@@ -1,0 +1,44 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Apr 28, 2014
+
+package com.eagle.programmar.JSON;
+
+import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleLanguageLookup;
+import com.eagle.programmar.JSON.Terminals.JSON_KeywordChoice;
+import com.eagle.programmar.JSON.Terminals.JSON_Literal;
+import com.eagle.programmar.JSON.Terminals.JSON_Number;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
+
+public class JSON_Program extends EagleLanguage
+{
+	public static final String NAME = "JSON";
+	
+	static {
+		EagleLanguageLookup.addLanguage(NAME, JSON_Program.class);
+		EagleLanguageLookup.setLanguageSuffix(".json", NAME);
+	}
+
+	public JSON_Program()
+	{
+		super(NAME, new JSON_Syntax());
+	}
+
+	@Override
+	public String getDocRoot()
+	{
+		return "http://www.w3schools.com/json/";
+	}
+	
+	public TokenList<JSON_Element> elements;
+	
+	public static class JSON_Element extends TokenChooser
+	{
+		public @CHOICE JSON_Literal literal;
+		public @CHOICE JSON_Number number;
+		public @CHOICE JSON_Object object;
+		public @CHOICE JSON_Dictionary dictionary;
+		public @CHOICE JSON_KeywordChoice builtIn = new JSON_KeywordChoice("null", "true", "false");
+	}
+}

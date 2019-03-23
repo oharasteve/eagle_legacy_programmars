@@ -1,0 +1,41 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Dec 8, 2013
+
+package com.eagle.programmar.Python.Statements;
+
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Terminals.Python_Comment;
+import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
+import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationColon;
+
+public class Python_IfStatement extends TokenSequence
+{
+	public @NOSPACE Python_Keyword IF = new Python_Keyword("if");
+	public Python_Expression condition;
+	public @NOSPACE PunctuationColon colon;
+	public Python_SingleOrMultiLineStatement ifThen;
+	public @OPT TokenList<Python_IfElif> ifElif;
+	public @OPT Python_IfElse ifElse;
+	public @OPT TokenList<Python_Comment> comments;
+	
+	public static class Python_IfElif extends TokenSequence
+	{
+		public @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
+		public @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
+		public Python_Expression condition;
+		public @NOSPACE PunctuationColon colon;
+		public Python_SingleOrMultiLineStatement elifStatement;
+	}
+		
+	public static class Python_IfElse extends TokenSequence
+	{
+		public @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
+		public @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
+		public @NOSPACE PunctuationColon colon;
+		public Python_SingleOrMultiLineStatement ifElseStatement;
+	}
+}

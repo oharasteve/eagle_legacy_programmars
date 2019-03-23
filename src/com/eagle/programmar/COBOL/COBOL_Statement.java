@@ -1,0 +1,101 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Dec 7, 2010
+
+package com.eagle.programmar.COBOL;
+
+import com.eagle.programmar.COBOL.Statements.COBOL_AcceptStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_CallStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_CancelStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_CloseStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_CommitStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_ComputeStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_ContinueStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_CopyStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_DeleteStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_DivideStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_EvaluateStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_ExitStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_GenerateStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_GoBackStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_GoStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_IfStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_InitializeStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_InitiateStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_InspectStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_InvokeStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_MergeStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_MoveStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_MultiplyStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_NextStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_OpenStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_ReadStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_ReleaseStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_ReturnStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_RewriteStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_SearchStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_SetStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_SortStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_StartStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_StopStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_StringStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_SubtractStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_TerminateStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_UnlockStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_UnstringStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_UseStatement;
+import com.eagle.programmar.COBOL.Statements.COBOL_WriteStatement;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractStatement;
+
+public class COBOL_Statement extends TokenChooser implements AbstractStatement
+{
+	public @CHOICE COBOL_AcceptStatement acceptStatement;
+	public @CHOICE COBOL_AddStatement addStatement;
+	public @CHOICE COBOL_CallStatement callStatement;
+	public @CHOICE COBOL_CancelStatement cancelStatement;
+	public @CHOICE COBOL_CloseStatement closeStatement;
+	public @CHOICE COBOL_CommitStatement commitStatement;
+	public @CHOICE COBOL_ComputeStatement computeStatement;
+	public @CHOICE COBOL_ContinueStatement continueStatement;
+	public @CHOICE COBOL_CopyStatement copyStatement;
+	public @CHOICE COBOL_DeleteStatement deleteStatement;
+	public @CHOICE COBOL_DisplayStatement displayStatement;
+	public @CHOICE COBOL_DivideStatement divideStatement;
+	public @CHOICE COBOL_ExitStatement exitStatement;
+	public @CHOICE COBOL_EvaluateStatement evaluateStatement;
+	public @CHOICE COBOL_GenerateStatement generateStatement;
+	public @CHOICE COBOL_GoStatement goStatement;
+	public @CHOICE COBOL_GoBackStatement goBackStatement;
+	public @CHOICE COBOL_IfStatement ifStatement;
+	public @CHOICE COBOL_InitiateStatement initiateStatement;
+	public @CHOICE COBOL_InitializeStatement initializeStatement;
+	public @CHOICE COBOL_InvokeStatement invokeStatement;
+	public @CHOICE COBOL_InspectStatement inspectStatement;
+	public @CHOICE COBOL_MergeStatement mergeStatement;
+	public @CHOICE COBOL_MoveStatement moveStatement;
+	public @CHOICE COBOL_MultiplyStatement multiplyStatement;
+	public @CHOICE COBOL_NextStatement nextStatement;
+	public @CHOICE COBOL_OpenStatement openStatement;
+	public @CHOICE COBOL_PerformStatement performStatement;
+	public @CHOICE COBOL_ReadStatement readStatement;
+	public @CHOICE COBOL_ReleaseStatement releaseStatement;
+	public @CHOICE COBOL_ReturnStatement returnStatement;
+	public @CHOICE COBOL_RewriteStatement rewruteStatement;
+	public @CHOICE COBOL_SearchStatement searchStatement;
+	public @CHOICE COBOL_SetStatement setStatement;
+	public @CHOICE COBOL_SortStatement sortStatement;
+	public @CHOICE COBOL_StartStatement startStatement;
+	public @CHOICE COBOL_StopStatement stopStatement;
+	public @CHOICE COBOL_StringStatement stringStatement;
+	public @CHOICE COBOL_SubtractStatement subtractStatement;
+	public @CHOICE COBOL_TerminateStatement terminateStatement;
+	public @CHOICE COBOL_UnlockStatement unlockStatement;
+	public @CHOICE COBOL_UnstringStatement unstringStatement;
+	public @CHOICE COBOL_UseStatement useStatement;
+	public @CHOICE COBOL_WriteStatement writeStatement;
+	
+	//public @LAST COBOL_UnparsedStatement unparsedStatement;
+}
