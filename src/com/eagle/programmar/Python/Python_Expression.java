@@ -153,46 +153,6 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	{
 		public Python_Variable name;
 		public @NOSPACE TokenList<Python_Parameter_List> args;
-		
-//		public static class Python_Function_Arguments extends TokenSequence
-//		{
-//			public PunctuationLeftParen leftParen;
-//			public @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_Function_ArgList argList;
-//			public @OPT Python_EndOfLine eoln;
-//			public PunctuationRightParen rightParen;
-//			
-//			public static class Python_Function_ArgList extends TokenSequence
-//			{
-//				public @OPT Python_EndOfLine eoln;
-//				public @OPT TokenList<Python_Comment> comment1;
-//				public Python_Function_Params params;
-//				public @OPT PunctuationComma comma;
-//				public @OPT TokenList<Python_Comment> comment2;
-//			}
-//			
-//			public static class Python_Function_Params extends TokenSequence
-//			{
-//				public @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-//				public Python_Expression expr;
-//				public @OPT Python_InitialValue init;
-//				public @OPT TokenList<Python_MoreArgument> moreArgs;
-//
-//				public static class Python_InitialValue extends TokenSequence
-//				{
-//					public PunctuationEquals equals;
-//					public Python_Expression expr;
-//				}
-//				
-//				public static class Python_MoreArgument extends TokenSequence
-//				{
-//					public PunctuationComma comma;
-//					public @OPT TokenList<Python_Comment> comment;
-//					public @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-//					public Python_Expression expr;
-//					public @OPT Python_InitialValue init;
-//				}
-//			}
-//		}
 	}
 
 	public static @P(190) class Python_BuiltIn extends PrimaryOperator

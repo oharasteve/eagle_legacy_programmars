@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_ExpressionList;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
@@ -12,7 +13,7 @@ import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_ForStatement extends TokenSequence
+public class Python_ForStatement<PS extends Python_Simple_Statement> extends TokenSequence
 {
 	public @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
 	public Python_VariableList varList;
@@ -20,14 +21,14 @@ public class Python_ForStatement extends TokenSequence
 	public Python_ExpressionList expressionList;
 	public @NOSPACE PunctuationColon colon;
 	public @OPT Python_Comment comment;
-	public Python_SingleOrMultiLineStatement forType;
-	public @OPT Python_ForElse forElseStatement;
+	public Python_SingleOrMultiLineStatement<PS> forType;
+	public @OPT Python_ForElse<PS> forElseStatement;
 
-	public static class Python_ForElse extends TokenSequence
+	public static class Python_ForElse<PS extends Python_Simple_Statement> extends TokenSequence
 	{
 		public Python_StartOfLine soln = new Python_StartOfLine();
 		public Python_Keyword ELSE = new Python_Keyword("else");
 		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement doWhat;
+		public Python_SingleOrMultiLineStatement<PS> doWhat;
 	}
 }

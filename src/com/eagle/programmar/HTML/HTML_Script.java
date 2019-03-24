@@ -4,6 +4,7 @@
 package com.eagle.programmar.HTML;
 
 import com.eagle.programmar.Django.Django_Control;
+import com.eagle.programmar.Django.Django_Syntax;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.programmar.Javascript.Javascript_Program;
@@ -30,8 +31,8 @@ public class HTML_Script extends TokenChooser
 		
 		public static class HTML_ScriptBody extends TokenChooser
 		{
-			public @CHOICE @NOSPACE @OPT Django_Control django;
-			public @CHOICE @SYNTAX(Javascript_Syntax.class) @OPT Javascript_Program javascript;
+			public @CHOICE @NOSPACE @SYNTAX(Django_Syntax.class) @OPT Django_Control django;
+			public @CHOICE @NOSPACE @SYNTAX(Javascript_Syntax.class) @OPT Javascript_Program javascript;
 		}
 
 		public static class HTML_EndScript extends TokenSequence

@@ -4,25 +4,26 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_WhileStatement extends TokenSequence
+public class Python_WhileStatement<PS extends Python_Simple_Statement> extends TokenSequence
 {
 	public @NOSPACE Python_Keyword WHILE = new Python_Keyword("while");
 	public Python_Expression condition;
 	public @NOSPACE PunctuationColon colon;
-	public Python_SingleOrMultiLineStatement statements;
-	public @OPT Python_WhileElse whileElse;
+	public Python_SingleOrMultiLineStatement<PS> statements;
+	public @OPT Python_WhileElse<PS> whileElse;
 	
-	public static class Python_WhileElse extends TokenSequence
+	public static class Python_WhileElse<PS extends Python_Simple_Statement> extends TokenSequence
 	{
 		public Python_StartOfLine soln = new Python_StartOfLine();
 		public Python_Keyword ELSE = new Python_Keyword("else");
 		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement doWhat;
+		public Python_SingleOrMultiLineStatement<PS> doWhat;
 	}
 }

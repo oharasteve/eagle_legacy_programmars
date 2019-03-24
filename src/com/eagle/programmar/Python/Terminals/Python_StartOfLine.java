@@ -43,7 +43,7 @@ public class Python_StartOfLine extends TerminalLiteralToken
 	
 						if (token instanceof Python_Statement)
 						{
-							Python_Statement firstStmt = (Python_Statement) token;
+							Python_Statement<?> firstStmt = (Python_Statement<?>) token;
 							AbstractToken child = firstStmt.statementOrComment.getWhich();
 							if (child instanceof Python_Statement_List)
 							{

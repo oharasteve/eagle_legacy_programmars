@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Parameter_List;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
@@ -17,7 +18,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_FunctionDefinition extends TokenSequence implements AbstractMethod
+public class Python_FunctionDefinition<PS extends Python_Simple_Statement> extends TokenSequence implements AbstractMethod
 {
 	public @OPT TokenList<Python_Decorator> decorator;
 	public @OPT Python_EndOfLine eoln;
@@ -26,7 +27,7 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 	public Python_Parameter_List params;
 	public @NOSPACE PunctuationColon colon;
 	public @OPT TokenList<Python_Comment> comment;
-	public Python_SingleOrMultiLineStatement defBody;
+	public Python_SingleOrMultiLineStatement<PS> defBody;
 	
 	public static class Python_Decorator extends TokenSequence
 	{

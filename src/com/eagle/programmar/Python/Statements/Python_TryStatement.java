@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
@@ -15,23 +16,23 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Python_TryStatement extends TokenSequence
+public class Python_TryStatement<PS extends Python_Simple_Statement> extends TokenSequence
 {
 	public Python_StartOfLine soln;
 	public Python_Keyword TRY = new Python_Keyword("try");
 	public PunctuationColon colon;
 	public @OPT Python_Comment comment;
-	public Python_SingleOrMultiLineStatement tryType;
-	public @OPT TokenList<Python_TryExcept> tryExcept;
-	public @OPT Python_TryElse tryElse;
-	public @OPT Python_TryFinally tryFinally;
+	public Python_SingleOrMultiLineStatement<PS> tryType;
+	public @OPT TokenList<Python_TryExcept<PS>> tryExcept;
+	public @OPT Python_TryElse<PS> tryElse;
+	public @OPT Python_TryFinally<PS> tryFinally;
 	
-	public static class Python_TryExcept extends TokenSequence
+	public static class Python_TryExcept<PS extends Python_Simple_Statement> extends TokenSequence
 	{
 		public Python_Keyword EXCEPT = new Python_Keyword("except");
 		public @OPT SeparatedList<Python_TryExceptClause,PunctuationComma> tryExceptClauses;
 		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement exceptWhat;
+		public Python_SingleOrMultiLineStatement<PS> exceptWhat;
 		
 		public static class Python_TryExceptClause extends TokenSequence
 		{
@@ -46,19 +47,19 @@ public class Python_TryStatement extends TokenSequence
 		}
 	}
 
-	public static class Python_TryElse extends TokenSequence
+	public static class Python_TryElse<PS extends Python_Simple_Statement> extends TokenSequence
 	{
 		public Python_StartOfLine soln = new Python_StartOfLine();
 		public Python_Keyword ELSE = new Python_Keyword("else");
 		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement elseWhat;
+		public Python_SingleOrMultiLineStatement<PS> elseWhat;
 	}
 
-	public static class Python_TryFinally extends TokenSequence
+	public static class Python_TryFinally<PS extends Python_Simple_Statement> extends TokenSequence
 	{
 		public Python_StartOfLine soln = new Python_StartOfLine();
 		public Python_Keyword FINALLY = new Python_Keyword("finally");
 		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement finallyWhat;
+		public Python_SingleOrMultiLineStatement<PS> finallyWhat;
 	}
 }
