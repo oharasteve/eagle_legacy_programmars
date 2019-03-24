@@ -4,7 +4,6 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
@@ -22,11 +21,6 @@ public class CSharp_Program extends EagleLanguage
 {
 	public static final String NAME = "CSharp";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, CSharp_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".cs", NAME);
-	}
-
 	public CSharp_Program()
 	{
 		super(NAME, new CSharp_Syntax());

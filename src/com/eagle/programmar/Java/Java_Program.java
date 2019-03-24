@@ -5,7 +5,6 @@ package com.eagle.programmar.Java;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
@@ -22,11 +21,6 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 {
 	public static final String NAME = "Java";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Java_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".java", NAME);
-	}
-
 	public Java_Program()
 	{
 		super(NAME, new Java_Syntax());

@@ -4,7 +4,6 @@
 package com.eagle.programmar.Perl;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Perl.Perl_Statement.Perl_SimpleStatement.Perl_StatementOrComment;
 import com.eagle.tokens.TokenList;
 
@@ -12,10 +11,6 @@ public class Perl_Program extends EagleLanguage
 {
 	public static final String NAME = "Perl";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Perl_Program.class);
-	}
-
 	public Perl_Program()
 	{
 		super(NAME, new Perl_Syntax());

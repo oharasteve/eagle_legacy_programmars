@@ -4,7 +4,6 @@
 package com.eagle.programmar.IntelASM;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Comment;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_EndOfLine;
 import com.eagle.tokens.TokenChooser;
@@ -14,10 +13,6 @@ public class IntelASM_Program extends EagleLanguage
 {
 	public static final String NAME = "IntelASM";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, IntelASM_Program.class);
-	}
-
 	public IntelASM_Program()
 	{
 		super(NAME, new IntelASM_Syntax());

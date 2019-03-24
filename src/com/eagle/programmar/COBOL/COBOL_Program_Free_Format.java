@@ -3,18 +3,12 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.COBOL.COBOL_Syntax.COBOL_Free_Format_Syntax;
 
 
 public class COBOL_Program_Free_Format extends COBOL_Program_Complete
 {
 	public static final String NAME = "COBOL_Free_Format";
-
-	static {
-		EagleLanguageLookup.addLanguage(NAME, COBOL_Program_Free_Format.class);
-		EagleLanguageLookup.setLanguageSuffix(".cbl", NAME);
-	}
 
 	public COBOL_Program_Free_Format()
 	{

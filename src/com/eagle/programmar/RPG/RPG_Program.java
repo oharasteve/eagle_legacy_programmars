@@ -4,7 +4,6 @@
 package com.eagle.programmar.RPG;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.parsers.EagleOverrideManager;
 import com.eagle.programmar.RPG.Directives.RPG_Copy_Directive;
 import com.eagle.programmar.RPG.Directives.RPG_Eject_Directive;
@@ -81,11 +80,6 @@ public abstract class RPG_Program extends EagleLanguage
 	{
 		public static final String NAME = "RPG_III";
 		
-		static {
-			EagleLanguageLookup.addLanguage(NAME, RPG_III_Program.class);
-			EagleLanguageLookup.setLanguageSuffix(".rpg", NAME);
-		}
-
 		public RPG_III_Program()
 		{
 			super(NAME);
@@ -106,10 +100,6 @@ public abstract class RPG_Program extends EagleLanguage
 	{
 		public static final String NAME = "RPG_IV";
 		
-		static {
-			EagleLanguageLookup.addLanguage(NAME, RPG_IV_Program.class);
-		}
-
 		public RPG_IV_Program()
 		{
 			super(NAME);

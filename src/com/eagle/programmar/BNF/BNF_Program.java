@@ -4,7 +4,6 @@
 package com.eagle.programmar.BNF;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.tokens.TokenList;
 
 public class BNF_Program extends EagleLanguage
@@ -14,11 +13,6 @@ public class BNF_Program extends EagleLanguage
 	public BNF_Program()
 	{
 		super(NAME, new BNF_Syntax());
-	}
-	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, BNF_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".bnf", NAME);
 	}
 
 	public TokenList<BNF_Rule> rules;

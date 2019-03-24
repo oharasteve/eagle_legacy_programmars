@@ -4,7 +4,6 @@
 package com.eagle.programmar.C;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeEnum;
 import com.eagle.programmar.C.Terminals.C_Comment;
@@ -17,12 +16,6 @@ public class C_Program extends EagleLanguage
 {
 	public static final String NAME = "C";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, C_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".c", NAME);
-		EagleLanguageLookup.setLanguageSuffix(".h", NAME);
-	}
-
 	public C_Program()
 	{
 		super(NAME, new C_Syntax());

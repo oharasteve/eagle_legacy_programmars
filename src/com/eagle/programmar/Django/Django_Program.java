@@ -4,17 +4,12 @@
 package com.eagle.programmar.Django;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.tokens.TokenList;
 
 public class Django_Program extends EagleLanguage
 {
 	public static final String NAME = "Django";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Django_Program.class);
-	}
-
 	public Django_Program()
 	{
 		super(NAME, new Django_Syntax());

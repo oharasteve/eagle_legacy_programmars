@@ -4,7 +4,6 @@
 package com.eagle.programmar.Delphi;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Program_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
@@ -21,12 +20,6 @@ public class Delphi_Program extends EagleLanguage
 {
 	public static final String NAME = "Delphi";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Delphi_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".p", NAME);
-		EagleLanguageLookup.setLanguageSuffix(".pas", NAME);
-	}
-
 	public Delphi_Program()
 	{
 		super(NAME, new Delphi_Syntax());

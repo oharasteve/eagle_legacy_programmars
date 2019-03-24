@@ -4,18 +4,12 @@
 package com.eagle.programmar.VB;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.tokens.TokenList;
 
 public class VB_Program extends EagleLanguage
 {
 	public static final String NAME = "VB";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, VB_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".cls", NAME);
-	}
-
 	public VB_Program()
 	{
 		super(NAME, new VB_Syntax());

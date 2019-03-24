@@ -4,18 +4,12 @@
 package com.eagle.programmar.TCL;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.tokens.TokenList;
 
 public class TCL_Program extends EagleLanguage
 {
 	public static final String NAME = "TCL";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, TCL_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".tcl", NAME);
-	}
-
 	public TCL_Program()
 	{
 		super(NAME, new TCL_Syntax());

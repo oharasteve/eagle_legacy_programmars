@@ -4,7 +4,6 @@
 package com.eagle.programmar.CMD;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.CMD.Statements.CMD_Unparsed_Statement;
 import com.eagle.programmar.CMD.Symbols.CMD_Label_Definition;
 import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
@@ -17,11 +16,6 @@ public class CMD_Program extends EagleLanguage
 {
 	public static final String NAME = "CMD";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, CMD_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".bat", NAME);
-	}
-
 	public CMD_Program()
 	{
 		super(NAME, new CMD_Syntax());

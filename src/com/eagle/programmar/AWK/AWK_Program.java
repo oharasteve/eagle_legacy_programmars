@@ -4,7 +4,6 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.TokenChooser;
@@ -14,11 +13,6 @@ public class AWK_Program extends EagleLanguage
 {
 	public static final String NAME = "AWK";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, AWK_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".awk", NAME);
-	}
-
 	public AWK_Program()
 	{
 		super(NAME, new AWK_Syntax());

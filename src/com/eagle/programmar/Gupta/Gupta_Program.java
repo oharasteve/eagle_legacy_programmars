@@ -4,17 +4,12 @@
 package com.eagle.programmar.Gupta;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Gupta.Declarations.Gupta_Application;
 
 public class Gupta_Program extends EagleLanguage
 {
 	public static final String NAME = "Gupta";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Gupta_Program.class);
-	}
-
 	public Gupta_Program()
 	{
 		super(NAME, new Gupta_Syntax());

@@ -4,7 +4,6 @@
 package com.eagle.programmar.HTML;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
@@ -21,12 +20,6 @@ public class HTML_Program extends EagleLanguage
 {
 	public static final String NAME = "HTML";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, HTML_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".htm", NAME);
-		EagleLanguageLookup.setLanguageSuffix(".html", NAME);
-	}
-
 	public HTML_Program()
 	{
 		super(NAME, new HTML_Syntax());

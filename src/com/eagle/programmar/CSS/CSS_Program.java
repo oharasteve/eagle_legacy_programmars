@@ -4,7 +4,6 @@
 package com.eagle.programmar.CSS;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.CSS.CSS_TagList.CSS_ColonOption;
 import com.eagle.programmar.CSS.Directives.CSS_If_Directive;
 import com.eagle.programmar.CSS.Terminals.CSS_Comment;
@@ -28,11 +27,6 @@ public class CSS_Program extends EagleLanguage
 {
 	public static final String NAME = "CSS";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, CSS_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".css", NAME);
-	}
-
 	public CSS_Program()
 	{
 		super(NAME, new CSS_Syntax());

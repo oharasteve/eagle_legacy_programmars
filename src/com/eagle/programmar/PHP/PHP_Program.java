@@ -4,7 +4,6 @@
 package com.eagle.programmar.PHP;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.HTML.HTML_DocType;
 import com.eagle.programmar.HTML.HTML_Program;
 import com.eagle.programmar.HTML.HTML_Syntax;
@@ -20,11 +19,6 @@ public class PHP_Program extends EagleLanguage
 {
 	public static final String NAME = "PHP";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, PHP_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".php", NAME);
-	}
-
 	public PHP_Program()
 	{
 		super(NAME, new PHP_Syntax());

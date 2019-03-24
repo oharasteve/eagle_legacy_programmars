@@ -4,7 +4,6 @@
 package com.eagle.programmar.Natural;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Natural.Terminals.Natural_Keyword;
 import com.eagle.tokens.TokenList;
 
@@ -12,11 +11,6 @@ public class Natural_Program extends EagleLanguage
 {
 	public static final String NAME = "Natural";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Natural_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".ntf", NAME);
-	}
-
 	public Natural_Program()
 	{
 		super(NAME, new Natural_Syntax());

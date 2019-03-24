@@ -4,7 +4,6 @@
 package com.eagle.programmar.XML;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
@@ -28,12 +27,6 @@ public class XML_Program extends EagleLanguage
 {
 	public static final String NAME = "XML";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, XML_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".xml", NAME);
-		EagleLanguageLookup.setLanguageSuffix(".xsd", NAME);
-	}
-
 	public XML_Program()
 	{
 		super(NAME, new XML_Syntax());

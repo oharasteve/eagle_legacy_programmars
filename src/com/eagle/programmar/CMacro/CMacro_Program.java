@@ -4,7 +4,6 @@
 package com.eagle.programmar.CMacro;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.parsers.EagleOverrideManager;
@@ -21,10 +20,6 @@ public class CMacro_Program extends EagleLanguage
 {
 	public static final String NAME = "CMacro";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, CMacro_Program.class);
-	}
-
 	public CMacro_Program()
 	{
 		super(NAME, new CMacro_Syntax());

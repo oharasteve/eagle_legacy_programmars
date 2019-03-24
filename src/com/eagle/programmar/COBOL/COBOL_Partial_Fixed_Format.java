@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_Copy_or_FileDescriptor.COBOL_FileDescriptor;
 import com.eagle.programmar.COBOL.COBOL_FileControl.COBOL_Copy_or_FileSelect.COBOL_FileSelect;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph;
@@ -17,10 +16,6 @@ import com.eagle.tokens.TokenList;
 public class COBOL_Partial_Fixed_Format extends COBOL_Program
 {
 	public static final String NAME = "COBOL_Partial_Fixed_Format";
-
-	static {
-		EagleLanguageLookup.addLanguage(NAME, COBOL_Program_Fixed_Format.class);
-	}
 
 	public COBOL_Partial_Fixed_Format()
 	{

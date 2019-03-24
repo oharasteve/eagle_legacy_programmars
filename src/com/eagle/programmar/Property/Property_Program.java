@@ -4,7 +4,6 @@
 package com.eagle.programmar.Property;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Property.Terminals.Property_Comment;
 import com.eagle.programmar.Property.Terminals.Property_EndOfLine;
 import com.eagle.programmar.Property.Terminals.Property_Identifier;
@@ -20,11 +19,6 @@ public class Property_Program extends EagleLanguage
 {
 	public static final String NAME = "Property";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Property_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".properties", NAME);
-	}
-
 	public Property_Program()
 	{
 		super(NAME, new Property_Syntax());

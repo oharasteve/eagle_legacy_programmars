@@ -4,7 +4,6 @@
 package com.eagle.programmar.PPSM;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.PPSM.Terminals.PPSM_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -13,11 +12,6 @@ public class PPSM_Program extends EagleLanguage
 {
 	public static final String NAME = "PPSM";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, PPSM_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".ppsm", NAME);
-	}
-
 	public PPSM_Program()
 	{
 		super(NAME, new PPSM_Syntax());

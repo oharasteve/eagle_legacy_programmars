@@ -4,7 +4,6 @@
 package com.eagle.programmar.JSON;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.JSON.Terminals.JSON_KeywordChoice;
 import com.eagle.programmar.JSON.Terminals.JSON_Literal;
 import com.eagle.programmar.JSON.Terminals.JSON_Number;
@@ -15,11 +14,6 @@ public class JSON_Program extends EagleLanguage
 {
 	public static final String NAME = "JSON";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, JSON_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".json", NAME);
-	}
-
 	public JSON_Program()
 	{
 		super(NAME, new JSON_Syntax());

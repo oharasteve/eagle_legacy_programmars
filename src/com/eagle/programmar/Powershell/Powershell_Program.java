@@ -4,18 +4,12 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.tokens.TokenList;
 
 public class Powershell_Program extends EagleLanguage
 {
 	public static final String NAME = "Powershell";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Powershell_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".ps1", NAME);
-	}
-
 	public Powershell_Program()
 	{
 		super(NAME, new Powershell_Syntax());

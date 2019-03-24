@@ -4,18 +4,12 @@
 package com.eagle.programmar.Lisp;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.tokens.TokenList;
 
 public class Lisp_Program extends EagleLanguage
 {
 	public static final String NAME = "Lisp";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Lisp_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".lisp", NAME);
-	}
-
 	public Lisp_Program()
 	{
 		super(NAME, new Lisp_Syntax());

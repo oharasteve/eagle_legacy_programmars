@@ -4,7 +4,6 @@
 package com.eagle.programmar.IBMASM;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.IBMASM.Data.IBMASM_DC_Instruction;
 import com.eagle.programmar.IBMASM.Data.IBMASM_DS_Instruction;
 import com.eagle.programmar.IBMASM.Terminals.IBMASM_Comment;
@@ -17,11 +16,6 @@ public class IBMASM_Program extends EagleLanguage
 {
 	public static final String NAME = "IBMASM";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, IBMASM_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".awk", NAME);
-	}
-
 	public IBMASM_Program()
 	{
 		super(NAME, new IBMASM_Syntax());

@@ -4,7 +4,6 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -13,11 +12,6 @@ public class Javascript_Program extends EagleLanguage
 {
 	public static final String NAME = "Javascript";
 	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, Javascript_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".js", NAME);
-	}
-
 	public Javascript_Program()
 	{
 		super(NAME, new Javascript_Syntax());

@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CPlus;
 
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -11,13 +10,6 @@ import com.eagle.tokens.TokenList;
 public class CPlus_Program extends C_Program
 {
 	public static final String NAME = "Cpp";
-	
-	static {
-		EagleLanguageLookup.addLanguage(NAME, CPlus_Program.class);
-		EagleLanguageLookup.setLanguageSuffix(".cc", NAME);
-		EagleLanguageLookup.setLanguageSuffix(".cpp", NAME);
-		EagleLanguageLookup.setLanguageSuffix(".hh", NAME);
-	}
 	
 	public CPlus_Program()
 	{

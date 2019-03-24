@@ -3,18 +3,12 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleLanguageLookup;
 import com.eagle.programmar.COBOL.COBOL_Syntax.COBOL_Fixed_Format_Syntax;
 
 
 public class COBOL_Program_Fixed_Format extends COBOL_Program_Complete
 {
 	public static final String NAME = "COBOL_Fixed_Format";
-
-	static {
-		EagleLanguageLookup.addLanguage(NAME, COBOL_Program_Fixed_Format.class);
-		EagleLanguageLookup.setLanguageSuffix(".cob", NAME);
-	}
 
 	public COBOL_Program_Fixed_Format()
 	{
