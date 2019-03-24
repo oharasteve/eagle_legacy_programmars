@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Statements;
 
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Type;
@@ -19,22 +18,22 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_ClassDeclaration<PS extends Python_Simple_Statement> extends TokenSequence implements AbstractClass
+public class Python_ClassDeclaration extends TokenSequence implements AbstractClass
 {
 	public @OPT TokenList<Python_Decorator> decorator;
 	public @OPT Python_EndOfLine eoln;
 	public @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
 	public Python_Class_Definition name;
-	public @OPT Python_ClassSuper<PS> superClass;
+	public @OPT Python_ClassSuper superClass;
 	public @NOSPACE PunctuationColon colon;
-	public Python_SingleOrMultiLineStatement<PS> statements;
+	public Python_SingleOrMultiLineStatement statements;
 	
-	public static class Python_ClassSuper<PS extends Python_Simple_Statement> extends TokenSequence
+	public static class Python_ClassSuper extends TokenSequence
 	{
 		public PunctuationLeftParen leftParen;
 		public @OPT Python_EndOfLine eoln;
 		public @OPT Python_Type type;
-		public @OPT Python_ClassSuper<PS> superClass;
+		public @OPT Python_ClassSuper superClass;
 		public @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes; 
 		public PunctuationRightParen rightParen;
 

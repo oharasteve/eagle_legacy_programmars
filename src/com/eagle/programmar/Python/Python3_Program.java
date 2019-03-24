@@ -1,9 +1,9 @@
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python3_Program.Python3_Simple_Statement;
+import com.eagle.parsers.EagleOverrideManager;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 
-public class Python3_Program extends Python_Program<Python3_Simple_Statement>
+public class Python3_Program extends Python_Program
 {
 	public static final String NAME = "Python3";
 	
@@ -17,6 +17,12 @@ public class Python3_Program extends Python_Program<Python3_Simple_Statement>
 		
 	}
 
+	@Override
+	public void findClassOverrides(EagleOverrideManager overrider)
+	{
+		overrider.override(Python_Simple_Statement.class, Python3_Simple_Statement.class);
+	}
+	
 	@Override
 	public String getDocRoot()
 	{

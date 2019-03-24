@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
@@ -37,18 +36,18 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Python_Statement<PS extends Python_Simple_Statement> extends TokenSequence implements AbstractStatement
+public class Python_Statement extends TokenSequence implements AbstractStatement
 {
 	public @OPT @NEWLINE Python_StartOfLine soln;
-	public Python_StatementOrComment<PS> statementOrComment;
+	public Python_StatementOrComment statementOrComment;
 	public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	public @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @OPT Python_Comment comment;
 	public @OPT Python_EndOfLine eoln;
 	
-	public static class Python_StatementOrComment<PS extends Python_Simple_Statement> extends TokenChooser
+	public static class Python_StatementOrComment extends TokenChooser
 	{
-		public @SKIP Python_MultilineStatement<PS> multiStatement;	// Only needed for Transformation
+		public @SKIP Python_MultilineStatement multiStatement;	// Only needed for Transformation
 		
 		public @CHOICE Python_Statement_List statements;
 		public @CHOICE Python_EndOfLine eoln;
@@ -71,33 +70,33 @@ public class Python_Statement<PS extends Python_Simple_Statement> extends TokenS
 		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
 	}
 	
-	public abstract static class Python_Simple_Statement extends TokenChooser
+	public static class Python_Simple_Statement extends TokenChooser
 	{
 		public @CHOICE Python_Assignment assignment;
 		public @CHOICE Python_AssertStatement assertStatement;
 		public @CHOICE Python_BreakStatement breakStatement;
-		public @CHOICE Python_ClassDeclaration<Python_Simple_Statement> classDeclaration;
+		public @CHOICE Python_ClassDeclaration classDeclaration;
 		public @CHOICE Python_ContinueStatement continueStatement;
 		public @CHOICE Python_DeleteStatement delStatement;
 		public @CHOICE Python_ExecStatement execStatement;
-		public @CHOICE Python_ForStatement<Python_Simple_Statement> forStatement;
+		public @CHOICE Python_ForStatement forStatement;
 		public @CHOICE Python_FromStatement fromStatement;
-		public @CHOICE Python_FunctionDefinition<Python_Simple_Statement> functionDefinition;
+		public @CHOICE Python_FunctionDefinition functionDefinition;
 		public @CHOICE Python_GlobalStatement globalStatement;
-		public @CHOICE Python_IfStatement<Python_Simple_Statement> ifStatement;
+		public @CHOICE Python_IfStatement ifStatement;
 		public @CHOICE Python_ImportStatement importStatement;
 		public @CHOICE Python_PassStatement passStatement;
 		public @CHOICE Python_RaiseStatement raiseStatement;
 		public @CHOICE Python_ReturnStatement returnStatement;
-		public @CHOICE Python_TryStatement<Python_Simple_Statement> tryStatement;
-		public @CHOICE Python_WhileStatement<Python_Simple_Statement> whileStatement;
-		public @CHOICE Python_WithStatement<Python_Simple_Statement> withStatement;
+		public @CHOICE Python_TryStatement tryStatement;
+		public @CHOICE Python_WhileStatement whileStatement;
+		public @CHOICE Python_WithStatement withStatement;
 		public @CHOICE Python_YieldStatement yieldStatement;
 		
 		public @LAST Python_ExpressionStatement expression;		// Avoid conflict with 'for' statement
 	}
 	
-	public static class Python_SingleOrMultiLineStatement<PS extends Python_Simple_Statement> extends TokenChooser
+	public static class Python_SingleOrMultiLineStatement extends TokenChooser
 	{
 		public @CHOICE static class Python_SingleLineStatement extends TokenSequence
 		{
@@ -106,11 +105,11 @@ public class Python_Statement<PS extends Python_Simple_Statement> extends TokenS
 			public @OPT Python_EndOfLine eoln;
 		}
 
-		public @CHOICE static class Python_MultilineStatement<PS extends Python_Simple_Statement> extends TokenSequence
+		public @CHOICE static class Python_MultilineStatement extends TokenSequence
 		{
 			public @OPT Python_Comment comment;
 			public Python_EndOfLine eoln;
-			public TokenList<Python_Statement<PS>> statements;
+			public TokenList<Python_Statement> statements;
 		}
 	}
 }

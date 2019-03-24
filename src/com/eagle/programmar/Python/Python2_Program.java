@@ -1,10 +1,10 @@
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python2_Program.Python2_Simple_Statement;
+import com.eagle.parsers.EagleOverrideManager;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 
-public class Python2_Program extends Python_Program<Python2_Simple_Statement>
+public class Python2_Program extends Python_Program
 {
 	public static final String NAME = "Python2";
 	
@@ -16,6 +16,12 @@ public class Python2_Program extends Python_Program<Python2_Simple_Statement>
 	public static class Python2_Simple_Statement extends Python_Simple_Statement
 	{
 		public @CHOICE Python_PrintStatement printStatement;
+	}
+
+	@Override
+	public void findClassOverrides(EagleOverrideManager overrider)
+	{
+		overrider.override(Python_Simple_Statement.class, Python2_Simple_Statement.class);
 	}
 
 	@Override

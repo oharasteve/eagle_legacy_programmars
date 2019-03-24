@@ -43,7 +43,7 @@ public class Python_StartOfLine extends TerminalLiteralToken
 	
 						if (token instanceof Python_Statement)
 						{
-							Python_Statement<?> firstStmt = (Python_Statement<?>) token;
+							Python_Statement firstStmt = (Python_Statement) token;
 							AbstractToken child = firstStmt.statementOrComment.getWhich();
 							if (child instanceof Python_Statement_List)
 							{
@@ -87,7 +87,7 @@ public class Python_StartOfLine extends TerminalLiteralToken
 				TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
 
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				if (! (tokenList.first() instanceof Python_IfElif))
+				if (tokenList.size() > 0 && ! (tokenList.first() instanceof Python_IfElif))
 				{
 					depth++;
 				}
