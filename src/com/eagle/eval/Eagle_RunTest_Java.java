@@ -12,7 +12,7 @@ import com.eagle.core.EagleProject;
 import com.eagle.core.ProgramEntry;
 import com.eagle.utils.EaglePath;
 
-public class Eagle_RunTest_Java extends Eagle_RunTest
+public abstract class Eagle_RunTest_Java extends Eagle_RunTest
 {
 	private EagleProject _proj;
 	private ProgramEntry _entry;

@@ -46,7 +46,7 @@ import com.eagle.programmar.XML.XML_Program;
 
 public class EagleLanguageLookup extends LanguageLookup
 {
-	private static void add(String name, Class<? extends EagleLanguage> lang, String... suffixes)
+	public void add(String name, Class<? extends EagleLanguage> lang, String... suffixes)
 	{
 		addLanguage(name, lang);
 		for (String suffix : suffixes)
