@@ -28,8 +28,12 @@ public abstract class Eagle_RunTest_Java extends Eagle_RunTest
 	{
 		String javaFileName = EaglePath.combinePaths(_proj._artifactBase, _entry.javaFile);
 		String javac = "javac";
-		String classDirName = EaglePath.combinePaths(_proj._artifactBase, _entry.javaClassDir);
+		String outputClassDirName = EaglePath.combinePaths(_proj._artifactBase, _entry.javaClassDir);
 
+//		String inputClassDirName1 = EaglePath.combinePaths(EagleEnvironment.TOP, "eagle_legacy_core", "bin");
+//		String inputClassDirName2 = EaglePath.combinePaths(EagleEnvironment.TOP, "eagle_legacy_transform", "bin");
+//		String inputClassDirNames = inputClassDirName1 + ";" + inputClassDirName2;
+		
 		int slashPos = _entry.sourceFile.lastIndexOf('/');
 		int dotPos = _entry.sourceFile.lastIndexOf('.');
 		String className = _entry.sourceFile.substring(slashPos + 1, dotPos);
@@ -40,8 +44,8 @@ public abstract class Eagle_RunTest_Java extends Eagle_RunTest
 			javac = EaglePath.combinePaths(java_path, "bin", "javac.exe");
 		}
 		
-		//Check to see if directory exists and create it if it doesn't
-		File classDir = new File(classDirName);
+		// Check to see if directory exists and create it, if it doesn't exist
+		File classDir = new File(outputClassDirName);
 		if (! classDir.exists())
 		{
 			classDir.mkdir();
@@ -50,16 +54,19 @@ public abstract class Eagle_RunTest_Java extends Eagle_RunTest
 		// Compile it, using javac
 		ArrayList<String> args = new ArrayList<String>();
 		args.add(javac);
+//		args.add("-classpath");
+//		args.add(inputClassDirNames);
 		args.add(javaFileName);
 		args.add("-d");
-		args.add(classDirName);
+		args.add(outputClassDirName);
 		compile(args, javaFileName);
 
 		// Run it
 		args = new ArrayList<String>();
 		args.add("java");
 		args.add("-classpath");
-		args.add(classDirName);
+//		args.add(inputClassDirNames + ";" + outputClassDirName);
+		args.add(outputClassDirName);
 		args.add(className);
 		run(_proj, _entry, args, _entry.sourceFile);
 		
