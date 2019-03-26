@@ -109,7 +109,7 @@ public abstract class Eagle_RunTest extends TestCase
 		try
 		{
 			// Is there an input file?
-			String inputFileName = EaglePath.combinePaths(proj._artifactBase, entry.inputFile);
+			String inputFileName = EaglePath.combinePaths(proj._inputDirectory, entry.inputFile);
 			File inputFile = new File(inputFileName);
 			
 			String output = " > " + entry.actualOutput + " 2>&1";
