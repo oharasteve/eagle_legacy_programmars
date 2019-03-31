@@ -24,7 +24,7 @@ public class HTML_Script extends TokenChooser
 		public static class HTML_StartScript extends TokenSequence
 		{
 			public HTML_Punctuation startTag = new HTML_Punctuation('<');
-			public @NOSPACE @DOC("html_scripts.asp") HTML_Keyword script = new HTML_Keyword("script");
+			public @NOSPACE @DOC("html_scripts.asp") HTML_Keyword SCRIPT = new HTML_Keyword("script");
 			public @OPT TokenList<HTML_Attribute> attributes;
 			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}

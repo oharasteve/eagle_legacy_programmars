@@ -9,6 +9,8 @@ import com.eagle.tokens.TerminalLiteralToken;
 
 public class Python_Literal extends TerminalLiteralToken
 {
+	private static final String PREFIXES = "bfru";
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -23,14 +25,15 @@ public class Python_Literal extends TerminalLiteralToken
 		if (_currentChar < nc) pre1 = rec.charAt(_currentChar);
 		if (_currentChar + 1 < nc) pre2 = rec.charAt(_currentChar + 1);
 		
-		int prefixLen;
-		if (pre1 == 'u' && pre2 == 'r') prefixLen = 2;
-		else if (pre1 == 'r' && pre2 == 'u') prefixLen = 2;
-		else if (pre1 == 'b' && pre2 == 'r') prefixLen = 2;
-		else if (pre1 == 'r') prefixLen = 1;
-		else if (pre1 == 'u') prefixLen = 1;
-		else if (pre1 == 'b') prefixLen = 1;
-		else prefixLen = 0;
+		int prefixLen = 0;
+		if (PREFIXES.indexOf(pre1) >= 0)
+		{
+			prefixLen++;
+			if (PREFIXES.indexOf(pre2) >= 0)
+			{
+				prefixLen++;
+			}
+		}
 		_currentChar += prefixLen;
 		
 		// Pick up the next three characters, if they are present

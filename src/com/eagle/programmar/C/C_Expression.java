@@ -66,7 +66,7 @@ public class C_Expression extends PrecedenceChooser
 	public static @P(120) class C_ExpressionList extends PrimaryOperator
 	{
 		public PunctuationLeftBrace leftBrace;
-		public C_ArgumentList valueList;
+		public @OPT C_ArgumentList valueList;
 		public @OPT C_Comment comment;
 		public PunctuationRightBrace rightBrace;
 	}

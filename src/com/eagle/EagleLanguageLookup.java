@@ -33,14 +33,12 @@ import com.eagle.programmar.PHP.PHP_Program;
 import com.eagle.programmar.PLI.PLI_Program;
 import com.eagle.programmar.PPSM.PPSM_Program;
 import com.eagle.programmar.Perl.Perl_Program;
-import com.eagle.programmar.Powershell.Powershell_Program;
 import com.eagle.programmar.Property.Property_Program;
 import com.eagle.programmar.Python.Python2_Program;
 import com.eagle.programmar.Python.Python3_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_III_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_IV_Program;
 import com.eagle.programmar.SQL.SQL_Program;
-import com.eagle.programmar.TCL.TCL_Program;
 import com.eagle.programmar.VB.VB_Program;
 import com.eagle.programmar.XML.XML_Program;
 
@@ -85,7 +83,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Perl_Program.NAME, Perl_Program.class);
 		add(PHP_Program.NAME, PHP_Program.class, ".php");
 		add(PLI_Program.NAME, PLI_Program.class, ".pli");
-		add(Powershell_Program.NAME, Powershell_Program.class, ".ps1");
+		// add(Powershell_Program.NAME, Powershell_Program.class, ".ps1");
 		add(PPSM_Program.NAME, PPSM_Program.class, ".ppsm");
 		add(Property_Program.NAME, Property_Program.class, ".properties");
 		add(Python2_Program.NAME, Python2_Program.class);
@@ -93,7 +91,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(RPG_III_Program.NAME, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.NAME, RPG_IV_Program.class);
 		add(SQL_Program.NAME, SQL_Program.class, ".sql");
-		add(TCL_Program.NAME, TCL_Program.class, ".tcl");
+		// add(TCL_Program.NAME, TCL_Program.class, ".tcl");
 		add(VB_Program.NAME, VB_Program.class, ".cls");
 		add(XML_Program.NAME, XML_Program.class, ".xml", ".xsd");
 	}
