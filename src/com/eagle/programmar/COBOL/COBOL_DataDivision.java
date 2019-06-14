@@ -65,7 +65,7 @@ public class COBOL_DataDivision extends TokenSequence
 			
 			public static class COBOL_FD_ReportExternal extends TokenSequence
 			{
-				public COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
+				public @OPT COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
 				public @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 				public COBOL_Keyword EXTERNAL = new COBOL_Keyword("EXTERNAL");
 				public @OPT COBOL_Identifier_Reference reportId;
