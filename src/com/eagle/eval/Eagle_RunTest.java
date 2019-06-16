@@ -109,10 +109,11 @@ public abstract class Eagle_RunTest extends TestCase
 		try
 		{
 			// Is there an input file?
-			String inputFileName = EaglePath.combinePaths(proj._inputDirectory, entry.inputFile);
+			String inputFileName = EaglePath.combinePaths(proj._testDirectory, entry.inputFile);
 			File inputFile = new File(inputFileName);
 			
-			String output = " > " + entry.actualOutput + " 2>&1";
+			String outputFileName = EaglePath.combinePaths(proj._artifactBase, entry.actualOutput);
+			String output = " > " + outputFileName + " 2>&1";
 			String now = "\"-now=12/30/10 2:03 am\""; // This is so the date/times will match
 	
 			if (_isDos)
@@ -133,7 +134,7 @@ public abstract class Eagle_RunTest extends TestCase
 				pb.redirectInput(inputFile);
 				input = " < " + inputFileName;
 			}
-			pb.redirectOutput(new File(entry.actualOutput));
+			pb.redirectOutput(new File(outputFileName));
 
 			cmd += input + output;
 			System.out.println(cmd);
@@ -164,20 +165,21 @@ public abstract class Eagle_RunTest extends TestCase
 	{
 		try
 		{
-			String expected = EaglePath.combinePaths(proj._artifactBase, entry.outputFile);
+			String actual = EaglePath.combinePaths(proj._artifactBase, entry.actualOutput);
+			String expected = EaglePath.combinePaths(proj._testDirectory, entry.expectedOutput);
 			String cmd;
 			ProcessBuilder pb;
 			if (_isDos)
 			{
-				String actualDos = entry.actualOutput.replaceAll("/", "\\\\");
+				String actualDos = actual.replaceAll("/", "\\\\");
 				String expectedDos = expected.replaceAll("/", "\\\\");
 				pb = new ProcessBuilder("CMD", "/C", "ECHO N|COMP", actualDos, expectedDos);
 				cmd = "cmd /c echo n|comp " + actualDos + " " + expectedDos;
 			}
 			else
 			{
-				pb = new ProcessBuilder("/usr/bin/diff", "--strip-trailing-cr", entry.actualOutput, expected);
-				cmd = "/usr/bin/diff -w --strip-trailing-cr " + entry.actualOutput + " " + expected;
+				pb = new ProcessBuilder("/usr/bin/diff", "--strip-trailing-cr", actual, expected);
+				cmd = "/usr/bin/diff -w --strip-trailing-cr " + actual + " " + expected;
 			}
 			System.out.println(cmd);
 			pb.redirectErrorStream(true);
