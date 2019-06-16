@@ -7,7 +7,6 @@ import com.eagle.core.EagleLanguage;
 import com.eagle.core.LanguageLookup;
 import com.eagle.programmar.AWK.AWK_Program;
 import com.eagle.programmar.BNF.BNF_Program;
-import com.eagle.programmar.Bash.Bash_Program;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.CMacro.CMacro_Program;
@@ -57,7 +56,7 @@ public class EagleLanguageLookup extends LanguageLookup
 	{
 		// The 3+ arguments are suffixes for this language
 		add(AWK_Program.NAME, AWK_Program.class, ".awk");
-		add(Bash_Program.NAME, Bash_Program.class, ".sh");
+		// add(Bash_Program.NAME, Bash_Program.class, ".sh");
 		add(BNF_Program.NAME, BNF_Program.class, ".bnf");
 		add(C_Program.NAME, C_Program.class, ".c", ".h");
 		add(CMacro_Program.NAME, CMacro_Program.class);
