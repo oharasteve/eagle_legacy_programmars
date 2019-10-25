@@ -20,7 +20,7 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 	public COBOL_Expression expr;
 	public @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
 	public @OPT COBOL_AddTo addTo;
-	//public @OPT COBOL_AddGiving giving;
+	public @OPT COBOL_AddGiving giving;
 	public @OPT TokenList<COBOL_AddOnSizeError> onErrorList;
 	public @OPT COBOL_Keyword ENDADD = new COBOL_Keyword("END-ADD");
 	

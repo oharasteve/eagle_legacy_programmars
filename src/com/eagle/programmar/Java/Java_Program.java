@@ -34,6 +34,7 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 	
 	public static final String[] MODIFIERS = new String[] {
 		"abstract",
+		"default",
 		"final",
 		"native",
 		"private",
