@@ -22,7 +22,8 @@ public class Java_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new Java_Comment();
-		_punctuationExceptions = new String[] { "//", "/*", "!=", "<=", "==", ">=", "...", "++", "--", "||", "&&" };
+		_punctuationExceptions = new String[] {
+				"//", "/*", "!=", "<=", "==", ">=", "...", "++", "--", "||", "&&", "::" };
 		
 		addReservedWords(keywords);
 	}

@@ -215,6 +215,13 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
+	public static @P(305) class Java_ColonColon extends PrecedenceOperator
+	{
+		public Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
+		public @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
+		public @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
+	}
+
 	public static @P(310) class Java_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
