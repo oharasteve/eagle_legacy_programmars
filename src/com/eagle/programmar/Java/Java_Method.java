@@ -7,12 +7,9 @@ import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Symbols.Java_Current_Class_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
-import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
-import com.eagle.programmar.Java.Terminals.Java_Literal;
-import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
@@ -21,8 +18,8 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Method extends TokenSequence implements EagleScopeInterface, AbstractMethod
@@ -34,14 +31,18 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 	public @OPT Java_GenericType genericType;
 	public Java_Type jtype;
 	public Java_Method_Definition methodName;
-	public @NOSPACE PunctuationLeftParen leftParen;
-	public @OPT @NOSPACE Java_MethodParameter param;
-	public @OPT @NOSPACE TokenList<Java_MoreParameters> moreParams;
-	public @NOSPACE PunctuationRightParen rightParen;
+	public @NOSPACE Java_ParameterList parameters;
+	public @OPT TokenList<Java_EmptyBrackets> brackets;
 	public @OPT Java_MethodDefault methodDefault;
 	public @OPT Java_MethodThrows jthrows;
 	public @OPT Java_Comment comment;
 	public Java_MethodBody body;
+	
+	public static class Java_EmptyBrackets extends TokenSequence
+	{
+		public PunctuationLeftBracket leftBracket;
+		public PunctuationRightBracket rightBracket;
+	}
 	
 	public static class Java_MethodDefault extends TokenSequence
 	{
@@ -54,46 +55,6 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 		public @FIRST @NEWLINE Java_Comment comment;
 		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 		public @CHOICE Java_Annotation annotation;
-	}
-	
-	public static class Java_MethodParameter extends TokenSequence
-	{
-		public @OPT TokenList<Java_MethodParameterPrefix> prefixes;
-		public @NOSPACE Java_Type jtype;
-		public @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
-		public Java_Variable_Definition id;
-		public @OPT TokenList<Java_EmptySubscript> emptySubscripts;
-		
-		public static class Java_EmptySubscript extends TokenSequence
-		{
-			public Java_Punctuation emptySubscript = new Java_Punctuation("[]");
-		}
-		
-		public static class Java_MethodParameterPrefix extends TokenChooser
-		{
-			public @CHOICE Java_Keyword FINAL = new Java_Keyword("final");
-
-			public @CHOICE static class Java_MethodNullable extends TokenSequence
-			{
-				public Java_Punctuation atSign = new Java_Punctuation('@');
-				public Java_Keyword NULLABLE = new Java_Keyword("Nullable");
-			}
-
-			public @CHOICE static class Java_MethodSuppress extends TokenSequence
-			{
-				public Java_Punctuation atSign = new Java_Punctuation('@');
-				public @NOSPACE Java_Keyword SUPPRESS = new Java_Keyword("SuppressWarnings");
-				public @NOSPACE PunctuationLeftParen leftParen;
-				public @NOSPACE Java_Literal warning;
-				public @NOSPACE PunctuationRightParen rightParen;
-			}
-		}
-	}
-		
-	public static class Java_MoreParameters extends TokenSequence
-	{
-		public @NOSPACE PunctuationComma comma;
-		public Java_MethodParameter param;
 	}
 	
 	public static class Java_MethodThrows extends TokenSequence
@@ -120,10 +81,7 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 		public @OPT @BLANKLINE TokenList<Java_Annotation> annotation;
 		public @OPT TokenList<Java_MethodModifier> modifiers;
 		public Java_Current_Class_Reference constructorName;
-		public @NOSPACE PunctuationLeftParen leftParen;
-		public @OPT Java_MethodParameter param;
-		public @OPT TokenList<Java_MoreParameters> moreParams;
-		public @NOSPACE PunctuationRightParen rightParen;
+		public @NOSPACE Java_ParameterList parameters;
 		public @OPT Java_MethodThrows jthrows;
 		public @OPT Java_Comment comment;
 		public Java_MethodBody body;

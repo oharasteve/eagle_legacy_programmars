@@ -4,11 +4,13 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
+import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Terminals.Java_BinaryNumber;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
+import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
@@ -17,10 +19,13 @@ import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -34,10 +39,10 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	private static OperatorList _operators = new OperatorList();
 
 	public @P(10) Java_HexNumber hex;
-	public @P(15) Java_BinaryNumber binary;
-	public @P(20) Java_Number number;
-	public @P(30) Java_Literal literal;
-	public @P(40) Java_Character_Literal characters;
+	public @P(20) Java_BinaryNumber binary;
+	public @P(30) Java_Number number;
+	public @P(40) Java_Literal literal;
+	public @P(50) Java_Character_Literal characters;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.
@@ -56,13 +61,44 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(100) class Java_DotClass extends PrimaryOperator
+	public static @P(90) class Java_DotClass extends PrimaryOperator
 	{
 		public Java_Type jtype;
 		public @NOSPACE PunctuationPeriod dot;
 		public @NOSPACE Java_Keyword CLASS = new Java_Keyword("class");
 	}
 	
+	public static @P(100) class Java_LambdaExpression extends PrimaryOperator
+	{
+		public Java_LambdaVariables params;
+		public Java_Punctuation arrow = new Java_Punctuation("->");
+		public Java_LambdaValue value;
+		
+		public static class Java_LambdaVariables extends TokenChooser
+		{
+			public @CHOICE Java_Identifier id;
+			
+			public @CHOICE static class Java_LambdaVariableList extends TokenSequence
+			{
+				public PunctuationLeftParen lParen;
+				public @OPT SeparatedList<Java_Identifier,PunctuationComma> params;
+				public PunctuationRightParen rParen;
+			}
+		}
+
+		public static class Java_LambdaValue extends TokenChooser
+		{
+			public @CHOICE Java_Expression value;
+
+			public @FIRST static class Java_LambdaBlock extends TokenSequence
+			{
+				public PunctuationLeftBrace leftBrace;
+				public @OPT TokenList<Java_StatementOrComment> statements;
+				public PunctuationRightBrace rightBrace;
+			}
+		}
+	}
+			
 	public static @P(110) class Java_CastExpression extends PrimaryOperator
 	{
 		public PunctuationLeftParen leftParen;
@@ -326,7 +362,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 				"|=");
 		public Java_Expression expr;
 	}
-
+	
 	public static @P(430) class Java_TrueFalseExpression extends PrecedenceOperator
 	{
 		public Java_Expression left = new Java_Expression(this, AllowedPrecedence.HIGHER);
