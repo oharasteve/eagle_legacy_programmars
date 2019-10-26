@@ -9,6 +9,7 @@ import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Terminals.Java_BinaryNumber;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
+import com.eagle.programmar.Java.Terminals.Java_HexFloatingNumber;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -24,6 +25,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -38,11 +40,12 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Java_HexNumber hex;
-	public @P(20) Java_BinaryNumber binary;
-	public @P(30) Java_Number number;
-	public @P(40) Java_Literal literal;
-	public @P(50) Java_Character_Literal characters;
+	public @P(10) Java_HexFloatingNumber hexFloat;
+	public @P(20) Java_HexNumber hex;
+	public @P(30) Java_BinaryNumber binary;
+	public @P(40) Java_Number number;
+	public @P(50) Java_Literal literal;
+	public @P(60) Java_Character_Literal characters;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.
@@ -115,7 +118,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public static @P(110) class Java_CastExpression extends PrimaryOperator
 	{
 		public PunctuationLeftParen leftParen;
-		public Java_Type jtype;
+		public SeparatedList<Java_Type, PunctuationAmpersand> types;
 		public PunctuationRightParen rightParen;
 		public Java_Expression expr;
 	}

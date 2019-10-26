@@ -41,6 +41,7 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 		"protected",
 		"public",
 		"static",
+		"strictfp",
 		"synchronized",
 		"transient",
 		"volatile"

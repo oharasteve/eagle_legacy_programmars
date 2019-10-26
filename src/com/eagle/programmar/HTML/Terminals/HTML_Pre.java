@@ -26,16 +26,17 @@ public class HTML_Pre extends TerminalCommentToken
 		if (findStart(lines) == FOUND.EOF) return false;
 		
 		EagleLineReader rec = lines.get(_currentLine);
+		String recLowerCase = rec.toLowerCase();
 		int nc = rec.length();
 		if (_currentChar + 3 >= nc) return false;	// Need room for a fourth character
 
 		if (rec.charAt(_currentChar) != '<') return false;
-		if (rec.charAt(_currentChar + 1) != 'p') return false;
-		if (rec.charAt(_currentChar + 2) != 'r') return false;
-		if (rec.charAt(_currentChar + 3) != 'e') return false;
+		if (recLowerCase.charAt(_currentChar + 1) != 'p') return false;
+		if (recLowerCase.charAt(_currentChar + 2) != 'r') return false;
+		if (recLowerCase.charAt(_currentChar + 3) != 'e') return false;
 
 		// Is the end on the same line?
-		int ec = rec.indexOf("</pre>", _currentChar + 4);
+		int ec = recLowerCase.indexOf("</pre>", _currentChar + 4);
 		if (ec >= 0)
 		{
 			// Yes! Whew!
@@ -51,7 +52,8 @@ public class HTML_Pre extends TerminalCommentToken
 		while (lastLine < numberLines)
 		{
 			String next = lines.get(lastLine).toString();
-			ec = next.indexOf("</pre>");
+			String nextLowerCase = next.toLowerCase();
+			ec = nextLowerCase.indexOf("</pre>");
 			if (ec >= 0)
 			{
 				foundIt(lastLine, ec + 5);
