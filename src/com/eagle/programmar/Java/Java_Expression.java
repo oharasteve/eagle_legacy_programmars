@@ -5,6 +5,7 @@ package com.eagle.programmar.Java;
 
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
+import com.eagle.programmar.Java.Terminals.Java_BinaryNumber;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
@@ -33,6 +34,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	private static OperatorList _operators = new OperatorList();
 
 	public @P(10) Java_HexNumber hex;
+	public @P(15) Java_BinaryNumber binary;
 	public @P(20) Java_Number number;
 	public @P(30) Java_Literal literal;
 	public @P(40) Java_Character_Literal characters;
@@ -220,6 +222,13 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
 		public @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
+	}
+
+	public static @P(307) class Java_ColonColonNew extends PrecedenceOperator
+	{
+		public Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
+		public @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
+		public @NOSPACE Java_Keyword NEW = new Java_Keyword("new");
 	}
 
 	public static @P(310) class Java_MultiplicativeExpression extends PrecedenceOperator

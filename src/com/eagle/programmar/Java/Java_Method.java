@@ -62,7 +62,12 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 		public @NOSPACE Java_Type jtype;
 		public @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
 		public Java_Variable_Definition id;
-		public @OPT Java_Punctuation emptySubscript = new Java_Punctuation("[]");
+		public @OPT TokenList<Java_EmptySubscript> emptySubscripts;
+		
+		public static class Java_EmptySubscript extends TokenSequence
+		{
+			public Java_Punctuation emptySubscript = new Java_Punctuation("[]");
+		}
 		
 		public static class Java_MethodParameterPrefix extends TokenChooser
 		{

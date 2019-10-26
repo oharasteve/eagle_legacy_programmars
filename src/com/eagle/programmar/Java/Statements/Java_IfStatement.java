@@ -4,6 +4,7 @@
 package com.eagle.programmar.Java.Statements;
 
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -14,7 +15,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_IfStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
+	public @OPT @NEWLINE Java_Label label;
+	public @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
 	public PunctuationLeftParen leftParen;
 	public @NOSPACE Java_Expression condition;
 	public @OPT TokenList<Java_Comment> comment1;

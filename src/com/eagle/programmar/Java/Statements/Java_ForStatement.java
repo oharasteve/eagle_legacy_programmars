@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java.Statements;
 
+import com.eagle.programmar.Java.Java_Annotation;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
@@ -31,7 +32,8 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @OPT @NEWLINE Java_Label label;
 		public @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
 		public PunctuationLeftParen leftParen;
-		public @OPT @NOSPACE Java_ForInit init;
+		public @OPT @NOSPACE Java_Annotation annotation;
+		public @OPT Java_ForInit init;
 		public @NOSPACE PunctuationSemicolon semicolon1;
 		public @OPT Java_Expression terminateCondition;
 		public @NOSPACE PunctuationSemicolon semicolon2;

@@ -4,6 +4,7 @@
 package com.eagle.programmar.Java.Statements;
 
 import com.eagle.programmar.Java.Java_Data.Java_DataInitialValue;
+import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Type;
@@ -15,15 +16,16 @@ import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_TryStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.20") Java_Keyword TRY = new Java_Keyword("try");
+	public @OPT @NEWLINE Java_Label label;
+	public @DOC("statements.html#14.20") Java_Keyword TRY = new Java_Keyword("try");
 	public @OPT Java_TryResources resources;
 	public @INDENT PunctuationLeftBrace leftBrace;
 	public TokenList<Java_StatementOrComment> statements;
@@ -59,7 +61,7 @@ public class Java_TryStatement extends TokenSequence
 	public static class Java_TryResources extends TokenSequence
 	{
 		public PunctuationLeftParen leftParen;
-		public SeparatedList<Java_TryResource,PunctuationComma> resources;
+		public SeparatedList<Java_TryResource,PunctuationSemicolon> resources;
 		public PunctuationRightParen rightParen;
 		
 		public static class Java_TryResource extends TokenSequence

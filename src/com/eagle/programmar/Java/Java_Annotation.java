@@ -12,6 +12,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_Annotation extends TokenChooser
@@ -28,7 +29,7 @@ public class Java_Annotation extends TokenChooser
 	public @CHOICE static class Java_AnnotationCall2 extends TokenSequence
 	{
 		public Java_Punctuation atSign = new Java_Punctuation('@');
-		public @NOSPACE Java_Identifier id;
+		public @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> id;
 		public @OPT TokenList<Java_Comment> comments;
 	}
 }
