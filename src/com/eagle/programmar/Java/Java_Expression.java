@@ -84,6 +84,19 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 				public @OPT SeparatedList<Java_Identifier,PunctuationComma> params;
 				public PunctuationRightParen rParen;
 			}
+			
+			public @CHOICE static class Java_LambdaTypedVariableList extends TokenSequence
+			{
+				public PunctuationLeftParen lParen;
+				public @OPT SeparatedList<Java_TypedIdentifier,PunctuationComma> params;
+				public PunctuationRightParen rParen;
+				
+				public static class Java_TypedIdentifier extends TokenSequence
+				{
+					public Java_Type type;
+					public Java_Identifier id;
+				}
+			}
 		}
 
 		public static class Java_LambdaValue extends TokenChooser

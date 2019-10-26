@@ -66,6 +66,7 @@ public class Java_TryStatement extends TokenSequence
 		
 		public static class Java_TryResource extends TokenSequence
 		{
+			public @OPT Java_Keyword FINAL = new Java_Keyword("final");
 			public Java_Type jtype;
 			public Java_Variable_Definition id;
 			public Java_DataInitialValue initialValue;
