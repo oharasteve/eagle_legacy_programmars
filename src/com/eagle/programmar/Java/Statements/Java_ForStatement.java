@@ -35,7 +35,7 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @NOSPACE PunctuationSemicolon semicolon1;
 		public @OPT Java_Expression terminateCondition;
 		public @NOSPACE PunctuationSemicolon semicolon2;
-		public @OPT Java_Expression increment;
+		public @OPT SeparatedList<Java_Expression,PunctuationComma> increment;
 		public @NOSPACE PunctuationRightParen rightParen;
 		public @OPT Java_Comment comment;
 		public Java_Statement action;

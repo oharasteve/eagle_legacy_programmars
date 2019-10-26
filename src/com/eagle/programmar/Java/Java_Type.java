@@ -7,6 +7,7 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -83,6 +84,6 @@ public class Java_Type extends TokenSequence implements AbstractType
 	public static class Java_ExtendsType extends TokenSequence
 	{
 		public Java_KeywordChoice EXTENDS = new Java_KeywordChoice("extends", "super");
-		public Java_Identifier_Reference typeName;
+		public SeparatedList<Java_Identifier_Reference, PunctuationPeriod> typeName;
 	}
 }
