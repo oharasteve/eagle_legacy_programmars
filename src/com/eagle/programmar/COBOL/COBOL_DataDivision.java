@@ -63,12 +63,21 @@ public class COBOL_DataDivision extends TokenSequence
 			public PunctuationPeriod dot;
 			public @OPT TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
 			
-			public static class COBOL_FD_ReportExternal extends TokenSequence
+			public static class COBOL_FD_ReportExternal extends TokenChooser
 			{
-				public COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
-				public COBOL_Keyword IS = new COBOL_Keyword("IS");
-				public @OPT COBOL_Keyword EXTERNAL = new COBOL_Keyword("EXTERNAL");
-				public @OPT COBOL_Identifier_Reference reportId;
+				public static @CHOICE class COBOL_FD_ReportIs extends TokenSequence
+				{
+					public COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
+					public COBOL_Keyword IS = new COBOL_Keyword("IS");
+					public @OPT COBOL_Keyword EXTERNAL = new COBOL_Keyword("EXTERNAL");
+					public @OPT COBOL_Identifier_Reference reportId;
+				}
+				public static @CHOICE class COBOL_FD_IsExternal extends TokenSequence
+				{
+					public COBOL_Keyword IS = new COBOL_Keyword("IS");
+					public COBOL_Keyword EXTERNAL = new COBOL_Keyword("EXTERNAL");
+					public @OPT COBOL_Identifier_Reference reportId;
+				}
 			}
 			
 			public static class COBOL_FD_RecordContains extends TokenSequence

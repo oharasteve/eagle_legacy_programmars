@@ -104,11 +104,23 @@ public class C_Expression extends PrecedenceChooser
 	
 	public static @P(170) class C_PostIncrementExpression extends PrimaryOperator
 	{
+		public C_Parenthesized_Expression expr;
+		public C_Punctuation postIncrementOperator = new C_Punctuation("++");
+	}
+
+	public static @P(175) class C_PostIncrementVariable extends PrimaryOperator
+	{
 		public C_Variable var;		// Cannot be just C_Expression -- infinite loop
 		public C_Punctuation postIncrementOperator = new C_Punctuation("++");
 	}
 
 	public static @P(180) class C_PostDecrementExpression extends PrimaryOperator
+	{
+		public C_Parenthesized_Expression expr;
+		public C_Punctuation postDecrementOperator = new C_Punctuation("--");
+	}
+
+	public static @P(185) class C_PostDecrementVariable extends PrimaryOperator
 	{
 		public C_Variable var;		// Cannot be just C_Expression -- infinite loop
 		public C_Punctuation postDecrementOperator = new C_Punctuation("--");

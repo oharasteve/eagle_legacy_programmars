@@ -26,12 +26,13 @@ public class C_Data extends TokenChooser
 	{
 		public @OPT C_KeywordChoice scope = new C_KeywordChoice(C_Program.getModifiers());
 		public C_Type jtype;
+		public @OPT TokenList<C_Comment> comments1;
 		public C_Variable_Definition id;
 		public @OPT TokenList<C_Subscript> subscripts;
 		public @OPT C_DataInitialValue initialValue;
 		public @OPT TokenList<C_MoreIdentifiers> moreIds;
 		public @NOSPACE PunctuationSemicolon semicolon;
-		public @OPT TokenList<C_Comment> comments;
+		public @OPT TokenList<C_Comment> comments2;
 		
 		public static class C_DataInitialValue extends TokenSequence
 		{
