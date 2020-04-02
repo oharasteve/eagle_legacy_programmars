@@ -18,17 +18,14 @@ import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -70,7 +67,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	{
 		public Rust_LambdaVariables params;
 		public Rust_Punctuation arrow = new Rust_Punctuation("->");
-		public Rust_LambdaValue value;
+//		public Rust_LambdaValue value;
 		
 		public static class Rust_LambdaVariables extends TokenChooser
 		{
@@ -97,17 +94,17 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 			}
 		}
 
-		public static class Rust_LambdaValue extends TokenChooser
-		{
-			public @CHOICE Rust_Expression value;
-
-			public @FIRST static class Rust_LambdaBlock extends TokenSequence
-			{
-				public PunctuationLeftBrace leftBrace;
-				public @OPT TokenList<Rust_StatementOrComment> statements;
-				public PunctuationRightBrace rightBrace;
-			}
-		}
+//		public static class Rust_LambdaValue extends TokenChooser
+//		{
+//			public @CHOICE Rust_Expression value;
+//
+//			public @FIRST static class Rust_LambdaBlock extends TokenSequence
+//			{
+//				public PunctuationLeftBrace leftBrace;
+//				public @OPT TokenList<Rust_StatementOrComment> statements;
+//				public PunctuationRightBrace rightBrace;
+//			}
+//		}
 	}
 			
 	public static @P(110) class Rust_CastExpression extends PrimaryOperator
@@ -118,67 +115,67 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 		public Rust_Expression expr;
 	}
 
-	public static @P(120) class Rust_ExpressionList extends PrimaryOperator
-	{
-		public PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<Rust_Comment> comment;
-		public @OPT Rust_ArgumentList valueList;
-		public PunctuationRightBrace rightBrace;
-	}
+//	public static @P(120) class Rust_ExpressionList extends PrimaryOperator
+//	{
+//		public PunctuationLeftBrace leftBrace;
+//		public @OPT TokenList<Rust_Comment> comment;
+//		public @OPT Rust_ArgumentList valueList;
+//		public PunctuationRightBrace rightBrace;
+//	}
 	
-	public static @P(130) class Rust_InterfaceCreationWithMethod extends PrimaryOperator
-	{
-		public Rust_Keyword NEW = new Rust_Keyword("new");
-		public Rust_KeywordChoice jinterface = new Rust_KeywordChoice( 
-				"Runnable", "ActionListener", "WindowAdapter");
-		public PunctuationLeftParen leftParen;
-		public PunctuationRightParen rightParen;
-		public PunctuationLeftBrace leftBrace;
-		public Rust_Method method;
-		public PunctuationRightBrace rightBrace;
-	}
+//	public static @P(130) class Rust_InterfaceCreationWithMethod extends PrimaryOperator
+//	{
+//		public Rust_Keyword NEW = new Rust_Keyword("new");
+//		public Rust_KeywordChoice jinterface = new Rust_KeywordChoice( 
+//				"Runnable", "ActionListener", "WindowAdapter");
+//		public PunctuationLeftParen leftParen;
+//		public PunctuationRightParen rightParen;
+//		public PunctuationLeftBrace leftBrace;
+//		public Rust_Method method;
+//		public PunctuationRightBrace rightBrace;
+//	}
 
-	public static @P(140) class Rust_ClassCreationExpression extends PrimaryOperator
-	{
-		public Rust_Keyword NEW = new Rust_Keyword("new");
-		public Rust_Type jtype;
-		public @NOSPACE PunctuationLeftParen leftParen;
-		public @NOSPACE @OPT TokenList<Rust_Comment> comments;
-		public @NOSPACE @OPT Rust_ArgumentList argList;
-		public @NOSPACE PunctuationRightParen rightParen;
-		public @OPT Rust_ClassOverride override;
-
-		public static class Rust_ClassOverride extends TokenSequence
-		{
-			public PunctuationLeftBrace leftBrace;
-			public TokenList<Rust_ClassElement> elementList;
-			public PunctuationRightBrace rightBrace;
-		}
-	}
+//	public static @P(140) class Rust_ClassCreationExpression extends PrimaryOperator
+//	{
+//		public Rust_Keyword NEW = new Rust_Keyword("new");
+//		public Rust_Type jtype;
+//		public @NOSPACE PunctuationLeftParen leftParen;
+//		public @NOSPACE @OPT TokenList<Rust_Comment> comments;
+//		public @NOSPACE @OPT Rust_ArgumentList argList;
+//		public @NOSPACE PunctuationRightParen rightParen;
+//		public @OPT Rust_ClassOverride override;
+//
+//		public static class Rust_ClassOverride extends TokenSequence
+//		{
+//			public PunctuationLeftBrace leftBrace;
+//			public TokenList<Rust_ClassElement> elementList;
+//			public PunctuationRightBrace rightBrace;
+//		}
+//	}
 	
-	public static @P(150) class Rust_ClassCreationWithInitializers extends PrimaryOperator
-	{
-		public Rust_Keyword NEW = new Rust_Keyword("new");
-		public Rust_Type jtype;
-		public PunctuationLeftBrace leftBrace;
-		public @OPT Rust_ArgumentList valueList;
-		public PunctuationRightBrace rightBrace;
-	}
+//	public static @P(150) class Rust_ClassCreationWithInitializers extends PrimaryOperator
+//	{
+//		public Rust_Keyword NEW = new Rust_Keyword("new");
+//		public Rust_Type jtype;
+//		public PunctuationLeftBrace leftBrace;
+//		public @OPT Rust_ArgumentList valueList;
+//		public PunctuationRightBrace rightBrace;
+//	}
 	
-	public static @P(160) class Rust_ClassCreationWithSubscript extends PrimaryOperator
-	{
-		public Rust_Keyword NEW = new Rust_Keyword("new");
-		public Rust_Type jtype;
-		public TokenList<Rust_Subscript> subscripts;
-	}
+//	public static @P(160) class Rust_ClassCreationWithSubscript extends PrimaryOperator
+//	{
+//		public Rust_Keyword NEW = new Rust_Keyword("new");
+//		public Rust_Type jtype;
+//		public TokenList<Rust_Subscript> subscripts;
+//	}
 	
-	public static @P(170) class Rust_MethodInvocation extends PrimaryOperator
-	{
-		public Rust_Variable methodName;
-		public @NOSPACE PunctuationLeftParen leftParen;
-		public @NOSPACE @OPT Rust_ArgumentList argList;
-		public @NOSPACE PunctuationRightParen rightParen;
-	}
+//	public static @P(170) class Rust_MethodInvocation extends PrimaryOperator
+//	{
+//		public Rust_Variable methodName;
+//		public @NOSPACE PunctuationLeftParen leftParen;
+//		public @NOSPACE @OPT Rust_ArgumentList argList;
+//		public @NOSPACE PunctuationRightParen rightParen;
+//	}
 	
 	public static @P(220) class Rust_NegativeExpression extends PrimaryOperator
 	{
@@ -203,10 +200,10 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 		public Rust_KeywordChoice builtinConstant = new Rust_KeywordChoice("false", "true", "null", "this", "super");
 	}
 	
-	public static @P(260) class Rust_VariableExpression extends PrimaryOperator
-	{
-		public Rust_Variable variable;
-	}
+//	public static @P(260) class Rust_VariableExpression extends PrimaryOperator
+//	{
+//		public Rust_Variable variable;
+//	}
 	
 	public static @P(270) class Rust_ParenthesizedExpression extends PrimaryOperator
 	{
@@ -232,13 +229,13 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 		public PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(300) class Rust_Subfield extends PrecedenceOperator
-	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @NOSPACE PunctuationPeriod dot;
-		public @OPT @NOSPACE Rust_GenericType genericType;
-		public @NOSPACE Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
+//	public static @P(300) class Rust_Subfield extends PrecedenceOperator
+//	{
+//		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+//		public @NOSPACE PunctuationPeriod dot;
+//		public @OPT @NOSPACE Rust_GenericType genericType;
+//		public @NOSPACE Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+//	}
 
 	public static @P(305) class Rust_ColonColon extends PrecedenceOperator
 	{
