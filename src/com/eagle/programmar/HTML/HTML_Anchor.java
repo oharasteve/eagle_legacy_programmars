@@ -36,6 +36,9 @@ public class HTML_Anchor extends TokenChooser
 			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 	}
+
+	// Can't do this. The </a> gets taken here, before the above gets to see it
+	//public @LAST @CURIOUS("Bogus end anchor") HTML_EndAnchor endAnchor;
 	
 	// This is an oddball case. An anchor with no closing </a> (in theory).
 	public @FIRST static class HTML_AnchorName extends TokenSequence

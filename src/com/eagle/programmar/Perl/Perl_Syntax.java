@@ -18,7 +18,7 @@ public class Perl_Syntax extends EagleSyntax
 		_isCaseSensitive = true;
 		_continuationChar = null;
 		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "::", "==", "->", "<=", ">=", "<<", ">>", "!=", "=>", "=~" };
+		_punctuationExceptions = new String[] { "===", "!==", "::", "==", "->", "<=", ">=", "<<", ">>", "!=", "=>", "=~" };
 		
 		addReservedWords(keywords);
 	}
