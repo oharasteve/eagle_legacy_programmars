@@ -29,7 +29,7 @@ public class Java_Annotation extends TokenChooser
 	public @CHOICE static class Java_AnnotationCall2 extends TokenSequence
 	{
 		public Java_Punctuation atSign = new Java_Punctuation('@');
-		public @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> id;
+		public @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> idList;
 		public @OPT TokenList<Java_Comment> comments;
 	}
 }

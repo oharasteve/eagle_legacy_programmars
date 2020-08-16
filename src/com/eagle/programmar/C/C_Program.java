@@ -61,7 +61,7 @@ public class C_Program extends EagleLanguage
 		String[] temp = new String[n+1];
 		for (int i = 0; i < n; i++)
 		{
-			if (primitives[i].equals(primitives)) return;
+			if (primitives[i].equals(primitive)) return;
 			temp[i] = primitives[i];
 		}
 		temp[n] = primitive;
