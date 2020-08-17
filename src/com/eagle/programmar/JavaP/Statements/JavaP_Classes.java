@@ -95,7 +95,6 @@ public class JavaP_Classes extends TokenSequence
 					public JavaP_Keyword THROWS = new JavaP_Keyword("throws");
 					public SeparatedList<JavaP_QualifiedName,PunctuationComma> name;
 				}
-				
 			}
 		}
 		
@@ -143,6 +142,7 @@ public class JavaP_Classes extends TokenSequence
 			public @CHOICE JavaP_CodeBlock code;
 			public @CHOICE JavaP_Signature signature;
 			public @CHOICE JavaP_RuntimeVisibleAnnotations runtimeAnnotation;
+			public @CHOICE JavaP_RuntimeVisibleTypeAnnotations runtimeTypeAnnotation;
 			public @CHOICE JavaP_CodeLineNumbers lineNumbers;
 			public @CHOICE JavaP_CodeLocalValues localValues;
 
