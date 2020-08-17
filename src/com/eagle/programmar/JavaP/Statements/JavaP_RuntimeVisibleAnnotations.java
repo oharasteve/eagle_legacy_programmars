@@ -108,12 +108,21 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 					public static class JavaP_AnnotationValueClass extends TokenChooser
 					{
 						public @CHOICE JavaP_Literal literal;
+						public @CHOICE JavaP_Number number;
 						
 						public static @CHOICE class JavaP_AnnotationValueOneClass extends TokenSequence
 						{
 							public JavaP_Keyword CLASS = new JavaP_Keyword("class");
 							public JavaP_LClassName className;
 							public PunctuationSemicolon semicolon;
+						}
+						
+						public static @CHOICE class JavaP_AnnotationValueRuntimeClass extends TokenSequence
+						{
+							public JavaP_LClassName className;
+							public PunctuationSemicolon semicolon;
+							public PunctuationPeriod dot;
+							public JavaP_Keyword RUNTIME = new JavaP_Keyword("RUNTIME");
 						}
 						
 						public static @CHOICE class JavaP_AnnotationValueManyClasses extends TokenSequence
