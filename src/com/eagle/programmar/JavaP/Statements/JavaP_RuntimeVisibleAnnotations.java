@@ -9,7 +9,10 @@ import com.eagle.programmar.JavaP.Terminals.JavaP_HexNumber;
 import com.eagle.programmar.JavaP.Terminals.JavaP_HexNumber.JavaP_HexNoPrefix;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Keyword;
 import com.eagle.programmar.JavaP.Terminals.JavaP_KeywordChoice;
+import com.eagle.programmar.JavaP.Terminals.JavaP_LClassName;
+import com.eagle.programmar.JavaP.Terminals.JavaP_Literal;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Number;
+import com.eagle.programmar.JavaP.Terminals.JavaP_QualifiedName;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -22,6 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 {
@@ -58,7 +62,10 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 				public PunctuationLeftParen leftParen;
 				public @OPT JavaP_RuntimeAnnotationValue value;
 				public PunctuationRightParen rightParen;
-				public JavaP_EndOfLine eoln;
+				public JavaP_EndOfLine eoln1;
+				public @OPT JavaP_QualifiedName name;
+				public @OPT JavaP_AnnotationValue annotationValue;
+				public @OPT JavaP_EndOfLine eoln2;
 				
 				public static class JavaP_RuntimeAnnotationValue extends TokenSequence
 				{
@@ -66,10 +73,10 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 					public PunctuationEquals equals;
 					public JavaP_WhichAnnotation which;
 				}
-				
+
 				public static class JavaP_AnnotationIdentifier extends TokenSequence
 				{
-					public JavaP_KeywordChoice CES = new JavaP_KeywordChoice("c", "e", "I", "s");
+					public JavaP_KeywordChoice CEIS = new JavaP_KeywordChoice("c", "e", "I", "s");
 					public JavaP_HashNumber id;
 					public @OPT PunctuationPeriod dot;
 					public @OPT JavaP_HashNumber id4;
@@ -84,6 +91,37 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 						public PunctuationLeftBracket leftBracket;
 						public SeparatedList<JavaP_AnnotationIdentifier,PunctuationComma> idList;
 						public PunctuationRightBracket rightBracket;
+					}
+				}
+				
+				public static class JavaP_AnnotationValue extends TokenSequence
+				{
+					public PunctuationLeftParen leftParen;
+					public JavaP_EndOfLine eoln1;
+					public JavaP_KeywordChoice VALUE = new JavaP_KeywordChoice("value", "name");
+					public PunctuationEquals equals;
+					public JavaP_AnnotationValueClass valueClass;
+					public JavaP_EndOfLine eoln2;
+					public PunctuationRightParen rightParen;
+					public JavaP_EndOfLine eoln3;
+					
+					public static class JavaP_AnnotationValueClass extends TokenChooser
+					{
+						public @CHOICE JavaP_Literal literal;
+						
+						public static @CHOICE class JavaP_AnnotationValueOneClass extends TokenSequence
+						{
+							public JavaP_Keyword CLASS = new JavaP_Keyword("class");
+							public JavaP_LClassName className;
+							public PunctuationSemicolon semicolon;
+						}
+						
+						public static @CHOICE class JavaP_AnnotationValueManyClasses extends TokenSequence
+						{
+							public PunctuationLeftBracket leftBracket;
+							public SeparatedList<JavaP_AnnotationValueOneClass, PunctuationComma> classNames;
+							public PunctuationRightBracket rightBracket;
+						}						
 					}
 				}
 			}
