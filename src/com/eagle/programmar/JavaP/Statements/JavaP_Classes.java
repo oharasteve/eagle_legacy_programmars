@@ -9,8 +9,6 @@ import com.eagle.programmar.JavaP.JavaP_Value;
 import com.eagle.programmar.JavaP.Blocks.JavaP_CodeLineNumbers;
 import com.eagle.programmar.JavaP.Blocks.JavaP_CodeLocalValues;
 import com.eagle.programmar.JavaP.Statements.JavaP_Classes.JavaP_OneClass.JavaP_MethodArgument.JavaP_MethodArg.JavaP_EmptySubscript;
-import com.eagle.programmar.JavaP.Statements.JavaP_PublicClass.JavaP_Flags.JavaP_Flag;
-import com.eagle.programmar.JavaP.Statements.JavaP_PublicClass.JavaP_Flags.JavaP_FlagCode;
 import com.eagle.programmar.JavaP.Terminals.JavaP_EndOfLine;
 import com.eagle.programmar.JavaP.Terminals.JavaP_HexNumber;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Identifier;
@@ -23,7 +21,6 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.AbstractToken.OPT;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -161,11 +158,11 @@ public class JavaP_Classes extends TokenSequence
 			{
 				public JavaP_Keyword FLAGS = new JavaP_Keyword("flags");
 				public PunctuationColon colon;
-				public @OPT JavaP_FlagCode flagCode;
+				public @OPT JavaP_OneFlagCode flagCode;
 				public @OPT SeparatedList<JavaP_OneClassFlag, PunctuationComma> flags;
 				public JavaP_EndOfLine eoln;
 				
-				public static class JavaP_FlagCode extends TokenSequence
+				public static class JavaP_OneFlagCode extends TokenSequence
 				{
 					public PunctuationLeftParen leftParen;
 					public JavaP_HexNumber hex;

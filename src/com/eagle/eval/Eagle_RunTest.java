@@ -113,6 +113,10 @@ public abstract class Eagle_RunTest extends TestCase
 			File inputFile = new File(inputFileName);
 			
 			String outputFileName = EaglePath.combinePaths(proj._artifactBase, entry.actualOutput);
+			// Make sure output directory exists
+			int lastSlash = outputFileName.lastIndexOf("/");
+			String outDir = outputFileName.substring(0, lastSlash);
+			if (EaglePath.createDir(outDir)) System.out.println("Created directory " + outDir);
 			String output = " > " + outputFileName + " 2>&1";
 			String now = "\"-now=12/30/10 2:03 am\""; // This is so the date/times will match
 	
