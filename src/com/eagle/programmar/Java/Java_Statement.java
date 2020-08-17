@@ -68,8 +68,8 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	{
 		private EagleScope _scope = new EagleScope(Java_Syntax.isCaseSensitive);
 		
-		public @OPT @INDENT Java_Label label;
-		public PunctuationLeftBrace leftBrace;
+		public @OPT Java_Label label;
+		public @INDENT PunctuationLeftBrace leftBrace;
 		public @OPT TokenList<Java_StatementOrComment> statements;
 		public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
 		public @OUTDENT PunctuationRightBrace rightBrace;

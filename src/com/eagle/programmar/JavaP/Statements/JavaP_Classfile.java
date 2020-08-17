@@ -4,11 +4,11 @@
 package com.eagle.programmar.JavaP.Statements;
 
 import com.eagle.programmar.JavaP.Terminals.JavaP_EndOfLine;
-import com.eagle.programmar.JavaP.Terminals.JavaP_QualifiedName;
 import com.eagle.programmar.JavaP.Terminals.JavaP_HexNumber.JavaP_HexNoPrefix;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Keyword;
 import com.eagle.programmar.JavaP.Terminals.JavaP_KeywordChoice;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Number;
+import com.eagle.programmar.JavaP.Terminals.JavaP_QualifiedName;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -39,7 +39,7 @@ public class JavaP_Classfile extends TokenSequence
 	
 	public static class JavaP_MD5Checksum extends TokenSequence
 	{
-		public JavaP_Keyword MD5 = new JavaP_Keyword("MD5");
+		public JavaP_KeywordChoice MD5 = new JavaP_KeywordChoice("MD5", "SHA-256");
 		public JavaP_Keyword CHECKSUM = new JavaP_Keyword("checksum");
 		public JavaP_HexNoPrefix hex;
 		public JavaP_EndOfLine eoln;
