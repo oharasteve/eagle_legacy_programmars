@@ -8,6 +8,7 @@ import java.io.IOException;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
@@ -15,6 +16,7 @@ import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Terminals.CMacro_IncludeSys;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Include_Statement extends TokenSequence implements CMacro_Processable
@@ -22,6 +24,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 	public C_Punctuation pound = new C_Punctuation('#'); 
 	public @DOC("Include-Syntax.html") C_Keyword INCLUDE = new C_Keyword("include");
 	public CMacro_IncludeWhat what;
+	public @OPT TokenList<C_Comment> comments;
 	
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{

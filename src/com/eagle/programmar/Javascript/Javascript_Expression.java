@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_HexNumber;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
@@ -60,7 +61,8 @@ public class Javascript_Expression extends PrecedenceChooser
 		public Javascript_Keyword CLASS = new Javascript_Keyword("class");
 	}
 	
-	public static @P(110) class Javascript_CastExpression extends PrimaryOperator
+	// See Javascript_LambdaFunction which also has @FIRST
+	public static @FIRST @P(110) class Javascript_CastExpression extends PrimaryOperator
 	{
 		public PunctuationLeftParen leftParen;
 		public @NOSPACE Javascript_Type jtype;
@@ -382,5 +384,12 @@ public class Javascript_Expression extends PrecedenceChooser
 		public Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(
 				"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 		public Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
+	}
+	
+	public static @P(540) class Javascript_LambdaFunction extends PrecedenceOperator
+	{
+		public Javascript_Expression arguments;
+		public Javascript_Punctuation arrow = new Javascript_Punctuation("=>");
+		public Javascript_FunctionBody code;
 	}
 }
