@@ -1,3 +1,6 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Mar 23, 2019
+
 package com.eagle.programmar.Python;
 
 import com.eagle.parsers.EagleOverrideManager;
