@@ -10,7 +10,7 @@ import com.eagle.tokens.TerminalLiteralToken;
 public class JavaP_LClassName extends TerminalLiteralToken
 {
 	private static final String VALIDS = "/_$";	// Valid characters in the name
-	private static final String PRIMITIVES = "IZ";
+	private static final String PRIMITIVES = "BIJZ";
 
 	@Override
 	public boolean parse(EagleFileReader lines)

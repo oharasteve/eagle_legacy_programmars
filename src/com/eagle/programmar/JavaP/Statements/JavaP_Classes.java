@@ -215,6 +215,14 @@ public class JavaP_Classes extends TokenSequence
 					public JavaP_EndOfLine eoln;
 				}
 			}
+			
+			public @CHOICE static class JavaP_OneClassDeprecated extends TokenSequence
+			{
+				public JavaP_Keyword DEPRECATED = new JavaP_Keyword("Deprecated");
+				public PunctuationColon colon;
+				public JavaP_Keyword TRUE = new JavaP_Keyword("true");
+				public JavaP_EndOfLine eoln;
+			}
 		}
 	}
 }

@@ -21,12 +21,6 @@ public class HTML_Tag extends TokenSequence
 	public @OPT TokenList<HTML_TagElement> attributes; 
 	public @NOSPACE HTML_PunctuationChoice closer = new HTML_PunctuationChoice(">", "/>");
 	
-	public static class HTML_TagCloser extends TokenChooser
-	{
-		public @CHOICE HTML_Punctuation endTag1 = new HTML_Punctuation('>');
-		public @CHOICE HTML_Punctuation endTag2 = new HTML_Punctuation("/>");
-	}
-	
 	public static class HTML_TagElement extends TokenChooser
 	{
 		public @CHOICE HTML_Attribute attribute;

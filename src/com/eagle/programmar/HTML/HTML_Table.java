@@ -106,8 +106,15 @@ public class HTML_Table extends TokenSequence
 			{
 				public HTML_Punctuation startTag = new HTML_Punctuation("<");
 				public @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
-				public @OPT TokenList<HTML_Attribute> attributes; 
-				public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+				public @OPT TokenList<HTML_Attribute> attributes;
+				public @NOSPACE HTML_EndStartDate endStart;
+				
+				public static class HTML_EndStartDate extends TokenChooser
+				{
+					// Not really a PunctuationChoice here, BUT the EagleWriteXML module insists on difference class names
+					public @CHOICE @CURIOUS("Bogus slash in element") HTML_PunctuationChoice slash = new HTML_PunctuationChoice("/>");
+					public @CHOICE HTML_Punctuation endTag = new HTML_Punctuation(">");
+				}
 			}
 			
 			public static class HTML_EndData extends TokenSequence

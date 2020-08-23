@@ -15,6 +15,10 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class HTML_Anchor extends TokenChooser
 {
+	// Note: If you have an <a name=>stuff</a> it will get picked up by HTML_AnchorHref first.
+	// If there is no </a> but there is an <a name=> it will get picked up @LAST with HTML_AnchorName
+	// This is fairly tricky because there is no way to say that we can't have an anchor inside an anchor.
+	
 	public @CHOICE static class HTML_AnchorHref extends TokenSequence
 	{
 		public @INDENT HTML_StartAnchor startTagA;
@@ -37,11 +41,8 @@ public class HTML_Anchor extends TokenChooser
 		}
 	}
 
-	// Can't do this. The </a> gets taken here, before the above gets to see it
-	//public @LAST @CURIOUS("Bogus end anchor") HTML_EndAnchor endAnchor;
-	
 	// This is an oddball case. An anchor with no closing </a> (in theory).
-	public @FIRST static class HTML_AnchorName extends TokenSequence
+	public @LAST static class HTML_AnchorName extends TokenSequence
 	{
 		public @INDENT HTML_Punctuation startTagA = new HTML_Punctuation('<');
 		public @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
@@ -54,11 +55,11 @@ public class HTML_Anchor extends TokenChooser
 		{
 			public @CHOICE HTML_Punctuation endTagA = new HTML_Punctuation("/>");
 			
-			public static @CHOICE class HTML_EndAnchorNameOddd extends TokenSequence
+			public static @CHOICE class HTML_EndAnchorNameOddity extends TokenSequence
 			{
 				public HTML_Punctuation endTagA = new HTML_Punctuation(">");
+				// This probably never happens because it will have been picked up by HTML_AnchorHref above.
 				public @OPT @CURIOUS("Extra end anchor name") HTML_EndAnchor bogusAnchorNameEnd;
-				
 			}
 		}
 	}
