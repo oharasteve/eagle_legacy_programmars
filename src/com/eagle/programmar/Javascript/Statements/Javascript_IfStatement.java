@@ -29,6 +29,7 @@ public class Javascript_IfStatement extends TokenSequence
 	public static class Javascript_IfElseClause extends TokenSequence
 	{
 		public @NEWLINE Javascript_Keyword ELSE = new Javascript_Keyword("else");
+		public @OPT Javascript_Comment comment;
 		public @NEWLINE Javascript_Statement elseStatement;
 	}
 }
