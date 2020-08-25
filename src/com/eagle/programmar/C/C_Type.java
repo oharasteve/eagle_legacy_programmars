@@ -86,6 +86,7 @@ public class C_Type extends TokenSequence implements AbstractType
 					public static class C_MoreFields extends TokenSequence
 					{
 						public PunctuationComma comma;
+						public @OPT TokenList<C_Comment> comments;
 						public @OPT TokenList<PunctuationStar> stars;
 						public C_Field_Definition id;
 						public @OPT TokenList<C_Subscript> subscripts;

@@ -26,6 +26,7 @@ public class Python_Variable extends TokenSequence implements AbstractVariable
 	public @OPT @NOSPACE TokenList<Python_DotVariable> moreFields1;
 	public @OPT @NOSPACE TokenList<Python_Subscript> subscript2;
 	public @OPT @NOSPACE TokenList<Python_DotVariable> moreFields2;
+	// public @OPT @NOSPACE Python_ColonType colonType;
 	
 	public static class Python_SelfOrVariable extends TokenChooser
 	{
@@ -67,5 +68,11 @@ public class Python_Variable extends TokenSequence implements AbstractVariable
 				public @OPT Python_Expression subscr;
 			}
 		}
+	}
+	
+	public static class Python_ColonType extends TokenSequence
+	{
+		public PunctuationColon colon;
+		public Python_Type type;
 	}
 }

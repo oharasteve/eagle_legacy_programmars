@@ -5,6 +5,7 @@ package com.eagle.programmar.Python;
 
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -13,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Python_Type extends TokenChooser implements AbstractType
 {
-	public @CHOICE Python_Keyword OBJECT = new Python_Keyword("object");
+	public @CHOICE Python_KeywordChoice TYPES = new Python_KeywordChoice("bool", "float", "int", "object", "str");
 	
 	public @CHOICE static class Python_Regular_Class extends TokenSequence
 	{

@@ -4,6 +4,7 @@
 package com.eagle.programmar.Perl.Statements;
 
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
+import com.eagle.programmar.Perl.Symbols.Perl_Use_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -15,6 +16,7 @@ public class Perl_UseStatement extends TokenSequence
 {
 	public Perl_Keyword USE = new Perl_Keyword("use");
 	public Perl_UseWhat what;
+	public @OPT Perl_UseAs as;
 	
 	public static class Perl_UseWhat extends TokenChooser
 	{
@@ -38,5 +40,11 @@ public class Perl_UseStatement extends TokenSequence
 				public Perl_Identifier_Reference id;
 			}
 		}
+	}
+	
+	public static class Perl_UseAs extends TokenSequence
+	{
+		public Perl_Keyword AS = new Perl_Keyword("as");
+		public Perl_Use_Definition id;
 	}
 }

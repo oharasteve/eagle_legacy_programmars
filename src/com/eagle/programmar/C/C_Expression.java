@@ -192,7 +192,7 @@ public class C_Expression extends PrecedenceChooser
 	{
 		public C_Expression expr = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public PunctuationLeftBracket leftBracket;
-		public C_Expression subscr = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public C_Expression subscr = new C_Expression(this, AllowedPrecedence.ANY);
 		public PunctuationRightBracket rightBracket;
 	}
 

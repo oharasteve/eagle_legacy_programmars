@@ -12,6 +12,7 @@ import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -36,11 +37,18 @@ public class Perl_ClassStatement extends TokenSequence
 	{
 		public Perl_KeywordChoice EXTENDS = new Perl_KeywordChoice("extends", "implements");
 		public TokenList<Perl_ExtendsName> extendsName;
+		public @OPT TokenList<Perl_MoreExtends> moreExtends;
 		
 		public static class Perl_ExtendsName extends TokenSequence
 		{
 			public @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 			public Perl_Identifier_Reference id;
+		}
+		
+		public static class Perl_MoreExtends extends TokenSequence
+		{
+			public PunctuationComma comma;
+			public TokenList<Perl_ExtendsName> extendsName;
 		}
 	}
 }
