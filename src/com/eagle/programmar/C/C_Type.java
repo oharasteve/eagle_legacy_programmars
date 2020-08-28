@@ -32,10 +32,13 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class C_Type extends TokenSequence implements AbstractType
 {
+	public @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
+	public @OPT C_Keyword VOLATILE = new C_Keyword("volatile");
 	public C_TypeBase base;
 	public @OPT C_TypeGeneric generic;
 	public @OPT C_TypeFunction function;
 	public @OPT C_Keyword CONST = new C_Keyword("const");
+	public @OPT TokenList<C_TypeStar> stars;
 	
 	public static class C_TypeBase extends TokenChooser
 	{
@@ -49,11 +52,17 @@ public class C_Type extends TokenSequence implements AbstractType
 		public @CHOICE static class C_TypeUnion extends TokenSequence
 		{
 			public C_Keyword UNION = new C_Keyword("union");
-			public @OPT C_Type_Definition def1;
+			public @OPT C_Type_Definition def;
 			public PunctuationLeftBrace leftBrace;
 			public @OPT TokenList<C_FieldOrComment> fields;
 			public PunctuationRightBrace rightBrace;
 			public @OPT PunctuationSemicolon semicolon;
+		}
+		
+		public @LAST static class C_TypeSimpleUnion extends TokenSequence
+		{
+			public C_Keyword UNION = new C_Keyword("union");
+			public C_Type_Definition def;
 		}
 		
 		public @CHOICE static class C_TypeStruct extends TokenSequence

@@ -13,6 +13,7 @@ import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -25,6 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Function extends TokenSequence
 {
+	public @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
 	public @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
 	public @OPT C_Comment comment1;
 	public @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
@@ -111,8 +113,15 @@ public class C_Function extends TokenSequence
 				
 				public static class C_FunctionAttribute extends TokenChooser
 				{
-					public @CHOICE C_KeywordChoice ATTR =
-							new C_KeywordChoice("__leaf__", "__malloc__", "__nothrow__", "__pure__");
+					public @CHOICE C_KeywordChoice ATTR = new C_KeywordChoice(
+							"__const__",
+							"__leaf__",
+							"__malloc__",
+							"__noreturn__",
+							"__nothrow__",
+							"__pure__",
+							"__warn_unused_result__"
+					);
 					
 					public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence
 					{
@@ -130,10 +139,18 @@ public class C_Function extends TokenSequence
 					{
 						public C_Keyword NONNULL = new C_Keyword("__nonnull__");
 						public PunctuationLeftParen leftParen;
-						public C_Number number;
+						public SeparatedList<C_Number, PunctuationComma> numbers;
 						public PunctuationRightParen righttParen;
 					}
 
+				
+					public @CHOICE static class C_FunctionAttributeAllocSize extends TokenSequence
+					{
+						public C_Keyword NONNULL = new C_Keyword("__alloc_size__");
+						public PunctuationLeftParen leftParen;
+						public SeparatedList<C_Number, PunctuationComma> numbers;
+						public PunctuationRightParen righttParen;
+					}
 				}
 				
 				public static class C_FunctionMoreAttributes extends TokenSequence

@@ -51,7 +51,8 @@ public class C_Program extends EagleLanguage
 			"register",
 			"static",
 			"virtual",
-			"volatile"
+			"volatile",
+			"__inline"
 	};
 
 	public static void addPrimitive(String primitive)

@@ -20,9 +20,11 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class C_TypeDef extends TokenSequence
 {
+	public @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
 	public C_Keyword TYPEDEF = new C_Keyword("typedef");
 	public @OPT C_Keyword INTERFACE = new C_Keyword("interface");
 	public C_TypeDef_What what;
+	public @OPT TokenList<C_TypedefAttributes> attributes;
 	public PunctuationSemicolon semicolon;
 	
 	public static class C_TypeDef_What extends TokenChooser
@@ -60,6 +62,35 @@ public class C_TypeDef extends TokenSequence
 			public C_Type returnType;
 			public C_Function_Definition funcName;
 			public C_Function_ParameterDefs params;
+		}
+	}
+
+	public static class C_TypedefAttributes extends TokenSequence
+	{
+		public C_Keyword ATTRIBUTE = new C_Keyword("__attribute__");
+		public PunctuationLeftParen leftParen1;
+		public PunctuationLeftParen leftParen2;
+		public C_TypedefAttribute attrib;
+		public @OPT TokenList<C_TypedefMoreAttributes> more;
+		public PunctuationRightParen righttParen1;
+		public PunctuationRightParen righttParen2;
+		
+		public static class C_TypedefAttribute extends TokenChooser
+		{
+			public @CHOICE static class C_TypedefAttributeMode extends TokenSequence
+			{
+				public C_Keyword MODE = new C_Keyword("__mode__");
+				public PunctuationLeftParen leftParen;
+				public C_Keyword WORD = new C_Keyword("__word__");
+				public PunctuationRightParen righttParen;
+			}
+
+		}
+		
+		public static class C_TypedefMoreAttributes extends TokenSequence
+		{
+			public PunctuationComma comma;
+			public C_TypedefAttribute attrib;
 		}
 	}
 }
