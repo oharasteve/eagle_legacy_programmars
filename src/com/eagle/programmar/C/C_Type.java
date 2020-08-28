@@ -5,8 +5,8 @@ package com.eagle.programmar.C;
 
 import com.eagle.programmar.C.C_Data.C_FunctionPointer;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
+import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeStruct.C_FieldOrComment;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeUserDefined.C_TypeStar;
 import com.eagle.programmar.C.Symbols.C_Field_Definition;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Symbols.C_Type_Definition;
@@ -35,6 +35,7 @@ public class C_Type extends TokenSequence implements AbstractType
 	public C_TypeBase base;
 	public @OPT C_TypeGeneric generic;
 	public @OPT C_TypeFunction function;
+	public @OPT C_Keyword CONST = new C_Keyword("const");
 	
 	public static class C_TypeBase extends TokenChooser
 	{
@@ -105,18 +106,25 @@ public class C_Type extends TokenSequence implements AbstractType
 		public @CHOICE static class C_TypePrimitive extends TokenSequence
 		{
 			public @OPT C_Keyword CONST = new C_Keyword("const");
-			public @OPT C_Keyword UNSIGNED = new C_Keyword("unsigned");
+			public @OPT C_KeywordChoice UNSIGNED = new C_KeywordChoice("signed", "unsigned");
 			public C_KeywordChoice primitive = new C_KeywordChoice(C_Program.getPrimitives());
 			public @OPT C_Keyword INT = new C_Keyword("int");
 			public @OPT TokenList<C_TypeStar> stars;
+			
+			public static class C_TypeStar extends TokenSequence
+			{
+				public C_PunctuationChoice starAmpersand = new C_PunctuationChoice("*", "&");
+			}
 		}
 		
 		// This one isn't handled by C_TypePrimitive
 		public @FIRST static class C_TypeShortUnsignedInt extends TokenSequence
 		{
+			public @OPT C_KeywordChoice UNSIGNED1 = new C_KeywordChoice("signed", "unsigned");
 			public C_KeywordChoice SHORT = new C_KeywordChoice("long", "short");
-			public C_Keyword UNSIGNED = new C_Keyword("unsigned");
-			public C_Keyword INT = new C_Keyword("int");
+			public @OPT C_Keyword LONG = new C_Keyword("long");
+			public @OPT C_KeywordChoice UNSIGNED2 = new C_KeywordChoice("signed", "unsigned");
+			public C_KeywordChoice INT = new C_KeywordChoice("int", "double");
 			public @OPT TokenList<C_TypeStar> stars;
 		}
 		
@@ -125,11 +133,6 @@ public class C_Type extends TokenSequence implements AbstractType
 			public @OPT C_Keyword STRUCT = new C_Keyword("struct");
 			public C_Identifier_Reference typeName;
 			public @OPT TokenList<C_TypeStar> stars;
-			
-			public static class C_TypeStar extends TokenSequence
-			{
-				public C_PunctuationChoice starAmpersand = new C_PunctuationChoice("*", "&");
-			}
 		}
 		
 		public @CHOICE static class C_TypeEnum extends TokenSequence

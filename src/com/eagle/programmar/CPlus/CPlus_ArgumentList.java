@@ -4,7 +4,7 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeUserDefined.C_TypeStar;
+import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;

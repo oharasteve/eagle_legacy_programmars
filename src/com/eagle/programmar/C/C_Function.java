@@ -10,6 +10,8 @@ import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
+import com.eagle.programmar.C.Terminals.C_Literal;
+import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -61,6 +63,7 @@ public class C_Function extends TokenSequence
 		{
 			public @NOSPACE @OPT C_Keyword CONST = new C_Keyword("const");
 			public C_Type ctype;
+			public @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
 			public @OPT C_Variable_Definition id;
 			public @OPT TokenList<C_Subscript> subscripts;
 			public @OPT C_Comment comment;
@@ -81,7 +84,65 @@ public class C_Function extends TokenSequence
 	
 	public static class C_FunctionBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
+		public @CHOICE static class C_FunctionNoBody extends TokenSequence
+		{
+			public @OPT C_FunctionAssembler assembler;
+			public @OPT TokenList<C_FunctionAttributes> attributes;
+			public PunctuationSemicolon semicolon;
+			
+			public static class C_FunctionAssembler extends TokenSequence
+			{
+				public C_Keyword ASM = new C_Keyword("__asm__");
+				public PunctuationLeftParen leftParen;
+				public C_Literal blank;
+				public C_Literal functionName;
+				public PunctuationRightParen righttParen;
+			}
+			
+			public static class C_FunctionAttributes extends TokenSequence
+			{
+				public C_Keyword ATTRIBUTE = new C_Keyword("__attribute__");
+				public PunctuationLeftParen leftParen1;
+				public PunctuationLeftParen leftParen2;
+				public C_FunctionAttribute attrib;
+				public @OPT TokenList<C_FunctionMoreAttributes> more;
+				public PunctuationRightParen righttParen1;
+				public PunctuationRightParen righttParen2;
+				
+				public static class C_FunctionAttribute extends TokenChooser
+				{
+					public @CHOICE C_KeywordChoice ATTR =
+							new C_KeywordChoice("__leaf__", "__malloc__", "__nothrow__", "__pure__");
+					
+					public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence
+					{
+						public C_Keyword FORMAT = new C_Keyword("__format__");
+						public PunctuationLeftParen leftParen;
+						public C_KeywordChoice FMTS = new C_KeywordChoice("__printf__", "__scanf__", "__strfmon__");
+						public PunctuationComma comma1;
+						public C_Number number1;
+						public PunctuationComma comma2;
+						public C_Number number2;
+						public PunctuationRightParen righttParen;
+					}
+					
+					public @CHOICE static class C_FunctionAttributeNonNull extends TokenSequence
+					{
+						public C_Keyword NONNULL = new C_Keyword("__nonnull__");
+						public PunctuationLeftParen leftParen;
+						public C_Number number;
+						public PunctuationRightParen righttParen;
+					}
+
+				}
+				
+				public static class C_FunctionMoreAttributes extends TokenSequence
+				{
+					public PunctuationComma comma;
+					public C_FunctionAttribute attrib;
+				}
+			}
+		}
 		
 		public @CHOICE static class C_FunctionImplementation extends TokenSequence
 		{
