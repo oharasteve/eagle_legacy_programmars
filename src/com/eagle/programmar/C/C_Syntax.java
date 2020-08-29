@@ -4,6 +4,7 @@
 package com.eagle.programmar.C;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 
 public class C_Syntax extends EagleSyntax
 {
@@ -18,7 +19,7 @@ public class C_Syntax extends EagleSyntax
 		_isCaseSensitive = true;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
-		//_commentInstance = new C_Comment();
+		_commentInstance = new CMacro_Comment();    // Doesn't work at all
 		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::" };
 		
 		addReservedWords(keywords);
