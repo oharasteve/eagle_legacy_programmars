@@ -34,6 +34,7 @@ public class C_Syntax extends EagleSyntax
 		"default",
 		"do",
 		"else",
+		"enum",
 		"extern",
 		"float",
 		"for",

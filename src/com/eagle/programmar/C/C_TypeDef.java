@@ -7,7 +7,7 @@ import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
 import com.eagle.programmar.C.Symbols.C_Type_Definition;
 import com.eagle.programmar.C.Terminals.C_Keyword;
-import com.eagle.programmar.CMacro.CMacro_Processable;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -29,7 +29,7 @@ public class C_TypeDef extends TokenSequence
 	
 	public static class C_TypeDef_What extends TokenChooser
 	{
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_Processable macro;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 		
 		public @CHOICE static class C_TypeDef_Data extends TokenSequence
 		{

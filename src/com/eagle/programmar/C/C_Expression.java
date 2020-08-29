@@ -12,6 +12,8 @@ import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.TokenList;
@@ -294,6 +296,7 @@ public class C_Expression extends PrecedenceChooser
 		public C_Expression var = new C_Expression(this, AllowedPrecedence.HIGHER);
 		public C_PunctuationChoice equals = new C_PunctuationChoice(
 				"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
+		public @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;	// What the ...
 		public C_Expression right = new C_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 }

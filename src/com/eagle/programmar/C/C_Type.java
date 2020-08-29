@@ -10,12 +10,13 @@ import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeStruct.C_FieldOrComment;
 import com.eagle.programmar.C.Symbols.C_Field_Definition;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Symbols.C_Type_Definition;
-import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -42,6 +43,8 @@ public class C_Type extends TokenSequence implements AbstractType
 	
 	public static class C_TypeBase extends TokenChooser
 	{
+		public @CHOICE C_Enum enumeration;
+		
 		public @FIRST static class C_NamespaceType extends TokenSequence
 		{
 			public C_Identifier_Reference namespace;
@@ -82,6 +85,7 @@ public class C_Type extends TokenSequence implements AbstractType
 				public @CHOICE C_Comment comment;
 				public @CHOICE C_FunctionPointer functionPtr;
 				public @LAST C_TypeUnion union;
+				public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 				
 				public @CHOICE static class C_Field extends TokenSequence
 				{
@@ -142,39 +146,6 @@ public class C_Type extends TokenSequence implements AbstractType
 			public @OPT C_Keyword STRUCT = new C_Keyword("struct");
 			public C_Identifier_Reference typeName;
 			public @OPT TokenList<C_TypeStar> stars;
-		}
-		
-		public @CHOICE static class C_TypeEnum extends TokenSequence
-		{
-			public C_Keyword ENUM = new C_Keyword("enum");
-			public @OPT C_Identifier_Reference typeName;
-			public @OPT C_TypeEnumValues values;
-			
-			public static class C_TypeEnumValues extends TokenSequence
-			{
-				public PunctuationLeftBrace leftBrace;
-				public @OPT TokenList<C_Comment> comment1;
-				public C_Variable_Definition firstEnum;
-				public @OPT C_EnumInitializer init;
-				public @OPT TokenList<C_Comment> comment2;
-				public @OPT TokenList<C_MoreEnums> moreEnums;
-				public PunctuationRightBrace rightBrace;
-				
-				public static class C_MoreEnums extends TokenSequence
-				{
-					public PunctuationComma comma;
-					public @OPT TokenList<C_Comment> comment1;
-					public C_Variable_Definition nextEnum;
-					public @OPT C_EnumInitializer init;
-					public @OPT TokenList<C_Comment> comment2;
-				}
-				
-				public static class C_EnumInitializer extends TokenSequence
-				{
-					public PunctuationEquals equals;
-					public C_Expression initialValue;
-				}
-			}
 		}
 	}
 	

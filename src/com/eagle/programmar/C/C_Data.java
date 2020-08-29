@@ -10,6 +10,8 @@ import com.eagle.programmar.C.Symbols.C_Field_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -36,8 +38,11 @@ public class C_Data extends TokenChooser
 		
 		public static class C_DataInitialValue extends TokenSequence
 		{
+			public @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro1;
 			public PunctuationEquals equals;
+			public @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro2;
 			public C_Expression expression;
+			public @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro3;
 		}
 		
 		public static class C_MoreIdentifiers extends TokenSequence

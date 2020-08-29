@@ -5,7 +5,6 @@ package com.eagle.programmar.C;
 
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleSyntax;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeEnum;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -104,9 +103,9 @@ public class C_Program extends EagleLanguage
 		public @CHOICE C_Statement statement;
 		public @CHOICE C_Type type;
 		
-		public @CHOICE static class C_Enum extends TokenSequence
+		public @CHOICE static class C_EnumStatement extends TokenSequence
 		{
-			public C_TypeEnum cenum;
+			public C_Enum cenum;
 			public PunctuationSemicolon semicolon;
 		}
 	}

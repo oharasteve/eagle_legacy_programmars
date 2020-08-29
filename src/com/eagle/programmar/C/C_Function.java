@@ -115,6 +115,7 @@ public class C_Function extends TokenSequence
 				{
 					public @CHOICE C_KeywordChoice ATTR = new C_KeywordChoice(
 							"__const__",
+							"__deprecated__",
 							"__leaf__",
 							"__malloc__",
 							"__noreturn__",
