@@ -18,6 +18,7 @@ import com.eagle.programmar.SQL.Statements.SQL_InsertStatement;
 import com.eagle.programmar.SQL.Statements.SQL_LoadStatement;
 import com.eagle.programmar.SQL.Statements.SQL_PragmaStatement;
 import com.eagle.programmar.SQL.Statements.SQL_SelectStatement;
+import com.eagle.programmar.SQL.Statements.SQL_SetStatement;
 import com.eagle.programmar.SQL.Statements.SQL_SlashStatement;
 import com.eagle.programmar.SQL.Statements.SQL_UpdateStatement;
 import com.eagle.programmar.SQL.Statements.SQL_VariableStatement;
@@ -40,6 +41,7 @@ public class SQL_Statement extends TokenChooser
 	public @CHOICE SQL_InsertStatement insertStmt;
 	public @CHOICE SQL_PragmaStatement pragmaStmt;
 	public @CHOICE SQL_SelectStatement selectStmt;
+	public @CHOICE SQL_SetStatement setStmt;
 	public @CHOICE SQL_SlashStatement slashStmt;
 	public @CHOICE SQL_UpdateStatement updateStmt;
 	public @CHOICE SQL_VariableStatement variableStmt;

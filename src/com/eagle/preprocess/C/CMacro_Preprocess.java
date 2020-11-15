@@ -123,7 +123,8 @@ public class CMacro_Preprocess extends EagleInclude
 		// Save the pre-processed file into the project artifact folder
 		if (_depth == 0 && _project != null)
 		{
-			String prepName = lines.getFileName();
+			int pathLen = _project._sourceBase.length();
+			String prepName = lines.getFileName().substring(pathLen+1);
 			try
 			{
 				_savePreprocessedFile.saveHtml(_project._artifactBase, prepName, _newLines);
