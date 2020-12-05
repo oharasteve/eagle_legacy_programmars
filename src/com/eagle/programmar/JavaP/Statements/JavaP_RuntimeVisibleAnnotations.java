@@ -27,15 +27,18 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
+// We use 'Anno' here to mean 'Annotation' and 'Viz' for 'Visible' and 'RT' for 'Runtime'
+// Class names were getting crazy long for inner inner inner inner inner inner inner classes
+
 public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 {
 	public JavaP_Keyword ANNOTATIONS = new JavaP_Keyword("RuntimeVisibleAnnotations");
 	public PunctuationColon colon;
-	public JavaP_RuntimeVisibleAnnotationChoice choice;
+	public JavaP_RTVizAnnoChoice choice;
 	
-	public static class JavaP_RuntimeVisibleAnnotationChoice extends TokenChooser
+	public static class JavaP_RTVizAnnoChoice extends TokenChooser
 	{
-		public @CHOICE static class JavaP_RuntimeVisibleAnnotationLength extends TokenSequence
+		public @CHOICE static class JavaP_RTVizAnnoLength extends TokenSequence
 		{
 			public JavaP_Keyword LENGTH = new JavaP_Keyword("length");
 			public PunctuationEquals equals;
@@ -49,32 +52,32 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 			}
 		}
 		
-		public @CHOICE static class JavaP_RuntimeVisibleAnnotationNoLength extends TokenSequence
+		public @CHOICE static class JavaP_RTVizAnnoNoLength extends TokenSequence
 		{
 			public JavaP_EndOfLine eoln;
-			public TokenList<JavaP_RuntimeAnnotation> annotations;
+			public TokenList<JavaP_RTAnno> annotations;
 
-			public static class JavaP_RuntimeAnnotation extends TokenSequence
+			public static class JavaP_RTAnno extends TokenSequence
 			{
 				public JavaP_Number seq;
 				public PunctuationColon colon;
 				public JavaP_HashNumber id;
 				public PunctuationLeftParen leftParen;
-				public @OPT JavaP_RuntimeAnnotationValue value;
+				public @OPT JavaP_RTAnnoValue value;
 				public PunctuationRightParen rightParen;
 				public JavaP_EndOfLine eoln1;
 				public @OPT JavaP_QualifiedName name;
-				public @OPT JavaP_AnnotationValue annotationValue;
+				public @OPT JavaP_AnnoValue annotationValue;
 				public @OPT JavaP_EndOfLine eoln2;
 				
-				public static class JavaP_RuntimeAnnotationValue extends TokenSequence
+				public static class JavaP_RTAnnoValue extends TokenSequence
 				{
 					public JavaP_HashNumber id;
 					public PunctuationEquals equals;
-					public JavaP_WhichAnnotation which;
+					public JavaP_WhichAnno which;
 				}
 
-				public static class JavaP_AnnotationIdentifier extends TokenSequence
+				public static class JavaP_AnnoIdentifier extends TokenSequence
 				{
 					public JavaP_KeywordChoice CEIS = new JavaP_KeywordChoice("c", "e", "I", "s");
 					public JavaP_HashNumber id;
@@ -82,53 +85,53 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 					public @OPT JavaP_HashNumber id4;
 				}
 		
-				public static class JavaP_WhichAnnotation extends TokenChooser
+				public static class JavaP_WhichAnno extends TokenChooser
 				{
-					public @CHOICE JavaP_AnnotationIdentifier id;
+					public @CHOICE JavaP_AnnoIdentifier id;
 		
-					public @CHOICE static class JavaP_AnnotationList extends TokenSequence
+					public @CHOICE static class JavaP_AnnoList extends TokenSequence
 					{
 						public PunctuationLeftBracket leftBracket;
-						public SeparatedList<JavaP_AnnotationIdentifier,PunctuationComma> idList;
+						public SeparatedList<JavaP_AnnoIdentifier,PunctuationComma> idList;
 						public PunctuationRightBracket rightBracket;
 					}
 				}
 				
-				public static class JavaP_AnnotationValue extends TokenSequence
+				public static class JavaP_AnnoValue extends TokenSequence
 				{
 					public PunctuationLeftParen leftParen;
 					public JavaP_EndOfLine eoln1;
 					public JavaP_KeywordChoice VALUE = new JavaP_KeywordChoice("value", "name");
 					public PunctuationEquals equals;
-					public JavaP_AnnotationValueClass valueClass;
+					public JavaP_AnnoValueClass valueClass;
 					public JavaP_EndOfLine eoln2;
 					public PunctuationRightParen rightParen;
 					public JavaP_EndOfLine eoln3;
 					
-					public static class JavaP_AnnotationValueClass extends TokenChooser
+					public static class JavaP_AnnoValueClass extends TokenChooser
 					{
 						public @CHOICE JavaP_Literal literal;
 						public @CHOICE JavaP_Number number;
 						
-						public static @CHOICE class JavaP_AnnotationValueOneClass extends TokenSequence
+						public static @CHOICE class JavaP_AnnoValueOneClass extends TokenSequence
 						{
 							public JavaP_Keyword CLASS = new JavaP_Keyword("class");
 							public JavaP_LClassName className;
 							public PunctuationSemicolon semicolon;
 						}
 						
-						public static @CHOICE class JavaP_AnnotationValueRuntimeClass extends TokenSequence
+						public static @CHOICE class JavaP_AnnoValueRTClass extends TokenSequence
 						{
 							public JavaP_LClassName className;
 							public PunctuationSemicolon semicolon;
 							public PunctuationPeriod dot;
-							public JavaP_Keyword RUNTIME = new JavaP_Keyword("RUNTIME");
+							public JavaP_Keyword RT = new JavaP_Keyword("RUNTIME");
 						}
 						
-						public static @CHOICE class JavaP_AnnotationValueManyClasses extends TokenSequence
+						public static @CHOICE class JavaP_AnnoValueManyClasses extends TokenSequence
 						{
 							public PunctuationLeftBracket leftBracket;
-							public SeparatedList<JavaP_AnnotationValueOneClass, PunctuationComma> classNames;
+							public SeparatedList<JavaP_AnnoValueOneClass, PunctuationComma> classNames;
 							public PunctuationRightBracket rightBracket;
 						}						
 					}
