@@ -45,6 +45,7 @@ public class JavaP_Syntax extends EagleSyntax
 			"ACC_SYNCHRONIZED",
 			"ACC_SYNTHETIC",
 			"ACC_VARARGS",
+			"ACC_VOLATILE"
 	};
 	
 	public static final String[] COMMANDS = new String[] {

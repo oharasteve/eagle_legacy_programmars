@@ -74,7 +74,8 @@ public class JavaP_Classes extends TokenSequence
 					"protected",
 					"public",
 					"static",
-					"synchronized"
+					"synchronized",
+					"volatile"
 			);
 		}
 		
