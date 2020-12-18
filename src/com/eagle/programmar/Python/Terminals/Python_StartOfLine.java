@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_Statement_List;
 import com.eagle.programmar.Python.Statements.Python_IfStatement.Python_IfElif;
 import com.eagle.tokens.AbstractToken;
@@ -32,10 +33,16 @@ public class Python_StartOfLine extends TerminalLiteralToken
 				if (tokenList.size() == 0) break; // First entry always matches
 
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				if (! (tokenList.first() instanceof Python_IfElif))
+				AbstractToken firstToken = tokenList.first();
+				if (! (firstToken instanceof Python_IfElif))
 				{
 					for (AbstractToken token : tokenList._elements)
 					{
+//						if (token instanceof Python_StartOfLine)
+//						{
+//							if (_currentLine == token._currentLine) return false;	// Cannot have two SOLN's on the same line
+//						}
+						
 						if (token instanceof Python_Comment)
 						{
 							continue;	// Doesn't matter what columns comments are in
@@ -48,7 +55,9 @@ public class Python_StartOfLine extends TerminalLiteralToken
 							if (child instanceof Python_Statement_List)
 							{
 								Python_Statement_List stmtList = (Python_Statement_List) child;
-								if (_currentChar != stmtList.statements.getPrimaryElement(0)._currentChar) return false;
+								Python_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
+								//if (_currentLine == otherStmt._currentLine) return false;	// Cannot have two SOLN's on the same line
+								if (_currentChar != otherStmt._currentChar) return false;
 								break;
 							}
 						}

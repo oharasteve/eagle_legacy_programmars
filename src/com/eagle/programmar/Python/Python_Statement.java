@@ -60,6 +60,8 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	
 	public static class Python_Statement_List extends TokenSequence
 	{
+		// This StartOfLine should be removed. But it breaks lots of Pythong
+		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
 		public @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
 		public SeparatedList<Python_Simple_Statement,Python_Statement_Separator> statements;
 	}
