@@ -16,6 +16,7 @@ import com.eagle.programmar.COBOL.COBOL_Program_Free_Format;
 import com.eagle.programmar.CPlus.CPlus_Program;
 import com.eagle.programmar.CSS.CSS_Program;
 import com.eagle.programmar.CSharp.CSharp_Program;
+import com.eagle.programmar.Delphi.Delphi_Configuration;
 import com.eagle.programmar.Delphi.Delphi_Program;
 import com.eagle.programmar.Django.Django_Program;
 import com.eagle.programmar.Gupta.Gupta_Program;
@@ -68,6 +69,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(CPlus_Program.NAME, CPlus_Program.class, ".cc", ".cpp", ".hh");
 		add(CSharp_Program.NAME, CSharp_Program.class, ".cs");
 		add(CSS_Program.NAME, CSS_Program.class, ".css");
+		add(Delphi_Configuration.NAME, Delphi_Configuration.class);
 		add(Delphi_Program.NAME, Delphi_Program.class, ".p", ".pas");
 		add(Django_Program.NAME, Django_Program.class);
 		add(Gupta_Program.NAME, Gupta_Program.class);
