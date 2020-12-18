@@ -49,13 +49,13 @@ public class SQL_Type extends TokenChooser
 
 	public @CHOICE static class SQL_TypeInt extends TokenSequence
 	{
-		public SQL_KeywordChoice INT = new SQL_KeywordChoice("INT", "INTEGER", "NUMBER");
+		public SQL_KeywordChoice INT = new SQL_KeywordChoice("INT", "INTEGER", "NUMBER", "TINYINT", "SMALLINT");
 		public @OPT SQL_TypeSize size;
 	}
 
 	public @CHOICE static class SQL_TypeDouble extends TokenSequence
 	{
-		public SQL_KeywordChoice DOUBLE = new SQL_KeywordChoice("DOUBLE");
+		public SQL_KeywordChoice DOUBLE = new SQL_KeywordChoice("FLOAT", "DOUBLE");
 	}
 	
 	public @CHOICE static class SQL_TypeRaw extends TokenSequence
@@ -76,12 +76,22 @@ public class SQL_Type extends TokenChooser
 
 	public @CHOICE static class SQL_TypeDate extends TokenSequence
 	{
-		public SQL_Keyword DATE = new SQL_Keyword("DATE");
+		public SQL_KeywordChoice DATE = new SQL_KeywordChoice("DATE", "TIME", "DATETIME");
 	}
 
 	public @CHOICE static class SQL_TypeTimeStamp extends TokenSequence
 	{
 		public SQL_Keyword TIMESTAMP = new SQL_Keyword("TIMESTAMP");
+	}
+
+	public @CHOICE static class SQL_TypeDecimal extends TokenSequence
+	{
+		public SQL_Keyword DECIMAL = new SQL_Keyword("DECIMAL");
+		public PunctuationLeftParen leftParen;
+		public SQL_Number size;
+		public PunctuationComma comma;
+		public SQL_Number size2;
+		public PunctuationRightParen rightParen;
 	}
 
 	public @CHOICE static class SQL_TypeEnum extends TokenSequence

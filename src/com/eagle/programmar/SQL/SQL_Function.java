@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class SQL_Function extends TokenSequence
 {
-	public SQL_Variable funcName;
+	public SQL_FunctionName funcName;
 	public PunctuationLeftParen leftParen;
 	public @OPT SeparatedList<SQL_FunctionParam,PunctuationComma> params;
 	public PunctuationRightParen rightParen;
@@ -43,9 +43,12 @@ public class SQL_Function extends TokenSequence
 	
 	public static class SQL_FunctionName extends TokenChooser
 	{
+		public @LAST SQL_Variable var;
+		
 		public @FIRST SQL_KeywordChoice fnName = new SQL_KeywordChoice(
 				"CONCAT",
 				"COUNT",
+				"CURRENT_TIMESTAMP",
 				"LENGTH",
 				"MIN", 
 				"SUBSTRING",

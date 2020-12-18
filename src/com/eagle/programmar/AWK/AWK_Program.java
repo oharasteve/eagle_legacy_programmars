@@ -5,7 +5,6 @@ package com.eagle.programmar.AWK;
 
 import com.eagle.core.EagleLanguage;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
-import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -30,6 +29,5 @@ public class AWK_Program extends EagleLanguage
 	{
 		public @CHOICE AWK_Command command;
 		public @CHOICE AWK_Comment comment;
-		public @CHOICE AWK_EndOfLine eoln;
 	}
 }

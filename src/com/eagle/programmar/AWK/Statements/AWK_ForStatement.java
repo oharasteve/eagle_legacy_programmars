@@ -6,6 +6,7 @@ package com.eagle.programmar.AWK.Statements;
 import com.eagle.programmar.AWK.AWK_Action;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
+import com.eagle.programmar.AWK.AWK_Variable;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -17,13 +18,28 @@ public class AWK_ForStatement extends TokenSequence
 {
 	public AWK_Keyword FOR = new AWK_Keyword("for");
 	public PunctuationLeftParen leftParen;
-	public AWK_Expression initialize;
-	public PunctuationSemicolon semicolon1;
-	public AWK_Expression test;
-	public PunctuationSemicolon semicolon2;
-	public AWK_Expression increment;
+	public AWK_ForWhat forWhat;
 	public PunctuationRightParen rightParen;
 	public AWK_ForBlock block;
+	
+	public static class AWK_ForWhat extends TokenChooser
+	{
+		public @CHOICE static class AWK_ForIteration extends TokenSequence
+		{
+			public AWK_Expression initialize;
+			public PunctuationSemicolon semicolon1;
+			public AWK_Expression test;
+			public PunctuationSemicolon semicolon2;
+			public AWK_Expression increment;
+		}
+		
+		public @CHOICE static class AWK_ForEach extends TokenSequence
+		{
+			public AWK_Variable var;
+			public AWK_Keyword IN = new AWK_Keyword("in");
+			public AWK_Expression value;
+		}
+	}
 	
 	public static class AWK_ForBlock extends TokenChooser
 	{

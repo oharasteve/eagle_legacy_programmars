@@ -82,6 +82,19 @@ public class SQL_CreateStatement extends TokenChooser
 					public SQL_Keyword PRIMARY = new SQL_Keyword("PRIMARY");
 					public SQL_Keyword KEY = new SQL_Keyword("KEY");
 				}
+				
+				public @CHOICE static class SQL_FieldCharSet extends TokenSequence
+				{
+					public SQL_Keyword CHARACTER = new SQL_Keyword("CHARACTER");
+					public SQL_Keyword SET = new SQL_Keyword("SET");
+					public SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8");
+				}
+				
+				public @CHOICE static class SQL_FieldCollate extends TokenSequence
+				{
+					public SQL_Keyword COLLATE = new SQL_Keyword("COLLATE");
+					public SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8_unicode_ci");
+				}
 			}
 		}
 		

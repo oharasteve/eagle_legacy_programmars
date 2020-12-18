@@ -93,7 +93,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Rust_Program.NAME, Rust_Program.class, ".rs");
 		add(SQL_Program.NAME, SQL_Program.class, ".sql");
 		// add(TCL_Program.NAME, TCL_Program.class, ".tcl");
-		add(VB_Program.NAME, VB_Program.class, ".cls");
+		add(VB_Program.NAME, VB_Program.class, ".vb");
 		add(XML_Program.NAME, XML_Program.class, ".xml", ".xsd");
 	}
 }

@@ -11,7 +11,6 @@ import com.eagle.programmar.AWK.Statements.AWK_SplitStatement;
 import com.eagle.programmar.AWK.Statements.AWK_SubStatement;
 import com.eagle.programmar.AWK.Statements.AWK_WhileStatement;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
-import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -23,7 +22,6 @@ public class AWK_Statements extends TokenSequence
 	public SeparatedList<AWK_Statement,PunctuationSemicolon> statements;
 	public @OPT PunctuationSemicolon semicolon;
 	public @OPT TokenList<AWK_Comment> comments;
-	public @OPT AWK_EndOfLine newline;
 	
 	public static class AWK_Statement extends TokenChooser
 	{
