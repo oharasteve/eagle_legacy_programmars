@@ -17,10 +17,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_LoopFunction extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @DOC("m_loop.htm") Lisp_Keyword LOOP = new Lisp_Keyword("loop");
-	public Lisp_LoopType loopType;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @DOC("m_loop.htm") Lisp_Keyword LOOP = new Lisp_Keyword("loop");
+	public @S(30) Lisp_LoopType loopType;
+	public @S(40) PunctuationRightParen rightParen;
 	
 	public static class Lisp_LoopType extends TokenChooser
 	{
@@ -28,14 +28,14 @@ public class Lisp_LoopFunction extends TokenSequence
 		
 		public @CHOICE static class Lisp_LoopFancy extends TokenSequence
 		{
-			public @OPT Lisp_LoopNamed named;
-			public @OPT TokenList<Lisp_LoopVariableClause> variableClauses;
-			public TokenList<Lisp_LoopMainClause> mainClauses;
+			public @S(10) @OPT Lisp_LoopNamed named;
+			public @S(20) @OPT TokenList<Lisp_LoopVariableClause> variableClauses;
+			public @S(30) TokenList<Lisp_LoopMainClause> mainClauses;
 			
 			public static class Lisp_LoopNamed extends TokenSequence
 			{
-				public Lisp_Keyword NAMED = new Lisp_Keyword("named");
-				public Lisp_Variable_Definition name;
+				public @S(10) Lisp_Keyword NAMED = new Lisp_Keyword("named");
+				public @S(20) Lisp_Variable_Definition name;
 			}
 			
 			public static class Lisp_LoopVariableClause extends TokenChooser
@@ -44,54 +44,54 @@ public class Lisp_LoopFunction extends TokenSequence
 		
 				public @CHOICE static class Lisp_LoopWith extends TokenSequence
 				{
-					public Lisp_LoopWithElement element;
-					public @OPT TokenList<Lisp_LoopMoreWith> more;
+					public @S(10) Lisp_LoopWithElement element;
+					public @S(20) @OPT TokenList<Lisp_LoopMoreWith> more;
 					
 					public static class Lisp_LoopMoreWith extends TokenSequence
 					{
-						public Lisp_Keyword AND = new Lisp_Keyword("and");
-						public Lisp_LoopWithElement element;
+						public @S(10) Lisp_Keyword AND = new Lisp_Keyword("and");
+						public @S(20) Lisp_LoopWithElement element;
 					}
 					
 					public static class Lisp_LoopWithElement extends TokenSequence
 					{
-						public Lisp_Keyword WITH = new Lisp_Keyword("with");
-						public @OPT Lisp_SExpr typeSpec;
-						public @OPT Lisp_LoopWithValue equalsValue;
+						public @S(10) Lisp_Keyword WITH = new Lisp_Keyword("with");
+						public @S(20) @OPT Lisp_SExpr typeSpec;
+						public @S(30) @OPT Lisp_LoopWithValue equalsValue;
 						
 						public static class Lisp_LoopWithValue extends TokenSequence
 						{
-							public PunctuationEquals equals;
-							public Lisp_SExpr value;
+							public @S(10) PunctuationEquals equals;
+							public @S(20) Lisp_SExpr value;
 						}
 					}
 				}
 				
 				public @CHOICE static class Lisp_LoopForAsClause extends TokenSequence
 				{
-					public Lisp_KeywordChoice FOR = new Lisp_KeywordChoice("for", "as");
-					public Lisp_Variable var;
-					public TokenList<Lisp_LoopForClause> forClause;
+					public @S(10) Lisp_KeywordChoice FOR = new Lisp_KeywordChoice("for", "as");
+					public @S(20) Lisp_Variable var;
+					public @S(30) TokenList<Lisp_LoopForClause> forClause;
 					
 					public static class Lisp_LoopForClause extends TokenChooser
 					{
 						public @CHOICE static class Lisp_ForArithmetic extends TokenSequence
 						{
-							public Lisp_KeywordChoice direction = new Lisp_KeywordChoice(
+							public @S(10) Lisp_KeywordChoice direction = new Lisp_KeywordChoice(
 									"across", "below", "from", "in", "on", "to");
-							public Lisp_SExpr expr;
+							public @S(20) Lisp_SExpr expr;
 						}
 		
 						public @CHOICE static class Lisp_ForEqualsThen extends TokenSequence
 						{
-							public PunctuationEquals equals;
-							public Lisp_SExpr expr;
-							public @OPT Lisp_LoopForThen thenClause;
+							public @S(10) PunctuationEquals equals;
+							public @S(20) Lisp_SExpr expr;
+							public @S(30) @OPT Lisp_LoopForThen thenClause;
 							
 							public static class Lisp_LoopForThen extends TokenSequence
 							{
-								public Lisp_Keyword THEN = new Lisp_Keyword("then");
-								public Lisp_SExpr expr;
+								public @S(10) Lisp_Keyword THEN = new Lisp_Keyword("then");
+								public @S(20) Lisp_SExpr expr;
 							}
 						}
 					}
@@ -104,31 +104,31 @@ public class Lisp_LoopFunction extends TokenSequence
 				
 				public @CHOICE static class Lisp_LoopUnconditionalDo extends TokenSequence
 				{
-					public Lisp_KeywordChoice DO = new Lisp_KeywordChoice("do", "doing");
-					public TokenList<Lisp_SExpr> actions;
+					public @S(10) Lisp_KeywordChoice DO = new Lisp_KeywordChoice("do", "doing");
+					public @S(20) TokenList<Lisp_SExpr> actions;
 				}
 				
 				public @CHOICE static class Lisp_LoopUnconditionalReturn extends TokenSequence
 				{
-					public Lisp_Keyword RETURN = new Lisp_Keyword("return");
-					public Lisp_SExpr value;
+					public @S(10) Lisp_Keyword RETURN = new Lisp_Keyword("return");
+					public @S(20) Lisp_SExpr value;
 				}
 				
 				public @CHOICE static class Lisp_LoopListAccumulation extends TokenSequence
 				{
-					public Lisp_KeywordChoice operation = new Lisp_KeywordChoice(
+					public @S(10) Lisp_KeywordChoice operation = new Lisp_KeywordChoice(
 							"append",
 							"appenging",
 							"collect",
 							"collecting",
 							"nconc",
 							"nconcing");
-					public Lisp_SExpr expr;
+					public @S(20) Lisp_SExpr expr;
 				}
 				
 				public @CHOICE static class Lisp_LoopNumericAccumulation extends TokenSequence
 				{
-					public Lisp_KeywordChoice operation = new Lisp_KeywordChoice(
+					public @S(10) Lisp_KeywordChoice operation = new Lisp_KeywordChoice(
 							"count",
 							"counting",
 							"maximize",
@@ -137,50 +137,50 @@ public class Lisp_LoopFunction extends TokenSequence
 							"minimizing",
 							"sum",
 							"summing");
-					public Lisp_SExpr value;
-					public @OPT Lisp_LoopAccumulateInto accumulateInto;
+					public @S(20) Lisp_SExpr value;
+					public @S(30) @OPT Lisp_LoopAccumulateInto accumulateInto;
 					
 					public static class Lisp_LoopAccumulateInto extends TokenSequence
 					{
-						public Lisp_Keyword INTO = new Lisp_Keyword("into");
-						public Lisp_Variable variable;
+						public @S(10) Lisp_Keyword INTO = new Lisp_Keyword("into");
+						public @S(20) Lisp_Variable variable;
 					}
 				}
 		
 				public @CHOICE static class Lisp_LoopConditional extends TokenSequence
 				{
-					public Lisp_KeywordChoice when = new Lisp_KeywordChoice("if", "when", "unless");
-					public Lisp_SExpr value;
-					public @OPT TokenList<Lisp_LoopMoreSelectableClause> more;
-					public @OPT Lisp_LoopConditionalElse conditionalElse;
-					public @OPT Lisp_Keyword END = new Lisp_Keyword("end");
+					public @S(10) Lisp_KeywordChoice when = new Lisp_KeywordChoice("if", "when", "unless");
+					public @S(20) Lisp_SExpr value;
+					public @S(30) @OPT TokenList<Lisp_LoopMoreSelectableClause> more;
+					public @S(40) @OPT Lisp_LoopConditionalElse conditionalElse;
+					public @S(50) @OPT Lisp_Keyword END = new Lisp_Keyword("end");
 					
 					public static class Lisp_LoopMoreSelectableClause extends TokenSequence
 					{
-						public Lisp_Keyword AND = new Lisp_Keyword("and");
-						public Lisp_SExpr value;
+						public @S(10) Lisp_Keyword AND = new Lisp_Keyword("and");
+						public @S(20) Lisp_SExpr value;
 					}
 					
 					public static class Lisp_LoopConditionalElse extends TokenSequence
 					{
-						public Lisp_Keyword ELSE = new Lisp_Keyword("else");
-						public Lisp_SExpr clause;
-						public @OPT TokenList<Lisp_LoopMoreSelectableClause> more;
+						public @S(10) Lisp_Keyword ELSE = new Lisp_Keyword("else");
+						public @S(20) Lisp_SExpr clause;
+						public @S(30) @OPT TokenList<Lisp_LoopMoreSelectableClause> more;
 					}
 				}
 		
 				public @CHOICE static class Lisp_LoopTerminationTest extends TokenSequence
 				{
-					public Lisp_KeywordChoice when = new Lisp_KeywordChoice(
+					public @S(10) Lisp_KeywordChoice when = new Lisp_KeywordChoice(
 							"while", "until", "repeat", "always", "never", "thereis");
-					public Lisp_SExpr condition;
+					public @S(20) Lisp_SExpr condition;
 				}
 			}
 			
 			public static class Lisp_LoopInitialFinal extends TokenSequence
 			{
-				public Lisp_KeywordChoice when = new Lisp_KeywordChoice("initially", "finally");
-				public Lisp_SExpr expr;
+				public @S(10) Lisp_KeywordChoice when = new Lisp_KeywordChoice("initially", "finally");
+				public @S(20) Lisp_SExpr expr;
 			}
 		}
 	}

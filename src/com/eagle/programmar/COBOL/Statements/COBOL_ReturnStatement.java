@@ -12,15 +12,15 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_ReturnStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsretu.htm") COBOL_Keyword RETURN = new COBOL_Keyword("RETURN");
-	public COBOL_Identifier_Reference file;
-	public COBOL_ReturnAtEndAction atEnd;
-	public COBOL_Keyword ENDRETURN = new COBOL_Keyword("END-RETURN");
+	public @S(10) @DOC("rlpsretu.htm") COBOL_Keyword RETURN = new COBOL_Keyword("RETURN");
+	public @S(20) COBOL_Identifier_Reference file;
+	public @S(30) COBOL_ReturnAtEndAction atEnd;
+	public @S(40) COBOL_Keyword ENDRETURN = new COBOL_Keyword("END-RETURN");
 
 	public static class COBOL_ReturnAtEndAction extends TokenSequence
 	{
-		public COBOL_Keyword AT = new COBOL_Keyword("AT");
-		public COBOL_Keyword END = new COBOL_Keyword("END");
-		public TokenList<COBOL_Statement> endAction;
+		public @S(10) COBOL_Keyword AT = new COBOL_Keyword("AT");
+		public @S(20) COBOL_Keyword END = new COBOL_Keyword("END");
+		public @S(30) TokenList<COBOL_Statement> endAction;
 	}
 }

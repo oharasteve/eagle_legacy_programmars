@@ -14,10 +14,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Perl_WhileStatement extends TokenSequence
 {
-	public @DOC("control-structures.while.php") Perl_Keyword WHILE = new Perl_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public Perl_Expression condition;
-	public PunctuationRightParen rightParen;
-	public @OPT TokenList<Perl_Comment> comments;
-	public Perl_Statement stmt;
+	public @S(10) @DOC("control-structures.while.php") Perl_Keyword WHILE = new Perl_Keyword("while");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Perl_Expression condition;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) @OPT TokenList<Perl_Comment> comments;
+	public @S(60) Perl_Statement stmt;
 }

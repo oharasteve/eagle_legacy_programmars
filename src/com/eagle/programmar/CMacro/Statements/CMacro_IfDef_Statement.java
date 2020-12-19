@@ -28,69 +28,69 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 	private static final String IFDEF = "ifdef";
 	private static final String IFNDEF = "ifndef";
 	
-	public C_Punctuation pound = new C_Punctuation('#'); 
-	public @DOC("Ifdef.html") C_KeywordChoice IFDEFNDEF = new C_KeywordChoice(IFDEF, IFNDEF);
-	public CMacro_Identifier_Reference ref;
-	public @OPT C_Comment comment1;
-	public CMacro_EndOfLine eoln1;
-	public @OPT TokenList<CMacro_IfDefElement> elements;
-	public @OPT TokenList<CMacro_IfDefElif> ifElif;
-	public @OPT CMacro_IfDefElse ifElse;
-	public @OPT CMacro_EndOfLine eoln2;
-	public C_Punctuation pound2 = new C_Punctuation('#'); 
-	public C_Keyword ENDIF = new C_Keyword("endif");
+	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+	public @S(20) @DOC("Ifdef.html") C_KeywordChoice IFDEFNDEF = new C_KeywordChoice(IFDEF, IFNDEF);
+	public @S(30) CMacro_Identifier_Reference ref;
+	public @S(40) @OPT C_Comment comment1;
+	public @S(50) CMacro_EndOfLine eoln1;
+	public @S(60) @OPT TokenList<CMacro_IfDefElement> elements;
+	public @S(70) @OPT TokenList<CMacro_IfDefElif> ifElif;
+	public @S(80) @OPT CMacro_IfDefElse ifElse;
+	public @S(90) @OPT CMacro_EndOfLine eoln2;
+	public @S(100) C_Punctuation pound2 = new C_Punctuation('#'); 
+	public @S(110) C_Keyword ENDIF = new C_Keyword("endif");
 	
 	public static class CMacro_IfDefElif extends TokenSequence
 	{
-		public C_Punctuation pound1 = new C_Punctuation('#');
-		public C_Keyword ELIF = new C_Keyword("elif");
-		public CMacro_Expression expr;
-		public @OPT @SYNTAX(C_Syntax.class) C_Comment comment;
-		public @OPT CMacro_EndOfLine eoln;
-		public @OPT TokenList<CMacro_IfDefElement> elements;
+		public @S(10) C_Punctuation pound1 = new C_Punctuation('#');
+		public @S(20) C_Keyword ELIF = new C_Keyword("elif");
+		public @S(30) CMacro_Expression expr;
+		public @S(40) @OPT @SYNTAX(C_Syntax.class) C_Comment comment;
+		public @S(50) @OPT CMacro_EndOfLine eoln;
+		public @S(60) @OPT TokenList<CMacro_IfDefElement> elements;
 	}
 
 	public static class CMacro_IfDefElse extends TokenSequence
 	{
-		public @OPT CMacro_EndOfLine eoln1;
-		public C_Punctuation pound1 = new C_Punctuation('#'); 
-		public C_Keyword ELSE = new C_Keyword("else");
-		public @OPT C_Comment comment;
-		public CMacro_EndOfLine eoln2;
-		public @OPT TokenList<CMacro_IfDefElement> elements;
+		public @S(10) @OPT CMacro_EndOfLine eoln1;
+		public @S(20) C_Punctuation pound1 = new C_Punctuation('#'); 
+		public @S(30) C_Keyword ELSE = new C_Keyword("else");
+		public @S(40) @OPT C_Comment comment;
+		public @S(50) CMacro_EndOfLine eoln2;
+		public @S(60) @OPT TokenList<CMacro_IfDefElement> elements;
 	}
 	
 	public static class CMacro_IfDefCPlusPlus extends TokenSequence
 	{
-		public C_Punctuation pound = new C_Punctuation('#'); 
-		public @DOC("Ifdef.html") C_Keyword ifdef1 = new C_Keyword("ifdef");
-		public C_Keyword CPLUSPLUS1 = new C_Keyword("__cplusplus");
-		public CMacro_EndOfLine eoln1;
-		public C_Keyword EXTERN = new C_Keyword("extern");
-		public C_Literal C;
-		public PunctuationLeftBrace leftBrace;
-		public CMacro_EndOfLine eoln2;
-		public C_Punctuation pound2 = new C_Punctuation('#'); 
-		public C_Keyword ENDIF1 = new C_Keyword("endif");
-		public CMacro_EndOfLine eoln3;
+		public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+		public @S(20) @DOC("Ifdef.html") C_Keyword ifdef1 = new C_Keyword("ifdef");
+		public @S(30) C_Keyword CPLUSPLUS1 = new C_Keyword("__cplusplus");
+		public @S(40) CMacro_EndOfLine eoln1;
+		public @S(50) C_Keyword EXTERN = new C_Keyword("extern");
+		public @S(60) C_Literal C;
+		public @S(70) PunctuationLeftBrace leftBrace;
+		public @S(80) CMacro_EndOfLine eoln2;
+		public @S(90) C_Punctuation pound2 = new C_Punctuation('#'); 
+		public @S(100) C_Keyword ENDIF1 = new C_Keyword("endif");
+		public @S(110) CMacro_EndOfLine eoln3;
 		
-		public @OPT TokenList<CMacro_IfDefElement> elements;
+		public @S(120) @OPT TokenList<CMacro_IfDefElement> elements;
 
-		public C_Punctuation pound3 = new C_Punctuation('#'); 
-		public @DOC("Ifdef.html") C_Keyword ifdef2 = new C_Keyword("ifdef");
-		public C_Keyword CPLUSPLUS2 = new C_Keyword("__cplusplus");
-		public CMacro_EndOfLine eoln4;
-		public PunctuationRightBrace rightBrace;
-		public @OPT C_Comment comment;
-		public CMacro_EndOfLine eoln5;
-		public C_Punctuation pound4 = new C_Punctuation('#'); 
-		public C_Keyword ENDIF2 = new C_Keyword("endif");
+		public @S(130) C_Punctuation pound3 = new C_Punctuation('#'); 
+		public @S(140) @DOC("Ifdef.html") C_Keyword ifdef2 = new C_Keyword("ifdef");
+		public @S(150) C_Keyword CPLUSPLUS2 = new C_Keyword("__cplusplus");
+		public @S(160) CMacro_EndOfLine eoln4;
+		public @S(170) PunctuationRightBrace rightBrace;
+		public @S(180) @OPT C_Comment comment;
+		public @S(190) CMacro_EndOfLine eoln5;
+		public @S(200) C_Punctuation pound4 = new C_Punctuation('#'); 
+		public @S(210) C_Keyword ENDIF2 = new C_Keyword("endif");
 	}
 	
 	// Need this for switching languages from CMacro to C
 	public static class CMacro_IfDefElement extends TokenSequence
 	{
-		public @SYNTAX(C_Syntax.class) C_StatementOrComment element;
+		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
 	}
 	
 	@Override

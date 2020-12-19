@@ -17,19 +17,19 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_SwitchStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.11") CSharp_Keyword SWITCH = new CSharp_Keyword("switch");
-	public @NOSPACE PunctuationLeftParen leftParen;
-	public @NOSPACE CSharp_Expression val;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @INDENT PunctuationLeftBrace leftBrace;
-	public TokenList<CSharp_SwitchCase> caseClause;
-	public @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(10) @NEWLINE @DOC("statements.html#14.11") CSharp_Keyword SWITCH = new CSharp_Keyword("switch");
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_Expression val;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(60) TokenList<CSharp_SwitchCase> caseClause;
+	public @S(70) @OUTDENT PunctuationRightBrace rightBrace;
 	
 	public static class CSharp_SwitchCase extends TokenSequence
 	{
-		public @NEWLINE CSharp_CaseType caseType;
-		public PunctuationColon colon;
-		public @OPT TokenList<CSharp_StatementOrComment> statements;
+		public @S(10) @NEWLINE CSharp_CaseType caseType;
+		public @S(20) PunctuationColon colon;
+		public @S(30) @OPT TokenList<CSharp_StatementOrComment> statements;
 	}
 	
 	public static class CSharp_CaseType extends TokenChooser
@@ -38,8 +38,8 @@ public class CSharp_SwitchStatement extends TokenSequence
 
 		public @CHOICE static class CSharp_CaseClause extends TokenSequence
 		{
-			public @BLANKLINE CSharp_Keyword CASE = new CSharp_Keyword("case");
-			public CSharp_Expression expr;
+			public @S(10) @BLANKLINE CSharp_Keyword CASE = new CSharp_Keyword("case");
+			public @S(20) CSharp_Expression expr;
 		}
 	}
 }

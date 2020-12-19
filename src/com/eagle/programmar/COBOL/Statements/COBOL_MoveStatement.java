@@ -15,20 +15,20 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_MoveStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsmove.htm") COBOL_Keyword MOVE = new COBOL_Keyword("MOVE");
-	public @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-	public COBOL_Expression expr;
-	public COBOL_Keyword TO = new COBOL_Keyword("TO");
-	public @OPT COBOL_Identifier_Reference var;
-	public @OPT COBOL_Subscript subscript;
-	public @OPT TokenList<COBOL_MoveMore> more;
-	public @OPT @CURIOUS("MOVE: Extra comma") PunctuationComma comma;
+	public @S(10) @DOC("rlpsmove.htm") COBOL_Keyword MOVE = new COBOL_Keyword("MOVE");
+	public @S(20) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+	public @S(30) COBOL_Expression expr;
+	public @S(40) COBOL_Keyword TO = new COBOL_Keyword("TO");
+	public @S(50) @OPT COBOL_Identifier_Reference var;
+	public @S(60) @OPT COBOL_Subscript subscript;
+	public @S(70) @OPT TokenList<COBOL_MoveMore> more;
+	public @S(80) @OPT @CURIOUS("MOVE: Extra comma") PunctuationComma comma;
 	
 	public static class COBOL_MoveMore extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public @OPT TokenList<COBOL_Comment> comments;
-		public COBOL_Identifier_Reference var;
-		public @OPT COBOL_Subscript subscript;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) @OPT TokenList<COBOL_Comment> comments;
+		public @S(30) COBOL_Identifier_Reference var;
+		public @S(40) @OPT COBOL_Subscript subscript;
 	}
 }

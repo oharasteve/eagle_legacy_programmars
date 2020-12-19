@@ -11,9 +11,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_BeginStatement extends TokenSequence
 {
-	public VB_Keyword BEGIN = new VB_Keyword("begin");
-	public VB_EndOfLine eoln;
-	public TokenList<VB_Statement> stmts;
-	public VB_Keyword END = new VB_Keyword("end");
+	public @S(10) VB_Keyword BEGIN = new VB_Keyword("begin");
+	public @S(20) VB_EndOfLine eoln;
+	public @S(30) TokenList<VB_Statement> stmts;
+	public @S(40) VB_Keyword END = new VB_Keyword("end");
 
 }

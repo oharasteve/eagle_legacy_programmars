@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Natural_ComputeStatement extends TokenSequence
 {
-	public @DOC("sm/compute.htm") Natural_Keyword COMPUTE = new Natural_Keyword("COMPUTE");
-	public Natural_Variable var;
-	public PunctuationEquals equals;
-	public Natural_Expression expr;
+	public @S(10) @DOC("sm/compute.htm") Natural_Keyword COMPUTE = new Natural_Keyword("COMPUTE");
+	public @S(20) Natural_Variable var;
+	public @S(30) PunctuationEquals equals;
+	public @S(40) Natural_Expression expr;
 }

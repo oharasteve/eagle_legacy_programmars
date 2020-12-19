@@ -12,9 +12,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Undef_Statement extends TokenSequence implements CMacro_Processable
 {
-	public C_Punctuation pound = new C_Punctuation('#'); 
-	public @DOC("Undefining-and-Redefining-Macros.html") C_Keyword UNDEF = new C_Keyword("undef");
-	public CMacro_Identifier_Reference var;
+	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+	public @S(20) @DOC("Undefining-and-Redefining-Macros.html") C_Keyword UNDEF = new C_Keyword("undef");
+	public @S(30) CMacro_Identifier_Reference var;
 	
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)

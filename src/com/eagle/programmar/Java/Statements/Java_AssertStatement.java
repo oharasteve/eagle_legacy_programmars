@@ -11,14 +11,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_AssertStatement extends TokenSequence
 {
-	public @NEWLINE Java_Keyword ASSERT = new Java_Keyword("assert");
-	public Java_Expression condition;
-	public @OPT Java_AssertMessage message;
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE Java_Keyword ASSERT = new Java_Keyword("assert");
+	public @S(20) Java_Expression condition;
+	public @S(30) @OPT Java_AssertMessage message;
+	public @S(40) @NOSPACE PunctuationSemicolon semicolon;
 	
 	public static class Java_AssertMessage extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public Java_Expression message;
+		public @S(10) PunctuationColon colon;
+		public @S(20) Java_Expression message;
 	}
 }

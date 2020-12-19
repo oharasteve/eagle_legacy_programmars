@@ -10,13 +10,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_ReleaseStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rele.htm") COBOL_Keyword RELEASE = new COBOL_Keyword("RELEASE");
-	public COBOL_Identifier_Reference id1;
-	public @OPT COBOL_ReleaseFrom from;
+	public @S(10) @DOC("rele.htm") COBOL_Keyword RELEASE = new COBOL_Keyword("RELEASE");
+	public @S(20) COBOL_Identifier_Reference id1;
+	public @S(30) @OPT COBOL_ReleaseFrom from;
 	
 	public static class COBOL_ReleaseFrom extends TokenSequence
 	{
-		public COBOL_Keyword FROM = new COBOL_Keyword("FROM");
-		public COBOL_Identifier_Reference id2;
+		public @S(10) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
+		public @S(20) COBOL_Identifier_Reference id2;
 	}
 }

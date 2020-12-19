@@ -14,29 +14,29 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpssubt.htm") COBOL_Keyword SUBTRACT = new COBOL_Keyword("SUBTRACT");
-	public COBOL_Expression expr;
-	public COBOL_SubtractFrom from;
-	public @OPT COBOL_SubtractGiving giving;
+	public @S(10) @DOC("rlpssubt.htm") COBOL_Keyword SUBTRACT = new COBOL_Keyword("SUBTRACT");
+	public @S(20) COBOL_Expression expr;
+	public @S(30) COBOL_SubtractFrom from;
+	public @S(40) @OPT COBOL_SubtractGiving giving;
 	
 	public static class COBOL_SubtractGiving extends TokenSequence
 	{
-		public COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
-		public COBOL_Variable result;
-		public @OPT COBOL_Subscript subscript;
-		public @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
+		public @S(10) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
+		public @S(20) COBOL_Variable result;
+		public @S(30) @OPT COBOL_Subscript subscript;
+		public @S(40) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
 	}
 	
 	public static class COBOL_SubtractFrom extends TokenSequence
 	{
-		public COBOL_Keyword FROM = new COBOL_Keyword("FROM");
-		public COBOL_Expression expr;
-		public @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
+		public @S(10) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
+		public @S(20) COBOL_Expression expr;
+		public @S(30) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
 	}
 	
 	public static class COBOL_SubtractMoreVars extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_Variable var;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Variable var;
 	}
 }

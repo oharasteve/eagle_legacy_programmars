@@ -34,7 +34,7 @@ import com.eagle.tokens.TokenSequence;
 public abstract class RPG_O_Output_Specification extends TokenSequence
 {
 	// Extra layer to keep everything in one file ....
-	public RPG_O_Output_Spec oSpec;
+	public @S(10) RPG_O_Output_Spec oSpec;
 	
 	public static class RPG_O_Output_Spec extends TokenChooser
 	{
@@ -68,13 +68,13 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 	
 	public abstract static class RPG_O_Output_Program_Record_Id extends TokenSequence
 	{
-		public RPG_Keyword O = new RPG_Keyword(6, 6, "O");
-		public RPG_O_Output_Program_Record_Id_Piece piece;
-		public @OPT RPG_Literal skipBefore;
-		public @OPT RPG_Literal skipAfter;
-		public @OPT RPG_Literal indicators;
-		public @OPT RPG_Literal exceptName;
-		public RPG_Blanks blank1;
+		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
+		public @S(20) RPG_O_Output_Program_Record_Id_Piece piece;
+		public @S(30) @OPT RPG_Literal skipBefore;
+		public @S(40) @OPT RPG_Literal skipAfter;
+		public @S(50) @OPT RPG_Literal indicators;
+		public @S(60) @OPT RPG_Literal exceptName;
+		public @S(70) RPG_Blanks blank1;
 		
 		public static class RPG_O_Output_Program_Record_Id_III extends RPG_O_Output_Program_Record_Id
 		{
@@ -133,13 +133,13 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 
 		public abstract static class RPG_O_Output_Program_Record_Id_Piece1 extends TokenSequence
 		{
-			public RPG_Literal recordName;
-			public RPG_KeywordChoice type;
-			public @OPT RPG_KeywordChoice overflowRelease;
-			public @OPT RPG_Number spaceBefore;
-			public @OPT RPG_Number spaceAfter;
-			public @OPT RPG_Literal skipBefore;
-			public @OPT RPG_Literal skipAfter;
+			public @S(10) RPG_Literal recordName;
+			public @S(20) RPG_KeywordChoice type;
+			public @S(30) @OPT RPG_KeywordChoice overflowRelease;
+			public @S(40) @OPT RPG_Number spaceBefore;
+			public @S(50) @OPT RPG_Number spaceAfter;
+			public @S(60) @OPT RPG_Literal skipBefore;
+			public @S(70) @OPT RPG_Literal skipAfter;
 			
 			public static class RPG_O_Output_Program_Record_Id_Piece1_III extends RPG_O_Output_Program_Record_Id_Piece1
 			{
@@ -172,9 +172,9 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		
 		public abstract static class RPG_O_Output_Program_Record_Id_Piece2 extends TokenSequence
 		{
-			public RPG_Blanks blank1;
-			public RPG_KeywordChoice logicalRelation;
-			public RPG_Blanks blank2;
+			public @S(10) RPG_Blanks blank1;
+			public @S(20) RPG_KeywordChoice logicalRelation;
+			public @S(30) RPG_Blanks blank2;
 			
 			public static class RPG_O_Output_Program_Record_Id_Piece2_III extends RPG_O_Output_Program_Record_Id_Piece2
 			{
@@ -199,9 +199,9 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		
 		public abstract static class RPG_O_Output_Program_Record_Id_Piece3 extends TokenSequence
 		{
-			public RPG_Blanks blank1;
-			public RPG_KeywordChoice logicalRelation;
-			public RPG_Blanks blank2;
+			public @S(10) RPG_Blanks blank1;
+			public @S(20) RPG_KeywordChoice logicalRelation;
+			public @S(30) RPG_Blanks blank2;
 			
 			public static class RPG_O_Output_Program_Record_Id_Piece3_III extends RPG_O_Output_Program_Record_Id_Piece3
 			{
@@ -227,16 +227,16 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 	
 	public abstract static class RPG_O_Output_Program_Field_Descr extends TokenSequence
 	{
-		public RPG_Keyword O = new RPG_Keyword(6, 6, "O");
-		public RPG_Blanks blank1;
-		public @OPT RPG_Literal indicators;
-		public RPG_Literal fieldName;
-		public @OPT RPG_Literal editCodes;
-		public @OPT RPG_Keyword blankAfter;
-		public @OPT RPG_Literal endPosition;
-		public @OPT RPG_KeywordChoice dataFormat;
-		public @OPT RPG_Literal constantOrEditWord;
-		public RPG_Blanks blank2;
+		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
+		public @S(20) RPG_Blanks blank1;
+		public @S(30) @OPT RPG_Literal indicators;
+		public @S(40) RPG_Literal fieldName;
+		public @S(50) @OPT RPG_Literal editCodes;
+		public @S(60) @OPT RPG_Keyword blankAfter;
+		public @S(70) @OPT RPG_Literal endPosition;
+		public @S(80) @OPT RPG_KeywordChoice dataFormat;
+		public @S(90) @OPT RPG_Literal constantOrEditWord;
+		public @S(100) RPG_Blanks blank2;
 
 		public static class RPG_O_Output_Program_Field_Descr_III extends RPG_O_Output_Program_Field_Descr
 		{
@@ -273,12 +273,12 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 	
 	public abstract static class RPG_O_Output_External_Record_Id extends TokenSequence
 	{
-		public RPG_Keyword O = new RPG_Keyword(6, 6, "O");
-		public RPG_Literal recordName;
-		public RPG_O_Output_External_Record_Id_Piece piece;
-		public @OPT RPG_Literal indicators;
-		public @OPT RPG_Literal exceptName;
-		public RPG_Blanks blank1;
+		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
+		public @S(20) RPG_Literal recordName;
+		public @S(30) RPG_O_Output_External_Record_Id_Piece piece;
+		public @S(40) @OPT RPG_Literal indicators;
+		public @S(50) @OPT RPG_Literal exceptName;
+		public @S(60) RPG_Blanks blank1;
 		
 		public static class RPG_O_Output_External_Record_Id_III extends RPG_O_Output_External_Record_Id
 		{
@@ -335,10 +335,10 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		
 		public abstract static class RPG_O_Output_External_Record_Id_Piece1 extends TokenSequence
 		{
-			public RPG_Literal filename;
-			public RPG_KeywordChoice type;
-			public RPG_Keyword release;
-			public RPG_Blanks blank2;
+			public @S(10) RPG_Literal filename;
+			public @S(20) RPG_KeywordChoice type;
+			public @S(30) RPG_Keyword release;
+			public @S(40) RPG_Blanks blank2;
 			
 			public static class RPG_O_Output_External_Record_Id_Piece1_III extends RPG_O_Output_External_Record_Id_Piece1
 			{
@@ -365,9 +365,9 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		
 		public abstract static class RPG_O_Output_External_Record_Id_Piece2 extends TokenSequence
 		{
-			public RPG_Blanks blank1;
-			public RPG_KeywordChoice logicalRelation;
-			public RPG_Blanks blank2;
+			public @S(10) RPG_Blanks blank1;
+			public @S(20) RPG_KeywordChoice logicalRelation;
+			public @S(30) RPG_Blanks blank2;
 			
 			public static class RPG_O_Output_External_Record_Id_Piece2_III extends RPG_O_Output_External_Record_Id_Piece2
 			{
@@ -392,9 +392,9 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		
 		public abstract static class RPG_O_Output_External_Record_Id_Piece3 extends TokenSequence
 		{
-			public RPG_Blanks blank1;
-			public RPG_KeywordChoice logicalRelation;
-			public RPG_Blanks blank2;
+			public @S(10) RPG_Blanks blank1;
+			public @S(20) RPG_KeywordChoice logicalRelation;
+			public @S(30) RPG_Blanks blank2;
 			
 			public static class RPG_O_Output_External_Record_Id_Piece3_III extends RPG_O_Output_External_Record_Id_Piece3
 			{
@@ -420,13 +420,13 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 	
 	public abstract static class RPG_O_Output_External_Field_Descr extends TokenSequence
 	{
-		public RPG_Keyword O = new RPG_Keyword(6, 6, "O");
-		public RPG_Blanks blank1;
-		public @OPT RPG_Literal indicators;
-		public RPG_Literal fieldName;
-		public RPG_Blanks blank2;
-		public @OPT RPG_Keyword blankAfter;
-		public RPG_Blanks blank3;
+		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
+		public @S(20) RPG_Blanks blank1;
+		public @S(30) @OPT RPG_Literal indicators;
+		public @S(40) RPG_Literal fieldName;
+		public @S(50) RPG_Blanks blank2;
+		public @S(60) @OPT RPG_Keyword blankAfter;
+		public @S(70) RPG_Blanks blank3;
 
 		public static class RPG_O_Output_External_Field_Descr_III extends RPG_O_Output_External_Field_Descr
 		{

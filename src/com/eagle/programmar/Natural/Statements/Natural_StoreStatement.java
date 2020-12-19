@@ -10,10 +10,10 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_StoreStatement extends TokenSequence
 {
-	public @OPT Natural_Label label;
-	public @DOC("sm/store.htm") Natural_Keyword STORE = new Natural_Keyword("STORE");
-	public @OPT Natural_Keyword RECORD = new Natural_Keyword("RECORD");
-	public @OPT Natural_Keyword IN = new Natural_Keyword("IN");
-	public @OPT Natural_Keyword FILE = new Natural_Keyword("FILE");
-	public Natural_Identifier_Reference viewName;
+	public @S(10) @OPT Natural_Label label;
+	public @S(20) @DOC("sm/store.htm") Natural_Keyword STORE = new Natural_Keyword("STORE");
+	public @S(30) @OPT Natural_Keyword RECORD = new Natural_Keyword("RECORD");
+	public @S(40) @OPT Natural_Keyword IN = new Natural_Keyword("IN");
+	public @S(50) @OPT Natural_Keyword FILE = new Natural_Keyword("FILE");
+	public @S(60) Natural_Identifier_Reference viewName;
 }

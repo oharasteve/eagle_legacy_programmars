@@ -12,15 +12,15 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_Application_Actions extends Gupta_Declaration
 {
-	public Gupta_Keyword Application = new Gupta_Keyword("Application");
-	public Gupta_Keyword Actions = new Gupta_Keyword("Actions");
+	public @S(10) Gupta_Keyword Application = new Gupta_Keyword("Application");
+	public @S(20) Gupta_Keyword Actions = new Gupta_Keyword("Actions");
 	
-	public @INDENT TokenList<Gupta_OnEvent> onEvents;
+	public @S(30) @INDENT TokenList<Gupta_OnEvent> onEvents;
 	
 	public static class Gupta_OnEvent extends TokenSequence
 	{
-		public Gupta_Keyword On = new Gupta_Keyword("On");
-		public Gupta_KeywordChoice eventName = new Gupta_KeywordChoice("SAM_AppStartup");
-		public @INDENT TokenList<Gupta_Statement> actions;
+		public @S(10) Gupta_Keyword On = new Gupta_Keyword("On");
+		public @S(20) Gupta_KeywordChoice eventName = new Gupta_KeywordChoice("SAM_AppStartup");
+		public @S(30) @INDENT TokenList<Gupta_Statement> actions;
 	}
 }

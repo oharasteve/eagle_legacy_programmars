@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Raise_Statement extends TokenSequence
 {
-	public Delphi_Keyword RAISE = new Delphi_Keyword("Raise");
-	public Delphi_Expression exception;
+	public @S(10) Delphi_Keyword RAISE = new Delphi_Keyword("Raise");
+	public @S(20) Delphi_Expression exception;
 }

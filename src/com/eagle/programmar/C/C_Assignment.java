@@ -9,12 +9,12 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class C_Assignment extends TokenSequence
 {
-	public C_Expression expr;
-	public @OPT TokenList<C_MoreAssignments> more;
+	public @S(10) C_Expression expr;
+	public @S(20) @OPT TokenList<C_MoreAssignments> more;
 	
 	public static class C_MoreAssignments extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public C_Expression expr;
+		public @S(10) PunctuationComma comma;
+		public @S(20) C_Expression expr;
 	}
 }

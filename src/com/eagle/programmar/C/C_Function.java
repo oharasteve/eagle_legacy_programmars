@@ -26,14 +26,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Function extends TokenSequence
 {
-	public @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
-	public @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
-	public @OPT C_Comment comment1;
-	public @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
-	public C_FunctionTypeName typeName;
-	public C_Function_ParameterDefs parameters;
-	public @OPT TokenList<C_Comment> comments2;
-	public C_FunctionBody body;
+	public @S(10) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
+	public @S(20) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(30) @OPT C_Comment comment1;
+	public @S(40) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(50) C_FunctionTypeName typeName;
+	public @S(60) C_Function_ParameterDefs parameters;
+	public @S(70) @OPT TokenList<C_Comment> comments2;
+	public @S(80) C_FunctionBody body;
 	
 	public static class C_FunctionTypeName extends TokenChooser
 	{
@@ -41,20 +41,20 @@ public class C_Function extends TokenSequence
 		
 		public @CHOICE static class C_Function_TypeAndName extends TokenSequence
 		{
-			public C_Type ctype;
-			public @OPT TokenList<C_Comment> comments1;
-			public C_Function_Definition functionName;
+			public @S(10) C_Type ctype;
+			public @S(20) @OPT TokenList<C_Comment> comments1;
+			public @S(30) C_Function_Definition functionName;
 		}
 	}
 	
 	public static class C_Function_ParameterDefs extends TokenSequence
 	{
-		public @NOSPACE PunctuationLeftParen leftParen;
-		public @OPT C_Comment comment1;
-		public @OPT @NOSPACE C_FunctionParameter param;
-		public @OPT C_Comment comment2;
-		public @OPT @NOSPACE TokenList<C_MoreParameterDefs> moreParams;
-		public @NOSPACE PunctuationRightParen rightParen;
+		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(20) @OPT C_Comment comment1;
+		public @S(30) @OPT @NOSPACE C_FunctionParameter param;
+		public @S(40) @OPT C_Comment comment2;
+		public @S(50) @OPT @NOSPACE TokenList<C_MoreParameterDefs> moreParams;
+		public @S(60) @NOSPACE PunctuationRightParen rightParen;
 	}
 
 	public static class C_FunctionParameter extends TokenChooser
@@ -63,53 +63,53 @@ public class C_Function extends TokenSequence
 		
 		public @CHOICE static class C_FunctionRegularParameter extends TokenSequence
 		{
-			public @NOSPACE @OPT C_Keyword CONST = new C_Keyword("const");
-			public C_Type ctype;
-			public @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
-			public @OPT C_Variable_Definition id;
-			public @OPT TokenList<C_Subscript> subscripts;
-			public @OPT C_Comment comment;
+			public @S(10) @NOSPACE @OPT C_Keyword CONST = new C_Keyword("const");
+			public @S(20) C_Type ctype;
+			public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
+			public @S(40) @OPT C_Variable_Definition id;
+			public @S(50) @OPT TokenList<C_Subscript> subscripts;
+			public @S(60) @OPT C_Comment comment;
 		}
 		
 		public @CHOICE static class C_FunctionDotDotDotParameter extends TokenSequence
 		{
-			public C_Punctuation dotDotDot = new C_Punctuation("...");
+			public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");
 		}
 	}
 		
 	public static class C_MoreParameterDefs extends TokenSequence
 	{
-		public @NOSPACE PunctuationComma comma;
-		public @OPT C_Comment comment;
-		public C_FunctionParameter param;
+		public @S(10) @NOSPACE PunctuationComma comma;
+		public @S(20) @OPT C_Comment comment;
+		public @S(30) C_FunctionParameter param;
 	}
 	
 	public static class C_FunctionBody extends TokenChooser
 	{
 		public @CHOICE static class C_FunctionNoBody extends TokenSequence
 		{
-			public @OPT C_FunctionAssembler assembler;
-			public @OPT TokenList<C_FunctionAttributes> attributes;
-			public PunctuationSemicolon semicolon;
+			public @S(10) @OPT C_FunctionAssembler assembler;
+			public @S(20) @OPT TokenList<C_FunctionAttributes> attributes;
+			public @S(30) PunctuationSemicolon semicolon;
 			
 			public static class C_FunctionAssembler extends TokenSequence
 			{
-				public C_Keyword ASM = new C_Keyword("__asm__");
-				public PunctuationLeftParen leftParen;
-				public C_Literal blank;
-				public C_Literal functionName;
-				public PunctuationRightParen righttParen;
+				public @S(10) C_Keyword ASM = new C_Keyword("__asm__");
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) C_Literal blank;
+				public @S(40) C_Literal functionName;
+				public @S(50) PunctuationRightParen righttParen;
 			}
 			
 			public static class C_FunctionAttributes extends TokenSequence
 			{
-				public C_Keyword ATTRIBUTE = new C_Keyword("__attribute__");
-				public PunctuationLeftParen leftParen1;
-				public PunctuationLeftParen leftParen2;
-				public C_FunctionAttribute attrib;
-				public @OPT TokenList<C_FunctionMoreAttributes> more;
-				public PunctuationRightParen righttParen1;
-				public PunctuationRightParen righttParen2;
+				public @S(10) C_Keyword ATTRIBUTE = new C_Keyword("__attribute__");
+				public @S(20) PunctuationLeftParen leftParen1;
+				public @S(30) PunctuationLeftParen leftParen2;
+				public @S(40) C_FunctionAttribute attrib;
+				public @S(50) @OPT TokenList<C_FunctionMoreAttributes> more;
+				public @S(60) PunctuationRightParen righttParen1;
+				public @S(70) PunctuationRightParen righttParen2;
 				
 				public static class C_FunctionAttribute extends TokenChooser
 				{
@@ -126,48 +126,48 @@ public class C_Function extends TokenSequence
 					
 					public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence
 					{
-						public C_Keyword FORMAT = new C_Keyword("__format__");
-						public PunctuationLeftParen leftParen;
-						public C_KeywordChoice FMTS = new C_KeywordChoice("__printf__", "__scanf__", "__strfmon__");
-						public PunctuationComma comma1;
-						public C_Number number1;
-						public PunctuationComma comma2;
-						public C_Number number2;
-						public PunctuationRightParen righttParen;
+						public @S(10) C_Keyword FORMAT = new C_Keyword("__format__");
+						public @S(20) PunctuationLeftParen leftParen;
+						public @S(30) C_KeywordChoice FMTS = new C_KeywordChoice("__printf__", "__scanf__", "__strfmon__");
+						public @S(40) PunctuationComma comma1;
+						public @S(50) C_Number number1;
+						public @S(60) PunctuationComma comma2;
+						public @S(70) C_Number number2;
+						public @S(80) PunctuationRightParen righttParen;
 					}
 					
 					public @CHOICE static class C_FunctionAttributeNonNull extends TokenSequence
 					{
-						public C_Keyword NONNULL = new C_Keyword("__nonnull__");
-						public PunctuationLeftParen leftParen;
-						public SeparatedList<C_Number, PunctuationComma> numbers;
-						public PunctuationRightParen righttParen;
+						public @S(10) C_Keyword NONNULL = new C_Keyword("__nonnull__");
+						public @S(20) PunctuationLeftParen leftParen;
+						public @S(30) SeparatedList<C_Number, PunctuationComma> numbers;
+						public @S(40) PunctuationRightParen righttParen;
 					}
 
 				
 					public @CHOICE static class C_FunctionAttributeAllocSize extends TokenSequence
 					{
-						public C_Keyword NONNULL = new C_Keyword("__alloc_size__");
-						public PunctuationLeftParen leftParen;
-						public SeparatedList<C_Number, PunctuationComma> numbers;
-						public PunctuationRightParen righttParen;
+						public @S(10) C_Keyword NONNULL = new C_Keyword("__alloc_size__");
+						public @S(20) PunctuationLeftParen leftParen;
+						public @S(30) SeparatedList<C_Number, PunctuationComma> numbers;
+						public @S(40) PunctuationRightParen righttParen;
 					}
 				}
 				
 				public static class C_FunctionMoreAttributes extends TokenSequence
 				{
-					public PunctuationComma comma;
-					public C_FunctionAttribute attrib;
+					public @S(10) PunctuationComma comma;
+					public @S(20) C_FunctionAttribute attrib;
 				}
 			}
 		}
 		
 		public @CHOICE static class C_FunctionImplementation extends TokenSequence
 		{
-			public @INDENT PunctuationLeftBrace leftBrace;
-			public @OPT TokenList<C_StatementOrComment> elements;
-			public @OUTDENT PunctuationRightBrace rightBrace;
-			public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(20) @OPT TokenList<C_StatementOrComment> elements;
+			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 		}
 	}
 }

@@ -16,27 +16,27 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_DeclareGeneric extends TokenSequence
 {
-	public PLI_Keyword DECLARE = new PLI_Keyword("DECLARE");
-	public PLI_Variable_Definition id;
-	public PLI_Keyword GENERIC = new PLI_Keyword("GENERIC");
-	public PunctuationLeftParen leftParen;
-	public PLI_GenericWhen when;
-	public @OPT TokenList<PLI_GenericMoreWhens> moreWhens;
-	public PunctuationRightParen rightParen;
-	public PunctuationSemicolon semicolon;
+	public @S(10) PLI_Keyword DECLARE = new PLI_Keyword("DECLARE");
+	public @S(20) PLI_Variable_Definition id;
+	public @S(30) PLI_Keyword GENERIC = new PLI_Keyword("GENERIC");
+	public @S(40) PunctuationLeftParen leftParen;
+	public @S(50) PLI_GenericWhen when;
+	public @S(60) @OPT TokenList<PLI_GenericMoreWhens> moreWhens;
+	public @S(70) PunctuationRightParen rightParen;
+	public @S(80) PunctuationSemicolon semicolon;
 	
 	public static class PLI_GenericWhen extends TokenSequence
 	{
-		public PLI_Identifier_Reference id;
-		public PLI_Keyword WHEN = new PLI_Keyword("WHEN");
-		public PunctuationLeftParen leftParen;
-		public @OPT SeparatedList<PLI_Type,PunctuationComma> types;
-		public PunctuationRightParen rightParen;
+		public @S(10) PLI_Identifier_Reference id;
+		public @S(20) PLI_Keyword WHEN = new PLI_Keyword("WHEN");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) @OPT SeparatedList<PLI_Type,PunctuationComma> types;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 	
 	public static class PLI_GenericMoreWhens extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public PLI_GenericWhen when;
+		public @S(10) PunctuationComma comma;
+		public @S(20) PLI_GenericWhen when;
 	}
 }

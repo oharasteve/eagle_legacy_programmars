@@ -10,13 +10,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class TCL_Variable extends TokenSequence
 {
-	public TCL_Identifier_Reference id;
-	public @OPT TCL_Subscript subscript;
+	public @S(10) TCL_Identifier_Reference id;
+	public @S(20) @OPT TCL_Subscript subscript;
 	
 	public static class TCL_Subscript extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public TCL_Expression expr;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) TCL_Expression expr;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 }

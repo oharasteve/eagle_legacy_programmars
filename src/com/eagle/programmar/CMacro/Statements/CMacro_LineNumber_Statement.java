@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_LineNumber_Statement extends TokenSequence
 {
-	public C_Punctuation pound = new C_Punctuation('#');
-	public C_Number lineNumber;
-	public C_Literal fileName;
-	public @OPT TokenList<C_Number> moreNumbers;
+	public @S(10) C_Punctuation pound = new C_Punctuation('#');
+	public @S(20) C_Number lineNumber;
+	public @S(30) C_Literal fileName;
+	public @S(40) @OPT TokenList<C_Number> moreNumbers;
 }

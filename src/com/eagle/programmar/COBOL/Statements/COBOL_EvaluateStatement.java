@@ -15,12 +15,12 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpseval.htm") COBOL_Keyword EVALUATE = new COBOL_Keyword("EVALUATE");
-	public COBOL_EvaluateWhat key;
-	public @OPT TokenList<COBOL_Comment> comments;
-	public @OPT TokenList<COBOL_EvaluateAlsoClause> alsos;
-	public TokenList<COBOL_EvaluateWhenClause> whens;
-	public @OPT COBOL_Keyword ENDEVALUATE = new COBOL_Keyword("END-EVALUATE");
+	public @S(10) @DOC("rlpseval.htm") COBOL_Keyword EVALUATE = new COBOL_Keyword("EVALUATE");
+	public @S(20) COBOL_EvaluateWhat key;
+	public @S(30) @OPT TokenList<COBOL_Comment> comments;
+	public @S(40) @OPT TokenList<COBOL_EvaluateAlsoClause> alsos;
+	public @S(50) TokenList<COBOL_EvaluateWhenClause> whens;
+	public @S(60) @OPT COBOL_Keyword ENDEVALUATE = new COBOL_Keyword("END-EVALUATE");
 	
 	public static class COBOL_EvaluateWhat extends TokenChooser
 	{
@@ -30,33 +30,33 @@ public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 		// Careful -- Condition has to precede Expression here.
 		public @CHOICE static class COBOL_EvaluateCondition extends TokenSequence
 		{
-			public COBOL_Expression cond;
+			public @S(10) COBOL_Expression cond;
 		}
 
 		public @CHOICE static class COBOL_EvaluateExpression extends TokenSequence
 		{
-			public COBOL_Expression expr;
-			public @OPT COBOL_EvaluateThru thru;
+			public @S(10) COBOL_Expression expr;
+			public @S(20) @OPT COBOL_EvaluateThru thru;
 			
 			public static class COBOL_EvaluateThru extends TokenSequence
 			{
-				public COBOL_Keyword THRU = new COBOL_Keyword("THRU");
-				public COBOL_Expression expr;
+				public @S(10) COBOL_Keyword THRU = new COBOL_Keyword("THRU");
+				public @S(20) COBOL_Expression expr;
 			}
 		}
 	}
 
 	public static class COBOL_EvaluateAlsoClause extends TokenSequence
 	{
-		public COBOL_Keyword ALSO = new COBOL_Keyword("ALSO");
-		public COBOL_EvaluateWhat value;
+		public @S(10) COBOL_Keyword ALSO = new COBOL_Keyword("ALSO");
+		public @S(20) COBOL_EvaluateWhat value;
 	}
 
 	public static class COBOL_EvaluateWhenClause extends TokenSequence
 	{
-		public COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
-		public COBOL_EvaluateWhat value;
-		public @OPT TokenList<COBOL_EvaluateAlsoClause> alsos;
-		public @OPT TokenList<COBOL_StatementOrComment> statements; 
+		public @S(10) COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
+		public @S(20) COBOL_EvaluateWhat value;
+		public @S(30) @OPT TokenList<COBOL_EvaluateAlsoClause> alsos;
+		public @S(40) @OPT TokenList<COBOL_StatementOrComment> statements; 
 	}
 }

@@ -13,10 +13,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_WhileStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.12") CSharp_Keyword WHILE = new CSharp_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE CSharp_Expression condition;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @OPT CSharp_Comment comment;
-	public CSharp_Statement whileStatement;
+	public @S(10) @NEWLINE @DOC("statements.html#14.12") CSharp_Keyword WHILE = new CSharp_Keyword("while");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_Expression condition;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) @OPT CSharp_Comment comment;
+	public @S(60) CSharp_Statement whileStatement;
 }

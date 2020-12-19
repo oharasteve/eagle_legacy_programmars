@@ -8,6 +8,6 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_Window_Defaults extends Gupta_Declaration
 {
-	public Gupta_Keyword Window = new Gupta_Keyword("Window");
-	public Gupta_Keyword Defaults = new Gupta_Keyword("Defaults");
+	public @S(10) Gupta_Keyword Window = new Gupta_Keyword("Window");
+	public @S(20) Gupta_Keyword Defaults = new Gupta_Keyword("Defaults");
 }

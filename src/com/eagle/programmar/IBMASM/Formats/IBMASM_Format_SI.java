@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_SI extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"CLI",		// Compare logical immediate
 		"MVI",		// Move immediate
 		"NI",		// And immediate
@@ -21,8 +21,8 @@ public class IBMASM_Format_SI extends TokenSequence
 		"XI"		// Exclusive or immediate
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Address address;
-	public PunctuationComma comma2;
-	public IBMASM_Immediate immediate;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Address address;
+	public @S(40) PunctuationComma comma2;
+	public @S(50) IBMASM_Immediate immediate;
 }

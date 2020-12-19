@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_FreeStatement extends TokenSequence
 {
-	public @DOC("7.23") PLI_Keyword FREE = new PLI_Keyword("FREE");
-	public SeparatedList<PLI_Identifier_Reference,PunctuationComma> ids;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.23") PLI_Keyword FREE = new PLI_Keyword("FREE");
+	public @S(20) SeparatedList<PLI_Identifier_Reference,PunctuationComma> ids;
+	public @S(30) PunctuationSemicolon semicolon;
 }

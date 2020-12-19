@@ -10,5 +10,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class RPG_U_AutoReport_Specification extends TokenSequence
 {
-	public RPG_Keyword U = new RPG_Keyword(6, 6, "U");
+	public @S(10) RPG_Keyword U = new RPG_Keyword(6, 6, "U");
 }

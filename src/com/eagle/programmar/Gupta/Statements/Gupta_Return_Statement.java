@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_Return_Statement extends TokenSequence
 {
-	public Gupta_Keyword Return = new Gupta_Keyword("Return");
-	public Gupta_Expression expression;
+	public @S(10) Gupta_Keyword Return = new Gupta_Keyword("Return");
+	public @S(20) Gupta_Expression expression;
 }

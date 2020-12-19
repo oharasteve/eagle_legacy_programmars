@@ -21,5 +21,5 @@ public class JavaP_Program extends EagleLanguage
 		return "TBD";
 	}
 	
-	public TokenList<JavaP_Statement> statements;
+	public @S(10) TokenList<JavaP_Statement> statements;
 }

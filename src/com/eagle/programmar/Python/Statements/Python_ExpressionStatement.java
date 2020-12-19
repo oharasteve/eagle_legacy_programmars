@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_ExpressionStatement extends TokenSequence
 {
-	public @NOSPACE Python_Expression expression;
-	public @OPT Python_Comment comment;
+	public @S(10) @NOSPACE Python_Expression expression;
+	public @S(20) @OPT Python_Comment comment;
 }

@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_SectionDirective extends TokenSequence
 {
-	public IntelASM_Keyword SECTION = new IntelASM_Keyword("SECTION_TEXT");
+	public @S(10) IntelASM_Keyword SECTION = new IntelASM_Keyword("SECTION_TEXT");
 }

@@ -17,16 +17,16 @@ public class HTML_Script extends TokenChooser
 {
 	public @CHOICE static class HTML_ScriptWithBody extends TokenSequence
 	{
-		public @INDENT HTML_StartScript startScript;
-		public HTML_ScriptBody body;
-		public @OUTDENT HTML_EndScript endScript;
+		public @S(10) @INDENT HTML_StartScript startScript;
+		public @S(20) HTML_ScriptBody body;
+		public @S(30) @OUTDENT HTML_EndScript endScript;
 		
 		public static class HTML_StartScript extends TokenSequence
 		{
-			public HTML_Punctuation startTag = new HTML_Punctuation('<');
-			public @NOSPACE @DOC("html_scripts.asp") HTML_Keyword SCRIPT = new HTML_Keyword("script");
-			public @OPT TokenList<HTML_Attribute> attributes;
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation('<');
+			public @S(20) @NOSPACE @DOC("html_scripts.asp") HTML_Keyword SCRIPT = new HTML_Keyword("script");
+			public @S(30) @OPT TokenList<HTML_Attribute> attributes;
+			public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 		
 		public static class HTML_ScriptBody extends TokenChooser
@@ -37,17 +37,17 @@ public class HTML_Script extends TokenChooser
 
 		public static class HTML_EndScript extends TokenSequence
 		{
-			public HTML_Punctuation startTag = new HTML_Punctuation("</");
-			public @NOSPACE HTML_Keyword SCRIPT = new HTML_Keyword("script");
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+			public @S(20) @NOSPACE HTML_Keyword SCRIPT = new HTML_Keyword("script");
+			public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 	}
 	
 	public @CHOICE static class HTMLScriptNoBody extends TokenSequence
 	{
-		public HTML_Punctuation startTag = new HTML_Punctuation('<');
-		public @NOSPACE @DOC("html_scripts.asp") HTML_Keyword script = new HTML_Keyword("script");
-		public @OPT TokenList<HTML_Attribute> attributes;
-		public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation("/>");
+		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation('<');
+		public @S(20) @NOSPACE @DOC("html_scripts.asp") HTML_Keyword script = new HTML_Keyword("script");
+		public @S(30) @OPT TokenList<HTML_Attribute> attributes;
+		public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation("/>");
 	}
 }

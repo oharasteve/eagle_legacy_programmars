@@ -40,9 +40,9 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 	
 	public @CHOICE static class CSharp_StatementBlock extends TokenSequence
 	{
-		public @INDENT PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<CSharp_StatementOrComment> statements;
-		public @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<CSharp_StatementOrComment> statements;
+		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 		
 		public static class CSharp_StatementOrComment extends TokenChooser
 		{

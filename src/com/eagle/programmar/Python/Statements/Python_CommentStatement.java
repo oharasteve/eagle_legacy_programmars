@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_CommentStatement extends TokenSequence
 {
-	public Python_Comment comment;
+	public @S(10) Python_Comment comment;
 }

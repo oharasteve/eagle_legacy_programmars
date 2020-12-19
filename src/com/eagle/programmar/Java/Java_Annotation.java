@@ -19,17 +19,17 @@ public class Java_Annotation extends TokenChooser
 {
 	public @CHOICE static class Java_AnnotationCall extends TokenSequence
 	{
-		public Java_Punctuation atSign = new Java_Punctuation('@');
-		public @NOSPACE Java_Variable var;
-		public @NOSPACE PunctuationLeftParen leftParen;
-		public @OPT @NOSPACE SeparatedList<Java_Expression, PunctuationComma> expressions;
-		public @NOSPACE PunctuationRightParen rightParen;
+		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
+		public @S(20) @NOSPACE Java_Variable var;
+		public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(40) @OPT @NOSPACE SeparatedList<Java_Expression, PunctuationComma> expressions;
+		public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
 	public @CHOICE static class Java_AnnotationCall2 extends TokenSequence
 	{
-		public Java_Punctuation atSign = new Java_Punctuation('@');
-		public @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> idList;
-		public @OPT TokenList<Java_Comment> comments;
+		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
+		public @S(20) @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> idList;
+		public @S(30) @OPT TokenList<Java_Comment> comments;
 	}
 }

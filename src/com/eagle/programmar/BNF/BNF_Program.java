@@ -15,5 +15,5 @@ public class BNF_Program extends EagleLanguage
 		super(NAME, new BNF_Syntax());
 	}
 
-	public TokenList<BNF_Rule> rules;
+	public @S(10) TokenList<BNF_Rule> rules;
 }

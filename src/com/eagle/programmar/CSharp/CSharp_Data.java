@@ -16,40 +16,40 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Data extends TokenSequence
 {
-	public @NEWLINE CSharp_DataBeforeSemicolon dataBody;
-	public @NOSPACE PunctuationSemicolon semicolon;
-	public @OPT TokenList<CSharp_Comment> comments;
+	public @S(10) @NEWLINE CSharp_DataBeforeSemicolon dataBody;
+	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(30) @OPT TokenList<CSharp_Comment> comments;
 
 	public static class CSharp_DataBeforeSemicolon extends TokenSequence
 	{
-		public @OPT TokenList<CSharp_Annotation> annotation1;
-		public @OPT TokenList<CSharp_DataModifier> modifiers;
-		public @OPT TokenList<CSharp_Annotation> annotation2;
-		public CSharp_Type jtype;
-		public CSharp_Variable_Definition id;
-		public @OPT PunctuationLeftBracket leftBracket;
-		public @OPT PunctuationRightBracket rightBracket;
-		public @OPT CSharp_DataInitialValue initialValue;
-		public @OPT TokenList<CSharp_MoreIdentifiers> moreIds;
+		public @S(10) @OPT TokenList<CSharp_Annotation> annotation1;
+		public @S(20) @OPT TokenList<CSharp_DataModifier> modifiers;
+		public @S(30) @OPT TokenList<CSharp_Annotation> annotation2;
+		public @S(40) CSharp_Type jtype;
+		public @S(50) CSharp_Variable_Definition id;
+		public @S(60) @OPT PunctuationLeftBracket leftBracket;
+		public @S(70) @OPT PunctuationRightBracket rightBracket;
+		public @S(80) @OPT CSharp_DataInitialValue initialValue;
+		public @S(90) @OPT TokenList<CSharp_MoreIdentifiers> moreIds;
 	}
 	
 	public static class CSharp_DataModifier extends TokenSequence
 	{
-		public CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
+		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
 	
 	public static class CSharp_DataInitialValue extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public CSharp_Expression expression;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) CSharp_Expression expression;
 	}
 	
 	public static class CSharp_MoreIdentifiers extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public CSharp_Variable_Definition id;
-		public @OPT PunctuationLeftBracket leftBracket;
-		public @OPT PunctuationRightBracket rightBracket;
-		public @OPT CSharp_DataInitialValue initialValue;
+		public @S(10) PunctuationComma comma;
+		public @S(20) CSharp_Variable_Definition id;
+		public @S(30) @OPT PunctuationLeftBracket leftBracket;
+		public @S(40) @OPT PunctuationRightBracket rightBracket;
+		public @S(50) @OPT CSharp_DataInitialValue initialValue;
 	}
 }

@@ -13,13 +13,13 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_ForStatement extends TokenSequence
 {
-	public @DOC("control-structures.for.php") Perl_Keyword FOR = new Perl_Keyword("for");
-	public PunctuationLeftParen leftParen;
-	public @OPT Perl_Expression initExpr;
-	public @OPT PunctuationSemicolon semicolon1;
-	public @OPT Perl_Expression testExpr;
-	public @OPT PunctuationSemicolon semicolon2;
-	public @OPT Perl_Expression incrExpr;
-	public PunctuationRightParen rightParen;
-	public Perl_Statement stmt;
+	public @S(10) @DOC("control-structures.for.php") Perl_Keyword FOR = new Perl_Keyword("for");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @OPT Perl_Expression initExpr;
+	public @S(40) @OPT PunctuationSemicolon semicolon1;
+	public @S(50) @OPT Perl_Expression testExpr;
+	public @S(60) @OPT PunctuationSemicolon semicolon2;
+	public @S(70) @OPT Perl_Expression incrExpr;
+	public @S(80) PunctuationRightParen rightParen;
+	public @S(90) Perl_Statement stmt;
 }

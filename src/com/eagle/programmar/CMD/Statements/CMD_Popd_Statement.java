@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Popd_Statement extends TokenSequence
 {
-	public @DOC("popd.mspx") CMD_Keyword POPD = new CMD_Keyword("popd");
+	public @S(10) @DOC("popd.mspx") CMD_Keyword POPD = new CMD_Keyword("popd");
 }

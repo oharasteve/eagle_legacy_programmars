@@ -14,11 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_WhileStatement extends TokenSequence
 {
-	public AWK_Keyword WHILE = new AWK_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public AWK_Expression condition;
-	public PunctuationRightParen rightParen;
-	public AWK_WhileBlock block;
+	public @S(10) AWK_Keyword WHILE = new AWK_Keyword("while");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) AWK_Expression condition;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) AWK_WhileBlock block;
 	
 	public static class AWK_WhileBlock extends TokenChooser
 	{

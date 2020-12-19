@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_CommitStatement extends TokenSequence
 {
-	public SQL_Keyword COMMIT = new SQL_Keyword("COMMIT");
-	public PunctuationSemicolon semicolon;
+	public @S(10) SQL_Keyword COMMIT = new SQL_Keyword("COMMIT");
+	public @S(20) PunctuationSemicolon semicolon;
 }

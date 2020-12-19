@@ -52,8 +52,8 @@ public class CSharp_Program extends EagleLanguage
 		"virtual"
 	}; 
 
-	public @OPT @NEWLINE TokenList<CSharp_Comment> comments1;
-	public @BLANKLINE TokenList<CSharp_NamespaceOrClassEntry> myClasses;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comments1;
+	public @S(20) @BLANKLINE TokenList<CSharp_NamespaceOrClassEntry> myClasses;
 	
 	public static class CSharp_NamespaceOrClassEntry extends TokenChooser
 	{
@@ -66,25 +66,25 @@ public class CSharp_Program extends EagleLanguage
 
 	public static class CSharp_Using extends TokenSequence
 	{
-		public CSharp_Keyword USING = new CSharp_Keyword("using");
-		public SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
-		public @OPT CSharp_UsingEquals alternateName;
-		public PunctuationSemicolon semicolon;
+		public @S(10) CSharp_Keyword USING = new CSharp_Keyword("using");
+		public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
+		public @S(30) @OPT CSharp_UsingEquals alternateName;
+		public @S(40) PunctuationSemicolon semicolon;
 
 		public static class CSharp_UsingEquals extends TokenSequence
 		{
-			public PunctuationEquals equals;
-			public SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
+			public @S(10) PunctuationEquals equals;
+			public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
 		}
 	}
 	
 	public static class CSharp_Namespace extends TokenSequence
 	{
-		public CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
-		public SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
-		public PunctuationLeftBrace leftBrace;
-		public TokenList<CSharp_ProgramElems> elems; 
-		public PunctuationRightBrace rightBrace;
+		public @S(10) CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
+		public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
+		public @S(30) PunctuationLeftBrace leftBrace;
+		public @S(40) TokenList<CSharp_ProgramElems> elems; 
+		public @S(50) PunctuationRightBrace rightBrace;
 	}
 	
 	public static class CSharp_ProgramElems extends TokenChooser

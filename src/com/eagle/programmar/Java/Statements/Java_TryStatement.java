@@ -24,52 +24,52 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_TryStatement extends TokenSequence
 {
-	public @OPT @NEWLINE Java_Label label;
-	public @DOC("statements.html#14.20") Java_Keyword TRY = new Java_Keyword("try");
-	public @OPT Java_TryResources resources;
-	public @INDENT PunctuationLeftBrace leftBrace;
-	public TokenList<Java_StatementOrComment> statements;
-	public @OUTDENT PunctuationRightBrace rightBrace;
-	public @OPT TokenList<Java_Comment> comments;
-	public @OPT TokenList<Java_CatchBlock> catchBlocks;
-	public @OPT Java_FinallyBlock finallyBlock;
+	public @S(10) @OPT @NEWLINE Java_Label label;
+	public @S(20) @DOC("statements.html#14.20") Java_Keyword TRY = new Java_Keyword("try");
+	public @S(30) @OPT Java_TryResources resources;
+	public @S(40) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(50) TokenList<Java_StatementOrComment> statements;
+	public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(70) @OPT TokenList<Java_Comment> comments;
+	public @S(80) @OPT TokenList<Java_CatchBlock> catchBlocks;
+	public @S(90) @OPT Java_FinallyBlock finallyBlock;
 	
 	public static class Java_CatchBlock extends TokenSequence
 	{
-		public @NEWLINE Java_Keyword CATCH = new Java_Keyword("catch");
-		public PunctuationLeftParen leftParen;
-		public @OPT Java_Keyword FINAL = new Java_Keyword("final");
-		public @NOSPACE Java_Type jtype;
-		public @OPT TokenList<Java_MoreExceptions> more;
-		public Java_Identifier id;
-		public @NOSPACE PunctuationRightParen rightParen;
-		public Java_Statement catchStatement;
+		public @S(10) @NEWLINE Java_Keyword CATCH = new Java_Keyword("catch");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT Java_Keyword FINAL = new Java_Keyword("final");
+		public @S(40) @NOSPACE Java_Type jtype;
+		public @S(50) @OPT TokenList<Java_MoreExceptions> more;
+		public @S(60) Java_Identifier id;
+		public @S(70) @NOSPACE PunctuationRightParen rightParen;
+		public @S(80) Java_Statement catchStatement;
 		
 		public static class Java_MoreExceptions extends TokenSequence
 		{
-			public Java_Punctuation vertBar = new Java_Punctuation('|');
-			public Java_Type jtype;
+			public @S(10) Java_Punctuation vertBar = new Java_Punctuation('|');
+			public @S(20) Java_Type jtype;
 		}
 	}
 	
 	public static class Java_FinallyBlock extends TokenSequence
 	{
-		public @NEWLINE Java_Keyword FINALLY = new Java_Keyword("finally");
-		public Java_Statement finallyStatement;
+		public @S(10) @NEWLINE Java_Keyword FINALLY = new Java_Keyword("finally");
+		public @S(20) Java_Statement finallyStatement;
 	}
 	
 	public static class Java_TryResources extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<Java_TryResource,PunctuationSemicolon> resources;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<Java_TryResource,PunctuationSemicolon> resources;
+		public @S(30) PunctuationRightParen rightParen;
 		
 		public static class Java_TryResource extends TokenSequence
 		{
-			public @OPT Java_Keyword FINAL = new Java_Keyword("final");
-			public Java_Type jtype;
-			public Java_Variable_Definition id;
-			public Java_DataInitialValue initialValue;
+			public @S(10) @OPT Java_Keyword FINAL = new Java_Keyword("final");
+			public @S(20) Java_Type jtype;
+			public @S(30) Java_Variable_Definition id;
+			public @S(40) Java_DataInitialValue initialValue;
 		}
 	}
 }

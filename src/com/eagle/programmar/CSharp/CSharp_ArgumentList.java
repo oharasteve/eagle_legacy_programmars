@@ -11,15 +11,15 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CSharp_ArgumentList extends TokenSequence
 {
-	public @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out");
-	public CSharp_Expression arg;
-	public @OPT TokenList<CSharp_MoreArguments> moreArgs;
+	public @S(10) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out");
+	public @S(20) CSharp_Expression arg;
+	public @S(30) @OPT TokenList<CSharp_MoreArguments> moreArgs;
 	
 	public static class CSharp_MoreArguments extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out");
-		public CSharp_Expression arg;
-		public @OPT TokenList<CSharp_Comment> comments;
+		public @S(10) PunctuationComma comma;
+		public @S(20) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out");
+		public @S(30) CSharp_Expression arg;
+		public @S(40) @OPT TokenList<CSharp_Comment> comments;
 	}
 }

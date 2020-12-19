@@ -10,23 +10,23 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_ReinputStatement extends TokenSequence
 {
-	public @DOC("sm/reinput.htm") Natural_Keyword REINPUT = new Natural_Keyword("REINPUT");
-	public @OPT Natural_Keyword WITH = new Natural_Keyword("WITH");
-	public @OPT Natural_Keyword TEXT = new Natural_Keyword("TEXT");
-	public Natural_Literal literal;
-	public @OPT Natural_Reinput_Mark mark;
-	public @OPT Natural_Reinput_Alarm alarm;
+	public @S(10) @DOC("sm/reinput.htm") Natural_Keyword REINPUT = new Natural_Keyword("REINPUT");
+	public @S(20) @OPT Natural_Keyword WITH = new Natural_Keyword("WITH");
+	public @S(30) @OPT Natural_Keyword TEXT = new Natural_Keyword("TEXT");
+	public @S(40) Natural_Literal literal;
+	public @S(50) @OPT Natural_Reinput_Mark mark;
+	public @S(60) @OPT Natural_Reinput_Alarm alarm;
 	
 	public static class Natural_Reinput_Mark extends TokenSequence
 	{
-		public Natural_Keyword MARK = new Natural_Keyword("MARK");
-		public Natural_Number num;
+		public @S(10) Natural_Keyword MARK = new Natural_Keyword("MARK");
+		public @S(20) Natural_Number num;
 	}
 	
 	public static class Natural_Reinput_Alarm extends TokenSequence
 	{
-		public @OPT Natural_Keyword AND = new Natural_Keyword("AND");
-		public @OPT Natural_Keyword SOUND = new Natural_Keyword("SOUND");
-		public Natural_Keyword ALARM = new Natural_Keyword("ALARM");
+		public @S(10) @OPT Natural_Keyword AND = new Natural_Keyword("AND");
+		public @S(20) @OPT Natural_Keyword SOUND = new Natural_Keyword("SOUND");
+		public @S(30) Natural_Keyword ALARM = new Natural_Keyword("ALARM");
 	}
 }

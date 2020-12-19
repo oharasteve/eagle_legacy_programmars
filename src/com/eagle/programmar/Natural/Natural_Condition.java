@@ -16,9 +16,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Natural_Condition extends TokenSequence
 {
-	public Natural_Condition_Base baseExpr;
-	public @OPT Natural_OperatorExpression opExpr;
-	public @OPT TokenList<Natural_AndOr> clauses;
+	public @S(10) Natural_Condition_Base baseExpr;
+	public @S(20) @OPT Natural_OperatorExpression opExpr;
+	public @S(30) @OPT TokenList<Natural_AndOr> clauses;
 	
 	public static class Natural_Condition_Base extends TokenChooser
 	{
@@ -26,31 +26,31 @@ public class Natural_Condition extends TokenSequence
 		
 		public @CHOICE static class Natural_NotCondition extends TokenSequence
 		{
-			public Natural_Keyword NOT = new Natural_Keyword("NOT");
-			public PunctuationLeftParen leftParen;
-			public Natural_Condition cond;
-			public PunctuationRightParen rightParen;
+			public @S(10) Natural_Keyword NOT = new Natural_Keyword("NOT");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) Natural_Condition cond;
+			public @S(40) PunctuationRightParen rightParen;
 		}
 	}
 	
 	public static class Natural_AndOr extends TokenSequence
 	{
-		public @OPT Natural_Comment comment;
-		public Natural_KeywordChoice andOr = new Natural_KeywordChoice("AND", "OR");
-		public Natural_ConditionClause conditionClause;
+		public @S(10) @OPT Natural_Comment comment;
+		public @S(20) Natural_KeywordChoice andOr = new Natural_KeywordChoice("AND", "OR");
+		public @S(30) Natural_ConditionClause conditionClause;
 	}
 
 	public static class Natural_ConditionClause extends TokenSequence
 	{
-		public @OPT Natural_Condition_Base baseExpr;
-		public Natural_OperatorExpression opExpr;
+		public @S(10) @OPT Natural_Condition_Base baseExpr;
+		public @S(20) Natural_OperatorExpression opExpr;
 	}
 	
 	public static class Natural_OperatorExpression extends TokenSequence
 	{
-		public Natural_Relational_Operator operator;
-		public Natural_Expression expr;
-		public @OPT Natural_ThruCondition thru;
+		public @S(10) Natural_Relational_Operator operator;
+		public @S(20) Natural_Expression expr;
+		public @S(30) @OPT Natural_ThruCondition thru;
 		
 		public static class Natural_Relational_Operator extends TokenChooser
 		{
@@ -59,35 +59,35 @@ public class Natural_Condition extends TokenSequence
 			
 			public @CHOICE static class Natural_Not_Equals extends TokenSequence
 			{
-				public Natural_Keyword NOT = new Natural_Keyword("NOT");
-				public PunctuationEquals equals;
+				public @S(10) Natural_Keyword NOT = new Natural_Keyword("NOT");
+				public @S(20) PunctuationEquals equals;
 			}
 
 			public @CHOICE static class Natural_Less_Than extends TokenSequence
 			{
-				public Natural_Keyword LESS = new Natural_Keyword("LESS");
-				public Natural_Keyword THAN = new Natural_Keyword("THAN");
+				public @S(10) Natural_Keyword LESS = new Natural_Keyword("LESS");
+				public @S(20) Natural_Keyword THAN = new Natural_Keyword("THAN");
 			}
 			
 			public @CHOICE static class Natural_Greater_Than extends TokenSequence
 			{
-				public Natural_Keyword GREATER = new Natural_Keyword("GREATER");
-				public Natural_Keyword THAN = new Natural_Keyword("THAN");
+				public @S(10) Natural_Keyword GREATER = new Natural_Keyword("GREATER");
+				public @S(20) Natural_Keyword THAN = new Natural_Keyword("THAN");
 			}
 		}
 		
 		public static class Natural_ThruCondition extends TokenSequence
 		{
-			public Natural_Keyword THRU = new Natural_Keyword("THRU");
-			public Natural_Expression expr;
-			public @OPT Natural_ButNotCondition butNot;
+			public @S(10) Natural_Keyword THRU = new Natural_Keyword("THRU");
+			public @S(20) Natural_Expression expr;
+			public @S(30) @OPT Natural_ButNotCondition butNot;
 		}
 
 		public static class Natural_ButNotCondition extends TokenSequence
 		{
-			public Natural_Keyword BUT = new Natural_Keyword("BUT");
-			public Natural_Keyword NOT = new Natural_Keyword("NOT");
-			public Natural_Expression expr;
+			public @S(10) Natural_Keyword BUT = new Natural_Keyword("BUT");
+			public @S(20) Natural_Keyword NOT = new Natural_Keyword("NOT");
+			public @S(30) Natural_Expression expr;
 		}
 	}
 }

@@ -21,5 +21,5 @@ public class Powershell_Program extends EagleLanguage
 		return "TBD";
 	}
 	
-	public @OPT TokenList<Powershell_Statement> statements;
+	public @S(10) @OPT TokenList<Powershell_Statement> statements;
 }

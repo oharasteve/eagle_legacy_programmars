@@ -14,26 +14,26 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class Django_BlockTransControl extends TokenSequence
 {
-	public HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
-	public @OPT PunctuationHyphen dash1;
-	public Django_Keyword BLOCK = new Django_Keyword("blocktrans");
-	public @OPT Django_BlockControlWith with;
-	public @OPT PunctuationHyphen dash2;
-	public HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
+	public @S(10) HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
+	public @S(20) @OPT PunctuationHyphen dash1;
+	public @S(30) Django_Keyword BLOCK = new Django_Keyword("blocktrans");
+	public @S(40) @OPT Django_BlockControlWith with;
+	public @S(50) @OPT PunctuationHyphen dash2;
+	public @S(60) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
 	
-	public @OPT TokenList<Django_Element> html;
+	public @S(70) @OPT TokenList<Django_Element> html;
 
-	public HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
-	public @OPT PunctuationHyphen dash3;
-	public Django_Keyword ENDBLOCK = new Django_Keyword("endblocktrans");
-	public @OPT PunctuationHyphen dash4;
-	public HTML_Punctuation percentBrace2 = new HTML_Punctuation("%}");
+	public @S(80) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
+	public @S(90) @OPT PunctuationHyphen dash3;
+	public @S(100) Django_Keyword ENDBLOCK = new Django_Keyword("endblocktrans");
+	public @S(110) @OPT PunctuationHyphen dash4;
+	public @S(120) HTML_Punctuation percentBrace2 = new HTML_Punctuation("%}");
 	
 	public static class Django_BlockControlWith extends TokenSequence
 	{
-		public Django_Keyword WITH = new Django_Keyword("with");
-		public Django_Literal literal;
-		public Django_Keyword AS = new Django_Keyword("as");
-		public Django_Variable var;
+		public @S(10) Django_Keyword WITH = new Django_Keyword("with");
+		public @S(20) Django_Literal literal;
+		public @S(30) Django_Keyword AS = new Django_Keyword("as");
+		public @S(40) Django_Variable var;
 	}
 }

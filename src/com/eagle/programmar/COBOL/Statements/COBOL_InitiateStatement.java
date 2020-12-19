@@ -9,6 +9,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_InitiateStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword INITIATE = new COBOL_Keyword("INITIATE");
-	public COBOL_Identifier_Reference report;
+	public @S(10) COBOL_Keyword INITIATE = new COBOL_Keyword("INITIATE");
+	public @S(20) COBOL_Identifier_Reference report;
 }

@@ -32,21 +32,21 @@ public class SQL_CreateStatement extends TokenChooser
 {
 	public @CHOICE static class SQL_CreateTableStatement extends TokenSequence
 	{
-		public @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-		public SQL_Keyword TABLE = new SQL_Keyword("TABLE");
-		public SQL_Table_Definition table;
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<SQL_CreateField,PunctuationComma> createFields;
-		public @OPT TokenList<SQL_CreateFieldKey> keys;
-		public PunctuationRightParen rightParen;
-		public @OPT TokenList<SQL_CreateOption> options;
-		public PunctuationSemicolon semicolon;
+		public @S(10) @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
+		public @S(20) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
+		public @S(30) SQL_Table_Definition table;
+		public @S(40) PunctuationLeftParen leftParen;
+		public @S(50) SeparatedList<SQL_CreateField,PunctuationComma> createFields;
+		public @S(60) @OPT TokenList<SQL_CreateFieldKey> keys;
+		public @S(70) PunctuationRightParen rightParen;
+		public @S(80) @OPT TokenList<SQL_CreateOption> options;
+		public @S(90) PunctuationSemicolon semicolon;
 	
 		public static class SQL_CreateField extends TokenSequence
 		{
-			public SQL_Field_Definition fieldName;
-			public SQL_Type fieldType;
-			public @OPT TokenList<SQL_FieldOption> fieldOptions;
+			public @S(10) SQL_Field_Definition fieldName;
+			public @S(20) SQL_Type fieldType;
+			public @S(30) @OPT TokenList<SQL_FieldOption> fieldOptions;
 			
 			public static class SQL_FieldOption extends TokenChooser
 			{
@@ -54,46 +54,46 @@ public class SQL_CreateStatement extends TokenChooser
 				
 				public @CHOICE static class SQL_FieldNotNull extends TokenSequence
 				{
-					public @OPT SQL_KeywordChoice NOT = new SQL_KeywordChoice("NON", "NOT");
-					public SQL_Keyword NULL = new SQL_Keyword("NULL");
+					public @S(10) @OPT SQL_KeywordChoice NOT = new SQL_KeywordChoice("NON", "NOT");
+					public @S(20) SQL_Keyword NULL = new SQL_Keyword("NULL");
 				}
 				
 				public @CHOICE static class SQL_FieldDefault extends TokenSequence
 				{
-					public SQL_Keyword DEFAULT = new SQL_Keyword("DEFAULT");
-					public SQL_Expression value;
+					public @S(10) SQL_Keyword DEFAULT = new SQL_Keyword("DEFAULT");
+					public @S(20) SQL_Expression value;
 				}
 				
 				public @CHOICE static class SQL_FieldOnUpdate extends TokenSequence
 				{
-					public SQL_Keyword ON = new SQL_Keyword("ON");
-					public SQL_Keyword UPDATE = new SQL_Keyword("UPDATE");
-					public SQL_Expression value;
+					public @S(10) SQL_Keyword ON = new SQL_Keyword("ON");
+					public @S(20) SQL_Keyword UPDATE = new SQL_Keyword("UPDATE");
+					public @S(30) SQL_Expression value;
 				}
 				
 				public @CHOICE static class SQL_FieldComment extends TokenSequence
 				{
-					public SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
-					public SQL_Literal comment;
+					public @S(10) SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
+					public @S(20) SQL_Literal comment;
 				}
 				
 				public @CHOICE static class SQL_FieldKey extends TokenSequence
 				{
-					public SQL_Keyword PRIMARY = new SQL_Keyword("PRIMARY");
-					public SQL_Keyword KEY = new SQL_Keyword("KEY");
+					public @S(10) SQL_Keyword PRIMARY = new SQL_Keyword("PRIMARY");
+					public @S(20) SQL_Keyword KEY = new SQL_Keyword("KEY");
 				}
 				
 				public @CHOICE static class SQL_FieldCharSet extends TokenSequence
 				{
-					public SQL_Keyword CHARACTER = new SQL_Keyword("CHARACTER");
-					public SQL_Keyword SET = new SQL_Keyword("SET");
-					public SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8");
+					public @S(10) SQL_Keyword CHARACTER = new SQL_Keyword("CHARACTER");
+					public @S(20) SQL_Keyword SET = new SQL_Keyword("SET");
+					public @S(30) SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8");
 				}
 				
 				public @CHOICE static class SQL_FieldCollate extends TokenSequence
 				{
-					public SQL_Keyword COLLATE = new SQL_Keyword("COLLATE");
-					public SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8_unicode_ci");
+					public @S(10) SQL_Keyword COLLATE = new SQL_Keyword("COLLATE");
+					public @S(20) SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8_unicode_ci");
 				}
 			}
 		}
@@ -102,44 +102,44 @@ public class SQL_CreateStatement extends TokenChooser
 		{
 			public @CHOICE static class SQL_CreateFieldPrimaryKey extends TokenSequence
 			{
-				public PunctuationComma comma;
-				public SQL_Keyword PRIMARY = new SQL_Keyword("PRIMARY");
-				public SQL_Keyword KEY = new SQL_Keyword("KEY");
-				public PunctuationLeftParen leftParen;
-				public SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
-				public PunctuationRightParen rightParen;
+				public @S(10) PunctuationComma comma;
+				public @S(20) SQL_Keyword PRIMARY = new SQL_Keyword("PRIMARY");
+				public @S(30) SQL_Keyword KEY = new SQL_Keyword("KEY");
+				public @S(40) PunctuationLeftParen leftParen;
+				public @S(50) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
+				public @S(60) PunctuationRightParen rightParen;
 			}
 	
 			public @CHOICE static class SQL_CreateFieldPlainKey extends TokenSequence
 			{
-				public PunctuationComma comma;
-				public SQL_Keyword KEY = new SQL_Keyword("KEY");
-				public SQL_Key_Definition key;
-				public PunctuationLeftParen leftParen;
-				public SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
-				public PunctuationRightParen rightParen;
+				public @S(10) PunctuationComma comma;
+				public @S(20) SQL_Keyword KEY = new SQL_Keyword("KEY");
+				public @S(30) SQL_Key_Definition key;
+				public @S(40) PunctuationLeftParen leftParen;
+				public @S(50) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
+				public @S(60) PunctuationRightParen rightParen;
 			}
 	
 			public @CHOICE static class SQL_CreateFieldUniqueKey extends TokenSequence
 			{
-				public PunctuationComma comma;
-				public SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
-				public @OPT SQL_CreateFieldUniqueKeyName name;
-				public PunctuationLeftParen leftParen;
-				public SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
-				public PunctuationRightParen rightParen;
+				public @S(10) PunctuationComma comma;
+				public @S(20) SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
+				public @S(30) @OPT SQL_CreateFieldUniqueKeyName name;
+				public @S(40) PunctuationLeftParen leftParen;
+				public @S(50) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
+				public @S(60) PunctuationRightParen rightParen;
 
 				public static class SQL_CreateFieldUniqueKeyName extends TokenSequence
 				{
-					public SQL_Keyword KEY = new SQL_Keyword("KEY");
-					public SQL_Key_Definition key;
+					public @S(10) SQL_Keyword KEY = new SQL_Keyword("KEY");
+					public @S(20) SQL_Key_Definition key;
 				}
 			}
 			
 			public @CHOICE static class SQL_CreateFieldConstraint extends TokenSequence
 			{
-				public PunctuationComma comma;
-				public SQL_Constraint constraint;
+				public @S(10) PunctuationComma comma;
+				public @S(20) SQL_Constraint constraint;
 			}
 		}
 	
@@ -149,76 +149,76 @@ public class SQL_CreateStatement extends TokenChooser
 	
 			public @CHOICE static class SQL_CreateEngine extends TokenSequence
 			{
-				public SQL_Keyword ENGINE = new SQL_Keyword("ENGINE");
-				public PunctuationEquals equals;
-				public SQL_Keyword MYIASM = new SQL_Keyword("MyISAM");
+				public @S(10) SQL_Keyword ENGINE = new SQL_Keyword("ENGINE");
+				public @S(20) PunctuationEquals equals;
+				public @S(30) SQL_Keyword MYIASM = new SQL_Keyword("MyISAM");
 			}
 	
 			public @CHOICE static class SQL_CreateCharset extends TokenSequence
 			{
-				public SQL_Keyword CHARSET = new SQL_Keyword("CHARSET");
-				public PunctuationEquals equals;
-				public SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
+				public @S(10) SQL_Keyword CHARSET = new SQL_Keyword("CHARSET");
+				public @S(20) PunctuationEquals equals;
+				public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
 			}
 	
 			public @CHOICE static class SQL_CreateComment extends TokenSequence
 			{
-				public SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
-				public PunctuationEquals equals;
-				public SQL_Literal tital;
+				public @S(10) SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
+				public @S(20) PunctuationEquals equals;
+				public @S(30) SQL_Literal tital;
 			}
 		}
 	}
 	
 	public @CHOICE static class SQL_CreateIndexStatement extends TokenSequence
 	{
-		public SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-		public @OPT SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
-		public SQL_Keyword INDEX = new SQL_Keyword("INDEX");
-		public SQL_Index_Definition index;
-		public SQL_Keyword ON = new SQL_Keyword("ON");
-		public SQL_Identifier_Reference table;
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
-		public PunctuationRightParen rightParen;
-		public PunctuationSemicolon semicolon;
+		public @S(10) SQL_Keyword CREATE = new SQL_Keyword("CREATE");
+		public @S(20) @OPT SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
+		public @S(30) SQL_Keyword INDEX = new SQL_Keyword("INDEX");
+		public @S(40) SQL_Index_Definition index;
+		public @S(50) SQL_Keyword ON = new SQL_Keyword("ON");
+		public @S(60) SQL_Identifier_Reference table;
+		public @S(70) PunctuationLeftParen leftParen;
+		public @S(80) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
+		public @S(90) PunctuationRightParen rightParen;
+		public @S(100) PunctuationSemicolon semicolon;
 	}
 	
 	public @CHOICE static class SQL_CreateViewStatement extends TokenSequence
 	{
-		public SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-		public @OPT SQL_Keyword OR = new SQL_Keyword("OR");
-		public @OPT SQL_Keyword REPLACE = new SQL_Keyword("REPLACE");
-		public SQL_Keyword VIEW = new SQL_Keyword("VIEW");
-		public SQL_View_Definition view;
-		public SQL_Keyword AS = new SQL_Keyword("AS");
-		public SQL_SelectStatement select;
+		public @S(10) SQL_Keyword CREATE = new SQL_Keyword("CREATE");
+		public @S(20) @OPT SQL_Keyword OR = new SQL_Keyword("OR");
+		public @S(30) @OPT SQL_Keyword REPLACE = new SQL_Keyword("REPLACE");
+		public @S(40) SQL_Keyword VIEW = new SQL_Keyword("VIEW");
+		public @S(50) SQL_View_Definition view;
+		public @S(60) SQL_Keyword AS = new SQL_Keyword("AS");
+		public @S(70) SQL_SelectStatement select;
 	}
 	
 	public @CHOICE static class SQL_CreateRoleStatement extends TokenSequence
 	{
-		public SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-		public SQL_Keyword ROLE = new SQL_Keyword("ROLE");
-		public SQL_Role_Definition role;
-		public PunctuationSemicolon semicolon;
+		public @S(10) SQL_Keyword CREATE = new SQL_Keyword("CREATE");
+		public @S(20) SQL_Keyword ROLE = new SQL_Keyword("ROLE");
+		public @S(30) SQL_Role_Definition role;
+		public @S(40) PunctuationSemicolon semicolon;
 	}
 	
 	public @CHOICE static class SQL_CreateSynonymStatement extends TokenSequence
 	{
-		public SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-		public SQL_Keyword PUBLIC = new SQL_Keyword("PUBLIC");
-		public SQL_Keyword SYNONYM = new SQL_Keyword("SYNONYM");
-		public SQL_Synonym_Definition synonym;
-		public SQL_Keyword FOR = new SQL_Keyword("FOR");
-		public @OPT SQL_CreateSynonymForWhom whom;
-		public PunctuationSemicolon semicolon;
+		public @S(10) SQL_Keyword CREATE = new SQL_Keyword("CREATE");
+		public @S(20) SQL_Keyword PUBLIC = new SQL_Keyword("PUBLIC");
+		public @S(30) SQL_Keyword SYNONYM = new SQL_Keyword("SYNONYM");
+		public @S(40) SQL_Synonym_Definition synonym;
+		public @S(50) SQL_Keyword FOR = new SQL_Keyword("FOR");
+		public @S(60) @OPT SQL_CreateSynonymForWhom whom;
+		public @S(70) PunctuationSemicolon semicolon;
 		
 		public static class SQL_CreateSynonymForWhom extends TokenSequence
 		{
-			public SQL_Punctuation ampersand = new SQL_Punctuation('&');
-			public SQL_Identifier_Reference user;
-			public SQL_Punctuation dotDot = new SQL_Punctuation("..");
-			public SQL_Identifier_Reference group;
+			public @S(10) SQL_Punctuation ampersand = new SQL_Punctuation('&');
+			public @S(20) SQL_Identifier_Reference user;
+			public @S(30) SQL_Punctuation dotDot = new SQL_Punctuation("..");
+			public @S(40) SQL_Identifier_Reference group;
 		}
 	}
 }

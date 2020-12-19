@@ -12,22 +12,22 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_Rmdir_Statement extends TokenSequence
 {
-	public @DOC("rmdir.mspx") CMD_Keyword RMDIR = new CMD_Keyword("rmdir");
-	public @OPT TokenList<CMD_Rmdir_Option> opts;
-	public CMD_Argument dir;
+	public @S(10) @DOC("rmdir.mspx") CMD_Keyword RMDIR = new CMD_Keyword("rmdir");
+	public @S(20) @OPT TokenList<CMD_Rmdir_Option> opts;
+	public @S(30) CMD_Argument dir;
 	
 	public static class CMD_Rmdir_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Rmdir_Option_Q extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword Q = new CMD_Keyword("q");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword Q = new CMD_Keyword("q");
 		}
 
 		public @CHOICE static class CMD_Rmdir_Option_S extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword S = new CMD_Keyword("s");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword S = new CMD_Keyword("s");
 		}
 	}
 }

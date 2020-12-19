@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Uses extends TokenSequence
 {
-	public Delphi_Keyword USES = new Delphi_Keyword("Uses");
-	public SeparatedList<Delphi_Identifier_Reference,PunctuationComma> uses;
-	public PunctuationSemicolon semicolon;
+	public @S(10) Delphi_Keyword USES = new Delphi_Keyword("Uses");
+	public @S(20) SeparatedList<Delphi_Identifier_Reference,PunctuationComma> uses;
+	public @S(30) PunctuationSemicolon semicolon;
 }

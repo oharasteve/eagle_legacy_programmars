@@ -15,14 +15,14 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_Variable extends TokenSequence implements AbstractVariable
 {
-	public CSharp_VariableIdentifier first;
-	public @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
-	public @OPT TokenList<CSharp_Subscript> subscript;
+	public @S(10) CSharp_VariableIdentifier first;
+	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
+	public @S(30) @OPT TokenList<CSharp_Subscript> subscript;
 	
 	public static class CSharp_MoreVariableIdentifiers extends TokenSequence
 	{
-		public @NOSPACE PunctuationPeriod dot;
-		public @NOSPACE CSharp_VariableIdentifier nextId;
+		public @S(10) @NOSPACE PunctuationPeriod dot;
+		public @S(20) @NOSPACE CSharp_VariableIdentifier nextId;
 	}
 	
 	public static class CSharp_VariableIdentifier extends TokenChooser
@@ -32,12 +32,12 @@ public class CSharp_Variable extends TokenSequence implements AbstractVariable
 		
 		public @CHOICE static class CSharp_CastedVariable extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen1;
-			public @NOSPACE PunctuationLeftParen leftParen2;
-			public @NOSPACE CSharp_Type cstype;
-			public @NOSPACE PunctuationRightParen rightParen1;
-			public CSharp_Identifier_Reference id;
-			public @NOSPACE PunctuationRightParen rightParen2;
+			public @S(10) PunctuationLeftParen leftParen1;
+			public @S(20) @NOSPACE PunctuationLeftParen leftParen2;
+			public @S(30) @NOSPACE CSharp_Type cstype;
+			public @S(40) @NOSPACE PunctuationRightParen rightParen1;
+			public @S(50) CSharp_Identifier_Reference id;
+			public @S(60) @NOSPACE PunctuationRightParen rightParen2;
 		}
 	}
 }

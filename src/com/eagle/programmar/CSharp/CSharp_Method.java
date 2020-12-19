@@ -21,45 +21,45 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Method extends TokenSequence implements AbstractMethod
 {
-	public @OPT @NEWLINE TokenList<CSharp_Comment> comment;
-	public @OPT TokenList<CSharp_Annotation> annotation;
-	public @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
-	public @OPT TokenList<CSharp_Comment> comment2;
-	public CSharp_Type returnType;
-	public @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
-	public @OPT CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
-	public CSharp_Method_Definition methodName;
-	public CSharp_MethodParameters parameters;
-	public @NEWLINE CSharp_MethodBody body;
-	public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
+	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
+	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(40) @OPT TokenList<CSharp_Comment> comment2;
+	public @S(50) CSharp_Type returnType;
+	public @S(60) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
+	public @S(70) @OPT CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
+	public @S(80) CSharp_Method_Definition methodName;
+	public @S(90) CSharp_MethodParameters parameters;
+	public @S(100) @NEWLINE CSharp_MethodBody body;
+	public @S(110) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 
 	public static class CSharp_MethodParameters extends TokenSequence
 	{
-		public @NOSPACE PunctuationLeftParen leftParen;
-		public @OPT @NOSPACE CSharp_MethodParameter param;
-		public @OPT TokenList<CSharp_MoreParameters> moreParams;
-		public @NOSPACE PunctuationRightParen rightParen;
-		public @OPT CSharp_Comment comment3;
+		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(20) @OPT @NOSPACE CSharp_MethodParameter param;
+		public @S(30) @OPT TokenList<CSharp_MoreParameters> moreParams;
+		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		public @S(50) @OPT CSharp_Comment comment3;
 	}
 	
 	public static class CSharp_MethodModifiers extends TokenSequence
 	{
-		public CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
+		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
 	
 	public static class CSharp_MethodParameter extends TokenSequence
 	{
-		public @OPT CSharp_Annotation annotation;
-		public @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out", "this");
-		public CSharp_Type cstype;
-		public CSharp_Variable_Definition id;
-		public @OPT CSharp_Punctuation emptySubscript = new CSharp_Punctuation("[]");
+		public @S(10) @OPT CSharp_Annotation annotation;
+		public @S(20) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out", "this");
+		public @S(30) CSharp_Type cstype;
+		public @S(40) CSharp_Variable_Definition id;
+		public @S(50) @OPT CSharp_Punctuation emptySubscript = new CSharp_Punctuation("[]");
 	}
 	
 	public static class CSharp_MoreParameters extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public CSharp_MethodParameter param;
+		public @S(10) PunctuationComma comma;
+		public @S(20) CSharp_MethodParameter param;
 	}
 	
 	public static class CSharp_MethodBody extends TokenChooser
@@ -68,10 +68,10 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 		
 		public @CHOICE static class CSharp_MethodImplementation extends TokenSequence
 		{
-			public @OPT TokenList<CSharp_Comment> comment1;
-			public @NOSPACE CSharp_StatementBlock block;
-			public @OPT TokenList<CSharp_Comment> comment2;
-			public @OPT @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon2;
+			public @S(10) @OPT TokenList<CSharp_Comment> comment1;
+			public @S(20) @NOSPACE CSharp_StatementBlock block;
+			public @S(30) @OPT TokenList<CSharp_Comment> comment2;
+			public @S(40) @OPT @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon2;
 		}
 	}
 }

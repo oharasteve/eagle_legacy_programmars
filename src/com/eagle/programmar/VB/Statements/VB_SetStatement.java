@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_SetStatement extends TokenSequence
 {
-	public VB_Keyword SET = new VB_Keyword("set");
-	public VB_Variable var;
-	public PunctuationEquals equals;
-	public VB_Expression expr;
+	public @S(10) VB_Keyword SET = new VB_Keyword("set");
+	public @S(20) VB_Variable var;
+	public @S(30) PunctuationEquals equals;
+	public @S(40) VB_Expression expr;
 }

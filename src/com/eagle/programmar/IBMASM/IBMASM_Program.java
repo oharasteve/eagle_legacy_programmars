@@ -27,12 +27,12 @@ public class IBMASM_Program extends EagleLanguage
 		return "http://publibz.boulder.ibm.com/bookmgr_OS390/libraryserver/zosv1r7/";
 	}
 	
-	public TokenList<IBMASM_Line> lines;
+	public @S(10) TokenList<IBMASM_Line> lines;
 	
 	public static class IBMASM_Line extends TokenSequence
 	{
-		public IBMASM_LineContents contents;
-		public IBMASM_EndOfLine eoln;
+		public @S(10) IBMASM_LineContents contents;
+		public @S(20) IBMASM_EndOfLine eoln;
 	}
 
 	public static class IBMASM_LineContents extends TokenChooser

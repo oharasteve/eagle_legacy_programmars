@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_IterateStatement extends TokenSequence
 {
-	public PLI_Keyword ITERATE = new PLI_Keyword("ITERATE");
-	public PLI_Identifier_Reference label;
-	public PunctuationSemicolon semicolon;
+	public @S(10) PLI_Keyword ITERATE = new PLI_Keyword("ITERATE");
+	public @S(20) PLI_Identifier_Reference label;
+	public @S(30) PunctuationSemicolon semicolon;
 }

@@ -21,47 +21,47 @@ public class COBOL_Picture_Value extends TokenChooser
 	
 	public @CHOICE static class COBOL_Picture_Value_Keyword extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_KeywordChoice constants = new COBOL_KeywordChoice(
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_KeywordChoice constants = new COBOL_KeywordChoice(
 				"ZERO", "ZEROS", "SPACE", "SPACES",
 				"LOW-VALUE", "LOW-VALUES", "HIGH-VALUE", "HIGH-VALUES");
 	}
 
 	public @CHOICE static class COBOL_Picture_Value_Literal extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_Literal literal;
-		public @OPT COBOL_ThruLiteral thru;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Literal literal;
+		public @S(30) @OPT COBOL_ThruLiteral thru;
 		
 		public static class COBOL_ThruLiteral extends TokenSequence
 		{
-			public COBOL_Keyword thru = new COBOL_Keyword("THRU");
-			public COBOL_Literal literal;
+			public @S(10) COBOL_Keyword thru = new COBOL_Keyword("THRU");
+			public @S(20) COBOL_Literal literal;
 		}
 	}
 
 	public @CHOICE static class COBOL_Picture_Value_Number extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_Number number;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Number number;
 	}
 
 	public @CHOICE static class COBOL_Picture_Value_HexNumber extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public @OPT COBOL_Punctuation ampersand = new COBOL_Punctuation('&');
-		public COBOL_HexNumber hex;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) @OPT COBOL_Punctuation ampersand = new COBOL_Punctuation('&');
+		public @S(30) COBOL_HexNumber hex;
 	}
 	
 	public @CHOICE static class COBOL_PictureNext extends TokenSequence
 	{
-		public COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
-		public @OPT COBOL_PictureNextMinus minus;
+		public @S(10) COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
+		public @S(20) @OPT COBOL_PictureNextMinus minus;
 		
 		public static class COBOL_PictureNextMinus extends TokenSequence
 		{
-			public PunctuationHyphen minus;
-			public COBOL_Identifier_Reference id;
+			public @S(10) PunctuationHyphen minus;
+			public @S(20) COBOL_Identifier_Reference id;
 		}
 	}
 }

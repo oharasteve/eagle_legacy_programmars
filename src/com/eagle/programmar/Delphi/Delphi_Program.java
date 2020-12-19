@@ -31,24 +31,24 @@ public class Delphi_Program extends EagleLanguage
 		return "http://docwiki.embarcadero.com/RADStudio/en/Declarations_and_Statements/";
 	}
 	
-	public Delphi_Full_or_Partial fullOrPartial;
+	public @S(10) Delphi_Full_or_Partial fullOrPartial;
 	
 	public static class Delphi_Full_or_Partial extends TokenChooser
 	{
 		public @CHOICE static class Delphi_Full extends TokenSequence
 		{
-			public Delphi_KeywordChoice programOrUnit = new Delphi_KeywordChoice("Program", "Unit");
-			public Delphi_Program_Definition id;
-			public PunctuationSemicolon semicolon;
-			public @OPT TokenList<Delphi_Header> headers;
-			public @OPT Delphi_BeginEnd beginEnd;
-			public @OPT Delphi_Keyword END = new Delphi_Keyword("End");
-			public PunctuationPeriod dot;
+			public @S(10) Delphi_KeywordChoice programOrUnit = new Delphi_KeywordChoice("Program", "Unit");
+			public @S(20) Delphi_Program_Definition id;
+			public @S(30) PunctuationSemicolon semicolon;
+			public @S(40) @OPT TokenList<Delphi_Header> headers;
+			public @S(50) @OPT Delphi_BeginEnd beginEnd;
+			public @S(60) @OPT Delphi_Keyword END = new Delphi_Keyword("End");
+			public @S(70) PunctuationPeriod dot;
 		}
 		
 		public @CHOICE static class Delphi_Partial extends TokenSequence
 		{
-			public TokenList<Delphi_Header> headers;
+			public @S(10) TokenList<Delphi_Header> headers;
 		}
 	}
 	
@@ -68,9 +68,9 @@ public class Delphi_Program extends EagleLanguage
 		
 		public @CHOICE static class Delphi_Initialization extends TokenSequence
 		{
-			public Delphi_KeywordChoice INITIALIZATION = new Delphi_KeywordChoice("Initialization", "Finalization");
-			public Delphi_Statement stmt;
-			public PunctuationSemicolon semicolon;
+			public @S(10) Delphi_KeywordChoice INITIALIZATION = new Delphi_KeywordChoice("Initialization", "Finalization");
+			public @S(20) Delphi_Statement stmt;
+			public @S(30) PunctuationSemicolon semicolon;
 		}
 	}
 }

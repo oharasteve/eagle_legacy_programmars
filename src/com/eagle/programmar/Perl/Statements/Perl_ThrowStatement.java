@@ -11,13 +11,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_ThrowStatement extends TokenSequence
 {
-	public Perl_Keyword THROW = new Perl_Keyword("throw");
-	public @OPT Perl_Keyword NEW = new Perl_Keyword("new");
-	public Perl_Expression expr;
+	public @S(10) Perl_Keyword THROW = new Perl_Keyword("throw");
+	public @S(20) @OPT Perl_Keyword NEW = new Perl_Keyword("new");
+	public @S(30) Perl_Expression expr;
 
 	public static class Perl_MoreException extends TokenSequence
 	{
-		public Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-		public Perl_Identifier_Reference id;
+		public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+		public @S(20) Perl_Identifier_Reference id;
 	}
 }

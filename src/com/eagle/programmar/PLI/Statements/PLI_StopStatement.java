@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_StopStatement extends TokenSequence
 {
-	public PLI_Keyword STOP = new PLI_Keyword("STOP");
-	public PunctuationSemicolon semicolon;
+	public @S(10) PLI_Keyword STOP = new PLI_Keyword("STOP");
+	public @S(20) PunctuationSemicolon semicolon;
 }

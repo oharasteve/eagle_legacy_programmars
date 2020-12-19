@@ -14,38 +14,38 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_Dir_Statement extends TokenSequence
 {
-	public @DOC("dir.mspx") CMD_Keyword DIR = new CMD_Keyword("dir");
-	public @OPT TokenList<CMD_Dir_Option> opts;
-	public TokenList<CMD_Argument> file;
+	public @S(10) @DOC("dir.mspx") CMD_Keyword DIR = new CMD_Keyword("dir");
+	public @S(20) @OPT TokenList<CMD_Dir_Option> opts;
+	public @S(30) TokenList<CMD_Argument> file;
 	
 	public static class CMD_Dir_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Dir_Option_A extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword A = new CMD_Keyword("a");
-			public PunctuationColon colon;
-			public CMD_KeywordChoice R = new CMD_KeywordChoice("h", "r");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword A = new CMD_Keyword("a");
+			public @S(30) PunctuationColon colon;
+			public @S(40) CMD_KeywordChoice R = new CMD_KeywordChoice("h", "r");
 		}
 
 		public @CHOICE static class CMD_Dir_Option_B extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword B = new CMD_Keyword("b");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword B = new CMD_Keyword("b");
 		}
 
 		public @CHOICE static class CMD_Dir_Option_O extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword O = new CMD_Keyword("o");
-			public PunctuationColon colon;
-			public CMD_Keyword D = new CMD_Keyword("d");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword O = new CMD_Keyword("o");
+			public @S(30) PunctuationColon colon;
+			public @S(40) CMD_Keyword D = new CMD_Keyword("d");
 		}
 
 		public @CHOICE static class CMD_Dir_Option_S extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword S = new CMD_Keyword("s");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword S = new CMD_Keyword("s");
 		}
 	}
 }

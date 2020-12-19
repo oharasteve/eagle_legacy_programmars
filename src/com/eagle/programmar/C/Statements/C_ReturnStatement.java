@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_ReturnStatement extends TokenSequence
 {
-	public @DOC("#The-return-Statement") C_Keyword RETURN = new C_Keyword("return");
-	public @OPT C_Expression expression;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("#The-return-Statement") C_Keyword RETURN = new C_Keyword("return");
+	public @S(20) @OPT C_Expression expression;
+	public @S(30) PunctuationSemicolon semicolon;
 }

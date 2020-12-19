@@ -12,14 +12,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Types extends TokenSequence
 {
-	public Delphi_Keyword TYPE = new Delphi_Keyword("Type");
-	public @OPT TokenList<Delphi_MoreTypes> moreTypes;
+	public @S(10) Delphi_Keyword TYPE = new Delphi_Keyword("Type");
+	public @S(20) @OPT TokenList<Delphi_MoreTypes> moreTypes;
 	
 	public static class Delphi_MoreTypes extends TokenSequence
 	{
-		public Delphi_Type_Definition name;
-		public PunctuationEquals equals;
-		public Delphi_Type type;
-		public PunctuationSemicolon semicolon;
+		public @S(10) Delphi_Type_Definition name;
+		public @S(20) PunctuationEquals equals;
+		public @S(30) Delphi_Type type;
+		public @S(40) PunctuationSemicolon semicolon;
 	}
 }

@@ -23,51 +23,51 @@ public class C_ForStatement extends TokenChooser
 {
 	public @CHOICE static class C_ForLoopStatement extends TokenSequence
 	{
-		public @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
-		public PunctuationLeftParen leftParen;
-		public @OPT C_ForLoopVariable loopVar;
-		public @OPT C_Comment comment1;
-		public PunctuationSemicolon semicolon1;
-		public @OPT C_Expression terminateCondition;
-		public @OPT C_Comment comment2;
-		public PunctuationSemicolon semicolon2;
-		public @OPT C_Expression increment;
-		public @OPT TokenList<C_MoreLoopIncrements> moreLoopIncrements;
-		public @OPT C_Comment comment3;
-		public PunctuationRightParen rightParen;
-		public @OPT C_Comment comment4;
-		public C_Statement action;
+		public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT C_ForLoopVariable loopVar;
+		public @S(40) @OPT C_Comment comment1;
+		public @S(50) PunctuationSemicolon semicolon1;
+		public @S(60) @OPT C_Expression terminateCondition;
+		public @S(70) @OPT C_Comment comment2;
+		public @S(80) PunctuationSemicolon semicolon2;
+		public @S(90) @OPT C_Expression increment;
+		public @S(100) @OPT TokenList<C_MoreLoopIncrements> moreLoopIncrements;
+		public @S(110) @OPT C_Comment comment3;
+		public @S(120) PunctuationRightParen rightParen;
+		public @S(130) @OPT C_Comment comment4;
+		public @S(140) C_Statement action;
 
 		public static class C_ForLoopVariable extends TokenChooser
 		{
 			public @CHOICE static class C_ForLoopVariableWithType extends TokenSequence
 			{
-				public C_Type varType;
-				public C_Assignment assignment;
+				public @S(10) C_Type varType;
+				public @S(20) C_Assignment assignment;
 			}
 
 			public @CHOICE static class C_ForLoopVariableNoType extends TokenSequence
 			{
-				public C_Assignment assignment;
+				public @S(10) C_Assignment assignment;
 			}
 		}
 		
 		public static class C_MoreLoopIncrements extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public C_ForLoopVariable forVar;
+			public @S(10) PunctuationComma comma;
+			public @S(20) C_ForLoopVariable forVar;
 		}
 	}
 	
 	public @CHOICE static class C_ForCollectionStatement extends TokenSequence
 	{
-		public C_Keyword FOR = new C_Keyword("for");
-		public PunctuationLeftParen leftParen;
-		public C_Type varType;
-		public C_Variable forVar;
-		public PunctuationColon colon;
-		public C_Expression collection;
-		public PunctuationRightParen rightParen;
-		public C_Statement action;
+		public @S(10) C_Keyword FOR = new C_Keyword("for");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) C_Type varType;
+		public @S(40) C_Variable forVar;
+		public @S(50) PunctuationColon colon;
+		public @S(60) C_Expression collection;
+		public @S(70) PunctuationRightParen rightParen;
+		public @S(80) C_Statement action;
 	}
 }

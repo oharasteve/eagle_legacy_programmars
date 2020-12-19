@@ -19,22 +19,22 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_FunctionDefinition extends TokenSequence implements AbstractMethod
 {
-	public @OPT TokenList<Python_Decorator> decorator;
-	public @OPT Python_EndOfLine eoln;
-	public @NOSPACE Python_Keyword DEF = new Python_Keyword("def");
-	public Python_FunctionName fnName;
-	public Python_Parameter_List params;
-	public @NOSPACE PunctuationColon colon;
-	public @OPT TokenList<Python_Comment> comment;
-	public Python_SingleOrMultiLineStatement defBody;
+	public @S(10) @OPT TokenList<Python_Decorator> decorator;
+	public @S(20) @OPT Python_EndOfLine eoln;
+	public @S(30) @NOSPACE Python_Keyword DEF = new Python_Keyword("def");
+	public @S(40) Python_FunctionName fnName;
+	public @S(50) Python_Parameter_List params;
+	public @S(60) @NOSPACE PunctuationColon colon;
+	public @S(70) @OPT TokenList<Python_Comment> comment;
+	public @S(80) Python_SingleOrMultiLineStatement defBody;
 	
 	public static class Python_Decorator extends TokenSequence
 	{
-		public Python_Punctuation atSign = new Python_Punctuation('@');
-		public Python_Variable id;
-		public @OPT Python_Parameter_List params;
-		public @OPT Python_Comment comment;
-		public Python_EndOfLine newLine;
+		public @S(10) Python_Punctuation atSign = new Python_Punctuation('@');
+		public @S(20) Python_Variable id;
+		public @S(30) @OPT Python_Parameter_List params;
+		public @S(40) @OPT Python_Comment comment;
+		public @S(50) Python_EndOfLine newLine;
 	}
 	
 	public static class Python_FunctionName extends TokenChooser

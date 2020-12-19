@@ -17,11 +17,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_Directive extends TokenSequence
 {
-	public @OPT IBMASM_Label_Definition label;
-	public IBMASM_Spaces spaces1;
-	public IBMASM_Direct directive;
-	public @OPT IBMASM_Spaces spaces2;
-	public @OPT IBMASM_Remark remark;
+	public @S(10) @OPT IBMASM_Label_Definition label;
+	public @S(20) IBMASM_Spaces spaces1;
+	public @S(30) IBMASM_Direct directive;
+	public @S(40) @OPT IBMASM_Spaces spaces2;
+	public @S(50) @OPT IBMASM_Remark remark;
 	
 	public static class IBMASM_Direct extends TokenChooser
 	{

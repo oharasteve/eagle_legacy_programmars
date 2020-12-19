@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_AcceptStatement extends TokenSequence
 {
-	public @DOC("sm/accept.htm") Natural_Keyword ACCEPT = new Natural_Keyword("ACCEPT");
-	public Natural_Keyword IF = new Natural_Keyword("IF");
-	public Natural_Condition cond;
+	public @S(10) @DOC("sm/accept.htm") Natural_Keyword ACCEPT = new Natural_Keyword("ACCEPT");
+	public @S(20) Natural_Keyword IF = new Natural_Keyword("IF");
+	public @S(30) Natural_Condition cond;
 }

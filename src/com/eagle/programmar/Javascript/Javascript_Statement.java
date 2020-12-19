@@ -26,13 +26,13 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_Statement extends TokenSequence
 {
-	public @OPT Javascript_Label label;
-	public Javascript_RealStatement statement;
+	public @S(10) @OPT Javascript_Label label;
+	public @S(20) Javascript_RealStatement statement;
 	
 	public static class Javascript_Label extends TokenSequence
 	{
-		public Javascript_Label_Definition label;
-		public PunctuationColon colon;
+		public @S(10) Javascript_Label_Definition label;
+		public @S(20) PunctuationColon colon;
 	}
 
 	public static class Javascript_RealStatement extends TokenChooser
@@ -42,21 +42,21 @@ public class Javascript_Statement extends TokenSequence
 		
 		public @FIRST static class Javascript_StatementBlock extends TokenSequence
 		{
-			public @INDENT PunctuationLeftBrace leftBrace;
-			public @OPT TokenList<Javascript_StatementOrComment> statements;
-			public @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(20) @OPT TokenList<Javascript_StatementOrComment> statements;
+			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 		}
 		
 		public @CHOICE static class Javascript_ExpressionStmt extends TokenSequence
 		{
-			public @NEWLINE Javascript_Expression expression;
-			public @OPT TokenList<Javascript_MoreStatements> moreStatements;
-			public @OPT @NOSPACE PunctuationSemicolon semicolon;
+			public @S(10) @NEWLINE Javascript_Expression expression;
+			public @S(20) @OPT TokenList<Javascript_MoreStatements> moreStatements;
+			public @S(30) @OPT @NOSPACE PunctuationSemicolon semicolon;
 				
 			public static class Javascript_MoreStatements extends TokenSequence
 			{
-				public @NOSPACE PunctuationComma comma;
-				public Javascript_Statement statement;
+				public @S(10) @NOSPACE PunctuationComma comma;
+				public @S(20) Javascript_Statement statement;
 			}
 		}
 		

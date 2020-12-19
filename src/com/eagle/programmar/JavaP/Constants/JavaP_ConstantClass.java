@@ -10,8 +10,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class JavaP_ConstantClass extends TokenSequence implements JavaP_ConstantShowable
 {
-	public JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "Class");
-	public JavaP_Symbol_Reference cls;
+	public @S(10) JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "Class");
+	public @S(20) JavaP_Symbol_Reference cls;
 	
 	@Override
 	public String showConstant()

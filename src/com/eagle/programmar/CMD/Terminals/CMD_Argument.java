@@ -19,7 +19,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Argument extends TokenSequence
 {
-	public CMD_ArgumentWrapper wrapper;
+	public @S(10) CMD_ArgumentWrapper wrapper;
 	
 	// Only need the wrapper to keep everything together in one file
 	public static class CMD_ArgumentWrapper extends TokenChooser
@@ -109,15 +109,15 @@ public class CMD_Argument extends TokenSequence
 		
 		public @CHOICE static class CMD_ArgumentVariable extends TokenSequence
 		{
-			public CMD_Punctuation percent1 = new CMD_Punctuation('%');
-			public CMD_Identifier_Reference var;
-			public CMD_Punctuation percent2 = new CMD_Punctuation('%');
+			public @S(10) CMD_Punctuation percent1 = new CMD_Punctuation('%');
+			public @S(20) CMD_Identifier_Reference var;
+			public @S(30) CMD_Punctuation percent2 = new CMD_Punctuation('%');
 		}
 		
 		public @CHOICE static class CMD_ArgumentParament extends TokenSequence
 		{
-			public CMD_Punctuation percent = new CMD_Punctuation('%');
-			public CMD_Number num;
+			public @S(10) CMD_Punctuation percent = new CMD_Punctuation('%');
+			public @S(20) CMD_Number num;
 		}
 	}
 }

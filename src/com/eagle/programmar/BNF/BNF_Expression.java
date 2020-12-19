@@ -17,13 +17,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class BNF_Expression extends TokenSequence
 {
-	public TokenList<BNF_ExpressionTerm> terms;
-	public @OPT TokenList<BNF_Alternation> choices;
+	public @S(10) TokenList<BNF_ExpressionTerm> terms;
+	public @S(20) @OPT TokenList<BNF_Alternation> choices;
 
 	public static class BNF_Alternation extends TokenSequence
 	{
-		public BNF_Punctuation VerticalBar = new BNF_Punctuation('|');
-		public TokenList<BNF_ExpressionTerm> terms;
+		public @S(10) BNF_Punctuation VerticalBar = new BNF_Punctuation('|');
+		public @S(20) TokenList<BNF_ExpressionTerm> terms;
 	}
 
 	public static class BNF_ExpressionTerm extends TokenChooser
@@ -32,23 +32,23 @@ public class BNF_Expression extends TokenSequence
 	
 		public @CHOICE static class BNF_Rulename extends TokenSequence
 		{
-			public BNF_Rule_Reference ref;
-			public @NOSPACE @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
+			public @S(10) BNF_Rule_Reference ref;
+			public @S(20) @NOSPACE @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
 		}
 		
 		public @CHOICE static class BNF_Group extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen;
-			public @NOSPACE BNF_Expression expression;
-			public @NOSPACE PunctuationRightParen rightParen;
-			public @NOSPACE @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) @NOSPACE BNF_Expression expression;
+			public @S(30) @NOSPACE PunctuationRightParen rightParen;
+			public @S(40) @NOSPACE @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
 		}
 		
 		public @CHOICE static class BNF_Optional extends TokenSequence
 		{
-			public PunctuationLeftBracket leftBracket;
-			public @NOSPACE BNF_Expression expression;
-			public @NOSPACE PunctuationRightBracket rightBracket;
+			public @S(10) PunctuationLeftBracket leftBracket;
+			public @S(20) @NOSPACE BNF_Expression expression;
+			public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 		}
 	}
 }

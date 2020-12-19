@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_AssignmentStatement extends TokenSequence
 {
-	public VB_Variable var;
-	public PunctuationEquals equals;
-	public VB_Expression expr;
+	public @S(10) VB_Variable var;
+	public @S(20) PunctuationEquals equals;
+	public @S(30) VB_Expression expr;
 }

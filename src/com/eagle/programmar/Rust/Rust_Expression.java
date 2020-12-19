@@ -58,15 +58,15 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	
 	public static @P(90) class Rust_DotClass extends PrimaryOperator
 	{
-		public Rust_Type jtype;
-		public @NOSPACE PunctuationPeriod dot;
-		public @NOSPACE Rust_Keyword CLASS = new Rust_Keyword("class");
+		public @S(10) Rust_Type jtype;
+		public @S(20) @NOSPACE PunctuationPeriod dot;
+		public @S(30) @NOSPACE Rust_Keyword CLASS = new Rust_Keyword("class");
 	}
 	
 	public static @P(100) class Rust_LambdaExpression extends PrimaryOperator
 	{
-		public Rust_LambdaVariables params;
-		public Rust_Punctuation arrow = new Rust_Punctuation("->");
+		public @S(10) Rust_LambdaVariables params;
+		public @S(20) Rust_Punctuation arrow = new Rust_Punctuation("->");
 //		public Rust_LambdaValue value;
 		
 		public static class Rust_LambdaVariables extends TokenChooser
@@ -75,21 +75,21 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 			
 			public @CHOICE static class Rust_LambdaVariableList extends TokenSequence
 			{
-				public PunctuationLeftParen lParen;
-				public @OPT SeparatedList<Rust_Identifier,PunctuationComma> params;
-				public PunctuationRightParen rParen;
+				public @S(10) PunctuationLeftParen lParen;
+				public @S(20) @OPT SeparatedList<Rust_Identifier,PunctuationComma> params;
+				public @S(30) PunctuationRightParen rParen;
 			}
 			
 			public @CHOICE static class Rust_LambdaTypedVariableList extends TokenSequence
 			{
-				public PunctuationLeftParen lParen;
-				public @OPT SeparatedList<Rust_TypedIdentifier,PunctuationComma> params;
-				public PunctuationRightParen rParen;
+				public @S(10) PunctuationLeftParen lParen;
+				public @S(20) @OPT SeparatedList<Rust_TypedIdentifier,PunctuationComma> params;
+				public @S(30) PunctuationRightParen rParen;
 				
 				public static class Rust_TypedIdentifier extends TokenSequence
 				{
-					public Rust_Type type;
-					public Rust_Identifier id;
+					public @S(10) Rust_Type type;
+					public @S(20) Rust_Identifier id;
 				}
 			}
 		}
@@ -109,10 +109,10 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 			
 	public static @P(110) class Rust_CastExpression extends PrimaryOperator
 	{
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<Rust_Type, PunctuationAmpersand> types;
-		public PunctuationRightParen rightParen;
-		public Rust_Expression expr;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<Rust_Type, PunctuationAmpersand> types;
+		public @S(30) PunctuationRightParen rightParen;
+		public @S(40) Rust_Expression expr;
 	}
 
 //	public static @P(120) class Rust_ExpressionList extends PrimaryOperator
@@ -179,25 +179,25 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	
 	public static @P(220) class Rust_NegativeExpression extends PrimaryOperator
 	{
-		public Rust_PunctuationChoice operator = new Rust_PunctuationChoice("-", "+");
-		public Rust_Expression expr;
+		public @S(10) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("-", "+");
+		public @S(20) Rust_Expression expr;
 	}
 
 	public static @P(230) class Rust_LogicalNotExpression extends PrimaryOperator
 	{
-		public Rust_Punctuation logicalNotOperator = new Rust_Punctuation('~');
-		public Rust_Expression expr;
+		public @S(10) Rust_Punctuation logicalNotOperator = new Rust_Punctuation('~');
+		public @S(20) Rust_Expression expr;
 	}
 	
 	public static @P(240) class Rust_NotExpression extends PrimaryOperator
 	{
-		public Rust_Punctuation notOperator = new Rust_Punctuation('!');
-		public Rust_Expression expr;
+		public @S(10) Rust_Punctuation notOperator = new Rust_Punctuation('!');
+		public @S(20) Rust_Expression expr;
 	}
 	
 	public static @P(250) class Rust_BuiltIn extends PrimaryOperator
 	{
-		public Rust_KeywordChoice builtinConstant = new Rust_KeywordChoice("false", "true", "null", "this", "super");
+		public @S(10) Rust_KeywordChoice builtinConstant = new Rust_KeywordChoice("false", "true", "null", "this", "super");
 	}
 	
 //	public static @P(260) class Rust_VariableExpression extends PrimaryOperator
@@ -207,15 +207,15 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	
 	public static @P(270) class Rust_ParenthesizedExpression extends PrimaryOperator
 	{
-		public PunctuationLeftParen leftParen;
-		public @NOSPACE Rust_Expression expression;
-		public @NOSPACE PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @NOSPACE Rust_Expression expression;
+		public @S(30) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
 	public static @P(280) class Rust_CommentExpression extends PrimaryOperator
 	{
-		public Rust_Comment comment;
-		public Rust_Expression expr;
+		public @S(10) Rust_Comment comment;
+		public @S(20) Rust_Expression expr;
 	}
 
 	///////////////////////////////////////////////
@@ -223,10 +223,10 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public static @P(290) class Rust_SubscriptExpression extends PrecedenceOperator
 	{
-		public Rust_Expression expr = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-		public PunctuationLeftBracket leftBracket;
-		public @OPT Rust_Expression subscr;
-		public PunctuationRightBracket rightBracket;
+		public @S(10) Rust_Expression expr = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) PunctuationLeftBracket leftBracket;
+		public @S(30) @OPT Rust_Expression subscr;
+		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
 //	public static @P(300) class Rust_Subfield extends PrecedenceOperator
@@ -239,99 +239,99 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public static @P(305) class Rust_ColonColon extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
-		public @NOSPACE Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
+		public @S(30) @NOSPACE Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(307) class Rust_ColonColonNew extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
-		public @NOSPACE Rust_Keyword NEW = new Rust_Keyword("new");
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
+		public @S(30) @NOSPACE Rust_Keyword NEW = new Rust_Keyword("new");
 	}
 
 	public static @P(310) class Rust_MultiplicativeExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_PunctuationChoice operator = new Rust_PunctuationChoice("*", "/", "%");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("*", "/", "%");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(320) class Rust_AdditiveExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_PunctuationChoice operator = new Rust_PunctuationChoice("+", "-");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("+", "-");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(330) class Rust_ShiftExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_PunctuationChoice operator = new Rust_PunctuationChoice(">>>", "<<", ">>");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice(">>>", "<<", ">>");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(340) class Rust_RelationalExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_PunctuationChoice operator = new Rust_PunctuationChoice("<", ">", "<=", ">=");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("<", ">", "<=", ">=");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(350) class Rust_InstanceOfExpression extends PrecedenceOperator
 	{
-		public Rust_Expression expr = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_Keyword instanceOperator = new Rust_Keyword("instanceof");
-		public Rust_Type type;
+		public @S(10) Rust_Expression expr = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_Keyword instanceOperator = new Rust_Keyword("instanceof");
+		public @S(30) Rust_Type type;
 	}
 
 	public static @P(360) class Rust_EqualityExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_PunctuationChoice operator = new Rust_PunctuationChoice("==", "!=");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("==", "!=");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(370) class Rust_AndExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_Punctuation bitwiseAndOperator = new Rust_Punctuation('&');
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_Punctuation bitwiseAndOperator = new Rust_Punctuation('&');
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(380) class Rust_ExclusiveOrExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_Punctuation bitwiseXOrOperator = new Rust_Punctuation('^');
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_Punctuation bitwiseXOrOperator = new Rust_Punctuation('^');
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(390) class Rust_InclusiveOrExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_Punctuation bitwiseOrOperator = new Rust_Punctuation('|');
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_Punctuation bitwiseOrOperator = new Rust_Punctuation('|');
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(400) class Rust_ConditionalAndExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_Punctuation andOperator = new Rust_Punctuation("&&");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_Punctuation andOperator = new Rust_Punctuation("&&");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(410) class Rust_ConditionalOrExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public Rust_Punctuation orOperator = new Rust_Punctuation("||");
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Rust_Punctuation orOperator = new Rust_Punctuation("||");
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(420) class Rust_AssignmentExpression extends PrecedenceOperator
 	{
-		public Rust_Expression var = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-		public Rust_PunctuationChoice equals = new Rust_PunctuationChoice(
+		public @S(10) Rust_Expression var = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) Rust_PunctuationChoice equals = new Rust_PunctuationChoice(
 				"=",
 				"*=",
 				"/=",
@@ -344,15 +344,15 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 				"&=",
 				"^=",
 				"|=");
-		public Rust_Expression expr;
+		public @S(30) Rust_Expression expr;
 	}
 	
 	public static @P(430) class Rust_TrueFalseExpression extends PrecedenceOperator
 	{
-		public Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-		public Rust_Punctuation questionMark = new Rust_Punctuation('?');
-		public Rust_Expression middle = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public PunctuationColon colon;
-		public Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) Rust_Punctuation questionMark = new Rust_Punctuation('?');
+		public @S(30) Rust_Expression middle = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(40) PunctuationColon colon;
+		public @S(50) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 }

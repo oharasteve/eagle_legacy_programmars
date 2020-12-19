@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_ContinueStatement extends TokenSequence
 {
-	public @DOC("statements.html#14.16") CSharp_Keyword CONTINUE = new CSharp_Keyword("continue");
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @DOC("statements.html#14.16") CSharp_Keyword CONTINUE = new CSharp_Keyword("continue");
+	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
 }

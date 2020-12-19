@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class CSharp_GetProperty extends TokenSequence
 {
-	public CSharp_Keyword GET = new CSharp_Keyword("get");
-	public CSharp_StatementBlock block;
+	public @S(10) CSharp_Keyword GET = new CSharp_Keyword("get");
+	public @S(20) CSharp_StatementBlock block;
 }

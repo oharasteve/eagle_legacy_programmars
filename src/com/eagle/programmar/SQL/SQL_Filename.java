@@ -9,7 +9,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class SQL_Filename extends TokenSequence
 {
-	public SQL_Identifier file;
-	public PunctuationPeriod dot;
-	public SQL_Identifier ext;
+	public @S(10) SQL_Identifier file;
+	public @S(20) PunctuationPeriod dot;
+	public @S(30) SQL_Identifier ext;
 }

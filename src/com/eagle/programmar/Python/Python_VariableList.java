@@ -13,8 +13,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_VariableList extends TokenSequence
 {
-	public SeparatedList<Python_Variable_or_List,PunctuationComma> vars;
-	public @OPT PunctuationComma comma;
+	public @S(10) SeparatedList<Python_Variable_or_List,PunctuationComma> vars;
+	public @S(20) @OPT PunctuationComma comma;
 
 	public static class Python_Variable_or_List extends TokenChooser
 	{
@@ -22,9 +22,9 @@ public class Python_VariableList extends TokenSequence
 		
 		public @CHOICE static class Python_Var_List extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen;
-			public @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_VariableList more;
-			public PunctuationRightParen rightParen;
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_VariableList more;
+			public @S(30) PunctuationRightParen rightParen;
 		}
 	}
 }

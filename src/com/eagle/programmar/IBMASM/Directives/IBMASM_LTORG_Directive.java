@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_LTORG_Directive extends TokenSequence
 {
-	public IBMASM_Keyword LTORG = new IBMASM_Keyword("LTORG");
+	public @S(10) IBMASM_Keyword LTORG = new IBMASM_Keyword("LTORG");
 }

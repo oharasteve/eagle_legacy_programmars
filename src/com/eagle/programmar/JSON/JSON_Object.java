@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class JSON_Object extends TokenSequence
 {
-	public PunctuationLeftBracket leftBracket;
-	public @OPT SeparatedList<JSON_Element,PunctuationComma> elements;
-	public PunctuationRightBracket rightBracket;
+	public @S(10) PunctuationLeftBracket leftBracket;
+	public @S(20) @OPT SeparatedList<JSON_Element,PunctuationComma> elements;
+	public @S(30) PunctuationRightBracket rightBracket;
 }

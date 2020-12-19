@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_BreakStatement extends TokenSequence
 {
-	public @DOC("control-structures.break.php") Perl_Keyword BREAK = new Perl_Keyword("break");
-	public @OPT Perl_Expression count;
+	public @S(10) @DOC("control-structures.break.php") Perl_Keyword BREAK = new Perl_Keyword("break");
+	public @S(20) @OPT Perl_Expression count;
 }

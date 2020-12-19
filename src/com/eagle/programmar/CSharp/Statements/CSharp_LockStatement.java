@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_LockStatement extends TokenSequence
 {
-	public @NEWLINE CSharp_Keyword LOCK = new CSharp_Keyword("lock");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE CSharp_Expression expr;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public CSharp_Statement statement;
+	public @S(10) @NEWLINE CSharp_Keyword LOCK = new CSharp_Keyword("lock");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_Expression expr;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) CSharp_Statement statement;
 }

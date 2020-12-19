@@ -16,28 +16,28 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Perl_MyStatement extends TokenSequence
 {
-	public Perl_Keyword MY = new Perl_Keyword("my");
-	public Perl_MyWhat what;
-	public @OPT Perl_MyEquals myEquals;
+	public @S(10) Perl_Keyword MY = new Perl_Keyword("my");
+	public @S(20) Perl_MyWhat what;
+	public @S(30) @OPT Perl_MyEquals myEquals;
 	
 	public static class Perl_MyWhat extends TokenChooser
 	{
 		public @CHOICE static class Perl_MyOne extends TokenSequence
 		{
-			public Perl_Variable var;
+			public @S(10) Perl_Variable var;
 		}
 		
 		public @CHOICE static class Perl_MyMany extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen;
-			public SeparatedList<Perl_Variable,PunctuationComma> vars;
-			public PunctuationRightParen rightParen;
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) SeparatedList<Perl_Variable,PunctuationComma> vars;
+			public @S(30) PunctuationRightParen rightParen;
 		}
 	}
 	
 	public static class Perl_MyEquals extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public Perl_Expression expression;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Perl_Expression expression;
 	}
 }

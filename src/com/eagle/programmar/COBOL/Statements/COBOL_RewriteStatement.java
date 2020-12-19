@@ -12,15 +12,15 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_RewriteStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsrewr.htm") COBOL_Keyword REWRITE = new COBOL_Keyword("REWRITE");
-	public COBOL_Identifier_Reference file;
-	public @OPT COBOL_RewriteKey key;
-	public @OPT COBOL_Keyword ENDREWRITE = new COBOL_Keyword("END-REWRITE");
+	public @S(10) @DOC("rlpsrewr.htm") COBOL_Keyword REWRITE = new COBOL_Keyword("REWRITE");
+	public @S(20) COBOL_Identifier_Reference file;
+	public @S(30) @OPT COBOL_RewriteKey key;
+	public @S(40) @OPT COBOL_Keyword ENDREWRITE = new COBOL_Keyword("END-REWRITE");
 
 	public static class COBOL_RewriteKey extends TokenSequence
 	{
-		public COBOL_Keyword INVALID = new COBOL_Keyword("INVALID");
-		public COBOL_Keyword KEY = new COBOL_Keyword("KEY");
-		public TokenList<COBOL_Statement> statements;
+		public @S(10) COBOL_Keyword INVALID = new COBOL_Keyword("INVALID");
+		public @S(20) COBOL_Keyword KEY = new COBOL_Keyword("KEY");
+		public @S(30) TokenList<COBOL_Statement> statements;
 	}
 }

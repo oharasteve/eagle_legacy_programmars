@@ -15,19 +15,19 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Natural_MoveStatement extends TokenSequence
 {
-	public @DOC("sm/move.htm") Natural_Keyword MOVE = new Natural_Keyword("MOVE");
-	public @OPT Natural_Keyword EDITED = new Natural_Keyword("EDITED");
-	public Natural_Expression expr;
-	public Natural_Keyword TO = new Natural_Keyword("TO");
-	public TokenList<Natural_Variable> variables;
-	public @OPT Natural_MoveMask mask;
+	public @S(10) @DOC("sm/move.htm") Natural_Keyword MOVE = new Natural_Keyword("MOVE");
+	public @S(20) @OPT Natural_Keyword EDITED = new Natural_Keyword("EDITED");
+	public @S(30) Natural_Expression expr;
+	public @S(40) Natural_Keyword TO = new Natural_Keyword("TO");
+	public @S(50) TokenList<Natural_Variable> variables;
+	public @S(60) @OPT Natural_MoveMask mask;
 	
 	public static class Natural_MoveMask extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public Natural_Keyword EM = new Natural_Keyword("EM");
-		public PunctuationEquals equals;
-		public Natural_EditMask mask;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Natural_Keyword EM = new Natural_Keyword("EM");
+		public @S(30) PunctuationEquals equals;
+		public @S(40) Natural_EditMask mask;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 }

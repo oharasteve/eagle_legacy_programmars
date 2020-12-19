@@ -20,12 +20,12 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class CPlus_Class extends TokenSequence implements AbstractClass
 {
-	public C_Keyword CLASS = new C_Keyword("class");
-	public CPlus_Class_Definition className;
-	public @OPT CPlus_ClassExtendList extendsClasses;
-	public PunctuationLeftBrace leftBrace;
-	public TokenList<CPlus_ClassElement> elements;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) C_Keyword CLASS = new C_Keyword("class");
+	public @S(20) CPlus_Class_Definition className;
+	public @S(30) @OPT CPlus_ClassExtendList extendsClasses;
+	public @S(40) PunctuationLeftBrace leftBrace;
+	public @S(50) TokenList<CPlus_ClassElement> elements;
+	public @S(60) PunctuationRightBrace rightBrace;
 	
 	public static class CPlus_ClassElement extends TokenChooser
 	{
@@ -34,20 +34,20 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	
 	public static class CPlus_ClassExtendList extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public SeparatedList<CPlus_ClassExtends,PunctuationComma> extendsClasses;
+		public @S(10) PunctuationColon colon;
+		public @S(20) SeparatedList<CPlus_ClassExtends,PunctuationComma> extendsClasses;
 		
 		public static class CPlus_ClassExtends extends TokenSequence
 		{
-			public @OPT C_Keyword PUBLIC = new C_Keyword("public");
-			public @OPT C_Punctuation colonColon = new C_Punctuation("::");
-			public @OPT TokenList<CPlus_ExtendsNamespace> extendsNamespace;
-			public C_Identifier_Reference otherClass;
+			public @S(10) @OPT C_Keyword PUBLIC = new C_Keyword("public");
+			public @S(20) @OPT C_Punctuation colonColon = new C_Punctuation("::");
+			public @S(30) @OPT TokenList<CPlus_ExtendsNamespace> extendsNamespace;
+			public @S(40) C_Identifier_Reference otherClass;
 			
 			public static class CPlus_ExtendsNamespace extends TokenSequence
 			{
-				public C_Identifier_Reference otherNamespace;
-				public C_Punctuation colonColon = new C_Punctuation("::");
+				public @S(10) C_Identifier_Reference otherNamespace;
+				public @S(20) C_Punctuation colonColon = new C_Punctuation("::");
 			}
 		}
 	}

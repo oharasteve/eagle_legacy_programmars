@@ -14,11 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_WhileStatement extends TokenSequence
 {
-	public @OPT @NEWLINE Java_Label label;
-	public @DOC("statements.html#14.12") Java_Keyword WHILE = new Java_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Java_Expression condition;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @OPT Java_Comment comment;
-	public Java_Statement whileStatement;
+	public @S(10) @OPT @NEWLINE Java_Label label;
+	public @S(20) @DOC("statements.html#14.12") Java_Keyword WHILE = new Java_Keyword("while");
+	public @S(30) PunctuationLeftParen leftParen;
+	public @S(40) @NOSPACE Java_Expression condition;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(60) @OPT Java_Comment comment;
+	public @S(70) Java_Statement whileStatement;
 }

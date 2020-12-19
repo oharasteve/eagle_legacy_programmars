@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Halt_Statement extends TokenSequence
 {
-	public Delphi_Keyword HALT = new Delphi_Keyword("Halt");
+	public @S(10) Delphi_Keyword HALT = new Delphi_Keyword("Halt");
 }

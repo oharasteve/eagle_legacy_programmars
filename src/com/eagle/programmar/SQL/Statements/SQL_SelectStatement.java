@@ -16,13 +16,13 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_SelectStatement extends TokenSequence
 {
-	public @DOC("sql_select.asp") SQL_Keyword SELECT = new SQL_Keyword("SELECT");
-	public SeparatedList<SQL_SelectWhat,PunctuationComma> what;
-	public @OPT SQL_SelectInto into;
-	public SQL_SelectFrom from;
-	public @OPT SQL_SelectWhere where;
-	public @OPT SQL_SelectReadOnly readOnly;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("sql_select.asp") SQL_Keyword SELECT = new SQL_Keyword("SELECT");
+	public @S(20) SeparatedList<SQL_SelectWhat,PunctuationComma> what;
+	public @S(30) @OPT SQL_SelectInto into;
+	public @S(40) SQL_SelectFrom from;
+	public @S(50) @OPT SQL_SelectWhere where;
+	public @S(60) @OPT SQL_SelectReadOnly readOnly;
+	public @S(70) PunctuationSemicolon semicolon;
 	
 	public static class SQL_SelectWhat extends TokenChooser
 	{
@@ -30,42 +30,42 @@ public class SQL_SelectStatement extends TokenSequence
 		
 		public @CHOICE static class SQL_SelectExpression extends TokenSequence
 		{
-			public SQL_Expression what;
-			public SQL_Identifier_Reference name;
+			public @S(10) SQL_Expression what;
+			public @S(20) SQL_Identifier_Reference name;
 		}
 	}
 	
 	public static class SQL_SelectInto extends TokenSequence
 	{
-		public SQL_Keyword INTO = new SQL_Keyword("INTO");
-		public SQL_Identifier_Reference table;
+		public @S(10) SQL_Keyword INTO = new SQL_Keyword("INTO");
+		public @S(20) SQL_Identifier_Reference table;
 	}
 	
 	public static class SQL_SelectFrom extends TokenSequence
 	{
-		public SQL_Keyword FROM = new SQL_Keyword("FROM");
-		public SQL_Identifier_Reference table;
-		public @OPT SQL_Table_Definition tableName;
-		public @OPT TokenList<SQL_SelectFromMore> more;
+		public @S(10) SQL_Keyword FROM = new SQL_Keyword("FROM");
+		public @S(20) SQL_Identifier_Reference table;
+		public @S(30) @OPT SQL_Table_Definition tableName;
+		public @S(40) @OPT TokenList<SQL_SelectFromMore> more;
 		
 		public static class SQL_SelectFromMore extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public SQL_Identifier_Reference table;
-			public @OPT SQL_Table_Definition tableName;
+			public @S(10) PunctuationComma comma;
+			public @S(20) SQL_Identifier_Reference table;
+			public @S(30) @OPT SQL_Table_Definition tableName;
 		}
 	}
 	
 	public static class SQL_SelectWhere extends TokenSequence
 	{
-		public SQL_Keyword WHERE = new SQL_Keyword("WHERE");
-		public SQL_Expression condition;
+		public @S(10) SQL_Keyword WHERE = new SQL_Keyword("WHERE");
+		public @S(20) SQL_Expression condition;
 	}
 	
 	public static class SQL_SelectReadOnly extends TokenSequence
 	{
-		public SQL_Keyword WITH = new SQL_Keyword("WITH");
-		public SQL_Keyword READ = new SQL_Keyword("READ");
-		public SQL_Keyword ONLY = new SQL_Keyword("ONLY");
+		public @S(10) SQL_Keyword WITH = new SQL_Keyword("WITH");
+		public @S(20) SQL_Keyword READ = new SQL_Keyword("READ");
+		public @S(30) SQL_Keyword ONLY = new SQL_Keyword("ONLY");
 	}
 }

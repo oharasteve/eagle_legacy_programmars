@@ -38,12 +38,12 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Python_Statement extends TokenSequence implements AbstractStatement
 {
-	public @OPT @NEWLINE Python_StartOfLine soln;
-	public Python_StatementOrComment statementOrComment;
-	public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
-	public @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	public @OPT Python_Comment comment;
-	public @OPT Python_EndOfLine eoln;
+	public @S(10) @OPT @NEWLINE Python_StartOfLine soln;
+	public @S(20) Python_StatementOrComment statementOrComment;
+	public @S(30) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(50) @OPT Python_Comment comment;
+	public @S(60) @OPT Python_EndOfLine eoln;
 	
 	public static class Python_StatementOrComment extends TokenChooser
 	{
@@ -54,7 +54,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		
 		public @FIRST static class Python_CommentList extends TokenSequence
 		{
-			public @NOSPACE SeparatedList<Python_Comment,Python_EndOfLine> comments;
+			public @S(10) @NOSPACE SeparatedList<Python_Comment,Python_EndOfLine> comments;
 		}
 	}
 	
@@ -62,8 +62,8 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	{
 		// This StartOfLine should be removed. But it breaks lots of Pythong
 		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
-		public @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public SeparatedList<Python_Simple_Statement,Python_Statement_Separator> statements;
+		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
+		public @S(20) SeparatedList<Python_Simple_Statement,Python_Statement_Separator> statements;
 	}
 	
 	public static class Python_Statement_Separator extends TokenChooser
@@ -102,16 +102,16 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	{
 		public @CHOICE static class Python_SingleLineStatement extends TokenSequence
 		{
-			public SeparatedList<Python_Simple_Statement,PunctuationSemicolon> statements;
-			public @OPT Python_Comment comment;
-			public @OPT Python_EndOfLine eoln;
+			public @S(10) SeparatedList<Python_Simple_Statement,PunctuationSemicolon> statements;
+			public @S(20) @OPT Python_Comment comment;
+			public @S(30) @OPT Python_EndOfLine eoln;
 		}
 
 		public @CHOICE static class Python_MultilineStatement extends TokenSequence
 		{
-			public @OPT Python_Comment comment;
-			public Python_EndOfLine eoln;
-			public TokenList<Python_Statement> statements;
+			public @S(10) @OPT Python_Comment comment;
+			public @S(20) Python_EndOfLine eoln;
+			public @S(30) TokenList<Python_Statement> statements;
 		}
 	}
 }

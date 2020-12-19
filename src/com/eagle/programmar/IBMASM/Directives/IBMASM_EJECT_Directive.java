@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_EJECT_Directive extends TokenSequence
 {
-	public IBMASM_Keyword EJECT = new IBMASM_Keyword("EJECT");
+	public @S(10) IBMASM_Keyword EJECT = new IBMASM_Keyword("EJECT");
 }

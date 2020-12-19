@@ -22,7 +22,7 @@ public class COBOL_Partial_Fixed_Format extends COBOL_Program
 		super(NAME, new COBOL_Fixed_Format_Syntax());
 	}
 	
-	public TokenList<COBOL_PartialWhat> pieces;
+	public @S(10) TokenList<COBOL_PartialWhat> pieces;
 	
 	public static class COBOL_PartialWhat extends TokenChooser
 	{

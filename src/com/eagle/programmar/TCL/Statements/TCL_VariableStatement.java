@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class TCL_VariableStatement extends TokenSequence
 {
-	public TCL_Keyword VARIABLE = new TCL_Keyword("variable");
-	public TCL_Variable_Definition variable;
+	public @S(10) TCL_Keyword VARIABLE = new TCL_Keyword("variable");
+	public @S(20) TCL_Variable_Definition variable;
 }

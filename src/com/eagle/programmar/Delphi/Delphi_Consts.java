@@ -14,23 +14,23 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Consts extends TokenSequence
 {
-	public Delphi_Keyword CONST = new Delphi_Keyword("Const");
-	public @OPT TokenList<Delphi_Comment> comments;
-	public TokenList<Delphi_Const> constants;
+	public @S(10) Delphi_Keyword CONST = new Delphi_Keyword("Const");
+	public @S(20) @OPT TokenList<Delphi_Comment> comments;
+	public @S(30) TokenList<Delphi_Const> constants;
 	
 	public static class Delphi_Const extends TokenSequence
 	{
-		public Delphi_Variable_Definition constant;
-		public @OPT Delphi_ConstType type;
-		public PunctuationEquals equals;
-		public Delphi_Expression expr;
-		public PunctuationSemicolon semicolon;
-		public @OPT TokenList<Delphi_Comment> comments;
+		public @S(10) Delphi_Variable_Definition constant;
+		public @S(20) @OPT Delphi_ConstType type;
+		public @S(30) PunctuationEquals equals;
+		public @S(40) Delphi_Expression expr;
+		public @S(50) PunctuationSemicolon semicolon;
+		public @S(60) @OPT TokenList<Delphi_Comment> comments;
 		
 		public static class Delphi_ConstType extends TokenSequence
 		{
-			public PunctuationColon colon;
-			public Delphi_Type type;
+			public @S(10) PunctuationColon colon;
+			public @S(20) Delphi_Type type;
 		}
 	}
 }

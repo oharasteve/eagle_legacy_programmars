@@ -15,9 +15,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Javascript_Variable extends TokenSequence
 {
-	public Javascript_VariableIdentifier firstId;
-	public @OPT TokenList<Javascript_DotIdentifier> moreIds;
-	public @OPT TokenList<Javascript_Subscript> subscript;
+	public @S(10) Javascript_VariableIdentifier firstId;
+	public @S(20) @OPT TokenList<Javascript_DotIdentifier> moreIds;
+	public @S(30) @OPT TokenList<Javascript_Subscript> subscript;
 	
 	public static class Javascript_VariableIdentifier extends TokenChooser
 	{
@@ -27,18 +27,18 @@ public class Javascript_Variable extends TokenSequence
 		
 		public @CHOICE static class Javascript_CastedVariable extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen1;
-			public PunctuationLeftParen leftParen2;
-			public Javascript_Type jtype;
-			public PunctuationRightParen rightParen1;
-			public Javascript_Identifier_Reference id;
-			public PunctuationRightParen rightParen2;
+			public @S(10) PunctuationLeftParen leftParen1;
+			public @S(20) PunctuationLeftParen leftParen2;
+			public @S(30) Javascript_Type jtype;
+			public @S(40) PunctuationRightParen rightParen1;
+			public @S(50) Javascript_Identifier_Reference id;
+			public @S(60) PunctuationRightParen rightParen2;
 		}
 	}
 
 	public static class Javascript_DotIdentifier extends TokenSequence
 	{
-		public @NOSPACE PunctuationPeriod dot;
-		public @NOSPACE Javascript_VariableIdentifier id;
+		public @S(10) @NOSPACE PunctuationPeriod dot;
+		public @S(20) @NOSPACE Javascript_VariableIdentifier id;
 	}
 }

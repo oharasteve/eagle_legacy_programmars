@@ -42,12 +42,12 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CMD_Command extends TokenSequence
 {
-	public @OPT CMD_EndOfLine eoln1;
-	public @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-	public CMD_Statement command;
-	public @OPT TokenList<CMD_Redirect> redirects;
-	public @OPT TokenList<CMD_More_Statements> moreStatements;
-	public CMD_EndOfLine eoln2;
+	public @S(10) @OPT CMD_EndOfLine eoln1;
+	public @S(20) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+	public @S(30) CMD_Statement command;
+	public @S(40) @OPT TokenList<CMD_Redirect> redirects;
+	public @S(50) @OPT TokenList<CMD_More_Statements> moreStatements;
+	public @S(60) CMD_EndOfLine eoln2;
 
 	public static class CMD_Redirect extends TokenChooser
 	{
@@ -65,11 +65,11 @@ public class CMD_Command extends TokenSequence
 
 		public @CHOICE static class CMD_BlockStatement extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen;
-			public CMD_EndOfLine eoln;
-			public TokenList<CMD_CommandOrLabel> commands;
-			public PunctuationRightParen rightParen;
-			public @OPT CMD_IfElse ifElse;
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) CMD_EndOfLine eoln;
+			public @S(30) TokenList<CMD_CommandOrLabel> commands;
+			public @S(40) PunctuationRightParen rightParen;
+			public @S(50) @OPT CMD_IfElse ifElse;
 			
 			public static class CMD_CommandOrLabel extends TokenChooser
 			{
@@ -79,16 +79,16 @@ public class CMD_Command extends TokenSequence
 			
 			public static class CMD_IfElse extends TokenSequence
 			{
-				public CMD_Keyword ELSE = new CMD_Keyword("else");
-				public @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-				public CMD_Statement stmt;
+				public @S(10) CMD_Keyword ELSE = new CMD_Keyword("else");
+				public @S(20) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+				public @S(30) CMD_Statement stmt;
 			}
 		}
 		
 		public @CHOICE static class CMD_GenericStatement extends TokenSequence
 		{
-			public CMD_Argument programName;
-			public @OPT TokenList<CMD_GenericArgument> args;
+			public @S(10) CMD_Argument programName;
+			public @S(20) @OPT TokenList<CMD_GenericArgument> args;
 			
 			public static class CMD_GenericArgument extends TokenChooser
 			{
@@ -124,34 +124,34 @@ public class CMD_Command extends TokenSequence
 	
 	public static class CMD_Redirect_Input extends TokenSequence
 	{
-		public CMD_Punctuation less = new CMD_Punctuation('<');
-		public CMD_Argument inFile;
+		public @S(10) CMD_Punctuation less = new CMD_Punctuation('<');
+		public @S(20) CMD_Argument inFile;
 	}
 
 	public static class CMD_Redirect_Output extends TokenSequence
 	{
-		public CMD_Punctuation greater = new CMD_Punctuation('>');
-		public CMD_Argument outFile;
+		public @S(10) CMD_Punctuation greater = new CMD_Punctuation('>');
+		public @S(20) CMD_Argument outFile;
 	}
 
 	public static class CMD_Redirect_Append extends TokenSequence
 	{
-		public CMD_Punctuation greaterGreater = new CMD_Punctuation(">>");
-		public CMD_Argument appFile;
+		public @S(10) CMD_Punctuation greaterGreater = new CMD_Punctuation(">>");
+		public @S(20) CMD_Argument appFile;
 	}
 
 	public static class CMD_Redirect_Error extends TokenSequence
 	{
-		public CMD_Number two;
-		public CMD_Punctuation greaterAnd = new CMD_Punctuation(">&");
-		public CMD_Number one;
+		public @S(10) CMD_Number two;
+		public @S(20) CMD_Punctuation greaterAnd = new CMD_Punctuation(">&");
+		public @S(30) CMD_Number one;
 	}
 	
 	public static class CMD_More_Statements extends TokenSequence
 	{
-		public CMD_Statement_Separator separator;
-		public CMD_Statement command;
-		public @OPT TokenList<CMD_Redirect> redirects;
+		public @S(10) CMD_Statement_Separator separator;
+		public @S(20) CMD_Statement command;
+		public @S(30) @OPT TokenList<CMD_Redirect> redirects;
 		
 		public static class CMD_Statement_Separator extends TokenChooser
 		{

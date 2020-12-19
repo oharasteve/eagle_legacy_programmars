@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_ExpressionStatement extends TokenSequence
 {
-	public @NEWLINE Javascript_Expression expr;
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE Javascript_Expression expr;
+	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
 }

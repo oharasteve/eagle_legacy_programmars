@@ -17,9 +17,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Processable
 {
-	public C_Punctuation pound = new C_Punctuation('#'); 
-	public @DOC("Pragmas.html") C_Keyword PRAGMA = new C_Keyword("pragma");
-	public CMacro_Pragma_Type what;
+	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+	public @S(20) @DOC("Pragmas.html") C_Keyword PRAGMA = new C_Keyword("pragma");
+	public @S(30) CMacro_Pragma_Type what;
 	
 	public static class CMacro_Pragma_Type extends TokenChooser
 	{
@@ -27,20 +27,20 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		
 		public @CHOICE static class CMacro_Pragma_Warning extends TokenSequence
 		{
-			public C_Keyword WARNING = new C_Keyword("warning");
-			public PunctuationLeftParen leftParen;
-			public C_Keyword DISABLE = new C_Keyword("disable");
-			public PunctuationColon colon;
-			public TokenList<C_Number> codes;
-			public PunctuationRightParen rightParen;
+			public @S(10) C_Keyword WARNING = new C_Keyword("warning");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) C_Keyword DISABLE = new C_Keyword("disable");
+			public @S(40) PunctuationColon colon;
+			public @S(50) TokenList<C_Number> codes;
+			public @S(60) PunctuationRightParen rightParen;
 		}
 		
 		public @CHOICE static class CMacro_Pragma_Pack extends TokenSequence
 		{
-			public C_Keyword PACK = new C_Keyword("pack");
-			public PunctuationLeftParen leftParen;
-			public @OPT C_Keyword PUSH = new C_Keyword("push");
-			public PunctuationRightParen rightParen;
+			public @S(10) C_Keyword PACK = new C_Keyword("pack");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) @OPT C_Keyword PUSH = new C_Keyword("push");
+			public @S(40) PunctuationRightParen rightParen;
 		}
 	}
 	

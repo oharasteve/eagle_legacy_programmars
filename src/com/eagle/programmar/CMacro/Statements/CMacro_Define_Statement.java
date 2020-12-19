@@ -20,19 +20,19 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CMacro_Define_Statement extends TokenSequence implements CMacro_Processable
 {
-	public C_Punctuation pound = new C_Punctuation('#'); 
-	public @DOC("Macros.html") C_Keyword DEFINE = new C_Keyword("define");
-	public CMacro_Define_Definition var;
-	public @OPT C_Comment comment1;
-	public @OPT CMacro_Parameters params;
-	public @OPT CMacro_RestOfLine value;		// Just keep it as a String
-	public @OPT C_Comment comment2;
+	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+	public @S(20) @DOC("Macros.html") C_Keyword DEFINE = new C_Keyword("define");
+	public @S(30) CMacro_Define_Definition var;
+	public @S(40) @OPT C_Comment comment1;
+	public @S(50) @OPT CMacro_Parameters params;
+	public @S(60) @OPT CMacro_RestOfLine value;		// Just keep it as a String
+	public @S(70) @OPT C_Comment comment2;
 
 	public static class CMacro_Parameters extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<CMacro_Parameter_Definition,PunctuationComma> params;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<CMacro_Parameter_Definition,PunctuationComma> params;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	@Override

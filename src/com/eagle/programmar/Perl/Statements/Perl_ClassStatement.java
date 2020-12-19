@@ -19,36 +19,36 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_ClassStatement extends TokenSequence
 {
-	public @OPT TokenList<Perl_ClassPrefix> prefix;
-	public Perl_Keyword CLASS = new Perl_Keyword("class");
-	public Perl_Class_Definition cls;
-	public @OPT Perl_ClassExtends extend;
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<Perl_StatementOrComment> stmts;
-	public PunctuationRightBrace rightBrace;
-	public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+	public @S(10) @OPT TokenList<Perl_ClassPrefix> prefix;
+	public @S(20) Perl_Keyword CLASS = new Perl_Keyword("class");
+	public @S(30) Perl_Class_Definition cls;
+	public @S(40) @OPT Perl_ClassExtends extend;
+	public @S(50) PunctuationLeftBrace leftBrace;
+	public @S(60) @OPT TokenList<Perl_StatementOrComment> stmts;
+	public @S(70) PunctuationRightBrace rightBrace;
+	public @S(80) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 
 	public static class Perl_ClassPrefix extends TokenSequence
 	{
-		public Perl_KeywordChoice modifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);
+		public @S(10) Perl_KeywordChoice modifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);
 	}
 	
 	public static class Perl_ClassExtends extends TokenSequence
 	{
-		public Perl_KeywordChoice EXTENDS = new Perl_KeywordChoice("extends", "implements");
-		public TokenList<Perl_ExtendsName> extendsName;
-		public @OPT TokenList<Perl_MoreExtends> moreExtends;
+		public @S(10) Perl_KeywordChoice EXTENDS = new Perl_KeywordChoice("extends", "implements");
+		public @S(20) TokenList<Perl_ExtendsName> extendsName;
+		public @S(30) @OPT TokenList<Perl_MoreExtends> moreExtends;
 		
 		public static class Perl_ExtendsName extends TokenSequence
 		{
-			public @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-			public Perl_Identifier_Reference id;
+			public @S(10) @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+			public @S(20) Perl_Identifier_Reference id;
 		}
 		
 		public static class Perl_MoreExtends extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public TokenList<Perl_ExtendsName> extendsName;
+			public @S(10) PunctuationComma comma;
+			public @S(20) TokenList<Perl_ExtendsName> extendsName;
 		}
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_GenerateStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword GENERATE = new COBOL_Keyword("GENERATE");
-	public COBOL_Identifier_Reference line;
+	public @S(10) COBOL_Keyword GENERATE = new COBOL_Keyword("GENERATE");
+	public @S(20) COBOL_Identifier_Reference line;
 }

@@ -10,9 +10,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_Instruction extends TokenSequence
 {
-	public @OPT IntelASM_Label_Definition label;
-	public IntelASM_RegularInstruction instruction;
-	public IntelASM_EndOfLine eoln;
+	public @S(10) @OPT IntelASM_Label_Definition label;
+	public @S(20) IntelASM_RegularInstruction instruction;
+	public @S(30) IntelASM_EndOfLine eoln;
 	
 	public static class IntelASM_RegularInstruction extends TokenChooser
 	{

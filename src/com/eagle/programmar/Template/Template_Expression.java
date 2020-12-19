@@ -41,21 +41,21 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	
 	public static @P(100) class Template_Parens extends PrimaryOperator
 	{
-		public PunctuationLeftParen leftParen;
-		public Template_Expression expr;
-		public PunctuationRightParen rightParen;		
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Template_Expression expr;
+		public @S(30) PunctuationRightParen rightParen;		
 	}
 	
 	public static @P(110) class Template_Negative extends PrimaryOperator
 	{
-		public Template_Punctuation negative = new Template_Punctuation('-');
-		public Template_Expression expr;
+		public @S(10) Template_Punctuation negative = new Template_Punctuation('-');
+		public @S(20) Template_Expression expr;
 	}
 	
 	public static @P(120) class Template_NotOp extends PrimaryOperator
 	{
-		public Template_Punctuation NOT = new Template_Punctuation('!');
-		public Template_Expression expr;
+		public @S(10) Template_Punctuation NOT = new Template_Punctuation('!');
+		public @S(20) Template_Expression expr;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -63,22 +63,22 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	
 	public static @P(130) class Template_Multiplicative_Expression extends PrecedenceOperator
 	{
-		public Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
-		public Template_PunctuationChoice operator = new Template_PunctuationChoice("*", "/");
-		public Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Template_PunctuationChoice operator = new Template_PunctuationChoice("*", "/");
+		public @S(30) Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(140) class Template_Additive_Expression extends PrecedenceOperator
 	{
-		public Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
-		public Template_PunctuationChoice operator = new Template_PunctuationChoice("+", "-");
-		public Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Template_PunctuationChoice operator = new Template_PunctuationChoice("+", "-");
+		public @S(30) Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(150) class Template_Relational_Expression extends PrecedenceOperator
 	{
-		public Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
-		public Template_PunctuationChoice operator = new Template_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
-		public Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Template_PunctuationChoice operator = new Template_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+		public @S(30) Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

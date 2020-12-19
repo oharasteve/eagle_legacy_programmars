@@ -17,15 +17,15 @@ public class SQL_Type extends TokenChooser
 {
 	public @CHOICE static class SQL_TypeSet extends TokenSequence
 	{
-		public SQL_Keyword SET = new SQL_Keyword("SET");
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<SQL_Expression,PunctuationComma> setValues;
-		public PunctuationRightParen rightParen;
+		public @S(10) SQL_Keyword SET = new SQL_Keyword("SET");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<SQL_Expression,PunctuationComma> setValues;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public @CHOICE static class SQL_TypeVarChar extends TokenSequence
 	{
-		public SQL_KeywordChoice charType = new SQL_KeywordChoice
+		public @S(10) SQL_KeywordChoice charType = new SQL_KeywordChoice
 		(
 			"CHAR",
 			"LONGVARCHAR",
@@ -33,81 +33,81 @@ public class SQL_Type extends TokenChooser
 			"VARCHAR",
 			"VARCHAR2"
 		);
-		public @OPT SQL_TypeSize size;
+		public @S(20) @OPT SQL_TypeSize size;
 	}
 
 	public @CHOICE static class SQL_TypeBoolean extends TokenSequence
 	{
-		public SQL_KeywordChoice BOOLEAN = new SQL_KeywordChoice("BOOLEAN");
+		public @S(10) SQL_KeywordChoice BOOLEAN = new SQL_KeywordChoice("BOOLEAN");
 	}
 	
 	public @CHOICE static class SQL_TypeBigInt extends TokenSequence
 	{
-		public SQL_Keyword BIGINT = new SQL_Keyword("BIGINT");
-		public SQL_TypeSize size;
+		public @S(10) SQL_Keyword BIGINT = new SQL_Keyword("BIGINT");
+		public @S(20) SQL_TypeSize size;
 	}
 
 	public @CHOICE static class SQL_TypeInt extends TokenSequence
 	{
-		public SQL_KeywordChoice INT = new SQL_KeywordChoice("INT", "INTEGER", "NUMBER", "TINYINT", "SMALLINT");
-		public @OPT SQL_TypeSize size;
+		public @S(10) SQL_KeywordChoice INT = new SQL_KeywordChoice("INT", "INTEGER", "NUMBER", "TINYINT", "SMALLINT");
+		public @S(20) @OPT SQL_TypeSize size;
 	}
 
 	public @CHOICE static class SQL_TypeDouble extends TokenSequence
 	{
-		public SQL_KeywordChoice DOUBLE = new SQL_KeywordChoice("FLOAT", "DOUBLE");
+		public @S(10) SQL_KeywordChoice DOUBLE = new SQL_KeywordChoice("FLOAT", "DOUBLE");
 	}
 	
 	public @CHOICE static class SQL_TypeRaw extends TokenSequence
 	{
-		public SQL_Keyword RAW = new SQL_Keyword("RAW");
-		public SQL_TypeSize size;
+		public @S(10) SQL_Keyword RAW = new SQL_Keyword("RAW");
+		public @S(20) SQL_TypeSize size;
 	}
 
 	public @CHOICE static class SQL_TypeBlob extends TokenSequence
 	{
-		public SQL_KeywordChoice BLOB = new SQL_KeywordChoice("BLOB", "NCLOB");
+		public @S(10) SQL_KeywordChoice BLOB = new SQL_KeywordChoice("BLOB", "NCLOB");
 	}
 	
 	public @CHOICE static class SQL_TypeText extends TokenSequence
 	{
-		public SQL_Keyword TEXT = new SQL_Keyword("TEXT");
+		public @S(10) SQL_Keyword TEXT = new SQL_Keyword("TEXT");
 	}
 
 	public @CHOICE static class SQL_TypeDate extends TokenSequence
 	{
-		public SQL_KeywordChoice DATE = new SQL_KeywordChoice("DATE", "TIME", "DATETIME");
+		public @S(10) SQL_KeywordChoice DATE = new SQL_KeywordChoice("DATE", "TIME", "DATETIME");
 	}
 
 	public @CHOICE static class SQL_TypeTimeStamp extends TokenSequence
 	{
-		public SQL_Keyword TIMESTAMP = new SQL_Keyword("TIMESTAMP");
+		public @S(10) SQL_Keyword TIMESTAMP = new SQL_Keyword("TIMESTAMP");
 	}
 
 	public @CHOICE static class SQL_TypeDecimal extends TokenSequence
 	{
-		public SQL_Keyword DECIMAL = new SQL_Keyword("DECIMAL");
-		public PunctuationLeftParen leftParen;
-		public SQL_Number size;
-		public PunctuationComma comma;
-		public SQL_Number size2;
-		public PunctuationRightParen rightParen;
+		public @S(10) SQL_Keyword DECIMAL = new SQL_Keyword("DECIMAL");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SQL_Number size;
+		public @S(40) PunctuationComma comma;
+		public @S(50) SQL_Number size2;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 
 	public @CHOICE static class SQL_TypeEnum extends TokenSequence
 	{
-		public SQL_Keyword ENUM = new SQL_Keyword("ENUM");
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<SQL_Expression,PunctuationComma> enumVal;
-		public PunctuationRightParen rightParen;
+		public @S(10) SQL_Keyword ENUM = new SQL_Keyword("ENUM");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<SQL_Expression,PunctuationComma> enumVal;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 	
 	public @CHOICE static class SQL_TypeSize extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public SQL_Number size;
-		public @OPT PunctuationComma comma;
-		public @OPT SQL_Number size2;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SQL_Number size;
+		public @S(30) @OPT PunctuationComma comma;
+		public @S(40) @OPT SQL_Number size2;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Natural_Label extends TokenSequence
 {
-	public Natural_Identifier_Reference label;
-	public PunctuationPeriod dot;
+	public @S(10) Natural_Identifier_Reference label;
+	public @S(20) PunctuationPeriod dot;
 }

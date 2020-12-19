@@ -13,11 +13,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_NoteStatement extends TokenSequence
 {
-	public PLI_Keyword NOTE = new PLI_Keyword("NOTE");
-	public PunctuationLeftParen leftParen;
-	public PLI_Expression expr1;
-	public PunctuationComma comma;
-	public PLI_Expression expr2;
-	public PunctuationRightParen rightParen;
-	public PunctuationSemicolon semicolon;
+	public @S(10) PLI_Keyword NOTE = new PLI_Keyword("NOTE");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) PLI_Expression expr1;
+	public @S(40) PunctuationComma comma;
+	public @S(50) PLI_Expression expr2;
+	public @S(60) PunctuationRightParen rightParen;
+	public @S(70) PunctuationSemicolon semicolon;
 }

@@ -12,10 +12,10 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class COBOL_ComputeStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpscomp.htm") COBOL_Keyword COMPUTE = new COBOL_Keyword("COMPUTE");
-	public COBOL_Identifier_Reference var;
-	public @OPT COBOL_Subscript subscript;
-	public @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
-	public PunctuationEquals equals;
-	public COBOL_Expression expr;
+	public @S(10) @DOC("rlpscomp.htm") COBOL_Keyword COMPUTE = new COBOL_Keyword("COMPUTE");
+	public @S(20) COBOL_Identifier_Reference var;
+	public @S(30) @OPT COBOL_Subscript subscript;
+	public @S(40) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
+	public @S(50) PunctuationEquals equals;
+	public @S(60) COBOL_Expression expr;
 }

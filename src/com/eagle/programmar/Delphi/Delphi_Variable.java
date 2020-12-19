@@ -16,22 +16,22 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Delphi_Variable extends TokenSequence implements AbstractVariable
 {
-	public Delphi_Identifier_Reference var;
-	public @OPT TokenList<Delphi_Extended_Variable> extensions;
+	public @S(10) Delphi_Identifier_Reference var;
+	public @S(20) @OPT TokenList<Delphi_Extended_Variable> extensions;
 
 	public static class Delphi_Extended_Variable extends TokenChooser
 	{
 		public @CHOICE static class Delphi_DotName extends TokenSequence
 		{
-			public PunctuationPeriod dot;
-			public Delphi_Identifier_Reference var;
+			public @S(10) PunctuationPeriod dot;
+			public @S(20) Delphi_Identifier_Reference var;
 		}
 	
 		public @CHOICE static class Delphi_Subscript extends TokenSequence
 		{
-			public PunctuationLeftBracket leftBracket;
-			public SeparatedList<Delphi_Expression,PunctuationComma> expr;
-			public PunctuationRightBracket rightBracket;
+			public @S(10) PunctuationLeftBracket leftBracket;
+			public @S(20) SeparatedList<Delphi_Expression,PunctuationComma> expr;
+			public @S(30) PunctuationRightBracket rightBracket;
 		}
 	}
 }

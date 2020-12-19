@@ -21,19 +21,19 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Class extends TokenSequence implements AbstractClass
 {
-	public Delphi_Keyword CLASS = new Delphi_Keyword("Class");
-	public @OPT Delphi_SuperClass superClass;
-	public @OPT TokenList<Delphi_Class_Entry> classEntries;
-	public @OPT Delphi_PrivateEntries privateEntries;
-	public @OPT Delphi_ProtectedEntries protectedEntries;
-	public @OPT Delphi_PublicEntries publicEntries;
-	public Delphi_Keyword END = new Delphi_Keyword("End");
+	public @S(10) Delphi_Keyword CLASS = new Delphi_Keyword("Class");
+	public @S(20) @OPT Delphi_SuperClass superClass;
+	public @S(30) @OPT TokenList<Delphi_Class_Entry> classEntries;
+	public @S(40) @OPT Delphi_PrivateEntries privateEntries;
+	public @S(50) @OPT Delphi_ProtectedEntries protectedEntries;
+	public @S(60) @OPT Delphi_PublicEntries publicEntries;
+	public @S(70) Delphi_Keyword END = new Delphi_Keyword("End");
 
 	public static class Delphi_SuperClass extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public Delphi_Type parentType;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Delphi_Type parentType;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static class Delphi_Class_Entry extends TokenChooser
@@ -45,28 +45,28 @@ public class Delphi_Class extends TokenSequence implements AbstractClass
 		
 		public @CHOICE static class Delphi_Field extends TokenSequence
 		{
-			public SeparatedList<Delphi_Variable_Definition,PunctuationComma> variables;
-			public PunctuationColon colon;
-			public Delphi_Type type;
-			public PunctuationSemicolon semicolon;
+			public @S(10) SeparatedList<Delphi_Variable_Definition,PunctuationComma> variables;
+			public @S(20) PunctuationColon colon;
+			public @S(30) Delphi_Type type;
+			public @S(40) PunctuationSemicolon semicolon;
 		}
 	}
 	
 	public static class Delphi_PrivateEntries extends TokenSequence
 	{
-		public Delphi_Keyword PRIVATE = new Delphi_Keyword("Private");
-		public TokenList<Delphi_Class_Entry> classEntries;
+		public @S(10) Delphi_Keyword PRIVATE = new Delphi_Keyword("Private");
+		public @S(20) TokenList<Delphi_Class_Entry> classEntries;
 	}
 	
 	public static class Delphi_ProtectedEntries extends TokenSequence
 	{
-		public Delphi_Keyword PROTECTED = new Delphi_Keyword("Protected");
-		public TokenList<Delphi_Class_Entry> classEntries;
+		public @S(10) Delphi_Keyword PROTECTED = new Delphi_Keyword("Protected");
+		public @S(20) TokenList<Delphi_Class_Entry> classEntries;
 	}
 	
 	public static class Delphi_PublicEntries extends TokenSequence
 	{
-		public Delphi_Keyword PUBLIC = new Delphi_Keyword("Public");
-		public TokenList<Delphi_Class_Entry> classEntries;
+		public @S(10) Delphi_Keyword PUBLIC = new Delphi_Keyword("Public");
+		public @S(20) TokenList<Delphi_Class_Entry> classEntries;
 	}
 }

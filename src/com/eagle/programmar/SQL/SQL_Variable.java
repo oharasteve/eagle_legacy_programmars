@@ -10,5 +10,5 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class SQL_Variable extends TokenSequence
 {
-	public SeparatedList<SQL_Identifier_Reference,PunctuationPeriod> field;
+	public @S(10) SeparatedList<SQL_Identifier_Reference,PunctuationPeriod> field;
 }

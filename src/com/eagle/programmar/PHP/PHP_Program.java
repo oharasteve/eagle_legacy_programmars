@@ -30,8 +30,8 @@ public class PHP_Program extends EagleLanguage
 		return "http://www.php.net/manual/en/";
 	}
 	
-	public @OPT @SYNTAX(HTML_Syntax.class) HTML_DocType docType;
-	public TokenList<PHP_Entry> entry;
+	public @S(10) @OPT @SYNTAX(HTML_Syntax.class) HTML_DocType docType;
+	public @S(20) TokenList<PHP_Entry> entry;
 	
 	public static class PHP_Entry extends TokenChooser
 	{
@@ -42,33 +42,33 @@ public class PHP_Program extends EagleLanguage
 	
 	public static class PHP_StartTag extends TokenSequence
 	{
-		public HTML_Punctuation startTag = new HTML_Punctuation("<?");
-		public HTML_Keyword php = new HTML_Keyword("php");
+		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<?");
+		public @S(20) HTML_Keyword php = new HTML_Keyword("php");
 	}
 	
 	public static class PHP_EndTag extends TokenSequence
 	{
-		public HTML_Punctuation endTag = new HTML_Punctuation("?>");
+		public @S(10) HTML_Punctuation endTag = new HTML_Punctuation("?>");
 	}
 	
 	public static class PHP_Section extends TokenSequence
 	{
-		public PHP_StartTag startTag;
-		public PHP_Body body;
+		public @S(10) PHP_StartTag startTag;
+		public @S(20) PHP_Body body;
 		
 		public static class PHP_Body extends TokenChooser
 		{
 			// Really wasteful ... frequently parses twice
 			public @CHOICE static class PHP_NoEnd extends TokenSequence
 			{
-				public TokenList<PHP_Element> elements;
-				public PHP_EndOfFile eof;	// Can't be inside another class ...
+				public @S(10) TokenList<PHP_Element> elements;
+				public @S(20) PHP_EndOfFile eof;	// Can't be inside another class ...
 			}
 			
 			public @CHOICE static class PHP_NormalEnd extends TokenSequence
 			{
-				public TokenList<PHP_Element> elements;
-				public PHP_EndTag endTag;
+				public @S(10) TokenList<PHP_Element> elements;
+				public @S(20) PHP_EndTag endTag;
 			}
 		}
 

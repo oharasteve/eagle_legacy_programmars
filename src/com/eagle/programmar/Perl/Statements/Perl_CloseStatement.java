@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_CloseStatement extends TokenSequence
 {
-	public Perl_Keyword CLOSE = new Perl_Keyword("close");
-	public Perl_Expression expr;
+	public @S(10) Perl_Keyword CLOSE = new Perl_Keyword("close");
+	public @S(20) Perl_Expression expr;
 }

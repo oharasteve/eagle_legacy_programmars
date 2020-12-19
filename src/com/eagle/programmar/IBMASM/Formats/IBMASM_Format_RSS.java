@@ -12,15 +12,15 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_RSS extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"ICM",
 		"STCM"
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Register register;
-	public PunctuationComma comma1;
-	public IBMASM_Address address1;
-	public PunctuationComma comma2;
-	public IBMASM_Address address2;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Register register;
+	public @S(40) PunctuationComma comma1;
+	public @S(50) IBMASM_Address address1;
+	public @S(60) PunctuationComma comma2;
+	public @S(70) IBMASM_Address address2;
 }

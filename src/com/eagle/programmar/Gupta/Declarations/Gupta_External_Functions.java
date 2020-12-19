@@ -8,6 +8,6 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_External_Functions extends Gupta_Declaration
 {
-	public Gupta_Keyword External = new Gupta_Keyword("External");
-	public Gupta_Keyword Functions = new Gupta_Keyword("Functions");
+	public @S(10) Gupta_Keyword External = new Gupta_Keyword("External");
+	public @S(20) Gupta_Keyword Functions = new Gupta_Keyword("Functions");
 }

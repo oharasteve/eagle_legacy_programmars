@@ -12,18 +12,18 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_If_Statement extends TokenSequence
 {
-	public Delphi_Keyword IF = new Delphi_Keyword("If");
-	public Delphi_Expression cond;
-	public @OPT TokenList<Delphi_Comment> comments1;
-	public Delphi_Keyword THEN = new Delphi_Keyword("Then");
-	public @OPT TokenList<Delphi_Comment> comments2;
-	public @OPT Delphi_Statement stmt;
-	public @OPT Delphi_If_Else ifElse;
+	public @S(10) Delphi_Keyword IF = new Delphi_Keyword("If");
+	public @S(20) Delphi_Expression cond;
+	public @S(30) @OPT TokenList<Delphi_Comment> comments1;
+	public @S(40) Delphi_Keyword THEN = new Delphi_Keyword("Then");
+	public @S(50) @OPT TokenList<Delphi_Comment> comments2;
+	public @S(60) @OPT Delphi_Statement stmt;
+	public @S(70) @OPT Delphi_If_Else ifElse;
 	
 	public static class Delphi_If_Else extends TokenSequence
 	{
-		public @OPT TokenList<Delphi_Comment> comments;
-		public Delphi_Keyword ELSE = new Delphi_Keyword("Else");
-		public Delphi_Statement stmt;
+		public @S(10) @OPT TokenList<Delphi_Comment> comments;
+		public @S(20) Delphi_Keyword ELSE = new Delphi_Keyword("Else");
+		public @S(30) Delphi_Statement stmt;
 	}
 }

@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Gupta_Set_Statement extends TokenSequence
 {
-	public Gupta_Keyword Set = new Gupta_Keyword("Set");
-	public Gupta_Identifier_Reference var;
-	public PunctuationEquals equals;
-	public Gupta_Expression expr;
+	public @S(10) Gupta_Keyword Set = new Gupta_Keyword("Set");
+	public @S(20) Gupta_Identifier_Reference var;
+	public @S(30) PunctuationEquals equals;
+	public @S(40) Gupta_Expression expr;
 }

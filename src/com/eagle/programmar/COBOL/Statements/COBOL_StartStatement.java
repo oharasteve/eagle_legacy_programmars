@@ -14,13 +14,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_StartStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsstar.htm") COBOL_Keyword START = new COBOL_Keyword("START");
-	public COBOL_Identifier_Reference file;
-	public COBOL_Keyword KEY1 = new COBOL_Keyword("KEY");
-	public COBOL_StartRelOp oper;
-	public COBOL_Identifier_Reference value;
-	public @OPT COBOL_StartInvalid invalid;
-	public @OPT COBOL_Keyword ENDSTART = new COBOL_Keyword("END-START");
+	public @S(10) @DOC("rlpsstar.htm") COBOL_Keyword START = new COBOL_Keyword("START");
+	public @S(20) COBOL_Identifier_Reference file;
+	public @S(30) COBOL_Keyword KEY1 = new COBOL_Keyword("KEY");
+	public @S(40) COBOL_StartRelOp oper;
+	public @S(50) COBOL_Identifier_Reference value;
+	public @S(60) @OPT COBOL_StartInvalid invalid;
+	public @S(70) @OPT COBOL_Keyword ENDSTART = new COBOL_Keyword("END-START");
 	
 	public static class COBOL_StartRelOp extends TokenChooser
 	{
@@ -28,16 +28,16 @@ public class COBOL_StartStatement extends COBOL_AbstractStatement
 		
 		public @CHOICE static class COBOL_StartOper2 extends TokenSequence
 		{
-			public COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
-			public COBOL_Keyword THAN = new COBOL_Keyword("THAN");
+			public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(20) COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
+			public @S(30) COBOL_Keyword THAN = new COBOL_Keyword("THAN");
 		}
 	}
 	
 	public static class COBOL_StartInvalid extends TokenSequence
 	{
-		public COBOL_Keyword INVALID = new COBOL_Keyword("INVALID");
-		public COBOL_Keyword KEY2 = new COBOL_Keyword("KEY");
-		public TokenList<COBOL_Statement> statements;
+		public @S(10) COBOL_Keyword INVALID = new COBOL_Keyword("INVALID");
+		public @S(20) COBOL_Keyword KEY2 = new COBOL_Keyword("KEY");
+		public @S(30) TokenList<COBOL_Statement> statements;
 	}
 }

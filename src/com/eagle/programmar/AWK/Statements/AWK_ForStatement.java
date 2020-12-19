@@ -16,28 +16,28 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class AWK_ForStatement extends TokenSequence
 {
-	public AWK_Keyword FOR = new AWK_Keyword("for");
-	public PunctuationLeftParen leftParen;
-	public AWK_ForWhat forWhat;
-	public PunctuationRightParen rightParen;
-	public AWK_ForBlock block;
+	public @S(10) AWK_Keyword FOR = new AWK_Keyword("for");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) AWK_ForWhat forWhat;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) AWK_ForBlock block;
 	
 	public static class AWK_ForWhat extends TokenChooser
 	{
 		public @CHOICE static class AWK_ForIteration extends TokenSequence
 		{
-			public AWK_Expression initialize;
-			public PunctuationSemicolon semicolon1;
-			public AWK_Expression test;
-			public PunctuationSemicolon semicolon2;
-			public AWK_Expression increment;
+			public @S(10) AWK_Expression initialize;
+			public @S(20) PunctuationSemicolon semicolon1;
+			public @S(30) AWK_Expression test;
+			public @S(40) PunctuationSemicolon semicolon2;
+			public @S(50) AWK_Expression increment;
 		}
 		
 		public @CHOICE static class AWK_ForEach extends TokenSequence
 		{
-			public AWK_Variable var;
-			public AWK_Keyword IN = new AWK_Keyword("in");
-			public AWK_Expression value;
+			public @S(10) AWK_Variable var;
+			public @S(20) AWK_Keyword IN = new AWK_Keyword("in");
+			public @S(30) AWK_Expression value;
 		}
 	}
 	

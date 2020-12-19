@@ -10,13 +10,13 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_AssertStatement extends TokenSequence
 {
-	public Python_Keyword ASSERT = new Python_Keyword("assert");
-	public Python_Expression condition;
-	public @OPT Python_AssertMessage message;
+	public @S(10) Python_Keyword ASSERT = new Python_Keyword("assert");
+	public @S(20) Python_Expression condition;
+	public @S(30) @OPT Python_AssertMessage message;
 	
 	public static class Python_AssertMessage extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public Python_Expression message;
+		public @S(10) PunctuationComma comma;
+		public @S(20) Python_Expression message;
 	}
 }

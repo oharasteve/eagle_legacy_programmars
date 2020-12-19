@@ -12,31 +12,31 @@ import com.eagle.tokens.TokenSequence;
 
 public abstract class RPG_F_File_Specification extends TokenSequence
 {
-	public RPG_Keyword F = new RPG_Keyword(6, 6, "F");
-	public @OPT RPG_Literal fileName;
-	public @OPT RPG_KeywordChoice fileType;
-	public @OPT RPG_KeywordChoice fileDesignation;
-	public @OPT RPG_Keyword endOfFile;
-	public @OPT RPG_KeywordChoice sequence;
-	public @OPT RPG_KeywordChoice fileFormat;
-	public RPG_Blanks blank1;
-	public @OPT RPG_Number recordLength;
-	public @OPT RPG_Keyword limitsProcessing;
-	public @OPT RPG_Number fieldLength;
-	public @OPT RPG_KeywordChoice recordAddressType;
-	public @OPT RPG_KeywordChoice fileOrganization;
-	public @OPT RPG_Literal overflowIndicator;
-	public @OPT RPG_Number keyStart;
-	public @OPT RPG_KeywordChoice extensionCode;
-	public @OPT RPG_KeywordChoice device;
-	public RPG_Blanks blank2;
-	public @OPT RPG_Keyword continuationLines;
-	public @OPT RPG_Literal routine;
-	public RPG_Blanks blank3;
-	public @OPT RPG_Keyword fileAddition;
-	public RPG_Blanks blank4;
-	public @OPT RPG_Literal fileCondition;
-	public RPG_Blanks blank5;
+	public @S(10) RPG_Keyword F = new RPG_Keyword(6, 6, "F");
+	public @S(20) @OPT RPG_Literal fileName;
+	public @S(30) @OPT RPG_KeywordChoice fileType;
+	public @S(40) @OPT RPG_KeywordChoice fileDesignation;
+	public @S(50) @OPT RPG_Keyword endOfFile;
+	public @S(60) @OPT RPG_KeywordChoice sequence;
+	public @S(70) @OPT RPG_KeywordChoice fileFormat;
+	public @S(80) RPG_Blanks blank1;
+	public @S(90) @OPT RPG_Number recordLength;
+	public @S(100) @OPT RPG_Keyword limitsProcessing;
+	public @S(110) @OPT RPG_Number fieldLength;
+	public @S(120) @OPT RPG_KeywordChoice recordAddressType;
+	public @S(130) @OPT RPG_KeywordChoice fileOrganization;
+	public @S(140) @OPT RPG_Literal overflowIndicator;
+	public @S(150) @OPT RPG_Number keyStart;
+	public @S(160) @OPT RPG_KeywordChoice extensionCode;
+	public @S(170) @OPT RPG_KeywordChoice device;
+	public @S(180) RPG_Blanks blank2;
+	public @S(190) @OPT RPG_Keyword continuationLines;
+	public @S(200) @OPT RPG_Literal routine;
+	public @S(210) RPG_Blanks blank3;
+	public @S(220) @OPT RPG_Keyword fileAddition;
+	public @S(230) RPG_Blanks blank4;
+	public @S(240) @OPT RPG_Literal fileCondition;
+	public @S(250) RPG_Blanks blank5;
 	
 	public static class RPG_F_File_Specification_III extends RPG_F_File_Specification
 	{

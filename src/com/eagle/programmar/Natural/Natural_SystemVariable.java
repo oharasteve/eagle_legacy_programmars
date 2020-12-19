@@ -9,7 +9,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Natural_SystemVariable extends TokenSequence
 {
-	public PunctuationStar star;
-	public Natural_Identifier_Reference id;
-	public @OPT Natural_Subscript subscript;
+	public @S(10) PunctuationStar star;
+	public @S(20) Natural_Identifier_Reference id;
+	public @S(30) @OPT Natural_Subscript subscript;
 }

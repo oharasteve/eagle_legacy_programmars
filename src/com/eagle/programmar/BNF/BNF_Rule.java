@@ -10,8 +10,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class BNF_Rule extends TokenSequence
 {
-	public BNF_Rule_Definition definition;
-	public BNF_Punctuation coloncolonEquals = new BNF_Punctuation("::=");
-	public BNF_Expression expression;
-	public PunctuationSemicolon semicolon;
+	public @S(10) BNF_Rule_Definition definition;
+	public @S(20) BNF_Punctuation coloncolonEquals = new BNF_Punctuation("::=");
+	public @S(30) BNF_Expression expression;
+	public @S(40) PunctuationSemicolon semicolon;
 }

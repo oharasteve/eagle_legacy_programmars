@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_ReturnStatement extends TokenSequence
 {
-	public @DOC("7.48") PLI_Keyword RETURN = new PLI_Keyword("RETURN");
-	public @OPT PLI_Expression expr;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.48") PLI_Keyword RETURN = new PLI_Keyword("RETURN");
+	public @S(20) @OPT PLI_Expression expr;
+	public @S(30) PunctuationSemicolon semicolon;
 }

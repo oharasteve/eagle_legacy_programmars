@@ -11,10 +11,10 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class JavaP_ConstantNameAndType extends TokenSequence implements JavaP_ConstantShowable
 {
-	public JavaP_Keyword NAMEANDTYPE = new JavaP_Keyword("NameAndType");
-	public JavaP_Symbol_Reference name;
-	public PunctuationColon colon;
-	public JavaP_Symbol_Reference type;
+	public @S(10) JavaP_Keyword NAMEANDTYPE = new JavaP_Keyword("NameAndType");
+	public @S(20) JavaP_Symbol_Reference name;
+	public @S(30) PunctuationColon colon;
+	public @S(40) JavaP_Symbol_Reference type;
 	
 	@Override
 	public String showConstant()

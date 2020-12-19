@@ -23,7 +23,7 @@ public class SQL_Program extends EagleLanguage
 		return "http://www.w3schools.com/sql/";
 	}
 	
-	public TokenList<SQL_StatementOrComment> statements;
+	public @S(10) TokenList<SQL_StatementOrComment> statements;
 	
 	public static class SQL_StatementOrComment extends TokenChooser
 	{

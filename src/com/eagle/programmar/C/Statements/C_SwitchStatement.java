@@ -18,14 +18,14 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_SwitchStatement extends TokenSequence
 {
-	public @DOC("#The-switch-Statement") C_Keyword SWITCH = new C_Keyword("switch");
-	public PunctuationLeftParen leftParen;
-	public C_Expression val;
-	public PunctuationRightParen rightParen;
-	public @OPT C_Comment comment;
-	public PunctuationLeftBrace leftBrace;
-	public TokenList<C_SwitchClause> switchClause;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) @DOC("#The-switch-Statement") C_Keyword SWITCH = new C_Keyword("switch");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) C_Expression val;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) @OPT C_Comment comment;
+	public @S(60) PunctuationLeftBrace leftBrace;
+	public @S(70) TokenList<C_SwitchClause> switchClause;
+	public @S(80) PunctuationRightBrace rightBrace;
 	
 	public static class C_SwitchClause extends TokenChooser
 	{
@@ -36,16 +36,16 @@ public class C_SwitchStatement extends TokenSequence
 	
 	public static class C_CaseClause extends TokenSequence
 	{
-		public C_Keyword CASE = new C_Keyword("case");
-		public C_Expression expr;
-		public PunctuationColon colon;
-		public @OPT TokenList<C_StatementOrComment> statements;
+		public @S(10) C_Keyword CASE = new C_Keyword("case");
+		public @S(20) C_Expression expr;
+		public @S(30) PunctuationColon colon;
+		public @S(40) @OPT TokenList<C_StatementOrComment> statements;
 	}
 	
 	public static class C_DefaultClause extends TokenSequence
 	{
-		public C_Keyword DEFAULT = new C_Keyword("default");
-		public PunctuationColon colon;
-		public @OPT TokenList<C_StatementOrComment> statements;
+		public @S(10) C_Keyword DEFAULT = new C_Keyword("default");
+		public @S(20) PunctuationColon colon;
+		public @S(30) @OPT TokenList<C_StatementOrComment> statements;
 	}
 }

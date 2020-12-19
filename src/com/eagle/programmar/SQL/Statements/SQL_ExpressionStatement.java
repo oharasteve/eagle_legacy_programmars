@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_ExpressionStatement extends TokenSequence
 {
-	public SQL_Expression expr;
-	public PunctuationSemicolon semicolon;
+	public @S(10) SQL_Expression expr;
+	public @S(20) PunctuationSemicolon semicolon;
 }

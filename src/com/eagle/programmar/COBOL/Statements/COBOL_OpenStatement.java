@@ -13,13 +13,13 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_OpenStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsopen.htm") COBOL_Keyword OPEN = new COBOL_Keyword("OPEN");
-	public COBOL_KeywordChoice inputOutput = new COBOL_KeywordChoice("I-O", "INPUT", "OUTPUT", "EXTEND");
-	public TokenList<COBOL_OpenFileList> fileList;
+	public @S(10) @DOC("rlpsopen.htm") COBOL_Keyword OPEN = new COBOL_Keyword("OPEN");
+	public @S(20) COBOL_KeywordChoice inputOutput = new COBOL_KeywordChoice("I-O", "INPUT", "OUTPUT", "EXTEND");
+	public @S(30) TokenList<COBOL_OpenFileList> fileList;
 	
 	public static class COBOL_OpenFileList extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_Identifier_Reference file;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Identifier_Reference file;
 	}
 }

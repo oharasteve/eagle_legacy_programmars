@@ -16,16 +16,16 @@ public class JavaP_ClassName extends TokenChooser
 {
 	public @CHOICE static class JavaP_ClassNameL extends TokenSequence
 	{
-		public @OPT JavaP_PunctuationChoice plus = new JavaP_PunctuationChoice("[", "+", "*");
-		public JavaP_LClassName lClass;
-		public @OPT JavaP_TemplatedClass template;
-		public PunctuationSemicolon semicolon;
+		public @S(10) @OPT JavaP_PunctuationChoice plus = new JavaP_PunctuationChoice("[", "+", "*");
+		public @S(20) JavaP_LClassName lClass;
+		public @S(30) @OPT JavaP_TemplatedClass template;
+		public @S(40) PunctuationSemicolon semicolon;
 		
 		public static class JavaP_TemplatedClass extends TokenSequence
 		{
-			public JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
-			public @OPT TokenList<JavaP_TemplateContents> contents;
-			public JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
+			public @S(10) JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
+			public @S(20) @OPT TokenList<JavaP_TemplateContents> contents;
+			public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 			
 			public static class JavaP_TemplateContents extends TokenChooser
 			{
@@ -34,8 +34,8 @@ public class JavaP_ClassName extends TokenChooser
 				
 				public @CHOICE static class JavaP_TemplateIds extends TokenSequence
 				{
-					public JavaP_Identifier id;
-					public PunctuationSemicolon semicolon;
+					public @S(10) JavaP_Identifier id;
+					public @S(20) PunctuationSemicolon semicolon;
 				}
 			}
 		}
@@ -43,7 +43,7 @@ public class JavaP_ClassName extends TokenChooser
 	
 	public @CHOICE static class JavaP_ClassNameNoL extends TokenSequence
 	{
-		public JavaP_Identifier identifier;
-		public PunctuationSemicolon semicolon;
+		public @S(10) JavaP_Identifier identifier;
+		public @S(20) PunctuationSemicolon semicolon;
 	}
 }

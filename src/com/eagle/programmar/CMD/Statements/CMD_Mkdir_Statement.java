@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Mkdir_Statement extends TokenSequence
 {
-	public @DOC("mkdir.mspx") CMD_Keyword MKDIR = new CMD_Keyword("mkdir");
-	public CMD_Argument dir;
+	public @S(10) @DOC("mkdir.mspx") CMD_Keyword MKDIR = new CMD_Keyword("mkdir");
+	public @S(20) CMD_Argument dir;
 }

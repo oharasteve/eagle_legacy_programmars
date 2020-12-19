@@ -13,11 +13,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_DoStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("js_loop_while.asp") Javascript_Keyword DO = new Javascript_Keyword("do");
-	public Javascript_Statement doStatement;
-	public @NEWLINE Javascript_Keyword WHILE = new Javascript_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Javascript_Expression condition;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @NOSPACE @OPT PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE @DOC("js_loop_while.asp") Javascript_Keyword DO = new Javascript_Keyword("do");
+	public @S(20) Javascript_Statement doStatement;
+	public @S(30) @NEWLINE Javascript_Keyword WHILE = new Javascript_Keyword("while");
+	public @S(40) PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE Javascript_Expression condition;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
+	public @S(70) @NOSPACE @OPT PunctuationSemicolon semicolon;
 }

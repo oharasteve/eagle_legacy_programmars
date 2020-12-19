@@ -23,7 +23,7 @@ public class AWK_Program extends EagleLanguage
 		return "TBD";
 	}
 
-	public TokenList<AWK_Element> elements;
+	public @S(10) TokenList<AWK_Element> elements;
 	
 	public static class AWK_Element extends TokenChooser
 	{

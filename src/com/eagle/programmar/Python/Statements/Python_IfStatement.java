@@ -14,28 +14,28 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_IfStatement extends TokenSequence
 {
-	public @NOSPACE Python_Keyword IF = new Python_Keyword("if");
-	public Python_Expression condition;
-	public @NOSPACE PunctuationColon colon;
-	public Python_SingleOrMultiLineStatement ifThen;
-	public @OPT TokenList<Python_IfElif> ifElif;
-	public @OPT Python_IfElse ifElse;
-	public @OPT TokenList<Python_Comment> comments;
+	public @S(10) @NOSPACE Python_Keyword IF = new Python_Keyword("if");
+	public @S(20) Python_Expression condition;
+	public @S(30) @NOSPACE PunctuationColon colon;
+	public @S(40) Python_SingleOrMultiLineStatement ifThen;
+	public @S(50) @OPT TokenList<Python_IfElif> ifElif;
+	public @S(60) @OPT Python_IfElse ifElse;
+	public @S(70) @OPT TokenList<Python_Comment> comments;
 	
 	public static class Python_IfElif extends TokenSequence
 	{
-		public @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
-		public Python_Expression condition;
-		public @NOSPACE PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement elifStatement;
+		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
+		public @S(20) @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
+		public @S(30) Python_Expression condition;
+		public @S(40) @NOSPACE PunctuationColon colon;
+		public @S(50) Python_SingleOrMultiLineStatement elifStatement;
 	}
 		
 	public static class Python_IfElse extends TokenSequence
 	{
-		public @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
-		public @NOSPACE PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement ifElseStatement;
+		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
+		public @S(20) @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(30) @NOSPACE PunctuationColon colon;
+		public @S(40) Python_SingleOrMultiLineStatement ifElseStatement;
 	}
 }

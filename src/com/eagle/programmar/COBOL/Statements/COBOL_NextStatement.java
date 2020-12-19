@@ -8,6 +8,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_NextStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
-	public COBOL_Keyword SENTENCE = new COBOL_Keyword("SENTENCE");
+	public @S(10) COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
+	public @S(20) COBOL_Keyword SENTENCE = new COBOL_Keyword("SENTENCE");
 }

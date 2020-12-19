@@ -22,30 +22,30 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_PercentStatement extends TokenSequence
 {
-	public PLI_Punctuation percent = new PLI_Punctuation('%');
-	public PLI_PercentWhat what;
-	public PunctuationSemicolon semicolon1;
-	public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
+	public @S(10) PLI_Punctuation percent = new PLI_Punctuation('%');
+	public @S(20) PLI_PercentWhat what;
+	public @S(30) PunctuationSemicolon semicolon1;
+	public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
 	
 	public static class PLI_PercentWhat extends TokenChooser
 	{
 		public @CHOICE static class PLI_PercentAssignment extends TokenSequence
 		{
-			public PLI_Variable_Definition var;
-			public PunctuationEquals equals;
-			public PLI_Expression expr;
+			public @S(10) PLI_Variable_Definition var;
+			public @S(20) PunctuationEquals equals;
+			public @S(30) PLI_Expression expr;
 		}
 		
 		public @CHOICE static class PLI_PercentProcess extends TokenSequence
 		{
-			public @DOC("7.43") PLI_Keyword PROCESS = new PLI_Keyword("PROCESS");
-			public PLI_Keyword GOSTMT = new PLI_Keyword("GOSTMT");
+			public @S(10) @DOC("7.43") PLI_Keyword PROCESS = new PLI_Keyword("PROCESS");
+			public @S(20) PLI_Keyword GOSTMT = new PLI_Keyword("GOSTMT");
 		}
 		
 		public @CHOICE static class PLI_PercentInclude extends TokenSequence
 		{
-			public @DOC("7.29") PLI_Keyword INCLUDE = new PLI_Keyword("INCLUDE");
-			public PLI_ProcessIncludeWhat what;
+			public @S(10) @DOC("7.29") PLI_Keyword INCLUDE = new PLI_Keyword("INCLUDE");
+			public @S(20) PLI_ProcessIncludeWhat what;
 			
 			public static class PLI_ProcessIncludeWhat extends TokenChooser
 			{
@@ -56,32 +56,32 @@ public class PLI_PercentStatement extends TokenSequence
 		
 		public @CHOICE static class PLI_PercentDeclare extends TokenSequence
 		{
-			public @DOC("7.10") PLI_Keyword DECLARE = new PLI_Keyword("DECLARE");
-			public @OPT PunctuationLeftParen leftParen;
-			public SeparatedList<PLI_Variable_Definition,PunctuationComma> vars;
-			public @OPT PunctuationRightParen rightParen;
-			public PLI_KeywordChoice type = new PLI_KeywordChoice("FIXED", "CHARACTER");
+			public @S(10) @DOC("7.10") PLI_Keyword DECLARE = new PLI_Keyword("DECLARE");
+			public @S(20) @OPT PunctuationLeftParen leftParen;
+			public @S(30) SeparatedList<PLI_Variable_Definition,PunctuationComma> vars;
+			public @S(40) @OPT PunctuationRightParen rightParen;
+			public @S(50) PLI_KeywordChoice type = new PLI_KeywordChoice("FIXED", "CHARACTER");
 		}
 		
 		public @CHOICE static class PLI_PercentActivate extends TokenSequence
 		{
-			public PLI_Keyword ACTIVATE = new PLI_Keyword("ACTIVATE");
-			public SeparatedList<PLI_Identifier_Reference,PunctuationComma> vars;
-			public @OPT PLI_Keyword NORESCAN = new PLI_Keyword("NORESCAN");
+			public @S(10) PLI_Keyword ACTIVATE = new PLI_Keyword("ACTIVATE");
+			public @S(20) SeparatedList<PLI_Identifier_Reference,PunctuationComma> vars;
+			public @S(30) @OPT PLI_Keyword NORESCAN = new PLI_Keyword("NORESCAN");
 		}
 		
 		public @CHOICE static class PLI_PercentDeactivate extends TokenSequence
 		{
-			public @DOC("7.8") PLI_Keyword DEACTIVATE = new PLI_Keyword("DEACTIVATE");
-			public PLI_Identifier_Reference var;
+			public @S(10) @DOC("7.8") PLI_Keyword DEACTIVATE = new PLI_Keyword("DEACTIVATE");
+			public @S(20) PLI_Identifier_Reference var;
 		}
 		
 		public @CHOICE static class PLI_PercentSkip extends TokenSequence
 		{
-			public PLI_Keyword SKIP = new PLI_Keyword("SKIP");
-			public PunctuationLeftParen leftParen;
-			public PLI_Number number;
-			public PunctuationRightParen rightParen;
+			public @S(10) PLI_Keyword SKIP = new PLI_Keyword("SKIP");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) PLI_Number number;
+			public @S(40) PunctuationRightParen rightParen;
 		}
 	}
 }

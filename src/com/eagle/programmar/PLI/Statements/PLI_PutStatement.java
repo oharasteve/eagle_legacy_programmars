@@ -21,50 +21,50 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_PutStatement extends TokenSequence
 {
-	public @OPT PLI_Label label;
-	public @DOC("7.45") PLI_Keyword PUT = new PLI_Keyword("PUT");
-	public @OPT PLI_PutFile file;
-	public @OPT PLI_Keyword SKIP = new PLI_Keyword("SKIP");
-	public @OPT PLI_PutFormat_Count count;
-	public @OPT PLI_PutString string;
-	public @OPT PLI_KeywordChoice dataOrEditOrList = new PLI_KeywordChoice(
+	public @S(10) @OPT PLI_Label label;
+	public @S(20) @DOC("7.45") PLI_Keyword PUT = new PLI_Keyword("PUT");
+	public @S(30) @OPT PLI_PutFile file;
+	public @S(40) @OPT PLI_Keyword SKIP = new PLI_Keyword("SKIP");
+	public @S(50) @OPT PLI_PutFormat_Count count;
+	public @S(60) @OPT PLI_PutString string;
+	public @S(70) @OPT PLI_KeywordChoice dataOrEditOrList = new PLI_KeywordChoice(
 			"DATA", "EDIT", "LIST");
 	
-	public @OPT PLI_PutValues values;
+	public @S(80) @OPT PLI_PutValues values;
 
-	public @OPT PLI_PutFormat putFormat;
+	public @S(90) @OPT PLI_PutFormat putFormat;
 	
-	public PunctuationSemicolon semicolon;
+	public @S(100) PunctuationSemicolon semicolon;
 
 	public static class PLI_PutFile extends TokenSequence
 	{
-		public PLI_Keyword FILE = new PLI_Keyword("FILE");
-		public PunctuationLeftParen leftParen1;
-		public PLI_Identifier_Reference file;
-		public PunctuationRightParen rightParen1;
+		public @S(10) PLI_Keyword FILE = new PLI_Keyword("FILE");
+		public @S(20) PunctuationLeftParen leftParen1;
+		public @S(30) PLI_Identifier_Reference file;
+		public @S(40) PunctuationRightParen rightParen1;
 	}
 	
 	public static class PLI_PutString extends TokenSequence
 	{
-		public PLI_Keyword STRING = new PLI_Keyword("STRING");
-		public PunctuationLeftParen leftParen1;
-		public PLI_Identifier_Reference var;
-		public PunctuationRightParen rightParen1;
+		public @S(10) PLI_Keyword STRING = new PLI_Keyword("STRING");
+		public @S(20) PunctuationLeftParen leftParen1;
+		public @S(30) PLI_Identifier_Reference var;
+		public @S(40) PunctuationRightParen rightParen1;
 	}
 	
 	public static class PLI_PutValues extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen1;
-		public SeparatedList<PLI_Expression,PunctuationComma> exprs;
-		public PunctuationRightParen rightParen1;
+		public @S(10) PunctuationLeftParen leftParen1;
+		public @S(20) SeparatedList<PLI_Expression,PunctuationComma> exprs;
+		public @S(30) PunctuationRightParen rightParen1;
 	}
 
 	public static class PLI_PutFormat extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen2;
-		public PLI_PutEditFormat editFormat;
-		public @OPT TokenList<PLI_PutMoreFormats> moreFmts;
-		public PunctuationRightParen rightParen2;
+		public @S(10) PunctuationLeftParen leftParen2;
+		public @S(20) PLI_PutEditFormat editFormat;
+		public @S(30) @OPT TokenList<PLI_PutMoreFormats> moreFmts;
+		public @S(40) PunctuationRightParen rightParen2;
 		
 		public static class PLI_PutEditFormat extends TokenChooser
 		{
@@ -73,65 +73,65 @@ public class PLI_PutStatement extends TokenSequence
 			
 			public @CHOICE static class PLI_PutMultipleFormats extends TokenSequence
 			{
-				public PLI_Number number;
-				public PLI_PutFormat format;
+				public @S(10) PLI_Number number;
+				public @S(20) PLI_PutFormat format;
 			}
 			
 			public @CHOICE static class PLI_PutFormat_A extends TokenSequence
 			{
-				public @OPT PLI_Number number;
-				public PLI_Keyword A = new PLI_Keyword("A");
-				public @OPT PLI_PutFormat_Count formatCount;
+				public @S(10) @OPT PLI_Number number;
+				public @S(20) PLI_Keyword A = new PLI_Keyword("A");
+				public @S(30) @OPT PLI_PutFormat_Count formatCount;
 			}
 
 			public @CHOICE static class PLI_PutFormat_E extends TokenSequence
 			{
-				public @OPT PLI_Number number;
-				public PLI_Keyword E = new PLI_Keyword("E");
-				public PLI_PutFormat_Count formatCount;
+				public @S(10) @OPT PLI_Number number;
+				public @S(20) PLI_Keyword E = new PLI_Keyword("E");
+				public @S(30) PLI_PutFormat_Count formatCount;
 			}
 
 			public @CHOICE static class PLI_PutFormat_F extends TokenSequence
 			{
-				public @OPT PLI_Number number;
-				public PLI_Keyword F = new PLI_Keyword("F");
-				public PLI_PutFormat_Count formatCount;
+				public @S(10) @OPT PLI_Number number;
+				public @S(20) PLI_Keyword F = new PLI_Keyword("F");
+				public @S(30) PLI_PutFormat_Count formatCount;
 			}
 
 			public @CHOICE static class PLI_PutFormat_R extends TokenSequence
 			{
-				public PLI_Keyword R = new PLI_Keyword("R");
-				public PunctuationLeftParen leftParen;
-				public PLI_Identifier_Reference label;
-				public PunctuationRightParen rightParen;
+				public @S(10) PLI_Keyword R = new PLI_Keyword("R");
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) PLI_Identifier_Reference label;
+				public @S(40) PunctuationRightParen rightParen;
 			}
 
 			public @CHOICE static class PLI_PutFormat_X extends TokenSequence
 			{
-				public @OPT PLI_Number number;
-				public PLI_Keyword X = new PLI_Keyword("X");
-				public PLI_PutFormat_Count formatCount;
+				public @S(10) @OPT PLI_Number number;
+				public @S(20) PLI_Keyword X = new PLI_Keyword("X");
+				public @S(30) PLI_PutFormat_Count formatCount;
 			}
 		}
 		
 		public static class PLI_PutMoreFormats extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public PLI_PutEditFormat editFormat;
+			public @S(10) PunctuationComma comma;
+			public @S(20) PLI_PutEditFormat editFormat;
 		}
 	}
 	
 	public static class PLI_PutFormat_Count extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public PLI_Expression expr;
-		public @OPT PLI_PutFormat_SecondCount secondCount;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) PLI_Expression expr;
+		public @S(30) @OPT PLI_PutFormat_SecondCount secondCount;
+		public @S(40) PunctuationRightParen rightParen;
 		
 		public static class PLI_PutFormat_SecondCount extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public PLI_Expression expr;
+			public @S(10) PunctuationComma comma;
+			public @S(20) PLI_Expression expr;
 		}
 	}
 }

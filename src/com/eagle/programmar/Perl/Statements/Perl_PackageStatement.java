@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_PackageStatement extends TokenSequence
 {
-	public Perl_Keyword PACKAGE = new Perl_Keyword("package");
-	public Perl_Package_Definition pkg;
+	public @S(10) Perl_Keyword PACKAGE = new Perl_Keyword("package");
+	public @S(20) Perl_Package_Definition pkg;
 }

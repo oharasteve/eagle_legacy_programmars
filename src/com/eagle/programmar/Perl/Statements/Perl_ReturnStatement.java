@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_ReturnStatement extends TokenSequence
 {
-	public @DOC("function.return.php") Perl_Keyword RETURN = new Perl_Keyword("return");
-	public @OPT Perl_Expression expr;
+	public @S(10) @DOC("function.return.php") Perl_Keyword RETURN = new Perl_Keyword("return");
+	public @S(20) @OPT Perl_Expression expr;
 }

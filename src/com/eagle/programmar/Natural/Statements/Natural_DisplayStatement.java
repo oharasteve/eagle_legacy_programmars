@@ -24,17 +24,17 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Natural_DisplayStatement extends TokenSequence
 {
-	public @DOC("sm/display.htm") Natural_Keyword DISPLAY = new Natural_Keyword("DISPLAY");
-	public @OPT Natural_Keyword NOTITLE = new Natural_Keyword("NOTITLE");
-	public @OPT Natural_DisplayFunctions displayFns;
-	public TokenList<Natural_DisplayElement> displayElement;
+	public @S(10) @DOC("sm/display.htm") Natural_Keyword DISPLAY = new Natural_Keyword("DISPLAY");
+	public @S(20) @OPT Natural_Keyword NOTITLE = new Natural_Keyword("NOTITLE");
+	public @S(30) @OPT Natural_DisplayFunctions displayFns;
+	public @S(40) TokenList<Natural_DisplayElement> displayElement;
 	
 	public static class Natural_DisplayFunctions extends TokenSequence
 	{
-		public @OPT Natural_Keyword AND = new Natural_Keyword("AND");
-		public @OPT Natural_Keyword GIVE = new Natural_Keyword("GIVE");
-		public @OPT Natural_Keyword SYSTEM = new Natural_Keyword("SYSTEM");
-		public Natural_Keyword FUNCTIONS = new Natural_Keyword("FUNCTIONS");
+		public @S(10) @OPT Natural_Keyword AND = new Natural_Keyword("AND");
+		public @S(20) @OPT Natural_Keyword GIVE = new Natural_Keyword("GIVE");
+		public @S(30) @OPT Natural_Keyword SYSTEM = new Natural_Keyword("SYSTEM");
+		public @S(40) Natural_Keyword FUNCTIONS = new Natural_Keyword("FUNCTIONS");
 	}
 	
 	public static class Natural_DisplayElement extends TokenChooser
@@ -51,64 +51,64 @@ public class Natural_DisplayStatement extends TokenSequence
 		
 		public @CHOICE static class Natural_Justified extends TokenSequence
 		{
-			public Natural_Keyword LEFT = new Natural_Keyword("LEFT");
-			public @OPT Natural_Keyword JUSTIFIED = new Natural_Keyword("JUSTIFIED");
+			public @S(10) Natural_Keyword LEFT = new Natural_Keyword("LEFT");
+			public @S(20) @OPT Natural_Keyword JUSTIFIED = new Natural_Keyword("JUSTIFIED");
 		}
 
 		public @CHOICE static class Natural_FieldPositioning extends TokenSequence
 		{
-			public Natural_Keyword T = new Natural_Keyword("T");
-			public PunctuationStar star;
-			public Natural_Variable var;
+			public @S(10) Natural_Keyword T = new Natural_Keyword("T");
+			public @S(20) PunctuationStar star;
+			public @S(30) Natural_Variable var;
 		}
 		
 		public @CHOICE static class Natural_FieldAndLinePositioning extends TokenSequence
 		{
-			public Natural_Keyword P = new Natural_Keyword("P");
-			public PunctuationStar star;
-			public Natural_Variable var;
+			public @S(10) Natural_Keyword P = new Natural_Keyword("P");
+			public @S(20) PunctuationStar star;
+			public @S(30) Natural_Variable var;
 		}
 		
 		public @CHOICE static class Natural_Vertical extends TokenSequence
 		{
-			public Natural_Keyword VERT = new Natural_Keyword("VERT");
-			public @OPT Natural_Keyword AS = new Natural_Keyword("AS");
-			public Natural_Literal literal;
+			public @S(10) Natural_Keyword VERT = new Natural_Keyword("VERT");
+			public @S(20) @OPT Natural_Keyword AS = new Natural_Keyword("AS");
+			public @S(30) Natural_Literal literal;
 		}
 		
 		public @CHOICE static class Natural_VerticalCaptioned extends TokenSequence
 		{
-			public Natural_Keyword VERT = new Natural_Keyword("VERT");
-			public @OPT Natural_Keyword AS = new Natural_Keyword("AS");
-			public Natural_Keyword CAPTIONED = new Natural_Keyword("CAPTIONED");
+			public @S(10) Natural_Keyword VERT = new Natural_Keyword("VERT");
+			public @S(20) @OPT Natural_Keyword AS = new Natural_Keyword("AS");
+			public @S(30) Natural_Keyword CAPTIONED = new Natural_Keyword("CAPTIONED");
 		}
 		
 		public @CHOICE static class Natural_Display_Literal extends TokenSequence
 		{
-			public Natural_Literal literal;
-			public @OPT Natural_LiteralCount count;
+			public @S(10) Natural_Literal literal;
+			public @S(20) @OPT Natural_LiteralCount count;
 			
 			public static class Natural_LiteralCount extends TokenSequence
 			{
-				public PunctuationLeftParen leftParen;
-				public Natural_Number count;
-				public PunctuationRightParen rightParen;
+				public @S(10) PunctuationLeftParen leftParen;
+				public @S(20) Natural_Number count;
+				public @S(30) PunctuationRightParen rightParen;
 			}
 		}
 		
 		public @CHOICE static class Natural_Relative_Positioning extends TokenSequence
 		{
-			public Natural_Number lines;
-			public PunctuationSlash slash;
-			public Natural_Number column;
+			public @S(10) Natural_Number lines;
+			public @S(20) PunctuationSlash slash;
+			public @S(30) Natural_Number column;
 		}
 	}
 	
 	public static class Natural_DisplayParameter extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public Natural_DisplayParameterContents contents;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Natural_DisplayParameterContents contents;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static class Natural_DisplayParameterContents extends TokenChooser
@@ -118,41 +118,41 @@ public class Natural_DisplayStatement extends TokenSequence
 
 		public @CHOICE static class NaturalDisplayParameterFieldRepresentation extends TokenSequence
 		{
-			public Natural_Keyword AD = new Natural_Keyword("AD");
-			public PunctuationEquals equals;
-			public Natural_DisplayParametersAD parameters;
+			public @S(10) Natural_Keyword AD = new Natural_Keyword("AD");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) Natural_DisplayParametersAD parameters;
 		}
 
 		public @CHOICE static class NaturalDisplayParameterColorDefinition extends TokenSequence
 		{
-			public Natural_Keyword CD = new Natural_Keyword("CD");
-			public PunctuationEquals equals;
-			public Natural_DisplayParametersCD parameters;
+			public @S(10) Natural_Keyword CD = new Natural_Keyword("CD");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) Natural_DisplayParametersCD parameters;
 		}
 
 		public @CHOICE static class NaturalDisplayParameterPrintMode extends TokenSequence
 		{
-			public Natural_Keyword PM = new Natural_Keyword("PM");
-			public PunctuationEquals equals;
-			public Natural_DisplayParametersPM parameters;
+			public @S(10) Natural_Keyword PM = new Natural_Keyword("PM");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) Natural_DisplayParametersPM parameters;
 		}
 	}
 	
 	public static class Natural_DisplayParametersAD extends TokenSequence
 	{
-		public Natural_KeywordChoice param = new Natural_KeywordChoice(
+		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice(
 				"B", "C", "D", "I", "N", "U", "V");
 	}
 	
 	public static class Natural_DisplayParametersCD extends TokenSequence
 	{
-		public Natural_KeywordChoice param = new Natural_KeywordChoice(
+		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice(
 				"BL", "GR", "NE", "PI", "RE", "TU", "YE");
 	}
 
 	public static class Natural_DisplayParametersPM extends TokenSequence
 	{
-		public Natural_KeywordChoice param = new Natural_KeywordChoice(
+		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice(
 				"C", "D", "I", "N");
 	}
 }

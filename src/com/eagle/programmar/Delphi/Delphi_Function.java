@@ -14,19 +14,19 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Function extends TokenSequence
 {
-	public Delphi_FunctionForward forward;
-	public @OPT TokenList<Delphi_Header> headers;
-	public Delphi_BeginEnd body;
-	public @OPT TokenList<Delphi_Comment> comments;
-	public PunctuationSemicolon semicolon2;
+	public @S(10) Delphi_FunctionForward forward;
+	public @S(20) @OPT TokenList<Delphi_Header> headers;
+	public @S(30) Delphi_BeginEnd body;
+	public @S(40) @OPT TokenList<Delphi_Comment> comments;
+	public @S(50) PunctuationSemicolon semicolon2;
 	
 	public static class Delphi_FunctionForward extends TokenSequence
 	{
-		public Delphi_Keyword FUNCTION = new Delphi_Keyword("Function");
-		public Delphi_Variable name;
-		public @OPT Delphi_Arguments args;
-		public PunctuationColon colon;
-		public Delphi_Type type;
-		public PunctuationSemicolon semicolon1;
+		public @S(10) Delphi_Keyword FUNCTION = new Delphi_Keyword("Function");
+		public @S(20) Delphi_Variable name;
+		public @S(30) @OPT Delphi_Arguments args;
+		public @S(40) PunctuationColon colon;
+		public @S(50) Delphi_Type type;
+		public @S(60) PunctuationSemicolon semicolon1;
 	}
 }

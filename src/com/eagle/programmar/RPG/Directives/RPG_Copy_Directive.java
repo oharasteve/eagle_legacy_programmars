@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class RPG_Copy_Directive extends TokenSequence
 {
-	public RPG_Keyword COPY = new RPG_Keyword(7, 112, "/COPY");
-	public RPG_Literal filename = new RPG_Literal(13, 44);
+	public @S(10) RPG_Keyword COPY = new RPG_Keyword(7, 112, "/COPY");
+	public @S(20) RPG_Literal filename = new RPG_Literal(13, 44);
 }

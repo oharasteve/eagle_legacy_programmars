@@ -14,34 +14,34 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_Set_Statement extends TokenSequence
 {
-	public @DOC("set.mspx") CMD_Keyword SET = new CMD_Keyword("set");
-	public CMD_Set_What setWhat;
+	public @S(10) @DOC("set.mspx") CMD_Keyword SET = new CMD_Keyword("set");
+	public @S(20) CMD_Set_What setWhat;
 	
 	public static class CMD_Set_What extends TokenChooser
 	{
 		public @CHOICE static class CMS_Set_Regular extends TokenSequence
 		{
-			public CMD_Variable_Definition var;
-			public PunctuationEquals equals;
-			public CMD_RestOfLine value;
+			public @S(10) CMD_Variable_Definition var;
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CMD_RestOfLine value;
 		}
 		
 		public @CHOICE static class CMD_Set_Assigment extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword A = new CMD_Keyword("a");
-			public CMD_Variable_Definition var;
-			public PunctuationEquals equals;
-			public CMD_Expression expr;
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword A = new CMD_Keyword("a");
+			public @S(30) CMD_Variable_Definition var;
+			public @S(40) PunctuationEquals equals;
+			public @S(50) CMD_Expression expr;
 		}
 		
 		public @CHOICE static class CMD_Set_Prompt extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword P = new CMD_Keyword("p");
-			public CMD_Variable_Definition var;
-			public PunctuationEquals equals;
-			public CMD_RestOfLine value;
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword P = new CMD_Keyword("p");
+			public @S(30) CMD_Variable_Definition var;
+			public @S(40) PunctuationEquals equals;
+			public @S(50) CMD_RestOfLine value;
 		}
 	}
 }

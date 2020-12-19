@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_CallStatement extends TokenSequence
 {
-	public @DOC("7.6") PLI_Keyword CALL = new PLI_Keyword("CALL");
-	public PLI_Expression params;
-	public @OPT PLI_Comment comment;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.6") PLI_Keyword CALL = new PLI_Keyword("CALL");
+	public @S(20) PLI_Expression params;
+	public @S(30) @OPT PLI_Comment comment;
+	public @S(40) PunctuationSemicolon semicolon;
 }

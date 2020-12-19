@@ -9,10 +9,10 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_DivideStatement extends TokenSequence
 {
-	public @DOC("sm/divide.htm") Natural_Keyword DIVIDE = new Natural_Keyword("DIVIDE");
-	public Natural_Variable denominator;
-	public Natural_Keyword INTO = new Natural_Keyword("INTO");
-	public Natural_Variable numerator;
-	public Natural_Keyword GIVING = new Natural_Keyword("GIVING");
-	public Natural_Variable quotient;
+	public @S(10) @DOC("sm/divide.htm") Natural_Keyword DIVIDE = new Natural_Keyword("DIVIDE");
+	public @S(20) Natural_Variable denominator;
+	public @S(30) Natural_Keyword INTO = new Natural_Keyword("INTO");
+	public @S(40) Natural_Variable numerator;
+	public @S(50) Natural_Keyword GIVING = new Natural_Keyword("GIVING");
+	public @S(60) Natural_Variable quotient;
 }

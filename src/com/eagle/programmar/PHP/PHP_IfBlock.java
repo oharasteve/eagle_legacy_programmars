@@ -21,37 +21,37 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class PHP_IfBlock extends TokenSequence
 {
-	public @SYNTAX(Perl_Syntax.class) PHP_IfCondition condition;
-	public TokenList<PHP_Entry> ifPart;
-	public @SYNTAX(Perl_Syntax.class) PHP_IfElse elseBlock;
-	public TokenList<PHP_Entry> elsePart;
-	public @SYNTAX(Perl_Syntax.class) PHP_EndIf endIf;
+	public @S(10) @SYNTAX(Perl_Syntax.class) PHP_IfCondition condition;
+	public @S(20) TokenList<PHP_Entry> ifPart;
+	public @S(30) @SYNTAX(Perl_Syntax.class) PHP_IfElse elseBlock;
+	public @S(40) TokenList<PHP_Entry> elsePart;
+	public @S(50) @SYNTAX(Perl_Syntax.class) PHP_EndIf endIf;
 	
 	public static class PHP_IfCondition extends TokenSequence
 	{
-		public PHP_StartTag startTag;
-		public TokenList<Perl_Statement> statements;
-		public Perl_Keyword IF = new Perl_Keyword("if");
-		public PunctuationLeftParen leftParen;
-		public Perl_Expression condition;
-		public PunctuationRightParen rightParen;
-		public PunctuationLeftBrace leftBrace;
-		public PHP_EndTag endTag;
+		public @S(10) PHP_StartTag startTag;
+		public @S(20) TokenList<Perl_Statement> statements;
+		public @S(30) Perl_Keyword IF = new Perl_Keyword("if");
+		public @S(40) PunctuationLeftParen leftParen;
+		public @S(50) Perl_Expression condition;
+		public @S(60) PunctuationRightParen rightParen;
+		public @S(70) PunctuationLeftBrace leftBrace;
+		public @S(80) PHP_EndTag endTag;
 	}
 
 	public static class PHP_IfElse extends TokenSequence
 	{
-		public PHP_StartTag startTag;
-		public PunctuationRightBrace rightBrace;
-		public Perl_Keyword ELSE = new Perl_Keyword("else");
-		public PunctuationLeftBrace leftBrace;
-		public PHP_EndTag endTag;
+		public @S(10) PHP_StartTag startTag;
+		public @S(20) PunctuationRightBrace rightBrace;
+		public @S(30) Perl_Keyword ELSE = new Perl_Keyword("else");
+		public @S(40) PunctuationLeftBrace leftBrace;
+		public @S(50) PHP_EndTag endTag;
 	}
 
 	public static class PHP_EndIf extends TokenSequence
 	{
-		public PHP_StartTag startTag;
-		public PunctuationRightBrace rightBrace;
-		public PHP_EndTag endTag;
+		public @S(10) PHP_StartTag startTag;
+		public @S(20) PunctuationRightBrace rightBrace;
+		public @S(30) PHP_EndTag endTag;
 	}
 }

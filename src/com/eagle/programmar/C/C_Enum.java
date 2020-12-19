@@ -18,34 +18,34 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class C_Enum extends TokenSequence
 {
-	public C_Keyword ENUM = new C_Keyword("enum");
-	public @OPT C_Identifier_Reference typeName;
-	public @OPT C_TypeEnumValues values;
+	public @S(10) C_Keyword ENUM = new C_Keyword("enum");
+	public @S(20) @OPT C_Identifier_Reference typeName;
+	public @S(30) @OPT C_TypeEnumValues values;
 	
 	public static class C_TypeEnumValues extends TokenSequence
 	{
-		public PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<C_Comment> comment1;
-		public C_Variable_Definition firstEnum;
-		public @OPT C_EnumInitializer init;
-		public @OPT TokenList<C_Comment> comment2;
-		public @OPT TokenList<C_MoreEnums> moreEnums;
-		public PunctuationRightBrace rightBrace;
+		public @S(10) PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<C_Comment> comment1;
+		public @S(30) C_Variable_Definition firstEnum;
+		public @S(40) @OPT C_EnumInitializer init;
+		public @S(50) @OPT TokenList<C_Comment> comment2;
+		public @S(60) @OPT TokenList<C_MoreEnums> moreEnums;
+		public @S(70) PunctuationRightBrace rightBrace;
 		
 		public static class C_MoreEnums extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public @OPT TokenList<C_Comment> comment1;
-			public C_Variable_Definition nextEnum;
-			public @OPT C_EnumInitializer init;
-			public @OPT TokenList<C_Comment> comment2;
+			public @S(10) PunctuationComma comma;
+			public @S(20) @OPT TokenList<C_Comment> comment1;
+			public @S(30) C_Variable_Definition nextEnum;
+			public @S(40) @OPT C_EnumInitializer init;
+			public @S(50) @OPT TokenList<C_Comment> comment2;
 		}
 		
 		public static class C_EnumInitializer extends TokenSequence
 		{
-			public PunctuationEquals equals;
-			public @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro1;
-			public C_Expression initialValue;
+			public @S(10) PunctuationEquals equals;
+			public @S(20) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro1;
+			public @S(30) C_Expression initialValue;
 		}
 	}
 }

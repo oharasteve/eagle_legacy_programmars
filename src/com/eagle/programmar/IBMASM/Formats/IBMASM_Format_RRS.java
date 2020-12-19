@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_RRS extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"BXH",		// Branch/high
 		"BXLE",		// Branch/low-equal
 		"HIO",		// Halt I/O
@@ -32,10 +32,10 @@ public class IBMASM_Format_RRS extends TokenSequence
 		"CS"		// Compare and Swap
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Register register1;
-	public PunctuationComma comma1;
-	public IBMASM_Register register2;
-	public PunctuationComma comma2;
-	public IBMASM_Address address;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Register register1;
+	public @S(40) PunctuationComma comma1;
+	public @S(50) IBMASM_Register register2;
+	public @S(60) PunctuationComma comma2;
+	public @S(70) IBMASM_Address address;
 }

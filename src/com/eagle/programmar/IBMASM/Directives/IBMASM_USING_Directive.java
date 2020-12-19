@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class IBMASM_USING_Directive extends TokenSequence
 {
-	public IBMASM_Keyword USING = new IBMASM_Keyword("USING");
-	public IBMASM_Spaces spaces;
-	public PunctuationStar star;
-	public PunctuationComma comma;
-	public IBMASM_Register register;
+	public @S(10) IBMASM_Keyword USING = new IBMASM_Keyword("USING");
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) PunctuationStar star;
+	public @S(40) PunctuationComma comma;
+	public @S(50) IBMASM_Register register;
 }

@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class VB_PrintStatement extends TokenSequence
 {
-	public VB_Keyword PRINT = new VB_Keyword("print");
-	public VB_Punctuation pound = new VB_Punctuation('#');
-	public VB_Number channel;
-	public PunctuationComma comma;
-	public VB_Expression expr;
+	public @S(10) VB_Keyword PRINT = new VB_Keyword("print");
+	public @S(20) VB_Punctuation pound = new VB_Punctuation('#');
+	public @S(30) VB_Number channel;
+	public @S(40) PunctuationComma comma;
+	public @S(50) VB_Expression expr;
 }

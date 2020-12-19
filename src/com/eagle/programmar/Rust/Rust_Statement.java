@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Rust_Statement extends TokenChooser implements AbstractStatement {
 	public static @CHOICE class Rust_Block_Statement extends TokenSequence {
-		public PunctuationLeftBrace leftBrace;
-		public PunctuationRightBrace rightBrace;
+		public @S(10) PunctuationLeftBrace leftBrace;
+		public @S(20) PunctuationRightBrace rightBrace;
 	}
 }

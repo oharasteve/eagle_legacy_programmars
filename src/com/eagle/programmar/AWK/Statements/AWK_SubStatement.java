@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_SubStatement extends TokenSequence
 {
-	public AWK_KeywordChoice SUB = new AWK_KeywordChoice("gsub", "sub");
-	public PunctuationLeftParen leftParen;
-	public AWK_ArgumentList argList;
-	public PunctuationRightParen rightParen;
+	public @S(10) AWK_KeywordChoice SUB = new AWK_KeywordChoice("gsub", "sub");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) AWK_ArgumentList argList;
+	public @S(40) PunctuationRightParen rightParen;
 }

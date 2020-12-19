@@ -19,10 +19,10 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_StatementOrComment extends TokenSequence
 {
-	public @OPT CMacro_EndOfLine eoln1;
-	public CMacro_StmtBody stmt;
-	public @OPT C_Comment comment;
-	public CMacro_EndOfLine eoln2;
+	public @S(10) @OPT CMacro_EndOfLine eoln1;
+	public @S(20) CMacro_StmtBody stmt;
+	public @S(30) @OPT C_Comment comment;
+	public @S(40) CMacro_EndOfLine eoln2;
 
 	public static class CMacro_StmtBody extends TokenChooser
 	{

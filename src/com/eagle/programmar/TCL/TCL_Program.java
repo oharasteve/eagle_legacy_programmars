@@ -21,5 +21,5 @@ public class TCL_Program extends EagleLanguage
 		return "TBD";
 	}
 	
-	public TokenList<TCL_Statement> statements;
+	public @S(10) TokenList<TCL_Statement> statements;
 }	

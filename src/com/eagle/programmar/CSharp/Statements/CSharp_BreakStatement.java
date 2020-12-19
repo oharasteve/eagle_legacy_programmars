@@ -9,7 +9,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_BreakStatement extends TokenSequence
 {
-	public @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
-	public @DOC("statements.html#14.15") CSharp_Keyword BREAK = new CSharp_Keyword("break");
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
+	public @S(20) @DOC("statements.html#14.15") CSharp_Keyword BREAK = new CSharp_Keyword("break");
+	public @S(30) @NOSPACE PunctuationSemicolon semicolon;
 }

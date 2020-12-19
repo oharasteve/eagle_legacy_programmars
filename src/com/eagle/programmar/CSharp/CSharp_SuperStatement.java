@@ -11,9 +11,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_SuperStatement extends TokenSequence
 {
-	public CSharp_Keyword SUPER = new CSharp_Keyword("super");
-	public PunctuationLeftParen leftParen;
-	public @OPT CSharp_ArgumentList args;
-	public PunctuationRightParen rightParen;
-	public PunctuationSemicolon semicolon;
+	public @S(10) CSharp_Keyword SUPER = new CSharp_Keyword("super");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @OPT CSharp_ArgumentList args;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationSemicolon semicolon;
 }

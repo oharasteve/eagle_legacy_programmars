@@ -17,36 +17,36 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Property extends TokenSequence
 {
-	public Delphi_Keyword PROPERTY = new Delphi_Keyword("Property");
-	public Delphi_Property_Definition property;
-	public @OPT Delphi_PropertySubscript subscript;
-	public PunctuationColon colon;
-	public Delphi_Type type;
-	public TokenList<Delphi_PropertyReadWrite> readWrites;
-	public PunctuationSemicolon semicolon;
+	public @S(10) Delphi_Keyword PROPERTY = new Delphi_Keyword("Property");
+	public @S(20) Delphi_Property_Definition property;
+	public @S(30) @OPT Delphi_PropertySubscript subscript;
+	public @S(40) PunctuationColon colon;
+	public @S(50) Delphi_Type type;
+	public @S(60) TokenList<Delphi_PropertyReadWrite> readWrites;
+	public @S(70) PunctuationSemicolon semicolon;
 	
 	public static class Delphi_PropertyReadWrite extends TokenChooser
 	{
 		public @CHOICE static class Delphi_PropertyRead extends TokenSequence
 		{
-			public Delphi_Keyword READ = new Delphi_Keyword("Read");
-			public Delphi_Identifier_Reference readVar;
+			public @S(10) Delphi_Keyword READ = new Delphi_Keyword("Read");
+			public @S(20) Delphi_Identifier_Reference readVar;
 		}
 		
 		public @CHOICE static class Delphi_PropertyWrite extends TokenSequence
 		{
-			public Delphi_Keyword WRITE = new Delphi_Keyword("Write");
-			public Delphi_Identifier_Reference writeVar;
+			public @S(10) Delphi_Keyword WRITE = new Delphi_Keyword("Write");
+			public @S(20) Delphi_Identifier_Reference writeVar;
 		}
 	}
 	
 	public static class Delphi_PropertySubscript extends TokenSequence
 	{
-		public PunctuationLeftBracket leftBracket;
-		public Delphi_Variable_Definition var;
-		public PunctuationColon colon;
-		public Delphi_Type type;
-		public PunctuationRightBracket rightBracket;
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) Delphi_Variable_Definition var;
+		public @S(30) PunctuationColon colon;
+		public @S(40) Delphi_Type type;
+		public @S(50) PunctuationRightBracket rightBracket;
 	}
 
 }

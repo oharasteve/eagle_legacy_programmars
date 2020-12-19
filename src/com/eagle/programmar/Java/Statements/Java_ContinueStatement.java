@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_ContinueStatement extends TokenSequence
 {
-	public @DOC("statements.html#14.16") Java_Keyword CONTINUE = new Java_Keyword("continue");
-	public @OPT Java_Identifier_Reference label;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("statements.html#14.16") Java_Keyword CONTINUE = new Java_Keyword("continue");
+	public @S(20) @OPT Java_Identifier_Reference label;
+	public @S(30) PunctuationSemicolon semicolon;
 }

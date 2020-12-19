@@ -12,23 +12,23 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_DivideStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsdivi.htm") COBOL_Keyword DIVIDE = new COBOL_Keyword("DIVIDE");
-	public COBOL_Expression y;
-	public COBOL_KeywordChoice BYINTO = new COBOL_KeywordChoice("BY", "INTO");
-	public COBOL_Expression x;
-	public @OPT COBOL_DivideGiving giving;
-	public @OPT COBOL_DivideRemainder remainder;
-	public @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
+	public @S(10) @DOC("rlpsdivi.htm") COBOL_Keyword DIVIDE = new COBOL_Keyword("DIVIDE");
+	public @S(20) COBOL_Expression y;
+	public @S(30) COBOL_KeywordChoice BYINTO = new COBOL_KeywordChoice("BY", "INTO");
+	public @S(40) COBOL_Expression x;
+	public @S(50) @OPT COBOL_DivideGiving giving;
+	public @S(60) @OPT COBOL_DivideRemainder remainder;
+	public @S(70) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
 	
 	public static class COBOL_DivideGiving extends TokenSequence
 	{
-		public COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
-		public COBOL_Identifier_Reference quotient;
+		public @S(10) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
+		public @S(20) COBOL_Identifier_Reference quotient;
 	}
 	
 	public static class COBOL_DivideRemainder extends TokenSequence
 	{
-		public COBOL_Keyword REMAINDER = new COBOL_Keyword("REMAINDER");
-		public COBOL_Identifier_Reference remainder;
+		public @S(10) COBOL_Keyword REMAINDER = new COBOL_Keyword("REMAINDER");
+		public @S(20) COBOL_Identifier_Reference remainder;
 	}
 }

@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_ExitStatement extends TokenSequence
 {
-	public VB_Keyword EXIT = new VB_Keyword("exit");
-	public VB_KeywordChoice FOR = new VB_KeywordChoice(
+	public @S(10) VB_Keyword EXIT = new VB_Keyword("exit");
+	public @S(20) VB_KeywordChoice FOR = new VB_KeywordChoice(
 			"do", "for", "function", "sub");
 }

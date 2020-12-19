@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Inherited_Statement extends TokenSequence
 {
-	public Delphi_Keyword INHERITED = new Delphi_Keyword("Inherited");
-	public @OPT Delphi_Variable name;
-	public @OPT Delphi_Parameter_List params;
+	public @S(10) Delphi_Keyword INHERITED = new Delphi_Keyword("Inherited");
+	public @S(20) @OPT Delphi_Variable name;
+	public @S(30) @OPT Delphi_Parameter_List params;
 }

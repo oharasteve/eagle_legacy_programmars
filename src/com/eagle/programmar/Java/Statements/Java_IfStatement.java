@@ -15,21 +15,21 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_IfStatement extends TokenSequence
 {
-	public @OPT @NEWLINE Java_Label label;
-	public @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Java_Expression condition;
-	public @OPT TokenList<Java_Comment> comment1;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @OPT TokenList<Java_Comment> comment2;
-	public Java_Statement thenStatement;
-	public @OPT Java_IfElseClause elseClause;
+	public @S(10) @OPT @NEWLINE Java_Label label;
+	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
+	public @S(30) PunctuationLeftParen leftParen;
+	public @S(40) @NOSPACE Java_Expression condition;
+	public @S(50) @OPT TokenList<Java_Comment> comment1;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
+	public @S(70) @OPT TokenList<Java_Comment> comment2;
+	public @S(80) Java_Statement thenStatement;
+	public @S(90) @OPT Java_IfElseClause elseClause;
 	
 	public static class Java_IfElseClause extends TokenSequence
 	{
-		public @OPT TokenList<Java_Comment> comment3;
-		public @NEWLINE Java_Keyword ELSE = new Java_Keyword("else");
-		public @OPT Java_Comment comment;
-		public Java_Statement elseStatement;
+		public @S(10) @OPT TokenList<Java_Comment> comment3;
+		public @S(20) @NEWLINE Java_Keyword ELSE = new Java_Keyword("else");
+		public @S(30) @OPT Java_Comment comment;
+		public @S(40) Java_Statement elseStatement;
 	}
 }

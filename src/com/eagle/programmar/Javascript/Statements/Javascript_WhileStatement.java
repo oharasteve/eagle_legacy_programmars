@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Javascript_WhileStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("js_loop_while.asp") Javascript_Keyword WHILE = new Javascript_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Javascript_Expression condition;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public Javascript_Statement whileStatement;
+	public @S(10) @NEWLINE @DOC("js_loop_while.asp") Javascript_Keyword WHILE = new Javascript_Keyword("while");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE Javascript_Expression condition;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) Javascript_Statement whileStatement;
 }

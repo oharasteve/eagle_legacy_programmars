@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_LeaveStatement extends TokenSequence
 {
-	public @DOC("7.30") PLI_Keyword LEAVE = new PLI_Keyword("LEAVE");
-	public @OPT PLI_Identifier_Reference label;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.30") PLI_Keyword LEAVE = new PLI_Keyword("LEAVE");
+	public @S(20) @OPT PLI_Identifier_Reference label;
+	public @S(30) PunctuationSemicolon semicolon;
 }

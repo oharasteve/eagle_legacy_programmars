@@ -12,25 +12,25 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_BeginStatement extends TokenSequence
 {
-	public SQL_Keyword BEGIN = new SQL_Keyword("BEGIN");
-	public SQL_BeginWhat what;
-	public PunctuationSemicolon semicolon;
+	public @S(10) SQL_Keyword BEGIN = new SQL_Keyword("BEGIN");
+	public @S(20) SQL_BeginWhat what;
+	public @S(30) PunctuationSemicolon semicolon;
 	
 	public static class SQL_BeginWhat extends TokenChooser
 	{
 		public @CHOICE static class SQL_BeginEnd extends TokenSequence
 		{
-			public TokenList<SQL_StatementOrComment> statements;
-			public @OPT SQL_CommitStatement commit;
-			public SQL_Keyword END = new SQL_Keyword("END");
+			public @S(10) TokenList<SQL_StatementOrComment> statements;
+			public @S(20) @OPT SQL_CommitStatement commit;
+			public @S(30) SQL_Keyword END = new SQL_Keyword("END");
 		}
 		
 		public @FIRST static class SQL_BeginTransaction extends TokenSequence
 		{
-			public SQL_Keyword TRANSACTION = new SQL_Keyword("TRANSACTION");
-			public PunctuationSemicolon semicolon;
-			public TokenList<SQL_StatementOrComment> statements;
-			public SQL_Keyword COMMIT = new SQL_Keyword("COMMIT");
+			public @S(10) SQL_Keyword TRANSACTION = new SQL_Keyword("TRANSACTION");
+			public @S(20) PunctuationSemicolon semicolon;
+			public @S(30) TokenList<SQL_StatementOrComment> statements;
+			public @S(40) SQL_Keyword COMMIT = new SQL_Keyword("COMMIT");
 		}
 	}
 }

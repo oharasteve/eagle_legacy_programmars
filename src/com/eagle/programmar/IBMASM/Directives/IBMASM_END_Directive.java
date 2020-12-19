@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_END_Directive extends TokenSequence
 {
-	public IBMASM_Keyword END = new IBMASM_Keyword("END");
+	public @S(10) IBMASM_Keyword END = new IBMASM_Keyword("END");
 }

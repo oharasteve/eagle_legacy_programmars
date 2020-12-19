@@ -9,7 +9,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Gupta_Subscript extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public Gupta_Expression expr;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) Gupta_Expression expr;
+	public @S(30) PunctuationRightParen rightParen;
 }

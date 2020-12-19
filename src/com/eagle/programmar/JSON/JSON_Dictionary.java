@@ -14,14 +14,14 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class JSON_Dictionary extends TokenSequence
 {
-	public PunctuationLeftBrace leftBrace;
-	public @OPT SeparatedList<JSON_DictEntry,PunctuationComma> entries;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) PunctuationLeftBrace leftBrace;
+	public @S(20) @OPT SeparatedList<JSON_DictEntry,PunctuationComma> entries;
+	public @S(30) PunctuationRightBrace rightBrace;
 	
 	public static class JSON_DictEntry extends TokenSequence
 	{
-		public JSON_Literal name;
-		public PunctuationColon colon;
-		public JSON_Element value;
+		public @S(10) JSON_Literal name;
+		public @S(20) PunctuationColon colon;
+		public @S(30) JSON_Element value;
 	}
 }

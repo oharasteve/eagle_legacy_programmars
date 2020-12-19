@@ -12,10 +12,10 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class Django_LoadControl extends TokenSequence
 {
-	public HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
-	public @OPT PunctuationHyphen dash1;
-	public Django_Keyword LOAD = new Django_Keyword("load");
-	public TokenList<Django_Variable_Definition> variables;
-	public @OPT PunctuationHyphen dash2;
-	public HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
+	public @S(10) HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
+	public @S(20) @OPT PunctuationHyphen dash1;
+	public @S(30) Django_Keyword LOAD = new Django_Keyword("load");
+	public @S(40) TokenList<Django_Variable_Definition> variables;
+	public @S(50) @OPT PunctuationHyphen dash2;
+	public @S(60) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
 }

@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_ContinueStatement extends TokenSequence
 {
-	public Python_Keyword CONTINUE = new Python_Keyword("continue");
+	public @S(10) Python_Keyword CONTINUE = new Python_Keyword("continue");
 }

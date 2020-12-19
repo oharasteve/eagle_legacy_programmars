@@ -23,58 +23,58 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Enum extends TokenSequence
 {
-	public @OPT @NEWLINE TokenList<Java_Annotation> annotations;
-	public @OPT TokenList<Java_DataModifier> modifiers;
-	public Java_Keyword ENUM = new Java_Keyword("enum");
-	public Java_Variable_Definition id;
-	public @OPT Java_ClassImplements implement;
-	public @INDENT PunctuationLeftBrace leftBrace;
-	public @OPT Java_Comment comment1;
+	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotations;
+	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;
+	public @S(30) Java_Keyword ENUM = new Java_Keyword("enum");
+	public @S(40) Java_Variable_Definition id;
+	public @S(50) @OPT Java_ClassImplements implement;
+	public @S(60) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(70) @OPT Java_Comment comment1;
 
-	public @OPT Java_EnumConstants constants;
-	public @OPT PunctuationComma comma;
-	public @OPT TokenList<Java_Comment> comment2;
-	public @OPT Java_EnumDeclarations declarations;
-	public @OPT TokenList<Java_Comment> comment3;
+	public @S(80) @OPT Java_EnumConstants constants;
+	public @S(90) @OPT PunctuationComma comma;
+	public @S(100) @OPT TokenList<Java_Comment> comment2;
+	public @S(110) @OPT Java_EnumDeclarations declarations;
+	public @S(120) @OPT TokenList<Java_Comment> comment3;
 	
-	public @OPT PunctuationSemicolon semicolon1;
-	public @OUTDENT PunctuationRightBrace rightBrace;
-	public @OPT TokenList<Java_Comment> comment4;
-	public @OPT @NOSPACE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
+	public @S(130) @OPT PunctuationSemicolon semicolon1;
+	public @S(140) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(150) @OPT TokenList<Java_Comment> comment4;
+	public @S(160) @OPT @NOSPACE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
 	
 	public static class Java_EnumConstants extends TokenSequence
 	{
-		public Java_EnumConstant constant;
-		public @OPT TokenList<Java_MoreEnumConstants> more;
-		public @OPT TokenList<Java_Comment> comments;
+		public @S(10) Java_EnumConstant constant;
+		public @S(20) @OPT TokenList<Java_MoreEnumConstants> more;
+		public @S(30) @OPT TokenList<Java_Comment> comments;
 		
 		public static class Java_MoreEnumConstants extends TokenSequence
 		{
-			public @NOSPACE PunctuationComma comma;
-			public @OPT TokenList<Java_Comment> comments;
-			public Java_EnumConstant constant;
+			public @S(10) @NOSPACE PunctuationComma comma;
+			public @S(20) @OPT TokenList<Java_Comment> comments;
+			public @S(30) Java_EnumConstant constant;
 		}
 	}
 	
 	public static class Java_EnumConstant extends TokenSequence
 	{
-		public @OPT @NEWLINE TokenList<Java_Annotation> annotations;
-		public Java_Variable_Definition id;
-		public @OPT Java_EnumInitializer initializer;
-		public @OPT Java_EnumClassBody body;
+		public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotations;
+		public @S(20) Java_Variable_Definition id;
+		public @S(30) @OPT Java_EnumInitializer initializer;
+		public @S(40) @OPT Java_EnumClassBody body;
 		
 		public static class Java_EnumClassBody extends TokenSequence
 		{
-			public @INDENT PunctuationLeftBrace leftBrace;
-			public @OPT TokenList<Java_EnumClassBodyDeclaration> declarations;
-			public @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(20) @OPT TokenList<Java_EnumClassBodyDeclaration> declarations;
+			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 		}
 	}
 	
 	public static class Java_EnumDeclarations extends TokenSequence
 	{
-		public @NOSPACE PunctuationSemicolon semicolon;
-		public TokenList<Java_EnumClassBodyDeclaration> body;
+		public @S(10) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(20) TokenList<Java_EnumClassBodyDeclaration> body;
 		
 		public static class Java_EnumClassBodyDeclaration extends TokenChooser
 		{
@@ -84,8 +84,8 @@ public class Java_Enum extends TokenSequence
 	
 	public static class Java_EnumInitializer extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public @OPT SeparatedList<Java_Expression,PunctuationComma> exprs;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<Java_Expression,PunctuationComma> exprs;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 }

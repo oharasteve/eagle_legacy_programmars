@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_WriteStatement extends TokenSequence
 {
-	public @DOC("sm/write.htm") Natural_Keyword WRITE = new Natural_Keyword("WRITE");
-	public @OPT Natural_KeywordChoice TITLE = new Natural_KeywordChoice(
+	public @S(10) @DOC("sm/write.htm") Natural_Keyword WRITE = new Natural_Keyword("WRITE");
+	public @S(20) @OPT Natural_KeywordChoice TITLE = new Natural_KeywordChoice(
 			"TITLE", "NOTITLE");
-	public TokenList<Natural_DisplayElement> writeWhat;
+	public @S(30) TokenList<Natural_DisplayElement> writeWhat;
 }

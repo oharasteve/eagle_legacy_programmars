@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_SkipStatement extends TokenSequence
 {
-	public @DOC("sm/skip.htm") Natural_Keyword SKIP = new Natural_Keyword("SKIP");
-	public Natural_Expression amount;
+	public @S(10) @DOC("sm/skip.htm") Natural_Keyword SKIP = new Natural_Keyword("SKIP");
+	public @S(20) Natural_Expression amount;
 }

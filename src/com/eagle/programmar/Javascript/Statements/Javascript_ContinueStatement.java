@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_ContinueStatement extends TokenSequence
 {
-	public Javascript_Keyword CONTINUE = new Javascript_Keyword("continue");
-	public PunctuationSemicolon semicolon;
+	public @S(10) Javascript_Keyword CONTINUE = new Javascript_Keyword("continue");
+	public @S(20) PunctuationSemicolon semicolon;
 }

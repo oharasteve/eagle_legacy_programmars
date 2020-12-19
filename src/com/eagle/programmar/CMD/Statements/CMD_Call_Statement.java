@@ -14,10 +14,10 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_Call_Statement extends TokenSequence
 {
-	public @DOC("call.mspx") CMD_Keyword CALL = new CMD_Keyword("call");
-	public @OPT PunctuationColon colon;
-	public CMD_Argument what;
-	public @OPT TokenList<CMD_Call_Parameter> args;
+	public @S(10) @DOC("call.mspx") CMD_Keyword CALL = new CMD_Keyword("call");
+	public @S(20) @OPT PunctuationColon colon;
+	public @S(30) CMD_Argument what;
+	public @S(40) @OPT TokenList<CMD_Call_Parameter> args;
 
 	public static class CMD_Call_Parameter extends TokenChooser
 	{
@@ -25,14 +25,14 @@ public class CMD_Call_Statement extends TokenSequence
 		
 		public @CHOICE static class CMD_Call_Minus_Option extends TokenSequence
 		{
-			public PunctuationHyphen minus;
-			public CMD_Argument option;
+			public @S(10) PunctuationHyphen minus;
+			public @S(20) CMD_Argument option;
 		}
 		
 		public @CHOICE static class CMD_Call_Slash_Option extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Argument option;
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Argument option;
 		}
 	}
 }

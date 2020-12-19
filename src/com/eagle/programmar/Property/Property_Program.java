@@ -30,7 +30,7 @@ public class Property_Program extends EagleLanguage
 		return "http://www.w3schools.com/json/";
 	}
 	
-	public TokenList<Property_Element> elements;
+	public @S(10) TokenList<Property_Element> elements;
 	
 	public static class Property_Element extends TokenChooser
 	{
@@ -41,9 +41,9 @@ public class Property_Program extends EagleLanguage
 	
 	public static class Property_Value extends TokenSequence
 	{
-		public @OPT PunctuationPeriod period;
-		public @OPT SeparatedList<Property_Identifier,PunctuationPeriod> ids;
-		public PunctuationEquals equals;
-		public Property_RestOfLine value;
+		public @S(10) @OPT PunctuationPeriod period;
+		public @S(20) @OPT SeparatedList<Property_Identifier,PunctuationPeriod> ids;
+		public @S(30) PunctuationEquals equals;
+		public @S(40) Property_RestOfLine value;
 	}
 }

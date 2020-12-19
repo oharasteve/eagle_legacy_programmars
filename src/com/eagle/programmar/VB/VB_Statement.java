@@ -31,9 +31,9 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class VB_Statement extends TokenSequence
 {
-	public VB_BaseStatement baseStatement;
-	public @OPT VB_Comment comment;
-	public VB_EndOfLine eoln;
+	public @S(10) VB_BaseStatement baseStatement;
+	public @S(20) @OPT VB_Comment comment;
+	public @S(30) VB_EndOfLine eoln;
 	
 	public static class VB_BaseStatement extends TokenChooser
 	{
@@ -63,8 +63,8 @@ public class VB_Statement extends TokenSequence
 		
 		public @CHOICE static class VB_Label extends TokenSequence
 		{
-			public VB_Label_Definition lbl;
-			public PunctuationColon colon;
+			public @S(10) VB_Label_Definition lbl;
+			public @S(20) PunctuationColon colon;
 		}
 	}
 }

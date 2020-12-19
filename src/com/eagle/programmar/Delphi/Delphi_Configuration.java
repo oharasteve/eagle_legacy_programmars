@@ -49,23 +49,23 @@ public class Delphi_Configuration extends EagleLanguage
 		return null;
 	}
 	
-	public @OPT Delphi_Config_EndOfLine eoln;
-	public TokenList<Delphi_Config_Block> blocks;
+	public @S(10) @OPT Delphi_Config_EndOfLine eoln;
+	public @S(20) TokenList<Delphi_Config_Block> blocks;
 	
 	public static class Delphi_Config_Block extends TokenSequence
 	{
-		public Delphi_Config_Punctuation leftBracket = new Delphi_Config_Punctuation('[');
-		public @OPT Delphi_Config_Value blockName = new Delphi_Config_Value("]");
-		public Delphi_Config_Punctuation rightBracket = new Delphi_Config_Punctuation(']');
-		public Delphi_Config_EndOfLine eoln;
-		public TokenList<Delphi_Config_Line> lines;
+		public @S(10) Delphi_Config_Punctuation leftBracket = new Delphi_Config_Punctuation('[');
+		public @S(20) @OPT Delphi_Config_Value blockName = new Delphi_Config_Value("]");
+		public @S(30) Delphi_Config_Punctuation rightBracket = new Delphi_Config_Punctuation(']');
+		public @S(40) Delphi_Config_EndOfLine eoln;
+		public @S(50) TokenList<Delphi_Config_Line> lines;
 		
 		public static class Delphi_Config_Line extends TokenSequence
 		{
-			public @OPT Delphi_Config_Value id = new Delphi_Config_Value("=]");
-			public Delphi_Config_Punctuation equals = new Delphi_Config_Punctuation('=');
-			public @OPT Delphi_Config_Value value = new Delphi_Config_Value("]");
-			public Delphi_Config_EndOfLine eoln;
+			public @S(10) @OPT Delphi_Config_Value id = new Delphi_Config_Value("=]");
+			public @S(20) Delphi_Config_Punctuation equals = new Delphi_Config_Punctuation('=');
+			public @S(30) @OPT Delphi_Config_Value value = new Delphi_Config_Value("]");
+			public @S(40) Delphi_Config_EndOfLine eoln;
 		}
 	}
 	

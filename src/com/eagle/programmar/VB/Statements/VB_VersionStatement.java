@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_VersionStatement extends TokenSequence
 {
-	public VB_Keyword VERSION = new VB_Keyword("version");
-	public VB_Number version;
-	public VB_Keyword CLASS = new VB_Keyword("class");
+	public @S(10) VB_Keyword VERSION = new VB_Keyword("version");
+	public @S(20) VB_Number version;
+	public @S(30) VB_Keyword CLASS = new VB_Keyword("class");
 }

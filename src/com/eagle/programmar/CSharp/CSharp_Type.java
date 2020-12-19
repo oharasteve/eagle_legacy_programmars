@@ -19,22 +19,22 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class CSharp_Type extends TokenSequence implements AbstractType
 {
-	public CSharp_TypeName typeName;
-	public @OPT CSharp_GenericType genericType;
-	public @OPT TokenList<CSharp_ArrayType> arrayTypes;
+	public @S(10) CSharp_TypeName typeName;
+	public @S(20) @OPT CSharp_GenericType genericType;
+	public @S(30) @OPT TokenList<CSharp_ArrayType> arrayTypes;
 	
 	public static class CSharp_ArrayType extends TokenSequence
 	{
-		public @NOSPACE PunctuationLeftBracket leftBracket;
-		public @OPT @NOSPACE PunctuationComma comma;
-		public @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(10) @NOSPACE PunctuationLeftBracket leftBracket;
+		public @S(20) @OPT @NOSPACE PunctuationComma comma;
+		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 	}
 	
 	public static class CSharp_GenericType extends TokenSequence
 	{
-		public CSharp_Punctuation lessThan = new CSharp_Punctuation('<');
-		public @NOSPACE SeparatedList<CSharp_Type,PunctuationComma> subType;
-		public @NOSPACE CSharp_Punctuation greaterThan = new CSharp_Punctuation('>');
+		public @S(10) CSharp_Punctuation lessThan = new CSharp_Punctuation('<');
+		public @S(20) @NOSPACE SeparatedList<CSharp_Type,PunctuationComma> subType;
+		public @S(30) @NOSPACE CSharp_Punctuation greaterThan = new CSharp_Punctuation('>');
 	}
 
 	// Delay finding this one until after looking for [] and <>
@@ -42,22 +42,22 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	{
 		public @CHOICE static class CSharp_IdList extends TokenSequence
 		{
-			public @OPT CSharp_NamespaceId namespaceId;
-			public CSharp_Identifier_Reference typeName;
-			public @OPT CSharp_ExtendsType extendsType;
+			public @S(10) @OPT CSharp_NamespaceId namespaceId;
+			public @S(20) CSharp_Identifier_Reference typeName;
+			public @S(30) @OPT CSharp_ExtendsType extendsType;
 
-			public @OPT TokenList<CSharp_MoreIds> moreIds;
+			public @S(40) @OPT TokenList<CSharp_MoreIds> moreIds;
 			
 			public static class CSharp_MoreIds extends TokenSequence
 			{
-				public @NOSPACE PunctuationPeriod dot;
-				public @NOSPACE CSharp_TypeName nextId;
+				public @S(10) @NOSPACE PunctuationPeriod dot;
+				public @S(20) @NOSPACE CSharp_TypeName nextId;
 			}
 			
 			public static class CSharp_NamespaceId extends TokenSequence
 			{
-				public CSharp_Identifier_Reference namespace;
-				public CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
+				public @S(10) CSharp_Identifier_Reference namespace;
+				public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
 			}
 		}
 
@@ -67,14 +67,14 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{
-			public CSharp_Punctuation question = new CSharp_Punctuation('?');
-			public @OPT CSharp_ExtendsType extendsType;
+			public @S(10) CSharp_Punctuation question = new CSharp_Punctuation('?');
+			public @S(20) @OPT CSharp_ExtendsType extendsType;
 		}
 	}
 	
 	public static class CSharp_ExtendsType extends TokenSequence
 	{
-		public CSharp_Keyword EXTENDS = new CSharp_Keyword("extends");
-		public CSharp_Identifier_Reference typeName;
+		public @S(10) CSharp_Keyword EXTENDS = new CSharp_Keyword("extends");
+		public @S(20) CSharp_Identifier_Reference typeName;
 	}
 }

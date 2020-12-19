@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_Call_Statement extends TokenSequence
 {
-	public Gupta_Keyword Call = new Gupta_Keyword("Call");
-	public Gupta_Function_Call fnCall;
+	public @S(10) Gupta_Keyword Call = new Gupta_Keyword("Call");
+	public @S(20) Gupta_Function_Call fnCall;
 }

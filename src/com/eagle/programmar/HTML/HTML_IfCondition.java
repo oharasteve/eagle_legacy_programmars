@@ -12,10 +12,10 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class HTML_IfCondition extends TokenSequence
 {
-	public HTML_Punctuation startTag = new HTML_Punctuation("<!");
-	public PunctuationLeftBracket leftBracket;
-	public HTML_Keyword IF = new HTML_Keyword("if");
-	public HTML_Identifier tag;
-	public PunctuationRightBracket rightBracket;
-	public HTML_Punctuation endTag = new HTML_Punctuation('>');
+	public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<!");
+	public @S(20) PunctuationLeftBracket leftBracket;
+	public @S(30) HTML_Keyword IF = new HTML_Keyword("if");
+	public @S(40) HTML_Identifier tag;
+	public @S(50) PunctuationRightBracket rightBracket;
+	public @S(60) HTML_Punctuation endTag = new HTML_Punctuation('>');
 }

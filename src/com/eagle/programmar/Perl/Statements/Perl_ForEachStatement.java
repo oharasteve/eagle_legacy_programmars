@@ -18,36 +18,36 @@ public class Perl_ForEachStatement extends TokenChooser
 {
 	public @CHOICE static class Perl_ForEachAsStatement extends TokenSequence
 	{
-		public @DOC("control-structures.foreach.php") Perl_Keyword FOREACH = new Perl_Keyword("foreach");
-		public PunctuationLeftParen leftParen;
-		public Perl_Expression expr;
-		public Perl_Keyword AS = new Perl_Keyword("as");
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Variable_Definition var;
-		public @OPT Perl_ForEachArrow arrow;
-		public PunctuationRightParen rightParen;
-		public Perl_Statement stmt;
+		public @S(10) @DOC("control-structures.foreach.php") Perl_Keyword FOREACH = new Perl_Keyword("foreach");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) Perl_Expression expr;
+		public @S(40) Perl_Keyword AS = new Perl_Keyword("as");
+		public @S(50) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(60) Perl_Variable_Definition var;
+		public @S(70) @OPT Perl_ForEachArrow arrow;
+		public @S(80) PunctuationRightParen rightParen;
+		public @S(90) Perl_Statement stmt;
 		
 		public static class Perl_ForEachArrow extends TokenSequence
 		{
-			public Perl_Punctuation equalsGreater = new Perl_Punctuation("=>");
-			public Perl_Variable var;
+			public @S(10) Perl_Punctuation equalsGreater = new Perl_Punctuation("=>");
+			public @S(20) Perl_Variable var;
 		}
 	}
 	
 	public @CHOICE static class Perl_ForEachNoAsStatement extends TokenSequence
 	{
-		public @DOC("control-structures.foreach.php") Perl_Keyword FOREACH = new Perl_Keyword("foreach");
-		public @OPT Perl_ForEachVariable var;
-		public PunctuationLeftParen leftParen;
-		public Perl_Expression expr;
-		public PunctuationRightParen rightParen;
-		public Perl_Statement stmt;
+		public @S(10) @DOC("control-structures.foreach.php") Perl_Keyword FOREACH = new Perl_Keyword("foreach");
+		public @S(20) @OPT Perl_ForEachVariable var;
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) Perl_Expression expr;
+		public @S(50) PunctuationRightParen rightParen;
+		public @S(60) Perl_Statement stmt;
 		
 		public static class Perl_ForEachVariable extends TokenSequence
 		{
-			public Perl_Punctuation dollar = new Perl_Punctuation('$');
-			public Perl_Variable_Definition var;
+			public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+			public @S(20) Perl_Variable_Definition var;
 		}
 	}
 }

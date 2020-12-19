@@ -16,10 +16,10 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class CSS_Qualifier extends TokenSequence
 {
-	public PunctuationLeftBracket leftBracket;
-	public CSS_QualifierChoice qual;
-	public PunctuationRightBracket rightBracket;
-	public @OPT CSS_Punctuation greaterThan = new CSS_Punctuation('>');
+	public @S(10) PunctuationLeftBracket leftBracket;
+	public @S(20) CSS_QualifierChoice qual;
+	public @S(30) PunctuationRightBracket rightBracket;
+	public @S(40) @OPT CSS_Punctuation greaterThan = new CSS_Punctuation('>');
 
 	public static class CSS_QualifierChoice extends TokenChooser
 	{
@@ -33,43 +33,43 @@ public class CSS_Qualifier extends TokenSequence
 		
 		public @CHOICE static class CSS_QualifierClass extends TokenSequence
 		{
-			public CSS_Keyword CLASS = new CSS_Keyword("class");
-			public PunctuationStar star;
-			public PunctuationEquals equals;
-			public CSS_Value value;
+			public @S(10) CSS_Keyword CLASS = new CSS_Keyword("class");
+			public @S(20) PunctuationStar star;
+			public @S(30) PunctuationEquals equals;
+			public @S(40) CSS_Value value;
 		}
 		
 		public @CHOICE static class CSS_QualiferCode extends TokenSequence
 		{
-			public CSS_KeywordChoice CODE = new CSS_KeywordChoice(
+			public @S(10) CSS_KeywordChoice CODE = new CSS_KeywordChoice(
 					"controls",
 					"data-original-title",
 					"disabled",
 					"hidden",
 					"href",
 					"title");
-			public @OPT CSS_BracketsHatEquals hatEquals;
+			public @S(20) @OPT CSS_BracketsHatEquals hatEquals;
 			
 			public static class CSS_BracketsHatEquals extends TokenSequence
 			{
-				public CSS_Punctuation hat = new CSS_Punctuation('^');
-				public PunctuationEquals equals;
-				public CSS_Literal literal;
+				public @S(10) CSS_Punctuation hat = new CSS_Punctuation('^');
+				public @S(20) PunctuationEquals equals;
+				public @S(30) CSS_Literal literal;
 			}
 		}
 		
 		public @CHOICE static class CSS_QualifierDataToggle extends TokenSequence
 		{
-			public CSS_Keyword DATA_TOGGLE = new CSS_Keyword("data-toggle");
-			public PunctuationEquals equals;
-			public CSS_Value value;
+			public @S(10) CSS_Keyword DATA_TOGGLE = new CSS_Keyword("data-toggle");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_Value value;
 		}
 		
 		public @CHOICE static class CSS_QualifierDir extends TokenSequence
 		{
-			public CSS_Keyword DIR = new CSS_Keyword("dir");
-			public PunctuationEquals equals;
-			public CSS_QualifierWhichDir which;
+			public @S(10) CSS_Keyword DIR = new CSS_Keyword("dir");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_QualifierWhichDir which;
 			
 			public static class CSS_QualifierWhichDir extends TokenChooser
 			{
@@ -81,19 +81,19 @@ public class CSS_Qualifier extends TokenSequence
 
 		public @CHOICE static class CSS_QualifierFrame extends TokenSequence
 		{
-			public CSS_KeywordChoice FRAME = new CSS_KeywordChoice(
+			public @S(10) CSS_KeywordChoice FRAME = new CSS_KeywordChoice(
 					"aria-valuenow",
 					"frame",
 					"page");
-			public PunctuationEquals equals;
-			public CSS_Literal literal;
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_Literal literal;
 		}
 
 		public @CHOICE static class CSS_QualifierHighlight extends TokenSequence
 		{
-			public CSS_Keyword HIGHLIGHT = new CSS_Keyword("highlight");
-			public PunctuationEquals equals;
-			public CSS_QualifierWhichHighlight which;
+			public @S(10) CSS_Keyword HIGHLIGHT = new CSS_Keyword("highlight");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_QualifierWhichHighlight which;
 			
 			public static class CSS_QualifierWhichHighlight extends TokenChooser
 			{
@@ -105,9 +105,9 @@ public class CSS_Qualifier extends TokenSequence
 
 		public @CHOICE static class CSS_QualifierRole extends TokenSequence
 		{
-			public CSS_Keyword ROLE = new CSS_Keyword("role");
-			public PunctuationEquals equals;
-			public CSS_QualifierWhichRole which;
+			public @S(10) CSS_Keyword ROLE = new CSS_Keyword("role");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_QualifierWhichRole which;
 			
 			public static class CSS_QualifierWhichRole extends TokenChooser
 			{
@@ -121,16 +121,16 @@ public class CSS_Qualifier extends TokenSequence
 		
 		public @CHOICE static class CSS_QualifierRow extends TokenSequence
 		{
-			public CSS_Keyword ROW = new CSS_Keyword("row$");
-			public PunctuationEquals equals;
-			public CSS_Literal literal;
+			public @S(10) CSS_Keyword ROW = new CSS_Keyword("row$");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_Literal literal;
 		}
 
 		public @CHOICE static class CSS_QualifierType extends TokenSequence
 		{
-			public CSS_Keyword TYPE = new CSS_Keyword("type");
-			public PunctuationEquals equals;
-			public CSS_QualifierWhichType which;
+			public @S(10) CSS_Keyword TYPE = new CSS_Keyword("type");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) CSS_QualifierWhichType which;
 			
 			public static class CSS_QualifierWhichType extends TokenChooser
 			{

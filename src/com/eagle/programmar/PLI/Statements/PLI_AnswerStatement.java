@@ -15,12 +15,12 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_AnswerStatement extends TokenSequence
 {
-	public PLI_Keyword ANSWER = new PLI_Keyword("ANSWER");
-	public PunctuationLeftParen leftParen;
-	public PLI_Expression expr;
-	public PunctuationRightParen rightParen;
-	public @OPT TokenList<PLI_AnswerClause> clauses;
-	public PunctuationSemicolon semicolon;
+	public @S(10) PLI_Keyword ANSWER = new PLI_Keyword("ANSWER");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) PLI_Expression expr;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) @OPT TokenList<PLI_AnswerClause> clauses;
+	public @S(60) PunctuationSemicolon semicolon;
 	
 	public static class PLI_AnswerClause extends TokenChooser
 	{
@@ -28,8 +28,8 @@ public class PLI_AnswerStatement extends TokenSequence
 
 		public @CHOICE static class PLI_AnswerCol extends TokenSequence
 		{
-			public PLI_Keyword COL = new PLI_Keyword("COL");
-			public PLI_Expression column;
+			public @S(10) PLI_Keyword COL = new PLI_Keyword("COL");
+			public @S(20) PLI_Expression column;
 		}
 	}
 }

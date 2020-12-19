@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class AWK_Action extends TokenSequence
 {
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<AWK_StatementOrComment> statements;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) PunctuationLeftBrace leftBrace;
+	public @S(20) @OPT TokenList<AWK_StatementOrComment> statements;
+	public @S(30) PunctuationRightBrace rightBrace;
 	
 	public static class AWK_StatementOrComment extends TokenChooser
 	{

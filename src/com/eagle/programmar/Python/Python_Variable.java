@@ -21,11 +21,11 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Python_Variable extends TokenSequence implements AbstractVariable
 {
-	public Python_SelfOrVariable var;
-	public @OPT @NOSPACE TokenList<Python_Subscript> subscript1;
-	public @OPT @NOSPACE TokenList<Python_DotVariable> moreFields1;
-	public @OPT @NOSPACE TokenList<Python_Subscript> subscript2;
-	public @OPT @NOSPACE TokenList<Python_DotVariable> moreFields2;
+	public @S(10) Python_SelfOrVariable var;
+	public @S(20) @OPT @NOSPACE TokenList<Python_Subscript> subscript1;
+	public @S(30) @OPT @NOSPACE TokenList<Python_DotVariable> moreFields1;
+	public @S(40) @OPT @NOSPACE TokenList<Python_Subscript> subscript2;
+	public @S(50) @OPT @NOSPACE TokenList<Python_DotVariable> moreFields2;
 	// public @OPT @NOSPACE Python_ColonType colonType;
 	
 	public static class Python_SelfOrVariable extends TokenChooser
@@ -38,41 +38,41 @@ public class Python_Variable extends TokenSequence implements AbstractVariable
 	
 	public static class Python_DotVariable extends TokenSequence
 	{
-		public @NOSPACE PunctuationPeriod dot1;
-		public @NOSPACE @OPT PunctuationPeriod dot2;
-		public @NOSPACE Python_Identifier_Reference fld;
+		public @S(10) @NOSPACE PunctuationPeriod dot1;
+		public @S(20) @NOSPACE @OPT PunctuationPeriod dot2;
+		public @S(30) @NOSPACE Python_Identifier_Reference fld;
 	}
 	
 	public static class Python_Subscript extends TokenSequence
 	{
-		public PunctuationLeftBracket leftBracket;
-		public @SYNTAX(Python_Multiline_Syntax.class) @NOSPACE Python_Subscript_Body body;
-		public @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) @SYNTAX(Python_Multiline_Syntax.class) @NOSPACE Python_Subscript_Body body;
+		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 
 		public static class Python_Subscript_Body extends TokenSequence
 		{
-			public @OPT Python_EndOfLine eoln;
-			public SeparatedList<Python_Subscript_Dimension,PunctuationComma> dimensions;
+			public @S(10) @OPT Python_EndOfLine eoln;
+			public @S(20) SeparatedList<Python_Subscript_Dimension,PunctuationComma> dimensions;
 		}
 
 		public static class Python_Subscript_Dimension extends TokenSequence
 		{
-			public @OPT Python_Expression subscr;
-			public @OPT Python_ColonSubscr colonStop;
-			public @OPT Python_ColonSubscr colonIncrement;
+			public @S(10) @OPT Python_Expression subscr;
+			public @S(20) @OPT Python_ColonSubscr colonStop;
+			public @S(30) @OPT Python_ColonSubscr colonIncrement;
 
 			public static class Python_ColonSubscr extends TokenSequence
 			{
-				public PunctuationColon colon;
-				public @OPT Python_EndOfLine eoln;
-				public @OPT Python_Expression subscr;
+				public @S(10) PunctuationColon colon;
+				public @S(20) @OPT Python_EndOfLine eoln;
+				public @S(30) @OPT Python_Expression subscr;
 			}
 		}
 	}
 	
 	public static class Python_ColonType extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public Python_Type type;
+		public @S(10) PunctuationColon colon;
+		public @S(20) Python_Type type;
 	}
 }

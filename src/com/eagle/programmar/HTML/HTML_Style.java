@@ -15,9 +15,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class HTML_Style extends TokenSequence
 {
-	public @INDENT HTML_StartStyle startStyle;
-	public HTML_StyleBody body;
-	public @OUTDENT HTML_EndStyle endStyle;
+	public @S(10) @INDENT HTML_StartStyle startStyle;
+	public @S(20) HTML_StyleBody body;
+	public @S(30) @OUTDENT HTML_EndStyle endStyle;
 	
 	public static class HTML_StyleBody extends TokenChooser
 	{
@@ -26,25 +26,25 @@ public class HTML_Style extends TokenSequence
 		
 		public @CHOICE static class HTML_StyleInclude extends TokenSequence
 		{
-			public HTML_Punctuation leftBrace = new HTML_Punctuation("{%");
-			public HTML_Keyword INCLUDE = new HTML_Keyword("include");
-			public HTML_Literal fileName;
-			public HTML_Punctuation percent2 = new HTML_Punctuation("%}");
+			public @S(10) HTML_Punctuation leftBrace = new HTML_Punctuation("{%");
+			public @S(20) HTML_Keyword INCLUDE = new HTML_Keyword("include");
+			public @S(30) HTML_Literal fileName;
+			public @S(40) HTML_Punctuation percent2 = new HTML_Punctuation("%}");
 		}
 	}
 
 	public static class HTML_StartStyle extends TokenSequence
 	{
-		public HTML_Punctuation startTag = new HTML_Punctuation("<");
-		public @NOSPACE @DOC("html_styles.asp") HTML_Keyword STYLE = new HTML_Keyword("style");
-		public @OPT TokenList<HTML_Attribute> attributes; 
-		public @NOSPACE HTML_Punctuation endTag1 = new HTML_Punctuation('>');
+		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
+		public @S(20) @NOSPACE @DOC("html_styles.asp") HTML_Keyword STYLE = new HTML_Keyword("style");
+		public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+		public @S(40) @NOSPACE HTML_Punctuation endTag1 = new HTML_Punctuation('>');
 	}
 
 	public static class HTML_EndStyle extends TokenSequence
 	{
-		public HTML_Punctuation startTag = new HTML_Punctuation("</");
-		public @NOSPACE HTML_Keyword STYLE = new HTML_Keyword("style");
-		public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+		public @S(20) @NOSPACE HTML_Keyword STYLE = new HTML_Keyword("style");
+		public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	}
 }

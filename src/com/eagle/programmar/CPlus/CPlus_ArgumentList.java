@@ -15,10 +15,10 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CPlus_ArgumentList extends TokenSequence
 {
-	public CPlus_ExpressionArg arg;
-	public @OPT C_Comment comment;
-	public @OPT TokenList<CPlus_MoreArguments> moreArgs;
-	public @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(10) CPlus_ExpressionArg arg;
+	public @S(20) @OPT C_Comment comment;
+	public @S(30) @OPT TokenList<CPlus_MoreArguments> moreArgs;
+	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	
 	public static class CPlus_ExpressionArg extends TokenChooser
 	{
@@ -28,16 +28,16 @@ public class CPlus_ArgumentList extends TokenSequence
 		
 		public @CHOICE static class CPlus_ExpressionArgType extends TokenSequence
 		{
-			public C_Identifier_Reference typeRef;
-			public TokenList<C_TypeStar> stars;
+			public @S(10) C_Identifier_Reference typeRef;
+			public @S(20) TokenList<C_TypeStar> stars;
 		}
 	}
 	
 	public static class CPlus_MoreArguments extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public @OPT C_Comment comment1;
-		public CPlus_ExpressionArg arg;
-		public @OPT C_Comment comment2;
+		public @S(10) PunctuationComma comma;
+		public @S(20) @OPT C_Comment comment1;
+		public @S(30) CPlus_ExpressionArg arg;
+		public @S(40) @OPT C_Comment comment2;
 	}
 }

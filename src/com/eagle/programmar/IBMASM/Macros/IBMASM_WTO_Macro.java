@@ -16,24 +16,24 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class IBMASM_WTO_Macro extends TokenSequence
 {
-	public IBMASM_Spaces spaces1;
-	public IBMASM_Keyword WTO = new IBMASM_Keyword("WTO");
-	public IBMASM_Spaces spaces2;
-	public IBMASM_WTO_Value value;
-	public IBMASM_Spaces spaces3;
-	public @OPT IBMASM_Remark remark;
+	public @S(10) IBMASM_Spaces spaces1;
+	public @S(20) IBMASM_Keyword WTO = new IBMASM_Keyword("WTO");
+	public @S(30) IBMASM_Spaces spaces2;
+	public @S(40) IBMASM_WTO_Value value;
+	public @S(50) IBMASM_Spaces spaces3;
+	public @S(60) @OPT IBMASM_Remark remark;
 	
 	public static class IBMASM_WTO_Value extends TokenChooser
 	{
 		public @CHOICE static class IBMASM_WTO_E extends TokenSequence
 		{
-			public IBMASM_Keyword MF = new IBMASM_Keyword("MF");
-			public PunctuationEquals equals;
-			public PunctuationLeftParen leftParen;
-			public IBMASM_Keyword E = new IBMASM_Keyword("E");
-			public PunctuationComma comma;
-			public IBMASM_Address address;
-			public PunctuationRightParen rightParen;
+			public @S(10) IBMASM_Keyword MF = new IBMASM_Keyword("MF");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) PunctuationLeftParen leftParen;
+			public @S(40) IBMASM_Keyword E = new IBMASM_Keyword("E");
+			public @S(50) PunctuationComma comma;
+			public @S(60) IBMASM_Address address;
+			public @S(70) PunctuationRightParen rightParen;
 		}
 	}
 }

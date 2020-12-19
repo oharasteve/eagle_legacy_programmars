@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_Type extends TokenSequence
 {
-	public Gupta_KeywordChoice typeName = new Gupta_KeywordChoice("String", "Number");
+	public @S(10) Gupta_KeywordChoice typeName = new Gupta_KeywordChoice("String", "Number");
 }

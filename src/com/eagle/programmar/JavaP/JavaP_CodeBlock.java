@@ -17,11 +17,11 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class JavaP_CodeBlock extends TokenSequence
 {
-	public JavaP_Keyword CODE = new JavaP_Keyword("Code");
-	public PunctuationColon colon;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword CODE = new JavaP_Keyword("Code");
+	public @S(20) PunctuationColon colon;
+	public @S(30) JavaP_EndOfLine eoln;
 	
-	public @OPT TokenList<JavaP_CodeDetails> details;
+	public @S(40) @OPT TokenList<JavaP_CodeDetails> details;
 
 	public static class JavaP_CodeDetails extends TokenChooser
 	{

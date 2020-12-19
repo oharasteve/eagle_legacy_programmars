@@ -30,9 +30,9 @@ public class CPlus_Expression extends C_Expression implements AbstractExpression
 
 	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
 	{
-		public C_Keyword NEW = new C_Keyword("new");
-		public C_Type type;
-		public CPlus_NewWhat what;
+		public @S(10) C_Keyword NEW = new C_Keyword("new");
+		public @S(20) C_Type type;
+		public @S(30) CPlus_NewWhat what;
 		
 		public static class CPlus_NewWhat extends TokenChooser
 		{

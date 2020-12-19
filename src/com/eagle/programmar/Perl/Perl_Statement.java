@@ -62,51 +62,51 @@ public class Perl_Statement extends TokenChooser
 	
 	public @LAST static class Perl_ExpressionStatement extends TokenSequence
 	{
-		public Perl_Expression expr;
-		public @OPT Perl_StatementSuffixModifier modifier;
-		public PunctuationSemicolon semicolon;
+		public @S(10) Perl_Expression expr;
+		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
+		public @S(30) PunctuationSemicolon semicolon;
 
 		public static class Perl_StatementSuffixModifier extends TokenSequence
 		{
-			public Perl_KeywordChoice IfUnless = new Perl_KeywordChoice("if", "unless", "while");
-			public @OPT Perl_MinusF minusF;
-			public Perl_Expression condition;
+			public @S(10) Perl_KeywordChoice IfUnless = new Perl_KeywordChoice("if", "unless", "while");
+			public @S(20) @OPT Perl_MinusF minusF;
+			public @S(30) Perl_Expression condition;
 			
 			public static class Perl_MinusF extends TokenSequence
 			{
-				public PunctuationHyphen minus;
-				public Perl_KeywordChoice DF = new Perl_KeywordChoice("d", "f");
+				public @S(10) PunctuationHyphen minus;
+				public @S(20) Perl_KeywordChoice DF = new Perl_KeywordChoice("d", "f");
 			}
 		}
 	}
 
 	public @CHOICE static class Perl_StatementBlock extends TokenSequence
 	{
-		public @INDENT PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<Perl_StatementOrComment> statements;
-		public @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<Perl_StatementOrComment> statements;
+		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 	}
 	
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence
 	{
-		public Perl_Keyword SUB = new Perl_Keyword("sub");
-		public @OPT Perl_SubMain main;
-		public Perl_Function_Definition fnName;
-		public @OPT Perl_Function_Parameters params;
-		public Perl_StatementBlock block;
+		public @S(10) Perl_Keyword SUB = new Perl_Keyword("sub");
+		public @S(20) @OPT Perl_SubMain main;
+		public @S(30) Perl_Function_Definition fnName;
+		public @S(40) @OPT Perl_Function_Parameters params;
+		public @S(50) Perl_StatementBlock block;
 		
 		public static class Perl_SubMain extends TokenSequence
 		{
-			public Perl_Identifier_Reference id;
-			public Perl_Punctuation quote = new Perl_Punctuation('\'');
+			public @S(10) Perl_Identifier_Reference id;
+			public @S(20) Perl_Punctuation quote = new Perl_Punctuation('\'');
 		}
 	}
 
 	public @CHOICE static class Perl_SimpleStatement extends TokenSequence
 	{
-		public Perl_StatementList statement;
-		public @OPT Perl_StatementSuffixModifier modifier;
-		public PunctuationSemicolon semicolon;
+		public @S(10) Perl_StatementList statement;
+		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
+		public @S(30) PunctuationSemicolon semicolon;
 
 		//
 		// Start actual statement list here

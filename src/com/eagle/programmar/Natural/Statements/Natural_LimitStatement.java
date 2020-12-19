@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_LimitStatement extends TokenSequence
 {
-	public @DOC("sm/limit.htm") Natural_Keyword LIMIT = new Natural_Keyword("LIMIT");
-	public Natural_Number count;
+	public @S(10) @DOC("sm/limit.htm") Natural_Keyword LIMIT = new Natural_Keyword("LIMIT");
+	public @S(20) Natural_Number count;
 }

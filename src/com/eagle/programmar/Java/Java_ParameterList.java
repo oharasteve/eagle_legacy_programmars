@@ -16,22 +16,22 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_ParameterList extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @OPT @NOSPACE Java_MethodParameter param;
-	public @OPT @NOSPACE TokenList<Java_MoreParameters> moreParams;
-	public @NOSPACE PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @OPT @NOSPACE Java_MethodParameter param;
+	public @S(30) @OPT @NOSPACE TokenList<Java_MoreParameters> moreParams;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 	
 	public static class Java_MethodParameter extends TokenSequence
 	{
-		public @OPT TokenList<Java_MethodParameterPrefix> prefixes;
-		public @NOSPACE Java_Type jtype;
-		public @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
-		public Java_Variable_Definition id;
-		public @OPT TokenList<Java_EmptySubscript> emptySubscripts;
+		public @S(10) @OPT TokenList<Java_MethodParameterPrefix> prefixes;
+		public @S(20) @NOSPACE Java_Type jtype;
+		public @S(30) @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
+		public @S(40) Java_Variable_Definition id;
+		public @S(50) @OPT TokenList<Java_EmptySubscript> emptySubscripts;
 		
 		public static class Java_EmptySubscript extends TokenSequence
 		{
-			public Java_Punctuation emptySubscript = new Java_Punctuation("[]");
+			public @S(10) Java_Punctuation emptySubscript = new Java_Punctuation("[]");
 		}
 		
 		public static class Java_MethodParameterPrefix extends TokenChooser
@@ -40,24 +40,24 @@ public class Java_ParameterList extends TokenSequence
 
 			public @CHOICE static class Java_MethodNullable extends TokenSequence
 			{
-				public Java_Punctuation atSign = new Java_Punctuation('@');
-				public Java_Keyword NULLABLE = new Java_Keyword("Nullable");
+				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
+				public @S(20) Java_Keyword NULLABLE = new Java_Keyword("Nullable");
 			}
 
 			public @CHOICE static class Java_MethodSuppress extends TokenSequence
 			{
-				public Java_Punctuation atSign = new Java_Punctuation('@');
-				public @NOSPACE Java_Keyword SUPPRESS = new Java_Keyword("SuppressWarnings");
-				public @NOSPACE PunctuationLeftParen leftParen;
-				public @NOSPACE Java_Literal warning;
-				public @NOSPACE PunctuationRightParen rightParen;
+				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
+				public @S(20) @NOSPACE Java_Keyword SUPPRESS = new Java_Keyword("SuppressWarnings");
+				public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+				public @S(40) @NOSPACE Java_Literal warning;
+				public @S(50) @NOSPACE PunctuationRightParen rightParen;
 			}
 		}
 	}
 		
 	public static class Java_MoreParameters extends TokenSequence
 	{
-		public @NOSPACE PunctuationComma comma;
-		public Java_MethodParameter param;
+		public @S(10) @NOSPACE PunctuationComma comma;
+		public @S(20) Java_MethodParameter param;
 	}
 }

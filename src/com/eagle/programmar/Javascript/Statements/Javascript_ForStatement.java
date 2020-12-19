@@ -23,46 +23,46 @@ public class Javascript_ForStatement extends TokenChooser
 {
 	public @CHOICE static class Javascript_ForLoopStatement extends TokenSequence
 	{
-		public @NEWLINE @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
-		public PunctuationLeftParen leftParen;
-		public @OPT Javascript_ForLoopVariable loopVar;
-		public @OPT Javascript_PunctuationChoice equals = new Javascript_PunctuationChoice("=", "+=");
-		public @OPT Javascript_Expression initialize;
-		public @OPT TokenList<Javascript_More_Variables> moreVariables;
-		public @NOSPACE PunctuationSemicolon semicolon1;
-		public @OPT Javascript_Expression terminateCondition;
-		public @NOSPACE PunctuationSemicolon semicolon2;
-		public @OPT Javascript_Expression increment;
-		public @OPT PunctuationComma comma;
-		public @OPT Javascript_Expression extraIncrement;
-		public @NOSPACE PunctuationRightParen rightParen;
-		public Javascript_Statement action;
+		public @S(10) @NEWLINE @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT Javascript_ForLoopVariable loopVar;
+		public @S(40) @OPT Javascript_PunctuationChoice equals = new Javascript_PunctuationChoice("=", "+=");
+		public @S(50) @OPT Javascript_Expression initialize;
+		public @S(60) @OPT TokenList<Javascript_More_Variables> moreVariables;
+		public @S(70) @NOSPACE PunctuationSemicolon semicolon1;
+		public @S(80) @OPT Javascript_Expression terminateCondition;
+		public @S(90) @NOSPACE PunctuationSemicolon semicolon2;
+		public @S(100) @OPT Javascript_Expression increment;
+		public @S(110) @OPT PunctuationComma comma;
+		public @S(120) @OPT Javascript_Expression extraIncrement;
+		public @S(130) @NOSPACE PunctuationRightParen rightParen;
+		public @S(140) Javascript_Statement action;
 
 		public static class Javascript_ForLoopVariable extends TokenChooser
 		{
 			public @FIRST static class Javascript_ForLoopVariableWithType extends TokenSequence
 			{
-				public @NOSPACE Javascript_Type varType;
-				public Javascript_Variable forVar;
+				public @S(10) @NOSPACE Javascript_Type varType;
+				public @S(20) Javascript_Variable forVar;
 			}
 
 			public @CHOICE static class Javascript_ForLoopVariableNoType extends TokenSequence
 			{
-				public @NOSPACE Javascript_Variable forVar;
+				public @S(10) @NOSPACE Javascript_Variable forVar;
 			}
 		}
 	}
 	
 	public @CHOICE static class Javascript_ForCollectionStatement extends TokenSequence
 	{
-		public @NEWLINE Javascript_Keyword FOR = new Javascript_Keyword("for");
-		public PunctuationLeftParen leftParen;
-		public Javascript_Type varType;
-		public @OPT Javascript_Variable forVar;  // The Javascript_Type steals it ...
-		public Javascript_InOrColon inOrColon;
-		public Javascript_Expression collection;
-		public PunctuationRightParen rightParen;
-		public Javascript_Statement action;
+		public @S(10) @NEWLINE Javascript_Keyword FOR = new Javascript_Keyword("for");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) Javascript_Type varType;
+		public @S(40) @OPT Javascript_Variable forVar;  // The Javascript_Type steals it ...
+		public @S(50) Javascript_InOrColon inOrColon;
+		public @S(60) Javascript_Expression collection;
+		public @S(70) PunctuationRightParen rightParen;
+		public @S(80) Javascript_Statement action;
 		
 		public static class Javascript_InOrColon extends TokenChooser
 		{

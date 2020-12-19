@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_YieldStatement extends TokenSequence
 {
-	public Python_Keyword YIELD = new Python_Keyword("yield");
-	public @OPT Python_YieldWhat yieldWhat;
+	public @S(10) Python_Keyword YIELD = new Python_Keyword("yield");
+	public @S(20) @OPT Python_YieldWhat yieldWhat;
 	
 	public static class Python_YieldWhat extends TokenChooser
 	{
@@ -20,8 +20,8 @@ public class Python_YieldStatement extends TokenSequence
 		
 		public @CHOICE static class Python_YieldFrom extends TokenSequence
 		{
-			public Python_Keyword FROM = new Python_Keyword("from");
-			public Python_Expression condition;
+			public @S(10) Python_Keyword FROM = new Python_Keyword("from");
+			public @S(20) Python_Expression condition;
 		}
 	}
 }

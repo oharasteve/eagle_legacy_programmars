@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_RequireStatement extends TokenSequence
 {
-	public Perl_KeywordChoice REQUIRE = new Perl_KeywordChoice("require", "require_once");
-	public Perl_Expression require;
+	public @S(10) Perl_KeywordChoice REQUIRE = new Perl_KeywordChoice("require", "require_once");
+	public @S(20) Perl_Expression require;
 }

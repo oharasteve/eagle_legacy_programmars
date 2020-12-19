@@ -14,10 +14,10 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_NamespaceStatement extends TokenSequence
 {
-	public Perl_Keyword NAMESPACE = new Perl_Keyword("namespace");
-	public @OPT Perl_Identifier_Reference id;
-	public @OPT TokenList<Perl_MoreSpace> more;
-	public Perl_NamespaceBody body;
+	public @S(10) Perl_Keyword NAMESPACE = new Perl_Keyword("namespace");
+	public @S(20) @OPT Perl_Identifier_Reference id;
+	public @S(30) @OPT TokenList<Perl_MoreSpace> more;
+	public @S(40) Perl_NamespaceBody body;
 	
 	public static class Perl_NamespaceBody extends TokenChooser
 	{
@@ -27,7 +27,7 @@ public class Perl_NamespaceStatement extends TokenSequence
 	
 	public static class Perl_MoreSpace extends TokenSequence
 	{
-		public Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-		public Perl_Identifier_Reference id;
+		public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+		public @S(20) Perl_Identifier_Reference id;
 	}
 }

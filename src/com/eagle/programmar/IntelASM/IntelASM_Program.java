@@ -24,7 +24,7 @@ public class IntelASM_Program extends EagleLanguage
 		return "TBD";
 	}
 	
-	public TokenList<IntelASM_Line> lines;
+	public @S(10) TokenList<IntelASM_Line> lines;
 	
 	public static class IntelASM_Line extends TokenChooser
 	{

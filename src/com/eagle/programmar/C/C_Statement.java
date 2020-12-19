@@ -33,9 +33,9 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 	
 	public @CHOICE static class C_StatementBlock extends TokenSequence
 	{
-		public @INDENT PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<C_StatementOrComment> statements;
-		public @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<C_StatementOrComment> statements;
+		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 	}
 
 	public @CHOICE C_BreakStatement breakStatement;

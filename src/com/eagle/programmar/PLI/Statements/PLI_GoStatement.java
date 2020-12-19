@@ -10,8 +10,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_GoStatement extends TokenSequence
 {
-	public @DOC("7.25") PLI_Keyword GO = new PLI_Keyword("GO");
-	public PLI_Keyword TO = new PLI_Keyword("TO");
-	public PLI_Identifier_Reference label;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.25") PLI_Keyword GO = new PLI_Keyword("GO");
+	public @S(20) PLI_Keyword TO = new PLI_Keyword("TO");
+	public @S(30) PLI_Identifier_Reference label;
+	public @S(40) PunctuationSemicolon semicolon;
 }

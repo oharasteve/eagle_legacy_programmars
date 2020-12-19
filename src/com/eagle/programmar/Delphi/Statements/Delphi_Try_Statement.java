@@ -9,11 +9,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Try_Statement extends TokenSequence
 {
-	public Delphi_Keyword TRY = new Delphi_Keyword("Try");
-	public Delphi_Statement_List statements1;
-	public @OPT Delphi_Keyword EXCEPT = new Delphi_Keyword("Except");
-	public @OPT Delphi_Statement_List statements2;
-	public @OPT Delphi_Keyword FINALLY = new Delphi_Keyword("Finally");
-	public @OPT Delphi_Statement_List statements3;
-	public Delphi_Keyword END = new Delphi_Keyword("End");
+	public @S(10) Delphi_Keyword TRY = new Delphi_Keyword("Try");
+	public @S(20) Delphi_Statement_List statements1;
+	public @S(30) @OPT Delphi_Keyword EXCEPT = new Delphi_Keyword("Except");
+	public @S(40) @OPT Delphi_Statement_List statements2;
+	public @S(50) @OPT Delphi_Keyword FINALLY = new Delphi_Keyword("Finally");
+	public @S(60) @OPT Delphi_Statement_List statements3;
+	public @S(70) Delphi_Keyword END = new Delphi_Keyword("End");
 }

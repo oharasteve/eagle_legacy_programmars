@@ -16,47 +16,47 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_AddStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsadd.htm") COBOL_Keyword ADD = new COBOL_Keyword("ADD");
-	public COBOL_Expression expr;
-	public @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
-	public @OPT COBOL_AddTo addTo;
-	public @OPT COBOL_AddGiving giving;
-	public @OPT TokenList<COBOL_AddOnSizeError> onErrorList;
-	public @OPT COBOL_Keyword ENDADD = new COBOL_Keyword("END-ADD");
+	public @S(10) @DOC("rlpsadd.htm") COBOL_Keyword ADD = new COBOL_Keyword("ADD");
+	public @S(20) COBOL_Expression expr;
+	public @S(30) @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
+	public @S(40) @OPT COBOL_AddTo addTo;
+	public @S(50) @OPT COBOL_AddGiving giving;
+	public @S(60) @OPT TokenList<COBOL_AddOnSizeError> onErrorList;
+	public @S(70) @OPT COBOL_Keyword ENDADD = new COBOL_Keyword("END-ADD");
 	
 	public static class COBOL_AddMoreExprs extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public COBOL_Expression expr;
+		public @S(10) PunctuationComma comma;
+		public @S(20) COBOL_Expression expr;
 	}
 
 	public static class COBOL_AddTo extends TokenSequence
 	{
-		public @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-		public COBOL_Variable var;
-		public @OPT TokenList<COBOL_AddMoreVars> moreVars;
+		public @S(10) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		public @S(20) COBOL_Variable var;
+		public @S(30) @OPT TokenList<COBOL_AddMoreVars> moreVars;
 		
 		public static class COBOL_AddMoreVars extends TokenSequence
 		{
-			public @OPT PunctuationComma comma;
-			public COBOL_Variable var;
+			public @S(10) @OPT PunctuationComma comma;
+			public @S(20) COBOL_Variable var;
 		}
 	}
 	
 	public static class COBOL_AddGiving extends TokenSequence
 	{
-		public @OPT @CURIOUS("ADD: Extra comma") PunctuationComma comma;
-		public COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
-		public TokenList<COBOL_Identifier_Reference> sum;
-		public @OPT COBOL_Subscript subscript;
+		public @S(10) @OPT @CURIOUS("ADD: Extra comma") PunctuationComma comma;
+		public @S(20) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
+		public @S(30) TokenList<COBOL_Identifier_Reference> sum;
+		public @S(40) @OPT COBOL_Subscript subscript;
 	}
 
 	public static class COBOL_AddOnSizeError extends TokenSequence
 	{
-		public @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
-		public COBOL_Keyword ON = new COBOL_Keyword("ON");
-		public COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
-		public COBOL_Keyword ERROR = new COBOL_Keyword("ERROR");
-		public TokenList<COBOL_Statement> actions;
+		public @S(10) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
+		public @S(20) COBOL_Keyword ON = new COBOL_Keyword("ON");
+		public @S(30) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
+		public @S(40) COBOL_Keyword ERROR = new COBOL_Keyword("ERROR");
+		public @S(50) TokenList<COBOL_Statement> actions;
 	}
 }

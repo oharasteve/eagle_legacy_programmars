@@ -10,27 +10,27 @@ import com.eagle.tokens.TokenSequence;
 
 public class SQL_LoadStatement extends TokenSequence
 {
-	public SQL_Keyword LOAD = new SQL_Keyword("LOAD");
-	public SQL_Keyword DATA = new SQL_Keyword("DATA");
-	public SQL_Keyword LOCAL = new SQL_Keyword("LOCAL");
-	public SQL_Keyword INFILE = new SQL_Keyword("INFILE");
-	public SQL_Literal inFile;
-	public SQL_Keyword INTO = new SQL_Keyword("INTO");
-	public SQL_Keyword TABLE = new SQL_Keyword("TABLE");
-	public SQL_Identifier_Reference table;
-	public SQL_Keyword FIELDS = new SQL_Keyword("FIELDS");
-	public SQL_Keyword TERMINATED1 = new SQL_Keyword("TERMINATED");
-	public SQL_Keyword BY1 = new SQL_Keyword("BY");
-	public SQL_Literal fieldTerminator;
-	public SQL_Keyword ENCLOSED = new SQL_Keyword("ENCLOSED");
-	public SQL_Keyword BY2 = new SQL_Keyword("BY");
-	public SQL_Literal enclosure;
-	public SQL_Keyword ESCAPED = new SQL_Keyword("ESCAPED");
-	public SQL_Keyword BY3 = new SQL_Keyword("BY");
-	public SQL_Literal escaped;
-	public SQL_Keyword LINES = new SQL_Keyword("LINES");
-	public SQL_Keyword TERMINATED2 = new SQL_Keyword("TERMINATED");
-	public SQL_Keyword BY4 = new SQL_Keyword("BY");
-	public SQL_Literal lineTerminator;
+	public @S(10) SQL_Keyword LOAD = new SQL_Keyword("LOAD");
+	public @S(20) SQL_Keyword DATA = new SQL_Keyword("DATA");
+	public @S(30) SQL_Keyword LOCAL = new SQL_Keyword("LOCAL");
+	public @S(40) SQL_Keyword INFILE = new SQL_Keyword("INFILE");
+	public @S(50) SQL_Literal inFile;
+	public @S(60) SQL_Keyword INTO = new SQL_Keyword("INTO");
+	public @S(70) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
+	public @S(80) SQL_Identifier_Reference table;
+	public @S(90) SQL_Keyword FIELDS = new SQL_Keyword("FIELDS");
+	public @S(100) SQL_Keyword TERMINATED1 = new SQL_Keyword("TERMINATED");
+	public @S(110) SQL_Keyword BY1 = new SQL_Keyword("BY");
+	public @S(120) SQL_Literal fieldTerminator;
+	public @S(130) SQL_Keyword ENCLOSED = new SQL_Keyword("ENCLOSED");
+	public @S(140) SQL_Keyword BY2 = new SQL_Keyword("BY");
+	public @S(150) SQL_Literal enclosure;
+	public @S(160) SQL_Keyword ESCAPED = new SQL_Keyword("ESCAPED");
+	public @S(170) SQL_Keyword BY3 = new SQL_Keyword("BY");
+	public @S(180) SQL_Literal escaped;
+	public @S(190) SQL_Keyword LINES = new SQL_Keyword("LINES");
+	public @S(200) SQL_Keyword TERMINATED2 = new SQL_Keyword("TERMINATED");
+	public @S(210) SQL_Keyword BY4 = new SQL_Keyword("BY");
+	public @S(220) SQL_Literal lineTerminator;
 }
 

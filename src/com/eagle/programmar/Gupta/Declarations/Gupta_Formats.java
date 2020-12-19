@@ -8,5 +8,5 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_Formats extends Gupta_Declaration
 {
-	public Gupta_Keyword Formats = new Gupta_Keyword("Formats");
+	public @S(10) Gupta_Keyword Formats = new Gupta_Keyword("Formats");
 }

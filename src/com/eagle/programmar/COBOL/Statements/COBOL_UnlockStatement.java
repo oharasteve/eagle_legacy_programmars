@@ -9,6 +9,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_UnlockStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword UNLOCK = new COBOL_Keyword("UNLOCK");
-	public COBOL_Identifier_Reference file;
+	public @S(10) COBOL_Keyword UNLOCK = new COBOL_Keyword("UNLOCK");
+	public @S(20) COBOL_Identifier_Reference file;
 }

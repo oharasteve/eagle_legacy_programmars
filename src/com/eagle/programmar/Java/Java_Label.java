@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Java_Label extends TokenSequence
 {
-	public Java_Label_Definition label;
-	public PunctuationColon colon;
+	public @S(10) Java_Label_Definition label;
+	public @S(20) PunctuationColon colon;
 }

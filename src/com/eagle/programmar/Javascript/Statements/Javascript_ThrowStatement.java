@@ -11,9 +11,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_ThrowStatement extends TokenSequence
 {
-	public @DOC("js_throw.asp") Javascript_Keyword THROW = new Javascript_Keyword("throw");
-	public Javascript_Expression expression;
-	public @OPT PunctuationComma comma;
-	public @OPT Javascript_Expression extraExpression;
-	public @OPT PunctuationSemicolon semicolon;
+	public @S(10) @DOC("js_throw.asp") Javascript_Keyword THROW = new Javascript_Keyword("throw");
+	public @S(20) Javascript_Expression expression;
+	public @S(30) @OPT PunctuationComma comma;
+	public @S(40) @OPT Javascript_Expression extraExpression;
+	public @S(50) @OPT PunctuationSemicolon semicolon;
 }

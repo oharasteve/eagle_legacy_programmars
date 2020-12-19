@@ -12,17 +12,17 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_WhileStatement extends TokenSequence
 {
-	public @NOSPACE Python_Keyword WHILE = new Python_Keyword("while");
-	public Python_Expression condition;
-	public @NOSPACE PunctuationColon colon;
-	public Python_SingleOrMultiLineStatement statements;
-	public @OPT Python_WhileElse whileElse;
+	public @S(10) @NOSPACE Python_Keyword WHILE = new Python_Keyword("while");
+	public @S(20) Python_Expression condition;
+	public @S(30) @NOSPACE PunctuationColon colon;
+	public @S(40) Python_SingleOrMultiLineStatement statements;
+	public @S(50) @OPT Python_WhileElse whileElse;
 	
 	public static class Python_WhileElse extends TokenSequence
 	{
-		public Python_StartOfLine soln = new Python_StartOfLine();
-		public Python_Keyword ELSE = new Python_Keyword("else");
-		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement doWhat;
+		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
+		public @S(20) Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(30) PunctuationColon colon;
+		public @S(40) Python_SingleOrMultiLineStatement doWhat;
 	}
 }

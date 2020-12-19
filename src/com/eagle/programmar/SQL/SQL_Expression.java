@@ -42,28 +42,28 @@ public class SQL_Expression extends PrecedenceChooser
 
 	public static @P(100) class SQL_Builtin extends PrimaryOperator
 	{
-		public SQL_KeywordChoice TIMESTAMP = new SQL_KeywordChoice("SYSTIMESTAMP");
+		public @S(10) SQL_KeywordChoice TIMESTAMP = new SQL_KeywordChoice("SYSTIMESTAMP");
 	}
 	
 	public static @P(110) class SQL_FunctionExpression extends PrimaryOperator
 	{
-		public SQL_Function function;
+		public @S(10) SQL_Function function;
 	}
 
 	public static @P(120) class SQL_DollarVariable extends PrimaryOperator
 	{
-		public SQL_Punctuation dollar = new SQL_Punctuation('$');
-		public SQL_Number number;
+		public @S(10) SQL_Punctuation dollar = new SQL_Punctuation('$');
+		public @S(20) SQL_Number number;
 	}
 	
 	public static @P(130) class SQL_VariableExpression extends PrimaryOperator
 	{
-		public SQL_Variable variable;
+		public @S(10) SQL_Variable variable;
 	}
 
 	public static @P(140) class SQL_Star extends PrimaryOperator
 	{
-		public PunctuationStar star;
+		public @S(10) PunctuationStar star;
 	}
 
 	///////////////////////////////////////////////
@@ -71,23 +71,23 @@ public class SQL_Expression extends PrecedenceChooser
 
 	public static @P(150) class SQL_MultiplicativeExpression extends PrecedenceOperator
 	{
-		public SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
-		public SQL_PunctuationChoice operator = new SQL_PunctuationChoice("*", "/", "%");
-		public SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) SQL_PunctuationChoice operator = new SQL_PunctuationChoice("*", "/", "%");
+		public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(160) class SQL_AdditiveExpression extends PrecedenceOperator
 	{
-		public SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
-		public SQL_PunctuationChoice operator = new SQL_PunctuationChoice("+", "-");
-		public SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) SQL_PunctuationChoice operator = new SQL_PunctuationChoice("+", "-");
+		public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(170) class SQL_RelationalExpression extends PrecedenceOperator
 	{
-		public SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
-		public SQL_RelationalOperator relationalOperator;
-		public SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) SQL_RelationalOperator relationalOperator;
+		public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
 
 		public static class SQL_RelationalOperator extends TokenChooser
 		{
@@ -98,15 +98,15 @@ public class SQL_Expression extends PrecedenceChooser
 
 	public static @P(180) class SQL_AndExpression extends PrecedenceOperator
 	{
-		public SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
-		public SQL_Keyword AND = new SQL_Keyword("AND");
-		public SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) SQL_Keyword AND = new SQL_Keyword("AND");
+		public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(190) class SQL_OrExpression extends PrecedenceOperator
 	{
-		public SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
-		public SQL_Keyword OR = new SQL_Keyword("OR");
-		public SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) SQL_Keyword OR = new SQL_Keyword("OR");
+		public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

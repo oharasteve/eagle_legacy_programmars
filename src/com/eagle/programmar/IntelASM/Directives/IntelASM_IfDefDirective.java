@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_IfDefDirective extends TokenSequence
 {
-	public IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
-	public IntelASM_KeywordChoice IFDEF = new IntelASM_KeywordChoice("ifdef", "ifndef");
-	public IntelASM_Identifier_Reference name;
+	public @S(10) IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
+	public @S(20) IntelASM_KeywordChoice IFDEF = new IntelASM_KeywordChoice("ifdef", "ifndef");
+	public @S(30) IntelASM_Identifier_Reference name;
 }

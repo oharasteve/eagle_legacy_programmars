@@ -13,14 +13,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_OpenStatement extends TokenSequence
 {
-	public @DOC("7.37") PLI_Keyword OPEN = new PLI_Keyword("OPEN");
-	public PLI_Keyword FILE = new PLI_Keyword("FILE");
-	public PunctuationLeftParen leftParen1;
-	public PLI_Identifier_Reference fileName;
-	public PunctuationRightParen rightParen1;
-	public PLI_Keyword TITLE = new PLI_Keyword("TITLE");
-	public PunctuationLeftParen leftParen2;
-	public PLI_Literal title;
-	public PunctuationRightParen rightParen2;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.37") PLI_Keyword OPEN = new PLI_Keyword("OPEN");
+	public @S(20) PLI_Keyword FILE = new PLI_Keyword("FILE");
+	public @S(30) PunctuationLeftParen leftParen1;
+	public @S(40) PLI_Identifier_Reference fileName;
+	public @S(50) PunctuationRightParen rightParen1;
+	public @S(60) PLI_Keyword TITLE = new PLI_Keyword("TITLE");
+	public @S(70) PunctuationLeftParen leftParen2;
+	public @S(80) PLI_Literal title;
+	public @S(90) PunctuationRightParen rightParen2;
+	public @S(100) PunctuationSemicolon semicolon;
 }

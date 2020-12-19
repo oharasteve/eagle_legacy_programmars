@@ -12,16 +12,16 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_CD_Statement extends TokenSequence
 {
-	public @DOC("chdir.mspx") CMD_Keyword CD = new CMD_Keyword("cd");
-	public @OPT TokenList<CMD_CD_Option> opts;
-	public CMD_Argument dir;
+	public @S(10) @DOC("chdir.mspx") CMD_Keyword CD = new CMD_Keyword("cd");
+	public @S(20) @OPT TokenList<CMD_CD_Option> opts;
+	public @S(30) CMD_Argument dir;
 	
 	public static class CMD_CD_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_CD_Option_D extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword D = new CMD_Keyword("d");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword D = new CMD_Keyword("d");
 		}
 	}
 }

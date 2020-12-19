@@ -15,13 +15,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_For_Statement extends TokenSequence
 {
-	public Delphi_Keyword FOR = new Delphi_Keyword("For");
-	public Delphi_Identifier_Reference var;
-	public Delphi_Punctuation colonEquals = new Delphi_Punctuation(":=");
-	public Delphi_Expression from;
-	public Delphi_KeywordChoice TO_DOWNTO = new Delphi_KeywordChoice("To", "DownTo");
-	public Delphi_Expression to;
-	public Delphi_Keyword DO = new Delphi_Keyword("Do");
-	public @OPT TokenList<Delphi_Comment> comments;
-	public Delphi_Statement stmt;
+	public @S(10) Delphi_Keyword FOR = new Delphi_Keyword("For");
+	public @S(20) Delphi_Identifier_Reference var;
+	public @S(30) Delphi_Punctuation colonEquals = new Delphi_Punctuation(":=");
+	public @S(40) Delphi_Expression from;
+	public @S(50) Delphi_KeywordChoice TO_DOWNTO = new Delphi_KeywordChoice("To", "DownTo");
+	public @S(60) Delphi_Expression to;
+	public @S(70) Delphi_Keyword DO = new Delphi_Keyword("Do");
+	public @S(80) @OPT TokenList<Delphi_Comment> comments;
+	public @S(90) Delphi_Statement stmt;
 }

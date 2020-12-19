@@ -16,20 +16,20 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_CopyStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword COPY = new COBOL_Keyword("COPY");
-	public COBOL_FileNameOrLiteral fileName;
-	public @OPT COBOL_CopyReplacing replacing;
+	public @S(10) COBOL_Keyword COPY = new COBOL_Keyword("COPY");
+	public @S(20) COBOL_FileNameOrLiteral fileName;
+	public @S(30) @OPT COBOL_CopyReplacing replacing;
 	
 	public static class COBOL_CopyReplacing extends TokenSequence
 	{
-		public COBOL_Keyword REPLACING = new COBOL_Keyword("REPLACING");
-		public TokenList<COBOL_CopyReplace> replacements;
+		public @S(10) COBOL_Keyword REPLACING = new COBOL_Keyword("REPLACING");
+		public @S(20) TokenList<COBOL_CopyReplace> replacements;
 		
 		public static class COBOL_CopyReplace extends TokenSequence
 		{
-			public COBOL_Identifier_Reference from;
-			public COBOL_Keyword BY = new COBOL_Keyword("BY");
-			public COBOL_Identifier_Reference to;
+			public @S(10) COBOL_Identifier_Reference from;
+			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
+			public @S(30) COBOL_Identifier_Reference to;
 		}
 	}
 

@@ -14,11 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class TCL_NamespaceStatement extends TokenSequence
 {
-	public TCL_Keyword NAMESPACE = new TCL_Keyword("namespace");
-	public TCL_Keyword EVAL = new TCL_Keyword("eval");
-	public TCL_Namespace_Definition namespace;
-	public PunctuationLeftBrace leftBrace;
-	public TCL_EndOfLine endOfLine;
+	public @S(10) TCL_Keyword NAMESPACE = new TCL_Keyword("namespace");
+	public @S(20) TCL_Keyword EVAL = new TCL_Keyword("eval");
+	public @S(30) TCL_Namespace_Definition namespace;
+	public @S(40) PunctuationLeftBrace leftBrace;
+	public @S(50) TCL_EndOfLine endOfLine;
 	
 	public TokenList<TCL_Statement> statements;
 	

@@ -23,7 +23,7 @@ public class Javascript_Program extends EagleLanguage
 		return "http://www.w3schools.com/js/";
 	}
 	
-	public @OPT TokenList<Javascript_Element> elements;
+	public @S(10) @OPT TokenList<Javascript_Element> elements;
 	
 	public static class Javascript_Element extends TokenChooser
 	{

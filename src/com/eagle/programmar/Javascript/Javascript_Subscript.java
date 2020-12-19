@@ -9,7 +9,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Javascript_Subscript extends TokenSequence
 {
-	public @NOSPACE PunctuationLeftBracket leftBracket;
-	public @NOSPACE Javascript_Expression expr;
-	public @NOSPACE PunctuationRightBracket rightBracket;
+	public @S(10) @NOSPACE PunctuationLeftBracket leftBracket;
+	public @S(20) @NOSPACE Javascript_Expression expr;
+	public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 }

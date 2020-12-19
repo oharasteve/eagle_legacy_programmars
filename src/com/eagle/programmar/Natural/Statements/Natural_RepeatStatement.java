@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_RepeatStatement extends TokenSequence
 {
-	public @DOC("sm/repeat.htm") Natural_Keyword REPEAT = new Natural_Keyword("REPEAT");
-	public TokenList<Natural_Statement> statements;
-	public Natural_Keyword ENDREPEAT = new Natural_Keyword("END-REPEAT");
+	public @S(10) @DOC("sm/repeat.htm") Natural_Keyword REPEAT = new Natural_Keyword("REPEAT");
+	public @S(20) TokenList<Natural_Statement> statements;
+	public @S(30) Natural_Keyword ENDREPEAT = new Natural_Keyword("END-REPEAT");
 }

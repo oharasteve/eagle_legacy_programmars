@@ -22,5 +22,5 @@ public class Gupta_Program extends EagleLanguage
 	}
 
 	// Components of a Gupta Program
-	public Gupta_Application application;
+	public @S(10) Gupta_Application application;
 }

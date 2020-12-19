@@ -11,6 +11,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Perl_GlobalStatement extends TokenSequence
 {
-	public Perl_Keyword GLOBAL = new Perl_Keyword("global");
-	public SeparatedList<Perl_Variable,PunctuationComma> vars;
+	public @S(10) Perl_Keyword GLOBAL = new Perl_Keyword("global");
+	public @S(20) SeparatedList<Perl_Variable,PunctuationComma> vars;
 }

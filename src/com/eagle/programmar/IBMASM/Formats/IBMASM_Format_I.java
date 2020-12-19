@@ -10,10 +10,10 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_Format_I extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"SVC"		// Supervisor call
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Immediate immediate;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Immediate immediate;
 }

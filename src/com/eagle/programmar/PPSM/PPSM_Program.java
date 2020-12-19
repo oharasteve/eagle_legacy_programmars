@@ -25,9 +25,9 @@ public class PPSM_Program extends EagleLanguage
 	
 	public static class PPSM_Element extends TokenSequence
 	{
-		public PPSM_KeywordChoice x = new PPSM_KeywordChoice("a", "b");
-		public @OPT PPSM_KeywordChoice y = new PPSM_KeywordChoice("c", "d", "e");
+		public @S(10) PPSM_KeywordChoice x = new PPSM_KeywordChoice("a", "b");
+		public @S(20) @OPT PPSM_KeywordChoice y = new PPSM_KeywordChoice("c", "d", "e");
 	}
 
-	public TokenList<PPSM_Element> elements;
+	public @S(10) TokenList<PPSM_Element> elements;
 }

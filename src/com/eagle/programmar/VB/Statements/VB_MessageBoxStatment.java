@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_MessageBoxStatment extends TokenSequence
 {
-	public VB_Keyword MESSAGEBOX = new VB_Keyword("MsgBox");
-	public VB_Expression expr;
+	public @S(10) VB_Keyword MESSAGEBOX = new VB_Keyword("MsgBox");
+	public @S(20) VB_Expression expr;
 }

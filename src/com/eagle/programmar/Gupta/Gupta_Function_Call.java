@@ -12,15 +12,15 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Gupta_Function_Call extends TokenSequence
 {
-	public Gupta_Identifier_Reference fnName;
-	public PunctuationLeftParen leftParen;
-	public @OPT Gupta_Expression expr;
-	public @OPT TokenList<Gupta_More_Arguments> moreArgs;
-	public PunctuationRightParen rightParen;
+	public @S(10) Gupta_Identifier_Reference fnName;
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @OPT Gupta_Expression expr;
+	public @S(40) @OPT TokenList<Gupta_More_Arguments> moreArgs;
+	public @S(50) PunctuationRightParen rightParen;
 	
 	public static class Gupta_More_Arguments extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public Gupta_Expression expr;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) Gupta_Expression expr;
 	}
 }

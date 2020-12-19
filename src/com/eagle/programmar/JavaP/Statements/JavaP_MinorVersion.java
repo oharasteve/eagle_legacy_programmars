@@ -11,9 +11,9 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class JavaP_MinorVersion extends TokenSequence
 {
-	public JavaP_Keyword MINOR = new JavaP_Keyword("minor");
-	public JavaP_Keyword VERSION = new JavaP_Keyword("version");
-	public PunctuationColon colon;
-	public JavaP_Number version;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword MINOR = new JavaP_Keyword("minor");
+	public @S(20) JavaP_Keyword VERSION = new JavaP_Keyword("version");
+	public @S(30) PunctuationColon colon;
+	public @S(40) JavaP_Number version;
+	public @S(50) JavaP_EndOfLine eoln;
 }

@@ -21,50 +21,50 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_For_Statement extends TokenSequence
 {
-	public @DOC("for.mspx") CMD_Keyword FOR = new CMD_Keyword("for");
-	public @OPT TokenList<CMD_For_Option> opts;
-	public CMD_PercentVariable var;
-	public CMD_Keyword IN = new CMD_Keyword("in");
-	public PunctuationLeftParen leftParen;
-	public CMD_Argument arg;
-	public @OPT TokenList<CMD_For_More_Params> moreParams;
-	public PunctuationRightParen rightParen;
-	public CMD_Keyword DO = new CMD_Keyword("do");
-	public @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-	public CMD_Statement stmt;
+	public @S(10) @DOC("for.mspx") CMD_Keyword FOR = new CMD_Keyword("for");
+	public @S(20) @OPT TokenList<CMD_For_Option> opts;
+	public @S(30) CMD_PercentVariable var;
+	public @S(40) CMD_Keyword IN = new CMD_Keyword("in");
+	public @S(50) PunctuationLeftParen leftParen;
+	public @S(60) CMD_Argument arg;
+	public @S(70) @OPT TokenList<CMD_For_More_Params> moreParams;
+	public @S(80) PunctuationRightParen rightParen;
+	public @S(90) CMD_Keyword DO = new CMD_Keyword("do");
+	public @S(100) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+	public @S(110) CMD_Statement stmt;
 	
 	public static class CMD_For_More_Params extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public CMD_Argument arg;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) CMD_Argument arg;
 	}
 	
 	public static class CMD_For_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_For_Option_D extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword D = new CMD_Keyword("d");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword D = new CMD_Keyword("d");
 		}
 
 		public @CHOICE static class CMD_For_Option_F extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword F = new CMD_Keyword("f");
-			public @OPT CMD_Literal opts;
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
+			public @S(30) @OPT CMD_Literal opts;
 		}
 	
 		public @CHOICE static class CMD_For_Option_L extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword L = new CMD_Keyword("l");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword L = new CMD_Keyword("l");
 		}
 
 		public @CHOICE static class CMD_For_Option_R extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword R = new CMD_Keyword("r");
-			public @OPT CMD_For_R forR;
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword R = new CMD_Keyword("r");
+			public @S(30) @OPT CMD_For_R forR;
 			
 			public static class CMD_For_R extends TokenChooser
 			{
@@ -73,8 +73,8 @@ public class CMD_For_Statement extends TokenSequence
 				
 				public @CHOICE static class CMD_For_R_pct extends TokenSequence
 				{
-					public CMD_Punctuation percent = new CMD_Punctuation('%');
-					public CMD_Number number;
+					public @S(10) CMD_Punctuation percent = new CMD_Punctuation('%');
+					public @S(20) CMD_Number number;
 				}
 			}
 		}

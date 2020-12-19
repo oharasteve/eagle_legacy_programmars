@@ -10,8 +10,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CPlus_Using extends TokenSequence
 {
-	public C_Keyword USING = new C_Keyword("using");
-	public @OPT C_Keyword NAMESPACE = new C_Keyword("namespace");
-	public C_Expression what;
-	public PunctuationSemicolon semicolon;
+	public @S(10) C_Keyword USING = new C_Keyword("using");
+	public @S(20) @OPT C_Keyword NAMESPACE = new C_Keyword("namespace");
+	public @S(30) C_Expression what;
+	public @S(40) PunctuationSemicolon semicolon;
 }

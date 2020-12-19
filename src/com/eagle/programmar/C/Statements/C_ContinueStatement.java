@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_ContinueStatement extends TokenSequence
 {
-	public @DOC("#The-continue-Statement") C_Keyword CONTINUE = new C_Keyword("continue");
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("#The-continue-Statement") C_Keyword CONTINUE = new C_Keyword("continue");
+	public @S(20) PunctuationSemicolon semicolon;
 }

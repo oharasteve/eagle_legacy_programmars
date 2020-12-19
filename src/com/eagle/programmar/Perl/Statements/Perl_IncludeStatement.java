@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_IncludeStatement extends TokenSequence
 {
-	public @DOC("function.include.php") Perl_Keyword INCLUDE = new Perl_Keyword("include");
-	public Perl_Literal filename;
+	public @S(10) @DOC("function.include.php") Perl_Keyword INCLUDE = new Perl_Keyword("include");
+	public @S(20) Perl_Literal filename;
 }

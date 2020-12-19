@@ -17,39 +17,39 @@ import com.eagle.tokens.interfaces.AbstractMethod;
 
 public class CPlus_Method extends TokenSequence implements AbstractMethod
 {
-	public CPlus_MethodTypeAndName typeAndName;
-	public C_Function_ParameterDefs parameters;
-	public @OPT TokenList<C_Comment> comments2;
-	public C_FunctionBody body;
+	public @S(10) CPlus_MethodTypeAndName typeAndName;
+	public @S(20) C_Function_ParameterDefs parameters;
+	public @S(30) @OPT TokenList<C_Comment> comments2;
+	public @S(40) C_FunctionBody body;
 
 	public static class CPlus_MethodTypeAndName extends TokenChooser
 	{
 		public @CHOICE static class CPlus_MethodWithType extends TokenSequence
 		{
-			public C_Type type;
-			public TokenList<CPlus_NamespaceQualifier> nameSpaces;
-			public C_Identifier_Reference methodName;
+			public @S(10) C_Type type;
+			public @S(20) TokenList<CPlus_NamespaceQualifier> nameSpaces;
+			public @S(30) C_Identifier_Reference methodName;
 		}
 		
 		public @CHOICE static class CPlus_MethodConstructor extends TokenSequence
 		{
-			public TokenList<CPlus_NamespaceQualifier> nameSpaces;
-			public @OPT C_Punctuation tilde = new C_Punctuation('~');
-			public CPlus_Current_Class_Reference methodName;
+			public @S(10) TokenList<CPlus_NamespaceQualifier> nameSpaces;
+			public @S(20) @OPT C_Punctuation tilde = new C_Punctuation('~');
+			public @S(30) CPlus_Current_Class_Reference methodName;
 		}
 
 		public @LAST static class CPlus_MethodNoType extends TokenSequence
 		{
-			public TokenList<CPlus_NamespaceQualifier> nameSpaces;
-			public @OPT C_Punctuation tilde = new C_Punctuation('~');
-			public C_Identifier_Reference methodName;
+			public @S(10) TokenList<CPlus_NamespaceQualifier> nameSpaces;
+			public @S(20) @OPT C_Punctuation tilde = new C_Punctuation('~');
+			public @S(30) C_Identifier_Reference methodName;
 		}
 	}
 	
 	public static class CPlus_NamespaceQualifier extends TokenSequence
 	{
-		public C_Identifier_Reference nameSpace;
-		public @OPT CPlus_Generic generic;
-		public C_Punctuation colonColon = new C_Punctuation("::");
+		public @S(10) C_Identifier_Reference nameSpace;
+		public @S(20) @OPT CPlus_Generic generic;
+		public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
 	}
 }

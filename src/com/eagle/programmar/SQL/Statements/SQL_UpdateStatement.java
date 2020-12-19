@@ -14,18 +14,18 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_UpdateStatement extends TokenSequence
 {
-	public @DOC("sql_update.asp") SQL_Keyword UPDATE = new SQL_Keyword("UPDATE");
-	public SQL_Identifier_Reference table;
-	public SQL_Keyword SET = new SQL_Keyword("SET");
-	public SeparatedList<SQL_UpdateAssignment,PunctuationComma> assignments;
-	public SQL_Keyword WHERE = new SQL_Keyword("WHERE");
-	public SQL_Expression condition;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("sql_update.asp") SQL_Keyword UPDATE = new SQL_Keyword("UPDATE");
+	public @S(20) SQL_Identifier_Reference table;
+	public @S(30) SQL_Keyword SET = new SQL_Keyword("SET");
+	public @S(40) SeparatedList<SQL_UpdateAssignment,PunctuationComma> assignments;
+	public @S(50) SQL_Keyword WHERE = new SQL_Keyword("WHERE");
+	public @S(60) SQL_Expression condition;
+	public @S(70) PunctuationSemicolon semicolon;
 
 	public static class SQL_UpdateAssignment extends TokenSequence
 	{
-		public SQL_Identifier_Reference var;
-		public PunctuationEquals equals;
-		public SQL_Expression value;
+		public @S(10) SQL_Identifier_Reference var;
+		public @S(20) PunctuationEquals equals;
+		public @S(30) SQL_Expression value;
 	}
 }

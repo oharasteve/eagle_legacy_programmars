@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenList;
 
 public class Gupta_Internal_Functions extends Gupta_Declaration
 {
-	public Gupta_Keyword Internal = new Gupta_Keyword("Internal");
-	public Gupta_Keyword Functions = new Gupta_Keyword("Functions");
-	public @OPT @INDENT TokenList<Gupta_Function> functions;
+	public @S(10) Gupta_Keyword Internal = new Gupta_Keyword("Internal");
+	public @S(20) Gupta_Keyword Functions = new Gupta_Keyword("Functions");
+	public @S(30) @OPT @INDENT TokenList<Gupta_Function> functions;
 }

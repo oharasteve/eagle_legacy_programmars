@@ -92,7 +92,8 @@ public class C_Program extends EagleLanguage
 		return modifiers;
 	}
 	
-	public @OPT TokenList<C_StatementOrComment> elements;
+	// Note that CPlus_Program has an @S(5)
+	public @S(10) @OPT TokenList<C_StatementOrComment> elements;
 
 	public static class C_StatementOrComment extends TokenChooser
 	{
@@ -105,8 +106,8 @@ public class C_Program extends EagleLanguage
 		
 		public @CHOICE static class C_EnumStatement extends TokenSequence
 		{
-			public C_Enum cenum;
-			public PunctuationSemicolon semicolon;
+			public @S(10) C_Enum cenum;
+			public @S(20) PunctuationSemicolon semicolon;
 		}
 	}
 }

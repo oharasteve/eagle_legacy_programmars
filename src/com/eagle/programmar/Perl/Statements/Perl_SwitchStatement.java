@@ -16,27 +16,27 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Perl_SwitchStatement extends TokenSequence
 {
-	public @DOC("control-structures.switch.php") Perl_Keyword SWITCH = new Perl_Keyword("switch");
-	public PunctuationLeftParen leftParen;
-	public Perl_Expression val;
-	public PunctuationRightParen rightParen;
-	public PunctuationLeftBrace leftBrace;
-	public TokenList<Perl_CaseClause> caseClause;
-	public @OPT Perl_DefaultClause elseClause;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) @DOC("control-structures.switch.php") Perl_Keyword SWITCH = new Perl_Keyword("switch");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Perl_Expression val;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationLeftBrace leftBrace;
+	public @S(60) TokenList<Perl_CaseClause> caseClause;
+	public @S(70) @OPT Perl_DefaultClause elseClause;
+	public @S(80) PunctuationRightBrace rightBrace;
 	
 	public static class Perl_CaseClause extends TokenSequence
 	{
-		public Perl_Keyword CASE = new Perl_Keyword("case");
-		public Perl_Expression expr;
-		public PunctuationColon colon;
-		public @OPT TokenList<Perl_StatementOrComment> statements;
+		public @S(10) Perl_Keyword CASE = new Perl_Keyword("case");
+		public @S(20) Perl_Expression expr;
+		public @S(30) PunctuationColon colon;
+		public @S(40) @OPT TokenList<Perl_StatementOrComment> statements;
 	}
 	
 	public static class Perl_DefaultClause extends TokenSequence
 	{
-		public Perl_Keyword DEFAULT = new Perl_Keyword("default");
-		public PunctuationColon colon;
-		public TokenList<Perl_StatementOrComment> statements;
+		public @S(10) Perl_Keyword DEFAULT = new Perl_Keyword("default");
+		public @S(20) PunctuationColon colon;
+		public @S(30) TokenList<Perl_StatementOrComment> statements;
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Pushd_Statement extends TokenSequence
 {
-	public @DOC("pushd.mspx") CMD_Keyword PUSHD = new CMD_Keyword("pushd");
-	public CMD_Argument dir;
+	public @S(10) @DOC("pushd.mspx") CMD_Keyword PUSHD = new CMD_Keyword("pushd");
+	public @S(20) CMD_Argument dir;
 }

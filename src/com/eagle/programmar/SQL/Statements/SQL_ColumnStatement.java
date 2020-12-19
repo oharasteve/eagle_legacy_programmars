@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_ColumnStatement extends TokenSequence
 {
-	public SQL_KeywordChoice COLUMN = new SQL_KeywordChoice("COLUMN", "COL");
-	public SQL_Identifier_Reference column;
-	public SQL_Keyword NEWVALUE = new SQL_Keyword("NEW_VALUE");
-	public SQL_Expression value;
-	public PunctuationSemicolon semicolon;
+	public @S(10) SQL_KeywordChoice COLUMN = new SQL_KeywordChoice("COLUMN", "COL");
+	public @S(20) SQL_Identifier_Reference column;
+	public @S(30) SQL_Keyword NEWVALUE = new SQL_Keyword("NEW_VALUE");
+	public @S(40) SQL_Expression value;
+	public @S(50) PunctuationSemicolon semicolon;
 }

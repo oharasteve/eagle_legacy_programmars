@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_SS extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"AP",		// Add packed
 		"CLC",		// Compare logical chars
 		"CP",		// Compare packed
@@ -36,8 +36,8 @@ public class IBMASM_Format_SS extends TokenSequence
 		"MVCIN"
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Address address1;
-	public PunctuationComma comma;
-	public IBMASM_Address address2;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Address address1;
+	public @S(40) PunctuationComma comma;
+	public @S(50) IBMASM_Address address2;
 }

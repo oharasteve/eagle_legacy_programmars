@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_SplitStatement extends TokenSequence
 {
-	public AWK_KeywordChoice SPLIT = new AWK_KeywordChoice("split");
-	public PunctuationLeftParen leftParen;
-	public AWK_ArgumentList argList;
-	public PunctuationRightParen rightParen;
+	public @S(10) AWK_KeywordChoice SPLIT = new AWK_KeywordChoice("split");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) AWK_ArgumentList argList;
+	public @S(40) PunctuationRightParen rightParen;
 }

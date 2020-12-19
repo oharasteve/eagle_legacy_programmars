@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class TCL_SetStatement extends TokenSequence
 {
-	public TCL_Keyword SET = new TCL_Keyword("set");
-	public TCL_Variable variable;
-	public TCL_Expression value;
+	public @S(10) TCL_Keyword SET = new TCL_Keyword("set");
+	public @S(20) TCL_Variable variable;
+	public @S(30) TCL_Expression value;
 }

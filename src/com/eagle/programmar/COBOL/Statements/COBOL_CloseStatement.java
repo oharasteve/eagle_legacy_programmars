@@ -13,14 +13,14 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_CloseStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsclos.htm") COBOL_Keyword CLOSE = new COBOL_Keyword("CLOSE");
-	public @OPT COBOL_Keyword RECOVER = new COBOL_Keyword("RECOVER");
-	public @OPT TokenList<COBOL_CloseFileList> fileList;
+	public @S(10) @DOC("rlpsclos.htm") COBOL_Keyword CLOSE = new COBOL_Keyword("CLOSE");
+	public @S(20) @OPT COBOL_Keyword RECOVER = new COBOL_Keyword("RECOVER");
+	public @S(30) @OPT TokenList<COBOL_CloseFileList> fileList;
 	
 	public static class COBOL_CloseFileList extends TokenSequence
 	{
-		public @OPT COBOL_Comment comment;
-		public @OPT PunctuationComma comma;
-		public COBOL_Identifier_Reference file;
+		public @S(10) @OPT COBOL_Comment comment;
+		public @S(20) @OPT PunctuationComma comma;
+		public @S(30) COBOL_Identifier_Reference file;
 	}
 }

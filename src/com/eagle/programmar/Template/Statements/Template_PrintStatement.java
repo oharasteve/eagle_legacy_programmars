@@ -13,9 +13,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Template_PrintStatement extends TokenSequence implements EagleRunnable
 {
-	public @NEWLINE Template_Keyword PRINT = new Template_Keyword("print");
-	public Template_Expression expr;
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE Template_Keyword PRINT = new Template_Keyword("print");
+	public @S(20) Template_Expression expr;
+	public @S(30) @NOSPACE PunctuationSemicolon semicolon;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

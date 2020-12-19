@@ -13,23 +13,23 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_Data extends TokenSequence
 {
-	public @NEWLINE Javascript_Type type;
-	public Javascript_Variable_Definition var;
-	public @OPT Javascript_InitData init;
-	public @OPT TokenList<Javascript_More_Variables> moreVars;
-	public @OPT @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE Javascript_Type type;
+	public @S(20) Javascript_Variable_Definition var;
+	public @S(30) @OPT Javascript_InitData init;
+	public @S(40) @OPT TokenList<Javascript_More_Variables> moreVars;
+	public @S(50) @OPT @NOSPACE PunctuationSemicolon semicolon;
 	
 	public static class Javascript_InitData extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public Javascript_Expression expr;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Javascript_Expression expr;
 	}
 	
 	public static class Javascript_More_Variables extends TokenSequence
 	{
-		public @NOSPACE PunctuationComma comma;
-		public @OPT TokenList<Javascript_Comment> comments;
-		public Javascript_Variable_Definition var;
-		public @OPT Javascript_InitData init;
+		public @S(10) @NOSPACE PunctuationComma comma;
+		public @S(20) @OPT TokenList<Javascript_Comment> comments;
+		public @S(30) Javascript_Variable_Definition var;
+		public @S(40) @OPT Javascript_InitData init;
 	}
 }

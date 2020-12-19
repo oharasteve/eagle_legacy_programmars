@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_RevertStatement extends TokenSequence
 {
-	public @OPT PLI_Label label1;
-	public @OPT PLI_Signal_Label label2;
-	public PLI_Keyword REVERT = new PLI_Keyword("REVERT");
-	public PLI_Signal signal;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @OPT PLI_Label label1;
+	public @S(20) @OPT PLI_Signal_Label label2;
+	public @S(30) PLI_Keyword REVERT = new PLI_Keyword("REVERT");
+	public @S(40) PLI_Signal signal;
+	public @S(50) PunctuationSemicolon semicolon;
 }

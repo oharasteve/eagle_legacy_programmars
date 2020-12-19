@@ -10,11 +10,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_Format_R extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"BR",
 		"SPM"
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Register register;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Register register;
 }

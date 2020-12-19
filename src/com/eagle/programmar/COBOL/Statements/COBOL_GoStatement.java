@@ -9,7 +9,7 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_GoStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsgoto.htm") COBOL_Keyword GO = new COBOL_Keyword("GO");
-	public @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-	public @OPT COBOL_Identifier_Reference label;
+	public @S(10) @DOC("rlpsgoto.htm") COBOL_Keyword GO = new COBOL_Keyword("GO");
+	public @S(20) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+	public @S(30) @OPT COBOL_Identifier_Reference label;
 }

@@ -12,17 +12,17 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class JavaP_CodeLineNumbers extends TokenSequence
 {
-	public JavaP_Keyword LINENUMBER = new JavaP_Keyword("LineNumberTable");
-	public PunctuationColon colon;
-	public JavaP_EndOfLine eoln;
-	public TokenList<JavaP_CodeLineEntry> entries;
+	public @S(10) JavaP_Keyword LINENUMBER = new JavaP_Keyword("LineNumberTable");
+	public @S(20) PunctuationColon colon;
+	public @S(30) JavaP_EndOfLine eoln;
+	public @S(40) TokenList<JavaP_CodeLineEntry> entries;
 	
 	public static class JavaP_CodeLineEntry extends TokenSequence
 	{
-		public JavaP_Keyword LINE = new JavaP_Keyword("line");
-		public JavaP_Number number1;
-		public PunctuationColon colon;
-		public JavaP_Number number2;
-		public JavaP_EndOfLine eoln;
+		public @S(10) JavaP_Keyword LINE = new JavaP_Keyword("line");
+		public @S(20) JavaP_Number number1;
+		public @S(30) PunctuationColon colon;
+		public @S(40) JavaP_Number number2;
+		public @S(50) JavaP_EndOfLine eoln;
 	}
 }

@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_VariableStatement extends TokenSequence
 {
-	public SQL_Keyword VARIABLE = new SQL_Keyword("VARIABLE");
-	public SQL_Variable var;
-	public SQL_Type type;
-	public PunctuationSemicolon semicolon;
+	public @S(10) SQL_Keyword VARIABLE = new SQL_Keyword("VARIABLE");
+	public @S(20) SQL_Variable var;
+	public @S(30) SQL_Type type;
+	public @S(40) PunctuationSemicolon semicolon;
 }

@@ -14,20 +14,20 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_DS_Instruction extends TokenSequence
 {
-	public @OPT IBMASM_Label_Definition label;
-	public IBMASM_Spaces spaces1;
-	public IBMASM_Keyword DS = new IBMASM_Keyword("DS");
-	public IBMASM_Spaces spaces2;
-	public IBMASM_DS_Value value;
-	public IBMASM_Spaces spaces3;
-	public @OPT IBMASM_Remark remark;
+	public @S(10) @OPT IBMASM_Label_Definition label;
+	public @S(20) IBMASM_Spaces spaces1;
+	public @S(30) IBMASM_Keyword DS = new IBMASM_Keyword("DS");
+	public @S(40) IBMASM_Spaces spaces2;
+	public @S(50) IBMASM_DS_Value value;
+	public @S(60) IBMASM_Spaces spaces3;
+	public @S(70) @OPT IBMASM_Remark remark;
 
 	public static class IBMASM_DS_Value extends TokenChooser
 	{
 		public @CHOICE static class IBMASM_DS_storage extends TokenSequence
 		{
-			public @OPT IBMASM_Number replication;
-			public IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("F");
+			public @S(10) @OPT IBMASM_Number replication;
+			public @S(20) IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("F");
 		}
 	}
 }

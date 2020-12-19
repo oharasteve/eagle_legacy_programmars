@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_SetLocal_Statement extends TokenSequence
 {
-	public @DOC("setlocal.mspx") CMD_Keyword SETLOCAL = new CMD_Keyword("setlocal");
+	public @S(10) @DOC("setlocal.mspx") CMD_Keyword SETLOCAL = new CMD_Keyword("setlocal");
 }

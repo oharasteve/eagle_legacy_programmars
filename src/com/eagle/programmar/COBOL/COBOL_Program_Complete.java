@@ -18,25 +18,25 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 	}
 	
 	// Components of a complete COBOL Program
-	public @OPT TokenList<COBOL_Comment> comments1;
-	public @OPT TokenList<COBOL_Directive> directives;
-	public @OPT TokenList<COBOL_Comment> comments2;
-	public @OPT COBOL_SpecialNames specialNames;
-	public @OPT COBOL_IdentificationDivision identificationDiv;
-	public @OPT COBOL_EnvironmentDivision environmentDiv;
-	public @OPT TokenList<COBOL_Comment> comments3;
-	public @OPT COBOL_DataDivision dataDiv;
-	public COBOL_ProcedureDivision procedureDiv;
+	public @S(10) @OPT TokenList<COBOL_Comment> comments1;
+	public @S(20) @OPT TokenList<COBOL_Directive> directives;
+	public @S(30) @OPT TokenList<COBOL_Comment> comments2;
+	public @S(40) @OPT COBOL_SpecialNames specialNames;
+	public @S(50) @OPT COBOL_IdentificationDivision identificationDiv;
+	public @S(60) @OPT COBOL_EnvironmentDivision environmentDiv;
+	public @S(70) @OPT TokenList<COBOL_Comment> comments3;
+	public @S(80) @OPT COBOL_DataDivision dataDiv;
+	public @S(90) COBOL_ProcedureDivision procedureDiv;
 	
-	public @OPT TokenList<COBOL_Program_Free_Format> nestedPrograms;
+	public @S(100) @OPT TokenList<COBOL_Program_Free_Format> nestedPrograms;
 
-	public @OPT COBOL_EndProgram endProgram;
+	public @S(110) @OPT COBOL_EndProgram endProgram;
 	
 	public static class COBOL_EndProgram extends TokenSequence
 	{
-		public COBOL_Keyword END = new COBOL_Keyword("END");
-		public COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
-		public COBOL_Identifier_Reference programId;
-		public PunctuationPeriod dot;
+		public @S(10) COBOL_Keyword END = new COBOL_Keyword("END");
+		public @S(20) COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
+		public @S(30) COBOL_Identifier_Reference programId;
+		public @S(40) PunctuationPeriod dot;
 	}
 }

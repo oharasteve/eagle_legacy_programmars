@@ -12,24 +12,24 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class CMD_Awk_Statement extends TokenSequence
 {
-	public CMD_Keyword AWK = new CMD_Keyword("awk");
-	public @OPT TokenList<CMD_Awk_Option> opts;
-	public @OPT TokenList<CMD_Argument> arg;
+	public @S(10) CMD_Keyword AWK = new CMD_Keyword("awk");
+	public @S(20) @OPT TokenList<CMD_Awk_Option> opts;
+	public @S(30) @OPT TokenList<CMD_Argument> arg;
 	
 	public static class CMD_Awk_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Awk_Option_F extends TokenSequence
 		{
-			public PunctuationHyphen minus;
-			public CMD_Keyword F = new CMD_Keyword("f");
-			public CMD_Argument arg;
+			public @S(10) PunctuationHyphen minus;
+			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
+			public @S(30) CMD_Argument arg;
 		}
 
 		public @CHOICE static class CMD_Awk_Option_V extends TokenSequence
 		{
-			public PunctuationHyphen minus;
-			public CMD_Keyword V = new CMD_Keyword("v");
-			public CMD_Argument variableDefinitions;
+			public @S(10) PunctuationHyphen minus;
+			public @S(20) CMD_Keyword V = new CMD_Keyword("v");
+			public @S(30) CMD_Argument variableDefinitions;
 		}
 	}
 }

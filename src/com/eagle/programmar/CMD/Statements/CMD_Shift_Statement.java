@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Shift_Statement extends TokenSequence
 {
-	public CMD_Keyword SHIFT = new CMD_Keyword("shift");
-	public @OPT CMD_Number shiftAmount;
+	public @S(10) CMD_Keyword SHIFT = new CMD_Keyword("shift");
+	public @S(20) @OPT CMD_Number shiftAmount;
 }

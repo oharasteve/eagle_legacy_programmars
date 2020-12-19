@@ -15,43 +15,43 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_DoStatement extends TokenSequence
 {
-	public @OPT PLI_Label label1;
-	public @DOC("7.15") PLI_Keyword DO = new PLI_Keyword("DO");
-	public @OPT PLI_DoLoop loop;
-	public @OPT PLI_DoUntil until;
-	public @OPT PLI_DoWhile dowhile;
-	public @OPT PLI_Keyword FOREVER = new PLI_Keyword("FOREVER");
-	public PunctuationSemicolon semicolon1;
-	public @OPT TokenList<PLI_StatementOrComment> statements;
-	public PLI_Keyword END = new PLI_Keyword("END");
-	public @OPT PLI_Identifier_Reference label2;
-	public PunctuationSemicolon semicolon2;
+	public @S(10) @OPT PLI_Label label1;
+	public @S(20) @DOC("7.15") PLI_Keyword DO = new PLI_Keyword("DO");
+	public @S(30) @OPT PLI_DoLoop loop;
+	public @S(40) @OPT PLI_DoUntil until;
+	public @S(50) @OPT PLI_DoWhile dowhile;
+	public @S(60) @OPT PLI_Keyword FOREVER = new PLI_Keyword("FOREVER");
+	public @S(70) PunctuationSemicolon semicolon1;
+	public @S(80) @OPT TokenList<PLI_StatementOrComment> statements;
+	public @S(90) PLI_Keyword END = new PLI_Keyword("END");
+	public @S(100) @OPT PLI_Identifier_Reference label2;
+	public @S(110) PunctuationSemicolon semicolon2;
 	
 	public static class PLI_DoLoop extends TokenSequence
 	{
-		public PLI_Identifier_Reference var;
-		public PunctuationEquals equals;
-		public PLI_Expression fromExpr;
-		public PLI_Keyword TO = new PLI_Keyword("TO");
-		public PLI_Expression toExpr;
-		public @OPT PLI_DoBy by;
+		public @S(10) PLI_Identifier_Reference var;
+		public @S(20) PunctuationEquals equals;
+		public @S(30) PLI_Expression fromExpr;
+		public @S(40) PLI_Keyword TO = new PLI_Keyword("TO");
+		public @S(50) PLI_Expression toExpr;
+		public @S(60) @OPT PLI_DoBy by;
 		
 		public static class PLI_DoBy extends TokenSequence
 		{
-			public PLI_Keyword BY = new PLI_Keyword("BY");
-			public PLI_Expression byExpr;
+			public @S(10) PLI_Keyword BY = new PLI_Keyword("BY");
+			public @S(20) PLI_Expression byExpr;
 		}
 	}
 	
 	public static class PLI_DoUntil extends TokenSequence
 	{
-		public PLI_Keyword UNTIL = new PLI_Keyword("UNTIL");
-		public PLI_Expression condition;
+		public @S(10) PLI_Keyword UNTIL = new PLI_Keyword("UNTIL");
+		public @S(20) PLI_Expression condition;
 	}
 	
 	public static class PLI_DoWhile extends TokenSequence
 	{
-		public PLI_Keyword WHILE = new PLI_Keyword("WHILE");
-		public PLI_Expression condition;
+		public @S(10) PLI_Keyword WHILE = new PLI_Keyword("WHILE");
+		public @S(20) PLI_Expression condition;
 	}
 }

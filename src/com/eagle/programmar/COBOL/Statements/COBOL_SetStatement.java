@@ -12,10 +12,10 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_SetStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsset.htm") COBOL_Keyword SET = new COBOL_Keyword("SET");
-	public COBOL_Identifier_Reference id;
-	public COBOL_SetHow how;
-	public COBOL_Expression expr;
+	public @S(10) @DOC("rlpsset.htm") COBOL_Keyword SET = new COBOL_Keyword("SET");
+	public @S(20) COBOL_Identifier_Reference id;
+	public @S(30) COBOL_SetHow how;
+	public @S(40) COBOL_Expression expr;
 	
 	public static class COBOL_SetHow extends TokenChooser
 	{
@@ -23,8 +23,8 @@ public class COBOL_SetStatement extends COBOL_AbstractStatement
 
 		public @CHOICE static class COBOL_SetBy extends TokenSequence
 		{
-			public COBOL_Keyword UP = new COBOL_Keyword("UP");
-			public COBOL_Keyword BY = new COBOL_Keyword("BY");
+			public @S(10) COBOL_Keyword UP = new COBOL_Keyword("UP");
+			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
 		}
 	}
 }

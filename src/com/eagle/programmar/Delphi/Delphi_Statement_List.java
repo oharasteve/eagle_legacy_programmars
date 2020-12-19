@@ -10,18 +10,18 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Statement_List extends TokenSequence
 {
-	public @OPT TokenList<Delphi_Comment> comments1;
-	public Delphi_Statement stmt;
-	public @OPT TokenList<Delphi_MoreStatements> stmts;
-	public @OPT TokenList<Delphi_Comment> comments2;
-	public @OPT PunctuationSemicolon semicolon;
-	public @OPT TokenList<Delphi_Comment> comments3;
+	public @S(10) @OPT TokenList<Delphi_Comment> comments1;
+	public @S(20) Delphi_Statement stmt;
+	public @S(30) @OPT TokenList<Delphi_MoreStatements> stmts;
+	public @S(40) @OPT TokenList<Delphi_Comment> comments2;
+	public @S(50) @OPT PunctuationSemicolon semicolon;
+	public @S(60) @OPT TokenList<Delphi_Comment> comments3;
 	
 	public static class Delphi_MoreStatements extends TokenSequence
 	{
-		public PunctuationSemicolon semicolon;
-		public @OPT TokenList<Delphi_Comment> comments4;
-		public Delphi_Statement stmt;
-		public @OPT TokenList<Delphi_Comment> comments5;
+		public @S(10) PunctuationSemicolon semicolon;
+		public @S(20) @OPT TokenList<Delphi_Comment> comments4;
+		public @S(30) Delphi_Statement stmt;
+		public @S(40) @OPT TokenList<Delphi_Comment> comments5;
 	}
 }

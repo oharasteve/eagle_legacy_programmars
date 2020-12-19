@@ -44,23 +44,23 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	
 	public @CHOICE static class Java_AnnotationDefinition extends TokenSequence
 	{
-		public @OPT Java_Annotation annotation;
-		public TokenList<Java_MethodModifier> modifiers;
-		public Java_Punctuation atSign = new Java_Punctuation('@');
-		public Java_Keyword INTERFACE = new Java_Keyword("interface");
-		public Java_Identifier id;
-		public PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<Java_Comment> comments;
-		public @OPT Java_AnnotationParameter parameter;
-		public PunctuationRightBrace rightBrace;
+		public @S(10) @OPT Java_Annotation annotation;
+		public @S(20) TokenList<Java_MethodModifier> modifiers;
+		public @S(30) Java_Punctuation atSign = new Java_Punctuation('@');
+		public @S(40) Java_Keyword INTERFACE = new Java_Keyword("interface");
+		public @S(50) Java_Identifier id;
+		public @S(60) PunctuationLeftBrace leftBrace;
+		public @S(70) @OPT TokenList<Java_Comment> comments;
+		public @S(80) @OPT Java_AnnotationParameter parameter;
+		public @S(90) PunctuationRightBrace rightBrace;
 		
 		public static class Java_AnnotationParameter extends TokenSequence
 		{
-			public Java_Type type;
-			public Java_Identifier id;
-			public PunctuationLeftParen leftParen;
-			public PunctuationRightParen rightParen;
-			public PunctuationSemicolon semicolon;
+			public @S(10) Java_Type type;
+			public @S(20) Java_Identifier id;
+			public @S(30) PunctuationLeftParen leftParen;
+			public @S(40) PunctuationRightParen rightParen;
+			public @S(50) PunctuationSemicolon semicolon;
 		}
 	}
 
@@ -68,11 +68,11 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	{
 		private EagleScope _scope = new EagleScope(Java_Syntax.isCaseSensitive);
 		
-		public @OPT Java_Label label;
-		public @INDENT PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<Java_StatementOrComment> statements;
-		public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
-		public @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(10) @OPT Java_Label label;
+		public @S(20) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(30) @OPT TokenList<Java_StatementOrComment> statements;
+		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
+		public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
 		
 		public static class Java_StatementOrComment extends TokenChooser
 		{

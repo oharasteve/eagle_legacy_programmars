@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_BreakStatement extends TokenSequence
 {
-	public @DOC("#The-break-Statement") C_Keyword BREAK = new C_Keyword("break");
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("#The-break-Statement") C_Keyword BREAK = new C_Keyword("break");
+	public @S(20) PunctuationSemicolon semicolon;
 }

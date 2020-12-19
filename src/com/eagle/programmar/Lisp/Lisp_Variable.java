@@ -16,10 +16,10 @@ public class Lisp_Variable extends TokenChooser
 	
 	public @CHOICE static class Lisp_VariableWithDot extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public Lisp_Identifier_Reference var1;
-		public PunctuationPeriod dot;
-		public Lisp_Identifier_Reference var2;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Lisp_Identifier_Reference var1;
+		public @S(30) PunctuationPeriod dot;
+		public @S(40) Lisp_Identifier_Reference var2;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 }

@@ -12,17 +12,17 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_Copy_Statement extends TokenSequence
 {
-	public @DOC("copy.mspx") CMD_Keyword COPY = new CMD_Keyword("copy");
-	public @OPT TokenList<CMD_Copy_Option> opts;
-	public CMD_Argument copyFrom;
-	public @OPT CMD_Argument copyTo;
+	public @S(10) @DOC("copy.mspx") CMD_Keyword COPY = new CMD_Keyword("copy");
+	public @S(20) @OPT TokenList<CMD_Copy_Option> opts;
+	public @S(30) CMD_Argument copyFrom;
+	public @S(40) @OPT CMD_Argument copyTo;
 	
 	public static class CMD_Copy_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Copy_Option_Y extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword Y = new CMD_Keyword("y");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword Y = new CMD_Keyword("y");
 		}
 	}
 }

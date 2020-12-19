@@ -14,11 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_DefunFunction extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");
-	public @OPT PunctuationComma comma;
-	public Lisp_Function_Definition name;
-	public Lisp_SExpr arguments;
-	public TokenList<Lisp_SExpr> body;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");
+	public @S(30) @OPT PunctuationComma comma;
+	public @S(40) Lisp_Function_Definition name;
+	public @S(50) Lisp_SExpr arguments;
+	public @S(60) TokenList<Lisp_SExpr> body;
+	public @S(70) PunctuationRightParen rightParen;
 }

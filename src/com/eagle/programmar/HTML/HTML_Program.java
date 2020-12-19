@@ -31,7 +31,7 @@ public class HTML_Program extends EagleLanguage
 		return "http://www.w3schools.com/html/";
 	}
 	
-	public TokenList<HTML_Element> elements;
+	public @S(10) TokenList<HTML_Element> elements;
 	
 	public static class HTML_Element extends TokenChooser
 	{
@@ -62,7 +62,7 @@ public class HTML_Program extends EagleLanguage
 		public @LAST static class HTML_JustText extends TokenSequence
 		{
 			// In a separate class just to enable @NEWLINE
-			public @NEWLINE HTML_Text text;
+			public @S(10) @NEWLINE HTML_Text text;
 		}
 	}
 }

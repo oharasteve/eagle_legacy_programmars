@@ -12,16 +12,16 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class TCL_IfStatement extends TokenSequence
 {
-	public TCL_Keyword IF = new TCL_Keyword("if");
-	public PunctuationLeftBrace leftBrace;
-	public TCL_Expression condition;
-	public PunctuationRightBrace rightBrace;
-	public TCL_Statement stmt;
-	public @OPT TCL_ElseClause elseClause;
+	public @S(10) TCL_Keyword IF = new TCL_Keyword("if");
+	public @S(20) PunctuationLeftBrace leftBrace;
+	public @S(30) TCL_Expression condition;
+	public @S(40) PunctuationRightBrace rightBrace;
+	public @S(50) TCL_Statement stmt;
+	public @S(60) @OPT TCL_ElseClause elseClause;
 	
 	public static class TCL_ElseClause extends TokenSequence
 	{
-		public TCL_Keyword ELSE = new TCL_Keyword("else");
-		public TCL_Statement stmt;
+		public @S(10) TCL_Keyword ELSE = new TCL_Keyword("else");
+		public @S(20) TCL_Statement stmt;
 	}
 }

@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_CSECT_Directive extends TokenSequence
 {
-	public IBMASM_Keyword CSECT = new IBMASM_Keyword("CSECT");
+	public @S(10) IBMASM_Keyword CSECT = new IBMASM_Keyword("CSECT");
 }

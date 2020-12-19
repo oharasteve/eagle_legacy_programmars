@@ -10,14 +10,14 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class COBOL_Subscript extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public COBOL_Expression expr;
-	public @OPT COBOL_SubscriptRange range;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) COBOL_Expression expr;
+	public @S(30) @OPT COBOL_SubscriptRange range;
+	public @S(40) PunctuationRightParen rightParen;
 	
 	public static class COBOL_SubscriptRange extends TokenSequence
 	{
-		public COBOL_PunctuationChoice colon = new COBOL_PunctuationChoice(":", ",");
-		public COBOL_Expression expr;
+		public @S(10) COBOL_PunctuationChoice colon = new COBOL_PunctuationChoice(":", ",");
+		public @S(20) COBOL_Expression expr;
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class AWK_Command extends TokenSequence
 {
-	public @OPT SeparatedList<AWK_Condition,PunctuationComma> condition;
-	public AWK_Action action;
+	public @S(10) @OPT SeparatedList<AWK_Condition,PunctuationComma> condition;
+	public @S(20) AWK_Action action;
 }

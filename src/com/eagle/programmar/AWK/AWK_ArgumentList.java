@@ -9,5 +9,5 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class AWK_ArgumentList extends TokenSequence
 {
-	public SeparatedList<AWK_Expression, PunctuationComma> exprs;
+	public @S(10) SeparatedList<AWK_Expression, PunctuationComma> exprs;
 }

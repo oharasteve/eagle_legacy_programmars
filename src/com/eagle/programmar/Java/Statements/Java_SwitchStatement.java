@@ -18,13 +18,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_SwitchStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.11") Java_Keyword SWITCH = new Java_Keyword("switch");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Java_Expression val;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @INDENT PunctuationLeftBrace leftBrace;
-	public TokenList<Java_SwitchClause> clause;
-	public @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(10) @NEWLINE @DOC("statements.html#14.11") Java_Keyword SWITCH = new Java_Keyword("switch");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE Java_Expression val;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(60) TokenList<Java_SwitchClause> clause;
+	public @S(70) @OUTDENT PunctuationRightBrace rightBrace;
 	
 	public static class Java_SwitchClause extends TokenChooser
 	{
@@ -32,17 +32,17 @@ public class Java_SwitchStatement extends TokenSequence
 		
 		public @CHOICE static class Java_CaseClause extends TokenSequence
 		{
-			public @NEWLINE Java_Keyword CASE = new Java_Keyword("case");
-			public Java_Expression expr;
-			public @NOSPACE PunctuationColon colon;
-			public @OPT TokenList<Java_StatementOrComment> statements;
+			public @S(10) @NEWLINE Java_Keyword CASE = new Java_Keyword("case");
+			public @S(20) Java_Expression expr;
+			public @S(30) @NOSPACE PunctuationColon colon;
+			public @S(40) @OPT TokenList<Java_StatementOrComment> statements;
 		}
 		
 		public @CHOICE static class Java_DefaultClause extends TokenSequence
 		{
-			public @NEWLINE Java_Keyword DEFAULT = new Java_Keyword("default");
-			public PunctuationColon colon;
-			public @OPT TokenList<Java_StatementOrComment> statements;
+			public @S(10) @NEWLINE Java_Keyword DEFAULT = new Java_Keyword("default");
+			public @S(20) PunctuationColon colon;
+			public @S(30) @OPT TokenList<Java_StatementOrComment> statements;
 		}
 	}
 }

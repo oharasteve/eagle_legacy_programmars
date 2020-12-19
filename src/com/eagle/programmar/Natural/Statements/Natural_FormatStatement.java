@@ -10,6 +10,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_FormatStatement extends TokenSequence
 {
-	public @DOC("sm/format.htm") Natural_Keyword FORMAT = new Natural_Keyword("FORMAT");
-	public TokenList<Natural_OptionChoice> options;
+	public @S(10) @DOC("sm/format.htm") Natural_Keyword FORMAT = new Natural_Keyword("FORMAT");
+	public @S(20) TokenList<Natural_OptionChoice> options;
 }

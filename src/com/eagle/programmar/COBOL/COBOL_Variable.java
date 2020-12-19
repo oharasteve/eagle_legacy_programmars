@@ -10,13 +10,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_Variable extends TokenSequence
 {
-	public COBOL_Identifier_Reference id;
-	public @OPT TokenList<COBOL_Subscript> subscript;
-	public @OPT TokenList<COBOL_OfVariable> ofList;
+	public @S(10) COBOL_Identifier_Reference id;
+	public @S(20) @OPT TokenList<COBOL_Subscript> subscript;
+	public @S(30) @OPT TokenList<COBOL_OfVariable> ofList;
 
 	public static class COBOL_OfVariable extends TokenSequence
 	{
-		public COBOL_Keyword OF = new COBOL_Keyword("OF");
-		public COBOL_Identifier_Reference id;
+		public @S(10) COBOL_Keyword OF = new COBOL_Keyword("OF");
+		public @S(20) COBOL_Identifier_Reference id;
 	}
 }

@@ -15,15 +15,15 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Vars extends TokenSequence
 {
-	public Delphi_Keyword VAR = new Delphi_Keyword("Var");
-	public TokenList<Delphi_Var> vars;
+	public @S(10) Delphi_Keyword VAR = new Delphi_Keyword("Var");
+	public @S(20) TokenList<Delphi_Var> vars;
 	
 	public static class Delphi_Var extends TokenSequence
 	{
-		public SeparatedList<Delphi_Variable_Definition,PunctuationComma> vars;
-		public PunctuationColon colon;
-		public Delphi_Type type;
-		public PunctuationSemicolon semicolon;
-		public @OPT TokenList<Delphi_Comment> comments;
+		public @S(10) SeparatedList<Delphi_Variable_Definition,PunctuationComma> vars;
+		public @S(20) PunctuationColon colon;
+		public @S(30) Delphi_Type type;
+		public @S(40) PunctuationSemicolon semicolon;
+		public @S(50) @OPT TokenList<Delphi_Comment> comments;
 	}
 }

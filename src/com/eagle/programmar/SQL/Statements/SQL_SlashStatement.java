@@ -8,5 +8,5 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class SQL_SlashStatement extends TokenSequence
 {
-	public PunctuationSlash slash;
+	public @S(10) PunctuationSlash slash;
 }

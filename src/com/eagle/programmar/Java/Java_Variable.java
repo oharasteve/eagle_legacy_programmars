@@ -18,14 +18,14 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
-	public Java_VariableIdentifier var;
-	public @OPT TokenList<Java_DotVariable> moreIds;
-	public @OPT TokenList<Java_Subscript> subscript;
+	public @S(10) Java_VariableIdentifier var;
+	public @S(20) @OPT TokenList<Java_DotVariable> moreIds;
+	public @S(30) @OPT TokenList<Java_Subscript> subscript;
 
 	public static class Java_DotVariable extends TokenSequence
 	{
-		public @NOSPACE PunctuationPeriod dot;
-		public @NOSPACE Java_VariableIdentifier id;
+		public @S(10) @NOSPACE PunctuationPeriod dot;
+		public @S(20) @NOSPACE Java_VariableIdentifier id;
 	}
 	public static class Java_VariableIdentifier extends TokenChooser
 	{
@@ -34,12 +34,12 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 		
 		public @CHOICE static class Java_CastedVariable extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen1;
-			public PunctuationLeftParen leftParen2;
-			public Java_Type jtype;
-			public PunctuationRightParen rightParen1;
-			public Java_Identifier_Reference id;
-			public PunctuationRightParen rightParen2;
+			public @S(10) PunctuationLeftParen leftParen1;
+			public @S(20) PunctuationLeftParen leftParen2;
+			public @S(30) Java_Type jtype;
+			public @S(40) PunctuationRightParen rightParen1;
+			public @S(50) Java_Identifier_Reference id;
+			public @S(60) PunctuationRightParen rightParen2;
 		}
 	}
 

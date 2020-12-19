@@ -17,26 +17,26 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class JavaP_Signature extends TokenSequence
 {
-	public JavaP_Keyword SIGNATURE = new JavaP_Keyword("Signature");
-	public PunctuationColon colon;
-	public JavaP_SignatureChoice choice;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword SIGNATURE = new JavaP_Keyword("Signature");
+	public @S(20) PunctuationColon colon;
+	public @S(30) JavaP_SignatureChoice choice;
+	public @S(40) JavaP_EndOfLine eoln;
 	
 	public static class JavaP_SignatureChoice extends TokenChooser
 	{
 		public @CHOICE static class JavaP_SignatureLength extends TokenSequence
 		{
-			public JavaP_Keyword LENGTH = new JavaP_Keyword("length");
-			public PunctuationEquals equals;
-			public JavaP_HexNumber hex;
-			public JavaP_EndOfLine eoln;
-			public TokenList<JavaP_HexNoPrefix> numbers;
+			public @S(10) JavaP_Keyword LENGTH = new JavaP_Keyword("length");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) JavaP_HexNumber hex;
+			public @S(40) JavaP_EndOfLine eoln;
+			public @S(50) TokenList<JavaP_HexNoPrefix> numbers;
 		}
 		
 		public @CHOICE static class JavaP_SignatureNoLength extends TokenSequence
 		{
-			public JavaP_Value value;
-			public @OPT JavaP_Comment comment;
+			public @S(10) JavaP_Value value;
+			public @S(20) @OPT JavaP_Comment comment;
 		}
 	}
 }

@@ -17,14 +17,14 @@ public class Perl_Type extends TokenChooser
 
 	public @CHOICE static class Perl_CompoundType extends TokenSequence
 	{
-		public Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-		public Perl_Variable_Definition type;
-		public @OPT TokenList<Perl_MoreTypeName> more;
+		public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+		public @S(20) Perl_Variable_Definition type;
+		public @S(30) @OPT TokenList<Perl_MoreTypeName> more;
 
 		public static class Perl_MoreTypeName extends TokenSequence
 		{
-			public Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-			public Perl_Variable_Definition type;
+			public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+			public @S(20) Perl_Variable_Definition type;
 		}
 	}
 }

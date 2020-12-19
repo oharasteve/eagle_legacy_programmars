@@ -11,16 +11,16 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Javascript_ArgumentList extends PrimaryOperator
 {
-	public Javascript_Expression arg;
-	public @OPT TokenList<Javascript_Comment> comment;
-	public @OPT TokenList<Javascript_MoreArguments> moreArgs;
-	public @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(10) Javascript_Expression arg;
+	public @S(20) @OPT TokenList<Javascript_Comment> comment;
+	public @S(30) @OPT TokenList<Javascript_MoreArguments> moreArgs;
+	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	
 	public static class Javascript_MoreArguments extends TokenSequence
 	{
-		public @NOSPACE PunctuationComma comma;
-		public @OPT TokenList<Javascript_Comment> comment1;
-		public Javascript_Expression arg;
-		public @OPT TokenList<Javascript_Comment> comment2;
+		public @S(10) @NOSPACE PunctuationComma comma;
+		public @S(20) @OPT TokenList<Javascript_Comment> comment1;
+		public @S(30) Javascript_Expression arg;
+		public @S(40) @OPT TokenList<Javascript_Comment> comment2;
 	}
 }

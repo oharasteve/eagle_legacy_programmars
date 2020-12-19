@@ -12,24 +12,24 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_PragmaStatement extends TokenSequence
 {
-	public SQL_Keyword PRAGMA = new SQL_Keyword("PRAGMA");
-	public TokenList<SQL_PragmaClause> clauses;
-	public PunctuationSemicolon semicolon;
+	public @S(10) SQL_Keyword PRAGMA = new SQL_Keyword("PRAGMA");
+	public @S(20) TokenList<SQL_PragmaClause> clauses;
+	public @S(30) PunctuationSemicolon semicolon;
 	
 	public static class SQL_PragmaClause extends TokenChooser
 	{
 		public @CHOICE static class SQL_Pragma_ForeignKeys extends TokenSequence
 		{
-			public SQL_Keyword FOREIGN_KEYS = new SQL_Keyword("FOREIGN_KEYS");
-			public PunctuationEquals equals;
-			public SQL_Keyword OFF = new SQL_Keyword("OFF");
+			public @S(10) SQL_Keyword FOREIGN_KEYS = new SQL_Keyword("FOREIGN_KEYS");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) SQL_Keyword OFF = new SQL_Keyword("OFF");
 		}
 		
 		public @CHOICE static class SQL_Pragma_JournalMode extends TokenSequence
 		{
-			public SQL_Keyword JOURNAL_MODE = new SQL_Keyword("JOURNAL_MODE");
-			public PunctuationEquals equals;
-			public SQL_Keyword OFF = new SQL_Keyword("OFF");
+			public @S(10) SQL_Keyword JOURNAL_MODE = new SQL_Keyword("JOURNAL_MODE");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) SQL_Keyword OFF = new SQL_Keyword("OFF");
 		}
 	}
 }

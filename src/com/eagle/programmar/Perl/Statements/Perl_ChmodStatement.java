@@ -10,9 +10,9 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Perl_ChmodStatement extends TokenSequence
 {
-	public Perl_Keyword CHMOD = new Perl_Keyword("chmod");
-	public Perl_Expression codes;
-	public PunctuationComma comma;
-	public Perl_Expression file;
+	public @S(10) Perl_Keyword CHMOD = new Perl_Keyword("chmod");
+	public @S(20) Perl_Expression codes;
+	public @S(30) PunctuationComma comma;
+	public @S(40) Perl_Expression file;
 
 }

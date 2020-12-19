@@ -11,14 +11,14 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class CSharp_Subscript extends TokenSequence
 {
-	public @NOSPACE PunctuationLeftBracket leftBracket;
-	public @NOSPACE CSharp_Expression expr;
-	public @OPT @NOSPACE TokenList<CSharp_MoreSubscripts> more;
-	public @NOSPACE PunctuationRightBracket rightBracket;
+	public @S(10) @NOSPACE PunctuationLeftBracket leftBracket;
+	public @S(20) @NOSPACE CSharp_Expression expr;
+	public @S(30) @OPT @NOSPACE TokenList<CSharp_MoreSubscripts> more;
+	public @S(40) @NOSPACE PunctuationRightBracket rightBracket;
 	
 	public static class CSharp_MoreSubscripts extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public CSharp_Expression expr;
+		public @S(10) PunctuationComma comma;
+		public @S(20) CSharp_Expression expr;
 	}
 }

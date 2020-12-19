@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_SleepStatement extends TokenSequence
 {
-	public Perl_Keyword SLEEP = new Perl_Keyword("sleep");
-	public Perl_Expression expr;
+	public @S(10) Perl_Keyword SLEEP = new Perl_Keyword("sleep");
+	public @S(20) Perl_Expression expr;
 }

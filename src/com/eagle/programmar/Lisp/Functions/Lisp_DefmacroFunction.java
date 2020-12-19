@@ -13,10 +13,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_DefmacroFunction extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @DOC("m_defmac.htm") Lisp_Keyword DEFMACRO = new Lisp_Keyword("defmacro");
-	public Lisp_Function_Definition name;
-	public Lisp_SExpr arguments;
-	public TokenList<Lisp_SExpr> body;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @DOC("m_defmac.htm") Lisp_Keyword DEFMACRO = new Lisp_Keyword("defmacro");
+	public @S(30) Lisp_Function_Definition name;
+	public @S(40) Lisp_SExpr arguments;
+	public @S(50) TokenList<Lisp_SExpr> body;
+	public @S(60) PunctuationRightParen rightParen;
 }

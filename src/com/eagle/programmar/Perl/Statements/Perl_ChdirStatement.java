@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_ChdirStatement extends TokenSequence
 {
-	public Perl_Keyword CHDIR = new Perl_Keyword("chdir");
-	public Perl_Expression expr;
+	public @S(10) Perl_Keyword CHDIR = new Perl_Keyword("chdir");
+	public @S(20) Perl_Expression expr;
 }

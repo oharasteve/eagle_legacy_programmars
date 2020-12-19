@@ -15,19 +15,19 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class JavaP_RuntimeVisibleTypeAnnotations extends TokenSequence
 {
-	public JavaP_Keyword ANNOTATIONS = new JavaP_Keyword("RuntimeVisibleTypeAnnotations");
-	public PunctuationColon colon1;
-	public JavaP_EndOfLine eoln1;
+	public @S(10) JavaP_Keyword ANNOTATIONS = new JavaP_Keyword("RuntimeVisibleTypeAnnotations");
+	public @S(20) PunctuationColon colon1;
+	public @S(30) JavaP_EndOfLine eoln1;
 
-	public JavaP_Number seq;
-	public PunctuationColon colon2;
-	public JavaP_HashNumber id;
-	public PunctuationLeftParen leftParen;
-	public PunctuationRightParen rightParen;
-	public PunctuationColon colon3;
-	public JavaP_Keyword METHOD_RETURN = new JavaP_Keyword("METHOD_RETURN");
-	public JavaP_EndOfLine eoln2;
+	public @S(40) JavaP_Number seq;
+	public @S(50) PunctuationColon colon2;
+	public @S(60) JavaP_HashNumber id;
+	public @S(70) PunctuationLeftParen leftParen;
+	public @S(80) PunctuationRightParen rightParen;
+	public @S(90) PunctuationColon colon3;
+	public @S(100) JavaP_Keyword METHOD_RETURN = new JavaP_Keyword("METHOD_RETURN");
+	public @S(110) JavaP_EndOfLine eoln2;
 
-	public @OPT JavaP_QualifiedName name;
-	public JavaP_EndOfLine eoln3;
+	public @S(120) @OPT JavaP_QualifiedName name;
+	public @S(130) JavaP_EndOfLine eoln3;
 }

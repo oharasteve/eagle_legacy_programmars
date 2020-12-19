@@ -17,9 +17,9 @@ public class PLI_Signal extends TokenChooser
 
 	public @CHOICE static class PLI_OnEndFile extends TokenSequence
 	{
-		public PLI_Keyword ENDFILE = new PLI_Keyword("ENDFILE");
-		public PunctuationLeftParen leftParen;
-		public PLI_Identifier_Reference file;
-		public PunctuationRightParen rightParen;
+		public @S(10) PLI_Keyword ENDFILE = new PLI_Keyword("ENDFILE");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) PLI_Identifier_Reference file;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 }

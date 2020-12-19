@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_AtAtStatement extends TokenSequence
 {
-	public SQL_Punctuation atat = new SQL_Punctuation("@@");
-	public SQL_Filename filename;
-	public @OPT PunctuationSemicolon semicolon;
+	public @S(10) SQL_Punctuation atat = new SQL_Punctuation("@@");
+	public @S(20) SQL_Filename filename;
+	public @S(30) @OPT PunctuationSemicolon semicolon;
 }

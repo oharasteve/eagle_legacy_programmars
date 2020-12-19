@@ -18,10 +18,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class SQL_Function extends TokenSequence
 {
-	public SQL_FunctionName funcName;
-	public PunctuationLeftParen leftParen;
-	public @OPT SeparatedList<SQL_FunctionParam,PunctuationComma> params;
-	public PunctuationRightParen rightParen;
+	public @S(10) SQL_FunctionName funcName;
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @OPT SeparatedList<SQL_FunctionParam,PunctuationComma> params;
+	public @S(40) PunctuationRightParen rightParen;
 	
 	public static class SQL_FunctionParam extends TokenChooser
 	{
@@ -29,15 +29,15 @@ public class SQL_Function extends TokenSequence
 		
 		public @CHOICE static class SQL_FunctionColonParam extends TokenSequence
 		{
-			public PunctuationColon colon;
-			public SQL_Expression arg;
+			public @S(10) PunctuationColon colon;
+			public @S(20) SQL_Expression arg;
 		}
 		
 		public @FIRST static class SQL_FunctionNamedParam extends TokenSequence
 		{
-			public SQL_Identifier_Reference parameterName;
-			public SQL_Punctuation equalsGreater = new SQL_Punctuation("=>");
-			public SQL_Expression arg;
+			public @S(10) SQL_Identifier_Reference parameterName;
+			public @S(20) SQL_Punctuation equalsGreater = new SQL_Punctuation("=>");
+			public @S(30) SQL_Expression arg;
 		}
 	}
 	
@@ -58,23 +58,23 @@ public class SQL_Function extends TokenSequence
 		
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence
 		{
-			public SQL_Keyword DBMSSCHEDULER = new SQL_Keyword("DBMS_SCHEDULER");
-			public PunctuationPeriod dot;
-			public SQL_KeywordChoice DROPJOB = new SQL_KeywordChoice("CREATE_JOB", "DROP_JOB");
+			public @S(10) SQL_Keyword DBMSSCHEDULER = new SQL_Keyword("DBMS_SCHEDULER");
+			public @S(20) PunctuationPeriod dot;
+			public @S(30) SQL_KeywordChoice DROPJOB = new SQL_KeywordChoice("CREATE_JOB", "DROP_JOB");
 		}
 		
 		public @CHOICE static class SQL_FunctionLOB extends TokenSequence
 		{
-			public SQL_Keyword DBMSLOB = new SQL_Keyword("DBMS_LOB");
-			public PunctuationPeriod dot;
-			public SQL_Keyword GETLENGTH = new SQL_Keyword("GETLENGTH");
+			public @S(10) SQL_Keyword DBMSLOB = new SQL_Keyword("DBMS_LOB");
+			public @S(20) PunctuationPeriod dot;
+			public @S(30) SQL_Keyword GETLENGTH = new SQL_Keyword("GETLENGTH");
 		}
 		
 		public @CHOICE static class SQL_FunctionJOB extends TokenSequence
 		{
-			public SQL_Keyword DBMSJOB = new SQL_Keyword("DBMS_JOB");
-			public PunctuationPeriod dot;
-			public SQL_Keyword REMOVE = new SQL_Keyword("REMOVE");
+			public @S(10) SQL_Keyword DBMSJOB = new SQL_Keyword("DBMS_JOB");
+			public @S(20) PunctuationPeriod dot;
+			public @S(30) SQL_Keyword REMOVE = new SQL_Keyword("REMOVE");
 		}
 	}
 }

@@ -15,21 +15,21 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_WithStatement extends TokenSequence
 {
-	public Python_Keyword WITH = new Python_Keyword("with");
-	public SeparatedList<Python_WithItem,PunctuationComma> withItems;
-	public PunctuationColon colon;
-	public Python_EndOfLine eoln;
-	public TokenList<Python_Statement> statements;
+	public @S(10) Python_Keyword WITH = new Python_Keyword("with");
+	public @S(20) SeparatedList<Python_WithItem,PunctuationComma> withItems;
+	public @S(30) PunctuationColon colon;
+	public @S(40) Python_EndOfLine eoln;
+	public @S(50) TokenList<Python_Statement> statements;
 	
 	public static class Python_WithItem extends TokenSequence
 	{
-		public Python_Expression condition;
-		public @OPT Python_WithItemAs withItemAs;
+		public @S(10) Python_Expression condition;
+		public @S(20) @OPT Python_WithItemAs withItemAs;
 		
 		public static class Python_WithItemAs extends TokenSequence
 		{
-			public Python_Keyword AS = new Python_Keyword("as");
-			public Python_Expression expression;
+			public @S(10) Python_Keyword AS = new Python_Keyword("as");
+			public @S(20) Python_Expression expression;
 		}
 	}
 }

@@ -19,13 +19,13 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_CallStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpscall.htm") COBOL_Keyword CALL = new COBOL_Keyword("CALL");
-	public @OPT COBOL_KeywordChoice how = new COBOL_KeywordChoice("STATICCOBOL", "WINAPI");
-	public COBOL_CallWhat callWhat;
-	public @OPT COBOL_Keyword USING = new COBOL_Keyword("USING");
-	public @OPT TokenList<COBOL_CallParameter> parameters;
-	public @OPT COBOL_CallException exception;
-	public @OPT COBOL_Keyword ENDCALL = new COBOL_Keyword("END-CALL");
+	public @S(10) @DOC("rlpscall.htm") COBOL_Keyword CALL = new COBOL_Keyword("CALL");
+	public @S(20) @OPT COBOL_KeywordChoice how = new COBOL_KeywordChoice("STATICCOBOL", "WINAPI");
+	public @S(30) COBOL_CallWhat callWhat;
+	public @S(40) @OPT COBOL_Keyword USING = new COBOL_Keyword("USING");
+	public @S(50) @OPT TokenList<COBOL_CallParameter> parameters;
+	public @S(60) @OPT COBOL_CallException exception;
+	public @S(70) @OPT COBOL_Keyword ENDCALL = new COBOL_Keyword("END-CALL");
 	
 	public static class COBOL_CallWhat extends TokenChooser
 	{
@@ -36,24 +36,24 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 	
 	public static class COBOL_CallParameter extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public @OPT COBOL_Keyword BY = new COBOL_Keyword("BY");
-		public @OPT COBOL_KeywordChoice byHow = new COBOL_KeywordChoice(
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) @OPT COBOL_Keyword BY = new COBOL_Keyword("BY");
+		public @S(30) @OPT COBOL_KeywordChoice byHow = new COBOL_KeywordChoice(
 				"CONTENT", "REFERENCE", "VALUE");
-		public COBOL_Expression expression;
-		public @OPT COBOL_ValueSize size;
+		public @S(40) COBOL_Expression expression;
+		public @S(50) @OPT COBOL_ValueSize size;
 		
 		public static class COBOL_ValueSize extends TokenSequence
 		{
-			public COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
-			public COBOL_Number size;
+			public @S(10) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
+			public @S(20) COBOL_Number size;
 		}
 	}
 	
 	public static class COBOL_CallException extends TokenSequence
 	{
-		public COBOL_Keyword ON = new COBOL_Keyword("ON");
-		public COBOL_Keyword EXCEPTION = new COBOL_Keyword("EXCEPTION");
-		public TokenList<COBOL_Statement> statements;
+		public @S(10) COBOL_Keyword ON = new COBOL_Keyword("ON");
+		public @S(20) COBOL_Keyword EXCEPTION = new COBOL_Keyword("EXCEPTION");
+		public @S(30) TokenList<COBOL_Statement> statements;
 	}
 }

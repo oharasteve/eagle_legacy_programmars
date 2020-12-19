@@ -18,23 +18,23 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_DDM extends TokenSequence
 {
-	public Natural_Identifier_Reference name;
-	public TokenList<Natural_DDM_Line> lines;
+	public @S(10) Natural_Identifier_Reference name;
+	public @S(20) TokenList<Natural_DDM_Line> lines;
 	
 	public static class Natural_DDM_Line extends TokenSequence
 	{
-		public @OPT Natural_KeywordChoice Ty = new Natural_KeywordChoice(
+		public @S(10) @OPT Natural_KeywordChoice Ty = new Natural_KeywordChoice(
 				"GR", "MU", "PE", "SB", "SP");
-		public Natural_Level Level;
-		public Natural_Identifier_Reference FieldName;
-		public @OPT Natural_KeywordChoice F = new Natural_KeywordChoice(
+		public @S(20) Natural_Level Level;
+		public @S(30) Natural_Identifier_Reference FieldName;
+		public @S(40) @OPT Natural_KeywordChoice F = new Natural_KeywordChoice(
 				"A", "B", "P", "U");
-		public @OPT Natural_Float Length;
-		public @OPT Natural_Number Occurs;
-		public @OPT Natural_Keyword D = new Natural_Keyword("D");
-		public @OPT Natural_Keyword U = new Natural_Keyword("U");
-		public Natural_Identifier_Reference DB;
-		public @OPT Natural_KeywordChoice S = new Natural_KeywordChoice(
+		public @S(50) @OPT Natural_Float Length;
+		public @S(60) @OPT Natural_Number Occurs;
+		public @S(70) @OPT Natural_Keyword D = new Natural_Keyword("D");
+		public @S(80) @OPT Natural_Keyword U = new Natural_Keyword("U");
+		public @S(90) Natural_Identifier_Reference DB;
+		public @S(100) @OPT Natural_KeywordChoice S = new Natural_KeywordChoice(
 				"F", "N");
 		
 		

@@ -10,8 +10,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class JavaP_CompiledFrom extends TokenSequence
 {
-	public JavaP_Keyword COMPILED = new JavaP_Keyword("Compiled");
-	public JavaP_Keyword FROM = new JavaP_Keyword("from");
-	public JavaP_Literal fileName;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword COMPILED = new JavaP_Keyword("Compiled");
+	public @S(20) JavaP_Keyword FROM = new JavaP_Keyword("from");
+	public @S(30) JavaP_Literal fileName;
+	public @S(40) JavaP_EndOfLine eoln;
 }

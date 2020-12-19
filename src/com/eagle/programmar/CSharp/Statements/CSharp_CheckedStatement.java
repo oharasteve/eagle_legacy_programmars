@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class CSharp_CheckedStatement extends TokenSequence
 {
-	public CSharp_Keyword CHECKED = new CSharp_Keyword("checked");
-	public CSharp_Statement statement;
+	public @S(10) CSharp_Keyword CHECKED = new CSharp_Keyword("checked");
+	public @S(20) CSharp_Statement statement;
 }

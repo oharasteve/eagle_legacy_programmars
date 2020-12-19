@@ -14,20 +14,20 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_IfStatement extends TokenSequence
 {
-	public @DOC("#The-if-Statement") C_Keyword IF = new C_Keyword("if");
-	public PunctuationLeftParen leftParen;
-	public C_Expression condition;
-	public @OPT C_Comment comment1;
-	public PunctuationRightParen rightParen;
-	public @OPT TokenList<C_Comment> comments;
-	public C_Statement thenStatement;
-	public @OPT C_IfElseClause elseClause;
+	public @S(10) @DOC("#The-if-Statement") C_Keyword IF = new C_Keyword("if");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) C_Expression condition;
+	public @S(40) @OPT C_Comment comment1;
+	public @S(50) PunctuationRightParen rightParen;
+	public @S(60) @OPT TokenList<C_Comment> comments;
+	public @S(70) C_Statement thenStatement;
+	public @S(80) @OPT C_IfElseClause elseClause;
 	
 	public static class C_IfElseClause extends TokenSequence
 	{
-		public @OPT TokenList<C_Comment> comment1;
-		public C_Keyword ELSE = new C_Keyword("else");
-		public @OPT TokenList<C_Comment> comment2;
-		public C_Statement elseStatement;
+		public @S(10) @OPT TokenList<C_Comment> comment1;
+		public @S(20) C_Keyword ELSE = new C_Keyword("else");
+		public @S(30) @OPT TokenList<C_Comment> comment2;
+		public @S(40) C_Statement elseStatement;
 	}
 }

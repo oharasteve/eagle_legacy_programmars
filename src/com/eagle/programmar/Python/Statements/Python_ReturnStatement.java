@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_ReturnStatement extends TokenSequence
 {
-	public @NOSPACE Python_Keyword RETURN = new Python_Keyword("return");
-	public @OPT Python_ExpressionList expressionList;
-	public @OPT Python_Comment comment;
+	public @S(10) @NOSPACE Python_Keyword RETURN = new Python_Keyword("return");
+	public @S(20) @OPT Python_ExpressionList expressionList;
+	public @S(30) @OPT Python_Comment comment;
 }

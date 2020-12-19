@@ -14,12 +14,12 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_DoStatement extends TokenSequence
 {
-	public @DOC("#The-do-Statement") C_Keyword DO = new C_Keyword("do");
-	public @OPT C_Comment comment;
-	public C_Statement doStatement;
-	public C_Keyword WHILE = new C_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public C_Expression condition;
-	public PunctuationRightParen rightParen;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("#The-do-Statement") C_Keyword DO = new C_Keyword("do");
+	public @S(20) @OPT C_Comment comment;
+	public @S(30) C_Statement doStatement;
+	public @S(40) C_Keyword WHILE = new C_Keyword("while");
+	public @S(50) PunctuationLeftParen leftParen;
+	public @S(60) C_Expression condition;
+	public @S(70) PunctuationRightParen rightParen;
+	public @S(80) PunctuationSemicolon semicolon;
 }

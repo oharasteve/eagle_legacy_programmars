@@ -13,12 +13,12 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_HistogramStatement extends TokenSequence
 {
-	public @DOC("sm/histogra.htm") Natural_Keyword HISTOGRAM = new Natural_Keyword("HISTOGRAM");
-	public Natural_Identifier_Reference viewName;
-	public Natural_Variable var;
-	public Natural_Keyword STARTING = new Natural_Keyword("STARTING");
-	public Natural_Keyword FROM = new Natural_Keyword("FROM");
-	public Natural_Literal literal;
-	public TokenList<Natural_Statement> statements;
-	public Natural_Keyword ENDHISTOGRAM = new Natural_Keyword("END-HISTOGRAM");
+	public @S(10) @DOC("sm/histogra.htm") Natural_Keyword HISTOGRAM = new Natural_Keyword("HISTOGRAM");
+	public @S(20) Natural_Identifier_Reference viewName;
+	public @S(30) Natural_Variable var;
+	public @S(40) Natural_Keyword STARTING = new Natural_Keyword("STARTING");
+	public @S(50) Natural_Keyword FROM = new Natural_Keyword("FROM");
+	public @S(60) Natural_Literal literal;
+	public @S(70) TokenList<Natural_Statement> statements;
+	public @S(80) Natural_Keyword ENDHISTOGRAM = new Natural_Keyword("END-HISTOGRAM");
 }

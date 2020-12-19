@@ -39,32 +39,32 @@ public class TCL_Expression extends PrecedenceChooser
 
 	public static @P(100) class TCL_VariableExpression extends PrimaryOperator
 	{
-		public TCL_Variable variable;
+		public @S(10) TCL_Variable variable;
 	}
 	
 	public static @P(110) class TCL_SignedExpression extends PrimaryOperator
 	{
-		public TCL_PunctuationChoice signedOperator = new TCL_PunctuationChoice("+", "-");
-		public TCL_Expression expr;
+		public @S(10) TCL_PunctuationChoice signedOperator = new TCL_PunctuationChoice("+", "-");
+		public @S(20) TCL_Expression expr;
 	}
 
 	public static @P(120) class TCL_NotExpression extends PrimaryOperator
 	{
-		public TCL_Keyword NOT = new TCL_Keyword("not");
-		public TCL_Expression expr;
+		public @S(10) TCL_Keyword NOT = new TCL_Keyword("not");
+		public @S(20) TCL_Expression expr;
 	}
 	
 	public static @P(130) class TCL_BangExpression extends PrimaryOperator
 	{
-		public TCL_Punctuation bang = new TCL_Punctuation('!');
-		public TCL_Expression expr;
+		public @S(10) TCL_Punctuation bang = new TCL_Punctuation('!');
+		public @S(20) TCL_Expression expr;
 	}
 	
 	public static @P(140) class TCL_ParenthesizedExpression extends PrimaryOperator
 	{
-		public PunctuationLeftParen leftParen;
-		public TCL_Expression expression;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) TCL_Expression expression;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	///////////////////////////////////////////////
@@ -72,37 +72,37 @@ public class TCL_Expression extends PrecedenceChooser
 	
 	public static @P(150) class TCL_MultiplicativeExpression extends PrecedenceOperator
 	{
-		public TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-		public TCL_PunctuationChoice operator = new TCL_PunctuationChoice("*", "/");
-		public TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) TCL_PunctuationChoice operator = new TCL_PunctuationChoice("*", "/");
+		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(160) class TCL_AdditiveExpression extends PrecedenceOperator
 	{
-		public TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-		public TCL_PunctuationChoice operator = new TCL_PunctuationChoice("+", "-");
-		public TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) TCL_PunctuationChoice operator = new TCL_PunctuationChoice("+", "-");
+		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(170) class TCL_RelationalExpression extends PrecedenceOperator
 	{
-		public TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-		public TCL_PunctuationChoice operator = new TCL_PunctuationChoice(
+		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) TCL_PunctuationChoice operator = new TCL_PunctuationChoice(
 				"<", ">", "<=", ">=", "==", "<>");
-		public TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 		
 	public static @P(180) class TCL_ConditionalAndExpression extends PrecedenceOperator
 	{
-		public TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-		public TCL_Keyword AND = new TCL_Keyword("and");
-		public TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) TCL_Keyword AND = new TCL_Keyword("and");
+		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 		
 	public static @P(190) class TCL_ConditionalOrExpression extends PrecedenceOperator
 	{
-		public TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-		public TCL_Keyword OR = new TCL_Keyword("or");
-		public TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) TCL_Keyword OR = new TCL_Keyword("or");
+		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

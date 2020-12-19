@@ -11,13 +11,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Close_Statement extends TokenSequence
 {
-	public Delphi_Keyword CLOSE = new Delphi_Keyword("Close");
-	public @OPT Delphi_CloseParams params;
+	public @S(10) Delphi_Keyword CLOSE = new Delphi_Keyword("Close");
+	public @S(20) @OPT Delphi_CloseParams params;
 	
 	public static class Delphi_CloseParams extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public Delphi_Identifier_Reference file;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Delphi_Identifier_Reference file;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 }

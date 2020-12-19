@@ -11,9 +11,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_EndStatement extends TokenSequence
 {
-	public @DOC("sm/endtrans.htm") Natural_Keyword END = new Natural_Keyword("END");
-	public @OPT Natural_Keyword OF = new Natural_Keyword("OF");
-	public Natural_Keyword TRANSACTION = new Natural_Keyword("TRANSACTION");
-	public @OPT TokenList<Natural_Variable> vars;
-	public @OPT Natural_Literal literal;
+	public @S(10) @DOC("sm/endtrans.htm") Natural_Keyword END = new Natural_Keyword("END");
+	public @S(20) @OPT Natural_Keyword OF = new Natural_Keyword("OF");
+	public @S(30) Natural_Keyword TRANSACTION = new Natural_Keyword("TRANSACTION");
+	public @S(40) @OPT TokenList<Natural_Variable> vars;
+	public @S(50) @OPT Natural_Literal literal;
 }

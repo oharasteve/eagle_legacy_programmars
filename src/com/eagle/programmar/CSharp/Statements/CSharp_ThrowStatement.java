@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_ThrowStatement extends TokenSequence
 {
-	public @DOC("statements.html#14.18") CSharp_Keyword THROW = new CSharp_Keyword("throw");
-	public @OPT CSharp_Expression expression;
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @DOC("statements.html#14.18") CSharp_Keyword THROW = new CSharp_Keyword("throw");
+	public @S(20) @OPT CSharp_Expression expression;
+	public @S(30) @NOSPACE PunctuationSemicolon semicolon;
 }

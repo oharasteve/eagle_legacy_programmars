@@ -12,8 +12,8 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_NMake_Statement extends TokenSequence
 {
-	public CMD_Keyword NMAKE = new CMD_Keyword("nmake");
-	public TokenList<CMD_NMake_Parameter> params;
+	public @S(10) CMD_Keyword NMAKE = new CMD_Keyword("nmake");
+	public @S(20) TokenList<CMD_NMake_Parameter> params;
 	
 	public static class CMD_NMake_Parameter extends TokenChooser
 	{
@@ -21,28 +21,28 @@ public class CMD_NMake_Statement extends TokenSequence
 
 		public @CHOICE static class CMD_NMake_Option_I extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword I = new CMD_Keyword("i");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword I = new CMD_Keyword("i");
 		}
 
 		public @CHOICE static class CMD_NMake_Option_K extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword K = new CMD_Keyword("k");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword K = new CMD_Keyword("k");
 		}
 
 		public @CHOICE static class CMD_NMake_Option_E extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword E = new CMD_Keyword("e");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword E = new CMD_Keyword("e");
 		}
 
 
 		public @CHOICE static class CMD_NMake_Option_F extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword F = new CMD_Keyword("f");
-			public CMD_Argument makefile;
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
+			public @S(30) CMD_Argument makefile;
 		}
 	}
 }

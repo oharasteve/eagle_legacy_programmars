@@ -20,15 +20,15 @@ public class HTML_DocType extends TokenSequence
 {
 	static String[] SUFFIXES = new String[] { "+", "?", "*" };
 	
-	public HTML_Punctuation startTag = new HTML_Punctuation("<!");
-	public @NOSPACE HTML_KeywordChoice DOCTYPE = new HTML_KeywordChoice(
+	public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<!");
+	public @S(20) @NOSPACE HTML_KeywordChoice DOCTYPE = new HTML_KeywordChoice(
 			"ATTLIST",
 			"DOCTYPE",
 			"ELEMENT",
 			"ENTITY",
 			"NOTATION");
-	public TokenList<HTML_DocValue> values; 
-	public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+	public @S(30) TokenList<HTML_DocValue> values; 
+	public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	
 	public static class HTML_DocValue extends TokenChooser
 	{
@@ -38,25 +38,25 @@ public class HTML_DocType extends TokenSequence
 		
 		public @CHOICE static class HTML_DocBrackets extends TokenSequence
 		{
-			public PunctuationLeftBracket leftBracket;
-			public TokenList<HTML_DocValue> values; 
-			public PunctuationRightBracket rightBracket;
+			public @S(10) PunctuationLeftBracket leftBracket;
+			public @S(20) TokenList<HTML_DocValue> values; 
+			public @S(30) PunctuationRightBracket rightBracket;
 		}
 		
 		public @CHOICE static class HTML_DocParens extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen;
-			public HTML_DocValue value;
-			public @OPT HTML_PunctuationChoice suffix = new HTML_PunctuationChoice(SUFFIXES);
-			public @OPT TokenList<HTML_DocMoreValues> more;
-			public PunctuationRightParen rightParen;
-			public @OPT HTML_Punctuation plus = new HTML_Punctuation('+');
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) HTML_DocValue value;
+			public @S(30) @OPT HTML_PunctuationChoice suffix = new HTML_PunctuationChoice(SUFFIXES);
+			public @S(40) @OPT TokenList<HTML_DocMoreValues> more;
+			public @S(50) PunctuationRightParen rightParen;
+			public @S(60) @OPT HTML_Punctuation plus = new HTML_Punctuation('+');
 			
 			public static class HTML_DocMoreValues extends TokenSequence
 			{
-				public HTML_PunctuationChoice commaOrBar = new HTML_PunctuationChoice(",", "|");
-				public HTML_DocValue value;
-				public @OPT HTML_PunctuationChoice suffix = new HTML_PunctuationChoice(SUFFIXES);
+				public @S(10) HTML_PunctuationChoice commaOrBar = new HTML_PunctuationChoice(",", "|");
+				public @S(20) HTML_DocValue value;
+				public @S(30) @OPT HTML_PunctuationChoice suffix = new HTML_PunctuationChoice(SUFFIXES);
 			}
 		}
 	}

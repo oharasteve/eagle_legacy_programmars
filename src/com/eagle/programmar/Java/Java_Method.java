@@ -26,28 +26,28 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 {
 	private EagleScope _scope = new EagleScope(Java_Syntax.isCaseSensitive);
 	
-	public @OPT @BLANKLINE TokenList<Java_Comment> comments;
-	public @OPT TokenList<Java_MethodModifier> modifiers;
-	public @OPT Java_GenericType genericType;
-	public Java_Type jtype;
-	public Java_Method_Definition methodName;
-	public @NOSPACE Java_ParameterList parameters;
-	public @OPT TokenList<Java_EmptyBrackets> brackets;
-	public @OPT Java_MethodDefault methodDefault;
-	public @OPT Java_MethodThrows jthrows;
-	public @OPT Java_Comment comment;
-	public Java_MethodBody body;
+	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
+	public @S(20) @OPT TokenList<Java_MethodModifier> modifiers;
+	public @S(30) @OPT Java_GenericType genericType;
+	public @S(40) Java_Type jtype;
+	public @S(50) Java_Method_Definition methodName;
+	public @S(60) @NOSPACE Java_ParameterList parameters;
+	public @S(70) @OPT TokenList<Java_EmptyBrackets> brackets;
+	public @S(80) @OPT Java_MethodDefault methodDefault;
+	public @S(90) @OPT Java_MethodThrows jthrows;
+	public @S(100) @OPT Java_Comment comment;
+	public @S(110) Java_MethodBody body;
 	
 	public static class Java_EmptyBrackets extends TokenSequence
 	{
-		public PunctuationLeftBracket leftBracket;
-		public PunctuationRightBracket rightBracket;
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) PunctuationRightBracket rightBracket;
 	}
 	
 	public static class Java_MethodDefault extends TokenSequence
 	{
-		public Java_Keyword DEFAULT = new Java_Keyword("default");
-		public @OPT Java_Expression expr;
+		public @S(10) Java_Keyword DEFAULT = new Java_Keyword("default");
+		public @S(20) @OPT Java_Expression expr;
 	}
 	
 	public static class Java_MethodModifier extends TokenChooser
@@ -59,8 +59,8 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 	
 	public static class Java_MethodThrows extends TokenSequence
 	{
-		public Java_Keyword jthrows = new Java_Keyword("throws");
-		public SeparatedList<Java_Variable,PunctuationComma> jclass;
+		public @S(10) Java_Keyword jthrows = new Java_Keyword("throws");
+		public @S(20) SeparatedList<Java_Variable,PunctuationComma> jclass;
 	}
 	
 	public static class Java_MethodBody extends TokenChooser
@@ -69,22 +69,22 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 		
 		public @CHOICE static class Java_MethodImplementation extends TokenSequence
 		{
-			public @OPT @NEWLINE TokenList<Java_Comment> comment1;
-			public Java_StatementBlock block;
-			public @OPT TokenList<Java_Comment> comment2;
-			public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
+			public @S(10) @OPT @NEWLINE TokenList<Java_Comment> comment1;
+			public @S(20) Java_StatementBlock block;
+			public @S(30) @OPT TokenList<Java_Comment> comment2;
+			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
 		}
 	}
 	
 	public static class Java_Constructor extends TokenSequence
 	{
-		public @OPT @BLANKLINE TokenList<Java_Annotation> annotation;
-		public @OPT TokenList<Java_MethodModifier> modifiers;
-		public Java_Current_Class_Reference constructorName;
-		public @NOSPACE Java_ParameterList parameters;
-		public @OPT Java_MethodThrows jthrows;
-		public @OPT Java_Comment comment;
-		public Java_MethodBody body;
+		public @S(10) @OPT @BLANKLINE TokenList<Java_Annotation> annotation;
+		public @S(20) @OPT TokenList<Java_MethodModifier> modifiers;
+		public @S(30) Java_Current_Class_Reference constructorName;
+		public @S(40) @NOSPACE Java_ParameterList parameters;
+		public @S(50) @OPT Java_MethodThrows jthrows;
+		public @S(60) @OPT Java_Comment comment;
+		public @S(70) Java_MethodBody body;
 	}
 		
 	@Override

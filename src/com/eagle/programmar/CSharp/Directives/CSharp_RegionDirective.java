@@ -12,12 +12,12 @@ import com.eagle.tokens.TokenSequence;
 
 public class CSharp_RegionDirective extends TokenSequence
 {
-	public CSharp_Punctuation pound1 = new CSharp_Punctuation('#');
-	public CSharp_Keyword REGION = new CSharp_Keyword("region");
-	public CSharp_CommentToEndOfLine regionName;
+	public @S(10) CSharp_Punctuation pound1 = new CSharp_Punctuation('#');
+	public @S(20) CSharp_Keyword REGION = new CSharp_Keyword("region");
+	public @S(30) CSharp_CommentToEndOfLine regionName;
 	
-	public TokenList<CSharp_ClassElement> elements;
+	public @S(40) TokenList<CSharp_ClassElement> elements;
 
-	public CSharp_Punctuation pound2 = new CSharp_Punctuation('#');
-	public CSharp_Keyword ENDREGION = new CSharp_Keyword("endregion");
+	public @S(50) CSharp_Punctuation pound2 = new CSharp_Punctuation('#');
+	public @S(60) CSharp_Keyword ENDREGION = new CSharp_Keyword("endregion");
 }

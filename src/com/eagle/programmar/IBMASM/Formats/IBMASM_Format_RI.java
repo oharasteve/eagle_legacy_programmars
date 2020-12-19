@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_RI extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"SLA",		// Shift left A/L
 		"SLL",		// Shift left A/L
 		"SLDA",		// Shift left double A/L
@@ -23,8 +23,8 @@ public class IBMASM_Format_RI extends TokenSequence
 		"SRDL"		// Shift right double A/L
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Register register;
-	public PunctuationComma comma;
-	public IBMASM_Immediate immediate;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Register register;
+	public @S(40) PunctuationComma comma;
+	public @S(50) IBMASM_Immediate immediate;
 }

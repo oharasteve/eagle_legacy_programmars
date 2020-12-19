@@ -16,9 +16,9 @@ public class Django_Expression extends TokenChooser
 	
 	public @CHOICE static class Django_ExpressionRange extends TokenSequence
 	{
-		public Django_Keyword RANGE = new Django_Keyword("range");
-		public PunctuationLeftParen leftParen;
-		public HTML_Number number;
-		public PunctuationRightParen rightParen;
+		public @S(10) Django_Keyword RANGE = new Django_Keyword("range");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) HTML_Number number;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 }

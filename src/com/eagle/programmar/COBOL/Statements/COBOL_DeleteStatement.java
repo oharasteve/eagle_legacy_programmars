@@ -9,7 +9,7 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_DeleteStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword DELETE = new COBOL_Keyword("DELETE");
-	public COBOL_Identifier_Reference file;
-	public @OPT COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
+	public @S(10) COBOL_Keyword DELETE = new COBOL_Keyword("DELETE");
+	public @S(20) COBOL_Identifier_Reference file;
+	public @S(30) @OPT COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
 }

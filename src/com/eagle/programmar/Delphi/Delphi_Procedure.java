@@ -14,24 +14,24 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Procedure extends TokenSequence
 {
-	public Delphi_ProcedureForward forward;
-	public @OPT TokenList<Delphi_Header> headers;
-	public @OPT Delphi_BeginEnd body;
-	public @OPT TokenList<Delphi_Comment> comments;
-	public @OPT PunctuationSemicolon semicolon;
+	public @S(10) Delphi_ProcedureForward forward;
+	public @S(20) @OPT TokenList<Delphi_Header> headers;
+	public @S(30) @OPT Delphi_BeginEnd body;
+	public @S(40) @OPT TokenList<Delphi_Comment> comments;
+	public @S(50) @OPT PunctuationSemicolon semicolon;
 	
 	public static class Delphi_ProcedureForward extends TokenSequence
 	{
-		public Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice("Procedure", "Constructor", "Destructor");
-		public Delphi_Variable name;
-		public @OPT Delphi_Arguments args;
-		public PunctuationSemicolon semicolon;
-		public @OPT Delphi_Override override;
+		public @S(10) Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice("Procedure", "Constructor", "Destructor");
+		public @S(20) Delphi_Variable name;
+		public @S(30) @OPT Delphi_Arguments args;
+		public @S(40) PunctuationSemicolon semicolon;
+		public @S(50) @OPT Delphi_Override override;
 
 		public static class Delphi_Override extends TokenSequence
 		{
-			public Delphi_Keyword OVERRIDE = new Delphi_Keyword("Override");
-			public PunctuationSemicolon semicolon;
+			public @S(10) Delphi_Keyword OVERRIDE = new Delphi_Keyword("Override");
+			public @S(20) PunctuationSemicolon semicolon;
 		}
 	}
 }

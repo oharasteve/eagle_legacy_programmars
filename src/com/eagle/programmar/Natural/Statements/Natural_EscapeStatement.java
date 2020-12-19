@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_EscapeStatement extends TokenSequence
 {
-	public @DOC("sm/escape.htm") Natural_Keyword ESCAPE = new Natural_Keyword("ESCAPE");
-	public Natural_KeywordChoice what = new Natural_KeywordChoice(
+	public @S(10) @DOC("sm/escape.htm") Natural_Keyword ESCAPE = new Natural_Keyword("ESCAPE");
+	public @S(20) Natural_KeywordChoice what = new Natural_KeywordChoice(
 			"BOTTOM", "TOP");
 }

@@ -21,10 +21,10 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Include_Statement extends TokenSequence implements CMacro_Processable
 {
-	public C_Punctuation pound = new C_Punctuation('#'); 
-	public @DOC("Include-Syntax.html") C_Keyword INCLUDE = new C_Keyword("include");
-	public CMacro_IncludeWhat what;
-	public @OPT TokenList<C_Comment> comments;
+	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+	public @S(20) @DOC("Include-Syntax.html") C_Keyword INCLUDE = new C_Keyword("include");
+	public @S(30) CMacro_IncludeWhat what;
+	public @S(40) @OPT TokenList<C_Comment> comments;
 	
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{

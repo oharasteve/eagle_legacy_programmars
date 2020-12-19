@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_NextStatement extends TokenSequence
 {
-	public Perl_Keyword NEXT = new Perl_Keyword("next");
+	public @S(10) Perl_Keyword NEXT = new Perl_Keyword("next");
 }

@@ -33,5 +33,5 @@ public class Perl_Program extends EagleLanguage
 		"var"
 	}; 
 
-	public TokenList<Perl_StatementOrComment> statements;
+	public @S(10) TokenList<Perl_StatementOrComment> statements;
 }

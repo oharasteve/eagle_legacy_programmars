@@ -19,13 +19,13 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class TCL_Statement extends TokenSequence
 {
-	public TCL_Compound_Statement compoundStatement;
-	public @OPT TCL_Comment comment;
-	public TCL_EndOfLine eoln;
+	public @S(10) TCL_Compound_Statement compoundStatement;
+	public @S(20) @OPT TCL_Comment comment;
+	public @S(30) TCL_EndOfLine eoln;
 	
 	public static class TCL_Compound_Statement extends TokenSequence
 	{
-		public SeparatedList<TCL_BaseStatement,PunctuationSemicolon> statements;
+		public @S(10) SeparatedList<TCL_BaseStatement,PunctuationSemicolon> statements;
 	}
 	
 	public static class TCL_BaseStatement extends TokenChooser
@@ -41,8 +41,8 @@ public class TCL_Statement extends TokenSequence
 	
 	public static class TCL_BlockStatement extends TokenSequence
 	{
-		public PunctuationLeftBrace leftBrace;
-		public @OPT TokenList<TCL_Statement> statements;
-		public PunctuationRightBrace rightBrace;
+		public @S(10) PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<TCL_Statement> statements;
+		public @S(30) PunctuationRightBrace rightBrace;
 	}
 }

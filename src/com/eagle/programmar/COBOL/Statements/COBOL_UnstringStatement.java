@@ -16,21 +16,21 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsunst.htm") COBOL_Keyword UNSTRING = new COBOL_Keyword("UNSTRING");
-	public COBOL_Expression expr;
-	public COBOL_Keyword DELIMITED = new COBOL_Keyword("DELIMITED");
-	public COBOL_Keyword BY = new COBOL_Keyword("BY");
-	public COBOL_UnstringOrWhat delim;
-	public @OPT COBOL_UnstringOrClause orClause;
-	public COBOL_Keyword INTO = new COBOL_Keyword("INTO");
-	public TokenList<COBOL_UnstringPiece> pieces;
-	public @OPT COBOL_UnstringWith with;
-	public @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
+	public @S(10) @DOC("rlpsunst.htm") COBOL_Keyword UNSTRING = new COBOL_Keyword("UNSTRING");
+	public @S(20) COBOL_Expression expr;
+	public @S(30) COBOL_Keyword DELIMITED = new COBOL_Keyword("DELIMITED");
+	public @S(40) COBOL_Keyword BY = new COBOL_Keyword("BY");
+	public @S(50) COBOL_UnstringOrWhat delim;
+	public @S(60) @OPT COBOL_UnstringOrClause orClause;
+	public @S(70) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
+	public @S(80) TokenList<COBOL_UnstringPiece> pieces;
+	public @S(90) @OPT COBOL_UnstringWith with;
+	public @S(100) @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
 	
 	public static class COBOL_UnstringOrClause extends TokenSequence
 	{
-		public COBOL_Keyword OR = new COBOL_Keyword("OR");
-		public COBOL_UnstringOrWhat unstringWhat;
+		public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
+		public @S(20) COBOL_UnstringOrWhat unstringWhat;
 		
 		public static class COBOL_UnstringOrWhat extends TokenChooser
 		{
@@ -38,30 +38,30 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 			
 			public @CHOICE static class COBOL_UnstringOrSpaces extends TokenSequence
 			{
-				public @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-				public COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
+				public @S(10) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+				public @S(20) COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
 			}
 		}
 	}
 
 	public static class COBOL_UnstringPiece extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_Identifier_Reference intoVar;
-		public @OPT COBOL_UnstringCount count;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Identifier_Reference intoVar;
+		public @S(30) @OPT COBOL_UnstringCount count;
 		
 		public static class COBOL_UnstringCount extends TokenSequence
 		{
-			public COBOL_Keyword COUNT = new COBOL_Keyword("COUNT");
-			public COBOL_Keyword IN = new COBOL_Keyword("IN");
-			public COBOL_Identifier_Reference countVar;
+			public @S(10) COBOL_Keyword COUNT = new COBOL_Keyword("COUNT");
+			public @S(20) COBOL_Keyword IN = new COBOL_Keyword("IN");
+			public @S(30) COBOL_Identifier_Reference countVar;
 		}
 	}
 	
 	public static class COBOL_UnstringWith extends TokenSequence
 	{
-		public COBOL_Keyword WITH = new COBOL_Keyword("WITH");
-		public COBOL_Keyword POINTER = new COBOL_Keyword("POINTER");
-		public COBOL_Identifier_Reference withPointer;
+		public @S(10) COBOL_Keyword WITH = new COBOL_Keyword("WITH");
+		public @S(20) COBOL_Keyword POINTER = new COBOL_Keyword("POINTER");
+		public @S(30) COBOL_Identifier_Reference withPointer;
 	}
 }

@@ -39,25 +39,25 @@ public class Gupta_Expression extends PrecedenceChooser
 	
 	public static @P(100) class Gupta_Parens extends PrimaryOperator
 	{
-		public PunctuationLeftParen leftParen;
-		public Gupta_Expression expr;
-		public PunctuationRightParen rightParen;		
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Gupta_Expression expr;
+		public @S(30) PunctuationRightParen rightParen;		
 	}
 	
 	public static @P(110) class Gupta_FunctionCall extends PrimaryOperator
 	{
-		public Gupta_Function_Call fnCall;
+		public @S(10) Gupta_Function_Call fnCall;
 	}
 	
 	public static @P(120) class Gupta_IdentifierExpression extends PrimaryOperator
 	{
-		public Gupta_Identifier_Reference identifier;
+		public @S(10) Gupta_Identifier_Reference identifier;
 	}
 	
 	public static @P(130) class Gupta_UnarySign extends PrimaryOperator
 	{
-		public Gupta_PunctuationChoice sign = new Gupta_PunctuationChoice("-", "+");
-		public Gupta_Expression exp;
+		public @S(10) Gupta_PunctuationChoice sign = new Gupta_PunctuationChoice("-", "+");
+		public @S(20) Gupta_Expression exp;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////
@@ -65,22 +65,22 @@ public class Gupta_Expression extends PrecedenceChooser
 	
 	public static @P(140) class Gupta_Multiplicative_Expression extends PrecedenceOperator 
 	{
-		public Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
-		public Gupta_PunctuationChoice timesDivide = new Gupta_PunctuationChoice("*", "/");
-		public Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Gupta_PunctuationChoice timesDivide = new Gupta_PunctuationChoice("*", "/");
+		public @S(30) Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(150) class Gupta_Additive_Expression extends PrecedenceOperator 
 	{
-		public Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
-		public Gupta_PunctuationChoice timesDivide = new Gupta_PunctuationChoice("+", "-");
-		public Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Gupta_PunctuationChoice timesDivide = new Gupta_PunctuationChoice("+", "-");
+		public @S(30) Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(160) class Gupta_StrCat_Expression extends PrecedenceOperator 
 	{
-		public Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
-		public Gupta_Punctuation strCat = new Gupta_Punctuation("||");
-		public Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Gupta_Punctuation strCat = new Gupta_Punctuation("||");
+		public @S(30) Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

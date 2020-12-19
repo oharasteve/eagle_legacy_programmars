@@ -11,14 +11,14 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Gupta_Variable_Declaration extends TokenSequence
 {
-	public Gupta_Type type;
-	public PunctuationColon colon;
-	public Gupta_Data_Definition varName;
-	public @OPT Gupta_InitialValue initValue;
+	public @S(10) Gupta_Type type;
+	public @S(20) PunctuationColon colon;
+	public @S(30) Gupta_Data_Definition varName;
+	public @S(40) @OPT Gupta_InitialValue initValue;
 	
 	public static class Gupta_InitialValue extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public Gupta_Literal literal;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Gupta_Literal literal;
 	}
 }

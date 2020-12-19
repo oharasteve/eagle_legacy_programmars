@@ -8,5 +8,5 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_ContinueStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword CONTINUE = new COBOL_Keyword("CONTINUE");
+	public @S(10) COBOL_Keyword CONTINUE = new COBOL_Keyword("CONTINUE");
 }

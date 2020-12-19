@@ -18,29 +18,29 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_SelectStatement extends TokenSequence
 {
-	public @DOC("7.51") PLI_Keyword SELECT = new PLI_Keyword("SELECT");
-	public PunctuationLeftParen leftParen;
-	public PLI_Expression expr;
-	public PunctuationRightParen rightParen;
-	public PunctuationSemicolon semicolon1;
-	public TokenList<PLI_SelectWhenClause> selectWhens;
-	public @OPT PLI_SelectOtherwise otherwise;
-	public PLI_Keyword END = new PLI_Keyword("END");
-	public PunctuationSemicolon semicolon2;
+	public @S(10) @DOC("7.51") PLI_Keyword SELECT = new PLI_Keyword("SELECT");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) PLI_Expression expr;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationSemicolon semicolon1;
+	public @S(60) TokenList<PLI_SelectWhenClause> selectWhens;
+	public @S(70) @OPT PLI_SelectOtherwise otherwise;
+	public @S(80) PLI_Keyword END = new PLI_Keyword("END");
+	public @S(90) PunctuationSemicolon semicolon2;
 	
 	public static class PLI_SelectWhenClause extends TokenSequence
 	{
-		public PLI_Keyword WHEN = new PLI_Keyword("WHEN");
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<PLI_Literal,PunctuationComma> literals;
-		public PunctuationRightParen rightParen;
-		public PLI_Statement statement;
+		public @S(10) PLI_Keyword WHEN = new PLI_Keyword("WHEN");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<PLI_Literal,PunctuationComma> literals;
+		public @S(40) PunctuationRightParen rightParen;
+		public @S(50) PLI_Statement statement;
 	}
 	
 	public static class PLI_SelectOtherwise extends TokenSequence
 	{
-		public PLI_Keyword OTHERWISE = new PLI_Keyword("OTHERWISE");
-		public @OPT PLI_Statement statement;
-		public @OPT PLI_Punctuation semiColon3 = new PLI_Punctuation(';');
+		public @S(10) PLI_Keyword OTHERWISE = new PLI_Keyword("OTHERWISE");
+		public @S(20) @OPT PLI_Statement statement;
+		public @S(30) @OPT PLI_Punctuation semiColon3 = new PLI_Punctuation(';');
 	}
 }

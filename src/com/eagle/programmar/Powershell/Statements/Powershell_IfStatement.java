@@ -13,9 +13,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Powershell_IfStatement extends TokenSequence
 {
-	public @NEWLINE Powershell_Keyword IF = new Powershell_Keyword("if");
-	public Powershell_Expression condition;
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<Powershell_Statement> stmts;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) @NEWLINE Powershell_Keyword IF = new Powershell_Keyword("if");
+	public @S(20) Powershell_Expression condition;
+	public @S(30) PunctuationLeftBrace leftBrace;
+	public @S(40) @OPT TokenList<Powershell_Statement> stmts;
+	public @S(50) PunctuationRightBrace rightBrace;
 }

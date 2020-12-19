@@ -25,71 +25,71 @@ public class PLI_Type extends TokenChooser
 
 		public @CHOICE static class PLI_TypeCharacter extends TokenSequence
 		{
-			public @OPT PLI_TypeSize size1;
-			public PLI_KeywordChoice CHARACTER = new PLI_KeywordChoice("CHAR", "CHARACTER", "WIDECHAR");
-			public @OPT PLI_TypeSize size2;
-			public @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice(
+			public @S(10) @OPT PLI_TypeSize size1;
+			public @S(20) PLI_KeywordChoice CHARACTER = new PLI_KeywordChoice("CHAR", "CHARACTER", "WIDECHAR");
+			public @S(30) @OPT PLI_TypeSize size2;
+			public @S(40) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice(
 					"STATIC", "VARYING");
-			public @OPT PLI_CharInitial initialValue;
+			public @S(50) @OPT PLI_CharInitial initialValue;
 			
 			public static class PLI_CharInitial extends TokenSequence
 			{
-				public PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
-				public PunctuationLeftParen leftParen;
-				public PLI_Literal initialValue;
-				public PunctuationRightParen rightParen;
+				public @S(10) PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) PLI_Literal initialValue;
+				public @S(40) PunctuationRightParen rightParen;
 			}
 		}
 
 		public @CHOICE static class PLI_TypeFixedBinary extends TokenSequence
 		{
-			public PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
-			public PLI_Keyword BINARY = new PLI_Keyword("BINARY");
-			public @OPT PLI_TypeSize size;
-			public @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
+			public @S(10) PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
+			public @S(20) PLI_Keyword BINARY = new PLI_Keyword("BINARY");
+			public @S(30) @OPT PLI_TypeSize size;
+			public @S(40) @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
 		}
 
 		public @CHOICE static class PLI_TypeFloat extends TokenSequence
 		{
-			public PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
-			public @OPT PLI_Keyword DECIMAL = new PLI_Keyword("DECIMAL");
-			public @OPT PLI_TypeSize size;
-			public @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
+			public @S(10) PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
+			public @S(20) @OPT PLI_Keyword DECIMAL = new PLI_Keyword("DECIMAL");
+			public @S(30) @OPT PLI_TypeSize size;
+			public @S(40) @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
 		}
 		
 		public @CHOICE static class PLI_TypeBit extends TokenSequence
 		{
-			public @OPT PLI_TypeSize size1;
-			public PLI_Keyword BIT = new PLI_Keyword("BIT");
-			public @OPT PLI_TypeSize size2;
-			public @OPT PLI_KeywordChoice alignedOrStatic = new PLI_KeywordChoice(
+			public @S(10) @OPT PLI_TypeSize size1;
+			public @S(20) PLI_Keyword BIT = new PLI_Keyword("BIT");
+			public @S(30) @OPT PLI_TypeSize size2;
+			public @S(40) @OPT PLI_KeywordChoice alignedOrStatic = new PLI_KeywordChoice(
 					"STATIC", "VARYING");
-			public @OPT PLI_Keyword ALIGNED = new PLI_Keyword("ALIGNED");
-			public @OPT PLI_BitInitial initialValue;
+			public @S(50) @OPT PLI_Keyword ALIGNED = new PLI_Keyword("ALIGNED");
+			public @S(60) @OPT PLI_BitInitial initialValue;
 			
 			public static class PLI_BitInitial extends TokenSequence
 			{
-				public PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
-				public PunctuationLeftParen leftParen;
-				public PLI_BitLiteral initialValue;
-				public PunctuationRightParen rightParen;
+				public @S(10) PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) PLI_BitLiteral initialValue;
+				public @S(40) PunctuationRightParen rightParen;
 			}
 		}
 		
 		public @CHOICE static class PLI_TypeGraphic extends TokenSequence
 		{
-			public PLI_Keyword GRAPHIC = new PLI_Keyword("GRAPHIC");
-			public @OPT PLI_TypeSize size;
-			public @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice(
+			public @S(10) PLI_Keyword GRAPHIC = new PLI_Keyword("GRAPHIC");
+			public @S(20) @OPT PLI_TypeSize size;
+			public @S(30) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice(
 					"VARYING");
 		}
 	}
 
 	public @CHOICE static class PLI_TypeSize extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<PLI_TypeSizeContents,PunctuationComma> typeSizeContents;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<PLI_TypeSizeContents,PunctuationComma> typeSizeContents;
+		public @S(30) PunctuationRightParen rightParen;
 		
 		public static class PLI_TypeSizeContents extends TokenChooser
 		{
@@ -97,9 +97,9 @@ public class PLI_Type extends TokenChooser
 			
 			public @CHOICE static class PLI_TypeSizeNormal extends TokenSequence
 			{
-				public PLI_Expression size1;
-				public @OPT PunctuationComma comma;
-				public @OPT PLI_Expression size2;
+				public @S(10) PLI_Expression size1;
+				public @S(20) @OPT PunctuationComma comma;
+				public @S(30) @OPT PLI_Expression size2;
 			}
 		}
 	}

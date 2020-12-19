@@ -10,12 +10,12 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Django_Variable extends TokenSequence
 {
-	public Django_Identifier_Reference variable;
-	public @OPT TokenList<Django_DotVariable> more;
+	public @S(10) Django_Identifier_Reference variable;
+	public @S(20) @OPT TokenList<Django_DotVariable> more;
 	
 	public static class Django_DotVariable extends TokenSequence
 	{
-		public PunctuationPeriod dot;
-		public Django_Identifier_Reference variable;
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) Django_Identifier_Reference variable;
 	}
 }

@@ -19,54 +19,54 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Property extends TokenSequence
 {
-	public @OPT TokenList<CSharp_Annotation> annotation;
-	public @OPT TokenList<CSharp_PropertyModifier> modifier;
-	public CSharp_Type type;
-	public CSharp_Variable_Definition id;
-	public @OPT CSharp_PropertySubscript subscript;
+	public @S(10) @OPT TokenList<CSharp_Annotation> annotation;
+	public @S(20) @OPT TokenList<CSharp_PropertyModifier> modifier;
+	public @S(30) CSharp_Type type;
+	public @S(40) CSharp_Variable_Definition id;
+	public @S(50) @OPT CSharp_PropertySubscript subscript;
 	
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<CSharp_GetterSetter> getSet;
-	public PunctuationRightBrace rightBrace;
+	public @S(60) PunctuationLeftBrace leftBrace;
+	public @S(70) @OPT TokenList<CSharp_GetterSetter> getSet;
+	public @S(80) PunctuationRightBrace rightBrace;
 	
 	public static class CSharp_PropertyModifier extends TokenSequence
 	{
-		public CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
+		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
 	
 	public static class CSharp_PropertySubscript extends TokenSequence
 	{
-		public PunctuationLeftBracket leftBracket;
-		public @OPT CSharp_MethodParameter param;
-		public @OPT TokenList<CSharp_MoreParameters> moreParams;
-		public PunctuationRightBracket rightBracket;
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) @OPT CSharp_MethodParameter param;
+		public @S(30) @OPT TokenList<CSharp_MoreParameters> moreParams;
+		public @S(40) PunctuationRightBracket rightBracket;
 	}
 	
 	public static class CSharp_GetterSetter extends TokenChooser
 	{
 		public @CHOICE static class CSharp_GetterNoBody extends TokenSequence
 		{
-			public CSharp_Keyword get = new CSharp_Keyword("get");
-			public PunctuationSemicolon semicolon;
+			public @S(10) CSharp_Keyword get = new CSharp_Keyword("get");
+			public @S(20) PunctuationSemicolon semicolon;
 		}
 		
 		public @CHOICE static class CSharp_GetterBody extends TokenSequence
 		{
-			public CSharp_Keyword get = new CSharp_Keyword("get");
-			public CSharp_Statement getBody;
+			public @S(10) CSharp_Keyword get = new CSharp_Keyword("get");
+			public @S(20) CSharp_Statement getBody;
 		}
 
 		public @CHOICE static class CSharp_SetterNoBody extends TokenSequence
 		{
-			public @OPT CSharp_Keyword csPrivate = new CSharp_Keyword("private");
-			public CSharp_Keyword set = new CSharp_Keyword("set");
-			public PunctuationSemicolon semicolon;
+			public @S(10) @OPT CSharp_Keyword csPrivate = new CSharp_Keyword("private");
+			public @S(20) CSharp_Keyword set = new CSharp_Keyword("set");
+			public @S(30) PunctuationSemicolon semicolon;
 		}
 		
 		public @CHOICE static class CSharp_SetterBody extends TokenSequence
 		{
-			public CSharp_Keyword set = new CSharp_Keyword("set");
-			public CSharp_Statement setBody;
+			public @S(10) CSharp_Keyword set = new CSharp_Keyword("set");
+			public @S(20) CSharp_Statement setBody;
 		}
 	}
 }

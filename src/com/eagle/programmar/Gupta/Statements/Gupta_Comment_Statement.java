@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_Comment_Statement extends TokenSequence
 {
-	public Gupta_Punctuation exclamation = new Gupta_Punctuation('!');
+	public @S(10) Gupta_Punctuation exclamation = new Gupta_Punctuation('!');
 }

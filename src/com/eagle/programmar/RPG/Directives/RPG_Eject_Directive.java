@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class RPG_Eject_Directive extends TokenSequence
 {
-	public RPG_Keyword EJECT = new RPG_Keyword(7, 12, "/EJECT");
+	public @S(10) RPG_Keyword EJECT = new RPG_Keyword(7, 12, "/EJECT");
 }

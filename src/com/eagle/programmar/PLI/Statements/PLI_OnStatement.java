@@ -15,11 +15,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_OnStatement extends TokenSequence
 {
-	public @OPT PLI_Label label;
-	public @DOC("7.36") PLI_Keyword ON = new PLI_Keyword("ON");
-	public SeparatedList<PLI_Signal,PunctuationComma> signals;
-	public @OPT PLI_Keyword SNAP = new PLI_Keyword("SNAP");
-	public PLI_OnAction action;
+	public @S(10) @OPT PLI_Label label;
+	public @S(20) @DOC("7.36") PLI_Keyword ON = new PLI_Keyword("ON");
+	public @S(30) SeparatedList<PLI_Signal,PunctuationComma> signals;
+	public @S(40) @OPT PLI_Keyword SNAP = new PLI_Keyword("SNAP");
+	public @S(50) PLI_OnAction action;
 		
 	public static class PLI_OnAction extends TokenChooser
 	{
@@ -27,8 +27,8 @@ public class PLI_OnStatement extends TokenSequence
 
 		public @CHOICE static class PLI_On_Action_System extends TokenSequence
 		{
-			public PLI_Keyword SYSTEM = new PLI_Keyword("SYSTEM");
-			public PunctuationSemicolon semicolon;
+			public @S(10) PLI_Keyword SYSTEM = new PLI_Keyword("SYSTEM");
+			public @S(20) PunctuationSemicolon semicolon;
 		}
 	}
 }

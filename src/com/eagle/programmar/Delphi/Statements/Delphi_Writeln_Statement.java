@@ -14,25 +14,25 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Writeln_Statement extends TokenSequence
 {
-	public Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
-	public @OPT Delphi_WriteLn_Something something;
+	public @S(10) Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
+	public @S(20) @OPT Delphi_WriteLn_Something something;
 	
 	public static class Delphi_WriteLn_Something extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public @OPT SeparatedList<Delphi_WriteLn_Piece,PunctuationComma> pieces;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<Delphi_WriteLn_Piece,PunctuationComma> pieces;
+		public @S(30) PunctuationRightParen rightParen;
 		
 		public static class Delphi_WriteLn_Piece extends TokenSequence
 		{
-			public Delphi_Expression expr;
-			public @OPT Delphi_Writeln_ColonWidth width;
-			public @OPT Delphi_Writeln_ColonWidth precision;
+			public @S(10) Delphi_Expression expr;
+			public @S(20) @OPT Delphi_Writeln_ColonWidth width;
+			public @S(30) @OPT Delphi_Writeln_ColonWidth precision;
 			
 			public static class Delphi_Writeln_ColonWidth extends TokenSequence
 			{
-				public PunctuationColon colon;
-				public Delphi_Expression width;
+				public @S(10) PunctuationColon colon;
+				public @S(20) Delphi_Expression width;
 			}
 		}
 	}

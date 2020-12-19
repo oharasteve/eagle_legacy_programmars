@@ -16,7 +16,7 @@ public class IBMASM_Immediate extends TokenChooser
 	
 	public @CHOICE static class IBMASM_Immediate_Data extends TokenSequence
 	{
-		public IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("C", "X");
-		public IBMASM_Literal literal;
+		public @S(10) IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("C", "X");
+		public @S(20) IBMASM_Literal literal;
 	}
 }

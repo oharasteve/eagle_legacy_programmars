@@ -9,6 +9,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_TerminateStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword TERMINATE = new COBOL_Keyword("TERMINATE");
-	public COBOL_Identifier_Reference report;
+	public @S(10) COBOL_Keyword TERMINATE = new COBOL_Keyword("TERMINATE");
+	public @S(20) COBOL_Identifier_Reference report;
 }

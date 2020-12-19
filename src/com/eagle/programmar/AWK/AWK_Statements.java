@@ -19,9 +19,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class AWK_Statements extends TokenSequence
 {
-	public SeparatedList<AWK_Statement,PunctuationSemicolon> statements;
-	public @OPT PunctuationSemicolon semicolon;
-	public @OPT TokenList<AWK_Comment> comments;
+	public @S(10) SeparatedList<AWK_Statement,PunctuationSemicolon> statements;
+	public @S(20) @OPT PunctuationSemicolon semicolon;
+	public @S(30) @OPT TokenList<AWK_Comment> comments;
 	
 	public static class AWK_Statement extends TokenChooser
 	{

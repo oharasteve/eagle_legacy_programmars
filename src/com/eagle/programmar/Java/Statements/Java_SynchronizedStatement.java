@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_SynchronizedStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.19") Java_Keyword SYNCHRONIZED = new Java_Keyword("synchronized");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Java_Expression expr;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public Java_Statement syncStatement;
+	public @S(10) @NEWLINE @DOC("statements.html#14.19") Java_Keyword SYNCHRONIZED = new Java_Keyword("synchronized");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE Java_Expression expr;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) Java_Statement syncStatement;
 }

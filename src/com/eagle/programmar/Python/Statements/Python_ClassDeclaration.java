@@ -20,27 +20,27 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_ClassDeclaration extends TokenSequence implements AbstractClass
 {
-	public @OPT TokenList<Python_Decorator> decorator;
-	public @OPT Python_EndOfLine eoln;
-	public @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
-	public Python_Class_Definition name;
-	public @OPT Python_ClassSuper superClass;
-	public @NOSPACE PunctuationColon colon;
-	public Python_SingleOrMultiLineStatement statements;
+	public @S(10) @OPT TokenList<Python_Decorator> decorator;
+	public @S(20) @OPT Python_EndOfLine eoln;
+	public @S(30) @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
+	public @S(40) Python_Class_Definition name;
+	public @S(50) @OPT Python_ClassSuper superClass;
+	public @S(60) @NOSPACE PunctuationColon colon;
+	public @S(70) Python_SingleOrMultiLineStatement statements;
 	
 	public static class Python_ClassSuper extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public @OPT Python_EndOfLine eoln;
-		public @OPT Python_Type type;
-		public @OPT Python_ClassSuper superClass;
-		public @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes; 
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT Python_EndOfLine eoln;
+		public @S(30) @OPT Python_Type type;
+		public @S(40) @OPT Python_ClassSuper superClass;
+		public @S(50) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes; 
+		public @S(60) PunctuationRightParen rightParen;
 
 		public static class Python_MoreTypes extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public Python_Type type;
+			public @S(10) PunctuationComma comma;
+			public @S(20) Python_Type type;
 		}
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_ExpressionList extends TokenSequence
 {
-	public SeparatedList<Python_Expression,PunctuationComma> expressions;
-	public @OPT PunctuationComma comma;
+	public @S(10) SeparatedList<Python_Expression,PunctuationComma> expressions;
+	public @S(20) @OPT PunctuationComma comma;
 }

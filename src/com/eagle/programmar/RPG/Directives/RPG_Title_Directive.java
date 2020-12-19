@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class RPG_Title_Directive extends TokenSequence
 {
-	public RPG_Keyword TITLE = new RPG_Keyword(7, 12, "/TITLE");
-	public RPG_Literal ttl = new RPG_Literal(14, 74);
+	public @S(10) RPG_Keyword TITLE = new RPG_Keyword(7, 12, "/TITLE");
+	public @S(20) RPG_Literal ttl = new RPG_Literal(14, 74);
 }

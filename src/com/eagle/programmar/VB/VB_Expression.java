@@ -49,45 +49,45 @@ public class VB_Expression extends PrecedenceChooser
 	
 	public static @P(100) class VB_BuiltIn extends PrimaryOperator
 	{
-		public VB_KeywordChoice builtIn = new VB_KeywordChoice("false", "true", "nothing");
+		public @S(10) VB_KeywordChoice builtIn = new VB_KeywordChoice("false", "true", "nothing");
 	}
 	
 	public static @P(110) class VB_FunctionCall extends PrimaryOperator
 	{
-		public VB_Identifier_Reference fnName;
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<VB_Expression,PunctuationComma> args;
-		public PunctuationRightParen rightParen;
+		public @S(10) VB_Identifier_Reference fnName;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<VB_Expression,PunctuationComma> args;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static @P(120) class VB_NegativeExpression extends PrimaryOperator
 	{
-		public VB_PunctuationChoice operator = new VB_PunctuationChoice("-", "+");
-		public VB_Expression expr;
+		public @S(10) VB_PunctuationChoice operator = new VB_PunctuationChoice("-", "+");
+		public @S(20) VB_Expression expr;
 	}
 
 	public static @P(130) class VB_NotExpression extends PrimaryOperator
 	{
-		public VB_Keyword NOT = new VB_Keyword("NOT");
-		public VB_Expression expr;
+		public @S(10) VB_Keyword NOT = new VB_Keyword("NOT");
+		public @S(20) VB_Expression expr;
 	}
 	
 	public static @P(140) class VB_VariableExpression extends PrimaryOperator
 	{
-		public VB_Variable variable;
+		public @S(10) VB_Variable variable;
 	}
 	
 	public static @P(150) class VB_ParenthesizedExpression extends PrimaryOperator
 	{
-		public PunctuationLeftParen leftParen;
-		public VB_Expression expression;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) VB_Expression expression;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static @P(160) class VB_CommentExpression extends PrimaryOperator
 	{
-		public VB_Comment comment;
-		public VB_Expression expr;
+		public @S(10) VB_Comment comment;
+		public @S(20) VB_Expression expr;
 	}
 
 	///////////////////////////////////////////////
@@ -95,31 +95,31 @@ public class VB_Expression extends PrecedenceChooser
 
 	public static @P(170) class VB_SubscriptExpression extends PrecedenceOperator
 	{
-		public VB_Expression expr = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public PunctuationLeftBracket leftBracket;
-		public VB_Expression subscr = new VB_Expression(this, AllowedPrecedence.HIGHER);
-		public PunctuationRightBracket rightBracket;
+		public @S(10) VB_Expression expr = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) PunctuationLeftBracket leftBracket;
+		public @S(30) VB_Expression subscr = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
 	public static @P(180) class VB_Subfield extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public PunctuationPeriod dot;
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(190) class VB_ExponentExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_Punctuation operator = new VB_Punctuation('^');
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_Punctuation operator = new VB_Punctuation('^');
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(200) class VB_MultiplicativeExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_MultiplyOperation operator;
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_MultiplyOperation operator;
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 
 		public static class VB_MultiplyOperation extends TokenChooser
 		{
@@ -130,45 +130,45 @@ public class VB_Expression extends PrecedenceChooser
 
 	public static @P(210) class VB_AdditiveExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_PunctuationChoice operator = new VB_PunctuationChoice("+", "-");
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice("+", "-");
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(220) class VB_ConcatExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_Punctuation ampersand = new VB_Punctuation('&');
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_Punctuation ampersand = new VB_Punctuation('&');
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(230) class VB_ShiftExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_PunctuationChoice operator = new VB_PunctuationChoice("<<", ">>");
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice("<<", ">>");
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(240) class VB_RelationalExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_PunctuationChoice operator = new VB_PunctuationChoice(
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice(
 				"<=", ">=", "<>", "<", ">");
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(250) class VB_InstanceOfExpression extends PrecedenceOperator
 	{
-		public VB_Expression expr = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_Keyword instanceOperator = new VB_Keyword("instanceof");
-		public VB_Type type;
+		public @S(10) VB_Expression expr = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_Keyword instanceOperator = new VB_Keyword("instanceof");
+		public @S(30) VB_Type type;
 	}
 
 	public static @P(260) class VB_EqualityExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_EqualityOperator equalityOperator;
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_EqualityOperator equalityOperator;
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 
 		public static class VB_EqualityOperator extends TokenChooser
 		{
@@ -179,36 +179,36 @@ public class VB_Expression extends PrecedenceChooser
 
 	public static @P(270) class VB_AndExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_Punctuation bitwiseAndOperator = new VB_Punctuation('&');
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_Punctuation bitwiseAndOperator = new VB_Punctuation('&');
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(280) class VB_ExclusiveOrExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_Punctuation bitwiseXOrOperator = new VB_Punctuation('^');
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_Punctuation bitwiseXOrOperator = new VB_Punctuation('^');
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(290) class VB_InclusiveOrExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_Keyword xor = new VB_Keyword("xor");
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_Keyword xor = new VB_Keyword("xor");
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(300) class VB_ConditionalAndExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_KeywordChoice andOperator = new VB_KeywordChoice("and", "andalso");
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_KeywordChoice andOperator = new VB_KeywordChoice("and", "andalso");
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(310) class VB_ConditionalOrExpression extends PrecedenceOperator
 	{
-		public VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-		public VB_KeywordChoice orOperator = new VB_KeywordChoice("or", "orelse");
-		public VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) VB_KeywordChoice orOperator = new VB_KeywordChoice("or", "orelse");
+		public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

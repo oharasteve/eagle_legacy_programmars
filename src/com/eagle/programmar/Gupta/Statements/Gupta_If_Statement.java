@@ -11,14 +11,14 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_If_Statement extends TokenSequence
 {
-	public Gupta_Keyword If = new Gupta_Keyword("If");
-	public Gupta_Condition condition;
-	public TokenList<Gupta_Statement> thenStatements;
-	public @OPT Gupta_Else_Statement elseClause;
+	public @S(10) Gupta_Keyword If = new Gupta_Keyword("If");
+	public @S(20) Gupta_Condition condition;
+	public @S(30) TokenList<Gupta_Statement> thenStatements;
+	public @S(40) @OPT Gupta_Else_Statement elseClause;
 	
 	public static class Gupta_Else_Statement extends TokenSequence
 	{
-		public Gupta_Keyword Else = new Gupta_Keyword("Else");
-		public TokenList<Gupta_Statement> elseStatements;
+		public @S(10) Gupta_Keyword Else = new Gupta_Keyword("Else");
+		public @S(20) TokenList<Gupta_Statement> elseStatements;
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class C_Label extends TokenSequence
 {
-	public C_Label_Definition label;
-	public PunctuationColon colon;
+	public @S(10) C_Label_Definition label;
+	public @S(20) PunctuationColon colon;
 }

@@ -14,17 +14,17 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_IfStatement extends TokenSequence
 {
-	public AWK_Keyword IF = new AWK_Keyword("if");
-	public PunctuationLeftParen leftParen;
-	public AWK_Expression condition;
-	public PunctuationRightParen rightParen;
-	public AWK_IfBlock block;
-	public @OPT AWK_IfElse ifelse;
+	public @S(10) AWK_Keyword IF = new AWK_Keyword("if");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) AWK_Expression condition;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) AWK_IfBlock block;
+	public @S(60) @OPT AWK_IfElse ifelse;
 	
 	public static class AWK_IfElse extends TokenSequence
 	{
-		public AWK_Keyword ELSE = new AWK_Keyword("else");
-		public AWK_IfBlock block;
+		public @S(10) AWK_Keyword ELSE = new AWK_Keyword("else");
+		public @S(20) AWK_IfBlock block;
 	}
 	
 	public static class AWK_IfBlock extends TokenChooser

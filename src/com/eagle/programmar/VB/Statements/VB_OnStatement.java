@@ -11,28 +11,28 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_OnStatement extends TokenSequence
 {
-	public VB_Keyword ON = new VB_Keyword("on");
-	public VB_Keyword ERROR = new VB_Keyword("error");
-	public VB_OnWhat onWhat;
+	public @S(10) VB_Keyword ON = new VB_Keyword("on");
+	public @S(20) VB_Keyword ERROR = new VB_Keyword("error");
+	public @S(30) VB_OnWhat onWhat;
 	
 	public static class VB_OnWhat extends TokenChooser
 	{
 		public @CHOICE static class VB_OnResume extends TokenSequence
 		{
-			public VB_Keyword RESUME = new VB_Keyword("resume");
-			public VB_Keyword NEXT = new VB_Keyword("next");
+			public @S(10) VB_Keyword RESUME = new VB_Keyword("resume");
+			public @S(20) VB_Keyword NEXT = new VB_Keyword("next");
 		}
 		
 		public @CHOICE static class VB_OnGotoZero extends TokenSequence
 		{
-			public VB_Keyword GOTO = new VB_Keyword("goto");
-			public VB_Number zero;
+			public @S(10) VB_Keyword GOTO = new VB_Keyword("goto");
+			public @S(20) VB_Number zero;
 		}
 		
 		public @CHOICE static class VB_OnGotoLabel extends TokenSequence
 		{
-			public VB_Keyword GOTO = new VB_Keyword("goto");
-			public VB_Identifier_Reference lbl;
+			public @S(10) VB_Keyword GOTO = new VB_Keyword("goto");
+			public @S(20) VB_Identifier_Reference lbl;
 		}
 	}
 }

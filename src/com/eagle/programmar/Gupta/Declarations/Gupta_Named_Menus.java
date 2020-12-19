@@ -8,6 +8,6 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_Named_Menus extends Gupta_Declaration
 {
-	public Gupta_Keyword Named = new Gupta_Keyword("Named");
-	public Gupta_Keyword Menus = new Gupta_Keyword("Menus");
+	public @S(10) Gupta_Keyword Named = new Gupta_Keyword("Named");
+	public @S(20) Gupta_Keyword Menus = new Gupta_Keyword("Menus");
 }

@@ -13,24 +13,24 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Gupta_Condition extends TokenSequence
 {
-	public Gupta_ConditionClause conditionClause;
-	public @OPT TokenList<Gupta_AndOr> clauses;
+	public @S(10) Gupta_ConditionClause conditionClause;
+	public @S(20) @OPT TokenList<Gupta_AndOr> clauses;
 	
 	public static class Gupta_AndOr extends TokenSequence
 	{
-		public Gupta_KeywordChoice andOr = new Gupta_KeywordChoice("AND", "OR");
-		public Gupta_ConditionClause conditionClause;
+		public @S(10) Gupta_KeywordChoice andOr = new Gupta_KeywordChoice("AND", "OR");
+		public @S(20) Gupta_ConditionClause conditionClause;
 	}
 
 	public static class Gupta_ConditionClause extends TokenSequence
 	{
-		public Gupta_Expression expr;
-		public Gupta_OperatorExpression opExpr;
+		public @S(10) Gupta_Expression expr;
+		public @S(20) Gupta_OperatorExpression opExpr;
 		
 		public static class Gupta_OperatorExpression extends TokenSequence
 		{
-			public Gupta_Relational_Operator operator;
-			public Gupta_Expression expr;
+			public @S(10) Gupta_Relational_Operator operator;
+			public @S(20) Gupta_Expression expr;
 			
 			public static class Gupta_Relational_Operator extends TokenChooser
 			{
@@ -39,20 +39,20 @@ public class Gupta_Condition extends TokenSequence
 				
 				public @CHOICE static class Gupta_Not_Equals extends TokenSequence
 				{
-					public Gupta_Keyword NOT = new Gupta_Keyword("NOT");
-					public PunctuationEquals equals;
+					public @S(10) Gupta_Keyword NOT = new Gupta_Keyword("NOT");
+					public @S(20) PunctuationEquals equals;
 				}
 
 				public @CHOICE static class Gupta_Less_Than extends TokenSequence
 				{
-					public Gupta_Keyword LESS = new Gupta_Keyword("LESS");
-					public Gupta_Keyword THAN = new Gupta_Keyword("THAN");
+					public @S(10) Gupta_Keyword LESS = new Gupta_Keyword("LESS");
+					public @S(20) Gupta_Keyword THAN = new Gupta_Keyword("THAN");
 				}
 				
 				public @CHOICE static class Gupta_Greater_Than extends TokenSequence
 				{
-					public Gupta_Keyword GREATER = new Gupta_Keyword("GREATER");
-					public Gupta_Keyword THAN = new Gupta_Keyword("THAN");
+					public @S(10) Gupta_Keyword GREATER = new Gupta_Keyword("GREATER");
+					public @S(20) Gupta_Keyword THAN = new Gupta_Keyword("THAN");
 				}
 			}
 		}

@@ -14,11 +14,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_MacroDirective extends TokenSequence
 {
-	public IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
-	public IntelASM_Keyword MACRO = new IntelASM_Keyword("macro");
-	public IntelASM_Macro_Definition name;
-	public IntelASM_Number parameterCount;
-	public IntelASM_EndOfLine eoln;
+	public @S(10) IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
+	public @S(20) IntelASM_Keyword MACRO = new IntelASM_Keyword("macro");
+	public @S(30) IntelASM_Macro_Definition name;
+	public @S(40) IntelASM_Number parameterCount;
+	public @S(50) IntelASM_EndOfLine eoln;
 	
 	public TokenList<IntelASM_Line> lines;
 
@@ -26,7 +26,7 @@ public class IntelASM_MacroDirective extends TokenSequence
 	
 	public static class IntelASM_EndMacro extends TokenSequence
 	{
-		public IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
-		public IntelASM_Keyword ENDMACRO = new IntelASM_Keyword("endmacro");
+		public @S(10) IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
+		public @S(20) IntelASM_Keyword ENDMACRO = new IntelASM_Keyword("endmacro");
 	}
 }

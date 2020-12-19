@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_StopStatement extends TokenSequence
 {
-	public @DOC("sm/stop.htm") Natural_Keyword STOP = new Natural_Keyword("STOP");
+	public @S(10) @DOC("sm/stop.htm") Natural_Keyword STOP = new Natural_Keyword("STOP");
 }

@@ -18,48 +18,48 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Django_Insert extends TokenSequence
 {
-	public HTML_Punctuation startBraceBrace = new HTML_Punctuation("{{");
-	public Django_InsertWhat what;
-	public HTML_Punctuation endBraceBrace = new HTML_Punctuation("}}");
+	public @S(10) HTML_Punctuation startBraceBrace = new HTML_Punctuation("{{");
+	public @S(20) Django_InsertWhat what;
+	public @S(30) HTML_Punctuation endBraceBrace = new HTML_Punctuation("}}");
 	
 	public static class Django_InsertWhat extends TokenChooser
 	{
 		public @CHOICE static class Django_InsertSuper extends TokenSequence
 		{
-			public Django_Keyword SUPER = new Django_Keyword("super");
-			public @OPT Django_InsertSuperArgs args;
+			public @S(10) Django_Keyword SUPER = new Django_Keyword("super");
+			public @S(20) @OPT Django_InsertSuperArgs args;
 
 			public static class Django_InsertSuperArgs extends TokenSequence
 			{
-				public PunctuationLeftParen leftParen;
-				public PunctuationRightParen rightParen;
+				public @S(10) PunctuationLeftParen leftParen;
+				public @S(20) PunctuationRightParen rightParen;
 			}
 		}
 
 		public @CHOICE static class Django_InsertVariable extends TokenSequence
 		{
-			public Django_Variable variable;
-			public @OPT Django_InsertDot insertDot;
-			public @OPT Django_OrWhat what;
+			public @S(10) Django_Variable variable;
+			public @S(20) @OPT Django_InsertDot insertDot;
+			public @S(30) @OPT Django_OrWhat what;
 		}
 	}
 	
 	public static class Django_InsertDot extends TokenSequence
 	{
-		public PunctuationPeriod dot;
-		public Django_Number number;
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) Django_Number number;
 	}
 
 	public static class Django_OrWhat extends TokenSequence
 	{
-		public Django_Punctuation verticalBar = new Django_Punctuation('|');
-		public Django_KeywordChoice DATE = new Django_KeywordChoice(
+		public @S(10) Django_Punctuation verticalBar = new Django_Punctuation('|');
+		public @S(20) Django_KeywordChoice DATE = new Django_KeywordChoice(
 				"capfirst",
 				"date",
 				"escape",
 				"safe"
 		);
-		public @OPT PunctuationColon colon;
-		public @OPT Django_Literal literal;
+		public @S(30) @OPT PunctuationColon colon;
+		public @S(40) @OPT Django_Literal literal;
 	}
 }

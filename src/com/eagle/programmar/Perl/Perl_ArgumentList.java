@@ -10,17 +10,17 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Perl_ArgumentList extends TokenSequence
 {
-	public Perl_Expression arg;
-	public @OPT TokenList<Perl_Comment> comments1;
-	public @OPT TokenList<Perl_MoreArguments> moreArgs;
-	public @OPT PunctuationComma comma;
-	public @OPT TokenList<Perl_Comment> comments2;
+	public @S(10) Perl_Expression arg;
+	public @S(20) @OPT TokenList<Perl_Comment> comments1;
+	public @S(30) @OPT TokenList<Perl_MoreArguments> moreArgs;
+	public @S(40) @OPT PunctuationComma comma;
+	public @S(50) @OPT TokenList<Perl_Comment> comments2;
 	
 	public static class Perl_MoreArguments extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public @OPT TokenList<Perl_Comment> comments1;
-		public Perl_Expression arg;
-		public @OPT TokenList<Perl_Comment> comments2;
+		public @S(10) PunctuationComma comma;
+		public @S(20) @OPT TokenList<Perl_Comment> comments1;
+		public @S(30) Perl_Expression arg;
+		public @S(40) @OPT TokenList<Perl_Comment> comments2;
 	}
 }

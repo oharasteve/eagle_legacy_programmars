@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_RX extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"A",		// Add
 		"AH",		// Add
 		"AD",		// FP add
@@ -60,8 +60,8 @@ public class IBMASM_Format_RX extends TokenSequence
 		"BAS"
 	);
 
-	public IBMASM_Spaces spaces;
-	public IBMASM_Register register;
-	public PunctuationComma comma;
-	public IBMASM_Address address;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Register register;
+	public @S(40) PunctuationComma comma;
+	public @S(50) IBMASM_Address address;
 }

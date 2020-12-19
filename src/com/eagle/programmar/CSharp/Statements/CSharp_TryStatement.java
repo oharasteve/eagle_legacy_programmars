@@ -18,32 +18,32 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_TryStatement extends TokenSequence
 {
-	public @DOC("statements.html#14.20") CSharp_Keyword TRY = new CSharp_Keyword("try");
-	public @INDENT PunctuationLeftBrace leftBrace;
-	public TokenList<CSharp_StatementOrComment> statements;
-	public @OUTDENT PunctuationRightBrace rightBrace;
-	public @OPT TokenList<CSharp_Comment> comments;
-	public @OPT TokenList<CSharp_CatchBlock> catchBlocks;
-	public @OPT CSharp_FinallyBlock finallyBlock;
+	public @S(10) @DOC("statements.html#14.20") CSharp_Keyword TRY = new CSharp_Keyword("try");
+	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(30) TokenList<CSharp_StatementOrComment> statements;
+	public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(50) @OPT TokenList<CSharp_Comment> comments;
+	public @S(60) @OPT TokenList<CSharp_CatchBlock> catchBlocks;
+	public @S(70) @OPT CSharp_FinallyBlock finallyBlock;
 	
 	public static class CSharp_CatchBlock extends TokenSequence
 	{
-		public CSharp_Keyword CATCH = new CSharp_Keyword("catch");
-		public @OPT CSharp_CatchWhat catchWhat;
-		public CSharp_Statement catchStatement;
+		public @S(10) CSharp_Keyword CATCH = new CSharp_Keyword("catch");
+		public @S(20) @OPT CSharp_CatchWhat catchWhat;
+		public @S(30) CSharp_Statement catchStatement;
 		
 		public static class CSharp_CatchWhat extends TokenSequence
 		{
-			public @NOSPACE PunctuationLeftParen leftParen;
-			public @NOSPACE CSharp_Type cstype;
-			public @OPT CSharp_Identifier id;
-			public @NOSPACE PunctuationRightParen rightParen;
+			public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+			public @S(20) @NOSPACE CSharp_Type cstype;
+			public @S(30) @OPT CSharp_Identifier id;
+			public @S(40) @NOSPACE PunctuationRightParen rightParen;
 		}
 	}
 	
 	public static class CSharp_FinallyBlock extends TokenSequence
 	{
-		public CSharp_Keyword FINALLY = new CSharp_Keyword("finally");
-		public CSharp_Statement finallyStatement;
+		public @S(10) CSharp_Keyword FINALLY = new CSharp_Keyword("finally");
+		public @S(20) CSharp_Statement finallyStatement;
 	}
 }

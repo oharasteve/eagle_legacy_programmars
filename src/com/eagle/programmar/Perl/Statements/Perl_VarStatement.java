@@ -15,10 +15,10 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Perl_VarStatement extends TokenSequence
 {
-	public TokenList<Perl_VarPrefix> prefix;
-	public @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
-	public Perl_Variable_Definition var;
-	public @OPT Perl_Variable_Init init;
+	public @S(10) TokenList<Perl_VarPrefix> prefix;
+	public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
+	public @S(30) Perl_Variable_Definition var;
+	public @S(40) @OPT Perl_Variable_Init init;
 	
 	public static class Perl_VarPrefix extends TokenChooser
 	{
@@ -27,7 +27,7 @@ public class Perl_VarStatement extends TokenSequence
 
 	public static class Perl_Variable_Init extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public Perl_Expression initVal;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Perl_Expression initVal;
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Perl_Label extends TokenSequence
 {
-	public Perl_Label_Definition label;
-	public PunctuationColon colon;
+	public @S(10) Perl_Label_Definition label;
+	public @S(20) PunctuationColon colon;
 }

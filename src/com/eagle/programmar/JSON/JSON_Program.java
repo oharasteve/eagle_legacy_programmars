@@ -25,7 +25,7 @@ public class JSON_Program extends EagleLanguage
 		return "http://www.w3schools.com/json/";
 	}
 	
-	public TokenList<JSON_Element> elements;
+	public @S(10) TokenList<JSON_Element> elements;
 	
 	public static class JSON_Element extends TokenChooser
 	{

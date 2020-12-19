@@ -26,18 +26,18 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Class extends TokenSequence implements AbstractClass
 {
-	public @OPT TokenList<CSharp_AnnotationOrComment> annotationOrComment;
-	public @OPT TokenList<CSharp_ClassModifier> modifiers;
-	public CSharp_KeywordChoice classOrInterface = new CSharp_KeywordChoice(
+	public @S(10) @OPT TokenList<CSharp_AnnotationOrComment> annotationOrComment;
+	public @S(20) @OPT TokenList<CSharp_ClassModifier> modifiers;
+	public @S(30) CSharp_KeywordChoice classOrInterface = new CSharp_KeywordChoice(
 			"class", "interface", "struct");
-	public CSharp_Class_Definition className;
-	public @OPT CSharp_GenericType genericType;
-	public @OPT CSharp_ExtendsOrImplements extendsOrImplements;
-	public @OPT @NEWLINE TokenList<CSharp_Comment> comments1;
-	public @INDENT PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<CSharp_ClassElement> elements;
-	public @OUTDENT PunctuationRightBrace rightBrace;
-	public @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+	public @S(40) CSharp_Class_Definition className;
+	public @S(50) @OPT CSharp_GenericType genericType;
+	public @S(60) @OPT CSharp_ExtendsOrImplements extendsOrImplements;
+	public @S(70) @OPT @NEWLINE TokenList<CSharp_Comment> comments1;
+	public @S(80) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(90) @OPT TokenList<CSharp_ClassElement> elements;
+	public @S(100) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(110) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	
 	public static class CSharp_AnnotationOrComment extends TokenChooser
 	{
@@ -47,34 +47,34 @@ public class CSharp_Class extends TokenSequence implements AbstractClass
 	
 	public static class CSharp_ClassModifier extends TokenSequence
 	{
-		public CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
+		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
 
 	public static class CSharp_DotIdentifier extends TokenSequence
 	{
-		public PunctuationPeriod dot;
-		public CSharp_Identifier id;
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) CSharp_Identifier id;
 	}
 	
 	public static class CSharp_ExtendsOrImplements extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public @OPT CSharp_NamespaceQualifer namespaceQualifier;
-		public SeparatedList<CSharp_Identifier_Reference,PunctuationPeriod> className;
-		public @OPT CSharp_GenericType genericType;
-		public @OPT TokenList<CSharp_MoreImplements> moreImpl;
+		public @S(10) PunctuationColon colon;
+		public @S(20) @OPT CSharp_NamespaceQualifer namespaceQualifier;
+		public @S(30) SeparatedList<CSharp_Identifier_Reference,PunctuationPeriod> className;
+		public @S(40) @OPT CSharp_GenericType genericType;
+		public @S(50) @OPT TokenList<CSharp_MoreImplements> moreImpl;
 		
 		public static class CSharp_NamespaceQualifer extends TokenSequence
 		{
-			public CSharp_Identifier_Reference nameSpace;
-			public CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
+			public @S(10) CSharp_Identifier_Reference nameSpace;
+			public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
 		}
 		
 		public static class CSharp_MoreImplements extends TokenSequence
 		{
-			public PunctuationComma comma;
-			public SeparatedList<CSharp_Identifier_Reference,PunctuationPeriod> className;
-			public @OPT CSharp_GenericType genericType;
+			public @S(10) PunctuationComma comma;
+			public @S(20) SeparatedList<CSharp_Identifier_Reference,PunctuationPeriod> className;
+			public @S(30) @OPT CSharp_GenericType genericType;
 		}
 	}
 	
@@ -92,8 +92,8 @@ public class CSharp_Class extends TokenSequence implements AbstractClass
 		
 		public @CHOICE static class CSharp_StaticStatement extends TokenSequence
 		{
-			public @OPT CSharp_Keyword STATIC = new CSharp_Keyword("static");
-			public @NEWLINE CSharp_Statement statement;
+			public @S(10) @OPT CSharp_Keyword STATIC = new CSharp_Keyword("static");
+			public @S(20) @NEWLINE CSharp_Statement statement;
 		}
 	}
 }

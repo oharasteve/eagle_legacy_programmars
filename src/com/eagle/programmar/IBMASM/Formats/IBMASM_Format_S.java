@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_Format_S extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"B",
 		"BE",
 		"BNE",
@@ -20,6 +20,6 @@ public class IBMASM_Format_S extends TokenSequence
 		"STCK"
 	);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Address address;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Address address;
 }

@@ -13,8 +13,8 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class CMD_Grep_Statement extends TokenSequence
 {
-	public CMD_Keyword GREP = new CMD_Keyword("grep");
-	public TokenList<CMD_Grep_Parameter> params;
+	public @S(10) CMD_Keyword GREP = new CMD_Keyword("grep");
+	public @S(20) TokenList<CMD_Grep_Parameter> params;
 	
 	public static class CMD_Grep_Parameter extends TokenChooser
 	{
@@ -22,45 +22,45 @@ public class CMD_Grep_Statement extends TokenSequence
 		
 		public @CHOICE static class CMD_Grep_Option_e extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword E = new CMD_Keyword("e");
-			public CMD_Argument pattern;
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword E = new CMD_Keyword("e");
+			public @S(30) CMD_Argument pattern;
 		}
 
 		public @CHOICE static class CMD_Grep_Option_H extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword H = new CMD_Keyword("H");
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword H = new CMD_Keyword("H");
 		}
 
 		public @CHOICE static class CMD_Grep_Option_i extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword I = new CMD_Keyword("i");
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword I = new CMD_Keyword("i");
 		}
 
 		public @CHOICE static class CMD_Grep_Option_l extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword L = new CMD_Keyword("l");
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword L = new CMD_Keyword("l");
 		}
 
 		public @CHOICE static class CMD_Grep_Option_n extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword N = new CMD_Keyword("n");
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword N = new CMD_Keyword("n");
 		}
 
 		public @CHOICE static class CMD_Grep_Option_v extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword V = new CMD_Keyword("v");
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword V = new CMD_Keyword("v");
 		}
 
 		public @CHOICE static class CMD_Grep_Option_w extends TokenSequence
 		{
-			public PunctuationHyphen minus;
-			public CMD_Keyword W = new CMD_Keyword("w");
+			public @S(10) PunctuationHyphen minus;
+			public @S(20) CMD_Keyword W = new CMD_Keyword("w");
 		}
 	}
 }

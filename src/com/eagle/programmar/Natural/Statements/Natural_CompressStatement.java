@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_CompressStatement extends TokenSequence
 {
-	public @DOC("sm/compress.htm") Natural_Keyword COMPRESS = new Natural_Keyword("COMPRESS");
-	public TokenList<Natural_Expression> expr;
-	public Natural_Keyword INTO = new Natural_Keyword("INTO");
-	public Natural_Variable var;
+	public @S(10) @DOC("sm/compress.htm") Natural_Keyword COMPRESS = new Natural_Keyword("COMPRESS");
+	public @S(20) TokenList<Natural_Expression> expr;
+	public @S(30) Natural_Keyword INTO = new Natural_Keyword("INTO");
+	public @S(40) Natural_Variable var;
 }

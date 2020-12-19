@@ -15,13 +15,13 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class CSharp_SubscriptOperator extends TokenSequence
 {
-	public @OPT @NEWLINE TokenList<CSharp_Comment> comment;
-	public @OPT TokenList<CSharp_Annotation> annotation;
-	public @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
-	public CSharp_Type returnType;
-	public CSharp_Keyword THIS = new CSharp_Keyword("this");
-	public PunctuationLeftBracket leftBracket;
-	public CSharp_MethodParameter parameter;
-	public PunctuationRightBracket rightBracket;
-	public CSharp_MethodImplementation implementation;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
+	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
+	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(40) CSharp_Type returnType;
+	public @S(50) CSharp_Keyword THIS = new CSharp_Keyword("this");
+	public @S(60) PunctuationLeftBracket leftBracket;
+	public @S(70) CSharp_MethodParameter parameter;
+	public @S(80) PunctuationRightBracket rightBracket;
+	public @S(90) CSharp_MethodImplementation implementation;
 }

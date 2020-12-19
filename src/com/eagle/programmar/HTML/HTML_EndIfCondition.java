@@ -11,9 +11,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class HTML_EndIfCondition extends TokenSequence
 {
-	public HTML_Punctuation startTag = new HTML_Punctuation("<!");
-	public PunctuationLeftBracket leftBracket;
-	public HTML_Keyword ENDIF = new HTML_Keyword("endif");
-	public PunctuationRightBracket rightBracket;
-	public HTML_Punctuation endTag = new HTML_Punctuation('>');
+	public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<!");
+	public @S(20) PunctuationLeftBracket leftBracket;
+	public @S(30) HTML_Keyword ENDIF = new HTML_Keyword("endif");
+	public @S(40) PunctuationRightBracket rightBracket;
+	public @S(50) HTML_Punctuation endTag = new HTML_Punctuation('>');
 }

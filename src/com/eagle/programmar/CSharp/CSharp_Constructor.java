@@ -18,24 +18,24 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_Constructor extends TokenSequence
 {
-	public @OPT @NEWLINE TokenList<CSharp_Comment> comment;
-	public @OPT TokenList<CSharp_Annotation> annotation;
-	public @OPT TokenList<CSharp_MethodModifiers> modifiers;
-	public CSharp_Current_Class_Reference constructorName;
-	public PunctuationLeftParen leftParen;
-	public @OPT CSharp_MethodParameter param;
-	public @OPT TokenList<CSharp_MoreParameters> moreParams;
-	public PunctuationRightParen rightParen;
-	public @OPT CSharp_ExtendsBase extendsBase;
-	public CSharp_MethodBody body;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
+	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
+	public @S(30) @OPT TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(40) CSharp_Current_Class_Reference constructorName;
+	public @S(50) PunctuationLeftParen leftParen;
+	public @S(60) @OPT CSharp_MethodParameter param;
+	public @S(70) @OPT TokenList<CSharp_MoreParameters> moreParams;
+	public @S(80) PunctuationRightParen rightParen;
+	public @S(90) @OPT CSharp_ExtendsBase extendsBase;
+	public @S(100) CSharp_MethodBody body;
 
 	public static class CSharp_ExtendsBase extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public CSharp_KeywordChoice baseOrthis = new CSharp_KeywordChoice(
+		public @S(10) PunctuationColon colon;
+		public @S(20) CSharp_KeywordChoice baseOrthis = new CSharp_KeywordChoice(
 				"base", "this");
-		public PunctuationLeftParen leftParen;
-		public @OPT CSharp_ArgumentList argList;
-		public PunctuationRightParen rightParen;
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) @OPT CSharp_ArgumentList argList;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 }

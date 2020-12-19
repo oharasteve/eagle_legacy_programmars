@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_DefparameterFunction extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @DOC("m_defpar.htm") Lisp_Keyword DEFPARAMETER = new Lisp_Keyword("defparameter");
-	public Lisp_Parameter_Definition name;
-	public Lisp_SExpr value;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @DOC("m_defpar.htm") Lisp_Keyword DEFPARAMETER = new Lisp_Keyword("defparameter");
+	public @S(30) Lisp_Parameter_Definition name;
+	public @S(40) Lisp_SExpr value;
+	public @S(50) PunctuationRightParen rightParen;
 }

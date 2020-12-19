@@ -9,7 +9,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_ParenthesizedExpression extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public C_Expression expression;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) C_Expression expression;
+	public @S(30) PunctuationRightParen rightParen;
 }

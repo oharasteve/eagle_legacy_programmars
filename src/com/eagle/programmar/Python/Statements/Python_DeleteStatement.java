@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_DeleteStatement extends TokenSequence
 {
-	public Python_Keyword DEL = new Python_Keyword("del");
-	public Python_ExpressionList expressionList;
+	public @S(10) Python_Keyword DEL = new Python_Keyword("del");
+	public @S(20) Python_ExpressionList expressionList;
 }

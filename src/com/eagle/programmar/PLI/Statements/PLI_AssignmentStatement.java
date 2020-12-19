@@ -14,11 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_AssignmentStatement extends TokenSequence
 {
-	public @OPT PLI_Label label;
-	public PLI_Identifier_Reference var;
-	public @OPT PLI_Subscript params;
-	public PunctuationEquals equals;
-	public PLI_Expression expr;
-	public @OPT PLI_Comment comment;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @OPT PLI_Label label;
+	public @S(20) PLI_Identifier_Reference var;
+	public @S(30) @OPT PLI_Subscript params;
+	public @S(40) PunctuationEquals equals;
+	public @S(50) PLI_Expression expr;
+	public @S(60) @OPT PLI_Comment comment;
+	public @S(70) PunctuationSemicolon semicolon;
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_TitleDirective extends TokenSequence
 {
-	public IntelASM_Keyword TITLE = new IntelASM_Keyword("TITLE");
-	public IntelASM_CommentToEndOfLine title;
+	public @S(10) IntelASM_Keyword TITLE = new IntelASM_Keyword("TITLE");
+	public @S(20) IntelASM_CommentToEndOfLine title;
 }

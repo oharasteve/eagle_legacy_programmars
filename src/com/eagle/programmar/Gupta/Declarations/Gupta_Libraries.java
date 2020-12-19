@@ -8,5 +8,5 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_Libraries extends Gupta_Declaration
 {
-	public Gupta_Keyword Libraries = new Gupta_Keyword("Libraries");
+	public @S(10) Gupta_Keyword Libraries = new Gupta_Keyword("Libraries");
 }

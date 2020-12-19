@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class JavaP_SourceFile extends TokenSequence
 {
-	public JavaP_Keyword SOURCEFILE = new JavaP_Keyword("SourceFile");
-	public PunctuationColon colon;
-	public JavaP_Literal fileName;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword SOURCEFILE = new JavaP_Keyword("SourceFile");
+	public @S(20) PunctuationColon colon;
+	public @S(30) JavaP_Literal fileName;
+	public @S(40) JavaP_EndOfLine eoln;
 }

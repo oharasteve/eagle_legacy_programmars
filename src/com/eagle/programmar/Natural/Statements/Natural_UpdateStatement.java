@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Natural_UpdateStatement extends TokenSequence
 {
-	public @DOC("sm/update.htm") Natural_Keyword UPDATE = new Natural_Keyword("UPDATE");
-	public PunctuationLeftParen leftParen;
-	public Natural_Label label;
-	public PunctuationRightParen rightParen;
+	public @S(10) @DOC("sm/update.htm") Natural_Keyword UPDATE = new Natural_Keyword("UPDATE");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Natural_Label label;
+	public @S(40) PunctuationRightParen rightParen;
 }

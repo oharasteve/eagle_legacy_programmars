@@ -8,6 +8,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_ExitStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsexit.htm") COBOL_Keyword EXIT = new COBOL_Keyword("EXIT");
-	public @OPT COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
+	public @S(10) @DOC("rlpsexit.htm") COBOL_Keyword EXIT = new COBOL_Keyword("EXIT");
+	public @S(20) @OPT COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
 }

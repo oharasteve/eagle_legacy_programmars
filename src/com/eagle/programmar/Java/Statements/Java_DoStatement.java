@@ -15,13 +15,13 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_DoStatement extends TokenSequence
 {
-	public @OPT @NEWLINE Java_Label label;
-	public @DOC("statements.html#14.13") Java_Keyword DO = new Java_Keyword("do");
-	public @OPT Java_Comment comment;
-	public Java_Statement doStatement;
-	public Java_Keyword WHILE = new Java_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE Java_Expression condition;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @OPT @NEWLINE Java_Label label;
+	public @S(20) @DOC("statements.html#14.13") Java_Keyword DO = new Java_Keyword("do");
+	public @S(30) @OPT Java_Comment comment;
+	public @S(40) Java_Statement doStatement;
+	public @S(50) Java_Keyword WHILE = new Java_Keyword("while");
+	public @S(60) PunctuationLeftParen leftParen;
+	public @S(70) @NOSPACE Java_Expression condition;
+	public @S(80) @NOSPACE PunctuationRightParen rightParen;
+	public @S(90) @NOSPACE PunctuationSemicolon semicolon;
 }

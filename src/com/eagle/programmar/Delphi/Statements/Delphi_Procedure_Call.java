@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Procedure_Call extends TokenSequence
 {
-	public Delphi_Expression expr;
+	public @S(10) Delphi_Expression expr;
 }

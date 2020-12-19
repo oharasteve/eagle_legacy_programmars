@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Break_Statement extends TokenSequence
 {
-	public Delphi_Keyword BREAK = new Delphi_Keyword("Break");
+	public @S(10) Delphi_Keyword BREAK = new Delphi_Keyword("Break");
 }

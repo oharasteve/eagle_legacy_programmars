@@ -15,32 +15,32 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_InspectStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsinsp.htm") COBOL_Keyword INSPECT = new COBOL_Keyword("INSPECT");
-	public COBOL_Expression expr;
-	public COBOL_InspectType type;
+	public @S(10) @DOC("rlpsinsp.htm") COBOL_Keyword INSPECT = new COBOL_Keyword("INSPECT");
+	public @S(20) COBOL_Expression expr;
+	public @S(30) COBOL_InspectType type;
 	
 	public static class COBOL_InspectType extends TokenChooser
 	{
 		public @CHOICE static class COBOL_InspectReplacing extends TokenSequence
 		{
-			public COBOL_Keyword REPLACING = new COBOL_Keyword("REPLACING");
-			public TokenList<COBOL_InspectReplacePattern> patterns;
+			public @S(10) COBOL_Keyword REPLACING = new COBOL_Keyword("REPLACING");
+			public @S(20) TokenList<COBOL_InspectReplacePattern> patterns;
 			
 			public static class COBOL_InspectReplacePattern extends TokenSequence
 			{
-				public COBOL_KeywordChoice FIRST = new COBOL_KeywordChoice("ALL", "FIRST", "LEADING");
-				public COBOL_Expression pattern;
-				public COBOL_Keyword BY = new COBOL_Keyword("BY");
-				public COBOL_Expression replacement;
+				public @S(10) COBOL_KeywordChoice FIRST = new COBOL_KeywordChoice("ALL", "FIRST", "LEADING");
+				public @S(20) COBOL_Expression pattern;
+				public @S(30) COBOL_Keyword BY = new COBOL_Keyword("BY");
+				public @S(40) COBOL_Expression replacement;
 			}
 		}
 		
 		public @CHOICE static class COBOL_InspectConverting extends TokenSequence
 		{
-			public COBOL_Keyword CONVERTING = new COBOL_Keyword("CONVERTING");
-			public COBOL_InspectConvert convertFrom;
-			public COBOL_Keyword TO = new COBOL_Keyword("TO");
-			public COBOL_InspectConvert convertTo;
+			public @S(10) COBOL_Keyword CONVERTING = new COBOL_Keyword("CONVERTING");
+			public @S(20) COBOL_InspectConvert convertFrom;
+			public @S(30) COBOL_Keyword TO = new COBOL_Keyword("TO");
+			public @S(40) COBOL_InspectConvert convertTo;
 			
 			public static class COBOL_InspectConvert extends TokenChooser
 			{
@@ -51,31 +51,31 @@ public class COBOL_InspectStatement extends COBOL_AbstractStatement
 		
 		public @CHOICE static class COBOL_InspectTallying extends TokenSequence
 		{
-			public COBOL_Keyword TALLYING = new COBOL_Keyword("TALLYING");
-			public COBOL_Identifier_Reference var;
-			public COBOL_Keyword FOR = new COBOL_Keyword("FOR");
-			public COBOL_InpsectTallyingWhat forWhat;
+			public @S(10) COBOL_Keyword TALLYING = new COBOL_Keyword("TALLYING");
+			public @S(20) COBOL_Identifier_Reference var;
+			public @S(30) COBOL_Keyword FOR = new COBOL_Keyword("FOR");
+			public @S(40) COBOL_InpsectTallyingWhat forWhat;
 			
 			public static class COBOL_InpsectTallyingWhat extends TokenChooser
 			{
 				public @CHOICE static class COBOL_InspectTallyingAll extends TokenSequence
 				{
-					public COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-					public COBOL_Literal literal;
+					public @S(10) COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+					public @S(20) COBOL_Literal literal;
 				}
 				
 				public @CHOICE static class COBOL_InspectTallyingSpaces extends TokenSequence
 				{
-					public COBOL_Keyword LEADING = new COBOL_Keyword("LEADING");
-					public COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
+					public @S(10) COBOL_Keyword LEADING = new COBOL_Keyword("LEADING");
+					public @S(20) COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
 				}
 				
 				public @CHOICE static class COBOL_InspectTallyingCharacters extends TokenSequence
 				{
-					public COBOL_Keyword CHARACTERS = new COBOL_Keyword("CHARACTERS");
-					public COBOL_Keyword BEFORE = new COBOL_Keyword("BEFORE");
-					public COBOL_Keyword INITIAL = new COBOL_Keyword("INITIAL");
-					public COBOL_Expression expr;
+					public @S(10) COBOL_Keyword CHARACTERS = new COBOL_Keyword("CHARACTERS");
+					public @S(20) COBOL_Keyword BEFORE = new COBOL_Keyword("BEFORE");
+					public @S(30) COBOL_Keyword INITIAL = new COBOL_Keyword("INITIAL");
+					public @S(40) COBOL_Expression expr;
 				}
 			}
 		}

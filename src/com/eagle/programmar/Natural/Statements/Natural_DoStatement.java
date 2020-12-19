@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_DoStatement extends TokenSequence
 {
-	public @DOC("sm/dodoend.htm") Natural_Keyword DO = new Natural_Keyword("DO");
-	public @OPT TokenList<Natural_Statement> statements;
-	public Natural_Keyword DOEND = new Natural_Keyword("DOEND");
+	public @S(10) @DOC("sm/dodoend.htm") Natural_Keyword DO = new Natural_Keyword("DO");
+	public @S(20) @OPT TokenList<Natural_Statement> statements;
+	public @S(30) Natural_Keyword DOEND = new Natural_Keyword("DOEND");
 }

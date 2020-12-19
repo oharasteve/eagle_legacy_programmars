@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_ExitStatement extends TokenSequence
 {
-	public @DOC("function.exit.php") Perl_Keyword EXIT = new Perl_Keyword("exit");
+	public @S(10) @DOC("function.exit.php") Perl_Keyword EXIT = new Perl_Keyword("exit");
 }

@@ -27,7 +27,7 @@ public class CMD_Program extends EagleLanguage
 		return "http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/";
 	}
 	
-	public @OPT TokenList<CMD_CommandOrLabelOrUnparsed> commands;
+	public @S(10) @OPT TokenList<CMD_CommandOrLabelOrUnparsed> commands;
 	
 	public @SKIP static class CMD_CommandOrLabelOrUnparsed extends TokenChooser
 	{
@@ -38,8 +38,8 @@ public class CMD_Program extends EagleLanguage
 	
 	public @SKIP static class CMD_Label extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public CMD_Label_Definition label;
-		public CMD_EndOfLine eoln;
+		public @S(10) PunctuationColon colon;
+		public @S(20) CMD_Label_Definition label;
+		public @S(30) CMD_EndOfLine eoln;
 	}
 }

@@ -17,24 +17,24 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_ForStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
-	public PunctuationLeftParen leftParen;
-	public @NOSPACE CSharp_ForLoopVariable loopVar;
-	public PunctuationEquals equals;
-	public CSharp_Expression initialize;
-	public @NOSPACE PunctuationSemicolon semicolon1;
-	public CSharp_Expression terminateCondition;
-	public @NOSPACE PunctuationSemicolon semicolon2;
-	public CSharp_Expression increment;
-	public @NOSPACE PunctuationRightParen rightParen;
-	public CSharp_Statement action;
+	public @S(10) @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_ForLoopVariable loopVar;
+	public @S(40) PunctuationEquals equals;
+	public @S(50) CSharp_Expression initialize;
+	public @S(60) @NOSPACE PunctuationSemicolon semicolon1;
+	public @S(70) CSharp_Expression terminateCondition;
+	public @S(80) @NOSPACE PunctuationSemicolon semicolon2;
+	public @S(90) CSharp_Expression increment;
+	public @S(100) @NOSPACE PunctuationRightParen rightParen;
+	public @S(110) CSharp_Statement action;
 
 	public static class CSharp_ForLoopVariable extends TokenChooser
 	{
 		public @FIRST static class CSharp_ForLoopVariableWithType extends TokenSequence
 		{
-			public @NOSPACE CSharp_Type varType;
-			public CSharp_Variable forVar;
+			public @S(10) @NOSPACE CSharp_Type varType;
+			public @S(20) CSharp_Variable forVar;
 		}
 
 		public @CHOICE @NOSPACE CSharp_Variable forVar;

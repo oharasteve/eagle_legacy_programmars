@@ -13,21 +13,21 @@ import com.eagle.tokens.TokenSequence;
 
 public class PLI_IfStatement extends TokenSequence
 {
-	public @OPT PLI_Label label;
-	public @DOC("7.27") PLI_Keyword IF = new PLI_Keyword("IF");
-	public PLI_Expression cond;
-	public PLI_Keyword THEN = new PLI_Keyword("THEN");
-	public @OPT TokenList<PLI_Comment> comment1;
-	public PLI_Statement thenAction;
-	public @OPT TokenList<PLI_Comment> comment2;
-	public @OPT PLI_Else elseClause;
-	public @OPT PLI_Keyword ENDIF = new PLI_Keyword("END-IF");
+	public @S(10) @OPT PLI_Label label;
+	public @S(20) @DOC("7.27") PLI_Keyword IF = new PLI_Keyword("IF");
+	public @S(30) PLI_Expression cond;
+	public @S(40) PLI_Keyword THEN = new PLI_Keyword("THEN");
+	public @S(50) @OPT TokenList<PLI_Comment> comment1;
+	public @S(60) PLI_Statement thenAction;
+	public @S(70) @OPT TokenList<PLI_Comment> comment2;
+	public @S(80) @OPT PLI_Else elseClause;
+	public @S(90) @OPT PLI_Keyword ENDIF = new PLI_Keyword("END-IF");
 	
 	public static class PLI_Else extends TokenSequence
 	{
-		public PLI_Keyword ELSE = new PLI_Keyword("ELSE");
-		public @OPT TokenList<PLI_Comment> comment3;
-		public PLI_Statement elseAction;
-		public @OPT TokenList<PLI_Comment> comment4;
+		public @S(10) PLI_Keyword ELSE = new PLI_Keyword("ELSE");
+		public @S(20) @OPT TokenList<PLI_Comment> comment3;
+		public @S(30) PLI_Statement elseAction;
+		public @S(40) @OPT TokenList<PLI_Comment> comment4;
 	}
 }

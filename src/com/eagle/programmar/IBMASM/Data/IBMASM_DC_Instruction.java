@@ -18,37 +18,37 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class IBMASM_DC_Instruction extends TokenSequence
 {
-	public @OPT IBMASM_Label_Definition label;
-	public IBMASM_Spaces spaces1;
-	public IBMASM_Keyword DC = new IBMASM_Keyword("DC");
-	public IBMASM_Spaces spaces2;
-	public IBMASM_DC_Value value;
-	public IBMASM_Spaces spaces3;
-	public @OPT IBMASM_Remark remark;
+	public @S(10) @OPT IBMASM_Label_Definition label;
+	public @S(20) IBMASM_Spaces spaces1;
+	public @S(30) IBMASM_Keyword DC = new IBMASM_Keyword("DC");
+	public @S(40) IBMASM_Spaces spaces2;
+	public @S(50) IBMASM_DC_Value value;
+	public @S(60) IBMASM_Spaces spaces3;
+	public @S(70) @OPT IBMASM_Remark remark;
 
 	public static class IBMASM_DC_Value extends TokenChooser
 	{
 		public @CHOICE static class IBMASM_DC_Address extends TokenSequence
 		{
-			public IBMASM_Keyword A = new IBMASM_Keyword("A");
-			public PunctuationLeftParen leftParen;
-			public IBMASM_Address address;
-			public PunctuationRightParen rightParen;
+			public @S(10) IBMASM_Keyword A = new IBMASM_Keyword("A");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) IBMASM_Address address;
+			public @S(40) PunctuationRightParen rightParen;
 		}
 		
 		public @CHOICE static class IBMASM_DC_Length extends TokenSequence
 		{
-			public @OPT IBMASM_Number replication;
-			public IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("CL", "XL");
-			public IBMASM_Number number;
-			public IBMASM_Literal literal;
+			public @S(10) @OPT IBMASM_Number replication;
+			public @S(20) IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("CL", "XL");
+			public @S(30) IBMASM_Number number;
+			public @S(40) IBMASM_Literal literal;
 		}
 		
 		public @CHOICE static class IBMASM_DC_Literal extends TokenSequence
 		{
-			public IBMASM_KeywordChoice code = new IBMASM_KeywordChoice(
+			public @S(10) IBMASM_KeywordChoice code = new IBMASM_KeywordChoice(
 					"B", "C", "E", "F", "G", "H", "P", "X");
-			public IBMASM_Literal literal;
+			public @S(20) IBMASM_Literal literal;
 		}
 	}
 }

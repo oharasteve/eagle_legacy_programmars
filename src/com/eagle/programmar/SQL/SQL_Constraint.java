@@ -15,21 +15,21 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class SQL_Constraint extends TokenSequence
 {
-	public SQL_Keyword CONSTRAINT = new SQL_Keyword("CONSTRAINT");
-	public SQL_Key_Definition key;
-	public SQL_KeywordChoice FOREIGN = new SQL_KeywordChoice("FOREIGN", "PRIMARY");
-	public SQL_Keyword KEY = new SQL_Keyword("KEY");
-	public PunctuationLeftParen leftParen1;
-	public SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyField1;
-	public PunctuationRightParen rightParen1;
-	public @OPT SQL_ConstraintReference references;
+	public @S(10) SQL_Keyword CONSTRAINT = new SQL_Keyword("CONSTRAINT");
+	public @S(20) SQL_Key_Definition key;
+	public @S(30) SQL_KeywordChoice FOREIGN = new SQL_KeywordChoice("FOREIGN", "PRIMARY");
+	public @S(40) SQL_Keyword KEY = new SQL_Keyword("KEY");
+	public @S(50) PunctuationLeftParen leftParen1;
+	public @S(60) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyField1;
+	public @S(70) PunctuationRightParen rightParen1;
+	public @S(80) @OPT SQL_ConstraintReference references;
 	
 	public static class SQL_ConstraintReference extends TokenSequence
 	{
-		public SQL_Keyword REFERENCES = new SQL_Keyword("REFERENCES");
-		public SQL_Identifier_Reference referenceField;
-		public PunctuationLeftParen leftParen2;
-		public SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyField2;
-		public PunctuationRightParen rightParen2;
+		public @S(10) SQL_Keyword REFERENCES = new SQL_Keyword("REFERENCES");
+		public @S(20) SQL_Identifier_Reference referenceField;
+		public @S(30) PunctuationLeftParen leftParen2;
+		public @S(40) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyField2;
+		public @S(50) PunctuationRightParen rightParen2;
 	}
 }

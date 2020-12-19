@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class AWK_NextStatement extends TokenSequence
 {
-	public AWK_Keyword NEXT = new AWK_Keyword("next");
+	public @S(10) AWK_Keyword NEXT = new AWK_Keyword("next");
 }

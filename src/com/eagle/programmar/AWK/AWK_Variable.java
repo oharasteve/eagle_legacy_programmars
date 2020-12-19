@@ -10,13 +10,13 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class AWK_Variable extends TokenSequence
 {
-	public AWK_Identifier_Reference id;
-	public @OPT AWK_VarSubscript subscript;
+	public @S(10) AWK_Identifier_Reference id;
+	public @S(20) @OPT AWK_VarSubscript subscript;
 	
 	public static class AWK_VarSubscript extends TokenSequence
 	{
-		public PunctuationLeftBracket leftBracket;
-		public AWK_Expression expr;
-		public PunctuationRightBracket rightBracket;
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) AWK_Expression expr;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 }

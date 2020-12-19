@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Perl_ExpressionList extends TokenSequence
 {
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<Perl_Comment> comment;
-	public Perl_ArgumentList valueList;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) PunctuationLeftBrace leftBrace;
+	public @S(20) @OPT TokenList<Perl_Comment> comment;
+	public @S(30) Perl_ArgumentList valueList;
+	public @S(40) PunctuationRightBrace rightBrace;
 }

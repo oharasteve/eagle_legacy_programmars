@@ -14,14 +14,14 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class JavaP_NestMembers extends TokenSequence
 {
-	public JavaP_Keyword NESTMEMBERS = new JavaP_Keyword("NestMembers");
-	public PunctuationColon colon;
-	public JavaP_EndOfLine eoln1;
-	public TokenList<JavaP_NestMember> members;
+	public @S(10) JavaP_Keyword NESTMEMBERS = new JavaP_Keyword("NestMembers");
+	public @S(20) PunctuationColon colon;
+	public @S(30) JavaP_EndOfLine eoln1;
+	public @S(40) TokenList<JavaP_NestMember> members;
 	
 	public static class JavaP_NestMember extends TokenSequence
 	{
-		public SeparatedList<JavaP_Identifier, PunctuationSlash> className;
-		public JavaP_EndOfLine eoln2;
+		public @S(10) SeparatedList<JavaP_Identifier, PunctuationSlash> className;
+		public @S(20) JavaP_EndOfLine eoln2;
 	}
 }

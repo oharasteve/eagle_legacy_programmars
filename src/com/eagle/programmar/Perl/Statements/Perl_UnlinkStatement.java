@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_UnlinkStatement extends TokenSequence
 {
-	public Perl_Keyword UNLINK = new Perl_Keyword("unlink");
-	public Perl_Expression expr;
+	public @S(10) Perl_Keyword UNLINK = new Perl_Keyword("unlink");
+	public @S(20) Perl_Expression expr;
 }

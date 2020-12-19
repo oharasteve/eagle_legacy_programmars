@@ -11,9 +11,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_GetStatement extends TokenSequence
 {
-	public @OPT Natural_Label label;
-	public @DOC("sm/get.htm") Natural_Keyword GET = new Natural_Keyword("GET");
-	public @OPT Natural_Keyword TRANSACTION = new Natural_Keyword("TRANSACTION");
-	public @OPT Natural_Keyword DATA = new Natural_Keyword("DATA");
-	public TokenList<Natural_Expression> exprs;
+	public @S(10) @OPT Natural_Label label;
+	public @S(20) @DOC("sm/get.htm") Natural_Keyword GET = new Natural_Keyword("GET");
+	public @S(30) @OPT Natural_Keyword TRANSACTION = new Natural_Keyword("TRANSACTION");
+	public @S(40) @OPT Natural_Keyword DATA = new Natural_Keyword("DATA");
+	public @S(50) TokenList<Natural_Expression> exprs;
 }

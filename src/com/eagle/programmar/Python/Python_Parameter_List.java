@@ -17,31 +17,31 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_Parameter_List extends TokenSequence
 {
-	public @NOSPACE PunctuationLeftParen leftParen;
-	public @OPT Python_Comment comment;
-	public @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_Params params;
-	public @OPT Python_EndOfLine eoln;
-	public @NOSPACE PunctuationRightParen rightParen;
+	public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(20) @OPT Python_Comment comment;
+	public @S(30) @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_Params params;
+	public @S(40) @OPT Python_EndOfLine eoln;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	
 	public static class Python_Params extends TokenSequence
 	{
-		public @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-		public @OPT Python_Expression expr;
-		public @OPT Python_InitValue initValue;
-		public @OPT TokenList<Python_MoreParams> moreParams;
+		public @S(10) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
+		public @S(20) @OPT Python_Expression expr;
+		public @S(30) @OPT Python_InitValue initValue;
+		public @S(40) @OPT TokenList<Python_MoreParams> moreParams;
 		
 		public static class Python_MoreParams extends TokenSequence
 		{
-			public @NOSPACE PunctuationComma comma;
-			public @OPT Python_Comment comment;
-			public @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-			public @OPT Python_Expression expr;
-			public @OPT Python_InitValue initValue;
+			public @S(10) @NOSPACE PunctuationComma comma;
+			public @S(20) @OPT Python_Comment comment;
+			public @S(30) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
+			public @S(40) @OPT Python_Expression expr;
+			public @S(50) @OPT Python_InitValue initValue;
 			
 			public static class Python_InitValue extends TokenSequence
 			{
-				public PunctuationEquals equals;
-				public Python_Expression defaultValue;
+				public @S(10) PunctuationEquals equals;
+				public @S(20) Python_Expression defaultValue;
 			}
 		}
 	}

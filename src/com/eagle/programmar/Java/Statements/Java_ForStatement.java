@@ -29,23 +29,23 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 	
 	public @CHOICE static class Java_ForLoopStatement extends TokenSequence
 	{
-		public @OPT @NEWLINE Java_Label label;
-		public @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
-		public PunctuationLeftParen leftParen;
-		public @OPT @NOSPACE Java_Annotation annotation;
-		public @OPT Java_ForInit init;
-		public @NOSPACE PunctuationSemicolon semicolon1;
-		public @OPT Java_Expression terminateCondition;
-		public @NOSPACE PunctuationSemicolon semicolon2;
-		public @OPT SeparatedList<Java_Expression,PunctuationComma> increments;
-		public @NOSPACE PunctuationRightParen rightParen;
-		public @OPT Java_Comment comment;
-		public Java_Statement action;
+		public @S(10) @OPT @NEWLINE Java_Label label;
+		public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) @OPT @NOSPACE Java_Annotation annotation;
+		public @S(50) @OPT Java_ForInit init;
+		public @S(60) @NOSPACE PunctuationSemicolon semicolon1;
+		public @S(70) @OPT Java_Expression terminateCondition;
+		public @S(80) @NOSPACE PunctuationSemicolon semicolon2;
+		public @S(90) @OPT SeparatedList<Java_Expression,PunctuationComma> increments;
+		public @S(100) @NOSPACE PunctuationRightParen rightParen;
+		public @S(110) @OPT Java_Comment comment;
+		public @S(120) Java_Statement action;
 
 		public static class Java_ForInit extends TokenSequence
 		{
-			public @OPT Java_Keyword FINAL = new Java_Keyword("final");
-			public SeparatedList<Java_ForWhat,PunctuationComma> what;
+			public @S(10) @OPT Java_Keyword FINAL = new Java_Keyword("final");
+			public @S(20) SeparatedList<Java_ForWhat,PunctuationComma> what;
 			
 			public static class Java_ForWhat extends TokenChooser
 			{
@@ -53,8 +53,8 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 				
 				public @FIRST static class Java_ForWithType extends TokenSequence
 				{
-					public Java_Type varType;
-					public Java_Expression expr;
+					public @S(10) Java_Type varType;
+					public @S(20) Java_Expression expr;
 				}
 			}
 		}
@@ -62,17 +62,17 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 	
 	public @CHOICE static class Java_ForCollectionStatement extends TokenSequence
 	{
-		public @OPT @NEWLINE Java_Label label;
-		public Java_Keyword FOR = new Java_Keyword("for");
-		public PunctuationLeftParen leftParen;
-		public @OPT Java_Keyword FINAL = new Java_Keyword("final");
-		public Java_Type varType;
-		public Java_Variable forVar;
-		public PunctuationColon colon;
-		public Java_Expression collection;
-		public PunctuationRightParen rightParen;
-		public @OPT Java_Comment comment;
-		public Java_Statement action;
+		public @S(10) @OPT @NEWLINE Java_Label label;
+		public @S(20) Java_Keyword FOR = new Java_Keyword("for");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) @OPT Java_Keyword FINAL = new Java_Keyword("final");
+		public @S(50) Java_Type varType;
+		public @S(60) Java_Variable forVar;
+		public @S(70) PunctuationColon colon;
+		public @S(80) Java_Expression collection;
+		public @S(90) PunctuationRightParen rightParen;
+		public @S(100) @OPT Java_Comment comment;
+		public @S(110) Java_Statement action;
 	}
 	
 	@Override

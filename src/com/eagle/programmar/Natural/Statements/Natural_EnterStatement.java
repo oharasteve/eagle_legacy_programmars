@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_EnterStatement extends TokenSequence
 {
-	public Natural_Keyword ENTER = new Natural_Keyword("ENTER");
+	public @S(10) Natural_Keyword ENTER = new Natural_Keyword("ENTER");
 }

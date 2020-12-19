@@ -13,9 +13,9 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class PLI_Subscript extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @OPT SeparatedList<PLI_ExpressionOrStar,PunctuationComma> args;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @OPT SeparatedList<PLI_ExpressionOrStar,PunctuationComma> args;
+	public @S(30) PunctuationRightParen rightParen;
 	
 	public static class PLI_ExpressionOrStar extends TokenChooser
 	{

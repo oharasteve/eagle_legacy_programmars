@@ -39,7 +39,7 @@ public class CMacro_Program extends EagleLanguage
 		overrideManager.override(CMacro_IfDefElement.class, CMacro_Element.class);
 	}
 	
-	public TokenList<CMacro_Element> elements;
+	public @S(10) TokenList<CMacro_Element> elements;
 	
 	public static class CMacro_Element extends TokenChooser
 	{
@@ -51,8 +51,8 @@ public class CMacro_Program extends EagleLanguage
 	
 	public static class CMacro_CommentLine extends TokenSequence
 	{
-		public C_Comment comment;
-		public CMacro_EndOfLine endOfLine;
+		public @S(10) C_Comment comment;
+		public @S(20) CMacro_EndOfLine endOfLine;
 	}
 	
 	public static class CMacro_TextLine extends TerminalLiteralToken

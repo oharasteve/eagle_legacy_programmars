@@ -10,8 +10,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Repeat_Statement extends TokenSequence
 {
-	public Delphi_Keyword REPEAT = new Delphi_Keyword("Repeat");
-	public Delphi_Statement_List statements;
-	public Delphi_Keyword UNTIL = new Delphi_Keyword("Until");
-	public Delphi_Expression expr;
+	public @S(10) Delphi_Keyword REPEAT = new Delphi_Keyword("Repeat");
+	public @S(20) Delphi_Statement_List statements;
+	public @S(30) Delphi_Keyword UNTIL = new Delphi_Keyword("Until");
+	public @S(40) Delphi_Expression expr;
 }

@@ -10,16 +10,16 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class VB_ArgumentList extends TokenSequence
 {
-	public VB_Expression arg;
-	public @OPT TokenList<VB_Comment> comment;
-	public @OPT TokenList<VB_MoreArguments> moreArgs;
-	public @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(10) VB_Expression arg;
+	public @S(20) @OPT TokenList<VB_Comment> comment;
+	public @S(30) @OPT TokenList<VB_MoreArguments> moreArgs;
+	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	
 	public static class VB_MoreArguments extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public @OPT TokenList<VB_Comment> comment1;
-		public VB_Expression arg;
-		public @OPT TokenList<VB_Comment> comment2;
+		public @S(10) PunctuationComma comma;
+		public @S(20) @OPT TokenList<VB_Comment> comment1;
+		public @S(30) VB_Expression arg;
+		public @S(40) @OPT TokenList<VB_Comment> comment2;
 	}
 }

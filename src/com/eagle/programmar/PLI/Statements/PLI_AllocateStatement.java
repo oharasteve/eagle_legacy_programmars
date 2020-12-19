@@ -17,29 +17,29 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_AllocateStatement extends TokenSequence
 {
-	public @DOC("7.2") PLI_Keyword ALLOCATE = new PLI_Keyword("ALLOCATE");
-	public PLI_AllocateVariable var;
-	public @OPT TokenList<PLI_Allocate_MoreVars> moreIds;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("7.2") PLI_Keyword ALLOCATE = new PLI_Keyword("ALLOCATE");
+	public @S(20) PLI_AllocateVariable var;
+	public @S(30) @OPT TokenList<PLI_Allocate_MoreVars> moreIds;
+	public @S(40) PunctuationSemicolon semicolon;
 	
 	public static class PLI_AllocateVariable extends TokenSequence
 	{
-		public PLI_Identifier_Reference id;
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<PLI_AllocateSize,PunctuationComma> sizes;
-		public PunctuationRightParen rightParen;
+		public @S(10) PLI_Identifier_Reference id;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<PLI_AllocateSize,PunctuationComma> sizes;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static class PLI_AllocateSize extends TokenSequence
 	{
-		public PLI_Expression size1;
-		public @OPT PunctuationColon colon;
-		public @OPT PLI_Expression size2;
+		public @S(10) PLI_Expression size1;
+		public @S(20) @OPT PunctuationColon colon;
+		public @S(30) @OPT PLI_Expression size2;
 	}
 	
 	public static class PLI_Allocate_MoreVars extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public PLI_AllocateVariable var;
+		public @S(10) PunctuationComma comma;
+		public @S(20) PLI_AllocateVariable var;
 	}
 }

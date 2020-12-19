@@ -24,127 +24,127 @@ public class Perl_Variable extends TokenChooser
 	
 	public @CHOICE static class Perl_UserVariable extends TokenSequence
 	{
-		public Perl_Identifier_Reference id;
-		public @OPT TokenList<Perl_Subscript> subscript;
-		public @OPT Perl_ClassField fld;
-		public @OPT Perl_VarFunctionCall fnCall;
-		public @OPT Perl_ExpressionList braces;
+		public @S(10) Perl_Identifier_Reference id;
+		public @S(20) @OPT TokenList<Perl_Subscript> subscript;
+		public @S(30) @OPT Perl_ClassField fld;
+		public @S(40) @OPT Perl_VarFunctionCall fnCall;
+		public @S(50) @OPT Perl_ExpressionList braces;
 		
 		public static class Perl_ClassField extends TokenSequence
 		{
-			public Perl_Punctuation arrow = new Perl_Punctuation("->");
-			public Perl_Identifier_Reference fld;
-			public @OPT TokenList<Perl_Subscript> subscripts;
+			public @S(10) Perl_Punctuation arrow = new Perl_Punctuation("->");
+			public @S(20) Perl_Identifier_Reference fld;
+			public @S(30) @OPT TokenList<Perl_Subscript> subscripts;
 		}
 	}
 
 	public @LAST static class Perl_DollarBraceVariable extends TokenSequence
 	{
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_ExpressionList braces;
+		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(20) Perl_ExpressionList braces;
 	}
 
 	public @CHOICE static class Perl_DollarNumberVariable extends TokenSequence
 	{
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Number number;
+		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(20) Perl_Number number;
 	}
 	
 	public @LAST static class Perl_DollarUnderscoreVariable extends TokenSequence
 	{
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Punctuation underscore = new Perl_Punctuation('_');
+		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(20) Perl_Punctuation underscore = new Perl_Punctuation('_');
 	}
 	
 	public @CHOICE static class Perl_DollarBarVariable extends TokenSequence
 	{
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Punctuation bar = new Perl_Punctuation('|');
+		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(20) Perl_Punctuation bar = new Perl_Punctuation('|');
 	}
 	
 	public @CHOICE static class Perl_DollarSignalVariable extends TokenSequence
 	{
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Keyword SIG = new Perl_Keyword("SIG");
-		public PunctuationLeftBrace leftBrace;
-		public Perl_Expression signal;
-		public PunctuationRightBrace rightBrace;
+		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(20) Perl_Keyword SIG = new Perl_Keyword("SIG");
+		public @S(30) PunctuationLeftBrace leftBrace;
+		public @S(40) Perl_Expression signal;
+		public @S(50) PunctuationRightBrace rightBrace;
 	}
 	
 	public @CHOICE static class Perl_SpecialVariable extends TokenSequence
 	{
-		public Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Punctuation caret = new Perl_Punctuation('^');
-		public Perl_KeywordChoice special = new Perl_KeywordChoice("O");
+		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(20) Perl_Punctuation caret = new Perl_Punctuation('^');
+		public @S(30) Perl_KeywordChoice special = new Perl_KeywordChoice("O");
 	}
 	
 	public @CHOICE static class Perl_PercentUTFVariable extends TokenSequence
 	{
-		public Perl_Punctuation percent = new Perl_Punctuation('%');
-		public Perl_Keyword UTF8 = new Perl_Keyword("utf8");
-		public Perl_Punctuation colonColon = new Perl_Punctuation("::");
-		public Perl_Identifier_Reference id;
+		public @S(10) Perl_Punctuation percent = new Perl_Punctuation('%');
+		public @S(20) Perl_Keyword UTF8 = new Perl_Keyword("utf8");
+		public @S(30) Perl_Punctuation colonColon = new Perl_Punctuation("::");
+		public @S(40) Perl_Identifier_Reference id;
 	}
 
 	public @CHOICE static class Perl_PercentVariable extends TokenSequence
 	{
-		public Perl_Punctuation percent = new Perl_Punctuation('%');
-		public Perl_Identifier_Reference id;
+		public @S(10) Perl_Punctuation percent = new Perl_Punctuation('%');
+		public @S(20) Perl_Identifier_Reference id;
 	}
 
 	public @CHOICE static class Perl_AmpersandVariable extends TokenSequence
 	{
-		public Perl_Punctuation ampersand = new Perl_Punctuation('&');
-		public Perl_Identifier_Reference id;
+		public @S(10) Perl_Punctuation ampersand = new Perl_Punctuation('&');
+		public @S(20) Perl_Identifier_Reference id;
 	}
 
 	public @CHOICE static class Perl_AtVariable extends TokenSequence
 	{
-		public Perl_Punctuation at = new Perl_Punctuation('@');
-		public Perl_Identifier_Reference id;
+		public @S(10) Perl_Punctuation at = new Perl_Punctuation('@');
+		public @S(20) Perl_Identifier_Reference id;
 	}
 
 	public @LAST static class Perl_AtUnderscoreVariable extends TokenSequence
 	{
-		public Perl_Punctuation at = new Perl_Punctuation('@');
-		public Perl_Punctuation underscore = new Perl_Punctuation('_');
+		public @S(10) Perl_Punctuation at = new Perl_Punctuation('@');
+		public @S(20) Perl_Punctuation underscore = new Perl_Punctuation('_');
 	}
 	
 	public @CHOICE static class Perl_NamespaceVariable extends TokenSequence
 	{
-		public Perl_Identifier_Reference id1;
-		public @OPT TokenList<Perl_More_NamespaceVars> more;
-		public Perl_Punctuation colonColon = new Perl_Punctuation("::");
-		public @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public Perl_Identifier_Reference id2;
-		public @OPT Perl_NamespaceArrow arrow;
+		public @S(10) Perl_Identifier_Reference id1;
+		public @S(20) @OPT TokenList<Perl_More_NamespaceVars> more;
+		public @S(30) Perl_Punctuation colonColon = new Perl_Punctuation("::");
+		public @S(40) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(50) Perl_Identifier_Reference id2;
+		public @S(60) @OPT Perl_NamespaceArrow arrow;
 		
 		public static class Perl_More_NamespaceVars extends TokenSequence
 		{
-			public Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-			public Perl_Identifier_Reference id;
+			public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+			public @S(20) Perl_Identifier_Reference id;
 		}
 		
 		public static class Perl_NamespaceArrow extends TokenSequence
 		{
-			public Perl_Punctuation arrow = new Perl_Punctuation("->");
-			public Perl_Keyword NEW = new Perl_Keyword("new");
-			public @OPT TokenList<Perl_Subscript> subscripts;
+			public @S(10) Perl_Punctuation arrow = new Perl_Punctuation("->");
+			public @S(20) Perl_Keyword NEW = new Perl_Keyword("new");
+			public @S(30) @OPT TokenList<Perl_Subscript> subscripts;
 		}
 	}
 
 	public @CHOICE static class Perl_ListVariable extends TokenSequence
 	{
-		public Perl_Keyword LIST = new Perl_Keyword("list");
-		public PunctuationLeftParen leftParen;
-		public SeparatedList<Perl_Expression,PunctuationComma> args;
-		public PunctuationRightParen rightParen;
+		public @S(10) Perl_Keyword LIST = new Perl_Keyword("list");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<Perl_Expression,PunctuationComma> args;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 	
 	public @CHOICE static class Perl_VarFunctionCall extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public @OPT SeparatedList<Perl_Expression,PunctuationComma> parameters;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<Perl_Expression,PunctuationComma> parameters;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 }

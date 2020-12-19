@@ -11,10 +11,10 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_DeleteStatement extends TokenSequence
 {
-	public @DOC("sql_delete.asp") SQL_Keyword DELETE = new SQL_Keyword("DELETE");
-	public SQL_Keyword FROM = new SQL_Keyword("FROM");
-	public SQL_Identifier_Reference table;
-	public SQL_Keyword WHERE = new SQL_Keyword("WHERE");
-	public SQL_Expression condition;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @DOC("sql_delete.asp") SQL_Keyword DELETE = new SQL_Keyword("DELETE");
+	public @S(20) SQL_Keyword FROM = new SQL_Keyword("FROM");
+	public @S(30) SQL_Identifier_Reference table;
+	public @S(40) SQL_Keyword WHERE = new SQL_Keyword("WHERE");
+	public @S(50) SQL_Expression condition;
+	public @S(60) PunctuationSemicolon semicolon;
 }

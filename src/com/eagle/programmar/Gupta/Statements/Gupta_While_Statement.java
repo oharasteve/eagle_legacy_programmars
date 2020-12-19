@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Gupta_While_Statement extends TokenSequence
 {
-	public Gupta_Keyword While = new Gupta_Keyword("While");
-	public Gupta_Condition condition;
-	public TokenList<Gupta_Statement> statements;
+	public @S(10) Gupta_Keyword While = new Gupta_Keyword("While");
+	public @S(20) Gupta_Condition condition;
+	public @S(30) TokenList<Gupta_Statement> statements;
 }

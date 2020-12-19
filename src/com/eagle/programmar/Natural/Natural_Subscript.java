@@ -13,9 +13,9 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Natural_Subscript extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public Natural_Subscript_Contents contents;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) Natural_Subscript_Contents contents;
+	public @S(30) PunctuationRightParen rightParen;
 
 	public static class Natural_Subscript_Contents extends TokenChooser
 	{
@@ -23,26 +23,26 @@ public class Natural_Subscript extends TokenSequence
 
 		public @CHOICE static class Natural_Subscript_Contents_Label extends TokenSequence
 		{
-			public Natural_Label label;
+			public @S(10) Natural_Label label;
 		}
 		
 		public @CHOICE static class Natural_Subscript_Contents_Normal extends TokenSequence
 		{
-			public Natural_Expression subscript;
-			public @OPT Natural_Subscript_Range subscriptRange;
-			public @OPT Natural_Second_Subscript secondSubscript;
+			public @S(10) Natural_Expression subscript;
+			public @S(20) @OPT Natural_Subscript_Range subscriptRange;
+			public @S(30) @OPT Natural_Second_Subscript secondSubscript;
 			
 			public static class Natural_Subscript_Range extends TokenSequence
 			{
-				public PunctuationColon colon;
-				public Natural_Expression subscript;
+				public @S(10) PunctuationColon colon;
+				public @S(20) Natural_Expression subscript;
 			}
 			
 			public static class Natural_Second_Subscript extends TokenSequence
 			{
-				public PunctuationComma comma;
-				public Natural_Expression subscript;
-				public @OPT Natural_Subscript_Range subscriptRange;
+				public @S(10) PunctuationComma comma;
+				public @S(20) Natural_Expression subscript;
+				public @S(30) @OPT Natural_Subscript_Range subscriptRange;
 			}
 		}
 	}

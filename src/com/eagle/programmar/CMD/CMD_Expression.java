@@ -11,9 +11,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Expression extends TokenSequence
 {
-	public CMD_Expr_Item item1;
-	public CMD_Punctuation plus = new CMD_Punctuation('+');
-	public CMD_Expr_Item item2;
+	public @S(10) CMD_Expr_Item item1;
+	public @S(20) CMD_Punctuation plus = new CMD_Punctuation('+');
+	public @S(30) CMD_Expr_Item item2;
 	
 	public static class CMD_Expr_Item extends TokenChooser
 	{

@@ -18,36 +18,36 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Enum extends TokenSequence
 {
-	public @OPT TokenList<CSharp_Annotation> annotation;
-	public @OPT @NEWLINE TokenList<CSharp_DataModifier> modifiers;
-	public CSharp_Keyword ENUM = new CSharp_Keyword("enum");
-	public CSharp_Variable_Definition id;
-	public @OPT CSharp_Enum_Basetype baseType;
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<CSharp_Comment> comments;
-	public CSharp_Variable_Definition firstEnum;
-	public @OPT CSharp_EnumInitializer initializer;
-	public @OPT TokenList<CSharp_MoreEnums> moreEnums;
-	public @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	public PunctuationRightBrace rightBrace;
-	public @OPT PunctuationSemicolon semicolon;
+	public @S(10) @OPT TokenList<CSharp_Annotation> annotation;
+	public @S(20) @OPT @NEWLINE TokenList<CSharp_DataModifier> modifiers;
+	public @S(30) CSharp_Keyword ENUM = new CSharp_Keyword("enum");
+	public @S(40) CSharp_Variable_Definition id;
+	public @S(50) @OPT CSharp_Enum_Basetype baseType;
+	public @S(60) PunctuationLeftBrace leftBrace;
+	public @S(70) @OPT TokenList<CSharp_Comment> comments;
+	public @S(80) CSharp_Variable_Definition firstEnum;
+	public @S(90) @OPT CSharp_EnumInitializer initializer;
+	public @S(100) @OPT TokenList<CSharp_MoreEnums> moreEnums;
+	public @S(110) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(120) PunctuationRightBrace rightBrace;
+	public @S(130) @OPT PunctuationSemicolon semicolon;
 	
 	public static class CSharp_Enum_Basetype extends TokenSequence
 	{
-		public PunctuationColon colon;
-		public CSharp_Type type;
+		public @S(10) PunctuationColon colon;
+		public @S(20) CSharp_Type type;
 	}
 	
 	public static class CSharp_MoreEnums extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public CSharp_Variable_Definition nextEnum;
-		public @OPT CSharp_EnumInitializer initialize;
+		public @S(10) PunctuationComma comma;
+		public @S(20) CSharp_Variable_Definition nextEnum;
+		public @S(30) @OPT CSharp_EnumInitializer initialize;
 	}
 	
 	public static class CSharp_EnumInitializer extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public CSharp_Expression expr;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) CSharp_Expression expr;
 	}
 }

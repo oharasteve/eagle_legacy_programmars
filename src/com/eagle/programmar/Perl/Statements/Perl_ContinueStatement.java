@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_ContinueStatement extends TokenSequence
 {
-	public @DOC("control-structures.continue.php") Perl_Keyword CONTINUE = new Perl_Keyword("continue");
+	public @S(10) @DOC("control-structures.continue.php") Perl_Keyword CONTINUE = new Perl_Keyword("continue");
 }

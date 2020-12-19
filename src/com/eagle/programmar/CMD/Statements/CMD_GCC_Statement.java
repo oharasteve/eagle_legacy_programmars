@@ -12,8 +12,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_GCC_Statement extends TokenSequence
 {
-	public CMD_Keyword GCC = new CMD_Keyword("gcc");
-	public TokenList<CMD_GCC_Parameter> params;
+	public @S(10) CMD_Keyword GCC = new CMD_Keyword("gcc");
+	public @S(20) TokenList<CMD_GCC_Parameter> params;
 	
 	public static class CMD_GCC_Parameter extends TokenChooser
 	{
@@ -21,9 +21,9 @@ public class CMD_GCC_Statement extends TokenSequence
 		
 		public @CHOICE static class CMD_GCC_Option_O extends TokenSequence
 		{
-			public CMD_Punctuation hyphen = new CMD_Punctuation('-');
-			public CMD_Keyword O = new CMD_Keyword("o");
-			public CMD_Argument tgtFile;
+			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
+			public @S(20) CMD_Keyword O = new CMD_Keyword("o");
+			public @S(30) CMD_Argument tgtFile;
 		}
 	}
 }

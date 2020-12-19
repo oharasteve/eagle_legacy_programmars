@@ -9,8 +9,8 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_UseStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword USE = new COBOL_Keyword("USE");
-	public COBOL_Keyword BEFORE = new COBOL_Keyword("BEFORE");
-	public COBOL_Keyword REPORTING = new COBOL_Keyword("REPORTING");
-	public COBOL_Identifier_Reference id;
+	public @S(10) COBOL_Keyword USE = new COBOL_Keyword("USE");
+	public @S(20) COBOL_Keyword BEFORE = new COBOL_Keyword("BEFORE");
+	public @S(30) COBOL_Keyword REPORTING = new COBOL_Keyword("REPORTING");
+	public @S(40) COBOL_Identifier_Reference id;
 }

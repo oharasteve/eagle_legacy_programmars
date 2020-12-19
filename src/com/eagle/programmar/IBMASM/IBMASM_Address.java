@@ -17,9 +17,9 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class IBMASM_Address extends TokenSequence
 {
-	public IBMASM_Label_or_Star label;
-	public @OPT IBMASM_AddressOffset offset;
-	public @OPT IBMASM_AddressSize size;
+	public @S(10) IBMASM_Label_or_Star label;
+	public @S(20) @OPT IBMASM_AddressOffset offset;
+	public @S(30) @OPT IBMASM_AddressSize size;
 	
 	public static class IBMASM_Label_or_Star extends TokenChooser
 	{
@@ -29,22 +29,22 @@ public class IBMASM_Address extends TokenSequence
 		
 		public @CHOICE static class IBMASM_Address_Equals extends TokenSequence
 		{
-			public PunctuationEquals equals;
-			public IBMASM_Keyword X = new IBMASM_Keyword("X");
-			public IBMASM_Literal literal;
+			public @S(10) PunctuationEquals equals;
+			public @S(20) IBMASM_Keyword X = new IBMASM_Keyword("X");
+			public @S(30) IBMASM_Literal literal;
 		}
 	}
 	
 	public static class IBMASM_AddressOffset extends TokenSequence
 	{
-		public IBMASM_Punctuation plus = new IBMASM_Punctuation('+');
-		public IBMASM_Number offset;
+		public @S(10) IBMASM_Punctuation plus = new IBMASM_Punctuation('+');
+		public @S(20) IBMASM_Number offset;
 	}
 	
 	public static class IBMASM_AddressSize extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public IBMASM_Number size;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) IBMASM_Number size;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 }

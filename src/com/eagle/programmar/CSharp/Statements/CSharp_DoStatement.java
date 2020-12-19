@@ -13,11 +13,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_DoStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("statements.html#14.13") CSharp_Keyword DO = new CSharp_Keyword("do");
-	public CSharp_Statement doStatement;
-	public CSharp_Keyword WHILE = new CSharp_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public CSharp_Expression condition;
-	public PunctuationRightParen rightParen;
-	public @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE @DOC("statements.html#14.13") CSharp_Keyword DO = new CSharp_Keyword("do");
+	public @S(20) CSharp_Statement doStatement;
+	public @S(30) CSharp_Keyword WHILE = new CSharp_Keyword("while");
+	public @S(40) PunctuationLeftParen leftParen;
+	public @S(50) CSharp_Expression condition;
+	public @S(60) PunctuationRightParen rightParen;
+	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
 }

@@ -21,5 +21,5 @@ public class Lisp_Program extends EagleLanguage
 		return "http://www.lispworks.com/documentation/HyperSpec/Body/";
 	}
 	
-	public TokenList<Lisp_SExpr> sexprs;
+	public @S(10) TokenList<Lisp_SExpr> sexprs;
 }

@@ -18,23 +18,23 @@ public class HTML_Anchor extends TokenChooser
 {
 	public @CHOICE static class HTML_AnchorHref extends TokenSequence
 	{
-		public @INDENT HTML_StartAnchor startTagA;
-		public @OPT TokenList<PHP_Entry> contents;
-		public @OUTDENT HTML_EndAnchor endAnchor;
+		public @S(10) @INDENT HTML_StartAnchor startTagA;
+		public @S(20) @OPT TokenList<PHP_Entry> contents;
+		public @S(30) @OUTDENT HTML_EndAnchor endAnchor;
 
 		public static class HTML_StartAnchor extends TokenSequence
 		{
-			public HTML_Punctuation startTag = new HTML_Punctuation("<");
-			public @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
-			public @OPT TokenList<HTML_Attribute> attributes; 
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
+			public @S(20) @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
+			public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+			public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 		
 		public static class HTML_EndAnchor extends TokenSequence
 		{
-			public HTML_Punctuation startTag = new HTML_Punctuation("</");
-			public @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+			public @S(20) @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
+			public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 	}
 
@@ -46,12 +46,12 @@ public class HTML_Anchor extends TokenChooser
 	// This is an oddball case. An anchor with no closing </a> (in theory).
 	public @FIRST static class HTML_AnchorName extends TokenSequence
 	{
-		public @INDENT HTML_Punctuation startTagA = new HTML_Punctuation('<');
-		public @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
-		public HTML_Keyword NAME = new HTML_Keyword("name");
-		public @NOSPACE PunctuationEquals equals;
-		public @NOSPACE HTML_Value value;
-		public @NOSPACE HTML_PunctuationChoice endTag = new HTML_PunctuationChoice("/>", ">");
-		public @OPT @CURIOUS("Extra end anchor name") HTML_EndAnchor bogusAnchorNameEnd;
+		public @S(10) @INDENT HTML_Punctuation startTagA = new HTML_Punctuation('<');
+		public @S(20) @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
+		public @S(30) HTML_Keyword NAME = new HTML_Keyword("name");
+		public @S(40) @NOSPACE PunctuationEquals equals;
+		public @S(50) @NOSPACE HTML_Value value;
+		public @S(60) @NOSPACE HTML_PunctuationChoice endTag = new HTML_PunctuationChoice("/>", ">");
+		public @S(70) @OPT @CURIOUS("Extra end anchor name") HTML_EndAnchor bogusAnchorNameEnd;
 	}
 }

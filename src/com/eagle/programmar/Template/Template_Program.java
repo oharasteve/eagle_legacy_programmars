@@ -23,7 +23,7 @@ public class Template_Program extends EagleLanguage implements EagleRunnable
 		return "TBD";
 	}
 	
-	public @OPT TokenList<Template_Statement> statements;
+	public @S(10) @OPT TokenList<Template_Statement> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

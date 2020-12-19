@@ -17,17 +17,17 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_Entry extends TokenSequence
 {
-	public @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
-	public PLI_Procedure_Definition id1;
-	public PunctuationColon colon;
+	public @S(10) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
+	public @S(20) PLI_Procedure_Definition id1;
+	public @S(30) PunctuationColon colon;
 	
-	public PLI_Keyword ENTRY = new PLI_Keyword("ENTRY");
-	public @OPT PLI_Procedure_Parameters params;
+	public @S(40) PLI_Keyword ENTRY = new PLI_Keyword("ENTRY");
+	public @S(50) @OPT PLI_Procedure_Parameters params;
 	
-	public @OPT PLI_ProcedureOptions options1;
-	public @OPT PLI_ProcedureReturns returns;
-	public @OPT PLI_ProcedureOptions options2;
-	public PunctuationSemicolon semicolon;
+	public @S(60) @OPT PLI_ProcedureOptions options1;
+	public @S(70) @OPT PLI_ProcedureReturns returns;
+	public @S(80) @OPT PLI_ProcedureOptions options2;
+	public @S(90) PunctuationSemicolon semicolon;
 
-	public TokenList<PLI_StatementOrComment> statements;
+	public @S(100) TokenList<PLI_StatementOrComment> statements;
 }

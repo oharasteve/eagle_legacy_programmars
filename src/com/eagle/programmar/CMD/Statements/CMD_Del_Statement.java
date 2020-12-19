@@ -12,28 +12,28 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_Del_Statement extends TokenSequence
 {
-	public @DOC("del.mspx") CMD_Keyword DEL = new CMD_Keyword("del");
-	public @OPT TokenList<CMD_Del_Option> opts;
-	public TokenList<CMD_Argument> file;
+	public @S(10) @DOC("del.mspx") CMD_Keyword DEL = new CMD_Keyword("del");
+	public @S(20) @OPT TokenList<CMD_Del_Option> opts;
+	public @S(30) TokenList<CMD_Argument> file;
 	
 	public static class CMD_Del_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Del_Option_F extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword F = new CMD_Keyword("f");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
 		}
 
 		public @CHOICE static class CMD_Del_Option_Q extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword Q = new CMD_Keyword("q");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword Q = new CMD_Keyword("q");
 		}
 
 		public @CHOICE static class CMD_Del_Option_S extends TokenSequence
 		{
-			public PunctuationSlash slash;
-			public CMD_Keyword S = new CMD_Keyword("s");
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword S = new CMD_Keyword("s");
 		}
 	}
 }

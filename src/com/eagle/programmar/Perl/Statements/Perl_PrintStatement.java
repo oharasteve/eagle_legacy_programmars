@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_PrintStatement extends TokenSequence
 {
-	public Perl_KeywordChoice PRINT = new Perl_KeywordChoice("print", "printf");
-	public Perl_Expression value;
-	public @OPT Perl_Literal literal;		// Second literal
+	public @S(10) Perl_KeywordChoice PRINT = new Perl_KeywordChoice("print", "printf");
+	public @S(20) Perl_Expression value;
+	public @S(30) @OPT Perl_Literal literal;		// Second literal
 }

@@ -11,10 +11,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_IfFunction extends TokenSequence
 {
-	public PunctuationLeftParen leftParen;
-	public @DOC("s_if.htm") Lisp_Keyword IF = new Lisp_Keyword("if");
-	public Lisp_SExpr condition;
-	public Lisp_SExpr ifTrue;
-	public @OPT Lisp_SExpr ifFalse;
-	public PunctuationRightParen rightParen;
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) @DOC("s_if.htm") Lisp_Keyword IF = new Lisp_Keyword("if");
+	public @S(30) Lisp_SExpr condition;
+	public @S(40) Lisp_SExpr ifTrue;
+	public @S(50) @OPT Lisp_SExpr ifFalse;
+	public @S(60) PunctuationRightParen rightParen;
 }

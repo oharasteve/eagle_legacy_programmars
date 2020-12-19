@@ -19,42 +19,42 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_If_Statement extends TokenSequence implements CMacro_Processable
 {
-	public C_Punctuation pound1 = new C_Punctuation('#'); 
-	public @DOC("If.html") C_Keyword IF = new C_Keyword("if");
-	public CMacro_Expression expr;
-	public @OPT C_Comment comment1;
-	public CMacro_EndOfLine eoln1;
-	public @OPT TokenList<CMacro_IfElement> elements;
-	public @OPT TokenList<CMacro_IfElif> ifElif;
-	public @OPT CMacro_IfElse ifElse;
-	public @OPT CMacro_EndOfLine eoln2;
-	public C_Punctuation pound2 = new C_Punctuation('#'); 
-	public C_Keyword ENDIF = new C_Keyword("endif");
-	public @OPT C_Comment comment2;
+	public @S(10) C_Punctuation pound1 = new C_Punctuation('#'); 
+	public @S(20) @DOC("If.html") C_Keyword IF = new C_Keyword("if");
+	public @S(30) CMacro_Expression expr;
+	public @S(40) @OPT C_Comment comment1;
+	public @S(50) CMacro_EndOfLine eoln1;
+	public @S(60) @OPT TokenList<CMacro_IfElement> elements;
+	public @S(70) @OPT TokenList<CMacro_IfElif> ifElif;
+	public @S(80) @OPT CMacro_IfElse ifElse;
+	public @S(90) @OPT CMacro_EndOfLine eoln2;
+	public @S(100) C_Punctuation pound2 = new C_Punctuation('#'); 
+	public @S(110) C_Keyword ENDIF = new C_Keyword("endif");
+	public @S(120) @OPT C_Comment comment2;
 
 	public static class CMacro_IfElif extends TokenSequence
 	{
-		public C_Punctuation pound1 = new C_Punctuation('#');
-		public C_Keyword ELIF = new C_Keyword("elif");
-		public CMacro_Expression expr;
-		public @OPT @SYNTAX(C_Syntax.class) C_Comment comment;
-		public @OPT CMacro_EndOfLine eoln;
-		public @OPT TokenList<CMacro_IfElement> elements;
+		public @S(10) C_Punctuation pound1 = new C_Punctuation('#');
+		public @S(20) C_Keyword ELIF = new C_Keyword("elif");
+		public @S(30) CMacro_Expression expr;
+		public @S(40) @OPT @SYNTAX(C_Syntax.class) C_Comment comment;
+		public @S(50) @OPT CMacro_EndOfLine eoln;
+		public @S(60) @OPT TokenList<CMacro_IfElement> elements;
 	}
 	
 	public static class CMacro_IfElse extends TokenSequence
 	{
-		public C_Punctuation pound1 = new C_Punctuation('#');
-		public C_Keyword ELSE = new C_Keyword("else");
-		public @OPT @SYNTAX(C_Syntax.class) C_Comment comment;
-		public @OPT CMacro_EndOfLine eoln;
-		public @OPT TokenList<CMacro_IfElement> elements;
+		public @S(10) C_Punctuation pound1 = new C_Punctuation('#');
+		public @S(20) C_Keyword ELSE = new C_Keyword("else");
+		public @S(30) @OPT @SYNTAX(C_Syntax.class) C_Comment comment;
+		public @S(40) @OPT CMacro_EndOfLine eoln;
+		public @S(50) @OPT TokenList<CMacro_IfElement> elements;
 	}
 	
 	// Need this for switching languages from CMacro to C
 	public static class CMacro_IfElement extends TokenSequence
 	{
-		public @SYNTAX(C_Syntax.class) C_StatementOrComment element;
+		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
 	}
 	
 	@Override

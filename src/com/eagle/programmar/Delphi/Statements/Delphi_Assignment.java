@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Assignment extends TokenSequence
 {
-	public Delphi_Variable var;
-	public Delphi_Punctuation colonEquals = new Delphi_Punctuation(":=");
-	public Delphi_Expression expr;
-	public @OPT Delphi_Comment comment;
+	public @S(10) Delphi_Variable var;
+	public @S(20) Delphi_Punctuation colonEquals = new Delphi_Punctuation(":=");
+	public @S(30) Delphi_Expression expr;
+	public @S(40) @OPT Delphi_Comment comment;
 }

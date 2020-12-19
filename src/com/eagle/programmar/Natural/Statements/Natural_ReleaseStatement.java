@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Natural_ReleaseStatement extends TokenSequence
 {
-	public @DOC("sm/release.htm") Natural_Keyword RELEASE = new Natural_Keyword("RELEASE");
-	public Natural_Keyword SET = new Natural_Keyword("SET");
-	public Natural_Literal literal;
+	public @S(10) @DOC("sm/release.htm") Natural_Keyword RELEASE = new Natural_Keyword("RELEASE");
+	public @S(20) Natural_Keyword SET = new Natural_Keyword("SET");
+	public @S(30) Natural_Literal literal;
 }

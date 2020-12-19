@@ -20,41 +20,41 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_Annotation extends TokenSequence
 {
-	public PunctuationLeftBracket leftBracket;
-	public CSharp_AnnotationItem item;
-	public @OPT TokenList<CSharp_MoreAnnotations> more;
-	public PunctuationRightBracket rightBracket;
+	public @S(10) PunctuationLeftBracket leftBracket;
+	public @S(20) CSharp_AnnotationItem item;
+	public @S(30) @OPT TokenList<CSharp_MoreAnnotations> more;
+	public @S(40) PunctuationRightBracket rightBracket;
 
 	public static class CSharp_AnnotationItem extends TokenSequence
 	{
-		public @OPT CSharp_AnnotionGlobal global;
-		public @OPT CSharp_AnnotionAssembly assembly;
-		public SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
-		public @OPT CSharp_AnnotationParams params;
+		public @S(10) @OPT CSharp_AnnotionGlobal global;
+		public @S(20) @OPT CSharp_AnnotionAssembly assembly;
+		public @S(30) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
+		public @S(40) @OPT CSharp_AnnotationParams params;
 	}
 
 	public static class CSharp_AnnotionGlobal extends TokenSequence
 	{
-		public CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
-		public CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
+		public @S(10) CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
+		public @S(20) CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
 	}
 	
 	public static class CSharp_AnnotionAssembly extends TokenSequence
 	{
-		public CSharp_KeywordChoice ASSEMBLY = new CSharp_KeywordChoice("assembly", "return");
-		public PunctuationColon colon;
+		public @S(10) CSharp_KeywordChoice ASSEMBLY = new CSharp_KeywordChoice("assembly", "return");
+		public @S(20) PunctuationColon colon;
 	}
 	
 	public static class CSharp_AnnotationParams extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public @OPT CSharp_ArgumentList argList;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT CSharp_ArgumentList argList;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static class CSharp_MoreAnnotations extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public CSharp_AnnotationItem item;
+		public @S(10) PunctuationComma comma;
+		public @S(20) CSharp_AnnotationItem item;
 	}
 }

@@ -8,5 +8,5 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_Variables extends Gupta_Declaration
 {
-	public Gupta_Keyword Variables = new Gupta_Keyword("Variables");
+	public @S(10) Gupta_Keyword Variables = new Gupta_Keyword("Variables");
 }

@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CPlus_Generic extends TokenSequence
 {
-	public C_Punctuation lessThan = new C_Punctuation('<');
-	public SeparatedList<C_Type,PunctuationComma> type;
-	public C_Punctuation greaterThan = new C_Punctuation('>');
+	public @S(10) C_Punctuation lessThan = new C_Punctuation('<');
+	public @S(20) SeparatedList<C_Type,PunctuationComma> type;
+	public @S(30) C_Punctuation greaterThan = new C_Punctuation('>');
 }

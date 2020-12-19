@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_DefineDirective extends TokenSequence
 {
-	public IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
-	public IntelASM_Keyword DEFINE = new IntelASM_Keyword("define");
-	public IntelASM_Define_Definition name;
-	public @OPT IntelASM_Identifier_Reference value;
+	public @S(10) IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
+	public @S(20) IntelASM_Keyword DEFINE = new IntelASM_Keyword("define");
+	public @S(30) IntelASM_Define_Definition name;
+	public @S(40) @OPT IntelASM_Identifier_Reference value;
 }

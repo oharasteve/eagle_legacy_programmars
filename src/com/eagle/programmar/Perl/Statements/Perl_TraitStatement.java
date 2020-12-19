@@ -13,9 +13,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Perl_TraitStatement extends TokenSequence
 {
-	public Perl_Keyword TRAIT = new Perl_Keyword("trait");
-	public Perl_Class_Definition trait;
-	public PunctuationLeftBrace leftBrace;
-	public @OPT TokenList<Perl_StatementOrComment> stmts;
-	public PunctuationRightBrace rightBrace;
+	public @S(10) Perl_Keyword TRAIT = new Perl_Keyword("trait");
+	public @S(20) Perl_Class_Definition trait;
+	public @S(30) PunctuationLeftBrace leftBrace;
+	public @S(40) @OPT TokenList<Perl_StatementOrComment> stmts;
+	public @S(50) PunctuationRightBrace rightBrace;
 }

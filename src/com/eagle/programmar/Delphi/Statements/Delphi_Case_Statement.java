@@ -13,17 +13,17 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Case_Statement extends TokenSequence
 {
-	public Delphi_Keyword CASE = new Delphi_Keyword("Case");
-	public Delphi_Expression expr;
-	public Delphi_Keyword OF = new Delphi_Keyword("Of");
-	public TokenList<Delphi_CaseClause> clauses;
-	public Delphi_Keyword END = new Delphi_Keyword("End");
+	public @S(10) Delphi_Keyword CASE = new Delphi_Keyword("Case");
+	public @S(20) Delphi_Expression expr;
+	public @S(30) Delphi_Keyword OF = new Delphi_Keyword("Of");
+	public @S(40) TokenList<Delphi_CaseClause> clauses;
+	public @S(50) Delphi_Keyword END = new Delphi_Keyword("End");
 	
 	public static class Delphi_CaseClause extends TokenSequence
 	{
-		public Delphi_Expression expr;
-		public PunctuationColon colon;
-		public Delphi_Statement stmt;
-		public PunctuationSemicolon semicolon;
+		public @S(10) Delphi_Expression expr;
+		public @S(20) PunctuationColon colon;
+		public @S(30) Delphi_Statement stmt;
+		public @S(40) PunctuationSemicolon semicolon;
 	}
 }

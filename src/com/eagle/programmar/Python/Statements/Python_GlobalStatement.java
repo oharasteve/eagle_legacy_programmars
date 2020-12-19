@@ -11,6 +11,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_GlobalStatement extends TokenSequence
 {
-	public Python_Keyword GLOBAL = new Python_Keyword("global");
-	public SeparatedList<Python_Variable_Definition,PunctuationComma> vars;
+	public @S(10) Python_Keyword GLOBAL = new Python_Keyword("global");
+	public @S(20) SeparatedList<Python_Variable_Definition,PunctuationComma> vars;
 }

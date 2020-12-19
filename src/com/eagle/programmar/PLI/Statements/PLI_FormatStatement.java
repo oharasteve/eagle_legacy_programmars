@@ -11,8 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_FormatStatement extends TokenSequence
 {
-	public @OPT PLI_Label label;
-	public PLI_Keyword FORMAT = new PLI_Keyword("FORMAT");
-	public PLI_PutFormat format;
-	public PunctuationSemicolon semicolon;
+	public @S(10) @OPT PLI_Label label;
+	public @S(20) PLI_Keyword FORMAT = new PLI_Keyword("FORMAT");
+	public @S(30) PLI_PutFormat format;
+	public @S(40) PunctuationSemicolon semicolon;
 }

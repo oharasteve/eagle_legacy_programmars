@@ -14,41 +14,41 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class COBOL_SpecialNames extends TokenSequence
 {
-	public COBOL_Keyword SPECIALNAMES = new COBOL_Keyword("SPECIAL-NAMES");
-	public PunctuationPeriod dot1;
-	public TokenList<COBOL_SpecialName> specialNames;
-	public PunctuationPeriod dot2;
+	public @S(10) COBOL_Keyword SPECIALNAMES = new COBOL_Keyword("SPECIAL-NAMES");
+	public @S(20) PunctuationPeriod dot1;
+	public @S(30) TokenList<COBOL_SpecialName> specialNames;
+	public @S(40) PunctuationPeriod dot2;
 
 	public static class COBOL_SpecialName extends TokenChooser
 	{
 		public @CHOICE static class COBOL_SpecialNameCursor extends TokenSequence
 		{
-			public COBOL_Keyword CURSOR = new COBOL_Keyword("CURSOR");
-			public COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Identifier_Reference var;
+			public @S(10) COBOL_Keyword CURSOR = new COBOL_Keyword("CURSOR");
+			public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(30) COBOL_Identifier_Reference var;
 		}
 
 		public @CHOICE static class COBOL_SpecialNameConsole extends TokenSequence
 		{
-			public COBOL_Keyword CONSOLE = new COBOL_Keyword("CONSOLE");
-			public COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Keyword CRT = new COBOL_Keyword("CRT");
+			public @S(10) COBOL_Keyword CONSOLE = new COBOL_Keyword("CONSOLE");
+			public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(30) COBOL_Keyword CRT = new COBOL_Keyword("CRT");
 		}
 
 		public @CHOICE static class COBOL_SpecialNameCrtStatus extends TokenSequence
 		{
-			public COBOL_Keyword CRT = new COBOL_Keyword("CRT");
-			public COBOL_Keyword STATUS = new COBOL_Keyword("STATUS");
-			public COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Identifier_Reference var;
+			public @S(10) COBOL_Keyword CRT = new COBOL_Keyword("CRT");
+			public @S(20) COBOL_Keyword STATUS = new COBOL_Keyword("STATUS");
+			public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(40) COBOL_Identifier_Reference var;
 		}
 
 		public @CHOICE static class COBOL_SpecialNameCallConvention extends TokenSequence
 		{
-			public COBOL_Keyword CALL_CONVENTION = new COBOL_Keyword("CALL-CONVENTION");
-			public COBOL_Number number;
-			public COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_KeywordChoice convention = new COBOL_KeywordChoice("STATICCOBOL", "STATICW32API", "WINAPI");
+			public @S(10) COBOL_Keyword CALL_CONVENTION = new COBOL_Keyword("CALL-CONVENTION");
+			public @S(20) COBOL_Number number;
+			public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(40) COBOL_KeywordChoice convention = new COBOL_KeywordChoice("STATICCOBOL", "STATICW32API", "WINAPI");
 		}
 	}
 }

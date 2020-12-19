@@ -14,9 +14,9 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class IntelASM_IncludeDirective extends TokenSequence
 {
-	public @OPT IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
-	public IntelASM_Keyword INCLUDE = new IntelASM_Keyword("include");
-	public IntelASM_Filename filename;
+	public @S(10) @OPT IntelASM_Punctuation percent = new IntelASM_Punctuation('%');
+	public @S(20) IntelASM_Keyword INCLUDE = new IntelASM_Keyword("include");
+	public @S(30) IntelASM_Filename filename;
 
 	public static class IntelASM_Filename extends TokenChooser
 	{
@@ -24,7 +24,7 @@ public class IntelASM_IncludeDirective extends TokenSequence
 
 		public @CHOICE static class IntelASM_BareFilename extends TokenSequence
 		{
-			public SeparatedList<IntelASM_Identifier_Reference,PunctuationPeriod> name;
+			public @S(10) SeparatedList<IntelASM_Identifier_Reference,PunctuationPeriod> name;
 		}
 	}
 }

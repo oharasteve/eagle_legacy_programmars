@@ -10,14 +10,14 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class VB_Variable extends TokenSequence
 {
-	public VB_Identifier_Reference var;
-	public @OPT VB_Subscript subscript;
-	public @OPT TokenList<VB_VariableField> dotFields;
+	public @S(10) VB_Identifier_Reference var;
+	public @S(20) @OPT VB_Subscript subscript;
+	public @S(30) @OPT TokenList<VB_VariableField> dotFields;
 	
 	public static class VB_VariableField extends TokenSequence
 	{
-		public PunctuationPeriod dot;
-		public VB_Identifier_Reference var;
-		public @OPT VB_Subscript subscript;
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) VB_Identifier_Reference var;
+		public @S(30) @OPT VB_Subscript subscript;
 	}
 }

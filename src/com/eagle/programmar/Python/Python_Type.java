@@ -18,7 +18,7 @@ public class Python_Type extends TokenChooser implements AbstractType
 	
 	public @CHOICE static class Python_Regular_Class extends TokenSequence
 	{
-		public SeparatedList<Python_TypeName,PunctuationPeriod> superClass;
+		public @S(10) SeparatedList<Python_TypeName,PunctuationPeriod> superClass;
 		
 		public static class Python_TypeName extends TokenChooser
 		{

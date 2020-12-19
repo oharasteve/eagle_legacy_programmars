@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_ReturnStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("js_functions.asp") Javascript_Keyword RETURN = new Javascript_Keyword("return");
-	public @OPT Javascript_Expression expression;
-	public @NOSPACE @OPT PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE @DOC("js_functions.asp") Javascript_Keyword RETURN = new Javascript_Keyword("return");
+	public @S(20) @OPT Javascript_Expression expression;
+	public @S(30) @NOSPACE @OPT PunctuationSemicolon semicolon;
 }

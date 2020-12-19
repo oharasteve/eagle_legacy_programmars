@@ -21,16 +21,15 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class COBOL_DataDeclaration extends TokenSequence
 {
-	public @OPT TokenList<COBOL_Comment> comments;
-	
-	public COBOL_Level level;
-	public @OPT COBOL_DataFieldName fieldName;
-	public @OPT TokenList<COBOL_DataClause> clauses;
-	public PunctuationPeriod dot;
-	public @OPT COBOL_DataComment comment;
+	public @S(10) @OPT TokenList<COBOL_Comment> comments;
+	public @S(20) COBOL_Level level;
+	public @S(30) @OPT COBOL_DataFieldName fieldName;
+	public @S(40) @OPT TokenList<COBOL_DataClause> clauses;
+	public @S(50) PunctuationPeriod dot;
+	public @S(60) @OPT COBOL_DataComment comment;
 	
 	// These are special -- context-sensitive, must have larger (deeper) Level numbers
-	public @OPT TokenList<COBOL_CopyOrDataDeclaration> children;
+	public @S(70) @OPT TokenList<COBOL_CopyOrDataDeclaration> children;
 
 	public static class COBOL_DataClause extends TokenChooser
 	{
@@ -60,34 +59,34 @@ public class COBOL_DataDeclaration extends TokenSequence
 		
 		public @CHOICE static class COBOL_BlankWhenZero extends TokenSequence
 		{
-			public COBOL_Keyword BLANK = new COBOL_Keyword("BLANK");
-			public @OPT COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
-			public COBOL_Keyword ZERO = new COBOL_Keyword("ZERO");
+			public @S(10) COBOL_Keyword BLANK = new COBOL_Keyword("BLANK");
+			public @S(20) @OPT COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
+			public @S(30) COBOL_Keyword ZERO = new COBOL_Keyword("ZERO");
 		}
 		
 		public @CHOICE static class COBOL_Sign extends TokenSequence
 		{
-			public COBOL_Keyword SIGN = new COBOL_Keyword("SIGN");
-			public COBOL_Keyword TRAILING = new COBOL_Keyword("TRAILING");
-			public COBOL_Keyword SEPARATE = new COBOL_Keyword("SEPARATE");
+			public @S(10) COBOL_Keyword SIGN = new COBOL_Keyword("SIGN");
+			public @S(20) COBOL_Keyword TRAILING = new COBOL_Keyword("TRAILING");
+			public @S(30) COBOL_Keyword SEPARATE = new COBOL_Keyword("SEPARATE");
 		}
 		
 		public @CHOICE static class COBOL_ObjectReference extends TokenSequence
 		{
-			public COBOL_Keyword OBJECT = new COBOL_Keyword("OBJECT");
-			public COBOL_Keyword REFERENCE = new COBOL_Keyword("REFERENCE");
+			public @S(10) COBOL_Keyword OBJECT = new COBOL_Keyword("OBJECT");
+			public @S(20) COBOL_Keyword REFERENCE = new COBOL_Keyword("REFERENCE");
 		}
 		
 		public @CHOICE static class COBOL_Typedef extends TokenSequence
 		{
-			public @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Keyword TYPEDEF = new COBOL_Keyword("TYPEDEF");
+			public @S(10) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(20) COBOL_Keyword TYPEDEF = new COBOL_Keyword("TYPEDEF");
 		}
 		
 		public @CHOICE static class COBOL_Usage extends TokenSequence
 		{
-			public COBOL_Keyword USAGE = new COBOL_Keyword("USAGE");
-			public COBOL_KeywordChoice type = new COBOL_KeywordChoice(
+			public @S(10) COBOL_Keyword USAGE = new COBOL_Keyword("USAGE");
+			public @S(20) COBOL_KeywordChoice type = new COBOL_KeywordChoice(
 					"1-RECTL",
 					"2SIZE",
 					"DATA-POINTER",
@@ -103,34 +102,34 @@ public class COBOL_DataDeclaration extends TokenSequence
 		
 		public @CHOICE static class COBOL_PictureClause extends TokenSequence
 		{
-			public COBOL_KeywordChoice PIC = new COBOL_KeywordChoice("PIC", "PICTURE");
-			public COBOL_Picture picture;
+			public @S(10) COBOL_KeywordChoice PIC = new COBOL_KeywordChoice("PIC", "PICTURE");
+			public @S(20) COBOL_Picture picture;
 		}
 		
 		public @CHOICE static class COBOL_ValueClause extends TokenSequence
 		{
-			public COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice("VALUE", "VALUES");
-			public @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-			public TokenList<COBOL_Picture_Value> values;
+			public @S(10) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice("VALUE", "VALUES");
+			public @S(20) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+			public @S(30) TokenList<COBOL_Picture_Value> values;
 		}
 		
 		public @CHOICE static class COBOL_ThruClause extends TokenSequence
 		{
-			public COBOL_Keyword THRU = new COBOL_Keyword("THRU");
-			public TokenList<COBOL_Picture_Value> values;
+			public @S(10) COBOL_Keyword THRU = new COBOL_Keyword("THRU");
+			public @S(20) TokenList<COBOL_Picture_Value> values;
 		}
 		
 		public @CHOICE static class COBOL_RedefinesClause extends TokenSequence
 		{
-			public COBOL_Keyword REDEFINES = new COBOL_Keyword("REDEFINES");
-			public COBOL_Identifier_Reference id;
+			public @S(10) COBOL_Keyword REDEFINES = new COBOL_Keyword("REDEFINES");
+			public @S(20) COBOL_Identifier_Reference id;
 		}
 	}
 	
 	public static class COBOL_Justified extends TokenSequence
 	{
-		public COBOL_Keyword JUSTIFIED = new COBOL_Keyword("JUSTIFIED");
-		public COBOL_Keyword RIGHT = new COBOL_Keyword("RIGHT");
+		public @S(10) COBOL_Keyword JUSTIFIED = new COBOL_Keyword("JUSTIFIED");
+		public @S(20) COBOL_Keyword RIGHT = new COBOL_Keyword("RIGHT");
 	}
 	
 	public static class COBOL_DataFieldName extends TokenChooser
@@ -141,31 +140,31 @@ public class COBOL_DataDeclaration extends TokenSequence
 	
 	public static class COBOL_OccursClause extends TokenSequence
 	{
-		public COBOL_Keyword OCCURS = new COBOL_Keyword("OCCURS");
-		public COBOL_Expression count;
-		public @OPT COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
-		public @OPT COBOL_OccursKey key;
-		public @OPT COBOL_IndexedBy indexedBy;
+		public @S(10) COBOL_Keyword OCCURS = new COBOL_Keyword("OCCURS");
+		public @S(20) COBOL_Expression count;
+		public @S(30) @OPT COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
+		public @S(40) @OPT COBOL_OccursKey key;
+		public @S(50) @OPT COBOL_IndexedBy indexedBy;
 		
 		public static class COBOL_OccursKey extends TokenSequence
 		{
-			public COBOL_Keyword ASCENDING = new COBOL_Keyword("ASCENDING");
-			public COBOL_Keyword KEY = new COBOL_Keyword("KEY");
-			public @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Identifier_Reference index;
+			public @S(10) COBOL_Keyword ASCENDING = new COBOL_Keyword("ASCENDING");
+			public @S(20) COBOL_Keyword KEY = new COBOL_Keyword("KEY");
+			public @S(30) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(40) COBOL_Identifier_Reference index;
 		}
 		
 		public static class COBOL_IndexedBy extends TokenSequence
 		{
-			public COBOL_Keyword INDEXED = new COBOL_Keyword("INDEXED");
-			public COBOL_Keyword BY = new COBOL_Keyword("BY");
-			public COBOL_Index_Definition index;
+			public @S(10) COBOL_Keyword INDEXED = new COBOL_Keyword("INDEXED");
+			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
+			public @S(30) COBOL_Index_Definition index;
 		}
 	}
 	
 	public static class COBOL_DataComment extends TokenSequence
 	{
-		public PunctuationStar star;
-		public COBOL_CommentToEndOfLine comment;
+		public @S(10) PunctuationStar star;
+		public @S(20) COBOL_CommentToEndOfLine comment;
 	}
 }

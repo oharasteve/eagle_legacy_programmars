@@ -16,31 +16,31 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_DataDeclaration extends TokenSequence
 {
-	public VB_KeywordChoice modifier = new VB_KeywordChoice(
+	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice(
 			"private", "public", "dim", "const");
-	public @OPT VB_Keyword CONST = new VB_Keyword("const");
-	public VB_Variable_Definition var;
-	public @OPT VB_Subscript subscript;
-	public @OPT TokenList<VB_MoreVariables> moreVariables;
-	public @OPT VB_DataType dataType;
-	public @OPT VB_DataInitialization initializer;
+	public @S(20) @OPT VB_Keyword CONST = new VB_Keyword("const");
+	public @S(30) VB_Variable_Definition var;
+	public @S(40) @OPT VB_Subscript subscript;
+	public @S(50) @OPT TokenList<VB_MoreVariables> moreVariables;
+	public @S(60) @OPT VB_DataType dataType;
+	public @S(70) @OPT VB_DataInitialization initializer;
 
 	public static class VB_DataType extends TokenSequence
 	{
-		public VB_Keyword AS = new VB_Keyword("as");
-		public VB_Type type;
+		public @S(10) VB_Keyword AS = new VB_Keyword("as");
+		public @S(20) VB_Type type;
 	}
 
 	public static class VB_DataInitialization extends TokenSequence
 	{
-		public PunctuationEquals equals;
-		public VB_Expression expr;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) VB_Expression expr;
 	}
 	
 	public static class VB_MoreVariables extends TokenSequence
 	{
-		public PunctuationComma comma;
-		public VB_Variable_Definition var;
-		public @OPT VB_Subscript subscript;
+		public @S(10) PunctuationComma comma;
+		public @S(20) VB_Variable_Definition var;
+		public @S(30) @OPT VB_Subscript subscript;
 	}
 }

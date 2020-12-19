@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class COBOL_Copy_Directive extends TokenSequence
 {
-	public @OPT TokenList<COBOL_Comment> comments;
-	public COBOL_CopyStatement copyStatement;
-	public PunctuationPeriod dot;
+	public @S(10) @OPT TokenList<COBOL_Comment> comments;
+	public @S(20) COBOL_CopyStatement copyStatement;
+	public @S(30) PunctuationPeriod dot;
 }

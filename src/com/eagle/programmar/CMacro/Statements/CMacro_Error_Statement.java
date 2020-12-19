@@ -12,9 +12,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Error_Statement extends TokenSequence implements CMacro_Processable
 {
-	public C_Punctuation pound = new C_Punctuation('#'); 
-	public C_Keyword ERROR = new C_Keyword("error");
-	public @OPT CMacro_RestOfLine message;		// Just keep it as a String
+	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
+	public @S(20) C_Keyword ERROR = new C_Keyword("error");
+	public @S(30) @OPT CMacro_RestOfLine message;		// Just keep it as a String
 
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)

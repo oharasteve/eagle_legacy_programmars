@@ -22,5 +22,5 @@ public class Django_Program extends EagleLanguage
 	}
 
 	// Components of a Django Program
-	public TokenList<Django_Element> elements;
+	public @S(10) TokenList<Django_Element> elements;
 }

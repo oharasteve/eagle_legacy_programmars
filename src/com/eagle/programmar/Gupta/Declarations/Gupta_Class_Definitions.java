@@ -8,6 +8,6 @@ import com.eagle.programmar.Gupta.Terminals.Gupta_Keyword;
 
 public class Gupta_Class_Definitions extends Gupta_Declaration
 {
-	public Gupta_Keyword Class = new Gupta_Keyword("Class");
-	public Gupta_Keyword Definitions = new Gupta_Keyword("Definitions");
+	public @S(10) Gupta_Keyword Class = new Gupta_Keyword("Class");
+	public @S(20) Gupta_Keyword Definitions = new Gupta_Keyword("Definitions");
 }

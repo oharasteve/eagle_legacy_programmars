@@ -8,6 +8,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_StopStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsstop.htm") COBOL_Keyword STOP = new COBOL_Keyword("STOP");
-	public COBOL_Keyword RUN = new COBOL_Keyword("RUN");
+	public @S(10) @DOC("rlpsstop.htm") COBOL_Keyword STOP = new COBOL_Keyword("STOP");
+	public @S(20) COBOL_Keyword RUN = new COBOL_Keyword("RUN");
 }

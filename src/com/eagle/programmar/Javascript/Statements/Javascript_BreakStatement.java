@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_BreakStatement extends TokenSequence
 {
-	public @NEWLINE @DOC("js_break.asp") Javascript_Keyword BREAK = new Javascript_Keyword("break");
-	public @OPT Javascript_Identifier_Reference label;
-	public @NOSPACE @OPT PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE @DOC("js_break.asp") Javascript_Keyword BREAK = new Javascript_Keyword("break");
+	public @S(20) @OPT Javascript_Identifier_Reference label;
+	public @S(30) @NOSPACE @OPT PunctuationSemicolon semicolon;
 }

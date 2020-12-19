@@ -24,8 +24,8 @@ public class CMD_Unparsed_Statement extends UnparsedElement
 		return elements;
 	}
 	
-	public TokenList<CMD_UnparsedElement> elements;
-	public CMD_EndOfLine eoln;
+	public @S(10) TokenList<CMD_UnparsedElement> elements;
+	public @S(20) CMD_EndOfLine eoln;
 	
 	public static class CMD_UnparsedElement extends TokenChooser
 	{

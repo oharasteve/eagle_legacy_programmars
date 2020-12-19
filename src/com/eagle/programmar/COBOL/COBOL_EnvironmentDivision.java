@@ -15,75 +15,75 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class COBOL_EnvironmentDivision extends TokenSequence
 {
-	public COBOL_Keyword ENVIRONMENT = new COBOL_Keyword("ENVIRONMENT");
-	public COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
-	public PunctuationPeriod dot;
-	public @OPT TokenList<COBOL_Comment> comments1;
-	public @OPT COBOL_ClassControl classControl;
-	public @OPT COBOL_ConfigurationSection configuration;
-	public @OPT COBOL_InputOutputSection inputOutput;
-	public @OPT COBOL_SpecialNames specialNames;
+	public @S(10) COBOL_Keyword ENVIRONMENT = new COBOL_Keyword("ENVIRONMENT");
+	public @S(20) COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
+	public @S(30) PunctuationPeriod dot;
+	public @S(40) @OPT TokenList<COBOL_Comment> comments1;
+	public @S(50) @OPT COBOL_ClassControl classControl;
+	public @S(60) @OPT COBOL_ConfigurationSection configuration;
+	public @S(70) @OPT COBOL_InputOutputSection inputOutput;
+	public @S(80) @OPT COBOL_SpecialNames specialNames;
 	
 	public static class COBOL_ClassControl extends TokenSequence
 	{
-		public COBOL_Keyword CLASSCONTROL = new COBOL_Keyword("CLASS-CONTROL");
-		public PunctuationPeriod dot1;
-		public TokenList<COBOL_ClassControlIs> controlIsList;
-		public PunctuationPeriod dot2;
+		public @S(10) COBOL_Keyword CLASSCONTROL = new COBOL_Keyword("CLASS-CONTROL");
+		public @S(20) PunctuationPeriod dot1;
+		public @S(30) TokenList<COBOL_ClassControlIs> controlIsList;
+		public @S(40) PunctuationPeriod dot2;
 		
 		public static class COBOL_ClassControlIs extends TokenSequence
 		{
-			public COBOL_Class_Definition classDef;
-			public COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public COBOL_Keyword CLASS = new COBOL_Keyword("CLASS");
-			public COBOL_Literal name;
+			public @S(10) COBOL_Class_Definition classDef;
+			public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(30) COBOL_Keyword CLASS = new COBOL_Keyword("CLASS");
+			public @S(40) COBOL_Literal name;
 		}
 	}
 	
 	public static class COBOL_ConfigurationSection extends TokenSequence
 	{
-		public COBOL_Keyword CONFIGURATION = new COBOL_Keyword("CONFIGURATION");
-		public COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
-		public PunctuationPeriod dot;
-		public @OPT TokenList<COBOL_Comment> comments1;
-		public @OPT TokenList<COBOL_Computer> computers;
-		public @OPT COBOL_SpecialNames specialNames;
-		public @OPT TokenList<COBOL_Comment> comments2;
+		public @S(10) COBOL_Keyword CONFIGURATION = new COBOL_Keyword("CONFIGURATION");
+		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
+		public @S(30) PunctuationPeriod dot;
+		public @S(40) @OPT TokenList<COBOL_Comment> comments1;
+		public @S(50) @OPT TokenList<COBOL_Computer> computers;
+		public @S(60) @OPT COBOL_SpecialNames specialNames;
+		public @S(70) @OPT TokenList<COBOL_Comment> comments2;
 		
 		public static class COBOL_Computer extends TokenSequence
 		{
-			public COBOL_KeywordChoice source = new COBOL_KeywordChoice("SOURCE-COMPUTER", "OBJECT-COMPUTER");
-			public PunctuationPeriod dot1;
-			public COBOL_Identifier_Reference id;
-			public PunctuationPeriod dot2;
+			public @S(10) COBOL_KeywordChoice source = new COBOL_KeywordChoice("SOURCE-COMPUTER", "OBJECT-COMPUTER");
+			public @S(20) PunctuationPeriod dot1;
+			public @S(30) COBOL_Identifier_Reference id;
+			public @S(40) PunctuationPeriod dot2;
 		}
 	}
 	
 	public static class COBOL_InputOutputSection extends TokenSequence
 	{
-		public COBOL_Keyword INPUTOUTPUT = new COBOL_Keyword("INPUT-OUTPUT");
-		public COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
-		public PunctuationPeriod dot;
-		public @OPT TokenList<COBOL_Comment> comments1;
-		public @OPT COBOL_FileControl fileControl;
-		public @OPT COBOL_IOControl ioControl;
+		public @S(10) COBOL_Keyword INPUTOUTPUT = new COBOL_Keyword("INPUT-OUTPUT");
+		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
+		public @S(30) PunctuationPeriod dot;
+		public @S(40) @OPT TokenList<COBOL_Comment> comments1;
+		public @S(50) @OPT COBOL_FileControl fileControl;
+		public @S(60) @OPT COBOL_IOControl ioControl;
 	}
 	
 	public static class COBOL_IOControl extends TokenSequence
 	{
-		public COBOL_Keyword IOCONTROL = new COBOL_Keyword("I-O-CONTROL");
-		public PunctuationPeriod dot;
-		public COBOL_IOControlSame controlSame;
+		public @S(10) COBOL_Keyword IOCONTROL = new COBOL_Keyword("I-O-CONTROL");
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) COBOL_IOControlSame controlSame;
 
 		public static class COBOL_IOControlSame extends TokenSequence
 		{
-			public COBOL_Keyword SAME = new COBOL_Keyword("SAME");
-			public COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
-			public COBOL_Keyword AREA = new COBOL_Keyword("AREA");
-			public COBOL_Keyword FOR = new COBOL_Keyword("FOR");
-			public COBOL_Keyword NETWORK = new COBOL_Keyword("NETWORK");
-			public COBOL_Keyword SHARED = new COBOL_Keyword("SHARED");
-			public PunctuationPeriod dot;
+			public @S(10) COBOL_Keyword SAME = new COBOL_Keyword("SAME");
+			public @S(20) COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
+			public @S(30) COBOL_Keyword AREA = new COBOL_Keyword("AREA");
+			public @S(40) COBOL_Keyword FOR = new COBOL_Keyword("FOR");
+			public @S(50) COBOL_Keyword NETWORK = new COBOL_Keyword("NETWORK");
+			public @S(60) COBOL_Keyword SHARED = new COBOL_Keyword("SHARED");
+			public @S(70) PunctuationPeriod dot;
 		}
 	}
 }

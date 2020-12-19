@@ -23,6 +23,6 @@ public class Natural_Program extends EagleLanguage
 	}
 
 	// Components of a Natural Program
-	public TokenList<Natural_Statement> statements;
-	public @OPT Natural_Keyword END = new Natural_Keyword("END");
+	public @S(10) TokenList<Natural_Statement> statements;
+	public @S(20) @OPT Natural_Keyword END = new Natural_Keyword("END");
 }

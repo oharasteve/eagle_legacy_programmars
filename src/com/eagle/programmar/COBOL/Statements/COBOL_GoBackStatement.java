@@ -8,5 +8,5 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 
 public class COBOL_GoBackStatement extends COBOL_AbstractStatement
 {
-	public COBOL_Keyword GOBACK = new COBOL_Keyword("GOBACK");
+	public @S(10) COBOL_Keyword GOBACK = new COBOL_Keyword("GOBACK");
 }

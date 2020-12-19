@@ -11,31 +11,31 @@ import com.eagle.tokens.TokenSequence;
 
 public abstract class RPG_C_Calculation_Specification extends TokenSequence
 {
-	public RPG_Keyword C = new RPG_Keyword(6, 6, "C");
-	public @OPT RPG_Literal controlLevel;
+	public @S(10) RPG_Keyword C = new RPG_Keyword(6, 6, "C");
+	public @S(20) @OPT RPG_Literal controlLevel;
 	
-	public @OPT RPG_Keyword not1;
-	public @OPT RPG_Literal indicator1;
+	public @S(30) @OPT RPG_Keyword not1;
+	public @S(40) @OPT RPG_Literal indicator1;
 	
-	public @OPT RPG_Keyword not2;
-	public @OPT RPG_Literal indicator2;
-	
-	public @OPT RPG_Keyword not3;
-	public @OPT RPG_Literal indicator3;
-	
-	public @OPT RPG_Literal factor1;
-	public @OPT RPG_Literal operation;
-	public @OPT RPG_Literal factor2;
-	public @OPT RPG_Literal result;
-	public @OPT RPG_Number length;
-	public @OPT RPG_Number decimalPositions;
-	public @OPT RPG_KeywordChoice operationExtender;
+	public @S(50) @OPT RPG_Keyword not2;
+	public @S(60) @OPT RPG_Literal indicator2;
 
-	public @OPT RPG_Literal resultIndicator1;
-	public @OPT RPG_Literal resultIndicator2;
-	public @OPT RPG_Literal resultIndicator3;
+	public @S(70) @OPT RPG_Keyword not3;
+	public @S(80) @OPT RPG_Literal indicator3;
 	
-	public @OPT RPG_Literal comments;
+	public @S(90) @OPT RPG_Literal factor1;
+	public @S(100) @OPT RPG_Literal operation;
+	public @S(110) @OPT RPG_Literal factor2;
+	public @S(120) @OPT RPG_Literal result;
+	public @S(130) @OPT RPG_Number length;
+	public @S(140) @OPT RPG_Number decimalPositions;
+	public @S(150) @OPT RPG_KeywordChoice operationExtender;
+
+	public @S(160) @OPT RPG_Literal resultIndicator1;
+	public @S(170) @OPT RPG_Literal resultIndicator2;
+	public @S(180) @OPT RPG_Literal resultIndicator3;
+	
+	public @S(190) @OPT RPG_Literal comments;
 	
 	public static class RPG_C_Calculation_Specification_III extends RPG_C_Calculation_Specification
 	{

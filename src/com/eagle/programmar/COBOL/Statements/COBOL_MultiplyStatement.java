@@ -15,34 +15,34 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_MultiplyStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsmult.htm") COBOL_Keyword MULTIPLY = new COBOL_Keyword("MULTIPLY");
-	public COBOL_Expression expr;
-	public COBOL_Keyword BY = new COBOL_Keyword("BY");
-	public COBOL_Expression expression;
-	public @OPT COBOL_MultiplyGiving giving;
-	public @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
-	public @OPT COBOL_MultiplyOnSizeError onError;
+	public @S(10) @DOC("rlpsmult.htm") COBOL_Keyword MULTIPLY = new COBOL_Keyword("MULTIPLY");
+	public @S(20) COBOL_Expression expr;
+	public @S(30) COBOL_Keyword BY = new COBOL_Keyword("BY");
+	public @S(40) COBOL_Expression expression;
+	public @S(50) @OPT COBOL_MultiplyGiving giving;
+	public @S(60) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
+	public @S(70) @OPT COBOL_MultiplyOnSizeError onError;
 
 	public static class COBOL_MultiplyGiving extends TokenSequence
 	{
-		public COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
-		public COBOL_Identifier_Reference var;
-		public @OPT COBOL_Subscript subscript;
-		public @OPT TokenList<COBOL_MultiplyMoreVars> moreVars;
+		public @S(10) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
+		public @S(20) COBOL_Identifier_Reference var;
+		public @S(30) @OPT COBOL_Subscript subscript;
+		public @S(40) @OPT TokenList<COBOL_MultiplyMoreVars> moreVars;
 		
 		public static class COBOL_MultiplyMoreVars extends TokenSequence
 		{
-			public @OPT PunctuationComma comma;
-			public COBOL_Identifier_Reference var;
-			public @OPT COBOL_Subscript subscript;
+			public @S(10) @OPT PunctuationComma comma;
+			public @S(20) COBOL_Identifier_Reference var;
+			public @S(30) @OPT COBOL_Subscript subscript;
 		}
 	}
 
 	public static class COBOL_MultiplyOnSizeError extends TokenSequence
 	{
-		public COBOL_Keyword ON = new COBOL_Keyword("ON");
-		public COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
-		public COBOL_Keyword ERROR = new COBOL_Keyword("ERROR");
-		public TokenList<COBOL_Statement> actions;
+		public @S(10) COBOL_Keyword ON = new COBOL_Keyword("ON");
+		public @S(20) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
+		public @S(30) COBOL_Keyword ERROR = new COBOL_Keyword("ERROR");
+		public @S(40) TokenList<COBOL_Statement> actions;
 	}
 }

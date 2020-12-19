@@ -13,32 +13,32 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class Django_IfControl extends TokenSequence
 {
-	public HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
-	public @OPT PunctuationHyphen dash1;
-	public Django_Keyword IF = new Django_Keyword("if");
-	public @OPT Django_Keyword NOT = new Django_Keyword("not");
-	public Django_Variable variable;
-	public @OPT PunctuationHyphen dash2;
-	public HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
+	public @S(10) HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
+	public @S(20) @OPT PunctuationHyphen dash1;
+	public @S(30) Django_Keyword IF = new Django_Keyword("if");
+	public @S(40) @OPT Django_Keyword NOT = new Django_Keyword("not");
+	public @S(50) Django_Variable variable;
+	public @S(60) @OPT PunctuationHyphen dash2;
+	public @S(70) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
 	
-	public TokenList<Django_Element> html;
+	public @S(80) TokenList<Django_Element> html;
 
-	public @OPT Django_IfElseControl ifElse;
+	public @S(90) @OPT Django_IfElseControl ifElse;
 	
-	public HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
-	public @OPT PunctuationHyphen dash3;
-	public Django_Keyword ENDIF = new Django_Keyword("endif");
-	public @OPT PunctuationHyphen dash4;
-	public HTML_Punctuation percentBrace2 = new HTML_Punctuation("%}");
+	public @S(100) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
+	public @S(110) @OPT PunctuationHyphen dash3;
+	public @S(120) Django_Keyword ENDIF = new Django_Keyword("endif");
+	public @S(130) @OPT PunctuationHyphen dash4;
+	public @S(140) HTML_Punctuation percentBrace2 = new HTML_Punctuation("%}");
 	
 	public static class Django_IfElseControl extends TokenSequence
 	{
-		public HTML_Punctuation bracePercent = new HTML_Punctuation("{%");
-		public @OPT PunctuationHyphen dash1;
-		public Django_Keyword ELSE = new Django_Keyword("else");
-		public @OPT PunctuationHyphen dash2;
-		public HTML_Punctuation percentBrace = new HTML_Punctuation("%}");
+		public @S(10) HTML_Punctuation bracePercent = new HTML_Punctuation("{%");
+		public @S(20) @OPT PunctuationHyphen dash1;
+		public @S(30) Django_Keyword ELSE = new Django_Keyword("else");
+		public @S(40) @OPT PunctuationHyphen dash2;
+		public @S(50) HTML_Punctuation percentBrace = new HTML_Punctuation("%}");
 		
-		public TokenList<Django_Element> html;
+		public @S(60) TokenList<Django_Element> html;
 	}
 }

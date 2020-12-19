@@ -21,43 +21,43 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class JavaP_StackMapTable extends TokenSequence
 {
-	public JavaP_Keyword STACKMAP = new JavaP_Keyword("StackMapTable");
-	public PunctuationColon colon;
-	public JavaP_Keyword NUMBER_OF_ENTRIES = new JavaP_Keyword("number_of_entries");
-	public PunctuationEquals equals;
-	public JavaP_Number entries;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword STACKMAP = new JavaP_Keyword("StackMapTable");
+	public @S(20) PunctuationColon colon;
+	public @S(30) JavaP_Keyword NUMBER_OF_ENTRIES = new JavaP_Keyword("number_of_entries");
+	public @S(40) PunctuationEquals equals;
+	public @S(50) JavaP_Number entries;
+	public @S(60) JavaP_EndOfLine eoln;
 	
-	public @OPT TokenList<JavaP_StackMapFrame> frames;
+	public @S(70) @OPT TokenList<JavaP_StackMapFrame> frames;
 	
 	public static class JavaP_StackMapFrame extends TokenSequence
 	{
-		public JavaP_Keyword FRAMETYPE = new JavaP_Keyword("frame_type");
-		public PunctuationEquals equals;
-		public JavaP_Number frameType;
-		public @OPT JavaP_Comment comment;
-		public JavaP_EndOfLine eoln;
+		public @S(10) JavaP_Keyword FRAMETYPE = new JavaP_Keyword("frame_type");
+		public @S(20) PunctuationEquals equals;
+		public @S(30) JavaP_Number frameType;
+		public @S(40) @OPT JavaP_Comment comment;
+		public @S(50) JavaP_EndOfLine eoln;
 		
-		public @OPT JavaP_StackMapOffset offsetDelta;
-		public @OPT JavaP_StackMapLocals locals;
-		public @OPT JavaP_StackMapStack stack;
+		public @S(60) @OPT JavaP_StackMapOffset offsetDelta;
+		public @S(70) @OPT JavaP_StackMapLocals locals;
+		public @S(80) @OPT JavaP_StackMapStack stack;
 
 		public static class JavaP_StackMapOffset extends TokenSequence
 		{
-			public JavaP_Keyword OFFSETDELTA = new JavaP_Keyword("offset_delta");
-			public PunctuationEquals equals;
-			public JavaP_Number delta;
-			public JavaP_EndOfLine eoln;
+			public @S(10) JavaP_Keyword OFFSETDELTA = new JavaP_Keyword("offset_delta");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) JavaP_Number delta;
+			public @S(40) JavaP_EndOfLine eoln;
 		}
 		
 		public static class JavaP_StackMapLocals extends TokenSequence
 		{
-			public JavaP_Keyword LOCALS = new JavaP_Keyword("locals");
-			public PunctuationEquals equals;
-			public PunctuationLeftBracket leftBracket;
-			public @OPT SeparatedList<JavaP_StackMapLocal,PunctuationComma> locals;
-			public PunctuationRightBracket rightBracket;
-			public JavaP_EndOfLine eoln;
+			public @S(10) JavaP_Keyword LOCALS = new JavaP_Keyword("locals");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) PunctuationLeftBracket leftBracket;
+			public @S(40) @OPT SeparatedList<JavaP_StackMapLocal,PunctuationComma> locals;
+			public @S(50) PunctuationRightBracket rightBracket;
+			public @S(60) JavaP_EndOfLine eoln;
 			
 			public static class JavaP_StackMapLocal extends TokenChooser
 			{
@@ -65,25 +65,25 @@ public class JavaP_StackMapTable extends TokenSequence
 				
 				public @CHOICE static class JavaP_StackMapLocalClass extends TokenSequence
 				{
-					public JavaP_Keyword CLASS = new JavaP_Keyword("class");
-					public JavaP_Value value;
+					public @S(10) JavaP_Keyword CLASS = new JavaP_Keyword("class");
+					public @S(20) JavaP_Value value;
 				}
 			}
 		}
 
 		public static class JavaP_StackMapStack extends TokenSequence
 		{
-			public JavaP_Keyword STACK = new JavaP_Keyword("stack");
-			public PunctuationEquals equals;
-			public PunctuationLeftBracket leftBracket;
-			public SeparatedList<JavaP_StackMapStackClass,PunctuationComma> stackClasses;
-			public PunctuationRightBracket rightBracket;
-			public JavaP_EndOfLine eoln;
+			public @S(10) JavaP_Keyword STACK = new JavaP_Keyword("stack");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) PunctuationLeftBracket leftBracket;
+			public @S(40) SeparatedList<JavaP_StackMapStackClass,PunctuationComma> stackClasses;
+			public @S(50) PunctuationRightBracket rightBracket;
+			public @S(60) JavaP_EndOfLine eoln;
 			
 			public static class JavaP_StackMapStackClass extends TokenSequence
 			{
-				public @OPT JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "uninitialized");
-				public @OPT JavaP_Value value;
+				public @S(10) @OPT JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "uninitialized");
+				public @S(20) @OPT JavaP_Value value;
 			}
 		}
 	}

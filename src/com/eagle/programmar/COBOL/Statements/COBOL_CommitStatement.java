@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_CommitStatement extends TokenSequence
 {
-	public COBOL_Keyword COMMIT = new COBOL_Keyword("COMMIT");
+	public @S(10) COBOL_Keyword COMMIT = new COBOL_Keyword("COMMIT");
 }

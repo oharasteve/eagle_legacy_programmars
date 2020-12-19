@@ -13,10 +13,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_WhileStatement extends TokenSequence
 {
-	public @DOC("#The-while-Statement") C_Keyword WHILE = new C_Keyword("while");
-	public PunctuationLeftParen leftParen;
-	public C_Expression condition;
-	public PunctuationRightParen rightParen;
-	public @OPT C_Comment comment;
-	public C_Statement whileStatement;
+	public @S(10) @DOC("#The-while-Statement") C_Keyword WHILE = new C_Keyword("while");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) C_Expression condition;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) @OPT C_Comment comment;
+	public @S(60) C_Statement whileStatement;
 }

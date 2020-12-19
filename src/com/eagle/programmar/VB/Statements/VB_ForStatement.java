@@ -14,14 +14,14 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_ForStatement extends TokenSequence
 {
-	public @DOC("5z06z1kb.aspx") VB_Keyword FOR = new VB_Keyword("for");
-	public VB_Identifier_Reference var;
-	public PunctuationEquals equals;
-	public VB_Expression from;
-	public VB_Keyword TO = new VB_Keyword("to");
-	public VB_Expression to;
-	public VB_EndOfLine eoln;
-	public TokenList<VB_Statement> action;
-	public VB_Keyword NEXT = new VB_Keyword("next");
-	public @OPT VB_Identifier_Reference var2;
+	public @S(10) @DOC("5z06z1kb.aspx") VB_Keyword FOR = new VB_Keyword("for");
+	public @S(20) VB_Identifier_Reference var;
+	public @S(30) PunctuationEquals equals;
+	public @S(40) VB_Expression from;
+	public @S(50) VB_Keyword TO = new VB_Keyword("to");
+	public @S(60) VB_Expression to;
+	public @S(70) VB_EndOfLine eoln;
+	public @S(80) TokenList<VB_Statement> action;
+	public @S(90) VB_Keyword NEXT = new VB_Keyword("next");
+	public @S(100) @OPT VB_Identifier_Reference var2;
 }

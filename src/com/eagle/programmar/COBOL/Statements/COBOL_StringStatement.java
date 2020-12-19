@@ -16,26 +16,26 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class COBOL_StringStatement extends COBOL_AbstractStatement
 {
-	public @DOC("rlpsstri.htm") COBOL_Keyword STRING = new COBOL_Keyword("STRING");
-	public TokenList<COBOL_StringWhat> elements;
-	public COBOL_Keyword INTO = new COBOL_Keyword("INTO");
-	public TokenList<COBOL_StringPiece> pieces;
-	public @OPT COBOL_StringWith with;
-	public @OPT COBOL_Keyword ENDSTRING = new COBOL_Keyword("END-STRING");
+	public @S(10) @DOC("rlpsstri.htm") COBOL_Keyword STRING = new COBOL_Keyword("STRING");
+	public @S(20) TokenList<COBOL_StringWhat> elements;
+	public @S(30) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
+	public @S(40) TokenList<COBOL_StringPiece> pieces;
+	public @S(50) @OPT COBOL_StringWith with;
+	public @S(60) @OPT COBOL_Keyword ENDSTRING = new COBOL_Keyword("END-STRING");
 	
 	public static class COBOL_StringWhat extends TokenSequence
 	{
-		public COBOL_Expression expr;
-		public COBOL_Keyword DELIMITED1 = new COBOL_Keyword("DELIMITED");
-		public @OPT COBOL_Keyword BY1 = new COBOL_Keyword("BY");
-		public @OPT COBOL_HexOrLiteral delim;
-		public @OPT COBOL_Keyword OR = new COBOL_Keyword("OR");
-		public @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-		public @OPT COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
-		public @OPT COBOL_Keyword SPACE = new COBOL_Keyword("SPACE");
-		public @OPT COBOL_Keyword DELIMITED2 = new COBOL_Keyword("DELIMITED");
-		public @OPT COBOL_Keyword BY2 = new COBOL_Keyword("BY");
-		public @OPT COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
+		public @S(10) COBOL_Expression expr;
+		public @S(20) COBOL_Keyword DELIMITED1 = new COBOL_Keyword("DELIMITED");
+		public @S(30) @OPT COBOL_Keyword BY1 = new COBOL_Keyword("BY");
+		public @S(40) @OPT COBOL_HexOrLiteral delim;
+		public @S(50) @OPT COBOL_Keyword OR = new COBOL_Keyword("OR");
+		public @S(60) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+		public @S(70) @OPT COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
+		public @S(80) @OPT COBOL_Keyword SPACE = new COBOL_Keyword("SPACE");
+		public @S(90) @OPT COBOL_Keyword DELIMITED2 = new COBOL_Keyword("DELIMITED");
+		public @S(100) @OPT COBOL_Keyword BY2 = new COBOL_Keyword("BY");
+		public @S(110) @OPT COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
 		
 		public static class COBOL_HexOrLiteral extends TokenChooser
 		{
@@ -46,22 +46,22 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_StringPiece extends TokenSequence
 	{
-		public @OPT PunctuationComma comma;
-		public COBOL_Identifier_Reference intoVar;
-		public @OPT COBOL_StringCount count;
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Identifier_Reference intoVar;
+		public @S(30) @OPT COBOL_StringCount count;
 		
 		public static class COBOL_StringCount extends TokenSequence
 		{
-			public COBOL_Keyword COUNT = new COBOL_Keyword("COUNT");
-			public COBOL_Keyword IN = new COBOL_Keyword("IN");
-			public COBOL_Identifier_Reference countVar;
+			public @S(10) COBOL_Keyword COUNT = new COBOL_Keyword("COUNT");
+			public @S(20) COBOL_Keyword IN = new COBOL_Keyword("IN");
+			public @S(30) COBOL_Identifier_Reference countVar;
 		}
 	}
 	
 	public static class COBOL_StringWith extends TokenSequence
 	{
-		public COBOL_Keyword WITH = new COBOL_Keyword("WITH");
-		public COBOL_Keyword POINTER = new COBOL_Keyword("POINTER");
-		public COBOL_Identifier_Reference withPointer;
+		public @S(10) COBOL_Keyword WITH = new COBOL_Keyword("WITH");
+		public @S(20) COBOL_Keyword POINTER = new COBOL_Keyword("POINTER");
+		public @S(30) COBOL_Identifier_Reference withPointer;
 	}
 }

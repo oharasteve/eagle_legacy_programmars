@@ -22,53 +22,53 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class PLI_Procedure extends TokenSequence
 {
-	public @OPT PLI_Signals signals;
-	public @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
-	public PLI_Procedure_Definition id1;
-	public PunctuationColon colon;
+	public @S(10) @OPT PLI_Signals signals;
+	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
+	public @S(30) PLI_Procedure_Definition id1;
+	public @S(40) PunctuationColon colon;
 	
-	public PLI_KeywordChoice PROCEDURE = new PLI_KeywordChoice("PROCEDURE", "PROC");
-	public @OPT PLI_Procedure_Parameters params;
+	public @S(50) PLI_KeywordChoice PROCEDURE = new PLI_KeywordChoice("PROCEDURE", "PROC");
+	public @S(60) @OPT PLI_Procedure_Parameters params;
 	
-	public @OPT PLI_ProcedureOptions options1;
-	public @OPT PLI_Keyword RECURSIVE = new PLI_Keyword("RECURSIVE");
-	public @OPT PLI_ProcedureReturns returns;
-	public @OPT PLI_ProcedureOptions options2;
-	public PunctuationSemicolon semicolon1;
+	public @S(70) @OPT PLI_ProcedureOptions options1;
+	public @S(80) @OPT PLI_Keyword RECURSIVE = new PLI_Keyword("RECURSIVE");
+	public @S(90) @OPT PLI_ProcedureReturns returns;
+	public @S(100) @OPT PLI_ProcedureOptions options2;
+	public @S(110) PunctuationSemicolon semicolon1;
 
-	public TokenList<PLI_StatementOrComment> statements;
+	public @S(120) TokenList<PLI_StatementOrComment> statements;
 	
-	public @OPT PLI_Punctuation percent2 = new PLI_Punctuation('%');
-	public PLI_Keyword END = new PLI_Keyword("END");
-	public PLI_Identifier_Reference id2;
-	public PunctuationSemicolon semicolon2;
+	public @S(130) @OPT PLI_Punctuation percent2 = new PLI_Punctuation('%');
+	public @S(140) PLI_Keyword END = new PLI_Keyword("END");
+	public @S(150) PLI_Identifier_Reference id2;
+	public @S(160) PunctuationSemicolon semicolon2;
 	
 	public static class PLI_Procedure_Parameters extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public @OPT PunctuationStar star;
-		public @OPT SeparatedList<PLI_Identifier_Reference,PunctuationComma> params;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT PunctuationStar star;
+		public @S(30) @OPT SeparatedList<PLI_Identifier_Reference,PunctuationComma> params;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 	
 	public static class PLI_ProcedureOptions extends TokenSequence
 	{
-		public PLI_Keyword OPTIONS = new PLI_Keyword("OPTIONS");
-		public PunctuationLeftParen leftParen;
-		public @OPT PLI_Keyword MAIN = new PLI_Keyword("MAIN");
-		public @OPT PunctuationComma comma;
-		public @OPT PLI_KeywordChoice order = new PLI_KeywordChoice(
+		public @S(10) PLI_Keyword OPTIONS = new PLI_Keyword("OPTIONS");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT PLI_Keyword MAIN = new PLI_Keyword("MAIN");
+		public @S(40) @OPT PunctuationComma comma;
+		public @S(50) @OPT PLI_KeywordChoice order = new PLI_KeywordChoice(
 				"ORDER", "REORDER");
-		public PunctuationRightParen rightParen;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 	
 	public static class PLI_ProcedureReturns extends TokenSequence
 	{
-		public PLI_Keyword RETURNS = new PLI_Keyword("RETURNS");
-		public PunctuationLeftParen leftParen;
-		public PLI_Type type;
-		public @OPT PLI_Keyword BYADDR = new PLI_Keyword("BYADDR");
-		public PunctuationRightParen rightParen;
+		public @S(10) PLI_Keyword RETURNS = new PLI_Keyword("RETURNS");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) PLI_Type type;
+		public @S(40) @OPT PLI_Keyword BYADDR = new PLI_Keyword("BYADDR");
+		public @S(50) PunctuationRightParen rightParen;
 	}
 	
 	public static class PLI_StatementOrComment extends TokenChooser

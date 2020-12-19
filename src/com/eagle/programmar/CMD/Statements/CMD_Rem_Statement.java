@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMD_Rem_Statement extends TokenSequence
 {
-	public @DOC("rem.mspx") CMD_Keyword REM = new CMD_Keyword("rem");
-	public CMD_RestOfLine comment;
+	public @S(10) @DOC("rem.mspx") CMD_Keyword REM = new CMD_Keyword("rem");
+	public @S(20) CMD_RestOfLine comment;
 }

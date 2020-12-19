@@ -25,7 +25,7 @@ public class PLI_Program extends EagleLanguage
 	}
 	
 	// Components of a PL/I Program
-	public @OPT TokenList<PLI_Element> elements;
+	public @S(10) @OPT TokenList<PLI_Element> elements;
 	
 	public static class PLI_Element extends TokenChooser
 	{

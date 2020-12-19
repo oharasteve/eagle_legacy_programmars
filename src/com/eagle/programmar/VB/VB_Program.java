@@ -21,5 +21,5 @@ public class VB_Program extends EagleLanguage
 		return "http://msdn.microsoft.com/en-us/library/";
 	}
 	
-	public @OPT TokenList<VB_Statement> elements;
+	public @S(10) @OPT TokenList<VB_Statement> elements;
 }

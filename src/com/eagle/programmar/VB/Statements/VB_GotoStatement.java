@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_GotoStatement extends TokenSequence
 {
-	public VB_Keyword GOTO = new VB_Keyword("goto");
-	public VB_Identifier_Reference lbl;
+	public @S(10) VB_Keyword GOTO = new VB_Keyword("goto");
+	public @S(20) VB_Identifier_Reference lbl;
 }

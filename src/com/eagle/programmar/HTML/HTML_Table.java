@@ -19,9 +19,9 @@ import com.eagle.tokens.TokenSequence;
 
 public class HTML_Table extends TokenSequence
 {
-	public @INDENT HTML_StartTable startTable;
-	public TokenList<HTML_TableBodyElement> elements;
-	public @OUTDENT HTML_EndTable endTable;
+	public @S(10) @INDENT HTML_StartTable startTable;
+	public @S(20) TokenList<HTML_TableBodyElement> elements;
+	public @S(30) @OUTDENT HTML_EndTable endTable;
 	
 	public static class HTML_TableBodyElement extends TokenChooser
 	{
@@ -40,34 +40,34 @@ public class HTML_Table extends TokenSequence
 		
 		public @CHOICE static class HTML_TableColGroup extends TokenSequence
 		{
-			public @INDENT HTML_Punctuation startTagColGroup = new HTML_Punctuation('<');
-			public @NOSPACE HTML_Keyword COLGROUP1 = new HTML_Keyword("colgroup");
-			public @OPT TokenList<HTML_Attribute> attributes; 
-			public @NOSPACE HTML_Punctuation endTagColGroup = new HTML_Punctuation('>');
+			public @S(10) @INDENT HTML_Punctuation startTagColGroup = new HTML_Punctuation('<');
+			public @S(20) @NOSPACE HTML_Keyword COLGROUP1 = new HTML_Keyword("colgroup");
+			public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+			public @S(40) @NOSPACE HTML_Punctuation endTagColGroup = new HTML_Punctuation('>');
 			
-			public @OPT TokenList<HTML_TableCol> columns;
+			public @S(50) @OPT TokenList<HTML_TableCol> columns;
 
-			public HTML_Punctuation startTag = new HTML_Punctuation("</");
-			public @NOSPACE HTML_Keyword COLGROUP2 = new HTML_Keyword("colgroup");
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(60) HTML_Punctuation startTag = new HTML_Punctuation("</");
+			public @S(70) @NOSPACE HTML_Keyword COLGROUP2 = new HTML_Keyword("colgroup");
+			public @S(80) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 			
 			public static class HTML_TableCol extends TokenSequence
 			{
-				public @INDENT HTML_Punctuation startTagSection = new HTML_Punctuation('<');
-				public @NOSPACE HTML_Keyword COL = new HTML_Keyword("col");
-				public @OPT TokenList<HTML_Attribute> attributes; 
-				public @NOSPACE HTML_PunctuationChoice endTagCol = new HTML_PunctuationChoice(">", "/>");
+				public @S(10) @INDENT HTML_Punctuation startTagSection = new HTML_Punctuation('<');
+				public @S(20) @NOSPACE HTML_Keyword COL = new HTML_Keyword("col");
+				public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+				public @S(40) @NOSPACE HTML_PunctuationChoice endTagCol = new HTML_PunctuationChoice(">", "/>");
 			}
 		}
 		
 		public @CHOICE static class HTML_TableSection extends TokenSequence
 		{
-			public @INDENT HTML_Punctuation startTagSection = new HTML_Punctuation('<');
-			public @NOSPACE HTML_KeywordChoice tableType = new HTML_KeywordChoice("thead", "tbody", "tfoot");
-			public @OPT TokenList<HTML_Attribute> attributes; 
-			public @NOSPACE HTML_Punctuation endTagRow = new HTML_Punctuation('>');
-			public @OPT HTML_TableSectionBody body;
-			public @OPT @OUTDENT HTML_EndTableSection endSection;
+			public @S(10) @INDENT HTML_Punctuation startTagSection = new HTML_Punctuation('<');
+			public @S(20) @NOSPACE HTML_KeywordChoice tableType = new HTML_KeywordChoice("thead", "tbody", "tfoot");
+			public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+			public @S(40) @NOSPACE HTML_Punctuation endTagRow = new HTML_Punctuation('>');
+			public @S(50) @OPT HTML_TableSectionBody body;
+			public @S(60) @OPT @OUTDENT HTML_EndTableSection endSection;
 
 			public static class HTML_TableSectionBody extends TokenChooser
 			{
@@ -75,39 +75,39 @@ public class HTML_Table extends TokenSequence
 				
 				public @CHOICE static class HTML_Table_NormalBody extends TokenSequence
 				{
-					public TokenList<HTML_TableRow> rows;
+					public @S(10) TokenList<HTML_TableRow> rows;
 				}
 			}
 			
 			public static class HTML_EndTableSection extends TokenSequence
 			{
-				public HTML_Punctuation startTag = new HTML_Punctuation("</");
-				public @NOSPACE HTML_KeywordChoice tableType = new HTML_KeywordChoice("thead", "tbody", "tfoot");
-				public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+				public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+				public @S(20) @NOSPACE HTML_KeywordChoice tableType = new HTML_KeywordChoice("thead", "tbody", "tfoot");
+				public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 			}
 		}
 	}
 	
 	public static class HTML_TableRow extends TokenSequence
 	{
-		public @INDENT HTML_StartRow startRow;
-		public @OPT TokenList<HTML_Comment> comments1;
-		public @OPT TokenList<HTML_TableData> cells;
-		public @OPT TokenList<HTML_Comment> comments2;
-		public @OPT @OUTDENT HTML_EndRow endRow;
+		public @S(10) @INDENT HTML_StartRow startRow;
+		public @S(20) @OPT TokenList<HTML_Comment> comments1;
+		public @S(30) @OPT TokenList<HTML_TableData> cells;
+		public @S(40) @OPT TokenList<HTML_Comment> comments2;
+		public @S(50) @OPT @OUTDENT HTML_EndRow endRow;
 		
 		public static class HTML_TableData extends TokenSequence
 		{
-			public @INDENT HTML_StartData startCell;
-			public @OPT TokenList<HTML_Element> contents;
-			public @OPT @OUTDENT HTML_EndData endData;
+			public @S(10) @INDENT HTML_StartData startCell;
+			public @S(20) @OPT TokenList<HTML_Element> contents;
+			public @S(30) @OPT @OUTDENT HTML_EndData endData;
 			
 			public static class HTML_StartData extends TokenSequence
 			{
-				public HTML_Punctuation startTag = new HTML_Punctuation("<");
-				public @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
-				public @OPT TokenList<HTML_Attribute> attributes;
-				public @NOSPACE HTML_EndStartDate endStart;
+				public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
+				public @S(20) @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
+				public @S(30) @OPT TokenList<HTML_Attribute> attributes;
+				public @S(40) @NOSPACE HTML_EndStartDate endStart;
 				
 				public static class HTML_EndStartDate extends TokenChooser
 				{
@@ -119,40 +119,40 @@ public class HTML_Table extends TokenSequence
 			
 			public static class HTML_EndData extends TokenSequence
 			{
-				public HTML_Punctuation startTag = new HTML_Punctuation("</");
-				public @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
-				public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+				public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+				public @S(20) @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
+				public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 			}
 		}
 
 		public static class HTML_StartRow extends TokenSequence
 		{
-			public HTML_Punctuation startTag = new HTML_Punctuation("<");
-			public @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
-			public @OPT TokenList<HTML_Attribute> attributes; 
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
+			public @S(20) @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
+			public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+			public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 
 		public static class HTML_EndRow extends TokenSequence
 		{
-			public HTML_Punctuation startTag = new HTML_Punctuation("</");
-			public @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
-			public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+			public @S(20) @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
+			public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 	}
 	
 	public static class HTML_StartTable extends TokenSequence
 	{
-		public HTML_Punctuation startTag = new HTML_Punctuation("<");
-		public @NOSPACE HTML_Keyword TABLE = new HTML_Keyword("table");
-		public @OPT TokenList<HTML_Attribute> attributes; 
-		public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
+		public @S(20) @NOSPACE HTML_Keyword TABLE = new HTML_Keyword("table");
+		public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+		public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	}
 	
 	public static class HTML_EndTable extends TokenSequence
 	{
-		public HTML_Punctuation startTag = new HTML_Punctuation("</");
-		public @NOSPACE HTML_Keyword TABLE = new HTML_Keyword("table");
-		public @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+		public @S(20) @NOSPACE HTML_Keyword TABLE = new HTML_Keyword("table");
+		public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	}
 }

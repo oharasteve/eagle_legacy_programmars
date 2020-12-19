@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class IBMASM_EQU_Directive extends TokenSequence
 {
-	public IBMASM_Keyword EQU = new IBMASM_Keyword("EQU");
-	public IBMASM_Spaces spaces;
-	public IBMASM_EQU_What what;
+	public @S(10) IBMASM_Keyword EQU = new IBMASM_Keyword("EQU");
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_EQU_What what;
 	
 	public static class IBMASM_EQU_What extends TokenChooser
 	{

@@ -14,15 +14,15 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_DeclareStatement extends TokenSequence
 {
-	public SQL_Keyword DECLARE = new SQL_Keyword("DECLARE");
-	public TokenList<SQL_Declaration> declarations;
+	public @S(10) SQL_Keyword DECLARE = new SQL_Keyword("DECLARE");
+	public @S(20) TokenList<SQL_Declaration> declarations;
 	
 	public static class SQL_Declaration extends TokenSequence
 	{
-		public SQL_Declare_Definition definition;
-		public SQL_Type type;
-		public SQL_Punctuation colonEquals = new SQL_Punctuation(":=");
-		public SQL_Expression value;
-		public PunctuationSemicolon semicolon;
+		public @S(10) SQL_Declare_Definition definition;
+		public @S(20) SQL_Type type;
+		public @S(30) SQL_Punctuation colonEquals = new SQL_Punctuation(":=");
+		public @S(40) SQL_Expression value;
+		public @S(50) PunctuationSemicolon semicolon;
 	}
 }

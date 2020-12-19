@@ -14,20 +14,20 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_ForStatement extends TokenSequence
 {
-	public @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
-	public Python_VariableList varList;
-	public Python_Keyword IN = new Python_Keyword("in");
-	public Python_ExpressionList expressionList;
-	public @NOSPACE PunctuationColon colon;
-	public @OPT Python_Comment comment;
-	public Python_SingleOrMultiLineStatement forType;
-	public @OPT Python_ForElse forElseStatement;
+	public @S(10) @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
+	public @S(20) Python_VariableList varList;
+	public @S(30) Python_Keyword IN = new Python_Keyword("in");
+	public @S(40) Python_ExpressionList expressionList;
+	public @S(50) @NOSPACE PunctuationColon colon;
+	public @S(60) @OPT Python_Comment comment;
+	public @S(70) Python_SingleOrMultiLineStatement forType;
+	public @S(80) @OPT Python_ForElse forElseStatement;
 
 	public static class Python_ForElse extends TokenSequence
 	{
-		public Python_StartOfLine soln = new Python_StartOfLine();
-		public Python_Keyword ELSE = new Python_Keyword("else");
-		public PunctuationColon colon;
-		public Python_SingleOrMultiLineStatement doWhat;
+		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
+		public @S(20) Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(30) PunctuationColon colon;
+		public @S(40) Python_SingleOrMultiLineStatement doWhat;
 	}
 }

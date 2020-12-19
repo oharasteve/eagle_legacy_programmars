@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_CloseStatement extends TokenSequence
 {
-	public VB_Keyword CLOSE = new VB_Keyword("close");
-	public VB_Punctuation pound = new VB_Punctuation('#');
-	public VB_Number channel;
+	public @S(10) VB_Keyword CLOSE = new VB_Keyword("close");
+	public @S(20) VB_Punctuation pound = new VB_Punctuation('#');
+	public @S(30) VB_Number channel;
 }

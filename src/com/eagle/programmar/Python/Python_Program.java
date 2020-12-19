@@ -14,5 +14,5 @@ public abstract class Python_Program extends EagleLanguage
 		super(name, syntax);
 	}
 
-	public @OPT TokenList<Python_Statement> entries;
+	public @S(10) @OPT TokenList<Python_Statement> entries;
 }

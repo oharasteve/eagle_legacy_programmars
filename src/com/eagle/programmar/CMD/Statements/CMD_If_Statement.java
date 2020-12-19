@@ -16,11 +16,11 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class CMD_If_Statement extends TokenSequence
 {
-	public @DOC("if.mspx") CMD_Keyword IF = new CMD_Keyword("if");
-	public @OPT CMD_Keyword NOT = new CMD_Keyword("not");
-	public CMD_IfWhat what;
-	public @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-	public CMD_Statement stmt;
+	public @S(10) @DOC("if.mspx") CMD_Keyword IF = new CMD_Keyword("if");
+	public @S(20) @OPT CMD_Keyword NOT = new CMD_Keyword("not");
+	public @S(30) CMD_IfWhat what;
+	public @S(40) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+	public @S(50) CMD_Statement stmt;
 	
 	public static class CMD_IfWhat extends TokenChooser
 	{
@@ -28,27 +28,27 @@ public class CMD_If_Statement extends TokenSequence
 		
 		public @CHOICE static class CMD_IfDefined extends TokenSequence
 		{
-			public CMD_Keyword DEFINED = new CMD_Keyword("defined");
-			public CMD_Argument var;
+			public @S(10) CMD_Keyword DEFINED = new CMD_Keyword("defined");
+			public @S(20) CMD_Argument var;
 		}
 
 		public @CHOICE static class CMD_IfErrorLevel extends TokenSequence
 		{
-			public CMD_Keyword ERRORLEVEL = new CMD_Keyword("errorlevel");
-			public CMD_Number level;
+			public @S(10) CMD_Keyword ERRORLEVEL = new CMD_Keyword("errorlevel");
+			public @S(20) CMD_Number level;
 		}
 
 		public @CHOICE static class CMD_IfExist extends TokenSequence
 		{
-			public CMD_Keyword EXIST = new CMD_Keyword("exist");
-			public CMD_Argument file;
+			public @S(10) CMD_Keyword EXIST = new CMD_Keyword("exist");
+			public @S(20) CMD_Argument file;
 		}
 		
 		public @CHOICE static class CMD_IfEqual extends TokenSequence
 		{
-			public CMD_Argument expr1;
-			public CMD_IfOperator operator;
-			public CMD_Argument expr2;
+			public @S(10) CMD_Argument expr1;
+			public @S(20) CMD_IfOperator operator;
+			public @S(30) CMD_Argument expr2;
 			
 			public static class CMD_IfOperator extends TokenChooser
 			{
@@ -62,15 +62,15 @@ public class CMD_If_Statement extends TokenSequence
 				
 				public @CHOICE static class CMD_EqualsEquals extends TokenSequence
 				{
-					public CMD_Punctuation equals = new CMD_Punctuation("==");
-					public @OPT PunctuationHyphen minus;
+					public @S(10) CMD_Punctuation equals = new CMD_Punctuation("==");
+					public @S(20) @OPT PunctuationHyphen minus;
 				}
 			}
 		}
 
 		public @LAST static class CMD_IfCondition extends TokenSequence
 		{
-			public CMD_Argument condition;
+			public @S(10) CMD_Argument condition;
 		}
 	}
 }

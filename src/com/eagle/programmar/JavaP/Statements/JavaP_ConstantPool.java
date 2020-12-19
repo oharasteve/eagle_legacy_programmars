@@ -22,22 +22,22 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class JavaP_ConstantPool extends TokenSequence
 {
-	public JavaP_Keyword CONSTANT = new JavaP_Keyword("Constant");
-	public JavaP_Keyword POOL = new JavaP_Keyword("pool");
-	public PunctuationColon colon;
-	public JavaP_EndOfLine eoln;
+	public @S(10) JavaP_Keyword CONSTANT = new JavaP_Keyword("Constant");
+	public @S(20) JavaP_Keyword POOL = new JavaP_Keyword("pool");
+	public @S(30) PunctuationColon colon;
+	public @S(40) JavaP_EndOfLine eoln;
 	
-	public TokenList<JavaP_Constant> constants;
+	public @S(50) TokenList<JavaP_Constant> constants;
 	
 	public static class JavaP_Constant extends TokenSequence
 	{
-		public @OPT JavaP_Keyword CONST = new JavaP_Keyword("const");
-		public JavaP_Symbol_Definition symbol;
-		public PunctuationEquals equals;
-		public JavaP_ConstantType type;
-		public @OPT PunctuationSemicolon semicolon;
-		public @OPT JavaP_Comment comment;
-		public JavaP_EndOfLine eoln;
+		public @S(10) @OPT JavaP_Keyword CONST = new JavaP_Keyword("const");
+		public @S(20) JavaP_Symbol_Definition symbol;
+		public @S(30) PunctuationEquals equals;
+		public @S(40) JavaP_ConstantType type;
+		public @S(50) @OPT PunctuationSemicolon semicolon;
+		public @S(60) @OPT JavaP_Comment comment;
+		public @S(70) JavaP_EndOfLine eoln;
 		
 		public static class JavaP_ConstantType extends TokenChooser
 		{

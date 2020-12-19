@@ -24,97 +24,97 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class JavaP_PublicClass extends TokenSequence
 {
-	public @OPT JavaP_Keyword PUBLIC = new JavaP_Keyword("public");
-	public @OPT JavaP_Keyword ABSTRACT = new JavaP_Keyword("abstract");
-	public @OPT JavaP_Keyword FINAL = new JavaP_Keyword("final");
-	public JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "interface");
-	public JavaP_QualifiedName className;
-	public @OPT JavaP_OneClassGeneric generic;
-	public @OPT TokenList<JavaP_ClassExtends> extendsOrImplements;
-	public JavaP_EndOfLine eoln;
+	public @S(10) @OPT JavaP_Keyword PUBLIC = new JavaP_Keyword("public");
+	public @S(20) @OPT JavaP_Keyword ABSTRACT = new JavaP_Keyword("abstract");
+	public @S(30) @OPT JavaP_Keyword FINAL = new JavaP_Keyword("final");
+	public @S(40) JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "interface");
+	public @S(50) JavaP_QualifiedName className;
+	public @S(60) @OPT JavaP_OneClassGeneric generic;
+	public @S(70) @OPT TokenList<JavaP_ClassExtends> extendsOrImplements;
+	public @S(80) JavaP_EndOfLine eoln;
 
-	public @OPT JavaP_MinorVersion minorVersion;
-	public @OPT JavaP_MajorVersion majorVersion;
-	public @OPT JavaP_Flags flags;
-	public @OPT JavaP_ThisClass thisClass;
-	public @OPT JavaP_SuperClass superClass;
-	public @OPT JavaP_Interfaces interfaces;
+	public @S(90) @OPT JavaP_MinorVersion minorVersion;
+	public @S(100) @OPT JavaP_MajorVersion majorVersion;
+	public @S(110) @OPT JavaP_Flags flags;
+	public @S(120) @OPT JavaP_ThisClass thisClass;
+	public @S(130) @OPT JavaP_SuperClass superClass;
+	public @S(140) @OPT JavaP_Interfaces interfaces;
 	
 	public static class JavaP_ClassExtends extends TokenSequence
 	{
-		public JavaP_KeywordChoice EXTENDS = new JavaP_KeywordChoice("extends", "implements");
-		public SeparatedList<JavaP_QualifiedName,PunctuationComma> parentClassName;
-		public @OPT JavaP_ExtendsTemplatedClass templatedClass;
+		public @S(10) JavaP_KeywordChoice EXTENDS = new JavaP_KeywordChoice("extends", "implements");
+		public @S(20) SeparatedList<JavaP_QualifiedName,PunctuationComma> parentClassName;
+		public @S(30) @OPT JavaP_ExtendsTemplatedClass templatedClass;
 		
 		public static class JavaP_ExtendsTemplatedClass extends TokenSequence
 		{
-			public JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
-			public SeparatedList<JavaP_QualifiedName,PunctuationComma> names;
-			public JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
+			public @S(10) JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
+			public @S(20) SeparatedList<JavaP_QualifiedName,PunctuationComma> names;
+			public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 		}
 	}
 
 	public static class JavaP_Flags extends TokenSequence
 	{
-		public JavaP_Keyword FLAGS = new JavaP_Keyword("flags");
-		public PunctuationColon colon;
-		public @OPT JavaP_FlagCode flagCode;
-		public SeparatedList<JavaP_Flag, PunctuationComma> flags;
-		public JavaP_EndOfLine eoln;
+		public @S(10) JavaP_Keyword FLAGS = new JavaP_Keyword("flags");
+		public @S(20) PunctuationColon colon;
+		public @S(30) @OPT JavaP_FlagCode flagCode;
+		public @S(40) SeparatedList<JavaP_Flag, PunctuationComma> flags;
+		public @S(50) JavaP_EndOfLine eoln;
 		
 		public static class JavaP_FlagCode extends TokenSequence
 		{
-			public PunctuationLeftParen leftParen;
-			public JavaP_HexNumber hex;
-			public PunctuationRightParen rightParen;
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) JavaP_HexNumber hex;
+			public @S(30) PunctuationRightParen rightParen;
 		}
 		
 		public static class JavaP_Flag extends TokenSequence
 		{
-			public JavaP_KeywordChoice name = new JavaP_KeywordChoice(JavaP_Syntax.ACC_CODES);
+			public @S(10) JavaP_KeywordChoice name = new JavaP_KeywordChoice(JavaP_Syntax.ACC_CODES);
 		}
 	}
 	
 	public static class JavaP_ThisClass extends TokenSequence
 	{
-		public JavaP_Keyword THIS_CLASS = new JavaP_Keyword("this_class");
-		public PunctuationColon colon;
-		public JavaP_HashNumber classNumber;
-		public @OPT JavaP_Comment className;
-		public JavaP_EndOfLine eoln;
+		public @S(10) JavaP_Keyword THIS_CLASS = new JavaP_Keyword("this_class");
+		public @S(20) PunctuationColon colon;
+		public @S(30) JavaP_HashNumber classNumber;
+		public @S(40) @OPT JavaP_Comment className;
+		public @S(50) JavaP_EndOfLine eoln;
 	}
 	
 	public static class JavaP_SuperClass extends TokenSequence
 	{
-		public JavaP_Keyword SUPER_CLASS = new JavaP_Keyword("super_class");
-		public PunctuationColon colon;
-		public JavaP_HashNumber classNumber;
-		public @OPT JavaP_Comment className;
-		public JavaP_EndOfLine eoln;
+		public @S(10) JavaP_Keyword SUPER_CLASS = new JavaP_Keyword("super_class");
+		public @S(20) PunctuationColon colon;
+		public @S(30) JavaP_HashNumber classNumber;
+		public @S(40) @OPT JavaP_Comment className;
+		public @S(50) JavaP_EndOfLine eoln;
 	}
 	
 	public static class JavaP_Interfaces extends TokenSequence
 	{
 		// interfaces: 0, fields: 3, methods: 12, attributes: 1
-		public JavaP_Keyword INTERFACES = new JavaP_Keyword("interfaces");
-		public PunctuationColon colon1;
-		public JavaP_Number numInterfaces;
-		public PunctuationComma comma1;
+		public @S(10) JavaP_Keyword INTERFACES = new JavaP_Keyword("interfaces");
+		public @S(20) PunctuationColon colon1;
+		public @S(30) JavaP_Number numInterfaces;
+		public @S(40) PunctuationComma comma1;
 		
-		public JavaP_Keyword FIELDS = new JavaP_Keyword("fields");
-		public PunctuationColon colon2;
-		public JavaP_Number numFields;
-		public PunctuationComma comma2;
+		public @S(50) JavaP_Keyword FIELDS = new JavaP_Keyword("fields");
+		public @S(60) PunctuationColon colon2;
+		public @S(70) JavaP_Number numFields;
+		public @S(80) PunctuationComma comma2;
 		
-		public JavaP_Keyword METHODS = new JavaP_Keyword("methods");
-		public PunctuationColon colon3;
-		public JavaP_Number numMethods;
-		public PunctuationComma comma3;
+		public @S(90) JavaP_Keyword METHODS = new JavaP_Keyword("methods");
+		public @S(100) PunctuationColon colon3;
+		public @S(110) JavaP_Number numMethods;
+		public @S(120) PunctuationComma comma3;
 
-		public JavaP_Keyword ATTRIBTES = new JavaP_Keyword("attributes");
-		public PunctuationColon colon4;
-		public JavaP_Number numAttributess;
+		public @S(130) JavaP_Keyword ATTRIBTES = new JavaP_Keyword("attributes");
+		public @S(140) PunctuationColon colon4;
+		public @S(150) JavaP_Number numAttributess;
 
-		public JavaP_EndOfLine eoln;
+		public @S(160) JavaP_EndOfLine eoln;
 	}
 }

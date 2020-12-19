@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_OptionStatement extends TokenSequence
 {
-	public VB_Keyword OPTION = new VB_Keyword("option");
-	public VB_Keyword EXPLICIT = new VB_Keyword("explicit");
+	public @S(10) VB_Keyword OPTION = new VB_Keyword("option");
+	public @S(20) VB_Keyword EXPLICIT = new VB_Keyword("explicit");
 }

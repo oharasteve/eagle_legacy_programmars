@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_Include extends TokenSequence
 {
-	public Perl_Keyword INCLUDE = new Perl_Keyword("include");
-	public PunctuationLeftParen leftParen;
-	public Perl_Literal fileName;
-	public PunctuationRightParen rightParen;
-	public PunctuationSemicolon semicolon;
+	public @S(10) Perl_Keyword INCLUDE = new Perl_Keyword("include");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Perl_Literal fileName;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationSemicolon semicolon;
 }

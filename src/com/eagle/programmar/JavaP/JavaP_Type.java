@@ -10,8 +10,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 
 public class JavaP_Type extends TokenSequence
 {
-	public @OPT PunctuationLeftBracket leftBracket;
-	public JavaP_TypeScalar type;
+	public @S(10) @OPT PunctuationLeftBracket leftBracket;
+	public @S(20) JavaP_TypeScalar type;
 	
 	public static class JavaP_TypeScalar extends TokenChooser
 	{

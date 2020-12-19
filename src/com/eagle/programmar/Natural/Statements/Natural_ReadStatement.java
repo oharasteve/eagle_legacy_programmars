@@ -19,14 +19,14 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Natural_ReadStatement extends TokenSequence
 {
-	public @OPT Natural_Label label;
-	public @DOC("sm/read.htm") Natural_Keyword READ = new Natural_Keyword("READ");
-	public @OPT Natural_Read_Number_Records numberRecords;
-	public Natural_Identifier_Reference viewName;
-	public @OPT Natural_PhysicalLogical physicalLogical;
-	public @OPT TokenList<Natural_ReadClause> clauses;
-	public @OPT TokenList<Natural_Statement> statements;
-	public @OPT Natural_KeywordChoice endRead = new Natural_KeywordChoice(
+	public @S(10) @OPT Natural_Label label;
+	public @S(20) @DOC("sm/read.htm") Natural_Keyword READ = new Natural_Keyword("READ");
+	public @S(30) @OPT Natural_Read_Number_Records numberRecords;
+	public @S(40) Natural_Identifier_Reference viewName;
+	public @S(50) @OPT Natural_PhysicalLogical physicalLogical;
+	public @S(60) @OPT TokenList<Natural_ReadClause> clauses;
+	public @S(70) @OPT TokenList<Natural_Statement> statements;
+	public @S(80) @OPT Natural_KeywordChoice endRead = new Natural_KeywordChoice(
 			"END-READ", "END-ALL");
 	
 	public static class Natural_ReadClause extends TokenChooser
@@ -40,48 +40,48 @@ public class Natural_ReadStatement extends TokenSequence
 	
 	public static class Natural_PhysicalLogical extends TokenSequence
 	{
-		public @OPT Natural_Keyword IN = new Natural_Keyword("IN");
-		public Natural_KeywordChoice device = new Natural_KeywordChoice(
+		public @S(10) @OPT Natural_Keyword IN = new Natural_Keyword("IN");
+		public @S(20) Natural_KeywordChoice device = new Natural_KeywordChoice(
 				"PHYSICAL", "LOGICAL");
-		public @OPT Natural_Keyword SEQUENCE = new Natural_Keyword("SEQUENCE");
+		public @S(30) @OPT Natural_Keyword SEQUENCE = new Natural_Keyword("SEQUENCE");
 	}
 	
 	public static class Natural_Read_Number_Records extends TokenSequence
 	{
-		public PunctuationLeftParen leftParen;
-		public Natural_Number number;
-		public PunctuationRightParen rightParen;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Natural_Number number;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static class Natural_Read_By extends TokenSequence
 	{
-		public Natural_Keyword BY = new Natural_Keyword("BY");
-		public Natural_Condition cond;
+		public @S(10) Natural_Keyword BY = new Natural_Keyword("BY");
+		public @S(20) Natural_Condition cond;
 	}
 	
 	public static class Natural_Read_Starting extends TokenSequence
 	{
-		public @OPT Natural_Keyword STARTING = new Natural_Keyword("STARTING");
-		public Natural_Keyword FROM = new Natural_Keyword("FROM");
-		public Natural_Expression expr;
+		public @S(10) @OPT Natural_Keyword STARTING = new Natural_Keyword("STARTING");
+		public @S(20) Natural_Keyword FROM = new Natural_Keyword("FROM");
+		public @S(30) Natural_Expression expr;
 	}
 	
 	public static class Natural_Read_Ending extends TokenSequence
 	{
-		public Natural_Keyword ENDING = new Natural_Keyword("ENDING");
-		public Natural_Keyword AT = new Natural_Keyword("AT");
-		public Natural_Expression expr;
+		public @S(10) Natural_Keyword ENDING = new Natural_Keyword("ENDING");
+		public @S(20) Natural_Keyword AT = new Natural_Keyword("AT");
+		public @S(30) Natural_Expression expr;
 	}
 	
 	public static class Natural_Read_Where extends TokenSequence
 	{
-		public Natural_Keyword WHERE = new Natural_Keyword("WHERE");
-		public Natural_Condition cond;
+		public @S(10) Natural_Keyword WHERE = new Natural_Keyword("WHERE");
+		public @S(20) Natural_Condition cond;
 	}
 	
 	public static class Natural_Read_With extends TokenSequence
 	{
-		public Natural_Keyword WITH = new Natural_Keyword("WITH");
-		public Natural_Condition cond;
+		public @S(10) Natural_Keyword WITH = new Natural_Keyword("WITH");
+		public @S(20) Natural_Condition cond;
 	}
 }

@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_RR extends TokenSequence
 {
-	public IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
 		"ALR",		// Add logical register
 		"AR",		// Add register
 		"ADR",		// FP addition
@@ -63,8 +63,8 @@ public class IBMASM_Format_RR extends TokenSequence
 		"MVCL"
 		);
 	
-	public IBMASM_Spaces spaces;
-	public IBMASM_Register register1;
-	public PunctuationComma comma;
-	public IBMASM_Register register2;
+	public @S(20) IBMASM_Spaces spaces;
+	public @S(30) IBMASM_Register register1;
+	public @S(40) PunctuationComma comma;
+	public @S(50) IBMASM_Register register2;
 }

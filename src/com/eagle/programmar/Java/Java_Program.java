@@ -47,12 +47,12 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 		"volatile"
 	}; 
 
-	public @OPT TokenList<Java_Comment> comments1;
-	public @OPT Java_Annotation annotation;
-	public @OPT TokenList<Java_Comment> comments2;
-	public @OPT Java_Package jpackage;
-	public @OPT TokenList<Java_ImportOrComment> jimportList;
-	public @OPT TokenList<Java_ClassOrEnum> classOrEnum;
+	public @S(10) @OPT TokenList<Java_Comment> comments1;
+	public @S(20) @OPT Java_Annotation annotation;
+	public @S(30) @OPT TokenList<Java_Comment> comments2;
+	public @S(40) @OPT Java_Package jpackage;
+	public @S(50) @OPT TokenList<Java_ImportOrComment> jimportList;
+	public @S(60) @OPT TokenList<Java_ClassOrEnum> classOrEnum;
 	
 	public static class Java_ClassOrEnum extends TokenChooser
 	{
@@ -62,15 +62,15 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 
 	public static class Java_Package extends TokenSequence
 	{
-		public @BLANKLINE Java_Keyword PACKAGE = new Java_Keyword("package");
-		public Java_Identifier id;
-		public @OPT TokenList<Java_MorePackageIds> moreIds;
-		public @NOSPACE PunctuationSemicolon semicolon;
+		public @S(10) @BLANKLINE Java_Keyword PACKAGE = new Java_Keyword("package");
+		public @S(20) Java_Identifier id;
+		public @S(30) @OPT TokenList<Java_MorePackageIds> moreIds;
+		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
 		
 		public static class Java_MorePackageIds extends TokenSequence
 		{
-			public @NOSPACE PunctuationPeriod dot;
-			public @NOSPACE Java_Identifier id;
+			public @S(10) @NOSPACE PunctuationPeriod dot;
+			public @S(20) @NOSPACE Java_Identifier id;
 		}
 	}
 	
@@ -82,16 +82,16 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 	
 	public static class Java_Import extends TokenSequence
 	{
-		public @NEWLINE Java_Keyword IMPORT = new Java_Keyword("import");
-		public @OPT Java_Keyword STATIC = new Java_Keyword("static");
-		public Java_Identifier id;
-		public @OPT TokenList<Java_DotIdentifierStar> dotId;
-		public @NOSPACE PunctuationSemicolon semicolon;
+		public @S(10) @NEWLINE Java_Keyword IMPORT = new Java_Keyword("import");
+		public @S(20) @OPT Java_Keyword STATIC = new Java_Keyword("static");
+		public @S(30) Java_Identifier id;
+		public @S(40) @OPT TokenList<Java_DotIdentifierStar> dotId;
+		public @S(50) @NOSPACE PunctuationSemicolon semicolon;
 
 		public static class Java_DotIdentifierStar extends TokenSequence
 		{
-			public @NOSPACE PunctuationPeriod dot;
-			public @NOSPACE Java_IdentifierStar idStar;
+			public @S(10) @NOSPACE PunctuationPeriod dot;
+			public @S(20) @NOSPACE Java_IdentifierStar idStar;
 			
 			public static class Java_IdentifierStar extends TokenChooser
 			{

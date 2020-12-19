@@ -49,8 +49,8 @@ public abstract class RPG_Program extends EagleLanguage
 
 	public static class RPG_Item extends TokenSequence
 	{
-		public @OPT RPG_Spec_or_Directive specOrDirective;
-		public RPG_EndOfLine eoln;
+		public @S(10) @OPT RPG_Spec_or_Directive specOrDirective;
+		public @S(20) RPG_EndOfLine eoln;
 	}
 
 	public static class RPG_Spec_or_Directive extends TokenChooser
@@ -74,7 +74,7 @@ public abstract class RPG_Program extends EagleLanguage
 	}
 
 	// Components of an RPG Program
-	public TokenList<RPG_Item> items;
+	public @S(10) TokenList<RPG_Item> items;
 	
 	public static class RPG_III_Program extends RPG_Program
 	{
