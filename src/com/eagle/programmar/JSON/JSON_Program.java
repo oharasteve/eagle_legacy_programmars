@@ -12,11 +12,11 @@ import com.eagle.tokens.TokenList;
 
 public class JSON_Program extends EagleLanguage
 {
-	public static final String NAME = "JSON";
+	public static final String JSON = "JSON";
 	
 	public JSON_Program()
 	{
-		super(NAME, new JSON_Syntax());
+		super(JSON, new JSON_Syntax());
 	}
 
 	@Override

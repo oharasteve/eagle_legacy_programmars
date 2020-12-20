@@ -9,11 +9,11 @@ import com.eagle.tokens.TokenList;
 
 public class Perl_Program extends EagleLanguage
 {
-	public static final String NAME = "Perl";
+	public static final String PERL = "Perl";
 	
 	public Perl_Program()
 	{
-		super(NAME, new Perl_Syntax());
+		super(PERL, new Perl_Syntax());
 	}
 	
 	@Override

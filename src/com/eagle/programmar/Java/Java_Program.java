@@ -19,11 +19,11 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Java_Program extends EagleLanguage implements EagleRunnable, EagleScopeInterface
 {
-	public static final String NAME = "Java";
+	public static final String JAVA = "Java";
 	
 	public Java_Program()
 	{
-		super(NAME, new Java_Syntax());
+		super(JAVA, new Java_Syntax());
 	}
 	
 	@Override

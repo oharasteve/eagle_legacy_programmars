@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class JavaP_Program extends EagleLanguage
 {
-	public static final String NAME = "JavaP";
+	public static final String JAVAP = "JavaP";
 	
 	public JavaP_Program()
 	{
-		super(NAME, new JavaP_Syntax());
+		super(JAVAP, new JavaP_Syntax());
 	}
 	
 	@Override

@@ -10,11 +10,11 @@ import com.eagle.tokens.TokenList;
 
 public class AWK_Program extends EagleLanguage
 {
-	public static final String NAME = "AWK";
+	public static final String AWK = "AWK";
 	
 	public AWK_Program()
 	{
-		super(NAME, new AWK_Syntax());
+		super(AWK, new AWK_Syntax());
 	}
 	
 	@Override

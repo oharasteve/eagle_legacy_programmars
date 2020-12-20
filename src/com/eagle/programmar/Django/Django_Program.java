@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class Django_Program extends EagleLanguage
 {
-	public static final String NAME = "Django";
+	public static final String DJANGO = "Django";
 	
 	public Django_Program()
 	{
-		super(NAME, new Django_Syntax());
+		super(DJANGO, new Django_Syntax());
 	}
 	
 	@Override

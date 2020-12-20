@@ -26,7 +26,7 @@ public class Java_HexFloatingNumber extends TerminalToken implements EagleRunnab
 	}
 
 	// Make it a little easier to read
-	private boolean isHex(char ch)
+	private static boolean isHex(char ch)
 	{
 		return TerminalHexNumberToken.HEX.indexOf(ch) >= 0;
 	}

@@ -8,11 +8,11 @@ import com.eagle.programmar.Gupta.Declarations.Gupta_Application;
 
 public class Gupta_Program extends EagleLanguage
 {
-	public static final String NAME = "Gupta";
+	public static final String GUPTA = "Gupta";
 	
 	public Gupta_Program()
 	{
-		super(NAME, new Gupta_Syntax());
+		super(GUPTA, new Gupta_Syntax());
 	}
 	
 	@Override

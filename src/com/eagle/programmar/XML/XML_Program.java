@@ -25,11 +25,11 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class XML_Program extends EagleLanguage
 {
-	public static final String NAME = "XML";
+	public static final String XML = "XML";
 	
 	public XML_Program()
 	{
-		super(NAME, new XML_Syntax());
+		super(XML, new XML_Syntax());
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class XML_Program extends EagleLanguage
 	public static class XML_Header extends TokenSequence
 	{
 		public @S(10) @NEWLINE HTML_Punctuation startTag = new HTML_Punctuation("<?");
-		public @S(20) @NOSPACE HTML_KeywordChoice XML = new HTML_KeywordChoice(
+		public @S(20) @NOSPACE HTML_KeywordChoice XMLISH = new HTML_KeywordChoice(
 				"mso-application",
 				"rfc",
 				"test",

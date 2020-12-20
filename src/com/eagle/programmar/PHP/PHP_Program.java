@@ -17,11 +17,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class PHP_Program extends EagleLanguage
 {
-	public static final String NAME = "PHP";
+	public static final String PHP = "PHP";
 	
 	public PHP_Program()
 	{
-		super(NAME, new PHP_Syntax());
+		super(PHP, new PHP_Syntax());
 	}
 	
 	@Override

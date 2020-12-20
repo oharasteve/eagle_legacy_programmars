@@ -11,11 +11,11 @@ import com.eagle.tokens.TokenList;
 
 public class PLI_Program extends EagleLanguage
 {
-	public static final String NAME = "PL/I";
+	public static final String PLI = "PL/I";
 	
 	public PLI_Program()
 	{
-		super(NAME, new PLI_Syntax());
+		super(PLI, new PLI_Syntax());
 	}
 
 	@Override

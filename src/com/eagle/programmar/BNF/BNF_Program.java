@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class BNF_Program extends EagleLanguage
 {
-	public static final String NAME = "BNF";
+	public static final String BNF = "BNF";
 	
 	public BNF_Program()
 	{
-		super(NAME, new BNF_Syntax());
+		super(BNF, new BNF_Syntax());
 	}
 
 	public @S(10) TokenList<BNF_Rule> rules;

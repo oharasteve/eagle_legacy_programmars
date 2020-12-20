@@ -7,11 +7,11 @@ import com.eagle.core.EagleLanguage;
 
 public class Rust_Program extends EagleLanguage
 {
-	public static final String NAME = "Rust";
+	public static final String RUST = "Rust";
 	
 	public Rust_Program()
 	{
-		super(NAME, new Rust_Syntax());
+		super(RUST, new Rust_Syntax());
 	}
 	
 	@Override

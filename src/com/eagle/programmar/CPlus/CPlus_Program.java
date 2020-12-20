@@ -9,11 +9,11 @@ import com.eagle.tokens.TokenList;
 
 public class CPlus_Program extends C_Program
 {
-	public static final String NAME = "Cpp";
+	public static final String CPP = "Cpp";
 	
 	public CPlus_Program()
 	{
-		super(NAME, new CPlus_Syntax());
+		super(CPP, new CPlus_Syntax());
 	}
 	
 	@Override

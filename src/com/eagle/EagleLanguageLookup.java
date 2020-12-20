@@ -56,46 +56,46 @@ public class EagleLanguageLookup extends LanguageLookup
 	
 	public EagleLanguageLookup()
 	{
-		// The 3+ arguments are suffixes for this language
-		add(AWK_Program.NAME, AWK_Program.class, ".awk");
+		// The third, etc arguments are suffixes for this language
+		add(AWK_Program.AWK, AWK_Program.class, ".awk");
 		// add(Bash_Program.NAME, Bash_Program.class, ".sh");
-		add(BNF_Program.NAME, BNF_Program.class, ".bnf");
-		add(C_Program.NAME, C_Program.class, ".c", ".h");
-		add(CMacro_Program.NAME, CMacro_Program.class);
-		add(CMD_Program.NAME, CMD_Program.class, ".bat");
-		add(COBOL_Partial_Fixed_Format.NAME, COBOL_Partial_Fixed_Format.class);
-		add(COBOL_Program_Fixed_Format.NAME, COBOL_Program_Fixed_Format.class, ".cob");
-		add(COBOL_Program_Free_Format.NAME, COBOL_Program_Free_Format.class, ".cbl");
-		add(CPlus_Program.NAME, CPlus_Program.class, ".cc", ".cpp", ".hh");
-		add(CSharp_Program.NAME, CSharp_Program.class, ".cs");
-		add(CSS_Program.NAME, CSS_Program.class, ".css");
-		add(Delphi_Configuration.NAME, Delphi_Configuration.class);
-		add(Delphi_Program.NAME, Delphi_Program.class, ".p", ".pas");
-		add(Django_Program.NAME, Django_Program.class);
-		add(Gupta_Program.NAME, Gupta_Program.class);
-		add(HTML_Program.NAME, HTML_Program.class, ".htm", ".html");
-		add(IBMASM_Program.NAME, IBMASM_Program.class);
-		add(IntelASM_Program.NAME, IntelASM_Program.class);
-		add(Java_Program.NAME, Java_Program.class, ".java");
-		add(JavaP_Program.NAME, JavaP_Program.class, ".javap");
-		add(Javascript_Program.NAME, Javascript_Program.class, ".js");
-		add(JSON_Program.NAME, JSON_Program.class, ".json");
-		add(Lisp_Program.NAME, Lisp_Program.class, ".lisp");
-		add(Natural_Program.NAME, Natural_Program.class, ".ntf");
-		add(Perl_Program.NAME, Perl_Program.class);
-		add(PHP_Program.NAME, PHP_Program.class, ".php");
-		add(PLI_Program.NAME, PLI_Program.class, ".pli");
-		// add(Powershell_Program.NAME, Powershell_Program.class, ".ps1");
-		add(PPSM_Program.NAME, PPSM_Program.class, ".ppsm");
-		add(Property_Program.NAME, Property_Program.class, ".properties");
-		add(Python2_Program.NAME, Python2_Program.class);
-		add(Python3_Program.NAME, Python3_Program.class, ".py");
-		add(RPG_III_Program.NAME, RPG_III_Program.class, ".rpg");
-		add(RPG_IV_Program.NAME, RPG_IV_Program.class);
-		add(Rust_Program.NAME, Rust_Program.class, ".rs");
-		add(SQL_Program.NAME, SQL_Program.class, ".sql");
-		// add(TCL_Program.NAME, TCL_Program.class, ".tcl");
-		add(VB_Program.NAME, VB_Program.class, ".vb");
-		add(XML_Program.NAME, XML_Program.class, ".xml", ".xsd");
+		add(BNF_Program.BNF, BNF_Program.class, ".bnf");
+		add(C_Program.C, C_Program.class, ".c", ".h");
+		add(CMacro_Program.CMACRO, CMacro_Program.class);
+		add(CMD_Program.CMD, CMD_Program.class, ".bat");
+		add(COBOL_Partial_Fixed_Format.COBOLPartial, COBOL_Partial_Fixed_Format.class);
+		add(COBOL_Program_Fixed_Format.COBOLFixed, COBOL_Program_Fixed_Format.class, ".cob");
+		add(COBOL_Program_Free_Format.COBOLFree, COBOL_Program_Free_Format.class, ".cbl");
+		add(CPlus_Program.CPP, CPlus_Program.class, ".cc", ".cpp", ".hh");
+		add(CSharp_Program.CSHARP, CSharp_Program.class, ".cs");
+		add(CSS_Program.CSS, CSS_Program.class, ".css");
+		add(Delphi_Configuration.DELPHIConfig, Delphi_Configuration.class);
+		add(Delphi_Program.DELPHI, Delphi_Program.class, ".p", ".pas");
+		add(Django_Program.DJANGO, Django_Program.class);
+		add(Gupta_Program.GUPTA, Gupta_Program.class);
+		add(HTML_Program.HTML, HTML_Program.class, ".htm", ".html");
+		add(IBMASM_Program.IBMASM, IBMASM_Program.class);
+		add(IntelASM_Program.INTELASM, IntelASM_Program.class);
+		add(Java_Program.JAVA, Java_Program.class, ".java");
+		add(JavaP_Program.JAVAP, JavaP_Program.class, ".javap");
+		add(Javascript_Program.JAVASCRIPT, Javascript_Program.class, ".js");
+		add(JSON_Program.JSON, JSON_Program.class, ".json");
+		add(Lisp_Program.LISP, Lisp_Program.class, ".lisp");
+		add(Natural_Program.NATURAL, Natural_Program.class, ".ntf");
+		add(Perl_Program.PERL, Perl_Program.class);
+		add(PHP_Program.PHP, PHP_Program.class, ".php");
+		add(PLI_Program.PLI, PLI_Program.class, ".pli");
+		// add(Powershell_Program.POWERSHELL, Powershell_Program.class, ".ps1");
+		add(PPSM_Program.PPSM, PPSM_Program.class, ".ppsm");
+		add(Property_Program.PROPERTY, Property_Program.class, ".properties");
+		add(Python2_Program.PYTHON2, Python2_Program.class);
+		add(Python3_Program.PYTHON3, Python3_Program.class, ".py");
+		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
+		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
+		add(Rust_Program.RUST, Rust_Program.class, ".rs");
+		add(SQL_Program.SQL, SQL_Program.class, ".sql");
+		// add(TCL_Program.TCL, TCL_Program.class, ".tcl");
+		add(VB_Program.VB, VB_Program.class, ".vb");
+		add(XML_Program.XML, XML_Program.class, ".xml", ".xsd");
 	}
 }

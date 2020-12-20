@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class VB_Program extends EagleLanguage
 {
-	public static final String NAME = "VB";
+	public static final String VB = "VB";
 	
 	public VB_Program()
 	{
-		super(NAME, new VB_Syntax());
+		super(VB, new VB_Syntax());
 	}
 	
 	@Override

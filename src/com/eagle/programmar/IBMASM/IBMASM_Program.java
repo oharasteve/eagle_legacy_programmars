@@ -14,11 +14,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_Program extends EagleLanguage
 {
-	public static final String NAME = "IBMASM";
+	public static final String IBMASM = "IBMASM";
 	
 	public IBMASM_Program()
 	{
-		super(NAME, new IBMASM_Syntax());
+		super(IBMASM, new IBMASM_Syntax());
 	}
 	
 	@Override

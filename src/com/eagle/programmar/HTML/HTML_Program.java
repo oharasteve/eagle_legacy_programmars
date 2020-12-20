@@ -18,11 +18,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class HTML_Program extends EagleLanguage
 {
-	public static final String NAME = "HTML";
+	public static final String HTML = "HTML";
 	
 	public HTML_Program()
 	{
-		super(NAME, new HTML_Syntax());
+		super(HTML, new HTML_Syntax());
 	}
 	
 	@Override

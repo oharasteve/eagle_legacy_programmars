@@ -10,11 +10,11 @@ import com.eagle.tokens.TokenList;
 
 public class Javascript_Program extends EagleLanguage
 {
-	public static final String NAME = "Javascript";
+	public static final String JAVASCRIPT = "Javascript";
 	
 	public Javascript_Program()
 	{
-		super(NAME, new Javascript_Syntax());
+		super(JAVASCRIPT, new Javascript_Syntax());
 	}
 	
 	@Override

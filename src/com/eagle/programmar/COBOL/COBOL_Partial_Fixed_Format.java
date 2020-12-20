@@ -15,11 +15,11 @@ import com.eagle.tokens.TokenList;
 
 public class COBOL_Partial_Fixed_Format extends COBOL_Program
 {
-	public static final String NAME = "COBOL_Partial_Fixed_Format";
+	public static final String COBOLPartial = "COBOL_Partial_Fixed_Format";
 
 	public COBOL_Partial_Fixed_Format()
 	{
-		super(NAME, new COBOL_Fixed_Format_Syntax());
+		super(COBOLPartial, new COBOL_Fixed_Format_Syntax());
 	}
 	
 	public @S(10) TokenList<COBOL_PartialWhat> pieces;

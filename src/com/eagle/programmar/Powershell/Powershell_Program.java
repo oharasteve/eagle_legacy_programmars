@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class Powershell_Program extends EagleLanguage
 {
-	public static final String NAME = "Powershell";
+	public static final String POWERHSELL = "Powershell";
 	
 	public Powershell_Program()
 	{
-		super(NAME, new Powershell_Syntax());
+		super(POWERHSELL, new Powershell_Syntax());
 	}
 	
 	@Override

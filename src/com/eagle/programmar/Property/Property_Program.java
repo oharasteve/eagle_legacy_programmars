@@ -17,11 +17,11 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Property_Program extends EagleLanguage
 {
-	public static final String NAME = "Property";
+	public static final String PROPERTY = "Property";
 	
 	public Property_Program()
 	{
-		super(NAME, new Property_Syntax());
+		super(PROPERTY, new Property_Syntax());
 	}
 
 	@Override

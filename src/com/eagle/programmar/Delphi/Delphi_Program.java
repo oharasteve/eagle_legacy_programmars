@@ -18,11 +18,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Program extends EagleLanguage
 {
-	public static final String NAME = "Delphi";
+	public static final String DELPHI = "Delphi";
 	
 	public Delphi_Program()
 	{
-		super(NAME, new Delphi_Syntax());
+		super(DELPHI, new Delphi_Syntax());
 	}
 	
 	@Override

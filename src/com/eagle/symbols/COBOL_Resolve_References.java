@@ -248,21 +248,18 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 						if (whichClause instanceof COBOL_OccursClause)
 						{
 							COBOL_OccursClause occurs = (COBOL_OccursClause) whichClause;
-							if (occurs != null)
+							if (occurs.indexedBy != null)
 							{
-								if (occurs.indexedBy != null)
+								COBOL_Index_Definition index = occurs.indexedBy.index;
+								if (ref.toString().equalsIgnoreCase(index.toString()))
 								{
-									COBOL_Index_Definition index = occurs.indexedBy.index;
-									if (ref.toString().equalsIgnoreCase(index.toString()))
-									{
-										if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
-										if (_trace) System.out.println("Data reference to " + ref + " at " +
-												(ref._currentLine+1) + "/" + (ref._currentChar+1));
-										ref.setDefinition(index);
-										index.addReference(ref);
-										//index.parentDef = defParent;
-										foundAny++;
-									}
+									if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
+									if (_trace) System.out.println("Data reference to " + ref + " at " +
+											(ref._currentLine+1) + "/" + (ref._currentChar+1));
+									ref.setDefinition(index);
+									index.addReference(ref);
+									//index.parentDef = defParent;
+									foundAny++;
 								}
 							}
 						}

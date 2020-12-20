@@ -15,7 +15,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Configuration extends EagleLanguage
 {
-	public static final String NAME = "Delphi_Configuration";
+	public static final String DELPHIConfig = "Delphi_Configuration";
 	
 	public static class Delphi_Config_Syntax extends EagleSyntax
 	{
@@ -40,7 +40,7 @@ public class Delphi_Configuration extends EagleLanguage
 
 	public Delphi_Configuration()
 	{
-		super(NAME, new Delphi_Config_Syntax());
+		super(DELPHIConfig, new Delphi_Config_Syntax());
 	}
 
 	@Override

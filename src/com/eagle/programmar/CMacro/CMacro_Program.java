@@ -18,11 +18,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Program extends EagleLanguage
 {
-	public static final String NAME = "CMacro";
+	public static final String CMACRO = "CMacro";
 	
 	public CMacro_Program()
 	{
-		super(NAME, new CMacro_Syntax());
+		super(CMACRO, new CMacro_Syntax());
 	}
 	
 	@Override

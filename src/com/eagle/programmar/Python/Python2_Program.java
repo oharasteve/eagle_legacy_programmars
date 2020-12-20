@@ -9,11 +9,11 @@ import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 
 public class Python2_Program extends Python_Program
 {
-	public static final String NAME = "Python2";
+	public static final String PYTHON2 = "Python2";
 	
 	public Python2_Program()
 	{
-		super(NAME, new Python_Syntax());
+		super(PYTHON2, new Python_Syntax());
 	}
 	
 	public static class Python2_Simple_Statement extends Python_Simple_Statement

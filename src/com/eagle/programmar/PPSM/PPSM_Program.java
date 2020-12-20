@@ -10,11 +10,11 @@ import com.eagle.tokens.TokenSequence;
 
 public class PPSM_Program extends EagleLanguage
 {
-	public static final String NAME = "PPSM";
+	public static final String PPSM = "PPSM";
 	
 	public PPSM_Program()
 	{
-		super(NAME, new PPSM_Syntax());
+		super(PPSM, new PPSM_Syntax());
 	}
 	
 	@Override

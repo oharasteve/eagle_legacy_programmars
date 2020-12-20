@@ -19,11 +19,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Program extends EagleLanguage
 {
-	public static final String NAME = "CSharp";
+	public static final String CSHARP = "CSharp";
 	
 	public CSharp_Program()
 	{
-		super(NAME, new CSharp_Syntax());
+		super(CSHARP, new CSharp_Syntax());
 	}
 
 	@Override

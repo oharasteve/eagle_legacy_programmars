@@ -14,11 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class CMD_Program extends EagleLanguage
 {
-	public static final String NAME = "CMD";
+	public static final String CMD = "CMD";
 	
 	public CMD_Program()
 	{
-		super(NAME, new CMD_Syntax());
+		super(CMD, new CMD_Syntax());
 	}
 	
 	@Override

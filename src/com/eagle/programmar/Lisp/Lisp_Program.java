@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class Lisp_Program extends EagleLanguage
 {
-	public static final String NAME = "Lisp";
+	public static final String LISP = "Lisp";
 	
 	public Lisp_Program()
 	{
-		super(NAME, new Lisp_Syntax());
+		super(LISP, new Lisp_Syntax());
 	}
 	
 	@Override

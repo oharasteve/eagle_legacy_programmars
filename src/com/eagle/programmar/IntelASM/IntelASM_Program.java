@@ -11,11 +11,11 @@ import com.eagle.tokens.TokenList;
 
 public class IntelASM_Program extends EagleLanguage
 {
-	public static final String NAME = "IntelASM";
+	public static final String INTELASM = "IntelASM";
 	
 	public IntelASM_Program()
 	{
-		super(NAME, new IntelASM_Syntax());
+		super(INTELASM, new IntelASM_Syntax());
 	}
 	
 	@Override

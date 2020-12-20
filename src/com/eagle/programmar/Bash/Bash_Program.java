@@ -8,11 +8,11 @@ import com.eagle.core.EagleLanguage;
 
 public class Bash_Program extends EagleLanguage
 {
-	public static final String NAME = "Bash";
+	public static final String BASH = "Bash";
 	
 	public Bash_Program()
 	{
-		super(NAME, new Bash_Syntax());
+		super(BASH, new Bash_Syntax());
 	}
 	
 	@Override

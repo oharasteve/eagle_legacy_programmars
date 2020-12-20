@@ -10,11 +10,11 @@ import com.eagle.tokens.TokenList;
 
 public class SQL_Program extends EagleLanguage
 {
-	public static final String NAME = "SQL";
+	public static final String SQL = "SQL";
 	
 	public SQL_Program()
 	{
-		super(NAME, new SQL_Syntax());
+		super(SQL, new SQL_Syntax());
 	}
 	
 	@Override

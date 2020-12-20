@@ -8,11 +8,11 @@ import com.eagle.tokens.TokenList;
 
 public class TCL_Program extends EagleLanguage
 {
-	public static final String NAME = "TCL";
+	public static final String TCL = "TCL";
 	
 	public TCL_Program()
 	{
-		super(NAME, new TCL_Syntax());
+		super(TCL, new TCL_Syntax());
 	}
 	
 	@Override

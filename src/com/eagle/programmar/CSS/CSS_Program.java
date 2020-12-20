@@ -25,11 +25,11 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class CSS_Program extends EagleLanguage
 {
-	public static final String NAME = "CSS";
+	public static final String CSS = "CSS";
 	
 	public CSS_Program()
 	{
-		super(NAME, new CSS_Syntax());
+		super(CSS, new CSS_Syntax());
 	}
 	
 	@Override

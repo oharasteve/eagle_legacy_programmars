@@ -78,11 +78,11 @@ public abstract class RPG_Program extends EagleLanguage
 	
 	public static class RPG_III_Program extends RPG_Program
 	{
-		public static final String NAME = "RPG_III";
+		public static final String RPGIII = "RPG_III";
 		
 		public RPG_III_Program()
 		{
-			super(NAME);
+			super(RPGIII);
 		}
 
 		@Override
@@ -98,11 +98,11 @@ public abstract class RPG_Program extends EagleLanguage
 	
 	public static class RPG_IV_Program extends RPG_Program
 	{
-		public static final String NAME = "RPG_IV";
+		public static final String RPGIV = "RPG_IV";
 		
 		public RPG_IV_Program()
 		{
-			super(NAME);
+			super(RPGIV);
 		}
 
 		@Override

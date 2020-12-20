@@ -13,11 +13,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Program extends EagleLanguage
 {
-	public static final String NAME = "C";
+	public static final String C = "C";
 	
 	public C_Program()
 	{
-		super(NAME, new C_Syntax());
+		super(C, new C_Syntax());
 	}
 	
 	// Called from C++ constructor
