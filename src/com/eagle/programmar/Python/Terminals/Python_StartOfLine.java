@@ -116,6 +116,12 @@ public class Python_StartOfLine extends TerminalLiteralToken
 	}
 
 	@Override
+	public String getValue()
+	{
+		return "";
+	}
+	
+	@Override
 	public String description()
 	{
 		return "Start of line";
