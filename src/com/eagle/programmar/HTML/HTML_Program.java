@@ -11,6 +11,8 @@ import com.eagle.programmar.HTML.HTML_Tag.HTML_EndTag;
 import com.eagle.programmar.HTML.Terminals.HTML_Comment;
 import com.eagle.programmar.HTML.Terminals.HTML_Pre;
 import com.eagle.programmar.HTML.Terminals.HTML_Text;
+import com.eagle.programmar.PHP.PHP_Program.PHP_Section;
+import com.eagle.programmar.PHP.PHP_Syntax;
 import com.eagle.programmar.XML.XML_Program.XML_Header;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -52,6 +54,9 @@ public class HTML_Program extends EagleLanguage
 		public @CHOICE HTML_Anchor anchor;
 		public @CHOICE HTML_Table table;
 		public @CHOICE HTML_Caption caption;
+		
+		// PHP
+		public @CHOICE @SYNTAX(PHP_Syntax.class) PHP_Section php_block;
 		
 		// Django
 		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Control dj_control;

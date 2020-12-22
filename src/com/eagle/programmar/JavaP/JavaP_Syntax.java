@@ -97,7 +97,7 @@ public class JavaP_Syntax extends EagleSyntax
 			"ireturn",
 			"istore", "istore_0", "istore_1", "istore_2", "istore_3",
 			"isub",
-			"ixor",
+			"ixor", "ior",
 			"i2b",
 			"ladd",
 			"lcmp",
