@@ -19,6 +19,6 @@ public abstract class COBOL_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "http://publib.boulder.ibm.com/infocenter/pdthelp/v1r1/index.jsp?topic=/com.ibm.entcobol.doc_3.4/";
+		return "https://www.ibm.com/support/knowledgecenter/SS6SG3_6.3.0/lr/ref/%l";
 	}
 }
