@@ -137,7 +137,7 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 		for (AbstractToken refToken : variableReferences)
 		{
 			Javascript_Identifier_Reference ref = (Javascript_Identifier_Reference) refToken;
-			DefinitionInterface def = ref.getDefinition();
+			DefinitionInterface def = ref.searchForDefinition();
 			if (def != null) continue;	// Already found a definition for this
 			
 			int foundAny = 0;

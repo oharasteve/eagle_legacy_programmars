@@ -83,7 +83,7 @@ public class Java_Resolve_References extends Eagle_Resolve_References
 			for (AbstractToken cls : classes)
 			{
 				Java_Identifier_Reference ref = (Java_Identifier_Reference) cls;
-				if (ref.getDefinition() == null)
+				if (ref.searchForDefinition() == null)
 				{
 					// Maybe it is defined in program2
 					ArrayList<AbstractToken> classes2 = findAllInstances(program2, Java_Class_Definition.class);

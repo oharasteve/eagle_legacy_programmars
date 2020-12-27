@@ -80,7 +80,7 @@ public class CSharp_Resolve_References extends Eagle_Resolve_References
 			for (AbstractToken cls : classes)
 			{
 				CSharp_Identifier_Reference ref = (CSharp_Identifier_Reference) cls;
-				if (ref.getDefinition() == null)
+				if (ref.searchForDefinition() == null)
 				{
 					// Maybe it is defined in program2
 					ArrayList<AbstractToken> classes2 = findAllInstances(program2, CSharp_Class_Definition.class);

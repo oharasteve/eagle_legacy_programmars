@@ -24,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Method extends TokenSequence implements EagleScopeInterface, AbstractMethod
 {
-	private EagleScope _scope = new EagleScope(Java_Syntax.isCaseSensitive);
+	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 	
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT TokenList<Java_MethodModifier> modifiers;

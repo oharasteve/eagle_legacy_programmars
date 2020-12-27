@@ -13,7 +13,7 @@ public class JavaP_Symbol_Reference extends JavaP_HashNumber implements Referenc
 {
 	public String showName()
 	{
-		JavaP_Symbol_Definition def = (JavaP_Symbol_Definition) getDefinition();
+		JavaP_Symbol_Definition def = (JavaP_Symbol_Definition) searchForDefinition();
 		AbstractToken parent = def.getParent();
 		if (! (parent instanceof JavaP_Constant))
 		{

@@ -30,7 +30,7 @@ import com.eagle.tokens.EagleScope;
 
 public class COBOL_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveRefs(EagleScope scope, COBOL_Program_Complete program)
+	public void XresolveRefs(EagleScope scope, COBOL_Program_Complete program)
 	{
 		resolveParagraphSectionReferences(scope, program);
 		resolveFileReferences(scope, program);
@@ -41,7 +41,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 		{
 			for (COBOL_Program_Complete subProgram : program.nestedPrograms._elements)
 			{
-				resolveRefs(scope, subProgram);
+				XresolveRefs(scope, subProgram);
 			}
 		}
 	}

@@ -66,7 +66,7 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 
 	public @CHOICE static class Java_StatementBlock extends TokenSequence implements EagleScopeInterface
 	{
-		private EagleScope _scope = new EagleScope(Java_Syntax.isCaseSensitive);
+		private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 		
 		public @S(10) @OPT Java_Label label;
 		public @S(20) @INDENT PunctuationLeftBrace leftBrace;

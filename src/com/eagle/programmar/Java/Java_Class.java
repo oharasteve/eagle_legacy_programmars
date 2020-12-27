@@ -27,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Class extends TokenSequence implements EagleRunnable, EagleScopeInterface, AbstractClass
 {
-	private EagleScope _scope = new EagleScope(true);
+	private EagleScope _scope = new EagleScope(this, true);
 	
 	public @S(10) @OPT @BLANKLINE Java_ClassModifierList modifierList;
 	public @S(20) @OPT @CURIOUS("Extra at sign") Java_Punctuation atSign = new Java_Punctuation('@');

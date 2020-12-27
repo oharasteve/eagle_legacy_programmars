@@ -25,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_ForStatement extends TokenChooser implements EagleScopeInterface
 {
-	private EagleScope _scope = new EagleScope(Java_Syntax.isCaseSensitive);
+	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 	
 	public @CHOICE static class Java_ForLoopStatement extends TokenSequence
 	{
