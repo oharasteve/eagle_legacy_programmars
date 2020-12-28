@@ -12,13 +12,13 @@ import junit.framework.TestCase;
 
 public class CMacro_Tests extends TestCase
 {
-	private static final String DEFINE = "#define ABC";
+	private static final String DEFINE = "#define ABC ";
 	
 	@Test
 	public void testSimpleMacro1()
 	{
 		String[] define = new String[] {
-				DEFINE + " (56 + 75)// comment",
+				DEFINE + "(56 + 75)// comment",
 		};
 		check(define, "(56 + 75)");
 	}
@@ -27,7 +27,7 @@ public class CMacro_Tests extends TestCase
 	public void testSimpleMacro2()
 	{
 		String[] define = new String[] {
-				DEFINE + " (56 * 75)  /*ABC*/",
+				DEFINE + "(56 * 75)  /*ABC*/",
 		};
 		check(define, "(56 * 75)  ");
 	}
@@ -36,7 +36,7 @@ public class CMacro_Tests extends TestCase
 	public void testContinuedComment1()
 	{
 		String[] define = new String[] {
-				DEFINE + " (56 * 75)  /*ABC",
+				DEFINE + "(56 * 75)  /*ABC",
 				"DEF*/",
 				"int i;",
 		};
@@ -47,7 +47,7 @@ public class CMacro_Tests extends TestCase
 	public void testMultilineMacro1()
 	{
 		String[] define = new String[] {
-				DEFINE + " (1 + 2 + 3 \\",
+				DEFINE + "(1 + 2 + 3 \\",
 				"   4 + 5 + 6 \\",
 				"7 + 8 + 9)"
 		};
@@ -58,7 +58,7 @@ public class CMacro_Tests extends TestCase
 	public void testMultilineMacro2()
 	{
 		String[] define = new String[] {
-				DEFINE + " (1 + 2 + 3 \\",
+				DEFINE + "(1 + 2 + 3 \\",
 				"   4 +/*COMMENT*/5 + 6 \\",
 				"7 + 8 + 9)"
 		};
@@ -70,10 +70,20 @@ public class CMacro_Tests extends TestCase
 	{
 		String[] define = new String[] {
 				DEFINE + "    'u'     /* less than means the cell has a",
-                         "             * value */"
+                "             * value */"
 		};
 		check(define, "'u'");
 	}
+	
+// Just returns x##y##z right now
+//	@Test
+//	public void testMacroConcat()
+//	{
+//		String[] define = new String[] {
+//				DEFINE + "x##y##z"
+//		};
+//		check(define, "xyz");
+//	}
 	
 	private static void check(String[] inputLines, String expected)
 	{

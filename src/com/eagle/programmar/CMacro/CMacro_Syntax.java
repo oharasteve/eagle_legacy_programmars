@@ -20,6 +20,6 @@ public class CMacro_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_autoAdvance = false;
 		//_commentInstance = new C_Comment();
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "/*", "&&", "||" };
+		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "/*", "&&", "||", "##" };
 	}
 }
