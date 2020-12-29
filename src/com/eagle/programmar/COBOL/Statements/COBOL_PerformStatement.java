@@ -11,6 +11,7 @@ import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence.COBOL_StatementOrComment;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_PerformWhat.COBOL_PerformParagraph.COBOL_Paragraph_or_Section_Thru;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
+import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
@@ -93,7 +94,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		public @CHOICE static class COBOL_PerformVarying extends TokenSequence
 		{
 			public @S(10) COBOL_KeywordChoice varyingOrAfter = new COBOL_KeywordChoice("VARYING", "AFTER");
-			public @S(20) COBOL_Identifier_Reference id;
+			public @S(20) COBOL_Modifiable_Identifier id;
 			public @S(30) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
 			public @S(40) COBOL_Expression from;
 			public @S(50) COBOL_Keyword BY = new COBOL_Keyword("BY");

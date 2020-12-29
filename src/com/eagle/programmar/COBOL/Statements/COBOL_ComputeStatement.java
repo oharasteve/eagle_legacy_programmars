@@ -6,14 +6,14 @@ package com.eagle.programmar.COBOL.Statements;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
-import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
+import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class COBOL_ComputeStatement extends COBOL_AbstractStatement
 {
 	public @S(10) @DOC("rlpscomp.htm") COBOL_Keyword COMPUTE = new COBOL_Keyword("COMPUTE");
-	public @S(20) COBOL_Identifier_Reference var;
+	public @S(20) COBOL_Modifiable_Identifier var;
 	public @S(30) @OPT COBOL_Subscript subscript;
 	public @S(40) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
 	public @S(50) PunctuationEquals equals;

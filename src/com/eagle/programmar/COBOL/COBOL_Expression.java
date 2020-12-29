@@ -16,6 +16,7 @@ import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -100,7 +101,20 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	
 	public static @P(150) class COBOL_VariableExpression extends PrimaryOperator
 	{
-		public @S(10) COBOL_Variable variable;
+		public @S(10) COBOL_VariableRef variable;
+
+		public static class COBOL_VariableRef extends TokenSequence
+		{
+			public @S(10) COBOL_Identifier_Reference id;
+			public @S(20) @OPT TokenList<COBOL_Subscript> subscript;
+			public @S(30) @OPT TokenList<COBOL_OfVariableRef> ofList;
+
+			public static class COBOL_OfVariableRef extends TokenSequence
+			{
+				public @S(10) COBOL_Keyword OF = new COBOL_Keyword("OF");
+				public @S(20) COBOL_Identifier_Reference id;
+			}
+		}
 	}
 
 	///////////////////////////////////////////////
