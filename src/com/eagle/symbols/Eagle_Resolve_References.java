@@ -6,6 +6,7 @@ package com.eagle.symbols;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.eagle.core.EagleSyntax;
 import com.eagle.tokens.AbstractToken;
@@ -184,7 +185,7 @@ public abstract class Eagle_Resolve_References
 					EagleUtilities.lj(def.toString(), 20) + "  " +
 					EagleUtilities.lj(def.typeName(), 9) + "  ");
 			
-			ArrayList<ReferenceInterface> refList = def.listReferences();
+			Collection<ReferenceInterface> refList = def.listReferences();
 			if (refList == null)
 			{
 				out.print("(none)");

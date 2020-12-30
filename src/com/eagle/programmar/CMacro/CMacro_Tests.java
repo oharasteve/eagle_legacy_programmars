@@ -75,16 +75,6 @@ public class CMacro_Tests extends TestCase
 		check(define, "'u'");
 	}
 	
-// Just returns x##y##z right now
-//	@Test
-//	public void testMacroConcat()
-//	{
-//		String[] define = new String[] {
-//				DEFINE + "x##y##z"
-//		};
-//		check(define, "xyz");
-//	}
-	
 	private static void check(String[] inputLines, String expected)
 	{
 		CMacro_RestOfLine rest = new CMacro_RestOfLine();

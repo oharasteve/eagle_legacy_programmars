@@ -29,7 +29,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CMacro_Preprocess extends EagleInclude
 {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
@@ -168,7 +168,7 @@ public class CMacro_Preprocess extends EagleInclude
 		return false;
 	}
 	
-	// Returns true iff something was changed in the file (not including the symbol table)
+	// Returns true always, even if nothing was changed in the file (not including the symbol table)
 	public boolean preprocessCMacroElement(ParserManager parser, CMacro_Element element)
 	{
 		// Ignore all the rest of the stuff
@@ -187,7 +187,7 @@ public class CMacro_Preprocess extends EagleInclude
 		return true;
 	}
 	
-	// Returns true iff something was changed in the file (not including the symbol table)
+	// Returns true always, even if nothing was changed in the file (not including the symbol table)
 	public boolean preprocessCStatement(C_StatementOrComment element)
 	{
 		AbstractToken whichStatement = element.getWhich();
@@ -210,13 +210,13 @@ public class CMacro_Preprocess extends EagleInclude
 	{
 		if (token instanceof TerminalEndOfLine) return;
 		
-		//System.out.println("******************* token = " + token.getClass().getName());
+		if (DEBUG) System.out.println("******************* token = " + token.getClass().getName());
 		for (int seq = token._currentLine; seq <= token._endLine; seq++)
 		{
 			if (seq == token._endLine && token._endChar < 0) break;	// Went a little too far with EOLN
 			
 			EagleLineReader oldLine = _oldLines.get(seq);
-			//System.out.println("***** Copying " + oldLine.toString());
+			if (DEBUG) System.out.println("***** Copying " + oldLine.toString());
 			
 			// Returns null if nothing has changed
 			String newLine = replaceWords(oldLine.toString());
@@ -339,7 +339,7 @@ public class CMacro_Preprocess extends EagleInclude
 			//throw new RuntimeException("Expected a left paren, not " + oldLine.substring(ec));
 		}
 		
-		//System.out.println("******* ec-sc=" + (ec-sc) + "  oldLine = " + oldLine.substring(sc));
+		if (DEBUG) System.out.println("******* ec-sc=" + (ec-sc) + "  oldLine = " + oldLine.substring(sc));
 		//int rparen = oldLine.indexOf(')', ec);
 		int rparen = -1;
 		int depth = 0;
@@ -362,7 +362,7 @@ public class CMacro_Preprocess extends EagleInclude
 		{
 			throw new RuntimeException("Missing right paren in " + oldLine.substring(ec));
 		}
-		//System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
+		if (DEBUG) System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
 		
 		String[] actualParams;
 		String actualParamString;
@@ -379,7 +379,6 @@ public class CMacro_Preprocess extends EagleInclude
 			actualParamString = oldLine.substring(ec+1, rparen);
 			actualParams = actualParamString.split(",");
 		}
-		
 		
 		SeparatedList<CMacro_Parameter_Definition,PunctuationComma> formalParams = defineStatement.params.params;
 		int paramCount = formalParams.getPrimaryCount();
@@ -420,11 +419,20 @@ public class CMacro_Preprocess extends EagleInclude
 					// Ok, make the change!
 					String trimmedParam = actualParam.trim();
 					changedPiece = changedPiece.substring(0, start) + trimmedParam + changedPiece.substring(end);
-					start += trimmedParam.length();	// Don't look at it again
+					start = start + trimmedParam.length() - formalParam.length();	// Don't look at it again
 				}
 			}
 			
 			index++;
+		}
+		
+		// Now, toss all the ## entries
+		int pound = -1;
+		while (true)
+		{
+			pound = changedPiece.indexOf("##", pound+1);
+			if (pound < 0) break;
+			changedPiece = changedPiece.substring(0, pound) + changedPiece.substring(pound + 2);
 		}
 
 		return oldLine.substring(0, sc) + changedPiece + oldLine.substring(rparen+1);
