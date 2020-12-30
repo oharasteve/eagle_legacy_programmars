@@ -7,14 +7,14 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.preprocess.C.CMacro_Preprocess;
-import com.eagle.programmar.C.Terminals.C_Character_Literal;
-import com.eagle.programmar.C.Terminals.C_HexNumber;
-import com.eagle.programmar.C.Terminals.C_Keyword;
-import com.eagle.programmar.C.Terminals.C_Literal;
-import com.eagle.programmar.C.Terminals.C_Number;
-import com.eagle.programmar.C.Terminals.C_Punctuation;
-import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Character_Literal;
+import com.eagle.programmar.CMacro.Terminals.CMacro_HexNumber;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Literal;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Number;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
+import com.eagle.programmar.CMacro.Terminals.CMacro_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
@@ -25,10 +25,10 @@ public class CMacro_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) C_Number number;
-	public @P(20) C_HexNumber hex;
-	public @P(30) C_Literal literal;
-	public @P(40) C_Character_Literal characters;
+	public @P(10) CMacro_Number number;
+	public @P(20) CMacro_HexNumber hex;
+	public @P(30) CMacro_Literal literal;
+	public @P(40) CMacro_Character_Literal characters;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.
@@ -49,7 +49,7 @@ public class CMacro_Expression extends PrecedenceChooser
 
 	public static @P(100) class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnable
 	{
-		public @S(10) C_Keyword DEFINED = new C_Keyword("defined");
+		public @S(10) CMacro_Keyword DEFINED = new CMacro_Keyword("defined");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) CMacro_Identifier_Reference variable;
 		public @S(40) PunctuationRightParen rightParen;
@@ -75,7 +75,7 @@ public class CMacro_Expression extends PrecedenceChooser
 
 	public static @P(120) class CMacro_NotExpression extends PrimaryOperator implements EagleRunnable
 	{
-		public @S(10) C_Punctuation notOperator = new C_Punctuation('!');
+		public @S(10) CMacro_Punctuation notOperator = new CMacro_Punctuation('!');
 		public @S(20) CMacro_Expression expr;
 		
 		@Override
@@ -102,7 +102,7 @@ public class CMacro_Expression extends PrecedenceChooser
 
 	public static @P(140) class CMacro_SymbolExpression extends PrimaryOperator
 	{
-		public @S(10) C_Punctuation poundOperator = new C_Punctuation('#');
+		public @S(10) CMacro_Punctuation poundOperator = new CMacro_Punctuation('#');
 		public @S(20) CMacro_Expression expr;
 	}
 	
@@ -112,7 +112,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(150) class CMacro_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("*", "/", "%");
+		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("*", "/", "%");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 		
 		@Override
@@ -127,7 +127,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(160) class CMacro_AdditiveExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("+", "-");
+		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("+", "-");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 		
 		@Override
@@ -142,7 +142,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(170) class CMacro_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("<", ">", "<=", ">=");
+		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 		
 		@Override
@@ -162,7 +162,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(180) class CMacro_EqualityExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("==", "!=");
+		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("==", "!=");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 		
 		@Override
@@ -180,28 +180,28 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(190) class CMacro_BitwiseAndExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_Punctuation bitwiseAndOperator = new C_Punctuation('&');
+		public @S(20) CMacro_Punctuation bitwiseAndOperator = new CMacro_Punctuation('&');
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(200) class CMacro_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_Punctuation bitwiseXOrOperator = new C_Punctuation('^');
+		public @S(20) CMacro_Punctuation bitwiseXOrOperator = new CMacro_Punctuation('^');
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(210) class CMacro_BitwiseOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_Punctuation bitwiseOrOperator = new C_Punctuation('|');
+		public @S(20) CMacro_Punctuation bitwiseOrOperator = new CMacro_Punctuation('|');
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(220) class CMacro_ConditionalAndExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_Punctuation andOperator = new C_Punctuation("&&");
+		public @S(20) CMacro_Punctuation andOperator = new CMacro_Punctuation("&&");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 		
 		@Override
@@ -224,7 +224,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(230) class CMacro_ConditionalOrExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_Punctuation orOperator = new C_Punctuation("||");
+		public @S(20) CMacro_Punctuation orOperator = new CMacro_Punctuation("||");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 		
 		@Override
@@ -247,7 +247,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(240) class CMacro_ConcatenateExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) C_Punctuation poundOperator = new C_Punctuation("##");
+		public @S(20) CMacro_Punctuation poundOperator = new CMacro_Punctuation("##");
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 

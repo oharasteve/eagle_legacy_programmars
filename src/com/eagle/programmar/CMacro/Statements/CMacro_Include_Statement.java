@@ -8,12 +8,12 @@ import java.io.IOException;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.preprocess.C.CMacro_Preprocess;
-import com.eagle.programmar.C.Terminals.C_Comment;
-import com.eagle.programmar.C.Terminals.C_Keyword;
-import com.eagle.programmar.C.Terminals.C_Literal;
-import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CMacro.CMacro_Processable;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_IncludeSys;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Literal;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,14 +21,14 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Include_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
-	public @S(20) @DOC("Include-Syntax.html") C_Keyword INCLUDE = new C_Keyword("include");
+	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
+	public @S(20) @DOC("Include-Syntax.html") CMacro_Keyword INCLUDE = new CMacro_Keyword("include");
 	public @S(30) CMacro_IncludeWhat what;
-	public @S(40) @OPT TokenList<C_Comment> comments;
+	public @S(40) @OPT TokenList<CMacro_Comment> comments;
 	
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{
-		public @CHOICE C_Literal filename;
+		public @CHOICE CMacro_Literal filename;
 		public @CHOICE CMacro_IncludeSys sys;
 	}
 	
@@ -36,8 +36,8 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
 		AbstractToken which = what.getWhich(); 
-		if (! (which instanceof C_Literal)) return false;
-		String fileName = ((C_Literal) which).getValue();
+		if (! (which instanceof CMacro_Literal)) return false;
+		String fileName = ((CMacro_Literal) which).getValue();
 		//System.out.println("#include " + macroName);
 		EagleFileReader macro;
 		try

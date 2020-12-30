@@ -7,9 +7,9 @@ import com.eagle.core.EagleLanguage;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.parsers.EagleOverrideManager;
-import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.CMacro.Statements.CMacro_IfDef_Statement.CMacro_IfDefElement;
 import com.eagle.programmar.CMacro.Statements.CMacro_If_Statement.CMacro_IfElement;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenChooser;
@@ -51,7 +51,7 @@ public class CMacro_Program extends EagleLanguage
 	
 	public static class CMacro_CommentLine extends TokenSequence
 	{
-		public @S(10) C_Comment comment;
+		public @S(10) CMacro_Comment comment;
 		public @S(20) CMacro_EndOfLine endOfLine;
 	}
 	

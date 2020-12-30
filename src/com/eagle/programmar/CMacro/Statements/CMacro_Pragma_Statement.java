@@ -4,10 +4,10 @@
 package com.eagle.programmar.CMacro.Statements;
 
 import com.eagle.preprocess.C.CMacro_Preprocess;
-import com.eagle.programmar.C.Terminals.C_Keyword;
-import com.eagle.programmar.C.Terminals.C_Number;
-import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CMacro.CMacro_Processable;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Number;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -17,29 +17,29 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
-	public @S(20) @DOC("Pragmas.html") C_Keyword PRAGMA = new C_Keyword("pragma");
+	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
+	public @S(20) @DOC("Pragmas.html") CMacro_Keyword PRAGMA = new CMacro_Keyword("pragma");
 	public @S(30) CMacro_Pragma_Type what;
 	
 	public static class CMacro_Pragma_Type extends TokenChooser
 	{
-		public @CHOICE C_Keyword ONCE = new C_Keyword("once");
+		public @CHOICE CMacro_Keyword ONCE = new CMacro_Keyword("once");
 		
 		public @CHOICE static class CMacro_Pragma_Warning extends TokenSequence
 		{
-			public @S(10) C_Keyword WARNING = new C_Keyword("warning");
+			public @S(10) CMacro_Keyword WARNING = new CMacro_Keyword("warning");
 			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) C_Keyword DISABLE = new C_Keyword("disable");
+			public @S(30) CMacro_Keyword DISABLE = new CMacro_Keyword("disable");
 			public @S(40) PunctuationColon colon;
-			public @S(50) TokenList<C_Number> codes;
+			public @S(50) TokenList<CMacro_Number> codes;
 			public @S(60) PunctuationRightParen rightParen;
 		}
 		
 		public @CHOICE static class CMacro_Pragma_Pack extends TokenSequence
 		{
-			public @S(10) C_Keyword PACK = new C_Keyword("pack");
+			public @S(10) CMacro_Keyword PACK = new CMacro_Keyword("pack");
 			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) @OPT C_Keyword PUSH = new C_Keyword("push");
+			public @S(30) @OPT CMacro_Keyword PUSH = new CMacro_Keyword("push");
 			public @S(40) PunctuationRightParen rightParen;
 		}
 	}

@@ -4,16 +4,16 @@
 package com.eagle.programmar.CMacro.Statements;
 
 import com.eagle.preprocess.C.CMacro_Preprocess;
-import com.eagle.programmar.C.Terminals.C_Keyword;
-import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Undef_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) C_Punctuation pound = new C_Punctuation('#'); 
-	public @S(20) @DOC("Undefining-and-Redefining-Macros.html") C_Keyword UNDEF = new C_Keyword("undef");
+	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
+	public @S(20) @DOC("Undefining-and-Redefining-Macros.html") CMacro_Keyword UNDEF = new CMacro_Keyword("undef");
 	public @S(30) CMacro_Identifier_Reference var;
 	
 	@Override
