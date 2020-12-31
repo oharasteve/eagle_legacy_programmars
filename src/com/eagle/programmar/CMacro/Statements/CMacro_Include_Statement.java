@@ -10,6 +10,7 @@ import com.eagle.parsers.EagleLineReader;
 import com.eagle.preprocess.C.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
+import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.programmar.CMacro.Terminals.CMacro_IncludeSys;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Literal;
@@ -25,6 +26,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 	public @S(20) @DOC("Include-Syntax.html") CMacro_Keyword INCLUDE = new CMacro_Keyword("include");
 	public @S(30) CMacro_IncludeWhat what;
 	public @S(40) @OPT TokenList<CMacro_Comment> comments;
+	public @S(50) CMacro_EndOfLine endOfLine;
 	
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{

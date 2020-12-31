@@ -22,7 +22,7 @@ public class CMacro_StatementOrComment extends TokenSequence
 	public @S(10) @OPT CMacro_EndOfLine eoln1;
 	public @S(20) CMacro_StmtBody stmt;
 	public @S(30) @OPT CMacro_Comment comment;
-	public @S(40) CMacro_EndOfLine eoln2;
+//	public @S(40) CMacro_EndOfLine eoln2;
 
 	public static class CMacro_StmtBody extends TokenChooser
 	{

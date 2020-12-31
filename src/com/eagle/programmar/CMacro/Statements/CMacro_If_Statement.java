@@ -31,13 +31,14 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	public @S(100) CMacro_Punctuation pound2 = new CMacro_Punctuation('#'); 
 	public @S(110) CMacro_Keyword ENDIF = new CMacro_Keyword("endif");
 	public @S(120) @OPT CMacro_Comment comment2;
+	public @S(130) CMacro_EndOfLine eoln3;
 
 	public static class CMacro_IfElif extends TokenSequence
 	{
 		public @S(10) CMacro_Punctuation pound1 = new CMacro_Punctuation('#');
 		public @S(20) CMacro_Keyword ELIF = new CMacro_Keyword("elif");
 		public @S(30) CMacro_Expression expr;
-		public @S(40) @OPT @SYNTAX(C_Syntax.class) CMacro_Comment comment;
+		public @S(40) @OPT CMacro_Comment comment;
 		public @S(50) @OPT CMacro_EndOfLine eoln;
 		public @S(60) @OPT TokenList<CMacro_IfElement> elements;
 	}
@@ -46,7 +47,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	{
 		public @S(10) CMacro_Punctuation pound1 = new CMacro_Punctuation('#');
 		public @S(20) CMacro_Keyword ELSE = new CMacro_Keyword("else");
-		public @S(30) @OPT @SYNTAX(C_Syntax.class) CMacro_Comment comment;
+		public @S(30) @OPT CMacro_Comment comment;
 		public @S(40) @OPT CMacro_EndOfLine eoln;
 		public @S(50) @OPT TokenList<CMacro_IfElement> elements;
 	}
