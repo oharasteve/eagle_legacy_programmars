@@ -106,8 +106,9 @@ public class CMacro_Preprocess extends EagleInclude
 				msg.append("File ").append(lines.getFileName());
 				msg.append(", line ").append(Integer.toString(element._currentLine+1)).append('\n');
 				msg.append(lines.get(element._currentLine).toString()).append('\n');
+				
 				for (int i = 0; i < element._currentChar; i++) msg.append(' ');
-				msg.append('^');
+				msg.append("^ ");
 				msg.append(ex.getMessage());
 				System.err.println(msg.toString());
 				//ex.printStackTrace(System.err);
@@ -276,7 +277,7 @@ public class CMacro_Preprocess extends EagleInclude
 					if (! Character.isLetterOrDigit(ch) && ch != '_')
 					{
 						String word = oldLine.substring(sc, ec);
-						//System.out.println("Checking " + word + " to see if it is a macro");
+						System.out.println("*** Checking " + word + " to see if it is a macro");
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!
