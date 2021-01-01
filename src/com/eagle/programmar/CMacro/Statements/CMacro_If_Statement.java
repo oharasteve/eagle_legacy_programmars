@@ -31,7 +31,6 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	public @S(100) CMacro_Punctuation pound2 = new CMacro_Punctuation('#'); 
 	public @S(110) CMacro_Keyword ENDIF = new CMacro_Keyword("endif");
 	public @S(120) @OPT CMacro_Comment comment2;
-	public @S(130) CMacro_EndOfLine eoln3;
 
 	public static class CMacro_IfElif extends TokenSequence
 	{

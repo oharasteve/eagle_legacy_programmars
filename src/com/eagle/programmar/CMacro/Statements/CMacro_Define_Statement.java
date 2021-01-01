@@ -9,7 +9,6 @@ import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Define_Definition;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Parameter_Definition;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
-import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.programmar.CMacro.Terminals.CMacro_RestOfLine;
@@ -28,7 +27,6 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 	public @S(50) @OPT CMacro_Parameters params;
 	public @S(60) @OPT CMacro_RestOfLine value;		// Just keep it as a String
 	public @S(70) @OPT CMacro_Comment comment2;
-	public @S(80) CMacro_EndOfLine endOfLine;
 
 	public static class CMacro_Parameters extends TokenSequence
 	{

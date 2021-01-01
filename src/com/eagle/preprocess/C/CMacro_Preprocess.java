@@ -29,7 +29,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CMacro_Preprocess extends EagleInclude
 {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
@@ -277,7 +277,7 @@ public class CMacro_Preprocess extends EagleInclude
 					if (! Character.isLetterOrDigit(ch) && ch != '_')
 					{
 						String word = oldLine.substring(sc, ec);
-						System.out.println("*** Checking " + word + " to see if it is a macro");
+						if (DEBUG) System.out.println("*** Checking " + word + " to see if it is a macro");
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!

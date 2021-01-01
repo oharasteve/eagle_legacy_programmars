@@ -27,10 +27,17 @@ public class CMacro_Comment extends TerminalCommentToken
 		
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
-		if (nc < 3 || _currentChar != 0) return false;
-		if (rec.charAt(_currentChar) != '#') return false;
-		if (rec.charAt(_currentChar+1) != ' ') return false;
+		if (_currentChar + 1 >= nc) return false;
+		if (rec.charAt(_currentChar) != '/') return false;
 
-		return super.possibleCommentToEndOfLine(rec, "#");
+		char ch = rec.charAt(_currentChar + 1);
+		switch (ch)
+		{
+		case '/' :
+			return super.possibleCommentToEndOfLine(rec, "//");
+		case '*' :
+			return super.possibleCommentPair2(lines, rec, "/*", "*/");
+		}
+		return false;
 	}
 }

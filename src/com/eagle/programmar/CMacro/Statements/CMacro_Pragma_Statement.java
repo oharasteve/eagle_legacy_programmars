@@ -5,7 +5,6 @@ package com.eagle.programmar.CMacro.Statements;
 
 import com.eagle.preprocess.C.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
-import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Number;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
@@ -21,7 +20,6 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
 	public @S(20) @DOC("Pragmas.html") CMacro_Keyword PRAGMA = new CMacro_Keyword("pragma");
 	public @S(30) CMacro_Pragma_Type what;
-	public @S(50) CMacro_EndOfLine endOfLine;
 	
 	public static class CMacro_Pragma_Type extends TokenChooser
 	{

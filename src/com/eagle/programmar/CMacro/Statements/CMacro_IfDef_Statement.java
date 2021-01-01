@@ -39,7 +39,7 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 	public @S(90) @OPT CMacro_EndOfLine eoln2;
 	public @S(100) CMacro_Punctuation pound2 = new CMacro_Punctuation('#'); 
 	public @S(110) CMacro_Keyword ENDIF = new CMacro_Keyword("endif");
-	public @S(120) CMacro_EndOfLine eoln3;
+	public @S(120) @OPT CMacro_Comment comment2;
 	
 	public static class CMacro_IfDefElif extends TokenSequence
 	{
