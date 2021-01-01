@@ -26,58 +26,31 @@ public class CMacro_RestOfLine extends TokenRestOfLine implements EagleRunnable
 		if (_currentChar >= recLen) return false;
 
 		int sc = _currentChar;
-		int ec;
-		_txt = null;
-		while (true)
+		int ec = recLen - 1;
+		StringBuffer text = new StringBuffer();
+		while (ec >= 0)
 		{
 			// Look for comments
-			ec = recLen - 1;
-			int commentPos = rec.indexOf("/*", sc);
-			if (commentPos >= 0)
+			if (rec.charAt(ec) != '\\')
 			{
-				int endCommentPos = rec.indexOf("*/", commentPos);
-				if (endCommentPos > 0)
+				int commentPos = rec.indexOf("/*", sc);
+				if (commentPos >= 0)
 				{
-					// Have to remove the comment and keep going
-					StringBuffer sb = new StringBuffer(rec.substring(0, commentPos));
-					for (int i = commentPos; i < endCommentPos + 2; i++) sb.append(' ');
-					sb.append(rec.substring(endCommentPos+2));
-					rec = sb.toString();
+					ec = commentPos - 1;
 				}
 				else
 				{
-					// Macro ends in a multi-line comment! Oh no.
-					_txt = rec.substring(sc, commentPos);
-					
-					// Must be continued on the next line
-					while (lastLine < lines.size())
-					{
-						lastLine++;
-						rec = lines.get(lastLine).toString();
-						ec = rec.indexOf("*/");
-						if (ec >= 0) break;
-					}
-					foundIt(lastLine, ec+1);
-					return true;
+					commentPos = rec.indexOf("//", sc);
+					if (commentPos >= 0) ec = commentPos - 1;
 				}
-			}
-			else
-			{
-				commentPos = rec.indexOf("//", _currentChar);
-				if (commentPos >= 0) ec = commentPos - 1;
 			}
 			
 			// Build the new result, one line at a time
 			String piece = rec.substring(sc, ec + 1);
-			if (_txt == null)
-			{
-				_txt = piece;
-			}
-			else
-			{
-				// Chop off the trailing \
-				_txt = _txt.substring(0, _txt.length()-1) + "\n" + piece;
-			}
+			// Chop off the trailing \, if any
+			if (piece.endsWith("\\")) piece = piece.substring(0, piece.length()-1);
+			if (text.length() > 0) text.append('\n');
+			text.append(piece);
 			
 			// Not continued (any more)
 			if (! rec.endsWith("\\") || lastLine+1 >= linesSize) break;
@@ -85,10 +58,11 @@ public class CMacro_RestOfLine extends TokenRestOfLine implements EagleRunnable
 			// Must be continued on the next line
 			lastLine++;
 			rec = lines.get(lastLine).toString();
-			recLen = rec.length();
 			sc = 0;
+			ec = rec.length() - 1;
 		}
 		
+		_txt = text.toString();
 		foundIt(lastLine, ec);
 		return true;
 	}

@@ -124,15 +124,21 @@ public class CMacro_Preprocess extends EagleInclude
 		// Save the pre-processed file into the project artifact folder
 		if (_depth == 0 && _project != null)
 		{
-			int pathLen = _project._sourceBase.length();
-			String prepName = lines.getFileName().substring(pathLen+1);
-			try
+			String srcFile = lines.getFileName();
+			String baseDir = _project._sourceBase.replaceAll("/", "\\\\");
+			// System.out.println("src=" + srcFile + " base=" + baseDir);
+			if (srcFile.startsWith(baseDir))
 			{
-				_savePreprocessedFile.saveHtml(_project._artifactBase, prepName, _newLines);
-			}
-			catch (IOException ex)
-			{
-				throw new RuntimeException("Unable to write preprocessed version of " + prepName, ex);
+				int pathLen = baseDir.length();
+				String prepName = srcFile.substring(pathLen+1);
+				try
+				{
+					_savePreprocessedFile.saveHtml(_project._artifactBase, prepName, _newLines);
+				}
+				catch (IOException ex)
+				{
+					throw new RuntimeException("Unable to write preprocessed version of " + prepName, ex);
+				}
 			}
 		}
 		

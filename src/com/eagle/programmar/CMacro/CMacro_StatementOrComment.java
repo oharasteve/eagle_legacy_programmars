@@ -15,13 +15,14 @@ import com.eagle.programmar.CMacro.Statements.CMacro_Undef_Statement;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
 public class CMacro_StatementOrComment extends TokenSequence
 {
 	public @S(10) @OPT CMacro_EndOfLine eoln1;
 	public @S(20) CMacro_StmtBody stmt;
-	public @S(30) @OPT CMacro_Comment comment;
+	public @S(30) @OPT TokenList<CMacro_Comment> comments;
 	public @S(40) CMacro_EndOfLine endOfLine;
 
 	public static class CMacro_StmtBody extends TokenChooser
