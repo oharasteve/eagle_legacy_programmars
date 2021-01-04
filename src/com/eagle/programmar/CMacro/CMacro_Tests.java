@@ -62,7 +62,7 @@ public class CMacro_Tests extends TestCase
 				"   4 +/*COMMENT*/5 + 6 \\",
 				"7 + 8 + 9)"
 		};
-		check(define, "(1 + 2 + 3 \n   4 +           5 + 6 \n7 + 8 + 9)");
+		check(define, "(1 + 2 + 3 \n   4 +/*COMMENT*/5 + 6 \n7 + 8 + 9)");
 	}
 
 	@Test
