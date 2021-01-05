@@ -11,6 +11,7 @@ import com.eagle.programmar.CMacro.Statements.CMacro_IfDef_Statement.CMacro_IfDe
 import com.eagle.programmar.CMacro.Statements.CMacro_If_Statement.CMacro_IfElement;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
+import com.eagle.programmar.CMacro.Terminals.CMacro_MultiLineText;
 import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -45,7 +46,7 @@ public class CMacro_Program extends EagleLanguage
 	{
 		public @CHOICE CMacro_CommentLine comment;
 		public @CHOICE CMacro_StatementOrComment stmt;
-		public @CHOICE CMacro_TextLine textLine;
+		public @CHOICE CMacro_MultiLineText textLine;
 		public @LAST CMacro_EndOfLine endOfLine;
 	}
 	

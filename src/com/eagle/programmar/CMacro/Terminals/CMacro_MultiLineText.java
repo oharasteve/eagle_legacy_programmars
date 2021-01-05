@@ -26,7 +26,12 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 			endLine++;
 			
 			// Don't allow lines that start with a #
-			if (rec.trim().startsWith("#")) break;
+			if (rec.trim().startsWith("#"))
+			{
+				endLine--;
+				if (endLine == _currentLine) return false;
+				break;
+			}
 			
 			if (text.length() > 0) text.append('\n');
 			text.append(rec);
@@ -34,7 +39,7 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 		if (text.length() == 0) return false;
 		
 		_txt = text.toString();
-		foundIt(endLine-1, recLen-1);
+		foundIt(endLine, -1);
 		return true;
 	}
 }

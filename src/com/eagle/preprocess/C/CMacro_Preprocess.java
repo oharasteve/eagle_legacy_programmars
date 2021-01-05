@@ -25,11 +25,12 @@ import com.eagle.programmar.CMacro.Symbols.CMacro_Parameter_Definition;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CMacro_Preprocess extends EagleInclude
 {
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
@@ -110,8 +111,8 @@ public class CMacro_Preprocess extends EagleInclude
 				for (int i = 0; i < element._currentChar; i++) msg.append(' ');
 				msg.append("^ ");
 				msg.append(ex.getMessage());
-				System.err.println(msg.toString());
-				//ex.printStackTrace(System.err);
+				//System.err.println(msg.toString());
+				ex.printStackTrace(System.err);
 				return lines;	// Can't preprocess it -- leave it alone
 			}
 		}
@@ -218,42 +219,50 @@ public class CMacro_Preprocess extends EagleInclude
 		if (token instanceof TerminalEndOfLine) return;
 		
 		if (DEBUG) System.out.println("******************* token = " + token.getClass().getName());
-		for (int seq = token._currentLine; seq <= token._endLine; seq++)
+		
+		String oldLine;
+		if (token instanceof TerminalToken)
 		{
-			if (seq == token._endLine && token._endChar < 0) break;	// Went a little too far with EOLN
-			
-			EagleLineReader oldLine = _oldLines.get(seq);
-			if (DEBUG) System.out.println("***** Copying " + oldLine.toString());
-			
-			// Returns null if nothing has changed
-			String newLine = replaceWords(oldLine.toString());
-			
-			if (newLine == null)
+			TerminalToken term = (TerminalToken) token;
+			oldLine = term.getValue();
+		}
+		else
+		{
+			int seq = token._currentLine;
+			oldLine = _oldLines.get(seq).toString();
+		}
+		if (DEBUG) System.out.println("***** Copying " + oldLine);
+		
+		// Returns null if nothing has changed
+		String newLine = replaceWords(oldLine);
+		
+		if (newLine == null)
+		{
+			_newLines.add(oldLine);
+		}
+		else
+		{
+			if (newLine.indexOf('\n') < 0)
 			{
-				_newLines.add(oldLine);
+				EagleLineReader line = new EagleLineReader(newLine);
+				//line.setOriginalLocation(oldLine.getOriginalFileName(), oldLine.getOriginalLineNumber());
+				line.setOriginalLocation(token._fileName,  token._currentLine);
+				_newLines.add(line);
 			}
 			else
 			{
-				if (newLine.indexOf('\n') < 0)
+				// Must have been a multi-line macro in there
+				boolean first = true;
+				for (String piece : newLine.split("\\n"))
 				{
-					EagleLineReader line = new EagleLineReader(newLine);
-					line.setOriginalLocation(oldLine.getOriginalFileName(), oldLine.getOriginalLineNumber());
-					_newLines.add(line);
-				}
-				else
-				{
-					// Must have been a multi-line macro in there
-					boolean first = true;
-					for (String piece : newLine.split("\\n"))
+					EagleLineReader line = new EagleLineReader(piece);
+					if (first)
 					{
-						EagleLineReader line = new EagleLineReader(piece);
-						if (first)
-						{
-							line.setOriginalLocation(oldLine.getOriginalFileName(), oldLine.getOriginalLineNumber());
-							first = false;
-						}
-						_newLines.add(line);
+						//line.setOriginalLocation(oldLine.getOriginalFileName(), oldLine.getOriginalLineNumber());
+						line.setOriginalLocation(token._fileName,  token._currentLine);
+						first = false;
 					}
+					_newLines.add(line);
 				}
 			}
 		}
