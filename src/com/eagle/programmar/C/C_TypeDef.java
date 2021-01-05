@@ -84,7 +84,6 @@ public class C_TypeDef extends TokenSequence
 				public @S(30) C_Keyword WORD = new C_Keyword("__word__");
 				public @S(40) PunctuationRightParen righttParen;
 			}
-
 		}
 		
 		public static class C_TypedefMoreAttributes extends TokenSequence

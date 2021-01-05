@@ -18,6 +18,7 @@ import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.CMacro_Program;
+import com.eagle.programmar.CMacro.CMacro_Program.CMacro_CommentLine;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_Element;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement;
@@ -30,7 +31,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CMacro_Preprocess extends EagleInclude
 {
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
@@ -119,9 +120,6 @@ public class CMacro_Preprocess extends EagleInclude
 		
 		if (! changed) return lines;
 		
-		// Debugging: list the new file
-		// SavePreprocessedFile.writeText(lines.getFileName(), _newLines);
-
 		// Save the pre-processed file into the project artifact folder
 		if (_depth == 0 && _project != null)
 		{
@@ -158,6 +156,7 @@ public class CMacro_Preprocess extends EagleInclude
 //			}
 //		}
 		
+		_newLines.removeNewLines();
 		return _newLines;
 	}
 
@@ -225,6 +224,12 @@ public class CMacro_Preprocess extends EagleInclude
 		{
 			TerminalToken term = (TerminalToken) token;
 			oldLine = term.getValue();
+		}
+		else if (token instanceof CMacro_CommentLine)
+		{
+			CMacro_CommentLine comm = (CMacro_CommentLine) token;
+			oldLine = comm.comment.getValue();
+			if (DEBUG) System.out.println("******* Comment " + oldLine);
 		}
 		else
 		{
