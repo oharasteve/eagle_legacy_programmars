@@ -162,11 +162,19 @@ public class C_Expression extends PrecedenceChooser
 		public @S(20) C_Expression expr;
 	}
 	
-	public static @P(250) class C_SizeOf extends PrimaryOperator
+	public static @P(250) class C_SizeOfType extends PrimaryOperator
 	{
 		public @S(10) C_Keyword SIZEOF = new C_Keyword("sizeof");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) C_Type ctype;
+		public @S(40) PunctuationRightParen rightParen;
+	}
+
+	public static @P(255) class C_SizeOfExpr extends PrimaryOperator
+	{
+		public @S(10) C_Keyword SIZEOF = new C_Keyword("sizeof");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) C_Expression expr;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 

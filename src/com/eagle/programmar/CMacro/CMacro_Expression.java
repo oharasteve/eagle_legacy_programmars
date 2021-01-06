@@ -7,6 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.programmar.CMacro.CMacro_Expression.CMacro_FunctionCall.CMacro_FunctionType.CMacroFunctionParens;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Character_Literal;
 import com.eagle.programmar.CMacro.Terminals.CMacro_HexNumber;
@@ -18,6 +19,8 @@ import com.eagle.programmar.CMacro.Terminals.CMacro_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -50,14 +53,38 @@ public class CMacro_Expression extends PrecedenceChooser
 	public static @P(100) class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Keyword DEFINED = new CMacro_Keyword("defined");
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) CMacro_Identifier_Reference variable;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(20) CMacro_FunctionType funcType;
+		
+		public static class CMacro_FunctionType extends TokenChooser
+		{
+			public @CHOICE CMacro_Identifier_Reference variable;
+			
+			public @CHOICE static class CMacroFunctionParens extends TokenSequence
+			{
+				public @S(10) PunctuationLeftParen leftParen;
+				public @S(20) CMacro_Identifier_Reference variable;
+				public @S(30) PunctuationRightParen rightParen;
+			}
+		}
 		
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			boolean val = interpreter._symbolTable.isDefined(variable.toString());
+			AbstractToken which = funcType.getWhich();
+			String name;
+			if (which instanceof CMacro_Identifier_Reference)
+			{
+				name = ((CMacro_Identifier_Reference) which).toString();
+			}
+			else if (which instanceof CMacroFunctionParens)
+			{
+				name = ((CMacroFunctionParens) which).variable.toString();
+			}
+			else
+			{
+				throw new RuntimeException("Unexpected token: " + which.toString());
+			}
+			boolean val = interpreter._symbolTable.isDefined(name);
 			interpreter.pushBool(val);
 		}
 	}

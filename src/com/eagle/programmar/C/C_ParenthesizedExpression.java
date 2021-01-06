@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_ParenthesizedExpression extends TokenSequence
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) C_Expression expression;
+	public @S(20) SeparatedList<C_Expression, PunctuationComma> expression;
 	public @S(30) PunctuationRightParen rightParen;
 }

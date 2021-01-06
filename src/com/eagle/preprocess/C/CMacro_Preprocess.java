@@ -398,7 +398,7 @@ public class CMacro_Preprocess extends EagleInclude
 		else	// Normal macro function
 		{
 			actualParamString = oldLine.substring(ec+1, rparen);
-			actualParams = actualParamString.split(",");
+			actualParams = fancySplit(actualParamString);
 		}
 		
 		SeparatedList<CMacro_Parameter_Definition,PunctuationComma> formalParams = defineStatement.params.params;
@@ -457,6 +457,60 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 
 		return oldLine.substring(0, sc) + changedPiece + oldLine.substring(rparen+1);
+	}
+	
+	public static String[] fancySplit(String line)
+	{
+		if (line.indexOf('(') < 0 && line.indexOf('"') < 0)
+		{
+			return line.split(",");	// Normal case
+		}
+		char replace = '?';
+		if (line.indexOf(replace) >= 0)
+		{
+			// Don't actually know what to do if there is already a ? in the line.
+			// Try a different replace char?
+			return line.split(",");
+		}
+		
+		StringBuffer buff = new StringBuffer(line);
+		int parenDepth = 0;
+		boolean inQuotes = false;
+		char prevCh = ' ';	// Anything but a backslash
+		for (int i = 0; i < buff.length(); i++)
+		{
+			char ch = buff.charAt(i);
+			if (prevCh != '\\' && ch == '"')
+			{
+				inQuotes = ! inQuotes;
+			}
+			else if (inQuotes && ch == ',')
+			{
+				buff.setCharAt(i, replace);  // Smash the comma for a moment
+			}
+			else if (! inQuotes)
+			{
+				if (ch == '(') parenDepth++;
+				else if (ch == ')') parenDepth--;
+				else if (ch == ',' && parenDepth > 0)
+				{
+					buff.setCharAt(i, replace);  // Smash the comma for a moment
+				}
+			}
+			
+			prevCh = ch;
+		}
+		
+		String[] result = buff.toString().split(",");
+		int numPieces = result.length;
+		for (int i = 0; i < numPieces; i++)
+		{
+			if (result[i].indexOf(replace) >= 0)
+			{
+				result[i] = result[i].replaceAll("\\"+replace, ",");
+			}
+		}
+		return result;
 	}
 	
 	public void addLine(EagleLineReader line)

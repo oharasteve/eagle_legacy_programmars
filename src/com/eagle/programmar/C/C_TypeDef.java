@@ -50,7 +50,7 @@ public class C_TypeDef extends TokenSequence
 		{
 			public @S(10) C_Type returnType;
 			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) PunctuationStar star;
+			public @S(30) @OPT PunctuationStar star;
 			public @S(40) C_Function_Definition funcName;
 			public @S(50) PunctuationRightParen rightParen;
 			public @S(60) C_Function_ParameterDefs params;

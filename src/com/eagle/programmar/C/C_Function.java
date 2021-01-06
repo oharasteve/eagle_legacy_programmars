@@ -71,6 +71,13 @@ public class C_Function extends TokenSequence
 			public @S(60) @OPT C_Comment comment;
 		}
 		
+		public @CHOICE static class C_FunctionFunctionParameter extends TokenSequence
+		{
+			public @S(10) C_Type ctype;
+			public @S(20) C_Function_Definition id;
+			public @S(30) C_Function_ParameterDefs params;
+		}
+		
 		public @CHOICE static class C_FunctionDotDotDotParameter extends TokenSequence
 		{
 			public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");

@@ -6,6 +6,7 @@ package com.eagle.programmar.CMacro;
 import org.junit.Test;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.preprocess.C.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.Terminals.CMacro_RestOfLine;
 
 import junit.framework.TestCase;
@@ -84,5 +85,27 @@ public class CMacro_Tests extends TestCase
 		boolean ok = rest.parse(lines);
 		assertTrue("Parse failed", ok);
 		assertEquals(expected.trim(), rest.getValue().trim());
+	}
+	
+	@Test
+	public void testFancyReplace1()
+	{
+		String val = "XpmCreatePixmapFromData, int, (Display * display," +
+				"        Drawable d," +
+				"        char **data," +
+				"        Pixmap * pixmap_return," +
+				"        Pixmap * shapemask_return," +
+				"        XpmAttributes * attributes)";
+		String[] pieces = CMacro_Preprocess.fancySplit(val);
+		assertEquals(3, pieces.length);
+		assertEquals(" int", pieces[1]);
+	}
+	
+	@Test
+	public void testFancyReplace2()
+	{
+		String val = "\"Output must be a list of variables, like \\\"(!x1!,!x2!,!x3!)\\\".\"";
+		String[] pieces = CMacro_Preprocess.fancySplit(val);
+		assertEquals(1, pieces.length);
 	}
 }

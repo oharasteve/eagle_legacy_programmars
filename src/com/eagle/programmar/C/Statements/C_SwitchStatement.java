@@ -24,7 +24,7 @@ public class C_SwitchStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT C_Comment comment;
 	public @S(60) PunctuationLeftBrace leftBrace;
-	public @S(70) TokenList<C_SwitchClause> switchClause;
+	public @S(70) @OPT TokenList<C_SwitchClause> switchClause;
 	public @S(80) PunctuationRightBrace rightBrace;
 	
 	public static class C_SwitchClause extends TokenChooser
