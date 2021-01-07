@@ -15,9 +15,9 @@ public class CMacro_Definition_Test extends TestCase
 	public void testOneLiner()
 	{
 		EagleFileReader lines = new EagleFileReader();
-		lines.add(" int a;");
-		lines.add("#define MAX alphabet");
-		lines.add(" int b;");
+		lines.add(" int a;", "none", 0);
+		lines.add("#define MAX alphabet", "none", 1);
+		lines.add(" int b;", "none", 2);
 		lines.setCurrentLine(1);
 		lines.setCurrentChar(12);
 		
@@ -30,10 +30,10 @@ public class CMacro_Definition_Test extends TestCase
 	public void testTwoLines()
 	{
 		EagleFileReader lines = new EagleFileReader();
-		lines.add(" int a;");
-		lines.add("#define MAX alphabet \\   ");
-		lines.add(" soup ");
-		lines.add(" int b;");
+		lines.add(" int a;", "none", 0);
+		lines.add("#define MAX alphabet \\   ", "none", 1);
+		lines.add(" soup ", "none", 2);
+		lines.add(" int b;", "none", 3);
 		lines.setCurrentLine(1);
 		lines.setCurrentChar(12);
 		
@@ -50,10 +50,10 @@ public class CMacro_Definition_Test extends TestCase
 	public void testThreeLines()
 	{
 		EagleFileReader lines = new EagleFileReader();
-		lines.add(" int a;");
-		lines.add("#define MAX alpha \\");
-		lines.add("beta \\");
-		lines.add(" gamma \\");
+		lines.add(" int a;", "none", 0);
+		lines.add("#define MAX alpha \\", "none", 1);
+		lines.add("beta \\", "none", 2);
+		lines.add(" gamma \\", "none", 3);
 		lines.setCurrentLine(1);
 		lines.setCurrentChar(12);
 		

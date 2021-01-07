@@ -81,7 +81,7 @@ public class CMacro_RestOfLine extends TokenRestOfLine implements EagleRunnable
 		CMacro_Program lang = new CMacro_Program();
 		CMacro_Syntax syntax = new CMacro_Syntax();
 		EagleFileReader lines = new EagleFileReader();
-		lines.add(_txt);
+		lines.add(_txt, "none", 0);
 		
 		CMacro_Expression expr = new CMacro_Expression();
 		expr.setSyntax(syntax);

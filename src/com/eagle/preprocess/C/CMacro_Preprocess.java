@@ -68,17 +68,6 @@ public class CMacro_Preprocess extends EagleInclude
 			}
 		}
 	
-		// Save origin information for every file
-		for (int i = 0; i < lines.size(); i++)
-		{
-			EagleLineReader line = lines.get(i);
-			String fname = line.getOriginalFileName();
-			if (fname == null)
-			{
-				line.setOriginalLocation(lines.getFileName(), i+1);
-			}
-		}
-
 		_oldLines = lines;
 		
 		// Parse the include file
@@ -120,6 +109,9 @@ public class CMacro_Preprocess extends EagleInclude
 		
 		if (! changed) return lines;
 		
+		// Some multiline comments still there and should be split apart
+		_newLines.splitApartMultilineStrings();
+
 		// Save the pre-processed file into the project artifact folder
 		if (_depth == 0 && _project != null)
 		{
@@ -141,22 +133,20 @@ public class CMacro_Preprocess extends EagleInclude
 			}
 		}
 		
-//		// Save origin information
-//		for (int i = 0; i < _newLines.size(); i++)
-//		{
-//			EagleLineReader line = _newLines.get(i);
-//			String origFile = line.getOriginalFileName();
-//			if (origFile == null)
-//			{
-//				line.setOriginalLocation(lines.getFileName(), i+1);
-//			}
-//			else
-//			{
-//				line.setOriginalLocation(origFile, line.getOriginalLineNumber());
-//			}
-//		}
+		// Save origin information
+		String oldFileName = lines.getFileName();
+		for (int i = 0; i < _newLines.size(); i++)
+		{
+			EagleLineReader line = _newLines.get(i);
+			String origFile = line.getOriginalFileName();
+			if (origFile == null)
+			{
+				int origLine = line.getOriginalLineNumber() + 1;		// Why add 1 ??? Works better, but why?
+				if (DEBUG) System.out.println("***** 1 Setting line# to " + origLine + " in " + oldFileName + " for " + line.toString());
+				line.setOriginalLocation(oldFileName, origLine);
+			}
+		}
 		
-		_newLines.removeNewLines();
 		return _newLines;
 	}
 
@@ -220,6 +210,8 @@ public class CMacro_Preprocess extends EagleInclude
 		if (DEBUG) System.out.println("******************* token = " + token.getClass().getName());
 		
 		String oldLine;
+		String oldFileName = token._fileName;
+		int oldLineNumber = token._currentLine;
 		if (token instanceof TerminalToken)
 		{
 			TerminalToken term = (TerminalToken) token;
@@ -243,31 +235,25 @@ public class CMacro_Preprocess extends EagleInclude
 		
 		if (newLine == null)
 		{
-			_newLines.add(oldLine);
+			_newLines.add(oldLine, oldFileName, oldLineNumber);
 		}
 		else
 		{
 			if (newLine.indexOf('\n') < 0)
 			{
 				EagleLineReader line = new EagleLineReader(newLine);
-				//line.setOriginalLocation(oldLine.getOriginalFileName(), oldLine.getOriginalLineNumber());
-				line.setOriginalLocation(token._fileName,  token._currentLine);
+				line.setOriginalLocation(token._fileName,  oldLineNumber);
 				_newLines.add(line);
 			}
 			else
 			{
 				// Must have been a multi-line macro in there
-				boolean first = true;
 				for (String piece : newLine.split("\\n"))
 				{
 					EagleLineReader line = new EagleLineReader(piece);
-					if (first)
-					{
-						//line.setOriginalLocation(oldLine.getOriginalFileName(), oldLine.getOriginalLineNumber());
-						line.setOriginalLocation(token._fileName,  token._currentLine);
-						first = false;
-					}
+					line.setOriginalLocation(token._fileName,  oldLineNumber);
 					_newLines.add(line);
+					oldLineNumber++;
 				}
 			}
 		}
