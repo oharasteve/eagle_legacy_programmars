@@ -52,7 +52,7 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 	public @S(30) @OPT TokenList<Java_Comment> comments2;
 	public @S(40) @OPT Java_Package jpackage;
 	public @S(50) @OPT TokenList<Java_ImportOrComment> jimportList;
-	public @S(60) @OPT TokenList<Java_ClassOrEnum> classOrEnum;
+	public @S(60) @OPT TokenList<Java_ClassOrEnum> classOrEnumList;
 	
 	public static class Java_ClassOrEnum extends TokenChooser
 	{
@@ -104,6 +104,6 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(classOrEnum.first().getWhich());
+		interpreter.tryToInterpret(classOrEnumList.first().getWhich());
 	}
 }
