@@ -16,7 +16,8 @@ public class JSON_Dictionary extends TokenSequence
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT SeparatedList<JSON_DictEntry,PunctuationComma> entries;
-	public @S(30) PunctuationRightBrace rightBrace;
+	public @S(30) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(40) PunctuationRightBrace rightBrace;
 	
 	public static class JSON_DictEntry extends TokenSequence
 	{

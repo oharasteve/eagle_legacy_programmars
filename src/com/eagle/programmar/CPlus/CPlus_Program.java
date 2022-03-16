@@ -4,6 +4,10 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Program;
+import com.eagle.programmar.C.C_Syntax;
+import com.eagle.programmar.C.Terminals.C_Comment;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -27,10 +31,12 @@ public class CPlus_Program extends C_Program
 
 	public static class CPlus_Element extends TokenChooser
 	{
-		public @LAST C_StatementOrComment statementOrComment;
+		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
+		public @CHOICE @SYNTAX(C_Syntax.class) C_Comment comment;
 		public @CHOICE CPlus_Class classDefinition;
 		public @CHOICE CPlus_Using using;
 		public @CHOICE CPlus_Namespace namespace;
 		public @CHOICE CPlus_Method method;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 	}
 }

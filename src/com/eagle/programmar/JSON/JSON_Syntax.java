@@ -4,6 +4,7 @@
 package com.eagle.programmar.JSON;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.JSON.Terminals.JSON_Comment;
 
 public class JSON_Syntax extends EagleSyntax
 {
@@ -18,5 +19,6 @@ public class JSON_Syntax extends EagleSyntax
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
+		_commentInstance = new JSON_Comment();
 	}
 }

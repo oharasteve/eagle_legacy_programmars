@@ -4,9 +4,11 @@
 package com.eagle.programmar.JSON;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.JSON.Terminals.JSON_Comment;
 import com.eagle.programmar.JSON.Terminals.JSON_KeywordChoice;
 import com.eagle.programmar.JSON.Terminals.JSON_Literal;
 import com.eagle.programmar.JSON.Terminals.JSON_Number;
+import com.eagle.programmar.JSON.Terminals.JSON_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -25,10 +27,12 @@ public class JSON_Program extends EagleLanguage
 		return "http://www.w3schools.com/json/";
 	}
 	
-	public @S(10) TokenList<JSON_Element> elements;
+	public @S(10) @OPT @CURIOUS("Strange file header") JSON_Punctuation header = new JSON_Punctuation(")]}'");
+	public @S(20) TokenList<JSON_Element> elements;
 	
 	public static class JSON_Element extends TokenChooser
 	{
+		public @CHOICE JSON_Comment comment;
 		public @CHOICE JSON_Literal literal;
 		public @CHOICE JSON_Number number;
 		public @CHOICE JSON_Object object;
