@@ -34,14 +34,22 @@ public class SQL_CreateStatement extends TokenChooser
 	{
 		public @S(10) @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
 		public @S(20) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
-		public @S(30) SQL_Table_Definition table;
-		public @S(40) PunctuationLeftParen leftParen;
-		public @S(50) SeparatedList<SQL_CreateField,PunctuationComma> createFields;
-		public @S(60) @OPT TokenList<SQL_CreateFieldKey> keys;
-		public @S(70) PunctuationRightParen rightParen;
-		public @S(80) @OPT TokenList<SQL_CreateOption> options;
-		public @S(90) PunctuationSemicolon semicolon;
+		public @S(30) SQL_IfNotExists ifNotExists;
+		public @S(40) SQL_Table_Definition table;
+		public @S(50) PunctuationLeftParen leftParen;
+		public @S(60) SeparatedList<SQL_CreateField,PunctuationComma> createFields;
+		public @S(70) @OPT TokenList<SQL_CreateFieldKey> keys;
+		public @S(80) PunctuationRightParen rightParen;
+		public @S(90) @OPT TokenList<SQL_CreateOption> options;
+		public @S(200) PunctuationSemicolon semicolon;
 	
+		public static class SQL_IfNotExists extends TokenSequence
+		{
+			public @S(10) SQL_Keyword IF = new SQL_Keyword("IF");
+			public @S(20) SQL_Keyword NOT = new SQL_Keyword("NOT");
+			public @S(30) SQL_Keyword EXISTS = new SQL_Keyword("EXISTS");
+		}
+		
 		public static class SQL_CreateField extends TokenSequence
 		{
 			public @S(10) SQL_Field_Definition fieldName;
@@ -51,6 +59,7 @@ public class SQL_CreateStatement extends TokenChooser
 			public static class SQL_FieldOption extends TokenChooser
 			{
 				public @CHOICE SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
+				public @CHOICE SQL_Keyword AUTOINCREMENT = new SQL_Keyword("AUTOINCREMENT");
 				
 				public @CHOICE static class SQL_FieldNotNull extends TokenSequence
 				{

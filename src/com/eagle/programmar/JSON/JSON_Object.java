@@ -17,8 +17,9 @@ public class JSON_Object extends TokenSequence
 	public @S(20) @OPT TokenList<JSON_Comment> comments1;
 	public @S(30) @OPT JSON_Element element;
 	public @S(40) @OPT TokenList<JSON_MoreObjects> moreElements;
-	public @S(50) @OPT TokenList<JSON_Comment> comments2;
-	public @S(60) PunctuationRightBracket rightBracket;
+	public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(60) @OPT TokenList<JSON_Comment> comments2;
+	public @S(70) PunctuationRightBracket rightBracket;
 	
 	public static class JSON_MoreObjects extends TokenSequence
 	{

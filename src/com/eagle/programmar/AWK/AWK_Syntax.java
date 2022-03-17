@@ -36,6 +36,7 @@ public class AWK_Syntax extends EagleSyntax
 	};
 	
 	private String[] keywords = new String[] {
+		"function",
 		"gsub",
 		"if",
 		"next",

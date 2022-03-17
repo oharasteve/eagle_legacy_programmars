@@ -29,5 +29,6 @@ public class AWK_Program extends EagleLanguage
 	{
 		public @CHOICE AWK_Command command;
 		public @CHOICE AWK_Comment comment;
+		public @CHOICE AWK_Function function;
 	}
 }

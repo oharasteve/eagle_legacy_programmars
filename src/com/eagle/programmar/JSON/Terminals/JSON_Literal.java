@@ -11,6 +11,6 @@ public class JSON_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericLiteral(lines, "\"", true, '\\', false, false);
+		return genericLiteral(lines, "\"", true, '\\', false, true);
 	}
 }

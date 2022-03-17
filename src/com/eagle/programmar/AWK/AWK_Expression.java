@@ -4,6 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.Symbols.AWK_Identifier_Reference;
+import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
 import com.eagle.programmar.AWK.Terminals.AWK_Literal;
@@ -15,6 +16,7 @@ import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
@@ -51,7 +53,15 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(40) AWK_Variable file;
 	}
 
-	public static @P(105) class AWK_FunctionCall extends PrimaryOperator
+	public static @P(110) class AWK_BuiltinFunctionCall extends PrimaryOperator
+	{
+		public @S(10) AWK_Identifier functionName;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT AWK_ArgumentList argList;
+		public @S(40) PunctuationRightParen rightParen;
+	}
+
+	public static @P(120) class AWK_FunctionCall extends PrimaryOperator
 	{
 		public @S(10) AWK_KeywordChoice functionName = new AWK_KeywordChoice(AWK_Syntax.FUNCTIONS);
 		public @S(20) PunctuationLeftParen leftParen;
@@ -59,36 +69,36 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
-	public static @P(110) class AWK_PatternExpression extends PrimaryOperator
+	public static @P(130) class AWK_PatternExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Pattern pattern;
 	}
 
-	public static @P(120) class AWK_PreIncrementExpression extends PrimaryOperator
+	public static @P(140) class AWK_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Punctuation operator = new AWK_Punctuation("++");
 		public @S(20) AWK_Expression expr;
 	}
 
-	public static @P(130) class AWK_PreDecrementExpression extends PrimaryOperator
+	public static @P(150) class AWK_PreDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Punctuation operator = new AWK_Punctuation("--");
 		public @S(20) AWK_Expression expr;
 	}
 	
-	public static @P(140) class AWK_PostIncrementExpression extends PrimaryOperator
+	public static @P(160) class AWK_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Variable var;		// Cannot be just AWK_Expression -- infinite loop
 		public @S(20) AWK_Punctuation operator = new AWK_Punctuation("++");
 	}
 
-	public static @P(150) class AWK_PostDecrementExpression extends PrimaryOperator
+	public static @P(170) class AWK_PostDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Variable var;		// Cannot be just AWK_Expression -- infinite loop
 		public @S(20) AWK_Punctuation operator = new AWK_Punctuation("--");
 	}
 
-	public static @P(160) class AWK_Strings extends PrimaryOperator
+	public static @P(180) class AWK_Strings extends PrimaryOperator
 	{
 		public @S(10) TokenList<AWK_StringPiece> pieces;
 		
@@ -99,20 +109,20 @@ public class AWK_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(170) class AWK_NotExpression extends PrimaryOperator
+	public static @P(190) class AWK_NotExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Punctuation operator = new AWK_Punctuation('!');
 		public @S(20) AWK_Expression expr;
 	}
 
-	public static @P(180) class AWK_ParenthesizedExpression extends PrimaryOperator
+	public static @P(200) class AWK_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) AWK_Expression expression;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	public static @P(190) class AWK_DollarParensExpression extends PrimaryOperator
+	public static @P(210) class AWK_DollarParensExpression extends PrimaryOperator
 	{
 		public @S(10) AWK_Punctuation dollar = new AWK_Punctuation('$');
 		public @S(20) PunctuationLeftParen leftParen;
@@ -123,7 +133,7 @@ public class AWK_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(200) class AWK_SubscriptExpression extends PrecedenceOperator
+	public static @P(220) class AWK_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression expr = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -131,49 +141,58 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 	
-	public static @P(210) class AWK_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(230) class AWK_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_PunctuationChoice operator = new AWK_PunctuationChoice("*", "/", "%");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(220) class AWK_AdditiveExpression extends PrecedenceOperator
+	public static @P(240) class AWK_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_PunctuationChoice operator = new AWK_PunctuationChoice("+", "-");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(230) class AWK_RelationalExpression extends PrecedenceOperator
+	public static @P(250) class AWK_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_PunctuationChoice operator = new AWK_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(240) class AWK_RegularExpression extends PrecedenceOperator
+	public static @P(260) class AWK_RegularExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_PunctuationChoice operator = new AWK_PunctuationChoice("~", "!~");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(250) class AWK_AndExpression extends PrecedenceOperator
+	public static @P(270) class AWK_AndExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_Punctuation andOperator = new AWK_Punctuation("&&");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(260) class AWK_OrExpression extends PrecedenceOperator
+	public static @P(280) class AWK_OrExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_Punctuation orOperator = new AWK_Punctuation("||");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(270) class AWK_Assignment extends PrecedenceOperator
+	public static @P(290) class AWK_TrueFalseExpression extends PrecedenceOperator
+	{
+		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) AWK_Punctuation questionMark = new AWK_Punctuation('?');
+		public @S(30) AWK_Expression middle = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(40) PunctuationColon colon;
+		public @S(50) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
+	}
+
+	public static @P(300) class AWK_Assignment extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=");
