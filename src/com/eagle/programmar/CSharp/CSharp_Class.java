@@ -4,6 +4,8 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
+import com.eagle.programmar.CSharp.Directives.CSharp_IfDirective;
+import com.eagle.programmar.CSharp.Directives.CSharp_PragmaDirective;
 import com.eagle.programmar.CSharp.Directives.CSharp_RegionDirective;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Class_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
@@ -88,7 +90,9 @@ public class CSharp_Class extends TokenSequence implements AbstractClass
 		public @LAST @NEWLINE CSharp_Statement statement;
 		public @CHOICE @NEWLINE CSharp_SubscriptOperator subscriptOperator;
 				
-		public @CHOICE @NEWLINE CSharp_RegionDirective region;
+		public @CHOICE @NEWLINE CSharp_RegionDirective regionDirective;
+		public @CHOICE @NEWLINE CSharp_IfDirective ifDirective;
+		public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
 		
 		public @CHOICE static class CSharp_StaticStatement extends TokenSequence
 		{

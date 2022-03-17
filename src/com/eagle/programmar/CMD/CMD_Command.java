@@ -155,7 +155,7 @@ public class CMD_Command extends TokenSequence
 		
 		public static class CMD_Statement_Separator extends TokenChooser
 		{
-			public @CHOICE CMD_PunctuationChoice separator = new CMD_PunctuationChoice("|", "&&");
+			public @CHOICE CMD_PunctuationChoice separator = new CMD_PunctuationChoice("||", "|", "&&");
 		}
 	}
 }

@@ -10,5 +10,5 @@ import com.eagle.tokens.TokenSequence;
 public class Perl_DieStatement extends TokenSequence
 {
 	public @S(10) Perl_Keyword DIE = new Perl_Keyword("die");
-	public @S(20) Perl_Literal message;
+	public @S(20) @OPT Perl_Literal message;
 }

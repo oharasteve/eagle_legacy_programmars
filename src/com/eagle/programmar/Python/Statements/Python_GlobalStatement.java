@@ -4,13 +4,13 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Symbols.Python_Variable_Definition;
-import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_GlobalStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword GLOBAL = new Python_Keyword("global");
+	public @S(10) Python_KeywordChoice GLOBAL = new Python_KeywordChoice("global", "nonlocal");
 	public @S(20) SeparatedList<Python_Variable_Definition,PunctuationComma> vars;
 }

@@ -43,7 +43,7 @@ public class PHP_Program extends EagleLanguage
 	public static class PHP_StartTag extends TokenSequence
 	{
 		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<?");
-		public @S(20) HTML_Keyword php = new HTML_Keyword("php");
+		public @S(20) @OPT HTML_Keyword php = new HTML_Keyword("php");
 	}
 	
 	public static class PHP_EndTag extends TokenSequence

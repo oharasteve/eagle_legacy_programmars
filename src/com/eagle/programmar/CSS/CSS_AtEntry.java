@@ -103,11 +103,21 @@ public class CSS_AtEntry extends TokenChooser
 	{
 		public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
 		public @S(20) @NOSPACE CSS_Keyword NAMESPACE = new CSS_Keyword("namespace");
-		public @S(30) CSS_Identifier name;
-		public @S(40) CSS_Keyword URL = new CSS_Keyword("URL");
-		public @S(50) PunctuationLeftParen leftParen;
-		public @S(60) CSS_FileName url;
-		public @S(70) PunctuationRightParen rightParen;
-		public @S(80) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(30) CSS_AtNameSpaceArg arg;
+		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+		
+		public static class CSS_AtNameSpaceArg extends TokenChooser
+		{
+			public @CHOICE CSS_Literal literal;
+			
+			public @CHOICE static class CSS_AtNameSpaceURL extends TokenSequence
+			{
+				public @S(10) CSS_Identifier name;
+				public @S(20) CSS_Keyword URL = new CSS_Keyword("URL");
+				public @S(30) PunctuationLeftParen leftParen;
+				public @S(40) CSS_FileName url;
+				public @S(50) PunctuationRightParen rightParen;
+			}
+		}
 	}
 }

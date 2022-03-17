@@ -17,10 +17,10 @@ public class CMD_Syntax extends EagleSyntax
 	public CMD_Syntax()
 	{
 		_isCaseSensitive = false;
-		_continuationChar = "\\";
+		_continuationChar = "^";	// Perhaps a backslash (\) on some systems?
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", ">&" };
+		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", ">&", "||" };
 		
 		findFirstWords(CMD_Statement.class);
 	}

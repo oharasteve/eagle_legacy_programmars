@@ -4,6 +4,7 @@
 package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
+import com.eagle.programmar.SQL.Terminals.SQL_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -22,7 +23,13 @@ public class SQL_PragmaStatement extends TokenSequence
 		{
 			public @S(10) SQL_Keyword FOREIGN_KEYS = new SQL_Keyword("FOREIGN_KEYS");
 			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_Keyword OFF = new SQL_Keyword("OFF");
+			public @S(30) SQL_Pragma_ForeignKey foreignKey;
+			
+			public static class SQL_Pragma_ForeignKey extends TokenChooser
+			{
+				public @CHOICE SQL_Number number;
+				public @CHOICE SQL_Keyword OFF = new SQL_Keyword("OFF");
+			}
 		}
 		
 		public @CHOICE static class SQL_Pragma_JournalMode extends TokenSequence

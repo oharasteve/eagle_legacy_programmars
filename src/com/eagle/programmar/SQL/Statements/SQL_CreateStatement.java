@@ -34,7 +34,7 @@ public class SQL_CreateStatement extends TokenChooser
 	{
 		public @S(10) @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
 		public @S(20) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
-		public @S(30) SQL_IfNotExists ifNotExists;
+		public @S(30) @OPT SQL_IfNotExists ifNotExists;
 		public @S(40) SQL_Table_Definition table;
 		public @S(50) PunctuationLeftParen leftParen;
 		public @S(60) SeparatedList<SQL_CreateField,PunctuationComma> createFields;
@@ -58,8 +58,7 @@ public class SQL_CreateStatement extends TokenChooser
 			
 			public static class SQL_FieldOption extends TokenChooser
 			{
-				public @CHOICE SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
-				public @CHOICE SQL_Keyword AUTOINCREMENT = new SQL_Keyword("AUTOINCREMENT");
+				public @CHOICE SQL_KeywordChoice option = new SQL_KeywordChoice("UNIQUE", "AUTOINCREMENT");
 				
 				public @CHOICE static class SQL_FieldNotNull extends TokenSequence
 				{

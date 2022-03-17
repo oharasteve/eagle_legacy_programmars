@@ -4,14 +4,18 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
+import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_ParameterList extends TokenSequence
@@ -41,7 +45,14 @@ public class Java_ParameterList extends TokenSequence
 			public @CHOICE static class Java_MethodNullable extends TokenSequence
 			{
 				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-				public @S(20) Java_Keyword NULLABLE = new Java_Keyword("Nullable");
+				public @S(20) Java_KeywordChoice NULLABLE = new Java_KeywordChoice("Nullable", "NonNull");
+			}
+
+			public @LAST static class Java_MethodQualifier extends TokenSequence
+			{
+				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
+				public @S(20) Java_Identifier qualifier;
+				public @S(30) @OPT SeparatedList<PunctuationPeriod, Java_Identifier> more;
 			}
 
 			public @CHOICE static class Java_MethodSuppress extends TokenSequence

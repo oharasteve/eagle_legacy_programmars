@@ -357,7 +357,7 @@ public class Perl_Expression extends PrecedenceChooser
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		// "<<" gets confused with <<SENTINEL for multi-line literals.
-		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice(">>", ">>>");
+		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("<<", ">>", ">>>");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
@@ -381,6 +381,13 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(20) Perl_Keyword instanceOperator = new Perl_Keyword("instanceof");
 		public @S(30) @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 		public @S(40) Perl_Identifier_Reference type;
+		public @S(50) @OPT TokenList<Perl_MoreInstanceOf> more;
+		
+		public static class Perl_MoreInstanceOf extends TokenSequence
+		{
+			public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+			public @S(20) Perl_Identifier_Reference type;
+		}
 	}
 	
 	public static @P(480) class Perl_EqualityExpression extends PrecedenceOperator

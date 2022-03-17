@@ -131,6 +131,7 @@ public class CSS_Qualifier extends TokenSequence
 			public @S(10) CSS_Keyword TYPE = new CSS_Keyword("type");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) CSS_QualifierWhichType which;
+			public @S(40) @OPT @CURIOUS("What does this mean>") CSS_Keyword I = new CSS_Keyword("i");
 			
 			public static class CSS_QualifierWhichType extends TokenChooser
 			{
