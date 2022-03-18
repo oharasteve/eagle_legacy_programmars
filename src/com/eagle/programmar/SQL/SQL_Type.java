@@ -27,73 +27,42 @@ public class SQL_Type extends TokenChooser
 	{
 		public @S(10) SQL_KeywordChoice charType = new SQL_KeywordChoice
 		(
+			"BIGINT",
+			"BLOB",
+			"BOOL",
+			"BOOLEAN",
 			"CHAR",
+			"DATE",
+			"DATETIME",
+			"DECIMAL",
+			"DOUBLE",
+			"FLOAT",
+			"INT",
+			"INTEGER",
 			"LONGVARCHAR",
+			"NCLOB",
+			"NUMBER",
+			"NUMERIC",
 			"NVARCHAR2",
+			"RAW",
+			"SMALLINT",
+			"TEXT",
+			"TIME",
+			"TIMESTAMP",
+			"TINYINT",
+			"UNSIGNED",
 			"VARCHAR",
 			"VARCHAR2"
 		);
 		public @S(20) @OPT SQL_TypeSize size;
 	}
 
-	public @CHOICE static class SQL_TypeBoolean extends TokenSequence
+	public @FIRST static class SQL_TypeUnisgnedLong extends TokenSequence
 	{
-		public @S(10) SQL_KeywordChoice BOOLEAN = new SQL_KeywordChoice("BOOLEAN");
+		public @S(10) SQL_KeywordChoice UNSIGNED = new SQL_KeywordChoice("UNSIGNED");
+		public @S(20) SQL_KeywordChoice LONG = new SQL_KeywordChoice("LONG");
 	}
 	
-	public @CHOICE static class SQL_TypeBigInt extends TokenSequence
-	{
-		public @S(10) SQL_Keyword BIGINT = new SQL_Keyword("BIGINT");
-		public @S(20) SQL_TypeSize size;
-	}
-
-	public @CHOICE static class SQL_TypeInt extends TokenSequence
-	{
-		public @S(10) SQL_KeywordChoice INT = new SQL_KeywordChoice("INT", "INTEGER", "NUMBER", "TINYINT", "SMALLINT");
-		public @S(20) @OPT SQL_TypeSize size;
-	}
-
-	public @CHOICE static class SQL_TypeDouble extends TokenSequence
-	{
-		public @S(10) SQL_KeywordChoice DOUBLE = new SQL_KeywordChoice("FLOAT", "DOUBLE");
-	}
-	
-	public @CHOICE static class SQL_TypeRaw extends TokenSequence
-	{
-		public @S(10) SQL_Keyword RAW = new SQL_Keyword("RAW");
-		public @S(20) SQL_TypeSize size;
-	}
-
-	public @CHOICE static class SQL_TypeBlob extends TokenSequence
-	{
-		public @S(10) SQL_KeywordChoice BLOB = new SQL_KeywordChoice("BLOB", "NCLOB");
-	}
-	
-	public @CHOICE static class SQL_TypeText extends TokenSequence
-	{
-		public @S(10) SQL_Keyword TEXT = new SQL_Keyword("TEXT");
-	}
-
-	public @CHOICE static class SQL_TypeDate extends TokenSequence
-	{
-		public @S(10) SQL_KeywordChoice DATE = new SQL_KeywordChoice("DATE", "TIME", "DATETIME");
-	}
-
-	public @CHOICE static class SQL_TypeTimeStamp extends TokenSequence
-	{
-		public @S(10) SQL_Keyword TIMESTAMP = new SQL_Keyword("TIMESTAMP");
-	}
-
-	public @CHOICE static class SQL_TypeDecimal extends TokenSequence
-	{
-		public @S(10) SQL_Keyword DECIMAL = new SQL_Keyword("DECIMAL");
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SQL_Number size;
-		public @S(40) PunctuationComma comma;
-		public @S(50) SQL_Number size2;
-		public @S(60) PunctuationRightParen rightParen;
-	}
-
 	public @CHOICE static class SQL_TypeEnum extends TokenSequence
 	{
 		public @S(10) SQL_Keyword ENUM = new SQL_Keyword("ENUM");

@@ -4,6 +4,7 @@
 package com.eagle.programmar.SQL;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 
 public class SQL_Syntax extends EagleSyntax
 {
@@ -18,6 +19,7 @@ public class SQL_Syntax extends EagleSyntax
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
+		_commentInstance = new SQL_Comment();
 		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "||", "&&", "/*" };
 		
 		addReservedWords(keywords);

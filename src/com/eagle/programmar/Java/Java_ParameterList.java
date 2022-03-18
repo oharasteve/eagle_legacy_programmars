@@ -51,8 +51,7 @@ public class Java_ParameterList extends TokenSequence
 			public @LAST static class Java_MethodQualifier extends TokenSequence
 			{
 				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-				public @S(20) Java_Identifier qualifier;
-				public @S(30) @OPT SeparatedList<PunctuationPeriod, Java_Identifier> more;
+				public @S(20) SeparatedList<Java_Identifier, PunctuationPeriod> idlist;
 			}
 
 			public @CHOICE static class Java_MethodSuppress extends TokenSequence

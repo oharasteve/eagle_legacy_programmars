@@ -77,10 +77,15 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(10) Perl_Keyword NEW = new Perl_Keyword("new");
 		public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
 		public @S(30) @OPT TokenList<Perl_MoreNamespace> namespace;
-		public @S(40) PunctuationLeftParen leftParen;
-		public @S(50) @OPT TokenList<Perl_Comment> comments;
-		public @S(60) @OPT Perl_ArgumentList argList;
-		public @S(70) PunctuationRightParen rightParen;
+		public @S(40) @OPT Perl_ClassCreationParams params;
+		
+		public static class Perl_ClassCreationParams extends TokenSequence
+		{
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) @OPT TokenList<Perl_Comment> comments;
+			public @S(30) @OPT Perl_ArgumentList argList;
+			public @S(40) PunctuationRightParen rightParen;
+		}
 
 		public static class Perl_MoreNamespace extends TokenSequence
 		{

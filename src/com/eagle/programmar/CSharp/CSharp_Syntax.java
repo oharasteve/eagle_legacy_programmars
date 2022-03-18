@@ -4,6 +4,7 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 
 public class CSharp_Syntax extends EagleSyntax
 {
@@ -19,6 +20,7 @@ public class CSharp_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "//", "..." };
+		_commentInstance = new CSharp_Comment();
 		
 		addReservedWords(keywords);
 	}

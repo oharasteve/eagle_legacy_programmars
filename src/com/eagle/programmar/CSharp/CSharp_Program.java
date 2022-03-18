@@ -49,6 +49,7 @@ public class CSharp_Program extends EagleLanguage
 		"readonly",
 		"sealed",
 		"static",
+		"unsafe",
 		"virtual"
 	}; 
 
@@ -67,9 +68,10 @@ public class CSharp_Program extends EagleLanguage
 	public static class CSharp_Using extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword USING = new CSharp_Keyword("using");
-		public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
-		public @S(30) @OPT CSharp_UsingEquals alternateName;
-		public @S(40) PunctuationSemicolon semicolon;
+		public @S(20) @OPT CSharp_Keyword STATIC = new CSharp_Keyword("static");
+		public @S(30) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
+		public @S(40) @OPT CSharp_UsingEquals alternateName;
+		public @S(50) PunctuationSemicolon semicolon;
 
 		public static class CSharp_UsingEquals extends TokenSequence
 		{

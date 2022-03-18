@@ -19,7 +19,7 @@ public class Javascript_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
-				"/*", "!=", "<=", "==", ">=", "//", "&&", "||", "===", "!==", "!===", "=>" };
+				"/*", "!=", "<=", "==", ">=", "//", "&&", "||", "===", "!==", "!===", "=>", "</" };
 		
 		addReservedWords(keywords);
 	}

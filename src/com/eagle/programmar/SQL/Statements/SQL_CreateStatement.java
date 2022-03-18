@@ -6,6 +6,7 @@ package com.eagle.programmar.SQL.Statements;
 import com.eagle.programmar.SQL.SQL_Constraint;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Type;
+import com.eagle.programmar.SQL.Statements.SQL_CreateStatement.SQL_CreateTableStatement.SQL_IfNotExists;
 import com.eagle.programmar.SQL.Symbols.SQL_Field_Definition;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Symbols.SQL_Index_Definition;
@@ -168,12 +169,18 @@ public class SQL_CreateStatement extends TokenChooser
 				public @S(20) PunctuationEquals equals;
 				public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
 			}
-	
+			
 			public @CHOICE static class SQL_CreateComment extends TokenSequence
 			{
 				public @S(10) SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
 				public @S(20) PunctuationEquals equals;
 				public @S(30) SQL_Literal tital;
+			}
+			
+			public @CHOICE static class SQL_CreateWithoutRowId extends TokenSequence
+			{
+				public @S(10) SQL_Keyword WITHOUT = new SQL_Keyword("WITHOUT");
+				public @S(20) SQL_Keyword ROWID = new SQL_Keyword("ROWID");
 			}
 		}
 	}
@@ -183,13 +190,14 @@ public class SQL_CreateStatement extends TokenChooser
 		public @S(10) SQL_Keyword CREATE = new SQL_Keyword("CREATE");
 		public @S(20) @OPT SQL_Keyword UNIQUE = new SQL_Keyword("UNIQUE");
 		public @S(30) SQL_Keyword INDEX = new SQL_Keyword("INDEX");
-		public @S(40) SQL_Index_Definition index;
-		public @S(50) SQL_Keyword ON = new SQL_Keyword("ON");
-		public @S(60) SQL_Identifier_Reference table;
-		public @S(70) PunctuationLeftParen leftParen;
-		public @S(80) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
-		public @S(90) PunctuationRightParen rightParen;
-		public @S(100) PunctuationSemicolon semicolon;
+		public @S(40) @OPT SQL_IfNotExists ifNotExists;
+		public @S(50) SQL_Index_Definition index;
+		public @S(60) SQL_Keyword ON = new SQL_Keyword("ON");
+		public @S(70) SQL_Identifier_Reference table;
+		public @S(80) PunctuationLeftParen leftParen;
+		public @S(90) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
+		public @S(100) PunctuationRightParen rightParen;
+		public @S(110) PunctuationSemicolon semicolon;
 	}
 	
 	public @CHOICE static class SQL_CreateViewStatement extends TokenSequence

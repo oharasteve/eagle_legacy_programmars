@@ -156,7 +156,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public static class Java_ClassOverride extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBrace leftBrace;
-			public @S(20) TokenList<Java_ClassElement> elementList;
+			public @S(20) @OPT TokenList<Java_ClassElement> elementList;
 			public @S(30) PunctuationRightBrace rightBrace;
 		}
 	}
