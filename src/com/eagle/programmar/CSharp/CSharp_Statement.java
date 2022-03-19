@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.programmar.CSharp.Directives.CSharp_PragmaDirective;
 import com.eagle.programmar.CSharp.Statements.CSharp_BreakStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_CheckedStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ContinueStatement;
@@ -37,6 +38,7 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE CSharp_Data data;
 	public @CHOICE CSharp_Class myclass;
 	public @CHOICE CSharp_Enum enumeration;
+	public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
 	
 	public @CHOICE static class CSharp_StatementBlock extends TokenSequence
 	{

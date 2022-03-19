@@ -6,7 +6,7 @@ package com.eagle.programmar.CMacro;
 import org.junit.Test;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.Terminals.CMacro_RestOfLine;
 
 import junit.framework.TestCase;

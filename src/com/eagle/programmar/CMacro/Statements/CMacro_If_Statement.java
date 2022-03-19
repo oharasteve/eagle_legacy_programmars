@@ -3,9 +3,7 @@
 
 package com.eagle.programmar.CMacro.Statements;
 
-import com.eagle.preprocess.C.CMacro_Preprocess;
-import com.eagle.programmar.C.C_Program.C_StatementOrComment;
-import com.eagle.programmar.C.C_Syntax;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Expression;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_Element;
@@ -24,10 +22,12 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	public @S(30) CMacro_Expression expr;
 	public @S(40) @OPT CMacro_Comment comment1;
 	public @S(50) CMacro_EndOfLine eoln1;
-	public @S(60) @OPT TokenList<CMacro_IfElement> elements;
+	
+	public @S(60) @OPT TokenList<CMacro_Element> elements;
 	public @S(70) @OPT TokenList<CMacro_IfElif> ifElif;
 	public @S(80) @OPT CMacro_IfElse ifElse;
 	public @S(90) @OPT CMacro_EndOfLine eoln2;
+	
 	public @S(100) CMacro_Punctuation pound2 = new CMacro_Punctuation('#'); 
 	public @S(110) CMacro_Keyword ENDIF = new CMacro_Keyword("endif");
 	public @S(120) @OPT CMacro_Comment comment2;
@@ -39,7 +39,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		public @S(30) CMacro_Expression expr;
 		public @S(40) @OPT CMacro_Comment comment;
 		public @S(50) @OPT CMacro_EndOfLine eoln;
-		public @S(60) @OPT TokenList<CMacro_IfElement> elements;
+		public @S(60) @OPT TokenList<CMacro_Element> elements;
 	}
 	
 	public static class CMacro_IfElse extends TokenSequence
@@ -48,20 +48,20 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		public @S(20) CMacro_Keyword ELSE = new CMacro_Keyword("else");
 		public @S(30) @OPT CMacro_Comment comment;
 		public @S(40) @OPT CMacro_EndOfLine eoln;
-		public @S(50) @OPT TokenList<CMacro_IfElement> elements;
+		public @S(50) @OPT TokenList<CMacro_Element> elements;
 	}
 	
-	// Need this for switching languages from CMacro to C
-	public static class CMacro_IfElement extends TokenSequence
-	{
-		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
-	}
+//	// Need this for switching languages from CMacro to C
+//	public static class CMacro_IfElement extends TokenSequence
+//	{
+//		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
+//	}
 	
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
 		boolean isTrue = expr.getBooleanValue(preprocessor);
-		TokenList<CMacro_IfElement> whichElements = null;
+		TokenList<CMacro_Element> whichElements = null;
 		if (isTrue)
 		{
 			whichElements = elements;	// Use the "then" clause
@@ -90,12 +90,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		
 		for (AbstractToken token : whichElements._elements)
 		{
-			if (token instanceof CMacro_IfElement)	// Normal case for C_Progam
-			{
-				CMacro_IfElement element = (CMacro_IfElement) token;
-				preprocessor.preprocessCStatement(element.element);
-			}
-			else if (token instanceof CMacro_Element)	// Class override in CMacro_Program
+			if (token instanceof CMacro_Element)
 			{
 				CMacro_Element element = (CMacro_Element) token;
 				preprocessor.preprocessCMacroElement(preprocessor._parser, element);

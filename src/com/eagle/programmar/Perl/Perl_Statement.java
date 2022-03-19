@@ -106,7 +106,7 @@ public class Perl_Statement extends TokenChooser
 	{
 		public @S(10) Perl_StatementList statement;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
-		public @S(30) PunctuationSemicolon semicolon;
+		public @S(30) @OPT PunctuationSemicolon semicolon;
 
 		//
 		// Start actual statement list here

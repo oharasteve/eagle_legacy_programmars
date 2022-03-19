@@ -9,6 +9,7 @@ import com.eagle.programmar.Javascript.Javascript_Statement;
 import com.eagle.programmar.Javascript.Javascript_Type;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
+import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -67,7 +68,7 @@ public class Javascript_ForStatement extends TokenChooser
 		public static class Javascript_InOrColon extends TokenChooser
 		{
 			public @CHOICE PunctuationColon colon;
-			public @CHOICE Javascript_Keyword IN = new Javascript_Keyword("in");
+			public @CHOICE Javascript_KeywordChoice IN = new Javascript_KeywordChoice("in", "of");
 		}
 	}
 }

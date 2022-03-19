@@ -13,6 +13,7 @@ import com.eagle.programmar.C.Symbols.C_Type_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
+import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
@@ -22,6 +23,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -92,12 +94,19 @@ public class C_Type extends TokenSequence implements AbstractType
 				{
 					public @S(10) C_Type jtype;
 					public @S(20) C_Field_Definition id;
-					public @S(30) @OPT TokenList<C_Subscript> subscripts;
-					public @S(40) @OPT C_FieldInitialValue initialValue;
-					public @S(50) @OPT TokenList<C_MoreFields> more;
-					public @S(60) @NOSPACE PunctuationSemicolon semicolon;
-					public @S(70) @OPT TokenList<C_Comment> comments;
+					public @S(30) @OPT C_TypeNumberOfBits bits;
+					public @S(40) @OPT TokenList<C_Subscript> subscripts;
+					public @S(50) @OPT C_FieldInitialValue initialValue;
+					public @S(60) @OPT TokenList<C_MoreFields> more;
+					public @S(70) @NOSPACE PunctuationSemicolon semicolon;
+					public @S(80) @OPT TokenList<C_Comment> comments;
 					
+					public static class C_TypeNumberOfBits extends TokenSequence
+					{
+						public @S(10) PunctuationColon colon;
+						public @S(20) C_Number bits;
+					}
+
 					public static class C_MoreFields extends TokenSequence
 					{
 						public @S(10) PunctuationComma comma;

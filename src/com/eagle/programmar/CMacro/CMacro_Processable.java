@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro;
 
-import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 
 public interface CMacro_Processable
 {

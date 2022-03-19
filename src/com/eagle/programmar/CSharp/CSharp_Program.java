@@ -4,6 +4,8 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
+import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
@@ -34,6 +36,7 @@ public class CSharp_Program extends EagleLanguage
 	
 	public static final String[] MODIFIERS = new String[] {
 		"abstract",
+		"async",
 		"const",
 		"delegate",
 		"event",
@@ -63,6 +66,7 @@ public class CSharp_Program extends EagleLanguage
 		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
 		public @CHOICE @NEWLINE CSharp_Class elems;
 		public @CHOICE @NEWLINE CSharp_Annotation annotation;
+		public @CHOICE @NEWLINE @SYNTAX(CMacro_Syntax.class) CMacro_Pragma_Statement pragma;
 	}
 
 	public static class CSharp_Using extends TokenSequence

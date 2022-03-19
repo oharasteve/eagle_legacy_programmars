@@ -54,7 +54,8 @@ public class CMD_Command extends TokenSequence
 		public @CHOICE CMD_Redirect_Input redirectInput;
 		public @CHOICE CMD_Redirect_Output redirectOutput;
 		public @CHOICE CMD_Redirect_Append redirectAppend;
-		public @CHOICE CMD_Redirect_Error redirectError;
+		public @CHOICE CMD_Redirect_Error_One redirectErrorOne;
+		public @CHOICE CMD_Redirect_Error_File redirectErrorFile;
 	}
 
 	// Some need a wrapper because they have CMD_Statement's inside of themselves
@@ -85,7 +86,7 @@ public class CMD_Command extends TokenSequence
 			}
 		}
 		
-		public @CHOICE static class CMD_GenericStatement extends TokenSequence
+		public @LAST static class CMD_GenericStatement extends TokenSequence
 		{
 			public @S(10) CMD_Argument programName;
 			public @S(20) @OPT TokenList<CMD_GenericArgument> args;
@@ -140,11 +141,19 @@ public class CMD_Command extends TokenSequence
 		public @S(20) CMD_Argument appFile;
 	}
 
-	public static class CMD_Redirect_Error extends TokenSequence
+	public static class CMD_Redirect_Error_One extends TokenSequence
 	{
 		public @S(10) CMD_Number two;
-		public @S(20) CMD_Punctuation greaterAnd = new CMD_Punctuation(">&");
-		public @S(30) CMD_Number one;
+		public @S(20) CMD_Punctuation greater = new CMD_Punctuation(">");
+		public @S(30) CMD_Punctuation ampersand = new CMD_Punctuation("&");
+		public @S(40) CMD_Number one;
+	}
+	
+	public static class CMD_Redirect_Error_File extends TokenSequence
+	{
+		public @S(10) CMD_Number two;
+		public @S(20) CMD_Punctuation greater = new CMD_Punctuation(">");
+		public @S(30) CMD_Argument file;
 	}
 	
 	public static class CMD_More_Statements extends TokenSequence

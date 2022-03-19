@@ -6,7 +6,7 @@ package com.eagle.programmar.CMacro;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Expression.CMacro_FunctionCall.CMacro_FunctionType.CMacroFunctionParens;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Character_Literal;

@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Sep 8, 2015
 
-package com.eagle.preprocess.C;
+package com.eagle.preprocess.CMacro;
 
 import java.io.IOException;
 

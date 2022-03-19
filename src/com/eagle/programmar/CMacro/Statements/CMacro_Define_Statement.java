@@ -4,7 +4,7 @@
 package com.eagle.programmar.CMacro.Statements;
 
 import com.eagle.math.TokenValue;
-import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Define_Definition;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Parameter_Definition;

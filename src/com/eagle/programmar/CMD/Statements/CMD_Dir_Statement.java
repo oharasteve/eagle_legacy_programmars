@@ -16,7 +16,7 @@ public class CMD_Dir_Statement extends TokenSequence
 {
 	public @S(10) @DOC("dir.mspx") CMD_Keyword DIR = new CMD_Keyword("dir");
 	public @S(20) @OPT TokenList<CMD_Dir_Option> opts;
-	public @S(30) TokenList<CMD_Argument> file;
+	public @S(30) @OPT TokenList<CMD_Argument> file;
 	
 	public static class CMD_Dir_Option extends TokenChooser
 	{

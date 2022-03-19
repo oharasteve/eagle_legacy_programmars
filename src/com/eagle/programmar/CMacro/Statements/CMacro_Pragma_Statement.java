@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.CMacro.Statements;
 
-import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Identifier;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Number;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
@@ -12,6 +13,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -28,11 +30,18 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		public @CHOICE static class CMacro_Pragma_Warning extends TokenSequence
 		{
 			public @S(10) CMacro_Keyword WARNING = new CMacro_Keyword("warning");
-			public @S(20) PunctuationLeftParen leftParen;
+			public @S(20) @OPT PunctuationLeftParen leftParen;
 			public @S(30) CMacro_Keyword DISABLE = new CMacro_Keyword("disable");
-			public @S(40) PunctuationColon colon;
-			public @S(50) TokenList<CMacro_Number> codes;
-			public @S(60) PunctuationRightParen rightParen;
+			public @S(40) @OPT PunctuationColon colon;
+			public @S(50) TokenList<CMacro_PragmaCode> codes;
+			public @S(60) @OPT PunctuationRightParen rightParen;
+			
+			public static class CMacro_PragmaCode extends TokenChooser
+			{
+				public @CHOICE PunctuationComma comma;
+				public @CHOICE CMacro_Number number;	// 1718 1501 0612 3021 etc etc
+				public @CHOICE CMacro_Identifier code;	// CS0618 and CS1718
+			}
 		}
 		
 		public @CHOICE static class CMacro_Pragma_Pack extends TokenSequence

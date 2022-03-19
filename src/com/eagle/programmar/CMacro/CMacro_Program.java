@@ -6,9 +6,6 @@ package com.eagle.programmar.CMacro;
 import com.eagle.core.EagleLanguage;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.parsers.EagleOverrideManager;
-import com.eagle.programmar.CMacro.Statements.CMacro_IfDef_Statement.CMacro_IfDefElement;
-import com.eagle.programmar.CMacro.Statements.CMacro_If_Statement.CMacro_IfElement;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.programmar.CMacro.Terminals.CMacro_MultiLineText;
@@ -32,13 +29,13 @@ public class CMacro_Program extends EagleLanguage
 		return "http://gcc.gnu.org/onlinedocs/cpp/";
 	}
 	
-	@Override
-	public void findClassOverrides(EagleOverrideManager overrideManager)
-	{
-		// Instead of creating a bunch of real C statements inside a #if, just use this simple class
-		overrideManager.override(CMacro_IfElement.class, CMacro_Element.class);
-		overrideManager.override(CMacro_IfDefElement.class, CMacro_Element.class);
-	}
+//	@Override
+//	public void findClassOverrides(EagleOverrideManager overrideManager)
+//	{
+//		// Instead of creating a bunch of real C statements inside a #if, just use this simple class
+//		overrideManager.override(CMacro_IfElement.class, CMacro_Element.class);
+//		overrideManager.override(CMacro_IfDefElement.class, CMacro_Element.class);
+//	}
 	
 	public @S(10) TokenList<CMacro_Element> elements;
 	

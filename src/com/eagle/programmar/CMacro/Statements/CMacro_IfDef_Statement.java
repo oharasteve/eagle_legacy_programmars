@@ -4,9 +4,7 @@
 package com.eagle.programmar.CMacro.Statements;
 
 import com.eagle.math.EagleValue;
-import com.eagle.preprocess.C.CMacro_Preprocess;
-import com.eagle.programmar.C.C_Program.C_StatementOrComment;
-import com.eagle.programmar.C.C_Syntax;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Expression;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_Element;
@@ -33,7 +31,7 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 	public @S(30) CMacro_Identifier_Reference ref;
 	public @S(40) @OPT CMacro_Comment comment1;
 	public @S(50) CMacro_EndOfLine eoln1;
-	public @S(60) @OPT TokenList<CMacro_IfDefElement> elements;
+	public @S(60) @OPT TokenList<CMacro_Element> elements;
 	public @S(70) @OPT TokenList<CMacro_IfDefElif> ifElif;
 	public @S(80) @OPT CMacro_IfDefElse ifElse;
 	public @S(90) @OPT CMacro_EndOfLine eoln2;
@@ -48,7 +46,7 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 		public @S(30) CMacro_Expression expr;
 		public @S(40) @OPT CMacro_Comment comment;
 		public @S(50) @OPT CMacro_EndOfLine eoln;
-		public @S(60) @OPT TokenList<CMacro_IfDefElement> elements;
+		public @S(60) @OPT TokenList<CMacro_Element> elements;
 	}
 
 	public static class CMacro_IfDefElse extends TokenSequence
@@ -58,7 +56,7 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 		public @S(30) CMacro_Keyword ELSE = new CMacro_Keyword("else");
 		public @S(40) @OPT CMacro_Comment comment;
 		public @S(50) CMacro_EndOfLine eoln2;
-		public @S(60) @OPT TokenList<CMacro_IfDefElement> elements;
+		public @S(60) @OPT TokenList<CMacro_Element> elements;
 	}
 	
 	public static class CMacro_IfDefCPlusPlus extends TokenSequence
@@ -75,7 +73,7 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 		public @S(100) CMacro_Keyword ENDIF1 = new CMacro_Keyword("endif");
 		public @S(110) CMacro_EndOfLine eoln3;
 		
-		public @S(120) @OPT TokenList<CMacro_IfDefElement> elements;
+		public @S(120) @OPT TokenList<CMacro_Element> elements;
 
 		public @S(130) CMacro_Punctuation pound3 = new CMacro_Punctuation('#'); 
 		public @S(140) @DOC("Ifdef.html") CMacro_Keyword ifdef2 = new CMacro_Keyword("ifdef");
@@ -89,10 +87,10 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 	}
 	
 	// Need this for switching languages from CMacro to C
-	public static class CMacro_IfDefElement extends TokenSequence
-	{
-		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
-	}
+//	public static class CMacro_IfDefElement extends TokenSequence
+//	{
+//		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
+//	}
 	
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
@@ -102,7 +100,7 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 		boolean isIfDef = IFDEFNDEF.toString().equals(IFDEF);
 		EagleValue value = preprocessor._symbolTable.findSymbol(macroName);
 		
-		TokenList<CMacro_IfDefElement> whichElements;
+		TokenList<CMacro_Element> whichElements;
 		if (value == null ^ isIfDef)	// XOR
 		{
 			whichElements = elements;
@@ -115,12 +113,12 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 		
 		for (AbstractToken token : whichElements._elements)
 		{
-			if (token instanceof CMacro_IfDefElement)
-			{
-				CMacro_IfDefElement element = (CMacro_IfDefElement) token;
-				preprocessor.preprocessCStatement(element.element);
-			}
-			else	// Class override for CMacro_Program
+			if (token instanceof CMacro_Element)
+//			{
+//				CMacro_Element element = (CMacro_Element) token;
+//				preprocessor.preprocessCStatement(element.element);
+//			}
+//			else	// Class override for CMacro_Program
 			{
 				CMacro_Element element = (CMacro_Element) token;
 				preprocessor.preprocessCMacroElement(preprocessor._parser, element);

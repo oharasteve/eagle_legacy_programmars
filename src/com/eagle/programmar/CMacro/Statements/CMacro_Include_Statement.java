@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.preprocess.C.CMacro_Preprocess;
+import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_IncludeSys;

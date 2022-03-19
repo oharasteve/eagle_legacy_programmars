@@ -11,6 +11,7 @@ import com.eagle.programmar.CMacro.Statements.CMacro_If_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_Include_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_LineNumber_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
+import com.eagle.programmar.CMacro.Statements.CMacro_Region_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_Undef_Statement;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
@@ -36,6 +37,7 @@ public class CMacro_StatementOrComment extends TokenSequence
 		public @CHOICE CMacro_Include_Statement includeStatement;
 		public @CHOICE CMacro_LineNumber_Statement lineNumberStatement;
 		public @CHOICE CMacro_Pragma_Statement pragmaStatement;
+		public @CHOICE CMacro_Region_Statement regionStatement;
 		public @CHOICE CMacro_Undef_Statement undefStatement;
 	}
 }

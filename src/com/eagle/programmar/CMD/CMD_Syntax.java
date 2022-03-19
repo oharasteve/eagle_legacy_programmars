@@ -4,7 +4,6 @@
 package com.eagle.programmar.CMD;
 
 import com.eagle.core.EagleSyntax;
-import com.eagle.programmar.CMD.CMD_Command.CMD_Statement;
 
 public class CMD_Syntax extends EagleSyntax
 {
@@ -20,8 +19,11 @@ public class CMD_Syntax extends EagleSyntax
 		_continuationChar = "^";	// Perhaps a backslash (\) on some systems?
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", ">&", "||" };
+		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", "||" };
 		
-		findFirstWords(CMD_Statement.class);
+		// findFirstWords(CMD_Statement.class);
+		// addReservedWord("for");
+		// addReservedWord("if");
+		// addReservedWord("rem");
 	}
 }

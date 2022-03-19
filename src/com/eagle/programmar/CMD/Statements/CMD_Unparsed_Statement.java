@@ -16,7 +16,7 @@ import com.eagle.tokens.UnparsedElement;
 
 public class CMD_Unparsed_Statement extends UnparsedElement
 {
-	static String[] PUNCTS = new String[] { "%", ".", ",", "=", "(", ")", "[", "]" };
+	static String[] PUNCTS = new String[] { "%", ".", ",", "=", "(", ")", "[", "]", "\\", ";" };
 
 	@Override
 	public @SKIP TokenList<? extends AbstractToken> unparsedPieces()
