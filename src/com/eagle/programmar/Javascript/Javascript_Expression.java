@@ -3,7 +3,8 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionBody;
+import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation;
+import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_HexNumber;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
@@ -16,6 +17,7 @@ import com.eagle.programmar.Javascript.Terminals.Javascript_RegularExpression;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -238,11 +240,21 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(40) @OPT TokenList<Javascript_Comment> comments;
 		public @S(50) PunctuationRightBrace rightBrace;
 		
-		public static class Javascript_DictionaryItem extends TokenSequence
+		public static class Javascript_DictionaryItem extends TokenChooser
 		{
-			public @S(10) Javascript_Expression field;
-			public @S(20) PunctuationColon colon;
-			public @S(30) Javascript_Expression expr;
+			public @CHOICE static class Javascript_DictionaryFunction extends TokenSequence
+			{
+				public @S(10) @OPT TokenList<Javascript_Comment> comments;
+				public @S(20) @OPT Javascript_Keyword GET = new Javascript_Keyword("get");
+				public @S(30) Javascript_FunctionImplementation function;
+			}
+			
+			public @CHOICE static class Javascript_DictionaryData extends TokenSequence
+			{
+				public @S(10) Javascript_Expression field;
+				public @S(20) PunctuationColon colon;
+				public @S(30) Javascript_Expression expr;
+			}
 		}
 	}
 

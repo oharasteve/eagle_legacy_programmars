@@ -10,6 +10,7 @@ public class Javascript_Type extends TokenChooser
 {
 	public @CHOICE Javascript_KeywordChoice buitinType = new Javascript_KeywordChoice(
 			"const",
+			"let",
 			"var",
 			"Array",
 			"Date",
