@@ -50,7 +50,8 @@ public class SQL_Function extends TokenSequence
 				"COUNT",
 				"CURRENT_TIMESTAMP",
 				"LENGTH",
-				"MIN", 
+				"MIN",
+				"RUN_METRIC",
 				"SUBSTRING",
 				"SYS_EXTRACT_UTC",
 				"SYS_GUID"

@@ -44,6 +44,6 @@ public class JavaP_ClassName extends TokenChooser
 	public @CHOICE static class JavaP_ClassNameNoL extends TokenSequence
 	{
 		public @S(10) JavaP_Identifier identifier;
-		public @S(20) PunctuationSemicolon semicolon;
+		public @S(20) @OPT PunctuationSemicolon semicolon;
 	}
 }

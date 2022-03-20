@@ -31,7 +31,8 @@ public class SQL_SelectStatement extends TokenSequence
 		public @CHOICE static class SQL_SelectExpression extends TokenSequence
 		{
 			public @S(10) SQL_Expression what;
-			public @S(20) SQL_Identifier_Reference name;
+			public @S(20) @OPT SQL_Keyword AS = new SQL_Keyword("AS");
+			public @S(30) SQL_Identifier_Reference name;
 		}
 	}
 	

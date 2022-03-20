@@ -5,6 +5,7 @@ package com.eagle.programmar.Python;
 
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Terminals.Python_BackQuote;
+import com.eagle.programmar.Python.Terminals.Python_BinaryNumber;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
@@ -37,9 +38,10 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Python_OctalNumber octal;
-	public @P(20) Python_HexNumber hex;
-	public @P(30) Python_Number number;
+	public @P(10) Python_BinaryNumber binary;
+	public @P(20) Python_OctalNumber octal;
+	public @P(30) Python_HexNumber hex;
+	public @P(40) Python_Number number;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.
@@ -83,7 +85,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 	
-	public static @P(120) class Python_Braces extends PrimaryOperator
+	public static @P(120) class Python_BracesColons extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT Python_EndOfLine eoln1;
@@ -113,6 +115,31 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 				public @S(10) PunctuationComma comma;
 				public @S(20) @OPT TokenList<Python_Comment> comment;
 				public @S(30) Python_DictionaryElement element;
+			}
+		}
+	}
+
+	public static @P(125) class Python_BracesNoColons extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT Python_EndOfLine eoln1;
+		public @S(30) @SYNTAX(Python_Multiline_Syntax.class) Python_Set set;
+		public @S(40) @OPT Python_EndOfLine eoln2;
+		public @S(50) PunctuationRightBrace rightBrace;
+		
+		public static class Python_Set extends TokenSequence
+		{
+			public @S(10) @OPT TokenList<Python_Comment> comment1;
+			public @S(20) Python_Expression element;
+			public @S(30) @OPT TokenList<Python_MoreSetElement> nextElement;
+			public @S(40) @OPT PunctuationComma comma;
+			public @S(50) @OPT TokenList<Python_Comment> comment2;
+			
+			public static class Python_MoreSetElement extends TokenSequence
+			{
+				public @S(10) PunctuationComma comma;
+				public @S(20) @OPT TokenList<Python_Comment> comment;
+				public @S(30) Python_Expression element;
 			}
 		}
 	}
@@ -369,7 +396,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(400) class Python_Assignment_Expression extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression leftVar = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=");
+		public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=", ":=");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

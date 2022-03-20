@@ -46,6 +46,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(40) Java_Number number;
 	public @P(50) Java_Literal literal;
 	public @P(60) Java_Character_Literal characters;
+	public @P(70) Java_Annotation annotation;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.

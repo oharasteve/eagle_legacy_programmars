@@ -73,10 +73,10 @@ public class SQL_CreateStatement extends TokenChooser
 					public @S(20) SQL_Expression value;
 				}
 				
-				public @CHOICE static class SQL_FieldOnUpdate extends TokenSequence
+				public @CHOICE static class SQL_FieldOnAction extends TokenSequence
 				{
 					public @S(10) SQL_Keyword ON = new SQL_Keyword("ON");
-					public @S(20) SQL_Keyword UPDATE = new SQL_Keyword("UPDATE");
+					public @S(20) SQL_KeywordChoice UPDATE = new SQL_KeywordChoice("UPDATE", "DELETE");
 					public @S(30) SQL_Expression value;
 				}
 				
@@ -103,6 +103,19 @@ public class SQL_CreateStatement extends TokenChooser
 				{
 					public @S(10) SQL_Keyword COLLATE = new SQL_Keyword("COLLATE");
 					public @S(20) SQL_KeywordChoice UTF = new SQL_KeywordChoice("utf8_unicode_ci");
+				}
+				
+				public @CHOICE static class SQL_FieldOnDelete extends TokenSequence
+				{
+					public @S(10) SQL_Keyword REFERENCES = new SQL_Keyword("REFERENCES");
+					public @S(20) SQL_Expression value;
+				}
+				
+				public @CHOICE static class SQL_FieldDeferrable extends TokenSequence
+				{
+					public @S(10) SQL_Keyword DEFERRABLE = new SQL_Keyword("DEFERRABLE");
+					public @S(20) SQL_Keyword INITIALLY = new SQL_Keyword("INITIALLY");
+					public @S(30) SQL_KeywordChoice DEFERRED = new SQL_KeywordChoice("IMMEDIATE", "DEFERRED");
 				}
 			}
 		}

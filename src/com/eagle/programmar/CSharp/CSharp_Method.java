@@ -73,5 +73,11 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 			public @S(30) @OPT TokenList<CSharp_Comment> comment2;
 			public @S(40) @OPT @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon2;
 		}
+		
+		public @CHOICE static class CSharp_MethodLambda extends TokenSequence
+		{
+			public @S(10) CSharp_Punctuation equalsGreater = new CSharp_Punctuation("=>");
+			public @S(20) CSharp_Expression returnValue;
+		}
 	}
 }

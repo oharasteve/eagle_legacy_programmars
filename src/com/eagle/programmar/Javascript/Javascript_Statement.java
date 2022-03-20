@@ -8,6 +8,7 @@ import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ForStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_IfStatement;
+import com.eagle.programmar.Javascript.Statements.Javascript_ImportStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ReturnStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_SwitchStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ThrowStatement;
@@ -65,6 +66,7 @@ public class Javascript_Statement extends TokenSequence
 		public @CHOICE Javascript_DoStatement doStatement;
 		public @CHOICE Javascript_ForStatement forStatement;
 		public @CHOICE Javascript_IfStatement ifStatement;
+		public @CHOICE Javascript_ImportStatement importStatement;
 		public @CHOICE Javascript_ReturnStatement returnStatement;
 		public @CHOICE Javascript_SwitchStatement switchStatement;
 		public @CHOICE Javascript_ThrowStatement throwStatement;

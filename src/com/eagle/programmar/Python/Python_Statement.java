@@ -22,6 +22,7 @@ import com.eagle.programmar.Python.Statements.Python_PassStatement;
 import com.eagle.programmar.Python.Statements.Python_RaiseStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
 import com.eagle.programmar.Python.Statements.Python_TryStatement;
+import com.eagle.programmar.Python.Statements.Python_TypeDeclaration;
 import com.eagle.programmar.Python.Statements.Python_WhileStatement;
 import com.eagle.programmar.Python.Statements.Python_WithStatement;
 import com.eagle.programmar.Python.Statements.Python_YieldStatement;
@@ -91,6 +92,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_RaiseStatement raiseStatement;
 		public @CHOICE Python_ReturnStatement returnStatement;
 		public @CHOICE Python_TryStatement tryStatement;
+		public @CHOICE Python_TypeDeclaration typeDeclaration;
 		public @CHOICE Python_WhileStatement whileStatement;
 		public @CHOICE Python_WithStatement withStatement;
 		public @CHOICE Python_YieldStatement yieldStatement;
