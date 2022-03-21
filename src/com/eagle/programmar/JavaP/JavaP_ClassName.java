@@ -6,10 +6,12 @@ package com.eagle.programmar.JavaP;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Identifier;
 import com.eagle.programmar.JavaP.Terminals.JavaP_LClassName;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Punctuation;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.tokens.punctuation.PunctuationSlash;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class JavaP_ClassName extends TokenChooser
@@ -43,7 +45,7 @@ public class JavaP_ClassName extends TokenChooser
 	
 	public @CHOICE static class JavaP_ClassNameNoL extends TokenSequence
 	{
-		public @S(10) JavaP_Identifier identifier;
+		public @S(10) SeparatedList<JavaP_Identifier, PunctuationSlash> identifier;
 		public @S(20) @OPT PunctuationSemicolon semicolon;
 	}
 }
