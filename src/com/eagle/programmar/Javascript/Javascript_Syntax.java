@@ -4,6 +4,7 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 
 public class Javascript_Syntax extends EagleSyntax
 {
@@ -18,6 +19,7 @@ public class Javascript_Syntax extends EagleSyntax
 		_isCaseSensitive = true;
 		_continuationChar = null;
 		_extraCharacters = "_";
+		_commentInstance = new Javascript_Comment();
 		_punctuationExceptions = new String[] {
 				"/*", "!=", "<=", "==", ">=", "//", "&&", "||", "===", "!==", "!===", "=>", "</" };
 		

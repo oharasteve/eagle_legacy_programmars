@@ -17,17 +17,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Javascript_ImportStatement extends TokenSequence
 {
 	public @S(10) @NEWLINE Javascript_Keyword IMPORT = new Javascript_Keyword("import");
-	public @S(20) PunctuationLeftBrace leftBrace;
-	public @S(30) SeparatedList<Javascript_ImportElement, PunctuationComma> ids;
-	public @S(40) PunctuationRightBrace rightBrace;
-	public @S(50) Javascript_Keyword FROM = new Javascript_Keyword("from");
-	public @S(60) Javascript_Literal where;
-	public @S(70) @NOSPACE @OPT PunctuationSemicolon semicolon;
+	public @S(20) SeparatedList<Javascript_ImportElement, PunctuationComma> ids;
+	public @S(30) @NOSPACE @OPT PunctuationSemicolon semicolon;
 	
 	public static class Javascript_ImportElement extends TokenSequence
 	{
 		public @S(10) Javascript_ImportWhat what;
 		public @S(20) @OPT Javascript_ImportAs importAs;
+		public @S(30) @OPT Javascript_ImportFrom importFrom;
 		
 		public static class Javascript_ImportWhat extends TokenChooser
 		{
@@ -46,6 +43,12 @@ public class Javascript_ImportStatement extends TokenSequence
 		{
 			public @S(10) Javascript_Keyword AS = new Javascript_Keyword("as");
 			public @S(20) Javascript_Identifier_Reference myId;
+		}
+		
+		public static class Javascript_ImportFrom extends TokenSequence
+		{
+			public @S(10) Javascript_Keyword FROM = new Javascript_Keyword("from");
+			public @S(20) Javascript_Literal where;
 		}
 	}
 }

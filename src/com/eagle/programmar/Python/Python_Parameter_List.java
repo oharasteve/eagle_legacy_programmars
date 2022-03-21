@@ -27,7 +27,7 @@ public class Python_Parameter_List extends TokenSequence
 	public static class Python_Params extends TokenSequence
 	{
 		public @S(10) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-		public @S(20) @OPT Python_Expression expr;
+		public @S(20) Python_Expression expr;
 		public @S(30) @OPT Python_ParamType type;
 		public @S(40) @OPT Python_InitValue initValue;
 		public @S(50) @OPT TokenList<Python_MoreParams> moreParams;
@@ -43,8 +43,9 @@ public class Python_Parameter_List extends TokenSequence
 			public @S(10) @NOSPACE PunctuationComma comma;
 			public @S(20) @OPT Python_Comment comment;
 			public @S(30) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-			public @S(40) @OPT Python_Expression expr;
-			public @S(50) @OPT Python_InitValue initValue;
+			public @S(40) Python_Expression expr;
+			public @S(50) @OPT Python_ParamType type;
+			public @S(60) @OPT Python_InitValue initValue;
 			
 			public static class Python_InitValue extends TokenSequence
 			{

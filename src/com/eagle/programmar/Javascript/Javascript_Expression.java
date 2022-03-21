@@ -64,6 +64,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	}
 	
 	// See Javascript_LambdaFunction which also has @FIRST
+	// Problem is (int)x and (num)/x. Ambiguous for the parser. It needs a real backtracker.
 	public static @FIRST @P(110) class Javascript_CastExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -206,6 +207,7 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(40) Javascript_ParenthesizedExpression arguments;
 	}
 
+ 	// Problem is (int)x and (num)/x. Ambiguous for the parser. It needs a real backtracker.
 	public static @P(310) class Javascript_Parenthesized_Expression extends PrimaryOperator
 	{
 		public @S(10) Javascript_ParenthesizedExpression expr;
@@ -245,7 +247,7 @@ public class Javascript_Expression extends PrecedenceChooser
 			public @CHOICE static class Javascript_DictionaryFunction extends TokenSequence
 			{
 				public @S(10) @OPT TokenList<Javascript_Comment> comments;
-				public @S(20) @OPT Javascript_Keyword GET = new Javascript_Keyword("get");
+				public @S(20) @OPT Javascript_KeywordChoice prefix = new Javascript_KeywordChoice("get", "static");
 				public @S(30) Javascript_FunctionImplementation function;
 			}
 			

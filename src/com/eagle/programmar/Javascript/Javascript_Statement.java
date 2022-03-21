@@ -48,7 +48,7 @@ public class Javascript_Statement extends TokenSequence
 			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 		}
 		
-		public @CHOICE static class Javascript_ExpressionStmt extends TokenSequence
+		public @LAST static class Javascript_ExpressionStmt extends TokenSequence
 		{
 			public @S(10) @NEWLINE Javascript_Expression expression;
 			public @S(20) @OPT TokenList<Javascript_MoreStatements> moreStatements;

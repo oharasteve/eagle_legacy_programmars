@@ -4,6 +4,7 @@
 package com.eagle.programmar.Javascript.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.TerminalLiteralToken;
 
 public class Javascript_Literal extends TerminalLiteralToken
@@ -11,6 +12,15 @@ public class Javascript_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
+		if (findStart(lines) == FOUND.EOF) return false;
+		EagleLineReader rec = lines.get(_currentLine);
+		char ch = rec.charAt(_currentChar);
+		if (ch == '`')
+		{
+			// backticks can span multiple lines, and can inject values with $(x) inside
+			return genericLiteral(lines, "`", true, '\\', false, true);
+		}
+
 		return genericLiteral(lines, "\"'", true, '\\', false, false);
 	}
 }

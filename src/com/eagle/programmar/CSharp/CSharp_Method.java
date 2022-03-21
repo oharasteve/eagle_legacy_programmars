@@ -29,7 +29,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 	public @S(60) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
 	public @S(70) @OPT CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
 	public @S(80) CSharp_Method_Definition methodName;
-	public @S(90) CSharp_MethodParameters parameters;
+	public @S(90) @OPT CSharp_MethodParameters parameters;
 	public @S(100) @NEWLINE CSharp_MethodBody body;
 	public @S(110) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 

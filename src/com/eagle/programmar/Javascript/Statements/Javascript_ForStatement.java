@@ -9,6 +9,7 @@ import com.eagle.programmar.Javascript.Javascript_Statement;
 import com.eagle.programmar.Javascript.Javascript_Type;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
@@ -41,7 +42,8 @@ public class Javascript_ForStatement extends TokenChooser
 		public @S(110) @OPT PunctuationComma comma;
 		public @S(120) @OPT Javascript_Expression extraIncrement;
 		public @S(130) @NOSPACE PunctuationRightParen rightParen;
-		public @S(140) Javascript_Statement action;
+		public @S(140) @OPT TokenList<Javascript_Comment> comments;
+		public @S(150) Javascript_Statement action;
 
 		public static class Javascript_ForLoopVariable extends TokenChooser
 		{
@@ -68,7 +70,8 @@ public class Javascript_ForStatement extends TokenChooser
 		public @S(60) Javascript_InOrColon inOrColon;
 		public @S(70) Javascript_Expression collection;
 		public @S(80) PunctuationRightParen rightParen;
-		public @S(90) Javascript_Statement action;
+		public @S(90) @OPT TokenList<Javascript_Comment> comments;
+		public @S(100) Javascript_Statement action;
 		
 		public static class Javascript_ForVariables extends TokenSequence
 		{

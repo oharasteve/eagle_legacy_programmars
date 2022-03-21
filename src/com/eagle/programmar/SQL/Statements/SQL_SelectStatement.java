@@ -19,7 +19,7 @@ public class SQL_SelectStatement extends TokenSequence
 	public @S(10) @DOC("sql_select.asp") SQL_Keyword SELECT = new SQL_Keyword("SELECT");
 	public @S(20) SeparatedList<SQL_SelectWhat,PunctuationComma> what;
 	public @S(30) @OPT SQL_SelectInto into;
-	public @S(40) SQL_SelectFrom from;
+	public @S(40) @OPT SQL_SelectFrom from;
 	public @S(50) @OPT SQL_SelectWhere where;
 	public @S(60) @OPT SQL_SelectReadOnly readOnly;
 	public @S(70) PunctuationSemicolon semicolon;
