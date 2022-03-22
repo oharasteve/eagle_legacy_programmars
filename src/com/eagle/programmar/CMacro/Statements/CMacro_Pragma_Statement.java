@@ -7,6 +7,7 @@ import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Identifier;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
+import com.eagle.programmar.CMacro.Terminals.CMacro_KeywordChoice;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Number;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.TokenChooser;
@@ -31,7 +32,7 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		{
 			public @S(10) CMacro_Keyword WARNING = new CMacro_Keyword("warning");
 			public @S(20) @OPT PunctuationLeftParen leftParen;
-			public @S(30) CMacro_Keyword DISABLE = new CMacro_Keyword("disable");
+			public @S(30) CMacro_KeywordChoice DISABLE = new CMacro_KeywordChoice("disable", "restore");
 			public @S(40) @OPT PunctuationColon colon;
 			public @S(50) TokenList<CMacro_PragmaCode> codes;
 			public @S(60) @OPT PunctuationRightParen rightParen;

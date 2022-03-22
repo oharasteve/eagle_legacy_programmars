@@ -4,6 +4,7 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
@@ -50,6 +51,7 @@ public class CSharp_Program extends EagleLanguage
 		"protected",
 		"public",
 		"readonly",
+		"ref",
 		"sealed",
 		"static",
 		"unsafe",
@@ -57,7 +59,7 @@ public class CSharp_Program extends EagleLanguage
 	}; 
 
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comments1;
-	public @S(20) @BLANKLINE TokenList<CSharp_NamespaceOrClassEntry> myClasses;
+	public @S(20) @OPT @BLANKLINE TokenList<CSharp_NamespaceOrClassEntry> myClasses;
 	
 	public static class CSharp_NamespaceOrClassEntry extends TokenChooser
 	{
@@ -101,5 +103,5 @@ public class CSharp_Program extends EagleLanguage
 		public @CHOICE @NEWLINE CSharp_Class myClass;
 		public @CHOICE @NEWLINE CSharp_Enum enumeration;
 		public @CHOICE @NEWLINE CSharp_Method method;
-	}
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;	}
 }

@@ -16,10 +16,12 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -208,10 +210,19 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(30) @NEWLINE CSharp_MethodBody body;
 	}
 
+	public static @P(320) class CSharp_LambdaParameters extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<CSharp_Variable, PunctuationComma> vars;
+		public @S(30) PunctuationRightParen rightParen;
+		public @S(40) CSharp_Punctuation lambda = new CSharp_Punctuation("=>");
+		public @S(50) CSharp_Statement stmt;
+	}
+	
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(320) class CSharp_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class CSharp_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression expr = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE PunctuationLeftBracket leftBracket;
@@ -219,56 +230,56 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(40) @NOSPACE PunctuationRightBracket rightBracket;
 	}
 	
-	public static @P(330) class CSharp_NamespaceExpression extends PrecedenceOperator
+	public static @P(510) class CSharp_NamespaceExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
 		public @S(30) @NOSPACE CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(340) class CSharp_SubfieldExpression extends PrecedenceOperator
+	public static @P(520) class CSharp_SubfieldExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE PunctuationPeriod dot;
 		public @S(30) @NOSPACE CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(350) class CSharp_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(530) class CSharp_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("*", "/", "%");
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(360) class CSharp_AdditiveExpression extends PrecedenceOperator
+	public static @P(540) class CSharp_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("+", "-");
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(370) class CSharp_ShiftExpression extends PrecedenceOperator
+	public static @P(550) class CSharp_ShiftExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("<<", ">>", ">>>");
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(380) class CSharp_RelationalExpression extends PrecedenceOperator
+	public static @P(560) class CSharp_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(390) class CSharp_InstanceOfExpression extends PrecedenceOperator
+	public static @P(570) class CSharp_InstanceOfExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression expr = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_Keyword instanceOperator = new CSharp_Keyword("is");
 		public @S(30) CSharp_Type type;
 	}
 
-	public static @P(400) class CSharp_EqualityExpression extends PrecedenceOperator
+	public static @P(580) class CSharp_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_EqualityOperator equalityOperator;
@@ -281,42 +292,42 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 
-	public static @P(410) class CSharp_AndExpression extends PrecedenceOperator
+	public static @P(590) class CSharp_AndExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_Punctuation bitwiseAndOperator = new CSharp_Punctuation('&');
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class CSharp_ExclusiveOrExpression extends PrecedenceOperator
+	public static @P(600) class CSharp_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_Punctuation bitwiseXOrOperator = new CSharp_Punctuation('^');
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class CSharp_InclusiveOrExpression extends PrecedenceOperator
+	public static @P(610) class CSharp_InclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_Punctuation bitwiseOrOperator = new CSharp_Punctuation('|');
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class CSharp_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(620) class CSharp_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_Punctuation andOperator = new CSharp_Punctuation("&&");
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(450) class CSharp_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(630) class CSharp_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CSharp_Punctuation orOperator = new CSharp_Punctuation("||");
 		public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class CSharp_TrueFalseExpression extends PrecedenceOperator
+	public static @P(640) class CSharp_TrueFalseExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) CSharp_Punctuation questionMark = new CSharp_Punctuation('?');
@@ -325,7 +336,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(50) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
-	public static @P(470) class CSharp_AssignmentExpression extends PrecedenceOperator
+	public static @P(650) class CSharp_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice(
@@ -333,7 +344,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(30) CSharp_Expression expr;
 	}
 
-	public static @P(480) class CSharp_LambdaExpression extends PrecedenceOperator
+	public static @P(660) class CSharp_LambdaExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) CSharp_Punctuation lambda = new CSharp_Punctuation("=>");

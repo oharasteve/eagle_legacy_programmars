@@ -23,6 +23,15 @@ public class CSharp_Literal extends TerminalLiteralToken
 			return false;
 		}
 		
+		// An "interpolated" string can have {{ and }} in it
+		if (rec.charAt(_currentChar) == '$')
+		{
+			lines.setCurrentChar(_currentChar + 1);
+			if (genericLiteral(lines, "\"", true, '\\', false, false)) return true;
+			lines.setCurrentChar(_currentChar);
+			return false;
+		}
+		
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 }

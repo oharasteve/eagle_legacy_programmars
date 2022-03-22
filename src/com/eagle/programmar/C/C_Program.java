@@ -6,6 +6,8 @@ package com.eagle.programmar.C;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.C.Terminals.C_Comment;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -103,6 +105,7 @@ public class C_Program extends EagleLanguage
 		public @CHOICE C_Function function;
 		public @CHOICE C_Statement statement;
 		public @CHOICE C_Type type;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 		
 		public @CHOICE static class C_EnumStatement extends TokenSequence
 		{

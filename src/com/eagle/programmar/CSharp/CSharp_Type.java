@@ -22,6 +22,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	public @S(10) CSharp_TypeName typeName;
 	public @S(20) @OPT CSharp_GenericType genericType;
 	public @S(30) @OPT TokenList<CSharp_ArrayType> arrayTypes;
+	public @S(40) @OPT CSharp_Punctuation questionMark = new CSharp_Punctuation("?");	// Nullable
 	
 	public static class CSharp_ArrayType extends TokenSequence
 	{

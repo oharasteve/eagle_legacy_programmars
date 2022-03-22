@@ -11,6 +11,6 @@ public class CSharp_HexNumber extends TerminalHexNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericHex(lines, "0x", "Ll");
+		return genericHex(lines, "0x", "LlUu");
 	}
 }
