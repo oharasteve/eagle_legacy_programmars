@@ -8,6 +8,7 @@ import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Comment;
+import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CPlus.Symbols.CPlus_Current_Class_Reference;
 import com.eagle.tokens.TokenChooser;
@@ -19,15 +20,16 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 {
 	public @S(10) CPlus_MethodTypeAndName typeAndName;
 	public @S(20) C_Function_ParameterDefs parameters;
-	public @S(30) @OPT TokenList<C_Comment> comments2;
-	public @S(40) C_FunctionBody body;
+	public @S(30) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
+	public @S(40) @OPT TokenList<C_Comment> comments2;
+	public @S(50) C_FunctionBody body;
 
 	public static class CPlus_MethodTypeAndName extends TokenChooser
 	{
 		public @CHOICE static class CPlus_MethodWithType extends TokenSequence
 		{
 			public @S(10) C_Type type;
-			public @S(20) TokenList<CPlus_NamespaceQualifier> nameSpaces;
+			public @S(20) @OPT TokenList<CPlus_NamespaceQualifier> nameSpaces;
 			public @S(30) C_Identifier_Reference methodName;
 		}
 		

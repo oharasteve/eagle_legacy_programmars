@@ -29,6 +29,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	
 	public static class CPlus_ClassElement extends TokenChooser
 	{
+		public @CHOICE CPlus_Method method;
 		public @LAST C_StatementOrComment c_stmt;
 	}
 	
