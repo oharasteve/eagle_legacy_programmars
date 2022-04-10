@@ -31,12 +31,12 @@ public class CPlus_Program extends C_Program
 
 	public static class CPlus_Element extends TokenChooser
 	{
-		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
+		public @FIRST CPlus_Namespace namespace;
 		public @CHOICE @SYNTAX(C_Syntax.class) C_Comment comment;
 		public @CHOICE CPlus_Class classDefinition;
 		public @CHOICE CPlus_Using using;
-		public @CHOICE CPlus_Namespace namespace;
 		public @CHOICE CPlus_Method method;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
 	}
 }

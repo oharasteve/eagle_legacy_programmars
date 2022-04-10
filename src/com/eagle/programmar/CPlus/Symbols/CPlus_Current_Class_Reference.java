@@ -23,7 +23,7 @@ public class CPlus_Current_Class_Reference extends C_Identifier_Reference
 			{
 				CPlus_Class parentClass = (CPlus_Class) parent;
 				String parentClassName = parentClass.className.getValue();
-				// Can you declare a constructor for an outer class? I don't think so.
+				// Can't declare a constructor for an outer class
 				return parentClassName.equals(_id);
 			}
 			parent = parent.getParent();

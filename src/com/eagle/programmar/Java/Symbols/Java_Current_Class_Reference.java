@@ -23,14 +23,14 @@ public class Java_Current_Class_Reference extends Java_Identifier_Reference
 			{
 				Java_Class parentClass = (Java_Class) parent;
 				String parentClassName = parentClass.className.getValue();
-				// Can you declare a constructor for an outer class? I don't think so.
+				// Can't declare a constructor for an outer class
 				return parentClassName.equals(_id);
 			}
 			if (parent instanceof Java_Enum)
 			{
 				Java_Enum parentEnum = (Java_Enum) parent;
 				String parentEnumName = parentEnum.id.getValue();
-				// Can you declare a constructor for an outer class? I don't think so.
+				// Can't declare a constructor for an outer class
 				return parentEnumName.equals(_id);
 			}
 			parent = parent.getParent();

@@ -22,7 +22,7 @@ public class CSharp_Current_Class_Reference extends CSharp_Identifier_Reference
 			{
 				CSharp_Class parentClass = (CSharp_Class) parent;
 				String parentClassName = parentClass.className.getValue();
-				// Can you declare a constructor for an outer class? I don't think so.
+				// Can't declare a constructor for an outer class.
 				return parentClassName.equals(_id);
 			}
 			parent = parent.getParent();

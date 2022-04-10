@@ -17,18 +17,31 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CPlus_Class extends TokenSequence implements AbstractClass
 {
 	public @S(10) C_Keyword CLASS = new C_Keyword("class");
 	public @S(20) CPlus_Class_Definition className;
 	public @S(30) @OPT CPlus_ClassExtendList extendsClasses;
-	public @S(40) PunctuationLeftBrace leftBrace;
-	public @S(50) TokenList<CPlus_ClassElement> elements;
-	public @S(60) PunctuationRightBrace rightBrace;
+	public @S(40) CPlus_ClassBody body;
+	
+	public static class CPlus_ClassBody extends TokenChooser
+	{
+		public @CHOICE PunctuationSemicolon semicolon;
+		
+		public @CHOICE static class CPlus_ClassBlockBody extends TokenSequence
+		{
+			public @S(10) PunctuationLeftBrace leftBrace;
+			public @S(20) TokenList<CPlus_ClassElement> elements;
+			public @S(30) PunctuationRightBrace rightBrace;
+		}
+	}
 	
 	public static class CPlus_ClassElement extends TokenChooser
 	{
+		public @FIRST CPlus_Constructor constructor;
+		public @FIRST CPlus_Operator operator;
 		public @CHOICE CPlus_Method method;
 		public @LAST C_StatementOrComment c_stmt;
 	}

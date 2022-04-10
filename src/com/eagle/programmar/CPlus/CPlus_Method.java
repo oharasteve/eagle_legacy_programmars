@@ -10,7 +10,6 @@ import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
-import com.eagle.programmar.CPlus.Symbols.CPlus_Current_Class_Reference;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -26,18 +25,13 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 
 	public static class CPlus_MethodTypeAndName extends TokenChooser
 	{
+		public @CHOICE CPlus_Constructor constructor;
+		
 		public @CHOICE static class CPlus_MethodWithType extends TokenSequence
 		{
 			public @S(10) C_Type type;
 			public @S(20) @OPT TokenList<CPlus_NamespaceQualifier> nameSpaces;
 			public @S(30) C_Identifier_Reference methodName;
-		}
-		
-		public @CHOICE static class CPlus_MethodConstructor extends TokenSequence
-		{
-			public @S(10) TokenList<CPlus_NamespaceQualifier> nameSpaces;
-			public @S(20) @OPT C_Punctuation tilde = new C_Punctuation('~');
-			public @S(30) CPlus_Current_Class_Reference methodName;
 		}
 
 		public @LAST static class CPlus_MethodNoType extends TokenSequence
