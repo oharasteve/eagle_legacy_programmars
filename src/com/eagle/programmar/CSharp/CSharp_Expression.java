@@ -5,6 +5,8 @@ package com.eagle.programmar.CSharp;
 
 import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodBody;
 import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodParameters;
+import com.eagle.programmar.CSharp.CSharp_Statement.CSharp_StatementBlock;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
@@ -120,9 +122,10 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(170) class CSharp_MethodInvocation extends PrimaryOperator
 	{
 		public @S(10) CSharp_Variable methodName;
-		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(30) @OPT @NOSPACE CSharp_ArgumentList argList;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		public @S(20) @OPT CSharp_GenericType generic;
+		public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(40) @OPT @NOSPACE CSharp_ArgumentList argList;
+		public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
 	public static @P(180) class CSharp_PreIncrementExpression extends PrimaryOperator
@@ -169,7 +172,8 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	
 	public static @P(250) class CSharp_BuiltIn extends PrimaryOperator
 	{
-		public @S(10) CSharp_KeywordChoice builtIn = new CSharp_KeywordChoice("false", "true", "null", "this", "super");
+		public @S(10) CSharp_KeywordChoice builtIn = new CSharp_KeywordChoice(
+				"default", "false", "true", "null", "this", "super");
 	}
 	
 	public static @P(260) class CSharp_VariableExpression extends PrimaryOperator
@@ -210,13 +214,22 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(30) @NEWLINE CSharp_MethodBody body;
 	}
 
-	public static @P(320) class CSharp_LambdaParameters extends PrimaryOperator
+	public static @P(320) class CSharp_LambdaBlock extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<CSharp_Variable, PunctuationComma> vars;
 		public @S(30) PunctuationRightParen rightParen;
 		public @S(40) CSharp_Punctuation lambda = new CSharp_Punctuation("=>");
-		public @S(50) CSharp_Statement stmt;
+		public @S(50) CSharp_StatementBlock block;
+	}
+
+	public static @P(330) class CSharp_LambdaParameters extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<CSharp_Variable, PunctuationComma> vars;
+		public @S(30) PunctuationRightParen rightParen;
+		public @S(40) CSharp_Punctuation lambda = new CSharp_Punctuation("=>");
+		public @S(50) CSharp_Expression expr;
 	}
 	
 	///////////////////////////////////////////////
@@ -344,7 +357,14 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(30) CSharp_Expression expr;
 	}
 
-	public static @P(660) class CSharp_LambdaExpression extends PrecedenceOperator
+	public static @P(660) class CSharp_LambdaFunction extends PrecedenceOperator
+	{
+		public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) CSharp_Punctuation lambda = new CSharp_Punctuation("=>");
+		public @S(30) CSharp_StatementBlock block;
+	}
+
+	public static @P(670) class CSharp_LambdaExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) CSharp_Punctuation lambda = new CSharp_Punctuation("=>");

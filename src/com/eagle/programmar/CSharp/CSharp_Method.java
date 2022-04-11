@@ -5,8 +5,8 @@ package com.eagle.programmar.CSharp;
 
 import com.eagle.programmar.CSharp.CSharp_Statement.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
-import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;
+import com.eagle.programmar.CSharp.Symbols.CSharp_Type_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
@@ -70,7 +70,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 	public static class CSharp_MethodWhere extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword WHERE = new CSharp_Keyword("where");
-		public @S(20) CSharp_Identifier_Definition id;
+		public @S(20) CSharp_Type_Definition id;
 		public @S(30) PunctuationColon colon;
 		public @S(40) CSharp_Type type;
 	}

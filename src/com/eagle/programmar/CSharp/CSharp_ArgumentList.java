@@ -14,6 +14,7 @@ public class CSharp_ArgumentList extends TokenSequence
 	public @S(10) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out");
 	public @S(20) CSharp_Expression arg;
 	public @S(30) @OPT TokenList<CSharp_MoreArguments> moreArgs;
+	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	
 	public static class CSharp_MoreArguments extends TokenSequence
 	{
