@@ -34,7 +34,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	public static class CSharp_GenericType extends TokenSequence
 	{
 		public @S(10) CSharp_Punctuation lessThan = new CSharp_Punctuation('<');
-		public @S(20) @NOSPACE SeparatedList<CSharp_Type,PunctuationComma> subType;
+		public @S(20) @OPT @NOSPACE SeparatedList<CSharp_Type,PunctuationComma> subType;
 		public @S(30) @NOSPACE CSharp_Punctuation greaterThan = new CSharp_Punctuation('>');
 	}
 

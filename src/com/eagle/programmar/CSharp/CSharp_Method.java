@@ -55,7 +55,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 	public static class CSharp_MethodParameter extends TokenSequence
 	{
 		public @S(10) @OPT CSharp_Annotation annotation;
-		public @S(20) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out", "this");
+		public @S(20) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out", "this", "params");
 		public @S(30) CSharp_Type cstype;
 		public @S(40) CSharp_Variable_Definition id;
 		public @S(50) @OPT CSharp_Punctuation emptySubscript = new CSharp_Punctuation("[]");
