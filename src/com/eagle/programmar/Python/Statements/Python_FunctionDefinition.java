@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Parameter_List;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
@@ -24,6 +25,7 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 	public @S(30) @NOSPACE Python_Keyword DEF = new Python_Keyword("def");
 	public @S(40) Python_FunctionName fnName;
 	public @S(50) Python_Parameter_List params;
+	public @S(55) @OPT Python_ReturnType returnType;
 	public @S(60) @NOSPACE PunctuationColon colon;
 	public @S(70) @OPT TokenList<Python_Comment> comment;
 	public @S(80) Python_SingleOrMultiLineStatement defBody;
@@ -41,5 +43,11 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 	{
 		public @CHOICE Python_Function_Definition name;
 		public @CHOICE Python_Keyword INIT = new Python_Keyword("__init__");
+	}
+	
+	public static class Python_ReturnType extends TokenSequence
+	{
+		public @S(10) Python_Punctuation arrow = new Python_Punctuation("->");
+		public @S(20) Python_Type type;
 	}
 }

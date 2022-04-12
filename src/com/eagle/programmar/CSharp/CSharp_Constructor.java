@@ -10,6 +10,7 @@ import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MoreParameters;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Current_Class_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -21,6 +22,7 @@ public class CSharp_Constructor extends TokenSequence
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
 	public @S(30) @OPT TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(35) @OPT CSharp_Punctuation tilde = new CSharp_Punctuation("~");
 	public @S(40) CSharp_Current_Class_Reference constructorName;
 	public @S(50) PunctuationLeftParen leftParen;
 	public @S(60) @OPT CSharp_MethodParameter param;

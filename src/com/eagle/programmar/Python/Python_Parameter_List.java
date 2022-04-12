@@ -20,7 +20,7 @@ public class Python_Parameter_List extends TokenSequence
 {
 	public @S(10) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(20) @OPT Python_Comment comment;
-	public @S(30) @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_Params params;
+	public @S(30) @NOSPACE @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_Params params;
 	public @S(40) @OPT Python_EndOfLine eoln;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	

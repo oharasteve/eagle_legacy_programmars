@@ -65,6 +65,13 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Primary expressions
 	
+	public static @P(85) class Java_ColonColon extends PrimaryOperator
+	{
+		public @S(10) Java_Type left;
+		public @S(20) @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
+		public @S(30) @NOSPACE Java_Expression right;
+	}
+
 	public static @P(90) class Java_DotClass extends PrimaryOperator
 	{
 		public @S(10) Java_Type jtype;
@@ -270,12 +277,12 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(40) @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(305) class Java_ColonColon extends PrecedenceOperator
-	{
-		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
-		public @S(30) @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
-	}
+//	public static @P(305) class Java_ColonColon extends PrecedenceOperator
+//	{
+//		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
+//		public @S(20) @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
+//		public @S(30) @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
+//	}
 
 	public static @P(307) class Java_ColonColonNew extends PrecedenceOperator
 	{

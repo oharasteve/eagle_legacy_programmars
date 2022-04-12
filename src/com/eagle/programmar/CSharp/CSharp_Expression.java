@@ -115,8 +115,9 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(160) class CSharp_ClassCreationWithSubscript extends PrimaryOperator
 	{
 		public @S(10) CSharp_Keyword NEW = new CSharp_Keyword("new");
-		public @S(20) CSharp_Type jtype;
+		public @S(20) @OPT CSharp_Type jtype;
 		public @S(30) TokenList<CSharp_Subscript> subscripts;
+		public @S(40) @OPT CSharp_ExpressionList values;
 	}
 
 	public static @P(170) class CSharp_MethodInvocation extends PrimaryOperator
@@ -253,6 +254,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(520) class CSharp_SubfieldExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(15) @OPT CSharp_Punctuation question = new CSharp_Punctuation('?');
 		public @S(20) @NOSPACE PunctuationPeriod dot;
 		public @S(30) @NOSPACE CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}

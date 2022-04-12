@@ -9,6 +9,7 @@ import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
 import com.eagle.programmar.HTML.HTML_Tag.HTML_EndTag;
 import com.eagle.programmar.HTML.Terminals.HTML_Comment;
+import com.eagle.programmar.HTML.Terminals.HTML_ExtraEndAnchor;
 import com.eagle.programmar.HTML.Terminals.HTML_Pre;
 import com.eagle.programmar.HTML.Terminals.HTML_Text;
 import com.eagle.programmar.PHP.PHP_Program.PHP_Section;
@@ -63,6 +64,12 @@ public class HTML_Program extends EagleLanguage
 		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Insert dj_insert;
 		
 		public @LAST XML_Header xmlHeader;
+		
+		public @LAST static class HTML_BogusEndAnchor extends TokenSequence
+		{
+			// In a separate class just to enable @CURIOUS
+			public @S(10) @CURIOUS("Extra end anchor") HTML_ExtraEndAnchor endAnchor;
+		}
 		
 		public @LAST static class HTML_JustText extends TokenSequence
 		{

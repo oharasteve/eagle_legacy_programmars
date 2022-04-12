@@ -91,7 +91,7 @@ public class CSharp_Program extends EagleLanguage
 		public @S(10) CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
 		public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
 		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) TokenList<CSharp_ProgramElems> elems; 
+		public @S(40) @OPT TokenList<CSharp_ProgramElems> elems; 
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
 	
