@@ -90,7 +90,8 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 		public @CHOICE static class CSharp_MethodLambda extends TokenSequence
 		{
 			public @S(10) CSharp_Punctuation equalsGreater = new CSharp_Punctuation("=>");
-			public @S(20) CSharp_Expression returnValue;
+			public @S(20) @OPT CSharp_Keyword REF = new CSharp_Keyword("ref");
+			public @S(30) CSharp_Expression returnValue;
 		}
 	}
 }

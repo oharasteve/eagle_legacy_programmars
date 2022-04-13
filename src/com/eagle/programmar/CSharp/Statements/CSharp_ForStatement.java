@@ -23,7 +23,7 @@ public class CSharp_ForStatement extends TokenSequence
 	public @S(40) @NOSPACE PunctuationSemicolon semicolon1;
 	public @S(50) CSharp_Expression terminateCondition;
 	public @S(60) @NOSPACE PunctuationSemicolon semicolon2;
-	public @S(70) CSharp_Expression increment;
+	public @S(70) SeparatedList<CSharp_Expression, PunctuationComma> increments;
 	public @S(80) @NOSPACE PunctuationRightParen rightParen;
 	public @S(90) CSharp_Statement action;
 

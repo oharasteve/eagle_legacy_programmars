@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.CSharp.Directives;
 
+import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
@@ -17,5 +17,5 @@ public class CSharp_PragmaDirective extends TokenSequence
 	public @S(20) CSharp_Keyword PRAGMA = new CSharp_Keyword("pragma");
 	public @S(30) CSharp_Keyword WARNING = new CSharp_Keyword("warning");
 	public @S(40) CSharp_KeywordChoice DISABLE = new CSharp_KeywordChoice("disable", "restore");
-	public @S(50) SeparatedList<CSharp_Number, PunctuationComma> numbers;
+	public @S(50) SeparatedList<CSharp_Expression, PunctuationComma> numbers;
 }
