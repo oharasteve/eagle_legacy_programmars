@@ -63,7 +63,8 @@ public class CSharp_Class extends TokenSequence implements AbstractClass
 		public @S(20) @OPT CSharp_NamespaceQualifer namespaceQualifier;
 		public @S(30) SeparatedList<CSharp_Identifier_Reference,PunctuationPeriod> className;
 		public @S(40) @OPT CSharp_GenericType genericType;
-		public @S(50) @OPT TokenList<CSharp_MoreImplements> moreImpl;
+		public @S(50) @OPT CSharp_GenericWhere where;
+		public @S(60) @OPT TokenList<CSharp_MoreImplements> moreImpl;
 		
 		public static class CSharp_NamespaceQualifer extends TokenSequence
 		{
@@ -76,6 +77,15 @@ public class CSharp_Class extends TokenSequence implements AbstractClass
 			public @S(10) PunctuationComma comma;
 			public @S(20) SeparatedList<CSharp_Identifier_Reference,PunctuationPeriod> className;
 			public @S(30) @OPT CSharp_GenericType genericType;
+			public @S(40) @OPT CSharp_GenericWhere where;
+		}
+		
+		public static class CSharp_GenericWhere extends TokenSequence
+		{
+			public @S(10) CSharp_Keyword WHERE = new CSharp_Keyword("where");
+			public @S(20) CSharp_Identifier_Reference id;
+			public @S(30) PunctuationColon colon;
+			public @S(40) CSharp_Type type;
 		}
 	}
 	
@@ -88,6 +98,7 @@ public class CSharp_Class extends TokenSequence implements AbstractClass
 		public @FIRST @NEWLINE CSharp_Method method;
 		public @LAST @NEWLINE CSharp_Statement statement;
 		public @CHOICE @NEWLINE CSharp_SubscriptOperator subscriptOperator;
+		public @CHOICE @NEWLINE CSharp_Operator operator;
 				
 		public @CHOICE @NEWLINE CSharp_RegionDirective regionDirective;
 		public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;

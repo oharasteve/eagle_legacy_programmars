@@ -9,6 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class CSharp_SetProperty extends TokenSequence
 {
-	public @S(10) CSharp_Keyword SET = new CSharp_Keyword("set");
-	public @S(20) CSharp_StatementBlock block;
+	public @S(10) @OPT CSharp_Keyword PRIVATE = new CSharp_Keyword("private");
+	public @S(20) CSharp_Keyword SET = new CSharp_Keyword("set");
+	public @S(30) @OPT CSharp_StatementBlock block;
 }

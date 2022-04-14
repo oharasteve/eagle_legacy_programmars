@@ -18,6 +18,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -34,7 +35,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 	public @S(80) CSharp_Method_Definition methodName;
 	public @S(90) @OPT CSharp_GenericType generic;
 	public @S(100) @OPT CSharp_MethodParameters parameters;
-	public @S(110) @OPT CSharp_MethodWhere where;
+	public @S(110) @OPT TokenList<CSharp_MethodWhere> where;
 	public @S(120) @NEWLINE CSharp_MethodBody body;
 	public @S(130) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 
@@ -59,6 +60,13 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 		public @S(30) CSharp_Type cstype;
 		public @S(40) CSharp_Variable_Definition id;
 		public @S(50) @OPT CSharp_Punctuation emptySubscript = new CSharp_Punctuation("[]");
+		public @S(60) @OPT CSharp_MethodParamDefault defValue;
+		
+		public static class CSharp_MethodParamDefault extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) CSharp_Expression value;
+		}
 	}
 	
 	public static class CSharp_MoreParameters extends TokenSequence

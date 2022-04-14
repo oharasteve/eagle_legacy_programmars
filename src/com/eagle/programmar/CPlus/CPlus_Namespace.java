@@ -6,6 +6,7 @@ package com.eagle.programmar.CPlus;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Namespace_Definition;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.CPlus.CPlus_Class.CPlus_ClassElement;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -22,6 +23,7 @@ public class CPlus_Namespace extends TokenSequence
 	
 	public static class CPlus_NamespaceElement extends TokenChooser
 	{
+		public @CHOICE CPlus_ClassElement cpp_element;
 		public @CHOICE CPlus_Namespace cpp_namespace;
 		public @CHOICE CPlus_Class cpp_class;
 		public @LAST C_StatementOrComment c_stmt;

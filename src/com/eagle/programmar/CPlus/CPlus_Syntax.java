@@ -23,6 +23,7 @@ public class CPlus_Syntax extends C_Syntax
 		"false",
 		"namespace",
 		"new",
+		"operator",
 		"true",
 		"using"
 	};

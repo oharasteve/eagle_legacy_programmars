@@ -12,6 +12,7 @@ import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ForEachStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_GetProperty;
+import com.eagle.programmar.CSharp.Statements.CSharp_GotoStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_LockStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ReturnStatement;
@@ -60,6 +61,7 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE CSharp_ForStatement forStatement;
 	public @CHOICE CSharp_ForEachStatement forEachStatement;
 	public @CHOICE CSharp_GetProperty getProperty;
+	public @CHOICE CSharp_GotoStatement gotoStatement;
 	public @CHOICE CSharp_IfStatement ifStatement;
 	public @CHOICE CSharp_LockStatement lockStatement;
 	public @CHOICE CSharp_ReturnStatement returnStatement;

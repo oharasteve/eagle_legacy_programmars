@@ -171,36 +171,44 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(20) CSharp_Expression expr;
 	}
 	
-	public static @P(250) class CSharp_BuiltIn extends PrimaryOperator
+	public static @P(250) class CSharp_DefaultGeneric extends PrimaryOperator
+	{
+		public @S(10) CSharp_KeywordChoice DEFAULT = new CSharp_KeywordChoice("default", "Default");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CSharp_Type type;
+		public @S(40) PunctuationRightParen rightParen;
+	}
+	
+	public static @P(260) class CSharp_BuiltIn extends PrimaryOperator
 	{
 		public @S(10) CSharp_KeywordChoice builtIn = new CSharp_KeywordChoice(
 				"default", "false", "true", "null", "this", "super");
 	}
 	
-	public static @P(260) class CSharp_VariableExpression extends PrimaryOperator
+	public static @P(270) class CSharp_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) CSharp_Variable variable;
 	}
 	
-	public static @P(270) class CSharp_TypeExpression extends PrimaryOperator
+	public static @P(280) class CSharp_TypeExpression extends PrimaryOperator
 	{
 		public @S(10) CSharp_Type type;
 	}
 	
-	public static @P(280) class CSharp_ParenthesizedExpression extends PrimaryOperator
+	public static @P(290) class CSharp_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @NOSPACE CSharp_Expression expression;
 		public @S(30) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
-	public static @P(290) class CSharp_CommentExpression extends PrimaryOperator
+	public static @P(300) class CSharp_CommentExpression extends PrimaryOperator
 	{
 		public @S(10) CSharp_Comment comment;
 		public @S(20) CSharp_Expression expr;
 	}
 	
-	public static @P(300) class CSharp_TypeOf extends PrimaryOperator
+	public static @P(310) class CSharp_TypeOf extends PrimaryOperator
 	{
 		public @S(10) CSharp_Keyword TYPEOF = new CSharp_Keyword("typeof");
 		public @S(20) PunctuationLeftParen leftParen;
@@ -208,14 +216,14 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
-	public static @P(310) class CSharp_Delegation extends PrimaryOperator
+	public static @P(320) class CSharp_Delegation extends PrimaryOperator
 	{
 		public @S(10) CSharp_Keyword DELEGATE = new CSharp_Keyword("delegate");
 		public @S(20) CSharp_MethodParameters parameters;
 		public @S(30) @NEWLINE CSharp_MethodBody body;
 	}
 
-	public static @P(320) class CSharp_LambdaBlock extends PrimaryOperator
+	public static @P(330) class CSharp_LambdaBlock extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<CSharp_Variable, PunctuationComma> vars;
@@ -224,7 +232,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(50) CSharp_StatementBlock block;
 	}
 
-	public static @P(330) class CSharp_LambdaParameters extends PrimaryOperator
+	public static @P(340) class CSharp_LambdaParameters extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<CSharp_Variable, PunctuationComma> vars;

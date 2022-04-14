@@ -19,7 +19,7 @@ public class CSharp_Syntax extends EagleSyntax
 		_isCaseSensitive = true;
 		_continuationChar = null;
 		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "//", "..." };
+		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "//", "...", "::" };
 		_commentInstance = new CSharp_Comment();
 		
 		addReservedWords(keywords);
@@ -66,6 +66,7 @@ public class CSharp_Syntax extends EagleSyntax
 		"native",
 		"new",
 		"null",
+		"operator",
 		"out",
 		"package",
 		"partial",

@@ -40,7 +40,7 @@ public class C_ForStatement extends TokenChooser
 
 		public static class C_ForLoopVariable extends TokenChooser
 		{
-			public @CHOICE static class C_ForLoopVariableWithType extends TokenSequence
+			public @FIRST static class C_ForLoopVariableWithType extends TokenSequence
 			{
 				public @S(10) C_Type varType;
 				public @S(20) C_Assignment assignment;

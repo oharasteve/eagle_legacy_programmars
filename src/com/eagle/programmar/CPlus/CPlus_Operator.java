@@ -16,7 +16,7 @@ public class CPlus_Operator extends TokenSequence
 	public @S(10) CPlus_Current_Class_Reference className1;
 	public @S(20) PunctuationAmpersand ampersand;
 	public @S(30) C_Keyword OPERATOR = new C_Keyword("operator");
-	public @S(40) C_PunctuationChoice oper = new C_PunctuationChoice("==");
+	public @S(40) C_PunctuationChoice oper = new C_PunctuationChoice("==", "!=", "=", "<<");
 	public @S(50) C_Function_ParameterDefs parameters;
 	public @S(60) @OPT CPlus_ConstructorValue value;
 }

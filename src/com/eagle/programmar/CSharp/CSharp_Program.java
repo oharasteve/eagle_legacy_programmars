@@ -10,6 +10,7 @@ import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -82,7 +83,14 @@ public class CSharp_Program extends EagleLanguage
 		public static class CSharp_UsingEquals extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
-			public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
+			public @S(20) @OPT CSharp_UsingGlobal global;
+			public @S(30) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
+			
+			public static class CSharp_UsingGlobal extends TokenSequence
+			{
+				public @S(10) CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
+				public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
+			}
 		}
 	}
 	

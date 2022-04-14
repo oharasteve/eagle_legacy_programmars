@@ -17,5 +17,5 @@ public class CSharp_UsingStatement extends TokenSequence
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @NOSPACE CSharp_DataBeforeSemicolon declaration;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-	public @S(60) CSharp_Statement whileStatement;
+	public @S(60) CSharp_Statement statement;
 }
