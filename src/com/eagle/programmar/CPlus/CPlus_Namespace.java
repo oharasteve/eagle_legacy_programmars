@@ -26,6 +26,7 @@ public class CPlus_Namespace extends TokenSequence
 		public @CHOICE CPlus_ClassElement cpp_element;
 		public @CHOICE CPlus_Namespace cpp_namespace;
 		public @CHOICE CPlus_Class cpp_class;
+		public @CHOICE CPlus_Template cpp_template;
 		public @LAST C_StatementOrComment c_stmt;
 	}
 }

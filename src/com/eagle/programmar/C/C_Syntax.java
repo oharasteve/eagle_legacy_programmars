@@ -30,6 +30,7 @@ public class C_Syntax extends EagleSyntax
 	private String[] keywords = new String[] {
 		"break",
 		"case",
+		"class",
 		"continue",
 		"const",
 		"default",
@@ -41,6 +42,7 @@ public class C_Syntax extends EagleSyntax
 		"for",
 		"if",
 		"int",
+		"namespace",
 		"NULL",
 		"return",
 		"sizeof",
