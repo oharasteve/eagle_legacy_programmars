@@ -63,6 +63,7 @@ public class C_ForStatement extends TokenChooser
 	{
 		public @S(10) C_Keyword FOR = new C_Keyword("for");
 		public @S(20) PunctuationLeftParen leftParen;
+		public @S(25) @OPT C_Keyword CONST = new C_Keyword("const");
 		public @S(30) C_Type varType;
 		public @S(40) C_Variable forVar;
 		public @S(50) PunctuationColon colon;

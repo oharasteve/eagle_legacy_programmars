@@ -5,23 +5,26 @@ package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Function.C_FunctionBody;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
+import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Comment;
-import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class CPlus_Method extends TokenSequence implements AbstractMethod
 {
 	public @S(10) CPlus_MethodTypeAndName typeAndName;
 	public @S(20) C_Function_ParameterDefs parameters;
-	public @S(30) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
+	public @S(30) @OPT C_KeywordChoice OVERRIDE = new C_KeywordChoice("override", "const");
 	public @S(40) @OPT TokenList<C_Comment> comments2;
-	public @S(50) C_FunctionBody body;
+	public @S(50) CPlus_MethodBody body;
 
 	public static class CPlus_MethodTypeAndName extends TokenChooser
 	{
@@ -47,5 +50,18 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 		public @S(10) C_Identifier_Reference nameSpace;
 		public @S(20) @OPT CPlus_Generic generic;
 		public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
+	}
+	
+	public static class CPlus_MethodBody extends TokenChooser
+	{
+		public @LAST C_FunctionBody body;
+		
+		public @CHOICE static class CPlus_MethodUsing extends TokenSequence
+		{
+			public @S(10) PunctuationLeftBrace leftBrace;
+			public @S(20) @OPT TokenList<CPlus_Using> usings;
+			public @S(30) @OPT TokenList<C_StatementOrComment> elements;
+			public @S(40) PunctuationRightBrace rightBrace;
+		}
 	}
 }

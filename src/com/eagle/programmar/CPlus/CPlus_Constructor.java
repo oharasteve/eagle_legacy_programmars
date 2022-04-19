@@ -6,6 +6,7 @@ package com.eagle.programmar.CPlus;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.C_Statement.C_StatementBlock;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CPlus.CPlus_Method.CPlus_NamespaceQualifier;
 import com.eagle.programmar.CPlus.Symbols.CPlus_Class_Reference;
@@ -31,7 +32,7 @@ public class CPlus_Constructor extends TokenSequence
 		public @CHOICE static class CPlus_ConstructorInitialValue extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
-			public @S(20) C_Keyword DELETE = new C_Keyword("delete");
+			public @S(20) C_KeywordChoice DELETE = new C_KeywordChoice("delete", "default");
 		}
 		
 		public @CHOICE static class CPlus_ConstructorCallSuper extends TokenSequence

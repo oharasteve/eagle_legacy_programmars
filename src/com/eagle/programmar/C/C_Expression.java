@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.programmar.C.C_Type.C_TypeGeneric;
 import com.eagle.programmar.C.Terminals.C_Character_Literal;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_HexNumber;
@@ -76,6 +77,7 @@ public class C_Expression extends PrecedenceChooser
 	public static @P(130) class C_FunctionCall extends PrimaryOperator
 	{
 		public @S(10) C_Variable functionName;
+		public @S(15) @OPT C_TypeGeneric generic;
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT C_ArgumentList argList;
 		public @S(40) PunctuationRightParen rightParen;
