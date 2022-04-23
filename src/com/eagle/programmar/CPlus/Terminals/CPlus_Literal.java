@@ -23,19 +23,23 @@ public class CPlus_Literal extends TerminalLiteralToken
 		char pre1 = ' ';
 		char pre2 = ' ';
 		if (_currentChar < nc) pre1 = rec.charAt(_currentChar);
-		if (_currentChar + 1 < nc) pre2 = rec.charAt(_currentChar + 1);
 		
 		int prefixLen = 0;
 		if (PREFIXES.indexOf(pre1) >= 0)
 		{
-			prefixLen++;
-			// Special case of u8
+			prefixLen = 1;
+
+			// Special case of u8"str"
+			if (_currentChar + 1 < nc) pre2 = rec.charAt(_currentChar + 1);
 			if (pre1 == 'u' && pre2 == '8')
 			{
-				prefixLen++;
+				prefixLen = 2;
 			}
+			
+			_currentChar += prefixLen;
+			lines.setCurrentChar(_currentChar);
+			lines.setCurrentLine(_currentLine);
 		}
-		_currentChar += prefixLen;
 
 		boolean ok = genericLiteral(lines, "\"'", true, '\\', false, false);
 		if (ok)

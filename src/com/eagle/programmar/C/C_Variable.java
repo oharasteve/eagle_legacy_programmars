@@ -72,7 +72,8 @@ public class C_Variable extends TokenSequence implements AbstractVariable
 		public @CHOICE static class C_ColonColonIdentifier extends TokenSequence
 		{
 			public @S(10) @NOSPACE C_Punctuation colonColon = new C_Punctuation("::");
-			public @S(20) @NOSPACE C_Identifier_Reference id;
+			public @S(20) @OPT C_Punctuation tilde = new C_Punctuation("~");
+			public @S(30) @NOSPACE C_Identifier_Reference id;
 		}
 	}
 }

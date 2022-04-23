@@ -13,6 +13,7 @@ import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.programmar.CMacro.Terminals.CMacro_RestOfLine;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -31,8 +32,14 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 	public static class CMacro_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<CMacro_Parameter_Definition,PunctuationComma> params;
+		public @S(20) SeparatedList<CMacro_Param,PunctuationComma> params;
 		public @S(30) PunctuationRightParen rightParen;
+		
+		public static class CMacro_Param extends TokenChooser
+		{
+			public @CHOICE CMacro_Parameter_Definition var;
+			public @CHOICE CMacro_Punctuation dotDotDot = new CMacro_Punctuation("...");
+		}
 	}
 	
 	@Override

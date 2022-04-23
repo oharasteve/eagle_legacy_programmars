@@ -150,7 +150,7 @@ public class C_Expression extends PrecedenceChooser
 	
 	public static @P(220) class C_BuiltIn extends PrimaryOperator
 	{
-		public @S(10) C_KeywordChoice logicalConstant = new C_KeywordChoice("false", "true", "NULL");
+		public @S(10) C_KeywordChoice logicalConstant = new C_KeywordChoice("false", "true", "NULL", "default");
 	}
 	
 	public static @P(230) class C_VariableExpression extends PrimaryOperator

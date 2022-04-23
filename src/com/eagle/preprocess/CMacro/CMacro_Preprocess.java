@@ -22,6 +22,7 @@ import com.eagle.programmar.CMacro.CMacro_Program.CMacro_CommentLine;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_Element;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement;
+import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement.CMacro_Parameters.CMacro_Param;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Parameter_Definition;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
@@ -231,7 +232,7 @@ public class CMacro_Preprocess extends EagleInclude
 		if (DEBUG) System.out.println("***** Copying " + oldLine);
 		
 		// Returns null if nothing has changed
-		String newLine = replaceWords(oldLine);
+		String newLine = replaceWords(token._currentLine, oldLine, 0);
 		
 		if (newLine == null)
 		{
@@ -262,8 +263,11 @@ public class CMacro_Preprocess extends EagleInclude
 	// Returns null if nothing changed
 	// QUESTION: should we ignore comments and strings? Currently: we don't check for them.
 	// Careful, this is recursive
-	private String replaceWords(String oldLine)
+	private String replaceWords(int lineNum, String oldLine, int changesSoFarThisLine)
 	{
+		// Don't ever do more than 10 changes on any one line
+		if (changesSoFarThisLine > 10) return null;
+		
 		String newLine = null;
 		
 		int sc = 0;
@@ -283,7 +287,7 @@ public class CMacro_Preprocess extends EagleInclude
 					if (! Character.isLetterOrDigit(ch) && ch != '_')
 					{
 						String word = oldLine.substring(sc, ec);
-						if (DEBUG) System.out.println("*** Checking " + word + " to see if it is a macro");
+						if (DEBUG) System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it is a macro");
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!
@@ -304,7 +308,7 @@ public class CMacro_Preprocess extends EagleInclude
 									}
 									else
 									{
-										//System.out.println("Replacing " + word + " with " + newPiece);
+										if (DEBUG) System.out.println("Replacing " + word + " with " + newPiece);
 										
 										// Apply the change
 										changedLine = oldLine.substring(0, sc) + newPiece + oldLine.substring(ec);
@@ -312,7 +316,8 @@ public class CMacro_Preprocess extends EagleInclude
 									
 									if (changedLine != null)
 									{
-										String moreChanges = replaceWords(changedLine);		// Recursive
+										if (DEBUG) System.out.println("************ " + changedLine);
+										String moreChanges = replaceWords(lineNum, changedLine, changesSoFarThisLine+1);		// Recursive
 										if (moreChanges != null) return moreChanges;
 										return changedLine;
 									}
@@ -387,7 +392,7 @@ public class CMacro_Preprocess extends EagleInclude
 			actualParams = fancySplit(actualParamString);
 		}
 		
-		SeparatedList<CMacro_Parameter_Definition,PunctuationComma> formalParams = defineStatement.params.params;
+		SeparatedList<CMacro_Param,PunctuationComma> formalParams = defineStatement.params.params;
 		int paramCount = formalParams.getPrimaryCount();
 		if (actualParams.length != paramCount)
 		{
@@ -399,8 +404,13 @@ public class CMacro_Preprocess extends EagleInclude
 		String changedPiece = newPiece;
 		for (String actualParam : actualParams)
 		{
-			CMacro_Parameter_Definition formalParamElement = formalParams.getPrimaryElement(index);
-			String formalParam = formalParamElement.toString();
+			CMacro_Param formalParamElement = formalParams.getPrimaryElement(index);
+			String formalParam = "Skippy";
+			AbstractToken which = formalParamElement.getWhich();
+			if (which instanceof CMacro_Parameter_Definition)
+			{
+				formalParam = ((CMacro_Parameter_Definition) which).toString();
+			}
 			if (! formalParam.equals(actualParam.trim()))		// Don't get stuck in a loop!
 			{
 				//System.out.println("Replacing " + formalParam + " with " + actualParam.trim() + " in " + changedPiece);

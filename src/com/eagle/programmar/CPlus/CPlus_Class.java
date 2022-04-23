@@ -8,6 +8,7 @@ import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.programmar.CPlus.CPlus_Method.CPlus_NamespaceQualifier;
 import com.eagle.programmar.CPlus.Symbols.CPlus_Class_Definition;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -23,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class CPlus_Class extends TokenSequence implements AbstractClass
 {
 	public @S(10) C_Keyword CLASS = new C_Keyword("class");
+	public @S(15) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
 	public @S(20) CPlus_Class_Definition className;
 	public @S(30) @OPT CPlus_ClassExtendList extendsClasses;
 	public @S(40) CPlus_ClassBody body;
@@ -44,6 +46,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 		public @FIRST CPlus_Constructor constructor;
 		public @FIRST CPlus_Operator operator;
 		public @CHOICE CPlus_Method method;
+		public @CHOICE CPlus_Class innerClass;
 		public @CHOICE CPlus_Using using;
 		public @LAST C_StatementOrComment c_stmt;
 		
