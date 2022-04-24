@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CPlus;
 
-import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
@@ -12,6 +11,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class CPlus_Generic extends TokenSequence
 {
 	public @S(10) C_Punctuation lessThan = new C_Punctuation('<');
-	public @S(20) SeparatedList<C_Type,PunctuationComma> type;
+	public @S(20) SeparatedList<CPlus_Type,PunctuationComma> type;
 	public @S(30) C_Punctuation greaterThan = new C_Punctuation('>');
 }

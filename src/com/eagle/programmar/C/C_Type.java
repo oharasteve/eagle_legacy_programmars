@@ -162,8 +162,21 @@ public class C_Type extends TokenSequence implements AbstractType
 	public static class C_TypeGeneric extends TokenSequence
 	{
 		public @S(10) C_Punctuation lessThan = new C_Punctuation('<');
-		public @S(20) SeparatedList<C_Type, PunctuationComma> types;
+		public @S(20) SeparatedList<C_GenericType,PunctuationComma> types;
 		public @S(30) C_Punctuation greaterThan = new C_Punctuation('>');
+		
+		public static class C_GenericType extends TokenChooser
+		{
+			public @CHOICE C_Type type;
+			
+			public @FIRST static class C_Plus_GenericVoid extends TokenSequence
+			{
+				public @S(10) C_Keyword VOID = new C_Keyword("void");
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) C_Type type;
+				public @S(40) PunctuationRightParen rightParen;
+			}
+		}
 	}
 	
 	public static class C_TypeFunction extends TokenSequence

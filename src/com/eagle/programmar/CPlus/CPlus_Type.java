@@ -7,5 +7,4 @@ import com.eagle.programmar.C.C_Type;
 
 public class CPlus_Type extends C_Type
 {
-
 }

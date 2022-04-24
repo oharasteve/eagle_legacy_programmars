@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CPlus;
 
+import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -23,12 +24,18 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CPlus_Class extends TokenSequence implements AbstractClass
 {
-	public @S(10) C_Keyword CLASS = new C_Keyword("class");
-	public @S(15) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
-	public @S(20) CPlus_Class_Definition className;
-	public @S(30) @OPT CPlus_ClassExtendList extendsClasses;
-	public @S(40) CPlus_ClassBody body;
+	public @S(10) C_KeywordChoice CLASS = new C_KeywordChoice("class", "struct");
+	public @S(20) @OPT TokenList<CPlus_ClassModifier> modifiers;
+	public @S(30) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
+	public @S(40) CPlus_Class_Definition className;
+	public @S(50) @OPT CPlus_ClassExtendList extendsClasses;
+	public @S(60) CPlus_ClassBody body;
 	
+	public static class CPlus_ClassModifier extends TokenSequence
+	{
+		public @S(10) C_KeywordChoice modifier = new C_KeywordChoice(C_Program.getModifiers());
+	}
+
 	public static class CPlus_ClassBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
