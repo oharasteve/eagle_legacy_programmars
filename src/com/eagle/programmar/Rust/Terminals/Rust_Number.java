@@ -12,6 +12,6 @@ public class Rust_Number extends TerminalNumberToken implements EagleRunnable
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", "LlFfDd", true, true);
+		return genericNumber(lines, "Ee", "LlFfDd", true, true, '_');
 	}
 }

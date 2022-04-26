@@ -65,6 +65,7 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @S(10) @OPT @NEWLINE Java_Label label;
 		public @S(20) Java_Keyword FOR = new Java_Keyword("for");
 		public @S(30) PunctuationLeftParen leftParen;
+		public @S(35) @OPT @NOSPACE Java_Annotation annotation;
 		public @S(40) @OPT Java_Keyword FINAL = new Java_Keyword("final");
 		public @S(50) Java_Type varType;
 		public @S(60) Java_Variable forVar;

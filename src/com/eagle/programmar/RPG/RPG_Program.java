@@ -86,7 +86,7 @@ public abstract class RPG_Program extends EagleLanguage
 		}
 
 		@Override
-		public void findClassOverrides(EagleOverrideManager overrider)
+		public void findLanguageOverrides(EagleOverrideManager overrider)
 		{
 			overrider.override(RPG_C_Calculation_Specification.class, RPG_C_Calculation_Specification_III.class);
 			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_III.class);	// Not available in RPG III
@@ -106,7 +106,7 @@ public abstract class RPG_Program extends EagleLanguage
 		}
 
 		@Override
-		public void findClassOverrides(EagleOverrideManager overrider)
+		public void findLanguageOverrides(EagleOverrideManager overrider)
 		{
 			overrider.override(RPG_C_Calculation_Specification.class, RPG_C_Calculation_Specification_IV.class);
 			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_IV.class);

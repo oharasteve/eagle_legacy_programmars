@@ -22,7 +22,7 @@ public class Python2_Program extends Python_Program
 	}
 
 	@Override
-	public void findClassOverrides(EagleOverrideManager overrider)
+	public void findLanguageOverrides(EagleOverrideManager overrider)
 	{
 		overrider.override(Python_Simple_Statement.class, Python2_Simple_Statement.class);
 	}

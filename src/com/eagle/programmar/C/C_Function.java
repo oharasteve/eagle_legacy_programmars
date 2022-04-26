@@ -18,6 +18,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
@@ -68,7 +69,14 @@ public class C_Function extends TokenSequence
 			public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
 			public @S(40) @OPT C_Variable_Definition id;
 			public @S(50) @OPT TokenList<C_Subscript> subscripts;
-			public @S(60) @OPT C_Comment comment;
+			public @S(60) @OPT C_FunctionDefaultValue value;
+			public @S(70) @OPT C_Comment comment;
+			
+			public static class C_FunctionDefaultValue extends TokenSequence
+			{
+				public @S(10) PunctuationEquals equals;
+				public @S(20) C_Expression expr;
+			}
 		}
 		
 		public @CHOICE static class C_FunctionFunctionParameter extends TokenSequence

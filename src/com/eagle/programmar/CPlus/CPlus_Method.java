@@ -21,7 +21,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class CPlus_Method extends TokenSequence implements AbstractMethod
 {
-	public @S(5) @OPT CPlus_Extern_C externC;
 	public @S(10) CPlus_MethodTypeAndName typeAndName;
 	public @S(20) C_Function_ParameterDefs parameters;
 	public @S(30) @OPT C_Keyword CONST = new C_Keyword("const");
@@ -29,22 +28,6 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 	public @S(50) @OPT TokenList<C_Comment> comments2;
 	public @S(60) CPlus_MethodBody body;
 
-	public static class CPlus_Extern_C extends TokenSequence
-	{
-		public @S(10) C_Keyword EXTERN = new C_Keyword("extern");
-		public @S(20) C_Literal_C C;
-		
-		public static class C_Literal_C extends C_Literal
-		{
-			@Override
-			public boolean parse(EagleFileReader lines)
-			{
-				if (! super.parse(lines)) return false;
-				return _txt.equals("\"C\"");
-			}
-		}
-	}
-	
 	public static class CPlus_MethodTypeAndName extends TokenChooser
 	{
 		public @CHOICE CPlus_Constructor constructor;

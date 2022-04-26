@@ -53,8 +53,10 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 		public @FIRST CPlus_Constructor constructor;
 		public @FIRST CPlus_Operator operator;
 		public @CHOICE CPlus_Method method;
+		public @CHOICE CPlus_Extern externC;
 		public @CHOICE CPlus_Class innerClass;
 		public @CHOICE CPlus_Using using;
+		public @CHOICE CPlus_Template template;
 		public @LAST C_StatementOrComment c_stmt;
 		
 		public @CHOICE static class CPlus_ClassPublicPrivate extends TokenSequence

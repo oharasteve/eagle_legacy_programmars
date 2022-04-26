@@ -78,6 +78,7 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 	{
 		public @CHOICE @NEWLINE Java_Comment comment;
 		public @CHOICE @NEWLINE Java_Import jimport;
+		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon semicolon;
 	}
 	
 	public static class Java_Import extends TokenSequence
