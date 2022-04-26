@@ -25,8 +25,6 @@ public class Java_ParameterList extends TokenSequence
 	public static class Java_MethodParameter extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<Java_MethodParameterPrefix> prefixes;
-		public @S(20) @OPT TokenList<Java_Annotation> annotations;
-		public @S(30) @OPT Java_Keyword FINAL = new Java_Keyword("final");
 		public @S(40) @NOSPACE Java_Type jtype;
 		public @S(50) @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
 		public @S(60) Java_Variable_Definition id;
@@ -40,21 +38,7 @@ public class Java_ParameterList extends TokenSequence
 		public static class Java_MethodParameterPrefix extends TokenChooser
 		{
 			public @CHOICE Java_KeywordChoice FINAL = new Java_KeywordChoice("final", "static");
-
-			public @CHOICE static class Java_MethodNullable extends TokenSequence
-			{
-				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-				public @S(20) Java_KeywordChoice NULLABLE = new Java_KeywordChoice("Nullable", "NonNull");
-			}
-
-			public @CHOICE static class Java_MethodSuppress extends TokenSequence
-			{
-				public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-				public @S(20) @NOSPACE Java_Keyword SUPPRESS = new Java_Keyword("SuppressWarnings");
-				public @S(30) @NOSPACE PunctuationLeftParen leftParen;
-				public @S(40) @NOSPACE Java_Literal warning;
-				public @S(50) @NOSPACE PunctuationRightParen rightParen;
-			}
+			public @CHOICE Java_Annotation annotation;
 		}
 	}
 		
