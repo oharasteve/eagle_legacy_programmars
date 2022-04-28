@@ -46,6 +46,8 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE C_ReturnStatement returnStatement;
 	public @CHOICE C_SwitchStatement switchStatement;
 	public @CHOICE C_WhileStatement whileStatement;
+	
+	public @CHOICE C_Declaration declaration;	// Like [[fallthrough]]
 
 	// Do this one last, just because it is so slow
 	public @CHOICE C_ExpressionStatement assignmentStatement;

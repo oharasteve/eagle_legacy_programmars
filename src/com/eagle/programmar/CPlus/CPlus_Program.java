@@ -36,7 +36,7 @@ public class CPlus_Program extends C_Program
 	@Override
 	public void findLanguageOverrides(EagleOverrideManager overrider)
 	{
-		// overrider.override(C_Expression.class, CPlus_Expression.class); // Times out at 60 seconds
+		// overrider.override(C_Expression.class, CPlus_Expression.class); // Times out at 60 seconds. Why?
 		overrider.override(C_Literal.class, CPlus_Literal.class);
 		overrider.override(C_Number.class, CPlus_Number.class);
 	}

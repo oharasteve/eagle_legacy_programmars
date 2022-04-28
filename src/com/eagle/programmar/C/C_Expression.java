@@ -17,6 +17,7 @@ import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -314,5 +315,24 @@ public class C_Expression extends PrecedenceChooser
 				"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 		public @S(30) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;	// What the ...
 		public @S(40) C_Expression right = new C_Expression(this, AllowedPrecedence.ATLEAST);
+	}
+	
+	//
+	// Not easy to have CPlus_Expression extend C_Expression.
+	// Have to use <generics> to make it work. C_Expression and CPlus_Expression
+	// would both have to derive off a generic base class
+	//
+	
+	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
+	{
+		public @S(10) C_Keyword NEW = new C_Keyword("new");
+		public @S(20) C_Type type;
+		public @S(30) CPlus_NewWhat what;
+		
+		public static class CPlus_NewWhat extends TokenChooser
+		{
+			public @CHOICE C_ParenthesizedExpression expr;
+			public @CHOICE C_Subscript size;
+		}
 	}
 }

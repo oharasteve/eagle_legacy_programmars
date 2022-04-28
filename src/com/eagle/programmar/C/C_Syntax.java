@@ -20,7 +20,9 @@ public class C_Syntax extends EagleSyntax
 		_continuationChar = "\\";
 		_extraCharacters = "_";
 		_commentInstance = new CMacro_Comment();    // Doesn't work at all
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::" };
+		_punctuationExceptions = new String[] {
+				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::"
+		};
 		
 		addReservedWords(keywords);
 		addReservedWords(C_Program.getPrimitives());
