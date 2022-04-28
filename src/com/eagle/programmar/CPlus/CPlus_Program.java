@@ -23,6 +23,8 @@ public class CPlus_Program extends C_Program
 	public CPlus_Program()
 	{
 		super(CPP, new CPlus_Syntax());
+		
+		super.addModifier("constexpr");
 	}
 	
 	@Override
@@ -34,6 +36,7 @@ public class CPlus_Program extends C_Program
 	@Override
 	public void findLanguageOverrides(EagleOverrideManager overrider)
 	{
+		// overrider.override(C_Expression.class, CPlus_Expression.class); // Times out at 60 seconds
 		overrider.override(C_Literal.class, CPlus_Literal.class);
 		overrider.override(C_Number.class, CPlus_Number.class);
 	}
@@ -48,6 +51,7 @@ public class CPlus_Program extends C_Program
 		public @CHOICE CPlus_Class classDefinition;
 		public @CHOICE CPlus_Using using;
 		public @CHOICE CPlus_Method method;
+		public @CHOICE CPlus_Extern extern;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
 	}

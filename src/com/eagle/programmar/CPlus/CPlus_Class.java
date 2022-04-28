@@ -24,12 +24,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CPlus_Class extends TokenSequence implements AbstractClass
 {
-	public @S(10) C_KeywordChoice CLASS = new C_KeywordChoice("class", "struct");
-	public @S(20) @OPT TokenList<CPlus_ClassModifier> modifiers;
-	public @S(30) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
-	public @S(40) CPlus_Class_Definition className;
-	public @S(50) @OPT CPlus_ClassExtendList extendsClasses;
-	public @S(60) CPlus_ClassBody body;
+	public @S(10) @OPT C_Keyword FRIEND = new C_Keyword("friend");
+	public @S(20) C_KeywordChoice CLASS = new C_KeywordChoice("class", "struct");
+	public @S(30) @OPT TokenList<CPlus_ClassModifier> modifiers;
+	public @S(40) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
+	public @S(50) CPlus_Class_Definition className;
+	public @S(60) @OPT CPlus_Generic generic;
+	public @S(70) @OPT CPlus_ClassExtendList extendsClasses;
+	public @S(80) CPlus_ClassBody body;
 	
 	public static class CPlus_ClassModifier extends TokenSequence
 	{

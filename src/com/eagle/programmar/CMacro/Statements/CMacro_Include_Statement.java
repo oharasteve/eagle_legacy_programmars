@@ -11,7 +11,7 @@ import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_IncludeSys;
-import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
+import com.eagle.programmar.CMacro.Terminals.CMacro_KeywordChoice;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Literal;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.AbstractToken;
@@ -22,7 +22,7 @@ import com.eagle.tokens.TokenSequence;
 public class CMacro_Include_Statement extends TokenSequence implements CMacro_Processable
 {
 	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
-	public @S(20) @DOC("Include-Syntax.html") CMacro_Keyword INCLUDE = new CMacro_Keyword("include");
+	public @S(20) @DOC("Include-Syntax.html") CMacro_KeywordChoice INCLUDE = new CMacro_KeywordChoice("include", "import");
 	public @S(30) CMacro_IncludeWhat what;
 	public @S(40) @OPT TokenList<CMacro_Comment> comments;
 	

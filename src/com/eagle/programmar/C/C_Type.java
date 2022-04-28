@@ -36,7 +36,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class C_Type extends TokenSequence implements AbstractType
 {
 	public @S(10) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
-	public @S(20) @OPT C_Keyword VOLATILE = new C_Keyword("volatile");
+	public @S(20) @OPT C_KeywordChoice VOLATILE = new C_KeywordChoice("volatile", "const");
 	public @S(30) C_TypeBase base;
 	public @S(40) @OPT C_TypeGeneric generic;
 	public @S(50) @OPT C_TypeFunction function;

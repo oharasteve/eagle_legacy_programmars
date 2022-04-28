@@ -4,9 +4,7 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
-import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
-import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
