@@ -28,8 +28,8 @@ public class CMacro_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) CMacro_Number number;
-	public @P(20) CMacro_HexNumber hex;
+	public @P(10) CMacro_HexNumber hex;
+	public @P(20) CMacro_Number number;
 	public @P(30) CMacro_Literal literal;
 	public @P(40) CMacro_Character_Literal characters;
 

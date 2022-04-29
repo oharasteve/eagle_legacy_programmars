@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CPlus;
 
+import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive;
 import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
@@ -22,7 +23,7 @@ public class CPlus_ArgumentList extends TokenSequence
 	
 	public static class CPlus_ExpressionArg extends TokenChooser
 	{
-		public @FIRST CPlus_Expression expr;
+		public @FIRST C_Expression expr;
 		public @CHOICE C_Keyword CONST = new C_Keyword("const");
 		public @CHOICE C_TypePrimitive primitiveType;
 		

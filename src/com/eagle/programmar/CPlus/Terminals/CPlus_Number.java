@@ -4,9 +4,9 @@
 package com.eagle.programmar.CPlus.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalNumberToken;
+import com.eagle.programmar.C.Terminals.C_Number;
 
-public class CPlus_Number extends TerminalNumberToken
+public class CPlus_Number extends C_Number
 {
 	@Override
 	public boolean parse(EagleFileReader lines)

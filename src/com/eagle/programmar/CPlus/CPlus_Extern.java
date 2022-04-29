@@ -5,6 +5,7 @@ package com.eagle.programmar.CPlus;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.C.C_Statement.C_StatementBlock;
+import com.eagle.programmar.C.C_TypeDef;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.tokens.TokenChooser;
@@ -35,5 +36,6 @@ public class CPlus_Extern extends TokenSequence
 	{
 		public @CHOICE CPlus_Method method;
 		public @CHOICE C_StatementBlock block;
+		public @CHOICE C_TypeDef typedef;
 	}
 }

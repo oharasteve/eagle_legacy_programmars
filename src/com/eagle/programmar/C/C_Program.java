@@ -10,8 +10,6 @@ import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Program extends EagleLanguage
 {
@@ -105,12 +103,7 @@ public class C_Program extends EagleLanguage
 		public @CHOICE C_Function function;
 		public @CHOICE C_Statement statement;
 		public @CHOICE C_Type type;
+		public @CHOICE C_Enum cenum;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-		
-		public @CHOICE static class C_EnumStatement extends TokenSequence
-		{
-			public @S(10) C_Enum cenum;
-			public @S(20) PunctuationSemicolon semicolon;
-		}
 	}
 }

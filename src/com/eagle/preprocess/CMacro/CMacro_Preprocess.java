@@ -457,6 +457,8 @@ public class CMacro_Preprocess extends EagleInclude
 	
 	public static String[] fancySplit(String line)
 	{
+		if (line.length() == 0) return new String[0];	// #define x() with no parameters. Odd, yes?
+		
 		if (line.indexOf('(') < 0 && line.indexOf('"') < 0)
 		{
 			return line.split(",");	// Normal case

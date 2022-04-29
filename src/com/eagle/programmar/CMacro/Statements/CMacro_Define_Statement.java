@@ -32,7 +32,7 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 	public static class CMacro_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<CMacro_Param,PunctuationComma> params;
+		public @S(20) @OPT SeparatedList<CMacro_Param,PunctuationComma> params;
 		public @S(30) PunctuationRightParen rightParen;
 		
 		public static class CMacro_Param extends TokenChooser
