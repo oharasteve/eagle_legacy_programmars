@@ -35,13 +35,17 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class C_Type extends TokenSequence implements AbstractType
 {
-	public @S(10) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
-	public @S(20) @OPT C_KeywordChoice VOLATILE = new C_KeywordChoice("volatile", "const");
+	public @S(10) @OPT TokenList<C_TypeModifier> modifiers;
 	public @S(30) C_TypeBase base;
 	public @S(40) @OPT C_TypeGeneric generic;
 	public @S(50) @OPT C_TypeFunction function;
 	public @S(60) @OPT C_Keyword CONST = new C_Keyword("const");
 	public @S(70) @OPT TokenList<C_TypeStar> stars;
+
+	public static class C_TypeModifier extends TokenChooser
+	{
+		public @CHOICE C_KeywordChoice EXTENSION = new C_KeywordChoice("__extension__", "const", "volatile");
+	}
 	
 	public static class C_TypeBase extends TokenChooser
 	{
@@ -136,7 +140,7 @@ public class C_Type extends TokenSequence implements AbstractType
 			
 			public static class C_TypeStar extends TokenSequence
 			{
-				public @S(10) C_PunctuationChoice starAmpersand = new C_PunctuationChoice("*", "&");
+				public @S(10) C_PunctuationChoice starAmpersand = new C_PunctuationChoice("*", "&&", "&");
 			}
 		}
 		

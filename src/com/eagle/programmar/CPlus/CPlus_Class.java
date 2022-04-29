@@ -45,7 +45,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 		public @CHOICE static class CPlus_ClassBlockBody extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBrace leftBrace;
-			public @S(20) TokenList<CPlus_ClassElement> elements;
+			public @S(20) @OPT TokenList<CPlus_ClassElement> elements;
 			public @S(30) PunctuationRightBrace rightBrace;
 		}
 	}
