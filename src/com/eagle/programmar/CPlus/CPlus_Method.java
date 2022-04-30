@@ -28,8 +28,6 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 
 	public static class CPlus_MethodTypeAndName extends TokenChooser
 	{
-		public @CHOICE CPlus_Constructor constructor;
-		
 		public @CHOICE static class CPlus_MethodWithType extends TokenSequence
 		{
 			public @S(5) @OPT C_Keyword CONST = new C_Keyword("const");

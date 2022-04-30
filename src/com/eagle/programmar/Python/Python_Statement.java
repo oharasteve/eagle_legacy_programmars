@@ -28,6 +28,7 @@ import com.eagle.programmar.Python.Statements.Python_WithStatement;
 import com.eagle.programmar.Python.Statements.Python_YieldStatement;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -102,6 +103,8 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	
 	public static class Python_SingleOrMultiLineStatement extends TokenChooser
 	{
+		public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
+		
 		public @CHOICE static class Python_SingleLineStatement extends TokenSequence
 		{
 			public @S(10) SeparatedList<Python_Simple_Statement,PunctuationSemicolon> statements;
