@@ -36,9 +36,10 @@ public class C_Data extends TokenChooser
 		public @S(80) @NOSPACE PunctuationSemicolon semicolon;
 		public @S(90) @OPT TokenList<C_Comment> comments2;
 		
-		public static class C_DataModifiers extends TokenSequence
+		public static class C_DataModifiers extends TokenChooser
 		{
-			public @S(10) C_KeywordChoice scope = new C_KeywordChoice(C_Program.getModifiers());
+			public @CHOICE C_KeywordChoice scope = new C_KeywordChoice(C_Program.getModifiers());
+			public @CHOICE C_Declaration declaration;
 		}
 		
 		public static class C_DataInitialValue extends TokenSequence

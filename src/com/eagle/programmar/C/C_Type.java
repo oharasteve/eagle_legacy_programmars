@@ -81,12 +81,17 @@ public class C_Type extends TokenSequence implements AbstractType
 			public @S(30) @OPT C_Comment comment1;
 			public @S(40) @OPT C_Type_Definition def;
 			public @S(50) @OPT C_Comment comment2;
-			public @S(60) PunctuationLeftBrace leftBrace;
-			public @S(70) @OPT C_Comment comment3;
-			public @S(80) @OPT TokenList<C_FieldOrComment> fields;
-			public @S(90) PunctuationRightBrace rightBrace;
-			public @S(100) @OPT PunctuationSemicolon semicolon;
+			public @S(60) @OPT C_StructBody body;
+			public @S(70) @OPT PunctuationSemicolon semicolon;
 			
+			public static class C_StructBody extends TokenSequence
+			{
+				public @S(10) PunctuationLeftBrace leftBrace;
+				public @S(20) @OPT C_Comment comment3;
+				public @S(30) @OPT TokenList<C_FieldOrComment> fields;
+				public @S(40) PunctuationRightBrace rightBrace;
+			}
+
 			public static class C_FieldOrComment extends TokenChooser
 			{
 				public @CHOICE C_Comment comment;
