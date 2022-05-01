@@ -32,7 +32,6 @@ public class C_Syntax extends EagleSyntax
 	private String[] keywords = new String[] {
 		"break",
 		"case",
-		"class",
 		"continue",
 		"const",
 		"default",

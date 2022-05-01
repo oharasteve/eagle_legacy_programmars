@@ -243,7 +243,7 @@ public class CMacro_Preprocess extends EagleInclude
 		if (DEBUG) System.out.println("***** Copying " + oldLine);
 		
 		// Returns null if nothing has changed
-		String newLine = replaceWords(token._currentLine, oldFileName, oldLine, 0);
+		String newLine = replaceWords(token._currentLine, oldFileName, oldLine);
 		
 		if (newLine == null)
 		{
@@ -274,7 +274,7 @@ public class CMacro_Preprocess extends EagleInclude
 	// Returns null if nothing changed
 	// QUESTION: should we ignore comments and strings? Currently: we don't check for them.
 	// Careful, this is recursive
-	private String replaceWords(int lineNum, String fname, String oldLine, int changesSoFarThisLine)
+	private String replaceWords(int lineNum, String fname, String oldLine)
 	{
 		// Don't ever do too many changes on any one line
 		// Note that there are many multi-line "lines"
@@ -299,7 +299,7 @@ public class CMacro_Preprocess extends EagleInclude
 					if (! Character.isLetterOrDigit(ch) && ch != '_')
 					{
 						String word = oldLine.substring(sc, ec);
-						// if (DEBUG) System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it is a macro");
+						// System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it is a macro");
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!
@@ -335,7 +335,7 @@ public class CMacro_Preprocess extends EagleInclude
 									if (changedLine != null)
 									{
 										if (DEBUG) System.out.println("************ " + changedLine);
-										String moreChanges = replaceWords(lineNum, fname, changedLine, changesSoFarThisLine+1);		// Recursive
+										String moreChanges = replaceWords(lineNum, fname, changedLine);		// Recursive
 										if (moreChanges != null) return moreChanges;
 										return changedLine;
 									}
@@ -369,8 +369,8 @@ public class CMacro_Preprocess extends EagleInclude
 			//throw new RuntimeException("Expected a left paren, not " + oldLine.substring(ec));
 		}
 		
-		if (DEBUG) System.out.println("******* ec-sc=" + (ec-sc) + "  oldLine = " + oldLine.substring(sc));
-		//int rparen = oldLine.indexOf(')', ec);
+		// System.out.println("******* ec-sc=" + (ec-sc) + "  oldLine = " + oldLine.substring(sc));
+		// int rparen = oldLine.indexOf(')', ec); // too simple! Might be embedded right parens!
 		int rparen = -1;
 		int depth = 0;
 		// Have to search for a matching right paren because there may be additional left parens in there
@@ -394,21 +394,24 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 		if (DEBUG) System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
 		
-		String[] actualParams;
-		String actualParamString;
+		String actualParamString = oldLine.substring(ec+1, rparen);
+		String[] actualParams = fancySplit(actualParamString);
+
+		// THIS STUFF IS BROKEN and JUNK
+		// Breaks isPrintable() test in CMacro_Preprocess_Test
 		// Handle nasty things like CM_ARGS((int a, int b))
-		if (rparen+1 < oldLine.length() && oldLine.charAt(ec+1) == '(' && oldLine.charAt(rparen+1) == ')')
-		{
-			rparen++;
-			actualParams = new String[1];
-			actualParamString = oldLine.substring(ec+1, rparen);
-			actualParams[0] = actualParamString;
-		}
-		else	// Normal macro function
-		{
-			actualParamString = oldLine.substring(ec+1, rparen);
-			actualParams = fancySplit(actualParamString);
-		}
+		// if (rparen+1 < oldLine.length() && oldLine.charAt(ec+1) == '(' && oldLine.charAt(rparen+1) == ')')
+		// {
+		//	rparen++;
+		//	actualParams = new String[1];
+		//	actualParamString = oldLine.substring(ec+1, rparen);
+		//	actualParams[0] = actualParamString;
+		// }
+		///else	// Normal macro function
+		// {
+		//	actualParamString = oldLine.substring(ec+1, rparen);
+		//	actualParams = fancySplit(actualParamString);
+		// }
 		
 		SeparatedList<CMacro_Param,PunctuationComma> formalParams = defineStatement.params.params;
 		int paramCount = 0;

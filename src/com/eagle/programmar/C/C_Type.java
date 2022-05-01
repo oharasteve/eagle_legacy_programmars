@@ -44,7 +44,7 @@ public class C_Type extends TokenSequence implements AbstractType
 
 	public static class C_TypeModifier extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice EXTENSION = new C_KeywordChoice("__extension__", "const", "volatile");
+		public @CHOICE C_KeywordChoice EXTENSION = new C_KeywordChoice("__extension__", "const", "volatile", "register");
 	}
 	
 	public static class C_TypeBase extends TokenChooser
@@ -182,7 +182,7 @@ public class C_Type extends TokenSequence implements AbstractType
 			{
 				public @S(10) C_Keyword VOID = new C_Keyword("void");
 				public @S(20) PunctuationLeftParen leftParen;
-				public @S(30) C_Type type;
+				public @S(30) @OPT SeparatedList<C_Type,PunctuationComma> types;
 				public @S(40) PunctuationRightParen rightParen;
 			}
 		}
