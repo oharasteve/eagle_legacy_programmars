@@ -107,6 +107,7 @@ public class JavaP_Syntax extends EagleSyntax
 			"lload", "lload_0", "lload_1", "lload_2", "lload_3",
 			"lmul",
 			"lookupswitch",
+			"lrem",
 			"lreturn",
 			"lstore", "lstore_2", "lstore_3",
 			"lsub",

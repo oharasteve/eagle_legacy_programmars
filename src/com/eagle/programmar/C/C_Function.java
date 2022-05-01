@@ -38,7 +38,7 @@ public class C_Function extends TokenSequence
 	
 	public static class C_FunctionTypeName extends TokenChooser
 	{
-		public @CHOICE C_Keyword MAIN = new C_Keyword("main");
+		public @CHOICE C_Keyword MAIN = new C_Keyword("main");   // Strange syntax with no return type on 'main'
 		
 		public @CHOICE static class C_Function_TypeAndName extends TokenSequence
 		{

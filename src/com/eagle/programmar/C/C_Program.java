@@ -102,8 +102,7 @@ public class C_Program extends EagleLanguage
 		public @CHOICE C_TypeDef typeDef;
 		public @LAST C_Data data;
 		public @CHOICE C_Function function;
-		public @CHOICE C_Statement statement;
-		public @CHOICE C_Type type;
+		public @LAST C_Statement statement;
 		public @CHOICE C_Enum cenum;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 	}

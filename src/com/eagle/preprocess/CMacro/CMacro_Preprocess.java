@@ -33,6 +33,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class CMacro_Preprocess extends EagleInclude
 {
 	private static final boolean DEBUG = false;
+	private static final boolean VERBOSE = false;
 	
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
@@ -70,6 +71,11 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 	
 		_oldLines = lines;
+		if (VERBOSE)
+		{
+			for (int i = 0; i < _depth; i++) System.out.print("  ");
+			System.out.println("*** Starting to read " + lines.getFileName());
+		}
 		
 		// Parse the include file
 		parser._parser.setTracer(_tracer);		// For debugging
@@ -136,14 +142,19 @@ public class CMacro_Preprocess extends EagleInclude
 		
 		// Save origin information
 		String oldFileName = lines.getFileName();
+		if (VERBOSE)
+		{
+			for (int i = 0; i < _depth; i++) System.out.print("  ");
+			System.out.println("*** Finished reading " + oldFileName);
+		}
 		for (int i = 0; i < _newLines.size(); i++)
 		{
 			EagleLineReader line = _newLines.get(i);
 			String origFile = line.getOriginalFileName();
 			if (origFile == null)
 			{
-				int origLine = line.getOriginalLineNumber() + 1;		// Why add 1 ??? Works better, but why?
-				if (DEBUG) System.out.println("***** 1 Setting line# to " + origLine + " in " + oldFileName + " for " + line.toString());
+				int origLine = line.getOriginalLineNumber();
+				// if (DEBUG) System.out.println("***** 1 Setting line# to " + origLine + " in " + oldFileName + " for " + line.toString());
 				line.setOriginalLocation(oldFileName, origLine);
 			}
 		}
@@ -232,7 +243,7 @@ public class CMacro_Preprocess extends EagleInclude
 		if (DEBUG) System.out.println("***** Copying " + oldLine);
 		
 		// Returns null if nothing has changed
-		String newLine = replaceWords(token._currentLine, oldLine, 0);
+		String newLine = replaceWords(token._currentLine, oldFileName, oldLine, 0);
 		
 		if (newLine == null)
 		{
@@ -263,10 +274,11 @@ public class CMacro_Preprocess extends EagleInclude
 	// Returns null if nothing changed
 	// QUESTION: should we ignore comments and strings? Currently: we don't check for them.
 	// Careful, this is recursive
-	private String replaceWords(int lineNum, String oldLine, int changesSoFarThisLine)
+	private String replaceWords(int lineNum, String fname, String oldLine, int changesSoFarThisLine)
 	{
-		// Don't ever do more than 10 changes on any one line
-		if (changesSoFarThisLine > 10) return null;
+		// Don't ever do too many changes on any one line
+		// Note that there are many multi-line "lines"
+		// if (changesSoFarThisLine > 100) return null;
 		
 		String newLine = null;
 		
@@ -287,7 +299,7 @@ public class CMacro_Preprocess extends EagleInclude
 					if (! Character.isLetterOrDigit(ch) && ch != '_')
 					{
 						String word = oldLine.substring(sc, ec);
-						if (DEBUG) System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it is a macro");
+						// if (DEBUG) System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it is a macro");
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!
@@ -300,7 +312,9 @@ public class CMacro_Preprocess extends EagleInclude
 								{
 									String newPiece = defineStatement.value.getValue();
 									String changedLine;
-									if (defineStatement.params != null && defineStatement.params.isPresent())
+									if (defineStatement.params != null &&
+											defineStatement.params.countTokens() > 0 &&
+											defineStatement.params.isPresent())
 									{
 										// Macro function, ugh
 										if (oldLine.charAt(ec) == ' ') ec++;	// Trim leading space
@@ -308,7 +322,11 @@ public class CMacro_Preprocess extends EagleInclude
 									}
 									else
 									{
-										if (DEBUG) System.out.println("Replacing " + word + " with " + newPiece);
+										if (VERBOSE)
+										{
+											for (int i = 0; i <= _depth; i++) System.out.print("  ");
+											System.out.println("****** " + fname + ":" + (lineNum+1) + " Replacing " + word + " with '" + newPiece + "'");
+										}
 										
 										// Apply the change
 										changedLine = oldLine.substring(0, sc) + newPiece + oldLine.substring(ec);
@@ -317,7 +335,7 @@ public class CMacro_Preprocess extends EagleInclude
 									if (changedLine != null)
 									{
 										if (DEBUG) System.out.println("************ " + changedLine);
-										String moreChanges = replaceWords(lineNum, changedLine, changesSoFarThisLine+1);		// Recursive
+										String moreChanges = replaceWords(lineNum, fname, changedLine, changesSoFarThisLine+1);		// Recursive
 										if (moreChanges != null) return moreChanges;
 										return changedLine;
 									}
@@ -393,10 +411,11 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 		
 		SeparatedList<CMacro_Param,PunctuationComma> formalParams = defineStatement.params.params;
-		int paramCount = formalParams.getPrimaryCount();
+		int paramCount = 0;
+		if (formalParams != null) paramCount = formalParams.getPrimaryCount();
 		if (actualParams.length != paramCount)
 		{
-			throw new RuntimeException("Number of parameters for " + word + " does not match, actual=" +
+			throw new RuntimeException("Warning: number of parameters for " + word + " does not match, actual=" +
 				actualParams.length + ", expected=" + paramCount + "\n  in " + actualParamString);
 		}
 

@@ -4,6 +4,7 @@
 package com.eagle.programmar.C;
 
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
+import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeStruct;
 import com.eagle.programmar.C.Statements.C_BreakStatement;
 import com.eagle.programmar.C.Statements.C_ContinueStatement;
 import com.eagle.programmar.C.Statements.C_DoStatement;
@@ -47,7 +48,8 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE C_SwitchStatement switchStatement;
 	public @CHOICE C_WhileStatement whileStatement;
 	
-	public @CHOICE C_Declaration declaration;	// Like [[fallthrough]]
+	public @CHOICE C_Declaration declaration;		// Like [[fallthrough]]
+	public @LAST C_TypeStruct structDefinition;		// Like struct bob_t;
 
 	// Do this one last, just because it is so slow
 	public @CHOICE C_ExpressionStatement assignmentStatement;

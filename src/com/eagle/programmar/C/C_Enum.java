@@ -25,7 +25,7 @@ public class C_Enum extends TokenSequence
 	public @S(30) @OPT C_Identifier_Reference typeName;
 	public @S(40) @OPT C_EnumType enumType;
 	public @S(50) @OPT C_TypeEnumValues values;
-	public @S(70) PunctuationSemicolon semicolon;
+	public @S(70) @OPT PunctuationSemicolon semicolon;
 	
 	public static class C_EnumType extends TokenSequence
 	{
