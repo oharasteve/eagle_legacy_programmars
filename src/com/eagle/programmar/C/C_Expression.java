@@ -327,7 +327,7 @@ public class C_Expression extends PrecedenceChooser
 	{
 		public @S(10) C_Keyword NEW = new C_Keyword("new");
 		public @S(20) C_Type type;
-		public @S(30) CPlus_NewWhat what;
+		public @S(30) @OPT CPlus_NewWhat what;
 		
 		public static class CPlus_NewWhat extends TokenChooser
 		{

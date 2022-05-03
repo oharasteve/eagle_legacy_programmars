@@ -18,7 +18,7 @@ public class SQL_Syntax extends EagleSyntax
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
-		_extraCharacters = "";
+		_extraCharacters = "_";
 		_commentInstance = new SQL_Comment();
 		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "||", "&&", "/*" };
 		

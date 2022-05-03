@@ -23,11 +23,12 @@ public class CPlus_Namespace extends TokenSequence
 	
 	public static class CPlus_NamespaceElement extends TokenChooser
 	{
+		public @FIRST CPlus_Data data;
 		public @CHOICE CPlus_ClassElement cpp_element;
 		public @CHOICE CPlus_Namespace cpp_namespace;
 		public @CHOICE CPlus_Class cpp_class;
 		public @CHOICE CPlus_Template cpp_template;
 		public @CHOICE CPlus_Using using;
-		public @LAST C_StatementOrComment c_stmt;
+		public @LAST C_StatementOrComment stmt;
 	}
 }

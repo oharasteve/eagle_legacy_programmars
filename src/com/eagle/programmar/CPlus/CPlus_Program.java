@@ -23,6 +23,7 @@ public class CPlus_Program extends C_Program
 		super(CPP, new CPlus_Syntax());
 		
 		super.addModifier("constexpr");
+		super.addModifier("mutable");
 	}
 	
 	@Override

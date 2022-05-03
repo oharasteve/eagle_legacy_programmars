@@ -17,6 +17,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -34,7 +35,8 @@ public class C_Function extends TokenSequence
 	public @S(50) C_FunctionTypeName typeName;
 	public @S(60) C_Function_ParameterDefs parameters;
 	public @S(70) @OPT TokenList<C_Comment> comments2;
-	public @S(80) C_FunctionBody body;
+	public @S(80) @OPT C_Keyword CONST = new C_Keyword("const");
+	public @S(90) C_FunctionBody body;
 	
 	public static class C_FunctionTypeName extends TokenChooser
 	{
@@ -61,6 +63,12 @@ public class C_Function extends TokenSequence
 	public static class C_FunctionParameter extends TokenChooser
 	{
 		public @FIRST C_FunctionPointer functionPointer;
+		
+		public @CHOICE static class C_FunctionParamAmpersand extends TokenSequence
+		{
+			public @S(10) PunctuationAmpersand ampersand;
+			public @S(20) C_Type type;
+		}
 		
 		public @CHOICE static class C_FunctionRegularParameter extends TokenSequence
 		{

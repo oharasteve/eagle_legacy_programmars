@@ -21,7 +21,7 @@ public class C_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_commentInstance = new CMacro_Comment();    // Doesn't work at all
 		_punctuationExceptions = new String[] {
-				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::"
+				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::", "+=", "-="
 		};
 		
 		addReservedWords(keywords);

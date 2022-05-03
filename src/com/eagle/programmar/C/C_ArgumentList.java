@@ -34,6 +34,7 @@ public class C_ArgumentList extends TokenSequence
 		public @FIRST C_Expression expr;
 		public @CHOICE C_Keyword CONST = new C_Keyword("const");
 		public @CHOICE C_TypePrimitive primitiveType;
+		public @LAST C_Lambda lambda;
 		
 		public @CHOICE static class C_ExpressionArgType extends TokenSequence
 		{

@@ -56,6 +56,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	{
 		public @FIRST CPlus_Constructor constructor;
 		public @FIRST CPlus_Operator operator;
+		public @FIRST CPlus_Data data;
 		public @CHOICE CPlus_Method method;
 		public @CHOICE CPlus_Extern externC;
 		public @CHOICE CPlus_Class innerClass;
@@ -81,6 +82,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 			public @S(20) @OPT C_Punctuation colonColon = new C_Punctuation("::");
 			public @S(30) @OPT TokenList<CPlus_ExtendsNamespace> extendsNamespace;
 			public @S(40) C_Identifier_Reference otherClass;
+			public @S(50) @OPT CPlus_Generic generic;
 			
 			public static class CPlus_ExtendsNamespace extends TokenSequence
 			{

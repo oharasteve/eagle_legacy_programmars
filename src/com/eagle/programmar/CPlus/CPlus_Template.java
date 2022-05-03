@@ -8,6 +8,7 @@ import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CPlus.Symbols.CPlus_Class_Definition;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
 public class CPlus_Template extends TokenSequence
@@ -17,5 +18,11 @@ public class CPlus_Template extends TokenSequence
 	public @S(30) C_KeywordChoice CLASS = new C_KeywordChoice("class", "typename");
 	public @S(40) CPlus_Class_Definition cls;
 	public @S(50) C_Punctuation greater = new C_Punctuation(">");
-	public @S(60) C_Function func;
+	public @S(60) CPlus_TemplateWhat what;
+	
+	public static class CPlus_TemplateWhat extends TokenChooser
+	{
+		public @CHOICE C_Function func;
+		public @CHOICE CPlus_Operator operator;
+	}
 }

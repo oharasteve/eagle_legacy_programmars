@@ -26,6 +26,10 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 	
 	public static class CMacro_Pragma_Type extends TokenChooser
 	{
+		// These are in Chromium (someplace)
+		// #pragma GCC diagnostic push
+		// #pragma GCC diagnostic ignored "-Wconversion-null"
+		
 		public @CHOICE CMacro_Keyword ONCE = new CMacro_Keyword("once");
 		
 		public @CHOICE static class CMacro_Pragma_Warning extends TokenSequence

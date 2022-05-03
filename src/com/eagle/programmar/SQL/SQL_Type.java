@@ -23,9 +23,9 @@ public class SQL_Type extends TokenChooser
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
-	public @CHOICE static class SQL_TypeVarChar extends TokenSequence
+	public @CHOICE static class SQL_BaseType extends TokenSequence
 	{
-		public @S(10) SQL_KeywordChoice charType = new SQL_KeywordChoice
+		public @S(10) SQL_KeywordChoice baseType = new SQL_KeywordChoice
 		(
 			"BIGINT",
 			"BLOB",
@@ -39,6 +39,7 @@ public class SQL_Type extends TokenChooser
 			"FLOAT",
 			"INT",
 			"INTEGER",
+			"INTEGER_NOT_NULL",	// Huh?
 			"LONGVARCHAR",
 			"NCLOB",
 			"NUMBER",

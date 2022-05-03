@@ -23,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CPlus_Constructor extends TokenSequence
 {
-	public @S(5) @OPT C_Keyword VIRTUAL = new C_Keyword("virtual");
+	public @S(5) @OPT C_KeywordChoice VIRTUAL = new C_KeywordChoice("virtual", "constexpr", "explicit");
 	public @S(10) @OPT C_Punctuation tilde = new C_Punctuation('~');
 	public @S(20) @OPT TokenList<CPlus_NamespaceQualifier> nameSpaces;
 	public @S(30) CPlus_Class_Reference constructorName;

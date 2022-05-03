@@ -243,7 +243,7 @@ public class CMacro_Preprocess extends EagleInclude
 		if (DEBUG) System.out.println("***** Copying " + oldLine);
 		
 		// Returns null if nothing has changed
-		String newLine = replaceWords(token._currentLine, oldFileName, oldLine);
+		String newLine = replaceWords(token._currentLine, oldFileName, oldLine, 0);
 		
 		if (newLine == null)
 		{
@@ -272,23 +272,37 @@ public class CMacro_Preprocess extends EagleInclude
 	}
 
 	// Returns null if nothing changed
-	// QUESTION: should we ignore comments and strings? Currently: we don't check for them.
+	// QUESTION: should we ignore comments? Currently: we don't check for it.
+	// There is a simple test for string literals
 	// Careful, this is recursive
-	private String replaceWords(int lineNum, String fname, String oldLine)
+	private String replaceWords(int lineNum, String fname, String oldLine, int depth)
 	{
 		// Don't ever do too many changes on any one line
 		// Note that there are many multi-line "lines"
-		// if (changesSoFarThisLine > 100) return null;
+		if (depth > 500)
+		{
+			String prtLine = oldLine;
+			if (oldLine.length() > 100) prtLine = oldLine.substring(0, 100) + " ...";
+			System.err.println("Exceeded maximum macro depth at line " + lineNum + ":  " + prtLine);
+			return null;	// Must be stuck in a loop ... bail out now
+		}
 		
 		String newLine = null;
 		
 		int sc = 0;
 		int len = oldLine.length();
+		boolean inQuotes = false;
 		while (sc < len)
 		{
 			// Find start of the next word
 			char ch = oldLine.charAt(sc);
-			if (Character.isLetter(ch) || ch == '_')
+			if (ch == '"')
+			{
+				inQuotes = ! inQuotes;
+			}
+			if (ch == '\n') inQuotes = false;
+			
+			if (! inQuotes && (Character.isLetter(ch) || ch == '_'))
 			{
 				// Found a word!
 				int ec = sc;
@@ -335,7 +349,7 @@ public class CMacro_Preprocess extends EagleInclude
 									if (changedLine != null)
 									{
 										if (DEBUG) System.out.println("************ " + changedLine);
-										String moreChanges = replaceWords(lineNum, fname, changedLine);		// Recursive
+										String moreChanges = replaceWords(lineNum, fname, changedLine, depth+1);		// Recursive
 										if (moreChanges != null) return moreChanges;
 										return changedLine;
 									}

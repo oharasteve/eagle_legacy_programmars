@@ -34,6 +34,7 @@ public class SQL_CreateStatement extends TokenChooser
 	public @CHOICE static class SQL_CreateTableStatement extends TokenSequence
 	{
 		public @S(10) @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
+		public @S(15) @OPT SQL_Keyword VIRTUAL = new SQL_Keyword("VIRTUAL");
 		public @S(20) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
 		public @S(30) @OPT SQL_IfNotExists ifNotExists;
 		public @S(40) SQL_Table_Definition table;
@@ -210,7 +211,14 @@ public class SQL_CreateStatement extends TokenChooser
 		public @S(80) PunctuationLeftParen leftParen;
 		public @S(90) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
 		public @S(100) PunctuationRightParen rightParen;
-		public @S(110) PunctuationSemicolon semicolon;
+		public @S(110) @OPT SQL_CreateIndexWhere where;
+		public @S(120) PunctuationSemicolon semicolon;
+		
+		public static class SQL_CreateIndexWhere extends TokenSequence
+		{
+			public @S(10) SQL_Keyword WHERE = new SQL_Keyword("WHERE");
+			public @S(20) SQL_Expression condition;
+		}
 	}
 	
 	public @CHOICE static class SQL_CreateViewStatement extends TokenSequence
