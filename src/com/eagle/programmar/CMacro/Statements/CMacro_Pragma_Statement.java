@@ -48,12 +48,20 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 				public @CHOICE CMacro_Identifier code;	// CS0618 and CS1718
 			}
 		}
-		
+
 		public @CHOICE static class CMacro_Pragma_Pack extends TokenSequence
 		{
 			public @S(10) CMacro_Keyword PACK = new CMacro_Keyword("pack");
 			public @S(20) PunctuationLeftParen leftParen;
 			public @S(30) @OPT CMacro_Keyword PUSH = new CMacro_Keyword("push");
+			public @S(40) PunctuationRightParen rightParen;
+		}
+		
+		public @CHOICE static class CMacro_Pragma_Intrinsic extends TokenSequence
+		{
+			public @S(10) CMacro_Keyword INTRINSIC = new CMacro_Keyword("intrinsic");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) @OPT CMacro_KeywordChoice ROT = new CMacro_KeywordChoice("rotl", "rotr");
 			public @S(40) PunctuationRightParen rightParen;
 		}
 	}

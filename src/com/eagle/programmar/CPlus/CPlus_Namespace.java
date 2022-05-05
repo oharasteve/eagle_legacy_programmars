@@ -4,8 +4,10 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
+import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Symbols.C_Namespace_Definition;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CPlus.CPlus_Class.CPlus_ClassElement;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -30,5 +32,18 @@ public class CPlus_Namespace extends TokenSequence
 		public @CHOICE CPlus_Template cpp_template;
 		public @CHOICE CPlus_Using using;
 		public @LAST C_StatementOrComment stmt;
+	}
+
+	public static class CPlus_NamespaceList extends TokenSequence
+	{
+		public @S(10) @OPT C_Punctuation colonColon = new C_Punctuation("::");
+		public @S(20) TokenList<CPlus_NamespaceColon> namespace;
+		
+		public static class CPlus_NamespaceColon extends TokenSequence
+		{
+			public @S(10) C_Identifier_Reference nameSpace;
+			public @S(20) @OPT CPlus_Generic generic;
+			public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
+		}
 	}
 }

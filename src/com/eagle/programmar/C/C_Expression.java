@@ -17,7 +17,6 @@ import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -32,7 +31,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class C_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
-
+	
 	public @P(10) C_HexNumber hex;
 	public @P(20) C_Number number;
 	public @P(30) C_Character_Literal characters;
@@ -323,16 +322,16 @@ public class C_Expression extends PrecedenceChooser
 	// would both have to derive off a generic base class
 	//
 	
-	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
-	{
-		public @S(10) C_Keyword NEW = new C_Keyword("new");
-		public @S(20) C_Type type;
-		public @S(30) @OPT CPlus_NewWhat what;
-		
-		public static class CPlus_NewWhat extends TokenChooser
-		{
-			public @CHOICE C_ParenthesizedExpression expr;
-			public @CHOICE C_Subscript size;
-		}
-	}
+//	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
+//	{
+//		public @S(10) C_Keyword NEW = new C_Keyword("new");
+//		public @S(20) C_Type type;
+//		public @S(30) @OPT CPlus_NewWhat what;
+//		
+//		public static class CPlus_NewWhat extends TokenChooser
+//		{
+//			public @CHOICE C_ParenthesizedExpression expr;
+//			public @CHOICE C_Subscript size;
+//		}
+//	}
 }

@@ -10,7 +10,7 @@ import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
-import com.eagle.programmar.CPlus.CPlus_Method.CPlus_NamespaceQualifier;
+import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;
 import com.eagle.programmar.CPlus.Symbols.CPlus_Class_Definition;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -28,7 +28,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public @S(10) @OPT C_Keyword FRIEND = new C_Keyword("friend");
 	public @S(20) C_KeywordChoice CLASS = new C_KeywordChoice("class", "struct");
 	public @S(30) @OPT TokenList<CPlus_ClassModifier> modifiers;
-	public @S(40) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
+	public @S(40) @OPT CPlus_NamespaceList namespaces;
 	public @S(50) CPlus_Class_Definition className;
 	public @S(60) @OPT CPlus_Generic generic;
 	public @S(70) @OPT CPlus_ClassExtendList extendsClasses;

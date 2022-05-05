@@ -3,14 +3,30 @@
 
 package com.eagle.programmar.CMacro.Terminals;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.TerminalNumberToken;
 
-public class CMacro_Number extends TerminalNumberToken
+public class CMacro_Number extends TerminalNumberToken implements EagleRunnable
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		return genericNumber(lines, "Ee", "Lf", true);
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		try
+		{
+			int x = Integer.parseInt(_numberAsText);
+			interpreter.pushInt(x);
+		}
+		catch (Exception ex)
+		{
+			throw new RuntimeException("Unable to evaluate " + _numberAsText);
+		}
 	}
 }

@@ -48,6 +48,7 @@ public class C_Program extends EagleLanguage
 			"constexpr",
 			"extern",
 			"inline",
+			"mutable",
 			"register",
 			"static",
 			"virtual",

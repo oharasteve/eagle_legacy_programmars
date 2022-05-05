@@ -9,11 +9,10 @@ import com.eagle.programmar.C.C_Statement.C_StatementBlock;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
-import com.eagle.programmar.CPlus.CPlus_Method.CPlus_NamespaceQualifier;
+import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;
 import com.eagle.programmar.CPlus.Symbols.CPlus_Class_Reference;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -25,7 +24,7 @@ public class CPlus_Constructor extends TokenSequence
 {
 	public @S(5) @OPT C_KeywordChoice VIRTUAL = new C_KeywordChoice("virtual", "constexpr", "explicit");
 	public @S(10) @OPT C_Punctuation tilde = new C_Punctuation('~');
-	public @S(20) @OPT TokenList<CPlus_NamespaceQualifier> nameSpaces;
+	public @S(20) @OPT CPlus_NamespaceList nameSpaces;
 	public @S(30) CPlus_Class_Reference constructorName;
 	public @S(40) C_Function_ParameterDefs parameters;
 	public @S(50) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
@@ -51,7 +50,7 @@ public class CPlus_Constructor extends TokenSequence
 		public static class CPlus_ConstructorCallSuper extends TokenSequence
 		{
 			public @S(10) CPlus_Class_Reference parent;
-			public @S(20) @OPT TokenList<CPlus_NamespaceQualifier> namespaces;
+			public @S(20) @OPT CPlus_NamespaceList namespaces;
 			public @S(30) PunctuationLeftParen leftParen;
 			public @S(40) @OPT C_ArgumentList argList;
 			public @S(50) PunctuationRightParen rightParen;

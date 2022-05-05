@@ -61,6 +61,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
 		boolean isTrue = expr.getBooleanValue(preprocessor);
+		// System.out.println("$$$$$$$$$$$$$$$$$$ " + expr.showText() + " is " + isTrue);
 		TokenList<CMacro_Element> whichElements = null;
 		if (isTrue)
 		{
@@ -90,6 +91,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		
 		for (AbstractToken token : whichElements._elements)
 		{
+			// System.out.println("      $$$$$$$$$$$$$$$ " + token.showText());
 			if (token instanceof CMacro_Element)
 			{
 				CMacro_Element element = (CMacro_Element) token;

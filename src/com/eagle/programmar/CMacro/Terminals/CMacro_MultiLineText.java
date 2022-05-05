@@ -19,6 +19,7 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 		int recLen = firstRec.length();
 		if (recLen < _currentChar) return false;
 
+		boolean inComment = false;
 		while (endLine < lines.size())
 		{
 			EagleLineReader rec = lines.get(endLine);
@@ -26,11 +27,24 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 			endLine++;
 			
 			// Don't allow lines that start with a #
-			if (rec.trim().startsWith("#"))
+			if (!inComment && rec.trim().startsWith("#"))
 			{
 				endLine--;
 				if (endLine == _currentLine) return false;
 				break;
+			}
+			
+			boolean inQuotes = false;
+			for (int i = 0; i < recLen-1; i++)	// -1 so we don't run off the end
+			{
+				char ch = rec.charAt(i);
+				char nextch = rec.charAt(i+1);
+				if (ch == '"') inQuotes = ! inQuotes;
+				if (! inQuotes)
+				{
+					if (ch == '/' && nextch == '*') inComment = true;
+					if (ch == '*' && nextch == '/') inComment = false;
+				}
 			}
 			
 			if (text.length() > 0) text.append('\n');

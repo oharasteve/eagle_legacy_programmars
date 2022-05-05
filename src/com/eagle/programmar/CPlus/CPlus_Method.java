@@ -10,6 +10,7 @@ import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -32,23 +33,16 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 		{
 			public @S(5) @OPT C_Keyword CONST = new C_Keyword("const");
 			public @S(10) CPlus_Type type;
-			public @S(20) @OPT TokenList<CPlus_NamespaceQualifier> nameSpaces;
+			public @S(20) @OPT CPlus_NamespaceList nameSpaces;
 			public @S(30) C_Identifier_Reference methodName;
 		}
 
 		public @LAST static class CPlus_MethodNoType extends TokenSequence
 		{
-			public @S(10) TokenList<CPlus_NamespaceQualifier> nameSpaces;
+			public @S(10) CPlus_NamespaceList nameSpaces;
 			public @S(20) @OPT C_Punctuation tilde = new C_Punctuation('~');
 			public @S(30) C_Identifier_Reference methodName;
 		}
-	}
-	
-	public static class CPlus_NamespaceQualifier extends TokenSequence
-	{
-		public @S(10) C_Identifier_Reference nameSpace;
-		public @S(20) @OPT CPlus_Generic generic;
-		public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
 	}
 	
 	public static class CPlus_MethodBody extends TokenChooser
