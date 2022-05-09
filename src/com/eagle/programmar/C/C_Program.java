@@ -106,5 +106,7 @@ public class C_Program extends EagleLanguage
 		public @LAST C_Statement statement;
 		public @CHOICE C_Enum cenum;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		
+		// NOTE: C++ adds the 'extern' statement here. See the constructor in CPlus_Program.java
 	}
 }

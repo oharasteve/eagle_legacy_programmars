@@ -32,6 +32,8 @@ public class CPlus_Program extends C_Program
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceGlobal.clas);
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceSub.class);
 		}
+		
+		TokenChooser.addChoice(C_StatementOrComment.class, CPlus_Extern.class);
 	}
 	
 	@Override

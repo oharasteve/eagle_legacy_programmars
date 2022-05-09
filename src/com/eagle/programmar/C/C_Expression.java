@@ -319,19 +319,8 @@ public class C_Expression extends PrecedenceChooser
 	//
 	// Not easy to have CPlus_Expression extend C_Expression.
 	// Have to use <generics> to make it work. C_Expression and CPlus_Expression
-	// would both have to derive off a generic base class
+	// would both have to derive off a generic base class which we are avoiding.
 	//
-	
-//	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
-//	{
-//		public @S(10) C_Keyword NEW = new C_Keyword("new");
-//		public @S(20) C_Type type;
-//		public @S(30) @OPT CPlus_NewWhat what;
-//		
-//		public static class CPlus_NewWhat extends TokenChooser
-//		{
-//			public @CHOICE C_ParenthesizedExpression expr;
-//			public @CHOICE C_Subscript size;
-//		}
-//	}
+
+	// NOTE: C++ adds the 'new' operator here. See CPlus_Expression.java and the constructor in CPlus_Program.java
 }

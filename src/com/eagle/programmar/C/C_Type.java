@@ -44,7 +44,8 @@ public class C_Type extends TokenSequence implements AbstractType
 
 	public static class C_TypeModifier extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice EXTENSION = new C_KeywordChoice("__extension__", "const", "volatile", "register");
+		public @CHOICE C_KeywordChoice EXTENSION = 
+				new C_KeywordChoice("__extension__", "const", "volatile", "register", "static");
 	}
 	
 	public static class C_TypeBase extends TokenChooser

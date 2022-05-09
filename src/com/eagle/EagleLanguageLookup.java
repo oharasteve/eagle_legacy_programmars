@@ -81,6 +81,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(JSON_Program.JSON, JSON_Program.class, ".json");
 		add(Lisp_Program.LISP, Lisp_Program.class, ".lisp");
 		add(Natural_Program.NATURAL, Natural_Program.class, ".ntf");
+		// add(ObjectiveC_Program.OBJECTIVEC, ObjectiveC_Program.class, ".m");
 		add(Perl_Program.PERL, Perl_Program.class);
 		add(PHP_Program.PHP, PHP_Program.class, ".php");
 		add(PLI_Program.PLI, PLI_Program.class, ".pli");

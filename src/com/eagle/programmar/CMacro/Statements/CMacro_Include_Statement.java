@@ -38,7 +38,6 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 		AbstractToken which = what.getWhich(); 
 		if (! (which instanceof CMacro_Literal)) return false;
 		String fileName = ((CMacro_Literal) which).getValue();
-		//System.out.println("#include " + macroName);
 		EagleFileReader macro;
 		try
 		{
@@ -59,6 +58,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 		{
 			CMacro_Preprocess innerPreprocessor = new CMacro_Preprocess(preprocessor);
 			EagleFileReader macroLines = innerPreprocessor.preprocessFile(preprocessor._parser, macro, preprocessor._depth+1);
+			if (macroLines == null) return false;
 			for (EagleLineReader line : macroLines.lines())
 			{
 				preprocessor.addLine(line);

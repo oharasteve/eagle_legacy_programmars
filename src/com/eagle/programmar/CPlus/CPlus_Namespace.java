@@ -18,6 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 public class CPlus_Namespace extends TokenSequence
 {
 	public @S(10) C_Keyword NAMESPACE = new C_Keyword("namespace");
+	public @S(15) @OPT TokenList<CPlus_NamespaceList> qualifiers;
 	public @S(20) @OPT C_Namespace_Definition namespace;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT TokenList<CPlus_NamespaceElement> statements;

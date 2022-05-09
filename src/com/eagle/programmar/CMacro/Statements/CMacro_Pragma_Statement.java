@@ -8,6 +8,7 @@ import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Identifier;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
 import com.eagle.programmar.CMacro.Terminals.CMacro_KeywordChoice;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Literal;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Number;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.TokenChooser;
@@ -36,15 +37,16 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		{
 			public @S(10) CMacro_Keyword WARNING = new CMacro_Keyword("warning");
 			public @S(20) @OPT PunctuationLeftParen leftParen;
-			public @S(30) CMacro_KeywordChoice DISABLE = new CMacro_KeywordChoice("disable", "restore");
+			public @S(30) CMacro_KeywordChoice DISABLE =
+					new CMacro_KeywordChoice("disable", "restore", "push", "pop");
 			public @S(40) @OPT PunctuationColon colon;
-			public @S(50) TokenList<CMacro_PragmaCode> codes;
+			public @S(50) @OPT TokenList<CMacro_PragmaCode> codes;
 			public @S(60) @OPT PunctuationRightParen rightParen;
 			
 			public static class CMacro_PragmaCode extends TokenChooser
 			{
 				public @CHOICE PunctuationComma comma;
-				public @CHOICE CMacro_Number number;	// 1718 1501 0612 3021 etc etc
+				public @CHOICE CMacro_Number number;	// 1718 1501 0612 3021 4702 etc etc
 				public @CHOICE CMacro_Identifier code;	// CS0618 and CS1718
 			}
 		}
@@ -53,8 +55,10 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		{
 			public @S(10) CMacro_Keyword PACK = new CMacro_Keyword("pack");
 			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) @OPT CMacro_Keyword PUSH = new CMacro_Keyword("push");
-			public @S(40) PunctuationRightParen rightParen;
+			public @S(30) @OPT CMacro_KeywordChoice PUSH = new CMacro_KeywordChoice("push", "pop");
+			public @S(40) @OPT PunctuationComma comma;
+			public @S(50) @OPT CMacro_Number number;	// 1 perhaps
+			public @S(60) PunctuationRightParen rightParen;
 		}
 		
 		public @CHOICE static class CMacro_Pragma_Intrinsic extends TokenSequence
@@ -63,6 +67,24 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 			public @S(20) PunctuationLeftParen leftParen;
 			public @S(30) @OPT CMacro_KeywordChoice ROT = new CMacro_KeywordChoice("rotl", "rotr");
 			public @S(40) PunctuationRightParen rightParen;
+		}
+		
+		public @CHOICE static class CMacro_Pragma_CLang extends TokenSequence
+		{
+			public @S(10) CMacro_Keyword CLANG = new CMacro_Keyword("clang");
+			public @S(20) CMacro_Keyword DIAGNOSTIC = new CMacro_Keyword("diagnostic");
+			public @S(30) CMacro_Pragme_CLang_What what;
+			
+			public static class CMacro_Pragme_CLang_What extends TokenChooser
+			{
+				public @CHOICE CMacro_Keyword PUSH = new CMacro_Keyword("push");
+				
+				public @CHOICE static class CMacro_Pragme_CLangIgnored extends TokenSequence
+				{
+					public @S(10) CMacro_Keyword IGNORED = new CMacro_Keyword("ignored");
+					public @S(20) CMacro_Literal warning;	// e.g., "-Wunguarded-availability"
+				}
+			}
 		}
 	}
 	

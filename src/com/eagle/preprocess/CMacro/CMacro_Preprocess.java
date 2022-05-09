@@ -82,8 +82,9 @@ public class CMacro_Preprocess extends EagleInclude
 		CMacro_Program pgm = new CMacro_Program();
 		if (!parser.parseLines(lines, pgm, pgm))
 		{
-			String msg = parser._parser.getStoppingPoint(lines.getFileName());
-			throw new RuntimeException("Unable to parse " + lines.getFileName() + '\n' + msg);
+			// String msg = parser._parser.getStoppingPoint(lines.getFileName());
+			System.err.println("Unable to parse " + lines.getFileName());
+			return null;
 		}
 		
 //		DumpTree dump = new DumpTree();
@@ -331,8 +332,8 @@ public class CMacro_Preprocess extends EagleInclude
 											defineStatement.params.isPresent())
 									{
 										// Macro function, ugh
-										if (oldLine.charAt(ec) == ' ') ec++;	// Trim leading space
-										changedLine = processDefineFunction(sc, ec, word, oldLine, newPiece, defineStatement);
+										if (ec < len && oldLine.charAt(ec) == ' ') ec++;	// Trim leading space
+										changedLine = processDefineFunction(lineNum, sc, ec, word, oldLine, newPiece, defineStatement);
 									}
 									else
 									{
@@ -346,13 +347,12 @@ public class CMacro_Preprocess extends EagleInclude
 										changedLine = oldLine.substring(0, sc) + newPiece + oldLine.substring(ec);
 									}
 									
-									if (changedLine != null)
-									{
-										if (DEBUG) System.out.println("************ " + changedLine);
-										String moreChanges = replaceWords(lineNum, fname, changedLine, depth+1);		// Recursive
-										if (moreChanges != null) return moreChanges;
-										return changedLine;
-									}
+									if (changedLine == null) return null;
+
+									if (DEBUG) System.out.println("************ " + changedLine);
+									String moreChanges = replaceWords(lineNum, fname, changedLine, depth+1);		// Recursive
+									if (moreChanges != null) return moreChanges;
+									return changedLine;
 								}
 							}
 							else
@@ -374,9 +374,12 @@ public class CMacro_Preprocess extends EagleInclude
 	}
 	
 	// Handle macro functions.
-	private static String processDefineFunction(int sc, int ec, String word, String oldLine, String newPiece,
+	private static String processDefineFunction(int line, int sc, int ec, String word, String oldLine, String newPiece,
 			CMacro_Define_Statement defineStatement)
 	{
+		int nc = oldLine.length();
+		if (ec >= nc) return null;
+		
 		if (oldLine.charAt(ec) != '(')
 		{
 			return null;	// Don't expand the macro -- it was supposed to be a function, but no params were passed
@@ -388,7 +391,7 @@ public class CMacro_Preprocess extends EagleInclude
 		int rparen = -1;
 		int depth = 0;
 		// Have to search for a matching right paren because there may be additional left parens in there
-		for (int i = ec + 1; i < oldLine.length(); i++)
+		for (int i = ec + 1; i <nc; i++)
 		{
 			char ch = oldLine.charAt(i);
 			if (ch == '(') depth++;
@@ -404,11 +407,12 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 		if (rparen < 0)
 		{
-			throw new RuntimeException("Missing right paren in " + oldLine.substring(ec));
+			System.err.println("*** Line " + (line+1) + " is missing right paren in " + oldLine.substring(ec));
+			return null;
 		}
 		if (DEBUG) System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
 		
-		String actualParamString = oldLine.substring(ec+1, rparen);
+		String actualParamString = oldLine.substring(ec+1, rparen).trim();
 		String[] actualParams = fancySplit(actualParamString);
 
 		// THIS STUFF IS BROKEN and JUNK
@@ -432,8 +436,10 @@ public class CMacro_Preprocess extends EagleInclude
 		if (formalParams != null) paramCount = formalParams.getPrimaryCount();
 		if (actualParams.length != paramCount)
 		{
-			throw new RuntimeException("Warning: number of parameters for " + word + " does not match, actual=" +
-				actualParams.length + ", expected=" + paramCount + "\n  in " + actualParamString);
+			System.err.println("*** Line " + (line+1) + " number of parameters for " + word + " does not match, actual=" +
+				actualParams.length + ", expected=" + paramCount);
+			if (actualParamString.length() > 0) System.err.println("  in " + actualParamString);
+			return null;
 		}
 
 		int index = 0;
