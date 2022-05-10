@@ -44,6 +44,7 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 				{
 					if (ch == '/' && nextch == '*') inComment = true;
 					if (ch == '*' && nextch == '/') inComment = false;
+					if (ch == '/' && nextch == '/') break;
 				}
 			}
 			

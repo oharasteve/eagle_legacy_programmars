@@ -18,7 +18,6 @@ import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -37,7 +36,7 @@ public class C_Type extends TokenSequence implements AbstractType
 {
 	public @S(10) @OPT TokenList<C_TypeModifier> modifiers;
 	public @S(30) C_TypeBase base;
-	public @S(40) @OPT C_TypeGeneric generic;
+	public @S(40) @OPT C_Generic generic;
 	public @S(50) @OPT C_TypeFunction function;
 	public @S(60) @OPT C_Keyword CONST = new C_Keyword("const");
 	public @S(70) @OPT TokenList<C_TypeStar> stars;
@@ -166,26 +165,6 @@ public class C_Type extends TokenSequence implements AbstractType
 			public @S(10) @OPT C_Keyword STRUCT = new C_Keyword("struct");
 			public @S(20) C_Identifier_Reference typeName;
 			public @S(30) @OPT TokenList<C_TypeStar> stars;
-		}
-	}
-	
-	public static class C_TypeGeneric extends TokenSequence
-	{
-		public @S(10) C_Punctuation lessThan = new C_Punctuation('<');
-		public @S(20) SeparatedList<C_GenericType,PunctuationComma> types;
-		public @S(30) C_Punctuation greaterThan = new C_Punctuation('>');
-		
-		public static class C_GenericType extends TokenChooser
-		{
-			public @CHOICE C_Type type;
-			
-			public @FIRST static class C_Plus_GenericVoid extends TokenSequence
-			{
-				public @S(10) C_Keyword VOID = new C_Keyword("void");
-				public @S(20) PunctuationLeftParen leftParen;
-				public @S(30) @OPT SeparatedList<C_Type,PunctuationComma> types;
-				public @S(40) PunctuationRightParen rightParen;
-			}
 		}
 	}
 	

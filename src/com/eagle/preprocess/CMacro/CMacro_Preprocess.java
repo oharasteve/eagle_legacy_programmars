@@ -24,6 +24,7 @@ import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement.CMacro_Parameters.CMacro_Param;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Parameter_Definition;
+import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TerminalEndOfLine;
@@ -54,12 +55,10 @@ public class CMacro_Preprocess extends EagleInclude
 	{
 		_parser = parser;
 		
-		if (DEBUG)
-		{
-			System.out.println("===================================================");
-			System.out.println("================ Pre-processing " + lines.getFileName() + " lines=" + lines.size());
-			System.out.println();
-		}
+		StringBuffer sb = new StringBuffer("*** Pre-processing ");
+		for (int i = 0; i < _depth; i++) sb.append(". ");
+		sb.append(lines.getFileName()).append(" lines=").append(lines.size());
+		System.out.println(sb);
 
 		if (_depth > 0)
 		{
@@ -80,6 +79,15 @@ public class CMacro_Preprocess extends EagleInclude
 		// Parse the include file
 		parser._parser.setTracer(_tracer);		// For debugging
 		CMacro_Program pgm = new CMacro_Program();
+		if (_tracer != null)
+		{
+			if (_parser._parser.getFileName() == null)
+			{
+				_parser._parser.setFileName(lines.getFileName());
+			}
+			_tracer.header(_parser._parser, pgm);
+		}
+
 		if (!parser.parseLines(lines, pgm, pgm))
 		{
 			// String msg = parser._parser.getStoppingPoint(lines.getFileName());
@@ -159,6 +167,11 @@ public class CMacro_Preprocess extends EagleInclude
 				line.setOriginalLocation(oldFileName, origLine);
 			}
 		}
+
+		sb = new StringBuffer("***           done ");
+		for (int i = 0; i < _depth; i++) sb.append(". ");
+		sb.append(lines.getFileName()).append(" lines=").append(_newLines.size());
+		System.out.println(sb);
 		
 		return _newLines;
 	}
@@ -333,7 +346,7 @@ public class CMacro_Preprocess extends EagleInclude
 									{
 										// Macro function, ugh
 										if (ec < len && oldLine.charAt(ec) == ' ') ec++;	// Trim leading space
-										changedLine = processDefineFunction(lineNum, sc, ec, word, oldLine, newPiece, defineStatement);
+										changedLine = processDefineFunction(lineNum, sc, ec, word, oldLine, newPiece, defineStatement, fname);
 									}
 									else
 									{
@@ -375,7 +388,7 @@ public class CMacro_Preprocess extends EagleInclude
 	
 	// Handle macro functions.
 	private static String processDefineFunction(int line, int sc, int ec, String word, String oldLine, String newPiece,
-			CMacro_Define_Statement defineStatement)
+			CMacro_Define_Statement defineStatement, String fname)
 	{
 		int nc = oldLine.length();
 		if (ec >= nc) return null;
@@ -408,6 +421,8 @@ public class CMacro_Preprocess extends EagleInclude
 		if (rparen < 0)
 		{
 			System.err.println("*** Line " + (line+1) + " is missing right paren in " + oldLine.substring(ec));
+			System.err.println("    Used at (or after) line " + (line+1) + " of " + fname);
+			System.err.println("    #define is at line " + (defineStatement._currentLine+1) + " of " + defineStatement._fileName);
 			return null;
 		}
 		if (DEBUG) System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
@@ -415,30 +430,25 @@ public class CMacro_Preprocess extends EagleInclude
 		String actualParamString = oldLine.substring(ec+1, rparen).trim();
 		String[] actualParams = fancySplit(actualParamString);
 
-		// THIS STUFF IS BROKEN and JUNK
-		// Breaks isPrintable() test in CMacro_Preprocess_Test
-		// Handle nasty things like CM_ARGS((int a, int b))
-		// if (rparen+1 < oldLine.length() && oldLine.charAt(ec+1) == '(' && oldLine.charAt(rparen+1) == ')')
-		// {
-		//	rparen++;
-		//	actualParams = new String[1];
-		//	actualParamString = oldLine.substring(ec+1, rparen);
-		//	actualParams[0] = actualParamString;
-		// }
-		///else	// Normal macro function
-		// {
-		//	actualParamString = oldLine.substring(ec+1, rparen);
-		//	actualParams = fancySplit(actualParamString);
-		// }
-		
 		SeparatedList<CMacro_Param,PunctuationComma> formalParams = defineStatement.params.params;
 		int paramCount = 0;
 		if (formalParams != null) paramCount = formalParams.getPrimaryCount();
+		if (paramCount > 0)
+		{
+			CMacro_Param first = (CMacro_Param) formalParams.first();
+			if (first.getWhich() instanceof CMacro_Punctuation) // ellipsis (...) is special
+			{
+				paramCount = 0;
+			}
+		}
+
 		if (actualParams.length != paramCount)
 		{
-			System.err.println("*** Line " + (line+1) + " number of parameters for " + word + " does not match, actual=" +
+			System.err.println("*** Number of parameters for " + word + " does not match, actual=" +
 				actualParams.length + ", expected=" + paramCount);
-			if (actualParamString.length() > 0) System.err.println("  in " + actualParamString);
+			if (actualParamString.length() > 0) System.err.println("    Actual parameter string: " + actualParamString);
+			System.err.println("    Used at (or after) line " + (line+1) + " of " + fname);
+			System.err.println("    #define is at line " + (defineStatement._currentLine+1) + " of " + defineStatement._fileName);
 			return null;
 		}
 
