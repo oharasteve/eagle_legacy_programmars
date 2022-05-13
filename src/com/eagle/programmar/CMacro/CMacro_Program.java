@@ -6,6 +6,7 @@ package com.eagle.programmar.CMacro;
 import com.eagle.core.EagleLanguage;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.programmar.CMacro.Terminals.CMacro_MultiLineText;
@@ -41,6 +42,7 @@ public class CMacro_Program extends EagleLanguage
 	
 	public static class CMacro_Element extends TokenChooser
 	{
+		public @CHOICE CMacro_Pragma_Statement pragma;
 		public @CHOICE CMacro_CommentLine comment;
 		public @CHOICE CMacro_StatementOrComment stmt;
 		public @CHOICE CMacro_MultiLineText textLine;

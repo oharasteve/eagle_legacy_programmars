@@ -4,6 +4,8 @@
 package com.eagle.programmar.C;
 
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_Literal;
+import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -20,6 +22,9 @@ public class C_Generic extends TokenSequence
 	
 	public static class C_GenericType extends TokenChooser
 	{
+		public @LAST C_Number number;
+		public @LAST C_Literal literal;
+		
 		public @CHOICE static class C_Plus_GenericType extends TokenSequence
 		{
 			public @S(10) C_Type type;

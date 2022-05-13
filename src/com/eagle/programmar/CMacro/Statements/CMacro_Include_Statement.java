@@ -22,7 +22,8 @@ import com.eagle.tokens.TokenSequence;
 public class CMacro_Include_Statement extends TokenSequence implements CMacro_Processable
 {
 	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
-	public @S(20) @DOC("Include-Syntax.html") CMacro_KeywordChoice INCLUDE = new CMacro_KeywordChoice("include", "import");
+	public @S(20) @DOC("Include-Syntax.html") CMacro_KeywordChoice INCLUDE =
+			new CMacro_KeywordChoice("include", "include_next", "import");
 	public @S(30) CMacro_IncludeWhat what;
 	public @S(40) @OPT TokenList<CMacro_Comment> comments;
 	

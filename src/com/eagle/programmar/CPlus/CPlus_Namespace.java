@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CPlus;
 
+import com.eagle.programmar.C.C_Generic;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Symbols.C_Namespace_Definition;
@@ -43,7 +44,7 @@ public class CPlus_Namespace extends TokenSequence
 		public static class CPlus_NamespaceColon extends TokenSequence
 		{
 			public @S(10) C_Identifier_Reference nameSpace;
-			public @S(20) @OPT CPlus_Generic generic;
+			public @S(20) @OPT C_Generic generic;
 			public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
 		}
 	}

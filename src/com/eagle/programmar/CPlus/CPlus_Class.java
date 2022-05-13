@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CPlus;
 
+import com.eagle.programmar.C.C_Generic;
 import com.eagle.programmar.C.C_ParenthesizedExpression;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
@@ -30,7 +31,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public @S(30) @OPT TokenList<CPlus_ClassModifier> modifiers;
 	public @S(40) @OPT CPlus_NamespaceList namespaces;
 	public @S(50) CPlus_Class_Definition className;
-	public @S(60) @OPT CPlus_Generic generic;
+	public @S(60) @OPT C_Generic generic;
 	public @S(70) @OPT CPlus_ClassExtendList extendsClasses;
 	public @S(80) CPlus_ClassBody body;
 	
@@ -82,7 +83,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 			public @S(20) @OPT C_Punctuation colonColon = new C_Punctuation("::");
 			public @S(30) @OPT TokenList<CPlus_ExtendsNamespace> extendsNamespace;
 			public @S(40) C_Identifier_Reference otherClass;
-			public @S(50) @OPT CPlus_Generic generic;
+			public @S(50) @OPT C_Generic generic;
 			
 			public static class CPlus_ExtendsNamespace extends TokenSequence
 			{

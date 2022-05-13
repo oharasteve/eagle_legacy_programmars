@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.programmar.C.C_Type.C_Generic;
 import com.eagle.programmar.C.Terminals.C_Character_Literal;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_HexNumber;

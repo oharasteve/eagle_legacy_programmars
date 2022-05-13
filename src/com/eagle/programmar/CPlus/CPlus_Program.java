@@ -12,6 +12,10 @@ import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.programmar.CPlus.Terminals.CPlus_Literal;
+import com.eagle.programmar.ObjectiveC.ObjectiveC_Class;
+import com.eagle.programmar.ObjectiveC.ObjectiveC_Interface;
+import com.eagle.programmar.ObjectiveC.ObjectiveC_Protocol;
+import com.eagle.programmar.ObjectiveC.ObjectiveC_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -32,6 +36,8 @@ public class CPlus_Program extends C_Program
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceGlobal.clas);
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceSub.class);
 		}
+		
+		C_Program.addPrimitive("BOOL");		// Might be ObjectiveC only
 		
 		TokenChooser.addChoice(C_StatementOrComment.class, CPlus_Extern.class);
 	}
@@ -60,6 +66,9 @@ public class CPlus_Program extends C_Program
 		public @CHOICE CPlus_Using using;
 		public @CHOICE CPlus_Method method;
 		public @CHOICE CPlus_Extern extern;
+		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Class objCclass;
+		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Interface objCinterface;
+		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Protocol objCprotocol;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
 	}

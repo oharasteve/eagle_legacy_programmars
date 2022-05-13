@@ -60,10 +60,14 @@ public class C_Program extends EagleLanguage
 	{
 		// Append to an array
 		int n = primitives.length;
-		String[] temp = new String[n+1];
 		for (int i = 0; i < n; i++)
 		{
 			if (primitives[i].equals(primitive)) return;
+		}
+
+		String[] temp = new String[n+1];
+		for (int i = 0; i < n; i++)
+		{
 			temp[i] = primitives[i];
 		}
 		temp[n] = primitive;
@@ -74,10 +78,14 @@ public class C_Program extends EagleLanguage
 	{
 		// Append to an array
 		int n = modifiers.length;
-		String[] temp = new String[n+1];
 		for (int i = 0; i < n; i++)
 		{
 			if (modifiers[i].equals(modifier)) return;
+		}
+
+		String[] temp = new String[n+1];
+		for (int i = 0; i < n; i++)
+		{
 			temp[i] = modifiers[i];
 		}
 		temp[n] = modifier;
