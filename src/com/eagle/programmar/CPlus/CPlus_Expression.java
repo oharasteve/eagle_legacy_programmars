@@ -7,8 +7,6 @@ import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Subscript;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Terminals.C_Keyword;
-import com.eagle.tokens.PrecedenceChooser.P;
-import com.eagle.tokens.PrecedenceChooser.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -16,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CPlus_Expression
+public class CPlus_Expression extends C_Expression
 {
 	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
 	{

@@ -40,6 +40,7 @@ public class CPlus_Program extends C_Program
 		C_Program.addPrimitive("BOOL");		// Might be ObjectiveC only
 		
 		TokenChooser.addChoice(C_StatementOrComment.class, CPlus_Extern.class);
+		TokenChooser.addChoice(C_StatementOrComment.class, CPlus_Constructor.class);
 	}
 	
 	@Override

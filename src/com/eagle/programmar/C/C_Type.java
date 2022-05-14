@@ -35,6 +35,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class C_Type extends TokenSequence implements AbstractType
 {
 	public @S(10) @OPT TokenList<C_TypeModifier> modifiers;
+	public @S(20) @OPT TokenList<C_NamespaceType> namespaces;
 	public @S(30) C_TypeBase base;
 	public @S(40) @OPT C_Generic generic;
 	public @S(50) @OPT C_TypeFunction function;
@@ -47,17 +48,16 @@ public class C_Type extends TokenSequence implements AbstractType
 				new C_KeywordChoice("__extension__", "const", "volatile", "register", "static");
 	}
 	
+	public static class C_NamespaceType extends TokenSequence
+	{
+		public @S(10) C_Identifier_Reference namespace;
+		public @S(20) C_Punctuation colonColon = new C_Punctuation("::");
+	}
+
 	public static class C_TypeBase extends TokenChooser
 	{
 		public @CHOICE C_Enum enumeration;
 		
-		public @FIRST static class C_NamespaceType extends TokenSequence
-		{
-			public @S(10) C_Identifier_Reference namespace;
-			public @S(20) C_Punctuation colonColon = new C_Punctuation("::");
-			public @S(30) C_TypeBase typebase;
-		}
-
 		public @CHOICE static class C_TypeUnion extends TokenSequence
 		{
 			public @S(10) C_Keyword UNION = new C_Keyword("union");

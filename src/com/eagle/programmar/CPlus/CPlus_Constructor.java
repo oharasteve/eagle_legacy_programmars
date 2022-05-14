@@ -4,6 +4,7 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_ArgumentList;
+import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.C_Statement.C_StatementBlock;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -19,41 +20,54 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CPlus_Constructor extends TokenSequence
+public class CPlus_Constructor extends TokenChooser
 {
-	public @S(5) @OPT C_KeywordChoice VIRTUAL = new C_KeywordChoice("virtual", "constexpr", "explicit");
-	public @S(10) @OPT C_Punctuation tilde = new C_Punctuation('~');
-	public @S(20) @OPT CPlus_NamespaceList nameSpaces;
-	public @S(30) CPlus_Class_Reference constructorName;
-	public @S(40) C_Function_ParameterDefs parameters;
-	public @S(50) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
-	public @S(60) @OPT CPlus_ConstructorCallSupers callSupers;
-	public @S(70) @OPT CPlus_ConstructorValue value;
-	
-	public static class CPlus_ConstructorValue extends TokenChooser
+	public @CHOICE static class CPlus_ConstructorWithParameters extends TokenSequence
 	{
-		public @CHOICE C_StatementBlock block;
+		public @S(5) @OPT C_KeywordChoice VIRTUAL = new C_KeywordChoice("virtual", "constexpr", "explicit");
+		public @S(10) @OPT C_Punctuation tilde = new C_Punctuation('~');
+		public @S(20) @OPT CPlus_NamespaceList nameSpaces;
+		public @S(30) CPlus_Class_Reference constructorName;
+		public @S(40) C_Function_ParameterDefs parameters;
+		public @S(50) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
+		public @S(60) @OPT CPlus_ConstructorCallSupers callSupers;
+		public @S(70) @OPT CPlus_ConstructorValue value;
 		
-		public @CHOICE static class CPlus_ConstructorInitialValue extends TokenSequence
+		public static class CPlus_ConstructorValue extends TokenChooser
 		{
-			public @S(10) PunctuationEquals equals;
-			public @S(20) C_KeywordChoice DELETE = new C_KeywordChoice("delete", "default");
+			public @CHOICE C_StatementBlock block;
+			
+			public @CHOICE static class CPlus_ConstructorInitialValue extends TokenSequence
+			{
+				public @S(10) PunctuationEquals equals;
+				public @S(20) C_KeywordChoice DELETE = new C_KeywordChoice("delete", "default");
+			}
+		}
+		
+		public static class CPlus_ConstructorCallSupers extends TokenSequence
+		{
+			public @S(10) PunctuationColon colon;
+			public @S(20) SeparatedList<CPlus_ConstructorCallSuper,PunctuationComma> callSuper;
+			
+			public static class CPlus_ConstructorCallSuper extends TokenSequence
+			{
+				public @S(10) CPlus_Class_Reference parent;
+				public @S(20) @OPT CPlus_NamespaceList namespaces;
+				public @S(30) PunctuationLeftParen leftParen;
+				public @S(40) @OPT C_ArgumentList argList;
+				public @S(50) PunctuationRightParen rightParen;
+			}
 		}
 	}
 	
-	public static class CPlus_ConstructorCallSupers extends TokenSequence
+	public @CHOICE static class CPlus_ConstructorParameterLess extends TokenSequence
 	{
-		public @S(10) PunctuationColon colon;
-		public @S(20) SeparatedList<CPlus_ConstructorCallSuper,PunctuationComma> callSuper;
-		
-		public static class CPlus_ConstructorCallSuper extends TokenSequence
-		{
-			public @S(10) CPlus_Class_Reference parent;
-			public @S(20) @OPT CPlus_NamespaceList namespaces;
-			public @S(30) PunctuationLeftParen leftParen;
-			public @S(40) @OPT C_ArgumentList argList;
-			public @S(50) PunctuationRightParen rightParen;
-		}
+		public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(20) @OPT CPlus_NamespaceList nameSpaces;
+		public @S(30) CPlus_Class_Reference constructorName;
+		public @S(40) C_Expression expr;
+		public @S(50) PunctuationSemicolon semicolon;
 	}
 }

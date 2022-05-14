@@ -6,7 +6,7 @@ package com.eagle.programmar.CPlus;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
-import com.eagle.programmar.CPlus.CPlus_Constructor.CPlus_ConstructorValue;
+import com.eagle.programmar.CPlus.CPlus_Constructor.CPlus_ConstructorWithParameters.CPlus_ConstructorValue;
 import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
