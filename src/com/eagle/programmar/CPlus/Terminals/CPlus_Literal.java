@@ -5,9 +5,9 @@ package com.eagle.programmar.CPlus.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.programmar.C.Terminals.C_Literal;
 
-public class CPlus_Literal extends TerminalLiteralToken
+public class CPlus_Literal extends C_Literal
 {
 	private static final String[] PREFIXES = new String[] {
 		"u8R", "u8", "u", "L", "R", "LR" };

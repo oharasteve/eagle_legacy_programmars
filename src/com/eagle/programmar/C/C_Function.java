@@ -115,6 +115,12 @@ public class C_Function extends TokenSequence
 			public @S(20) C_Number zero;
 		}
 		
+		public @CHOICE static class C_FunctionEqualsDefault extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) C_Keyword DEFAULT = new C_Keyword("default");
+		}
+		
 		public @CHOICE static class C_FunctionNoBody extends TokenSequence
 		{
 			public @S(10) @OPT C_FunctionAssembler assembler;

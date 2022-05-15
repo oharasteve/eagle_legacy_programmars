@@ -14,6 +14,7 @@ import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
+import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.TokenList;
@@ -75,6 +76,7 @@ public class C_Expression extends PrecedenceChooser
 	
 	public static @P(130) class C_FunctionCall extends PrimaryOperator
 	{
+		public @S(5) @OPT TokenList<CPlus_NamespaceList> namespaces;
 		public @S(10) C_Variable functionName;
 		public @S(20) @OPT C_Generic generic;
 		public @S(30) PunctuationLeftParen leftParen;
