@@ -33,16 +33,22 @@ public class CPlus_Constructor extends TokenChooser
 		public @S(40) C_Function_ParameterDefs parameters;
 		public @S(50) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
 		public @S(60) @OPT CPlus_ConstructorCallSupers callSupers;
-		public @S(70) @OPT CPlus_ConstructorValue value;
+		public @S(70) CPlus_ConstructorValue value;
 		
 		public static class CPlus_ConstructorValue extends TokenChooser
 		{
 			public @CHOICE C_StatementBlock block;
 			
-			public @CHOICE static class CPlus_ConstructorInitialValue extends TokenSequence
+			public @CHOICE static class CPlus_ConstructorNoBraces extends TokenSequence
 			{
-				public @S(10) PunctuationEquals equals;
-				public @S(20) C_KeywordChoice DELETE = new C_KeywordChoice("delete", "default");
+				public @S(10) @OPT CPlus_ConstructorInitialValue value;
+				public @S(20) PunctuationSemicolon semicolon;
+
+				public static class CPlus_ConstructorInitialValue extends TokenSequence
+				{
+					public @S(10) PunctuationEquals equals;
+					public @S(20) C_KeywordChoice DELETE = new C_KeywordChoice("delete", "default");
+				}
 			}
 		}
 		
@@ -64,7 +70,7 @@ public class CPlus_Constructor extends TokenChooser
 	
 	public @CHOICE static class CPlus_ConstructorParameterLess extends TokenSequence
 	{
-		public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(10) @OPT C_KeywordChoice CONST = new C_KeywordChoice("const", "constexpr");
 		public @S(20) @OPT CPlus_NamespaceList nameSpaces;
 		public @S(30) CPlus_Class_Reference constructorName;
 		public @S(40) C_Expression expr;

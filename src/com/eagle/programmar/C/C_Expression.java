@@ -76,7 +76,7 @@ public class C_Expression extends PrecedenceChooser
 	
 	public static @P(130) class C_FunctionCall extends PrimaryOperator
 	{
-		public @S(5) @OPT TokenList<CPlus_NamespaceList> namespaces;
+		public @S(5) @OPT CPlus_NamespaceList namespace;
 		public @S(10) C_Variable functionName;
 		public @S(20) @OPT C_Generic generic;
 		public @S(30) PunctuationLeftParen leftParen;

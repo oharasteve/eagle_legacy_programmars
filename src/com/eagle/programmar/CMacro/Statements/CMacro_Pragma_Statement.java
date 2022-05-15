@@ -24,13 +24,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 //
 // Still a couple in Chromium:
-//             #pragma ma    /chromium-main/third_party/protobuf/objectivec/GPBArray.h
-//             #pragma ma    /chromium-main/third_party/protobuf/objectivec/GPBDictionary.h
-//             #pragma ma    /chromium-main/third_party/protobuf/objectivec/GPBWellKnownTypes.h
-//   #pragma   data_seg(     /chromium-main/sandbox/win/tests/integration_tests/hooking_dll.cc
-//   #pragma   optimize(     /chromium-main/base/third_party/double_conversion/double-conversion/string-to-double.cc
-//   #pragma   push_macro    /chromium-main/ui/gl/init/gl_initializer_angle.cc
-//   #pragma   section(      /chromium-main/third_party/crashpad/crashpad/snapshot/crashpad_info_size_test_module.cc
+//             #pragma map    /chromium-main/third_party/protobuf/objectivec/GPBArray.h
+//             #pragma map    /chromium-main/third_party/protobuf/objectivec/GPBDictionary.h
+//             #pragma map    /chromium-main/third_party/protobuf/objectivec/GPBWellKnownTypes.h
+//   #pragma   data_seg(      /chromium-main/sandbox/win/tests/integration_tests/hooking_dll.cc
+//   #pragma   optimize(      /chromium-main/base/third_party/double_conversion/double-conversion/string-to-double.cc
+//   #pragma   push_macro     /chromium-main/ui/gl/init/gl_initializer_angle.cc
+//   #pragma   section(       /chromium-main/third_party/crashpad/crashpad/snapshot/crashpad_info_size_test_module.cc
 //
 
 public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Processable

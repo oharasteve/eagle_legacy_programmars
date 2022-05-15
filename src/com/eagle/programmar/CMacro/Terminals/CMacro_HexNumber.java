@@ -11,6 +11,6 @@ public class CMacro_HexNumber extends TerminalHexNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericHex(lines, "0x", null);
+		return genericHex(lines, "0x", "UL");
 	}
 }

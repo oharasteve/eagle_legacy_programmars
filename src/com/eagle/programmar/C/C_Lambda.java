@@ -29,7 +29,7 @@ public class C_Lambda extends TokenSequence
 		public static class C_LambdaParam extends TokenSequence
 		{
 			public @S(10) @OPT PunctuationAmpersand ampersand;
-			public @S(20) C_Variable variable;
+			public @S(20) @OPT C_Variable variable;
 		}
 	}
 }

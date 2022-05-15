@@ -10,6 +10,7 @@ import com.eagle.programmar.C.Symbols.C_Namespace_Definition;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.CPlus.CPlus_Class.CPlus_ClassElement;
+import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList.CPlus_NamespaceListColons.CPlus_NamespaceColon;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -19,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 public class CPlus_Namespace extends TokenSequence
 {
 	public @S(10) C_Keyword NAMESPACE = new C_Keyword("namespace");
-	public @S(15) @OPT TokenList<CPlus_NamespaceList> qualifiers;
+	public @S(15) @OPT CPlus_NamespaceList qualifiers;
 	public @S(20) @OPT C_Namespace_Definition namespace;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT TokenList<CPlus_NamespaceElement> statements;
@@ -36,16 +37,24 @@ public class CPlus_Namespace extends TokenSequence
 		public @LAST C_StatementOrComment stmt;
 	}
 
-	public static class CPlus_NamespaceList extends TokenSequence
+	public static class CPlus_NamespaceList extends TokenChooser
 	{
-		public @S(10) @OPT C_Punctuation colonColon = new C_Punctuation("::");
-		public @S(20) TokenList<CPlus_NamespaceColon> namespace;
-		
-		public static class CPlus_NamespaceColon extends TokenSequence
+		public @CHOICE static class CPlus_NamespaceListColons extends TokenSequence
 		{
-			public @S(10) C_Identifier_Reference nameSpace;
-			public @S(20) @OPT C_Generic generic;
-			public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
+			public @S(10) C_Punctuation colonColon = new C_Punctuation("::");
+			public @S(20) @OPT TokenList<CPlus_NamespaceColon> namespace;
+			
+			public static class CPlus_NamespaceColon extends TokenSequence
+			{
+				public @S(10) C_Identifier_Reference nameSpace;
+				public @S(20) @OPT C_Generic generic;
+				public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
+			}
+		}
+		
+		public @CHOICE static class CPlus_NamespaceListNoColons extends TokenSequence
+		{
+			public @S(20) TokenList<CPlus_NamespaceColon> namespace;
 		}
 	}
 }

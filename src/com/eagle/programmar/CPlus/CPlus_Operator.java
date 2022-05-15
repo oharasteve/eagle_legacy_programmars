@@ -14,13 +14,14 @@ import com.eagle.tokens.punctuation.PunctuationAmpersand;
 public class CPlus_Operator extends TokenSequence
 {
 	public @S(10) @OPT C_Keyword CONSTEXPR = new C_Keyword("constexpr");
-	public @S(20) @OPT CPlus_NamespaceList nameSpaces;
+	public @S(20) @OPT CPlus_NamespaceList nameSpace1;
 	public @S(30) CPlus_Type type;
 	public @S(40) @OPT PunctuationAmpersand ampersand;
-	public @S(50) C_Keyword OPERATOR = new C_Keyword("operator");
-	public @S(60) C_PunctuationChoice oper = new C_PunctuationChoice(
+	public @S(50) @OPT CPlus_NamespaceList nameSpace2;
+	public @S(60) C_Keyword OPERATOR = new C_Keyword("operator");
+	public @S(70) C_PunctuationChoice oper = new C_PunctuationChoice(
 			"+", "-", "*", "==", "!=", "=", "<<", "()", "+=", "-=", "<", ">", "&");
-	public @S(70) C_Function_ParameterDefs parameters;
-	public @S(80) @OPT C_Keyword CONST = new C_Keyword("const");
-	public @S(90) @OPT CPlus_ConstructorValue value;
+	public @S(80) C_Function_ParameterDefs parameters;
+	public @S(90) @OPT C_Keyword CONST = new C_Keyword("const");
+	public @S(100) @OPT CPlus_ConstructorValue value;
 }
