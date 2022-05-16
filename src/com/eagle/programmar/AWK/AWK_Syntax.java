@@ -17,7 +17,7 @@ public class AWK_Syntax extends EagleSyntax
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
-		_autoAdvance = true;
+		_autoAdvance = false;
 		_punctuationExceptions = new String[] { "==", "!=", "<=", ">=", "++", "--", "+=", "!~" };
 		
 		addReservedWords(keywords);
@@ -36,6 +36,7 @@ public class AWK_Syntax extends EagleSyntax
 	};
 	
 	private String[] keywords = new String[] {
+		"case",
 		"function",
 		"gsub",
 		"if",
@@ -44,6 +45,7 @@ public class AWK_Syntax extends EagleSyntax
 		"printf",
 		"split",
 		"sub",
+		"switch",
 		"while",
 	};
 }

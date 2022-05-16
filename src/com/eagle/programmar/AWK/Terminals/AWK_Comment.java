@@ -29,6 +29,7 @@ public class AWK_Comment extends TerminalCommentToken
 		int nc = rec.length();
 		if (_currentChar >= nc) return false;
 		if (rec.charAt(_currentChar) != '#') return false;
+		
 		foundIt(_currentLine, nc);
 		_comment = rec.substring(_currentChar, nc);
 		return true;

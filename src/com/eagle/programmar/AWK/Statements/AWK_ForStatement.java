@@ -7,6 +7,7 @@ import com.eagle.programmar.AWK.AWK_Action;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.AWK_Variable;
+import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -20,7 +21,8 @@ public class AWK_ForStatement extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) AWK_ForWhat forWhat;
 	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) AWK_ForBlock block;
+	public @S(50) @OPT AWK_EndOfLine eoln;
+	public @S(60) AWK_ForBlock block;
 	
 	public static class AWK_ForWhat extends TokenChooser
 	{

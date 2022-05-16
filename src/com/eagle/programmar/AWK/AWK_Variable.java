@@ -4,6 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.Symbols.AWK_Identifier_Reference;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
@@ -11,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class AWK_Variable extends TokenSequence
 {
 	public @S(10) AWK_Identifier_Reference id;
-	public @S(20) @OPT AWK_VarSubscript subscript;
+	public @S(20) @OPT TokenList<AWK_VarSubscript> subscripts;
 	
 	public static class AWK_VarSubscript extends TokenSequence
 	{

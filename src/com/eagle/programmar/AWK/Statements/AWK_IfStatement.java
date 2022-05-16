@@ -6,6 +6,7 @@ package com.eagle.programmar.AWK.Statements;
 import com.eagle.programmar.AWK.AWK_Action;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
+import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -18,8 +19,9 @@ public class AWK_IfStatement extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) AWK_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) AWK_IfBlock block;
-	public @S(60) @OPT AWK_IfElse ifelse;
+	public @S(50) @OPT AWK_EndOfLine eoln;
+	public @S(60) AWK_IfBlock block;
+	public @S(70) @OPT AWK_IfElse ifelse;
 	
 	public static class AWK_IfElse extends TokenSequence
 	{
