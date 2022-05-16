@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenList;
 
 public class ObjectiveC_Program extends C_Program
 {
-	public static final String OBJECTIVEC = "ObjC";
+	public static final String OBJECTIVEC = "ObjectiveC";
 	
 	public ObjectiveC_Program()
 	{

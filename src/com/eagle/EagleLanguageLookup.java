@@ -29,6 +29,7 @@ import com.eagle.programmar.JavaP.JavaP_Program;
 import com.eagle.programmar.Javascript.Javascript_Program;
 import com.eagle.programmar.Lisp.Lisp_Program;
 import com.eagle.programmar.Natural.Natural_Program;
+import com.eagle.programmar.ObjectiveC.ObjectiveC_Program;
 import com.eagle.programmar.PHP.PHP_Program;
 import com.eagle.programmar.PLI.PLI_Program;
 import com.eagle.programmar.PPSM.PPSM_Program;
@@ -81,7 +82,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(JSON_Program.JSON, JSON_Program.class, ".json");
 		add(Lisp_Program.LISP, Lisp_Program.class, ".lisp");
 		add(Natural_Program.NATURAL, Natural_Program.class, ".ntf");
-		// add(ObjectiveC_Program.OBJECTIVEC, ObjectiveC_Program.class, ".m");
+		add(ObjectiveC_Program.OBJECTIVEC, ObjectiveC_Program.class);
 		add(Perl_Program.PERL, Perl_Program.class);
 		add(PHP_Program.PHP, PHP_Program.class, ".php");
 		add(PLI_Program.PLI, PLI_Program.class, ".pli");
