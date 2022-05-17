@@ -36,13 +36,15 @@ public class C_TypeDef extends TokenSequence
 			public @S(10) C_Type type;
 			public @S(20) @OPT PunctuationStar star;
 			public @S(30) C_Type_Definition typeName;
-			public @S(40) @OPT TokenList<C_TypeDefMore> more;
+			public @S(40) @OPT C_Subscript subscript;
+			public @S(50) @OPT TokenList<C_TypeDefMore> more;
 			
 			public static class C_TypeDefMore extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;
 				public @S(20) @OPT PunctuationStar star;
 				public @S(30) C_Type_Definition typeName;
+				public @S(40) @OPT C_Subscript subscript;
 			}
 		}
 		

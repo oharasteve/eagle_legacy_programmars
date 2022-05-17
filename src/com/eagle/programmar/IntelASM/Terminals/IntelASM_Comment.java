@@ -27,10 +27,18 @@ public class IntelASM_Comment extends TerminalCommentToken
 		
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
-		if (_currentChar >= nc || rec.charAt(_currentChar) != ';') return false;
+		if (_currentChar < nc && rec.charAt(_currentChar) == ';')
+		{
+			foundIt(_currentLine, nc);
+			_comment = rec.substring(_currentChar, nc);
+			return true;
+		}
 
-		foundIt(_currentLine, nc);
-		_comment = rec.substring(_currentChar, nc);
-		return true;
+		if (_currentChar+1 < nc && rec.charAt(_currentChar) == '/' && rec.charAt(_currentChar+1) == '/')
+		{
+			return super.possibleCommentToEndOfLine(rec, "//");
+		}
+
+		return false;
 	}
 }

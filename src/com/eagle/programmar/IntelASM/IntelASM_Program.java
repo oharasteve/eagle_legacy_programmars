@@ -32,5 +32,6 @@ public class IntelASM_Program extends EagleLanguage
 		public @CHOICE IntelASM_Comment comment;
 		public @CHOICE IntelASM_Directive directive;
 		public @CHOICE IntelASM_Instruction instruction;
+		public @CHOICE IntelASM_Label label;
 	}
 }

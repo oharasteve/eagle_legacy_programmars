@@ -11,6 +11,6 @@ public class IntelASM_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericLiteral(lines, "\"", false, '?', false, false);
+		return genericLiteral(lines, "'\"", false, '?', false, false);
 	}
 }

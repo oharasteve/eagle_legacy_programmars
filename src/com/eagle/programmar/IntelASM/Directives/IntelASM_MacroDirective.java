@@ -19,10 +19,8 @@ public class IntelASM_MacroDirective extends TokenSequence
 	public @S(30) IntelASM_Macro_Definition name;
 	public @S(40) IntelASM_Number parameterCount;
 	public @S(50) IntelASM_EndOfLine eoln;
-	
-	public TokenList<IntelASM_Line> lines;
-
-	public IntelASM_EndMacro endMacro;
+	public @S(60) TokenList<IntelASM_Line> lines;
+	public @S(70) IntelASM_EndMacro endMacro;
 	
 	public static class IntelASM_EndMacro extends TokenSequence
 	{

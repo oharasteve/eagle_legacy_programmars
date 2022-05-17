@@ -9,6 +9,7 @@ import com.eagle.programmar.C.Statements.C_AutoLock;
 import com.eagle.programmar.C.Statements.C_BreakStatement;
 import com.eagle.programmar.C.Statements.C_ContinueStatement;
 import com.eagle.programmar.C.Statements.C_DoStatement;
+import com.eagle.programmar.C.Statements.C_Embed_Assembler;
 import com.eagle.programmar.C.Statements.C_ExpressionStatement;
 import com.eagle.programmar.C.Statements.C_ForStatement;
 import com.eagle.programmar.C.Statements.C_IfStatement;
@@ -39,7 +40,8 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 		public @S(20) @OPT TokenList<C_StatementOrComment> statements;
 		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 	}
-
+	public @CHOICE C_Embed_Assembler assembler;
+	
 	public @CHOICE C_AutoLock autoLock;
 	public @CHOICE C_BreakStatement breakStatement;
 	public @CHOICE C_ContinueStatement continueStatement;

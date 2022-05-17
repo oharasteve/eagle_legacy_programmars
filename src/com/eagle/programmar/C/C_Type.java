@@ -135,6 +135,12 @@ public class C_Type extends TokenSequence implements AbstractType
 			}
 		}
 
+		public @CHOICE static class C_TypeLongLong extends TokenSequence
+		{
+			public @S(10) C_Keyword LONG1 = new C_Keyword("long");
+			public @S(20) C_Keyword LONG2 = new C_Keyword("long");
+		}
+		
 		public @CHOICE static class C_TypePrimitive extends TokenSequence
 		{
 			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");

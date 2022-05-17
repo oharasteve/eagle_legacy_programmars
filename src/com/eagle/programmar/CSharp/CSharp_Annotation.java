@@ -29,8 +29,10 @@ public class CSharp_Annotation extends TokenSequence
 	{
 		public @S(10) @OPT CSharp_AnnotionGlobal global;
 		public @S(20) @OPT CSharp_AnnotionAssembly assembly;
-		public @S(30) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
-		public @S(40) @OPT CSharp_AnnotationParams params;
+		public @S(30) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
+		public @S(40) @OPT CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
+		public @S(50) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
+		public @S(60) @OPT CSharp_AnnotationParams params;
 	}
 
 	public static class CSharp_AnnotionGlobal extends TokenSequence
