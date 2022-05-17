@@ -35,15 +35,17 @@ public class Delphi_Program extends EagleLanguage
 	
 	public static class Delphi_Full_or_Partial extends TokenChooser
 	{
-		public @CHOICE static class Delphi_Full extends TokenSequence
+		public @FIRST static class Delphi_Full extends TokenSequence
 		{
-			public @S(10) Delphi_KeywordChoice programOrUnit = new Delphi_KeywordChoice("Program", "Unit");
-			public @S(20) Delphi_Program_Definition id;
-			public @S(30) PunctuationSemicolon semicolon;
-			public @S(40) @OPT TokenList<Delphi_Header> headers;
-			public @S(50) @OPT Delphi_BeginEnd beginEnd;
-			public @S(60) @OPT Delphi_Keyword END = new Delphi_Keyword("End");
-			public @S(70) PunctuationPeriod dot;
+			public @S(10) @OPT TokenList<Delphi_Comment> comments1;
+			public @S(20) Delphi_KeywordChoice programOrUnit = new Delphi_KeywordChoice("Program", "Unit");
+			public @S(30) Delphi_Program_Definition id;
+			public @S(40) PunctuationSemicolon semicolon;
+			public @S(50) @OPT TokenList<Delphi_Header> headers;
+			public @S(60) @OPT Delphi_BeginEnd beginEnd;
+			public @S(70) @OPT Delphi_Keyword END = new Delphi_Keyword("End");
+			public @S(80) PunctuationPeriod dot;
+			public @S(90) @OPT TokenList<Delphi_Comment> comments2;
 		}
 		
 		public @CHOICE static class Delphi_Partial extends TokenSequence

@@ -3,9 +3,8 @@
 
 package com.eagle.programmar.Lisp;
 
-import java.lang.reflect.Field;
-
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.Lisp.Terminals.Lisp_Comment;
 
 public class Lisp_Syntax extends EagleSyntax
 {
@@ -17,24 +16,20 @@ public class Lisp_Syntax extends EagleSyntax
 	
 	public Lisp_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "_";
+		_commentInstance = new Lisp_Comment();
 		
 		addReservedWords(keywords);
-
-		// Pick up all the Function names.
-		for (Field fld : Lisp_Function.class.getDeclaredFields())
-		{
-			Class<?> statementClass = fld.getType();
-			String name = statementClass.getDeclaredFields()[1].getName().toLowerCase();
-			// Probably should verify that it is a Lisp_Keyword, and pick up its value, etc.
-			addReservedWord(name);
-		}
 	}
 
 	private String[] keywords = new String[] {
 			"char",
+			"defmacro",
+			"defparameter",
+			"defun",
+			"if",
 			"do",
 			"let",
 			"nil",

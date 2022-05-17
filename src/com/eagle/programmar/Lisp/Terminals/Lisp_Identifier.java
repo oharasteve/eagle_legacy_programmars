@@ -30,6 +30,6 @@ public abstract class Lisp_Identifier extends TerminalIdentifierToken
 			}
 		}
 		
-		return genericIdentifier(lines, ALPHAS+"-*", ALPHAS+DIGITS+"->*.!$", true);
+		return genericIdentifier(lines, ALPHAS+"+-*_", ALPHAS+DIGITS+"+-<>*=.!$_", false);
 	}
 }

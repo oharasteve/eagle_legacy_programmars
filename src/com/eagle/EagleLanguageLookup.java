@@ -34,7 +34,6 @@ import com.eagle.programmar.PHP.PHP_Program;
 import com.eagle.programmar.PLI.PLI_Program;
 import com.eagle.programmar.PPSM.PPSM_Program;
 import com.eagle.programmar.Perl.Perl_Program;
-import com.eagle.programmar.Powershell.Powershell_Program;
 import com.eagle.programmar.Property.Property_Program;
 import com.eagle.programmar.Python.Python2_Program;
 import com.eagle.programmar.Python.Python3_Program;
@@ -87,7 +86,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Perl_Program.PERL, Perl_Program.class);
 		add(PHP_Program.PHP, PHP_Program.class, ".php");
 		add(PLI_Program.PLI, PLI_Program.class, ".pli");
-		add(Powershell_Program.POWERHSELL, Powershell_Program.class, ".ps1");
+		// add(Powershell_Program.POWERHSELL, Powershell_Program.class, ".ps1");
 		add(PPSM_Program.PPSM, PPSM_Program.class, ".ppsm");
 		add(Property_Program.PROPERTY, Property_Program.class, ".properties");
 		add(Python2_Program.PYTHON2, Python2_Program.class);
