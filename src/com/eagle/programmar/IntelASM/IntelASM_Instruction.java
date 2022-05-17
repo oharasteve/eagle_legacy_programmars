@@ -29,27 +29,28 @@ public class IntelASM_Instruction extends TokenSequence
 		public @CHOICE static class IntelASM_JMP extends TokenSequence
 		{
 			public @S(10) IntelASM_KeywordChoice JMP =
-					new IntelASM_KeywordChoice("JE", "JL", "JLE", "JMP", "JNE", "JNZ", "JZ");
+					new IntelASM_KeywordChoice("JC", "JE", "JG", "JGE", "JL", "JLE", "JMP", "JNE", "JNZ", "JZ");
 			public @S(20) IntelASM_Label_Reference label;
 		}
 
 		public @CHOICE static class IntelASM_NoArgs extends TokenSequence
 		{
 			public @S(10) IntelASM_KeywordChoice CMD =
-					new IntelASM_KeywordChoice("CLD", "RET");
+					new IntelASM_KeywordChoice("CLD", "LODSB", "MOVSB", "NOP", "RET", "STD", "STOSB");
 		}
 
 		public @CHOICE static class IntelASM_OneArg extends TokenSequence
 		{
 			public @S(10) IntelASM_KeywordChoice CMD =
-					new IntelASM_KeywordChoice("DIV", "INC", "POP", "PUSH");
+					new IntelASM_KeywordChoice("DEC", "DIV", "INC", "MUL", "NEG", "POP", "PUSH", "REP", "REPZ", "SETZ");
 			public @S(20) IntelASM_Expression arg;
 		}
 		
 		public @CHOICE static class IntelASM_TwoArgs extends TokenSequence
 		{
 			public @S(10) IntelASM_KeywordChoice CMD =
-					new IntelASM_KeywordChoice("ADD", "AND", "CMP", "LEA", "MOV", "SHR", "SUB", "XOR");
+					new IntelASM_KeywordChoice("ADD", "AND", "CMP", "LEA", "MOV", "MOVSX", "MOVZX",
+							"OR", "SHL", "SHR", "SUB", "TEST", "XOR");
 			public @S(20) IntelASM_Expression arg1;
 			public @S(30) PunctuationComma comma;
 			public @S(40) IntelASM_Expression arg2;

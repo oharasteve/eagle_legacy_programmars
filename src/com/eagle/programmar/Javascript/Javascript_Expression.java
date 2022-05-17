@@ -386,7 +386,7 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Javascript_Punctuation questionMark = new Javascript_Punctuation('?');
 		public @S(30) @OPT TokenList<Javascript_Comment> comments1;
-		public @S(40) Javascript_Expression middle = new Javascript_Expression(this, AllowedPrecedence.ANY);
+		public @S(40) Javascript_Expression middle = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(50) PunctuationColon colon;
 		public @S(60) @OPT TokenList<Javascript_Comment> comments2;
 		public @S(70) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);

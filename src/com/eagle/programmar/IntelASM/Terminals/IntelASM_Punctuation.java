@@ -17,4 +17,9 @@ public class IntelASM_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
+
+	public IntelASM_Punctuation(String punct)
+	{
+		super(punct);
+	}
 }
