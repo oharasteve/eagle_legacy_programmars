@@ -104,15 +104,9 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 				
 				public static class Java_TypedIdentifier extends TokenSequence
 				{
-					public @S(10) @OPT Java_NullableArgument nullable;
+					public @S(10) @OPT Java_Annotation annotation;
 					public @S(20) Java_Type type;
 					public @S(30) Java_Identifier id;
-					
-					public static class Java_NullableArgument extends TokenSequence
-					{
-						public @S(10) Java_Punctuation at = new Java_Punctuation("@");
-						public @S(20) Java_Keyword NULLABLE = new Java_Keyword("Nullable");
-					}
 				}
 			}
 		}

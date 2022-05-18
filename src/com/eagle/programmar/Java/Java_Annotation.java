@@ -5,6 +5,7 @@ package com.eagle.programmar.Java;
 
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
+import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -31,6 +32,13 @@ public class Java_Annotation extends TokenChooser
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
 		public @S(20) @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> idList;
 		public @S(30) @OPT TokenList<Java_Comment> comments;
+	}
+	
+	public @CHOICE static class Java_AnnotationList extends TokenSequence
+	{
+		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
+		public @S(20) Java_KeywordChoice ATTR =
+				new Java_KeywordChoice("Nullable", "AccessoryAction", "PageTransition");
 	}
 	
 	public @LAST static class Java_AnnotationSimple extends TokenSequence

@@ -96,8 +96,10 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 		
 		public @CHOICE static class Java_StaticStatement extends TokenSequence implements EagleRunnable
 		{
-			public @S(10) @OPT Java_Keyword STATIC = new Java_Keyword("static");
-			public @S(20) Java_Statement statement;
+			public @S(10) @OPT Java_Keyword PRIVATE = new Java_Keyword("private");
+			public @S(20) @OPT Java_Annotation annotation;
+			public @S(30) @OPT Java_Keyword STATIC = new Java_Keyword("static");
+			public @S(40) Java_Statement statement;
 			
 			@Override
 			public void interpret(EagleInterpreter interpreter)

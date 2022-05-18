@@ -13,7 +13,6 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -28,7 +27,7 @@ public class Java_TryStatement extends TokenSequence
 	public @S(20) @DOC("statements.html#14.20") Java_Keyword TRY = new Java_Keyword("try");
 	public @S(30) @OPT Java_TryResources resources;
 	public @S(40) @INDENT PunctuationLeftBrace leftBrace;
-	public @S(50) TokenList<Java_StatementOrComment> statements;
+	public @S(50) @OPT TokenList<Java_StatementOrComment> statements;
 	public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
 	public @S(70) @OPT TokenList<Java_Comment> comments;
 	public @S(80) @OPT TokenList<Java_CatchBlock> catchBlocks;
@@ -61,8 +60,9 @@ public class Java_TryStatement extends TokenSequence
 	public static class Java_TryResources extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Java_TryResource,PunctuationSemicolon> resources;
-		public @S(30) PunctuationRightParen rightParen;
+		public @S(20) Java_TryResource resource;
+		public @S(30) @OPT TokenList<Java_TryMoreResources> more;
+		public @S(40) PunctuationRightParen rightParen;
 		
 		public static class Java_TryResource extends TokenSequence
 		{
@@ -70,6 +70,12 @@ public class Java_TryStatement extends TokenSequence
 			public @S(20) Java_Type jtype;
 			public @S(30) Java_Variable_Definition id;
 			public @S(40) Java_DataInitialValue initialValue;
+		}
+		
+		public static class Java_TryMoreResources extends TokenSequence
+		{
+			public @S(10) PunctuationSemicolon semicolon;
+			public @S(20) @OPT Java_TryResource resource;
 		}
 	}
 }

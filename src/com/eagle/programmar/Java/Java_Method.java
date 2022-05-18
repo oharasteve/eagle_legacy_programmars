@@ -27,16 +27,39 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 	
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
-	public @S(20) @OPT TokenList<Java_MethodModifier> modifiers;
-	public @S(30) @OPT Java_GenericType genericType;
-	public @S(40) Java_Type jtype;
-	public @S(50) Java_Method_Definition methodName;
-	public @S(60) @NOSPACE Java_ParameterList parameters;
+	public @S(20) @OPT Java_Annotation annotation;
+	public @S(30) @OPT TokenList<Java_MethodModifier> modifiers;
+	public @S(40) Java_MethodTypeAndName typeAndName;
 	public @S(70) @OPT TokenList<Java_EmptyBrackets> brackets;
 	public @S(80) @OPT Java_MethodDefault methodDefault;
 	public @S(90) @OPT Java_MethodThrows jthrows;
 	public @S(100) @OPT Java_Comment comment;
 	public @S(110) Java_MethodBody body;
+	
+	public static class Java_MethodTypeAndName extends TokenChooser
+	{
+		public @CHOICE static class Java_MethodType extends TokenSequence
+		{
+			public @S(10) Java_Type jtype;
+			public @S(20) Java_Method_Definition methodName;
+			public @S(30) Java_ParameterList parameters;
+		}
+
+		public @CHOICE static class Java_MethodGeneric extends TokenSequence
+		{
+			public @S(10) Java_GenericType genericType;
+			public @S(20) Java_Method_Definition methodName;
+			public @S(30) Java_ParameterList parameters;
+		}
+		
+		public @CHOICE static class Java_MethodTwoTypes extends TokenSequence
+		{
+			public @S(10) Java_GenericType genericType;
+			public @S(20) Java_Type jtype;
+			public @S(30) Java_Method_Definition methodName;
+			public @S(40) Java_ParameterList parameters;
+		}
+	}
 	
 	public static class Java_EmptyBrackets extends TokenSequence
 	{
