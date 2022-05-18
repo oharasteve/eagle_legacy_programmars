@@ -17,4 +17,9 @@ public class Django_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
+
+	public Django_Punctuation(String punct)
+	{
+		super(punct);
+	}
 }

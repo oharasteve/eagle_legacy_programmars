@@ -36,9 +36,9 @@ public class Django_Insert extends TokenSequence
 			}
 		}
 
-		public @CHOICE static class Django_InsertVariable extends TokenSequence
+		public @CHOICE static class Django_InsertExpression extends TokenSequence
 		{
-			public @S(10) Django_Variable variable;
+			public @S(10) Django_Expression expr;
 			public @S(20) @OPT Django_InsertDot insertDot;
 			public @S(30) @OPT Django_OrWhat what;
 		}
@@ -47,7 +47,13 @@ public class Django_Insert extends TokenSequence
 	public static class Django_InsertDot extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;
-		public @S(20) Django_Number number;
+		public @S(20) Django_InsertDotWhat what;
+		
+		public static class Django_InsertDotWhat extends TokenChooser
+		{
+			public @CHOICE Django_Number number;
+			public @CHOICE Django_Variable variable;
+		}
 	}
 
 	public static class Django_OrWhat extends TokenSequence

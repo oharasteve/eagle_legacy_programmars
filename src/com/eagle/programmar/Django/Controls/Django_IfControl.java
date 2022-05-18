@@ -4,7 +4,7 @@
 package com.eagle.programmar.Django.Controls;
 
 import com.eagle.programmar.Django.Django_Element;
-import com.eagle.programmar.Django.Django_Variable;
+import com.eagle.programmar.Django.Django_Expression;
 import com.eagle.programmar.Django.Terminals.Django_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.tokens.TokenList;
@@ -16,12 +16,11 @@ public class Django_IfControl extends TokenSequence
 	public @S(10) HTML_Punctuation bracePercent1 = new HTML_Punctuation("{%");
 	public @S(20) @OPT PunctuationHyphen dash1;
 	public @S(30) Django_Keyword IF = new Django_Keyword("if");
-	public @S(40) @OPT Django_Keyword NOT = new Django_Keyword("not");
-	public @S(50) Django_Variable variable;
-	public @S(60) @OPT PunctuationHyphen dash2;
-	public @S(70) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
+	public @S(40) Django_Expression expr;
+	public @S(50) @OPT PunctuationHyphen dash2;
+	public @S(60) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
 	
-	public @S(80) TokenList<Django_Element> html;
+	public @S(70) TokenList<Django_Element> html;
 
 	public @S(90) @OPT Django_IfElseControl ifElse;
 	
