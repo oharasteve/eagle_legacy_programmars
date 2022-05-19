@@ -13,41 +13,35 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class HTML_Script extends TokenChooser
+public class HTML_Script extends TokenSequence
 {
-	public @CHOICE static class HTML_ScriptWithBody extends TokenSequence
-	{
-		public @S(10) @INDENT HTML_StartScript startScript;
-		public @S(20) HTML_ScriptBody body;
-		public @S(30) @OUTDENT HTML_EndScript endScript;
-		
-		public static class HTML_StartScript extends TokenSequence
-		{
-			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation('<');
-			public @S(20) @NOSPACE @DOC("html_scripts.asp") HTML_Keyword SCRIPT = new HTML_Keyword("script");
-			public @S(30) @OPT TokenList<HTML_Attribute> attributes;
-			public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
-		}
-		
-		public static class HTML_ScriptBody extends TokenChooser
-		{
-			public @CHOICE @NOSPACE @SYNTAX(Django_Syntax.class) @OPT Django_Control django;
-			public @CHOICE @NOSPACE @SYNTAX(Javascript_Syntax.class) @OPT Javascript_Program javascript;
-		}
-
-		public static class HTML_EndScript extends TokenSequence
-		{
-			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
-			public @S(20) @NOSPACE HTML_Keyword SCRIPT = new HTML_Keyword("script");
-			public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
-		}
-	}
+	public @S(10) HTML_Punctuation startTag = new HTML_Punctuation('<');
+	public @S(20) @DOC("html_scripts.asp") HTML_Keyword SCRIPT = new HTML_Keyword("script");
+	public @S(30) @OPT TokenList<HTML_Attribute> attributes;
+	public @S(40) HTML_ScriptContents contents;
 	
-	public @CHOICE static class HTMLScriptNoBody extends TokenSequence
+	public static class HTML_ScriptContents extends TokenChooser
 	{
-		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation('<');
-		public @S(20) @NOSPACE @DOC("html_scripts.asp") HTML_Keyword script = new HTML_Keyword("script");
-		public @S(30) @OPT TokenList<HTML_Attribute> attributes;
-		public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation("/>");
+		public @CHOICE HTML_Punctuation endTag = new HTML_Punctuation("/>");
+
+		public @CHOICE static class HTML_ScriptWithBody extends TokenSequence
+		{
+			public @S(10) HTML_Punctuation endTag = new HTML_Punctuation('>');
+			public @S(20) HTML_ScriptBody body;
+			public @S(30) HTML_EndScript endScript;
+			
+			public static class HTML_ScriptBody extends TokenChooser
+			{
+				public @CHOICE @SYNTAX(Django_Syntax.class) @OPT Django_Control django;
+				public @CHOICE @SYNTAX(Javascript_Syntax.class) @OPT Javascript_Program javascript;
+			}
+	
+			public static class HTML_EndScript extends TokenSequence
+			{
+				public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+				public @S(20) HTML_Keyword SCRIPT = new HTML_Keyword("script");
+				public @S(30) HTML_Punctuation endTag = new HTML_Punctuation('>');
+			}
+		}
 	}
 }

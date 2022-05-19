@@ -5,6 +5,7 @@ package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
+import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenList;
@@ -43,7 +44,9 @@ public class AWK_Function extends TokenSequence
 	public static class AWK_FunctionBody extends TokenSequence
 	{
 		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT TokenList<AWK_StatementOrComment> elements;
-		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(20) @OPT AWK_EndOfLine eoln1;
+		public @S(30) @OPT TokenList<AWK_StatementOrComment> elements;
+		public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(50) @OPT AWK_EndOfLine eoln2;
 	}
 }

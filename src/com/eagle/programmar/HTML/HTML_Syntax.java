@@ -34,6 +34,7 @@ public class HTML_Syntax extends EagleSyntax
 		"caption",
 		"pre",
 		"script",
+		"span",
 		"style",
 		"table",
 		"td",

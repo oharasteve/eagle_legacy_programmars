@@ -42,9 +42,9 @@ public class HTML_Attribute extends TokenSequence
 	
 	public static class HTML_Value extends TokenChooser
 	{
-		public @CHOICE HTML_HexNumber hex;
-		public @CHOICE HTML_Number number;
-		public @CHOICE HTML_Literal literal;
+		public @FIRST HTML_HexNumber hex;
+		public @FIRST HTML_Number number;
+		public @FIRST HTML_Literal literal;
 		
 		public @CHOICE static class HTML_Id_Value extends TokenSequence
 		{

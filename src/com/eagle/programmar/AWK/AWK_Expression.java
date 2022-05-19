@@ -4,6 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.Symbols.AWK_Identifier_Reference;
+import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
@@ -173,14 +174,16 @@ public class AWK_Expression extends PrecedenceChooser
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_Punctuation andOperator = new AWK_Punctuation("&&");
-		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) @OPT AWK_EndOfLine eoln;		// Hack -- really should switch to Multiline_Syntax
+		public @S(40) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(280) class AWK_OrExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_Punctuation orOperator = new AWK_Punctuation("||");
-		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) @OPT AWK_EndOfLine eoln;		// Hack -- really should switch to Multiline_Syntax
+		public @S(40) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(290) class AWK_TrueFalseExpression extends PrecedenceOperator

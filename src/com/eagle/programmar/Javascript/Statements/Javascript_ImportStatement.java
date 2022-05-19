@@ -34,7 +34,7 @@ public class Javascript_ImportStatement extends TokenSequence
 			public @CHOICE static class Javascript_ImportBraces extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBrace leftBrace;
-				public @S(20) Javascript_Identifier_Reference id;
+				public @S(20) SeparatedList<Javascript_Identifier_Reference,PunctuationComma> id;
 				public @S(30) PunctuationRightBrace rightBrace;
 			}
 		}

@@ -13,18 +13,30 @@ import com.eagle.programmar.Django.Controls.Django_IfControl;
 import com.eagle.programmar.Django.Controls.Django_LoadControl;
 import com.eagle.programmar.Django.Controls.Django_SpacelessControl;
 import com.eagle.programmar.Django.Controls.Django_TransControl;
+import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationHyphen;
 
-public class Django_Control extends TokenChooser
+public class Django_Control extends TokenSequence
 {
-	public @CHOICE Django_AutoEscapeControl autoescapeControl;
-	public @CHOICE Django_BlockControl blockControl;
-	public @CHOICE Django_BlockTransControl blockTransControl;
-	public @CHOICE Django_CommentControl commentControl;
-	public @CHOICE Django_ExtendsControl extendsControl;
-	public @CHOICE Django_ForControl forControl;
-	public @CHOICE Django_IfControl ifControl;
-	public @CHOICE Django_LoadControl loadControl;
-	public @CHOICE Django_SpacelessControl spacelessControl;
-	public @CHOICE Django_TransControl transControl;
+	public @S(10) HTML_Punctuation bracePercent = new HTML_Punctuation("{%");
+	public @S(20) @OPT PunctuationHyphen dash1;
+	public @S(30) Django_ControlChoices which;
+	public @S(40) @OPT PunctuationHyphen dash2;
+	public @S(50) HTML_Punctuation percentBrace = new HTML_Punctuation("%}");
+	
+	public class Django_ControlChoices extends TokenChooser
+	{
+		public @CHOICE Django_AutoEscapeControl autoescapeControl;
+		public @CHOICE Django_BlockControl blockControl;
+		public @CHOICE Django_BlockTransControl blockTransControl;
+		public @CHOICE Django_CommentControl commentControl;
+		public @CHOICE Django_ExtendsControl extendsControl;
+		public @CHOICE Django_ForControl forControl;
+		public @CHOICE Django_IfControl ifControl;
+		public @CHOICE Django_LoadControl loadControl;
+		public @CHOICE Django_SpacelessControl spacelessControl;
+		public @CHOICE Django_TransControl transControl;
+	}
 }

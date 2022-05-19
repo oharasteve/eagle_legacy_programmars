@@ -55,6 +55,9 @@ public class HTML_Program extends EagleLanguage
 		public @CHOICE HTML_Anchor anchor;
 		public @CHOICE HTML_Table table;
 		public @CHOICE HTML_Caption caption;
+
+		// @FIRST for speed. Some Chromium HTML files have thousands of <span> tags all on one lien
+		public @FIRST HTML_Span span;
 		
 		// PHP
 		public @CHOICE @SYNTAX(PHP_Syntax.class) PHP_Section php_block;

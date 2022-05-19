@@ -8,6 +8,7 @@ import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
+import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Javascript_Function extends TokenSequence
 {
-	public @S(10) @OPT Javascript_Keyword STATIC = new Javascript_Keyword("static");
+	public @S(10) @OPT Javascript_KeywordChoice STATIC = new Javascript_KeywordChoice("static", "async");
 	public @S(20) Javascript_Keyword FUNCTION = new Javascript_Keyword("function");
 	public @S(30) Javascript_FunctionImplementation implementation;
 	
