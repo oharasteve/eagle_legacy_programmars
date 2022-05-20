@@ -8,6 +8,7 @@ import com.eagle.programmar.Django.Terminals.Django_KeywordChoice;
 import com.eagle.programmar.Django.Terminals.Django_Literal;
 import com.eagle.programmar.Django.Terminals.Django_Number;
 import com.eagle.programmar.Django.Terminals.Django_Punctuation;
+import com.eagle.programmar.Django.Terminals.Django_PunctuationChoice;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -19,8 +20,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Django_Insert extends TokenSequence
 {
 	public @S(10) HTML_Punctuation startBraceBrace = new HTML_Punctuation("{{");
-	public @S(20) Django_InsertWhat what;
-	public @S(30) HTML_Punctuation endBraceBrace = new HTML_Punctuation("}}");
+	public @S(20) @OPT Django_PunctuationChoice plus = new Django_PunctuationChoice("+", "-", "/");
+	public @S(30) Django_InsertWhat what;
+	public @S(40) HTML_Punctuation endBraceBrace = new HTML_Punctuation("}}");
 	
 	public static class Django_InsertWhat extends TokenChooser
 	{

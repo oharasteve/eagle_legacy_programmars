@@ -26,7 +26,7 @@ public class Django_Control extends TokenSequence
 	public @S(40) @OPT PunctuationHyphen dash2;
 	public @S(50) HTML_Punctuation percentBrace = new HTML_Punctuation("%}");
 	
-	public class Django_ControlChoices extends TokenChooser
+	public static class Django_ControlChoices extends TokenChooser
 	{
 		public @CHOICE Django_AutoEscapeControl autoescapeControl;
 		public @CHOICE Django_BlockControl blockControl;
