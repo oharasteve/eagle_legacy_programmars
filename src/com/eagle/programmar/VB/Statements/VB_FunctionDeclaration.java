@@ -15,13 +15,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_FunctionDeclaration extends TokenSequence
 {
-	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice(
+	public @S(10) @OPT VB_KeywordChoice modifier = new VB_KeywordChoice(
 			"private", "public");
 	public @S(20) VB_Keyword FUNCTION1 = new VB_Keyword("function");
 	public @S(30) VB_Sub_Definition name;
 	public @S(40) VB_Parameters params;
-	public @S(50) VB_Keyword AS = new VB_Keyword("as");
-	public @S(60) VB_Type type;
+	public @S(50) @OPT VB_Keyword AS = new VB_Keyword("as");
+	public @S(60) @OPT VB_Type type;
 	public @S(70) VB_EndOfLine eoln;
 	public @S(80) @OPT TokenList<VB_Statement> stmts;
 	public @S(90) VB_Keyword END = new VB_Keyword("end");

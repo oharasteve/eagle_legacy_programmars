@@ -23,7 +23,12 @@ public class VB_Parameters extends TokenSequence
 		public @S(10) @OPT VB_KeywordChoice valRef = new VB_KeywordChoice(
 				"byval", "byref");
 		public @S(20) VB_Variable_Definition var;
-		public @S(30) VB_Keyword AS = new VB_Keyword("as");
-		public @S(40) VB_Type type;
+		public @S(30) @OPT VB_ParameterAs as;
+		
+		public static class VB_ParameterAs extends TokenSequence
+		{
+			public @S(10) VB_Keyword AS = new VB_Keyword("as");
+			public @S(20) VB_Type type;
+		}
 	}
 }

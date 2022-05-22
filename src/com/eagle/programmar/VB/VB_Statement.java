@@ -10,6 +10,7 @@ import com.eagle.programmar.VB.Statements.VB_CallStatement;
 import com.eagle.programmar.VB.Statements.VB_CloseStatement;
 import com.eagle.programmar.VB.Statements.VB_DataDeclaration;
 import com.eagle.programmar.VB.Statements.VB_ExitStatement;
+import com.eagle.programmar.VB.Statements.VB_ForEachStatement;
 import com.eagle.programmar.VB.Statements.VB_ForStatement;
 import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
 import com.eagle.programmar.VB.Statements.VB_GotoStatement;
@@ -22,6 +23,7 @@ import com.eagle.programmar.VB.Statements.VB_PrintStatement;
 import com.eagle.programmar.VB.Statements.VB_SetStatement;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
 import com.eagle.programmar.VB.Statements.VB_VersionStatement;
+import com.eagle.programmar.VB.Statements.VB_WscriptEcho;
 import com.eagle.programmar.VB.Symbols.VB_Label_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
@@ -47,6 +49,7 @@ public class VB_Statement extends TokenSequence
 		public @CHOICE VB_DataDeclaration dataDeclaration;
 		public @CHOICE VB_ExitStatement exitStatement;
 		public @CHOICE VB_ForStatement forStatement;
+		public @CHOICE VB_ForEachStatement forEachStatement;
 		public @CHOICE VB_FunctionDeclaration functionDefinition;
 		public @CHOICE VB_GotoStatement gotoStatement;
 		public @CHOICE VB_IfStatement ifStatement;
@@ -58,6 +61,7 @@ public class VB_Statement extends TokenSequence
 		public @CHOICE VB_SetStatement setStatement;
 		public @CHOICE VB_SubDeclaration subDefinition;
 		public @CHOICE VB_VersionStatement versionStatement;
+		public @CHOICE VB_WscriptEcho wscriptEcho;
 		
 		public @CHOICE VB_Variable functionCall;	// Not really right ...
 		
