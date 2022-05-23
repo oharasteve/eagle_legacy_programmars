@@ -29,6 +29,10 @@ public class Powershell_Comment extends TerminalCommentToken
 		if (_currentChar+1 < rec.length())
 		{
 			char ch1 = rec.charAt(_currentChar);
+			if (ch1 == '#')
+			{
+				return super.possibleCommentToEndOfLine(rec, "#");
+			}
 			if (ch1 == '/')
 			{
 				char ch2 = rec.charAt(_currentChar);

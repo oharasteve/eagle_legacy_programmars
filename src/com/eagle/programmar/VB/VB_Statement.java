@@ -24,12 +24,18 @@ import com.eagle.programmar.VB.Statements.VB_SetStatement;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
 import com.eagle.programmar.VB.Statements.VB_VersionStatement;
 import com.eagle.programmar.VB.Statements.VB_WscriptEcho;
+import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Label_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class VB_Statement extends TokenSequence
 {
@@ -63,7 +69,18 @@ public class VB_Statement extends TokenSequence
 		public @CHOICE VB_VersionStatement versionStatement;
 		public @CHOICE VB_WscriptEcho wscriptEcho;
 		
-		public @CHOICE VB_Variable functionCall;	// Not really right ...
+		public @LAST static class VB_InvokeFunction extends TokenSequence
+		{
+			public @S(10) SeparatedList<VB_Identifier_Reference,PunctuationPeriod> names;
+			public @S(20) @OPT VB_InvokeFunctionArgs args;
+			
+			public static class VB_InvokeFunctionArgs extends TokenSequence
+			{
+				public @S(10) PunctuationLeftParen leftParen;
+				public @S(20) @OPT SeparatedList<VB_Expression,PunctuationComma> args;
+				public @S(30) PunctuationRightParen rightParen;
+			}
+		}
 		
 		public @CHOICE static class VB_Label extends TokenSequence
 		{
