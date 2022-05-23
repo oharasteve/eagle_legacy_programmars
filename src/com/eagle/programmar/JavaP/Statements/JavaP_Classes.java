@@ -54,7 +54,7 @@ public class JavaP_Classes extends TokenSequence
 			{
 				public @S(10) JavaP_QualifiedName type;
 				public @S(20) @OPT JavaP_OneClassGeneric generic;
-				public @S(30) @OPT JavaP_EmptySubscript subscript;
+				public @S(30) @OPT TokenList<JavaP_EmptySubscript> subscript;
 				public @S(40) JavaP_OneClassWhat what;
 			}
 

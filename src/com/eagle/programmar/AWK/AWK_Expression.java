@@ -107,6 +107,7 @@ public class AWK_Expression extends PrecedenceChooser
 		{
 			public @CHOICE AWK_Literal literal;
 			public @CHOICE AWK_Identifier_Reference id;
+			public @CHOICE AWK_FunctionCall fn;
 		}
 	}
 	
