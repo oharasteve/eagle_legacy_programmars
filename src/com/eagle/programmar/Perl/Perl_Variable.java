@@ -104,6 +104,12 @@ public class Perl_Variable extends TokenChooser
 		public @S(20) Perl_Identifier_Reference id;
 	}
 
+	public @CHOICE static class Perl_AtEachVariable extends TokenSequence
+	{
+		public @S(10) Perl_Punctuation at = new Perl_Punctuation('@');
+		public @S(20) Perl_Keyword EACH = new Perl_Keyword("each");
+	}
+
 	public @LAST static class Perl_AtUnderscoreVariable extends TokenSequence
 	{
 		public @S(10) Perl_Punctuation at = new Perl_Punctuation('@');
@@ -137,8 +143,9 @@ public class Perl_Variable extends TokenChooser
 	{
 		public @S(10) Perl_Keyword LIST = new Perl_Keyword("list");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<Perl_Expression,PunctuationComma> args;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(30) @OPT PunctuationComma comma;
+		public @S(40) SeparatedList<Perl_Expression,PunctuationComma> args;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 	
 	public @CHOICE static class Perl_VarFunctionCall extends TokenSequence
