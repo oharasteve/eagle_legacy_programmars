@@ -70,7 +70,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(CSharp_Program.CSHARP, CSharp_Program.class, ".cs");
 		add(CSS_Program.CSS, CSS_Program.class, ".css");
 		add(Delphi_Configuration.DELPHIConfig, Delphi_Configuration.class);
-		add(Delphi_Program.DELPHI, Delphi_Program.class, ".p", ".pas");
+		add(Delphi_Program.DELPHI, Delphi_Program.class, ".dpr", ".p", ".pas");
 		add(Django_Program.DJANGO, Django_Program.class);
 		add(Gupta_Program.GUPTA, Gupta_Program.class);
 		add(HTML_Program.HTML, HTML_Program.class, ".htm", ".html");
