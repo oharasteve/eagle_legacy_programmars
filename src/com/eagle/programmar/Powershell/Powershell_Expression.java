@@ -12,6 +12,9 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -59,24 +62,39 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(20) Powershell_Expression expr;
 	}
 	
+	public static @P(130) class Powershell_Lists extends PrimaryOperator
+	{
+		public @S(19) @OPT Powershell_Punctuation at = new Powershell_Punctuation("@");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) Powershell_Expression expr;
+		public @S(40) TokenList<Powershell_ListItem> listItem;
+		public @S(50) PunctuationRightParen rightParen;
+		
+		public static class Powershell_ListItem extends TokenSequence
+		{
+			public @S(10) PunctuationComma comma;
+			public @S(20) Powershell_Expression expr;
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public static @P(130) class Powershell_Multiplicative_Expression extends PrecedenceOperator
+	public static @P(300) class Powershell_Multiplicative_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("*", "/");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(140) class Powershell_Additive_Expression extends PrecedenceOperator
+	public static @P(310) class Powershell_Additive_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("+", "-");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(150) class Powershell_Relational_Expression extends PrecedenceOperator
+	public static @P(320) class Powershell_Relational_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-lt", "-le");

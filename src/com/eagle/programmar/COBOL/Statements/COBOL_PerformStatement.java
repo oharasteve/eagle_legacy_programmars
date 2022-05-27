@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.core.EagleTestable;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence.COBOL_StatementOrComment;
@@ -19,7 +16,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class COBOL_PerformStatement extends COBOL_AbstractStatement implements EagleTestable, EagleRunnable
+public class COBOL_PerformStatement extends COBOL_AbstractStatement
 {
 	public @S(10) @DOC("rlpsperf.htm") COBOL_Keyword PERFORM = new COBOL_Keyword("PERFORM");
 	public @S(20) @OPT COBOL_PerformTestWhen testWhen;
@@ -68,24 +65,11 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 			public @S(40) COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
 		}
 		
-		public @CHOICE static class COBOL_PerformTimesInline extends TokenSequence implements EagleRunnable
+		public @CHOICE static class COBOL_PerformTimesInline extends TokenSequence
 		{
 			public @S(10) COBOL_Number times;
 			public @S(20) COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
 			public @S(30) TokenList<COBOL_StatementOrComment> statements;
-			
-			@Override
-			public void interpret(EagleInterpreter interpreter)
-			{
-				int n = interpreter.getIntValue(times);
-				for (int i = 0; i < n; i++)
-				{
-					for (COBOL_StatementOrComment stmt : statements._elements)
-					{
-						interpreter.tryToInterpret(stmt);
-					}
-				}
-			}
 		}
 	}
 	
@@ -107,17 +91,5 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 			public @S(10) COBOL_Keyword UNTIL = new COBOL_Keyword("UNTIL");
 			public @S(20) COBOL_Expression condition;
 		}
-	}
-
-	@Override
-	public Object[] addTests()
-	{
-		String pgm1 = "PERFORM 3 TIMES DISPLAY 99 END-PERFORM.";
-		return new Object[] { "Perform1", null, pgm1, "99\n99\n99\n" };
-	}
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
 	}
 }

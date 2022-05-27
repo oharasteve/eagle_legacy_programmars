@@ -74,6 +74,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 		{
 			public @S(10) COBOL_Expression parameter;
 			public @S(20) @OPT COBOL_ExpressionFunctionRange range;
+			public @S(30) @OPT COBOL_KeywordChoice LEADING = new COBOL_KeywordChoice("LEADING", "TRAILING");
 			
 			public static class COBOL_ExpressionFunctionRange extends TokenSequence
 			{
@@ -169,7 +170,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 			
 			public @CHOICE static class COBOL_Equal extends TokenSequence
 			{
-				public @S(10) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
+				public @S(10) COBOL_KeywordChoice EQUAL = new COBOL_KeywordChoice("EQUAL", "EQUALS");
 				public @S(20) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
 			}
 			

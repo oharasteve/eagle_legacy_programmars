@@ -20,8 +20,15 @@ public class VB_ForStatement extends TokenSequence
 	public @S(40) VB_Expression from;
 	public @S(50) VB_Keyword TO = new VB_Keyword("to");
 	public @S(60) VB_Expression to;
-	public @S(70) VB_EndOfLine eoln;
-	public @S(80) TokenList<VB_Statement> action;
-	public @S(90) VB_Keyword NEXT = new VB_Keyword("next");
-	public @S(100) @OPT VB_Identifier_Reference var2;
+	public @S(70) @OPT VB_ForStep step;
+	public @S(80) VB_EndOfLine eoln;
+	public @S(90) TokenList<VB_Statement> action;
+	public @S(100) VB_Keyword NEXT = new VB_Keyword("next");
+	public @S(110) @OPT VB_Identifier_Reference var2;
+	
+	public static class VB_ForStep extends TokenSequence
+	{
+		public @S(10) VB_Keyword STEP = new VB_Keyword("step");
+		public @S(20) VB_Expression step;
+	}
 }

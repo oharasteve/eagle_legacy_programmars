@@ -15,7 +15,7 @@ public class AWK_ArgumentList extends TokenSequence
 	
 	public static class AWK_MoreArguments extends TokenSequence
 	{
-		public @S(10) PunctuationComma comma;
+		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) @OPT AWK_EndOfLine eoln;
 		public @S(30) AWK_Expression expr;
 	}
