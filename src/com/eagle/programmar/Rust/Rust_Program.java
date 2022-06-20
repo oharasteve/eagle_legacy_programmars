@@ -4,6 +4,9 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.Rust.Terminals.Rust_Comment;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 
 public class Rust_Program extends EagleLanguage
 {
@@ -20,5 +23,13 @@ public class Rust_Program extends EagleLanguage
 		return "https://doc.rust-lang.org/reference";
 	}
 	
-	// TBD: Elements
+	public @S(10) TokenList<Rust_Element> elements;
+	
+	public static class Rust_Element extends TokenChooser
+	{
+	  public @CHOICE Rust_Comment comment;
+	  public @CHOICE Rust_Module module;
+	  // public @CHOICE Rust_Function function;
+	  // public @CHOICE Rust_Data data;
+	}
 }

@@ -39,6 +39,7 @@ import com.eagle.programmar.Python.Python2_Program;
 import com.eagle.programmar.Python.Python3_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_III_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_IV_Program;
+import com.eagle.programmar.Rust.Rust_Program;
 import com.eagle.programmar.SQL.SQL_Program;
 import com.eagle.programmar.VB.VB_Program;
 import com.eagle.programmar.XML.XML_Program;
@@ -93,7 +94,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Python3_Program.PYTHON3, Python3_Program.class, ".py");
 		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
-		// add(Rust_Program.RUST, Rust_Program.class, ".rs");
+		add(Rust_Program.RUST, Rust_Program.class, ".rs");
 		add(SQL_Program.SQL, SQL_Program.class, ".sql");
 		// add(TCL_Program.TCL, TCL_Program.class, ".tcl");
 		add(VB_Program.VB, VB_Program.class, ".vb", ".vba", ".vbs");
