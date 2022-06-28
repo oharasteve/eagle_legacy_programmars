@@ -14,5 +14,5 @@ public class Powershell_AssignmentStatement extends TokenSequence
 	public @S(10) @NEWLINE Powershell_Variable var;
 	public @S(20) PunctuationEquals equals;
 	public @S(30) Powershell_Expression expr;
-	public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(40) @OPT @NOSPACE PunctuationSemicolon semicolon;
 }

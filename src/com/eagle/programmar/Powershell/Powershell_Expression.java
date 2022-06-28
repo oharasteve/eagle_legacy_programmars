@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Powershell;
 
-import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
@@ -24,7 +23,6 @@ public class Powershell_Expression extends PrecedenceChooser
 
 	public @P(10) Powershell_Number number;
 	public @P(20) Powershell_Literal literal;
-	public @P(30) Powershell_Identifier_Reference id;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.
@@ -42,6 +40,12 @@ public class Powershell_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
+	
+	public static @P(90) class Powershell_Var extends PrimaryOperator
+	{
+		// Because Powershell_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
+		public @S(10) Powershell_Variable id;
+	}
 	
 	public static @P(100) class Powershell_Parens extends PrimaryOperator
 	{
@@ -83,7 +87,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	public static @P(300) class Powershell_Multiplicative_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("*", "/");
+		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("*", "/", "%");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
@@ -98,6 +102,13 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-lt", "-le");
+		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(330) class Powershell_Logical_Expression extends PrecedenceOperator
+	{
+		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice("-and", "-or", "-xor");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

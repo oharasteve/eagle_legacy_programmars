@@ -73,7 +73,7 @@ public class PLI_Declaration extends TokenSequence
 			
 			public static class PLI_Declare_Initial extends TokenSequence
 			{
-				public @S(10) PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
+				public @S(10) PLI_KeywordChoice INITIAL = new PLI_KeywordChoice("INITIAL", "INIT");
 				public @S(20) PunctuationLeftParen leftParen;
 				public @S(30) SeparatedList<PLI_Expression,PunctuationComma> exprs;
 				public @S(40) PunctuationRightParen rightParen;

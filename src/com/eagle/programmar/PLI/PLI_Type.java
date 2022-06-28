@@ -21,7 +21,8 @@ public class PLI_Type extends TokenChooser
 	
 	public @CHOICE static class PLI_BaseType extends TokenChooser
 	{
-		public @CHOICE PLI_KeywordChoice base = new PLI_KeywordChoice("COMPLEX", "FILE", "VARYING", "UNION");
+		public @CHOICE PLI_KeywordChoice base = new PLI_KeywordChoice(
+				"COMPLEX", "FILE", "PRINT", "UNION", "VARYING");
 
 		public @CHOICE static class PLI_TypeCharacter extends TokenSequence
 		{
@@ -34,7 +35,7 @@ public class PLI_Type extends TokenChooser
 			
 			public static class PLI_CharInitial extends TokenSequence
 			{
-				public @S(10) PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
+				public @S(10) PLI_KeywordChoice INITIAL = new PLI_KeywordChoice("INITIAL", "INIT");
 				public @S(20) PunctuationLeftParen leftParen;
 				public @S(30) PLI_Literal initialValue;
 				public @S(40) PunctuationRightParen rightParen;
@@ -44,7 +45,7 @@ public class PLI_Type extends TokenChooser
 		public @CHOICE static class PLI_TypeFixedBinary extends TokenSequence
 		{
 			public @S(10) PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
-			public @S(20) PLI_Keyword BINARY = new PLI_Keyword("BINARY");
+			public @S(20) PLI_KeywordChoice BINARY = new PLI_KeywordChoice("BINARY", "BIN");
 			public @S(30) @OPT PLI_TypeSize size;
 			public @S(40) @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
 		}
@@ -52,7 +53,7 @@ public class PLI_Type extends TokenChooser
 		public @CHOICE static class PLI_TypeFloat extends TokenSequence
 		{
 			public @S(10) PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
-			public @S(20) @OPT PLI_Keyword DECIMAL = new PLI_Keyword("DECIMAL");
+			public @S(20) @OPT PLI_KeywordChoice DECIMAL = new PLI_KeywordChoice("DECIMAL", "DEC");
 			public @S(30) @OPT PLI_TypeSize size;
 			public @S(40) @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
 		}
