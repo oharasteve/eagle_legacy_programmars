@@ -20,10 +20,5 @@ public class CMD_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", "||" };
-		
-		// findFirstWords(CMD_Statement.class);
-		// addReservedWord("for");
-		// addReservedWord("if");
-		// addReservedWord("rem");
 	}
 }

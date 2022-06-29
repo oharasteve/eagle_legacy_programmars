@@ -1,0 +1,16 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jun 29, 2022
+
+package com.eagle.programmar.Bash.Terminals;
+
+import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.TerminalIdentifierToken;
+
+public class Bash_Identifier extends TerminalIdentifierToken
+{
+	@Override
+	public boolean parse(EagleFileReader lines)
+	{
+		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"_", true);
+	}
+}

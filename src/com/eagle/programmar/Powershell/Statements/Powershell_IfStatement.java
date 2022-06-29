@@ -16,6 +16,15 @@ public class Powershell_IfStatement extends TokenSequence
 	public @S(10) @NEWLINE Powershell_Keyword IF = new Powershell_Keyword("if");
 	public @S(20) Powershell_Expression condition;
 	public @S(30) PunctuationLeftBrace leftBrace;
-	public @S(40) @OPT TokenList<Powershell_Statement> stmts;
+	public @S(40) TokenList<Powershell_Statement> stmts;
 	public @S(50) PunctuationRightBrace rightBrace;
+	public @S(60) @OPT Powershell_IfElseStatement elseStmt;
+	
+	public static class Powershell_IfElseStatement extends TokenSequence
+	{
+		public @S(10) Powershell_Keyword ELSE = new Powershell_Keyword("else");
+		public @S(20) PunctuationLeftBrace leftBrace;
+		public @S(30) TokenList<Powershell_Statement> stmts;
+		public @S(40) PunctuationRightBrace rightBrace;
+	}
 }

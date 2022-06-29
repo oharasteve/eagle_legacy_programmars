@@ -4,15 +4,11 @@
 package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Powershell_AssignmentStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Powershell_Variable var;
-	public @S(20) PunctuationEquals equals;
-	public @S(30) Powershell_Expression expr;
-	public @S(40) @OPT @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE Powershell_Expression expr;
+	public @S(20) @OPT @NOSPACE PunctuationSemicolon semicolon;
 }

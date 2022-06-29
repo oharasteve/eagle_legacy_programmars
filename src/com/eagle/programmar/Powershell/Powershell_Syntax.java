@@ -18,12 +18,13 @@ public class Powershell_Syntax extends EagleSyntax
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "<=", ">=", "==", "!=" };
+		_punctuationExceptions = new String[] { "<=", ">=", "==", "!=", "::", "++", "--" };
 		
 		addReservedWords(reservedWords);
 	}
 	
 	private String[] reservedWords = new String[] {
+		"break",
 		"data",
 		"print",
 	};

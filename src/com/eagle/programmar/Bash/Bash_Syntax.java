@@ -12,4 +12,13 @@ public class Bash_Syntax extends EagleSyntax
 	{
 		return "Bash";
 	}
+	
+	public Bash_Syntax()
+	{
+		_isCaseSensitive = true;
+		_continuationChar = "\\";
+		_extraCharacters = "";
+		_autoAdvance = false;
+		_punctuationExceptions = new String[] { "==", "!=" };
+	}
 }
