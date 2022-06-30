@@ -1,0 +1,80 @@
+// Copyright Eagle Legacy Modernization, LLC, 2010-date
+// Original author: Steven A. O'Hara, Jun 29, 2022
+
+package com.eagle.programmar.Powershell;
+
+import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+//[CmdletBinding()]
+//Param(
+//   [Parameter(Mandatory=$False,Position=1)]$param,
+//   [Switch]$night = $False
+//)
+
+public class Powershell_CmdletBinding extends TokenSequence
+{
+	public @S(10) PunctuationLeftBracket leftBracket;
+	public @S(20) Powershell_Keyword CMDLETBINDING = new Powershell_Keyword("CmdletBinding");
+	public @S(30) PunctuationLeftParen leftParen;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationRightBracket rightBracket;
+	public @S(60) Powershell_CmdletParamList paramList;
+	
+	public static class Powershell_CmdletParamList extends TokenSequence
+	{
+		public @S(10) Powershell_Keyword PARAM = new Powershell_Keyword("Param");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<Powershell_CmdletParam, PunctuationComma> params;
+		public @S(40) PunctuationRightParen rightParen;
+		
+		public static class Powershell_CmdletParam extends TokenChooser
+		{
+			public @CHOICE static class Powershell_CmdletParameter extends TokenSequence
+			{
+				public @S(10) PunctuationLeftBracket leftBracket;
+				public @S(20) Powershell_Keyword PARAMETER = new Powershell_Keyword("Parameter");
+				public @S(30) PunctuationLeftParen leftParen;
+				public @S(40) SeparatedList<Powershell_CmdletParameterOption,PunctuationComma> options;
+				public @S(50) PunctuationRightParen rightParen;
+				public @S(60) PunctuationRightBracket rightBracket;
+				public @S(70) Powershell_Variable param;
+				
+				public static class Powershell_CmdletParameterOption extends TokenChooser
+				{
+					public @CHOICE static class Powershell_CmdletParameterMandatory extends TokenSequence
+					{
+						public  @S(10)Powershell_Keyword MANDATORY = new Powershell_Keyword("Mandatory");
+						public  @S(20)PunctuationEquals equals;
+						public  @S(30)Powershell_Expression value;
+					}
+					
+					public @CHOICE static class Powershell_CmdletParameterPosition extends TokenSequence
+					{
+						public @S(10) Powershell_Keyword POSITION = new Powershell_Keyword("Position");
+						public @S(20) PunctuationEquals equals;
+						public @S(30) Powershell_Expression value;
+					}
+				}
+			}
+			
+			public @CHOICE static class Powershell_CmdletSwitch extends TokenSequence
+			{
+				public @S(10) PunctuationLeftBracket leftBracket;
+				public @S(20) Powershell_Keyword SWITCH = new Powershell_Keyword("Switch");
+				public @S(30) PunctuationRightBracket rightBracket;
+				public @S(40) Powershell_Variable param;
+				public @S(50) PunctuationEquals equals;
+				public @S(60) Powershell_Expression expr;
+			}
+		}
+	}
+}

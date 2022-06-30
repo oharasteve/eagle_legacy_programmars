@@ -3,10 +3,12 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Powershell_SourceStatement extends TokenSequence
 {
 	public @S(10) PunctuationPeriod dot;
+	public @S(20) Powershell_Filename filename;
 }
