@@ -5,13 +5,13 @@ package com.eagle.programmar.JavaP.Constants;
 
 import com.eagle.programmar.JavaP.Statements.JavaP_ConstantPool.JavaP_ConstantShowable;
 import com.eagle.programmar.JavaP.Symbols.JavaP_Symbol_Reference;
-import com.eagle.programmar.JavaP.Terminals.JavaP_Keyword;
+import com.eagle.programmar.JavaP.Terminals.JavaP_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class JavaP_ConstantNameAndType extends TokenSequence implements JavaP_ConstantShowable
 {
-	public @S(10) JavaP_Keyword NAMEANDTYPE = new JavaP_Keyword("NameAndType");
+	public @S(10) JavaP_KeywordChoice NAMEANDTYPE = new JavaP_KeywordChoice("NameAndType", "InvokeDynamic");
 	public @S(20) JavaP_Symbol_Reference name;
 	public @S(30) PunctuationColon colon;
 	public @S(40) JavaP_Symbol_Reference type;

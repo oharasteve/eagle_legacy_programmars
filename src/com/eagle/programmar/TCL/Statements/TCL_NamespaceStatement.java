@@ -20,7 +20,7 @@ public class TCL_NamespaceStatement extends TokenSequence
 	public @S(40) PunctuationLeftBrace leftBrace;
 	public @S(50) TCL_EndOfLine endOfLine;
 	
-	public TokenList<TCL_Statement> statements;
+	public @S(60) TokenList<TCL_Statement> statements;
 	
-	public PunctuationRightBrace rightBrace;
+	public @S(70)PunctuationRightBrace rightBrace;
 }
