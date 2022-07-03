@@ -4,7 +4,6 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Identifier;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
@@ -144,24 +143,24 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(10) Powershell_Variable variable;
 	}
 	
-	public static @P(230) class Powershell_FilenameExpression extends PrimaryOperator
-	{
-		// Because Powershell_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
-		public @S(10) Powershell_Filename filename;
-	}
-	
-	public static @P(240) class Powershell_ParenthesizedExpression extends PrimaryOperator
+	public static @P(230) class Powershell_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @NOSPACE Powershell_Expression expression;
 		public @S(30) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
-	public static @P(250) class Powershell_CallExpression extends PrimaryOperator
+	public static @P(240) class Powershell_CallExpression extends PrimaryOperator
 	{
 		public @S(10) Powershell_Identifier id;
 		public @S(20) TokenList<Powershell_Expression> arguments;
 	}
+	
+//	public static @P(250) class Powershell_FilenameExpression extends PrimaryOperator
+//	{
+//		// Because Powershell_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
+//		public @S(10) Powershell_Filename filename;
+//	}
 	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

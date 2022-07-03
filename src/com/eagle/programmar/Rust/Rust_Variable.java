@@ -1,0 +1,22 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Jul 1, 2022
+
+package com.eagle.programmar.Rust;
+
+import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
+
+public class Rust_Variable extends TokenSequence
+{
+	public @S(10) Rust_Identifier_Reference var;
+	public @S(20) @OPT Rust_Subscript subscript;
+	
+	public static class Rust_Subscript extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) Rust_Expression expr;
+		public @S(30) PunctuationRightBracket rightBracket;
+	}
+}

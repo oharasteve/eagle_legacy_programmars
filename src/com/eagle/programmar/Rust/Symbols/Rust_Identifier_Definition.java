@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Rust.Symbols;
 
-import com.eagle.programmar.Python.Terminals.Python_Identifier;
+import com.eagle.programmar.Rust.Terminals.Rust_Identifier;
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Rust_Identifier_Definition extends Python_Identifier implements DefinitionInterface
+public abstract class Rust_Identifier_Definition extends Rust_Identifier implements DefinitionInterface
 {
 }

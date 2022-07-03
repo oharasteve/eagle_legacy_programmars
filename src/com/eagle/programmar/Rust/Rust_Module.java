@@ -6,14 +6,14 @@ package com.eagle.programmar.Rust;
 import com.eagle.programmar.Rust.Rust_Statement.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
-import com.eagle.tokens.AbstractToken.DOC;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_Module {
-	public @DOC("items/modules.html") Rust_Keyword MOD = new Rust_Keyword("mod");
-	public Rust_Identifier_Definition id;
-	public Rust_Module_Body body;
+public class Rust_Module extends TokenSequence {
+	public @S(10) @DOC("items/modules.html") Rust_Keyword MOD = new Rust_Keyword("mod");
+	public @S(20) Rust_Identifier_Definition id;
+	public @S(30) Rust_Module_Body body;
 	
 	public static class Rust_Module_Body extends TokenChooser
 	{
