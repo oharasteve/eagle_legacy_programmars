@@ -76,7 +76,7 @@ public class CMD_Argument extends TokenSequence
 						// Don't allow == in the middle of an argument
 						if (ch == '=')
 						{
-							if (_endChar + 1 <= recLen)
+							if (_endChar + 1 < recLen)
 							{
 								if (rec.charAt(_endChar+1) == '=') break;
 							}
