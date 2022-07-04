@@ -1,11 +1,15 @@
-// Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Sep 30, 2015
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 4, 2022
 
 package com.eagle.programmar.Go;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.Go.Statements.Go_Package;
+import com.eagle.programmar.Go.Terminals.Go_Comment;
+import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
 
 public class Go_Program extends EagleLanguage
 {
@@ -26,5 +30,13 @@ public class Go_Program extends EagleLanguage
 	
 	public static class Go_Element extends TokenChooser
 	{
+		public @CHOICE Go_CommentEoln comment;
+		public @CHOICE Go_Package pkg;
+	}
+	
+	public static class Go_CommentEoln extends TokenSequence
+	{
+		public @S(10) Go_Comment comment;
+		public @S(20) Go_EOLN eoln;
 	}
 }

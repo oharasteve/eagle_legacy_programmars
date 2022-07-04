@@ -31,5 +31,6 @@ public class Rust_Program extends EagleLanguage
 	  public @CHOICE Rust_Function function;
 	  public @CHOICE Rust_Module module;
 	  public @CHOICE Rust_Data data;
+	  public @CHOICE Rust_Use use;
 	}
 }

@@ -11,9 +11,10 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Rust_Module extends TokenSequence {
-	public @S(10) @DOC("items/modules.html") Rust_Keyword MOD = new Rust_Keyword("mod");
-	public @S(20) Rust_Identifier_Definition id;
-	public @S(30) Rust_Module_Body body;
+	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
+	public @S(20) @DOC("items/modules.html") Rust_Keyword MOD = new Rust_Keyword("mod");
+	public @S(30) Rust_Identifier_Definition id;
+	public @S(40) Rust_Module_Body body;
 	
 	public static class Rust_Module_Body extends TokenChooser
 	{
