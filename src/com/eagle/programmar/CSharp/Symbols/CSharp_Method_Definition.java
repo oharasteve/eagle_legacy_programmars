@@ -6,8 +6,8 @@ package com.eagle.programmar.CSharp.Symbols;
 public class CSharp_Method_Definition extends CSharp_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Method";
+		return DefinitionType.METHOD;
 	}
 }

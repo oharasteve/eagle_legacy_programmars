@@ -7,8 +7,8 @@ package com.eagle.programmar.Lisp.Symbols;
 public class Lisp_Function_Definition extends Lisp_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Function";
+		return DefinitionType.FUNCTION;
 	}
 }

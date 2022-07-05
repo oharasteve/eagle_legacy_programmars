@@ -6,8 +6,8 @@ package com.eagle.programmar.Java.Symbols;
 public class Java_Method_Definition extends Java_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Method";
+		return DefinitionType.METHOD;
 	}
 }

@@ -6,8 +6,8 @@ package com.eagle.programmar.Lisp.Symbols;
 public class Lisp_Parameter_Definition extends Lisp_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Parameter";
+		return DefinitionType.PARAMETER;
 	}
 }

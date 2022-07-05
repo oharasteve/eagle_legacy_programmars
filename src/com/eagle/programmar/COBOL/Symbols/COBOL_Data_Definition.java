@@ -25,8 +25,8 @@ public class COBOL_Data_Definition extends COBOL_Identifier_Definition
 	}
 	
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Data";
+		return DefinitionType.DATA;
 	}
 }

@@ -9,8 +9,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class C_Label_Definition extends C_Identifier implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 }

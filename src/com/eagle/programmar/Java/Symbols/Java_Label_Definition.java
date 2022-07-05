@@ -6,8 +6,8 @@ package com.eagle.programmar.Java.Symbols;
 public class Java_Label_Definition extends Java_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 }

@@ -6,8 +6,8 @@ package com.eagle.programmar.Rust.Symbols;
 public class Rust_Function_Definition extends Rust_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Function";
+		return DefinitionType.FUNCTION;
 	}
 }

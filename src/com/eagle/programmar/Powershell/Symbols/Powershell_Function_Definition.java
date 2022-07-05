@@ -16,8 +16,8 @@ public class Powershell_Function_Definition extends TerminalIdentifierToken impl
 	}
 
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Function";
+		return DefinitionType.FUNCTION;
 	}
 }

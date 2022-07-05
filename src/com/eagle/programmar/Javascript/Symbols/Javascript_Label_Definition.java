@@ -6,9 +6,9 @@ package com.eagle.programmar.Javascript.Symbols;
 public class Javascript_Label_Definition extends Javascript_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 
 }

@@ -9,8 +9,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class JavaP_Symbol_Definition extends JavaP_HashNumber implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Symbol";
+		return DefinitionType.SYMBOL;
 	}
 }

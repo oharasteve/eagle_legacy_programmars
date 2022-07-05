@@ -6,8 +6,8 @@ package com.eagle.programmar.IntelASM.Symbols;
 public class IntelASM_Label_Definition extends IntelASM_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 }

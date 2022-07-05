@@ -9,8 +9,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class Template_Identifier_Definition extends Template_Identifier implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Variable";
+		return DefinitionType.VARIABLE;
 	}
 }

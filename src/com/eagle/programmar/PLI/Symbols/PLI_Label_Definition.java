@@ -6,8 +6,8 @@ package com.eagle.programmar.PLI.Symbols;
 public class PLI_Label_Definition extends PLI_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 }

@@ -6,8 +6,8 @@ package com.eagle.programmar.C.Symbols;
 public class C_Type_Definition extends C_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Type";
+		return DefinitionType.TYPE;
 	}
 }

@@ -6,8 +6,8 @@ package com.eagle.programmar.VB.Symbols;
 public class VB_Function_Definition extends VB_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Function";
+		return DefinitionType.FUNCTION;
 	}
 }

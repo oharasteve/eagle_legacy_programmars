@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.Go.Symbols;
 
-public class Go_Variable_Definition extends Go_Identifier_Definition
+public class Go_Function_Definition extends Go_Identifier_Definition
 {
 	@Override
 	public DefinitionType getType()
 	{
-		return DefinitionType.VARIABLE;
+		return DefinitionType.FUNCTION;
 	}
 }

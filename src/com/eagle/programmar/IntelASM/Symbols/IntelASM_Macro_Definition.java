@@ -6,8 +6,8 @@ package com.eagle.programmar.IntelASM.Symbols;
 public class IntelASM_Macro_Definition extends IntelASM_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Macro";
+		return DefinitionType.MACRO;
 	}
 }

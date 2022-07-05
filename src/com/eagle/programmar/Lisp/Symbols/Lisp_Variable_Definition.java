@@ -7,8 +7,8 @@ package com.eagle.programmar.Lisp.Symbols;
 public class Lisp_Variable_Definition extends Lisp_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Variable";
+		return DefinitionType.VARIABLE;
 	}
 }

@@ -6,8 +6,8 @@ package com.eagle.programmar.Delphi.Symbols;
 public class Delphi_Procedure_Definition extends Delphi_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Procedure";
+		return DefinitionType.PROCEDURE;
 	}
 }

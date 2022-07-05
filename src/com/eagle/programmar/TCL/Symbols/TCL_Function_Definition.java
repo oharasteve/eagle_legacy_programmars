@@ -6,8 +6,8 @@ package com.eagle.programmar.TCL.Symbols;
 public class TCL_Function_Definition extends TCL_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Procedure";
+		return DefinitionType.FUNCTION;
 	}
 }

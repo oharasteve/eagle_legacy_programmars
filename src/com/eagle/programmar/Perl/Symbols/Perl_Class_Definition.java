@@ -6,8 +6,8 @@ package com.eagle.programmar.Perl.Symbols;
 public class Perl_Class_Definition extends Perl_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Class";
+		return DefinitionType.CLASS;
 	}
 }

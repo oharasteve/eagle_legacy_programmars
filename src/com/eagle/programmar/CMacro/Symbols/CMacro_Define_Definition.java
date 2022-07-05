@@ -7,8 +7,8 @@ package com.eagle.programmar.CMacro.Symbols;
 public class CMacro_Define_Definition extends CMacro_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Define";
+		return DefinitionType.DEFINE;
 	}
 }

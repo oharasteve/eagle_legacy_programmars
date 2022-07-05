@@ -7,8 +7,8 @@ package com.eagle.programmar.Python.Symbols;
 public class Python_Function_Definition extends Python_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Function";
+		return DefinitionType.FUNCTION;
 	}
 }

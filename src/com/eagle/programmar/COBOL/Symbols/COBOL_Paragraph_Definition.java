@@ -7,8 +7,8 @@ package com.eagle.programmar.COBOL.Symbols;
 public class COBOL_Paragraph_Definition extends COBOL_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Paragraph";
+		return DefinitionType.PARAGRAPH;
 	}
 }

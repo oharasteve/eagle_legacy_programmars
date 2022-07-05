@@ -6,8 +6,8 @@ package com.eagle.programmar.CSharp.Symbols;
 public class CSharp_Class_Definition extends CSharp_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Class";
+		return DefinitionType.CLASS;
 	}
 }

@@ -7,8 +7,8 @@ package com.eagle.programmar.Delphi.Symbols;
 public class Delphi_Program_Definition extends Delphi_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Program";
+		return DefinitionType.PROGRAM;
 	}
 }

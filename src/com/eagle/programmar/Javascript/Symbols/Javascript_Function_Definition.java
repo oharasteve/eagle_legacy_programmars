@@ -6,8 +6,8 @@ package com.eagle.programmar.Javascript.Symbols;
 public class Javascript_Function_Definition extends Javascript_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Function";
+		return DefinitionType.FUNCTION;
 	}
 }

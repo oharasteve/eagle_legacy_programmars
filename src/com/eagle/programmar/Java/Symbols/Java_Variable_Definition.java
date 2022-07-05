@@ -9,9 +9,9 @@ import com.eagle.core.EagleRunnable;
 public class Java_Variable_Definition extends Java_Identifier_Definition implements EagleRunnable
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Variable";
+		return DefinitionType.VARIABLE;
 	}
 
 	@Override

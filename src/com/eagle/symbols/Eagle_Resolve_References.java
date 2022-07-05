@@ -183,7 +183,7 @@ public abstract class Eagle_Resolve_References
 			DefinitionInterface def = (DefinitionInterface) defToken;
 			out.print(EagleUtilities.rj(def.getStartLine()+1, 5) + "  " +
 					EagleUtilities.lj(def.toString(), 20) + "  " +
-					EagleUtilities.lj(def.typeName(), 9) + "  ");
+					EagleUtilities.lj(def.getType().getName(), 9) + "  ");
 			
 			Collection<ReferenceInterface> refList = def.listReferences();
 			if (refList == null)

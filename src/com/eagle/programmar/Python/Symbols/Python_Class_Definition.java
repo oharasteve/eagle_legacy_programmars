@@ -6,8 +6,8 @@ package com.eagle.programmar.Python.Symbols;
 public class Python_Class_Definition extends Python_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Class";
+		return DefinitionType.CLASS;
 	}
 }

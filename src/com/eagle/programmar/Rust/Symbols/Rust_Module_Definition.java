@@ -6,8 +6,8 @@ package com.eagle.programmar.Rust.Symbols;
 public class Rust_Module_Definition extends Rust_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Module";
+		return DefinitionType.MODULE;
 	}
 }

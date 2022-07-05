@@ -8,8 +8,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class TCL_Namespace_Definition extends TCL_Identifier_Definition implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Namespace";
+		return DefinitionType.NAMESPACE;
 	}
 }

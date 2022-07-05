@@ -6,8 +6,8 @@ package com.eagle.programmar.C.Symbols;
 public class C_Namespace_Definition extends C_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Namespace";
+		return DefinitionType.NAMESPACE;
 	}
 }

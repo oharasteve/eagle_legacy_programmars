@@ -8,8 +8,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class TCL_Variable_Definition extends TCL_Identifier_Definition implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Variable";
+		return DefinitionType.VARIABLE;
 	}
 }

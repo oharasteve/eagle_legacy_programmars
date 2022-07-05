@@ -7,8 +7,8 @@ package com.eagle.programmar.COBOL.Symbols;
 public class COBOL_Program_Definition extends COBOL_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Program";
+		return DefinitionType.PROGRAM;
 	}
 }

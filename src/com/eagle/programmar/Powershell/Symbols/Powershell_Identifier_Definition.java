@@ -9,8 +9,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class Powershell_Identifier_Definition extends Powershell_Identifier implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Variable";
+		return DefinitionType.VARIABLE;
 	}
 }

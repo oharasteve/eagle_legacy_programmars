@@ -6,8 +6,8 @@ package com.eagle.programmar.SQL.Symbols;
 public class SQL_View_Definition extends SQL_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "View";
+		return DefinitionType.VIEW;
 	}
 }

@@ -6,8 +6,8 @@ package com.eagle.programmar.SQL.Symbols;
 public class SQL_Role_Definition extends SQL_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Role";
+		return DefinitionType.ROLE;
 	}
 }

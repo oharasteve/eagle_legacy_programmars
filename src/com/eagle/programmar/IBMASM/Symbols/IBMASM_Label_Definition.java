@@ -8,9 +8,9 @@ import com.eagle.parsers.EagleFileReader;
 public class IBMASM_Label_Definition extends IBMASM_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 
 	@Override

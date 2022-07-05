@@ -6,8 +6,8 @@ package com.eagle.programmar.CMD.Symbols;
 public class CMD_Label_Definition extends CMD_Identifier_Definition
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Label";
+		return DefinitionType.LABEL;
 	}
 }

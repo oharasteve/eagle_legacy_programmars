@@ -9,8 +9,8 @@ import com.eagle.tokens.DefinitionInterface;
 public class BNF_Rule_Definition extends BNF_Identifier implements DefinitionInterface
 {
 	@Override
-	public String typeName()
+	public DefinitionType getType()
 	{
-		return "Rule";
+		return DefinitionType.RULE;
 	}
 }
