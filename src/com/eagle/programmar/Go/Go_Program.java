@@ -4,6 +4,8 @@
 package com.eagle.programmar.Go;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.Go.Statements.Go_Data;
+import com.eagle.programmar.Go.Statements.Go_Import;
 import com.eagle.programmar.Go.Statements.Go_Package;
 import com.eagle.programmar.Go.Terminals.Go_Comment;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
@@ -32,6 +34,8 @@ public class Go_Program extends EagleLanguage
 	{
 		public @CHOICE Go_CommentEoln comment;
 		public @CHOICE Go_Package pkg;
+		public @CHOICE Go_Import imprt;
+		public @CHOICE Go_Data data;
 	}
 	
 	public static class Go_CommentEoln extends TokenSequence
