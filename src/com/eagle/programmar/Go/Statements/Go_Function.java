@@ -19,7 +19,7 @@ public class Go_Function extends TokenSequence
 	public @S(10) Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Go_FunctionParamater,PunctuationComma> parameters;
+	public @S(40) @OPT SeparatedList<Go_FunctionParamater,PunctuationComma> parameters;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) @OPT Go_Type returnType;
 	public @S(70) Go_Statement stmt;

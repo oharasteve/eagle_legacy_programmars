@@ -20,7 +20,8 @@ public class Go_Syntax extends EagleSyntax
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] { ":=",
 				"==", "!=", "<=", ">=",
-				"++", "--", "+=", "!~" };
+				"++", "--", "+=", "-=",
+				"*=", "/-", "!~" };
 		
 		addReservedWords(keywords);
 	}

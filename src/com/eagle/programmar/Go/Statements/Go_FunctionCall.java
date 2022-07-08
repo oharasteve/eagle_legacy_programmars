@@ -11,6 +11,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Go_FunctionCall extends TokenSequence
 {
@@ -18,5 +19,6 @@ public class Go_FunctionCall extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) SeparatedList<Go_Expression,PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) Go_EOLN eoln;
+	public @S(50) @OPT PunctuationSemicolon semicolon;
+	public @S(60) Go_EOLN eoln;
 }
