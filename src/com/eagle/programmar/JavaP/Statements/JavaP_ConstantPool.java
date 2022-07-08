@@ -5,6 +5,7 @@ package com.eagle.programmar.JavaP.Statements;
 
 import com.eagle.programmar.JavaP.Constants.JavaP_ConstantClass;
 import com.eagle.programmar.JavaP.Constants.JavaP_ConstantLong;
+import com.eagle.programmar.JavaP.Constants.JavaP_ConstantMethodHandle;
 import com.eagle.programmar.JavaP.Constants.JavaP_ConstantMethodRef;
 import com.eagle.programmar.JavaP.Constants.JavaP_ConstantNameAndType;
 import com.eagle.programmar.JavaP.Constants.JavaP_ConstantString;
@@ -45,6 +46,7 @@ public class JavaP_ConstantPool extends TokenSequence
 			public @CHOICE JavaP_ConstantClass constantClass;
 			public @CHOICE JavaP_ConstantLong constantLong;
 			public @CHOICE JavaP_ConstantMethodRef methodRef;
+			public @CHOICE JavaP_ConstantMethodHandle methodHandle;
 			public @CHOICE JavaP_ConstantNameAndType nameAndType;
 			public @CHOICE JavaP_ConstantString constantString;
 			public @CHOICE JavaP_ConstantUtf8 constantUtf8;

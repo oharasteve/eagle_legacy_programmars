@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.JavaP;
 
+import com.eagle.programmar.JavaP.Statements.JavaP_BootstrapMethods;
 import com.eagle.programmar.JavaP.Statements.JavaP_Classes;
 import com.eagle.programmar.JavaP.Statements.JavaP_Classfile;
 import com.eagle.programmar.JavaP.Statements.JavaP_CompiledFrom;
@@ -20,6 +21,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class JavaP_Statement extends TokenChooser
 {
+	public @CHOICE JavaP_BootstrapMethods bootstrapMethods;
 	public @CHOICE JavaP_Classes classes;
 	public @CHOICE JavaP_Classfile classfile;
 	public @CHOICE JavaP_CompiledFrom compiledFrom;

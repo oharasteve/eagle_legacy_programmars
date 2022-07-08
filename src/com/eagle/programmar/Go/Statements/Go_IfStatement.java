@@ -1,0 +1,27 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 8, 2022
+
+package com.eagle.programmar.Go.Statements;
+
+import com.eagle.programmar.Go.Go_Expression;
+import com.eagle.programmar.Go.Go_Statement;
+import com.eagle.programmar.Go.Terminals.Go_Keyword;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+public class Go_IfStatement extends TokenSequence
+{
+	public @S(10) Go_Keyword IF = new Go_Keyword("if");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Go_Expression condition;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) Go_Statement thenStatement;
+	public @S(60) @OPT Go_IfElseClause elseClause;
+	
+	public static class Go_IfElseClause extends TokenSequence
+	{
+		public @S(10) Go_Keyword ELSE = new Go_Keyword("else");
+		public @S(20) Go_Statement elseStatement;
+	}
+}

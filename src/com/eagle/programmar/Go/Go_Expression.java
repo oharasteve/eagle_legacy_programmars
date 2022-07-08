@@ -44,42 +44,74 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(100) class Go_NegativeExpression extends PrimaryOperator
+	public static @P(100) class Go_MethodInvocation extends PrimaryOperator
+	{
+		public @S(10) Go_Variable methodName;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT SeparatedList<Go_Expression,PunctuationComma> argList;
+		public @S(40) PunctuationRightParen rightParen;
+	}
+
+	public static @P(220) class Go_PreIncrementExpression extends PrimaryOperator
+	{
+		public @S(10) Go_Punctuation preIncrementOperator = new Go_Punctuation("++");
+		public @S(20) @NOSPACE Go_Variable var;
+	}
+
+	public static @P(230) class Go_PreDecrementExpression extends PrimaryOperator
+	{
+		public @S(10) Go_Punctuation preDecrementOperator = new Go_Punctuation("--");
+		public @S(20) @NOSPACE Go_Variable var;
+	}
+	
+	public static @P(240) class Go_PostIncrementExpression extends PrimaryOperator
+	{
+		public @S(10) Go_Variable var;
+		public @S(20) @NOSPACE Go_Punctuation postIncrementOperator = new Go_Punctuation("++");
+	}
+
+	public static @P(250) class Go_PostDecrementExpression extends PrimaryOperator
+	{
+		public @S(10) Go_Variable var;
+		public @S(20) @NOSPACE Go_Punctuation postDecrementOperator = new Go_Punctuation("--");
+	}
+
+	public static @P(110) class Go_NegativeExpression extends PrimaryOperator
 	{
 		public @S(10) Go_PunctuationChoice operator = new Go_PunctuationChoice("-");
 		public @S(20) Go_Expression expr;
 	}
 
-	public static @P(110) class Go_LogicalNotExpression extends PrimaryOperator
+	public static @P(120) class Go_LogicalNotExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Punctuation logicalNotOperator = new Go_Punctuation('~');
 		public @S(20) Go_Expression expr;
 	}
 	
-	public static @P(120) class Go_NotExpression extends PrimaryOperator
+	public static @P(130) class Go_NotExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Punctuation notOperator = new Go_Punctuation('!');
 		public @S(20) Go_Expression expr;
 	}
 	
-	public static @P(130) class Go_BuiltIn extends PrimaryOperator
+	public static @P(140) class Go_BuiltIn extends PrimaryOperator
 	{
 		public @S(10) Go_KeywordChoice builtinConstant = new Go_KeywordChoice("false", "true");
 	}
 	
-	public static @P(140) class Go_VariableExpression extends PrimaryOperator
+	public static @P(150) class Go_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Variable variable;
 	}
 	
-	public static @P(150) class Go_BracesExpression extends PrimaryOperator
+	public static @P(160) class Go_BracesExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @NOSPACE SeparatedList<Go_Expression,PunctuationComma> expression;
 		public @S(30) @NOSPACE PunctuationRightBrace rightBrace;
 	}
 
-	public static @P(160) class Go_ParenthesizedExpression extends PrimaryOperator
+	public static @P(170) class Go_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @NOSPACE Go_Expression expression;

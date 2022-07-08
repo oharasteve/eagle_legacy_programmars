@@ -92,7 +92,7 @@ public class JavaP_Syntax extends EagleSyntax
 			"imul",
 			"ineg",
 			"instanceof",
-			"invokeinterface", "invokespecial", "invokestatic", "invokevirtual",
+			"invokedynamic", "invokeinterface", "invokespecial", "invokestatic", "invokevirtual",
 			"irem",
 			"ireturn",
 			"istore", "istore_0", "istore_1", "istore_2", "istore_3",

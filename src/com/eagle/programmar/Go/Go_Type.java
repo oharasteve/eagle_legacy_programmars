@@ -11,7 +11,10 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Go_Type extends TokenSequence
 {
 	public @S(10) @OPT Go_TypeArray array;
-	public @S(20) Go_KeywordChoice type = new Go_KeywordChoice("string");
+	public @S(20) Go_KeywordChoice type = new Go_KeywordChoice(
+			"bool",
+			"int",
+			"string");
 	
 	public static class Go_TypeArray extends TokenSequence
 	{

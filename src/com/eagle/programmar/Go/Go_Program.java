@@ -38,6 +38,7 @@ public class Go_Program extends EagleLanguage
 		public @CHOICE Go_Import imprt;
 		public @CHOICE Go_Data data;
 		public @CHOICE Go_Function function;
+		public @CHOICE Go_Statement stmt;
 	}
 	
 	public static class Go_CommentEoln extends TokenSequence
