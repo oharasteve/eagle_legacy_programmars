@@ -4,8 +4,11 @@
 package com.eagle.programmar.Julia;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.Julia.Terminals.Julia_Comment;
+import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
 
 public class Julia_Program extends EagleLanguage
 {
@@ -26,5 +29,13 @@ public class Julia_Program extends EagleLanguage
 	
 	public static class Julia_Element extends TokenChooser
 	{
+		public @CHOICE Julia_CommentEoln comment;
+		public @CHOICE Julia_Statement stmt;
+	}
+	
+	public static class Julia_CommentEoln extends TokenSequence
+	{
+		public @S(10) Julia_Comment comment;
+		public @S(20) Julia_EOLN eoln;
 	}
 }
