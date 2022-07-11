@@ -13,6 +13,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Go_Function extends TokenSequence
 {
@@ -27,6 +28,7 @@ public class Go_Function extends TokenSequence
 	public static class Go_FunctionParamater extends TokenSequence
 	{
 		public @S(10) Go_Variable_Definition var;
-		public @S(20) Go_Type type;
+		public @S(20) @OPT PunctuationStar star;
+		public @S(30) Go_Type type;
 	}
 }
