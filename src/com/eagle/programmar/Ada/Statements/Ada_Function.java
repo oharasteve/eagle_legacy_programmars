@@ -48,6 +48,6 @@ public class Ada_Function extends TokenSequence
 	public static class Ada_FunctionReturns extends TokenSequence
 	{
 		public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
-		public @S(20) Ada_Type typs;
+		public @S(20) Ada_Type type;
 	}
 }

@@ -4,8 +4,13 @@
 package com.eagle.programmar.Algol68;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Algol68_Program extends EagleLanguage
 {
@@ -26,5 +31,15 @@ public class Algol68_Program extends EagleLanguage
 	
 	public static class Algol68_Element extends TokenChooser
 	{
+		public @CHOICE Algol68_Statement statement;
+		
+		public @CHOICE static class Algol68_Main extends TokenSequence
+		{
+			public @S(10) Algol68_Keyword MAIN = new Algol68_Keyword("MAIN");
+			public @S(20) PunctuationColon colon;
+			public @S(30) PunctuationLeftParen leftParen;
+			public @S(40) TokenList<Algol68_Element> elements;
+			public @S(50) PunctuationRightParen rightParen;
+		}
 	}
 }

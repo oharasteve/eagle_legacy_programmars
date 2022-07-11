@@ -1,0 +1,16 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 11, 2022
+
+package com.eagle.programmar.Algol68.Terminals;
+
+import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.TerminalLiteralToken;
+
+public class Algol68_Literal extends TerminalLiteralToken
+{
+	@Override
+	public boolean parse(EagleFileReader lines)
+	{
+		return genericLiteral(lines, "\"", true, '\\', false, false);
+	}
+}
