@@ -4,6 +4,7 @@
 package com.eagle.programmar.Ada;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.Ada.Terminals.Ada_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -26,5 +27,7 @@ public class Ada_Program extends EagleLanguage
 	
 	public static class Ada_Element extends TokenChooser
 	{
+		public @CHOICE Ada_Comment comment;
+		public @CHOICE Ada_Statement stmt;
 	}
 }
