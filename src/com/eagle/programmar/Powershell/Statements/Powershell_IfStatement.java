@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Powershell_IfStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Powershell_Keyword IF = new Powershell_Keyword("if");
+	public @S(10) Powershell_Keyword IF = new Powershell_Keyword("if");
 	public @S(20) Powershell_Expression condition;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) TokenList<Powershell_Statement> stmts;

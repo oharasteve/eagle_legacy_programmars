@@ -11,10 +11,10 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_Assignment extends TokenSequence
 {
-	public @S(10) @NEWLINE Javascript_Variable var;
+	public @S(10) Javascript_Variable var;
 	public @S(20) Javascript_AssignmentOperator assignmentOperator;
 	public @S(30) Javascript_Expression exp;
-	public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(40) PunctuationSemicolon semicolon;
 
 	public static class Javascript_AssignmentOperator extends TokenChooser
 	{

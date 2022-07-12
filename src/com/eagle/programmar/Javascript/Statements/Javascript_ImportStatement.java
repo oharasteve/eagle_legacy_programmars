@@ -16,9 +16,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_ImportStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Javascript_Keyword IMPORT = new Javascript_Keyword("import");
+	public @S(10) Javascript_Keyword IMPORT = new Javascript_Keyword("import");
 	public @S(20) SeparatedList<Javascript_ImportElement, PunctuationComma> ids;
-	public @S(30) @NOSPACE @OPT PunctuationSemicolon semicolon;
+	public @S(30) @OPT PunctuationSemicolon semicolon;
 	
 	public static class Javascript_ImportElement extends TokenSequence
 	{

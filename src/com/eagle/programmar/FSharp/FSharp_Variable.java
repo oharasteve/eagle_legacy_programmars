@@ -22,11 +22,11 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class FSharp_Variable extends TokenSequence implements AbstractVariable
 {
 	public @S(10) Python_SelfOrVariable var;
-	public @S(20) @OPT @NOSPACE TokenList<Python_Subscript> subscript1;
-	public @S(30) @OPT @NOSPACE TokenList<Python_DotVariable> moreFields1;
-	public @S(40) @OPT @NOSPACE TokenList<Python_Subscript> subscript2;
-	public @S(50) @OPT @NOSPACE TokenList<Python_DotVariable> moreFields2;
-	// public @S(60) @OPT @NOSPACE Python_ColonType colonType;
+	public @S(20) @OPT TokenList<Python_Subscript> subscript1;
+	public @S(30) @OPT TokenList<Python_DotVariable> moreFields1;
+	public @S(40) @OPT TokenList<Python_Subscript> subscript2;
+	public @S(50) @OPT TokenList<Python_DotVariable> moreFields2;
+	// public @S(60) @OPT Python_ColonType colonType;
 	
 	public static class Python_SelfOrVariable extends TokenChooser
 	{
@@ -38,16 +38,16 @@ public class FSharp_Variable extends TokenSequence implements AbstractVariable
 	
 	public static class Python_DotVariable extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationPeriod dot1;
-		public @S(20) @NOSPACE @OPT PunctuationPeriod dot2;
-		public @S(30) @NOSPACE Python_Identifier_Reference fld;
+		public @S(10) PunctuationPeriod dot1;
+		public @S(20) @OPT PunctuationPeriod dot2;
+		public @S(30) Python_Identifier_Reference fld;
 	}
 	
 	public static class Python_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @SYNTAX(Python_Multiline_Syntax.class) @NOSPACE Python_Subscript_Body body;
-		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(20) @SYNTAX(Python_Multiline_Syntax.class) Python_Subscript_Body body;
+		public @S(30) PunctuationRightBracket rightBracket;
 
 		public static class Python_Subscript_Body extends TokenSequence
 		{

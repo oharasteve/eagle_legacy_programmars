@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class FSharp_Assignment extends TokenSequence
 {
-	public @S(10) @NOSPACE FSharp_Variable var;
+	public @S(10) FSharp_Variable var;
 	public @S(20) FSharp_Punctuation operator = new FSharp_Punctuation("<-");
 	public @S(30) FSharp_Expression expr;
 }

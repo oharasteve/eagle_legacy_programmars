@@ -26,27 +26,27 @@ public class AWK_Function extends TokenSequence
 	
 	public static class AWK_Function_ParameterDefs extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT AWK_Comment comment1;
-		public @S(30) @OPT @NOSPACE AWK_Identifier param;
+		public @S(30) @OPT AWK_Identifier param;
 		public @S(40) @OPT AWK_Comment comment2;
-		public @S(50) @OPT @NOSPACE TokenList<AWK_MoreParameterDefs> moreParams;
-		public @S(60) @NOSPACE PunctuationRightParen rightParen;
+		public @S(50) @OPT TokenList<AWK_MoreParameterDefs> moreParams;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 
 	public static class AWK_MoreParameterDefs extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationComma comma;
+		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT AWK_Comment comment;
 		public @S(30) AWK_Identifier param;
 	}
 	
 	public static class AWK_FunctionBody extends TokenSequence
 	{
-		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT AWK_EndOfLine eoln1;
 		public @S(30) @OPT TokenList<AWK_StatementOrComment> elements;
-		public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(40) PunctuationRightBrace rightBrace;
 		public @S(50) @OPT AWK_EndOfLine eoln2;
 	}
 }

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Powershell_AssignmentStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Powershell_Expression expr;
-	public @S(20) @OPT @NOSPACE PunctuationSemicolon semicolon;
+	public @S(10) Powershell_Expression expr;
+	public @S(20) @OPT PunctuationSemicolon semicolon;
 }

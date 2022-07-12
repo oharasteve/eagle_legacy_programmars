@@ -33,7 +33,7 @@ public class C_Data extends TokenChooser
 		public @S(50) @OPT TokenList<C_Subscript> subscripts;
 		public @S(60) @OPT C_DataInitialValue initialValue;
 		public @S(70) @OPT TokenList<C_MoreIdentifiers> moreIds;
-		public @S(80) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(80) PunctuationSemicolon semicolon;
 		public @S(90) @OPT TokenList<C_Comment> comments2;
 		
 		public static class C_DataModifiers extends TokenChooser
@@ -71,9 +71,9 @@ public class C_Data extends TokenChooser
 		public @S(60) PunctuationRightParen rightParen1;
 		public @S(70) PunctuationLeftParen leftParen2;
 		public @S(80) @OPT C_Comment comment;
-		public @S(90) @OPT @NOSPACE C_FunctionParameter param;
-		public @S(100) @OPT @NOSPACE TokenList<C_MoreParameterDefs> moreParams;
+		public @S(90) @OPT C_FunctionParameter param;
+		public @S(100) @OPT TokenList<C_MoreParameterDefs> moreParams;
 		public @S(110) PunctuationRightParen rightParen2;
-		public @S(120) @NOSPACE @OPT PunctuationSemicolon semicolon;
+		public @S(120) @OPT PunctuationSemicolon semicolon;
 	}
 }

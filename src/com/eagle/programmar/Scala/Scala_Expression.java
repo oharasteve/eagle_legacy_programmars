@@ -58,13 +58,13 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	public static @P(110) class Scala_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Scala_PunctuationChoice preIncrementOperator = new Scala_PunctuationChoice("++", "--");
-		public @S(20) @NOSPACE Scala_Variable var;
+		public @S(20) Scala_Variable var;
 	}
 
 	public static @P(120) class Scala_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Scala_Variable var;
-		public @S(20) @NOSPACE Scala_PunctuationChoice postIncrementOperator = new Scala_PunctuationChoice("++", "--");
+		public @S(20) Scala_PunctuationChoice postIncrementOperator = new Scala_PunctuationChoice("++", "--");
 	}
 
 	public static @P(130) class Scala_NegativeExpression extends PrimaryOperator
@@ -98,8 +98,8 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	public static @P(180) class Scala_BracesExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @NOSPACE SeparatedList<Scala_Expression,PunctuationComma> expression;
-		public @S(30) @NOSPACE PunctuationRightBrace rightBrace;
+		public @S(20) SeparatedList<Scala_Expression,PunctuationComma> expression;
+		public @S(30) PunctuationRightBrace rightBrace;
 	}
 
 	public static @P(190) class Scala_ParenthesizedExpression extends PrimaryOperator

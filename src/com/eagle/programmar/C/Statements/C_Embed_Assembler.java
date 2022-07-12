@@ -13,8 +13,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class C_Embed_Assembler extends TokenSequence
 {
-	public @S(10) @INDENT C_KeywordChoice ASM = new C_KeywordChoice("__asm", "_asm");
+	public @S(10) C_KeywordChoice ASM = new C_KeywordChoice("__asm", "_asm");
 	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) @OPT @SYNTAX(IntelASM_Syntax.class) TokenList<IntelASM_Line> assmbler;
-	public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(40) PunctuationRightBrace rightBrace;
 }

@@ -56,25 +56,25 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	public static @P(110) class Go_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Punctuation preIncrementOperator = new Go_Punctuation("++");
-		public @S(20) @NOSPACE Go_Variable var;
+		public @S(20) Go_Variable var;
 	}
 
 	public static @P(120) class Go_PreDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Punctuation preDecrementOperator = new Go_Punctuation("--");
-		public @S(20) @NOSPACE Go_Variable var;
+		public @S(20) Go_Variable var;
 	}
 	
 	public static @P(130) class Go_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Variable var;
-		public @S(20) @NOSPACE Go_Punctuation postIncrementOperator = new Go_Punctuation("++");
+		public @S(20) Go_Punctuation postIncrementOperator = new Go_Punctuation("++");
 	}
 
 	public static @P(140) class Go_PostDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) Go_Variable var;
-		public @S(20) @NOSPACE Go_Punctuation postDecrementOperator = new Go_Punctuation("--");
+		public @S(20) Go_Punctuation postDecrementOperator = new Go_Punctuation("--");
 	}
 
 	public static @P(150) class Go_NegativeExpression extends PrimaryOperator
@@ -108,15 +108,15 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	public static @P(200) class Go_BracesExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @NOSPACE SeparatedList<Go_Expression,PunctuationComma> expression;
-		public @S(30) @NOSPACE PunctuationRightBrace rightBrace;
+		public @S(20) SeparatedList<Go_Expression,PunctuationComma> expression;
+		public @S(30) PunctuationRightBrace rightBrace;
 	}
 
 	public static @P(210) class Go_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @NOSPACE Go_Expression expression;
-		public @S(30) @NOSPACE PunctuationRightParen rightParen;
+		public @S(20) Go_Expression expression;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	///////////////////////////////////////////////

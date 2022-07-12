@@ -57,13 +57,13 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	public static @P(110) class Ada_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Ada_PunctuationChoice preIncrementOperator = new Ada_PunctuationChoice("++", "--");
-		public @S(20) @NOSPACE Ada_Variable var;
+		public @S(20) Ada_Variable var;
 	}
 
 	public static @P(120) class Ada_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Ada_Variable var;
-		public @S(20) @NOSPACE Ada_PunctuationChoice postIncrementOperator = new Ada_PunctuationChoice("++", "--");
+		public @S(20) Ada_PunctuationChoice postIncrementOperator = new Ada_PunctuationChoice("++", "--");
 	}
 
 	public static @P(130) class Ada_NegativeExpression extends PrimaryOperator
@@ -97,8 +97,8 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	public static @P(180) class Ada_BracketsExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @NOSPACE SeparatedList<Ada_Expression,PunctuationComma> expression;
-		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(20) SeparatedList<Ada_Expression,PunctuationComma> expression;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
 	public static @P(190) class Ada_ParenthesizedExpression extends PrimaryOperator

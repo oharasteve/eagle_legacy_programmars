@@ -43,20 +43,20 @@ public class Javascript_Statement extends TokenSequence
 		
 		public @FIRST static class Javascript_StatementBlock extends TokenSequence
 		{
-			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(10) PunctuationLeftBrace leftBrace;
 			public @S(20) @OPT TokenList<Javascript_StatementOrComment> statements;
-			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(30) PunctuationRightBrace rightBrace;
 		}
 		
 		public @LAST static class Javascript_ExpressionStmt extends TokenSequence
 		{
-			public @S(10) @NEWLINE Javascript_Expression expression;
+			public @S(10) Javascript_Expression expression;
 			public @S(20) @OPT TokenList<Javascript_MoreStatements> moreStatements;
-			public @S(30) @OPT @NOSPACE PunctuationSemicolon semicolon;
+			public @S(30) @OPT PunctuationSemicolon semicolon;
 				
 			public static class Javascript_MoreStatements extends TokenSequence
 			{
-				public @S(10) @NOSPACE PunctuationComma comma;
+				public @S(10) PunctuationComma comma;
 				public @S(20) Javascript_Statement statement;
 			}
 		}

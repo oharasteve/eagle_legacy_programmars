@@ -107,7 +107,7 @@ public class C_Type extends TokenSequence implements AbstractType
 					public @S(40) @OPT TokenList<C_Subscript> subscripts;
 					public @S(50) @OPT C_FieldInitialValue initialValue;
 					public @S(60) @OPT TokenList<C_MoreFields> more;
-					public @S(70) @NOSPACE PunctuationSemicolon semicolon;
+					public @S(70) PunctuationSemicolon semicolon;
 					public @S(80) @OPT TokenList<C_Comment> comments;
 					
 					public static class C_TypeNumberOfBits extends TokenSequence

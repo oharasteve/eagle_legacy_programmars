@@ -18,29 +18,29 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Perl_TryStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Perl_Keyword TRY = new Perl_Keyword("try");
-	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(10) Perl_Keyword TRY = new Perl_Keyword("try");
+	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) TokenList<Perl_Statement> statements;
-	public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) @OPT TokenList<Perl_Comment> comments;
 	public @S(60) @OPT TokenList<Perl_CatchBlock> catchBlocks;
 	public @S(70) @OPT Perl_FinallyBlock finallyBlock;
 	
 	public static class Perl_CatchBlock extends TokenSequence
 	{
-		public @S(10) @NEWLINE Perl_Keyword CATCH = new Perl_Keyword("catch");
+		public @S(10) Perl_Keyword CATCH = new Perl_Keyword("catch");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
-		public @S(40) @NOSPACE Perl_Identifier_Reference ref;
+		public @S(40) Perl_Identifier_Reference ref;
 		public @S(50) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
 		public @S(60) Perl_Variable_Definition id;
-		public @S(70) @NOSPACE PunctuationRightParen rightParen;
+		public @S(70) PunctuationRightParen rightParen;
 		public @S(80) Perl_Statement catchStatement;
 	}
 	
 	public static class Perl_FinallyBlock extends TokenSequence
 	{
-		public @S(10) @NEWLINE Perl_Keyword FINALLY = new Perl_Keyword("finally");
+		public @S(10) Perl_Keyword FINALLY = new Perl_Keyword("finally");
 		public @S(20) Perl_Statement finallyStatement;
 	}
 }

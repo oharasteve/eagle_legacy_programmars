@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Powershell_WriteStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Powershell_KeywordChoice WRITE = new Powershell_KeywordChoice(
+	public @S(10) Powershell_KeywordChoice WRITE = new Powershell_KeywordChoice(
 			"write-host", "write-output");
 	public @S(20) Powershell_Expression expr;
 }

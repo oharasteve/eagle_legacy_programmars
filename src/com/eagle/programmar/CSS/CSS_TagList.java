@@ -26,15 +26,15 @@ public class CSS_TagList extends TokenSequence
 	public @S(30) @OPT CSS_Punctuation colonColon = new CSS_Punctuation("::");
 	public @S(40) CSS_Tag tag;
 	public @S(50) @OPT CSS_DotClass dotClass;
-	public @S(60) @OPT @NOSPACE CSS_Qualifier qualifier;
+	public @S(60) @OPT CSS_Qualifier qualifier;
 	public @S(70) @OPT TokenList<CSS_MoreQualifiers> moreQualifiers;
-	public @S(80) @OPT @NOSPACE TokenList<CSS_ColonOption> colonOption;
-	public @S(90) @OPT @NOSPACE CSS_PunctuationChoice separator =
+	public @S(80) @OPT TokenList<CSS_ColonOption> colonOption;
+	public @S(90) @OPT CSS_PunctuationChoice separator =
 			new CSS_PunctuationChoice(",", "+", "~", ">");
 
 	public static class CSS_MoreQualifiers extends TokenSequence
 	{
-		public @S(10) @OPT @NOSPACE PunctuationComma comma;
+		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) CSS_Qualifier qualifier;
 	}
 	
@@ -58,16 +58,16 @@ public class CSS_TagList extends TokenSequence
 		
 		public static class CSS_DotWhat extends TokenChooser
 		{
-			public @CHOICE @NOSPACE CSS_Keyword MEDIA = new CSS_Keyword("media");
-			public @CHOICE @NOSPACE CSS_Class_Definition classDefinition;
+			public @CHOICE CSS_Keyword MEDIA = new CSS_Keyword("media");
+			public @CHOICE CSS_Class_Definition classDefinition;
 		}
 	}
 
 	public static class CSS_ColonOption extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
-		public @S(20) @NOSPACE CSS_ColonWhat what;
-		public @S(30) @OPT @NOSPACE PunctuationComma comma;
+		public @S(20) CSS_ColonWhat what;
+		public @S(30) @OPT PunctuationComma comma;
 		
 		public static class CSS_ColonWhat extends TokenChooser
 		{
@@ -97,17 +97,17 @@ public class CSS_TagList extends TokenSequence
 				public @S(10) CSS_KeywordChoice NTH_CHILD = new CSS_KeywordChoice(
 						"nth-child",
 						"nth-last-child");
-				public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-				public @S(30) @NOSPACE CSS_Value value;
-				public @S(40) @NOSPACE PunctuationRightParen rightParen;
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) CSS_Value value;
+				public @S(40) PunctuationRightParen rightParen;
 			}
 			
 			public @CHOICE static class CSS_ColonNot extends TokenSequence
 			{
 				public @S(10) CSS_Keyword NOT = new CSS_Keyword("not");
-				public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-				public @S(30) @NOSPACE CSS_ColonNotWhat what;
-				public @S(40) @NOSPACE PunctuationRightParen rightParen;
+				public @S(20) PunctuationLeftParen leftParen;
+				public @S(30) CSS_ColonNotWhat what;
+				public @S(40) PunctuationRightParen rightParen;
 				
 				public static class CSS_ColonNotWhat extends TokenChooser
 				{
@@ -116,7 +116,7 @@ public class CSS_TagList extends TokenSequence
 					public @CHOICE static class CSS_ColonNotClass extends TokenSequence
 					{
 						public @S(10) CSS_PunctuationChoice separator = new CSS_PunctuationChoice(".", ":");
-						public @S(20) @NOSPACE CSS_Class_Definition classDefinition;
+						public @S(20) CSS_Class_Definition classDefinition;
 					}
 				}
 			}

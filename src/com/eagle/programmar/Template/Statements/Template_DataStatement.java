@@ -15,11 +15,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Template_DataStatement extends TokenSequence implements EagleRunnable
 {
-	public @S(10) @NEWLINE Template_Keyword DATA = new Template_Keyword("data");
+	public @S(10) Template_Keyword DATA = new Template_Keyword("data");
 	public @S(20) Template_Identifier_Definition var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Template_Expression expr;
-	public @S(50) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(50) PunctuationSemicolon semicolon;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

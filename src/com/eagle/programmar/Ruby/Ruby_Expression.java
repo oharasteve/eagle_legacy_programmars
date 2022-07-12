@@ -56,13 +56,13 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	public static @P(110) class Ruby_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Ruby_PunctuationChoice preIncrementOperator = new Ruby_PunctuationChoice("++", "--");
-		public @S(20) @NOSPACE Ruby_Variable var;
+		public @S(20) Ruby_Variable var;
 	}
 
 	public static @P(120) class Ruby_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Ruby_Variable var;
-		public @S(20) @NOSPACE Ruby_PunctuationChoice postIncrementOperator = new Ruby_PunctuationChoice("++", "--");
+		public @S(20) Ruby_PunctuationChoice postIncrementOperator = new Ruby_PunctuationChoice("++", "--");
 	}
 
 	public static @P(130) class Ruby_NegativeExpression extends PrimaryOperator
@@ -96,8 +96,8 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	public static @P(180) class Ruby_BracketsExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @NOSPACE SeparatedList<Ruby_Expression,PunctuationComma> expression;
-		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(20) SeparatedList<Ruby_Expression,PunctuationComma> expression;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
 	public static @P(190) class Ruby_ParenthesizedExpression extends PrimaryOperator

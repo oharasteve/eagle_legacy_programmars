@@ -25,10 +25,10 @@ public class CSS_Gradient extends TokenSequence
 			"-o-linear-gradient",
 			"-webkit-linear-gradient",
 			"-webkit-gradient");
-	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE CSS_Gradient_Piece piece;
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) CSS_Gradient_Piece piece;
 	public @S(40) @OPT TokenList<CSS_MoreGradient> moreGradients;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) PunctuationRightParen rightParen;
 	
 	public static class CSS_Gradient_Piece extends TokenChooser
 	{

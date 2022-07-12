@@ -29,11 +29,11 @@ public class Javascript_Function extends TokenSequence
 	public static class Javascript_FunctionImplementation extends TokenSequence
 	{
 		public @S(10) @OPT Javascript_Function_Definition functionName;
-		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(30) @OPT @NOSPACE Javascript_FunctionParameter param;
-		public @S(40) @OPT @NOSPACE TokenList<Javascript_MoreParameters> moreParams;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT Javascript_FunctionParameter param;
+		public @S(40) @OPT TokenList<Javascript_MoreParameters> moreParams;
 		public @S(50) @OPT TokenList<Javascript_Comment> comments1;
-		public @S(60) @NOSPACE PunctuationRightParen rightParen;
+		public @S(60) PunctuationRightParen rightParen;
 		public @S(70) @OPT TokenList<Javascript_Comment> comments2;
 		public @S(80) Javascript_FunctionBody body;
 		
@@ -57,16 +57,16 @@ public class Javascript_Function extends TokenSequence
 			
 		public static class Javascript_MoreParameters extends TokenSequence
 		{
-			public @S(10) @NOSPACE PunctuationComma comma;
+			public @S(10) PunctuationComma comma;
 			public @S(20) @OPT Javascript_Comment comment;
 			public @S(30) Javascript_FunctionParameter param;
 		}
 		
 		public static class Javascript_FunctionBody extends TokenSequence
 		{
-			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(10) PunctuationLeftBrace leftBrace;
 			public @S(20) @OPT TokenList<Javascript_StatementOrComment> statements;
-			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(30) PunctuationRightBrace rightBrace;
 		}
 	}
 }

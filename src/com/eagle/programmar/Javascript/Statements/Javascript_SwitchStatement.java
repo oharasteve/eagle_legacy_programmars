@@ -18,16 +18,16 @@ public class Javascript_SwitchStatement extends TokenSequence
 {
 	public @S(10) @DOC("js_switch.asp") Javascript_Keyword SWITCH = new Javascript_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE Javascript_Expression val;
-	public @S(40) @NOSPACE PunctuationRightParen rightParen;
-	public @S(50) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(30) Javascript_Expression val;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationLeftBrace leftBrace;
 	public @S(60) TokenList<Javascript_CaseClause> caseClause;
 	public @S(70) @OPT Javascript_DefaultClause elseClause;
-	public @S(80) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(80) PunctuationRightBrace rightBrace;
 	
 	public static class Javascript_CaseClause extends TokenSequence
 	{
-		public @S(10) @BLANKLINE Javascript_Keyword CASE = new Javascript_Keyword("case");
+		public @S(10) Javascript_Keyword CASE = new Javascript_Keyword("case");
 		public @S(20) Javascript_Expression expr;
 		public @S(30) PunctuationColon colon;
 		public @S(40) @OPT TokenList<Javascript_StatementOrComment> statements;
@@ -35,7 +35,7 @@ public class Javascript_SwitchStatement extends TokenSequence
 	
 	public static class Javascript_DefaultClause extends TokenSequence
 	{
-		public @S(10) @NEWLINE Javascript_Keyword DEFAULT = new Javascript_Keyword("default");
+		public @S(10) Javascript_Keyword DEFAULT = new Javascript_Keyword("default");
 		public @S(20) PunctuationColon colon;
 		public @S(30) TokenList<Javascript_StatementOrComment> statements;
 	}

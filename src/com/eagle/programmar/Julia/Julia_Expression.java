@@ -59,13 +59,13 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	public static @P(110) class Julia_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Julia_PunctuationChoice preIncrementOperator = new Julia_PunctuationChoice("++", "--");
-		public @S(20) @NOSPACE Julia_Variable var;
+		public @S(20) Julia_Variable var;
 	}
 
 	public static @P(120) class Julia_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Julia_Variable var;
-		public @S(20) @NOSPACE Julia_PunctuationChoice postIncrementOperator = new Julia_PunctuationChoice("++", "--");
+		public @S(20) Julia_PunctuationChoice postIncrementOperator = new Julia_PunctuationChoice("++", "--");
 	}
 
 	public static @P(130) class Julia_NegativeExpression extends PrimaryOperator
@@ -99,8 +99,8 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	public static @P(180) class Julia_BracketsExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @NOSPACE SeparatedList<Julia_Expression,PunctuationComma> expression;
-		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(20) SeparatedList<Julia_Expression,PunctuationComma> expression;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
 	public static @P(190) class Julia_ParenthesizedExpression extends PrimaryOperator

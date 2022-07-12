@@ -57,13 +57,13 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	public static @P(110) class Algol68_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_PunctuationChoice preIncrementOperator = new Algol68_PunctuationChoice("++", "--");
-		public @S(20) @NOSPACE Algol68_Variable var;
+		public @S(20) Algol68_Variable var;
 	}
 
 	public static @P(120) class Algol68_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_Variable var;
-		public @S(20) @NOSPACE Algol68_PunctuationChoice postIncrementOperator = new Algol68_PunctuationChoice("++", "--");
+		public @S(20) Algol68_PunctuationChoice postIncrementOperator = new Algol68_PunctuationChoice("++", "--");
 	}
 
 	public static @P(130) class Algol68_NegativeExpression extends PrimaryOperator
@@ -91,8 +91,8 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	public static @P(170) class Algol68_BracketsExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @NOSPACE SeparatedList<Algol68_Expression,PunctuationComma> expression;
-		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
+		public @S(20) SeparatedList<Algol68_Expression,PunctuationComma> expression;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
 	public static @P(180) class Algol68_ParenthesizedExpression extends PrimaryOperator

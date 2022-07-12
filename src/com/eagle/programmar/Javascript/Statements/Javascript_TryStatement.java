@@ -16,25 +16,25 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Javascript_TryStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE @DOC("js_try_catch.asp") Javascript_Keyword TRY = new Javascript_Keyword("try");
-	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(10) @DOC("js_try_catch.asp") Javascript_Keyword TRY = new Javascript_Keyword("try");
+	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) @OPT TokenList<Javascript_StatementOrComment> statements;
-	public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) @OPT TokenList<Javascript_CatchBlock> catchBlocks;
 	public @S(60) @OPT Javascript_FinallyBlock finallyBlock;
 	
 	public static class Javascript_CatchBlock extends TokenSequence
 	{
-		public @S(10) @NEWLINE Javascript_Keyword CATCH = new Javascript_Keyword("catch");
+		public @S(10) Javascript_Keyword CATCH = new Javascript_Keyword("catch");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE Javascript_Variable_Definition id;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		public @S(30) Javascript_Variable_Definition id;
+		public @S(40) PunctuationRightParen rightParen;
 		public @S(50) Javascript_Statement catchStatement;
 	}
 	
 	public static class Javascript_FinallyBlock extends TokenSequence
 	{
-		public @S(10) @NEWLINE Javascript_Keyword FINALLY = new Javascript_Keyword("finally");
+		public @S(10) Javascript_Keyword FINALLY = new Javascript_Keyword("finally");
 		public @S(20) Javascript_Statement finallyStatement;
 	}
 }

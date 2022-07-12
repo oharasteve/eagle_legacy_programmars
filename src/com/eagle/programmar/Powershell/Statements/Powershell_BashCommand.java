@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Powershell_BashCommand extends TokenSequence
 {
-	public @S(10) @NEWLINE Powershell_Keyword BASH = new Powershell_Keyword("bash");
+	public @S(10) Powershell_Keyword BASH = new Powershell_Keyword("bash");
 	public @S(20) Powershell_Expression expr;
 }

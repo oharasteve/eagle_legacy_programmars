@@ -29,24 +29,24 @@ public class CSS_AtEntry extends TokenChooser
 		public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
 		public @S(20) CSS_Keyword MOZDOCUMENT = new CSS_Keyword("-moz-document");
 		public @S(30) CSS_Keyword URLPREFIX = new CSS_Keyword("url-prefix");
-		public @S(40) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(50) @NOSPACE CSS_Literal literal;
-		public @S(60) @NOSPACE PunctuationRightParen rightParen;
-		public @S(70) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(40) PunctuationLeftParen leftParen;
+		public @S(50) CSS_Literal literal;
+		public @S(60) PunctuationRightParen rightParen;
+		public @S(70) PunctuationLeftBrace leftBrace;
 		public @S(80) TokenList<CSS_Body> bodies;
-		public @S(90) @NOSPACE @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(90) PunctuationRightBrace rightBrace;
 	}
 	
 	public @CHOICE static class CSS_AtMedia extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
-		public @S(20) @NOSPACE CSS_Keyword MEDIA = new CSS_Keyword("media");
+		public @S(20) CSS_Keyword MEDIA = new CSS_Keyword("media");
 		public @S(30) CSS_MediaParam param;
 		public @S(40) @OPT TokenList<CSS_MoreMediaParam> moreParams;
-		public @S(50) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(50) PunctuationLeftBrace leftBrace;
 		public @S(60) @OPT CSS_Comment comment;
 		public @S(70) TokenList<CSS_Body> bodies;
-		public @S(80) @NOSPACE @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(80) PunctuationRightBrace rightBrace;
 		
 		public static class CSS_MediaParam extends TokenChooser
 		{
@@ -71,7 +71,7 @@ public class CSS_AtEntry extends TokenChooser
 		
 		public static class CSS_MoreMediaParam extends TokenSequence
 		{
-			public @S(10) @OPT @NOSPACE PunctuationComma comma;
+			public @S(10) @OPT PunctuationComma comma;
 			public @S(20) @OPT CSS_Keyword AND = new CSS_Keyword("and");
 			public @S(30) CSS_MediaParam param;
 		}
@@ -80,9 +80,9 @@ public class CSS_AtEntry extends TokenChooser
 	public @CHOICE static class CSS_AtImport extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
-		public @S(20) @NOSPACE CSS_Keyword IMPORT = new CSS_Keyword("import");
+		public @S(20) CSS_Keyword IMPORT = new CSS_Keyword("import");
 		public @S(30) CSS_ImportWhat what;
-		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(40) PunctuationSemicolon semicolon;
 		
 		public static class CSS_ImportWhat extends TokenChooser
 		{
@@ -94,17 +94,17 @@ public class CSS_AtEntry extends TokenChooser
 	public @CHOICE static class CSS_AtCharset extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
-		public @S(20) @NOSPACE CSS_Keyword CHARSET = new CSS_Keyword("charset");
+		public @S(20) CSS_Keyword CHARSET = new CSS_Keyword("charset");
 		public @S(30) CSS_Literal charset;
-		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(40) PunctuationSemicolon semicolon;
 	}
 
 	public @CHOICE static class CSS_AtNamespace extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
-		public @S(20) @NOSPACE CSS_Keyword NAMESPACE = new CSS_Keyword("namespace");
+		public @S(20) CSS_Keyword NAMESPACE = new CSS_Keyword("namespace");
 		public @S(30) CSS_AtNameSpaceArg arg;
-		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(40) PunctuationSemicolon semicolon;
 		
 		public static class CSS_AtNameSpaceArg extends TokenChooser
 		{

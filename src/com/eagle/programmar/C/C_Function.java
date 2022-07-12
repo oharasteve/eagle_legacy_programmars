@@ -53,12 +53,12 @@ public class C_Function extends TokenSequence
 	
 	public static class C_Function_ParameterDefs extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT C_Comment comment1;
-		public @S(30) @OPT @NOSPACE C_FunctionParameter param;
+		public @S(30) @OPT C_FunctionParameter param;
 		public @S(40) @OPT C_Comment comment2;
-		public @S(50) @OPT @NOSPACE TokenList<C_MoreParameterDefs> moreParams;
-		public @S(60) @NOSPACE PunctuationRightParen rightParen;
+		public @S(50) @OPT TokenList<C_MoreParameterDefs> moreParams;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 
 	public static class C_FunctionParameter extends TokenChooser
@@ -73,7 +73,7 @@ public class C_Function extends TokenSequence
 		
 		public @CHOICE static class C_FunctionRegularParameter extends TokenSequence
 		{
-			public @S(10) @NOSPACE @OPT C_Keyword CONST = new C_Keyword("const");
+			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
 			public @S(20) C_Type ctype;
 			public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
 			public @S(40) @OPT C_Variable_Definition id;
@@ -103,7 +103,7 @@ public class C_Function extends TokenSequence
 		
 	public static class C_MoreParameterDefs extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationComma comma;
+		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT C_Comment comment;
 		public @S(30) C_FunctionParameter param;
 	}
@@ -200,9 +200,9 @@ public class C_Function extends TokenSequence
 		
 		public @CHOICE static class C_FunctionImplementation extends TokenSequence
 		{
-			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(10) PunctuationLeftBrace leftBrace;
 			public @S(20) @OPT TokenList<C_StatementOrComment> elements;
-			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(30) PunctuationRightBrace rightBrace;
 			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 		}
 	}

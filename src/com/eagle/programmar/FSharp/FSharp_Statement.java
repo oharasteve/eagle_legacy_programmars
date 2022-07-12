@@ -24,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class FSharp_Statement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @OPT @NEWLINE FSharp_StartOfLine soln;
+	public @S(10) @OPT FSharp_StartOfLine soln;
 	public @S(20) FSharp_StatementOrComment statementOrComment;
 	public @S(30) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
@@ -40,7 +40,7 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 		
 		public @FIRST static class FSharp_CommentList extends TokenSequence
 		{
-			public @S(10) @NOSPACE SeparatedList<FSharp_Comment,FSharp_EndOfLine> comments;
+			public @S(10) SeparatedList<FSharp_Comment,FSharp_EndOfLine> comments;
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 	{
 		// This StartOfLine should be removed. But it breaks lots of FSharpg
 		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
-		public @S(10) @NEWLINE FSharp_StartOfLine soln = new FSharp_StartOfLine();
+		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
 		public @S(20) SeparatedList<FSharp_Simple_Statement,FSharp_Statement_Separator> statements;
 	}
 	

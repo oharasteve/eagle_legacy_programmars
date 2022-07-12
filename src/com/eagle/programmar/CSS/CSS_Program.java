@@ -50,17 +50,17 @@ public class CSS_Program extends EagleLanguage
 
 	public static class CSS_Body extends TokenSequence
 	{
-		public @S(10) @OPT @NEWLINE TokenList<CSS_TagList> tags;
+		public @S(10) @OPT TokenList<CSS_TagList> tags;
 		public @S(20) @OPT PunctuationStar star;
-		public @S(30) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(30) PunctuationLeftBrace leftBrace;
 		public @S(40) @OPT TokenList<CSS_Item> items;
 		public @S(50) @OPT CSS_BackslashZero zero;
-		public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(60) PunctuationRightBrace rightBrace;
 		public @S(70) @OPT TokenList<CSS_ColonOption> colonOption;
 		public @S(80) @OPT CSS_StarPiece starPiece;
 		public @S(90) @OPT CSS_Qualifier qualifier;
-		public @S(100) @OPT @NOSPACE PunctuationComma comma;
-		public @S(110) @OPT @NOSPACE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+		public @S(100) @OPT PunctuationComma comma;
+		public @S(110) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 		
 		public static class CSS_StarPiece extends TokenSequence
 		{
@@ -85,31 +85,31 @@ public class CSS_Program extends EagleLanguage
 		
 		public @CHOICE static class CSS_PercentItem extends TokenSequence
 		{
-			public @S(10) @NEWLINE CSS_Number pct;
-			public @S(20) @NOSPACE CSS_Punctuation percent = new CSS_Punctuation('%');
-			public @S(30) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(10) CSS_Number pct;
+			public @S(20) CSS_Punctuation percent = new CSS_Punctuation('%');
+			public @S(30) PunctuationLeftBrace leftBrace;
 			public @S(40) @OPT TokenList<CSS_Item> items;
-			public @S(50) @NOSPACE @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(50) PunctuationRightBrace rightBrace;
 		}
 		
 		public @CHOICE static class CSS_ToItem extends TokenSequence
 		{
 			public @S(10) CSS_KeywordChoice TO = new CSS_KeywordChoice("from", "to");
-			public @S(20) @INDENT PunctuationLeftBrace leftBrace;
+			public @S(20) PunctuationLeftBrace leftBrace;
 			public @S(30) @OPT TokenList<CSS_Item> items;
-			public @S(40) @NOSPACE @OUTDENT PunctuationRightBrace rightBrace;
+			public @S(40) PunctuationRightBrace rightBrace;
 		}
 	}
 	
 	public static class CSS_Line extends TokenSequence
 	{
-		public @S(10) @NEWLINE @OPT PunctuationStar star;
-		public @S(20) @NOSPACE CSS_Identifier attribute;
-		public @S(30) @NOSPACE CSS_PunctuationChoice colonEquals = new CSS_PunctuationChoice(":", "=");
+		public @S(10) @OPT PunctuationStar star;
+		public @S(20) CSS_Identifier attribute;
+		public @S(30) CSS_PunctuationChoice colonEquals = new CSS_PunctuationChoice(":", "=");
 		public @S(40) @OPT CSS_Value_List values;
 		public @S(50) @OPT CSS_Tab tab;
-		public @S(60) @OPT @NOSPACE PunctuationSemicolon semicolon1;
-		public @S(70) @OPT @NOSPACE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
+		public @S(60) @OPT PunctuationSemicolon semicolon1;
+		public @S(70) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
 	
 		public static class CSS_Tab extends TokenSequence
 		{
@@ -127,7 +127,7 @@ public class CSS_Program extends EagleLanguage
 				
 				public @CHOICE static class CSS_MoreValuesComma extends TokenSequence
 				{
-					public @S(10) @NOSPACE PunctuationComma comma;
+					public @S(10) PunctuationComma comma;
 					public @S(20) CSS_Value val;
 				}
 			}

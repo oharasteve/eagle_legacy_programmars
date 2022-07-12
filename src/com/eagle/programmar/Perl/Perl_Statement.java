@@ -82,9 +82,9 @@ public class Perl_Statement extends TokenChooser
 
 	public @CHOICE static class Perl_StatementBlock extends TokenSequence
 	{
-		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT TokenList<Perl_StatementOrComment> statements;
-		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
+		public @S(30) PunctuationRightBrace rightBrace;
 	}
 	
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence

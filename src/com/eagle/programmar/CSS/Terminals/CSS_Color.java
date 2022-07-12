@@ -35,42 +35,42 @@ public class CSS_Color extends TokenChooser
 	public @CHOICE static class CSS_RGB_Value extends TokenSequence
 	{
 		public @S(10) CSS_Keyword RGB = new CSS_Keyword("rgb");
-		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE CSS_Number red;
-		public @S(40) @NOSPACE PunctuationComma comma1;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CSS_Number red;
+		public @S(40) PunctuationComma comma1;
 		public @S(50) CSS_Number green;
-		public @S(60) @NOSPACE PunctuationComma comma2;
+		public @S(60) PunctuationComma comma2;
 		public @S(70) CSS_Number blue;
-		public @S(80) @NOSPACE PunctuationRightParen rightParen;
+		public @S(80) PunctuationRightParen rightParen;
 	}
 	
 	public @CHOICE static class CSS_RGBA_Value extends TokenSequence
 	{
 		public @S(10) CSS_Keyword RGBA = new CSS_Keyword("rgba");
-		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE CSS_Number red;
-		public @S(40) @NOSPACE PunctuationComma comma1;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CSS_Number red;
+		public @S(40) PunctuationComma comma1;
 		public @S(50) CSS_Number green;
-		public @S(60) @NOSPACE PunctuationComma comma2;
+		public @S(60) PunctuationComma comma2;
 		public @S(70) CSS_Number blue;
-		public @S(80) @NOSPACE PunctuationComma comma3;
+		public @S(80) PunctuationComma comma3;
 		public @S(90) CSS_Number alpha;
-		public @S(100) @NOSPACE PunctuationRightParen rightParen;
+		public @S(100) PunctuationRightParen rightParen;
 		public @S(110) @OPT CSS_NumericValue percentage;
 	}
 	
 	public @CHOICE static class CSS_HSL_Value extends TokenSequence
 	{
 		public @S(10) CSS_Keyword HSL = new CSS_Keyword("hsl");
-		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE CSS_Number hue;
-		public @S(40) @NOSPACE PunctuationComma comma1;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CSS_Number hue;
+		public @S(40) PunctuationComma comma1;
 		public @S(50) CSS_Number saturation;
 		public @S(60) @OPT CSS_Punctuation pct1 = new CSS_Punctuation('%');
-		public @S(70) @NOSPACE PunctuationComma comma2;
+		public @S(70) PunctuationComma comma2;
 		public @S(80) CSS_Number luminosity;
 		public @S(90) @OPT CSS_Punctuation pct2 = new CSS_Punctuation('%');
-		public @S(100) @NOSPACE PunctuationRightParen rightParen;
+		public @S(100) PunctuationRightParen rightParen;
 	}
 	
 	public @CHOICE static class CSS_Transparent extends TokenSequence

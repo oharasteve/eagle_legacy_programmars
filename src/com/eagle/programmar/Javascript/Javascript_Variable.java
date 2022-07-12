@@ -38,7 +38,7 @@ public class Javascript_Variable extends TokenSequence
 
 	public static class Javascript_DotIdentifier extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationPeriod dot;
-		public @S(20) @NOSPACE Javascript_VariableIdentifier id;
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) Javascript_VariableIdentifier id;
 	}
 }

@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Javascript_ParenthesizedExpression extends TokenSequence
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) @OPT @NOSPACE SeparatedList<Javascript_Expression,PunctuationComma> expressions;
+	public @S(20) @OPT SeparatedList<Javascript_Expression,PunctuationComma> expressions;
 	public @S(30) @OPT PunctuationComma comma;
-	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(40) PunctuationRightParen rightParen;
 }

@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class FSharp_IfStatement extends TokenSequence
 {
-	public @S(10) @NOSPACE FSharp_Keyword IF = new FSharp_Keyword("if");
+	public @S(10) FSharp_Keyword IF = new FSharp_Keyword("if");
 	public @S(20) FSharp_Expression condition;
 	public @S(30) FSharp_Keyword THEN = new FSharp_Keyword("then");
 	public @S(40) FSharp_SingleOrMultiLineStatement ifThen;
@@ -21,16 +21,16 @@ public class FSharp_IfStatement extends TokenSequence
 	
 	public static class FSharp_IfElif extends TokenSequence
 	{
-		public @S(10) @NEWLINE FSharp_StartOfLine soln = new FSharp_StartOfLine();
-		public @S(20) @NOSPACE FSharp_Keyword ELIF = new FSharp_Keyword("elif");
+		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
+		public @S(20) FSharp_Keyword ELIF = new FSharp_Keyword("elif");
 		public @S(30) FSharp_Expression condition;
 		public @S(50) FSharp_SingleOrMultiLineStatement elifStatement;
 	}
 		
 	public static class FSharp_IfElse extends TokenSequence
 	{
-		public @S(10) @NEWLINE FSharp_StartOfLine soln = new FSharp_StartOfLine();
-		public @S(20) @NOSPACE FSharp_Keyword ELSE = new FSharp_Keyword("else");
+		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
+		public @S(20) FSharp_Keyword ELSE = new FSharp_Keyword("else");
 		public @S(40) FSharp_SingleOrMultiLineStatement ifElseStatement;
 	}
 }

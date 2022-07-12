@@ -66,7 +66,7 @@ public class Delphi_Program extends EagleLanguage
 		public @CHOICE Delphi_Vars vars;
 		public @CHOICE Delphi_Procedure proc;
 		public @CHOICE Delphi_Function func;
-		public @CHOICE @NEWLINE Delphi_Include include;
+		public @CHOICE Delphi_Include include;
 		
 		public @CHOICE static class Delphi_Initialization extends TokenSequence
 		{

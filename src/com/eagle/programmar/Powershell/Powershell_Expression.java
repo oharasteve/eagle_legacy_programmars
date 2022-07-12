@@ -50,25 +50,25 @@ public class Powershell_Expression extends PrecedenceChooser
 	public static @P(100) class Powershell_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Powershell_Punctuation preIncrementOperator = new Powershell_Punctuation("++");
-		public @S(20) @NOSPACE Powershell_Variable var;
+		public @S(20) Powershell_Variable var;
 	}
 
 	public static @P(110) class Powershell_PreDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) Powershell_Punctuation preDecrementOperator = new Powershell_Punctuation("--");
-		public @S(20) @NOSPACE Powershell_Variable var;
+		public @S(20) Powershell_Variable var;
 	}
 	
 	public static @P(120) class Powershell_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Powershell_Variable var;
-		public @S(20) @NOSPACE Powershell_Punctuation postIncrementOperator = new Powershell_Punctuation("++");
+		public @S(20) Powershell_Punctuation postIncrementOperator = new Powershell_Punctuation("++");
 	}
 
 	public static @P(130) class Powershell_PostDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) Powershell_Variable var;
-		public @S(20) @NOSPACE Powershell_Punctuation postDecrementOperator = new Powershell_Punctuation("--");
+		public @S(20) Powershell_Punctuation postDecrementOperator = new Powershell_Punctuation("--");
 	}
 	
 	public static @P(140) class Powershell_Negative extends PrimaryOperator
@@ -127,8 +127,8 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Punctuation dollar = new Powershell_Punctuation("$");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE Powershell_Expression expression;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		public @S(30) Powershell_Expression expression;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 	
 	public static @P(200) class Powershell_BuiltIn extends PrimaryOperator
@@ -146,8 +146,8 @@ public class Powershell_Expression extends PrecedenceChooser
 	public static @P(230) class Powershell_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @NOSPACE Powershell_Expression expression;
-		public @S(30) @NOSPACE PunctuationRightParen rightParen;
+		public @S(20) Powershell_Expression expression;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static @P(240) class Powershell_CallExpression extends PrimaryOperator
@@ -176,8 +176,8 @@ public class Powershell_Expression extends PrecedenceChooser
 	public static @P(405) class Powershell_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) @NOSPACE PunctuationPeriod dot;
-		public @S(30) @NOSPACE Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(410) class Powershell_Multiplicative_Expression extends PrecedenceOperator

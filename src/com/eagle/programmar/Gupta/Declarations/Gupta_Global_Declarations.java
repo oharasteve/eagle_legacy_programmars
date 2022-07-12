@@ -11,7 +11,7 @@ public class Gupta_Global_Declarations extends Gupta_Declaration
 	public @S(10) Gupta_Keyword Global = new Gupta_Keyword("Global");
 	public @S(20) Gupta_Keyword Declarations = new Gupta_Keyword("Declarations");
 
-	public @S(30) @INDENT Gupta_Window_Defaults windowDefaults;
+	public @S(30) Gupta_Window_Defaults windowDefaults;
 	public @S(40) Gupta_Formats formats;
 	public @S(50) Gupta_External_Functions externalFunctions;
 	public @S(60) Gupta_Constants constants;

@@ -13,6 +13,6 @@ public class Gupta_Application extends Gupta_Declaration
 	public @S(20) Gupta_Keyword description = new Gupta_Keyword("description");
 	public @S(30) Gupta_CommentToEndOfLine comment;
 	
-	public @S(40) @INDENT Gupta_Libraries libraries;
+	public @S(40) Gupta_Libraries libraries;
 	public @S(50) Gupta_Global_Declarations globalDeclarations;
 }

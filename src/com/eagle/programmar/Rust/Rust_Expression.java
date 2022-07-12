@@ -94,8 +94,8 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public static @P(260) class Rust_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @NOSPACE Rust_Expression expression;
-		public @S(30) @NOSPACE PunctuationRightParen rightParen;
+		public @S(20) Rust_Expression expression;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 	
 	public static @P(270) class Rust_ExpressionArray extends PrimaryOperator
@@ -122,8 +122,8 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public static @P(310) class Rust_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) @NOSPACE PunctuationPeriod dot;
-		public @S(30) @NOSPACE Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(320) class Rust_MultiplicativeExpression extends PrecedenceOperator

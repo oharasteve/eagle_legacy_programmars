@@ -29,19 +29,19 @@ public class Javascript_ForStatement extends TokenChooser
 {
 	public @CHOICE static class Javascript_ForLoopStatement extends TokenSequence
 	{
-		public @S(10) @NEWLINE @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
+		public @S(10) @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT Javascript_ForLoopVariable loopVar;
 		public @S(40) @OPT Javascript_PunctuationChoice equals = new Javascript_PunctuationChoice("=", "+=");
 		public @S(50) @OPT Javascript_Expression initialize;
 		public @S(60) @OPT TokenList<Javascript_More_Variables> moreVariables;
-		public @S(70) @NOSPACE PunctuationSemicolon semicolon1;
+		public @S(70) PunctuationSemicolon semicolon1;
 		public @S(80) @OPT Javascript_Expression terminateCondition;
-		public @S(90) @NOSPACE PunctuationSemicolon semicolon2;
+		public @S(90) PunctuationSemicolon semicolon2;
 		public @S(100) @OPT Javascript_Expression increment;
 		public @S(110) @OPT PunctuationComma comma;
 		public @S(120) @OPT Javascript_Expression extraIncrement;
-		public @S(130) @NOSPACE PunctuationRightParen rightParen;
+		public @S(130) PunctuationRightParen rightParen;
 		public @S(140) @OPT TokenList<Javascript_Comment> comments;
 		public @S(150) Javascript_Statement action;
 
@@ -49,20 +49,20 @@ public class Javascript_ForStatement extends TokenChooser
 		{
 			public @FIRST static class Javascript_ForLoopVariableWithType extends TokenSequence
 			{
-				public @S(10) @NOSPACE Javascript_Type varType;
+				public @S(10) Javascript_Type varType;
 				public @S(20) Javascript_Variable forVar;
 			}
 
 			public @CHOICE static class Javascript_ForLoopVariableNoType extends TokenSequence
 			{
-				public @S(10) @NOSPACE Javascript_Variable forVar;
+				public @S(10) Javascript_Variable forVar;
 			}
 		}
 	}
 	
 	public @CHOICE static class Javascript_ForCollectionStatement extends TokenSequence
 	{
-		public @S(10) @NEWLINE Javascript_Keyword FOR = new Javascript_Keyword("for");
+		public @S(10) Javascript_Keyword FOR = new Javascript_Keyword("for");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) Javascript_Type varType;
 		public @S(40) @OPT Javascript_Variable forVar;  // The Javascript_Type steals it ...

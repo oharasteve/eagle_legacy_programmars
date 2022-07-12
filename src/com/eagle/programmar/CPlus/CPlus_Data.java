@@ -25,6 +25,6 @@ public class CPlus_Data extends TokenSequence
 		public @S(10) @OPT CPlus_NamespaceList namespaces;
 		public @S(20) C_Variable_Definition id;
 		public @S(30) @OPT C_DataInitialValue initialValue;
-		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+		public @S(40) PunctuationSemicolon semicolon;
 	}
 }

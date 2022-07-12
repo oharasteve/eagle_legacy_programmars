@@ -265,8 +265,8 @@ public class Perl_Expression extends PrecedenceChooser
 	{
 		public @S(10) Perl_Keyword EACH = new Perl_Keyword("each");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE Perl_Variable var;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		public @S(30) Perl_Variable var;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 	
 	public static @P(330) class Perl_DieExpression extends PrimaryOperator
@@ -293,8 +293,8 @@ public class Perl_Expression extends PrecedenceChooser
 			public @S(10) Perl_Keyword USE = new Perl_Keyword("use");
 			public @S(20) PunctuationLeftParen leftParen;
 			public @S(30) Perl_Punctuation ampersand = new Perl_Punctuation('&');
-			public @S(40) @NOSPACE Perl_Variable var;
-			public @S(50) @NOSPACE PunctuationRightParen rightParen;
+			public @S(40) Perl_Variable var;
+			public @S(50) PunctuationRightParen rightParen;
 		}
 	}
 	

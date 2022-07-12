@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenList;
 public class Gupta_Constants extends Gupta_Declaration
 {
 	public @S(10) Gupta_Keyword Constants = new Gupta_Keyword("Constants");
-	public @S(20) @INDENT Gupta_System_Constants systemConstants;
+	public @S(20) Gupta_System_Constants systemConstants;
 	public @S(30) Gupta_User_Constants userConstants;
 	
 	public static class Gupta_System_Constants extends Gupta_Declaration

@@ -66,9 +66,9 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(120) class FSharp_FunctionCall extends PrimaryOperator
 	{
 		public @S(10) FSharp_Variable functionName;
-		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(30) @NOSPACE @OPT SeparatedList<FSharp_Expression,PunctuationComma> argList;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) @OPT SeparatedList<FSharp_Expression,PunctuationComma> argList;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static @P(130) class FSharp_UnarySign extends PrimaryOperator
@@ -124,8 +124,8 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(410) class FSharp_Subfield extends PrecedenceOperator
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) @NOSPACE PunctuationPeriod dot;
-		public @S(30) @NOSPACE FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(420) class FSharp_Multiplicative_Expression extends PrecedenceOperator 

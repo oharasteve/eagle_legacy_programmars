@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Powershell_ReturnStatement extends TokenSequence
 {
-	public @S(10) @NEWLINE Powershell_Keyword RETURN = new Powershell_Keyword("return");
+	public @S(10) Powershell_Keyword RETURN = new Powershell_Keyword("return");
 	public @S(20) Powershell_Expression expr;
 }

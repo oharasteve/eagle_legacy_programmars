@@ -33,22 +33,22 @@ public class BNF_Expression extends TokenSequence
 		public @CHOICE static class BNF_Rulename extends TokenSequence
 		{
 			public @S(10) BNF_Rule_Reference ref;
-			public @S(20) @NOSPACE @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
+			public @S(20) @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
 		}
 		
 		public @CHOICE static class BNF_Group extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) @NOSPACE BNF_Expression expression;
-			public @S(30) @NOSPACE PunctuationRightParen rightParen;
-			public @S(40) @NOSPACE @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
+			public @S(20) BNF_Expression expression;
+			public @S(30) PunctuationRightParen rightParen;
+			public @S(40) @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
 		}
 		
 		public @CHOICE static class BNF_Optional extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) @NOSPACE BNF_Expression expression;
-			public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
+			public @S(20) BNF_Expression expression;
+			public @S(30) PunctuationRightBracket rightBracket;
 		}
 	}
 }

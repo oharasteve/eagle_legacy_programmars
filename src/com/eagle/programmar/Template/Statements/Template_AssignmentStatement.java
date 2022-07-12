@@ -15,10 +15,10 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Template_AssignmentStatement extends TokenSequence implements EagleRunnable
 {
-	public @S(10) @NEWLINE Template_Variable var;
+	public @S(10) Template_Variable var;
 	public @S(20) PunctuationEquals equals;
 	public @S(30) Template_Expression expr;
-	public @S(40) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(40) PunctuationSemicolon semicolon;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
