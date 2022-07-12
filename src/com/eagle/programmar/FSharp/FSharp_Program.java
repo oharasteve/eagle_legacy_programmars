@@ -1,10 +1,9 @@
-// Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Sep 30, 2015
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 11, 2022
 
 package com.eagle.programmar.FSharp;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
 public class FSharp_Program extends EagleLanguage
@@ -22,9 +21,5 @@ public class FSharp_Program extends EagleLanguage
 		return "TBD";
 	}
 
-	public @S(10) TokenList<FSharp_Element> elements;
-	
-	public static class FSharp_Element extends TokenChooser
-	{
-	}
+	public @S(10) TokenList<FSharp_Statement> elements;
 }

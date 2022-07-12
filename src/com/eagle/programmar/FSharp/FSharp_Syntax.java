@@ -1,9 +1,10 @@
-// Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Sep 30, 2015
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 11, 2022
 
 package com.eagle.programmar.FSharp;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.FSharp.FSharp_Syntax;
 
 public class FSharp_Syntax extends EagleSyntax
 {
@@ -18,34 +19,34 @@ public class FSharp_Syntax extends EagleSyntax
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "==", "!=", "<=", ">=", "++", "--", "+=", "!~" };
+		_punctuationExceptions = new String[] {
+				"<-", "..", "[|", "|]", "||", ".[", "<>" };
 		
 		addReservedWords(keywords);
-		addReservedWords(FUNCTIONS);
 	}
 
-	public static final String[] FUNCTIONS = {
-		"getline",
-		"index",
-		"int",
-		"length",
-		"match",
-		"sprintf",
-		"strftime",
-		"substr",
+	private String[] keywords = new String[] {
+			"do",
+			"downto",
+			"else",
+			"if",
+			"let",
+			"printfn",
+			"then",
+			"to",
 	};
 	
-	private String[] keywords = new String[] {
-		"case",
-		"function",
-		"gsub",
-		"if",
-		"next",
-		"print",
-		"printf",
-		"split",
-		"sub",
-		"switch",
-		"while",
-	};
+	public static class FSharp_Multiline_Syntax extends FSharp_Syntax
+	{
+		@Override
+		public String syntaxId()
+		{
+			return "FSharp Multi";
+		}
+		
+		public FSharp_Multiline_Syntax()
+		{
+			_autoAdvance = true;
+		}
+	}
 }
