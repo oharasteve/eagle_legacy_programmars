@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
-import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
-import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
-import com.eagle.programmar.Python.Terminals.Python_Keyword;
-import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
+import com.eagle.programmar.FSharp.FSharp_Syntax.FSharp_Multiline_Syntax;
+import com.eagle.programmar.FSharp.Symbols.FSharp_Identifier_Reference;
+import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
+import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
+import com.eagle.programmar.FSharp.Terminals.FSharp_PunctuationChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,56 +21,56 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class FSharp_Variable extends TokenSequence implements AbstractVariable
 {
-	public @S(10) Python_SelfOrVariable var;
-	public @S(20) @OPT TokenList<Python_Subscript> subscript1;
-	public @S(30) @OPT TokenList<Python_DotVariable> moreFields1;
-	public @S(40) @OPT TokenList<Python_Subscript> subscript2;
-	public @S(50) @OPT TokenList<Python_DotVariable> moreFields2;
-	// public @S(60) @OPT Python_ColonType colonType;
+	public @S(10) FSharp_SelfOrVariable var;
+	public @S(20) @OPT TokenList<FSharp_Subscript> subscript1;
+	public @S(30) @OPT TokenList<FSharp_DotVariable> moreFields1;
+	public @S(40) @OPT TokenList<FSharp_Subscript> subscript2;
+	public @S(50) @OPT TokenList<FSharp_DotVariable> moreFields2;
+	// public @S(60) @OPT FSharp_ColonType colonType;
 	
-	public static class Python_SelfOrVariable extends TokenChooser
+	public static class FSharp_SelfOrVariable extends TokenChooser
 	{
-		public @CHOICE Python_Keyword SELF = new Python_Keyword("self");
-		public @CHOICE Python_Identifier_Reference id;
-		public @CHOICE Python_DotVariable dotVariable;
-		public @CHOICE Python_PunctuationChoice dotDot = new Python_PunctuationChoice("..", ".", "_1", "_2", "__", "_$", "_");
+		public @CHOICE FSharp_Keyword SELF = new FSharp_Keyword("self");
+		public @CHOICE FSharp_Identifier_Reference id;
+		public @CHOICE FSharp_DotVariable dotVariable;
+		public @CHOICE FSharp_PunctuationChoice dotDot = new FSharp_PunctuationChoice("..", ".", "_1", "_2", "__", "_$", "_");
 	}
 	
-	public static class Python_DotVariable extends TokenSequence
+	public static class FSharp_DotVariable extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot1;
 		public @S(20) @OPT PunctuationPeriod dot2;
-		public @S(30) Python_Identifier_Reference fld;
+		public @S(30) FSharp_Identifier_Reference fld;
 	}
 	
-	public static class Python_Subscript extends TokenSequence
+	public static class FSharp_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @SYNTAX(Python_Multiline_Syntax.class) Python_Subscript_Body body;
+		public @S(20) @SYNTAX(FSharp_Multiline_Syntax.class) FSharp_Subscript_Body body;
 		public @S(30) PunctuationRightBracket rightBracket;
 
-		public static class Python_Subscript_Body extends TokenSequence
+		public static class FSharp_Subscript_Body extends TokenSequence
 		{
-			public @S(10) @OPT Python_EndOfLine eoln;
-			public @S(20) SeparatedList<Python_Subscript_Dimension,PunctuationComma> dimensions;
+			public @S(10) @OPT FSharp_EndOfLine eoln;
+			public @S(20) SeparatedList<FSharp_Subscript_Dimension,PunctuationComma> dimensions;
 		}
 
-		public static class Python_Subscript_Dimension extends TokenSequence
+		public static class FSharp_Subscript_Dimension extends TokenSequence
 		{
 			public @S(10) @OPT FSharp_Expression subscr;
-			public @S(20) @OPT Python_ColonSubscr colonStop;
-			public @S(30) @OPT Python_ColonSubscr colonIncrement;
+			public @S(20) @OPT FSharp_ColonSubscr colonStop;
+			public @S(30) @OPT FSharp_ColonSubscr colonIncrement;
 
-			public static class Python_ColonSubscr extends TokenSequence
+			public static class FSharp_ColonSubscr extends TokenSequence
 			{
 				public @S(10) PunctuationColon colon;
-				public @S(20) @OPT Python_EndOfLine eoln;
+				public @S(20) @OPT FSharp_EndOfLine eoln;
 				public @S(30) @OPT FSharp_Expression subscr;
 			}
 		}
 	}
 	
-	public static class Python_ColonType extends TokenSequence
+	public static class FSharp_ColonType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) FSharp_Type type;

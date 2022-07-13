@@ -1,3 +1,6 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 11, 2022
+
 package com.eagle.programmar.FSharp.Statements;
 
 import com.eagle.programmar.FSharp.FSharp_Expression;
