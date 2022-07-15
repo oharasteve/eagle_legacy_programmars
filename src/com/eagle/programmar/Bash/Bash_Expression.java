@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash;
 
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.programmar.Bash.Terminals.Bash_Number;
+import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -15,6 +16,12 @@ public class Bash_Expression extends TokenChooser
 {
 	public @CHOICE Bash_Number number;
 	public @CHOICE Bash_Literal literal;
+	
+	public @CHOICE static class Bash_DollarNumber extends TokenSequence
+	{
+		public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
+		public @S(20) Bash_Number number;
+	}
 	
 	public @CHOICE static class Bash_Array extends TokenSequence
 	{

@@ -19,6 +19,6 @@ public class Bash_Syntax extends EagleSyntax
 		_continuationChar = "\\";
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "==", "!=" };
+		_punctuationExceptions = new String[] { "==", "!=", "[[", "]]", "((", "))" };
 	}
 }

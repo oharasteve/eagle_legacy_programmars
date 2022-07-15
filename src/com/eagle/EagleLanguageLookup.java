@@ -101,7 +101,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Lisp_Program.LISP, Lisp_Program.class, ".lisp");
 		add(Natural_Program.NATURAL, Natural_Program.class, ".ntf");
 		add(ObjectiveC_Program.OBJECTIVEC, ObjectiveC_Program.class);
-		add(Perl_Program.PERL, Perl_Program.class);
+		add(Perl_Program.PERL, Perl_Program.class, ".perl", ".pl");
 		add(PHP_Program.PHP, PHP_Program.class, ".php");
 		add(PLI_Program.PLI, PLI_Program.class, ".pli");
 		add(Powershell_Program.POWERHSELL, Powershell_Program.class, ".ps1");
@@ -111,7 +111,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Python3_Program.PYTHON3, Python3_Program.class, ".py");
 		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
-		add(Ruby_Program.RUBY, Ruby_Program.class, ".sh");
+		add(Ruby_Program.RUBY, Ruby_Program.class, ".ruby");
 		add(Rust_Program.RUST, Rust_Program.class, ".rs", ".rust");
 		add(Scala_Program.SCALA, Scala_Program.class, ".scala");
 		add(SQL_Program.SQL, SQL_Program.class, ".sql");
