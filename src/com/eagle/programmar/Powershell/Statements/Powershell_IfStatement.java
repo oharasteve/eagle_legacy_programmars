@@ -9,16 +9,20 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_IfStatement extends TokenSequence
 {
 	public @S(10) Powershell_Keyword IF = new Powershell_Keyword("if");
-	public @S(20) Powershell_Expression condition;
-	public @S(30) PunctuationLeftBrace leftBrace;
-	public @S(40) TokenList<Powershell_Statement> stmts;
-	public @S(50) PunctuationRightBrace rightBrace;
-	public @S(60) @OPT Powershell_IfElseStatement elseStmt;
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Powershell_Expression condition;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) PunctuationLeftBrace leftBrace;
+	public @S(60) TokenList<Powershell_Statement> stmts;
+	public @S(70) PunctuationRightBrace rightBrace;
+	public @S(80) @OPT Powershell_IfElseStatement elseStmt;
 	
 	public static class Powershell_IfElseStatement extends TokenSequence
 	{

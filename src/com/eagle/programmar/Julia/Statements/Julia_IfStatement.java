@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Julia_IfStatement extends TokenSequence
 {
-	public @S(10) Julia_Keyword IF = new Julia_Keyword("if");
+	public @S(10) @DOC("control-flow/#man-conditional-evaluation") Julia_Keyword IF = new Julia_Keyword("if");
 	public @S(20) Julia_Expression condition;
 	public @S(30) Julia_EOLN eoln1;
 	public @S(40) TokenList<Julia_Statement> thenStatements;

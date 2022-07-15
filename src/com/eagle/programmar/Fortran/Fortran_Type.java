@@ -1,0 +1,46 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 14, 2022
+
+package com.eagle.programmar.Fortran;
+
+import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
+import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
+import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+public class Fortran_Type extends TokenSequence
+{
+	public @S(10) Fortran_DataType dataType;
+	public @S(20) @OPT Fortran_Dimension dimension;
+	
+	public static class Fortran_DataType extends TokenChooser
+	{
+		public @CHOICE Fortran_KeywordChoice INTEGER = new Fortran_KeywordChoice(
+				"INTEGER",
+				"LOGICAL");
+		
+		public @CHOICE static class Fortran_CharacterType extends TokenSequence
+		{
+			public @S(10) Fortran_Keyword CHARACTER = new Fortran_Keyword("CHARACTER");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) Fortran_Keyword LEN = new Fortran_Keyword("LEN");
+			public @S(40) PunctuationEquals equals;
+			public @S(50) Fortran_Number len;
+			public @S(60) PunctuationRightParen rightParen;
+		}
+	}
+	
+	public static class Fortran_Dimension extends TokenSequence
+	{
+		public @S(10) PunctuationComma comma;
+		public @S(20) Fortran_Keyword DIMENSION = new Fortran_Keyword("DIMENSION");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) Fortran_Number len;
+		public @S(50) PunctuationRightParen rightParen;
+	}
+}

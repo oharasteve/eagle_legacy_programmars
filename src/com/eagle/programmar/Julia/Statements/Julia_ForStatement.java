@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Julia_ForStatement extends TokenSequence
 {
-	public @S(10) Julia_Keyword FOR = new Julia_Keyword("for");
+	public @S(10) @DOC("control-flow/#man-loops") Julia_Keyword FOR = new Julia_Keyword("for");
 	public @S(20) Julia_Variable var;
 	public @S(30) Julia_Keyword IN = new Julia_Keyword("in");
 	public @S(40) Julia_Expression values;

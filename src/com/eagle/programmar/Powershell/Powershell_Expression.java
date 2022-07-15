@@ -29,6 +29,7 @@ public class Powershell_Expression extends PrecedenceChooser
 
 	public @P(10) Powershell_Number number;
 	public @P(20) Powershell_Literal literal;
+	//public @P(30) Powershell_Filename fileName;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.

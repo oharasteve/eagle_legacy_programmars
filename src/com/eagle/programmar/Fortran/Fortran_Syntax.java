@@ -15,16 +15,35 @@ public class Fortran_Syntax extends EagleSyntax
 	
 	public Fortran_Syntax()
 	{
+		_autoAdvance = false;
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
+		_fixedStartColumn = 6;
+		_fixedEndColumn = 72;
+		
+		_continuationColumn = 5;	// if 6th column is a * then continue previous line
+		_continuationColumnChar = '*';
+		
 		//_commentInstance = new Fortran_Comment();
-		_punctuationExceptions = new String[] { "/=" };
+		_punctuationExceptions = new String[] { "/=", "::", "//" };
 		
 		addReservedWords(keywords);
 	}
 	
 	private String[] keywords = new String[] {
-		"function",
+			"call",
+			"common",
+			"else",
+			"end",
+			"exit",
+			"function",
+			"if",
+			"implicit",
+			"print",
+			"program",
+			"subroutine",
+			"then",
+			"write",
 	};
 }

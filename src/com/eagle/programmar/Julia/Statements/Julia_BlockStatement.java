@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Julia_BlockStatement extends TokenSequence
 {
-	public @S(10) PunctuationLeftBrace leftBrace;
+	public @S(10) @DOC("control-flow/#man-compound-expressions") PunctuationLeftBrace leftBrace;
 	public @S(20) Julia_EOLN eoln1;
 	public @S(30) TokenList<Julia_Statement> stmt;
 	public @S(40) PunctuationRightBrace rightBrace;

@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Julia_ReturnStatement extends TokenSequence
 {
-	public @S(10) Julia_Keyword RETURN = new Julia_Keyword("return");
+	public @S(10) @DOC("functions/#The-return-Keyword") Julia_Keyword RETURN = new Julia_Keyword("return");
 	public @S(20) Julia_Expression expr;
 	public @S(30) Julia_EOLN eoln;
 }

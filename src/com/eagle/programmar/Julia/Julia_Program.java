@@ -22,7 +22,7 @@ public class Julia_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://docs.julialang.org/en/v1/manual/";
 	}
 
 	public @S(10) TokenList<Julia_Element> elements;
