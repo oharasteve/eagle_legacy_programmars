@@ -4,6 +4,7 @@
 package com.eagle.programmar.Go.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.TerminalLiteralToken;
 
 public class Go_Literal extends TerminalLiteralToken
@@ -11,6 +12,19 @@ public class Go_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
+		if (findStart(lines) == FOUND.EOF) return false;
+		EagleLineReader rec = lines.get(_currentLine);
+		int nc = rec.length();
+		
+		if (_currentChar < nc)
+		{
+			if (rec.charAt(_currentChar) == '`')
+			{
+				// Allow multiline for back tick (`)
+				return genericLiteral(lines, "`", true, '\\', false, true);
+			}
+		}
+		
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 }
