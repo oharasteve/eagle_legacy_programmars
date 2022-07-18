@@ -8,13 +8,15 @@ import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Go_Variable;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.programmar.Go.Terminals.Go_Punctuation;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Go_ForStatement extends TokenSequence
 {
 	public @S(10) Go_Keyword FOR = new Go_Keyword("for");
-	public @S(20) Go_Variable var;
+	public @S(20) SeparatedList<Go_Variable,PunctuationComma> vars;
 	public @S(30) Go_Punctuation colonEquals = new Go_Punctuation(":=");
 	public @S(40) Go_Expression initValue;
 	public @S(50) PunctuationSemicolon semiColon1;

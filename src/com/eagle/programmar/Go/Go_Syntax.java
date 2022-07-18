@@ -27,8 +27,11 @@ public class Go_Syntax extends EagleSyntax
 	}
 
 	private String[] keywords = new String[] {
+			"const",
 			"else",
 			"for",
 			"if",
+			"struct",
+			"type",
 	};
 }
