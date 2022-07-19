@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Rust_LetStatement extends TokenSequence
 {
-	public @S(10) Rust_Keyword LET = new Rust_Keyword("let");
+	public @S(10) @DOC("statements.html#let-statements") Rust_Keyword LET = new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
 	public @S(30) Rust_Variable var;
 	public @S(40) PunctuationEquals equals;

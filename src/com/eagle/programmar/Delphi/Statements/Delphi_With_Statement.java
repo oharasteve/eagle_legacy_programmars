@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_With_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword WITH = new Delphi_Keyword("With");
+	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#With_Statements") Delphi_Keyword WITH = new Delphi_Keyword("With");
 	public @S(20) Delphi_Expression expr;
 	public @S(30) Delphi_Keyword DO = new Delphi_Keyword("Do");
 	public @S(40) Delphi_Statement stmt;

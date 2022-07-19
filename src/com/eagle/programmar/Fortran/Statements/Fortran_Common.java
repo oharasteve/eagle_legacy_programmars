@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class Fortran_Common extends TokenSequence
 {
-	public @S(10) Fortran_Keyword COMMON = new Fortran_Keyword("COMMON");
+	public @S(10) @DOC("6j4m0vn7v/index.html") Fortran_Keyword COMMON = new Fortran_Keyword("COMMON");
 	public @S(20) PunctuationSlash slash1;
 	public @S(30) Fortran_Common_Reference common;
 	public @S(40) PunctuationSlash slash2;

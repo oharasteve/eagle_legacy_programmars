@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Go_ReturnStatement extends TokenSequence
 {
-	public @S(10) Go_Keyword RETURN = new Go_Keyword("return");
+	public @S(10) @DOC("#Return_statements") Go_Keyword RETURN = new Go_Keyword("return");
 	public @S(20) Go_Expression expr;
 	public @S(30) Go_EOLN eoln;
 }

@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Scala_Import extends TokenSequence
 {
-	public @S(10) Scala_Keyword IMPORT = new Scala_Keyword("import");
+	public @S(10) @DOC("packaging-imports.html#import-statements-part-1") Scala_Keyword IMPORT = new Scala_Keyword("import");
 	public @S(20) Scala_Variable variable;
 	public @S(30) Scala_EOLN eoln;
 }

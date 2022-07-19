@@ -26,7 +26,7 @@ public class Go_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://go.dev/ref/spec";
 	}
 
 	public @S(10) TokenList<Go_Element> elements;

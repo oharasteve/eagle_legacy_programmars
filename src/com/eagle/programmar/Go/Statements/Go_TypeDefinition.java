@@ -17,7 +17,7 @@ public class Go_TypeDefinition extends TokenSequence
 {
 	public @S(10) Go_Keyword TYPE = new Go_Keyword("type");
 	public @S(20) Go_Type_Definition typeName;
-	public @S(30) Go_Keyword STRUCT = new Go_Keyword("struct");
+	public @S(30) @DOC("#Struct_types") Go_Keyword STRUCT = new Go_Keyword("struct");
 	public @S(40) PunctuationLeftBrace leftBrace;
 	public @S(50) Go_EOLN eoln1;
 	public @S(60) TokenList<Go_StructLine> structLine;

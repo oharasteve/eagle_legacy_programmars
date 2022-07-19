@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Bash_BreakStatement extends TokenSequence
 {
-	public @S(10) Bash_Keyword BREAK = new Bash_Keyword("break");
+	public @S(10) @DOC("#index-break") Bash_Keyword BREAK = new Bash_Keyword("break");
 }

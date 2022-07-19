@@ -20,7 +20,7 @@ public class Rust_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "https://doc.rust-lang.org/reference";
+		return "https://doc.rust-lang.org/reference/";
 	}
 	
 	public @S(10) TokenList<Rust_Element> elements;

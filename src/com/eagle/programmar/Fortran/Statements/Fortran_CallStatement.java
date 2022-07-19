@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Fortran_CallStatement extends TokenSequence
 {
-	public @S(10) Fortran_Keyword CALL = new Fortran_Keyword("CALL");
+	public @DOC("6j4m0vn7p/index.html") @S(10) Fortran_Keyword CALL = new Fortran_Keyword("CALL");
 	public @S(20) Fortran_Function_Reference subroutine;
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) SeparatedList<Fortran_Expression,PunctuationComma> arguments;

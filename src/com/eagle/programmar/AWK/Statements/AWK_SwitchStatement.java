@@ -19,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_SwitchStatement extends TokenSequence
 {
-	public @S(10) @DOC("#The-switch-Statement") AWK_Keyword SWITCH = new AWK_Keyword("switch");
+	public @S(10) @DOC("#index-switch-statement") AWK_Keyword SWITCH = new AWK_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) AWK_Expression val;
 	public @S(40) PunctuationRightParen rightParen;

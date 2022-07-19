@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_PassStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword PASS = new Python_Keyword("pass");
+	public @S(10) @DOC("simple_stmts.html#the-pass-statement") Python_Keyword PASS = new Python_Keyword("pass");
 }

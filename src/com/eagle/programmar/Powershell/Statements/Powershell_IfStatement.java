@@ -26,7 +26,7 @@ public class Powershell_IfStatement extends TokenSequence
 	
 	public static class Powershell_IfElseStatement extends TokenSequence
 	{
-		public @S(10) Powershell_Keyword ELSE = new Powershell_Keyword("else");
+		public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword ELSE = new Powershell_Keyword("else");
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) TokenList<Powershell_Statement> stmts;
 		public @S(40) PunctuationRightBrace rightBrace;

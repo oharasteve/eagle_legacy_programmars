@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Bash_ExportCommand extends TokenSequence
 {
-	public @S(10) Bash_Keyword EXPORT = new Bash_Keyword("export");
+	public @S(10) @DOC("#index-export") Bash_Keyword EXPORT = new Bash_Keyword("export");
 	public @S(20) Bash_Variable var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Bash_Expression expr;

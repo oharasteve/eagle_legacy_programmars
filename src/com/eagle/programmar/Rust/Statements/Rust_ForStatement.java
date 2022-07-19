@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Rust_ForStatement extends TokenSequence
 {
-	public @S(10) Rust_Keyword FOR = new Rust_Keyword("for");
+	public @S(10) @DOC("expressions/loop-expr.html#iterator-loops") Rust_Keyword FOR = new Rust_Keyword("for");
 	public @S(20) Rust_Variable var;
 	public @S(30) Rust_Keyword IN = new Rust_Keyword("in");
 	public @S(40) Rust_Expression expr;

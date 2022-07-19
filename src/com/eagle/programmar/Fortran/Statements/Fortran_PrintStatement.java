@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Fortran_PrintStatement extends TokenSequence
 {
-	public @S(10) Fortran_Keyword PRINT = new Fortran_Keyword("PRINT");
+	public @S(10) @DOC("6j4m0vnap/index.html") Fortran_Keyword PRINT = new Fortran_Keyword("PRINT");
 	public @S(20) PunctuationStar star;
 	public @S(30) PunctuationComma comma;
 	public @S(40) Fortran_Expression expression;

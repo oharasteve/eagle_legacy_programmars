@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Case_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword CASE = new Delphi_Keyword("Case");
+	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#Case_Statements") Delphi_Keyword CASE = new Delphi_Keyword("Case");
 	public @S(20) Delphi_Expression expr;
 	public @S(30) Delphi_Keyword OF = new Delphi_Keyword("Of");
 	public @S(40) TokenList<Delphi_CaseClause> clauses;

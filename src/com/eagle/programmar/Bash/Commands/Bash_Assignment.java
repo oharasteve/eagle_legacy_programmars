@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Bash_Assignment extends TokenSequence
 {
-	public @S(10) @OPT Bash_Keyword LET = new Bash_Keyword("let");
+	public @S(10) @DOC("#Shell-Arithmetic") @OPT Bash_Keyword LET = new Bash_Keyword("let");
 	public @S(20) Bash_Variable variable;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Bash_Expression value;

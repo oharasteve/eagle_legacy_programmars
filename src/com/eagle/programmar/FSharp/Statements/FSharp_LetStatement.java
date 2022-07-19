@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class FSharp_LetStatement extends TokenSequence
 {
-	public @S(10) FSharp_Keyword LET = new FSharp_Keyword("let");
+	public @S(10) @DOC("functions/let-bindings") FSharp_Keyword LET = new FSharp_Keyword("let");
 	public @S(20) @OPT FSharp_Keyword MUTABLE = new FSharp_Keyword("mutable");
 	public @S(30) FSharp_Variable var;
 	public @S(40) PunctuationEquals equals;

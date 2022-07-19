@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Fortran_Implicit extends TokenSequence
 {
-	public @S(10) Fortran_Keyword IMPLICIT = new Fortran_Keyword("IMPLICIT");
+	public @S(10) @DOC("6j4m0vn9v/index.html") Fortran_Keyword IMPLICIT = new Fortran_Keyword("IMPLICIT");
 	public @S(20) Fortran_Keyword NONE = new Fortran_Keyword("NONE");
 	public @S(30) Fortran_EOLN eoln;
 }

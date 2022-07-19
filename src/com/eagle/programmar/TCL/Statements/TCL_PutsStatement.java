@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class TCL_PutsStatement extends TokenSequence
 {
-	public @S(10) TCL_Keyword PUTS = new TCL_Keyword("puts");
+	public @S(10) @DOC("TclCmd/puts.html") TCL_Keyword PUTS = new TCL_Keyword("puts");
 	public @S(20) TCL_Literal literal;
 }

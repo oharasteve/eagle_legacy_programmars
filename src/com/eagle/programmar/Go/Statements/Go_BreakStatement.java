@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Go_BreakStatement extends TokenSequence
 {
-	public @S(10) Go_Keyword BREAK = new Go_Keyword("break");
+	public @S(10) @DOC("#Break_statements") Go_Keyword BREAK = new Go_Keyword("break");
 	public @S(20) Go_EOLN eoln;
 }

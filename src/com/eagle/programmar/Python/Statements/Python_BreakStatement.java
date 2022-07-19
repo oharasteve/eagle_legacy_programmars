@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_BreakStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword BREAK = new Python_Keyword("break");
+	public @S(10) @DOC("simple_stmts.html#the-break-statement") Python_Keyword BREAK = new Python_Keyword("break");
 }

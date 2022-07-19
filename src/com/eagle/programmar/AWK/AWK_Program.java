@@ -22,7 +22,7 @@ public class AWK_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://www.gnu.org/software/gawk/manual/gawk.html";
 	}
 
 	public @S(10) TokenList<AWK_Element> elements;

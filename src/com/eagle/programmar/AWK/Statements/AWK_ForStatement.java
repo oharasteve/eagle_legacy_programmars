@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class AWK_ForStatement extends TokenSequence
 {
-	public @S(10) AWK_Keyword FOR = new AWK_Keyword("for");
+	public @S(10) @DOC("#For-Statement") AWK_Keyword FOR = new AWK_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) AWK_ForWhat forWhat;
 	public @S(40) PunctuationRightParen rightParen;

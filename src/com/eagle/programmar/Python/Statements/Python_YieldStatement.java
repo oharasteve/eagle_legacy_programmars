@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_YieldStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword YIELD = new Python_Keyword("yield");
+	public @S(10) @DOC("simple_stmts.html#the-yield-statement") Python_Keyword YIELD = new Python_Keyword("yield");
 	public @S(20) @OPT Python_YieldWhat yieldWhat;
 	
 	public static class Python_YieldWhat extends TokenChooser

@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Powershell_ForEachStatement extends TokenSequence
 {
-	public @S(10) Powershell_Keyword FOREACH = new Powershell_Keyword("foreach");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_Keyword FOREACH = new Powershell_Keyword("foreach");
 	public @S(20) Powershell_Expression expr;
 	public @S(30) PunctuationSemicolon semicolon;
 }

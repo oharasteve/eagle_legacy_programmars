@@ -13,8 +13,8 @@ import com.eagle.programmar.Scala.Statements.Scala_Function;
 import com.eagle.programmar.Scala.Statements.Scala_FunctionCall;
 import com.eagle.programmar.Scala.Statements.Scala_IfStatement;
 import com.eagle.programmar.Scala.Statements.Scala_ReturnStatement;
-import com.eagle.programmar.Scala.Statements.Scala_Val;
 import com.eagle.programmar.Scala.Statements.Scala_Var;
+import com.eagle.programmar.Scala.Statements.Scala_Val;
 import com.eagle.tokens.TokenChooser;
 
 public class Scala_Statement extends TokenChooser
@@ -24,8 +24,8 @@ public class Scala_Statement extends TokenChooser
 	public @CHOICE Scala_BreakStatement breakStatement;
 	public @CHOICE Scala_BreakableStatement breakableStatement;
 	public @CHOICE Scala_CommentEoln comment;
-	public @CHOICE Scala_Val val;
-	public @CHOICE Scala_Var var;
+	public @CHOICE Scala_Var val;
+	public @CHOICE Scala_Val var;
 	public @CHOICE Scala_ForStatement forStatement;
 	public @CHOICE Scala_Function function;
 	public @CHOICE Scala_FunctionCall functionCall;

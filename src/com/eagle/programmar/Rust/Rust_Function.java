@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Rust_Function extends TokenSequence {
 	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
-	public @S(20) Rust_Keyword FN = new Rust_Keyword("fn");
+	public @S(20) @DOC("items/functions.html") Rust_Keyword FN = new Rust_Keyword("fn");
 	public @S(30) Rust_Function_Definition id;
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT SeparatedList<Rust_Parameter,PunctuationComma> funcParamDefs;

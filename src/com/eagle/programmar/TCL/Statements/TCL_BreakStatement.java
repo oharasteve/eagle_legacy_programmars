@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class TCL_BreakStatement extends TokenSequence
 {
-	public @S(10) TCL_Keyword BREAK = new TCL_Keyword("break");
+	public @S(10) @DOC("TclCmd/break.html") TCL_Keyword BREAK = new TCL_Keyword("break");
 }

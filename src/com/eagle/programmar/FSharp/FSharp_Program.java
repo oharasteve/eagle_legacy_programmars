@@ -18,7 +18,7 @@ public class FSharp_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/";
 	}
 
 	public @S(10) TokenList<FSharp_Statement> elements;

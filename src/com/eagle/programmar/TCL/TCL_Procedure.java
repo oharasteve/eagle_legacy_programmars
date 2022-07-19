@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class TCL_Procedure extends TokenSequence
 {
-	public @S(10) TCL_Keyword PROC = new TCL_Keyword("proc");
+	public @S(10) @DOC("TclCmd/proc.html") TCL_Keyword PROC = new TCL_Keyword("proc");
 	public @S(20) TCL_Function_Definition name;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) TokenList<TCL_Variable_Definition> vars;

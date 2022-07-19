@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_RaiseStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword RAISE = new Python_Keyword("raise");
+	public @S(10) @DOC("simple_stmts.html#the-raise-statement") Python_Keyword RAISE = new Python_Keyword("raise");
 	public @S(20) @OPT SeparatedList<Python_RaiseCondition,PunctuationComma> raiseConditions;
 	
 	public static class Python_RaiseCondition extends TokenSequence

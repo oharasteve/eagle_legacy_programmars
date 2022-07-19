@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Ruby_BreakStatement extends TokenSequence
 {
-	public @S(10) Ruby_Keyword BREAK = new Ruby_Keyword("break");
+	public @S(10) @DOC("control_expressions_rdoc.html#label-break+Statement") Ruby_Keyword BREAK = new Ruby_Keyword("break");
 	public @S(20) Ruby_EOLN eoln;
 }

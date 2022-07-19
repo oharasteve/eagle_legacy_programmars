@@ -25,7 +25,7 @@ public class Scala_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://docs.scala-lang.org/scala3/book/";
 	}
 
 	public @S(10) TokenList<Scala_Element> elements;

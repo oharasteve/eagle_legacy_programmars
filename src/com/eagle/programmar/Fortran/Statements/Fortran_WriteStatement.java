@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Fortran_WriteStatement extends TokenSequence
 {
-	public @S(10) Fortran_Keyword WRITE = new Fortran_Keyword("WRITE");
+	public @S(10) @DOC("6j4m0vnbs/index.html") Fortran_Keyword WRITE = new Fortran_Keyword("WRITE");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Fortran_Variable var;
 	public @S(40) PunctuationComma comma;

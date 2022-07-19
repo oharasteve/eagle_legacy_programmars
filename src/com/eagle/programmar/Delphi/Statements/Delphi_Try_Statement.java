@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_Try_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword TRY = new Delphi_Keyword("Try");
+	public @S(10) @DOC("Exceptions_(Delphi)") Delphi_Keyword TRY = new Delphi_Keyword("Try");
 	public @S(20) Delphi_Statement_List statements1;
 	public @S(30) @OPT Delphi_Keyword EXCEPT = new Delphi_Keyword("Except");
 	public @S(40) @OPT Delphi_Statement_List statements2;

@@ -9,6 +9,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Rust_BreakStatement extends TokenSequence
 {
-	public @S(10) Rust_Keyword BREAK = new Rust_Keyword("break");
+	public @S(10) @DOC("expressions/loop-expr.html#break-expressions") Rust_Keyword BREAK = new Rust_Keyword("break");
 	public @S(20) @OPT PunctuationSemicolon semicolon;
 }

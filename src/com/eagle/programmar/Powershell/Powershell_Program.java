@@ -18,7 +18,7 @@ public class Powershell_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://docs.microsoft.com/en-us/powershell/scripting/lang-spec/";
 	}
 	
 	public @S(10) @OPT Powershell_CmdletBinding cmtletBinding;

@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class TCL_NamespaceStatement extends TokenSequence
 {
-	public @S(10) TCL_Keyword NAMESPACE = new TCL_Keyword("namespace");
+	public @S(10) @DOC("TclCmd/namespace.html") TCL_Keyword NAMESPACE = new TCL_Keyword("namespace");
 	public @S(20) TCL_Keyword EVAL = new TCL_Keyword("eval");
 	public @S(30) TCL_Namespace_Definition namespace;
 	public @S(40) PunctuationLeftBrace leftBrace;

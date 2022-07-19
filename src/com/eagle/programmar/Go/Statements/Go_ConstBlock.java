@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Go_ConstBlock extends TokenSequence
 {
-	public @S(10) Go_Keyword CONST = new Go_Keyword("const");
+	public @S(10) @DOC("#Constant_declarations") Go_Keyword CONST = new Go_Keyword("const");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Go_EOLN eoln1;
 	public @S(40) TokenList<Go_Assignment> constLine;

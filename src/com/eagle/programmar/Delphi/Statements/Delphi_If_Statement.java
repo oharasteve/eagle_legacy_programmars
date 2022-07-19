@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_If_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword IF = new Delphi_Keyword("If");
+	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#If_Statements") Delphi_Keyword IF = new Delphi_Keyword("If");
 	public @S(20) Delphi_Expression cond;
 	public @S(30) @OPT TokenList<Delphi_Comment> comments1;
 	public @S(40) Delphi_Keyword THEN = new Delphi_Keyword("Then");

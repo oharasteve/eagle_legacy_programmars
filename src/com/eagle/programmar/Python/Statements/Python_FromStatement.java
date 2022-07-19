@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_FromStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword FROM = new Python_Keyword("from");
+	public @S(10) @DOC("simple_stmts.html#the-import-statement") Python_Keyword FROM = new Python_Keyword("from");
 	public @S(20) Python_Variable fromName;
 	public @S(30) Python_ImportStatement importStatement;
 }

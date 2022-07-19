@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Fortran_Function extends TokenSequence
 {
 	public @S(10) Fortran_Type type;
-	public @S(20) Fortran_Keyword FUNCTION1 = new Fortran_Keyword("FUNCTION");
+	public @S(20) @DOC("6j4m0vn9h/index.html") Fortran_Keyword FUNCTION1 = new Fortran_Keyword("FUNCTION");
 	public @S(30) Fortran_Function_Definition fnName1;
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) SeparatedList<Fortran_Variable_Reference,PunctuationComma> parameters;

@@ -15,7 +15,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_For_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword FOR = new Delphi_Keyword("For");
+	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#For_Statements") Delphi_Keyword FOR = new Delphi_Keyword("For");
 	public @S(20) Delphi_Identifier_Reference var;
 	public @S(30) Delphi_Punctuation colonEquals = new Delphi_Punctuation(":=");
 	public @S(40) Delphi_Expression from;

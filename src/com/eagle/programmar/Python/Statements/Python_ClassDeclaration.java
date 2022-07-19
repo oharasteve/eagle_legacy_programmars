@@ -22,7 +22,7 @@ public class Python_ClassDeclaration extends TokenSequence implements AbstractCl
 {
 	public @S(10) @OPT TokenList<Python_Decorator> decorator;
 	public @S(20) @OPT Python_EndOfLine eoln;
-	public @S(30) @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
+	public @S(30) @DOC("compound_stmts.html#class-definitions") @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
 	public @S(40) Python_Class_Definition name;
 	public @S(50) @OPT Python_ClassSuper superClass;
 	public @S(60) @NOSPACE PunctuationColon colon;

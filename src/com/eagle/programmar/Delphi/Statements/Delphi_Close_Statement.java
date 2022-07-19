@@ -11,7 +11,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Close_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword CLOSE = new Delphi_Keyword("Close");
+	public @S(10) @DOC("Standard_Routines_and_Input-Output#The_Close_function") Delphi_Keyword CLOSE = new Delphi_Keyword("Close");
 	public @S(20) @OPT Delphi_CloseParams params;
 	
 	public static class Delphi_CloseParams extends TokenSequence

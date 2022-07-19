@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class TCL_ForStatement extends TokenSequence
 {
-	public @S(10) TCL_Keyword FOR = new TCL_Keyword("for");
+	public @S(10) @DOC("TclCmd/for.html") TCL_Keyword FOR = new TCL_Keyword("for");
 	public @S(20) PunctuationLeftBrace leftBrace1;
 	public @S(30) TCL_Statement init;
 	public @S(40) PunctuationRightBrace rightBrace1;

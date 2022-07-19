@@ -20,7 +20,7 @@ public class Ada_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://www.adaic.org/resources/add_content/standards/05rm/RM-Final.pdf";
 	}
 
 	public @S(10) TokenList<Ada_Element> elements;

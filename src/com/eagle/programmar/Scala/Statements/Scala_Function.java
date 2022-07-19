@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Scala_Function extends TokenSequence
 {
-	public @S(10) Scala_Keyword DEF = new Scala_Keyword("def");
+	public @S(10) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
 	public @S(20) Scala_Function_Definition id;
 	public @S(30) @OPT Scala_FunctionParams params;
 	public @S(40) @OPT Scala_FunctionReturns returnType;

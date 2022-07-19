@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Rewrite_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword REWRITE = new Delphi_Keyword("ReWrite");
+	public @S(10) @DOC("System.Rewrite") Delphi_Keyword REWRITE = new Delphi_Keyword("ReWrite");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Delphi_Identifier_Reference file;
 	public @S(40) PunctuationComma comma;

@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Ruby_ForStatement extends TokenSequence
 {
-	public @S(10) Ruby_Keyword FOR = new Ruby_Keyword("for");
+	public @S(10) @DOC("control_expressions_rdoc.html#label-for+Loop") Ruby_Keyword FOR = new Ruby_Keyword("for");
 	public @S(20) Ruby_Variable var;
 	public @S(30) Ruby_Keyword IN = new Ruby_Keyword("in");
 	public @S(40) Ruby_Expression values;

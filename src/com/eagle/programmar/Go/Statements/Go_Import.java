@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Go_Import extends TokenSequence
 {
-	public @S(10) Go_Keyword IMPORT = new Go_Keyword("import");
+	public @S(10) @DOC("#Import_declarations") Go_Keyword IMPORT = new Go_Keyword("import");
 	public @S(20) Go_ImportWhat what;
 	public @S(30) Go_EOLN eoln;
 	

@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Fortran_IfStatement extends TokenSequence
 {
-	public @S(10) Fortran_Keyword IF1 = new Fortran_Keyword("IF");
+	public @S(10) @DOC("6j4m0vn9r/index.html") Fortran_Keyword IF1 = new Fortran_Keyword("IF");
 	public @S(20) Fortran_Expression condition;
 	public @S(30) Fortran_Keyword THEN = new Fortran_Keyword("THEN");
 	public @S(40) Fortran_EOLN eoln1;

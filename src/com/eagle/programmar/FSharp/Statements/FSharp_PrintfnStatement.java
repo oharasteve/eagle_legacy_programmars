@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class FSharp_PrintfnStatement extends TokenSequence
 {
-	public @S(10) FSharp_Keyword PRINTFN = new FSharp_Keyword("printfn");
+	public @S(10) @DOC("plaintext-formatting") FSharp_Keyword PRINTFN = new FSharp_Keyword("printfn");
 	public @S(20) TokenList<FSharp_Expression> exprs;
 	public @S(30) FSharp_EndOfLine eoln;
 }

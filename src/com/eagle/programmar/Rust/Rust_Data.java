@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Rust_Data extends TokenSequence
 {
 	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
-	public @S(20) Rust_KeywordChoice STATIC = new Rust_KeywordChoice("const", "static");
+	public @S(20) @DOC("items/static-items.html") Rust_KeywordChoice STATIC = new Rust_KeywordChoice("const", "static");
 	public @S(30) Rust_Variable_Definition var;
 	public @S(40) PunctuationColon colon;
 	public @S(50) Rust_Type type;

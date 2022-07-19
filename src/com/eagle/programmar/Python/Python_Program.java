@@ -13,6 +13,12 @@ public abstract class Python_Program extends EagleLanguage
 	{
 		super(name, syntax);
 	}
+	
+	@Override
+	public String getDocRoot()
+	{
+		return "https://docs.python.org/3.10/reference/";
+	}
 
 	public @S(10) @OPT TokenList<Python_Statement> entries;
 }

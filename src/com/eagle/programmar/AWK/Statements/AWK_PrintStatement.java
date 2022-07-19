@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_PrintStatement extends TokenSequence
 {
-	public @S(10) AWK_KeywordChoice PRINT = new AWK_KeywordChoice("print", "printf");
+	public @S(10) @DOC("#print") AWK_KeywordChoice PRINT = new AWK_KeywordChoice("print", "printf");
 	public @S(20) AWK_PrintParameters param;
 	
 	public static class AWK_PrintParameters extends TokenChooser

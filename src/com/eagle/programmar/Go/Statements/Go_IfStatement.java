@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Go_IfStatement extends TokenSequence
 {
-	public @S(10) Go_Keyword IF = new Go_Keyword("if");
+	public @S(10) @DOC("#If_statements") Go_Keyword IF = new Go_Keyword("if");
 	public @S(20) Go_Expression condition;
 	public @S(30) Go_Statement thenStatement;
 	public @S(40) @OPT Go_IfElseClause elseClause;

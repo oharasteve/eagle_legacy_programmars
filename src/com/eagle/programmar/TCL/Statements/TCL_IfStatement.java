@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class TCL_IfStatement extends TokenSequence
 {
-	public @S(10) TCL_Keyword IF = new TCL_Keyword("if");
+	public @S(10) @DOC("TclCmd/if.html") TCL_Keyword IF = new TCL_Keyword("if");
 	public @S(20) TCL_PunctuationChoice left = new TCL_PunctuationChoice("{", "(");
 	public @S(30) TCL_Expression condition;
 	public @S(40) TCL_PunctuationChoice right = new TCL_PunctuationChoice("}", ")");

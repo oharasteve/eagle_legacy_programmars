@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Python_ImportStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword IMPORT = new Python_Keyword("import");
+	public @S(10) @DOC("simple_stmts.html#the-import-statement") Python_Keyword IMPORT = new Python_Keyword("import");
 	public @S(20) Python_ImportWhat what;
 	public @S(30) @OPT Python_FromImportAs fromAs;
 	public @S(40) @OPT TokenList<Python_MoreImports> moreImports;

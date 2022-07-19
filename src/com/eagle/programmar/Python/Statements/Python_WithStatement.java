@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_WithStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword WITH = new Python_Keyword("with");
+	public @S(10) @DOC("compound_stmts.html#the-with-statement") Python_Keyword WITH = new Python_Keyword("with");
 	public @S(20) SeparatedList<Python_WithItem,PunctuationComma> withItems;
 	public @S(30) PunctuationColon colon;
 	public @S(40) Python_EndOfLine eoln;

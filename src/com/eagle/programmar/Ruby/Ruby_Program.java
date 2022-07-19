@@ -22,7 +22,7 @@ public class Ruby_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://docs.ruby-lang.org/en/2.4.0/syntax/";
 	}
 
 	public @S(10) TokenList<Ruby_Element> elements;

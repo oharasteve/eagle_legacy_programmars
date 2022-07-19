@@ -14,6 +14,12 @@ public class Fortran_Program extends EagleLanguage
 	{
 		super(FORTRAN, new Fortran_Syntax());
 	}
+
+	@Override
+	public String getDocRoot()
+	{
+		return "https://docs.oracle.com/cd/E19957-01/805-4939/";
+	}
 	
 	public @S(10) TokenList<Fortran_Statement> statements;
 }

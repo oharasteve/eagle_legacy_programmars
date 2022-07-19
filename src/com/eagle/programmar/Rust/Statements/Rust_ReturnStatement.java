@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Rust_ReturnStatement extends TokenSequence
 {
-	public @S(10) Rust_Keyword RETURN = new Rust_Keyword("return");
+	public @S(10) @DOC("expressions/return-expr.html") Rust_Keyword RETURN = new Rust_Keyword("return");
 	public @S(20) Rust_Expression expr;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 }

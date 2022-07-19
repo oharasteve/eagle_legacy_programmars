@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Rust_IfStatement extends TokenSequence
 {
-	public @S(10) Rust_Keyword IF = new Rust_Keyword("if");
+	public @S(10) @DOC("expressions/if-expr.html") Rust_Keyword IF = new Rust_Keyword("if");
 	public @S(20) Rust_Expression condition;
 	public @S(30) Rust_Statement stmt;
 	public @S(40) @OPT Rust_IfElseClause elseClause;

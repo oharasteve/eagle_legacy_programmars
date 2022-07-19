@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_IfStatement extends TokenSequence
 {
-	public @S(10) @NOSPACE Python_Keyword IF = new Python_Keyword("if");
+	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;
 	public @S(30) @NOSPACE PunctuationColon colon;
 	public @S(40) Python_SingleOrMultiLineStatement ifThen;

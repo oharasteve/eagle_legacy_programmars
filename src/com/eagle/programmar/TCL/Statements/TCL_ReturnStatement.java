@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class TCL_ReturnStatement extends TokenSequence
 {
-	public @S(10) TCL_Keyword RETURN = new TCL_Keyword("return");
+	public @S(10) @DOC("TclCmd/return.html") TCL_Keyword RETURN = new TCL_Keyword("return");
 	public @S(20) TCL_Expression expr;
 }

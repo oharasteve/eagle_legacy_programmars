@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Bash_Function extends TokenSequence
 {
-	public @S(10) Bash_Keyword FUNCTION = new Bash_Keyword("function");
+	public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
 	public @S(20) Bash_Function_Definition fnName;
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) PunctuationRightParen rightParen;

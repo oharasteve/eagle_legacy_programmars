@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Readln_Statement extends TokenSequence
 {
-	public @S(10) Delphi_Keyword READLN = new Delphi_Keyword("ReadLn");
+	public @S(10) @DOC("System.Readln") Delphi_Keyword READLN = new Delphi_Keyword("ReadLn");
 	public @S(20) @OPT Delphi_Readln_What what;
 	
 	public static class Delphi_Readln_What extends TokenChooser

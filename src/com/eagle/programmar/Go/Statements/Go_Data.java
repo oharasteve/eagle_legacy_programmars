@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Go_Data extends TokenSequence
 {
-	public @S(10) Go_Keyword VAR = new Go_Keyword("var");
+	public @S(10) @DOC("#Variables") Go_Keyword VAR = new Go_Keyword("var");
 	public @S(20) Go_Variable_Definition id;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Go_Type type;

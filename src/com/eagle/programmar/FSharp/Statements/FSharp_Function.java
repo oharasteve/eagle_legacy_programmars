@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class FSharp_Function extends TokenSequence
 {
-	public @S(10) FSharp_Keyword LET = new FSharp_Keyword("let");
+	public @S(10) @DOC("functions/") FSharp_Keyword LET = new FSharp_Keyword("let");
 	public @S(20) FSharp_Function_Definition func;
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) SeparatedList<FSharp_FunctionParam,PunctuationComma> params;

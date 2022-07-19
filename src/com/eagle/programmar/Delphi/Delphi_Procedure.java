@@ -22,7 +22,7 @@ public class Delphi_Procedure extends TokenSequence
 	
 	public static class Delphi_ProcedureForward extends TokenSequence
 	{
-		public @S(10) Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice("Procedure", "Constructor", "Destructor");
+		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Procedure_Declarations") Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice("Procedure", "Constructor", "Destructor");
 		public @S(20) Delphi_Variable name;
 		public @S(30) @OPT Delphi_Arguments args;
 		public @S(40) PunctuationSemicolon semicolon;

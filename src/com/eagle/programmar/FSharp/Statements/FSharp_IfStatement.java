@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class FSharp_IfStatement extends TokenSequence
 {
-	public @S(10) FSharp_Keyword IF = new FSharp_Keyword("if");
+	public @S(10) @DOC("conditional-expressions-if-then-else") FSharp_Keyword IF = new FSharp_Keyword("if");
 	public @S(20) FSharp_Expression condition;
 	public @S(30) FSharp_Keyword THEN = new FSharp_Keyword("then");
 	public @S(40) FSharp_SingleOrMultiLineStatement ifThen;

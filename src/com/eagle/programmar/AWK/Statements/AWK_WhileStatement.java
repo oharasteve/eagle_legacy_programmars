@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_WhileStatement extends TokenSequence
 {
-	public @S(10) AWK_Keyword WHILE = new AWK_Keyword("while");
+	public @S(10) @DOC("#index-while-statement-1") AWK_Keyword WHILE = new AWK_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) AWK_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;

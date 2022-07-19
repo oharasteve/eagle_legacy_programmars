@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Powershell_BreakStatement extends TokenSequence
 {
-	public @S(10) Powershell_Keyword BREAK = new Powershell_Keyword("break");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#851-the-break-statement") Powershell_Keyword BREAK = new Powershell_Keyword("break");
 }

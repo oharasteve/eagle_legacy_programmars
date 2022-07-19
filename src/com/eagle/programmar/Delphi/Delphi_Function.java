@@ -22,7 +22,7 @@ public class Delphi_Function extends TokenSequence
 	
 	public static class Delphi_FunctionForward extends TokenSequence
 	{
-		public @S(10) Delphi_Keyword FUNCTION = new Delphi_Keyword("Function");
+		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword("Function");
 		public @S(20) Delphi_Variable name;
 		public @S(30) @OPT Delphi_Arguments args;
 		public @S(40) PunctuationColon colon;

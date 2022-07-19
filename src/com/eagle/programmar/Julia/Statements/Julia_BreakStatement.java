@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Julia_BreakStatement extends TokenSequence
 {
-	public @S(10) Julia_Keyword BREAK = new Julia_Keyword("break");
+	public @S(10) @DOC("base/base/#break") Julia_Keyword BREAK = new Julia_Keyword("break");
 	public @S(20) Julia_EOLN eoln;
 }

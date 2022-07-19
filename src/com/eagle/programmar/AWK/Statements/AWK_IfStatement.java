@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_IfStatement extends TokenSequence
 {
-	public @S(10) AWK_Keyword IF = new AWK_Keyword("if");
+	public @S(10) @DOC("#index-if-statement-2") AWK_Keyword IF = new AWK_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) AWK_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;

@@ -10,6 +10,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Bash_EchoCommand extends TokenSequence
 {
-	public @S(10) Bash_Keyword ECHO = new Bash_Keyword("echo");
+	public @S(10) @DOC("#index-echo") Bash_Keyword ECHO = new Bash_Keyword("echo");
 	public @S(20) @OPT TokenList<Bash_Expression> lines;
 }

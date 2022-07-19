@@ -24,7 +24,7 @@ public class Algol68_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "TBD";
+		return "https://jmvdveer.home.xs4all.nl/learning-algol-68-genie.pdf";
 	}
 
 	public @S(10) TokenList<Algol68_Element> elements;

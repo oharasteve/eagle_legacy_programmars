@@ -28,7 +28,7 @@ public class Delphi_Program extends EagleLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "http://docwiki.embarcadero.com/RADStudio/en/Declarations_and_Statements/";
+		return "http://docwiki.embarcadero.com/RADStudio/en/";
 	}
 	
 	public @S(10) Delphi_Full_or_Partial fullOrPartial;
@@ -38,7 +38,7 @@ public class Delphi_Program extends EagleLanguage
 		public @FIRST static class Delphi_Full extends TokenSequence
 		{
 			public @S(10) @OPT TokenList<Delphi_Comment> comments1;
-			public @S(20) Delphi_KeywordChoice programOrUnit = new Delphi_KeywordChoice("Program", "Unit");
+			public @S(20) @DOC("Programs_and_Units_(Delphi)#The_Program_Heading") Delphi_KeywordChoice programOrUnit = new Delphi_KeywordChoice("Program", "Unit");
 			public @S(30) Delphi_Program_Definition id;
 			public @S(40) PunctuationSemicolon semicolon;
 			public @S(50) @OPT TokenList<Delphi_Header> headers;

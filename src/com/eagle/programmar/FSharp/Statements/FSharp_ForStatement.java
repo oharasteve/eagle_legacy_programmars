@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class FSharp_ForStatement extends TokenSequence
 {
-	public @S(10) FSharp_Keyword FOR = new FSharp_Keyword("for");
+	public @S(10) @DOC("loops-for-to-expression") FSharp_Keyword FOR = new FSharp_Keyword("for");
 	public @S(20) FSharp_Variable var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) FSharp_Expression init;

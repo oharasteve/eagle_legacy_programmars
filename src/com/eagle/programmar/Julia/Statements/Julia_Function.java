@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Julia_Function extends TokenSequence
 {
-	public @S(10) @DOC("functions/") Julia_Keyword FUNCTION = new Julia_Keyword("function");
+	public @S(10) @DOC("manual/functions/") Julia_Keyword FUNCTION = new Julia_Keyword("function");
 	public @S(20) Julia_Function_Definition id;
 	public @S(30) @OPT Julia_FunctionParams params;
 	public @S(40) Julia_EOLN eoln1;

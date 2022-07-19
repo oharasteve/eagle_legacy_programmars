@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Python_TryStatement extends TokenSequence
 {
 	public @S(10) Python_StartOfLine soln;
-	public @S(20) Python_Keyword TRY = new Python_Keyword("try");
+	public @S(20) @DOC("compound_stmts.html#the-try-statement") Python_Keyword TRY = new Python_Keyword("try");
 	public @S(30) PunctuationColon colon;
 	public @S(40) @OPT Python_Comment comment;
 	public @S(50) Python_SingleOrMultiLineStatement tryType;

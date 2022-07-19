@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Writeln_Statement extends TokenSequence
 {
-	public @S(10) Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
+	public @S(10) @DOC("System.Writeln") Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
 	public @S(20) @OPT Delphi_WriteLn_Something something;
 	
 	public static class Delphi_WriteLn_Something extends TokenSequence

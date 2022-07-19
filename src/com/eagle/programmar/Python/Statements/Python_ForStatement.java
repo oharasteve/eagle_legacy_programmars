@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_ForStatement extends TokenSequence
 {
-	public @S(10) @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
+	public @S(10) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
 	public @S(20) Python_VariableList varList;
 	public @S(30) Python_Keyword IN = new Python_Keyword("in");
 	public @S(40) Python_ExpressionList expressionList;

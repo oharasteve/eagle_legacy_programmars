@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Scala_IfStatement extends TokenSequence
 {
-	public @S(10) Scala_Keyword IF = new Scala_Keyword("if");
+	public @S(10) @DOC("taste-control-structures.html#ifelse") Scala_Keyword IF = new Scala_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Scala_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;

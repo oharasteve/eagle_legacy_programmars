@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Fortran_DoStatement extends TokenSequence
 {
-	public @S(10) Fortran_Keyword DO1 = new Fortran_Keyword("DO");
+	public @S(10) @DOC("6j4m0vn8c/index.html") Fortran_Keyword DO1 = new Fortran_Keyword("DO");
 	public @S(20) Fortran_Variable_Reference var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Fortran_Expression start;

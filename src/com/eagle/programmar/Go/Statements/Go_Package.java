@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Go_Package extends TokenSequence
 {
-	public @S(10) Go_Keyword PACKAGE = new Go_Keyword("package");
+	public @S(10) @DOC("#Package_clause") Go_Keyword PACKAGE = new Go_Keyword("package");
 	public @S(20) Go_Identifier id;
 	public @S(30) Go_EOLN eoln;
 }

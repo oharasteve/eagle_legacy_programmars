@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Ruby_IfStatement extends TokenSequence
 {
-	public @S(10) Ruby_Keyword IF = new Ruby_Keyword("if");
+	public @S(10) @DOC("control_expressions_rdoc.html#label-if+Expression") Ruby_Keyword IF = new Ruby_Keyword("if");
 	public @S(20) Ruby_Expression condition;
 	public @S(30) Ruby_EOLN eoln1;
 	public @S(40) TokenList<Ruby_Statement> thenStatements;
