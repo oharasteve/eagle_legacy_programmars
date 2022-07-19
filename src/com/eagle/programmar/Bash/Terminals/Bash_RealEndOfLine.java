@@ -5,6 +5,6 @@ package com.eagle.programmar.Bash.Terminals;
 
 import com.eagle.tokens.TerminalEndOfLine;
 
-public class Bash_EndOfLine extends TerminalEndOfLine
+public class Bash_RealEndOfLine extends TerminalEndOfLine
 {
 }

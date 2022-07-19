@@ -19,6 +19,23 @@ public class Bash_Syntax extends EagleSyntax
 		_continuationChar = "\\";
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "==", "!=", "[[", "]]", "((", "))" };
+		_punctuationExceptions = new String[] {
+				"==", "!=", "[[", "]]", "((", "))", ".." };
+		
+		addReservedWords(keywords);
 	}
+	
+	private String[] keywords = new String[] {
+			"break",
+			"cat",
+			"do",
+			"done",
+			"echo",
+			"elif",
+			"else",
+			"export",
+			"fi",
+			"for",
+			"if",
+	};
 }

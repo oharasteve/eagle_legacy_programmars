@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
-import com.eagle.programmar.Bash.Terminals.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
