@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Terminals.Bash_Filename;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -18,6 +19,6 @@ public class Bash_DiffCommand extends TokenSequence
 	
 	public static class Bash_DiffOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword SKIPCR = new Bash_Keyword("--strip-trailing-cr");
+		public @CHOICE Bash_KeywordChoice SKIPCR = new Bash_KeywordChoice("--strip-trailing-cr");
 	}
 }

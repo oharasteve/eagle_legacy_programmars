@@ -25,6 +25,14 @@ public class Bash_Comment extends TerminalCommentToken
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
-		return super.possibleCommentToEndOfLine(rec, "#");
+		if (! super.possibleCommentToEndOfLine(rec, "#")) return false;
+		
+		// Check for shebang (#!) on line 1, columns 1-2
+		if (_currentLine > 0) return true;
+		if (rec.length() < 2) return true;
+		if (rec.charAt(0) != '#' || rec.charAt(1) != '!') return true;
+		
+		// Dang, it is a she-bang (#!)
+		return false;
 	}
 }

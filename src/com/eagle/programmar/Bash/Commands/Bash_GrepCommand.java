@@ -4,6 +4,7 @@
 package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -17,6 +18,6 @@ public class Bash_GrepCommand extends TokenSequence
 	
 	public static class Bash_GrepOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword V = new Bash_Keyword("-v");
+		public @CHOICE Bash_KeywordChoice I = new Bash_KeywordChoice("-i", "-v", "-E");
 	}
 }

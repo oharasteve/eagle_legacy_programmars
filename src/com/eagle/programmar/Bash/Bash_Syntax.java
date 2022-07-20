@@ -20,7 +20,7 @@ public class Bash_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"==", "!=", "[[", "]]", "((", "))", ".." };
+				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>" };
 		
 		addReservedWords(keywords);
 	}
@@ -35,9 +35,13 @@ public class Bash_Syntax extends EagleSyntax
 			"else",
 			"export",
 			"fi",
+			"find",
 			"for",
 			"function",
 			"if",
+			"python", "python3",
+			"read",
 			"then",
+			"while",
 	};
 }

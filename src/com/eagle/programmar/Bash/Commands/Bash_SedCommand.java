@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Terminals.Bash_Filename;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -18,6 +19,8 @@ public class Bash_SedCommand extends TokenSequence
 	
 	public static class Bash_SedOption extends TokenChooser
 	{
+		public @CHOICE Bash_KeywordChoice E = new Bash_KeywordChoice("-E", "-e", "-i", "-r");
+
 		public @CHOICE static class Bash_SedOptionF extends TokenSequence
 		{
 			public @S(10) Bash_Keyword F = new Bash_Keyword("-f");

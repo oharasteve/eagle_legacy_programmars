@@ -17,8 +17,11 @@ import com.eagle.programmar.Bash.Commands.Bash_GccCommand;
 import com.eagle.programmar.Bash.Commands.Bash_GrepCommand;
 import com.eagle.programmar.Bash.Commands.Bash_IfStatement;
 import com.eagle.programmar.Bash.Commands.Bash_LispCommand;
+import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
+import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
 import com.eagle.programmar.Bash.Commands.Bash_TeeCommand;
+import com.eagle.programmar.Bash.Commands.Bash_WhileStatement;
 import com.eagle.programmar.Bash.Terminals.Bash_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -26,7 +29,7 @@ import com.eagle.tokens.TokenSequence;
 public class Bash_Statement extends TokenSequence
 {
 	public @S(10) Bash_Element element;
-	public @S(20) Bash_EndOfLine eoln;
+	public @S(20) @OPT Bash_EndOfLine eoln;
 	
 	public static class Bash_Element extends TokenChooser
 	{
@@ -43,8 +46,12 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_GrepCommand grepCommand;
 		public @CHOICE Bash_IfStatement ifStatement;
 		public @CHOICE Bash_LispCommand lispCommand;
+		public @CHOICE Bash_ReadCommand readCommand;
 		public @CHOICE Bash_SedCommand sedCommand;
 		public @CHOICE Bash_TeeCommand teeCommand;
+		public @CHOICE Bash_WhileStatement whileStatement;
+		
+		public @CHOICE Bash_PythonProgram pythonProgram;
 		
 		public @LAST Bash_Assignment assignment;
 		public @LAST Bash_FunctionCall functionCall;

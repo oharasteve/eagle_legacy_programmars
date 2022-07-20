@@ -119,6 +119,11 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(40) Bash_Number stop;
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
+	
+	public static @P(240) class Bash_Constants extends PrimaryOperator
+	{
+		public @S(10) Bash_KeywordChoice TRUE = new Bash_KeywordChoice("false", "true");
+	}
 
 	///////////////////////////////////////////////
 	// Binary expressions

@@ -5,12 +5,12 @@ package com.eagle.programmar.Perl.Statements;
 
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
-import com.eagle.programmar.Perl.Terminals.Perl_Literal;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Perl_PrintStatement extends TokenSequence
 {
 	public @S(10) Perl_KeywordChoice PRINT = new Perl_KeywordChoice("print", "printf");
-	public @S(20) Perl_Expression value;
-	public @S(30) @OPT Perl_Literal literal;		// Second literal
+	public @S(20) SeparatedList<Perl_Expression,PunctuationComma> strings;
 }

@@ -23,7 +23,14 @@ public class Perl_UseStatement extends TokenSequence
 		public @FIRST static class Perl_UseRemote extends TokenSequence
 		{
 			public @S(10) Perl_KeywordChoice NET = new Perl_KeywordChoice(
-					"Getopt", "IPC", "Net", "Win32");
+					"File",
+					"Getopt",
+					"IPC",
+					"List",
+					"MIME",
+					"Net",
+					"Time",
+					"Win32");
 			public @S(20) @OPT Perl_Punctuation colonColon = new Perl_Punctuation("::");
 			public @S(30) @OPT Perl_Identifier_Reference id;
 		}

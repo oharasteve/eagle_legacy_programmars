@@ -16,7 +16,7 @@ public class Bash_EndOfLine extends TokenSequence
 
 	public static class Bash_Redirect extends TokenSequence
 	{
-		public @S(10) Bash_PunctuationChoice direction = new Bash_PunctuationChoice("<", ">", ">>");
+		public @S(10) Bash_PunctuationChoice direction = new Bash_PunctuationChoice("<", ">", ">>", "&>");
 		public @S(20) Bash_Expression fileName;
 	}
 	

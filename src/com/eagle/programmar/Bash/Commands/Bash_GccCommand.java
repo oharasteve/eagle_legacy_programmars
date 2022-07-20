@@ -15,11 +15,11 @@ public class Bash_GccCommand extends TokenSequence
 	public @S(10) Bash_KeywordChoice GCC = new Bash_KeywordChoice("gcc", "gfortran");
 	public @S(20) @OPT TokenList<Bash_GccOption> options1;
 	public @S(30) Bash_Filename fileName;
-	public @S(40) @OPT TokenList<Bash_GccOption> options3;
+	public @S(40) @OPT TokenList<Bash_GccOption> options2;
 	
 	public static class Bash_GccOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword Wall = new Bash_Keyword("-Wall");
+		public @CHOICE Bash_KeywordChoice G = new Bash_KeywordChoice("-g", "-Wall");
 
 		public @CHOICE static class Bash_GccOptionO extends TokenSequence
 		{

@@ -39,7 +39,7 @@ public class Bash_IfStatement extends TokenSequence
 	public static class Bash_If_Else extends TokenSequence
 	{
 		public @S(10) Bash_Keyword ELSE = new Bash_Keyword("else");
-		public @S(20) Bash_EndOfLine eoln;
+		public @S(20) @OPT Bash_EndOfLine eoln;
 		public @S(30) TokenList<Bash_Statement> statements;
 	}
 }
