@@ -36,6 +36,8 @@ public class Bash_Syntax extends EagleSyntax
 			"export",
 			"fi",
 			"for",
+			"function",
 			"if",
+			"then",
 	};
 }

@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 public class Bash_EndOfLine extends TokenSequence
 {
 	public @S(10) @OPT TokenList<Bash_Redirect> redirect;
-	public @S(0) Bash_LineEnder ender;
+	public @S(20) Bash_LineEnder ender;
 
 	public static class Bash_Redirect extends TokenSequence
 	{
