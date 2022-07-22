@@ -224,7 +224,24 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Powershell_AssignmentExpression extends PrecedenceOperator
+	public static @P(470) class Powershell_Match_Expression extends PrecedenceOperator
+	{
+		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice(
+				"-cmatch", "-in", "-match", "-notin");
+		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(480) class Powershell_Replace_Expression extends PrecedenceOperator
+	{
+		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-replace");
+		public @S(30) Powershell_Expression expr;
+		public @S(40) PunctuationComma comma;
+		public @S(50) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(490) class Powershell_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression var = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Powershell_PunctuationChoice equals = new Powershell_PunctuationChoice(

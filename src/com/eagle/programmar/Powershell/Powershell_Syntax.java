@@ -32,6 +32,7 @@ public class Powershell_Syntax extends EagleSyntax
 			"else",
 			"elseif",
 			"for",
+			"foreach",
 			"function",
 			"if",
 			"return",
