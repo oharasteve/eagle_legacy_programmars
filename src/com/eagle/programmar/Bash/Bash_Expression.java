@@ -49,7 +49,12 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(20) Bash_Number number;
 	}
 	
-	public static @P(110) class Bash_DollarExpr extends PrimaryOperator
+	public static @P(110) class Bash_DollarPound extends PrimaryOperator
+	{
+		public @S(10) Bash_PunctuationChoice dollarPound = new Bash_PunctuationChoice("$#", "$?", "$@", "$*");
+	}
+	
+	public static @P(120) class Bash_DollarExpr extends PrimaryOperator
 	{
 		public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 		public @S(20) PunctuationLeftBrace leftBrace;
@@ -57,7 +62,7 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightBrace rightBrace;
 	}
 
-	public static @P(120) class Bash_DollarSubstring extends PrimaryOperator
+	public static @P(130) class Bash_DollarSubstring extends PrimaryOperator
 	{
 		public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 		public @S(20) PunctuationLeftBrace leftBrace;
@@ -69,12 +74,6 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(80) PunctuationRightBrace rightBrace;
 	}
 
-	public static @P(130) class Bash_NotExpression extends PrimaryOperator
-	{
-		public @S(10) Bash_Punctuation bang = new Bash_Punctuation("!");
-		public @S(20) Bash_Expression expr;
-	}
-	
 	public static @P(140) class Bash_SizeExpression extends PrimaryOperator
 	{
 		public @S(10) Bash_Punctuation bang = new Bash_Punctuation("#");
@@ -94,7 +93,7 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(10) Bash_Variable variable;
 	}
 
-	public static @P(180) class Bash_Evaluate1 extends PrimaryOperator
+	public static @P(170) class Bash_Evaluate1 extends PrimaryOperator
 	{
 		public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 		public @S(20) PunctuationLeftParen leftParen;
@@ -103,7 +102,7 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(50) PunctuationRightParen rightParen;
 	}
 
-	public static @P(200) class Bash_Evaluate2 extends PrimaryOperator
+	public static @P(180) class Bash_Evaluate2 extends PrimaryOperator
 	{
 		public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 		public @S(20) Bash_Punctuation leftParenParen = new Bash_Punctuation("((");
@@ -111,7 +110,7 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(40) Bash_Punctuation rightParenParen = new Bash_Punctuation("))");
 	}
 
-	public static @P(220) class Bash_Range extends PrimaryOperator
+	public static @P(190) class Bash_Range extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) Bash_Number start;
@@ -119,23 +118,18 @@ public class Bash_Expression extends PrecedenceChooser
 		public @S(40) Bash_Number stop;
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
-	
-	public static @P(240) class Bash_Constants extends PrimaryOperator
-	{
-		public @S(10) Bash_KeywordChoice TRUE = new Bash_KeywordChoice("false", "true");
-	}
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Bash_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(500) class Bash_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Bash_PunctuationChoice operator = new Bash_PunctuationChoice("*", "/", "%");
 		public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Bash_Relational_Expression extends PrecedenceOperator
+	public static @P(510) class Bash_Relational_Expression extends PrecedenceOperator
 	{
 		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Bash_RelOp operator;
@@ -150,21 +144,21 @@ public class Bash_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(440) class Bash_AdditiveExpression extends PrecedenceOperator
+	public static @P(520) class Bash_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Bash_PunctuationChoice operator = new Bash_PunctuationChoice("+", "-");
 		public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(460) class Bash_LogicalAnd_Expression extends PrecedenceOperator
+	public static @P(530) class Bash_LogicalAnd_Expression extends PrecedenceOperator
 	{
 		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Bash_Punctuation operator = new Bash_Punctuation("&&");
 		public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(480) class Bash_LogicalOr_Expression extends PrecedenceOperator
+	public static @P(540) class Bash_LogicalOr_Expression extends PrecedenceOperator
 	{
 		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Bash_Punctuation operator = new Bash_Punctuation("||");

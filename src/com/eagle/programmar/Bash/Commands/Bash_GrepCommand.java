@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
@@ -15,6 +16,7 @@ public class Bash_GrepCommand extends TokenSequence
 	public @S(10) Bash_Keyword GREP = new Bash_Keyword("grep");
 	public @S(20) @OPT TokenList<Bash_GrepOption> options;
 	public @S(30) @OPT Bash_Literal pattern;
+	public @S(40) @OPT Bash_FilenameOrLiteral filename;
 	
 	public static class Bash_GrepOption extends TokenChooser
 	{

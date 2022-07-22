@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash.Commands;
 
-import com.eagle.programmar.Bash.Terminals.Bash_Filename;
+import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.tokens.TokenChooser;
@@ -14,7 +14,7 @@ public class Bash_LispCommand extends TokenSequence
 {
 	public @S(10) Bash_Keyword LISP = new Bash_Keyword("clisp");
 	public @S(20) @OPT TokenList<Bash_LispOption> options;
-	public @S(30) @OPT Bash_Filename fileName;
+	public @S(30) @OPT Bash_FilenameOrLiteral fileName;
 	
 	public static class Bash_LispOption extends TokenChooser
 	{

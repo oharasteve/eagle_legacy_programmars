@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash.Commands;
 
-import com.eagle.programmar.Bash.Terminals.Bash_Filename;
+import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
@@ -14,7 +14,7 @@ public class Bash_GccCommand extends TokenSequence
 {
 	public @S(10) Bash_KeywordChoice GCC = new Bash_KeywordChoice("gcc", "gfortran");
 	public @S(20) @OPT TokenList<Bash_GccOption> options1;
-	public @S(30) Bash_Filename fileName;
+	public @S(30) Bash_FilenameOrLiteral fileName;
 	public @S(40) @OPT TokenList<Bash_GccOption> options2;
 	
 	public static class Bash_GccOption extends TokenChooser
@@ -24,7 +24,7 @@ public class Bash_GccCommand extends TokenSequence
 		public @CHOICE static class Bash_GccOptionO extends TokenSequence
 		{
 			public @S(10) Bash_Keyword O = new Bash_Keyword("-o");
-			public @S(20) Bash_Filename fileName;
+			public @S(20) Bash_FilenameOrLiteral fileName;
 		}
 	}
 }

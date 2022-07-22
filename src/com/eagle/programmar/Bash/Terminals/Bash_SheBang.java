@@ -8,6 +8,11 @@ import com.eagle.parsers.EagleLineReader;
 
 public class Bash_SheBang extends Bash_Punctuation
 {
+	public Bash_SheBang()
+	{
+		super("#!");
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

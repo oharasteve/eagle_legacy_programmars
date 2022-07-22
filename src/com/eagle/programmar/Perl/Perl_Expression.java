@@ -199,8 +199,7 @@ public class Perl_Expression extends PrecedenceChooser
                 "T_REQUIRE",
                 "T_REQUIRE_ONCE",
                 "T_USE",
-                "namespace",
-                "shift");
+                "namespace");
 	}
 	
 	public static @P(270) class Perl_RegExExpression extends PrimaryOperator

@@ -5,8 +5,10 @@ package com.eagle.programmar.Bash;
 
 import com.eagle.programmar.Bash.Commands.Bash_Assignment;
 import com.eagle.programmar.Bash.Commands.Bash_AwkCommand;
+import com.eagle.programmar.Bash.Commands.Bash_BashProgram;
 import com.eagle.programmar.Bash.Commands.Bash_BreakStatement;
 import com.eagle.programmar.Bash.Commands.Bash_CatCommand;
+import com.eagle.programmar.Bash.Commands.Bash_ChmodCommand;
 import com.eagle.programmar.Bash.Commands.Bash_DiffCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EchoCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ExportCommand;
@@ -36,6 +38,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_AwkCommand awkCommand;
 		public @CHOICE Bash_BreakStatement breakStatement;
 		public @CHOICE Bash_CatCommand catCommand;
+		public @CHOICE Bash_ChmodCommand chmodCommand;
 		public @CHOICE Bash_Comment comment;
 		public @CHOICE Bash_DiffCommand diffCommand;
 		public @CHOICE Bash_EchoCommand echoCommand;
@@ -51,6 +54,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_TeeCommand teeCommand;
 		public @CHOICE Bash_WhileStatement whileStatement;
 		
+		public @CHOICE Bash_BashProgram bashProgram;
 		public @CHOICE Bash_PythonProgram pythonProgram;
 		
 		public @LAST Bash_Assignment assignment;

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.programmar.Bash.Bash_Condition;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
-import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 public class Bash_WhileStatement extends TokenSequence
 {
 	public @S(10) @DOC("#Looping-Constructs") Bash_Keyword WHILE = new Bash_Keyword("while");
-	public @S(20) Bash_Expression condition;
+	public @S(20) Bash_Condition condition;
 	public @S(30) Bash_EndOfLine eoln1;
 	public @S(40) Bash_Keyword DO = new Bash_Keyword("do");
 	public @S(50) @OPT Bash_EndOfLine eoln2;

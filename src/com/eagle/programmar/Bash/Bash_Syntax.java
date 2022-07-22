@@ -20,7 +20,8 @@ public class Bash_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>" };
+				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>", ">&",
+				"$#", "$?", "$@", "$*" };
 		
 		addReservedWords(keywords);
 	}
@@ -28,6 +29,7 @@ public class Bash_Syntax extends EagleSyntax
 	private String[] keywords = new String[] {
 			"break",
 			"cat",
+			"chmod",
 			"do",
 			"done",
 			"echo",
@@ -35,7 +37,6 @@ public class Bash_Syntax extends EagleSyntax
 			"else",
 			"export",
 			"fi",
-			"find",
 			"for",
 			"function",
 			"if",
