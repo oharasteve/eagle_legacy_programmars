@@ -30,6 +30,7 @@ public class Powershell_Syntax extends EagleSyntax
 	private String[] reservedWords = new String[] {
 			"break",
 			"else",
+			"elseif",
 			"for",
 			"function",
 			"if",

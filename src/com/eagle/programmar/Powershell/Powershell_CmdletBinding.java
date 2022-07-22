@@ -6,6 +6,7 @@ package com.eagle.programmar.Powershell;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -27,14 +28,17 @@ public class Powershell_CmdletBinding extends TokenSequence
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) PunctuationRightBracket rightBracket;
-	public @S(60) Powershell_CmdletParamList paramList;
+	public @S(60) @OPT Powershell_EndOfLine eoln;
+	public @S(70) Powershell_CmdletParamList paramList;
 	
 	public static class Powershell_CmdletParamList extends TokenSequence
 	{
 		public @S(10) Powershell_Keyword PARAM = new Powershell_Keyword("Param");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<Powershell_CmdletParam, PunctuationComma> params;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(30) @OPT Powershell_EndOfLine eoln1;
+		public @S(40) TokenList<Powershell_CmdletParam> params;
+		public @S(50) PunctuationRightParen rightParen;
+		public @S(60) @OPT Powershell_EndOfLine eoln2;
 		
 		public static class Powershell_CmdletParam extends TokenChooser
 		{
@@ -46,7 +50,17 @@ public class Powershell_CmdletBinding extends TokenSequence
 				public @S(40) SeparatedList<Powershell_CmdletParameterOption,PunctuationComma> options;
 				public @S(50) PunctuationRightParen rightParen;
 				public @S(60) PunctuationRightBracket rightBracket;
-				public @S(70) Powershell_Variable param;
+				public @S(70) @OPT Powershell_CastParam cast;
+				public @S(80) Powershell_Variable param;
+				public @S(90) @OPT PunctuationComma comma;
+				public @S(100) @OPT Powershell_EndOfLine eoln;
+				
+				public static class Powershell_CastParam extends TokenSequence
+				{
+					public @S(10) PunctuationLeftBracket leftBracket;
+					public @S(20) Powershell_Type type;
+					public @S(30) PunctuationRightBracket rightBracket;
+				}
 				
 				public static class Powershell_CmdletParameterOption extends TokenChooser
 				{
@@ -74,6 +88,8 @@ public class Powershell_CmdletBinding extends TokenSequence
 				public @S(40) Powershell_Variable param;
 				public @S(50) PunctuationEquals equals;
 				public @S(60) Powershell_Expression expr;
+				public @S(70) @OPT PunctuationComma comma;
+				public @S(80) @OPT Powershell_EndOfLine eoln;
 			}
 		}
 	}

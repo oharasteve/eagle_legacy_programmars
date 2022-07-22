@@ -21,11 +21,16 @@ public class Powershell_FunctionStatement extends TokenSequence
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword("function");
 	public @S(20) Powershell_Function_Definition name;
-	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) @OPT SeparatedList<Powershell_Variable, PunctuationComma> params;
-	public @S(50) PunctuationRightParen rightParen;
-	public @S(60) PunctuationLeftBrace leftBrace;
-	public @S(70) @OPT Powershell_EndOfLine eoln;
-	public @S(80) @OPT TokenList<Powershell_Statement> stmts;
-	public @S(90) PunctuationRightBrace rightBrace;
+	public @S(30) @OPT Powershell_FunctionParams params;
+	public @S(40) PunctuationLeftBrace leftBrace;
+	public @S(50) @OPT Powershell_EndOfLine eoln;
+	public @S(60) @OPT TokenList<Powershell_Statement> stmts;
+	public @S(70) PunctuationRightBrace rightBrace;
+	
+	public static class Powershell_FunctionParams extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<Powershell_Variable, PunctuationComma> params;
+		public @S(30) PunctuationRightParen rightParen;
+	}
 }

@@ -3,8 +3,10 @@
 
 package com.eagle.programmar.Powershell;
 
+import com.eagle.programmar.Powershell.Powershell_Expression.Powershell_FunctionCall.Powershell_Library;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
+import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
@@ -110,7 +112,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public static class Powershell_Library extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) Powershell_KeywordChoice MATH = new Powershell_KeywordChoice("Math");
+			public @S(20) SeparatedList<Powershell_Identifier_Reference,PunctuationPeriod> name;
 			public @S(30) PunctuationRightBracket rightBracket;
 			public @S(40) Powershell_Punctuation colons = new Powershell_Punctuation("::");
 		}
@@ -144,23 +146,23 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(10) Powershell_Variable variable;
 	}
 	
-	public static @P(230) class Powershell_ParenthesizedExpression extends PrimaryOperator
+	public static @P(230) class Powershell_LibraryVariable extends PrimaryOperator
+	{
+		public @S(10) Powershell_Library libName;
+		public @S(20) Powershell_Identifier_Reference variable;
+	}
+	
+	public static @P(240) class Powershell_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Powershell_Expression expression;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(240) class Powershell_CallCommand extends PrimaryOperator
+	public static @P(250) class Powershell_CallCommand extends PrimaryOperator
 	{
 		public @S(10) Powershell_Command command;
 	}
-	
-//	public static @P(250) class Powershell_FilenameExpression extends PrimaryOperator
-//	{
-//		// Because Powershell_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
-//		public @S(10) Powershell_Filename filename;
-//	}
 	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
@@ -215,7 +217,14 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Powershell_AssignmentExpression extends PrecedenceOperator
+	public static @P(460) class Powershell_Format_Expression extends PrecedenceOperator
+	{
+		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-f");
+		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(470) class Powershell_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression var = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Powershell_PunctuationChoice equals = new Powershell_PunctuationChoice(
