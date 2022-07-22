@@ -17,15 +17,22 @@ public class Powershell_Syntax extends EagleSyntax
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
-		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "<=", ">=", "==", "!=", "::", "++", "--" };
+		_extraCharacters = "_-";
+		_autoAdvance = false;
+		_punctuationExceptions = new String[] {
+				"<=", ">=", "==", "!=",
+				"::", "++", "--",
+				"*>", ">>" };
 		
 		addReservedWords(reservedWords);
 	}
 	
 	private String[] reservedWords = new String[] {
-		"break",
-		"data",
-		"print",
+			"break",
+			"else",
+			"for",
+			"function",
+			"if",
+			"return",
 	};
 }

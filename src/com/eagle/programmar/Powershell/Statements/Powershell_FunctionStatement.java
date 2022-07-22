@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Statement;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Definition;
@@ -24,6 +25,7 @@ public class Powershell_FunctionStatement extends TokenSequence
 	public @S(40) @OPT SeparatedList<Powershell_Variable, PunctuationComma> params;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) PunctuationLeftBrace leftBrace;
-	public @S(70) @OPT TokenList<Powershell_Statement> stmts;
-	public @S(80) PunctuationRightBrace rightBrace;
+	public @S(70) @OPT Powershell_EndOfLine eoln;
+	public @S(80) @OPT TokenList<Powershell_Statement> stmts;
+	public @S(90) PunctuationRightBrace rightBrace;
 }

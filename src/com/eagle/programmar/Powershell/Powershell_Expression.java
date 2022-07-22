@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Powershell;
 
+import com.eagle.programmar.Powershell.Statements.Powershell_Command;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Identifier;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
@@ -99,7 +99,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(170) class Powershell_LibraryCall extends PrimaryOperator
+	public static @P(170) class Powershell_FunctionCall extends PrimaryOperator
 	{
 		public @S(10) @OPT Powershell_Library library;
 		public @S(20) Powershell_Function_Reference func;
@@ -151,10 +151,9 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(30) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(240) class Powershell_CallExpression extends PrimaryOperator
+	public static @P(240) class Powershell_CallCommand extends PrimaryOperator
 	{
-		public @S(10) Powershell_Identifier id;
-		public @S(20) TokenList<Powershell_Expression> arguments;
+		public @S(10) Powershell_Command command;
 	}
 	
 //	public static @P(250) class Powershell_FilenameExpression extends PrimaryOperator
