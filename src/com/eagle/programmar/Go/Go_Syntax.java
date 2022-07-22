@@ -15,7 +15,7 @@ public class Go_Syntax extends EagleSyntax
 	
 	public Go_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = true;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] { ":=",
@@ -31,7 +31,24 @@ public class Go_Syntax extends EagleSyntax
 			"else",
 			"for",
 			"if",
+			"range",
 			"struct",
+			"switch",
 			"type",
+			"var",
 	};
+	
+	public static class Go_Multiline_Syntax extends Go_Syntax
+	{
+		@Override
+		public String syntaxId()
+		{
+			return "Go Multi";
+		}
+		
+		public Go_Multiline_Syntax()
+		{
+			_autoAdvance = true;
+		}
+	}
 }

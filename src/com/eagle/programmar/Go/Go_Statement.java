@@ -12,7 +12,9 @@ import com.eagle.programmar.Go.Statements.Go_ForStatement;
 import com.eagle.programmar.Go.Statements.Go_FunctionCall;
 import com.eagle.programmar.Go.Statements.Go_IfStatement;
 import com.eagle.programmar.Go.Statements.Go_ReturnStatement;
+import com.eagle.programmar.Go.Statements.Go_SwitchStatement;
 import com.eagle.programmar.Go.Statements.Go_TypeDefinition;
+import com.eagle.programmar.Go.Statements.Go_VarStatement;
 import com.eagle.tokens.TokenChooser;
 
 public class Go_Statement extends TokenChooser
@@ -26,5 +28,7 @@ public class Go_Statement extends TokenChooser
 	public @CHOICE Go_FunctionCall functionCall;
 	public @CHOICE Go_IfStatement ifStatement;
 	public @CHOICE Go_ReturnStatement returnStatement;
+	public @CHOICE Go_SwitchStatement switchStatement;
 	public @CHOICE Go_TypeDefinition typeDefinition;
+	public @CHOICE Go_VarStatement varStatement;
 }

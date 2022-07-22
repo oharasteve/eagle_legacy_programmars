@@ -11,11 +11,13 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Go_Type extends TokenSequence
 {
 	public @S(10) @OPT Go_TypeArray array;
-	public @S(20) Go_TypeWhat what;
+	public @S(20) @OPT PunctuationStar star;
+	public @S(30) Go_TypeWhat what;
 	
 	public static class Go_TypeWhat extends TokenChooser
 	{
