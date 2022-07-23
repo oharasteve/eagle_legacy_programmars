@@ -16,7 +16,6 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -90,15 +89,8 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(19) @OPT Powershell_Punctuation at = new Powershell_Punctuation("@");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) Powershell_Expression expr;
-		public @S(40) TokenList<Powershell_ListItem> listItem;
-		public @S(50) PunctuationRightParen rightParen;
-		
-		public static class Powershell_ListItem extends TokenSequence
-		{
-			public @S(10) PunctuationComma comma;
-			public @S(20) Powershell_Expression expr;
-		}
+		public @S(30) @OPT SeparatedList<Powershell_Expression,PunctuationComma> expressions;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 	
 	public static @P(170) class Powershell_FunctionCall extends PrimaryOperator

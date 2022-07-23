@@ -18,14 +18,18 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Powershell_ForEachStatement extends TokenSequence
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_Keyword FOREACH = new Powershell_Keyword("foreach");
-	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Powershell_Variable var;
-	public @S(40) Powershell_Keyword IN = new Powershell_Keyword("in");
-	public @S(50) Powershell_Expression expr;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(20) @OPT Powershell_ForEachParams params;
+	public @S(30) PunctuationLeftBrace leftBrace;
+	public @S(40) @OPT Powershell_EndOfLine eoln;
+	public @S(50) TokenList<Powershell_Statement> stmts;
+	public @S(60) PunctuationRightBrace rightBrace;
 	
-	public @S(70) PunctuationLeftBrace leftBrace;
-	public @S(80) @OPT Powershell_EndOfLine eoln;
-	public @S(90) TokenList<Powershell_Statement> stmts;
-	public @S(100) PunctuationRightBrace rightBrace;
+	public static class Powershell_ForEachParams extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Powershell_Variable var;
+		public @S(30) Powershell_Keyword IN = new Powershell_Keyword("in");
+		public @S(40) Powershell_Expression expr;
+		public @S(50) PunctuationRightParen rightParen;
+	}
 }

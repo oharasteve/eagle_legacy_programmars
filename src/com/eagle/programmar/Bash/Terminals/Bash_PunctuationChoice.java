@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Bash.Terminals;
 
+import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.TerminalPunctuationChoice;
 
 public class Bash_PunctuationChoice extends TerminalPunctuationChoice
@@ -16,5 +17,12 @@ public class Bash_PunctuationChoice extends TerminalPunctuationChoice
 	public Bash_PunctuationChoice(String... puncts)
 	{
 		super(puncts);
+	}
+	
+	@Override
+	public boolean parse(EagleFileReader lines)
+	{
+		if (! super.parse(lines)) return false;
+		return super.dontAllowLettersAfterHyphen(lines);
 	}
 }

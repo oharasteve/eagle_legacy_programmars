@@ -7,6 +7,7 @@ import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_Comment;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
+import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -20,15 +21,18 @@ public class Bash_SetCommand extends TokenSequence
 	public static class Bash_SetOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice EUX = new Bash_KeywordChoice(
-				"-e", "-eu", "-ex", "-eE", "-eux",
-				"+e", "+ex",
-				"-u", "-x");
+				"-e", "-eu", "-ex", "-eE", "-eux", "-u", "-x");
+
+		public @CHOICE static class Bash_SetPlus extends TokenSequence
+		{
+			public @S(10) Bash_Punctuation PLUS = new Bash_Punctuation("+");
+			public @S(20) Bash_KeywordChoice EX = new Bash_KeywordChoice("e", "ex");
+		}
 
 		public @CHOICE static class Bash_SetOptionO extends TokenSequence
 		{
 			public @S(10) Bash_KeywordChoice O = new Bash_KeywordChoice(
-					"-eo", "-euox",
-					"-o");
+					"-eo", "-euox", "-o");
 			public @S(20) Bash_Identifier_Reference id;
 		}
 	}

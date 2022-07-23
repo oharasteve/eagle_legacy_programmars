@@ -28,6 +28,7 @@ public class Powershell_EndOfLine extends TokenSequence
 		{
 			public @CHOICE Powershell_Literal literal;
 			public @CHOICE Powershell_Filename fileName;
+			public @CHOICE Powershell_Variable variable;
 			
 			public @CHOICE static class Powershell_RedirectToNumber extends TokenSequence
 			{

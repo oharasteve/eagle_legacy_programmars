@@ -6,12 +6,12 @@ package com.eagle.programmar.Bash;
 import com.eagle.programmar.Bash.Terminals.Bash_Filename;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.programmar.Bash.Terminals.Bash_Number;
-import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.programmar.Bash.Terminals.Bash_PunctuationChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_RealEndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationAmpersand;
 
 public class Bash_EndOfLine extends TokenSequence
 {
@@ -31,7 +31,7 @@ public class Bash_EndOfLine extends TokenSequence
 			
 			public @CHOICE static class Bash_RedirectToNumber extends TokenSequence
 			{
-				public @S(10) @OPT Bash_Punctuation ampersane = new Bash_Punctuation("&");
+				public @S(10) @OPT PunctuationAmpersand ampersand;
 				public @S(20) Bash_Number number;
 			}
 		}

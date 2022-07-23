@@ -140,7 +140,7 @@ public class Bash_Expression extends PrecedenceChooser
 			public @CHOICE Bash_PunctuationChoice strOp = new Bash_PunctuationChoice(
 					"==", "!=", "<", ">", "<=", ">=");
 			public @CHOICE Bash_KeywordChoice numOp = new Bash_KeywordChoice(
-					"-eq", "-ne", "-lt", "-gt", "-lt", "-le");
+					"-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 		}
 	}
 	
@@ -162,6 +162,13 @@ public class Bash_Expression extends PrecedenceChooser
 	{
 		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Bash_Punctuation operator = new Bash_Punctuation("||");
+		public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(550) class Bash_Assignment_Expression extends PrecedenceOperator
+	{
+		public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Bash_PunctuationChoice equals = new Bash_PunctuationChoice("=");
 		public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

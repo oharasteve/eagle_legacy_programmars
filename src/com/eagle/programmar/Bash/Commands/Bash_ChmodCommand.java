@@ -7,6 +7,7 @@ import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Number;
+import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.programmar.Bash.Terminals.Bash_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,6 +22,12 @@ public class Bash_ChmodCommand extends TokenSequence
 	public static class Bash_ChmodCode extends TokenChooser
 	{
 		public @CHOICE Bash_Number number;
+		
+		public @CHOICE static class Bash_ChmodNoGroup extends TokenSequence
+		{
+			public @S(10) Bash_Punctuation PLUS = new Bash_Punctuation("+");
+			public @S(20) Bash_KeywordChoice RWX = new Bash_KeywordChoice("r", "w", "x");
+		}
 		
 		public @CHOICE static class Bash_ChmodLetters extends TokenSequence
 		{

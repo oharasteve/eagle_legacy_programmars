@@ -11,6 +11,7 @@ import com.eagle.programmar.Bash.Commands.Bash_CatCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ChmodCommand;
 import com.eagle.programmar.Bash.Commands.Bash_DiffCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EchoCommand;
+import com.eagle.programmar.Bash.Commands.Bash_EvaludateCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ExportCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ForStatement;
 import com.eagle.programmar.Bash.Commands.Bash_Function;
@@ -42,6 +43,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_Comment comment;
 		public @CHOICE Bash_DiffCommand diffCommand;
 		public @CHOICE Bash_EchoCommand echoCommand;
+		public @CHOICE Bash_EvaludateCommand evaludateCommand;
 		public @CHOICE Bash_ExportCommand exportCommand;
 		public @CHOICE Bash_ForStatement forStatement;
 		public @CHOICE Bash_Function function;
