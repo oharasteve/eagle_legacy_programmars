@@ -85,6 +85,72 @@ public class Perl_RegularExpression extends TokenChooser
 		}
 	}
 	
+	public @CHOICE static class Perl_RegularQuery extends TerminalRegularExpression
+	{
+		@Override
+		public boolean parse(EagleFileReader lines)
+		{
+			EagleLineReader rec = lines.get(_currentLine);
+			int recLen = rec.length();
+			if (_currentChar+3 >= recLen) return false;
+			
+			char ch = rec.charAt(_currentChar);
+			if (ch == 'q')
+			{
+				ch = rec.charAt(_currentChar + 1);
+				if (ch == 'r' || ch == 'q')
+				{
+					char marker = rec.charAt(_currentChar + 2);
+					if (marker == '/')
+					{
+						int endChar = myIndexOf(rec, marker, _currentChar + 3);
+						if (endChar > 0)
+						{
+							if (endChar + 1 < recLen)
+							{
+								foundIt(_currentLine, endChar);
+								return true;
+							}
+						}
+					}
+				}
+			}
+			
+			return false;
+		}
+	}
+	
+	public @CHOICE static class Perl_RegularMatch extends TerminalRegularExpression
+	{
+		@Override
+		public boolean parse(EagleFileReader lines)
+		{
+			EagleLineReader rec = lines.get(_currentLine);
+			int recLen = rec.length();
+			if (_currentChar+3 >= recLen) return false;
+			
+			char ch = rec.charAt(_currentChar);
+			if (ch == 'm')
+			{
+				char marker = rec.charAt(_currentChar + 1);
+				if (marker == '/')
+				{
+					int endChar = myIndexOf(rec, marker, _currentChar + 2);
+					if (endChar > 0)
+					{
+						if (endChar + 1 < recLen)
+						{
+							foundIt(_currentLine, endChar);
+							return true;
+						}
+					}
+				}
+			}
+			
+			return false;
+		}
+	}
+	
 	public @CHOICE static class Perl_RegularCondition extends TerminalRegularExpression
 	{
 		@Override

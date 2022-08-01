@@ -46,8 +46,9 @@ public class Perl_ForEachStatement extends TokenChooser
 		
 		public static class Perl_ForEachVariable extends TokenSequence
 		{
-			public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
-			public @S(20) Perl_Variable_Definition var;
+			public @S(10) @OPT Perl_Keyword MY = new Perl_Keyword("my");
+			public @S(20) Perl_Punctuation dollar = new Perl_Punctuation('$');
+			public @S(30) Perl_Variable_Definition var;
 		}
 	}
 }

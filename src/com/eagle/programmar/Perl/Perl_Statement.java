@@ -5,16 +5,19 @@ package com.eagle.programmar.Perl;
 
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Perl_Statement.Perl_ExpressionStatement.Perl_StatementSuffixModifier;
+import com.eagle.programmar.Perl.Perl_Statement.Perl_SimpleStatement.Perl_StatementList;
 import com.eagle.programmar.Perl.Perl_Statement.Perl_SimpleStatement.Perl_StatementOrComment;
 import com.eagle.programmar.Perl.Statements.Perl_BreakStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ChdirStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ChmodStatement;
+import com.eagle.programmar.Perl.Statements.Perl_ChompCommand;
 import com.eagle.programmar.Perl.Statements.Perl_ClassStatement;
 import com.eagle.programmar.Perl.Statements.Perl_CloseStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ContinueStatement;
 import com.eagle.programmar.Perl.Statements.Perl_DieStatement;
 import com.eagle.programmar.Perl.Statements.Perl_DoStatement;
 import com.eagle.programmar.Perl.Statements.Perl_EchoStatement;
+import com.eagle.programmar.Perl.Statements.Perl_EvalStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ExitStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForEachStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForStatement;
@@ -24,10 +27,12 @@ import com.eagle.programmar.Perl.Statements.Perl_IncludeStatement;
 import com.eagle.programmar.Perl.Statements.Perl_MyStatement;
 import com.eagle.programmar.Perl.Statements.Perl_NamespaceStatement;
 import com.eagle.programmar.Perl.Statements.Perl_NextStatement;
+import com.eagle.programmar.Perl.Statements.Perl_OpenStatement;
 import com.eagle.programmar.Perl.Statements.Perl_PackageStatement;
 import com.eagle.programmar.Perl.Statements.Perl_PrintStatement;
 import com.eagle.programmar.Perl.Statements.Perl_RequireStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ReturnStatement;
+import com.eagle.programmar.Perl.Statements.Perl_ShiftStatement;
 import com.eagle.programmar.Perl.Statements.Perl_SleepStatement;
 import com.eagle.programmar.Perl.Statements.Perl_SwitchStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ThrowStatement;
@@ -66,16 +71,31 @@ public class Perl_Statement extends TokenChooser
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
 		public @S(30) PunctuationSemicolon semicolon;
 
-		public static class Perl_StatementSuffixModifier extends TokenSequence
+		public static class Perl_StatementSuffixModifier extends TokenChooser
 		{
-			public @S(10) Perl_KeywordChoice IfUnless = new Perl_KeywordChoice("if", "unless", "while");
-			public @S(20) @OPT Perl_MinusF minusF;
-			public @S(30) Perl_Expression condition;
-			
-			public static class Perl_MinusF extends TokenSequence
+			public @CHOICE static class Perl_StatementIfSuffix extends TokenSequence
 			{
-				public @S(10) PunctuationHyphen minus;
-				public @S(20) Perl_KeywordChoice DF = new Perl_KeywordChoice("d", "f");
+				public @S(10) Perl_KeywordChoice IfUnless = new Perl_KeywordChoice("if", "unless", "while");
+				public @S(20) @OPT Perl_MinusF minusF;
+				public @S(30) Perl_Expression condition;
+				
+				public static class Perl_MinusF extends TokenSequence
+				{
+					public @S(10) PunctuationHyphen minus;
+					public @S(20) Perl_KeywordChoice DF = new Perl_KeywordChoice("d", "f");
+				}
+			}
+			
+			public @CHOICE static class Perl_StatementOrSuffix extends TokenSequence
+			{
+				public @S(10) Perl_Keyword OR = new Perl_Keyword("or");
+				public @S(20) Perl_StatementList statement;
+			}
+			
+			public @CHOICE static class Perl_StatementBarSuffix extends TokenSequence
+			{
+				public @S(10) Perl_Punctuation barBar = new Perl_Punctuation("||");
+				public @S(20) Perl_StatementList statement;
 			}
 		}
 	}
@@ -116,20 +136,24 @@ public class Perl_Statement extends TokenChooser
 			public @CHOICE Perl_BreakStatement breakStatement;
 			public @CHOICE Perl_ChdirStatement chdirStatement;
 			public @CHOICE Perl_ChmodStatement chmodStatement;
+			public @CHOICE Perl_ChompCommand chompCommand;
 			public @CHOICE Perl_CloseStatement closeStatement;
 			public @CHOICE Perl_ContinueStatement continueStatement;
 			public @CHOICE Perl_DieStatement dieStatement;
 			public @CHOICE Perl_DoStatement doStatement;
 			public @CHOICE Perl_EchoStatement echoStatement;
+			public @CHOICE Perl_EvalStatement evalStatement;
 			public @CHOICE Perl_ExitStatement exitStatement;
 			public @CHOICE Perl_GlobalStatement globalStatement;
 			public @CHOICE Perl_IncludeStatement includeStatement;
 			public @CHOICE Perl_MyStatement myStatement;
 			public @CHOICE Perl_NextStatement nextStatement;
+			public @CHOICE Perl_OpenStatement openStatement;
 			public @CHOICE Perl_PackageStatement packageStatement;
 			public @CHOICE Perl_PrintStatement printStatement;
 			public @CHOICE Perl_RequireStatement requireStatement;
 			public @CHOICE Perl_ReturnStatement returnStatement;
+			public @CHOICE Perl_ShiftStatement shiftStatement;
 			public @CHOICE Perl_SleepStatement sleepStatement;
 			public @CHOICE Perl_ThrowStatement throwStatement;
 			public @CHOICE Perl_UnlinkStatement unlinkStatement;

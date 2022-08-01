@@ -16,8 +16,9 @@ public class Perl_WhileStatement extends TokenSequence
 {
 	public @S(10) @DOC("control-structures.while.php") Perl_Keyword WHILE = new Perl_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Perl_Expression condition;
-	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) @OPT TokenList<Perl_Comment> comments;
-	public @S(60) Perl_Statement stmt;
+	public @S(30) @OPT Perl_Keyword MY = new Perl_Keyword("my");
+	public @S(40) Perl_Expression condition;
+	public @S(50) PunctuationRightParen rightParen;
+	public @S(60) @OPT TokenList<Perl_Comment> comments;
+	public @S(70) Perl_Statement stmt;
 }
