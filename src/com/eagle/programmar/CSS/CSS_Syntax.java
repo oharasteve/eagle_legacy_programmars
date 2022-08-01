@@ -28,6 +28,7 @@ public class CSS_Syntax extends EagleSyntax
 	private String[] keywords = new String[] {
 		"media",
 		"-moz-document",
+		"namespace",
 		"not",
 		"rgb",
 		"rgba",

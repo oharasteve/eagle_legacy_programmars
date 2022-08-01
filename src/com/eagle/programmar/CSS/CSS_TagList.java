@@ -112,6 +112,7 @@ public class CSS_TagList extends TokenSequence
 				public static class CSS_ColonNotWhat extends TokenChooser
 				{
 					public @CHOICE CSS_Qualifier qualifier;
+					public @CHOICE CSS_Keyword BODY = new CSS_Keyword("body");
 					
 					public @CHOICE static class CSS_ColonNotClass extends TokenSequence
 					{
