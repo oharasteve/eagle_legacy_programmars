@@ -12,6 +12,6 @@ public class Bash_Literal extends TerminalLiteralToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		return genericLiteral(lines, "'\"", true, '\\', false, false);
+		return genericLiteral(lines, "'\"`", true, '\\', false, false);
 	}
 }
