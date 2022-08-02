@@ -95,9 +95,9 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 		}
 
 		@Override
-		public String getDisplayStyleName()
+		public DisplayStyle getDisplayStyle()
 		{
-			return "identifier";
+			return DisplayStyle.IDENTIFIER;
 		}
 	}
 }

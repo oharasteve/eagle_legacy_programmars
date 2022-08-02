@@ -71,9 +71,9 @@ public class Lisp_Operator extends TerminalToken
 	}
 
 	@Override
-	public String getDisplayStyleName() 
+	public DisplayStyle getDisplayStyle() 
 	{
-		return "punctuation";
+		return DisplayStyle.PUNCTUATION;
 	}
 
 	@Override

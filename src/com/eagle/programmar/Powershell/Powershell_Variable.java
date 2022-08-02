@@ -8,12 +8,22 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Powershell_Variable extends TokenSequence
 {
 	public @S(10) Powershell_Punctuation DOLLAR = new Powershell_Punctuation("$");
 	public @S(20) @OPT Powershell_VariableScope scope;
 	public @S(30) Powershell_Identifier_Reference id;
+	public @S(40) @OPT Powershell_Subscript subscript;
+	
+	public static class Powershell_Subscript extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) Powershell_Expression subscr;
+		public @S(30) PunctuationRightBracket rightBracket;
+	}
 	
 	public static class Powershell_VariableScope extends TokenSequence
 	{

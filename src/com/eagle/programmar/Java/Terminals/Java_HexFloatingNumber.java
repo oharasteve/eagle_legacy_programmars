@@ -20,9 +20,9 @@ public class Java_HexFloatingNumber extends TerminalToken implements EagleRunnab
 	protected String _numberAsText;
 	
 	@Override
-	public String getDisplayStyleName()
+	public DisplayStyle getDisplayStyle()
 	{
-		return "number";
+		return DisplayStyle.NUMBER;
 	}
 
 	// Make it a little easier to read
