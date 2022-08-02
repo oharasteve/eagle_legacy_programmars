@@ -11,6 +11,6 @@ public class Powershell_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"_-", true);
+		return genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_-", false);
 	}
 }

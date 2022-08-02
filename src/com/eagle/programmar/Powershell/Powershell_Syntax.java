@@ -36,5 +36,6 @@ public class Powershell_Syntax extends EagleSyntax
 			"function",
 			"if",
 			"return",
+			"try",
 	};
 }

@@ -23,13 +23,18 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_CmdletBinding extends TokenSequence
 {
-	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) Powershell_Keyword CMDLETBINDING = new Powershell_Keyword("CmdletBinding");
-	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) PunctuationRightBracket rightBracket;
-	public @S(60) @OPT Powershell_EndOfLine eoln;
-	public @S(70) Powershell_CmdletParamList paramList;
+	public @S(10) @OPT Powershell_CmdletBound bound;
+	public @S(20) Powershell_CmdletParamList paramList;
+	
+	public static class Powershell_CmdletBound extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) Powershell_Keyword CMDLETBINDING = new Powershell_Keyword("CmdletBinding");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) PunctuationRightParen rightParen;
+		public @S(50) PunctuationRightBracket rightBracket;
+		public @S(60) @OPT Powershell_EndOfLine eoln;
+	}
 	
 	public static class Powershell_CmdletParamList extends TokenSequence
 	{

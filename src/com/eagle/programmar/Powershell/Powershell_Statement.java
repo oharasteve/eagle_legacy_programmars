@@ -11,6 +11,7 @@ import com.eagle.programmar.Powershell.Statements.Powershell_ForStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_IfStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ReturnStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
@@ -32,6 +33,7 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_ForStatement forStatement;
 		public @CHOICE Powershell_FunctionStatement functionDefinition;
 		public @CHOICE Powershell_ReturnStatement returnStatement;
+		public @CHOICE Powershell_TryStatement tryStatement;
 		public @CHOICE Powershell_WriteStatement writeStatement;
 	
 		public @LAST Powershell_AssignmentStatement assignmentStatement;

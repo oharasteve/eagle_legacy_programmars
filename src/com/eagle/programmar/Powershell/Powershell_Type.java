@@ -8,5 +8,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Powershell_Type extends TokenSequence
 {
-	public @S(10) Powershell_KeywordChoice INT = new Powershell_KeywordChoice("int");
+	public @S(10) Powershell_KeywordChoice INT = new Powershell_KeywordChoice("int", "string");
 }

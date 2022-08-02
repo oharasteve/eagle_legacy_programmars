@@ -6,6 +6,7 @@ package com.eagle.programmar.Powershell.Statements;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
+import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.programmar.Powershell.Terminals.Powershell_VerbNoun;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -17,6 +18,13 @@ public class Powershell_Command extends TokenSequence
 {
 	public @S(10) Powershell_WhichCommand which;		// Like Get-Content or javac
 	public @S(20) @OPT TokenList<Powershell_CommandArg> arg;
+	public @S(30) @OPT Powershell_Pipe pipe;
+	
+	public static class Powershell_Pipe extends TokenSequence
+	{
+		public @S(10) Powershell_Punctuation pipe = new Powershell_Punctuation("|");
+		public @S(20) Powershell_Command command;
+	}
 	
 	public static class Powershell_WhichCommand extends TokenChooser
 	{

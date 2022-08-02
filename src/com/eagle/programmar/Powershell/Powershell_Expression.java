@@ -16,6 +16,7 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -95,11 +96,19 @@ public class Powershell_Expression extends PrecedenceChooser
 	
 	public static @P(170) class Powershell_FunctionCall extends PrimaryOperator
 	{
-		public @S(10) @OPT Powershell_Library library;
-		public @S(20) Powershell_Function_Reference func;
-		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) SeparatedList<Powershell_Expression, PunctuationComma> arguments;
-		public @S(50) PunctuationRightParen rightParen;
+		public @S(10) @OPT Powershell_DiscardResult discardResult;
+		public @S(20) @OPT Powershell_Library library;
+		public @S(30) Powershell_Function_Reference func;
+		public @S(40) PunctuationLeftParen leftParen;
+		public @S(50) SeparatedList<Powershell_Expression, PunctuationComma> arguments;
+		public @S(60) PunctuationRightParen rightParen;
+		
+		public static class Powershell_DiscardResult extends TokenSequence
+		{
+			public @S(10) PunctuationLeftBracket leftBracket;
+			public @S(20) Powershell_Keyword VOID = new Powershell_Keyword("void");
+			public @S(30) PunctuationRightBracket rightBracket;
+		}
 		
 		public static class Powershell_Library extends TokenSequence
 		{
@@ -167,56 +176,56 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(405) class Powershell_Subfield extends PrecedenceOperator
+	public static @P(410) class Powershell_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(410) class Powershell_Multiplicative_Expression extends PrecedenceOperator
+	public static @P(420) class Powershell_Multiplicative_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("*", "/", "%");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Powershell_Additive_Expression extends PrecedenceOperator
+	public static @P(430) class Powershell_Additive_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("+", "-");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(430) class Powershell_Relational_Expression extends PrecedenceOperator
+	public static @P(440) class Powershell_Relational_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-lt", "-le");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(440) class Powershell_LogicalAnd_Expression extends PrecedenceOperator
+	public static @P(450) class Powershell_LogicalAnd_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-and");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(450) class Powershell_LogicalOr_Expression extends PrecedenceOperator
+	public static @P(460) class Powershell_LogicalOr_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-or");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Powershell_Format_Expression extends PrecedenceOperator
+	public static @P(470) class Powershell_Format_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-f");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Powershell_Match_Expression extends PrecedenceOperator
+	public static @P(480) class Powershell_Match_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice(
@@ -224,7 +233,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(480) class Powershell_Replace_Expression extends PrecedenceOperator
+	public static @P(490) class Powershell_Replace_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-replace");
@@ -233,7 +242,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(50) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(490) class Powershell_AssignmentExpression extends PrecedenceOperator
+	public static @P(500) class Powershell_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression var = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Powershell_PunctuationChoice equals = new Powershell_PunctuationChoice(
@@ -244,5 +253,12 @@ public class Powershell_Expression extends PrecedenceChooser
 				"+=",
 				"-=");
 		public @S(30) Powershell_Expression expr;
+		public @S(40) @OPT TokenList<Powershell_CommaExpression> exprs;
+
+		public static class Powershell_CommaExpression extends TokenSequence
+		{
+			public @S(10) PunctuationComma comma;
+			public @S(20) Powershell_Expression expr;
+		}
 	}
 }
