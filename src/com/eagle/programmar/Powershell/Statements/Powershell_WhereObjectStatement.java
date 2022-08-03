@@ -1,0 +1,21 @@
+// Copyright Eagle Legacy Modernization, LLC, 2010-date
+// Original author: Steven A. O'Hara, Aug 2, 2022
+
+package com.eagle.programmar.Powershell.Statements;
+
+import com.eagle.programmar.Powershell.Powershell_EndOfLine;
+import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
+import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
+
+public class Powershell_WhereObjectStatement extends TokenSequence
+{
+	public @S(10) Powershell_KeywordChoice WHERE = new Powershell_KeywordChoice("where", "where-object");
+	public @S(20) PunctuationLeftBrace leftBrace;
+	public @S(30) @OPT Powershell_EndOfLine eoln;
+	public @S(40) TokenList<Powershell_Statement> stmts;
+	public @S(50) PunctuationRightBrace rightBrace;
+}

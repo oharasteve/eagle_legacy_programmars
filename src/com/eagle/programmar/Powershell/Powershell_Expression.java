@@ -207,14 +207,16 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-and");
-		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(460) class Powershell_LogicalOr_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-or");
-		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(470) class Powershell_Match_Expression extends PrecedenceOperator
@@ -222,6 +224,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice(
 				"-cmatch",
+				"-contains",
 				"-f",
 				"-in",
 				"-join",
