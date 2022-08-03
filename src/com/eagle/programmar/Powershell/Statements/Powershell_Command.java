@@ -12,6 +12,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Powershell_Command extends TokenSequence
@@ -34,9 +35,15 @@ public class Powershell_Command extends TokenSequence
 		public @LAST Powershell_Identifier_Reference id;
 	}
 	
-	public static class Powershell_CommandArg extends TokenChooser
+	public static class Powershell_CommandArg extends TokenSequence
 	{
-		public @CHOICE Powershell_Expression expression;
-		public @CHOICE Powershell_Filename filename;
+		public @S(10) Powershell_CommandOneArg arg;
+		public @S(20) @OPT PunctuationComma comma;
+		
+		public static class Powershell_CommandOneArg extends TokenChooser
+		{
+			public @CHOICE Powershell_Expression expression;
+			public @FIRST Powershell_Filename filename;
+		}
 	}
 }
