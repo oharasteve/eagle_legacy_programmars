@@ -19,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_FunctionStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword("function");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword("Function");
 	public @S(20) Powershell_Function_Definition name;
 	public @S(30) @OPT Powershell_FunctionParams params;
 	public @S(40) PunctuationLeftBrace leftBrace;

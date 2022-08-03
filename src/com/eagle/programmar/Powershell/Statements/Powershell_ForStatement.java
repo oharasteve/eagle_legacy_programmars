@@ -19,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Powershell_ForStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#843-the-for-statement") Powershell_Keyword FOR = new Powershell_Keyword("for");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#843-the-for-statement") Powershell_Keyword FOR = new Powershell_Keyword("For");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Powershell_Variable var;
 	public @S(40) PunctuationEquals equals;

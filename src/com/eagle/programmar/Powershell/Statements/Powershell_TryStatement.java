@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Powershell_TryStatement extends TokenSequence
 {
-	public @S(10) Powershell_Keyword TRY = new Powershell_Keyword("try");
+	public @S(10) Powershell_Keyword TRY = new Powershell_Keyword("Try");
 	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) Powershell_EndOfLine eoln;
 	public @S(40) @OPT TokenList<Powershell_Statement> statements;
@@ -23,7 +23,7 @@ public class Powershell_TryStatement extends TokenSequence
 	
 	public static class Powershell_CatchBlock extends TokenSequence
 	{
-		public @S(10) Powershell_Keyword CATCH = new Powershell_Keyword("catch");
+		public @S(10) Powershell_Keyword CATCH = new Powershell_Keyword("Catch");
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) Powershell_EndOfLine eoln;
 		public @S(40) @OPT TokenList<Powershell_Statement> statements;
@@ -32,7 +32,7 @@ public class Powershell_TryStatement extends TokenSequence
 	
 	public static class Powershell_FinallyBlock extends TokenSequence
 	{
-		public @S(10) Powershell_Keyword FINALLY = new Powershell_Keyword("finally");
+		public @S(10) Powershell_Keyword FINALLY = new Powershell_Keyword("Finally");
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) Powershell_EndOfLine eoln;
 		public @S(40) @OPT TokenList<Powershell_Statement> statements;

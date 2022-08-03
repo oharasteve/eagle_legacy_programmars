@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_ForEachStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_Keyword FOREACH = new Powershell_Keyword("foreach");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_Keyword FOREACH = new Powershell_Keyword("ForEach");
 	public @S(20) @OPT Powershell_ForEachParams params;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT Powershell_EndOfLine eoln;

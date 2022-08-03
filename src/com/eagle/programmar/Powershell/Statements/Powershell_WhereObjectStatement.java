@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Powershell_WhereObjectStatement extends TokenSequence
 {
-	public @S(10) Powershell_KeywordChoice WHERE = new Powershell_KeywordChoice("where", "where-object");
+	public @S(10) Powershell_KeywordChoice WHERE = new Powershell_KeywordChoice("Where", "Where-Object");
 	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) @OPT Powershell_EndOfLine eoln;
 	public @S(40) TokenList<Powershell_Statement> stmts;
