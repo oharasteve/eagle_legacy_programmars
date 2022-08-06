@@ -31,6 +31,7 @@ public class Python_Parameter_List extends TokenSequence
 		public @S(30) @OPT Python_ParamType type;
 		public @S(40) @OPT Python_InitValue initValue;
 		public @S(50) @OPT TokenList<Python_MoreParams> moreParams;
+		public @S(60) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 		
 		public static class Python_ParamType extends TokenSequence
 		{
