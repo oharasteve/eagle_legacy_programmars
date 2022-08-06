@@ -114,11 +114,6 @@ public class CMacro_IfDef_Statement extends TokenSequence implements CMacro_Proc
 		for (AbstractToken token : whichElements._elements)
 		{
 			if (token instanceof CMacro_Element)
-//			{
-//				CMacro_Element element = (CMacro_Element) token;
-//				preprocessor.preprocessCStatement(element.element);
-//			}
-//			else	// Class override for CMacro_Program
 			{
 				CMacro_Element element = (CMacro_Element) token;
 				preprocessor.preprocessCMacroElement(preprocessor._parser, element);

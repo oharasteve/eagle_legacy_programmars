@@ -10,6 +10,8 @@ import com.eagle.programmar.Java.Java_Enum.Java_EnumDeclarations.Java_EnumClassB
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.tokens.EagleScope;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Enum extends TokenSequence
+public class Java_Enum extends TokenSequence implements EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotations;
 	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;
@@ -87,5 +89,13 @@ public class Java_Enum extends TokenSequence
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<Java_Expression,PunctuationComma> exprs;
 		public @S(30) PunctuationRightParen rightParen;
+	}
+	
+	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+	
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 }

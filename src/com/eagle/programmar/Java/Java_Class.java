@@ -28,8 +28,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Class extends TokenSequence implements EagleRunnable, EagleScopeInterface, AbstractClass
 {
-	private EagleScope _scope = new EagleScope(this, true);
-	
 	public @S(10) @OPT @BLANKLINE Java_ClassModifierList modifierList;
 	public @S(20) @OPT @CURIOUS("Extra at sign") Java_Punctuation atSign = new Java_Punctuation('@');
 	public @S(30) Java_KeywordChoice classOrInterface = new Java_KeywordChoice("class", "interface");
@@ -117,6 +115,8 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 			interpreter.tryToInterpret(element.getWhich());
 		}
 	}
+	
+	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 	
 	@Override
 	public EagleScope getScope()

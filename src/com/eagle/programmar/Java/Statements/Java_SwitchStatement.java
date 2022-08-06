@@ -4,19 +4,22 @@
 package com.eagle.programmar.Java.Statements;
 
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock.Java_StatementOrComment;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Java_SwitchStatement extends TokenSequence
+public class Java_SwitchStatement extends TokenSequence implements EagleScopeInterface
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.11") Java_Keyword SWITCH = new Java_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -44,5 +47,13 @@ public class Java_SwitchStatement extends TokenSequence
 			public @S(20) PunctuationColon colon;
 			public @S(30) @OPT TokenList<Java_StatementOrComment> statements;
 		}
+	}
+	
+	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+	
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 }

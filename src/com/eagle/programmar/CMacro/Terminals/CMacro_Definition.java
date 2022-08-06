@@ -20,7 +20,7 @@ public class CMacro_Definition extends TerminalLiteralToken
 		int lastLine = _currentLine;
 		int firstChar = _currentChar;
 		boolean continued = true;
-		int maxLine = lines.size();
+		int maxLine = lines.numberLines();
 		
 		// Skip the space after the macro name
 		EagleLineReader rec = lines.get(lastLine);

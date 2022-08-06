@@ -20,7 +20,7 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 		if (recLen < _currentChar) return false;
 
 		boolean inComment = false;
-		while (endLine < lines.size())
+		while (endLine < lines.numberLines())
 		{
 			EagleLineReader rec = lines.get(endLine);
 			recLen = rec.length();

@@ -24,10 +24,4 @@ public class CMacro_Region_Statement extends TokenSequence
 	public @S(70) CMacro_Punctuation pound2 = new CMacro_Punctuation('#'); 
 	public @S(80) CMacro_Keyword ENDREGION = new CMacro_Keyword("endregion");
 	public @S(90) @OPT CMacro_CommentRestOfLine endLabel;
-	
-//	// Need this for switching languages from CMacro to C
-//	public static class CMacro_RegionElement extends TokenSequence
-//	{
-//		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
-//	}
 }

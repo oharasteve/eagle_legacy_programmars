@@ -20,7 +20,7 @@ public class CMacro_RestOfLine extends TokenRestOfLine implements EagleRunnable
 		if (findStart(lines) == FOUND.EOF) return false;
 
 		String rec = lines.get(_currentLine).toString();
-		int linesSize = lines.size();
+		int linesSize = lines.numberLines();
 		int lastLine = _currentLine;
 		int recLen = rec.length();
 		if (_currentChar >= recLen) return false;

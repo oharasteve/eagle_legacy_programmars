@@ -36,7 +36,7 @@ public class Delphi_Preprocess extends EagleInclude
 		if (DEBUG)
 		{
 			System.out.println("===================================================");
-			System.out.println("================ Pre-processing " + lines.getFileName() + " lines=" + lines.size());
+			System.out.println("================ Pre-processing " + lines.getFileName() + " lines=" + lines.numberLines());
 			System.out.println();
 		}
 
@@ -50,20 +50,20 @@ public class Delphi_Preprocess extends EagleInclude
 		}	
 		
 		// Save origin information for every file
-		for (int i = 0; i < lines.size(); i++)
+		for (int i = 0; i < lines.numberLines(); i++)
 		{
 			EagleLineReader line = lines.get(i);
 			String fname = line.getOriginalFileName();
 			if (fname == null)
 			{
-				line.setOriginalLocation(lines.getFileName(), i + 1);
+				line.setOriginalLocation(lines.getFileName());
 			}
 		}
 
-		for (int i = 0; i < lines.size(); i++)
+		for (int i = 0; i < lines.numberLines(); i++)
 		{
 			EagleLineReader line = lines.get(i);
-			_newLines.add(line);
+			_newLines.addLine(line);
 			
 			if (line.indexOf(StartInclude) >= 0)
 			{
@@ -102,7 +102,7 @@ public class Delphi_Preprocess extends EagleInclude
 		{
 			if (seq == token._endLine && token._endChar < 0) break;	// Went a little too far with EOLN
 			EagleLineReader oldLine = _oldLines.get(seq);
-			_newLines.add(oldLine);
+			_newLines.addLine(oldLine);
 		}
 	}
 }

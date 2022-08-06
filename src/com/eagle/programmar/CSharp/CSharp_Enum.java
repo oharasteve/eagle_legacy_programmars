@@ -7,6 +7,8 @@ import com.eagle.programmar.CSharp.CSharp_Data.CSharp_DataModifier;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -16,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Enum extends TokenSequence
+public class CSharp_Enum extends TokenSequence implements EagleScopeInterface
 {
 	public @S(10) @OPT TokenList<CSharp_Annotation> annotation;
 	public @S(20) @OPT @NEWLINE TokenList<CSharp_DataModifier> modifiers;
@@ -49,5 +51,13 @@ public class CSharp_Enum extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) CSharp_Expression expr;
+	}
+	
+	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 }

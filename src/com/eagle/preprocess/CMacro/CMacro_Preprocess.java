@@ -57,7 +57,7 @@ public class CMacro_Preprocess extends EagleInclude
 		
 		StringBuffer sb = new StringBuffer("*** Pre-processing ");
 		for (int i = 0; i < _depth; i++) sb.append(". ");
-		sb.append(lines.getFileName()).append(" lines=").append(lines.size());
+		sb.append(lines.getFileName()).append(" lines=").append(lines.numberLines());
 		System.out.println(sb);
 
 		if (_depth > 0)
@@ -156,21 +156,20 @@ public class CMacro_Preprocess extends EagleInclude
 			for (int i = 0; i < _depth; i++) System.out.print("  ");
 			System.out.println("*** Finished reading " + oldFileName);
 		}
-		for (int i = 0; i < _newLines.size(); i++)
+		for (int i = 0; i < _newLines.numberLines(); i++)
 		{
-			EagleLineReader line = _newLines.get(i);
-			String origFile = line.getOriginalFileName();
+			EagleLineReader newLine = _newLines.get(i);
+			String origFile = newLine.getOriginalFileName();
 			if (origFile == null)
 			{
-				int origLine = line.getOriginalLineNumber();
 				// if (DEBUG) System.out.println("***** 1 Setting line# to " + origLine + " in " + oldFileName + " for " + line.toString());
-				line.setOriginalLocation(oldFileName, origLine);
+				newLine.setOriginalLocation(oldFileName);
 			}
 		}
 
 		sb = new StringBuffer("***           done ");
 		for (int i = 0; i < _depth; i++) sb.append(". ");
-		sb.append(lines.getFileName()).append(" lines=").append(_newLines.size());
+		sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
 		System.out.println(sb);
 		
 		return _newLines;
@@ -237,7 +236,7 @@ public class CMacro_Preprocess extends EagleInclude
 		
 		String oldLine;
 		String oldFileName = token._fileName;
-		int oldLineNumber = token._currentLine;
+		int oldLineNumber = token._currentLine + 1;
 		if (token instanceof TerminalToken)
 		{
 			TerminalToken term = (TerminalToken) token;
@@ -267,18 +266,17 @@ public class CMacro_Preprocess extends EagleInclude
 		{
 			if (newLine.indexOf('\n') < 0)
 			{
-				EagleLineReader line = new EagleLineReader(newLine);
-				line.setOriginalLocation(token._fileName,  oldLineNumber);
-				_newLines.add(line);
+				EagleLineReader line = new EagleLineReader(newLine, oldLineNumber);
+				line.setOriginalLocation(token._fileName);
+				addLine(line);
 			}
 			else
 			{
 				// Must have been a multi-line macro in there
 				for (String piece : newLine.split("\\n"))
 				{
-					EagleLineReader line = new EagleLineReader(piece);
-					line.setOriginalLocation(token._fileName,  oldLineNumber);
-					_newLines.add(line);
+					EagleLineReader line = new EagleLineReader(piece, oldLineNumber);
+					addLine(line);
 					oldLineNumber++;
 				}
 			}
@@ -565,6 +563,6 @@ public class CMacro_Preprocess extends EagleInclude
 	
 	public void addLine(EagleLineReader line)
 	{
-		_newLines.add(line);
+		_newLines.addLine(line);
 	}
 }

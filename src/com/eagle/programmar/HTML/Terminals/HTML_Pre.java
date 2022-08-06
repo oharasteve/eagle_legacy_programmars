@@ -48,7 +48,7 @@ public class HTML_Pre extends TerminalCommentToken
 		// Oh dang ... multi-line comment
 		_comment = rec.substring(_currentChar + 4).trim() + "\n";
 		int lastLine = _currentLine + 1;
-		int numberLines = lines.size();
+		int numberLines = lines.numberLines();
 		while (lastLine < numberLines)
 		{
 			String next = lines.get(lastLine).toString();

@@ -47,7 +47,7 @@ public class C_UnparsedStatement extends UnparsedElement
 			boolean inQuotes1 = false;
 			boolean inQuotes2 = false;
 			_comment = "";
-			while (_currentLine < lines.size())
+			while (_currentLine < lines.numberLines())
 			{
 				EagleLineReader rec = lines.get(_currentLine);
 				if (rec == null) return false;

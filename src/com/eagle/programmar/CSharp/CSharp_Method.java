@@ -12,6 +12,8 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.tokens.EagleScope;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -23,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Method extends TokenSequence implements AbstractMethod
+public class CSharp_Method extends TokenSequence implements AbstractMethod, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
@@ -101,5 +103,13 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod
 			public @S(20) @OPT CSharp_Keyword REF = new CSharp_Keyword("ref");
 			public @S(30) CSharp_Expression returnValue;
 		}
+	}
+
+	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 }

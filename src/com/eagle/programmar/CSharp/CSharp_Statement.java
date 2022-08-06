@@ -24,6 +24,8 @@ import com.eagle.programmar.CSharp.Statements.CSharp_TryStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_UsingStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
+import com.eagle.tokens.EagleScope;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -41,7 +43,7 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE CSharp_Enum enumeration;
 	public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
 	
-	public @CHOICE static class CSharp_StatementBlock extends TokenSequence
+	public @CHOICE static class CSharp_StatementBlock extends TokenSequence implements EagleScopeInterface
 	{
 		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT TokenList<CSharp_StatementOrComment> statements;
@@ -51,6 +53,14 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 		{
 			public @CHOICE @NEWLINE CSharp_Statement statement;
 			public @CHOICE @NEWLINE CSharp_Comment comment;
+		}
+		
+		private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+
+		@Override
+		public EagleScope getScope()
+		{
+			return _scope;
 		}
 	}
 
