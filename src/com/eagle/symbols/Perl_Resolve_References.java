@@ -40,7 +40,7 @@ public class Perl_Resolve_References extends Eagle_Resolve_References
 			if (_trace)
 			{
 				System.out.println("Function definition for " + def + " at " +
-						(def._currentLine+1) + "/" + (def._currentChar+1));
+						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
 			}
 		}
 
@@ -58,7 +58,7 @@ public class Perl_Resolve_References extends Eagle_Resolve_References
 				{
 					if (foundAny == 1) System.err.println("**** Duplicate function definition for " + functionName);
 					if (_trace) System.out.println("Function reference to " + functionName + " at " +
-							(ref._currentLine+1) + "/" + (ref._currentChar+1));
+							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 					ref.setDefinition(function);
 					function.addReference(ref);
 					foundAny++;

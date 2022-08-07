@@ -67,7 +67,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			if (_trace)
 			{
 				System.out.println("Section definition for " + def + " at " +
-						(def._currentLine+1) + "/" + (def._currentChar+1));
+						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
 			}
 		}
 
@@ -78,7 +78,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			if (_trace)
 			{
 				System.out.println("Paragraph definition for " + def + " at " +
-						(def._currentLine+1) + "/" + (def._currentChar+1));
+						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
 			}
 		}
 
@@ -96,7 +96,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				{
 					if (foundAny == 1) throw new EagleSymbolException("Duplicate section definition for " + sectionName);
 					if (_trace) System.out.println("Section reference to " + sectionName + " at " +
-							(ref._currentLine+1) + "/" + (ref._currentChar+1));
+							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 					ref.setDefinition(section);
 					section.addReference(ref);
 					foundAny++;
@@ -111,7 +111,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				{
 					if (foundAny == 1) throw new EagleSymbolException("Duplicate paragraph definition for " + paragraphName);
 					if (_trace) System.out.println("Paragraph reference to " + paragraphName + " at " +
-							(ref._currentLine+1) + "/" + (ref._currentChar+1));
+							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 					ref.setDefinition(paragraph);
 					paragraph.addReference(ref);
 					foundAny++;
@@ -142,7 +142,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			if (_trace)
 			{
 				System.out.println("File definition for " + def.id + " at " +
-						(def._currentLine+1) + "/" + (def._currentChar+1));
+						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
 			}
 		}
 
@@ -159,7 +159,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				{
 					if (foundAny == 1) throw new EagleSymbolException("Duplicate file definition for " + def);
 					if (_trace) System.out.println("File reference to " + def + " at " +
-							(ref._currentLine+1) + "/" + (ref._currentChar+1));
+							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 					ref.setDefinition(def);
 					def.addReference(ref);
 					//def.parentDef = defParent;
@@ -200,7 +200,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				if (_trace)
 				{
 					System.out.println("Data definition for " + whichDef + " at " +
-							(def._currentLine+1) + "/" + (def._currentChar+1));
+							(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
 				}
 			}
 		}
@@ -211,7 +211,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			if (_trace)
 			{
 				System.out.println("Data definition for " + def + " at " +
-						(def._currentLine+1) + "/" + (def._currentChar+1));
+						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
 			}
 		}
 		
@@ -231,7 +231,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate data definition for " + def);
 						if (_trace) System.out.println("Data reference to " + def + " at " +
-								(ref._currentLine+1) + "/" + (ref._currentChar+1));
+								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 						ref.setDefinition(def);
 						def.addReference(ref);
 						//def.parentDef = defParent;
@@ -255,7 +255,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 								{
 									if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
 									if (_trace) System.out.println("Data reference to " + ref + " at " +
-											(ref._currentLine+1) + "/" + (ref._currentChar+1));
+											(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 									ref.setDefinition(index);
 									index.addReference(ref);
 									//index.parentDef = defParent;
@@ -278,7 +278,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
 						if (_trace) System.out.println("Data reference to " + ref + " at " +
-								(ref._currentLine+1) + "/" + (ref._currentChar+1));
+								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 						ref.setDefinition(def3);
 						def3.addReference(ref);
 						//def3.parentDef = defParent3;
@@ -297,7 +297,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
 						if (_trace) System.out.println("Data reference to " + ref + " at " +
-								(ref._currentLine+1) + "/" + (ref._currentChar+1));
+								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 						ref.setDefinition(def2);
 						def2.addReference(ref);
 						foundAny++;

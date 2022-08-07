@@ -57,7 +57,7 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 								FSharp_Statement_List stmtList = (FSharp_Statement_List) child;
 								FSharp_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
 								//if (_currentLine == otherStmt._currentLine) return false;	// Cannot have two SOLN's on the same line
-								if (_currentChar != otherStmt._currentChar) return false;
+								if (_currentChar != otherStmt.getStartChar()) return false;
 								break;
 							}
 						}

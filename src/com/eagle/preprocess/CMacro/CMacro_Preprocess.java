@@ -111,10 +111,10 @@ public class CMacro_Preprocess extends EagleInclude
 			{
 				StringBuffer msg = new StringBuffer("Failed preprocessing ").append(element.getWhich()).append('\n');
 				msg.append("File ").append(lines.getFileName());
-				msg.append(", line ").append(Integer.toString(element._currentLine+1)).append('\n');
-				msg.append(lines.get(element._currentLine).toString()).append('\n');
+				msg.append(", line ").append(Integer.toString(element.getStartLine()+1)).append('\n');
+				msg.append(lines.get(element.getStartLine()).toString()).append('\n');
 				
-				for (int i = 0; i < element._currentChar; i++) msg.append(' ');
+				for (int i = 0; i < element.getStartChar(); i++) msg.append(' ');
 				msg.append("^ ");
 				msg.append(ex.getMessage());
 				//System.err.println(msg.toString());
@@ -235,8 +235,8 @@ public class CMacro_Preprocess extends EagleInclude
 		if (DEBUG) System.out.println("******************* token = " + token.getClass().getName());
 		
 		String oldLine;
-		String oldFileName = token._fileName;
-		int oldLineNumber = token._currentLine + 1;
+		String oldFileName = token.getFileName();
+		int oldLineNumber = token.getStartLine() + 1;
 		if (token instanceof TerminalToken)
 		{
 			TerminalToken term = (TerminalToken) token;
@@ -250,13 +250,13 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 		else
 		{
-			int seq = token._currentLine;
+			int seq = token.getStartLine();
 			oldLine = _oldLines.get(seq).toString();
 		}
 		if (DEBUG) System.out.println("***** Copying " + oldLine);
 		
 		// Returns null if nothing has changed
-		String newLine = replaceWords(token._currentLine, oldFileName, oldLine, 0);
+		String newLine = replaceWords(token.getStartLine(), oldFileName, oldLine, 0);
 		
 		if (newLine == null)
 		{
@@ -267,7 +267,7 @@ public class CMacro_Preprocess extends EagleInclude
 			if (newLine.indexOf('\n') < 0)
 			{
 				EagleLineReader line = new EagleLineReader(newLine, oldLineNumber);
-				line.setOriginalLocation(token._fileName);
+				line.setOriginalLocation(token.getFileName());
 				addLine(line);
 			}
 			else
@@ -420,7 +420,7 @@ public class CMacro_Preprocess extends EagleInclude
 		{
 			System.err.println("*** Line " + (line+1) + " is missing right paren in " + oldLine.substring(ec));
 			System.err.println("    Used at (or after) line " + (line+1) + " of " + fname);
-			System.err.println("    #define is at line " + (defineStatement._currentLine+1) + " of " + defineStatement._fileName);
+			System.err.println("    #define is at line " + (defineStatement.getStartLine()+1) + " of " + defineStatement.getFileName());
 			return null;
 		}
 		if (DEBUG) System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
@@ -446,7 +446,7 @@ public class CMacro_Preprocess extends EagleInclude
 				actualParams.length + ", expected=" + paramCount);
 			if (actualParamString.length() > 0) System.err.println("    Actual parameter string: " + actualParamString);
 			System.err.println("    Used at (or after) line " + (line+1) + " of " + fname);
-			System.err.println("    #define is at line " + (defineStatement._currentLine+1) + " of " + defineStatement._fileName);
+			System.err.println("    #define is at line " + (defineStatement.getStartLine()+1) + " of " + defineStatement.getFileName());
 			return null;
 		}
 

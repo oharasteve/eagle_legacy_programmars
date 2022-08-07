@@ -49,7 +49,7 @@ public class Delphi_Preprocess extends EagleInclude
 			}
 		}	
 		
-		// Save origin information for every file
+		// Save origin information for every line
 		for (int i = 0; i < lines.numberLines(); i++)
 		{
 			EagleLineReader line = lines.get(i);
@@ -98,9 +98,9 @@ public class Delphi_Preprocess extends EagleInclude
 		if (token instanceof TerminalEndOfLine) return;
 		
 		//System.out.println("******************* token = " + token.getClass().getName());
-		for (int seq = token._currentLine; seq <= token._endLine; seq++)
+		for (int seq = token.getStartLine(); seq <= token.getEndLine(); seq++)
 		{
-			if (seq == token._endLine && token._endChar < 0) break;	// Went a little too far with EOLN
+			if (seq == token.getEndLine() && token.getEndChar() < 0) break;	// Went a little too far with EOLN
 			EagleLineReader oldLine = _oldLines.get(seq);
 			_newLines.addLine(oldLine);
 		}

@@ -48,7 +48,7 @@ public class Natural_Resolve_References extends Eagle_Resolve_References
 				{
 					if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
 					if (_trace) System.out.println("Data reference to " + ref + " at " +
-							(ref._currentLine+1) + "/" + (ref._currentChar+1));
+							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
 					ref.setDefinition(def);
 					def.addReference(ref);
 					foundAny++;

@@ -40,10 +40,10 @@ public class CMacro_Definition_Test extends TestCase
 		CMacro_Definition definition = new CMacro_Definition();
 		assertTrue(definition.parse(lines));
 		assertEquals("alphabet \\\n soup", definition.getValue());
-		assertEquals(1, definition._currentLine);
-		assertEquals(13, definition._currentChar);
-		assertEquals(2, definition._endLine);
-		assertEquals(6, definition._endChar);
+		assertEquals(1, definition.getStartLine());
+		assertEquals(13, definition.getStartChar());
+		assertEquals(2, definition.getEndLine());
+		assertEquals(6, definition.getEndChar());
 	}
 	
 	@Test
