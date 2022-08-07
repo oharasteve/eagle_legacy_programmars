@@ -76,7 +76,7 @@ public class JavaP_Syntax extends EagleSyntax
 			"getfield",
 			"getstatic",
 			"goto",
-			"i2d", "i2l",
+			"i2d", "i2l", "i2c",
 			"iadd",
 			"iaload",
 			"iand",
