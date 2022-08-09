@@ -26,7 +26,7 @@ public class Julia_Syntax extends EagleSyntax
 	}
 
 	// From https://www.geeksforgeeks.org/julia-keywords/
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"baremodule",
 			"begin",
 			"break",

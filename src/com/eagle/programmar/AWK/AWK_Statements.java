@@ -4,6 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.Statements.AWK_BreakStatement;
+import com.eagle.programmar.AWK.Statements.AWK_ExitStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ForStatement;
 import com.eagle.programmar.AWK.Statements.AWK_IfStatement;
 import com.eagle.programmar.AWK.Statements.AWK_NextStatement;
@@ -33,6 +34,7 @@ public class AWK_Statements extends TokenSequence
 		public @CHOICE AWK_Comment comment;
 
 		public @CHOICE AWK_BreakStatement breakStatement;
+		public @CHOICE AWK_ExitStatement exitStatement;
 		public @CHOICE AWK_ForStatement forStatement;
 		public @CHOICE AWK_IfStatement ifStatement;
 		public @CHOICE AWK_NextStatement nextStatement;

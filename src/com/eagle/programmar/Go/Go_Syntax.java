@@ -27,7 +27,7 @@ public class Go_Syntax extends EagleSyntax
 	}
 
 	// From https://www.tutorialandexample.com/keywords-in-golang
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"break",
 			"case",
 			"chan",

@@ -28,7 +28,7 @@ public class CSharp_Syntax extends EagleSyntax
 	}
 	
 	// From https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"abstract",
 			"as",
 			"base",

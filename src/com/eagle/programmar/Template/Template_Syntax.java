@@ -23,7 +23,7 @@ public class Template_Syntax extends EagleSyntax
 		addReservedWords(reservedWords);
 	}
 	
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 		"data",
 		"print",
 	};

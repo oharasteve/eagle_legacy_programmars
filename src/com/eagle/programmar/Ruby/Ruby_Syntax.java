@@ -24,7 +24,7 @@ public class Ruby_Syntax extends EagleSyntax
 	}
 
 	// From https://www.geeksforgeeks.org/ruby-keywords/
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"__ENCODING__",
 			"__LINE__",
 			"__FILE__",

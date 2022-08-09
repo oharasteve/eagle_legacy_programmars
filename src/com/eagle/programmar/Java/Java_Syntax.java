@@ -29,7 +29,7 @@ public class Java_Syntax extends EagleSyntax
 	}
 	
 	// From https://www.geeksforgeeks.org/list-of-all-java-keywords/
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"abstract",
 			"assert",
 			"boolean",

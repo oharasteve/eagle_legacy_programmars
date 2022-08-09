@@ -23,7 +23,7 @@ public class IntelASM_Syntax extends EagleSyntax
 		addReservedWords(keywords);
 	}
 	
-	private String[] keywords = new String[] {
+	private static String[] keywords = new String[] {
 			"BYTE",
 			"DWORD",
 			"PTR"

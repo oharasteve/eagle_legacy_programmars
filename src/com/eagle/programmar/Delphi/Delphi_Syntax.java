@@ -25,7 +25,7 @@ public class Delphi_Syntax extends EagleSyntax
 	}
 	
 	// From https://en.wikibooks.org/wiki/Delphi_Programming/Reserved_keywords
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"and",
 			"array",
 			"as",

@@ -26,7 +26,7 @@ public class Rust_Syntax extends EagleSyntax
 	}
 	
 	// From https://doc.rust-lang.org/reference/keywords.html
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"Self",
 			"abstract",
 			"as",

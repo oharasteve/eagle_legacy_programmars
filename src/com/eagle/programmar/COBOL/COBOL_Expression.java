@@ -65,10 +65,18 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public static @P(120) class COBOL_ExpressionFunction extends PrimaryOperator
 	{
 		public @S(10) COBOL_Keyword FUNCTION = new COBOL_Keyword("FUNCTION");
-		public @S(20) COBOL_Identifier_Reference func;
+		public @S(20) COBOL_FunctionName func;
 		public @S(30) PunctuationLeftParen leftParen;
 		public @S(40) SeparatedList<COBOL_FunctionParameter,PunctuationComma> parameters;
 		public @S(50) PunctuationRightParen rightParen;
+		
+		public static class COBOL_FunctionName extends TokenChooser
+		{
+			public @FIRST COBOL_KeywordChoice builtins = new COBOL_KeywordChoice(
+					"LENGTH");
+			
+			public @CHOICE COBOL_Variable userFunc;
+		}
 		
 		public static class COBOL_FunctionParameter extends TokenSequence
 		{

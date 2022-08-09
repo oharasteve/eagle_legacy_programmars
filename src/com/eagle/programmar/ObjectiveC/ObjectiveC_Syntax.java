@@ -15,10 +15,11 @@ public class ObjectiveC_Syntax extends C_Syntax
 	
 	public ObjectiveC_Syntax()
 	{
-		addReservedWords(keywords);
+		addReservedWords(C_Syntax.C_reservedWords);
+		addReservedWords(reservedWords);
 	}
 	
-	private String[] keywords = new String[] {
+	private static String[] reservedWords = new String[] {
 		"BOOL",
 		"NO",
 		"YES",

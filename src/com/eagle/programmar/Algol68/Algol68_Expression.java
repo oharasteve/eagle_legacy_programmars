@@ -47,6 +47,12 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Primary expressions
 	
+	public static @P(90) class Algol68_ArrayInfo extends PrimaryOperator
+	{
+		public @S(10) Algol68_KeywordChoice UPB = new Algol68_KeywordChoice("UPB", "LWB");
+		public @S(20) Algol68_Variable arrayName;
+	}
+
 	public static @P(100) class Algol68_MethodInvocation extends PrimaryOperator
 	{
 		public @S(10) Algol68_Variable methodName;
@@ -102,12 +108,6 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 		public @S(30) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(190) class Algol68_ArrayInfo extends PrimaryOperator
-	{
-		public @S(10) Algol68_KeywordChoice UPB = new Algol68_KeywordChoice("UPB", "LWB");
-		public @S(20) Algol68_Variable arrayName;
-	}
-
 	///////////////////////////////////////////////
 	// Binary expressions
 

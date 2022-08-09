@@ -27,7 +27,7 @@ public class Javascript_Syntax extends EagleSyntax
 	}
 	
 	// From https://www.geeksforgeeks.org/javascript-reserved-words/?ref=lbp
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"abstract",
 			"arguments",
 			"boolean",

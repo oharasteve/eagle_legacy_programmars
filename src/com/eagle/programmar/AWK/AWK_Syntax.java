@@ -21,7 +21,7 @@ public class AWK_Syntax extends EagleSyntax
 		_punctuationExceptions = new String[] { "==", "!=", "<=", ">=", "++", "--", "+=", "!~" };
 		
 		addReservedWords(reservedWords);
-		// addReservedWords(FUNCTIONS);
+		addReservedWords(FUNCTIONS);
 	}
 
 	// See https://www.gnu.org/software/gawk/manual/html_node/Built_002din.html
@@ -37,7 +37,7 @@ public class AWK_Syntax extends EagleSyntax
 	};
 	
 	// From https://www.gnu.org/software/gawk/manual/html_node/Glossary.html under "Keyword"
-	private String[] reservedWords = new String[] {
+	private static String[] reservedWords = new String[] {
 			"BEGIN",
 			"BEGINFILE",
 			"END",
