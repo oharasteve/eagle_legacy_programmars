@@ -5,6 +5,7 @@ package com.eagle.programmar.Scala.Statements;
 
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Scala_Statement;
+import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -22,6 +23,7 @@ public class Scala_IfStatement extends TokenSequence
 	public static class Scala_IfElseClause extends TokenSequence
 	{
 		public @S(10) Scala_Keyword ELSE = new Scala_Keyword("else");
-		public @S(20) Scala_Statement elseStatement;
+		public @S(20) @OPT Scala_EOLN eoln;
+		public @S(30) Scala_Statement elseStatement;
 	}
 }

@@ -25,13 +25,25 @@ public class Rust_Syntax extends EagleSyntax
 		addReservedWords(reservedWords);
 	}
 	
+	// From https://doc.rust-lang.org/reference/keywords.html
 	private String[] reservedWords = new String[] {
+			"Self",
 			"abstract",
+			"as",
 			"async",
 			"await",
 			"become",
 			"box",
+			"break",
+			"const",
+			"continue",
+			"crate",
 			"do",
+			"dyn",
+			"else",
+			"enum",
+			"extern",
+			"false",
 			"final",
 			"fn",
 			"for",
@@ -51,7 +63,6 @@ public class Rust_Syntax extends EagleSyntax
 			"ref",
 			"return",
 			"self",
-			"Self",
 			"static",
 			"struct",
 			"super",

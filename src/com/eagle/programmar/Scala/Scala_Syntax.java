@@ -22,15 +22,49 @@ public class Scala_Syntax extends EagleSyntax
 				"==", "!=", "<=", ">=",
 				"+=", "-=", "*=", "/="};
 		
-		addReservedWords(keywords);
+		addReservedWords(reservedWords);
 	}
 
-	private String[] keywords = new String[] {
+	// From https://www.geeksforgeeks.org/scala-keywords/#:~:text=Keywords%20or%20Reserved%20words%20are,in%20a%20compile%2Dtime%20error.
+	private String[] reservedWords = new String[] {
+			"abstract",
+			"case",
+			"catch",
+			"class",
 			"def",
+			"do",
 			"else",
+			"extends",
+			"false",
+			"final",
+			"finally",
 			"for",
+			"forSome",
 			"if",
+			"implicit",
+			"import",
+			"lazy",
+			"match",
+			"new",
+			"null",
 			"object",
-			"val"
+			"override",
+			"package",
+			"private",
+			"protected",
+			"return",
+			"sealed",
+			"super",
+			"this",
+			"throw",
+			"trait",
+			"true",
+			"try",
+			"type",
+			"val",
+			"var",
+			"while",
+			"with",
+			"yield",
 	};
 }

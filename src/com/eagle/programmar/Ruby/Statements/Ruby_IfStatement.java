@@ -23,6 +23,7 @@ public class Ruby_IfStatement extends TokenSequence
 	public static class Ruby_IfElseClause extends TokenSequence
 	{
 		public @S(10) Ruby_Keyword ELSE = new Ruby_Keyword("else");
-		public @S(20) TokenList<Ruby_Statement> elseStatements;
+		public @S(20) @OPT Ruby_EOLN eoln2;
+		public @S(30) TokenList<Ruby_Statement> elseStatements;
 	}
 }

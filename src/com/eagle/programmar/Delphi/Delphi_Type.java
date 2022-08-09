@@ -25,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Delphi_Type extends TokenChooser
 {
 	public @CHOICE Delphi_KeywordChoice base = new Delphi_KeywordChoice(
-			"Boolean", "Integer", "LongInt", "Int64", "Text");
+			"Boolean", "Integer", "LongInt", "Int64", "String", "Text");
 	
 	public @CHOICE Delphi_Identifier_Reference userType;
 	public @CHOICE Delphi_Class classDefinition;

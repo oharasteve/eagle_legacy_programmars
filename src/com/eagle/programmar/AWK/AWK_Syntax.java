@@ -20,10 +20,11 @@ public class AWK_Syntax extends EagleSyntax
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] { "==", "!=", "<=", ">=", "++", "--", "+=", "!~" };
 		
-		addReservedWords(keywords);
-		addReservedWords(FUNCTIONS);
+		addReservedWords(reservedWords);
+		// addReservedWords(FUNCTIONS);
 	}
 
+	// See https://www.gnu.org/software/gawk/manual/html_node/Built_002din.html
 	public static final String[] FUNCTIONS = {
 		"getline",
 		"index",
@@ -35,17 +36,28 @@ public class AWK_Syntax extends EagleSyntax
 		"substr",
 	};
 	
-	private String[] keywords = new String[] {
-		"case",
-		"function",
-		"gsub",
-		"if",
-		"next",
-		"print",
-		"printf",
-		"split",
-		"sub",
-		"switch",
-		"while",
+	// From https://www.gnu.org/software/gawk/manual/html_node/Glossary.html under "Keyword"
+	private String[] reservedWords = new String[] {
+			"BEGIN",
+			"BEGINFILE",
+			"END",
+			"ENDFILE",
+			"break",
+			"case",
+			"continue",
+			"default",
+			"delete",
+			"do",
+			"else",
+			"exit",
+			"for",
+			"function",
+			"func",
+			"if",
+			"in",
+			"next",
+			"nextfile",
+			"switch",
+			"while",
 	};
 }

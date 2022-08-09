@@ -23,6 +23,7 @@ public class Julia_IfStatement extends TokenSequence
 	public static class Julia_IfElseClause extends TokenSequence
 	{
 		public @S(10) Julia_Keyword ELSE = new Julia_Keyword("else");
-		public @S(20) TokenList<Julia_Statement> elseStatements;
+		public @S(20) @OPT Julia_EOLN eoln2;
+		public @S(30) TokenList<Julia_Statement> elseStatements;
 	}
 }
