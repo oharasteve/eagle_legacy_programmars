@@ -24,7 +24,7 @@ public class Bash_PerlProgram extends TokenSequence
 	public @S(50) @OPT TokenList<Bash_PerlOption> options;
 	public @S(60) Bash_RealEndOfLine eoln;
 	
-	public @S(60) @SYNTAX(Perl_Syntax.class) Perl_Program perlProg;
+	public @S(70) @SYNTAX(Perl_Syntax.class) Perl_Program perlProg;
 	
 	public static class Bash_PerlOption extends TokenChooser
 	{

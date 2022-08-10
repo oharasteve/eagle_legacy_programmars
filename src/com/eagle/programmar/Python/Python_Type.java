@@ -19,7 +19,13 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Python_Type extends TokenChooser implements AbstractType
 {
-	public @CHOICE Python_KeywordChoice TYPES = new Python_KeywordChoice("bool", "float", "int", "object", "str");
+	public @CHOICE Python_KeywordChoice TYPES = new Python_KeywordChoice(
+			"None",
+			"bool",
+			"float",
+			"int",
+			"object",
+			"str");
 	public @LAST Python_Literal typeName;
 	public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
 	

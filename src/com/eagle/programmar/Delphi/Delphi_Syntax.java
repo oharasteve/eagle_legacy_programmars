@@ -66,7 +66,7 @@ public class Delphi_Syntax extends EagleSyntax
 			"object",
 			"of",
 			"or",
-			"out",
+			// "out",	// Not really reserved. And often used.
 			"packed",
 			"procedure",
 			"program",

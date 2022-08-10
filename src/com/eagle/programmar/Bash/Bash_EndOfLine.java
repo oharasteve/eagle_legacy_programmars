@@ -40,7 +40,12 @@ public class Bash_EndOfLine extends TokenSequence
 	public static class Bash_LineEnder extends TokenChooser
 	{
 		public @CHOICE Bash_RealEndOfLine eoln;
-		public @CHOICE Bash_PunctuationChoice separator = new Bash_PunctuationChoice(
+		
+		public @CHOICE static class Bash_Piper extends TokenSequence
+		{
+			public @S(10) Bash_PunctuationChoice separator = new Bash_PunctuationChoice(
 				"|", ";", "||", "&&");
+			public @S(20) @OPT Bash_RealEndOfLine eoln;
+		}
 	}
 }

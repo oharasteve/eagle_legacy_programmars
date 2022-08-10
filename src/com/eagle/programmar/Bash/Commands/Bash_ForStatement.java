@@ -16,7 +16,7 @@ public class Bash_ForStatement extends TokenSequence
 	public @S(10) @DOC("#Looping-Constructs") Bash_Keyword FOR = new Bash_Keyword("for");
 	public @S(20) Bash_Identifier_Reference id;
 	public @S(30) Bash_Keyword IN = new Bash_Keyword("in");
-	public @S(40) Bash_Expression values;
+	public @S(40) TokenList<Bash_Expression> values;
 	public @S(50) Bash_EndOfLine eoln1;
 	
 	public @S(60) Bash_Keyword DO = new Bash_Keyword("do");

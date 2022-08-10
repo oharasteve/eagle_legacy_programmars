@@ -6,6 +6,7 @@ package com.eagle.programmar.Powershell;
 import com.eagle.programmar.Powershell.Statements.Powershell_AssignmentStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_BreakStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
+import com.eagle.programmar.Powershell.Statements.Powershell_ContinueStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForEachStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
@@ -26,8 +27,9 @@ public class Powershell_Statement extends TokenSequence
 	
 	public static class Powershell_Element extends TokenChooser
 	{
-		public @CHOICE Powershell_Comment comment;
 		public @CHOICE Powershell_BreakStatement breakStatement;
+		public @CHOICE Powershell_Comment comment;
+		public @CHOICE Powershell_ContinueStatement continueStatement;
 		public @CHOICE Powershell_IfStatement ifStatement;
 		public @CHOICE Powershell_ForEachStatement foreachStatement;
 		public @CHOICE Powershell_ForStatement forStatement;

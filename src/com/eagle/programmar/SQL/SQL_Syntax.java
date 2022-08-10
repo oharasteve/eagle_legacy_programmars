@@ -170,7 +170,7 @@ public class SQL_Syntax extends EagleSyntax
 			"UNBOUNDED",
 			"UNION",
 			"UNIQUE",
-			"USER",
+			// "USER", // Often used as a field name
 			"USING",
 			"VACUUM",
 			"VARCHAR",

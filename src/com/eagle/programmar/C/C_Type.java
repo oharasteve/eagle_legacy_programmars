@@ -57,6 +57,7 @@ public class C_Type extends TokenSequence implements AbstractType
 	public static class C_TypeBase extends TokenChooser
 	{
 		public @CHOICE C_Enum enumeration;
+		public @LAST C_Keyword UNSIGNED = new C_Keyword("unsigned");	// All by itself is ok too
 		
 		public @CHOICE static class C_TypeUnion extends TokenSequence
 		{

@@ -9,6 +9,7 @@ import com.eagle.programmar.Bash.Commands.Bash_BashProgram;
 import com.eagle.programmar.Bash.Commands.Bash_BreakStatement;
 import com.eagle.programmar.Bash.Commands.Bash_CatCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ChmodCommand;
+import com.eagle.programmar.Bash.Commands.Bash_DieCommand;
 import com.eagle.programmar.Bash.Commands.Bash_DiffCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EchoCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EvaludateCommand;
@@ -20,6 +21,7 @@ import com.eagle.programmar.Bash.Commands.Bash_GccCommand;
 import com.eagle.programmar.Bash.Commands.Bash_GrepCommand;
 import com.eagle.programmar.Bash.Commands.Bash_IfStatement;
 import com.eagle.programmar.Bash.Commands.Bash_LispCommand;
+import com.eagle.programmar.Bash.Commands.Bash_PerlProgram;
 import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
 import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
@@ -41,6 +43,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_CatCommand catCommand;
 		public @CHOICE Bash_ChmodCommand chmodCommand;
 		public @CHOICE Bash_Comment comment;
+		public @CHOICE Bash_DieCommand dieCommand;
 		public @CHOICE Bash_DiffCommand diffCommand;
 		public @CHOICE Bash_EchoCommand echoCommand;
 		public @CHOICE Bash_EvaludateCommand evaludateCommand;
@@ -57,6 +60,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_WhileStatement whileStatement;
 		
 		public @CHOICE Bash_BashProgram bashProgram;
+		public @CHOICE Bash_PerlProgram perlProgram;
 		public @CHOICE Bash_PythonProgram pythonProgram;
 		
 		public @LAST Bash_Assignment assignment;
