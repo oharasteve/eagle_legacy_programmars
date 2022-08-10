@@ -51,8 +51,18 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	
 	public static @P(100) class COBOL_BuiltIn extends PrimaryOperator
 	{
-		public @S(10) COBOL_KeywordChoice logicalConstant = new COBOL_KeywordChoice("FALSE", "TRUE", "ANY",
-				"ZERO", "ZEROS", "LOW-VALUES", "HIGH-VALUES", "SPACE", "SPACES");
+		public @S(10) COBOL_KeywordChoice logicalConstant = new COBOL_KeywordChoice(
+				"ANY",
+				"FALSE",
+				"HIGH-VALUES",
+				"LOW-VALUES",
+				"SPACE",
+				"SPACES",
+				"TRUE",
+				"ZERO",
+				"ZEROES",
+				"ZEROS"
+		);
 	}
 	
 	public static @P(110) class COBOL_ParenthesizedExpression extends PrimaryOperator
@@ -73,7 +83,12 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 		public static class COBOL_FunctionName extends TokenChooser
 		{
 			public @FIRST COBOL_KeywordChoice builtins = new COBOL_KeywordChoice(
-					"LENGTH");
+					"CURRENT-DATE",
+					"INTEGER-OF-DATE",
+					"LENGTH",
+					"REM",
+					"REVERSE"
+			);
 			
 			public @CHOICE COBOL_Variable userFunc;
 		}

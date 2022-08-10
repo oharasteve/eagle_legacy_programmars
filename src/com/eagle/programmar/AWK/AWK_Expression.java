@@ -56,15 +56,23 @@ public class AWK_Expression extends PrecedenceChooser
 
 	public static @P(110) class AWK_BuiltinFunctionCall extends PrimaryOperator
 	{
-		public @S(10) AWK_Identifier functionName;
+		public @S(10) AWK_KeywordChoice function = new AWK_KeywordChoice(
+				"index",
+				"int",
+				"length",
+				"match",
+				"sprintf",
+				"strftime",
+				"substr"
+		);
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT AWK_ArgumentList argList;
 		public @S(40) PunctuationRightParen rightParen;
 	}
-
-	public static @P(120) class AWK_FunctionCall extends PrimaryOperator
+	
+	public static @P(120) class AWK_UserFunctionCall extends PrimaryOperator
 	{
-		public @S(10) AWK_KeywordChoice functionName = new AWK_KeywordChoice(AWK_Syntax.FUNCTIONS);
+		public @S(10) AWK_Identifier functionName;
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT AWK_ArgumentList argList;
 		public @S(40) PunctuationRightParen rightParen;
@@ -107,7 +115,7 @@ public class AWK_Expression extends PrecedenceChooser
 		{
 			public @CHOICE AWK_Literal literal;
 			public @CHOICE AWK_Identifier_Reference id;
-			public @CHOICE AWK_FunctionCall fn;
+			public @CHOICE AWK_UserFunctionCall fn;
 		}
 	}
 	
@@ -171,7 +179,14 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(270) class AWK_AndExpression extends PrecedenceOperator
+	public static @P(270) class AWK_InExpression extends PrecedenceOperator
+	{
+		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) AWK_Keyword IN = new AWK_Keyword("in");
+		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(280) class AWK_AndExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_Punctuation andOperator = new AWK_Punctuation("&&");
@@ -179,7 +194,7 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(40) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(280) class AWK_OrExpression extends PrecedenceOperator
+	public static @P(290) class AWK_OrExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_Punctuation orOperator = new AWK_Punctuation("||");
@@ -187,7 +202,7 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(40) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(290) class AWK_TrueFalseExpression extends PrecedenceOperator
+	public static @P(300) class AWK_TrueFalseExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) AWK_Punctuation questionMark = new AWK_Punctuation('?');
@@ -196,7 +211,7 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(50) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 
-	public static @P(300) class AWK_Assignment extends PrecedenceOperator
+	public static @P(310) class AWK_Assignment extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=");

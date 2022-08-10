@@ -55,7 +55,13 @@ public class Javascript_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
+	public static @P(90) class Javascript_Buildin_Function extends PrimaryOperator
+	{
+		public @S(10) Javascript_KeywordChoice fn = new Javascript_KeywordChoice(
+				"eval"
+		);
+	}
 	public static @P(100) class Javascript_DotClass extends PrimaryOperator
 	{
 		public @S(10) Javascript_Type jtype;
@@ -172,9 +178,10 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(20) Javascript_Expression expr;
 	}
 	
-	public static @P(270) class Javascript_BuiltIn extends PrimaryOperator
+	public static @P(270) class Javascript_BuiltInVar extends PrimaryOperator
 	{
 		public @S(10) Javascript_KeywordChoice logicalConstant = new Javascript_KeywordChoice(
+				"arguments",
 				"false",
 				"null",
 				"String",

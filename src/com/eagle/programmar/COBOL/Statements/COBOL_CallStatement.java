@@ -7,6 +7,7 @@ import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
+import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_HexNumber;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
@@ -24,8 +25,9 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 	public @S(30) COBOL_CallWhat callWhat;
 	public @S(40) @OPT COBOL_Keyword USING = new COBOL_Keyword("USING");
 	public @S(50) @OPT TokenList<COBOL_CallParameter> parameters;
-	public @S(60) @OPT COBOL_CallException exception;
-	public @S(70) @OPT COBOL_Keyword ENDCALL = new COBOL_Keyword("END-CALL");
+	public @S(60) @OPT COBOL_CallReturning returning;
+	public @S(70) @OPT COBOL_CallException exception;
+	public @S(80) @OPT COBOL_Keyword ENDCALL = new COBOL_Keyword("END-CALL");
 	
 	public static class COBOL_CallWhat extends TokenChooser
 	{
@@ -48,6 +50,12 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 			public @S(10) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
 			public @S(20) COBOL_Number size;
 		}
+	}
+	
+	public static class COBOL_CallReturning extends TokenSequence
+	{
+		public @S(10) COBOL_Keyword RETURNING = new COBOL_Keyword("RETURNING");
+		public @S(20) COBOL_Modifiable_Identifier variable;
 	}
 	
 	public static class COBOL_CallException extends TokenSequence
