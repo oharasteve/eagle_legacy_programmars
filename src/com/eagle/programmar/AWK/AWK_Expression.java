@@ -114,8 +114,10 @@ public class AWK_Expression extends PrecedenceChooser
 		public static class AWK_StringPiece extends TokenChooser
 		{
 			public @CHOICE AWK_Literal literal;
-			public @CHOICE AWK_Identifier_Reference id;
-			public @CHOICE AWK_UserFunctionCall fn;
+			public @CHOICE AWK_BuiltinFunctionCall fn;
+			public @CHOICE AWK_UserFunctionCall userfn;
+
+			public @LAST AWK_Identifier_Reference id;
 		}
 	}
 	

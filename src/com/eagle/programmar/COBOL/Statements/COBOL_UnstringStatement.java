@@ -5,6 +5,7 @@ package com.eagle.programmar.COBOL.Statements;
 
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
+import com.eagle.programmar.COBOL.COBOL_Overflow;
 import com.eagle.programmar.COBOL.Statements.COBOL_UnstringStatement.COBOL_UnstringOrClause.COBOL_UnstringOrWhat;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -25,7 +26,8 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 	public @S(70) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
 	public @S(80) TokenList<COBOL_UnstringPiece> pieces;
 	public @S(90) @OPT COBOL_UnstringWith with;
-	public @S(100) @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
+	public @S(100) @OPT COBOL_Overflow overflow;
+	public @S(110) @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
 	
 	public static class COBOL_UnstringOrClause extends TokenSequence
 	{

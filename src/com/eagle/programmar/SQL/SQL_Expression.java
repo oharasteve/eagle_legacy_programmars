@@ -43,6 +43,7 @@ public class SQL_Expression extends PrecedenceChooser
 	public static @P(100) class SQL_Builtin extends PrimaryOperator
 	{
 		public @S(10) SQL_KeywordChoice TIMESTAMP = new SQL_KeywordChoice(
+				"CURRENT_TIMESTAMP",
 				"NULL",
 				"SYSTIMESTAMP",
 				"TRUE");
