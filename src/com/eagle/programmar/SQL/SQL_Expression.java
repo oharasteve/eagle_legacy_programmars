@@ -44,6 +44,7 @@ public class SQL_Expression extends PrecedenceChooser
 	{
 		public @S(10) SQL_KeywordChoice TIMESTAMP = new SQL_KeywordChoice(
 				"CURRENT_TIMESTAMP",
+				"FALSE",
 				"NULL",
 				"SYSTIMESTAMP",
 				"TRUE");

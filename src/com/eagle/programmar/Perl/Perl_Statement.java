@@ -69,7 +69,7 @@ public class Perl_Statement extends TokenChooser
 	{
 		public @S(10) Perl_Expression expr;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
-		public @S(30) PunctuationSemicolon semicolon;
+		public @S(30) @OPT PunctuationSemicolon semicolon;
 
 		public static class Perl_StatementSuffixModifier extends TokenChooser
 		{

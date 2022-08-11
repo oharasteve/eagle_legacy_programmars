@@ -41,7 +41,9 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) @OPT COBOL_Keyword BY = new COBOL_Keyword("BY");
 		public @S(30) @OPT COBOL_KeywordChoice byHow = new COBOL_KeywordChoice(
-				"CONTENT", "LENGTH", "REFERENCE", "VALUE");
+				"CONTENT",
+				"REFERENCE",
+				"VALUE");
 		public @S(40) COBOL_Expression expression;
 		public @S(50) @OPT COBOL_ValueSize size;
 		

@@ -7,11 +7,13 @@ import com.eagle.programmar.Powershell.Statements.Powershell_AssignmentStatement
 import com.eagle.programmar.Powershell.Statements.Powershell_BreakStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
 import com.eagle.programmar.Powershell.Statements.Powershell_ContinueStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_ExitStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForEachStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_IfStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ReturnStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_ThrowStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhereObjectStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
@@ -30,11 +32,13 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_BreakStatement breakStatement;
 		public @CHOICE Powershell_Comment comment;
 		public @CHOICE Powershell_ContinueStatement continueStatement;
+		public @CHOICE Powershell_ExitStatement exitStatement;
 		public @CHOICE Powershell_IfStatement ifStatement;
 		public @CHOICE Powershell_ForEachStatement foreachStatement;
 		public @CHOICE Powershell_ForStatement forStatement;
 		public @CHOICE Powershell_FunctionStatement functionDefinition;
 		public @CHOICE Powershell_ReturnStatement returnStatement;
+		public @CHOICE Powershell_ThrowStatement throwStatement;
 		public @CHOICE Powershell_TryStatement tryStatement;
 		public @CHOICE Powershell_WhereObjectStatement whereObjectStatement;
 		public @CHOICE Powershell_WriteStatement writeStatement;

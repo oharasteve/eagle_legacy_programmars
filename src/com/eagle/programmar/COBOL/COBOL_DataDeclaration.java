@@ -109,8 +109,9 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE static class COBOL_ValueClause extends TokenSequence
 		{
 			public @S(10) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice("VALUE", "VALUES");
-			public @S(20) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-			public @S(30) TokenList<COBOL_Picture_Value> values;
+			public @S(20) @OPT COBOL_KeywordChoice ARE = new COBOL_KeywordChoice("ARE", "IS");
+			public @S(30) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+			public @S(40) TokenList<COBOL_Picture_Value> values;
 		}
 		
 		public @CHOICE static class COBOL_ThruClause extends TokenSequence

@@ -24,7 +24,7 @@ public class Perl_Syntax extends EagleSyntax
 		addReservedWords(reservedWords);
 	}
 
-	private static String[] reservedWords = new String[] {
+	private static final String[] reservedWords = new String[] {
 			"CORE",
 			"and",
 			"cmp",

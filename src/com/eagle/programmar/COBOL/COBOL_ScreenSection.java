@@ -96,7 +96,7 @@ public class COBOL_ScreenSection extends TokenSequence
 			public @CHOICE static class COBOL_ScreenColumn extends TokenSequence
 			{
 				public @S(10) COBOL_KeywordChoice COLUMN = new COBOL_KeywordChoice("COLUMN", "COL");
-				public @S(20) @OPT COBOL_NumberOrIdentifier number;
+				public @S(20) @OPT COBOL_Number number;
 			}
 
 			public @CHOICE static class COBOL_BackgroundColor extends TokenSequence

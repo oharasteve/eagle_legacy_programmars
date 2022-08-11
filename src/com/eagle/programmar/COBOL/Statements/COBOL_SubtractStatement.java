@@ -19,6 +19,7 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 	public @S(20) COBOL_Expression expr;
 	public @S(30) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
 	public @S(40) COBOL_SubtractType type;
+	public @S(50) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
 	
 	public static class COBOL_SubtractType extends TokenChooser
 	{

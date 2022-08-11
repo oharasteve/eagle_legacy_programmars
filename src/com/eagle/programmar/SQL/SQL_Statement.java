@@ -31,7 +31,7 @@ public class SQL_Statement extends TokenChooser
 	public @CHOICE SQL_AtAtStatement atAtStmt;
 	public @CHOICE SQL_BeginStatement beginStmt;
 	public @CHOICE SQL_ColumnStatement columnStmt;
-	//public @CHOICE SQL_CommitStatement commitStmt;	// Part of a BEGIN / END transaction
+	// public @CHOICE SQL_CommitStatement commitStmt;	// Part of a BEGIN / END transaction only.
 	public @CHOICE SQL_CreateStatement createStmt;
 	public @CHOICE SQL_DeclareStatement declareStmt;
 	public @CHOICE SQL_DeleteStatement deleteStmt;
