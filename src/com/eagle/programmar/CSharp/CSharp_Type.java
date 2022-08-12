@@ -63,6 +63,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		}
 
 		public @CHOICE CSharp_KeywordChoice primitive = new CSharp_KeywordChoice(
+				"auto",
 				"bool",
 				"boolean",
 				"byte",

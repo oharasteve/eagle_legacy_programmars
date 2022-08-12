@@ -9,7 +9,6 @@ import com.eagle.programmar.Bash.Commands.Bash_BashProgram;
 import com.eagle.programmar.Bash.Commands.Bash_BreakStatement;
 import com.eagle.programmar.Bash.Commands.Bash_CatCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ChmodCommand;
-import com.eagle.programmar.Bash.Commands.Bash_DieCommand;
 import com.eagle.programmar.Bash.Commands.Bash_DiffCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EchoCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EvaludateCommand;
@@ -43,7 +42,6 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_CatCommand catCommand;
 		public @CHOICE Bash_ChmodCommand chmodCommand;
 		public @CHOICE Bash_Comment comment;
-		public @CHOICE Bash_DieCommand dieCommand;
 		public @CHOICE Bash_DiffCommand diffCommand;
 		public @CHOICE Bash_EchoCommand echoCommand;
 		public @CHOICE Bash_EvaludateCommand evaludateCommand;

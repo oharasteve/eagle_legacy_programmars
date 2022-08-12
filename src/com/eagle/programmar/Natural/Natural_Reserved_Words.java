@@ -1,3 +1,6 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Aug 11, 2022
+
 package com.eagle.programmar.Natural;
 
 public class Natural_Reserved_Words {

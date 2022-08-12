@@ -307,7 +307,7 @@ public class Perl_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(370) class Perl_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Perl_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression expr = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -315,49 +315,49 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 	
-	public static @P(380) class Perl_DotExpression extends PrecedenceOperator
+	public static @P(510) class Perl_DotExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(390) class Perl_ColonColonExpression extends PrecedenceOperator
+	public static @P(520) class Perl_ColonColonExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Punctuation colonColon = new Perl_Punctuation("::");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(400) class Perl_ArrowExpression extends PrecedenceOperator
+	public static @P(530) class Perl_ArrowExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Punctuation arrow = new Perl_Punctuation("->");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(410) class Perl_MapExpression extends PrecedenceOperator
+	public static @P(540) class Perl_MapExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Punctuation arrow = new Perl_Punctuation("=>");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Perl_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(550) class Perl_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("*", "/", "%");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Perl_AdditiveExpression extends PrecedenceOperator
+	public static @P(560) class Perl_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("+", "-");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Perl_ShiftExpression extends PrecedenceOperator
+	public static @P(570) class Perl_ShiftExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		// "<<" gets confused with <<SENTINEL for multi-line literals.
@@ -365,21 +365,21 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class Perl_RelationalExpression extends PrecedenceOperator
+	public static @P(580) class Perl_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("<=", ">=", "<", ">");
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(460) class Perl_RegExTest extends PrecedenceOperator
+	public static @P(590) class Perl_RegExTest extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression var = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("=~", "!~");
 		public @S(30) Perl_RegularExpression expr;
 	}
 
-	public static @P(470) class Perl_InstanceOfExpression extends PrecedenceOperator
+	public static @P(600) class Perl_InstanceOfExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression expr = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Keyword instanceOperator = new Perl_Keyword("instanceof");
@@ -394,7 +394,7 @@ public class Perl_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(480) class Perl_EqualityExpression extends PrecedenceOperator
+	public static @P(610) class Perl_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_EqualityOperator equalityOperator;
@@ -407,28 +407,28 @@ public class Perl_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(490) class Perl_AndExpression extends PrecedenceOperator
+	public static @P(620) class Perl_AndExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Punctuation bitwiseAndOperator = new Perl_Punctuation('&');
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(500) class Perl_ExclusiveOrExpression extends PrecedenceOperator
+	public static @P(630) class Perl_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Punctuation bitwiseXOrOperator = new Perl_Punctuation('^');
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(510) class Perl_InclusiveOrExpression extends PrecedenceOperator
+	public static @P(640) class Perl_InclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_Punctuation bitwiseOrOperator = new Perl_Punctuation('|');
 		public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(520) class Perl_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(650) class Perl_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_AndOperator oper;
@@ -441,7 +441,7 @@ public class Perl_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(530) class Perl_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(660) class Perl_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Perl_OrOperator oper;
@@ -454,7 +454,7 @@ public class Perl_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(540) class Perl_TrueFalseExpression extends PrecedenceOperator
+	public static @P(670) class Perl_TrueFalseExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Perl_Punctuation questionMark = new Perl_Punctuation('?');
@@ -463,7 +463,7 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(50) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
-	public static @P(550) class Perl_AssignmentExpression extends PrecedenceOperator
+	public static @P(680) class Perl_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Perl_Expression var = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice(

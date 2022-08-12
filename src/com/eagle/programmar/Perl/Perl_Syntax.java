@@ -27,8 +27,10 @@ public class Perl_Syntax extends EagleSyntax
 	private static final String[] reservedWords = new String[] {
 			"CORE",
 			"and",
+			"case",			// I added
 			"cmp",
 			"continue",
+			"default",		// I added
 			"do",
 			"else",
 			"elsif",
@@ -36,6 +38,7 @@ public class Perl_Syntax extends EagleSyntax
 			"exp",
 			"for",
 			"foreach",
+			"function",		// I added
 			"ge",
 			"gt",
 			"if",
@@ -54,6 +57,7 @@ public class Perl_Syntax extends EagleSyntax
 			"qx",
 			// "s",
 			"sub",
+			"switch",		// I added
 			"tr",
 			"unless",
 			"until",

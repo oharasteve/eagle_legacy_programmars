@@ -219,84 +219,84 @@ public class C_Expression extends PrecedenceChooser
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightSub = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(310) class C_ArrowSubfield extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_Punctuation arrow = new C_Punctuation("->");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightArrow = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(320) class C_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("*", "/", "%");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightMult = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(330) class C_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("+", "-");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightAdd = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(340) class C_ShiftExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("<<", ">>", ">>>");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightShift = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(350) class C_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("<", ">", "<=", ">=");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightRel = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(360) class C_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("==", "!=");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightEq = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(370) class C_BitwiseAndExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_Punctuation bitwiseAndOperator = new C_Punctuation('&');
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightBitAnd = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(380) class C_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_Punctuation bitwiseXOrOperator = new C_Punctuation('^');
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightXor = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(390) class C_BitwiseOrExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_Punctuation bitwiseOrOperator = new C_Punctuation('|');
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightBitOr = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(400) class C_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_Punctuation andOperator = new C_Punctuation("&&");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightAnd = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(410) class C_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) C_Punctuation orOperator = new C_Punctuation("||");
-		public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) C_Expression rightOr = new C_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
 	public static @P(420) class C_TrueFalseExpression extends PrecedenceOperator
@@ -305,7 +305,7 @@ public class C_Expression extends PrecedenceChooser
 		public @S(20) C_Punctuation questionMark = new C_Punctuation('?');
 		public @S(30) C_Expression middle = new C_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(40) PunctuationColon colon;
-		public @S(50) C_Expression right = new C_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(50) C_Expression rightTF = new C_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
 	public static @P(430) class C_AssignmentExpression extends PrecedenceOperator
@@ -314,7 +314,7 @@ public class C_Expression extends PrecedenceChooser
 		public @S(20) C_PunctuationChoice equals = new C_PunctuationChoice(
 				"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 		public @S(30) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;	// What the ...
-		public @S(40) C_Expression right = new C_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(40) C_Expression rightAsg = new C_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
 	//

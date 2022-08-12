@@ -20,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Python_Type extends TokenChooser implements AbstractType
 {
 	public @CHOICE Python_KeywordChoice TYPES = new Python_KeywordChoice(
+			"Any",
 			"None",
 			"bool",
 			"float",
@@ -43,12 +44,13 @@ public class Python_Type extends TokenChooser implements AbstractType
 	public @FIRST static class Python_StrongType extends TokenSequence
 	{
 		public @S(10) Python_KeywordChoice TUPLE = new Python_KeywordChoice(
-				"Dict",
-				"List",
+				"Dict", "dict",
+				"List", "list",
 				"Optional",
-				"Tuple",
-				"Sequence",
-				"Union");
+				"Tuple", "tuple",
+				"Type",
+				"Sequence", "sequence",
+				"Union", "union");
 		public @S(20) PunctuationLeftBracket leftBracket;
 		public @S(30) SeparatedList<Python_Type,PunctuationComma> types;
 		public @S(40) PunctuationRightBracket rightBracket;

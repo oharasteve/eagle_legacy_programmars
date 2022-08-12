@@ -58,6 +58,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_Statement extends TokenChooser
 {
+	public @FIRST Perl_Comment comment;
 	public @CHOICE Perl_Include include;
 	public @CHOICE Perl_FunctionDefinition function;
 	public @CHOICE Perl_NamespaceStatement namespaceStatement;
@@ -70,6 +71,7 @@ public class Perl_Statement extends TokenChooser
 		public @S(10) Perl_Expression expr;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
 		public @S(30) @OPT PunctuationSemicolon semicolon;
+		public @S(40) @OPT TokenList<Perl_Comment> comments;
 
 		public static class Perl_StatementSuffixModifier extends TokenChooser
 		{
@@ -127,6 +129,7 @@ public class Perl_Statement extends TokenChooser
 		public @S(10) Perl_StatementList statement;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
 		public @S(30) @OPT PunctuationSemicolon semicolon;
+		public @S(40) @OPT TokenList<Perl_Comment> comments;
 
 		//
 		// Start actual statement list here

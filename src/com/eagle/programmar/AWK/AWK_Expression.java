@@ -213,10 +213,10 @@ public class AWK_Expression extends PrecedenceChooser
 		public @S(50) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 
-	public static @P(310) class AWK_Assignment extends PrecedenceOperator
+	public static @P(310) class AWK_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=");
+		public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=", "-=", "*=", "/=");
 		public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }
