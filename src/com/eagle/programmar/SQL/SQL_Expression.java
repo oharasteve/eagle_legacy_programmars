@@ -13,6 +13,9 @@ import com.eagle.programmar.SQL.Terminals.SQL_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class SQL_Expression extends PrecedenceChooser
@@ -40,10 +43,22 @@ public class SQL_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
+	public static @P(90) class SQL_CurrentTimeStamp extends PrimaryOperator
+	{
+		// For some reason, this sometimes has parens after it
+		public @S(10) SQL_Keyword TIMESTAMP = new SQL_Keyword("CURRENT_TIMESTAMP");
+		public @S(20) @OPT SQL_CurrentTimeStampFunction func;
+		
+		public static class SQL_CurrentTimeStampFunction extends TokenSequence
+		{
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) PunctuationRightParen rightParen;
+		}
+	}
+	
 	public static @P(100) class SQL_Builtin extends PrimaryOperator
 	{
-		public @S(10) SQL_KeywordChoice TIMESTAMP = new SQL_KeywordChoice(
-				"CURRENT_TIMESTAMP",
+		public @S(10) SQL_KeywordChoice SYSTIMESTAMP = new SQL_KeywordChoice(
 				"FALSE",
 				"NULL",
 				"SYSTIMESTAMP",

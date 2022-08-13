@@ -1,8 +1,9 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Nov 28, 2014
 
-package com.eagle.programmar.CSS;
+package com.eagle.programmar.CSS.Values;
 
+import com.eagle.programmar.CSS.CSS_Value;
 import com.eagle.programmar.CSS.Terminals.CSS_Color;
 import com.eagle.programmar.CSS.Terminals.CSS_HexNumber;
 import com.eagle.programmar.CSS.Terminals.CSS_Keyword;

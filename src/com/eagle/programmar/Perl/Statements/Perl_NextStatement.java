@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Perl.Statements;
 
+import com.eagle.programmar.Perl.Symbols.Perl_Label_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
@@ -10,7 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 public class Perl_NextStatement extends TokenSequence
 {
 	public @S(10) Perl_Keyword NEXT = new Perl_Keyword("next");
-	public @S(20) @OPT Perl_NextUnless unless;
+	public @S(20) @OPT Perl_Label_Reference label;
+	public @S(30) @OPT Perl_NextUnless unless;
 	
 	public static class Perl_NextUnless extends TokenSequence
 	{

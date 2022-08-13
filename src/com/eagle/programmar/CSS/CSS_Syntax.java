@@ -19,7 +19,7 @@ public class CSS_Syntax extends EagleSyntax
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
-		_punctuationExceptions = new String[] { "::" };
+		_punctuationExceptions = new String[] { "::", "--" };
 		_commentInstance = new CSS_Comment();
 		
 		addReservedWords(keywords);

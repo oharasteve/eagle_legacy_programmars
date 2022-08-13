@@ -22,13 +22,14 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 {
 	public @S(10) @OPT @DOC("compound_stmts.html#function-definitions") TokenList<Python_Decorator> decorator;
 	public @S(20) @OPT Python_EndOfLine eoln;
-	public @S(30) @NOSPACE Python_Keyword DEF = new Python_Keyword("def");
-	public @S(40) Python_FunctionName fnName;
-	public @S(50) Python_Parameter_List params;
-	public @S(55) @OPT Python_ReturnType returnType;
-	public @S(60) @NOSPACE PunctuationColon colon;
-	public @S(70) @OPT TokenList<Python_Comment> comment;
-	public @S(80) Python_SingleOrMultiLineStatement defBody;
+	public @S(30) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
+	public @S(40) @NOSPACE Python_Keyword DEF = new Python_Keyword("def");
+	public @S(50) Python_FunctionName fnName;
+	public @S(60) Python_Parameter_List params;
+	public @S(70) @OPT Python_ReturnType returnType;
+	public @S(80) @NOSPACE PunctuationColon colon;
+	public @S(90) @OPT TokenList<Python_Comment> comment;
+	public @S(100) Python_SingleOrMultiLineStatement defBody;
 	
 	public static class Python_Decorator extends TokenSequence
 	{

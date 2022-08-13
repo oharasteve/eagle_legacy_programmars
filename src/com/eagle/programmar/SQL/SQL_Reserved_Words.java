@@ -107,7 +107,7 @@ public class SQL_Reserved_Words {
 			"NVL",
 			"NVL2",
 			"OFF",
-			"OFFSET",
+			// "OFFSET",		// Used as a field name
 			"OLD",
 			"ON",
 			"ONLINE",

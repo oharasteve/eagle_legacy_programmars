@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CSS;
 
+import com.eagle.programmar.CSS.Directives.CSS_AtApply;
 import com.eagle.programmar.CSS.Directives.CSS_AtCharset;
 import com.eagle.programmar.CSS.Directives.CSS_AtImport;
 import com.eagle.programmar.CSS.Directives.CSS_AtMedia;
@@ -15,6 +16,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class CSS_AtEntry extends TokenChooser
 {
+	public @CHOICE CSS_AtApply atApply;
 	public @CHOICE CSS_AtCharset atCharset;
 	public @CHOICE CSS_AtImport atImport;
 	public @CHOICE CSS_AtMedia atMedia;

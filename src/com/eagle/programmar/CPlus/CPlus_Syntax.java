@@ -20,12 +20,14 @@ public class CPlus_Syntax extends C_Syntax
 	}
 	
 	private static String[] reservedWords = new String[] {
-		"class",
-		"false",
-		"namespace",
-		"new",
-		"operator",
-		"true",
-		"using"
+			"auto",
+			"class",
+			"false",
+			"final",
+			"namespace",
+			"new",
+			"operator",
+			"true",
+			"using"
 	};
 }

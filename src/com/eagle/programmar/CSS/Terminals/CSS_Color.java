@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSS.Terminals;
 
-import com.eagle.programmar.CSS.CSS_Value.CSS_NumericValue;
+import com.eagle.programmar.CSS.Values.CSS_NumericValue;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;

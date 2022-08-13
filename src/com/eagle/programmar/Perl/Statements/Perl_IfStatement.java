@@ -35,9 +35,10 @@ public class Perl_IfStatement extends TokenSequence
 		
 		public @CHOICE static class Perl_IfExists extends TokenSequence
 		{
-			public @S(10) PunctuationHyphen minus;
-			public @S(20) Perl_Keyword F = new Perl_Keyword("f");
-			public @S(30) Perl_Expression expr;
+			public @S(10) @OPT Perl_Keyword NOT = new Perl_Keyword("not");
+			public @S(20) PunctuationHyphen minus;
+			public @S(30) Perl_KeywordChoice FD = new Perl_KeywordChoice("d", "f");
+			public @S(40) Perl_Expression expr;
 		}
 	}
 	

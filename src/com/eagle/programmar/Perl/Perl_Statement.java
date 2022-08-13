@@ -63,7 +63,7 @@ public class Perl_Statement extends TokenChooser
 	public @CHOICE Perl_FunctionDefinition function;
 	public @CHOICE Perl_NamespaceStatement namespaceStatement;
 	public @CHOICE Perl_ClassStatement classStatement;
-	public @LAST Perl_Label label;
+	public @CHOICE Perl_Label label;
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon semicolon;
 	
 	public @LAST static class Perl_ExpressionStatement extends TokenSequence

@@ -6,6 +6,7 @@ package com.eagle.programmar.JavaP;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Identifier;
 import com.eagle.programmar.JavaP.Terminals.JavaP_LClassName;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Punctuation;
+import com.eagle.programmar.JavaP.Terminals.JavaP_PunctuationChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;

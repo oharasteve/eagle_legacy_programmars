@@ -44,9 +44,11 @@ public class C_Program extends EagleLanguage
 	
 	// Careful, this gets added to in some projects
 	private static String[] modifiers = new String[] {
+			"auto",
 			"const",
 			"constexpr",
 			"extern",
+			"final",
 			"inline",
 			"mutable",
 			"register",
