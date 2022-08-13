@@ -4,9 +4,7 @@
 package com.eagle.programmar.HTML;
 
 import com.eagle.programmar.Django.Django_Control;
-import com.eagle.programmar.HTML.HTML_Program.HTML_Element;
 import com.eagle.programmar.HTML.HTML_Table.HTML_TablePiece.HTML_TableColGroup.HTML_TableCol;
-import com.eagle.programmar.HTML.HTML_Table.HTML_TableRow.HTML_TableData;
 import com.eagle.programmar.HTML.Terminals.HTML_Comment;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_KeywordChoice;
@@ -85,59 +83,6 @@ public class HTML_Table extends TokenSequence
 				public @S(20) @NOSPACE HTML_KeywordChoice tableType = new HTML_KeywordChoice("thead", "tbody", "tfoot");
 				public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 			}
-		}
-	}
-	
-	public static class HTML_TableRow extends TokenSequence
-	{
-		public @S(10) @INDENT HTML_StartRow startRow;
-		public @S(20) @OPT TokenList<HTML_Comment> comments1;
-		public @S(30) @OPT TokenList<HTML_TableData> cells;
-		public @S(40) @OPT TokenList<HTML_Comment> comments2;
-		public @S(50) @OPT @OUTDENT HTML_EndRow endRow;
-		
-		public static class HTML_TableData extends TokenSequence
-		{
-			public @S(10) @INDENT HTML_StartData startCell;
-			public @S(20) @OPT TokenList<HTML_Element> contents;
-			public @S(30) @OPT @OUTDENT HTML_EndData endData;
-			
-			public static class HTML_StartData extends TokenSequence
-			{
-				public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
-				public @S(20) @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
-				public @S(30) @OPT TokenList<HTML_Attribute> attributes;
-				public @S(40) @NOSPACE HTML_EndStartDate endStart;
-				
-				public static class HTML_EndStartDate extends TokenChooser
-				{
-					// Not really a PunctuationChoice here, BUT the EagleWriteXML module insists on difference class names
-					public @CHOICE @CURIOUS("Bogus slash in element") HTML_PunctuationChoice slash = new HTML_PunctuationChoice("/>");
-					public @CHOICE HTML_Punctuation endTag = new HTML_Punctuation(">");
-				}
-			}
-			
-			public static class HTML_EndData extends TokenSequence
-			{
-				public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
-				public @S(20) @NOSPACE HTML_KeywordChoice TD = new HTML_KeywordChoice("td", "th");
-				public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
-			}
-		}
-
-		public static class HTML_StartRow extends TokenSequence
-		{
-			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
-			public @S(20) @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
-			public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
-			public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
-		}
-
-		public static class HTML_EndRow extends TokenSequence
-		{
-			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
-			public @S(20) @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
-			public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
 	}
 	

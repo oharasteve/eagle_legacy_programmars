@@ -4,7 +4,6 @@
 package com.eagle.programmar.C;
 
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeStruct;
 import com.eagle.programmar.C.Statements.C_AutoLock;
 import com.eagle.programmar.C.Statements.C_BreakStatement;
 import com.eagle.programmar.C.Statements.C_ContinueStatement;
@@ -17,6 +16,7 @@ import com.eagle.programmar.C.Statements.C_IfStatement;
 import com.eagle.programmar.C.Statements.C_ReturnStatement;
 import com.eagle.programmar.C.Statements.C_SwitchStatement;
 import com.eagle.programmar.C.Statements.C_WhileStatement;
+import com.eagle.programmar.C.Types.C_TypeStruct;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;

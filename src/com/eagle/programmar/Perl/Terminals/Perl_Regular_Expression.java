@@ -8,7 +8,7 @@ import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.TerminalRegularExpression;
 import com.eagle.tokens.TokenChooser;
 
-public class Perl_RegularExpression extends TokenChooser
+public class Perl_Regular_Expression extends TokenChooser
 {
 	public @CHOICE static class Perl_RegularSubstitution extends TerminalRegularExpression
 	{

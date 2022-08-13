@@ -4,6 +4,15 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
+import com.eagle.programmar.COBOL.Picture.COBOL_BlankWhenZero;
+import com.eagle.programmar.COBOL.Picture.COBOL_ObjectReference;
+import com.eagle.programmar.COBOL.Picture.COBOL_PictureClause;
+import com.eagle.programmar.COBOL.Picture.COBOL_RedefinesClause;
+import com.eagle.programmar.COBOL.Picture.COBOL_Sign;
+import com.eagle.programmar.COBOL.Picture.COBOL_ThruClause;
+import com.eagle.programmar.COBOL.Picture.COBOL_Typedef;
+import com.eagle.programmar.COBOL.Picture.COBOL_Usage;
+import com.eagle.programmar.COBOL.Picture.COBOL_ValueClause;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Data_Definition;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Index_Definition;
@@ -12,7 +21,6 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_CommentToEndOfLine;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
-import com.eagle.programmar.COBOL.Terminals.COBOL_Picture;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -33,8 +41,6 @@ public class COBOL_DataDeclaration extends TokenSequence
 
 	public static class COBOL_DataClause extends TokenChooser
 	{
-		public @CHOICE COBOL_OccursClause occurs;
-		public @CHOICE COBOL_Justified justified;
 		public @CHOICE COBOL_KeywordChoice primitive = new COBOL_KeywordChoice(
 				"BYTE",
 				"CLIPFORMAT",
@@ -57,74 +63,17 @@ public class COBOL_DataDeclaration extends TokenSequence
 				"VARTYPE",
 				"WORD");
 		
-		public @CHOICE static class COBOL_BlankWhenZero extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword BLANK = new COBOL_Keyword("BLANK");
-			public @S(20) @OPT COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
-			public @S(30) COBOL_Keyword ZERO = new COBOL_Keyword("ZERO");
-		}
-		
-		public @CHOICE static class COBOL_Sign extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword SIGN = new COBOL_Keyword("SIGN");
-			public @S(20) COBOL_Keyword TRAILING = new COBOL_Keyword("TRAILING");
-			public @S(30) COBOL_Keyword SEPARATE = new COBOL_Keyword("SEPARATE");
-		}
-		
-		public @CHOICE static class COBOL_ObjectReference extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword OBJECT = new COBOL_Keyword("OBJECT");
-			public @S(20) COBOL_Keyword REFERENCE = new COBOL_Keyword("REFERENCE");
-		}
-		
-		public @CHOICE static class COBOL_Typedef extends TokenSequence
-		{
-			public @S(10) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public @S(20) COBOL_Keyword TYPEDEF = new COBOL_Keyword("TYPEDEF");
-		}
-		
-		public @CHOICE static class COBOL_Usage extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword USAGE = new COBOL_Keyword("USAGE");
-			public @S(20) COBOL_KeywordChoice type = new COBOL_KeywordChoice(
-					"1-RECTL",
-					"2SIZE",
-					"DATA-POINTER",
-					"LONG",
-					"POINT",
-					"TAGMSG",
-					"TAGPOINT",
-					"TAGRECT",
-					"TAGSIZE",
-					"UINT",
-					"ULONG");
-		}
-		
-		public @CHOICE static class COBOL_PictureClause extends TokenSequence
-		{
-			public @S(10) COBOL_KeywordChoice PIC = new COBOL_KeywordChoice("PIC", "PICTURE");
-			public @S(20) COBOL_Picture picture;
-		}
-		
-		public @CHOICE static class COBOL_ValueClause extends TokenSequence
-		{
-			public @S(10) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice("VALUE", "VALUES");
-			public @S(20) @OPT COBOL_KeywordChoice ARE = new COBOL_KeywordChoice("ARE", "IS");
-			public @S(30) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-			public @S(40) TokenList<COBOL_Picture_Value> values;
-		}
-		
-		public @CHOICE static class COBOL_ThruClause extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword THRU = new COBOL_Keyword("THRU");
-			public @S(20) TokenList<COBOL_Picture_Value> values;
-		}
-		
-		public @CHOICE static class COBOL_RedefinesClause extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword REDEFINES = new COBOL_Keyword("REDEFINES");
-			public @S(20) COBOL_Identifier_Reference id;
-		}
+		public @CHOICE COBOL_BlankWhenZero blankWhenZero; 
+		public @CHOICE COBOL_Justified justified;
+		public @CHOICE COBOL_ObjectReference objectReference;
+		public @CHOICE COBOL_OccursClause occurs;
+		public @CHOICE COBOL_PictureClause pictureClause;
+		public @CHOICE COBOL_RedefinesClause redefinesClause;
+		public @CHOICE COBOL_Sign sign;
+		public @CHOICE COBOL_ThruClause thruClause;
+		public @CHOICE COBOL_Typedef typedef;
+		public @CHOICE COBOL_Usage usage;
+		public @CHOICE COBOL_ValueClause valueClause;
 	}
 	
 	public static class COBOL_Justified extends TokenSequence

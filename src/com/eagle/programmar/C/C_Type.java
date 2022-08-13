@@ -3,33 +3,25 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.programmar.C.C_Data.C_FunctionPointer;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive.C_TypeStar;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypeStruct.C_FieldOrComment;
-import com.eagle.programmar.C.Symbols.C_Field_Definition;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
-import com.eagle.programmar.C.Symbols.C_Type_Definition;
-import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
-import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
-import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
-import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
-import com.eagle.programmar.CMacro.CMacro_Syntax;
+import com.eagle.programmar.C.Types.C_TypeLongLong;
+import com.eagle.programmar.C.Types.C_TypePrimitive;
+import com.eagle.programmar.C.Types.C_TypePrimitive.C_TypeStar;
+import com.eagle.programmar.C.Types.C_TypeShortUnsignedInt;
+import com.eagle.programmar.C.Types.C_TypeSimpleUnion;
+import com.eagle.programmar.C.Types.C_TypeStruct;
+import com.eagle.programmar.C.Types.C_TypeUnion;
+import com.eagle.programmar.C.Types.C_TypeUserDefined;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class C_Type extends TokenSequence implements AbstractType
@@ -59,120 +51,13 @@ public class C_Type extends TokenSequence implements AbstractType
 		public @CHOICE C_Enum enumeration;
 		public @LAST C_Keyword UNSIGNED = new C_Keyword("unsigned");	// All by itself is ok too
 		
-		public @CHOICE static class C_TypeUnion extends TokenSequence
-		{
-			public @S(10) C_Keyword UNION = new C_Keyword("union");
-			public @S(20) @OPT C_Type_Definition def;
-			public @S(30) PunctuationLeftBrace leftBrace;
-			public @S(40) @OPT TokenList<C_FieldOrComment> fields;
-			public @S(50) PunctuationRightBrace rightBrace;
-			public @S(60) @OPT PunctuationSemicolon semicolon;
-		}
-		
-		public @LAST static class C_TypeSimpleUnion extends TokenSequence
-		{
-			public @S(10) C_Keyword UNION = new C_Keyword("union");
-			public @S(20) C_Type_Definition def;
-		}
-		
-		public @CHOICE static class C_TypeStruct extends TokenSequence
-		{
-			public @S(10) @OPT TokenList<C_Comment> comments;
-			public @S(20) C_Keyword STRUCT = new C_Keyword("struct");
-			public @S(30) @OPT C_Comment comment1;
-			public @S(40) @OPT C_Type_Definition def;
-			public @S(50) @OPT C_Comment comment2;
-			public @S(60) @OPT C_StructBody body;
-			public @S(70) @OPT PunctuationSemicolon semicolon;
-			
-			public static class C_StructBody extends TokenSequence
-			{
-				public @S(10) PunctuationLeftBrace leftBrace;
-				public @S(20) @OPT C_Comment comment3;
-				public @S(30) @OPT TokenList<C_FieldOrComment> fields;
-				public @S(40) PunctuationRightBrace rightBrace;
-			}
-
-			public static class C_FieldOrComment extends TokenChooser
-			{
-				public @CHOICE C_Comment comment;
-				public @CHOICE C_FunctionPointer functionPtr;
-				public @LAST C_TypeUnion union;
-				public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-				
-				public @CHOICE static class C_Field extends TokenSequence
-				{
-					public @S(10) C_Type jtype;
-					public @S(20) C_Field_Definition id;
-					public @S(30) @OPT C_TypeNumberOfBits bits;
-					public @S(40) @OPT TokenList<C_Subscript> subscripts;
-					public @S(50) @OPT C_FieldInitialValue initialValue;
-					public @S(60) @OPT TokenList<C_MoreFields> more;
-					public @S(70) PunctuationSemicolon semicolon;
-					public @S(80) @OPT TokenList<C_Comment> comments;
-					
-					public static class C_TypeNumberOfBits extends TokenSequence
-					{
-						public @S(10) PunctuationColon colon;
-						public @S(20) C_Number bits;
-					}
-
-					public static class C_MoreFields extends TokenSequence
-					{
-						public @S(10) PunctuationComma comma;
-						public @S(20) @OPT TokenList<C_Comment> comments;
-						public @S(30) @OPT TokenList<PunctuationStar> stars;
-						public @S(40) C_Field_Definition id;
-						public @S(50) @OPT TokenList<C_Subscript> subscripts;
-						public @S(60) @OPT C_FieldInitialValue initialValue;
-					}
-					
-					public static class C_FieldInitialValue extends TokenSequence
-					{
-						public @S(10) PunctuationEquals equals;
-						public @S(20) C_Expression expression;
-					}
-				}
-			}
-		}
-
-		public @CHOICE static class C_TypeLongLong extends TokenSequence
-		{
-			public @S(10) C_Keyword LONG1 = new C_Keyword("long");
-			public @S(20) C_Keyword LONG2 = new C_Keyword("long");
-		}
-		
-		public @CHOICE static class C_TypePrimitive extends TokenSequence
-		{
-			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
-			public @S(20) @OPT C_KeywordChoice UNSIGNED = new C_KeywordChoice("signed", "unsigned");
-			public @S(30) C_KeywordChoice primitive = new C_KeywordChoice(C_Program.getPrimitives());
-			public @S(40) @OPT C_Keyword INT = new C_Keyword("int");
-			public @S(50) @OPT TokenList<C_TypeStar> stars;
-			
-			public static class C_TypeStar extends TokenSequence
-			{
-				public @S(10) C_PunctuationChoice starAmpersand = new C_PunctuationChoice("*", "&&", "&");
-			}
-		}
-		
-		// This one isn't handled by C_TypePrimitive
-		public @FIRST static class C_TypeShortUnsignedInt extends TokenSequence
-		{
-			public @S(10) @OPT C_KeywordChoice UNSIGNED1 = new C_KeywordChoice("signed", "unsigned");
-			public @S(20) C_KeywordChoice SHORT = new C_KeywordChoice("long", "short");
-			public @S(30) @OPT C_Keyword LONG = new C_Keyword("long");
-			public @S(40) @OPT C_KeywordChoice UNSIGNED2 = new C_KeywordChoice("signed", "unsigned");
-			public @S(50) C_KeywordChoice INT = new C_KeywordChoice("int", "double");
-			public @S(60) @OPT TokenList<C_TypeStar> stars;
-		}
-		
-		public @CHOICE static class C_TypeUserDefined extends TokenSequence
-		{
-			public @S(10) @OPT C_Keyword STRUCT = new C_Keyword("struct");
-			public @S(20) C_Identifier_Reference typeName;
-			public @S(30) @OPT TokenList<C_TypeStar> stars;
-		}
+		public @FIRST C_TypeShortUnsignedInt typeShortUnsigned;	// This one isn't handled by C_TypePrimitive
+		public @CHOICE C_TypeUnion typeUnion;
+		public @CHOICE C_TypeStruct typeStruct;
+		public @CHOICE C_TypeLongLong typeLongLong;
+		public @CHOICE C_TypePrimitive typePrimitive;
+		public @CHOICE C_TypeUserDefined typeUsedDefined;
+		public @LAST C_TypeSimpleUnion typeSimpleUnion;
 	}
 	
 	public static class C_TypeFunction extends TokenSequence

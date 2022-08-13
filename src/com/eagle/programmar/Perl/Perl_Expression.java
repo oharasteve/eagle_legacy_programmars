@@ -15,7 +15,7 @@ import com.eagle.programmar.Perl.Terminals.Perl_Number;
 import com.eagle.programmar.Perl.Terminals.Perl_OctalNumber;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
-import com.eagle.programmar.Perl.Terminals.Perl_RegularExpression;
+import com.eagle.programmar.Perl.Terminals.Perl_Regular_Expression;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.TokenChooser;
@@ -181,7 +181,7 @@ public class Perl_Expression extends PrecedenceChooser
 	public static @P(250) class Perl_GrepExpression extends PrimaryOperator
 	{
 		public @S(10) Perl_Keyword GREP = new Perl_Keyword("grep");
-		public @S(20) Perl_RegularExpression regex;
+		public @S(20) Perl_Regular_Expression regex;
 		public @S(30) PunctuationComma comma;
 		public @S(40) Perl_Expression expr;
 	}
@@ -204,7 +204,7 @@ public class Perl_Expression extends PrecedenceChooser
 	
 	public static @P(270) class Perl_RegExExpression extends PrimaryOperator
 	{
-		public @S(10) Perl_RegularExpression regex;
+		public @S(10) Perl_Regular_Expression regex;
 	}
 	
 	public static @P(280) class Perl_FunctionCall extends PrimaryOperator
@@ -376,7 +376,7 @@ public class Perl_Expression extends PrecedenceChooser
 	{
 		public @S(10) Perl_Expression var = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("=~", "!~");
-		public @S(30) Perl_RegularExpression expr;
+		public @S(30) Perl_Regular_Expression expr;
 	}
 
 	public static @P(600) class Perl_InstanceOfExpression extends PrecedenceOperator

@@ -25,8 +25,8 @@ import com.eagle.programmar.RPG.Specifications.RPG_H_Header_Specification.RPG_H_
 import com.eagle.programmar.RPG.Specifications.RPG_I_Input_Specification;
 import com.eagle.programmar.RPG.Specifications.RPG_L_LineCounter_Specification;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Spec;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Specification_III;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Specification_IV;
+import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification_III;
+import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification_IV;
 import com.eagle.programmar.RPG.Specifications.RPG_U_AutoReport_Specification;
 import com.eagle.programmar.RPG.Terminals.RPG_Comment;
 import com.eagle.programmar.RPG.Terminals.RPG_EndOfLine;

@@ -5,7 +5,7 @@ package com.eagle.programmar.Django;
 
 import com.eagle.programmar.HTML.HTML_Program.HTML_Element;
 import com.eagle.programmar.HTML.HTML_Syntax;
-import com.eagle.programmar.HTML.HTML_Table.HTML_TableRow;
+import com.eagle.programmar.HTML.HTML_TableRow;
 import com.eagle.tokens.TokenChooser;
 
 public class Django_Element extends TokenChooser

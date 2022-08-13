@@ -5,11 +5,11 @@ package com.eagle.programmar.C;
 
 import com.eagle.programmar.C.C_Function.C_FunctionParameter;
 import com.eagle.programmar.C.C_Function.C_MoreParameterDefs;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.C.Symbols.C_Field_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
+import com.eagle.programmar.C.Types.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;

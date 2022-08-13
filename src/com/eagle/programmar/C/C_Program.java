@@ -33,6 +33,7 @@ public class C_Program extends EagleLanguage
 	}
 	
 	private static String[] primitives = new String[] {
+			"auto",
 			"char",
 			"double",
 			"float",
@@ -44,7 +45,6 @@ public class C_Program extends EagleLanguage
 	
 	// Careful, this gets added to in some projects
 	private static String[] modifiers = new String[] {
-			"auto",
 			"const",
 			"constexpr",
 			"extern",

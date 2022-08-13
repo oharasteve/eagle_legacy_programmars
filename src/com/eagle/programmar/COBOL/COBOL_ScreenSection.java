@@ -3,6 +3,19 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.programmar.COBOL.Screen.COBOL_BackgroundColor;
+import com.eagle.programmar.COBOL.Screen.COBOL_ForegroundColor;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenBlankScreen;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenBlankWhenZero;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenColumn;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenFrom;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenLine;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenPicture;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenPictureVariable;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenPrompt;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenTo;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenUsing;
+import com.eagle.programmar.COBOL.Screen.COBOL_ScreenValue;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Data_Definition;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
@@ -11,14 +24,10 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
-import com.eagle.programmar.COBOL.Terminals.COBOL_Picture;
-import com.eagle.programmar.COBOL.Terminals.COBOL_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class COBOL_ScreenSection extends TokenSequence
 {
@@ -73,91 +82,19 @@ public class COBOL_ScreenSection extends TokenSequence
 					"REVERSE-VIDEO",
 					"SECURE");
 			
-			public @CHOICE static class COBOL_ScreenBlankScreen extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword BLANK = new COBOL_Keyword("BLANK");
-				public @S(20) COBOL_KeywordChoice blank = new COBOL_KeywordChoice("SCREEN", "LINE");
-			}
-			
-			public @CHOICE static class COBOL_ScreenBlankWhenZero extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword BLANK = new COBOL_Keyword("BLANK");
-				public @S(20) @OPT COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
-				public @S(30) COBOL_Keyword ZERO = new COBOL_Keyword("ZERO");
-			}
-			
-			public @CHOICE static class COBOL_ScreenLine extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword LINE = new COBOL_Keyword("LINE");
-				public @S(20) @OPT COBOL_Punctuation plus = new COBOL_Punctuation('+');
-				public @S(30) COBOL_NumberOrIdentifier number;
-			}
-
-			public @CHOICE static class COBOL_ScreenColumn extends TokenSequence
-			{
-				public @S(10) COBOL_KeywordChoice COLUMN = new COBOL_KeywordChoice("COLUMN", "COL");
-				public @S(20) @OPT COBOL_Number number;
-			}
-
-			public @CHOICE static class COBOL_BackgroundColor extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword BACKGROUND = new COBOL_Keyword("BACKGROUND-COLOR");
-				public @S(20) @OPT COBOL_NumberOrIdentifier color;
-			}
-
-			public @CHOICE static class COBOL_ForegroundColor extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword FOREGROUND = new COBOL_Keyword("FOREGROUND-COLOR");
-				public @S(20) @OPT COBOL_NumberOrIdentifier color;
-			}
-
-			public @CHOICE static class COBOL_ScreenValue extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword VALUE = new COBOL_Keyword("VALUE");
-				public @S(20) @OPT COBOL_Literal value;
-			}
-			
-			public @CHOICE static class COBOL_ScreenPicture extends TokenSequence
-			{
-				public @S(10) COBOL_KeywordChoice PIC = new COBOL_KeywordChoice("PIC", "PICTURE");
-				public @S(20) COBOL_Picture picture;
-			}
-
-			public @CHOICE static class COBOL_ScreenPictureVariable extends TokenSequence
-			{
-				public @S(10) COBOL_KeywordChoice PIC = new COBOL_KeywordChoice("PIC", "PICTURE");
-				public @S(20) COBOL_Keyword X = new COBOL_Keyword("X");
-				public @S(30) PunctuationLeftParen leftParen;
-				public @S(40) COBOL_Expression size;
-				public @S(50) PunctuationRightParen rightParen;
-			}
-			
-			public @CHOICE static class COBOL_ScreenFrom extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
-				public @S(20) COBOL_Identifier_Reference dataRef;
-				public @S(30) @OPT COBOL_Subscript subscript;
-			}
-
-			public @CHOICE static class COBOL_ScreenTo extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword TO = new COBOL_Keyword("TO");
-				public @S(20) COBOL_Identifier_Reference dataRef;
-				public @S(30) @OPT COBOL_Subscript subscript;
-			}
-
-			public @CHOICE static class COBOL_ScreenUsing extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword USING = new COBOL_Keyword("USING");
-				public @S(20) @OPT COBOL_Identifier_Reference dataRef;
-				public @S(30) @OPT COBOL_Subscript subscript;
-			}
-			
-			public @CHOICE static class COBOL_ScreenPrompt extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword PROMPT = new COBOL_Keyword("PROMPT");
-				public @S(20) COBOL_Literal literal;
-			}
+			public @CHOICE COBOL_ScreenBlankScreen blankScreen; 
+			public @CHOICE COBOL_ScreenBlankWhenZero blankZero;
+			public @CHOICE COBOL_ScreenLine line;
+			public @CHOICE COBOL_ScreenColumn column;
+			public @CHOICE COBOL_BackgroundColor bgColor;
+			public @CHOICE COBOL_ForegroundColor fgColor;
+			public @CHOICE COBOL_ScreenValue value; 
+			public @CHOICE COBOL_ScreenPicture picture;
+			public @CHOICE COBOL_ScreenPictureVariable pictureValue; 
+			public @CHOICE COBOL_ScreenFrom from;
+			public @CHOICE COBOL_ScreenTo to;
+			public @CHOICE COBOL_ScreenUsing using;
+			public @CHOICE COBOL_ScreenPrompt prompt;
 		}
 
 		public static class COBOL_NumberOrIdentifier extends TokenChooser

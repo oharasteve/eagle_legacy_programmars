@@ -9,7 +9,7 @@ import com.eagle.core.EagleSymbolException;
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration.COBOL_DataClause;
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration.COBOL_OccursClause;
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_Copy_or_FileDescriptor.COBOL_FileDescriptor;
+import com.eagle.programmar.COBOL.COBOL_FileDescriptor;
 import com.eagle.programmar.COBOL.COBOL_Program_Complete;
 import com.eagle.programmar.COBOL.COBOL_ReportEntry.COBOL_ReportDescription;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Data_Definition;

@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive;
-import com.eagle.programmar.C.C_Type.C_TypeBase.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Types.C_TypePrimitive;
+import com.eagle.programmar.C.Types.C_TypePrimitive.C_TypeStar;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
