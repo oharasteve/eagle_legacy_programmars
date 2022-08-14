@@ -3,33 +3,29 @@
 
 package com.eagle.programmar.RPG.Specifications;
 
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_External_Field_Descr;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_External_Record_Id;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_External_Record_Id.RPG_O_Output_External_Record_Id_Piece;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_External_Record_Id.RPG_O_Output_External_Record_Id_Piece1;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_External_Record_Id.RPG_O_Output_External_Record_Id_Piece2;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_External_Record_Id.RPG_O_Output_External_Record_Id_Piece3;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Program_Field_Descr;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Program_Record_Id;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Program_Record_Id.RPG_O_Output_Program_Record_Id_Piece;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Program_Record_Id.RPG_O_Output_Program_Record_Id_Piece1;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Program_Record_Id.RPG_O_Output_Program_Record_Id_Piece2;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Program_Record_Id.RPG_O_Output_Program_Record_Id_Piece3;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Spec;
 import com.eagle.programmar.RPG.Terminals.RPG_Blanks;
 import com.eagle.programmar.RPG.Terminals.RPG_Keyword;
 import com.eagle.programmar.RPG.Terminals.RPG_KeywordChoice;
 import com.eagle.programmar.RPG.Terminals.RPG_Literal;
 import com.eagle.programmar.RPG.Terminals.RPG_Number;
 
-public class RPG_O_Output_Specification_III extends RPG_O_Output_Spec
+public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 {
 	public RPG_O_Output_Specification_III()
 	{
-		recordId = new RPG_O_Output_Program_Record_Id_III();
-		fieldDescr = new RPG_O_Output_Program_Field_Descr_III();
-		externalRecordId = new RPG_O_Output_External_Record_Id_III();
-		externalFieldDescr = new RPG_O_Output_External_Field_Descr_III();
+		spec = new RPG_O_Output_Spec();
+		spec.recordId = new RPG_O_Output_Program_Record_Id_III();
+		spec.fieldDescr = new RPG_O_Output_Program_Field_Descr_III();
+		spec.externalRecordId = new RPG_O_Output_External_Record_Id_III();
+		spec.externalFieldDescr = new RPG_O_Output_External_Field_Descr_III();
 	}
 	
 	public static class RPG_O_Output_Program_Record_Id_III extends RPG_O_Output_Program_Record_Id

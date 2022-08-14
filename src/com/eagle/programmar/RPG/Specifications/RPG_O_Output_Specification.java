@@ -13,8 +13,7 @@ import com.eagle.tokens.TokenSequence;
 
 public abstract class RPG_O_Output_Specification extends TokenSequence
 {
-	// Extra layer to keep everything in one file ....
-	public @S(10) RPG_O_Output_Spec oSpec;
+	public @S(10) RPG_O_Output_Spec spec;
 	
 	public static class RPG_O_Output_Spec extends TokenChooser
 	{

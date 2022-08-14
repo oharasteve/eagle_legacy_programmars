@@ -24,7 +24,7 @@ import com.eagle.programmar.RPG.Specifications.RPG_H_Header_Specification.RPG_H_
 import com.eagle.programmar.RPG.Specifications.RPG_H_Header_Specification.RPG_H_Header_Specification_IV;
 import com.eagle.programmar.RPG.Specifications.RPG_I_Input_Specification;
 import com.eagle.programmar.RPG.Specifications.RPG_L_LineCounter_Specification;
-import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification.RPG_O_Output_Spec;
+import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification_III;
 import com.eagle.programmar.RPG.Specifications.RPG_O_Output_Specification_IV;
 import com.eagle.programmar.RPG.Specifications.RPG_U_AutoReport_Specification;
@@ -70,7 +70,7 @@ public abstract class RPG_Program extends EagleLanguage
 		public @CHOICE RPG_L_LineCounter_Specification lSpec;
 		public @CHOICE RPG_I_Input_Specification iSpec;
 		public @CHOICE RPG_C_Calculation_Specification cSpec;
-		public @CHOICE RPG_O_Output_Spec oSpec;
+		public @CHOICE RPG_O_Output_Specification oSpec;
 	}
 
 	// Components of an RPG Program
@@ -92,7 +92,7 @@ public abstract class RPG_Program extends EagleLanguage
 			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_III.class);	// Not available in RPG III
 			overrider.override(RPG_F_File_Specification.class, RPG_F_File_Specification_III.class);
 			overrider.override(RPG_H_Header_Specification.class, RPG_H_Header_Specification_III.class);
-			overrider.override(RPG_O_Output_Spec.class, RPG_O_Output_Specification_III.class);
+			overrider.override(RPG_O_Output_Specification.class, RPG_O_Output_Specification_III.class);
 		}
 	}
 	
@@ -112,7 +112,7 @@ public abstract class RPG_Program extends EagleLanguage
 			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_IV.class);
 			overrider.override(RPG_F_File_Specification.class, RPG_F_File_Specification_IV.class);
 			overrider.override(RPG_H_Header_Specification.class, RPG_H_Header_Specification_IV.class);
-			overrider.override(RPG_O_Output_Spec.class, RPG_O_Output_Specification_IV.class);
+			overrider.override(RPG_O_Output_Specification.class, RPG_O_Output_Specification_IV.class);
 		}
 	}
 }
