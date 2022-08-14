@@ -48,37 +48,37 @@ public class SQL_CreateStatement extends TokenChooser
 			public @S(20) SQL_Keyword NOT = new SQL_Keyword("NOT");
 			public @S(30) SQL_Keyword EXISTS = new SQL_Keyword("EXISTS");
 		}
-	}
 
-	public static class SQL_CreateOption extends TokenChooser
-	{
-		public @CHOICE SQL_Keyword DEFAULT = new SQL_Keyword("DEFAULT");
-
-		public @CHOICE static class SQL_CreateEngine extends TokenSequence
+		public static class SQL_CreateOption extends TokenChooser
 		{
-			public @S(10) SQL_Keyword ENGINE = new SQL_Keyword("ENGINE");
-			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_Keyword MYIASM = new SQL_Keyword("MyISAM");
-		}
-
-		public @CHOICE static class SQL_CreateCharset extends TokenSequence
-		{
-			public @S(10) SQL_Keyword CHARSET = new SQL_Keyword("CHARSET");
-			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
-		}
-		
-		public @CHOICE static class SQL_CreateComment extends TokenSequence
-		{
-			public @S(10) SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
-			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_Literal tital;
-		}
-		
-		public @CHOICE static class SQL_CreateWithoutRowId extends TokenSequence
-		{
-			public @S(10) SQL_Keyword WITHOUT = new SQL_Keyword("WITHOUT");
-			public @S(20) SQL_Keyword ROWID = new SQL_Keyword("ROWID");
+			public @CHOICE SQL_Keyword DEFAULT = new SQL_Keyword("DEFAULT");
+	
+			public @CHOICE static class SQL_CreateEngine extends TokenSequence
+			{
+				public @S(10) SQL_Keyword ENGINE = new SQL_Keyword("ENGINE");
+				public @S(20) PunctuationEquals equals;
+				public @S(30) SQL_Keyword MYIASM = new SQL_Keyword("MyISAM");
+			}
+	
+			public @CHOICE static class SQL_CreateCharset extends TokenSequence
+			{
+				public @S(10) SQL_Keyword CHARSET = new SQL_Keyword("CHARSET");
+				public @S(20) PunctuationEquals equals;
+				public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
+			}
+			
+			public @CHOICE static class SQL_CreateComment extends TokenSequence
+			{
+				public @S(10) SQL_Keyword COMMENT = new SQL_Keyword("COMMENT");
+				public @S(20) PunctuationEquals equals;
+				public @S(30) SQL_Literal tital;
+			}
+			
+			public @CHOICE static class SQL_CreateWithoutRowId extends TokenSequence
+			{
+				public @S(10) SQL_Keyword WITHOUT = new SQL_Keyword("WITHOUT");
+				public @S(20) SQL_Keyword ROWID = new SQL_Keyword("ROWID");
+			}
 		}
 	}
 
