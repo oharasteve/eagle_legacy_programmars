@@ -5,7 +5,9 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Bash_Variable;
+import com.eagle.programmar.Bash.Terminals.Bash_Filename;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
@@ -15,5 +17,11 @@ public class Bash_Assignment extends TokenSequence
 	public @S(20) @DOC("#Shell-Arithmetic") @OPT Bash_Keyword LET = new Bash_Keyword("let");
 	public @S(30) Bash_Variable variable;
 	public @S(40) PunctuationEquals equals;
-	public @S(50) Bash_Expression value;
+	public @S(50) @OPT Bash_AssignWhat what;
+	
+	public static class Bash_AssignWhat extends TokenChooser
+	{
+		public @CHOICE Bash_Expression value;
+		public @LAST Bash_Filename fname;
+	}
 }

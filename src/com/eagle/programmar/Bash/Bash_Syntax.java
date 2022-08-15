@@ -21,7 +21,7 @@ public class Bash_Syntax extends EagleSyntax
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>",
-				"$#", "$?", "$@", "$*", "&&", "||" };
+				"$#", "$?", "$@", "$*", "&&", "||", "&>>"};
 		
 		addReservedWords(keywords);
 	}

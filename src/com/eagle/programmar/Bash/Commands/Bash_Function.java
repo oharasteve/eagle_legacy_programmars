@@ -23,10 +23,11 @@ public class Bash_Function extends TokenChooser
 		public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
 		public @S(20) Bash_Function_Definition fnName;
 		public @S(30) @OPT Bash_FunctionParams params;
-		public @S(40) PunctuationLeftBrace leftBrace;
-		public @S(50) Bash_EndOfLine eoln1;
-		public @S(60) TokenList<Bash_Statement> statements;
-		public @S(70) PunctuationRightBrace rightBrace;
+		public @S(40) @OPT Bash_EndOfLine eoln1;
+		public @S(50) PunctuationLeftBrace leftBrace;
+		public @S(60) Bash_EndOfLine eoln2;
+		public @S(70) TokenList<Bash_Statement> statements;
+		public @S(80) PunctuationRightBrace rightBrace;
 		
 		public static class Bash_FunctionParams extends TokenSequence
 		{

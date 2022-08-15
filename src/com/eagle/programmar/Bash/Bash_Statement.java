@@ -25,6 +25,7 @@ import com.eagle.programmar.Bash.Commands.Bash_PerlProgram;
 import com.eagle.programmar.Bash.Commands.Bash_PwdCommand;
 import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
 import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
+import com.eagle.programmar.Bash.Commands.Bash_RmCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
 import com.eagle.programmar.Bash.Commands.Bash_TeeCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WhileStatement;
@@ -57,6 +58,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_MkTempCommand mktempCommand;
 		public @CHOICE Bash_PwdCommand pwdCommand;
 		public @CHOICE Bash_ReadCommand readCommand;
+		public @CHOICE Bash_RmCommand rmCommand;
 		public @CHOICE Bash_SedCommand sedCommand;
 		public @CHOICE Bash_TeeCommand teeCommand;
 		public @CHOICE Bash_WhileStatement whileStatement;
@@ -67,5 +69,6 @@ public class Bash_Statement extends TokenSequence
 		
 		public @LAST Bash_Assignment assignment;
 		public @LAST Bash_FunctionCall functionCall;
+		public @LAST Bash_Condition condition;
 	}
 }
