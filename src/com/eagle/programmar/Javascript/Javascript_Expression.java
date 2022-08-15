@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassElement;
+import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassExtends;
 import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation;
 import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
@@ -56,7 +58,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public static @P(90) class Javascript_Buildin_Function extends PrimaryOperator
+	public static @P(90) class Javascript_Builtin_Function extends PrimaryOperator
 	{
 		public @S(10) Javascript_KeywordChoice fn = new Javascript_KeywordChoice(
 				"eval"
@@ -273,13 +275,22 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(20) @OPT Javascript_ParenthesizedExpression args;
 	}
 	
-	public static @P(360) class Javascript_TypeOfExpr extends PrimaryOperator
+	public static @P(360) class Javascript_ClassExpr extends PrimaryOperator
+	{
+		public @S(10) Javascript_Keyword CLASS = new Javascript_Keyword("class");
+		public @S(20) @OPT Javascript_ClassExtends extend;
+		public @S(30) PunctuationLeftBrace leftBrace;
+		public @S(40) TokenList<Javascript_ClassElement> elements;
+		public @S(50) PunctuationRightBrace rightBrace;
+	}
+	
+	public static @P(370) class Javascript_TypeOfExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Keyword TYPEOF = new Javascript_Keyword("typeof");
 		public @S(20) Javascript_Expression expr;
 	}
 	
-	public static @P(370) class Javascript_VoidExpr extends PrimaryOperator
+	public static @P(380) class Javascript_VoidExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Keyword VOID = new Javascript_Keyword("void");
 		public @S(20) Javascript_Number number;
@@ -288,7 +299,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(380) class Javascript_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Javascript_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -296,56 +307,56 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(390) class Javascript_Subfield extends PrecedenceOperator
+	public static @P(510) class Javascript_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(400) class Javascript_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(520) class Javascript_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("*", "/", "%");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(410) class Javascript_AdditiveExpression extends PrecedenceOperator
+	public static @P(530) class Javascript_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("+", "-");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Javascript_ShiftExpression extends PrecedenceOperator
+	public static @P(540) class Javascript_ShiftExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(">>>", "<<", ">>");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(430) class Javascript_RelationalExpression extends PrecedenceOperator
+	public static @P(550) class Javascript_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Javascript_InstanceOfExpression extends PrecedenceOperator
+	public static @P(560) class Javascript_InstanceOfExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Keyword instanceOperator = new Javascript_Keyword("instanceof");
 		public @S(30) Javascript_Type type;
 	}
 
-	public static @P(450) class Javascript_InExpression extends PrecedenceOperator
+	public static @P(570) class Javascript_InExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Keyword inOperator = new Javascript_Keyword("in");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(460) class Javascript_EqualityExpression extends PrecedenceOperator
+	public static @P(580) class Javascript_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("!==", "===", "==", "!=");
@@ -353,42 +364,42 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(40) @OPT Javascript_Comment comment;
 	}
 
-	public static @P(470) class Javascript_AndExpression extends PrecedenceOperator
+	public static @P(590) class Javascript_AndExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Punctuation bitwiseAndOperator = new Javascript_Punctuation('&');
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(480) class Javascript_ExclusiveOrExpression extends PrecedenceOperator
+	public static @P(600) class Javascript_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Punctuation bitwiseXOrOperator = new Javascript_Punctuation('^');
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(490) class Javascript_InclusiveOrExpression extends PrecedenceOperator
+	public static @P(610) class Javascript_InclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Punctuation bitwiseOrOperator = new Javascript_Punctuation('|');
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(500) class Javascript_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(620) class Javascript_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Punctuation andOperator = new Javascript_Punctuation("&&");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(510) class Javascript_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(630) class Javascript_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Javascript_Punctuation orOperator = new Javascript_Punctuation("||");
 		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(520) class Javascript_TrueFalseExpression extends PrecedenceOperator
+	public static @P(640) class Javascript_TrueFalseExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Javascript_Punctuation questionMark = new Javascript_Punctuation('?');
@@ -399,7 +410,7 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(70) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
-	public static @P(530) class Javascript_AssignmentExpression extends PrecedenceOperator
+	public static @P(650) class Javascript_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Javascript_Expression var = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(
@@ -407,10 +418,16 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(30) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
-	public static @P(540) class Javascript_LambdaFunction extends PrecedenceOperator
+	public static @P(660) class Javascript_LambdaFunction extends PrecedenceOperator
 	{
-		public @S(10) Javascript_Expression arguments;
+		public @S(10) Javascript_Expression arguments = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Javascript_Punctuation arrow = new Javascript_Punctuation("=>");
-		public @S(30) Javascript_FunctionBody code;
+		public @S(30) Javascript_LambdaBody body;
+		
+		public static class Javascript_LambdaBody extends TokenChooser
+		{
+			public @CHOICE Javascript_FunctionBody block;
+			public @CHOICE Javascript_Statement stmt;
+		}
 	}
 }

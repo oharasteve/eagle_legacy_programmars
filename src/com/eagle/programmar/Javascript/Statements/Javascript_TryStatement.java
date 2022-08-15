@@ -20,7 +20,7 @@ public class Javascript_TryStatement extends TokenSequence
 	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) @OPT TokenList<Javascript_StatementOrComment> statements;
 	public @S(40) PunctuationRightBrace rightBrace;
-	public @S(50) @OPT TokenList<Javascript_CatchBlock> catchBlocks;
+	public @S(50) @OPT Javascript_CatchBlock catchBlock;
 	public @S(60) @OPT Javascript_FinallyBlock finallyBlock;
 	
 	public static class Javascript_CatchBlock extends TokenSequence

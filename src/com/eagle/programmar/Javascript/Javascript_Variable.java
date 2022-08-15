@@ -22,7 +22,7 @@ public class Javascript_Variable extends TokenSequence
 	public static class Javascript_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE Javascript_Identifier_Reference id;
-		public @CHOICE Javascript_KeywordChoice THIS = new Javascript_KeywordChoice("this", "class");
+		public @CHOICE Javascript_KeywordChoice THIS = new Javascript_KeywordChoice("this");
 		public @LAST Javascript_PunctuationChoice dollar = new Javascript_PunctuationChoice("$", "_");
 		
 		public @CHOICE static class Javascript_CastedVariable extends TokenSequence
