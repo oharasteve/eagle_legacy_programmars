@@ -24,14 +24,14 @@ public class CSharp_Constructor extends TokenSequence implements EagleScopeInter
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
 	public @S(30) @OPT TokenList<CSharp_MethodModifiers> modifiers;
-	public @S(35) @OPT CSharp_Punctuation tilde = new CSharp_Punctuation("~");
-	public @S(40) CSharp_Current_Class_Reference constructorName;
-	public @S(50) PunctuationLeftParen leftParen;
-	public @S(60) @OPT CSharp_MethodParameter param;
-	public @S(70) @OPT TokenList<CSharp_MoreParameters> moreParams;
-	public @S(80) PunctuationRightParen rightParen;
-	public @S(90) @OPT CSharp_ExtendsBase extendsBase;
-	public @S(100) CSharp_MethodBody body;
+	public @S(40) @OPT CSharp_Punctuation tilde = new CSharp_Punctuation("~");
+	public @S(50) CSharp_Current_Class_Reference constructorName;
+	public @S(60) PunctuationLeftParen leftParen;
+	public @S(70) @OPT CSharp_MethodParameter param;
+	public @S(80) @OPT TokenList<CSharp_MoreParameters> moreParams;
+	public @S(90) PunctuationRightParen rightParen;
+	public @S(100) @OPT CSharp_ExtendsBase extendsBase;
+	public @S(110) CSharp_MethodBody body;
 
 	public static class CSharp_ExtendsBase extends TokenSequence
 	{

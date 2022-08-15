@@ -67,14 +67,14 @@ public class IntelASM_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 	
-	public static @P(200) class IntelASM_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(500) class IntelASM_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) IntelASM_Expression left = new IntelASM_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) IntelASM_PunctuationChoice operator = new IntelASM_PunctuationChoice("*");
 		public @S(30) IntelASM_Expression right = new IntelASM_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(210) class IntelASM_AdditiveExpression extends PrecedenceOperator
+	public static @P(510) class IntelASM_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) IntelASM_Expression left = new IntelASM_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) IntelASM_PunctuationChoice operator = new IntelASM_PunctuationChoice("+", "-");

@@ -91,7 +91,7 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public static @P(400) class FSharp_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class FSharp_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) FSharp_Expression expr = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) FSharp_Punctuation leftDotBracket = new FSharp_Punctuation(".[");
@@ -121,28 +121,28 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 	
-	public static @P(410) class FSharp_Subfield extends PrecedenceOperator
+	public static @P(510) class FSharp_Subfield extends PrecedenceOperator
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class FSharp_Multiplicative_Expression extends PrecedenceOperator 
+	public static @P(520) class FSharp_Multiplicative_Expression extends PrecedenceOperator 
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("*", "/", "%");
 		public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(430) class FSharp_Additive_Expression extends PrecedenceOperator 
+	public static @P(530) class FSharp_Additive_Expression extends PrecedenceOperator 
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("+", "-");
 		public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(440) class FSharp_Relational_Expression extends PrecedenceOperator 
+	public static @P(540) class FSharp_Relational_Expression extends PrecedenceOperator 
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice(
@@ -150,14 +150,14 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class FSharp_And_Expression extends PrecedenceOperator 
+	public static @P(550) class FSharp_And_Expression extends PrecedenceOperator 
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) FSharp_Punctuation AND = new FSharp_Punctuation("&&");
 		public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(460) class FSharp_Or_Expression extends PrecedenceOperator 
+	public static @P(560) class FSharp_Or_Expression extends PrecedenceOperator 
 	{
 		public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) FSharp_Punctuation OR = new FSharp_Punctuation("||");

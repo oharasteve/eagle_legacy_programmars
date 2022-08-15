@@ -144,7 +144,7 @@ public class CMacro_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(200) class CMacro_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
+	public static @P(500) class CMacro_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("*", "/", "%");
@@ -159,7 +159,7 @@ public class CMacro_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(210) class CMacro_AdditiveExpression extends PrecedenceOperator implements EagleRunnable
+	public static @P(510) class CMacro_AdditiveExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("+", "-");
@@ -174,7 +174,7 @@ public class CMacro_Expression extends PrecedenceChooser
 		}
 	}
 
-	public static @P(220) class CMacro_RelationalExpression extends PrecedenceOperator implements EagleRunnable
+	public static @P(520) class CMacro_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("<", ">", "<=", ">=");
@@ -194,7 +194,7 @@ public class CMacro_Expression extends PrecedenceChooser
 		}
 	}
 
-	public static @P(230) class CMacro_EqualityExpression extends PrecedenceOperator implements EagleRunnable
+	public static @P(530) class CMacro_EqualityExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("==", "!=");
@@ -212,28 +212,28 @@ public class CMacro_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(240) class CMacro_BitwiseAndExpression extends PrecedenceOperator
+	public static @P(540) class CMacro_BitwiseAndExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_Punctuation bitwiseAndOperator = new CMacro_Punctuation('&');
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(250) class CMacro_ExclusiveOrExpression extends PrecedenceOperator
+	public static @P(550) class CMacro_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_Punctuation bitwiseXOrOperator = new CMacro_Punctuation('^');
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(260) class CMacro_BitwiseOrExpression extends PrecedenceOperator
+	public static @P(560) class CMacro_BitwiseOrExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_Punctuation bitwiseOrOperator = new CMacro_Punctuation('|');
 		public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(270) class CMacro_ConditionalAndExpression extends PrecedenceOperator implements EagleRunnable
+	public static @P(570) class CMacro_ConditionalAndExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_Punctuation andOperator = new CMacro_Punctuation("&&");
@@ -256,7 +256,7 @@ public class CMacro_Expression extends PrecedenceChooser
 		}
 	}
 		
-	public static @P(280) class CMacro_ConditionalOrExpression extends PrecedenceOperator implements EagleRunnable
+	public static @P(580) class CMacro_ConditionalOrExpression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_Punctuation orOperator = new CMacro_Punctuation("||");
@@ -279,7 +279,7 @@ public class CMacro_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(290) class CMacro_ConcatenateExpression extends PrecedenceOperator
+	public static @P(590) class CMacro_ConcatenateExpression extends PrecedenceOperator
 	{
 		public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) CMacro_Punctuation poundOperator = new CMacro_Punctuation("##");

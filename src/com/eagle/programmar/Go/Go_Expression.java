@@ -161,7 +161,7 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Go_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Go_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression expr = new Go_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -171,49 +171,49 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 		public @S(60) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(410) class Go_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(510) class Go_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression left = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Go_PunctuationChoice operator = new Go_PunctuationChoice("*", "/", "%");
 		public @S(30) Go_Expression right = new Go_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Go_AdditiveExpression extends PrecedenceOperator
+	public static @P(520) class Go_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression left = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Go_PunctuationChoice operator = new Go_PunctuationChoice("+", "-");
 		public @S(30) Go_Expression right = new Go_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Go_RelationalExpression extends PrecedenceOperator
+	public static @P(530) class Go_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression left = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Go_PunctuationChoice operator = new Go_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Go_Expression right = new Go_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Go_EqualityExpression extends PrecedenceOperator
+	public static @P(540) class Go_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression left = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Go_PunctuationChoice operator = new Go_PunctuationChoice("==", "!=");
 		public @S(30) Go_Expression right = new Go_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(450) class Go_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(550) class Go_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression left = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Go_Punctuation andOperator = new Go_Punctuation("&&");
 		public @S(30) Go_Expression right = new Go_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Go_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(560) class Go_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression left = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Go_Punctuation orOperator = new Go_Punctuation("||");
 		public @S(30) Go_Expression right = new Go_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Go_AssignmentExpression extends PrecedenceOperator
+	public static @P(570) class Go_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Go_Expression var = new Go_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice(

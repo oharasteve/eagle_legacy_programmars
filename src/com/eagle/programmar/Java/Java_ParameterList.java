@@ -23,10 +23,10 @@ public class Java_ParameterList extends TokenSequence
 	public static class Java_MethodParameter extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<Java_MethodParameterPrefix> prefixes;
-		public @S(40) @NOSPACE Java_Type jtype;
-		public @S(50) @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
-		public @S(60) Java_Variable_Definition id;
-		public @S(70) @OPT TokenList<Java_EmptySubscript> emptySubscripts;
+		public @S(20) @NOSPACE Java_Type jtype;
+		public @S(30) @OPT Java_Punctuation elipsis = new Java_Punctuation("...");
+		public @S(40) Java_Variable_Definition id;
+		public @S(50) @OPT TokenList<Java_EmptySubscript> emptySubscripts;
 		
 		public static class Java_EmptySubscript extends TokenSequence
 		{

@@ -104,13 +104,13 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Ruby_Expression expression;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Ruby_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Ruby_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression expr = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -120,56 +120,56 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(60) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(410) class Ruby_Subfield extends PrecedenceOperator
+	public static @P(510) class Ruby_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Ruby_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(520) class Ruby_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("*", "/", "%");
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Ruby_AdditiveExpression extends PrecedenceOperator
+	public static @P(530) class Ruby_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("+", "-");
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Ruby_RelationalExpression extends PrecedenceOperator
+	public static @P(540) class Ruby_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class Ruby_EqualityExpression extends PrecedenceOperator
+	public static @P(550) class Ruby_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("==", "!=");
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Ruby_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(560) class Ruby_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_Punctuation andOperator = new Ruby_Punctuation("&&");
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Ruby_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(570) class Ruby_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_Punctuation orOperator = new Ruby_Punctuation("||");
 		public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(480) class Ruby_AssignmentExpression extends PrecedenceOperator
+	public static @P(580) class Ruby_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression var = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Ruby_PunctuationChoice equals = new Ruby_PunctuationChoice(
@@ -182,7 +182,7 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(30) Ruby_Expression expr;
 	}
 	
-	public static @P(490) class Ruby_RangeExpression extends PrecedenceOperator
+	public static @P(590) class Ruby_RangeExpression extends PrecedenceOperator
 	{
 		public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Ruby_Punctuation dotDot = new Ruby_Punctuation("..");

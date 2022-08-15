@@ -18,8 +18,8 @@ public class VB_ForEachStatement extends TokenSequence
 	public @S(30) VB_Identifier_Reference var;
 	public @S(40) VB_Keyword IN = new VB_Keyword("in");
 	public @S(50) VB_Expression from;
-	public @S(70) VB_EndOfLine eoln;
-	public @S(80) TokenList<VB_Statement> action;
-	public @S(90) VB_Keyword NEXT = new VB_Keyword("next");
-	public @S(100) @OPT VB_Identifier_Reference var2;
+	public @S(60) VB_EndOfLine eoln;
+	public @S(70) TokenList<VB_Statement> action;
+	public @S(80) VB_Keyword NEXT = new VB_Keyword("next");
+	public @S(90) @OPT VB_Identifier_Reference var2;
 }

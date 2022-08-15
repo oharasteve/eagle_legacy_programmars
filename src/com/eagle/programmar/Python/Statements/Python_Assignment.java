@@ -16,12 +16,12 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Python_Assignment extends TokenSequence
 {
 	public @S(10) @NOSPACE Python_VariableList varList;
-	public @S(15) @OPT Python_ResultType resultType;
-	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice(
+	public @S(20) @OPT Python_ResultType resultType;
+	public @S(30) Python_PunctuationChoice operator = new Python_PunctuationChoice(
 			"=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=", "**=", "//=");
-	public @S(30) Python_Expression expr;
-	public @S(40) @OPT TokenList<Python_MoreAsgExpressions> moreExpressions;
-	public @S(50) @OPT Python_Comment comment;
+	public @S(40) Python_Expression expr;
+	public @S(50) @OPT TokenList<Python_MoreAsgExpressions> moreExpressions;
+	public @S(60) @OPT Python_Comment comment;
 	
 	public static class Python_MoreAsgExpressions extends TokenSequence
 	{

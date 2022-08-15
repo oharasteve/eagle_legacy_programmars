@@ -119,7 +119,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 
-	public static @P(125) class Python_BracesNoColons extends PrimaryOperator
+	public static @P(130) class Python_BracesNoColons extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT Python_EndOfLine eoln1;
@@ -144,7 +144,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 	
-	public static @P(130) class Python_Brackets extends PrimaryOperator
+	public static @P(140) class Python_Brackets extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) @OPT TokenList<Python_Comment> comment;
@@ -153,58 +153,58 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(50) PunctuationRightBracket rightBracket;
 	}
 	
-	public static @P(140) class Python_UnarySign extends PrimaryOperator
+	public static @P(150) class Python_UnarySign extends PrimaryOperator
 	{
 		public @S(10) Python_PunctuationChoice sign = new Python_PunctuationChoice("*", "-", "+", "~");
 		public @S(20) Python_Expression expr;
 	}
 
-	public static @P(150) class Python_Not_Expression extends PrimaryOperator 
+	public static @P(160) class Python_Not_Expression extends PrimaryOperator 
 	{
 		public @S(10) Python_Keyword NOT = new Python_Keyword("not");
 		public @S(20) Python_Expression expr;
 	}
 	
-	public static @P(160) class Python_Literals extends PrimaryOperator
+	public static @P(170) class Python_Literals extends PrimaryOperator
 	{
 		public @S(10) TokenList<Python_Literal> literals;
 	}
 	
-	public static @P(170) class Python_BackQuotes extends PrimaryOperator
+	public static @P(180) class Python_BackQuotes extends PrimaryOperator
 	{
 		// These are obsolete as of Python 3.
 		public @S(10) @CURIOUS("Obsolete backquotes") TokenList<Python_BackQuote> quotes;
 	}
 	
-	public static @P(180) class Python_Function_Call extends PrimaryOperator
+	public static @P(190) class Python_Function_Call extends PrimaryOperator
 	{
 		public @S(10) Python_Variable name;
 		public @S(20) @NOSPACE TokenList<Python_Parameter_List> args;
 	}
 
-	public static @P(190) class Python_BuiltIn extends PrimaryOperator
+	public static @P(200) class Python_BuiltIn extends PrimaryOperator
 	{
 		public @S(10) Python_KeywordChoice builtins = new Python_KeywordChoice("None", "False", "True");
 	}
 	
-	public static @P(200) class Python_VariableExpression extends PrimaryOperator
+	public static @P(210) class Python_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) Python_Variable variable;
 	}
 	
-	public static @P(210) class Python_Star_Expression extends PrimaryOperator
+	public static @P(220) class Python_Star_Expression extends PrimaryOperator
 	{
 		public @S(10) PunctuationStar star;
 		public @S(20) Python_Expression expr;
 	}
 
-	public static @P(220) class Python_StarStar_Expression extends PrimaryOperator
+	public static @P(230) class Python_StarStar_Expression extends PrimaryOperator
 	{
 		public @S(10) Python_Punctuation starStar = new Python_Punctuation("**");
 		public @S(20) Python_Expression expr;
 	}
 	
-	public static @P(230) class Python_Lambda_Expression extends PrimaryOperator 
+	public static @P(240) class Python_Lambda_Expression extends PrimaryOperator 
 	{
 		public @S(10) Python_Keyword LAMBDA = new Python_Keyword("lambda");
 		public @S(20) @OPT PunctuationLeftParen leftParen;
@@ -238,7 +238,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		
 	}
 	
-	public static @P(240) class Python_Yield extends PrimaryOperator
+	public static @P(250) class Python_Yield extends PrimaryOperator
 	{
 		public @S(10) Python_Keyword YIELD = new Python_Keyword("yield");
 		public @S(20) Python_Expression expr;
@@ -247,7 +247,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public static @P(250) class Python_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Python_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression expr = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -271,63 +271,63 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 	
-	public static @P(260) class Python_Subfield extends PrecedenceOperator
+	public static @P(510) class Python_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE PunctuationPeriod dot;
 		public @S(30) @NOSPACE Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(270) class Python_Power_Expression extends PrecedenceOperator
+	public static @P(520) class Python_Power_Expression extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Punctuation stars = new Python_Punctuation("**");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(280) class Python_Multiplicative_Expression extends PrecedenceOperator 
+	public static @P(530) class Python_Multiplicative_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("//", "*", "/", "%");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(290) class Python_Additive_Expression extends PrecedenceOperator 
+	public static @P(540) class Python_Additive_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("+", "-");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(300) class Python_Shift_Expression extends PrecedenceOperator 
+	public static @P(550) class Python_Shift_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("<<", ">>");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(310) class Python_Bitwise_And_Expression extends PrecedenceOperator 
+	public static @P(560) class Python_Bitwise_And_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Punctuation and = new Python_Punctuation('&');
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(320) class Python_Bitwise_Xor_Expression extends PrecedenceOperator 
+	public static @P(570) class Python_Bitwise_Xor_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Punctuation xor = new Python_Punctuation('^');
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(330) class Python_Bitwise_Or_Expression extends PrecedenceOperator 
+	public static @P(580) class Python_Bitwise_Or_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Punctuation or = new Python_Punctuation('|');
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(340) class Python_Relational_Expression extends PrecedenceOperator 
+	public static @P(590) class Python_Relational_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Relational_Operator relOp;
@@ -352,7 +352,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 
-	public static @P(350) class Python_And_Expression extends PrecedenceOperator 
+	public static @P(600) class Python_And_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword AND = new Python_Keyword("and");
@@ -360,7 +360,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(360) class Python_Or_Expression extends PrecedenceOperator 
+	public static @P(610) class Python_Or_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword OR = new Python_Keyword("or");
@@ -368,7 +368,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(370) class Python_For_In_Expression extends PrecedenceOperator
+	public static @P(620) class Python_For_In_Expression extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword FOR = new Python_Keyword("for");
@@ -377,7 +377,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(50) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(380) class Python_If_Else_Expression extends PrecedenceOperator 
+	public static @P(630) class Python_If_Else_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword IF = new Python_Keyword("if");
@@ -386,14 +386,14 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(50) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(390) class Python_If_Expression extends PrecedenceOperator 
+	public static @P(640) class Python_If_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword IF = new Python_Keyword("if");
 		public @S(30) Python_Expression middle = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(400) class Python_Assignment_Expression extends PrecedenceOperator
+	public static @P(650) class Python_Assignment_Expression extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression leftVar = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=", ":=");

@@ -63,12 +63,12 @@ public class C_ForStatement extends TokenChooser
 	{
 		public @S(10) C_Keyword FOR = new C_Keyword("for");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(25) @OPT C_Keyword CONST = new C_Keyword("const");
-		public @S(30) C_Type varType;
-		public @S(40) C_Variable forVar;
-		public @S(50) PunctuationColon colon;
-		public @S(60) C_Expression collection;
-		public @S(70) PunctuationRightParen rightParen;
-		public @S(80) C_Statement action;
+		public @S(30) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(40) C_Type varType;
+		public @S(50) C_Variable forVar;
+		public @S(60) PunctuationColon colon;
+		public @S(70) C_Expression collection;
+		public @S(80) PunctuationRightParen rightParen;
+		public @S(90) C_Statement action;
 	}
 }

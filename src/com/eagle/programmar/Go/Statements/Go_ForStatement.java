@@ -36,6 +36,6 @@ public class Go_ForStatement extends TokenChooser
 		public @S(30) Go_Punctuation colonEquals = new Go_Punctuation(":=");
 		public @S(40) Go_Keyword RANGE = new Go_Keyword("range");
 		public @S(50) Go_Variable variable;
-		public @S(90) Go_Statement statement;
+		public @S(60) Go_Statement statement;
 	}
 }

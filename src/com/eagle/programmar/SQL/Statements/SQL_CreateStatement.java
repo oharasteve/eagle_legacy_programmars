@@ -31,16 +31,16 @@ public class SQL_CreateStatement extends TokenChooser
 	public @CHOICE static class SQL_CreateTableStatement extends TokenSequence
 	{
 		public @S(10) @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-		public @S(15) @OPT SQL_Keyword VIRTUAL = new SQL_Keyword("VIRTUAL");
-		public @S(20) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
-		public @S(30) @OPT SQL_IfNotExists ifNotExists;
-		public @S(40) SQL_Table_Definition table;
-		public @S(50) PunctuationLeftParen leftParen;
-		public @S(60) SeparatedList<SQL_CreateField,PunctuationComma> createFields;
-		public @S(70) @OPT TokenList<SQL_CreateFieldKey> keys;
-		public @S(80) PunctuationRightParen rightParen;
-		public @S(90) @OPT TokenList<SQL_CreateOption> options;
-		public @S(200) PunctuationSemicolon semicolon;
+		public @S(20) @OPT SQL_Keyword VIRTUAL = new SQL_Keyword("VIRTUAL");
+		public @S(30) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
+		public @S(40) @OPT SQL_IfNotExists ifNotExists;
+		public @S(50) SQL_Table_Definition table;
+		public @S(60) PunctuationLeftParen leftParen;
+		public @S(70) SeparatedList<SQL_CreateField,PunctuationComma> createFields;
+		public @S(80) @OPT TokenList<SQL_CreateFieldKey> keys;
+		public @S(90) PunctuationRightParen rightParen;
+		public @S(100) @OPT TokenList<SQL_CreateOption> options;
+		public @S(110) PunctuationSemicolon semicolon;
 	
 		public static class SQL_IfNotExists extends TokenSequence
 		{

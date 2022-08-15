@@ -63,15 +63,15 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @S(10) @OPT @NEWLINE Java_Label label;
 		public @S(20) Java_Keyword FOR = new Java_Keyword("for");
 		public @S(30) PunctuationLeftParen leftParen;
-		public @S(35) @OPT @NOSPACE Java_Annotation annotation;
-		public @S(40) @OPT Java_Keyword FINAL = new Java_Keyword("final");
-		public @S(50) Java_Type varType;
-		public @S(60) Java_Variable forVar;
-		public @S(70) PunctuationColon colon;
-		public @S(80) Java_Expression collection;
-		public @S(90) PunctuationRightParen rightParen;
-		public @S(100) @OPT Java_Comment comment;
-		public @S(110) Java_Statement action;
+		public @S(40) @OPT @NOSPACE Java_Annotation annotation;
+		public @S(50) @OPT Java_Keyword FINAL = new Java_Keyword("final");
+		public @S(60) Java_Type varType;
+		public @S(70) Java_Variable forVar;
+		public @S(80) PunctuationColon colon;
+		public @S(90) Java_Expression collection;
+		public @S(100) PunctuationRightParen rightParen;
+		public @S(110) @OPT Java_Comment comment;
+		public @S(120) Java_Statement action;
 	}
 	
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);

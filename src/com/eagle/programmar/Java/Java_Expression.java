@@ -72,14 +72,14 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(30) @NOSPACE Java_Expression right;
 	}
 
-	public static @P(120) class Java_DotClass extends PrimaryOperator
+	public static @P(110) class Java_DotClass extends PrimaryOperator
 	{
 		public @S(10) Java_Type jtype;
 		public @S(20) @NOSPACE PunctuationPeriod dot;
 		public @S(30) @NOSPACE Java_Keyword CLASS = new Java_Keyword("class");
 	}
 	
-	public static @P(130) class Java_LambdaExpression extends PrimaryOperator
+	public static @P(120) class Java_LambdaExpression extends PrimaryOperator
 	{
 		public @S(10) Java_LambdaVariables params;
 		public @S(20) Java_Punctuation arrow = new Java_Punctuation("->");
@@ -124,7 +124,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		}
 	}
 			
-	public static @P(140) class Java_CastExpression extends PrimaryOperator
+	public static @P(130) class Java_CastExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) SeparatedList<Java_Type, PunctuationAmpersand> types;
@@ -132,7 +132,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(40) Java_Expression expr;
 	}
 
-	public static @P(150) class Java_ExpressionList extends PrimaryOperator
+	public static @P(140) class Java_ExpressionList extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT TokenList<Java_Comment> comment;
@@ -140,7 +140,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(40) PunctuationRightBrace rightBrace;
 	}
 	
-	public static @P(160) class Java_InterfaceCreationWithMethod extends PrimaryOperator
+	public static @P(150) class Java_InterfaceCreationWithMethod extends PrimaryOperator
 	{
 		public @S(10) Java_Keyword NEW = new Java_Keyword("new");
 		public @S(20) Java_KeywordChoice jinterface = new Java_KeywordChoice( 
@@ -152,7 +152,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(70) PunctuationRightBrace rightBrace;
 	}
 
-	public static @P(170) class Java_ClassCreationExpression extends PrimaryOperator
+	public static @P(160) class Java_ClassCreationExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Keyword NEW = new Java_Keyword("new");
 		public @S(20) Java_Type jtype;
@@ -170,7 +170,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		}
 	}
 	
-	public static @P(180) class Java_ClassCreationWithInitializers extends PrimaryOperator
+	public static @P(170) class Java_ClassCreationWithInitializers extends PrimaryOperator
 	{
 		public @S(10) Java_Keyword NEW = new Java_Keyword("new");
 		public @S(20) Java_Type jtype;
@@ -179,14 +179,14 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
 	
-	public static @P(190) class Java_ClassCreationWithSubscript extends PrimaryOperator
+	public static @P(180) class Java_ClassCreationWithSubscript extends PrimaryOperator
 	{
 		public @S(10) Java_Keyword NEW = new Java_Keyword("new");
 		public @S(20) Java_Type jtype;
 		public @S(30) TokenList<Java_Subscript> subscripts;
 	}
 	
-	public static @P(200) class Java_MethodInvocation extends PrimaryOperator
+	public static @P(190) class Java_MethodInvocation extends PrimaryOperator
 	{
 		public @S(10) Java_Variable methodName;
 		public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -194,7 +194,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(40) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
-	public static @P(210) class Java_AnnotationInvocation extends PrimaryOperator
+	public static @P(200) class Java_AnnotationInvocation extends PrimaryOperator
 	{
 		public @S(10) Java_Punctuation at = new Java_Punctuation("@");
 		public @S(20) Java_Variable methodName;
@@ -203,66 +203,66 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
-	public static @P(220) class Java_PreIncrementExpression extends PrimaryOperator
+	public static @P(210) class Java_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Punctuation preIncrementOperator = new Java_Punctuation("++");
 		public @S(20) @NOSPACE Java_Variable var;
 	}
 
-	public static @P(230) class Java_PreDecrementExpression extends PrimaryOperator
+	public static @P(220) class Java_PreDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Punctuation preDecrementOperator = new Java_Punctuation("--");
 		public @S(20) @NOSPACE Java_Variable var;
 	}
 	
-	public static @P(240) class Java_PostIncrementExpression extends PrimaryOperator
+	public static @P(230) class Java_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Variable var;
 		public @S(20) @NOSPACE Java_Punctuation postIncrementOperator = new Java_Punctuation("++");
 	}
 
-	public static @P(250) class Java_PostDecrementExpression extends PrimaryOperator
+	public static @P(240) class Java_PostDecrementExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Variable var;
 		public @S(20) @NOSPACE Java_Punctuation postDecrementOperator = new Java_Punctuation("--");
 	}
 	
-	public static @P(260) class Java_NegativeExpression extends PrimaryOperator
+	public static @P(250) class Java_NegativeExpression extends PrimaryOperator
 	{
 		public @S(10) Java_PunctuationChoice operator = new Java_PunctuationChoice("-", "+");
 		public @S(20) Java_Expression expr;
 	}
 
-	public static @P(270) class Java_LogicalNotExpression extends PrimaryOperator
+	public static @P(260) class Java_LogicalNotExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Punctuation logicalNotOperator = new Java_Punctuation('~');
 		public @S(20) Java_Expression expr;
 	}
 	
-	public static @P(280) class Java_NotExpression extends PrimaryOperator
+	public static @P(270) class Java_NotExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Punctuation notOperator = new Java_Punctuation('!');
 		public @S(20) Java_Expression expr;
 	}
 	
-	public static @P(290) class Java_BuiltIn extends PrimaryOperator
+	public static @P(280) class Java_BuiltIn extends PrimaryOperator
 	{
 		public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice("false", "true", "null", "this", "super");
 	}
 	
-	public static @P(300) class Java_VariableExpression extends PrimaryOperator
+	public static @P(290) class Java_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Variable variable;
 	}
 	
-	public static @P(310) class Java_ParenthesizedExpression extends PrimaryOperator
+	public static @P(300) class Java_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @NOSPACE Java_Expression expression;
 		public @S(30) @NOSPACE PunctuationRightParen rightParen;
 	}
 	
-	public static @P(320) class Java_CommentExpression extends PrimaryOperator
+	public static @P(310) class Java_CommentExpression extends PrimaryOperator
 	{
 		public @S(10) Java_Comment comment;
 		public @S(20) Java_Expression expr;
@@ -271,7 +271,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Java_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Java_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression expr = new Java_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -279,7 +279,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(410) class Java_Subfield extends PrecedenceOperator
+	public static @P(510) class Java_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -287,98 +287,98 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(40) @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Java_ColonColon extends PrecedenceOperator
+	public static @P(520) class Java_ColonColon extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
 		public @S(30) @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Java_ColonColonNew extends PrecedenceOperator
+	public static @P(530) class Java_ColonColonNew extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @NOSPACE Java_Punctuation colonColon = new Java_Punctuation("::");
 		public @S(30) @NOSPACE Java_Keyword NEW = new Java_Keyword("new");
 	}
 
-	public static @P(440) class Java_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(540) class Java_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("*", "/", "%");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class Java_AdditiveExpression extends PrecedenceOperator
+	public static @P(550) class Java_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("+", "-");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(460) class Java_ShiftExpression extends PrecedenceOperator
+	public static @P(560) class Java_ShiftExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice(">>>", "<<", ">>");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Java_RelationalExpression extends PrecedenceOperator
+	public static @P(570) class Java_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(480) class Java_InstanceOfExpression extends PrecedenceOperator
+	public static @P(580) class Java_InstanceOfExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression expr = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_Keyword instanceOperator = new Java_Keyword("instanceof");
 		public @S(30) Java_Type type;
 	}
 
-	public static @P(490) class Java_EqualityExpression extends PrecedenceOperator
+	public static @P(590) class Java_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("==", "!=");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(500) class Java_AndExpression extends PrecedenceOperator
+	public static @P(600) class Java_AndExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_Punctuation bitwiseAndOperator = new Java_Punctuation('&');
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(510) class Java_ExclusiveOrExpression extends PrecedenceOperator
+	public static @P(610) class Java_ExclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_Punctuation bitwiseXOrOperator = new Java_Punctuation('^');
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(520) class Java_InclusiveOrExpression extends PrecedenceOperator
+	public static @P(620) class Java_InclusiveOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_Punctuation bitwiseOrOperator = new Java_Punctuation('|');
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(530) class Java_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(630) class Java_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_Punctuation andOperator = new Java_Punctuation("&&");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(540) class Java_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(640) class Java_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Java_Punctuation orOperator = new Java_Punctuation("||");
 		public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(550) class Java_AssignmentExpression extends PrecedenceOperator
+	public static @P(650) class Java_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression var = new Java_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Java_PunctuationChoice equals = new Java_PunctuationChoice(
@@ -397,7 +397,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 		public @S(30) Java_Expression expr;
 	}
 	
-	public static @P(560) class Java_TrueFalseExpression extends PrecedenceOperator
+	public static @P(660) class Java_TrueFalseExpression extends PrecedenceOperator
 	{
 		public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Java_Punctuation questionMark = new Java_Punctuation('?');

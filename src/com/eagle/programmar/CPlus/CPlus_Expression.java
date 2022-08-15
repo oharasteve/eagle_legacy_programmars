@@ -32,20 +32,6 @@ public class CPlus_Expression extends C_Expression
 				public @S(20) @OPT SeparatedList<C_Expression, PunctuationComma> expression;
 				public @S(30) PunctuationRightParen rightParen;
 			}
-			
 		}
 	}
-
-//	public static @P(210) class CPlus_NamespaceGlobal extends PrimaryOperator
-//	{
-//		public @S(10) @OPT C_Punctuation colonColon = new C_Punctuation("::");
-//	}
-//	
-//	public static @P(510) class CPlus_NamespaceSub extends PrecedenceOperator
-//	{
-//		public @S(10) C_Expression left = new C_Expression(this, AllowedPrecedence.ATLEAST);
-//		public @S(20) @OPT CPlus_Generic generic;
-//		public @S(30) C_Punctuation colonColon = new C_Punctuation("::");
-//		public @S(40) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
-//	}
 }

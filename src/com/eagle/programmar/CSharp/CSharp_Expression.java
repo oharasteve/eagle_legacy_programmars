@@ -262,9 +262,9 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(520) class CSharp_SubfieldExpression extends PrecedenceOperator
 	{
 		public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(15) @OPT CSharp_Punctuation question = new CSharp_Punctuation('?');
-		public @S(20) @NOSPACE PunctuationPeriod dot;
-		public @S(30) @NOSPACE CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) @OPT CSharp_Punctuation question = new CSharp_Punctuation('?');
+		public @S(30) @NOSPACE PunctuationPeriod dot;
+		public @S(40) @NOSPACE CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(530) class CSharp_MultiplicativeExpression extends PrecedenceOperator

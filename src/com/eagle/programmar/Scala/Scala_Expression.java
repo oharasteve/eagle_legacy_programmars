@@ -106,13 +106,13 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Scala_Expression expression;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Scala_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Scala_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression expr = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -122,56 +122,56 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 		public @S(60) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(410) class Scala_Subfield extends PrecedenceOperator
+	public static @P(510) class Scala_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Scala_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(520) class Scala_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_PunctuationChoice operator = new Scala_PunctuationChoice("*", "/", "%");
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Scala_AdditiveExpression extends PrecedenceOperator
+	public static @P(530) class Scala_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_PunctuationChoice operator = new Scala_PunctuationChoice("+", "-");
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Scala_RelationalExpression extends PrecedenceOperator
+	public static @P(540) class Scala_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_PunctuationChoice operator = new Scala_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class Scala_EqualityExpression extends PrecedenceOperator
+	public static @P(550) class Scala_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_PunctuationChoice operator = new Scala_PunctuationChoice("==", "!=");
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Scala_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(560) class Scala_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_Punctuation andOperator = new Scala_Punctuation("&&");
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Scala_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(570) class Scala_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_Punctuation orOperator = new Scala_Punctuation("||");
 		public @S(30) Scala_Expression right = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(480) class Scala_AssignmentExpression extends PrecedenceOperator
+	public static @P(580) class Scala_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression var = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Scala_PunctuationChoice equals = new Scala_PunctuationChoice(
@@ -184,7 +184,7 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 		public @S(30) Scala_Expression expr;
 	}
 	
-	public static @P(490) class Scala_RangeExpression extends PrecedenceOperator
+	public static @P(590) class Scala_RangeExpression extends PrecedenceOperator
 	{
 		public @S(10) Scala_Expression left = new Scala_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Scala_Keyword TO = new Scala_Keyword("to");

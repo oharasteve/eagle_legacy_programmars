@@ -62,7 +62,7 @@ public class Django_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(200) static class Django_SubscriptExpression extends PrecedenceOperator
+	public @P(500) static class Django_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Django_Expression expr = new Django_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -70,14 +70,14 @@ public class Django_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 	
-	public @P(210) static class Django_LengthExpression extends PrecedenceOperator
+	public @P(510) static class Django_LengthExpression extends PrecedenceOperator
 	{
 		public @S(10) Django_Expression left = new Django_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Django_Punctuation bar = new Django_Punctuation("|");
 		public @S(30) Django_Keyword LENGTH = new Django_Keyword("length");
 	}
 
-	public @P(220) static class Django_EqualityExpression extends PrecedenceOperator
+	public @P(520) static class Django_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Django_Expression left = new Django_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Django_PunctuationChoice operator = new Django_PunctuationChoice("==", "!=");

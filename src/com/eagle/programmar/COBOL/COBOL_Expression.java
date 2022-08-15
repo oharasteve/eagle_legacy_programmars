@@ -168,35 +168,35 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Binary expressions
 	
-	public static @P(400) class COBOL_ThroughExpression extends PrecedenceOperator
+	public static @P(500) class COBOL_ThroughExpression extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) COBOL_Keyword THRU = new COBOL_Keyword("THRU");
 		public @S(30) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(410) class COBOL_ConcatenateExpression extends PrecedenceOperator
+	public static @P(510) class COBOL_ConcatenateExpression extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) COBOL_Punctuation ampersand = new COBOL_Punctuation('&');
 		public @S(30) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(420) class COBOL_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(520) class COBOL_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) COBOL_PunctuationChoice timesDivide = new COBOL_PunctuationChoice("*", "/");
 		public @S(30) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(430) class COBOL_AdditiveExpression extends PrecedenceOperator
+	public static @P(530) class COBOL_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) COBOL_PunctuationChoice plusMinus = new COBOL_PunctuationChoice("+", "-");
 		public @S(30) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class COBOL_RelationCondition extends PrecedenceOperator
+	public static @P(540) class COBOL_RelationCondition extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
@@ -237,7 +237,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 		}
 	}
 
-	public static @P(450) class COBOL_AndCondition extends PrecedenceOperator
+	public static @P(550) class COBOL_AndCondition extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) COBOL_Keyword AND = new COBOL_Keyword("AND");
@@ -245,7 +245,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 		public @S(40) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(460) class COBOL_OrCondition extends PrecedenceOperator
+	public static @P(560) class COBOL_OrCondition extends PrecedenceOperator
 	{
 		public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) COBOL_Keyword OR = new COBOL_Keyword("OR");

@@ -107,13 +107,13 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Julia_Expression expression;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Julia_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Julia_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression expr = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -129,56 +129,56 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 		}
 	}
 
-	public static @P(410) class Julia_Subfield extends PrecedenceOperator
+	public static @P(510) class Julia_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Julia_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(520) class Julia_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("*", "/", "%");
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Julia_AdditiveExpression extends PrecedenceOperator
+	public static @P(530) class Julia_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("+", "-");
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Julia_RelationalExpression extends PrecedenceOperator
+	public static @P(540) class Julia_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class Julia_EqualityExpression extends PrecedenceOperator
+	public static @P(550) class Julia_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("==", "!=");
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Julia_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(560) class Julia_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Julia_Punctuation andOperator = new Julia_Punctuation("&&");
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Julia_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(570) class Julia_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Julia_Punctuation orOperator = new Julia_Punctuation("||");
 		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(480) class Julia_AssignmentExpression extends PrecedenceOperator
+	public static @P(580) class Julia_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression var = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice(
@@ -191,7 +191,7 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 		public @S(30) Julia_Expression expr;
 	}
 	
-	public static @P(490) class Julia_RangeExpression extends PrecedenceOperator
+	public static @P(590) class Julia_RangeExpression extends PrecedenceOperator
 	{
 		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationColon colon;

@@ -97,35 +97,35 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(410) class Fortran_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(500) class Fortran_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("*", "/");
 		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Fortran_AdditiveExpression extends PrecedenceOperator
+	public static @P(510) class Fortran_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("+", "-");
 		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(430) class Fortran_StringConcatenation extends PrecedenceOperator
+	public static @P(520) class Fortran_StringConcatenation extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_Punctuation operator = new Fortran_Punctuation("//");
 		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Fortran_RelationalExpression extends PrecedenceOperator
+	public static @P(530) class Fortran_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("<", ">", "<=", ">=");
 		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(450) class Fortran_EqualityExpression extends PrecedenceOperator
+	public static @P(540) class Fortran_EqualityExpression extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_EqOper oper;
@@ -138,14 +138,14 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 		}
 	}
 	
-	public static @P(460) class Fortran_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(550) class Fortran_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_Keyword andOperator = new Fortran_Keyword(".AND.");
 		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Fortran_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(560) class Fortran_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Fortran_Keyword orOperator = new Fortran_Keyword(".OR.");

@@ -28,11 +28,11 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 	public @S(20) @OPT Java_Annotation annotation;
 	public @S(30) @OPT TokenList<Java_MethodModifier> modifiers;
 	public @S(40) Java_MethodTypeAndName typeAndName;
-	public @S(70) @OPT TokenList<Java_EmptyBrackets> brackets;
-	public @S(80) @OPT Java_MethodDefault methodDefault;
-	public @S(90) @OPT Java_MethodThrows jthrows;
-	public @S(100) @OPT Java_Comment comment;
-	public @S(110) Java_MethodBody body;
+	public @S(50) @OPT TokenList<Java_EmptyBrackets> brackets;
+	public @S(60) @OPT Java_MethodDefault methodDefault;
+	public @S(70) @OPT Java_MethodThrows jthrows;
+	public @S(80) @OPT Java_Comment comment;
+	public @S(90) Java_MethodBody body;
 	
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{

@@ -24,13 +24,13 @@ public class FSharp_IfStatement extends TokenSequence
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
 		public @S(20) FSharp_Keyword ELIF = new FSharp_Keyword("elif");
 		public @S(30) FSharp_Expression condition;
-		public @S(50) FSharp_SingleOrMultiLineStatement elifStatement;
+		public @S(40) FSharp_SingleOrMultiLineStatement elifStatement;
 	}
 		
 	public static class FSharp_IfElse extends TokenSequence
 	{
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
 		public @S(20) FSharp_Keyword ELSE = new FSharp_Keyword("else");
-		public @S(40) FSharp_SingleOrMultiLineStatement ifElseStatement;
+		public @S(30) FSharp_SingleOrMultiLineStatement ifElseStatement;
 	}
 }

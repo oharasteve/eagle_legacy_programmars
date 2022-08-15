@@ -76,13 +76,13 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(20) Delphi_Parameter_List params;
 	}
 	
-	public static @P(135) class Delphi_Function_Call extends PrimaryOperator
+	public static @P(140) class Delphi_Function_Call extends PrimaryOperator
 	{
 		public @S(10) Delphi_Variable name;
 		public @S(20) Delphi_Parameter_List params;
 	}
 	
-	public static @P(140) class Delphi_Cast extends PrimaryOperator
+	public static @P(150) class Delphi_Cast extends PrimaryOperator
 	{
 		public @S(10) Delphi_Type type;
 		public @S(20) PunctuationLeftParen leftParen;
@@ -90,18 +90,18 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(40) PunctuationRightParen rightParen;		
 	}
 	
-	public static @P(150) class Delphi_VariableExpression extends PrimaryOperator
+	public static @P(160) class Delphi_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) Delphi_Variable variable;
 	}
 	
-	public static @P(160) class Delphi_UnarySign extends PrimaryOperator
+	public static @P(170) class Delphi_UnarySign extends PrimaryOperator
 	{
 		public @S(10) Delphi_PunctuationChoice sign = new Delphi_PunctuationChoice("-", "+");
 		public @S(20) Delphi_Expression expr;
 	}
 	
-	public static @P(170) class Delphi_NotOp extends PrimaryOperator
+	public static @P(180) class Delphi_NotOp extends PrimaryOperator
 	{
 		public @S(10) Delphi_Keyword NOT = new Delphi_Keyword("Not");
 		public @S(20) Delphi_Expression expr;
@@ -110,14 +110,14 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public static @P(180) class Delphi_Dot_Expression extends PrecedenceOperator 
+	public static @P(500) class Delphi_Dot_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Delphi_Expression right = new Delphi_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(190) class Delphi_Multiplicative_Expression extends PrecedenceOperator 
+	public static @P(510) class Delphi_Multiplicative_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Delphi_Multiplicative_Operator multOp;
@@ -130,7 +130,7 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 
-	public static @P(200) class Delphi_Additive_Expression extends PrecedenceOperator 
+	public static @P(520) class Delphi_Additive_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Delphi_Additive_Operator addOp;
@@ -143,7 +143,7 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 	
-	public static @P(210) class Delphi_Relational_Expression extends PrecedenceOperator 
+	public static @P(530) class Delphi_Relational_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Delphi_Relational_Operator relOp;
@@ -157,7 +157,7 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 	
-	public static @P(220) class Delphi_DotDot_Expression extends PrecedenceOperator 
+	public static @P(540) class Delphi_DotDot_Expression extends PrecedenceOperator 
 	{
 		public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Delphi_Punctuation dotDot = new Delphi_Punctuation("..");

@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Bash;
 
-import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.programmar.Bash.Terminals.Bash_Number;
@@ -97,9 +96,8 @@ public class Bash_Expression extends PrecedenceChooser
 	{
 		public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) Bash_Identifier_Reference id;
-		public @S(40) TokenList<Bash_Expression> args;
-		public @S(50) PunctuationRightParen rightParen;
+		public @S(30) Bash_Statement stmt;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static @P(180) class Bash_Evaluate2 extends PrimaryOperator

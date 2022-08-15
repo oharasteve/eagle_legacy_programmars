@@ -20,7 +20,9 @@ import com.eagle.programmar.Bash.Commands.Bash_GccCommand;
 import com.eagle.programmar.Bash.Commands.Bash_GrepCommand;
 import com.eagle.programmar.Bash.Commands.Bash_IfStatement;
 import com.eagle.programmar.Bash.Commands.Bash_LispCommand;
+import com.eagle.programmar.Bash.Commands.Bash_MkTempCommand;
 import com.eagle.programmar.Bash.Commands.Bash_PerlProgram;
+import com.eagle.programmar.Bash.Commands.Bash_PwdCommand;
 import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
 import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
@@ -52,6 +54,8 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_GrepCommand grepCommand;
 		public @CHOICE Bash_IfStatement ifStatement;
 		public @CHOICE Bash_LispCommand lispCommand;
+		public @CHOICE Bash_MkTempCommand mktempCommand;
+		public @CHOICE Bash_PwdCommand pwdCommand;
 		public @CHOICE Bash_ReadCommand readCommand;
 		public @CHOICE Bash_SedCommand sedCommand;
 		public @CHOICE Bash_TeeCommand teeCommand;

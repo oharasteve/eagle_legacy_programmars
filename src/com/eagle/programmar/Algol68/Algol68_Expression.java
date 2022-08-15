@@ -47,61 +47,61 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(90) class Algol68_ArrayInfo extends PrimaryOperator
+	public static @P(100) class Algol68_ArrayInfo extends PrimaryOperator
 	{
 		public @S(10) Algol68_KeywordChoice UPB = new Algol68_KeywordChoice("UPB", "LWB");
 		public @S(20) Algol68_Variable arrayName;
 	}
 
-	public static @P(100) class Algol68_MethodInvocation extends PrimaryOperator
+	public static @P(110) class Algol68_MethodInvocation extends PrimaryOperator
 	{
 		public @S(10) Algol68_Variable methodName;
 		public @S(20) @OPT Algol68_Punctuation question = new Algol68_Punctuation("?");
 		public @S(30) Algol68_FunctionArguments args;
 	}
 
-	public static @P(110) class Algol68_PreIncrementExpression extends PrimaryOperator
+	public static @P(120) class Algol68_PreIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_PunctuationChoice preIncrementOperator = new Algol68_PunctuationChoice("++", "--");
 		public @S(20) Algol68_Variable var;
 	}
 
-	public static @P(120) class Algol68_PostIncrementExpression extends PrimaryOperator
+	public static @P(130) class Algol68_PostIncrementExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_Variable var;
 		public @S(20) Algol68_PunctuationChoice postIncrementOperator = new Algol68_PunctuationChoice("++", "--");
 	}
 
-	public static @P(130) class Algol68_NegativeExpression extends PrimaryOperator
+	public static @P(140) class Algol68_NegativeExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("-");
 		public @S(20) Algol68_Expression expr;
 	}
 
-	public static @P(140) class Algol68_LogicalNotExpression extends PrimaryOperator
+	public static @P(150) class Algol68_LogicalNotExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_Punctuation logicalNotOperator = new Algol68_Punctuation('~');
 		public @S(20) Algol68_Expression expr;
 	}
 	
-	public static @P(150) class Algol68_BuiltIn extends PrimaryOperator
+	public static @P(160) class Algol68_BuiltIn extends PrimaryOperator
 	{
 		public @S(10) Algol68_KeywordChoice builtinConstant = new Algol68_KeywordChoice("FALSE", "TRUE");
 	}
 	
-	public static @P(160) class Algol68_VariableExpression extends PrimaryOperator
+	public static @P(170) class Algol68_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) Algol68_Variable variable;
 	}
 	
-	public static @P(170) class Algol68_BracketsExpression extends PrimaryOperator
+	public static @P(180) class Algol68_BracketsExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) SeparatedList<Algol68_Expression,PunctuationComma> expression;
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
-	public static @P(180) class Algol68_ParenthesizedExpression extends PrimaryOperator
+	public static @P(190) class Algol68_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) SeparatedList<Algol68_Expression,PunctuationComma> expressions;
@@ -111,7 +111,7 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(400) class Algol68_SubscriptExpression extends PrecedenceOperator
+	public static @P(500) class Algol68_SubscriptExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression expr = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) PunctuationLeftBracket leftBracket;
@@ -127,14 +127,14 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 		}
 	}
 
-	public static @P(410) class Algol68_Subfield extends PrecedenceOperator
+	public static @P(510) class Algol68_Subfield extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationPeriod dot;
 		public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class Algol68_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(520) class Algol68_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Algol68_MultOper operator;
@@ -147,14 +147,14 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 		}
 	}
 
-	public static @P(430) class Algol68_AdditiveExpression extends PrecedenceOperator
+	public static @P(530) class Algol68_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("+", "-");
 		public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(440) class Algol68_RelationalExpression extends PrecedenceOperator
+	public static @P(540) class Algol68_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Algol68_RelOp relOp;
@@ -167,21 +167,21 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 		}
 	}
 
-	public static @P(450) class Algol68_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(550) class Algol68_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Algol68_Keyword andOperator = new Algol68_Keyword("and");
 		public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(460) class Algol68_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(560) class Algol68_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Algol68_Keyword orOperator = new Algol68_Keyword("or");
 		public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
-	public static @P(470) class Algol68_AssignmentExpression extends PrecedenceOperator
+	public static @P(570) class Algol68_AssignmentExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression var = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Algol68_PunctuationChoice equals = new Algol68_PunctuationChoice(
@@ -192,7 +192,7 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 		public @S(30) Algol68_Expression expr;
 	}
 	
-	public static @P(480) class Algol68_RangeExpression extends PrecedenceOperator
+	public static @P(580) class Algol68_RangeExpression extends PrecedenceOperator
 	{
 		public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Algol68_Punctuation dotDot = new Algol68_Punctuation("..");

@@ -94,21 +94,21 @@ public class TCL_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 	
-	public static @P(400) class TCL_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(500) class TCL_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) TCL_PunctuationChoice operator = new TCL_PunctuationChoice("*", "/", "%");
 		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(410) class TCL_AdditiveExpression extends PrecedenceOperator
+	public static @P(510) class TCL_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) TCL_PunctuationChoice operator = new TCL_PunctuationChoice("+", "-");
 		public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(420) class TCL_RelationalExpression extends PrecedenceOperator
+	public static @P(520) class TCL_RelationalExpression extends PrecedenceOperator
 	{
 		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) TCL_RelOperator relOper;
@@ -122,7 +122,7 @@ public class TCL_Expression extends PrecedenceChooser
 		}
 	}
 		
-	public static @P(430) class TCL_ConditionalAndExpression extends PrecedenceOperator
+	public static @P(530) class TCL_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) TCL_AndOperator andOper;
@@ -135,7 +135,7 @@ public class TCL_Expression extends PrecedenceChooser
 		}
 	}
 		
-	public static @P(440) class TCL_ConditionalOrExpression extends PrecedenceOperator
+	public static @P(540) class TCL_ConditionalOrExpression extends PrecedenceOperator
 	{
 		public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) TCL_OrOperator orOper;
