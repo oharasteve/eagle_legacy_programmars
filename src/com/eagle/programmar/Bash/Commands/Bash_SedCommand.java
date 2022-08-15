@@ -7,6 +7,7 @@ import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Literal;
+import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -26,6 +27,12 @@ public class Bash_SedCommand extends TokenSequence
 		{
 			public @S(10) Bash_Keyword F = new Bash_Keyword("-f");
 			public @S(20) Bash_FilenameOrLiteral fileName;
+		}
+
+		public @CHOICE static class Bash_SedOptionPlus extends TokenSequence
+		{
+			public @S(10) Bash_Punctuation plus = new Bash_Punctuation("+");
+			public @S(20) Bash_KeywordChoice EX = new Bash_KeywordChoice("e", "ex", "x");
 		}
 	}
 }

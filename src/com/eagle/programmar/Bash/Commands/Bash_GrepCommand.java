@@ -19,6 +19,6 @@ public class Bash_GrepCommand extends TokenSequence
 	
 	public static class Bash_GrepOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice I = new Bash_KeywordChoice("-i", "-v", "-E", "-q");
+		public @CHOICE Bash_KeywordChoice I = new Bash_KeywordChoice("-i", "-v", "-E", "-q", "-qE");
 	}
 }
