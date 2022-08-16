@@ -56,8 +56,8 @@ public class CPlus_Program extends C_Program
 		overrider.override(C_Literal.class, CPlus_Literal.class);
 	}
 	
-	// Step is 5 to avoid duplicate @S(10) in C_Program
-	public @S(5) @OPT TokenList<CPlus_Element> items;
+	// Step is 9 to avoid duplicate @S(10) in C_Program
+	public @S(9) @OPT TokenList<CPlus_Element> items;
 
 	public static class CPlus_Element extends TokenChooser
 	{

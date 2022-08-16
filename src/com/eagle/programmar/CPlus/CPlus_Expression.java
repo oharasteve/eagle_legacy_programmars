@@ -16,7 +16,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CPlus_Expression extends C_Expression
 {
-	public static @P(500) class CPlus_NewExpression extends PrimaryOperator
+	// Caution -- cannot conflict with any P() numbers in C_Expression
+	public static @P(499) class CPlus_NewExpression extends PrimaryOperator
 	{
 		public @S(10) C_Keyword NEW = new C_Keyword("new");
 		public @S(20) C_Type type;
