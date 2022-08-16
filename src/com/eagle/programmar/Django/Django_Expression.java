@@ -63,7 +63,8 @@ public class Django_Expression extends PrecedenceChooser
 	{
 		public @S(10) Django_Variable variable;
 		public @S(20) Django_Keyword IS = new Django_Keyword("is");
-		public @S(30) Django_Keyword DEFINED = new Django_Keyword("defined");
+		public @S(30) @OPT Django_Keyword NOT = new Django_Keyword("not");
+		public @S(40) Django_Keyword DEFINED = new Django_Keyword("defined");
 	}
 
 	public @P(130) static class Django_BracketsExpression extends PrimaryOperator
