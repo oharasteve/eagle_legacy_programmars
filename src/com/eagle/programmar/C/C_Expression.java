@@ -76,12 +76,12 @@ public class C_Expression extends PrecedenceChooser
 	
 	public static @P(130) class C_FunctionCall extends PrimaryOperator
 	{
-		public @S(5) @OPT CPlus_NamespaceList namespace;
-		public @S(10) C_Variable functionName;
-		public @S(20) @OPT C_Generic generic;
-		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) @OPT C_ArgumentList argList;
-		public @S(50) PunctuationRightParen rightParen;
+		public @S(10) @OPT CPlus_NamespaceList namespace;
+		public @S(20) C_Variable functionName;
+		public @S(30) @OPT C_Generic generic;
+		public @S(40) PunctuationLeftParen leftParen;
+		public @S(50) @OPT C_ArgumentList argList;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 				
 	public static @P(140) class C_FunctionName extends PrimaryOperator

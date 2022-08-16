@@ -31,10 +31,10 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 	{
 		public @CHOICE static class CPlus_MethodWithType extends TokenSequence
 		{
-			public @S(5) @OPT C_Keyword CONST = new C_Keyword("const");
-			public @S(10) CPlus_Type type;
-			public @S(20) @OPT CPlus_NamespaceList nameSpaces;
-			public @S(30) C_Identifier_Reference methodName;
+			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
+			public @S(20) CPlus_Type type;
+			public @S(30) @OPT CPlus_NamespaceList nameSpaces;
+			public @S(40) C_Identifier_Reference methodName;
 		}
 
 		public @LAST static class CPlus_MethodNoType extends TokenSequence

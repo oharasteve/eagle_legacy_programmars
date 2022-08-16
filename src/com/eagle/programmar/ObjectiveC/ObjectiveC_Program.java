@@ -24,8 +24,8 @@ public class ObjectiveC_Program extends C_Program
 		return "TBD";
 	}
 
-	// Step is 5 to avoid duplicate @S(10) in C_Program
-	public @S(5) @OPT TokenList<ObjectiveC_Element> items;
+	// Step is 9 to avoid duplicate @S(10) in C_Program
+	public @S(9) @OPT TokenList<ObjectiveC_Element> items;
 	
 	public static class ObjectiveC_Element extends TokenChooser
 	{

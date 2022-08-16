@@ -104,7 +104,7 @@ public class C_Program extends EagleLanguage
 		return modifiers;
 	}
 	
-	// Note that CPlus_Program has an @S(5)
+	// Note that CPlus_Program has an S(9) and ObjectiveC_Program has an S(8)
 	public @S(10) @OPT TokenList<C_StatementOrComment> elements;
 
 	public static class C_StatementOrComment extends TokenChooser

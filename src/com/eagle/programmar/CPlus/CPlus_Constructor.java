@@ -26,14 +26,14 @@ public class CPlus_Constructor extends TokenChooser
 {
 	public @CHOICE static class CPlus_ConstructorWithParameters extends TokenSequence
 	{
-		public @S(5) @OPT C_KeywordChoice VIRTUAL = new C_KeywordChoice("virtual", "constexpr", "explicit");
-		public @S(10) @OPT C_Punctuation tilde = new C_Punctuation('~');
-		public @S(20) @OPT CPlus_NamespaceList nameSpaces;
-		public @S(30) CPlus_Class_Reference constructorName;
-		public @S(40) C_Function_ParameterDefs parameters;
-		public @S(50) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
-		public @S(60) @OPT CPlus_ConstructorCallSupers callSupers;
-		public @S(70) CPlus_ConstructorValue value;
+		public @S(10) @OPT C_KeywordChoice VIRTUAL = new C_KeywordChoice("virtual", "constexpr", "explicit");
+		public @S(20) @OPT C_Punctuation tilde = new C_Punctuation('~');
+		public @S(30) @OPT CPlus_NamespaceList nameSpaces;
+		public @S(40) CPlus_Class_Reference constructorName;
+		public @S(50) C_Function_ParameterDefs parameters;
+		public @S(60) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
+		public @S(70) @OPT CPlus_ConstructorCallSupers callSupers;
+		public @S(80) CPlus_ConstructorValue value;
 		
 		public static class CPlus_ConstructorValue extends TokenChooser
 		{
