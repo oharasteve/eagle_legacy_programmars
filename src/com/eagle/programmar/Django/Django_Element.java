@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Django;
 
+import com.eagle.programmar.Django.Terminals.Django_Comment;
 import com.eagle.programmar.HTML.HTML_Program.HTML_Element;
 import com.eagle.programmar.HTML.HTML_Syntax;
 import com.eagle.programmar.HTML.HTML_TableRow;
@@ -12,4 +13,5 @@ public class Django_Element extends TokenChooser
 {
 	public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_TableRow tableRow;
 	public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Element element;
+	public @CHOICE Django_Comment comment;
 }

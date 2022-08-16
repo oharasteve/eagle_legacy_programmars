@@ -9,8 +9,12 @@ import com.eagle.programmar.Django.Controls.Django_BlockTransControl;
 import com.eagle.programmar.Django.Controls.Django_CommentControl;
 import com.eagle.programmar.Django.Controls.Django_ExtendsControl;
 import com.eagle.programmar.Django.Controls.Django_ForControl;
+import com.eagle.programmar.Django.Controls.Django_FromControl;
 import com.eagle.programmar.Django.Controls.Django_IfControl;
+import com.eagle.programmar.Django.Controls.Django_ImportControl;
 import com.eagle.programmar.Django.Controls.Django_LoadControl;
+import com.eagle.programmar.Django.Controls.Django_MacroControl;
+import com.eagle.programmar.Django.Controls.Django_SetControl;
 import com.eagle.programmar.Django.Controls.Django_SpacelessControl;
 import com.eagle.programmar.Django.Controls.Django_TransControl;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
@@ -34,8 +38,12 @@ public class Django_Control extends TokenSequence
 		public @CHOICE Django_CommentControl commentControl;
 		public @CHOICE Django_ExtendsControl extendsControl;
 		public @CHOICE Django_ForControl forControl;
+		public @CHOICE Django_FromControl fromControl;
 		public @CHOICE Django_IfControl ifControl;
+		public @CHOICE Django_ImportControl importControl;
 		public @CHOICE Django_LoadControl loadControl;
+		public @CHOICE Django_MacroControl macroControl;
+		public @CHOICE Django_SetControl setControl;
 		public @CHOICE Django_SpacelessControl spacelessControl;
 		public @CHOICE Django_TransControl transControl;
 	}

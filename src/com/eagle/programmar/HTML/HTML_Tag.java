@@ -5,6 +5,7 @@ package com.eagle.programmar.HTML;
 
 import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
+import com.eagle.programmar.Django.Terminals.Django_Comment;
 import com.eagle.programmar.HTML.Terminals.HTML_Identifier;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.programmar.HTML.Terminals.HTML_PunctuationChoice;
@@ -26,6 +27,7 @@ public class HTML_Tag extends TokenSequence
 		public @CHOICE HTML_Attribute attribute;
 		public @CHOICE Django_Control control;
 		public @CHOICE Django_Insert insert;
+		public @CHOICE Django_Comment comment;
 	}
 	
 	public static class HTML_Tag_Namespace extends TokenSequence

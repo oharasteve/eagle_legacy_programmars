@@ -7,15 +7,15 @@ import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.TerminalCommentToken;
 
-public class Django_Comment extends TerminalCommentToken
+public class Django_CommentUntilBrace extends TerminalCommentToken
 {
 	// Need a default constructor for the parser
-	public Django_Comment()
+	public Django_CommentUntilBrace()
 	{
 		this("");
 	}
 	
-	public Django_Comment(String comment)
+	public Django_CommentUntilBrace(String comment)
 	{
 		super(comment);
 	}
@@ -25,6 +25,6 @@ public class Django_Comment extends TerminalCommentToken
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
-		return super.possibleCommentPair2(lines, rec, "{#", "#}");
+		return commentUntilSentinel(lines, rec, "{%");
 	}
 }

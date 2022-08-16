@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Django.Controls;
 
-import com.eagle.programmar.Django.Terminals.Django_Comment;
+import com.eagle.programmar.Django.Terminals.Django_CommentUntilBrace;
 import com.eagle.programmar.Django.Terminals.Django_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.tokens.TokenSequence;
@@ -15,7 +15,7 @@ public class Django_CommentControl extends TokenSequence
 	public @S(20) @OPT PunctuationHyphen dash2;
 	public @S(30) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
 	
-	public @S(40) Django_Comment comment;
+	public @S(40) Django_CommentUntilBrace comment;
 
 	public @S(50) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
 	public @S(60) @OPT PunctuationHyphen dash3;
