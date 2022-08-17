@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python;
 
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
@@ -19,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Python_Type extends TokenChooser implements AbstractType
 {
-	public @CHOICE Python_KeywordChoice TYPES = new Python_KeywordChoice(
+	public @CHOICE Python_KeywordChoice PRIMITIVES = new Python_KeywordChoice(
 			"Any",
 			"None",
 			"bool",
@@ -41,18 +42,33 @@ public class Python_Type extends TokenChooser implements AbstractType
 		}
 	}
 	
-	public @FIRST static class Python_StrongType extends TokenSequence
+	public @FIRST static class Python_StructuredType extends TokenSequence
 	{
-		public @S(10) Python_KeywordChoice TUPLE = new Python_KeywordChoice(
+		public @S(10) @OPT Python_TypeTyping typing;
+		public @S(20) Python_KeywordChoice TUPLE = new Python_KeywordChoice(
+				"Callable", "callable",
+				"DefaultDict", "defaultdict",
 				"Dict", "dict",
+				"Iterable", "iterable",
+				"Iterator", "iterator",
 				"List", "list",
-				"Optional",
-				"Tuple", "tuple",
-				"Type",
+				"Mapping", "mapping",
+				"MutableMapping", "mutablemapping",
+				"Optional", "optional",
 				"Sequence", "sequence",
+				"Set", "set",
+				"Tuple", "tuple",
+				"Type", "type",
 				"Union", "union");
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) SeparatedList<Python_Type,PunctuationComma> types;
-		public @S(40) PunctuationRightBracket rightBracket;
+		public @S(30) PunctuationLeftBracket leftBracket;
+		public @S(40) @OPT Python_EndOfLine eoln;
+		public @S(50) SeparatedList<Python_Type,PunctuationComma> types;
+		public @S(60) PunctuationRightBracket rightBracket;
+		
+		public static class Python_TypeTyping extends TokenSequence
+		{
+			public @S(10) Python_Keyword TYPING = new Python_Keyword("typing");
+			public @S(20) PunctuationPeriod dot;
+		}
 	}
 }

@@ -49,10 +49,20 @@ public class Python_Parameter_List extends TokenSequence
 			{
 				public @S(10) @NOSPACE PunctuationComma comma;
 				public @S(20) @OPT Python_Comment comment;
-				public @S(30) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-				public @S(40) Python_Expression expr;
-				public @S(50) @OPT Python_ParamType type;
-				public @S(60) @OPT Python_InitValue initValue;
+				public @S(30) Python_Param param;
+				public @S(40) @OPT Python_ParamType type;
+				public @S(50) @OPT Python_InitValue initValue;
+				
+				public static class Python_Param extends TokenChooser
+				{
+					public @CHOICE Python_Expression expr;
+
+					public @CHOICE static class PythonParamStar extends TokenSequence
+					{
+						public @S(10) Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
+						public @S(20) @OPT Python_Expression expr;
+					}
+				}
 				
 				public static class Python_InitValue extends TokenSequence
 				{

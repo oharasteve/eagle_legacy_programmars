@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.Python.Statements;
 
+import com.eagle.programmar.Python.Python_Decorators;
 import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Type;
-import com.eagle.programmar.Python.Statements.Python_FunctionDefinition.Python_Decorator;
 import com.eagle.programmar.Python.Symbols.Python_Class_Definition;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_ClassDeclaration extends TokenSequence implements AbstractClass
 {
-	public @S(10) @OPT TokenList<Python_Decorator> decorator;
+	public @S(10) @OPT TokenList<Python_Decorators> decorators;
 	public @S(20) @OPT Python_EndOfLine eoln;
 	public @S(30) @DOC("compound_stmts.html#class-definitions") @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
 	public @S(40) Python_Class_Definition name;
