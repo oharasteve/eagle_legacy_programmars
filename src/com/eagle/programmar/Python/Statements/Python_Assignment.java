@@ -7,6 +7,7 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
+import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -19,9 +20,10 @@ public class Python_Assignment extends TokenSequence
 	public @S(20) @OPT Python_ResultType resultType;
 	public @S(30) Python_PunctuationChoice operator = new Python_PunctuationChoice(
 			"=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=", "**=", "//=");
-	public @S(40) Python_Expression expr;
-	public @S(50) @OPT TokenList<Python_MoreAsgExpressions> moreExpressions;
-	public @S(60) @OPT Python_Comment comment;
+	public @S(40) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
+	public @S(50) Python_Expression expr;
+	public @S(60) @OPT TokenList<Python_MoreAsgExpressions> moreExpressions;
+	public @S(70) @OPT Python_Comment comment;
 	
 	public static class Python_MoreAsgExpressions extends TokenSequence
 	{

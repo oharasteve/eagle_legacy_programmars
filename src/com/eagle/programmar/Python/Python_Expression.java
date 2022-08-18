@@ -147,10 +147,11 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(140) class Python_Brackets extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @OPT TokenList<Python_Comment> comment;
-		public @S(30) @OPT Python_EndOfLine eoln;
-		public @S(40) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
-		public @S(50) PunctuationRightBracket rightBracket;
+		public @S(20) @OPT Python_EndOfLine eoln1;
+		public @S(30) @OPT TokenList<Python_Comment> comment;
+		public @S(40) @OPT Python_EndOfLine eoln2;
+		public @S(50) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
+		public @S(60) PunctuationRightBracket rightBracket;
 	}
 	
 	public static @P(150) class Python_UnarySign extends PrimaryOperator
