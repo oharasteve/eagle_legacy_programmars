@@ -24,7 +24,9 @@ import com.eagle.programmar.SQL.Statements.SQL_SelectStatement;
 import com.eagle.programmar.SQL.Statements.SQL_SetStatement;
 import com.eagle.programmar.SQL.Statements.SQL_SlashStatement;
 import com.eagle.programmar.SQL.Statements.SQL_UpdateStatement;
+import com.eagle.programmar.SQL.Statements.SQL_ValuesStatement;
 import com.eagle.programmar.SQL.Statements.SQL_VariableStatement;
+import com.eagle.programmar.SQL.Statements.SQL_WithStatement;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
@@ -51,7 +53,9 @@ public class SQL_Statement extends TokenChooser
 	public @CHOICE SQL_SetStatement setStmt;
 	public @CHOICE SQL_SlashStatement slashStmt;
 	public @CHOICE SQL_UpdateStatement updateStmt;
+	public @CHOICE SQL_ValuesStatement valueStmt;
 	public @CHOICE SQL_VariableStatement variableStmt;
+	public @CHOICE SQL_WithStatement withStmt;
 
 	public @CHOICE PunctuationSemicolon semicolon;
 

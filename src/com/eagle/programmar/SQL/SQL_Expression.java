@@ -4,6 +4,8 @@
 package com.eagle.programmar.SQL;
 
 import com.eagle.programmar.SQL.Statements.SQL_SelectStatement;
+import com.eagle.programmar.SQL.Statements.SQL_ValuesStatement;
+import com.eagle.programmar.SQL.Statements.SQL_WithStatement;
 import com.eagle.programmar.SQL.Terminals.SQL_HexString;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
@@ -106,8 +108,21 @@ public class SQL_Expression extends PrecedenceChooser
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
+	public static @P(180) class SQL_InnerValues extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SQL_ValuesStatement innerValues;
+		public @S(30) PunctuationRightParen rightParen;
+	}
+
+	public static @P(190) class SQL_InnerWith extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SQL_WithStatement innerWith;
+		public @S(30) PunctuationRightParen rightParen;
+	}
 	
-	public static @P(180) class SQL_Parentheses extends PrimaryOperator
+	public static @P(200) class SQL_Parentheses extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) SeparatedList<SQL_Expression,PunctuationComma> exprs;
