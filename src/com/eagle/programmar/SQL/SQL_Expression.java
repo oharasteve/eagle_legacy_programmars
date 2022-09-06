@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.SQL;
 
+import com.eagle.programmar.SQL.Statements.SQL_SelectStatement;
 import com.eagle.programmar.SQL.Terminals.SQL_HexString;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
@@ -12,8 +13,10 @@ import com.eagle.programmar.SQL.Terminals.SQL_Punctuation;
 import com.eagle.programmar.SQL.Terminals.SQL_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
@@ -70,20 +73,45 @@ public class SQL_Expression extends PrecedenceChooser
 		public @S(10) SQL_Function function;
 	}
 
-	public static @P(130) class SQL_DollarVariable extends PrimaryOperator
+	public static @P(130) class SQL_CastExpression extends PrimaryOperator
+	{
+		public @S(10) SQL_Keyword CAST = new SQL_Keyword("CAST");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SQL_Expression expr;
+		public @S(40) SQL_Keyword AS = new SQL_Keyword("AS");
+		public @S(50) SQL_Type type;
+		public @S(60) PunctuationRightParen rightParen;
+	}
+	
+	public static @P(140) class SQL_DollarVariable extends PrimaryOperator
 	{
 		public @S(10) SQL_Punctuation dollar = new SQL_Punctuation('$');
 		public @S(20) SQL_Number number;
 	}
 	
-	public static @P(140) class SQL_VariableExpression extends PrimaryOperator
+	public static @P(150) class SQL_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) SQL_Variable variable;
 	}
 
-	public static @P(150) class SQL_Star extends PrimaryOperator
+	public static @P(160) class SQL_Star extends PrimaryOperator
 	{
 		public @S(10) PunctuationStar star;
+	}
+	
+	public static @P(170) class SQL_InnerSelect extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SQL_SelectStatement innerSelect;
+		public @S(30) PunctuationRightParen rightParen;
+	}
+
+	
+	public static @P(180) class SQL_Parentheses extends PrimaryOperator
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<SQL_Expression,PunctuationComma> exprs;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	///////////////////////////////////////////////
@@ -111,7 +139,7 @@ public class SQL_Expression extends PrecedenceChooser
 
 		public static class SQL_RelationalOperator extends TokenChooser
 		{
-			public @CHOICE SQL_Keyword LIKE = new SQL_Keyword("LIKE");
+			public @CHOICE SQL_KeywordChoice LIKE = new SQL_KeywordChoice("LIKE", "IN");
 			public @CHOICE SQL_PunctuationChoice operator = new SQL_PunctuationChoice("=", "!=", "<", ">", "<=", ">=");
 		}
 	}

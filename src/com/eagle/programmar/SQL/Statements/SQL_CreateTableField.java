@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class SQL_CreateField extends TokenSequence
+public class SQL_CreateTableField extends TokenSequence
 {
 	public @S(10) SQL_Field_Definition fieldName;
 	public @S(20) SQL_Type fieldType;

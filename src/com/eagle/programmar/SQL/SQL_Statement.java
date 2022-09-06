@@ -7,11 +7,14 @@ import com.eagle.programmar.SQL.Statements.SQL_AlterStatement;
 import com.eagle.programmar.SQL.Statements.SQL_AtAtStatement;
 import com.eagle.programmar.SQL.Statements.SQL_BeginStatement;
 import com.eagle.programmar.SQL.Statements.SQL_ColumnStatement;
-import com.eagle.programmar.SQL.Statements.SQL_CreateStatement;
+import com.eagle.programmar.SQL.Statements.SQL_CreateIndexStatement;
+import com.eagle.programmar.SQL.Statements.SQL_CreateRoleStatement;
+import com.eagle.programmar.SQL.Statements.SQL_CreateSynonymStatement;
+import com.eagle.programmar.SQL.Statements.SQL_CreateTableStatement;
+import com.eagle.programmar.SQL.Statements.SQL_CreateViewStatement;
 import com.eagle.programmar.SQL.Statements.SQL_DeclareStatement;
 import com.eagle.programmar.SQL.Statements.SQL_DeleteStatement;
 import com.eagle.programmar.SQL.Statements.SQL_DropStatement;
-import com.eagle.programmar.SQL.Statements.SQL_ExpressionStatement;
 import com.eagle.programmar.SQL.Statements.SQL_ForStatement;
 import com.eagle.programmar.SQL.Statements.SQL_GrantStatement;
 import com.eagle.programmar.SQL.Statements.SQL_InsertStatement;
@@ -31,8 +34,11 @@ public class SQL_Statement extends TokenChooser
 	public @CHOICE SQL_AtAtStatement atAtStmt;
 	public @CHOICE SQL_BeginStatement beginStmt;
 	public @CHOICE SQL_ColumnStatement columnStmt;
-	// public @CHOICE SQL_CommitStatement commitStmt;	// Part of a BEGIN / END transaction only.
-	public @CHOICE SQL_CreateStatement createStmt;
+	public @CHOICE SQL_CreateIndexStatement createIndexStmt;
+	public @CHOICE SQL_CreateRoleStatement createRoleStmt;
+	public @CHOICE SQL_CreateSynonymStatement createSynonymStmt;
+	public @CHOICE SQL_CreateTableStatement createTableStmt;
+	public @CHOICE SQL_CreateViewStatement createViewStmt;
 	public @CHOICE SQL_DeclareStatement declareStmt;
 	public @CHOICE SQL_DeleteStatement deleteStmt;
 	public @CHOICE SQL_DropStatement dropStmt;
@@ -49,5 +55,6 @@ public class SQL_Statement extends TokenChooser
 
 	public @CHOICE PunctuationSemicolon semicolon;
 
-	public @LAST SQL_ExpressionStatement expressionStmt;
+	public @LAST SQL_Function functionCall;
+	//public @LAST SQL_ExpressionStatement expressionStmt;
 }

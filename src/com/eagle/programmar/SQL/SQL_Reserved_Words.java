@@ -33,6 +33,7 @@ public class SQL_Reserved_Words {
 			"COMMIT",		// I added 
 			"CONSTRAINT",
 			"COPY",
+			"CREATE",		// I added
 			"CROSS",
 			"CURRENT",
 			"CURRENT_CATALOG",
@@ -55,7 +56,7 @@ public class SQL_Reserved_Words {
 			"DISTRIBUTE",
 			"DO",
 			"ELSE",
-			"END",		// Not really Reserved
+			//"END",		// Not really Reserved
 			"EXCEPT",
 			"EXCLUDE",
 			"EXISTS",
@@ -87,6 +88,7 @@ public class SQL_Reserved_Words {
 			"INTERSECT",
 			"INTERVAL",
 			"INTO",
+			"JOIN",			// I added
 			"LEADING",
 			"LEFT",
 			"LIKE",
