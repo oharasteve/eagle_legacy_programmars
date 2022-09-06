@@ -6,6 +6,7 @@ package com.eagle.programmar.MSSolution;
 import com.eagle.programmar.MSSolution.Terminals.MSSolution_EndOfLine;
 import com.eagle.programmar.MSSolution.Terminals.MSSolution_Keyword;
 import com.eagle.programmar.MSSolution.Terminals.MSSolution_Literal;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -26,7 +27,7 @@ public class MSSolution_Project extends TokenSequence
 	public @S(100) MSSolution_Literal guid2;
 	public @S(110) MSSolution_EndOfLine eoln1;
 	
-	public @S(120) MSSolution_ProjectSection projectSection;
+	public @S(120) @OPT TokenList<MSSolution_ProjectSection> projectSection;
 	
 	public @S(130) MSSolution_Keyword ENDPROJECT = new MSSolution_Keyword("EndProject");
 	public @S(140) MSSolution_EndOfLine eoln2;

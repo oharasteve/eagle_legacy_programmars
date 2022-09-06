@@ -4,6 +4,7 @@
 package com.eagle.programmar.MSSolution;
 
 import com.eagle.core.EagleLanguage;
+import com.eagle.programmar.MSSolution.Terminals.MSSolution_EndOfLine;
 import com.eagle.tokens.TokenList;
 
 public class MSSolution_Program extends EagleLanguage
@@ -21,7 +22,8 @@ public class MSSolution_Program extends EagleLanguage
 		return "TBD";
 	}
 	
-	public @S(10) MSSolution_Header header;
-	public @S(20) TokenList<MSSolution_Project> projects;
-	public @S(30) MSSolution_Global global;
+	public @S(10) @OPT MSSolution_EndOfLine eoln;
+	public @S(20) MSSolution_Header header;
+	public @S(30) TokenList<MSSolution_Project> projects;
+	public @S(40) MSSolution_Global global;
 }

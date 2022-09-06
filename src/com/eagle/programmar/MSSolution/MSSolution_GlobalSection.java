@@ -27,7 +27,10 @@ public class MSSolution_GlobalSection extends TokenSequence
 			"ExtensibilityAddIns",
 			"ExtensibilityGlobals",
 			"ProjectConfiguration",
-			"SolutionConfiguration");
+			"ProjectConfigurationPlatforms",
+			"SolutionConfiguration",
+			"SolutionConfigurationPlatforms",
+			"SolutionProperties");
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) PunctuationEquals equals;
 	public @S(60) MSSolution_KeywordChoice PREPOST = new MSSolution_KeywordChoice("preSolution", "postSolution");
@@ -40,37 +43,72 @@ public class MSSolution_GlobalSection extends TokenSequence
 	
 	public static class MSSolution_GlobalSectionEntry extends TokenSequence
 	{
-		public @S(10) MSSolution_GlobalSectionEntryValue left;
+		public @S(10) MSSolution_GlobalSectionEntryLeft left;
 		public @S(20) PunctuationEquals equals;
-		public @S(30) @OPT MSSolution_GlobalSectionEntryValue right;
+		public @S(30) @OPT MSSolution_GlobalSectionEntryRight right;
 		public @S(40) MSSolution_EndOfLine eoln1;
 		
-		public static class MSSolution_GlobalSectionEntryValue extends TokenChooser
+		public static class MSSolution_GlobalSectionEntryAnyCPU extends TokenSequence
 		{
-			public @CHOICE MSSolution_KeywordChoice debug = new MSSolution_KeywordChoice(
-					"Debug",
-					"Release",
+			public @S(10) MSSolution_Punctuation bar = new MSSolution_Punctuation("|");
+			public @S(20) MSSolution_Keyword ANY = new MSSolution_Keyword("Any");
+			public @S(30) MSSolution_Keyword CPU = new MSSolution_Keyword("CPU");
+		}
+		
+		public static class MSSolution_GlobalSectionEntryLeft extends TokenChooser
+		{
+			public @CHOICE MSSolution_KeywordChoice HIDE = new MSSolution_KeywordChoice(
+					"HideSolutionNode",
+					"SolutionGuid",
 					"XCSharpProjectsDisabled");
+			
+			public @CHOICE static class MSSolution_GlobalSectionEntryDebug extends TokenSequence
+			{
+				public @S(10) MSSolution_KeywordChoice debug = new MSSolution_KeywordChoice("Debug", "Release");
+				public @S(20) @OPT MSSolution_GlobalSectionEntryAnyCPU anycpu;
+			}
 			
 			public @CHOICE static class MSSolution_GlobalSectionEntryGuid extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBrace leftBrace1;
-				public @S(20) MSSolution_GUID guid1;
+				public @S(20) MSSolution_GUID guid;
 				public @S(30) PunctuationRightBrace rightBrace1;
 				public @S(40) PunctuationPeriod dot1;
 				public @S(50) MSSolution_KeywordChoice debug = new MSSolution_KeywordChoice("Debug", "Release");
-				public @S(60) PunctuationPeriod dot2;
-				public @S(70) MSSolution_KeywordChoice build = new MSSolution_KeywordChoice("ActiveCfg", "Build");
-				public @S(80) @OPT PunctuationPeriod dot3;
-				public @S(90) @OPT MSSolution_Number number;
+				public @S(60) @OPT MSSolution_GlobalSectionEntryAnyCPU anycpu;
+				public @S(70) PunctuationPeriod dot2;
+				public @S(80) MSSolution_KeywordChoice build = new MSSolution_KeywordChoice("ActiveCfg", "Build");
+				public @S(90) @OPT PunctuationPeriod dot3;
+				public @S(100) @OPT MSSolution_Number number;
 			}
+		}
+		
+		public static class MSSolution_GlobalSectionEntryRight extends TokenChooser
+		{
+			public @CHOICE MSSolution_KeywordChoice HIDE = new MSSolution_KeywordChoice(
+					"FALSE");
 			
 			public @CHOICE static class MSSolution_GlobalSectionEntryNet extends TokenSequence
 			{
 				public @S(10) MSSolution_KeywordChoice release = new MSSolution_KeywordChoice("Debug", "Release");
 				public @S(20) MSSolution_Punctuation bar = new MSSolution_Punctuation("|");
-				public @S(30) PunctuationPeriod dot4;
+				public @S(30) PunctuationPeriod dot;
 				public @S(40) MSSolution_Keyword NET = new MSSolution_Keyword("NET");
+			}
+			
+			public @CHOICE static class MSSolution_GlobalSectionEntryGuid extends TokenSequence
+			{
+				public @S(10) PunctuationLeftBrace leftBrace;
+				public @S(20) MSSolution_GUID guid;
+				public @S(30) PunctuationRightBrace rightBrace;
+			}
+			
+			public @LAST static class MSSolution_GlobalSectionEntryDebug extends TokenSequence
+			{
+				public @S(10) MSSolution_KeywordChoice debug = new MSSolution_KeywordChoice(
+						"Debug",
+						"Release");
+				public @S(20) @OPT MSSolution_GlobalSectionEntryAnyCPU anycpu;
 			}
 		}
 	}
