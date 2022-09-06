@@ -11,7 +11,6 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_WithStatement extends TokenSequence
 {

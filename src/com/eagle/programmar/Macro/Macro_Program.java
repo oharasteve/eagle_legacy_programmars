@@ -7,11 +7,11 @@ import com.eagle.core.EagleLanguage;
 
 public class Macro_Program extends EagleLanguage
 {
-	public static final String NAME = "Macro";
+	public static final String MACRO = "Macro";
 	
 	public Macro_Program()
 	{
-		super(NAME, new Macro_Syntax());
+		super(MACRO, new Macro_Syntax());
 	}
 	
 	@Override
