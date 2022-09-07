@@ -23,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Python_Type extends TokenChooser implements AbstractType
 {
 	public @LAST Python_Literal typeName;
-	public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
+	public @CHOICE Python_Punctuation ellipsis = new Python_Punctuation("...");
 
 	public @CHOICE static class Python_TypeTuple extends TokenSequence
 	{
@@ -56,12 +56,14 @@ public class Python_Type extends TokenChooser implements AbstractType
 		public @S(20) Python_KeywordChoice TUPLE = new Python_KeywordChoice(
 				"Awaitable", "awaitable",
 				"Callable", "callable",
+				"Coroutine", "coroutine",
 				"DefaultDict", "defaultdict",
 				"Dict", "dict",
 				"Generic", "generic",
 				"Iterable", "iterable",
 				"Iterator", "iterator",
 				"List", "list",
+				"Map", "map",
 				"Mapping", "mapping",
 				"MutableMapping", "mutablemapping",
 				"Optional", "optional",
