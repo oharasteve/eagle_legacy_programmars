@@ -8,10 +8,12 @@ import com.eagle.core.EagleSyntax;
 public class HTML_Syntax extends EagleSyntax
 {
 	public static final String[] PUNCT = new String [] {
-		"<!", "<!--",
-		"</", "/>",
-		"{%", "%}",
-		"<?", "?>" };
+		"<!",  "<!--",
+		"</",  "/>",
+		"{%",  "%}",
+		"<?",  "?>",
+		"<%@", "%>",
+	};
 	
 	@Override
 	public String syntaxId()

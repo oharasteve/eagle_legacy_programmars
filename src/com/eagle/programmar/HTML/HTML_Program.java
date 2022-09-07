@@ -14,7 +14,7 @@ import com.eagle.programmar.HTML.Terminals.HTML_Pre;
 import com.eagle.programmar.HTML.Terminals.HTML_Text;
 import com.eagle.programmar.PHP.PHP_Program.PHP_Section;
 import com.eagle.programmar.PHP.PHP_Syntax;
-import com.eagle.programmar.XML.XML_Program.XML_Header;
+import com.eagle.programmar.XML.XML_Header;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;

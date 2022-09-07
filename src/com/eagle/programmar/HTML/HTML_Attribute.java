@@ -10,9 +10,11 @@ import com.eagle.programmar.HTML.Terminals.HTML_Literal;
 import com.eagle.programmar.HTML.Terminals.HTML_Number;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.programmar.HTML.Terminals.HTML_PunctuationChoice;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
@@ -48,7 +50,7 @@ public class HTML_Attribute extends TokenSequence
 		
 		public @CHOICE static class HTML_Id_Value extends TokenSequence
 		{
-			public @S(10) HTML_Identifier id;
+			public @S(10) SeparatedList<HTML_Identifier,PunctuationComma> id;
 			public @S(20) @OPT HTML_Id_DotValue dotValue;
 			
 			public static class HTML_Id_DotValue extends TokenSequence
