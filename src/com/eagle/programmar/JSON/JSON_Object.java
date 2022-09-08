@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.JSON;
 
-import com.eagle.programmar.JSON.JSON_Program.JSON_Element;
+import com.eagle.programmar.JSON.JSON_Program.JSON_ElementOrComment.JSON_Element;
 import com.eagle.programmar.JSON.Terminals.JSON_Comment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;

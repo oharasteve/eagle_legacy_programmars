@@ -35,6 +35,8 @@ public class JSON_Comment extends TerminalCommentToken
 		{
 		case '/' :
 			return super.possibleCommentToEndOfLine(rec, "//");
+		case '*' :
+			return super.possibleCommentPair2(lines, rec, "/*", "*/");
 		}
 		return false;
 	}

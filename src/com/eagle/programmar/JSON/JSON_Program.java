@@ -28,15 +28,19 @@ public class JSON_Program extends EagleLanguage
 	}
 	
 	public @S(10) @OPT @CURIOUS("Strange file header") JSON_Punctuation header = new JSON_Punctuation(")]}'");
-	public @S(20) TokenList<JSON_Element> elements;
+	public @S(20) TokenList<JSON_ElementOrComment> elements;
 	
-	public static class JSON_Element extends TokenChooser
+	public static class JSON_ElementOrComment extends TokenChooser
 	{
 		public @CHOICE JSON_Comment comment;
-		public @CHOICE JSON_Literal literal;
-		public @CHOICE JSON_Number number;
-		public @CHOICE JSON_Object object;
-		public @CHOICE JSON_Dictionary dictionary;
-		public @CHOICE JSON_KeywordChoice builtIn = new JSON_KeywordChoice("null", "true", "false");
+		
+		public @CHOICE static class JSON_Element extends TokenChooser
+		{
+			public @CHOICE JSON_Literal literal;
+			public @CHOICE JSON_Number number;
+			public @CHOICE JSON_Object object;
+			public @CHOICE JSON_Dictionary dictionary;
+			public @CHOICE JSON_KeywordChoice builtIn = new JSON_KeywordChoice("null", "true", "false");
+		}
 	}
 }
