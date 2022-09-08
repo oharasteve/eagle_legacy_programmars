@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class CSharp_KeywordChoice extends TerminalKeywordChoice
 {

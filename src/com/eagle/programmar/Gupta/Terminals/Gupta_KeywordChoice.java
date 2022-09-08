@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Gupta.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Gupta_KeywordChoice extends TerminalKeywordChoice
 {

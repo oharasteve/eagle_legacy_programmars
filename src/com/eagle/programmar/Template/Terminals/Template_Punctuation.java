@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Template.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Template_Punctuation extends TerminalPunctuationToken
 {

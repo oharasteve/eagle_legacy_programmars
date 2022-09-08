@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Template.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Template_Keyword extends TerminalKeywordToken
 {

@@ -6,10 +6,10 @@ package com.eagle.programmar.Bash.Commands;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
-import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Bash_EchoCommand extends TokenSequence
 {

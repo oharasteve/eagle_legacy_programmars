@@ -5,7 +5,7 @@ package com.eagle.programmar.Natural.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Natural_EditMask extends TerminalLiteralToken
 {

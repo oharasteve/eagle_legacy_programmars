@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.MSSolution.Terminals;
 
-import com.eagle.tokens.TerminalLiteralRestOfLine;
+import com.eagle.tokens.terminals.TerminalLiteralRestOfLine;
 
 public class MSSolution_RestOfLine extends TerminalLiteralRestOfLine
 {

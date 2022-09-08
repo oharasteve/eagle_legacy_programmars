@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Python_Punctuation extends TerminalPunctuationToken
 {

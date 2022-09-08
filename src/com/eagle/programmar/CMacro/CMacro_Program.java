@@ -10,10 +10,10 @@ import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 import com.eagle.programmar.CMacro.Terminals.CMacro_EndOfLine;
 import com.eagle.programmar.CMacro.Terminals.CMacro_MultiLineText;
-import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMacro_Program extends EagleLanguage
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class CMD_KeywordChoice extends TerminalKeywordChoice
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Ruby.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Ruby_EOLN extends TerminalEndOfLine
 {

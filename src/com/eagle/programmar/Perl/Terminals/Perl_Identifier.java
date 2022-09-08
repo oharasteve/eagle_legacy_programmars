@@ -4,7 +4,7 @@
 package com.eagle.programmar.Perl.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public abstract class Perl_Identifier extends TerminalIdentifierToken
 {

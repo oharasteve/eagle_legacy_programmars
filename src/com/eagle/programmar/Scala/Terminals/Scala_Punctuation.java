@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Scala.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Scala_Punctuation extends TerminalPunctuationToken
 {

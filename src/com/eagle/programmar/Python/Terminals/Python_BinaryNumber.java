@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalBinaryNumberToken;
+import com.eagle.tokens.terminals.TerminalBinaryNumberToken;
 
 public class Python_BinaryNumber extends TerminalBinaryNumberToken
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Perl.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Perl_KeywordChoice extends TerminalKeywordChoice
 {

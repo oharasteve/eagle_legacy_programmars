@@ -4,7 +4,7 @@
 package com.eagle.programmar.Perl.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalOctalNumberToken;
+import com.eagle.tokens.terminals.TerminalOctalNumberToken;
 
 public class Perl_OctalNumber extends TerminalOctalNumberToken
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Javascript.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Javascript_KeywordChoice extends TerminalKeywordChoice
 {

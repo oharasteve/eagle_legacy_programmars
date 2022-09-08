@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IntelASM.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class IntelASM_PunctuationChoice extends TerminalPunctuationChoice
 {

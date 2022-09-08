@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSS.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class CSS_KeywordChoice extends TerminalKeywordChoice
 {

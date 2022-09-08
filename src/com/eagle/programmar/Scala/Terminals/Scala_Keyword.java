@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Scala.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Scala_Keyword extends TerminalKeywordToken
 {

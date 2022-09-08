@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Bash_Keyword extends TerminalKeywordToken
 {

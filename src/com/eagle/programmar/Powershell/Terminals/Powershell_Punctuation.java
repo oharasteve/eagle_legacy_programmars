@@ -4,7 +4,7 @@
 package com.eagle.programmar.Powershell.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Powershell_Punctuation extends TerminalPunctuationToken
 {

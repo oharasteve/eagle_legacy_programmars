@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IBMASM.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class IBMASM_KeywordChoice extends TerminalKeywordChoice
 {

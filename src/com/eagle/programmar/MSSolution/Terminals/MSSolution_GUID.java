@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.MSSolution.Terminals;
 
-import com.eagle.tokens.TerminalGuidToken;
+import com.eagle.tokens.terminals.TerminalGuidToken;
 
 public class MSSolution_GUID extends TerminalGuidToken
 {

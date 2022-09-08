@@ -10,7 +10,9 @@ import com.eagle.programmar.IntelASM.Terminals.IntelASM_Literal;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Number;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
-import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 

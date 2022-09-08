@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Bash_KeywordChoice extends TerminalKeywordChoice
 {

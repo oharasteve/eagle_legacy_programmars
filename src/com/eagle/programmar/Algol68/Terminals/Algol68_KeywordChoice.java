@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Algol68.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Algol68_KeywordChoice extends TerminalKeywordChoice
 {

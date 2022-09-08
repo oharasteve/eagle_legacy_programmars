@@ -10,8 +10,8 @@ import com.eagle.programmar.Python.Python_Statement.Python_Statement_List;
 import com.eagle.programmar.Python.Statements.Python_IfStatement.Python_IfElif;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Python_StartOfLine extends TerminalLiteralToken
 {

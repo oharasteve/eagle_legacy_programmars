@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Powershell.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Powershell_Keyword extends TerminalKeywordToken
 {

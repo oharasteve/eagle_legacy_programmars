@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Ada.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Ada_Keyword extends TerminalKeywordToken
 {

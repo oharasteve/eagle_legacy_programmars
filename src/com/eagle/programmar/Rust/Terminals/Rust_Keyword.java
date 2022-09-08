@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Rust_Keyword extends TerminalKeywordToken
 {

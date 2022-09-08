@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Julia.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Julia_EOLN extends TerminalEndOfLine
 {

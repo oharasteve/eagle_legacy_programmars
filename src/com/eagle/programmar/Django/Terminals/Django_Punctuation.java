@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Django.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Django_Punctuation extends TerminalPunctuationToken
 {

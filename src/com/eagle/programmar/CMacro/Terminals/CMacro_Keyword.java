@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class CMacro_Keyword extends TerminalKeywordToken
 {

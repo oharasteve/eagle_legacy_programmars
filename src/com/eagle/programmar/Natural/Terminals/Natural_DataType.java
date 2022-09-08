@@ -5,7 +5,7 @@ package com.eagle.programmar.Natural.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalPictureToken;
+import com.eagle.tokens.terminals.TerminalPictureToken;
 
 public class Natural_DataType extends TerminalPictureToken
 {

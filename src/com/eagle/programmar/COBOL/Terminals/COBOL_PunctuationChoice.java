@@ -6,7 +6,7 @@ package com.eagle.programmar.COBOL.Terminals;
 import com.eagle.core.EagleSyntax;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class COBOL_PunctuationChoice extends TerminalPunctuationChoice
 {

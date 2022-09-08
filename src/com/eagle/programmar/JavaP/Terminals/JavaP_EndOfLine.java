@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.JavaP.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class JavaP_EndOfLine extends TerminalEndOfLine
 {

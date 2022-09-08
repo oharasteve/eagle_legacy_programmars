@@ -13,8 +13,8 @@ import com.eagle.programmar.Scala.Statements.Scala_Function;
 import com.eagle.programmar.Scala.Statements.Scala_FunctionCall;
 import com.eagle.programmar.Scala.Statements.Scala_IfStatement;
 import com.eagle.programmar.Scala.Statements.Scala_ReturnStatement;
-import com.eagle.programmar.Scala.Statements.Scala_Var;
 import com.eagle.programmar.Scala.Statements.Scala_Val;
+import com.eagle.programmar.Scala.Statements.Scala_Var;
 import com.eagle.tokens.TokenChooser;
 
 public class Scala_Statement extends TokenChooser

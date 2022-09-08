@@ -4,7 +4,7 @@
 package com.eagle.programmar.Scala.Symbols;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Scala_Identifier extends TerminalIdentifierToken
 {

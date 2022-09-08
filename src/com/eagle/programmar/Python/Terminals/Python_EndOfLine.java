@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Python_EndOfLine extends TerminalEndOfLine
 {

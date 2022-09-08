@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Go.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Go_EOLN extends TerminalEndOfLine
 {

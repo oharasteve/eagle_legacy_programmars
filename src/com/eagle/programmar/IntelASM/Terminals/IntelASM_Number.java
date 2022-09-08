@@ -4,7 +4,7 @@
 package com.eagle.programmar.IntelASM.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalNumberToken;
+import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class IntelASM_Number extends TerminalNumberToken
 {

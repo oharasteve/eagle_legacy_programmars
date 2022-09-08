@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Rust_KeywordChoice extends TerminalKeywordChoice
 {

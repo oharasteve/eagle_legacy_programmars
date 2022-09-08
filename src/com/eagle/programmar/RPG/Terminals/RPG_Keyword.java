@@ -5,7 +5,7 @@ package com.eagle.programmar.RPG.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class RPG_Keyword extends TerminalKeywordToken
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.AWK.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class AWK_EndOfLine extends TerminalEndOfLine
 {

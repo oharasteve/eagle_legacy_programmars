@@ -5,7 +5,7 @@ package com.eagle.programmar.Powershell.Symbols;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.DefinitionInterface;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Powershell_Function_Definition extends TerminalIdentifierToken implements DefinitionInterface
 {

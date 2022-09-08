@@ -7,11 +7,11 @@ import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalEndOfLine;
-import com.eagle.tokens.TerminalLiteralToken;
-import com.eagle.tokens.TerminalPunctuationToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Delphi_Configuration extends EagleLanguage
 {

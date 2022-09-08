@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.PPSM.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class PPSM_KeywordChoice extends TerminalKeywordChoice
 {

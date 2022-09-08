@@ -5,8 +5,8 @@ package com.eagle.programmar.Natural.Terminals;
 
 import com.eagle.programmar.Natural.Natural_DDM.Natural_DDM_Line;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TerminalLevelToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.terminals.TerminalLevelToken;
 
 public class Natural_Level extends TerminalLevelToken
 {

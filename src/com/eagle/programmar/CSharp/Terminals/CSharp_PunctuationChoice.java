@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class CSharp_PunctuationChoice extends TerminalPunctuationChoice
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.SQL.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class SQL_Keyword extends TerminalKeywordToken
 {

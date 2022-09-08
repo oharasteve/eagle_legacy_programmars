@@ -4,7 +4,7 @@
 package com.eagle.programmar.Rust.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalHexNumberToken;
+import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Rust_HexNumber extends TerminalHexNumberToken
 {

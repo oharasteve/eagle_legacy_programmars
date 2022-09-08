@@ -4,7 +4,7 @@
 package com.eagle.programmar.Bash.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Bash_Punctuation extends TerminalPunctuationToken
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Rust_Punctuation extends TerminalPunctuationToken
 {

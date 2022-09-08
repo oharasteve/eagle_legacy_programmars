@@ -6,7 +6,7 @@ package com.eagle.programmar.CMacro.Terminals;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalNumberToken;
+import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class CMacro_Number extends TerminalNumberToken implements EagleRunnable
 {

@@ -4,7 +4,7 @@
 package com.eagle.programmar.PLI.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public abstract class PLI_Identifier extends TerminalIdentifierToken
 {

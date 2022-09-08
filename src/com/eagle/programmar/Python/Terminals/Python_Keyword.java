@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Python_Keyword extends TerminalKeywordToken
 {

@@ -5,7 +5,7 @@ package com.eagle.programmar.MSSolution.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalCommentRestOfLineToken;
+import com.eagle.tokens.terminals.TerminalCommentRestOfLineToken;
 
 public class MSSolution_Comment extends TerminalCommentRestOfLineToken
 {

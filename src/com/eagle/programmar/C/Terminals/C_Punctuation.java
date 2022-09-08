@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.C.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class C_Punctuation extends TerminalPunctuationToken
 {

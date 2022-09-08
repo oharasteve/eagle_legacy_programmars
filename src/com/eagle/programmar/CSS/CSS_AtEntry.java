@@ -16,6 +16,8 @@ import com.eagle.tokens.TokenChooser;
 
 public class CSS_AtEntry extends TokenChooser
 {
+	public static final String LAST_EDIT = "2022-09-08 06:57:00 CDT";
+
 	public @CHOICE CSS_AtApply atApply;
 	public @CHOICE CSS_AtCharset atCharset;
 	public @CHOICE CSS_AtImport atImport;

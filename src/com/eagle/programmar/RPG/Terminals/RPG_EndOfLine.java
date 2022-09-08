@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.RPG.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class RPG_EndOfLine extends TerminalEndOfLine
 {

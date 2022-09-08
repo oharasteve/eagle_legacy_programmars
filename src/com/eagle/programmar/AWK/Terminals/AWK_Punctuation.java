@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.AWK.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class AWK_Punctuation extends TerminalPunctuationToken
 {

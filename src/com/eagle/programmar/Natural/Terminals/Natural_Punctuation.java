@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Natural.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Natural_Punctuation extends TerminalPunctuationToken
 {

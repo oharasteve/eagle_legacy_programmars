@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.VB.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class VB_Punctuation extends TerminalPunctuationToken
 {

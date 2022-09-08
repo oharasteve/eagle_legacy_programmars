@@ -9,11 +9,11 @@ import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Number;
-import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Bash_ChmodCommand extends TokenSequence
 {

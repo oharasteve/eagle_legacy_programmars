@@ -5,7 +5,7 @@ package com.eagle.programmar.Rust.Terminals;
 
 import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalNumberToken;
+import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class Rust_Number extends TerminalNumberToken implements EagleRunnable
 {

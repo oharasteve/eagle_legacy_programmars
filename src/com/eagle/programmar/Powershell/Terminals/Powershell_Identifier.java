@@ -4,7 +4,7 @@
 package com.eagle.programmar.Powershell.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Powershell_Identifier extends TerminalIdentifierToken
 {

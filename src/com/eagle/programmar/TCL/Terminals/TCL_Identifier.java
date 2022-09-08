@@ -4,7 +4,7 @@
 package com.eagle.programmar.TCL.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class TCL_Identifier extends TerminalIdentifierToken
 {

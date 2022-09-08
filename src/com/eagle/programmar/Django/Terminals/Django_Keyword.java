@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Django.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Django_Keyword extends TerminalKeywordToken
 {

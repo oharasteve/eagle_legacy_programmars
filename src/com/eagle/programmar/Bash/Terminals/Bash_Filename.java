@@ -4,7 +4,7 @@
 package com.eagle.programmar.Bash.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalFilename;
+import com.eagle.tokens.terminals.TerminalFilename;
 
 public class Bash_Filename extends TerminalFilename
 {

@@ -4,7 +4,7 @@
 package com.eagle.programmar.C.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class C_Character_Literal extends TerminalLiteralToken
 {

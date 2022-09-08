@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Property.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Property_EndOfLine extends TerminalEndOfLine
 {

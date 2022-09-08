@@ -4,7 +4,7 @@
 package com.eagle.programmar.Fortran.Symbols;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Fortran_Identifier extends TerminalIdentifierToken
 {

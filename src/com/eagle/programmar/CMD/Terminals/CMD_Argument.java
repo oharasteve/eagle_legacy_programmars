@@ -8,9 +8,9 @@ import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.CMD.Symbols.CMD_Identifier_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Argument.CMD_ArgumentWrapper.CMD_RawArgument;
-import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 //
 // This class is a little odd. It always creates a CMD_RawArgument while parsing

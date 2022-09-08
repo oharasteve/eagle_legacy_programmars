@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.PHP;
 
-import com.eagle.tokens.TerminalEndOfFile;
+import com.eagle.tokens.terminals.TerminalEndOfFile;
 
 public class PHP_EndOfFile extends TerminalEndOfFile
 {

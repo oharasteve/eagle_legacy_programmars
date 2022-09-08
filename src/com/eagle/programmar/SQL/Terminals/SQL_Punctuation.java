@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.SQL.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class SQL_Punctuation extends TerminalPunctuationToken
 {

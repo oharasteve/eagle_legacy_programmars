@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.FSharp.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class FSharp_PunctuationChoice extends TerminalPunctuationChoice
 {

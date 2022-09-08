@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.TCL.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class TCL_Keyword extends TerminalKeywordToken
 {

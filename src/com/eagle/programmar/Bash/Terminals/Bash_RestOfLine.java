@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash.Terminals;
 
-import com.eagle.tokens.TerminalLiteralRestOfLine;
+import com.eagle.tokens.terminals.TerminalLiteralRestOfLine;
 
 public class Bash_RestOfLine extends TerminalLiteralRestOfLine
 {

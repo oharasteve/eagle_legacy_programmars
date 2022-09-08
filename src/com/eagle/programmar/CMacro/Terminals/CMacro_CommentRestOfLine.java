@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro.Terminals;
 
-import com.eagle.tokens.TerminalCommentRestOfLineToken;
+import com.eagle.tokens.terminals.TerminalCommentRestOfLineToken;
 
 public class CMacro_CommentRestOfLine extends TerminalCommentRestOfLineToken
 {

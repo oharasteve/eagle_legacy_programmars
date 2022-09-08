@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.VB.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class VB_KeywordChoice extends TerminalKeywordChoice
 {

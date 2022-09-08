@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.MSSolution.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class MSSolution_KeywordChoice extends TerminalKeywordChoice
 {

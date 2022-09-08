@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IBMASM.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class IBMASM_EndOfLine extends TerminalEndOfLine
 {

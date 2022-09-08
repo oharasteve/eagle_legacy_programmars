@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Fortran.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Fortran_EOLN extends TerminalEndOfLine
 {

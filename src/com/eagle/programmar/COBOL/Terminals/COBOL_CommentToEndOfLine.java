@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.COBOL.Terminals;
 
-import com.eagle.tokens.TerminalCommentRestOfLineToken;
+import com.eagle.tokens.terminals.TerminalCommentRestOfLineToken;
 
 public class COBOL_CommentToEndOfLine extends TerminalCommentRestOfLineToken
 {

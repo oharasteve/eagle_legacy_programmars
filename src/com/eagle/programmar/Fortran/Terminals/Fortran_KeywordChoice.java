@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Fortran.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Fortran_KeywordChoice extends TerminalKeywordChoice
 {

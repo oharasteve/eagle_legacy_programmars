@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.TCL.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class TCL_EndOfLine extends TerminalEndOfLine
 {

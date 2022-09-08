@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Fortran.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Fortran_PunctuationChoice extends TerminalPunctuationChoice
 {

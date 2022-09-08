@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.PLI.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class PLI_PunctuationChoice extends TerminalPunctuationChoice
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.MSSolution.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class MSSolution_Punctuation extends TerminalPunctuationToken
 {

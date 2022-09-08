@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Ada.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Ada_Punctuation extends TerminalPunctuationToken
 {

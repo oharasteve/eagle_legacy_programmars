@@ -7,8 +7,8 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalHexNumberToken;
 import com.eagle.tokens.TerminalToken;
+import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 /*
  * See https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.10.2

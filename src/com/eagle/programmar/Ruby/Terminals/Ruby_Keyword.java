@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Ruby.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Ruby_Keyword extends TerminalKeywordToken
 {

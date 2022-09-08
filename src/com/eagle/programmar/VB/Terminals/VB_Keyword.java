@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.VB.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class VB_Keyword extends TerminalKeywordToken
 {

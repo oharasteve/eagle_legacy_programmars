@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class CMacro_PunctuationChoice extends TerminalPunctuationChoice
 {

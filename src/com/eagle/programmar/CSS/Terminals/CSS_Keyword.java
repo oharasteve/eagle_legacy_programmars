@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSS.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class CSS_Keyword extends TerminalKeywordToken
 {

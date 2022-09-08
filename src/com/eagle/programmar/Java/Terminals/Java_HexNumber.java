@@ -4,7 +4,7 @@
 package com.eagle.programmar.Java.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalHexNumberToken;
+import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Java_HexNumber extends TerminalHexNumberToken
 {

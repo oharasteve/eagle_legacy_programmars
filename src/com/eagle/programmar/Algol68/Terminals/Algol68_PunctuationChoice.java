@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Algol68.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Algol68_PunctuationChoice extends TerminalPunctuationChoice
 {

@@ -27,9 +27,9 @@ import com.eagle.programmar.CMacro.Symbols.CMacro_Parameter_Definition;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TerminalEndOfLine;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class CMacro_Preprocess extends EagleInclude
 {

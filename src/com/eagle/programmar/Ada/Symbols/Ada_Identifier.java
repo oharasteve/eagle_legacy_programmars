@@ -4,7 +4,7 @@
 package com.eagle.programmar.Ada.Symbols;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Ada_Identifier extends TerminalIdentifierToken
 {

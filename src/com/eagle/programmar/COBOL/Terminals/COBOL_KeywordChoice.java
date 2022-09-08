@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.COBOL.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class COBOL_KeywordChoice extends TerminalKeywordChoice
 {

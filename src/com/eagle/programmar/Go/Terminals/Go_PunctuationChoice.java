@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Go.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Go_PunctuationChoice extends TerminalPunctuationChoice
 {

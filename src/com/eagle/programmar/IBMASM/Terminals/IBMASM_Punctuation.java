@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IBMASM.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class IBMASM_Punctuation extends TerminalPunctuationToken
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.BNF.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class BNF_PunctuationChoice extends TerminalPunctuationChoice
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Ruby.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Ruby_PunctuationChoice extends TerminalPunctuationChoice
 {

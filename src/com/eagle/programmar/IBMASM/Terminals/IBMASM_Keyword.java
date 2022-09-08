@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IBMASM.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class IBMASM_Keyword extends TerminalKeywordToken
 {

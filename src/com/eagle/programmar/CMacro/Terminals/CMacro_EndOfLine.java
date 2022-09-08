@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class CMacro_EndOfLine extends TerminalEndOfLine
 {

@@ -4,7 +4,7 @@
 package com.eagle.programmar.Bash.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Bash_Literal extends TerminalLiteralToken
 {

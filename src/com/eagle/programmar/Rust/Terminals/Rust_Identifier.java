@@ -4,7 +4,7 @@
 package com.eagle.programmar.Rust.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Rust_Identifier extends TerminalIdentifierToken
 {

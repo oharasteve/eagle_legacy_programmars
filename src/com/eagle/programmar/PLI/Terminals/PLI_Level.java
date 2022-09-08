@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.PLI.Terminals;
 
-import com.eagle.tokens.TerminalLevelToken;
+import com.eagle.tokens.terminals.TerminalLevelToken;
 
 public class PLI_Level extends TerminalLevelToken
 {

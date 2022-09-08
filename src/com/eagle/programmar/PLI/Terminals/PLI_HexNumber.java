@@ -5,7 +5,7 @@ package com.eagle.programmar.PLI.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalHexNumberToken;
+import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class PLI_HexNumber extends TerminalHexNumberToken
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.FSharp.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class FSharp_EndOfLine extends TerminalEndOfLine
 {

@@ -4,7 +4,7 @@
 package com.eagle.programmar.Algol68.Symbols;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public class Algol68_Identifier extends TerminalIdentifierToken
 {

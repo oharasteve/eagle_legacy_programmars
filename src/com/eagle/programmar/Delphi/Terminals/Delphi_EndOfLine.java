@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Delphi.Terminals;
 
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Delphi_EndOfLine extends TerminalEndOfLine
 {

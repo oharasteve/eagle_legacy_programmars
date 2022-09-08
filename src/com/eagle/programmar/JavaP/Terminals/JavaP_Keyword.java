@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.JavaP.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class JavaP_Keyword extends TerminalKeywordToken
 {

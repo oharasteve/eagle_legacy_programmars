@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Delphi.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Delphi_Keyword extends TerminalKeywordToken
 {

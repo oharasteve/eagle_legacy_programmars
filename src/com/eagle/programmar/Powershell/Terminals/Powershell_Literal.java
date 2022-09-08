@@ -4,7 +4,7 @@
 package com.eagle.programmar.Powershell.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Powershell_Literal extends TerminalLiteralToken
 {

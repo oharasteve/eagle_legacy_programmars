@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Django.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Django_KeywordChoice extends TerminalKeywordChoice
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Natural.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Natural_Keyword extends TerminalKeywordToken
 {

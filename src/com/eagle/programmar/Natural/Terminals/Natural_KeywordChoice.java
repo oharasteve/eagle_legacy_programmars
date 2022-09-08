@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Natural.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Natural_KeywordChoice extends TerminalKeywordChoice
 {

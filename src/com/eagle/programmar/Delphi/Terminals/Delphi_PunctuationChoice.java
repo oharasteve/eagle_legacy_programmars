@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Delphi.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Delphi_PunctuationChoice extends TerminalPunctuationChoice
 {

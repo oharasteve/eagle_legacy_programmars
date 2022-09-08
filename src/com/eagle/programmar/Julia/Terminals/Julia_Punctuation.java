@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Julia.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class Julia_Punctuation extends TerminalPunctuationToken
 {

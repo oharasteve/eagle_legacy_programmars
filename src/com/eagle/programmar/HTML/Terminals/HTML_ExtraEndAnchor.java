@@ -7,7 +7,7 @@ import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.HTML.HTML_Anchor;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class HTML_ExtraEndAnchor extends TerminalLiteralToken
 {

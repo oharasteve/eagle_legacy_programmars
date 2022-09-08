@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSS.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class CSS_Punctuation extends TerminalPunctuationToken
 {

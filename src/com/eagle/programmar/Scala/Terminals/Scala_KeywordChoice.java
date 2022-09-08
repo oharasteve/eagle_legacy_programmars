@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Scala.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Scala_KeywordChoice extends TerminalKeywordChoice
 {

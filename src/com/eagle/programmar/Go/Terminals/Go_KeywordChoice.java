@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Go.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class Go_KeywordChoice extends TerminalKeywordChoice
 {

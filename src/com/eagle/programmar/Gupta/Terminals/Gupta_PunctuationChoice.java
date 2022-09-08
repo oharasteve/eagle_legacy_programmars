@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Gupta.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Gupta_PunctuationChoice extends TerminalPunctuationChoice
 {

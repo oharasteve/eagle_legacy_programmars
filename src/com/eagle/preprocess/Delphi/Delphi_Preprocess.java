@@ -14,7 +14,7 @@ import com.eagle.preprocess.EagleInclude;
 import com.eagle.preprocess.EagleSymbolTable;
 import com.eagle.preprocess.FindIncludeFile;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TerminalEndOfLine;
+import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class Delphi_Preprocess extends EagleInclude
 {

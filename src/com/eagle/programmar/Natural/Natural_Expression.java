@@ -7,7 +7,9 @@ import com.eagle.programmar.Natural.Terminals.Natural_Literal;
 import com.eagle.programmar.Natural.Terminals.Natural_Number;
 import com.eagle.programmar.Natural.Terminals.Natural_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
-import com.eagle.tokens.PrecedenceChooser.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 

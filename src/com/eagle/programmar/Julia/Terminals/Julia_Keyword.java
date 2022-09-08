@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Julia.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class Julia_Keyword extends TerminalKeywordToken
 {

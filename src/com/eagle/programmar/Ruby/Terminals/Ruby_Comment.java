@@ -5,7 +5,7 @@ package com.eagle.programmar.Ruby.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalCommentToken;
+import com.eagle.tokens.terminals.TerminalCommentToken;
 
 public class Ruby_Comment extends TerminalCommentToken
 {

@@ -5,8 +5,8 @@ package com.eagle.programmar.SQL.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalHexNumberToken;
-import com.eagle.tokens.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalHexNumberToken;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class SQL_HexString extends TerminalLiteralToken
 {

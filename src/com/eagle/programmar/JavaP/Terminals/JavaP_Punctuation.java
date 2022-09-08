@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.JavaP.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationToken;
+import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
 public class JavaP_Punctuation extends TerminalPunctuationToken
 {

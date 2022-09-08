@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.HTML.Terminals;
 
-import com.eagle.tokens.TerminalKeywordChoice;
+import com.eagle.tokens.terminals.TerminalKeywordChoice;
 
 public class HTML_KeywordChoice extends TerminalKeywordChoice
 {

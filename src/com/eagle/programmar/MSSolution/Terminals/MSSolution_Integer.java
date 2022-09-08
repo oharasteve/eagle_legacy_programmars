@@ -4,7 +4,7 @@
 package com.eagle.programmar.MSSolution.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.TerminalIntegerToken;
+import com.eagle.tokens.terminals.TerminalIntegerToken;
 
 public class MSSolution_Integer extends TerminalIntegerToken
 {

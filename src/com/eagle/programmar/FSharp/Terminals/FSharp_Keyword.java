@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.FSharp.Terminals;
 
-import com.eagle.tokens.TerminalKeywordToken;
+import com.eagle.tokens.terminals.TerminalKeywordToken;
 
 public class FSharp_Keyword extends TerminalKeywordToken
 {

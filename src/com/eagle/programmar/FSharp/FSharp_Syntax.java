@@ -4,7 +4,6 @@
 package com.eagle.programmar.FSharp;
 
 import com.eagle.core.EagleSyntax;
-import com.eagle.programmar.FSharp.FSharp_Syntax;
 
 public class FSharp_Syntax extends EagleSyntax
 {

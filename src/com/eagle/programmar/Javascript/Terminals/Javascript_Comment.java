@@ -5,7 +5,7 @@ package com.eagle.programmar.Javascript.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalCommentToken;
+import com.eagle.tokens.terminals.TerminalCommentToken;
 
 public class Javascript_Comment extends TerminalCommentToken
 {

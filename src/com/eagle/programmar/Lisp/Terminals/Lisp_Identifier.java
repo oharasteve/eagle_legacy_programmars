@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.TerminalIdentifierToken;
+import com.eagle.tokens.terminals.TerminalIdentifierToken;
 
 public abstract class Lisp_Identifier extends TerminalIdentifierToken
 {

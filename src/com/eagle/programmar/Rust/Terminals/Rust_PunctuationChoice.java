@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Rust_PunctuationChoice extends TerminalPunctuationChoice
 {

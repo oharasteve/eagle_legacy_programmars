@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class CMD_PunctuationChoice extends TerminalPunctuationChoice
 {

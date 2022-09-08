@@ -4,7 +4,7 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
-import com.eagle.tokens.PrecedenceChooser.PrimaryOperator;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;

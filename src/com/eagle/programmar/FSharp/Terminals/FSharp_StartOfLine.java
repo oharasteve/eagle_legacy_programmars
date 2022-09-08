@@ -10,8 +10,8 @@ import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_IfStatement.FSharp_IfElif;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TerminalLiteralToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class FSharp_StartOfLine extends TerminalLiteralToken
 {

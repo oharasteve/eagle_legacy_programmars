@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Lisp.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Lisp_PunctuationChoice extends TerminalPunctuationChoice
 {

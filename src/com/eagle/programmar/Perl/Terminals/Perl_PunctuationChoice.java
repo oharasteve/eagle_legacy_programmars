@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Perl.Terminals;
 
-import com.eagle.tokens.TerminalPunctuationChoice;
+import com.eagle.tokens.terminals.TerminalPunctuationChoice;
 
 public class Perl_PunctuationChoice extends TerminalPunctuationChoice
 {
