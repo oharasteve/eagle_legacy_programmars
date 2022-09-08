@@ -372,10 +372,11 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public static @P(620) class Python_For_In_Expression extends PrecedenceOperator
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Keyword FOR = new Python_Keyword("for");
-		public @S(30) Python_VariableList varList;
-		public @S(40) Python_Keyword IN = new Python_Keyword("in");
-		public @S(50) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
+		public @S(30) Python_Keyword FOR = new Python_Keyword("for");
+		public @S(40) Python_VariableList varList;
+		public @S(50) Python_Keyword IN = new Python_Keyword("in");
+		public @S(60) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
 	public static @P(630) class Python_If_Else_Expression extends PrecedenceOperator 
@@ -398,6 +399,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	{
 		public @S(10) Python_Expression leftVar = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=", ":=");
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
+		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 }

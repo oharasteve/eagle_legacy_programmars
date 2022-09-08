@@ -4,11 +4,9 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
-import com.eagle.programmar.Python.Python_Statement;
-import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -19,8 +17,7 @@ public class Python_WithStatement extends TokenSequence
 	public @S(20) @DOC("compound_stmts.html#the-with-statement") Python_Keyword WITH = new Python_Keyword("with");
 	public @S(30) SeparatedList<Python_WithItem,PunctuationComma> withItems;
 	public @S(40) PunctuationColon colon;
-	public @S(50) Python_EndOfLine eoln;
-	public @S(60) TokenList<Python_Statement> statements;
+	public @S(50) Python_SingleOrMultiLineStatement statements;
 	
 	public static class Python_WithItem extends TokenSequence
 	{
