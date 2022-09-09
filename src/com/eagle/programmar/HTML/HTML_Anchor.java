@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.HTML;
 
-import com.eagle.programmar.HTML.HTML_Anchor.HTML_AnchorHref.HTML_EndAnchor;
 import com.eagle.programmar.HTML.HTML_Attribute.HTML_Value;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
@@ -52,6 +51,13 @@ public class HTML_Anchor extends TokenChooser
 		public @S(40) @NOSPACE PunctuationEquals equals;
 		public @S(50) @NOSPACE HTML_Value value;
 		public @S(60) @NOSPACE HTML_PunctuationChoice endTag = new HTML_PunctuationChoice("/>", ">");
-		public @S(70) @OPT @CURIOUS("Extra end anchor name") HTML_EndAnchor bogusAnchorNameEnd;
+		public @S(70) @OPT @CURIOUS("Extra end anchor name") HTML_EndAnchorName bogusAnchorNameEnd;
+		
+		public static class HTML_EndAnchorName extends TokenSequence
+		{
+			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
+			public @S(20) @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
+			public @S(30) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
+		}
 	}
 }

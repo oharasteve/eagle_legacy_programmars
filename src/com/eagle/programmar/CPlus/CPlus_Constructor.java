@@ -6,7 +6,6 @@ package com.eagle.programmar.CPlus;
 import com.eagle.programmar.C.C_ArgumentList;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
-import com.eagle.programmar.C.C_Statement.C_StatementBlock;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
@@ -17,7 +16,6 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -34,23 +32,6 @@ public class CPlus_Constructor extends TokenChooser
 		public @S(60) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
 		public @S(70) @OPT CPlus_ConstructorCallSupers callSupers;
 		public @S(80) CPlus_ConstructorValue value;
-		
-		public static class CPlus_ConstructorValue extends TokenChooser
-		{
-			public @CHOICE C_StatementBlock block;
-			
-			public @CHOICE static class CPlus_ConstructorNoBraces extends TokenSequence
-			{
-				public @S(10) @OPT CPlus_ConstructorInitialValue value;
-				public @S(20) PunctuationSemicolon semicolon;
-
-				public static class CPlus_ConstructorInitialValue extends TokenSequence
-				{
-					public @S(10) PunctuationEquals equals;
-					public @S(20) C_KeywordChoice DELETE = new C_KeywordChoice("delete", "default");
-				}
-			}
-		}
 		
 		public static class CPlus_ConstructorCallSupers extends TokenSequence
 		{

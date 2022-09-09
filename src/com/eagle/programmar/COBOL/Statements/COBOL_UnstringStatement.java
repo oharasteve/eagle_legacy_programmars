@@ -6,7 +6,6 @@ package com.eagle.programmar.COBOL.Statements;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Overflow;
-import com.eagle.programmar.COBOL.Statements.COBOL_UnstringStatement.COBOL_UnstringOrClause.COBOL_UnstringOrWhat;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
@@ -33,16 +32,16 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 	{
 		public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
 		public @S(20) COBOL_UnstringOrWhat unstringWhat;
+	}
+
+	public static class COBOL_UnstringOrWhat extends TokenChooser
+	{
+		public @CHOICE COBOL_Literal delim;
 		
-		public static class COBOL_UnstringOrWhat extends TokenChooser
+		public @CHOICE static class COBOL_UnstringOrSpaces extends TokenSequence
 		{
-			public @CHOICE COBOL_Literal delim;
-			
-			public @CHOICE static class COBOL_UnstringOrSpaces extends TokenSequence
-			{
-				public @S(10) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-				public @S(20) COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
-			}
+			public @S(10) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+			public @S(20) COBOL_Keyword SPACES = new COBOL_Keyword("SPACES");
 		}
 	}
 

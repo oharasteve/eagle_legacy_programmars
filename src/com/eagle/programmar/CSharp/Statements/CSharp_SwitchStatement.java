@@ -4,14 +4,14 @@
 package com.eagle.programmar.CSharp.Statements;
 
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.CSharp_Syntax;
-import com.eagle.programmar.CSharp.CSharp_Statement.CSharp_StatementBlock.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.EagleScope;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;

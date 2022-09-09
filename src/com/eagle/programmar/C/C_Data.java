@@ -10,13 +10,10 @@ import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Types.C_TypePrimitive.C_TypeStar;
-import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
-import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -35,21 +32,6 @@ public class C_Data extends TokenChooser
 		public @S(70) @OPT TokenList<C_MoreIdentifiers> moreIds;
 		public @S(80) PunctuationSemicolon semicolon;
 		public @S(90) @OPT TokenList<C_Comment> comments2;
-		
-		public static class C_DataModifiers extends TokenChooser
-		{
-			public @CHOICE C_KeywordChoice scope = new C_KeywordChoice(C_Program.getModifiers());
-			public @CHOICE C_Declaration declaration;
-		}
-		
-		public static class C_DataInitialValue extends TokenSequence
-		{
-			public @S(10) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro1;
-			public @S(20) PunctuationEquals equals;
-			public @S(30) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro2;
-			public @S(40) C_Expression expression;
-			public @S(50) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro3;
-		}
 		
 		public static class C_MoreIdentifiers extends TokenSequence
 		{

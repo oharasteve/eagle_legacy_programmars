@@ -5,7 +5,6 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Statement;
-import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit.Bash_FunctionParams;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenChooser;
@@ -39,10 +38,11 @@ public class Bash_Function extends TokenChooser
 	public @CHOICE static class Bash_Function_Implicit extends TokenSequence
 	{
 		public @S(10) Bash_Function_Definition fnName;
-		public @S(20) Bash_FunctionParams params;
-		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) Bash_EndOfLine eoln1;
-		public @S(50) TokenList<Bash_Statement> statements;
-		public @S(60) PunctuationRightBrace rightBrace;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) PunctuationRightParen rightParen;
+		public @S(40) PunctuationLeftBrace leftBrace;
+		public @S(50) Bash_EndOfLine eoln1;
+		public @S(60) TokenList<Bash_Statement> statements;
+		public @S(70) PunctuationRightBrace rightBrace;
 	}
 }

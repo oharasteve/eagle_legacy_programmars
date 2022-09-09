@@ -6,7 +6,6 @@ package com.eagle.programmar.Javascript;
 import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassElement;
 import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassExtends;
 import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation;
-import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_HexNumber;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;

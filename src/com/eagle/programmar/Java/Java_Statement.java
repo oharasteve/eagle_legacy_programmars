@@ -72,12 +72,6 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
 		public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
 		
-		public static class Java_StatementOrComment extends TokenChooser
-		{
-			public @FIRST @NEWLINE Java_Comment comment;
-			public @CHOICE @NEWLINE Java_Statement statement;
-		}
-		
 		private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 		
 		@Override

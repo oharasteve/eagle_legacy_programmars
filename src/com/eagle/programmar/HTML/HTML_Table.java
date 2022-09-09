@@ -4,7 +4,6 @@
 package com.eagle.programmar.HTML;
 
 import com.eagle.programmar.Django.Django_Control;
-import com.eagle.programmar.HTML.HTML_Table.HTML_TablePiece.HTML_TableColGroup.HTML_TableCol;
 import com.eagle.programmar.HTML.Terminals.HTML_Comment;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_KeywordChoice;
@@ -28,6 +27,14 @@ public class HTML_Table extends TokenSequence
 		public @CHOICE HTML_TablePiece piece;
 	}
 
+	public static class HTML_TableCol extends TokenSequence
+	{
+		public @S(10) @INDENT HTML_Punctuation startTagSection = new HTML_Punctuation('<');
+		public @S(20) @NOSPACE HTML_Keyword COL = new HTML_Keyword("col");
+		public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+		public @S(40) @NOSPACE HTML_PunctuationChoice endTagCol = new HTML_PunctuationChoice(">", "/>");
+	}
+
 	public static class HTML_TablePiece extends TokenChooser
 	{
 		public @CHOICE HTML_Comment comment;
@@ -48,14 +55,6 @@ public class HTML_Table extends TokenSequence
 			public @S(60) HTML_Punctuation startTag = new HTML_Punctuation("</");
 			public @S(70) @NOSPACE HTML_Keyword COLGROUP2 = new HTML_Keyword("colgroup");
 			public @S(80) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
-			
-			public static class HTML_TableCol extends TokenSequence
-			{
-				public @S(10) @INDENT HTML_Punctuation startTagSection = new HTML_Punctuation('<');
-				public @S(20) @NOSPACE HTML_Keyword COL = new HTML_Keyword("col");
-				public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
-				public @S(40) @NOSPACE HTML_PunctuationChoice endTagCol = new HTML_PunctuationChoice(">", "/>");
-			}
 		}
 		
 		public @CHOICE static class HTML_TableSection extends TokenSequence

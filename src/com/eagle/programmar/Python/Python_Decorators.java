@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python_Expression.Python_Parens.Python_CommentEoln;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.TokenChooser;

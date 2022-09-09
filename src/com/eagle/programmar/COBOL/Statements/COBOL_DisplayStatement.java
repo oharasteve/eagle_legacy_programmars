@@ -8,8 +8,6 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
-import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement.COBOL_DisplayClause.COBOL_DisplayOptions.COBOL_DisplayAt.COBOL_DisplayColumn;
-import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement.COBOL_DisplayClause.COBOL_DisplayOptions.COBOL_DisplayAt.COBOL_DisplayLine;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
@@ -43,6 +41,18 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 		public @S(10) COBOL_DisplayWhat what;
 		public @S(20) @OPT TokenList<COBOL_DisplayOptions> options;
 		
+		public static class COBOL_DisplayLine extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword LINE = new COBOL_Keyword("LINE");
+			public @S(20) COBOL_Expression line;
+		}
+		
+		public static class COBOL_DisplayColumn extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword COLUMN = new COBOL_Keyword("COLUMN");
+			public @S(20) COBOL_Expression column;
+		}
+
 		public static class COBOL_DisplayOptions extends TokenChooser
 		{
 			public @CHOICE COBOL_DisplayLine line;
@@ -60,18 +70,6 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 				public @S(10) COBOL_Keyword AT = new COBOL_Keyword("AT");
 				public @S(20) @OPT COBOL_DisplayLine line;
 				public @S(30) @OPT COBOL_DisplayColumn column;
-				
-				public static class COBOL_DisplayLine extends TokenSequence
-				{
-					public @S(10) COBOL_Keyword LINE = new COBOL_Keyword("LINE");
-					public @S(20) COBOL_Expression line;
-				}
-				
-				public static class COBOL_DisplayColumn extends TokenSequence
-				{
-					public @S(10) COBOL_Keyword COLUMN = new COBOL_Keyword("COLUMN");
-					public @S(20) COBOL_Expression column;
-				}
 			}
 
 			public @CHOICE static class COBOL_DisplayWith extends TokenSequence

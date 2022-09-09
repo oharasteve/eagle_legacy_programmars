@@ -6,7 +6,6 @@ package com.eagle.programmar.Java;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Class.Java_ClassImplements;
 import com.eagle.programmar.Java.Java_Data.Java_DataModifier;
-import com.eagle.programmar.Java.Java_Enum.Java_EnumDeclarations.Java_EnumClassBodyDeclaration;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -73,15 +72,15 @@ public class Java_Enum extends TokenSequence implements EagleScopeInterface
 		}
 	}
 	
+	public static class Java_EnumClassBodyDeclaration extends TokenChooser
+	{
+		public @CHOICE Java_ClassElement element;
+	}
+
 	public static class Java_EnumDeclarations extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationSemicolon semicolon;
 		public @S(20) TokenList<Java_EnumClassBodyDeclaration> body;
-		
-		public static class Java_EnumClassBodyDeclaration extends TokenChooser
-		{
-			public @CHOICE Java_ClassElement element;
-		}
 	}
 	
 	public static class Java_EnumInitializer extends TokenSequence

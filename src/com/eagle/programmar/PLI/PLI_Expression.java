@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.programmar.PLI.PLI_Expression.PLI_RepeatedLiteral.PLI_RepeatCount;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_BitLiteral;
@@ -29,6 +28,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class PLI_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
+
+	public static class PLI_RepeatCount extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) PLI_Number count;
+		public @S(30) PunctuationRightParen rightParen;
+	}
 
 	public @P(10) PLI_Number number;
 	public @P(20) PLI_BitLiteral bits;
@@ -68,13 +74,6 @@ public class PLI_Expression extends PrecedenceChooser
 	{
 		public @S(10) TokenList<PLI_RepeatCount> repeat;
 		public @S(20) PLI_Literal literal;
-		
-		public static class PLI_RepeatCount extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) PLI_Number count;
-			public @S(30) PunctuationRightParen rightParen;
-		}
 	}
 	
 	public static @P(130) class PLI_NegativeExpression extends PrimaryOperator

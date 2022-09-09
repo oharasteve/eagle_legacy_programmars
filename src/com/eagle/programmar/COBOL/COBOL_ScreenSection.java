@@ -17,13 +17,11 @@ import com.eagle.programmar.COBOL.Screen.COBOL_ScreenTo;
 import com.eagle.programmar.COBOL.Screen.COBOL_ScreenUsing;
 import com.eagle.programmar.COBOL.Screen.COBOL_ScreenValue;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Data_Definition;
-import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
-import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -95,12 +93,6 @@ public class COBOL_ScreenSection extends TokenSequence
 			public @CHOICE COBOL_ScreenTo to;
 			public @CHOICE COBOL_ScreenUsing using;
 			public @CHOICE COBOL_ScreenPrompt prompt;
-		}
-
-		public static class COBOL_NumberOrIdentifier extends TokenChooser
-		{
-			public @CHOICE COBOL_Number color;
-			public @CHOICE COBOL_Identifier_Reference dataRef;
 		}
 	}
 }

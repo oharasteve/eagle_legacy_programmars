@@ -5,7 +5,6 @@ package com.eagle.programmar.JavaP.Statements;
 
 import com.eagle.programmar.JavaP.JavaP_CodeBlock;
 import com.eagle.programmar.JavaP.JavaP_MethodArgument;
-import com.eagle.programmar.JavaP.JavaP_MethodArgument.JavaP_MethodArg.JavaP_EmptySubscript;
 import com.eagle.programmar.JavaP.Blocks.JavaP_CodeLineNumbers;
 import com.eagle.programmar.JavaP.Blocks.JavaP_CodeLocalValues;
 import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassConstantValue;
@@ -13,11 +12,11 @@ import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassDeprecated;
 import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassDescriptor;
 import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassExceptions;
 import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassFlags;
+import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassGeneric;
 import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassMethodParameters;
 import com.eagle.programmar.JavaP.Terminals.JavaP_EndOfLine;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Keyword;
 import com.eagle.programmar.JavaP.Terminals.JavaP_KeywordChoice;
-import com.eagle.programmar.JavaP.Terminals.JavaP_Punctuation;
 import com.eagle.programmar.JavaP.Terminals.JavaP_QualifiedName;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -25,8 +24,10 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
@@ -53,8 +54,14 @@ public class JavaP_Classes extends TokenSequence
 			{
 				public @S(10) JavaP_QualifiedName type;
 				public @S(20) @OPT JavaP_OneClassGeneric generic;
-				public @S(30) @OPT TokenList<JavaP_EmptySubscript> subscript;
+				public @S(30) @OPT TokenList<JavaP_NoSubscript> subscript;
 				public @S(40) JavaP_OneClassWhat what;
+				
+				public static class JavaP_NoSubscript extends TokenSequence
+				{
+					public @S(10) PunctuationLeftBracket leftBracket;
+					public @S(20) PunctuationRightBracket rightBracket;
+				}
 			}
 
 			public @CHOICE static class JavaP_OneClassStaticHeader extends TokenSequence
@@ -96,13 +103,6 @@ public class JavaP_Classes extends TokenSequence
 					public @S(20) SeparatedList<JavaP_QualifiedName,PunctuationComma> name;
 				}
 			}
-		}
-		
-		public static class JavaP_OneClassGeneric extends TokenSequence
-		{
-			public @S(10) JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
-			public @S(20) SeparatedList<JavaP_MethodArgument,PunctuationComma> names;
-			public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 		}
 		
 		public static class JavaP_OneClassParameter extends TokenChooser

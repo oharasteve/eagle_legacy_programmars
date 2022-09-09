@@ -6,7 +6,7 @@ package com.eagle.programmar.Java.Statements;
 import com.eagle.programmar.Java.Java_Data.Java_DataInitialValue;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
-import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock.Java_StatementOrComment;
+import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;

@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
 import com.eagle.programmar.Python.Statements.Python_AwaitStatement;
@@ -106,6 +105,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	public static class Python_SingleOrMultiLineStatement extends TokenChooser
 	{
 		public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
+		public @CHOICE Python_MultilineStatement multi;
 		
 		public @CHOICE static class Python_SingleLineStatement extends TokenSequence
 		{
@@ -113,12 +113,12 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 			public @S(20) @OPT Python_Comment comment;
 			public @S(30) @OPT Python_EndOfLine eoln;
 		}
-
-		public @CHOICE static class Python_MultilineStatement extends TokenSequence
-		{
-			public @S(10) @OPT Python_Comment comment;
-			public @S(20) Python_EndOfLine eoln;
-			public @S(30) TokenList<Python_Statement> statements;
-		}
+	}
+	
+	public static class Python_MultilineStatement extends TokenSequence
+	{
+		public @S(10) @OPT Python_Comment comment;
+		public @S(20) Python_EndOfLine eoln;
+		public @S(30) TokenList<Python_Statement> statements;
 	}
 }

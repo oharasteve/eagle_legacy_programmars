@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CPlus;
 
-import com.eagle.programmar.C.C_Data.C_RegularData.C_DataInitialValue;
-import com.eagle.programmar.C.C_Data.C_RegularData.C_DataModifiers;
+import com.eagle.programmar.C.C_DataInitialValue;
+import com.eagle.programmar.C.C_DataModifiers;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;

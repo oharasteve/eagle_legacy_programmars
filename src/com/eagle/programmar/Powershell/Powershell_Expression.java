@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Powershell;
 
-import com.eagle.programmar.Powershell.Powershell_Expression.Powershell_FunctionCall.Powershell_Library;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
@@ -45,6 +44,14 @@ public class Powershell_Expression extends PrecedenceChooser
 	public Powershell_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
 	    super(_operators, allowed, token.getClass());
+	}
+
+	public static class Powershell_Library extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) SeparatedList<Powershell_Identifier_Reference,PunctuationPeriod> name;
+		public @S(30) PunctuationRightBracket rightBracket;
+		public @S(40) Powershell_Punctuation colons = new Powershell_Punctuation("::");
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -108,14 +115,6 @@ public class Powershell_Expression extends PrecedenceChooser
 			public @S(10) PunctuationLeftBracket leftBracket;
 			public @S(20) Powershell_Keyword VOID = new Powershell_Keyword("void");
 			public @S(30) PunctuationRightBracket rightBracket;
-		}
-		
-		public static class Powershell_Library extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) SeparatedList<Powershell_Identifier_Reference,PunctuationPeriod> name;
-			public @S(30) PunctuationRightBracket rightBracket;
-			public @S(40) Powershell_Punctuation colons = new Powershell_Punctuation("::");
 		}
 	}
 	

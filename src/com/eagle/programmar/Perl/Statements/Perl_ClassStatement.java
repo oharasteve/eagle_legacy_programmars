@@ -4,7 +4,7 @@
 package com.eagle.programmar.Perl.Statements;
 
 import com.eagle.programmar.Perl.Perl_Program;
-import com.eagle.programmar.Perl.Perl_Statement.Perl_SimpleStatement.Perl_StatementOrComment;
+import com.eagle.programmar.Perl.Perl_StatementOrComment;
 import com.eagle.programmar.Perl.Symbols.Perl_Class_Definition;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;

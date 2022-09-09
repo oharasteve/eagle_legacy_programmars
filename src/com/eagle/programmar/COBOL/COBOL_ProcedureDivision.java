@@ -4,7 +4,6 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
-import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph.COBOL_ParagraphHeader;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
@@ -98,12 +97,12 @@ public class COBOL_ProcedureDivision extends TokenSequence
 				public @S(10) TokenList<COBOL_CopyOrDataDeclaration> data;
 			}
 		}
-		
-		public static class COBOL_ParagraphHeader extends TokenSequence
-		{
-			public @S(10) COBOL_Paragraph_Definition paragraphName;
-			public @S(20) PunctuationPeriod dot;
-		}
+	}
+	
+	public static class COBOL_ParagraphHeader extends TokenSequence
+	{
+		public @S(10) COBOL_Paragraph_Definition paragraphName;
+		public @S(20) PunctuationPeriod dot;
 	}
 
 	public static class COBOL_Sentence extends TokenSequence
@@ -111,11 +110,5 @@ public class COBOL_ProcedureDivision extends TokenSequence
 		public @S(10) TokenList<COBOL_StatementOrComment> statements;
 		public @S(20) PunctuationPeriod dot1;
 		public @S(30) @CURIOUS("SENTENCE: Extra dot") @OPT PunctuationPeriod dot2;
-		
-		public static class COBOL_StatementOrComment extends TokenChooser
-		{
-			public @CHOICE COBOL_Comment comment;
-			public @CHOICE COBOL_Statement statement;
-		}
 	}
 }

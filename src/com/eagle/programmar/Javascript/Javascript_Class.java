@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation.Javascript_FunctionBody;
-import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation.Javascript_FunctionParameter;
-import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation.Javascript_MoreParameters;
 import com.eagle.programmar.Javascript.Javascript_Program.Javascript_Element;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Definition;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Reference;
@@ -50,9 +47,8 @@ public class Javascript_Class extends TokenSequence
 		public @S(20) @OPT Javascript_KeywordChoice GET = new Javascript_KeywordChoice("get", "set");
 		public @S(30) Javascript_Function_Definition name;
 		public @S(40) PunctuationLeftParen leftParen;
-		public @S(50) @OPT Javascript_FunctionParameter param;
-		public @S(60) @OPT TokenList<Javascript_MoreParameters> moreParams;
-		public @S(70) PunctuationRightParen rightParen;
-		public @S(80) Javascript_FunctionBody body;
+		public @S(50) @OPT Javascript_FunctionParameters params;
+		public @S(60) PunctuationRightParen rightParen;
+		public @S(70) Javascript_FunctionBody body;
 	}
 }

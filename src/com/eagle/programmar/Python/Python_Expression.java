@@ -79,12 +79,6 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_CommentEoln> comments;
 		public @S(30) @OPT @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
 		public @S(40) @NOSPACE PunctuationRightParen rightParen;
-		
-		public static class Python_CommentEoln extends TokenSequence
-		{
-			public @S(10) Python_Comment comment;
-			public @S(20) @OPT Python_EndOfLine eoln;
-		}
 	}
 	
 	public static @P(120) class Python_BracesColons extends PrimaryOperator

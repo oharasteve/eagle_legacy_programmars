@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.preprocess.CMacro.CMacro_Preprocess;
-import com.eagle.programmar.CMacro.CMacro_Expression.CMacro_FunctionCall.CMacroFunctionParens;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Character_Literal;
 import com.eagle.programmar.CMacro.Terminals.CMacro_HexNumber;
@@ -49,6 +48,19 @@ public class CMacro_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 
+	public static class CMacro_FunctionType extends TokenChooser
+	{
+		public @CHOICE CMacro_Identifier_Reference variable;
+		public @CHOICE CMacroFunctionParens params;
+	}
+	
+	public static class CMacroFunctionParens extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT CMacro_Identifier_Reference variable;
+		public @S(30) PunctuationRightParen rightParen;
+	}
+
 	///////////////////////////////////////////////
 	// Primary expressions
 
@@ -56,19 +68,6 @@ public class CMacro_Expression extends PrecedenceChooser
 	{
 		public @S(10) CMacro_Keyword DEFINED = new CMacro_Keyword("defined");
 		public @S(20) CMacro_FunctionType funcType;
-		
-		public static class CMacro_FunctionType extends TokenChooser
-		{
-			public @CHOICE CMacro_Identifier_Reference variable;
-			public @CHOICE CMacroFunctionParens params;
-		}
-		
-		public static class CMacroFunctionParens extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) @OPT CMacro_Identifier_Reference variable;
-			public @S(30) PunctuationRightParen rightParen;
-		}
 		
 		@Override
 		public void interpret(EagleInterpreter interpreter)

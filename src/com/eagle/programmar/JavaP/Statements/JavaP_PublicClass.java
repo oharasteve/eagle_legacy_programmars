@@ -4,7 +4,7 @@
 package com.eagle.programmar.JavaP.Statements;
 
 import com.eagle.programmar.JavaP.JavaP_Syntax;
-import com.eagle.programmar.JavaP.Statements.JavaP_Classes.JavaP_OneClass.JavaP_OneClassGeneric;
+import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassGeneric;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Comment;
 import com.eagle.programmar.JavaP.Terminals.JavaP_EndOfLine;
 import com.eagle.programmar.JavaP.Terminals.JavaP_HashNumber;

@@ -4,7 +4,7 @@
 package com.eagle.programmar.Perl.Statements;
 
 import com.eagle.programmar.Perl.Perl_Expression;
-import com.eagle.programmar.Perl.Perl_Statement.Perl_SimpleStatement.Perl_StatementOrComment;
+import com.eagle.programmar.Perl.Perl_StatementOrComment;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;

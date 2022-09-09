@@ -4,15 +4,15 @@
 package com.eagle.programmar.Java.Statements;
 
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
-import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock.Java_StatementOrComment;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.EagleScope;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;

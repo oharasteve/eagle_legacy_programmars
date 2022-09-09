@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python_Parameter_List.Python_Parameters.Python_Params.Python_MoreParams.Python_InitValue;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
@@ -26,6 +25,12 @@ public class Python_Parameter_List extends TokenSequence
 	public @S(40) @OPT Python_EndOfLine eoln;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	
+	public static class Python_InitValue extends TokenSequence
+	{
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Python_Expression defaultValue;
+	}
+
 	public static class Python_Parameters extends TokenChooser
 	{
 		public @CHOICE PunctuationStar star;	// Means end of positional arguments
@@ -62,12 +67,6 @@ public class Python_Parameter_List extends TokenSequence
 						public @S(10) Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
 						public @S(20) @OPT Python_Expression expr;
 					}
-				}
-				
-				public static class Python_InitValue extends TokenSequence
-				{
-					public @S(10) PunctuationEquals equals;
-					public @S(20) Python_Expression defaultValue;
 				}
 			}
 		}

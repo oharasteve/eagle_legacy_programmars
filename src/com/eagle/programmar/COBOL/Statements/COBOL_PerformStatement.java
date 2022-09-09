@@ -5,8 +5,7 @@ package com.eagle.programmar.COBOL.Statements;
 
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
-import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence.COBOL_StatementOrComment;
-import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_PerformWhat.COBOL_PerformParagraph.COBOL_Paragraph_or_Section_Thru;
+import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -30,6 +29,12 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement
 		public @S(30) COBOL_KeywordChoice when = new COBOL_KeywordChoice("BEFORE", "AFTER");
 	}
 	
+	public static class COBOL_Paragraph_or_Section_Thru extends TokenSequence
+	{
+		public @S(10) COBOL_KeywordChoice THRU = new COBOL_KeywordChoice("THRU", "THROUGH");
+		public @S(20) COBOL_Identifier_Reference performEndParagraph;
+	}
+
 	public static class COBOL_PerformWhat extends TokenChooser
 	{
 		public @CHOICE static class COBOL_PerformParagraph extends TokenSequence
@@ -38,12 +43,6 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement
 			public @S(20) @OPT COBOL_Paragraph_or_Section_Thru performThrough;
 			public @S(30) @OPT COBOL_PerformTestWhen testWhen;
 			public @S(40) @OPT TokenList<COBOL_PerformClause> clauseList;
-			
-			public static class COBOL_Paragraph_or_Section_Thru extends TokenSequence
-			{
-				public @S(10) COBOL_KeywordChoice THRU = new COBOL_KeywordChoice("THRU", "THROUGH");
-				public @S(20) COBOL_Identifier_Reference performEndParagraph;
-			}
 		}
 		
 		public @CHOICE static class COBOL_PerformNothing extends TokenSequence

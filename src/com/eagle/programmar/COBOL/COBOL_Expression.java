@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.programmar.COBOL.COBOL_Expression.COBOL_RelationCondition.COBOL_RelationalOperator;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_HexNumber;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -46,6 +45,38 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public COBOL_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
 	    super(_operators, allowed, token.getClass());
+	}
+
+	public static class COBOL_RelationalOperator extends TokenChooser
+	{
+		public @CHOICE COBOL_PunctuationChoice operator = new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">");
+		
+		public @CHOICE static class COBOL_Greater extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
+			public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
+			public @S(30) @OPT COBOL_OrEqual orEqual;
+		}
+		
+		public @CHOICE static class COBOL_Equal extends TokenSequence
+		{
+			public @S(10) COBOL_KeywordChoice EQUAL = new COBOL_KeywordChoice("EQUAL", "EQUALS");
+			public @S(20) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		}
+		
+		public @CHOICE static class COBOL_Less extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword LESS = new COBOL_Keyword("LESS");
+			public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
+			public @S(30) @OPT COBOL_OrEqual orEqual;
+		}
+
+		public @CHOICE static class COBOL_OrEqual extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
+			public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
+			public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		}
 	}
 
 	///////////////////////////////////////////////
@@ -205,38 +236,6 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 		public @S(30) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
 		public @S(40) COBOL_RelationalOperator relationalOperator;
 		public @S(50) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
-
-		public static class COBOL_RelationalOperator extends TokenChooser
-		{
-			public @CHOICE COBOL_PunctuationChoice operator = new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">");
-			
-			public @CHOICE static class COBOL_Greater extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
-				public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
-				public @S(30) @OPT COBOL_OrEqual orEqual;
-			}
-			
-			public @CHOICE static class COBOL_Equal extends TokenSequence
-			{
-				public @S(10) COBOL_KeywordChoice EQUAL = new COBOL_KeywordChoice("EQUAL", "EQUALS");
-				public @S(20) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-			}
-			
-			public @CHOICE static class COBOL_Less extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword LESS = new COBOL_Keyword("LESS");
-				public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
-				public @S(30) @OPT COBOL_OrEqual orEqual;
-			}
-
-			public @CHOICE static class COBOL_OrEqual extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
-				public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
-				public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-			}
-		}
 	}
 
 	public static @P(550) class COBOL_AndCondition extends PrecedenceOperator

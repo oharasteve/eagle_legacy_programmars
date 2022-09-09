@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.Terminals.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Argument;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenSequence;
 

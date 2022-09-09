@@ -6,7 +6,6 @@ package com.eagle.programmar.COBOL.Statements;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Variable;
-import com.eagle.programmar.COBOL.Statements.COBOL_SubtractStatement.COBOL_SubtractType.COBOL_SubtractNoGiving.COBOL_SubtractMoreVars;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,18 +20,18 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 	public @S(40) COBOL_SubtractType type;
 	public @S(50) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
 	
+	public static class COBOL_SubtractMoreVars extends TokenSequence
+	{
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Variable var;
+	}
+
 	public static class COBOL_SubtractType extends TokenChooser
 	{
 		public @CHOICE static class COBOL_SubtractNoGiving extends TokenSequence
 		{
 			public @S(10) COBOL_Variable var;
 			public @S(20) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
-			
-			public static class COBOL_SubtractMoreVars extends TokenSequence
-			{
-				public @S(10) @OPT PunctuationComma comma;
-				public @S(20) COBOL_Variable var;
-			}
 		}
 		
 		public @FIRST static class COBOL_SubtractWithGiving extends TokenSequence

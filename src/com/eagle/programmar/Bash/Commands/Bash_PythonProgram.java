@@ -5,9 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_FilenameOrLiteral;
-import com.eagle.programmar.Bash.Commands.Bash_PythonProgram.Bash_PythonExec.Bash_PythonOption;
 import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
-import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_RealEndOfLine;
 import com.eagle.programmar.Bash.Terminals.Bash_SheBang;
@@ -41,14 +39,5 @@ public class Bash_PythonProgram extends TokenChooser
 		public @S(50) Bash_FilenameOrLiteral name;
 		public @S(60) @OPT TokenList<Bash_FilenameOrLiteral> args;
 		public @S(70) Bash_EndOfLine eoln;
-		
-		public static class Bash_PythonOption extends TokenChooser
-		{
-			public @CHOICE static class Bash_PythonOptionM extends TokenSequence
-			{
-				public @S(10) Bash_Keyword M = new Bash_Keyword("-m");
-				public @S(20) Bash_Identifier_Reference moduleName;
-			}
-		}
 	}
 }

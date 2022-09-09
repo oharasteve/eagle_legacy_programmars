@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.programmar.COBOL.COBOL_FileControl.COBOL_Copy_or_FileSelect.COBOL_FileSelect;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Section;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;

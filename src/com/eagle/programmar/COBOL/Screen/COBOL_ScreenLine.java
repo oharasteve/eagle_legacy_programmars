@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL.Screen;
 
-import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration.COBOL_NumberOrIdentifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Punctuation;
 import com.eagle.tokens.TokenSequence;

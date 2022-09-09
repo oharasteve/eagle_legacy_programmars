@@ -9,7 +9,7 @@ import com.eagle.programmar.HTML.HTML_Program;
 import com.eagle.programmar.HTML.HTML_Syntax;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
-import com.eagle.programmar.Perl.Perl_Statement.Perl_SimpleStatement.Perl_StatementOrComment;
+import com.eagle.programmar.Perl.Perl_StatementOrComment;
 import com.eagle.programmar.Perl.Perl_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;

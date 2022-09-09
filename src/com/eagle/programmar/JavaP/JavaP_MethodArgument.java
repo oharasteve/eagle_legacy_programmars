@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.JavaP;
 
-import com.eagle.programmar.JavaP.Statements.JavaP_Classes.JavaP_OneClass.JavaP_OneClassGeneric;
+import com.eagle.programmar.JavaP.Parameters.JavaP_OneClassGeneric;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Identifier;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Keyword;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Punctuation;

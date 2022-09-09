@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_SingleOrMultiLineStatement.FSharp_MultilineStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_Assignment;
 import com.eagle.programmar.FSharp.Statements.FSharp_ForStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
@@ -70,22 +69,23 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 		public @LAST FSharp_Expression returnValue;
 	}
 	
+	public static class FSharp_MultilineStatement extends TokenSequence
+	{
+		public @S(10) @OPT FSharp_Comment comment;
+		public @S(20) FSharp_EndOfLine eoln;
+		public @S(30) TokenList<FSharp_Statement> statements;
+	}
+
 	public static class FSharp_SingleOrMultiLineStatement extends TokenChooser
 	{
 		public @CHOICE FSharp_Punctuation dots = new FSharp_Punctuation("...");
+		public @CHOICE FSharp_MultilineStatement multilineStatement;
 		
 		public @CHOICE static class FSharp_SingleLineStatement extends TokenSequence
 		{
 			public @S(10) SeparatedList<FSharp_Simple_Statement,PunctuationSemicolon> statements;
 			public @S(20) @OPT FSharp_Comment comment;
 			public @S(30) @OPT FSharp_EndOfLine eoln;
-		}
-
-		public @CHOICE static class FSharp_MultilineStatement extends TokenSequence
-		{
-			public @S(10) @OPT FSharp_Comment comment;
-			public @S(20) FSharp_EndOfLine eoln;
-			public @S(30) TokenList<FSharp_Statement> statements;
 		}
 	}
 }

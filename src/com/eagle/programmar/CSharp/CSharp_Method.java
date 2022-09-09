@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.programmar.CSharp.CSharp_Statement.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Type_Definition;
@@ -88,14 +87,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 	public static class CSharp_MethodBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
-		
-		public @CHOICE static class CSharp_MethodImplementation extends TokenSequence
-		{
-			public @S(10) @OPT TokenList<CSharp_Comment> comment1;
-			public @S(20) @NOSPACE CSharp_StatementBlock block;
-			public @S(30) @OPT TokenList<CSharp_Comment> comment2;
-			public @S(40) @OPT @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon2;
-		}
+		public @CHOICE CSharp_MethodImplementation implementation;
 		
 		public @CHOICE static class CSharp_MethodLambda extends TokenSequence
 		{

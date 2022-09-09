@@ -13,9 +13,9 @@ import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph.COBOL_SentenceOrComment;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Section;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence;
-import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence.COBOL_StatementOrComment;
 import com.eagle.programmar.COBOL.COBOL_Program_Complete;
 import com.eagle.programmar.COBOL.COBOL_Statement;
+import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 

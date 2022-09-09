@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.programmar.PLI.PLI_Declaration.PLI_Declare_Variables.PLI_Identifier_List.PLI_Declare_Initial;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
@@ -70,17 +69,17 @@ public class PLI_Declaration extends TokenSequence
 				public @S(50) @OPT PLI_Keyword STATIC = new PLI_Keyword("STATIC");
 				public @S(60) @OPT PLI_Declare_Initial initial;
 			}
-			
-			public static class PLI_Declare_Initial extends TokenSequence
-			{
-				public @S(10) PLI_KeywordChoice INITIAL = new PLI_KeywordChoice("INITIAL", "INIT");
-				public @S(20) PunctuationLeftParen leftParen;
-				public @S(30) SeparatedList<PLI_Expression,PunctuationComma> exprs;
-				public @S(40) PunctuationRightParen rightParen;
-			}
 		}
 	}
 	
+	public static class PLI_Declare_Initial extends TokenSequence
+	{
+		public @S(10) PLI_KeywordChoice INITIAL = new PLI_KeywordChoice("INITIAL", "INIT");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<PLI_Expression,PunctuationComma> exprs;
+		public @S(40) PunctuationRightParen rightParen;
+	}
+
 	public static class PLI_Declare_Size extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
