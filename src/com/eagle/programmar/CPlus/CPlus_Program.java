@@ -4,7 +4,6 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.parsers.EagleOverrideManager;
-import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.C.C_Syntax;
 import com.eagle.programmar.C.Terminals.C_Comment;
@@ -22,20 +21,20 @@ import com.eagle.tokens.TokenList;
 public class CPlus_Program extends C_Program
 {
 	public static final String CPP = "Cpp";
-	private static C_Expression _fakeExpr = null;
+//	private static C_Expression _fakeExpr = null;
 	
 	public CPlus_Program()
 	{
 		super(CPP, new CPlus_Syntax());
 		
-		// Can't easily have CPlus_Expression extend C_Expression. It's that old robot leg problem.
-		if (_fakeExpr == null)
-		{
-			_fakeExpr = new C_Expression();		// Prime the _operators._list structure
-			_fakeExpr.addOperator(CPlus_Expression.CPlus_NewExpression.class);
+//		// Can't easily have CPlus_Expression extend C_Expression. It's that old robot leg problem.
+//		if (_fakeExpr == null)
+//		{
+//			_fakeExpr = new C_Expression();		// Prime the _operators._list structure
+//			_fakeExpr.addOperator(CPlus_Expression.CPlus_NewExpression.class);
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceGlobal.clas);
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceSub.class);
-		}
+//		}
 		
 		C_Program.addPrimitive("BOOL");		// Might be ObjectiveC only
 		

@@ -19,8 +19,12 @@ import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -204,6 +208,25 @@ public class C_Expression extends PrecedenceChooser
 	{
 		public @S(10) C_Comment comment;
 		public @S(20) C_Expression expr;
+	}
+	
+	public static @P(330) class CPlus_NewExpression extends PrimaryOperator
+	{
+		public @S(10) C_Keyword NEW = new C_Keyword("new");
+		public @S(20) C_Type type;
+		public @S(30) @OPT CPlus_NewWhat what;
+		
+		public static class CPlus_NewWhat extends TokenChooser
+		{
+			public @CHOICE C_Subscript size;
+			
+			public @CHOICE static class CPlus_Parentheses extends TokenSequence
+			{
+				public @S(10) PunctuationLeftParen leftParen;
+				public @S(20) @OPT SeparatedList<C_Expression, PunctuationComma> expression;
+				public @S(30) PunctuationRightParen rightParen;
+			}
+		}
 	}
 
 	///////////////////////////////////////////////

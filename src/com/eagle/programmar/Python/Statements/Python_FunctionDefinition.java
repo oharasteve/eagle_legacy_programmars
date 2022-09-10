@@ -20,10 +20,10 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_FunctionDefinition extends TokenSequence implements AbstractMethod
 {
-	public @S(10) @OPT @DOC("compound_stmts.html#function-definitions") Python_Decorators decorators;
+	public @S(10) @OPT  Python_Decorators decorators;
 	public @S(20) @OPT Python_EndOfLine eoln;
 	public @S(30) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
-	public @S(40) @NOSPACE Python_Keyword DEF = new Python_Keyword("def");
+	public @S(40) @NOSPACE @DOC("compound_stmts.html#function-definitions") Python_Keyword DEF = new Python_Keyword("def");
 	public @S(50) Python_FunctionName fnName;
 	public @S(60) Python_Parameter_List params;
 	public @S(70) @OPT Python_ReturnType returnType;

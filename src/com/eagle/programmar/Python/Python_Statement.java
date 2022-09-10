@@ -49,7 +49,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	
 	public static class Python_StatementOrComment extends TokenChooser
 	{
-		public @SKIP Python_MultilineStatement multiStatement;	// Only needed for Transformation
+//		public @SKIP Python_MultilineStatement multiStatement;	// Only needed for Transformation
 		
 		public @CHOICE Python_Statement_List statements;
 		public @CHOICE Python_EndOfLine eoln;
@@ -101,11 +101,17 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		
 		public @LAST Python_ExpressionStatement expression;		// Avoid conflict with 'for' statement
 	}
+
+	public static class Python_MultilineStatement extends TokenSequence
+	{
+		public @S(10) @OPT Python_Comment comment;
+		public @S(20) Python_EndOfLine eoln;
+		public @S(30) TokenList<Python_Statement> statements;
+	}
 	
 	public static class Python_SingleOrMultiLineStatement extends TokenChooser
 	{
 		public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
-		public @CHOICE Python_MultilineStatement multi;
 		
 		public @CHOICE static class Python_SingleLineStatement extends TokenSequence
 		{
@@ -113,12 +119,12 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 			public @S(20) @OPT Python_Comment comment;
 			public @S(30) @OPT Python_EndOfLine eoln;
 		}
-	}
-	
-	public static class Python_MultilineStatement extends TokenSequence
-	{
-		public @S(10) @OPT Python_Comment comment;
-		public @S(20) Python_EndOfLine eoln;
-		public @S(30) TokenList<Python_Statement> statements;
+
+		public @CHOICE static class Python_MultilineStatement extends TokenSequence
+		{
+			public @S(10) @OPT Python_Comment comment;
+			public @S(20) Python_EndOfLine eoln;
+			public @S(30) TokenList<Python_Statement> statements;
+		}
 	}
 }
