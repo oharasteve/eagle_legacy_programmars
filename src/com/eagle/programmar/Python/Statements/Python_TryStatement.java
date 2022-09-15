@@ -21,7 +21,7 @@ public class Python_TryStatement extends TokenSequence
 	public @S(20) @DOC("compound_stmts.html#the-try-statement") Python_Keyword TRY = new Python_Keyword("try");
 	public @S(30) PunctuationColon colon;
 	public @S(40) @OPT Python_Comment comment;
-	public @S(50) Python_SingleOrMultiLineStatement tryType;
+	public @S(50) Python_SingleOrMultiLineStatement tryBlock;
 	public @S(60) @OPT TokenList<Python_TryExcept> tryExcept;
 	public @S(70) @OPT Python_TryElse tryElse;
 	public @S(80) @OPT Python_TryFinally tryFinally;
