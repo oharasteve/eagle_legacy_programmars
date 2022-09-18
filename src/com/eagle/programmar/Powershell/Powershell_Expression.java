@@ -20,9 +20,11 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -32,6 +34,7 @@ public class Powershell_Expression extends PrecedenceChooser
 
 	public @P(10) Powershell_Number number;
 	public @P(20) Powershell_Literal literal;
+	public @P(30) Powershell_Punctuation dollarQuestion = new Powershell_Punctuation("$?");
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator precedence.
@@ -117,7 +120,15 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(170) class Powershell_FunctionCall extends PrimaryOperator
+	public static @P(170) class Powershell_Hashes extends PrimaryOperator
+	{
+		public @S(10) @OPT Powershell_Punctuation at = new Powershell_Punctuation("@");
+		public @S(20) PunctuationLeftBrace leftBrace;
+		public @S(30) @OPT Powershell_Expressions expressions;
+		public @S(40) PunctuationRightBrace rightBrace;
+	}
+	
+	public static @P(180) class Powershell_FunctionCall extends PrimaryOperator
 	{
 		public @S(10) @OPT Powershell_DiscardResult discardResult;
 		public @S(20) @OPT Powershell_Library library;
@@ -134,7 +145,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(180) class Powershell_Cast extends PrimaryOperator
+	public static @P(190) class Powershell_Cast extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) Powershell_Type type;
@@ -142,7 +153,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(40) Powershell_Expression expr;
 	}
 
-	public static @P(190) class Powershell_EvaluateExpression extends PrimaryOperator
+	public static @P(200) class Powershell_EvaluateExpression extends PrimaryOperator
 	{
 		public @S(10) Powershell_Punctuation dollar = new Powershell_Punctuation("$");
 		public @S(20) PunctuationLeftParen leftParen;
@@ -150,32 +161,32 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(200) class Powershell_BuiltIn extends PrimaryOperator
+	public static @P(210) class Powershell_BuiltIn extends PrimaryOperator
 	{
 		public @S(10) Powershell_KeywordChoice builtin = new Powershell_KeywordChoice(
 				"length");
 	}
 
-	public static @P(210) class Powershell_VariableExpression extends PrimaryOperator
+	public static @P(220) class Powershell_VariableExpression extends PrimaryOperator
 	{
 		// Because Powershell_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
 		public @S(10) Powershell_Variable variable;
 	}
 	
-	public static @P(220) class Powershell_LibraryVariable extends PrimaryOperator
+	public static @P(230) class Powershell_LibraryVariable extends PrimaryOperator
 	{
 		public @S(10) Powershell_Library libName;
 		public @S(20) Powershell_Identifier_Reference variable;
 	}
 	
-	public static @P(230) class Powershell_ParenthesizedExpression extends PrimaryOperator
+	public static @P(240) class Powershell_ParenthesizedExpression extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Powershell_Expression expression;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(240) class Powershell_CallCommand extends PrimaryOperator
+	public static @P(250) class Powershell_CallCommand extends PrimaryOperator
 	{
 		public @S(10) Powershell_Command command;
 	}
@@ -215,7 +226,8 @@ public class Powershell_Expression extends PrecedenceChooser
 	public static @P(540) class Powershell_Relational_Expression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-lt", "-le");
+		public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice(
+				"-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
@@ -246,7 +258,8 @@ public class Powershell_Expression extends PrecedenceChooser
 				"-join",
 				"-match",
 				"-notin",
-				"-replace");
+				"-replace",
+				"-split");
 		public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	

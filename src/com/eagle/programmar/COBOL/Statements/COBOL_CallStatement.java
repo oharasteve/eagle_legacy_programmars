@@ -26,7 +26,7 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 	public @S(40) @OPT COBOL_Keyword USING = new COBOL_Keyword("USING");
 	public @S(50) @OPT TokenList<COBOL_CallParameter> parameters;
 	public @S(60) @OPT COBOL_CallReturning returning;
-	public @S(70) @OPT COBOL_CallException exception;
+	public @S(70) @OPT TokenList<COBOL_CallException> exceptions;
 	public @S(80) @OPT COBOL_Keyword ENDCALL = new COBOL_Keyword("END-CALL");
 	
 	public static class COBOL_CallWhat extends TokenChooser
@@ -62,8 +62,9 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 	
 	public static class COBOL_CallException extends TokenSequence
 	{
-		public @S(10) COBOL_Keyword ON = new COBOL_Keyword("ON");
-		public @S(20) COBOL_Keyword EXCEPTION = new COBOL_Keyword("EXCEPTION");
-		public @S(30) TokenList<COBOL_Statement> statements;
+		public @S(10) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
+		public @S(20) COBOL_Keyword ON = new COBOL_Keyword("ON");
+		public @S(30) COBOL_Keyword EXCEPTION = new COBOL_Keyword("EXCEPTION");
+		public @S(40) TokenList<COBOL_Statement> statements;
 	}
 }

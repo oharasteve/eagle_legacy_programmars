@@ -6,6 +6,7 @@ package com.eagle.programmar.COBOL.Statements;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
+import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
@@ -29,7 +30,7 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 		{
 			public @S(10) COBOL_Identifier_Reference from;
 			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
-			public @S(30) COBOL_Identifier_Reference to;
+			public @S(30) COBOL_Expression to;
 		}
 	}
 

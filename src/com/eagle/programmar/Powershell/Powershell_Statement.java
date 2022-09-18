@@ -7,6 +7,7 @@ import com.eagle.programmar.Powershell.Statements.Powershell_AssignmentStatement
 import com.eagle.programmar.Powershell.Statements.Powershell_BreakStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
 import com.eagle.programmar.Powershell.Statements.Powershell_ContinueStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_DoStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ExitStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForEachStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForStatement;
@@ -16,6 +17,7 @@ import com.eagle.programmar.Powershell.Statements.Powershell_ReturnStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ThrowStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhereObjectStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_WhileStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
@@ -32,6 +34,7 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_BreakStatement breakStatement;
 		public @CHOICE Powershell_Comment comment;
 		public @CHOICE Powershell_ContinueStatement continueStatement;
+		public @CHOICE Powershell_DoStatement doStatement;
 		public @CHOICE Powershell_ExitStatement exitStatement;
 		public @CHOICE Powershell_IfStatement ifStatement;
 		public @CHOICE Powershell_ForEachStatement foreachStatement;
@@ -42,6 +45,7 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_TryStatement tryStatement;
 		public @CHOICE Powershell_WhereObjectStatement whereObjectStatement;
 		public @CHOICE Powershell_WriteStatement writeStatement;
+		public @CHOICE Powershell_WhileStatement whileStatement;
 	
 		public @LAST Powershell_Command command;
 		public @LAST Powershell_AssignmentStatement assignmentStatement;

@@ -21,6 +21,7 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_CommentToEndOfLine;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
+import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -71,6 +72,7 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE COBOL_RedefinesClause redefinesClause;
 		public @CHOICE COBOL_Sign sign;
 		public @CHOICE COBOL_ThruClause thruClause;
+		public @CHOICE COBOL_Type type;
 		public @CHOICE COBOL_Typedef typedef;
 		public @CHOICE COBOL_Usage usage;
 		public @CHOICE COBOL_ValueClause valueClause;
@@ -88,13 +90,34 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE COBOL_Data_Definition id;
 	}
 	
+	public static class COBOL_Type extends TokenChooser
+	{
+		public @CHOICE COBOL_Keyword TYPE = new COBOL_Keyword("TYPE");
+		public @CHOICE COBOL_Literal type;
+	}
+	
 	public static class COBOL_OccursClause extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword OCCURS = new COBOL_Keyword("OCCURS");
 		public @S(20) COBOL_Expression count;
-		public @S(30) @OPT COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
-		public @S(40) @OPT COBOL_OccursKey key;
-		public @S(50) @OPT COBOL_IndexedBy indexedBy;
+		public @S(30) @OPT COBOL_OccursTo to;
+		public @S(40) @OPT COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
+		public @S(50) @OPT COBOL_Depending depends;
+		public @S(60) @OPT COBOL_OccursKey key;
+		public @S(70) @OPT COBOL_IndexedBy indexedBy;
+		
+		public static class COBOL_Depending extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword DEPENDING = new COBOL_Keyword("DEPENDING");
+			public @S(20) COBOL_Keyword ON = new COBOL_Keyword("ON");
+			public @S(30) COBOL_Identifier_Reference index;
+		}
+		
+		public static class COBOL_OccursTo extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword TO = new COBOL_Keyword("TO");
+			public @S(20) COBOL_Expression count;
+		}
 		
 		public static class COBOL_OccursKey extends TokenSequence
 		{

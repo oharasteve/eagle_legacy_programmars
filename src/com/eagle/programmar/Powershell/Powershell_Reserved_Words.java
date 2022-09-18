@@ -24,7 +24,7 @@ public class Powershell_Reserved_Words {
 			"end",
 			"enum",
 			"exit",
-			"filter",
+			// "filter",	// I removed
 			"finally",
 			"for",
 			"foreach",

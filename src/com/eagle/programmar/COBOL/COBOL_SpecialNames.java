@@ -6,6 +6,7 @@ package com.eagle.programmar.COBOL;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
+import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -26,6 +27,14 @@ public class COBOL_SpecialNames extends TokenSequence
 			public @S(10) COBOL_Keyword CURSOR = new COBOL_Keyword("CURSOR");
 			public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(30) COBOL_Identifier_Reference var;
+		}
+
+		public @CHOICE static class COBOL_SpecialNameCurrency extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword CURRENCY = new COBOL_Keyword("CURRENCY");
+			public @S(20) COBOL_Keyword SIGN = new COBOL_Keyword("SIGN");
+			public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(40) COBOL_Literal sign;
 		}
 
 		public @CHOICE static class COBOL_SpecialNameConsole extends TokenSequence

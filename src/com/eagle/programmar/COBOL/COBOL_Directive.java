@@ -53,8 +53,25 @@ public class COBOL_Directive extends TokenSequence
 			public static class COBOL_SetString extends TokenSequence
 			{
 				public @S(10) COBOL_KeywordChoice key = new COBOL_KeywordChoice(
-						"ANS85", "CASE", "CONSTANT", "DATALIT", "DEFAULTBYTE", "KEYCOMPRESS", "LINKCOUNT", "MF", "MFOO",
-						"NESTCALL", "NOALTER", "NOKEYCOMPRESS", "NOOSVS", "NOQUAL", "NOVSC2", "QUAL", "SOURCEFORMAT");
+						"ANS85",
+						"CASE",
+						"CONSTANT",
+						"DATALIT",
+						"DEFAULTBYTE",
+						"DIALECT",
+						"ISO2002",
+						"KEYCOMPRESS",
+						"LINKCOUNT",
+						"MF",
+						"MFOO",
+						"NESTCALL",
+						"NOALTER",
+						"NOKEYCOMPRESS",
+						"NOOSVS",
+						"NOQUAL",
+						"NOVSC2",
+						"QUAL",
+						"SOURCEFORMAT");
 				public @S(20) @OPT COBOL_Literal val;
 			}
 			
