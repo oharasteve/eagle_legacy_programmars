@@ -38,7 +38,7 @@ public class Powershell_Reserved_Words {
 			"module",
 			"namespace",
 			"parallel",
-			"param",
+			// "param",		// I removed
 			"private",
 			"process",
 			"public",

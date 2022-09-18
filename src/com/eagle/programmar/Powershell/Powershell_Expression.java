@@ -17,6 +17,7 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -54,6 +55,21 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(40) Powershell_Punctuation colons = new Powershell_Punctuation("::");
 	}
 
+	public static class Powershell_Expressions extends TokenSequence
+	{
+		public @S(10) @OPT Powershell_EndOfLine eoln1;
+		public @S(20) Powershell_Expression expr;
+		public @S(30) @OPT TokenList<Powershell_MoreExpressions> more;
+		public @S(40) @OPT Powershell_EndOfLine eoln2;
+		
+		public static class Powershell_MoreExpressions extends TokenSequence
+		{
+			public @S(10) PunctuationComma comma;
+			public @S(20) @OPT Powershell_EndOfLine eoln;
+			public @S(30) Powershell_Expression expr;
+		}
+	}
+	
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 	
@@ -97,7 +113,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) @OPT Powershell_Punctuation at = new Powershell_Punctuation("@");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @OPT SeparatedList<Powershell_Expression,PunctuationComma> expressions;
+		public @S(30) @OPT Powershell_Expressions expressions;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
@@ -107,7 +123,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(20) @OPT Powershell_Library library;
 		public @S(30) Powershell_Function_Reference func;
 		public @S(40) PunctuationLeftParen leftParen;
-		public @S(50) SeparatedList<Powershell_Expression, PunctuationComma> arguments;
+		public @S(50) @OPT Powershell_Expressions arguments;
 		public @S(60) PunctuationRightParen rightParen;
 		
 		public static class Powershell_DiscardResult extends TokenSequence
