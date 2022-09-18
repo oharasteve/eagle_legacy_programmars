@@ -27,6 +27,7 @@ import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
 import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
 import com.eagle.programmar.Bash.Commands.Bash_RmCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
+import com.eagle.programmar.Bash.Commands.Bash_SetCommand;
 import com.eagle.programmar.Bash.Commands.Bash_TeeCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WhileStatement;
 import com.eagle.programmar.Bash.Terminals.Bash_Comment;
@@ -60,6 +61,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_ReadCommand readCommand;
 		public @CHOICE Bash_RmCommand rmCommand;
 		public @CHOICE Bash_SedCommand sedCommand;
+		public @CHOICE Bash_SetCommand setCommand;
 		public @CHOICE Bash_TeeCommand teeCommand;
 		public @CHOICE Bash_WhileStatement whileStatement;
 		

@@ -110,14 +110,22 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
-	public static @P(150) class Perl_DollarEnvExpression extends PrimaryOperator
+	public static @P(150) class Perl_BracesInvocation extends PrimaryOperator
 	{
-		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
-		public @S(20) Perl_Keyword ENV = new Perl_Keyword("ENV");
-		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) Perl_Literal literal;
-		public @S(50) PunctuationRightBrace rightBrace;
+		public @S(10) Perl_Variable methodName;
+		public @S(20) PunctuationLeftBrace leftBrace;
+		public @S(30) @OPT Perl_ArgumentList argList;
+		public @S(40) PunctuationRightBrace rightBrace;
 	}
+	
+//	public static @P(150) class Perl_DollarEnvExpression extends PrimaryOperator
+//	{
+//		public @S(10) Perl_Punctuation dollar = new Perl_Punctuation('$');
+//		public @S(20) Perl_Keyword ENV = new Perl_Keyword("ENV");
+//		public @S(30) PunctuationLeftBrace leftBrace;
+//		public @S(40) Perl_Literal literal;
+//		public @S(50) PunctuationRightBrace rightBrace;
+//	}
 	
 	public static @P(160) class Perl_PreIncrementExpression extends PrimaryOperator
 	{
@@ -306,6 +314,12 @@ public class Perl_Expression extends PrecedenceChooser
 		public @S(30) Perl_Punctuation greaterThan = new Perl_Punctuation('>');
 	}
 
+	public static @P(370) class Perl_PercentExpression extends PrimaryOperator
+	{
+		public @S(10) Perl_Punctuation percent = new Perl_Punctuation("%");
+		public @S(20) Perl_Expression expr;
+	}
+	
 	///////////////////////////////////////////////
 	// Binary expressions
 
