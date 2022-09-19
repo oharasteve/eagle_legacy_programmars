@@ -21,11 +21,12 @@ public class COBOL_FileDescriptor extends TokenSequence
 	public @S(20) COBOL_File_Definition id;
 	public @S(30) @OPT COBOL_FD_ReportExternal reportExternal;
 	public @S(40) @OPT COBOL_FD_RecordContains recordContains;
-	public @S(50) @OPT COBOL_FD_LabelRecordStandard labelRecordStandard;
-	public @S(60) @OPT COBOL_FD_LabelRecordOmitted labelRecordOmitted;
-	public @S(70) @OPT COBOL_FD_RecordingMode recordingMode;
-	public @S(80) PunctuationPeriod dot;
-	public @S(90) @OPT TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
+	public @S(50) @OPT COBOL_FD_RecordIsVarying recordIsVarying;
+	public @S(60) @OPT COBOL_FD_LabelRecordStandard labelRecordStandard;
+	public @S(70) @OPT COBOL_FD_LabelRecordOmitted labelRecordOmitted;
+	public @S(80) @OPT COBOL_FD_RecordingMode recordingMode;
+	public @S(90) PunctuationPeriod dot;
+	public @S(100) @OPT TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
 	
 	public static class COBOL_FD_ReportExternal extends TokenChooser
 	{
@@ -50,6 +51,18 @@ public class COBOL_FileDescriptor extends TokenSequence
 		public @S(20) COBOL_Keyword CONTAINS = new COBOL_Keyword("CONTAINS");
 		public @S(30) COBOL_Number count;
 		public @S(40) COBOL_Keyword CHARACTERS = new COBOL_Keyword("CHARACTERS");
+	}
+	
+	public static class COBOL_FD_RecordIsVarying extends TokenSequence
+	{
+		public @S(10) COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
+		public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
+		public @S(30) COBOL_Keyword VARYING = new COBOL_Keyword("VARYING");
+		public @S(40) COBOL_Keyword IN = new COBOL_Keyword("IN");
+		public @S(50) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
+		public @S(60) COBOL_Keyword DEPENDING = new COBOL_Keyword("DEPENDING");
+		public @S(70) COBOL_Keyword ON = new COBOL_Keyword("ON");
+		public @S(80) COBOL_Identifier_Reference what;
 	}
 	
 	public static class COBOL_FD_LabelRecordStandard extends TokenSequence

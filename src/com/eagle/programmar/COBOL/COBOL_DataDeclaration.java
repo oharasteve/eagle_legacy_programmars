@@ -76,6 +76,7 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE COBOL_Typedef typedef;
 		public @CHOICE COBOL_Usage usage;
 		public @CHOICE COBOL_ValueClause valueClause;
+		public @CHOICE COBOL_ValueIsGlobal isGlobal;
 	}
 	
 	public static class COBOL_Justified extends TokenSequence
@@ -133,6 +134,12 @@ public class COBOL_DataDeclaration extends TokenSequence
 			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
 			public @S(30) COBOL_Index_Definition index;
 		}
+	}
+	
+	public static class COBOL_ValueIsGlobal extends TokenSequence
+	{
+		public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
+		public @S(20) COBOL_Keyword GLOBAL = new COBOL_Keyword("GLOBAL");
 	}
 	
 	public static class COBOL_DataComment extends TokenSequence

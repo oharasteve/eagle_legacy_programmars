@@ -5,7 +5,6 @@ package com.eagle.programmar.COBOL;
 
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
-import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
@@ -46,9 +45,5 @@ public class COBOL_ReportDataLineType extends TokenChooser
 		public @S(20) COBOL_Keyword FOOTING = new COBOL_Keyword("FOOTING");
 		public @S(30) @OPT COBOL_Keyword FINAL = new COBOL_Keyword("FINAL");
 		public @S(40) @OPT COBOL_Identifier_Reference id;
-		public @S(50) @OPT COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
-		public @S(60) @OPT COBOL_Keyword GROUP = new COBOL_Keyword("GROUP");
-		public @S(70) @OPT COBOL_Keyword PLUS = new COBOL_Keyword("PLUS");
-		public @S(80) @OPT COBOL_Number count;
 	}
 }
