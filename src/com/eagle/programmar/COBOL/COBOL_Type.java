@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
@@ -29,5 +30,6 @@ public class COBOL_Type extends TokenChooser
 	{
 		public @S(10) COBOL_Keyword OBJECT = new COBOL_Keyword("OBJECT");
 		public @S(20) COBOL_Keyword REFERENCE = new COBOL_Keyword("REFERENCE");
+		public @S(30) @OPT COBOL_Identifier_Reference id;
 	}
 }

@@ -52,16 +52,21 @@ public class COBOL_InspectStatement extends COBOL_AbstractStatement
 		public @CHOICE static class COBOL_InspectTallying extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword TALLYING = new COBOL_Keyword("TALLYING");
-			public @S(20) COBOL_Identifier_Reference var;
-			public @S(30) COBOL_Keyword FOR = new COBOL_Keyword("FOR");
-			public @S(40) COBOL_InpsectTallyingWhat forWhat;
+			public @S(20) TokenList<COBOL_InspectTally> tallies;
+			
+			public static class COBOL_InspectTally extends TokenSequence
+			{
+				public @S(20) COBOL_Identifier_Reference var;
+				public @S(30) COBOL_Keyword FOR = new COBOL_Keyword("FOR");
+				public @S(40) COBOL_InpsectTallyingWhat forWhat;
+			}
 			
 			public static class COBOL_InpsectTallyingWhat extends TokenChooser
 			{
 				public @CHOICE static class COBOL_InspectTallyingAll extends TokenSequence
 				{
 					public @S(10) COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-					public @S(20) COBOL_Literal literal;
+					public @S(20) TokenList<COBOL_Literal> literals;
 				}
 				
 				public @CHOICE static class COBOL_InspectTallyingSpaces extends TokenSequence

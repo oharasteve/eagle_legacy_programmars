@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Program_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_CommentToEndOfLine;
@@ -57,6 +58,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 	public static class COBOL_IdentificationEntry extends TokenChooser
 	{
 		public @CHOICE COBOL_SpecialNames specialNames;
+		public @CHOICE COBOL_Comment comment;
 
 		public @CHOICE static class COBOL_IdentificationSimple extends TokenSequence
 		{
@@ -75,8 +77,24 @@ public class COBOL_IdentificationDivision extends TokenSequence
 			public static class COBOL_RepositoryEntry extends TokenSequence
 			{
 				public @S(10) COBOL_Keyword CLASS = new COBOL_Keyword("CLASS");
-				public @S(20) COBOL_Keyword SYS_CONSOLE = new COBOL_Keyword("SYS-CONSOLE");
+				public @S(20) COBOL_Identifier_Reference id;
 				public @S(30) COBOL_Keyword AS = new COBOL_Keyword("AS");
+				public @S(40) COBOL_Literal literal;
+				public @S(50) PunctuationPeriod dot;
+			}
+		}
+		
+		public @CHOICE static class COBOL_IdentificationClassControl extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword CLASSCONTROL = new COBOL_Keyword("CLASS-CONTROL");
+			public @S(20) PunctuationPeriod dot;
+			public @S(30) TokenList<COBOL_IdentificationClassEntry> entries;
+			
+			public static class COBOL_IdentificationClassEntry extends TokenSequence
+			{
+				public @S(10) COBOL_Identifier_Reference id;
+				public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
+				public @S(30) COBOL_Keyword CLASS = new COBOL_Keyword("CLASS");
 				public @S(40) COBOL_Literal literal;
 				public @S(50) PunctuationPeriod dot;
 			}

@@ -31,7 +31,7 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 		public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
 		public @S(30) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
 		public @S(40) COBOL_UnstringOrWhat delim;
-		public @S(50) @OPT COBOL_UnstringOrClause orClause;
+		public @S(50) @OPT TokenList<COBOL_UnstringOrClause> orClauses;
 	}
 	
 	public static class COBOL_UnstringOrClause extends TokenSequence

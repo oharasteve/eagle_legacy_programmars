@@ -32,6 +32,13 @@ public class COBOL_StartStatement extends COBOL_AbstractStatement
 			public @S(20) COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
 			public @S(30) COBOL_Keyword THAN = new COBOL_Keyword("THAN");
 		}
+		
+		public @CHOICE static class COBOL_StartOper3 extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
+			public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
+			public @S(30) COBOL_Keyword TO = new COBOL_Keyword("TO");
+		}
 	}
 	
 	public static class COBOL_StartInvalid extends TokenSequence
