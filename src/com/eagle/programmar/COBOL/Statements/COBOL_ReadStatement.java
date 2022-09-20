@@ -17,7 +17,7 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 	public @S(10) @DOC("rlpsread.htm") COBOL_Keyword READ = new COBOL_Keyword("READ");
 	public @S(20) TokenList<COBOL_Identifier_Reference> files;
 	public @S(30) @OPT COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
-	public @S(40) TokenList<COBOL_ReadClause> entries;
+	public @S(40) @OPT TokenList<COBOL_ReadClause> entries;
 	public @S(50) @OPT COBOL_Keyword ENDREAD = new COBOL_Keyword("END-READ");
 	
 	public static class COBOL_ReadClause extends TokenChooser
