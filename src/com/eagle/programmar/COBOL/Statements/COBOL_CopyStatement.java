@@ -19,8 +19,15 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 {
 	public @S(10) COBOL_Keyword COPY = new COBOL_Keyword("COPY");
 	public @S(20) COBOL_FileNameOrLiteral fileName;
-	public @S(30) @OPT COBOL_CopyReplacing replacing;
+	public @S(30) @OPT COBOL_CopyIn in;
+	public @S(40) @OPT COBOL_CopyReplacing replacing;
 	
+	public static class COBOL_CopyIn extends TokenSequence
+	{
+		public @S(10) COBOL_Keyword IN = new COBOL_Keyword("IN");
+		public @S(20) COBOL_Identifier_Reference id;
+	}
+
 	public static class COBOL_CopyReplacing extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword REPLACING = new COBOL_Keyword("REPLACING");

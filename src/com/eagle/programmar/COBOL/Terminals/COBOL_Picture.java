@@ -9,8 +9,9 @@ import com.eagle.tokens.terminals.TerminalPictureToken;
 
 public class COBOL_Picture extends TerminalPictureToken
 {
-	private static final String FIRST = "9ZXSVB+-$*";
-	private static final String REST = "ZSXVDBCR()0123456789/,-$*";
+	private static final String BRITISH_POUND = "\uFFFD"; // 65533 in decimal. Looks like a cursive L
+	private static final String FIRST = "9ZXSVBP+-*$" + BRITISH_POUND;
+	private static final String REST = FIRST + "DCR()012345678/,";
 	
 	@Override
 	public boolean parse(EagleFileReader lines)

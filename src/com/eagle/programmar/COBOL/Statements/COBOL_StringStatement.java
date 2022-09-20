@@ -25,7 +25,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 	
 	public static class COBOL_StringWhat extends TokenSequence
 	{
-		public @S(10) COBOL_Expression expr;
+		public @S(10) TokenList<COBOL_Expression> exprs;
 		public @S(20) COBOL_Keyword DELIMITED1 = new COBOL_Keyword("DELIMITED");
 		public @S(30) @OPT COBOL_Keyword BY1 = new COBOL_Keyword("BY");
 		public @S(40) @OPT COBOL_HexOrLiteral delim;

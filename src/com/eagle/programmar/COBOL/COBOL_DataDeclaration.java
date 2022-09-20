@@ -8,6 +8,7 @@ import com.eagle.programmar.COBOL.Picture.COBOL_BlankWhenZero;
 import com.eagle.programmar.COBOL.Picture.COBOL_ObjectReference;
 import com.eagle.programmar.COBOL.Picture.COBOL_PictureClause;
 import com.eagle.programmar.COBOL.Picture.COBOL_RedefinesClause;
+import com.eagle.programmar.COBOL.Picture.COBOL_RenamesClause;
 import com.eagle.programmar.COBOL.Picture.COBOL_Sign;
 import com.eagle.programmar.COBOL.Picture.COBOL_ThruClause;
 import com.eagle.programmar.COBOL.Picture.COBOL_Typedef;
@@ -70,6 +71,7 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE COBOL_OccursClause occurs;
 		public @CHOICE COBOL_PictureClause pictureClause;
 		public @CHOICE COBOL_RedefinesClause redefinesClause;
+		public @CHOICE COBOL_RenamesClause renamesClause;
 		public @CHOICE COBOL_Sign sign;
 		public @CHOICE COBOL_ThruClause thruClause;
 		public @CHOICE COBOL_TypeLiteral type;

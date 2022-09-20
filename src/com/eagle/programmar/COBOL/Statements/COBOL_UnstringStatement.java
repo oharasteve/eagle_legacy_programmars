@@ -52,12 +52,20 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) COBOL_Identifier_Reference intoVar;
 		public @S(30) @OPT COBOL_UnstringCount count;
+		public @S(40) @OPT COBOL_UnstringDelimiter delimiter;
 		
 		public static class COBOL_UnstringCount extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword COUNT = new COBOL_Keyword("COUNT");
 			public @S(20) COBOL_Keyword IN = new COBOL_Keyword("IN");
 			public @S(30) COBOL_Identifier_Reference countVar;
+		}
+		
+		public static class COBOL_UnstringDelimiter extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword DELIMITER = new COBOL_Keyword("DELIMITER");
+			public @S(20) COBOL_Keyword IN = new COBOL_Keyword("IN");
+			public @S(30) COBOL_Expression range;
 		}
 	}
 	

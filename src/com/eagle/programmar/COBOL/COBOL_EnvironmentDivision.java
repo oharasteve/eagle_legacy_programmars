@@ -28,6 +28,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 		public @CHOICE COBOL_ConfigurationSection configuration;
 		public @CHOICE COBOL_InputOutputSection inputOutput;
 		public @CHOICE COBOL_SpecialNames specialNames;
+		public @CHOICE COBOL_FileControl fileControl;
 	}
 	
 	public static class COBOL_ClassControl extends TokenSequence
@@ -71,7 +72,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) @OPT TokenList<COBOL_Comment> comments1;
-		public @S(50) TokenList<COBOL_IOSectionEntry> entries;
+		public @S(50) @OPT TokenList<COBOL_IOSectionEntry> entries;
 	}
 	
 	public static class COBOL_IOSectionEntry extends TokenChooser
