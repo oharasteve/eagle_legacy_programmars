@@ -20,7 +20,6 @@ import com.eagle.programmar.COBOL.Symbols.COBOL_Index_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_CommentToEndOfLine;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
-import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
 import com.eagle.tokens.TokenChooser;
@@ -43,27 +42,7 @@ public class COBOL_DataDeclaration extends TokenSequence
 
 	public static class COBOL_DataClause extends TokenChooser
 	{
-		public @CHOICE COBOL_KeywordChoice primitive = new COBOL_KeywordChoice(
-				"BYTE",
-				"CLIPFORMAT",
-				"CLSID",
-				"COMP",
-				"COMP-0",
-				"COMP-3",
-				"COMP-5",
-				"COMP-X",
-				"DWORD",
-				"FILETIME",
-				"FORMATETC",
-				"IID",
-				"LONG",
-				"POINTER",
-				"PROCEDURE-POINTER",
-				"ULARGE-INTEGER",
-				"ULONG",
-				"USHORT",
-				"VARTYPE",
-				"WORD");
+		public @CHOICE COBOL_Type primitive;
 		
 		public @CHOICE COBOL_BlankWhenZero blankWhenZero; 
 		public @CHOICE COBOL_Justified justified;

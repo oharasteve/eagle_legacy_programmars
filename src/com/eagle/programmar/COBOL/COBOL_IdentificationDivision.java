@@ -80,7 +80,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 				public @S(20) COBOL_Identifier_Reference id;
 				public @S(30) COBOL_Keyword AS = new COBOL_Keyword("AS");
 				public @S(40) COBOL_Literal literal;
-				public @S(50) PunctuationPeriod dot;
+				public @S(50) @OPT PunctuationPeriod dot;
 			}
 		}
 		
