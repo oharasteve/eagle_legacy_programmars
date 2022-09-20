@@ -108,7 +108,7 @@ public class COBOL_ProcedureDivision extends TokenSequence
 	public static class COBOL_Sentence extends TokenSequence
 	{
 		public @S(10) TokenList<COBOL_StatementOrComment> statements;
-		public @S(20) PunctuationPeriod dot1;
+		public @S(20) @OPT PunctuationPeriod dot1;
 		public @S(30) @CURIOUS("SENTENCE: Extra dot") @OPT PunctuationPeriod dot2;
 	}
 }

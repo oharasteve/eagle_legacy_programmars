@@ -18,16 +18,21 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 {
 	public @S(10) @DOC("rlpsunst.htm") COBOL_Keyword UNSTRING = new COBOL_Keyword("UNSTRING");
 	public @S(20) COBOL_Expression expr;
-	public @S(30) COBOL_Keyword DELIMITED = new COBOL_Keyword("DELIMITED");
-	public @S(40) COBOL_Keyword BY = new COBOL_Keyword("BY");
-	public @S(50) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-	public @S(60) COBOL_UnstringOrWhat delim;
-	public @S(70) @OPT COBOL_UnstringOrClause orClause;
+	public @S(30) @OPT COBOL_UnstringDelimited delimited;
 	public @S(80) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
 	public @S(90) TokenList<COBOL_UnstringPiece> pieces;
 	public @S(100) @OPT COBOL_UnstringWith with;
 	public @S(110) @OPT COBOL_Overflow overflow;
 	public @S(120) @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
+	
+	public static class COBOL_UnstringDelimited extends TokenSequence
+	{
+		public @S(10) COBOL_Keyword DELIMITED = new COBOL_Keyword("DELIMITED");
+		public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
+		public @S(30) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+		public @S(40) COBOL_UnstringOrWhat delim;
+		public @S(50) @OPT COBOL_UnstringOrClause orClause;
+	}
 	
 	public static class COBOL_UnstringOrClause extends TokenSequence
 	{

@@ -9,6 +9,7 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -19,10 +20,15 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 	public @S(20) COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
 	public @S(30) PunctuationPeriod dot;
 	public @S(40) @OPT TokenList<COBOL_Comment> comments1;
-	public @S(50) @OPT COBOL_ClassControl classControl;
-	public @S(60) @OPT COBOL_ConfigurationSection configuration;
-	public @S(70) @OPT COBOL_InputOutputSection inputOutput;
-	public @S(80) @OPT COBOL_SpecialNames specialNames;
+	public @S(50) TokenList<COBOL_EnvironmentEntry> entries;
+	
+	public static class COBOL_EnvironmentEntry extends TokenChooser
+	{
+		public @CHOICE COBOL_ClassControl classControl;
+		public @CHOICE COBOL_ConfigurationSection configuration;
+		public @CHOICE COBOL_InputOutputSection inputOutput;
+		public @CHOICE COBOL_SpecialNames specialNames;
+	}
 	
 	public static class COBOL_ClassControl extends TokenSequence
 	{
@@ -65,8 +71,14 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) @OPT TokenList<COBOL_Comment> comments1;
-		public @S(50) @OPT COBOL_FileControl fileControl;
-		public @S(60) @OPT COBOL_IOControl ioControl;
+		public @S(50) TokenList<COBOL_IOSectionEntry> entries;
+	}
+	
+	public static class COBOL_IOSectionEntry extends TokenChooser
+	{
+		public @CHOICE COBOL_FileControl fileControl;
+		public @CHOICE COBOL_IOControl ioControl;
+		public @CHOICE COBOL_IOControlSelect selectControl;
 	}
 	
 	public static class COBOL_IOControl extends TokenSequence

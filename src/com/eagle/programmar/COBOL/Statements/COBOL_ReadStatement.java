@@ -8,6 +8,7 @@ import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
@@ -15,13 +16,18 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 {
 	public @S(10) @DOC("rlpsread.htm") COBOL_Keyword READ = new COBOL_Keyword("READ");
 	public @S(20) TokenList<COBOL_Identifier_Reference> files;
-	public @S(30) @OPT COBOL_ReadInto into;
-	public @S(40) @OPT COBOL_ReadNext next;
-	public @S(50) @OPT COBOL_ReadAtEndAction atEnd;
-	public @S(60) @OPT COBOL_ReadIgnoreLock ignoreLock;
-	public @S(70) @OPT COBOL_ReadKey key;
-	public @S(80) @OPT COBOL_ReadInvalidKey invalid;
-	public @S(90) @OPT COBOL_Keyword ENDREAD = new COBOL_Keyword("END-READ");
+	public @S(30) TokenList<COBOL_ReadClause> entries;
+	public @S(40) @OPT COBOL_Keyword ENDREAD = new COBOL_Keyword("END-READ");
+	
+	public static class COBOL_ReadClause extends TokenChooser
+	{
+		public @CHOICE COBOL_ReadInto into;
+		public @CHOICE COBOL_ReadNext next;
+		public @CHOICE COBOL_ReadAtEndAction atEnd;
+		public @CHOICE COBOL_ReadIgnoreLock ignoreLock;
+		public @CHOICE COBOL_ReadKey key;
+		public @CHOICE COBOL_ReadInvalidKey invalid;
+	}
 
 	public static class COBOL_ReadInto extends TokenSequence
 	{
@@ -45,9 +51,10 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_ReadInvalidKey extends TokenSequence
 	{
-		public @S(10) COBOL_Keyword INVALID = new COBOL_Keyword("INVALID");
-		public @S(20) COBOL_Keyword KEY = new COBOL_Keyword("KEY");
-		public @S(30) TokenList<COBOL_Statement> statements;
+		public @S(10) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
+		public @S(20) COBOL_Keyword INVALID = new COBOL_Keyword("INVALID");
+		public @S(30) COBOL_Keyword KEY = new COBOL_Keyword("KEY");
+		public @S(40) TokenList<COBOL_Statement> statements;
 	}
 
 	public static class COBOL_ReadAtEndAction extends TokenSequence

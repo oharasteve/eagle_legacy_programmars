@@ -117,7 +117,7 @@ public class COBOL_Reserved_Words
 			"DIVISION",
 			"DOWN",
 			"DUPLICATES",
-			"DYNAMIC",
+			// "DYNAMIC",		// I removed
 			"EGCS",
 			"EGI",
 			"EJECT",

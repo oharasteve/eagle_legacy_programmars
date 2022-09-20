@@ -72,7 +72,7 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE COBOL_RedefinesClause redefinesClause;
 		public @CHOICE COBOL_Sign sign;
 		public @CHOICE COBOL_ThruClause thruClause;
-		public @CHOICE COBOL_Type type;
+		public @CHOICE COBOL_TypeLiteral type;
 		public @CHOICE COBOL_Typedef typedef;
 		public @CHOICE COBOL_Usage usage;
 		public @CHOICE COBOL_ValueClause valueClause;
@@ -91,7 +91,7 @@ public class COBOL_DataDeclaration extends TokenSequence
 		public @CHOICE COBOL_Data_Definition id;
 	}
 	
-	public static class COBOL_Type extends TokenChooser
+	public static class COBOL_TypeLiteral extends TokenChooser
 	{
 		public @CHOICE COBOL_Keyword TYPE = new COBOL_Keyword("TYPE");
 		public @CHOICE COBOL_Literal type;

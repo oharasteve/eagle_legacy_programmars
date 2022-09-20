@@ -49,8 +49,8 @@ public class COBOL_SpecialNames extends TokenSequence
 			public static class COBOL_SpecialNameClassValue extends TokenSequence
 			{
 				public @S(10) COBOL_Expression value1;
-				public @S(20) @OPT COBOL_Keyword THRU = new COBOL_Keyword("THRO");
-				public @S(40) @OPT COBOL_Expression value2;
+				public @S(20) @OPT COBOL_Keyword THRU = new COBOL_Keyword("THRU");
+				public @S(30) @OPT COBOL_Expression value2;
 			}
 		}
 

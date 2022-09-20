@@ -6,6 +6,7 @@ package com.eagle.programmar.COBOL.Statements;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -19,8 +20,14 @@ public class COBOL_MergeStatement extends COBOL_AbstractStatement
 	public @S(50) @OPT COBOL_Keyword KEY = new COBOL_Keyword("KEY");
 	public @S(60) COBOL_Identifier_Reference key;
 	public @S(70) @OPT TokenList<COBOL_MergeKey> moreKeys;
-	public @S(80) @OPT COBOL_MergeUsing using;
-	public @S(90) @OPT COBOL_MergeGiving giving;
+	public @S(80) TokenList<COBOL_MergeEntry> entries;
+	
+	public static class COBOL_MergeEntry extends TokenChooser
+	{
+		public @CHOICE COBOL_MergeUsing using;
+		public @CHOICE COBOL_MergeGiving giving;
+		public @CHOICE COBOL_MergeOutput output;
+	}
 
 	public static class COBOL_MergeKey extends TokenSequence
 	{
@@ -45,5 +52,13 @@ public class COBOL_MergeStatement extends COBOL_AbstractStatement
 	{
 		public @S(10) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
 		public @S(20) COBOL_Identifier_Reference giving;
+	}
+	
+	public static class COBOL_MergeOutput extends TokenSequence
+	{
+		public @S(10) COBOL_Keyword OUTPUT  = new COBOL_Keyword("OUTPUT");
+		public @S(20) COBOL_Keyword PROCEDURE  = new COBOL_Keyword("PROCEDURE");
+		public @S(30) COBOL_Keyword IS  = new COBOL_Keyword("IS");
+		public @S(40) COBOL_Identifier_Reference procedure;
 	}
 }

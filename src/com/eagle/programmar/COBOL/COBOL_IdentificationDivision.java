@@ -24,10 +24,11 @@ public class COBOL_IdentificationDivision extends TokenSequence
 
 	public static class COBOL_IdentificationIsInitial extends TokenSequence
 	{
-		public @S(10) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
-		public @S(20) @OPT COBOL_Keyword INITIAL = new COBOL_Keyword("INITIAL");
-		public @S(30) @OPT COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
-		public @S(40) @OPT PunctuationPeriod dot;
+		public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
+		public @S(20) @OPT COBOL_Keyword COMMON = new COBOL_Keyword("COMMON");
+		public @S(30) COBOL_Keyword INITIAL = new COBOL_Keyword("INITIAL");
+		public @S(40) @OPT COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
+		public @S(50) @OPT PunctuationPeriod dot;
 	}
 
 	public static class COBOL_IdentificationHeader extends TokenChooser
@@ -47,9 +48,10 @@ public class COBOL_IdentificationDivision extends TokenSequence
 	public static class COBOL_ProgramId extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword PROGRAMID = new COBOL_Keyword("PROGRAM-ID");
-		public @S(20) @OPT PunctuationPeriod dot;
+		public @S(20) @OPT PunctuationPeriod dot1;
 		public @S(30) COBOL_Program_Definition programDef;
 		public @S(40) @OPT COBOL_Program_Subname subId;
+		public @S(50) @OPT PunctuationPeriod dot2;
 	}
 	
 	public static class COBOL_IdentificationEntry extends TokenChooser
