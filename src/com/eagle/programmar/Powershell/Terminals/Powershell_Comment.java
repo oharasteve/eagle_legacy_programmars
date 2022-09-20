@@ -26,13 +26,18 @@ public class Powershell_Comment extends TerminalCommentToken
 		if (findStart(lines) == FOUND.EOF) return false;
 		
 		EagleLineReader rec = lines.get(_currentLine);
-		if (_currentChar+1 < rec.length())
+		if (_currentChar < rec.length())
 		{
 			char ch1 = rec.charAt(_currentChar);
 			if (ch1 == '#')
 			{
 				return super.possibleCommentToEndOfLine(rec, "#");
 			}
+		}
+		
+		if (_currentChar+1 < rec.length())
+		{
+			char ch1 = rec.charAt(_currentChar);
 			if (ch1 == '/')
 			{
 				char ch2 = rec.charAt(_currentChar);

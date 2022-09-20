@@ -23,12 +23,11 @@ public class Powershell_Syntax extends EagleSyntax
 				"<=", ">=", "==", "!=",
 				"::", "++", "--",
 				"*>", ">>",
-				"$?" };
+				"$?", "$_" };
 		
 		// Breaks everything - problem is the EOLN, not the comment itself.
 		// _commentInstance = new Powershell_Comment();
 		
-		// All user variables must start with a $
-		// addReservedWords(Powershell_Reserved_Words.RESERVED_WORDS);
+		addReservedWords(Powershell_Reserved_Words.RESERVED_WORDS);
 	}
 }

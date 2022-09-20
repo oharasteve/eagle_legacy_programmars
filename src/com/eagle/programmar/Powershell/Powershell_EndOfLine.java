@@ -16,8 +16,7 @@ import com.eagle.tokens.TokenSequence;
 public class Powershell_EndOfLine extends TokenSequence
 {
 	public @S(10) @OPT TokenList<Powershell_Redirect> redirect;
-	public @S(20) @OPT Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice(
-			"|", ";", "||", "&&");
+	public @S(20) @OPT Powershell_Pipe pipe;
 	public @S(30) @OPT Powershell_RealEndOfLine eoln;
 
 	public static class Powershell_Redirect extends TokenSequence
@@ -38,5 +37,13 @@ public class Powershell_EndOfLine extends TokenSequence
 				public @S(20) Powershell_Number number;
 			}
 		}
+	}
+	
+	public static class Powershell_Pipe extends TokenSequence
+	{
+		public @S(10) Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice(
+				"|", ";", "||", "&&");
+		public @S(20) @OPT Powershell_RealEndOfLine eoln;
+		public @S(30) Powershell_Statement statement;
 	}
 }

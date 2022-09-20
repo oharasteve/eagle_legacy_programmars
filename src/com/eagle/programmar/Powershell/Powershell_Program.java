@@ -4,7 +4,6 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.core.EagleLanguage;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenList;
 
 public class Powershell_Program extends EagleLanguage
@@ -23,6 +22,6 @@ public class Powershell_Program extends EagleLanguage
 	}
 	
 	public @S(10) @OPT Powershell_CmdletBinding cmtletBinding;
-	public @S(20) @OPT TokenList<Powershell_Comment> comments;
+	public @S(20) @OPT TokenList<Powershell_CommentEoln> comments;
 	public @S(30) @OPT TokenList<Powershell_Statement> statements;
 }

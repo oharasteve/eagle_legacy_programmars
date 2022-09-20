@@ -11,6 +11,6 @@ public class Powershell_Filename extends TerminalFilename
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericFilename(lines, "Variable"); // Allow Variable: in addition to C:
+		return genericFilename(lines, "Alias", "Variable"); // Allow Variable: in addition to C:
 	}
 }

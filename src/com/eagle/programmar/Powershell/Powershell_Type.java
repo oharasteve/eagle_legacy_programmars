@@ -11,9 +11,16 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Powershell_Type extends TokenSequence
 {
 	public @S(10) Powershell_KeywordChoice INT = new Powershell_KeywordChoice(
-			"char",
-			"int",
-			"string");
-	public @S(20) @OPT PunctuationLeftBracket leftBracket;
-	public @S(30) @OPT PunctuationRightBracket rightBracket;
+			"Array",
+			"Char",
+			"Double",
+			"Int", "Int64",
+			"String");
+	public @S(20) @OPT Powershell_TypeBrackets brackets;
+	
+	public static class Powershell_TypeBrackets extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) PunctuationRightBracket rightBracket;
+	}
 }

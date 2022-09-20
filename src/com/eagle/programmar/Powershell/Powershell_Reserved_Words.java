@@ -53,6 +53,8 @@ public class Powershell_Reserved_Words {
 			"until",
 			"using",
 			"var",
+			"where",			// I added
+			"where-object",		// I added
 			"while",
 			"workflow",
 	};

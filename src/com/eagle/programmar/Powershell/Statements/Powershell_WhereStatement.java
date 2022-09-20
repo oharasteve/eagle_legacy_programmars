@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Powershell_WhereObjectStatement extends TokenSequence
+public class Powershell_WhereStatement extends TokenSequence
 {
 	public @S(10) Powershell_KeywordChoice WHERE = new Powershell_KeywordChoice("Where", "Where-Object");
 	public @S(20) PunctuationLeftBrace leftBrace;

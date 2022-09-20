@@ -16,7 +16,7 @@ import com.eagle.programmar.Powershell.Statements.Powershell_IfStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ReturnStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ThrowStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
-import com.eagle.programmar.Powershell.Statements.Powershell_WhereObjectStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_WhereStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhileStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_XcopyStatement;
@@ -44,7 +44,7 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_ReturnStatement returnStatement;
 		public @CHOICE Powershell_ThrowStatement throwStatement;
 		public @CHOICE Powershell_TryStatement tryStatement;
-		public @CHOICE Powershell_WhereObjectStatement whereObjectStatement;
+		public @CHOICE Powershell_WhereStatement whereObjectStatement;
 		public @CHOICE Powershell_WriteStatement writeStatement;
 		public @CHOICE Powershell_WhileStatement whileStatement;
 		public @CHOICE Powershell_XcopyStatement xcopyStatement;
