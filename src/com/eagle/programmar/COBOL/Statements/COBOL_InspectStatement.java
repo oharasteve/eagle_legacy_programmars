@@ -45,7 +45,9 @@ public class COBOL_InspectStatement extends COBOL_AbstractStatement
 			public static class COBOL_InspectConvert extends TokenChooser
 			{
 				public @CHOICE COBOL_Literal literal;
-				public @CHOICE COBOL_KeywordChoice cases = new COBOL_KeywordChoice("LOWER-CASE", "UPPER-CASE");
+				public @CHOICE COBOL_KeywordChoice cases = new COBOL_KeywordChoice(
+						"LOWER-CASE", "LowerCase",
+						"UPPER-CASE", "UpperCase");
 			}
 		}
 		
@@ -63,10 +65,16 @@ public class COBOL_InspectStatement extends COBOL_AbstractStatement
 			
 			public static class COBOL_InpsectTallyingWhat extends TokenChooser
 			{
-				public @CHOICE static class COBOL_InspectTallyingAll extends TokenSequence
+				public @CHOICE static class COBOL_InspectTallyingAllLiterals extends TokenSequence
 				{
 					public @S(10) COBOL_Keyword ALL = new COBOL_Keyword("ALL");
 					public @S(20) TokenList<COBOL_Literal> literals;
+				}
+				
+				public @LAST static class COBOL_InspectTallyingAllExpr extends TokenSequence
+				{
+					public @S(10) COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+					public @S(20) COBOL_Expression expr;
 				}
 				
 				public @CHOICE static class COBOL_InspectTallyingSpaces extends TokenSequence
