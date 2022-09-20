@@ -19,6 +19,7 @@ import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhereObjectStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhileStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_XcopyStatement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -46,6 +47,7 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_WhereObjectStatement whereObjectStatement;
 		public @CHOICE Powershell_WriteStatement writeStatement;
 		public @CHOICE Powershell_WhileStatement whileStatement;
+		public @CHOICE Powershell_XcopyStatement xcopyStatement;
 	
 		public @LAST Powershell_Command command;
 		public @LAST Powershell_AssignmentStatement assignmentStatement;

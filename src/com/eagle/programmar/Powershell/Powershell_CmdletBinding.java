@@ -55,10 +55,11 @@ public class Powershell_CmdletBinding extends TokenSequence
 				public @S(40) SeparatedList<Powershell_CmdletParameterOption,PunctuationComma> options;
 				public @S(50) PunctuationRightParen rightParen;
 				public @S(60) PunctuationRightBracket rightBracket;
-				public @S(70) @OPT Powershell_CastParam cast;
-				public @S(80) Powershell_Variable param;
-				public @S(90) @OPT PunctuationComma comma;
-				public @S(100) @OPT Powershell_EndOfLine eoln;
+				public @S(70) @OPT Powershell_EndOfLine eoln1;
+				public @S(80) @OPT Powershell_CastParam cast;
+				public @S(90) Powershell_Variable param;
+				public @S(100) @OPT PunctuationComma comma;
+				public @S(110) @OPT Powershell_EndOfLine eoln2;
 				
 				public static class Powershell_CastParam extends TokenSequence
 				{
