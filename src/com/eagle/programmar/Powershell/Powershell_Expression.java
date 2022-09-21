@@ -83,11 +83,11 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(20) Powershell_Identifier_Reference field;
 		public @S(30) PunctuationEquals equals;
 		public @S(40) Powershell_Expression expr;
-		public @S(50) @OPT TokenList<Powershell_MoreExpressions> more;
+		public @S(50) @OPT TokenList<Powershell_MoreDictExpressions> more;
 		public @S(60) @OPT Powershell_Comment comment;
 		public @S(70) @OPT Powershell_EndOfLine eoln2;
 		
-		public static class Powershell_MoreExpressions extends TokenSequence
+		public static class Powershell_MoreDictExpressions extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) @OPT Powershell_Comment comment;

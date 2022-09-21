@@ -19,11 +19,11 @@ public class COBOL_UnstringStatement extends COBOL_AbstractStatement
 	public @S(10) @DOC("rlpsunst.htm") COBOL_Keyword UNSTRING = new COBOL_Keyword("UNSTRING");
 	public @S(20) COBOL_Expression expr;
 	public @S(30) @OPT COBOL_UnstringDelimited delimited;
-	public @S(80) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
-	public @S(90) TokenList<COBOL_UnstringPiece> pieces;
-	public @S(100) @OPT COBOL_UnstringWith with;
-	public @S(110) @OPT COBOL_Overflow overflow;
-	public @S(120) @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
+	public @S(40) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
+	public @S(50) TokenList<COBOL_UnstringPiece> pieces;
+	public @S(60) @OPT COBOL_UnstringWith with;
+	public @S(70) @OPT COBOL_Overflow overflow;
+	public @S(80) @OPT COBOL_Keyword ENDUNSTRING = new COBOL_Keyword("END-UNSTRING");
 	
 	public static class COBOL_UnstringDelimited extends TokenSequence
 	{

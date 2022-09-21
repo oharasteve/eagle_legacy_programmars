@@ -58,9 +58,9 @@ public class COBOL_InspectStatement extends COBOL_AbstractStatement
 			
 			public static class COBOL_InspectTally extends TokenSequence
 			{
-				public @S(20) COBOL_Identifier_Reference var;
-				public @S(30) COBOL_Keyword FOR = new COBOL_Keyword("FOR");
-				public @S(40) COBOL_InpsectTallyingWhat forWhat;
+				public @S(10) COBOL_Identifier_Reference var;
+				public @S(20) COBOL_Keyword FOR = new COBOL_Keyword("FOR");
+				public @S(30) COBOL_InpsectTallyingWhat forWhat;
 			}
 			
 			public static class COBOL_InpsectTallyingWhat extends TokenChooser

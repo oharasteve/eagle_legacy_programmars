@@ -15,11 +15,12 @@ public class Powershell_Identifier extends TerminalIdentifierToken
 		
 		// Cannot have the last character be a minus sign (-) in an identifier
 		int len = _id.length();
-		if (len > 0 && _id.charAt(len-1) == '-')
+		while (len > 0 && _id.charAt(len-1) == '-')
 		{
 			_id = _id.substring(0, len-1);	// Toss the - at the end
 			_endChar--;		// Back up one
 			_currentChar--;
+			len--;
 		}
 		
 		return true;

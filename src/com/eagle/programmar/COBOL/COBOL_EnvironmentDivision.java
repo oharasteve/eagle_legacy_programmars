@@ -20,7 +20,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 	public @S(20) COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
 	public @S(30) PunctuationPeriod dot;
 	public @S(40) @OPT TokenList<COBOL_Comment> comments1;
-	public @S(50) TokenList<COBOL_EnvironmentEntry> entries;
+	public @S(50) @OPT TokenList<COBOL_EnvironmentEntry> entries;
 	
 	public static class COBOL_EnvironmentEntry extends TokenChooser
 	{
