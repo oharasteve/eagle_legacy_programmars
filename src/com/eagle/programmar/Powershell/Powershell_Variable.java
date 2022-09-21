@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Powershell;
 
-import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
+import com.eagle.programmar.Powershell.Symbols.Powershell_Variable_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.TokenSequence;
@@ -15,7 +15,7 @@ public class Powershell_Variable extends TokenSequence
 {
 	public @S(10) Powershell_Punctuation DOLLAR = new Powershell_Punctuation("$");
 	public @S(20) @OPT Powershell_VariableScope scope;
-	public @S(30) Powershell_Identifier_Reference id;
+	public @S(30) Powershell_Variable_Reference id;
 	public @S(40) @OPT Powershell_Subscript subscript;
 	
 	public static class Powershell_Subscript extends TokenSequence
@@ -27,7 +27,10 @@ public class Powershell_Variable extends TokenSequence
 	
 	public static class Powershell_VariableScope extends TokenSequence
 	{
-		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice("script");
+		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice(
+				"env",
+				"global",
+				"script");
 		public @S(20) PunctuationColon colon;
 	}
 }

@@ -15,6 +15,6 @@ public abstract class Natural_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS+"#", ALPHAS+DIGITS+"-", true);
+		return genericIdentifier(lines, ALPHAS+"#", ALPHAS+DIGITS+"-", true, false);
 	}
 }

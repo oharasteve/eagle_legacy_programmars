@@ -4,6 +4,7 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
+import com.eagle.programmar.Powershell.Symbols.Powershell_Field_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
@@ -80,7 +81,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	public static class Powershell_DictionaryValues extends TokenSequence
 	{
 		public @S(10) @OPT Powershell_EndOfLine eoln1;
-		public @S(20) Powershell_Identifier_Reference field;
+		public @S(20) Powershell_Field_Reference field;
 		public @S(30) PunctuationEquals equals;
 		public @S(40) Powershell_Expression expr;
 		public @S(50) @OPT TokenList<Powershell_MoreDictExpressions> more;
@@ -92,7 +93,7 @@ public class Powershell_Expression extends PrecedenceChooser
 			public @S(10) PunctuationComma comma;
 			public @S(20) @OPT Powershell_Comment comment;
 			public @S(30) @OPT Powershell_EndOfLine eoln;
-			public @S(40) Powershell_Identifier_Reference field;
+			public @S(40) Powershell_Field_Reference field;
 			public @S(50) PunctuationEquals equals;
 			public @S(60) Powershell_Expression expr;
 		}

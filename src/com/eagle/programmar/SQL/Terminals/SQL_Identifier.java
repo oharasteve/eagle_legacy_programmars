@@ -39,6 +39,6 @@ public class SQL_Identifier extends TerminalIdentifierToken
 			return true;
 		}
 		
-		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"_", true);
+		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"_", true, false);
 	}
 }

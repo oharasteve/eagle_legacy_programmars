@@ -18,6 +18,6 @@ public class IBMASM_Label_Definition extends IBMASM_Identifier_Definition
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 		if (_currentChar != 0) return false;	// Labels must be in column 1
-		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"@", true);
+		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"@", true, true);
 	}
 }

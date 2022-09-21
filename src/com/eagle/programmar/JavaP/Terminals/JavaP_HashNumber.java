@@ -11,7 +11,7 @@ public class JavaP_HashNumber extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! genericIdentifier(lines, "#", DIGITS, false)) return false;
+		if (! genericIdentifier(lines, "#", DIGITS, false, true)) return false;
 		if (_id.length() < 2) return false;	// Need at least one digit
 		return true;
 	}

@@ -6,7 +6,7 @@ package com.eagle.programmar.Powershell.Symbols;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Identifier;
 import com.eagle.tokens.DefinitionInterface;
 
-public class Powershell_Identifier_Definition extends Powershell_Identifier implements DefinitionInterface
+public abstract class Powershell_Identifier_Definition extends Powershell_Identifier implements DefinitionInterface
 {
 	@Override
 	public DefinitionType getType()

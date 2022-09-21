@@ -11,6 +11,6 @@ public abstract class Python_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_", false);
+		return genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_", false, false);
 	}
 }

@@ -14,7 +14,8 @@ public class Powershell_Type extends TokenSequence
 			"Array",
 			"Char",
 			"Double",
-			"Int", "Int64",
+			"Int",
+			"Int64",
 			"String");
 	public @S(20) @OPT Powershell_TypeBrackets brackets;
 	

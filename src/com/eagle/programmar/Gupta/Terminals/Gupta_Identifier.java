@@ -11,6 +11,6 @@ public abstract class Gupta_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS+DIGITS, ALPHAS+DIGITS+"_", true);
+		return genericIdentifier(lines, ALPHAS+DIGITS, ALPHAS+DIGITS+"_", true, false);
 	}
 }

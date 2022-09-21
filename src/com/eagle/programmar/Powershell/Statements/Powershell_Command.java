@@ -4,7 +4,7 @@
 package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
+import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
 import com.eagle.programmar.Powershell.Terminals.Powershell_VerbNoun;
 import com.eagle.tokens.TokenChooser;
@@ -24,7 +24,7 @@ public class Powershell_Command extends TokenSequence
 		public @CHOICE PunctuationAmpersand ampersand;
 		public @CHOICE PunctuationPeriod dot;
 		public @CHOICE Powershell_VerbNoun verbNoun;		// Like Get-Content for example
-		public @LAST Powershell_Identifier_Reference id;
+		public @LAST Powershell_Function_Reference id;
 	}
 	
 	public static class Powershell_CommandArg extends TokenSequence
