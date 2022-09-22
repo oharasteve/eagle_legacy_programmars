@@ -40,10 +40,10 @@ public class Powershell_FunctionStatement extends TokenSequence
 	
 	public static class Powershell_FunctionParam extends TokenSequence
 	{
-		public @S(10) @OPT Powershell_CastParam cast;
+		public @S(10) @OPT Powershell_CastParameter cast;
 		public @S(20) Powershell_Variable var;
 		
-		public static class Powershell_CastParam extends PrimaryOperator
+		public static class Powershell_CastParameter extends PrimaryOperator
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
 			public @S(20) Powershell_Type type;

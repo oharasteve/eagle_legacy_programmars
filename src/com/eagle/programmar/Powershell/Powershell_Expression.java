@@ -4,6 +4,8 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
+import com.eagle.programmar.Powershell.Statements.Powershell_ForEachStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_WhereStatement;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Field_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
@@ -19,6 +21,7 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -333,11 +336,25 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(30) Powershell_Expression expr = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
-	public static @P(600) class Powershell_Comma_Expression extends PrecedenceOperator
+	public static @P(600) class Powershell_CommaExpression extends PrecedenceOperator
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationComma comma;
 		public @S(30) @OPT Powershell_EndOfLine eoln;
 		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+	}
+	
+	public static @P(610) class Powershell_PipeExpression extends PrecedenceOperator
+	{
+		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(20) Powershell_Punctuation pipe = new Powershell_Punctuation("|");
+		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(40) Powershell_PipeAction action;
+		
+		public static class Powershell_PipeAction extends TokenChooser
+		{
+			public @CHOICE Powershell_WhereStatement whereStatement;
+			public @CHOICE Powershell_ForEachStatement foreachStatement;
+		}
 	}
 }

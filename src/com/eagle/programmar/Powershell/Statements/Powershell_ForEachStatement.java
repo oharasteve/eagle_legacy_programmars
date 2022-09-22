@@ -8,6 +8,8 @@ import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Statement;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -17,13 +19,19 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_ForEachStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_Keyword FOREACH = new Powershell_Keyword("ForEach");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_ForEach foreach;
 	public @S(20) @OPT Powershell_ForEachParams params;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT Powershell_EndOfLine eoln;
 	public @S(50) TokenList<Powershell_Statement> stmts;
 	public @S(60) PunctuationRightBrace rightBrace;
 	
+	public static class Powershell_ForEach extends TokenChooser
+	{
+		public @CHOICE Powershell_Punctuation percent = new Powershell_Punctuation("%");
+		public @CHOICE Powershell_Keyword FOREACH = new Powershell_Keyword("ForEach");
+	}
+
 	public static class Powershell_ForEachParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

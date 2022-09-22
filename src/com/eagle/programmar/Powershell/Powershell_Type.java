@@ -13,6 +13,7 @@ public class Powershell_Type extends TokenSequence
 	public @S(10) Powershell_KeywordChoice INT = new Powershell_KeywordChoice(
 			"Array",
 			"Char",
+			"DateTime",
 			"Double",
 			"Int",
 			"Int64",
