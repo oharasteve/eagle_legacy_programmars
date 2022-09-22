@@ -30,6 +30,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Powershell_Expression extends PrecedenceChooser
 {
@@ -90,7 +91,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		
 		public static class Powershell_MoreDictExpressions extends TokenSequence
 		{
-			public @S(10) PunctuationComma comma;
+			public @S(10) PunctuationSemicolon semicolon;
 			public @S(20) @OPT Powershell_Comment comment;
 			public @S(30) @OPT Powershell_EndOfLine eoln;
 			public @S(40) Powershell_Field_Reference field;

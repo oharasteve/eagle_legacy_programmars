@@ -7,6 +7,7 @@ import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Statement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -20,6 +21,6 @@ public class Powershell_DoStatement extends TokenSequence
 	public @S(40) TokenList<Powershell_Statement> stmts;
 	public @S(50) PunctuationRightBrace rightBrace;
 	public @S(60) @OPT Powershell_EndOfLine eoln2;
-	public @S(70) Powershell_Keyword WHILE = new Powershell_Keyword("While");
+	public @S(70) Powershell_KeywordChoice WHILE = new Powershell_KeywordChoice("Until", "While");
 	public @S(80) Powershell_Expression condition;
 }

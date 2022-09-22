@@ -3,7 +3,16 @@
 
 package com.eagle.programmar.Powershell.Symbols;
 
+import com.eagle.parsers.EagleFileReader;
+
 public class Powershell_Variable_Reference extends Powershell_Identifier_Reference
 {
-
+	@Override
+	public boolean parse(EagleFileReader lines)
+	{
+		// Allow reserved words because the $ is required for variables
+		if (! genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_-", false, true)) return false;
+		removeTrailingHyphens();
+		return true;
+	}
 }

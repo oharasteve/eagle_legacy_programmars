@@ -16,6 +16,8 @@ public class Powershell_Type extends TokenSequence
 			"Double",
 			"Int",
 			"Int64",
+			"PSCredential",
+			"SecureString",
 			"String");
 	public @S(20) @OPT Powershell_TypeBrackets brackets;
 	

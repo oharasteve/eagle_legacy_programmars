@@ -5,16 +5,20 @@ package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Definition;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_FunctionStatement extends TokenSequence
@@ -30,7 +34,20 @@ public class Powershell_FunctionStatement extends TokenSequence
 	public static class Powershell_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Powershell_Variable, PunctuationComma> params;
+		public @S(20) @OPT SeparatedList<Powershell_FunctionParam, PunctuationComma> params;
 		public @S(30) PunctuationRightParen rightParen;
+	}
+	
+	public static class Powershell_FunctionParam extends TokenSequence
+	{
+		public @S(10) @OPT Powershell_CastParam cast;
+		public @S(20) Powershell_Variable var;
+		
+		public static class Powershell_CastParam extends PrimaryOperator
+		{
+			public @S(10) PunctuationLeftBracket leftBracket;
+			public @S(20) Powershell_Type type;
+			public @S(30) PunctuationRightBracket rightBracket;
+		}
 	}
 }
