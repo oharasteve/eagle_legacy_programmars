@@ -47,6 +47,8 @@ public class Powershell_CmdletBinding extends TokenSequence
 		
 		public static class Powershell_CmdletParam extends TokenChooser
 		{
+			public @CHOICE Powershell_CommentEoln comment;
+			
 			public @CHOICE static class Powershell_CmdletParameter extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBracket leftBracket;
@@ -92,10 +94,15 @@ public class Powershell_CmdletBinding extends TokenSequence
 				public @S(20) Powershell_Keyword SWITCH = new Powershell_Keyword("Switch");
 				public @S(30) PunctuationRightBracket rightBracket;
 				public @S(40) Powershell_Variable param;
-				public @S(50) PunctuationEquals equals;
-				public @S(60) Powershell_Expression expr;
-				public @S(70) @OPT PunctuationComma comma;
-				public @S(80) @OPT Powershell_EndOfLine eoln;
+				public @S(50) @OPT Powershell_SwitchValue value;
+				public @S(60) @OPT PunctuationComma comma;
+				public @S(70) @OPT Powershell_EndOfLine eoln;
+				
+				public static class Powershell_SwitchValue extends TokenSequence
+				{
+					public @S(10) PunctuationEquals equals;
+					public @S(20) Powershell_Expression expr;
+				}
 			}
 		}
 	}
