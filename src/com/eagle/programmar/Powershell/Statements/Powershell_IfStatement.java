@@ -36,7 +36,7 @@ public class Powershell_IfStatement extends TokenSequence
 		public @S(40) PunctuationRightParen rightParen;
 		public @S(50) PunctuationLeftBrace leftBrace;
 		public @S(60) @OPT Powershell_EndOfLine eoln;
-		public @S(70) TokenList<Powershell_Statement> stmts;
+		public @S(70) @OPT TokenList<Powershell_Statement> stmts;
 		public @S(80) PunctuationRightBrace rightBrace;
 		public @S(90) @OPT Powershell_EndOfLine eoln2;
 	}
@@ -46,7 +46,7 @@ public class Powershell_IfStatement extends TokenSequence
 		public @S(10) Powershell_Keyword ELSE = new Powershell_Keyword("Else");
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) @OPT Powershell_EndOfLine eoln;
-		public @S(40) TokenList<Powershell_Statement> stmts;
+		public @S(40) @OPT TokenList<Powershell_Statement> stmts;
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
 }

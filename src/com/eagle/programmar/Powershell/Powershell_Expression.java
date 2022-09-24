@@ -4,8 +4,6 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
-import com.eagle.programmar.Powershell.Statements.Powershell_ForEachStatement;
-import com.eagle.programmar.Powershell.Statements.Powershell_WhereStatement;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Field_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
@@ -16,6 +14,7 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Number;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
+import com.eagle.programmar.Powershell.Terminals.Powershell_RealEndOfLine;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
@@ -261,7 +260,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("*", "/", "%");
-		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(30) @OPT Powershell_RealEndOfLine eoln;
 		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
@@ -269,7 +268,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("+", "-");
-		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(30) @OPT Powershell_RealEndOfLine eoln;
 		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
@@ -292,7 +291,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-and");
-		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(30) @OPT Powershell_RealEndOfLine eoln;
 		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
@@ -300,7 +299,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Keyword operator = new Powershell_Keyword("-or");
-		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(30) @OPT Powershell_RealEndOfLine eoln;
 		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
@@ -347,7 +346,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) PunctuationComma comma;
-		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(30) @OPT Powershell_RealEndOfLine eoln;
 		public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 	}
 	
@@ -355,7 +354,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Powershell_Punctuation pipe = new Powershell_Punctuation("|");
-		public @S(30) @OPT Powershell_EndOfLine eoln;
+		public @S(30) @OPT Powershell_RealEndOfLine eoln;
 		public @S(40) Powershell_Statement statement;
 	}
 }

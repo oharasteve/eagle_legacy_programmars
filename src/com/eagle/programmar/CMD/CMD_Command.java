@@ -12,6 +12,7 @@ import com.eagle.programmar.CMD.Statements.CMD_Del_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Dir_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Echo_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Exit_Statement;
+import com.eagle.programmar.CMD.Statements.CMD_FindStr_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_For_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_GCC_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Goto_Statement;
@@ -27,6 +28,7 @@ import com.eagle.programmar.CMD.Statements.CMD_Rmdir_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_SetLocal_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Set_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Shift_Statement;
+import com.eagle.programmar.CMD.Statements.CMD_Xcopy_Statement;
 import com.eagle.programmar.CMD.Terminals.CMD_Comment;
 import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
@@ -105,6 +107,7 @@ public class CMD_Command extends TokenSequence
 		public @CHOICE CMD_Dir_Statement dirCommand;
 		public @CHOICE CMD_Echo_Statement echoCommand;
 		public @CHOICE CMD_Exit_Statement exitCommand;
+		public @CHOICE CMD_FindStr_Statement findstrCommand;
 		public @CHOICE CMD_For_Statement forCommand;
 		public @CHOICE CMD_GCC_Statement gccCommand;
 		public @CHOICE CMD_Goto_Statement gotoCommand;
@@ -120,6 +123,7 @@ public class CMD_Command extends TokenSequence
 		public @CHOICE CMD_Set_Statement setCommand;
 		public @CHOICE CMD_SetLocal_Statement setLocalCommand;
 		public @CHOICE CMD_Shift_Statement shiftCommand;
+		public @CHOICE CMD_Xcopy_Statement xcopyCommand;
 	}
 	
 	public static class CMD_Redirect_Input extends TokenSequence

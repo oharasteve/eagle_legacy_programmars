@@ -16,7 +16,7 @@ public class Powershell_Syntax extends EagleSyntax
 	public Powershell_Syntax()
 	{
 		_isCaseSensitive = false;
-		_continuationChar = null;
+		_continuationChar = "`";
 		_extraCharacters = "_-";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {

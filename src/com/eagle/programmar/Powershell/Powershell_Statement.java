@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Powershell;
 
+import com.eagle.programmar.CMD.CMD_Syntax;
+import com.eagle.programmar.CMD.Statements.CMD_FindStr_Statement;
+import com.eagle.programmar.CMD.Statements.CMD_Xcopy_Statement;
 import com.eagle.programmar.Powershell.Statements.Powershell_AssignmentStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_BreakStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
@@ -19,7 +22,6 @@ import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhereStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhileStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
-import com.eagle.programmar.Powershell.Statements.Powershell_XcopyStatement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -47,7 +49,9 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_WhereStatement whereObjectStatement;
 		public @CHOICE Powershell_WriteStatement writeStatement;
 		public @CHOICE Powershell_WhileStatement whileStatement;
-		public @CHOICE Powershell_XcopyStatement xcopyStatement;
+
+		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_Xcopy_Statement xcopyStatement;
+		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement findstrStatement;
 	
 		public @LAST Powershell_Command command;
 		public @LAST Powershell_AssignmentStatement assignmentStatement;

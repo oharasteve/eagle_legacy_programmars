@@ -4,9 +4,9 @@
 package com.eagle.programmar.Powershell;
 
 import com.eagle.programmar.Powershell.Symbols.Powershell_Identifier_Reference;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -24,17 +24,23 @@ public class Powershell_Type extends TokenSequence
 				"Char",
 				"DateTime",
 				"Double",
+				"Float",
 				"Int",
 				"Int64",
 				"PSCredential",
 				"SecureString",
 				"String");
 		
-		public @CHOICE static class Powershell_TypeNet extends TokenSequence
+		public @CHOICE static class Powershell_SystemType extends TokenSequence
 		{
-			public @S(10) Powershell_Keyword NET = new Powershell_Keyword("Net");
-			public @S(20) PunctuationPeriod dot;
-			public @S(30) Powershell_Identifier_Reference id;
+			public @S(10) Powershell_KeywordChoice SYSTEM = new Powershell_KeywordChoice("Net", "System");
+			public @S(20) TokenList<Powershell_SystemSubType> subtype;
+			
+			public static class Powershell_SystemSubType extends TokenSequence
+			{
+				public @S(10) PunctuationPeriod dot;
+				public @S(20) Powershell_Identifier_Reference id;
+			}
 		}
 	}
 	
