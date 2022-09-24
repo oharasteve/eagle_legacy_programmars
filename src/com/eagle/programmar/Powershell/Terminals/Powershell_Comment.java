@@ -40,7 +40,7 @@ public class Powershell_Comment extends TerminalCommentToken
 			char ch1 = rec.charAt(_currentChar);
 			if (ch1 == '/')
 			{
-				char ch2 = rec.charAt(_currentChar);
+				char ch2 = rec.charAt(_currentChar+1);
 				if (ch2 == '/')
 				{
 					return super.possibleCommentToEndOfLine(rec, "//");
@@ -48,6 +48,14 @@ public class Powershell_Comment extends TerminalCommentToken
 				if (ch2 == '*')
 				{
 					return super.possibleCommentPair2(lines, rec, "/*", "*/");
+				}
+			}
+			else if (ch1 == '<')
+			{
+				char ch2 = rec.charAt(_currentChar+1);
+				if (ch2 == '#')
+				{
+					return super.possibleCommentPair2(lines, rec, "<#", "#>");
 				}
 			}
 		}

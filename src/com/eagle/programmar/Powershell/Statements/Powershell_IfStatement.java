@@ -20,13 +20,14 @@ public class Powershell_IfStatement extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Powershell_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) PunctuationLeftBrace leftBrace;
-	public @S(60) @OPT Powershell_EndOfLine eoln1;
-	public @S(70) TokenList<Powershell_Statement> stmts;
-	public @S(80) PunctuationRightBrace rightBrace;
-	public @S(90) @OPT Powershell_EndOfLine eoln2;
-	public @S(100) @OPT TokenList<Powershell_IfElseIfStatement> elseIfStmts;
-	public @S(110) @OPT Powershell_IfElseStatement elseStmt;
+	public @S(50) @OPT Powershell_EndOfLine eoln1;
+	public @S(60) PunctuationLeftBrace leftBrace;
+	public @S(70) @OPT Powershell_EndOfLine eoln2;
+	public @S(80) TokenList<Powershell_Statement> stmts;
+	public @S(90) PunctuationRightBrace rightBrace;
+	public @S(100) @OPT Powershell_EndOfLine eoln3;
+	public @S(110) @OPT TokenList<Powershell_IfElseIfStatement> elseIfStmts;
+	public @S(120) @OPT Powershell_IfElseStatement elseStmt;
 	
 	public static class Powershell_IfElseIfStatement extends TokenSequence
 	{

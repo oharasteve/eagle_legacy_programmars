@@ -314,6 +314,7 @@ public class Powershell_Expression extends PrecedenceChooser
 				"-join",
 				"-match",
 				"-notin",
+				"-notlike",
 				"-notmatch",
 				"-replace",
 				"-split");

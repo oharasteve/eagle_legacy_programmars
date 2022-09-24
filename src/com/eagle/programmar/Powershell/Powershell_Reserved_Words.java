@@ -11,7 +11,7 @@ public class Powershell_Reserved_Words {
 			"begin",
 			"break",
 			"catch",
-			"class",
+			// "class",		// I removed
 			"command",
 			"configuration",
 			"continue",
