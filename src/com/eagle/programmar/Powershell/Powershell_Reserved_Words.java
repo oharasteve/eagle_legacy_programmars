@@ -36,7 +36,7 @@ public class Powershell_Reserved_Words {
 			"inlinescript",
 			"interface",
 			"module",
-			"namespace",
+			// "namespace",	// I removed
 			"parallel",
 			// "param",		// I removed
 			"private",

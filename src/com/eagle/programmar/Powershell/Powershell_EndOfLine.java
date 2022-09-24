@@ -12,6 +12,7 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_RealEndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Powershell_EndOfLine extends TokenSequence
 {
@@ -39,11 +40,20 @@ public class Powershell_EndOfLine extends TokenSequence
 		}
 	}
 	
-	public static class Powershell_Pipe extends TokenSequence
+	public static class Powershell_Pipe extends TokenChooser
 	{
-		public @S(10) Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice(
-				"|", ";", "||", "&&");
-		public @S(20) @OPT Powershell_RealEndOfLine eoln;
-		public @S(30) Powershell_Statement statement;
+		public @CHOICE static class Powershell_PipeAction extends TokenSequence
+		{
+			public @S(10) Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice(
+					"|", ";", "||", "&&");
+			public @S(20) @OPT Powershell_RealEndOfLine eoln;
+			public @S(30) Powershell_Statement statement;
+		}
+		
+		public @FIRST static class Powershell_PipeBogusSemicolon extends TokenSequence
+		{
+			public @S(10) @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+			public @S(20) Powershell_RealEndOfLine eoln;
+		}
 	}
 }
