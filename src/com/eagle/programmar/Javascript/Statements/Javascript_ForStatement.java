@@ -32,7 +32,7 @@ public class Javascript_ForStatement extends TokenChooser
 		public @S(10) @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT Javascript_ForLoopVariable loopVar;
-		public @S(40) @OPT Javascript_PunctuationChoice equals = new Javascript_PunctuationChoice("=", "+=");
+		public @S(40) @OPT Javascript_PunctuationChoice equals = new Javascript_PunctuationChoice("=", "+=", "++", "--");
 		public @S(50) @OPT Javascript_Expression initialize;
 		public @S(60) @OPT TokenList<Javascript_More_Variables> moreVariables;
 		public @S(70) PunctuationSemicolon semicolon1;

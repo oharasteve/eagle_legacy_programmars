@@ -11,10 +11,10 @@ public class Javascript_Reserved_Words
 			// "arguments",		// I removed
 			"boolean",
 			"break",
-			"byte",
+			// "byte",			// I removed
 			"case",
 			"catch",			// I removed
-			"char",
+			// "char",			// I removed
 			"class",			// I added
 			"const",
 			"continue",
@@ -22,13 +22,13 @@ public class Javascript_Reserved_Words
 			"default",
 			"delete",
 			"do",
-			"double",
+			// "double",		// I removed
 			"else",
 			"eval",
 			"false",
 			"final",
 			"finally",			// I removed
-			"float",
+			// "float",			// I removed
 			"for",
 			"function",
 			// "goto",			// I removed
@@ -36,9 +36,9 @@ public class Javascript_Reserved_Words
 			"implements",
 			"in",
 			"instanceof",
-			"int",
+			// "int",			// I removed
 			"interface",
-			"long",
+			// "long",			// I removed
 			"native",
 			"new",
 			"null",
@@ -47,8 +47,8 @@ public class Javascript_Reserved_Words
 			"protected",
 			"public",
 			"return",
-			"short",
-			"static",
+			// "short",			// I removed
+			// "static",		// I removed
 			"switch",
 			"synchronized",
 			"this",

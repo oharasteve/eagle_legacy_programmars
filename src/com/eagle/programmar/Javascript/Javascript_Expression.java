@@ -288,7 +288,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	public static @P(380) class Javascript_TypeOfExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Keyword TYPEOF = new Javascript_Keyword("typeof");
-		public @S(20) Javascript_Expression expr;
+		public @S(20) Javascript_Variable var;
 	}
 	
 	public static @P(390) class Javascript_VoidExpr extends PrimaryOperator
