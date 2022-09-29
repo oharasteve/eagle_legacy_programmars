@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Javascript_Function extends TokenSequence
 {
 	public @S(10) @OPT Javascript_KeywordChoice STATIC = new Javascript_KeywordChoice("static", "async");
-	public @S(20) Javascript_Keyword FUNCTION = new Javascript_Keyword("function");
+	public @S(20) @OPT Javascript_Keyword FUNCTION = new Javascript_Keyword("function");
 	public @S(30) Javascript_FunctionImplementation implementation;
 	
 	public static class Javascript_FunctionImplementation extends TokenSequence

@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
@@ -16,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Javascript_Variable extends TokenSequence
 {
 	public @S(10) Javascript_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<Javascript_DotIdentifier> moreIds;
+	public @S(20) @OPT TokenList<Javascript_DotField> moreIds;
 	public @S(30) @OPT TokenList<Javascript_Subscript> subscript;
 	
 	public static class Javascript_VariableIdentifier extends TokenChooser
@@ -36,9 +37,9 @@ public class Javascript_Variable extends TokenSequence
 		}
 	}
 
-	public static class Javascript_DotIdentifier extends TokenSequence
+	public static class Javascript_DotField extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;
-		public @S(20) Javascript_VariableIdentifier id;
+		public @S(20) Javascript_Field_Reference id;
 	}
 }

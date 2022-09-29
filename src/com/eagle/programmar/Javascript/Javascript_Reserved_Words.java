@@ -9,11 +9,13 @@ public class Javascript_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"abstract",
 			// "arguments",		// I removed
+			"async",			// I added
+			"await",			// I added
 			"boolean",
 			"break",
-			// "byte",			// I removed
+			"byte",
 			"case",
-			"catch",			// I removed
+			"catch",
 			// "char",			// I removed
 			"class",			// I added
 			"const",
@@ -22,13 +24,13 @@ public class Javascript_Reserved_Words
 			"default",
 			"delete",
 			"do",
-			// "double",		// I removed
+			"double",
 			"else",
 			"eval",
 			"false",
 			"final",
-			"finally",			// I removed
-			// "float",			// I removed
+			"finally",
+			"float",
 			"for",
 			"function",
 			// "goto",			// I removed
@@ -36,9 +38,9 @@ public class Javascript_Reserved_Words
 			"implements",
 			"in",
 			"instanceof",
-			// "int",			// I removed
+			"int",
 			"interface",
-			// "long",			// I removed
+			"long",
 			"native",
 			"new",
 			"null",
@@ -47,8 +49,8 @@ public class Javascript_Reserved_Words
 			"protected",
 			"public",
 			"return",
-			// "short",			// I removed
-			// "static",		// I removed
+			"short",
+			"static",
 			"switch",
 			"synchronized",
 			"this",

@@ -6,6 +6,8 @@ package com.eagle.programmar.Javascript;
 import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassElement;
 import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassExtends;
 import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Definition;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_HexNumber;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
@@ -15,6 +17,7 @@ import com.eagle.programmar.Javascript.Terminals.Javascript_Number;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_RegularExpression;
+import com.eagle.programmar.Javascript.Terminals.Javascript_TemplateLiteral;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
@@ -135,8 +138,9 @@ public class Javascript_Expression extends PrecedenceChooser
 	
 	public static @P(200) class Javascript_MethodInvocation extends PrimaryOperator
 	{
-		public @S(10) Javascript_Variable methodName;
-		public @S(20) Javascript_ParenthesizedExpression arguments;
+		public @S(10) @OPT Javascript_Keyword AWAIT = new Javascript_Keyword("await");
+		public @S(20) Javascript_Variable methodName;
+		public @S(30) Javascript_ParenthesizedExpression arguments;
 	}
 	
 	public static @P(210) class Javascript_PreIncrementExpression extends PrimaryOperator
@@ -194,12 +198,18 @@ public class Javascript_Expression extends PrecedenceChooser
 			);
 	}
 	
-	public static @P(290) class Javascript_VariableExpression extends PrimaryOperator
+	public static @P(290) class Javascript_TemplateExpr extends PrimaryOperator
+	{
+		public @S(10) @OPT Javascript_Function_Reference func;
+		public @S(20) Javascript_TemplateLiteral template;
+	}
+
+	public static @P(300) class Javascript_VariableExpression extends PrimaryOperator
 	{
 		public @S(10) Javascript_Variable variable;
 	}
 	
-	public static @P(300) class Javascript_StrangeFunction extends PrimaryOperator
+	public static @P(310) class Javascript_StrangeFunction extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Javascript_Number zero;
@@ -209,7 +219,7 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(60) Javascript_ParenthesizedExpression arguments;
 	}
 
-	public static @P(310) class Javascript_ParenthesizedFunction extends PrimaryOperator
+	public static @P(320) class Javascript_ParenthesizedFunction extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Javascript_Function function;
@@ -218,12 +228,12 @@ public class Javascript_Expression extends PrecedenceChooser
 	}
 
  	// Problem is (int)x and (num)/x. Ambiguous for the parser. It needs a real backtracker.
-	public static @P(320) class Javascript_Parenthesized_Expression extends PrimaryOperator
+	public static @P(330) class Javascript_Parenthesized_Expression extends PrimaryOperator
 	{
 		public @S(10) Javascript_ParenthesizedExpression expr;
 	}
 	
-	public static @P(330) class Javascript_SimpleArray extends PrimaryOperator
+	public static @P(340) class Javascript_SimpleArray extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) @OPT Javascript_Expression expr;
@@ -237,13 +247,13 @@ public class Javascript_Expression extends PrecedenceChooser
 		}
 	}
 	
-	public static @P(340) class Javascript_CommentExpression extends PrimaryOperator
+	public static @P(350) class Javascript_CommentExpression extends PrimaryOperator
 	{
 		public @S(10) Javascript_Comment comment;
 		public @S(20) Javascript_Expression expr;
 	}
 	
-	public static @P(350) class Javascript_Dictionary extends PrimaryOperator
+	public static @P(360) class Javascript_Dictionary extends PrimaryOperator
 	{
 		// Don't use @INDENT here. Messes up 'return' statements that return a dictionary.
 		public @S(10) PunctuationLeftBrace leftBrace;
@@ -261,22 +271,36 @@ public class Javascript_Expression extends PrecedenceChooser
 				public @S(30) Javascript_FunctionImplementation function;
 			}
 			
-			public @CHOICE static class Javascript_DictionaryData extends TokenSequence
+			public @CHOICE static class Javascript_DictionaryDataNumber extends TokenSequence
 			{
-				public @S(10) Javascript_Expression field;
+				public @S(10) Javascript_Number number;
+				public @S(20) PunctuationColon colon;
+				public @S(30) Javascript_Expression expr;
+			}
+			
+			public @CHOICE static class Javascript_DictionaryDataLiteral extends TokenSequence
+			{
+				public @S(10) Javascript_Literal field;
+				public @S(20) PunctuationColon colon;
+				public @S(30) Javascript_Expression expr;
+			}
+			
+			public @CHOICE static class Javascript_DictionaryDataVariable extends TokenSequence
+			{
+				public @S(10) Javascript_Field_Definition field;
 				public @S(20) PunctuationColon colon;
 				public @S(30) Javascript_Expression expr;
 			}
 		}
 	}
 
-	public static @P(360) class Javascript_FunctionExpr extends PrimaryOperator
+	public static @P(370) class Javascript_FunctionExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Function function;
 		public @S(20) @OPT Javascript_ParenthesizedExpression args;
 	}
 	
-	public static @P(370) class Javascript_ClassExpr extends PrimaryOperator
+	public static @P(380) class Javascript_ClassExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Keyword CLASS = new Javascript_Keyword("class");
 		public @S(20) @OPT Javascript_ClassExtends extend;
@@ -285,13 +309,25 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
 	
-	public static @P(380) class Javascript_TypeOfExpr extends PrimaryOperator
+	public static @P(390) class Javascript_TypeOfExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Keyword TYPEOF = new Javascript_Keyword("typeof");
-		public @S(20) Javascript_Variable var;
+		public @S(20) Javascript_TypeOfWhat what;
+		
+		public static class Javascript_TypeOfWhat extends TokenChooser
+		{
+			public @CHOICE Javascript_Variable var;
+
+			public @CHOICE static class Javascript_TypeOfParens extends TokenSequence
+			{
+				public @S(10) PunctuationLeftParen leftParen;
+				public @S(20) Javascript_Variable var;
+				public @S(30) PunctuationRightParen rightParen;
+			}
+		}
 	}
 	
-	public static @P(390) class Javascript_VoidExpr extends PrimaryOperator
+	public static @P(400) class Javascript_VoidExpr extends PrimaryOperator
 	{
 		public @S(10) Javascript_Keyword VOID = new Javascript_Keyword("void");
 		public @S(20) Javascript_Number number;

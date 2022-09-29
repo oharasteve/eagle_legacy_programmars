@@ -65,6 +65,7 @@ public class Javascript_Statement extends TokenSequence
 		public @CHOICE Javascript_ContinueStatement continueStatement;
 		public @CHOICE Javascript_DoStatement doStatement;
 		public @CHOICE Javascript_ForStatement forStatement;
+		public @CHOICE Javascript_Function function;
 		public @CHOICE Javascript_IfStatement ifStatement;
 		public @CHOICE Javascript_ImportStatement importStatement;
 		public @CHOICE Javascript_ReturnStatement returnStatement;
