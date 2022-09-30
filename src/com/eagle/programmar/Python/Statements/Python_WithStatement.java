@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
-import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;

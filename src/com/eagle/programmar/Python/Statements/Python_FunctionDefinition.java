@@ -5,7 +5,7 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Decorators;
 import com.eagle.programmar.Python.Python_Parameter_List;
-import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_Comment;

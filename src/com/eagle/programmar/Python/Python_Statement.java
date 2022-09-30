@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement.Python_MultilineStatement;
+import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
 import com.eagle.programmar.Python.Statements.Python_BreakStatement;
@@ -28,11 +28,9 @@ import com.eagle.programmar.Python.Statements.Python_WithStatement;
 import com.eagle.programmar.Python.Statements.Python_YieldStatement;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
-import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -49,7 +47,8 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	
 	public static class Python_StatementOrComment extends TokenChooser
 	{
-		public @SKIP Python_MultilineStatement multiStatement;	// Only needed for Transformation
+		// Only needed for Transformation. Look at createStatementBlock in Generate_Python_Statement
+		public @SKIP Python_MultilineStatement multiStatement;
 		
 		public @FIRST Python_CommentList comments;
 		public @CHOICE Python_Statement_List statements;
@@ -95,24 +94,5 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_YieldStatement yieldStatement;
 		
 		public @LAST Python_ExpressionStatement expression;		// Avoid conflict with 'for' statement
-	}
-	
-	public static class Python_SingleOrMultiLineStatement extends TokenChooser
-	{
-		public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
-		
-		public @CHOICE static class Python_SingleLineStatement extends TokenSequence
-		{
-			public @S(10) SeparatedList<Python_Simple_Statement,PunctuationSemicolon> statements;
-			public @S(20) @OPT Python_Comment comment;
-			public @S(30) @OPT Python_EndOfLine eoln;
-		}
-
-		public @CHOICE static class Python_MultilineStatement extends TokenSequence
-		{
-			public @S(10) @OPT Python_Comment comment;
-			public @S(20) Python_EndOfLine eoln;
-			public @S(30) TokenList<Python_Statement> statements;
-		}
 	}
 }

@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_ExpressionList;
-import com.eagle.programmar.Python.Python_Statement.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
