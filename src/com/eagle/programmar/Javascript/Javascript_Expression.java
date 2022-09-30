@@ -253,43 +253,41 @@ public class Javascript_Expression extends PrecedenceChooser
 		public @S(20) Javascript_Expression expr;
 	}
 	
-	public static @P(360) class Javascript_Dictionary extends PrimaryOperator
+	public static @P(360) class Javascript_ObjectLiteral extends PrimaryOperator
 	{
-		// Don't use @INDENT here. Messes up 'return' statements that return a dictionary.
+		// Don't use @INDENT here. Messes up 'return' statements that return an object literal.
 		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) SeparatedList<Javascript_DictionaryItem,PunctuationComma> items;
+		public @S(20) SeparatedList<Javascript_ObjectLiteralItem,PunctuationComma> items;
 		public @S(30) @OPT PunctuationComma comma;
 		public @S(40) @OPT TokenList<Javascript_Comment> comments;
 		public @S(50) PunctuationRightBrace rightBrace;
 		
-		public static class Javascript_DictionaryItem extends TokenChooser
+		public static class Javascript_ObjectLiteralItem extends TokenChooser
 		{
-			public @CHOICE static class Javascript_DictionaryFunction extends TokenSequence
+			public @CHOICE static class Javascript_ObjectFunction extends TokenSequence
 			{
 				public @S(10) @OPT TokenList<Javascript_Comment> comments;
 				public @S(20) @OPT Javascript_KeywordChoice prefix = new Javascript_KeywordChoice("get", "static");
 				public @S(30) Javascript_FunctionImplementation function;
 			}
 			
-			public @CHOICE static class Javascript_DictionaryDataNumber extends TokenSequence
+			public @LAST static class Javascript_ObjecLiteraltData extends TokenSequence
 			{
-				public @S(10) Javascript_Number number;
-				public @S(20) PunctuationColon colon;
-				public @S(30) Javascript_Expression expr;
-			}
-			
-			public @CHOICE static class Javascript_DictionaryDataLiteral extends TokenSequence
-			{
-				public @S(10) Javascript_Literal field;
-				public @S(20) PunctuationColon colon;
-				public @S(30) Javascript_Expression expr;
-			}
-			
-			public @CHOICE static class Javascript_DictionaryDataVariable extends TokenSequence
-			{
-				public @S(10) Javascript_Field_Definition field;
-				public @S(20) PunctuationColon colon;
-				public @S(30) Javascript_Expression expr;
+				public @S(10) Javascript_ObjectFieldName name;
+				public @S(20) @OPT Javascript_ObjectFieldValue value;
+				
+				public static class Javascript_ObjectFieldName extends TokenChooser
+				{
+					public @CHOICE Javascript_Number number;
+					public @CHOICE Javascript_Literal literal;
+					public @CHOICE Javascript_Field_Definition field;
+				}
+				
+				public static class Javascript_ObjectFieldValue extends TokenSequence
+				{
+					public @S(10) PunctuationColon colon;
+					public @S(20) Javascript_Expression expr;
+				}
 			}
 		}
 	}

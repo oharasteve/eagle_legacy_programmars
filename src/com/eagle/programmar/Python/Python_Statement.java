@@ -51,13 +51,9 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	{
 		public @SKIP Python_MultilineStatement multiStatement;	// Only needed for Transformation
 		
+		public @FIRST Python_CommentList comments;
 		public @CHOICE Python_Statement_List statements;
 		public @CHOICE Python_EndOfLine eoln;
-		
-		public @FIRST static class Python_CommentList extends TokenSequence
-		{
-			public @S(10) @NOSPACE SeparatedList<Python_Comment,Python_EndOfLine> comments;
-		}
 	}
 	
 	public static class Python_Statement_List extends TokenSequence

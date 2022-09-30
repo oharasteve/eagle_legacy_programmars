@@ -4,9 +4,9 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.programmar.Python.Python_CommentList;
 import com.eagle.programmar.Python.Python_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment.Python_CommentList;
 import com.eagle.programmar.Python.Python_Statement.Python_Statement_List;
 import com.eagle.programmar.Python.Statements.Python_IfStatement.Python_IfElif;
 import com.eagle.tokens.AbstractToken;
