@@ -4,6 +4,7 @@
 package com.eagle.programmar.Perl;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 
 public class Perl_Syntax extends EagleSyntax
 {
@@ -18,8 +19,9 @@ public class Perl_Syntax extends EagleSyntax
 		_isCaseSensitive = true;
 		_continuationChar = null;
 		_extraCharacters = "_";
+		_commentInstance = new Perl_Comment();
 		_punctuationExceptions = new String[] {
-				"===", "!==", "::", "==", "->", "<=", ">=", "<<", ">>", "!=", "=>", "=~", "?>" };
+				"===", "!==", "::", "==", "->", "<=", ">=", "<<", ">>", "!=", "=>", "=~", "?>", "//", "/*" };
 		
 		addReservedWords(reservedWords);
 	}
@@ -42,6 +44,7 @@ public class Perl_Syntax extends EagleSyntax
 			"ge",
 			"gt",
 			"if",
+			"join",			// I added
 			"le",
 			"lock",
 			"lt",

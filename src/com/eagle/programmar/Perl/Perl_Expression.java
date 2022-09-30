@@ -20,6 +20,7 @@ import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -318,6 +319,12 @@ public class Perl_Expression extends PrecedenceChooser
 	{
 		public @S(10) Perl_Punctuation percent = new Perl_Punctuation("%");
 		public @S(20) Perl_Expression expr;
+	}
+	
+	public static @P(380) class Perl_JoinExpression extends PrimaryOperator
+	{
+		public @S(10) Perl_Keyword JOIN = new Perl_Keyword("join");
+		public @S(20) SeparatedList<Perl_Expression,PunctuationComma> items;
 	}
 	
 	///////////////////////////////////////////////

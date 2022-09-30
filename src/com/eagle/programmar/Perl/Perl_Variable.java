@@ -4,6 +4,7 @@
 package com.eagle.programmar.Perl;
 
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
+import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Number;
@@ -151,7 +152,8 @@ public class Perl_Variable extends TokenChooser
 	public @CHOICE static class Perl_VarFunctionCall extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Perl_Expression,PunctuationComma> parameters;
-		public @S(30) PunctuationRightParen rightParen;
+		public @S(20) @OPT Perl_Comment comment;
+		public @S(30) @OPT SeparatedList<Perl_Expression,PunctuationComma> parameters;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 }

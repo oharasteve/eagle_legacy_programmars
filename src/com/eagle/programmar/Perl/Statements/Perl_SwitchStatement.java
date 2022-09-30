@@ -6,6 +6,7 @@ package com.eagle.programmar.Perl.Statements;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_StatementOrComment;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
+import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -29,14 +30,14 @@ public class Perl_SwitchStatement extends TokenSequence
 	{
 		public @S(10) Perl_Keyword CASE = new Perl_Keyword("case");
 		public @S(20) Perl_Expression expr;
-		public @S(30) PunctuationColon colon;
+		public @S(30) @OPT PunctuationColon colon;
 		public @S(40) @OPT TokenList<Perl_StatementOrComment> statements;
 	}
 	
 	public static class Perl_DefaultClause extends TokenSequence
 	{
-		public @S(10) Perl_Keyword DEFAULT = new Perl_Keyword("default");
-		public @S(20) PunctuationColon colon;
+		public @S(10) Perl_KeywordChoice DEFAULT = new Perl_KeywordChoice("default", "else");
+		public @S(20) @OPT PunctuationColon colon;
 		public @S(30) TokenList<Perl_StatementOrComment> statements;
 	}
 }
