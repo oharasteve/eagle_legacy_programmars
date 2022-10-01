@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
@@ -36,7 +38,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Python_Statement extends TokenSequence implements AbstractStatement
+public class Python_Statement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) @OPT @NEWLINE Python_StartOfLine soln;
 	public @S(20) Python_StatementOrComment statementOrComment;
@@ -55,12 +57,18 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_EndOfLine eoln;
 	}
 	
-	public static class Python_Statement_List extends TokenSequence
+	public static class Python_Statement_List extends TokenSequence implements EagleRunnable
 	{
 		// This StartOfLine should be removed. But it breaks lots of Pythong
 		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
 		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
 		public @S(20) SeparatedList<Python_Simple_Statement,Python_Statement_Separator> statements;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			interpreter.tryToInterpret(statements.first());
+		}
 	}
 	
 	public static class Python_Statement_Separator extends TokenChooser
@@ -69,7 +77,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
 	}
 	
-	public static class Python_Simple_Statement extends TokenChooser
+	public static class Python_Simple_Statement extends TokenChooser implements EagleRunnable
 	{
 		public @CHOICE Python_Assignment assignment;
 		public @CHOICE Python_AssertStatement assertStatement;
@@ -94,5 +102,17 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_YieldStatement yieldStatement;
 		
 		public @LAST Python_ExpressionStatement expression;		// Avoid conflict with 'for' statement
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			interpreter.tryToInterpret(getWhich());
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(statementOrComment.getWhich());
 	}
 }

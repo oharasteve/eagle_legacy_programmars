@@ -3,11 +3,13 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
 import com.eagle.tokens.TokenList;
 
-public abstract class Python_Program extends EagleLanguage
+public abstract class Python_Program extends EagleLanguage implements EagleRunnable
 {
 	public Python_Program(String name, EagleSyntax syntax)
 	{
@@ -21,4 +23,14 @@ public abstract class Python_Program extends EagleLanguage
 	}
 
 	public @S(10) @OPT TokenList<Python_Statement> entries;
+
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (Python_Statement stmt : entries._elements)
+		{
+			interpreter.tryToInterpret(stmt);
+		}
+	}
 }

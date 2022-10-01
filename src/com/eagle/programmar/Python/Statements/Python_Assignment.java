@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Python.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Python_VariableList;
@@ -14,7 +17,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Python_Assignment extends TokenSequence
+public class Python_Assignment extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @NOSPACE Python_VariableList varList;
 	public @S(20) @OPT Python_ResultType resultType;
@@ -35,5 +38,12 @@ public class Python_Assignment extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) Python_Type type;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter.getEagleValue(expr);
+		interpreter._symbolTable.setSymbol(varList._name.toString(), value);
 	}
 }

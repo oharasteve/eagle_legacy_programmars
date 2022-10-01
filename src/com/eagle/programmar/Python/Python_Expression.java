@@ -277,9 +277,9 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public static @P(520) class Python_Power_Expression extends PrecedenceOperator
 	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
+		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Python_Punctuation stars = new Python_Punctuation("**");
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	}
 	
 	public static @P(530) class Python_Multiplicative_Expression extends PrecedenceOperator 

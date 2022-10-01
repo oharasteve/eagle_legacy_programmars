@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
@@ -19,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class Python_Variable extends TokenSequence implements AbstractVariable
+public class Python_Variable extends TokenSequence implements AbstractVariable, EagleRunnable
 {
 	public @S(10) Python_SelfOrVariable var;
 	public @S(20) @OPT @NOSPACE TokenList<Python_Subscript> subscript1;
@@ -74,5 +77,13 @@ public class Python_Variable extends TokenSequence implements AbstractVariable
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) Python_Type type;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		Python_Identifier_Reference which = (Python_Identifier_Reference) var.getWhich();
+		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		interpreter.pushEagleValue(value);
 	}
 }
