@@ -30,6 +30,8 @@ public class CSS_AtMedia extends TokenSequence
 	
 	public static class CSS_MediaParam extends TokenChooser
 	{
+		public @CHOICE CSS_Keyword ALL = new CSS_Keyword("all");
+		
 		public @CHOICE static class CSS_MediaParamParens extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;

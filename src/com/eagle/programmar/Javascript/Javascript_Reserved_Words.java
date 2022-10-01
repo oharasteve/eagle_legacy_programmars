@@ -44,6 +44,7 @@ public class Javascript_Reserved_Words
 			"native",
 			"new",
 			"null",
+			"of",				// I added
 			"package",
 			"private",
 			"protected",
