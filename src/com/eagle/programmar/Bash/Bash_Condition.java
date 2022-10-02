@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Bash;
 
+import com.eagle.programmar.Bash.Commands.Bash_GrepCommand;
+import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
@@ -70,6 +72,16 @@ public class Bash_Condition extends PrecedenceChooser
 	public static @P(150) class Bash_Constants extends PrimaryOperator
 	{
 		public @S(10) Bash_KeywordChoice TRUE = new Bash_KeywordChoice("false", "true");
+	}
+	
+	public static @P(160) class Bash_GrepCondition extends PrimaryOperator
+	{
+		public @S(10) Bash_GrepCommand grepStatement;
+	}
+	
+	public static @P(170) class Bash_ReadCondition extends PrimaryOperator
+	{
+		public @S(10) Bash_ReadCommand readStatement;
 	}
 
 	///////////////////////////////////////////////

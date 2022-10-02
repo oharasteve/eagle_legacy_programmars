@@ -44,7 +44,7 @@ public class Bash_EndOfLine extends TokenSequence
 		public @CHOICE static class Bash_Piper extends TokenSequence
 		{
 			public @S(10) Bash_PunctuationChoice separator = new Bash_PunctuationChoice(
-				"|", ";", "||", "&&");
+				",", "|", ";", "||", "&&");
 			public @S(20) @OPT Bash_RealEndOfLine eoln;
 		}
 	}

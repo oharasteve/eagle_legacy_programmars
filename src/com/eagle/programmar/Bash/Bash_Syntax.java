@@ -21,28 +21,9 @@ public class Bash_Syntax extends EagleSyntax
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>",
-				"$#", "$?", "$@", "$*", "&&", "||", "&>>"};
+				"$#", "$?", "$@", "$*", "&&", "||", "&>>",
+				"+=", "-="};
 		
-		addReservedWords(keywords);
+		addReservedWords(Bash_Reserved_Words.RESERVED_WORDS);
 	}
-	
-	private String[] keywords = new String[] {
-			"break",
-			"cat",
-			"chmod",
-			"do",
-			"done",
-			"echo",
-			"elif",
-			"else",
-			"export",
-			"fi",
-			"for",
-			"function",
-			"if",
-			"python", "python3",
-			"read",
-			"then",
-			"while",
-	};
 }
