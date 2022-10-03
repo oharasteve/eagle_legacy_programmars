@@ -13,7 +13,7 @@ public class Javascript_Reserved_Words
 			"await",			// I added
 			"boolean",
 			"break",
-			"byte",
+			// "byte",			// I removed
 			"case",
 			"catch",
 			// "char",			// I removed
@@ -24,13 +24,13 @@ public class Javascript_Reserved_Words
 			"default",
 			"delete",
 			"do",
-			"double",
+			// "double",		// I removed
 			"else",
 			"eval",
 			"false",
 			"final",
 			"finally",
-			"float",
+			// "float",			// I removed
 			"for",
 			"function",
 			// "goto",			// I removed
