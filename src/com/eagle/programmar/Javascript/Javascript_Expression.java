@@ -70,6 +70,7 @@ public class Javascript_Expression extends PrecedenceChooser
 				"eval"
 		);
 	}
+	
 	public static @P(110) class Javascript_DotClass extends PrimaryOperator
 	{
 		public @S(10) Javascript_Type jtype;
