@@ -76,7 +76,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 			
 			public static class COBOL_RepositoryEntry extends TokenSequence
 			{
-				public @S(10) COBOL_Keyword CLASS = new COBOL_Keyword("CLASS");
+				public @S(10) COBOL_KeywordChoice CLASS = new COBOL_KeywordChoice("CLASS", "ENUM");
 				public @S(20) COBOL_Identifier_Reference id;
 				public @S(30) COBOL_Keyword AS = new COBOL_Keyword("AS");
 				public @S(40) COBOL_Literal literal;
