@@ -1,0 +1,19 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Mar 16, 2024
+
+package com.eagle.programmar.Eaglish.Statements;
+
+import com.eagle.programmar.Eaglish.Eaglish_Expression;
+import com.eagle.programmar.Eaglish.Eaglish_Variable;
+import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
+import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.tokens.TokenSequence;
+
+public class Eaglish_Add_Statement extends TokenSequence
+{
+	public @S(10) Eaglish_Keyword ADD = new Eaglish_Keyword("ADD");
+	public @S(20) Eaglish_Expression expr;
+	public @S(30) Eaglish_Keyword TO = new Eaglish_Keyword("TO");
+	public @S(40) Eaglish_Variable var;
+	public @S(50) Eaglish_EndOfLine eoln;
+}

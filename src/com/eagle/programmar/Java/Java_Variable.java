@@ -27,6 +27,7 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 		public @S(10) @NOSPACE PunctuationPeriod dot;
 		public @S(20) @NOSPACE Java_VariableIdentifier id;
 	}
+	
 	public static class Java_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE Java_KeywordChoice THIS = new Java_KeywordChoice("this", "class", "super");

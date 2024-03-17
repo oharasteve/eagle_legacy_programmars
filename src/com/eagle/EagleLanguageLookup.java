@@ -22,6 +22,7 @@ import com.eagle.programmar.CSharp.CSharp_Program;
 import com.eagle.programmar.Delphi.Delphi_Configuration;
 import com.eagle.programmar.Delphi.Delphi_Program;
 import com.eagle.programmar.Django.Django_Program;
+import com.eagle.programmar.Eaglish.Eaglish_Program;
 import com.eagle.programmar.FSharp.FSharp_Program;
 import com.eagle.programmar.Fortran.Fortran_Program;
 import com.eagle.programmar.Go.Go_Program;
@@ -87,6 +88,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Delphi_Configuration.DELPHIConfig, Delphi_Configuration.class);
 		add(Delphi_Program.DELPHI, Delphi_Program.class, ".dpr", ".p", ".pas");
 		add(Django_Program.DJANGO, Django_Program.class);
+		add(Eaglish_Program.EAGLISH, Eaglish_Program.class, ".eaglish");
 		add(Fortran_Program.FORTRAN, Fortran_Program.class, ".for");
 		add(FSharp_Program.FSHARP, FSharp_Program.class, ".fs");
 		add(Go_Program.GO, Go_Program.class, ".go");

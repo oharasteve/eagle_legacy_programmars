@@ -12,9 +12,9 @@ import com.eagle.programmar.Python.Statements.Python_IfStatement.Python_IfElif;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.tokens.terminals.TerminalStartOfLine;
 
-public class Python_StartOfLine extends TerminalLiteralToken
+public class Python_StartOfLine extends TerminalStartOfLine
 {
 	private static final String TAB = "  ";
 	private static final int TABLEN = TAB.length();
@@ -109,23 +109,5 @@ public class Python_StartOfLine extends TerminalLiteralToken
 		StringBuffer sb = new StringBuffer(TABLEN * depth);
 		for (int i = 1; i < depth; i++) sb.append(TAB);
 		return sb.toString();
-	}
-	
-	@Override
-	public String showString()
-	{
-		return "SOLN";
-	}
-
-	@Override
-	public String getValue()
-	{
-		return "";
-	}
-	
-	@Override
-	public String description()
-	{
-		return "Start of line";
 	}
 }
