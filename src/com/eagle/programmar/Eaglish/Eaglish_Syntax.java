@@ -19,5 +19,6 @@ public class Eaglish_Syntax extends EagleSyntax
 		_autoAdvance = false;
 		_continuationChar = null;
 		_extraCharacters = "";
+		_punctuationExceptions = new String[] { "<=", ">=" };
 	}
 }
