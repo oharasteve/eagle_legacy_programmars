@@ -7,7 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Program_Identifier;
-import com.eagle.programmar.Eaglish.Terminals.Eaglish_Comment;
+import com.eagle.programmar.Eaglish.Terminals.Eaglish_CommentEoln;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenList;
@@ -29,9 +29,9 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 	}
 
 	// Components of an Eaglish Program
-	public @S(10) @OPT TokenList<Eaglish_Comment> comments1;
+	public @S(10) @OPT TokenList<Eaglish_CommentEoln> comments1;
 	public @S(20) Eaglish_Prog prog;
-	public @S(30) @OPT TokenList<Eaglish_Comment> comments2;
+	public @S(30) @OPT TokenList<Eaglish_CommentEoln> comments2;
 	
 	public static class Eaglish_Prog extends TokenSequence
 	{
