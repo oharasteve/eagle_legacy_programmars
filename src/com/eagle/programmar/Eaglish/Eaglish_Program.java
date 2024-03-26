@@ -6,10 +6,12 @@ package com.eagle.programmar.Eaglish;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Eaglish.Statements.Eaglish_Function_Block;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Program_Identifier;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_CommentEoln;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
@@ -44,11 +46,25 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 		public @S(50) Eaglish_Keyword END_PROGRAM = new Eaglish_Keyword("END_PROGRAM"); 
 		public @S(60) Eaglish_EndOfLine eoln2;
 	}
-	
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(prog.statements.first().getWhich());
+		// First pass, just collect all the FUNCTION definitions
+		for (Eaglish_Statement stmt : prog.statements._elements)
+		{
+			AbstractToken which = stmt.getWhich();
+			if (which instanceof Eaglish_Function_Block)
+			{
+				Eaglish_Function_Block fn = (Eaglish_Function_Block) which;
+				interpreter._functionList.add(fn);
+			}
+		}
+		
+		// Second pass, execute the program
+		for (Eaglish_Statement stmt : prog.statements._elements)
+		{
+			interpreter.tryToInterpret(stmt.getWhich());
+		}
 	}
 }

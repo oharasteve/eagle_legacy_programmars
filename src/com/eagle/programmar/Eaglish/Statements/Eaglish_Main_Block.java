@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_Main_Block extends TokenSequence
+public class Eaglish_Main_Block extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Eaglish_Keyword MAIN = new Eaglish_Keyword("MAIN");
 	public @S(20) Eaglish_EndOfLine eoln1;
@@ -18,4 +20,13 @@ public class Eaglish_Main_Block extends TokenSequence
 
 	public @S(40) Eaglish_Keyword END_MAIN = new Eaglish_Keyword("END_MAIN");
 	public @S(50) Eaglish_EndOfLine eoln2;
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (Eaglish_Statement stmt : statements._elements)
+		{
+			interpreter.tryToInterpret(stmt.getWhich());
+		}
+	}
 }

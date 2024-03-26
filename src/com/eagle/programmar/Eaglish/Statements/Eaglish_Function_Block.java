@@ -3,14 +3,16 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Function_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_Function_Block extends TokenSequence
+public class Eaglish_Function_Block extends AbstractFunction implements EagleRunnable
 {
 	public @S(10) Eaglish_Keyword FUNCTION = new Eaglish_Keyword("FUNCTION");
 	public @S(20) Eaglish_Function_Definition var;
@@ -22,4 +24,12 @@ public class Eaglish_Function_Block extends TokenSequence
 	
 	public @S(70) Eaglish_Keyword END_FUNCTION = new Eaglish_Keyword("END_FUNCTION");
 	public @S(80) Eaglish_EndOfLine eoln2;
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Don't do anything here.
+		// We searched for all the function in a preliminary pass
+		// And we only evaluate when it called
+	}
 }
