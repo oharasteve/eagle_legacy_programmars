@@ -41,18 +41,6 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Java_HexFloatingNumber hexFloat;
-	public @P(20) Java_HexNumber hex;
-	public @P(30) Java_BinaryNumber binary;
-	public @P(40) Java_Number number;
-	public @P(50) Java_Literal literal;
-	public @P(60) Java_Character_Literal characters;
-	public @P(70) Java_Annotation annotation;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Java_Expression()
 	{
 	    super(_operators);
@@ -63,6 +51,21 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Java_HexFloatingNumber hexFloat;
+	public @P(20) Java_HexNumber hex;
+	public @P(30) Java_BinaryNumber binary;
+	public @P(40) Java_Number number;
+	public @P(50) Java_Literal literal;
+	public @P(60) Java_Character_Literal characters;
+	public @P(70) Java_Annotation annotation;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	

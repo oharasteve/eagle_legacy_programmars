@@ -40,15 +40,6 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Python_BinaryNumber binary;
-	public @P(20) Python_OctalNumber octal;
-	public @P(30) Python_HexNumber hex;
-	public @P(40) Python_Number number;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Python_Expression()
 	{
 	    super(_operators);
@@ -58,6 +49,18 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Python_BinaryNumber binary;
+	public @P(20) Python_OctalNumber octal;
+	public @P(30) Python_HexNumber hex;
+	public @P(40) Python_Number number;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions

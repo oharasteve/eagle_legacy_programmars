@@ -26,13 +26,6 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Ruby_Number number;
-	public @P(20) Ruby_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Ruby_Expression()
 	{
 	    super(_operators);
@@ -43,6 +36,16 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Ruby_Number number;
+	public @P(20) Ruby_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	

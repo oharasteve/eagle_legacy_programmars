@@ -29,12 +29,6 @@ public class AWK_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 	
-	public @P(10) AWK_Number number;
-	
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-	
 	public AWK_Expression()
 	{
 		super(_operators);
@@ -44,7 +38,16 @@ public class AWK_Expression extends PrecedenceChooser
 	{ 
 		super(_operators, allowed, token.getClass());
 	}
-		
+	
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) AWK_Number number;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 

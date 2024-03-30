@@ -19,7 +19,6 @@ import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -38,13 +37,6 @@ public class Powershell_Expression extends PrecedenceChooser
 {
 	protected static OperatorList _operators = new OperatorList();
 
-	public @P(10) Powershell_Number number;
-	public @P(20) Powershell_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Powershell_Expression()
 	{
 	    super(_operators);
@@ -55,58 +47,16 @@ public class Powershell_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 
-	public static class Powershell_Library extends TokenSequence
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) SeparatedList<Powershell_Identifier_Reference,PunctuationPeriod> name;
-		public @S(30) @OPT Powershell_Keyword FTP = new Powershell_Keyword("+FTP");
-		public @S(40) PunctuationRightBracket rightBracket;
-		public @S(50) Powershell_Punctuation colons = new Powershell_Punctuation("::");
-	}
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
 
-	public static class Powershell_Expressions extends TokenSequence
-	{
-		public @S(10) @OPT Powershell_EndOfLine eoln1;
-		public @S(20) Powershell_Expression expr;
-		public @S(30) @OPT TokenList<Powershell_MoreExpressions> more;
-		public @S(40) @OPT Powershell_Comment comment;
-		public @S(50) @OPT Powershell_EndOfLine eoln2;
-		
-		public static class Powershell_MoreExpressions extends TokenSequence
-		{
-			public @S(10) @OPT PunctuationComma comma;
-			public @S(20) @OPT Powershell_Comment comment;
-			public @S(30) @OPT Powershell_EndOfLine eoln;
-			public @S(40) Powershell_Expression expr;
-		}
-	}
+	///////////////////////////////////////////////
+	// Terminals
 
-	public static class Powershell_DictionaryValues extends TokenSequence
-	{
-		public @S(10) @OPT Powershell_EndOfLine eoln1;
-		public @S(20) Powershell_Field field;
-		public @S(30) PunctuationEquals equals;
-		public @S(40) Powershell_Expression expr;
-		public @S(50) @OPT TokenList<Powershell_MoreDictExpressions> more;
-		public @S(60) @OPT Powershell_Comment comment;
-		public @S(70) @OPT Powershell_EndOfLine eoln2;
-		
-		public static class Powershell_Field extends TokenChooser
-		{
-			public @CHOICE Powershell_Field_Reference field;
-			public @CHOICE Powershell_Literal literal;
-		}
-		public static class Powershell_MoreDictExpressions extends TokenSequence
-		{
-			public @S(10) @OPT PunctuationSemicolon semicolon;
-			public @S(20) @OPT Powershell_Comment comment;
-			public @S(30) @OPT Powershell_EndOfLine eoln;
-			public @S(40) Powershell_Field field;
-			public @S(50) PunctuationEquals equals;
-			public @S(60) Powershell_Expression expr;
-		}
-	}
-	
+	public @P(10) Powershell_Number number;
+	public @P(20) Powershell_Literal literal;
+
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 	
@@ -156,7 +106,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	{
 		public @S(10) @OPT Powershell_Punctuation at = new Powershell_Punctuation("@");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @OPT Powershell_Expressions expressions;
+		public @S(30) @OPT Powershell_ExpressionList expressions;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
@@ -166,6 +116,32 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) @OPT Powershell_DictionaryValues expressions;
 		public @S(40) PunctuationRightBrace rightBrace;
+		
+		public static class Powershell_DictionaryValues extends TokenSequence
+		{
+			public @S(10) @OPT Powershell_EndOfLine eoln1;
+			public @S(20) Powershell_Field field;
+			public @S(30) PunctuationEquals equals;
+			public @S(40) Powershell_Expression expr;
+			public @S(50) @OPT TokenList<Powershell_MoreDictExpressions> more;
+			public @S(60) @OPT Powershell_Comment comment;
+			public @S(70) @OPT Powershell_EndOfLine eoln2;
+			
+			public static class Powershell_Field extends TokenChooser
+			{
+				public @CHOICE Powershell_Field_Reference field;
+				public @CHOICE Powershell_Literal literal;
+			}
+			public static class Powershell_MoreDictExpressions extends TokenSequence
+			{
+				public @S(10) @OPT PunctuationSemicolon semicolon;
+				public @S(20) @OPT Powershell_Comment comment;
+				public @S(30) @OPT Powershell_EndOfLine eoln;
+				public @S(40) Powershell_Field field;
+				public @S(50) PunctuationEquals equals;
+				public @S(60) Powershell_Expression expr;
+			}
+		}
 	}
 	
 	public static @P(190) class Powershell_FunctionCall extends PrimaryOperator
@@ -174,7 +150,7 @@ public class Powershell_Expression extends PrecedenceChooser
 		public @S(20) @OPT Powershell_Library library;
 		public @S(30) Powershell_Function_Reference func;
 		public @S(40) PunctuationLeftParen leftParen;
-		public @S(50) @OPT Powershell_Expressions arguments;
+		public @S(50) @OPT Powershell_ExpressionList arguments;
 		public @S(60) PunctuationRightParen rightParen;
 		
 		public static class Powershell_DiscardResult extends TokenSequence

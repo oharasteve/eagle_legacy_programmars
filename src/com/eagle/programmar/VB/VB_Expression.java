@@ -29,13 +29,6 @@ public class VB_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) VB_Number number;
-	public @P(20) VB_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public VB_Expression()
 	{
 	    super(_operators);
@@ -46,6 +39,16 @@ public class VB_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) VB_Number number;
+	public @P(20) VB_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	

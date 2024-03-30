@@ -38,15 +38,6 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) CSharp_HexNumber hex;
-	public @P(20) CSharp_Number number;
-	public @P(30) CSharp_Literal literal;
-	public @P(40) CSharp_Character_Literal characters;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public CSharp_Expression()
 	{
 	    super(_operators);
@@ -56,6 +47,18 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+	
+	public @P(10) CSharp_HexNumber hex;
+	public @P(20) CSharp_Number number;
+	public @P(30) CSharp_Literal literal;
+	public @P(40) CSharp_Character_Literal characters;
 
 	///////////////////////////////////////////////
 	// Primary expressions

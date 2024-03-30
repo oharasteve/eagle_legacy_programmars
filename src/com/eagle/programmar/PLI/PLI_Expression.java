@@ -29,22 +29,6 @@ public class PLI_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public static class PLI_RepeatCount extends TokenSequence
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) PLI_Number count;
-		public @S(30) PunctuationRightParen rightParen;
-	}
-
-	public @P(10) PLI_Number number;
-	public @P(20) PLI_BitLiteral bits;
-	public @P(30) PLI_HexNumber hex;
-	public @P(40) PLI_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public PLI_Expression()
 	{
 	    super(_operators);
@@ -55,6 +39,18 @@ public class PLI_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) PLI_Number number;
+	public @P(20) PLI_BitLiteral bits;
+	public @P(30) PLI_HexNumber hex;
+	public @P(40) PLI_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 

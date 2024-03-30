@@ -30,16 +30,6 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Rust_BinaryNumber bin;
-	public @P(20) Rust_HexNumber hex;
-	public @P(30) Rust_Number number;
-	public @P(40) Rust_Literal literal;
-	public @P(50) Rust_Character_Literal characters;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Rust_Expression()
 	{
 	    super(_operators);
@@ -50,6 +40,19 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Rust_BinaryNumber bin;
+	public @P(20) Rust_HexNumber hex;
+	public @P(30) Rust_Number number;
+	public @P(40) Rust_Literal literal;
+	public @P(50) Rust_Character_Literal characters;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	

@@ -3,38 +3,36 @@
 
 package com.eagle.programmar.Ada;
 
-import com.eagle.programmar.Ada.Statements.Ada_FunctionCall.Ada_FunctionArguments;
-import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
-import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
+import com.eagle.programmar.Ada.Expressions.Ada_AdditiveExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_AssignmentExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_BracketsExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_BuiltIn;
+import com.eagle.programmar.Ada.Expressions.Ada_ConditionalAndExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_ConditionalOrExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_EqualityExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_LogicalNotExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_MethodInvocation;
+import com.eagle.programmar.Ada.Expressions.Ada_MultiplicativeExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_NegativeExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_NotExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_ParenthesizedExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_PostIncrementExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_PreIncrementExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_RangeExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_RelationalExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_Subfield;
+import com.eagle.programmar.Ada.Expressions.Ada_SubscriptExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_VariableExpression;
 import com.eagle.programmar.Ada.Terminals.Ada_Literal;
 import com.eagle.programmar.Ada.Terminals.Ada_Number;
-import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
-import com.eagle.programmar.Ada.Terminals.Ada_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Ada_Expression extends PrecedenceChooser implements AbstractExpression
 {
 	private static OperatorList _operators = new OperatorList();
-
-	public @P(10) Ada_Number number;
-	public @P(20) Ada_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
 
 	public Ada_Expression()
 	{
@@ -45,161 +43,42 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	{
 	    super(_operators, allowed, token.getClass());
 	}
-		
+	
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Ada_Number number;
+	public @P(20) Ada_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(100) class Ada_MethodInvocation extends PrimaryOperator
-	{
-		public @S(10) Ada_Variable methodName;
-		public @S(20) @OPT Ada_Punctuation question = new Ada_Punctuation("?");
-		public @S(30) Ada_FunctionArguments args;
-	}
-
-	public static @P(110) class Ada_PreIncrementExpression extends PrimaryOperator
-	{
-		public @S(10) Ada_PunctuationChoice preIncrementOperator = new Ada_PunctuationChoice("++", "--");
-		public @S(20) Ada_Variable var;
-	}
-
-	public static @P(120) class Ada_PostIncrementExpression extends PrimaryOperator
-	{
-		public @S(10) Ada_Variable var;
-		public @S(20) Ada_PunctuationChoice postIncrementOperator = new Ada_PunctuationChoice("++", "--");
-	}
-
-	public static @P(130) class Ada_NegativeExpression extends PrimaryOperator
-	{
-		public @S(10) Ada_PunctuationChoice operator = new Ada_PunctuationChoice("-");
-		public @S(20) Ada_Expression expr;
-	}
-
-	public static @P(140) class Ada_LogicalNotExpression extends PrimaryOperator
-	{
-		public @S(10) Ada_Punctuation logicalNotOperator = new Ada_Punctuation('~');
-		public @S(20) Ada_Expression expr;
-	}
-	
-	public static @P(150) class Ada_NotExpression extends PrimaryOperator
-	{
-		public @S(10) Ada_Punctuation notOperator = new Ada_Punctuation('!');
-		public @S(20) Ada_Expression expr;
-	}
-	
-	public static @P(160) class Ada_BuiltIn extends PrimaryOperator
-	{
-		public @S(10) Ada_KeywordChoice builtinConstant = new Ada_KeywordChoice("false", "true");
-	}
-	
-	public static @P(170) class Ada_VariableExpression extends PrimaryOperator
-	{
-		public @S(10) Ada_Variable variable;
-	}
-	
-	public static @P(180) class Ada_BracketsExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) SeparatedList<Ada_Expression,PunctuationComma> expression;
-		public @S(30) PunctuationRightBracket rightBracket;
-	}
-
-	public static @P(190) class Ada_ParenthesizedExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Ada_Expression,PunctuationComma> expressions;
-		public @S(30) PunctuationRightParen rightParen;
-	}
+	public @P(100) Ada_MethodInvocation methodInvocation;
+	public @P(110) Ada_PreIncrementExpression preIncrementExpression;
+	public @P(120) Ada_PostIncrementExpression postIncrementExpression;
+	public @P(130) Ada_NegativeExpression negativeExpression;
+	public @P(140) Ada_LogicalNotExpression logicalNotExpression;
+	public @P(150) Ada_NotExpression notExpression;
+	public @P(160) Ada_BuiltIn builtIn;
+	public @P(170) Ada_VariableExpression variableExpression;
+	public @P(180) Ada_BracketsExpression bracketsExpression;
+	public @P(190) Ada_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class Ada_SubscriptExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression expr = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) @OPT Ada_Expression subscr1;
-		public @S(40) @OPT PunctuationColon colon;
-		public @S(50) @OPT Ada_SubscriptionEnd subscr2;
-		public @S(60) PunctuationRightBracket rightBracket;
-		
-		public static class Ada_SubscriptionEnd extends TokenChooser
-		{
-			public @CHOICE Ada_Keyword END = new Ada_Keyword("end");
-			public @CHOICE Ada_Expression subscr2;
-		}
-	}
-
-	public static @P(510) class Ada_Subfield extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationPeriod dot;
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(520) class Ada_MultiplicativeExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_MultOper operator;
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-		
-		public static class Ada_MultOper extends TokenChooser
-		{
-			public @CHOICE Ada_PunctuationChoice operator = new Ada_PunctuationChoice("*", "/");
-			public @CHOICE Ada_Keyword MOD = new Ada_Keyword("mod");
-		}
-	}
-
-	public static @P(530) class Ada_AdditiveExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_PunctuationChoice operator = new Ada_PunctuationChoice("+", "-");
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(540) class Ada_RelationalExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_PunctuationChoice operator = new Ada_PunctuationChoice("<", ">", "<=", ">=");
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(550) class Ada_EqualityExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_PunctuationChoice operator = new Ada_PunctuationChoice("=", "/=");
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(560) class Ada_ConditionalAndExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_Keyword andOperator = new Ada_Keyword("and");
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(570) class Ada_ConditionalOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_Keyword orOperator = new Ada_Keyword("or");
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(580) class Ada_AssignmentExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression var = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) Ada_PunctuationChoice equals = new Ada_PunctuationChoice(
-				":=",
-				"*=",
-				"+=",
-				"-=");
-		public @S(30) Ada_Expression expr;
-	}
-	
-	public static @P(590) class Ada_RangeExpression extends PrecedenceOperator
-	{
-		public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Ada_Punctuation dotDot = new Ada_Punctuation("..");
-		public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
+	public @P(500) Ada_SubscriptExpression subscriptExpression;
+	public @P(510) Ada_Subfield subfield;
+	public @P(520) Ada_MultiplicativeExpression multiplicativeExpression;
+	public @P(530) Ada_AdditiveExpression additiveExpression;
+	public @P(540) Ada_RelationalExpression relationalExpression;
+	public @P(550) Ada_EqualityExpression equalityExpression;
+	public @P(560) Ada_ConditionalAndExpression conditionalAndExpression;
+	public @P(570) Ada_ConditionalOrExpression conditionalOrExpression;
+	public @P(580) Ada_AssignmentExpression assignmentExpression;
+	public @P(590) Ada_RangeExpression rangeExpression;
 }

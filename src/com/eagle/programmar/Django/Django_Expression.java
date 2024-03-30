@@ -27,13 +27,6 @@ public class Django_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Django_Number number;
-	public @P(20) Django_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Django_Expression()
 	{
 	    super(_operators);
@@ -44,6 +37,16 @@ public class Django_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Django_Number number;
+	public @P(20) Django_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	

@@ -31,15 +31,6 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Delphi_Number number;
-	public @P(20) Delphi_HexNumber hex;
-	public @P(30) Delphi_Literal literal;
-	public @P(40) Delphi_Character character;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Delphi_Expression()
 	{
 	    super(_operators);
@@ -49,6 +40,18 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Delphi_Number number;
+	public @P(20) Delphi_HexNumber hex;
+	public @P(30) Delphi_Literal literal;
+	public @P(40) Delphi_Character character;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions

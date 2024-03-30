@@ -29,13 +29,6 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) FSharp_Number number;
-	public @P(20) FSharp_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public FSharp_Expression()
 	{
 	    super(_operators);
@@ -45,6 +38,16 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+	
+	public @P(10) FSharp_Number number;
+	public @P(20) FSharp_Literal literal;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions

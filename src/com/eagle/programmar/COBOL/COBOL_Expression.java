@@ -28,14 +28,6 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) COBOL_Literal literal;
-	public @P(20) COBOL_Number number;
-	public @P(30) COBOL_HexNumber hex;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public COBOL_Expression()
 	{
 	    super(_operators);
@@ -46,37 +38,16 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	    super(_operators, allowed, token.getClass());
 	}
 
-	public static class COBOL_RelationalOperator extends TokenChooser
-	{
-		public @CHOICE COBOL_PunctuationChoice operator = new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">");
-		
-		public @CHOICE static class COBOL_Greater extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
-			public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
-			public @S(30) @OPT COBOL_OrEqual orEqual;
-		}
-		
-		public @CHOICE static class COBOL_Equal extends TokenSequence
-		{
-			public @S(10) COBOL_KeywordChoice EQUAL = new COBOL_KeywordChoice("EQUAL", "EQUALS");
-			public @S(20) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-		}
-		
-		public @CHOICE static class COBOL_Less extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword LESS = new COBOL_Keyword("LESS");
-			public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
-			public @S(30) @OPT COBOL_OrEqual orEqual;
-		}
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
 
-		public @CHOICE static class COBOL_OrEqual extends TokenSequence
-		{
-			public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
-			public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
-			public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-		}
-	}
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) COBOL_Literal literal;
+	public @P(20) COBOL_Number number;
+	public @P(30) COBOL_HexNumber hex;
 
 	///////////////////////////////////////////////
 	// Primary expressions

@@ -21,22 +21,12 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CMacro_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
-
-	public @P(10) CMacro_HexNumber hex;
-	public @P(20) CMacro_Number number;
-	public @P(30) CMacro_Literal literal;
-	public @P(40) CMacro_Character_Literal characters;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
 
 	public CMacro_Expression()
 	{
@@ -48,18 +38,17 @@ public class CMacro_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 
-	public static class CMacro_FunctionType extends TokenChooser
-	{
-		public @CHOICE CMacro_Identifier_Reference variable;
-		public @CHOICE CMacroFunctionParens params;
-	}
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
 	
-	public static class CMacroFunctionParens extends TokenSequence
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT CMacro_Identifier_Reference variable;
-		public @S(30) PunctuationRightParen rightParen;
-	}
+	public @P(10) CMacro_HexNumber hex;
+	public @P(20) CMacro_Number number;
+	public @P(30) CMacro_Literal literal;
+	public @P(40) CMacro_Character_Literal characters;
 
 	///////////////////////////////////////////////
 	// Primary expressions
@@ -88,6 +77,12 @@ public class CMacro_Expression extends PrecedenceChooser
 			}
 			boolean val = interpreter._symbolTable.isDefined(name);
 			interpreter.pushBool(val);
+		}
+		
+		public static class CMacro_FunctionType extends TokenChooser
+		{
+			public @CHOICE CMacro_Identifier_Reference variable;
+			public @CHOICE CMacroFunctionParens params;
 		}
 	}
 	

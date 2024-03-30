@@ -37,14 +37,6 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class C_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
-	
-	public @P(10) C_HexNumber hex;
-	public @P(20) C_Number number;
-	public @P(30) C_Character_Literal characters;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
 
 	public C_Expression()
 	{
@@ -56,6 +48,17 @@ public class C_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) C_HexNumber hex;
+	public @P(20) C_Number number;
+	public @P(30) C_Character_Literal characters;
+	
 	///////////////////////////////////////////////
 	// Primary expressions
 

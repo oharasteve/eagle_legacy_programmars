@@ -29,14 +29,6 @@ public class SQL_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) SQL_Number number;
-	public @P(20) SQL_Literal literal;
-	public @P(30) SQL_HexString hex;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public SQL_Expression()
 	{
 	    super(_operators);
@@ -47,6 +39,17 @@ public class SQL_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) SQL_Number number;
+	public @P(20) SQL_Literal literal;
+	public @P(30) SQL_HexString hex;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 

@@ -28,13 +28,6 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Fortran_Number number;
-	public @P(20) Fortran_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Fortran_Expression()
 	{
 	    super(_operators);
@@ -45,6 +38,16 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Fortran_Number number;
+	public @P(20) Fortran_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	

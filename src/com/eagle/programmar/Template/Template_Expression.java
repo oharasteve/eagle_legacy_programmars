@@ -20,14 +20,6 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 {
 	protected static OperatorList _operators = new OperatorList();
 
-	public @P(10) Template_Number number;
-	public @P(20) Template_Literal literal;
-	public @P(30) Template_Identifier_Reference id;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Template_Expression()
 	{
 	    super(_operators);
@@ -37,6 +29,17 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Template_Number number;
+	public @P(20) Template_Literal literal;
+	public @P(30) Template_Identifier_Reference id;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions

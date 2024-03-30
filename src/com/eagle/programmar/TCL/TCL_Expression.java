@@ -27,13 +27,6 @@ public class TCL_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) TCL_Number number;
-	public @P(20) TCL_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public TCL_Expression()
 	{
 	    super(_operators);
@@ -43,6 +36,16 @@ public class TCL_Expression extends PrecedenceChooser
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) TCL_Number number;
+	public @P(20) TCL_Literal literal;
 
 	///////////////////////////////////////////////
 	// Primary expressions

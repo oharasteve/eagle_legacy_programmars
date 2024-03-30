@@ -19,13 +19,6 @@ public class Gupta_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Gupta_Number number;
-	public @P(20) Gupta_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Gupta_Expression()
 	{
 	    super(_operators);
@@ -35,6 +28,16 @@ public class Gupta_Expression extends PrecedenceChooser
 	{
 	    super(_operators, allowed, token.getClass());
 	}
+
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Gupta_Number number;
+	public @P(20) Gupta_Literal literal;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions

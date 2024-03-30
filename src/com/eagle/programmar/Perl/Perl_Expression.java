@@ -40,15 +40,6 @@ public class Perl_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
-	public @P(10) Perl_OctalNumber octal;
-	public @P(20) Perl_HexNumber hex;
-	public @P(30) Perl_Number number;
-	public @P(40) Perl_Literal literal;
-
-	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
-	//
-
 	public Perl_Expression()
 	{
 	    super(_operators);
@@ -59,6 +50,18 @@ public class Perl_Expression extends PrecedenceChooser
 	    super(_operators, allowed, token.getClass());
 	}
 		
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Perl_OctalNumber octal;
+	public @P(20) Perl_HexNumber hex;
+	public @P(30) Perl_Number number;
+	public @P(40) Perl_Literal literal;
+
 	///////////////////////////////////////////////
 	// Primary expressions
 	
