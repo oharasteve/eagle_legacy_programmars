@@ -21,17 +21,26 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class COBOL_Interpreter extends EagleInterpreter
 {
-	private Eval_COBOL_Expression evaluator = new Eval_COBOL_Expression();
-
 	public COBOL_Interpreter(ParserManager parser, EagleSymbolTable symbolTable)
 	{
 		super(parser, symbolTable);
 	}
 
 	@Override
-	protected void evaluateExpression(AbstractExpression expr)
+	protected void evaluateExpression(AbstractExpression abs_expr)
 	{
-		evaluator.interpret((COBOL_Expression) expr, this);
+		COBOL_Expression expr = (COBOL_Expression) abs_expr;
+		AbstractToken which = expr.getWhich();
+		
+		if (which instanceof EagleRunnable)
+		{
+			EagleRunnable runnable = (EagleRunnable) which;
+			runnable.interpret(this);
+		}
+		else
+		{
+			throw new RuntimeException("Unable to evaulate expression " + (which.getClass().getName()));
+		}
 	}
 
 	public void execute(COBOL_Program_Complete pgm)

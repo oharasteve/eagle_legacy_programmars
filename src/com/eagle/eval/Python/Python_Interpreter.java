@@ -4,24 +4,35 @@
 package com.eagle.eval.Python;
 
 import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.ParserManager;
 import com.eagle.preprocess.EagleSymbolTable;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 
 
 public class Python_Interpreter extends EagleInterpreter
 {
-	private Eval_Python_Expression evaluator = new Eval_Python_Expression();
-	
 	public Python_Interpreter(ParserManager parser, EagleSymbolTable symbolTable)
 	{
 		super(parser, symbolTable);
 	}
 	
 	@Override
-	protected void evaluateExpression(AbstractExpression expr)
+	protected void evaluateExpression(AbstractExpression abs_expr)
 	{
-		evaluator.interpret((Python_Expression) expr, this);
+		Python_Expression expr = (Python_Expression) abs_expr;
+		AbstractToken which = expr.getWhich();
+		
+		if (which instanceof EagleRunnable)
+		{
+			EagleRunnable runnable = (EagleRunnable) which;
+			runnable.interpret(this);
+		}
+		else
+		{
+			throw new RuntimeException("Unable to evaulate expression " + (which.getClass().getName()));
+		}
 	}
 }

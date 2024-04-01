@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Python.Python_Parameter_List.Python_Parameters.Python_Params;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Terminals.Python_BackQuote;
 import com.eagle.programmar.Python.Terminals.Python_BinaryNumber;
@@ -16,6 +20,7 @@ import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.programmar.Python.Terminals.Python_OctalNumber;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
@@ -76,12 +81,18 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(70) PunctuationRightParen rightParen2;
 	}
 	
-	public static @P(110) class Python_Parens extends PrimaryOperator
+	public static @P(110) class Python_Parens extends PrimaryOperator implements EagleRunnable
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_CommentEoln> comments;
 		public @S(30) @OPT @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
 		public @S(40) @NOSPACE PunctuationRightParen rightParen;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			interpreter.tryToInterpret(list.expr);
+		}
 	}
 	
 	public static @P(120) class Python_BracesColons extends PrimaryOperator
@@ -176,20 +187,53 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(10) @CURIOUS("Obsolete backquotes") TokenList<Python_BackQuote> quotes;
 	}
 	
-	public static @P(190) class Python_Function_Call extends PrimaryOperator
+	public static @P(190) class Python_Function_Call extends PrimaryOperator implements EagleRunnable
 	{
 		public @S(10) Python_Variable name;
 		public @S(20) @NOSPACE TokenList<Python_Parameter_List> args;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			// Assume print(expr);
+			AbstractToken what = args.first().params.getWhich();
+			if (! (what instanceof Python_Params)) throw new RuntimeException("Unexpected arg: " + what.toString());
+			Python_Params params = (Python_Params) what;
+			EagleValue result = interpreter.getEagleValue(params.expr);
+			System.out.println(result.toString());
+		}
 	}
 
-	public static @P(200) class Python_BuiltIn extends PrimaryOperator
+	public static @P(200) class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 	{
 		public @S(10) Python_KeywordChoice builtins = new Python_KeywordChoice("None", "False", "True");
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			switch (builtins.toString())
+			{
+			case "False" :
+				interpreter.pushBool(false);
+				break;
+			case "True" :
+				interpreter.pushBool(true);
+				break;
+			default:
+				throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtins);
+			}
+		}
 	}
 	
-	public static @P(210) class Python_VariableExpression extends PrimaryOperator
+	public static @P(210) class Python_VariableExpression extends PrimaryOperator implements EagleRunnable
 	{
 		public @S(10) Python_Variable variable;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			interpreter.tryToInterpret(variable);
+		}
 	}
 	
 	public static @P(220) class Python_Star_Expression extends PrimaryOperator
@@ -278,25 +322,72 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		public @S(30) @NOSPACE Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(520) class Python_Power_Expression extends PrecedenceOperator
+	public static @P(520) class Python_Power_Expression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.HIGHER);
 		public @S(20) Python_Punctuation stars = new Python_Punctuation("**");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.ATLEAST);
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			int leftValue = interpreter.getIntValue(left);
+			int rightValue = interpreter.getIntValue(right);
+			interpreter.pushInt((int) Math.round(Math.pow(leftValue, rightValue)));
+		}
 	}
 	
-	public static @P(530) class Python_Multiplicative_Expression extends PrecedenceOperator 
+	public static @P(530) class Python_Multiplicative_Expression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("//", "*", "/", "%");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			int leftValue = interpreter.getIntValue(left);
+			int rightValue = interpreter.getIntValue(right);
+			switch (operator.toString())
+			{
+			case "*" :
+				interpreter.pushInt(leftValue * rightValue);
+				break;
+			case "//" :
+				interpreter.pushInt(leftValue / rightValue);
+				break;
+			case "%" :
+				interpreter.pushInt(leftValue % rightValue);
+				break;
+			default:
+				throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+			}
+		}
 	}
 	
-	public static @P(540) class Python_Additive_Expression extends PrecedenceOperator 
+	public static @P(540) class Python_Additive_Expression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("+", "-");
 		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			int leftValue = interpreter.getIntValue(left);
+			int rightValue = interpreter.getIntValue(right);
+			switch (operator.toString())
+			{
+			case "+" :
+				interpreter.pushInt(leftValue + rightValue);
+				break;
+			case "-" :
+				interpreter.pushInt(leftValue - rightValue);
+				break;
+			default:
+				throw new RuntimeException("Unexpected additive operator: " + operator);
+			}
+		}
 	}
 	
 	public static @P(550) class Python_Shift_Expression extends PrecedenceOperator 
@@ -352,20 +443,36 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 		}
 	}
 
-	public static @P(600) class Python_And_Expression extends PrecedenceOperator 
+	public static @P(600) class Python_And_Expression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword AND = new Python_Keyword("and");
 		public @S(30) @OPT TokenList<Python_Comment> comment;
 		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			boolean leftValue = interpreter.getBoolValue(left);
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(leftValue && rightValue);
+		}
 	}
 
-	public static @P(610) class Python_Or_Expression extends PrecedenceOperator 
+	public static @P(610) class Python_Or_Expression extends PrecedenceOperator implements EagleRunnable
 	{
 		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) Python_Keyword OR = new Python_Keyword("or");
 		public @S(30) @OPT TokenList<Python_Comment> comment;
 		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			boolean leftValue = interpreter.getBoolValue(left);
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(leftValue || rightValue);
+		}
 	}
 	
 	public static @P(620) class Python_For_In_Expression extends PrecedenceOperator

@@ -3,8 +3,10 @@
 
 package com.eagle.programmar.CMacro.Statements;
 
+import com.eagle.core.EagleRunnable;
 import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Expression;
+import com.eagle.programmar.CMacro.CMacro_Interpreter;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_Element;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
@@ -60,7 +62,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
-		boolean isTrue = expr.getBooleanValue(preprocessor);
+		boolean isTrue = getBooleanValue(expr, preprocessor);
 		// System.out.println("$$$$$$$$$$$$$$$$$$ " + expr.showText() + " is " + isTrue);
 		TokenList<CMacro_Element> whichElements = null;
 		if (isTrue)
@@ -72,7 +74,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 			// Check for #elif clauses
 			for (CMacro_IfElif elif : ifElif._elements)
 			{
-				if (elif.expr.getBooleanValue(preprocessor))
+				if (getBooleanValue(elif.expr, preprocessor))
 				{
 					whichElements = elif.elements;
 					break;
@@ -100,5 +102,24 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 			else throw new RuntimeException("Didn't expect " + token + " here");
 		}
 		return true;	// Always change the file
+	}
+	
+
+	//////////////////////////////////////////////////////////////
+	// Evaluation routine, for macros
+	
+	private boolean getBooleanValue(CMacro_Expression cond, CMacro_Preprocess preprocessor)
+	{
+		AbstractToken which = cond.getWhich();
+		if (! (which instanceof EagleRunnable))
+		{
+			throw new RuntimeException("Need to implement EagleRunnable for " + which);
+		}
+		
+		EagleRunnable runnable = (EagleRunnable) which;
+		CMacro_Interpreter interpreter = new CMacro_Interpreter(preprocessor._parser, preprocessor._symbolTable);
+		runnable.interpret(interpreter);
+		boolean val = interpreter.getBoolValue(this);
+		return val;
 	}
 }
