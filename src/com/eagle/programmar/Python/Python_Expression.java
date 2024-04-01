@@ -3,43 +3,46 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleValue;
-import com.eagle.programmar.Python.Python_Parameter_List.Python_Parameters.Python_Params;
-import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
-import com.eagle.programmar.Python.Terminals.Python_BackQuote;
+import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
+import com.eagle.programmar.Python.Expressions.Python_And_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
+import com.eagle.programmar.Python.Expressions.Python_BackQuotes;
+import com.eagle.programmar.Python.Expressions.Python_Bitwise_And_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Bitwise_Or_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Bitwise_Xor_Expression;
+import com.eagle.programmar.Python.Expressions.Python_BracesColons;
+import com.eagle.programmar.Python.Expressions.Python_BracesNoColons;
+import com.eagle.programmar.Python.Expressions.Python_Brackets;
+import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
+import com.eagle.programmar.Python.Expressions.Python_For_In_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Function_Call;
+import com.eagle.programmar.Python.Expressions.Python_FunnyConstructor;
+import com.eagle.programmar.Python.Expressions.Python_If_Else_Expression;
+import com.eagle.programmar.Python.Expressions.Python_If_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Lambda_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Literals;
+import com.eagle.programmar.Python.Expressions.Python_Multiplicative_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Not_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Or_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Parens;
+import com.eagle.programmar.Python.Expressions.Python_Power_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
+import com.eagle.programmar.Python.Expressions.Python_StarStar_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Star_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Subfield;
+import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
+import com.eagle.programmar.Python.Expressions.Python_UnarySign;
+import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
+import com.eagle.programmar.Python.Expressions.Python_Yield;
 import com.eagle.programmar.Python.Terminals.Python_BinaryNumber;
-import com.eagle.programmar.Python.Terminals.Python_Comment;
-import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
-import com.eagle.programmar.Python.Terminals.Python_Keyword;
-import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
-import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.programmar.Python.Terminals.Python_OctalNumber;
-import com.eagle.programmar.Python.Terminals.Python_Punctuation;
-import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Python_Expression extends PrecedenceChooser implements AbstractExpression
 {
@@ -70,442 +73,40 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 	
-	public static @P(100) class Python_Funny_Constructor extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen1;
-		public @S(20) Python_Type type;
-		public @S(30) PunctuationStar star;
-		public @S(40) Python_Expression size;
-		public @S(50) PunctuationRightParen rightParen1;
-		public @S(60) PunctuationLeftParen leftParen2;
-		public @S(70) PunctuationRightParen rightParen2;
-	}
-	
-	public static @P(110) class Python_Parens extends PrimaryOperator implements EagleRunnable
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_CommentEoln> comments;
-		public @S(30) @OPT @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(list.expr);
-		}
-	}
-	
-	public static @P(120) class Python_BracesColons extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT Python_EndOfLine eoln1;
-		public @S(30) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_Dictionary dictionary;
-		public @S(40) @OPT Python_EndOfLine eoln2;
-		public @S(50) PunctuationRightBrace rightBrace;
-		
-		public static class Python_Dictionary extends TokenSequence
-		{
-			public @S(10) @OPT TokenList<Python_Comment> comment1;
-			public @S(20) @OPT Python_DictionaryElement element;
-			public @S(30) @OPT TokenList<Python_MoreDictionaryElement> nextElement;
-			public @S(40) @OPT PunctuationComma comma;
-			public @S(50) @OPT TokenList<Python_Comment> comment2;
-			
-			public static class Python_DictionaryElement extends TokenSequence
-			{
-				public @S(10) Python_Expression key;
-				public @S(20) PunctuationColon colon;
-				public @S(30) @OPT Python_EndOfLine eoln;
-				public @S(40) @OPT Python_Comment comment;
-				public @S(50) Python_Expression value;
-			}
-			
-			public static class Python_MoreDictionaryElement extends TokenSequence
-			{
-				public @S(10) PunctuationComma comma;
-				public @S(20) @OPT TokenList<Python_Comment> comment;
-				public @S(30) Python_DictionaryElement element;
-			}
-		}
-	}
-
-	public static @P(130) class Python_BracesNoColons extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT Python_EndOfLine eoln1;
-		public @S(30) @SYNTAX(Python_Multiline_Syntax.class) Python_Set set;
-		public @S(40) @OPT Python_EndOfLine eoln2;
-		public @S(50) PunctuationRightBrace rightBrace;
-		
-		public static class Python_Set extends TokenSequence
-		{
-			public @S(10) @OPT TokenList<Python_Comment> comment1;
-			public @S(20) Python_Expression element;
-			public @S(30) @OPT TokenList<Python_MoreSetElement> nextElement;
-			public @S(40) @OPT PunctuationComma comma;
-			public @S(50) @OPT TokenList<Python_Comment> comment2;
-			
-			public static class Python_MoreSetElement extends TokenSequence
-			{
-				public @S(10) PunctuationComma comma;
-				public @S(20) @OPT TokenList<Python_Comment> comment;
-				public @S(30) Python_Expression element;
-			}
-		}
-	}
-	
-	public static @P(140) class Python_Brackets extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @OPT Python_EndOfLine eoln1;
-		public @S(30) @OPT TokenList<Python_Comment> comment;
-		public @S(40) @OPT Python_EndOfLine eoln2;
-		public @S(50) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
-		public @S(60) PunctuationRightBracket rightBracket;
-	}
-	
-	public static @P(150) class Python_UnarySign extends PrimaryOperator
-	{
-		public @S(10) Python_PunctuationChoice sign = new Python_PunctuationChoice("*", "-", "+", "~");
-		public @S(20) Python_Expression expr;
-	}
-
-	public static @P(160) class Python_Not_Expression extends PrimaryOperator 
-	{
-		public @S(10) Python_Keyword NOT = new Python_Keyword("not");
-		public @S(20) Python_Expression expr;
-	}
-	
-	public static @P(170) class Python_Literals extends PrimaryOperator
-	{
-		public @S(10) TokenList<Python_Literal> literals;
-	}
-	
-	public static @P(180) class Python_BackQuotes extends PrimaryOperator
-	{
-		// These are obsolete as of Python 3.
-		public @S(10) @CURIOUS("Obsolete backquotes") TokenList<Python_BackQuote> quotes;
-	}
-	
-	public static @P(190) class Python_Function_Call extends PrimaryOperator implements EagleRunnable
-	{
-		public @S(10) Python_Variable name;
-		public @S(20) @NOSPACE TokenList<Python_Parameter_List> args;
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			// Assume print(expr);
-			AbstractToken what = args.first().params.getWhich();
-			if (! (what instanceof Python_Params)) throw new RuntimeException("Unexpected arg: " + what.toString());
-			Python_Params params = (Python_Params) what;
-			EagleValue result = interpreter.getEagleValue(params.expr);
-			System.out.println(result.toString());
-		}
-	}
-
-	public static @P(200) class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
-	{
-		public @S(10) Python_KeywordChoice builtins = new Python_KeywordChoice("None", "False", "True");
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			switch (builtins.toString())
-			{
-			case "False" :
-				interpreter.pushBool(false);
-				break;
-			case "True" :
-				interpreter.pushBool(true);
-				break;
-			default:
-				throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtins);
-			}
-		}
-	}
-	
-	public static @P(210) class Python_VariableExpression extends PrimaryOperator implements EagleRunnable
-	{
-		public @S(10) Python_Variable variable;
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(variable);
-		}
-	}
-	
-	public static @P(220) class Python_Star_Expression extends PrimaryOperator
-	{
-		public @S(10) PunctuationStar star;
-		public @S(20) Python_Expression expr;
-	}
-
-	public static @P(230) class Python_StarStar_Expression extends PrimaryOperator
-	{
-		public @S(10) Python_Punctuation starStar = new Python_Punctuation("**");
-		public @S(20) Python_Expression expr;
-	}
-	
-	public static @P(240) class Python_Lambda_Expression extends PrimaryOperator 
-	{
-		public @S(10) Python_Keyword LAMBDA = new Python_Keyword("lambda");
-		public @S(20) @OPT PunctuationLeftParen leftParen;
-		public @S(30) @OPT Python_Variable_List parameters;
-		public @S(40) @OPT PunctuationRightParen rightParen;
-		public @S(50) PunctuationColon colon;
-		public @S(60) Python_Expression expr;
-		
-		public static class Python_Variable_List extends TokenSequence
-		{
-			public @S(10) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-			public @S(20) Python_Variable var;
-			public @S(30) @OPT Python_Variable_Default defaultValue;
-			public @S(40) @OPT TokenList<Python_MoreVariablesInList> moreVars;
-
-			public static class Python_MoreVariablesInList extends TokenSequence
-			{
-				public @S(10) PunctuationComma comma;
-				public @S(20) @OPT TokenList<Python_Comment> comments;
-				public @S(30) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-				public @S(40) Python_Variable var;
-				public @S(50) @OPT Python_Variable_Default defaultValue;
-			}
-			
-			public static class Python_Variable_Default extends TokenSequence
-			{
-				public @S(10) PunctuationEquals equals;
-				public @S(20) Python_Expression defaultValue;
-			}
-		}
-		
-	}
-	
-	public static @P(250) class Python_Yield extends PrimaryOperator
-	{
-		public @S(10) Python_Keyword YIELD = new Python_Keyword("yield");
-		public @S(20) Python_Expression expr;
-	}
+	public @P(100) Python_FunnyConstructor funnyConstructor;
+	public @P(110) Python_Parens parens;
+	public @P(120) Python_BracesColons bracesColons;
+	public @P(130) Python_BracesNoColons bracesNoColons;
+	public @P(140) Python_Brackets brackets;
+	public @P(150) Python_UnarySign unarySign;
+	public @P(160) Python_Not_Expression notExpression;
+	public @P(170) Python_Literals literals;
+	public @P(180) Python_BackQuotes backQuotes;
+	public @P(190) Python_Function_Call functionCall;
+	public @P(200) Python_BuiltIn builtIn;
+	public @P(210) Python_VariableExpression variableExpression;
+	public @P(220) Python_Star_Expression starExpression;
+	public @P(230) Python_StarStar_Expression starStarExpression;
+	public @P(240) Python_Lambda_Expression lambdaExpression;
+	public @P(250) Python_Yield yield;
 	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public static @P(500) class Python_SubscriptExpression extends PrecedenceOperator
-	{
-		public @S(10) Python_Expression expr = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) @OPT Python_EndOfLine eoln;
-		public @S(40) @SYNTAX(Python_Multiline_Syntax.class) Python_SubscrExpr subscr;
-		public @S(50) PunctuationRightBracket rightBracket;
-		public @S(60) @OPT Python_Parameter_List moreArguments;
-		
-		public static class Python_SubscrExpr extends TokenSequence
-		{
-			public @S(10) @OPT Python_Expression subscr;
-			public @S(20) @OPT Python_ColonSubscript subscriptStop;
-			public @S(30) @OPT Python_ColonSubscript subscriptStep;
-		}
-
-		public static class Python_ColonSubscript extends TokenSequence
-		{
-			public @S(10) PunctuationColon colon;
-			public @S(20) @OPT Python_EndOfLine eoln;
-			public @S(30) @OPT Python_Expression expr;
-		}
-	}
-	
-	public static @P(510) class Python_Subfield extends PrecedenceOperator
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) @NOSPACE PunctuationPeriod dot;
-		public @S(30) @NOSPACE Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(520) class Python_Power_Expression extends PrecedenceOperator implements EagleRunnable
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) Python_Punctuation stars = new Python_Punctuation("**");
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			int leftValue = interpreter.getIntValue(left);
-			int rightValue = interpreter.getIntValue(right);
-			interpreter.pushInt((int) Math.round(Math.pow(leftValue, rightValue)));
-		}
-	}
-	
-	public static @P(530) class Python_Multiplicative_Expression extends PrecedenceOperator implements EagleRunnable
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("//", "*", "/", "%");
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			int leftValue = interpreter.getIntValue(left);
-			int rightValue = interpreter.getIntValue(right);
-			switch (operator.toString())
-			{
-			case "*" :
-				interpreter.pushInt(leftValue * rightValue);
-				break;
-			case "//" :
-				interpreter.pushInt(leftValue / rightValue);
-				break;
-			case "%" :
-				interpreter.pushInt(leftValue % rightValue);
-				break;
-			default:
-				throw new RuntimeException("Unexpected multiplicative operator: " + operator);
-			}
-		}
-	}
-	
-	public static @P(540) class Python_Additive_Expression extends PrecedenceOperator implements EagleRunnable
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("+", "-");
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			int leftValue = interpreter.getIntValue(left);
-			int rightValue = interpreter.getIntValue(right);
-			switch (operator.toString())
-			{
-			case "+" :
-				interpreter.pushInt(leftValue + rightValue);
-				break;
-			case "-" :
-				interpreter.pushInt(leftValue - rightValue);
-				break;
-			default:
-				throw new RuntimeException("Unexpected additive operator: " + operator);
-			}
-		}
-	}
-	
-	public static @P(550) class Python_Shift_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("<<", ">>");
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(560) class Python_Bitwise_And_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Punctuation and = new Python_Punctuation('&');
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(570) class Python_Bitwise_Xor_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Punctuation xor = new Python_Punctuation('^');
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(580) class Python_Bitwise_Or_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Punctuation or = new Python_Punctuation('|');
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(590) class Python_Relational_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Relational_Operator relOp;
-		public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-
-		public static class Python_Relational_Operator extends TokenChooser
-		{
-			public @CHOICE Python_PunctuationChoice operator = new Python_PunctuationChoice(
-					"==", "!=", "<>", "<=", ">=", "<", ">");
-			
-			public @CHOICE static class Python_IN_Operator extends TokenSequence
-			{
-				public @S(10) @OPT Python_Keyword NOT = new Python_Keyword("not");
-				public @S(20) Python_Keyword IN = new Python_Keyword("in");
-			}
-			
-			public @CHOICE static class Python_IS_Operator extends TokenSequence
-			{
-				public @S(10) Python_Keyword IS = new Python_Keyword("is");
-				public @S(20) @OPT Python_Keyword NOT = new Python_Keyword("not");
-			}
-		}
-	}
-
-	public static @P(600) class Python_And_Expression extends PrecedenceOperator implements EagleRunnable
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Keyword AND = new Python_Keyword("and");
-		public @S(30) @OPT TokenList<Python_Comment> comment;
-		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			boolean leftValue = interpreter.getBoolValue(left);
-			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue && rightValue);
-		}
-	}
-
-	public static @P(610) class Python_Or_Expression extends PrecedenceOperator implements EagleRunnable
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Keyword OR = new Python_Keyword("or");
-		public @S(30) @OPT TokenList<Python_Comment> comment;
-		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-		
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			boolean leftValue = interpreter.getBoolValue(left);
-			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue || rightValue);
-		}
-	}
-	
-	public static @P(620) class Python_For_In_Expression extends PrecedenceOperator
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
-		public @S(30) Python_Keyword FOR = new Python_Keyword("for");
-		public @S(40) Python_VariableList varList;
-		public @S(50) Python_Keyword IN = new Python_Keyword("in");
-		public @S(60) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(630) class Python_If_Else_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Keyword IF = new Python_Keyword("if");
-		public @S(30) Python_Expression middle = new Python_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(40) Python_Keyword ELSE = new Python_Keyword("else");
-		public @S(50) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(640) class Python_If_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_Keyword IF = new Python_Keyword("if");
-		public @S(30) Python_Expression middle = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(650) class Python_Assignment_Expression extends PrecedenceOperator
-	{
-		public @S(10) Python_Expression leftVar = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=", ":=");
-		public @S(30) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
-		public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	}
+	public @P(500) Python_SubscriptExpression subscriptExpression;
+	public @P(510) Python_Subfield subfield;
+	public @P(520) Python_Power_Expression powerExpression;
+	public @P(530) Python_Multiplicative_Expression multiplicativeExpression;
+	public @P(540) Python_Additive_Expression additiveExpression;
+	public @P(550) Python_Shift_Expression shiftExpression;
+	public @P(560) Python_Bitwise_And_Expression bitwiseAndExpression;
+	public @P(570) Python_Bitwise_Xor_Expression bitwiseXorExpression;
+	public @P(580) Python_Bitwise_Or_Expression bitwiseOrExpression;
+	public @P(590) Python_Relational_Expression relationalExpression;
+	public @P(600) Python_And_Expression andExpression;
+	public @P(610) Python_Or_Expression orExpression;
+	public @P(620) Python_For_In_Expression forInExpression;
+	public @P(630) Python_If_Else_Expression ifElseExpression;
+	public @P(640) Python_If_Expression ifExpression;
+	public @P(650) Python_Assignment_Expression assignmentExpression;
 }

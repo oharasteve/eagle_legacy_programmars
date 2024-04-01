@@ -1,49 +1,19 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Dec 23, 2012
 
-package com.eagle.eval.COBOL;
+package com.eagle.programmar.COBOL;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.parsers.ParserManager;
-import com.eagle.preprocess.EagleSymbolTable;
-import com.eagle.programmar.COBOL.COBOL_Expression;
-import com.eagle.programmar.COBOL.COBOL_ProcedureDivision;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph.COBOL_SentenceOrComment;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Section;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence;
-import com.eagle.programmar.COBOL.COBOL_Program_Complete;
-import com.eagle.programmar.COBOL.COBOL_Statement;
-import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.interfaces.AbstractExpression;
 
-public class COBOL_Interpreter extends EagleInterpreter
+public class COBOL_Execution
 {
-	public COBOL_Interpreter(ParserManager parser, EagleSymbolTable symbolTable)
-	{
-		super(parser, symbolTable);
-	}
-
-	@Override
-	protected void evaluateExpression(AbstractExpression abs_expr)
-	{
-		COBOL_Expression expr = (COBOL_Expression) abs_expr;
-		AbstractToken which = expr.getWhich();
-		
-		if (which instanceof EagleRunnable)
-		{
-			EagleRunnable runnable = (EagleRunnable) which;
-			runnable.interpret(this);
-		}
-		else
-		{
-			throw new RuntimeException("Unable to evaulate expression " + (which.getClass().getName()));
-		}
-	}
-
-	public void execute(COBOL_Program_Complete pgm)
+	public void execute(EagleInterpreter interpreter, COBOL_Program_Complete pgm)
 	{
 		//COBOL_Resolve_References.resolveReferences(pgm);
 		
@@ -66,7 +36,7 @@ public class COBOL_Interpreter extends EagleInterpreter
 						if (whichStmt instanceof EagleRunnable)
 						{
 							EagleRunnable runnable = (EagleRunnable) whichStmt;
-							runnable.interpret(this);
+							runnable.interpret(interpreter);
 						}
 						else throw new RuntimeException("Don't know how to interpret statement: " + whichStmt);
 					}
