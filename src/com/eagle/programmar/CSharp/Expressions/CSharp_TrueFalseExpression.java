@@ -1,0 +1,18 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Apr 1, 2024
+
+package com.eagle.programmar.CSharp.Expressions;
+
+import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.punctuation.PunctuationColon;
+
+public class CSharp_TrueFalseExpression extends PrecedenceOperator
+{
+	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
+	public @S(20) CSharp_Punctuation questionMark = new CSharp_Punctuation('?');
+	public @S(30) CSharp_Expression middle = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(40) PunctuationColon colon;
+	public @S(50) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
+}

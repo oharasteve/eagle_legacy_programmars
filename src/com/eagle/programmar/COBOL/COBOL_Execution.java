@@ -11,6 +11,10 @@ import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Section;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Sentence;
 import com.eagle.tokens.AbstractToken;
 
+//
+// I believe this should all go away and have COBOL_ProcedureDivision implement EagleRunnable, etc, etc
+//
+
 public class COBOL_Execution
 {
 	public void execute(EagleInterpreter interpreter, COBOL_Program_Complete pgm)

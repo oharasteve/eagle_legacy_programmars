@@ -3,26 +3,26 @@
 
 package com.eagle.programmar.Fortran;
 
-import com.eagle.programmar.Fortran.Symbols.Fortran_Identifier_Reference;
-import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
-import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
+import com.eagle.programmar.Fortran.Expressions.Fortran_AdditiveExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_BracketExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_BuiltIn;
+import com.eagle.programmar.Fortran.Expressions.Fortran_ConditionalAndExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_ConditionalOrExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_EqualityExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_FunctionCall;
+import com.eagle.programmar.Fortran.Expressions.Fortran_MultiplicativeExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_NegativeExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_ParenthesizedExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_RelationalExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_StringConcatenation;
+import com.eagle.programmar.Fortran.Expressions.Fortran_Subscript;
+import com.eagle.programmar.Fortran.Expressions.Fortran_VariableExpression;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Literal;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
-import com.eagle.programmar.Fortran.Terminals.Fortran_Punctuation;
-import com.eagle.programmar.Fortran.Terminals.Fortran_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Fortran_Expression extends PrecedenceChooser implements AbstractExpression
 {
@@ -51,109 +51,22 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(100) class Fortran_NegativeExpression extends PrimaryOperator
-	{
-		public @S(10) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("-");
-		public @S(20) Fortran_Expression expr;
-	}
-	
-	public static @P(110) class Fortran_FunctionCall extends PrimaryOperator
-	{
-		public @S(10) Fortran_Identifier_Reference variable;
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<Fortran_Expression,PunctuationComma> args;
-		public @S(40) PunctuationRightParen rightParen;
-	}
-
-	public static @P(120) class Fortran_Subscript extends PrimaryOperator
-	{
-		public @S(10) Fortran_Identifier_Reference variable;
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<Fortran_Expression,PunctuationColon> args;
-		public @S(40) PunctuationRightParen rightParen;
-	}
-
-	public static @P(130) class Fortran_BuiltIn extends PrimaryOperator
-	{
-		public @S(10) Fortran_KeywordChoice builtinConstant = new Fortran_KeywordChoice(
-				".FALSE.",
-				".TRUE.");
-	}
-
-	public static @P(140) class Fortran_VariableExpression extends PrimaryOperator
-	{
-		public @S(10) Fortran_Variable variable;
-	}
-
-	public static @P(150) class Fortran_ParenthesizedExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Fortran_Expression expression;
-		public @S(30) PunctuationRightParen rightParen;
-	}
-
-	public static @P(160) class Fortran_BracketExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) SeparatedList<Fortran_Expression,PunctuationComma> expression;
-		public @S(30) PunctuationRightBracket rightBracket;
-	}
+	public @P(100) Fortran_NegativeExpression negativeExpression;
+	public @P(110) Fortran_FunctionCall functionCall;
+	public @P(120) Fortran_Subscript subscript;
+	public @P(130) Fortran_BuiltIn builtIn;
+	public @P(140) Fortran_VariableExpression variableExpression;
+	public @P(150) Fortran_ParenthesizedExpression parenthesizedExpression;
+	public @P(160) Fortran_BracketExpression bracketExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class Fortran_MultiplicativeExpression extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("*", "/");
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(510) class Fortran_AdditiveExpression extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("+", "-");
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(520) class Fortran_StringConcatenation extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_Punctuation operator = new Fortran_Punctuation("//");
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(530) class Fortran_RelationalExpression extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("<", ">", "<=", ">=");
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(540) class Fortran_EqualityExpression extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_EqOper oper;
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-		
-		public static class Fortran_EqOper extends TokenChooser
-		{
-			public @CHOICE Fortran_KeywordChoice EQ = new Fortran_KeywordChoice(".EQ.", ".NE.");
-			public @CHOICE Fortran_PunctuationChoice oper = new Fortran_PunctuationChoice("=", "/=");
-		}
-	}
-	
-	public static @P(550) class Fortran_ConditionalAndExpression extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_Keyword andOperator = new Fortran_Keyword(".AND.");
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(560) class Fortran_ConditionalOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Fortran_Keyword orOperator = new Fortran_Keyword(".OR.");
-		public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	}
+	public @P(500) Fortran_MultiplicativeExpression multiplicativeExpression;
+	public @P(510) Fortran_AdditiveExpression additiveExpression;
+	public @P(520) Fortran_StringConcatenation stringConcatenation;
+	public @P(530) Fortran_RelationalExpression relationalExpression;
+	public @P(540) Fortran_EqualityExpression equalityExpression;
+	public @P(550) Fortran_ConditionalAndExpression conditionalAndExpression;
+	public @P(560) Fortran_ConditionalOrExpression conditionalOrExpression;
 }
