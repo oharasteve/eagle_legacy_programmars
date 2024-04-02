@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -10,7 +12,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public abstract class COBOL_Program_Complete extends COBOL_Program
+public abstract class COBOL_Program_Complete extends COBOL_Program implements EagleRunnable
 {
 	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
 	{
@@ -38,5 +40,11 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		public @S(20) COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
 		public @S(30) COBOL_Identifier_Reference programId;
 		public @S(40) PunctuationPeriod dot;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(procedureDiv);
 	}
 }

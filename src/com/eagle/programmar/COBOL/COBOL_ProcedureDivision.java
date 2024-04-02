@@ -3,21 +3,18 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
-import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_ParagraphHeader;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
-import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
-import com.eagle.programmar.COBOL.Symbols.COBOL_Section_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
-import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class COBOL_ProcedureDivision extends TokenSequence
+public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT TokenList<COBOL_Comment> comments;
 	
@@ -67,48 +64,9 @@ public class COBOL_ProcedureDivision extends TokenSequence
 		public @S(60) PunctuationPeriod dot2;
 	}
 	
-	public static class COBOL_Section extends TokenSequence
+	@Override
+	public void interpret(EagleInterpreter interpreter)
 	{
-		public @S(10) @OPT COBOL_SectionHeader sectionHeader;
-		public @S(20) TokenList<COBOL_Paragraph> paragraphs;
-
-		public static class COBOL_SectionHeader extends TokenSequence
-		{
-			public @S(10) COBOL_Section_Definition sectionName;
-			public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
-			public @S(30) @OPT COBOL_Number number;
-			public @S(40) PunctuationPeriod dot;
-		}
-	}
-
-	public static class COBOL_Paragraph extends TokenSequence
-	{
-		public @S(10) @OPT TokenList<COBOL_ParagraphHeader> paragraphHeaders;
-		public @S(20) TokenList<COBOL_SentenceOrComment> sentences;
-
-		public static class COBOL_SentenceOrComment extends TokenChooser
-		{
-			public @CHOICE COBOL_Comment comment;
-			public @CHOICE COBOL_Sentence sentence;
-			public @LAST COBOL_ScreenDeclaration screen;
-
-			public @LAST static class COBOL_DataInParagraph extends TokenSequence
-			{
-				public @S(10) TokenList<COBOL_CopyOrDataDeclaration> data;
-			}
-		}
-	}
-	
-	public static class COBOL_ParagraphHeader extends TokenSequence
-	{
-		public @S(10) COBOL_Paragraph_Definition paragraphName;
-		public @S(20) PunctuationPeriod dot;
-	}
-
-	public static class COBOL_Sentence extends TokenSequence
-	{
-		public @S(10) TokenList<COBOL_StatementOrComment> statements;
-		public @S(20) @OPT PunctuationPeriod dot1;
-		public @S(30) @CURIOUS("SENTENCE: Extra dot") @OPT PunctuationPeriod dot2;
+		interpreter.tryToInterpret(sections.first());
 	}
 }

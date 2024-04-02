@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Paragraph;
-import com.eagle.programmar.COBOL.COBOL_ProcedureDivision.COBOL_Section;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.COBOL_Syntax.COBOL_Fixed_Format_Syntax;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
