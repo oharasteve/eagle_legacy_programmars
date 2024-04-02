@@ -3,28 +3,33 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.programmar.Java.Java_Variable;
+import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
+import com.eagle.programmar.Rust.Expressions.Rust_ConditionalAndExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ConditionalOrExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_DotDotExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
+import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
+import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_Subfield;
+import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_BinaryNumber;
 import com.eagle.programmar.Rust.Terminals.Rust_Character_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_HexNumber;
-import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
-import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
-import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationAmpersand;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Rust_Expression extends PrecedenceChooser implements AbstractExpression
 {
@@ -56,134 +61,26 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(100) class Rust_MethodInvocation extends PrimaryOperator
-	{
-		public @S(10) Java_Variable methodName;
-		public @S(20) @OPT Rust_Punctuation bang = new Rust_Punctuation("!");
-		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) @OPT SeparatedList<Rust_Expression,PunctuationComma> argList;
-		public @S(50) PunctuationRightParen rightParen;
-	}
-
-	public static @P(110) class Rust_NegativeExpression extends PrimaryOperator
-	{
-		public @S(10) Rust_Punctuation neg = new Rust_Punctuation("-");
-		public @S(20) Rust_Expression expr;
-	}
-
-	public static @P(120) class Rust_NotExpression extends PrimaryOperator
-	{
-		public @S(10) Rust_Punctuation notOperator = new Rust_Punctuation('!');
-		public @S(20) Rust_Expression expr;
-	}
-	
-	public static @P(130) class Rust_BuiltIn extends PrimaryOperator
-	{
-		public @S(10) Rust_KeywordChoice builtinConstant = new Rust_KeywordChoice("false", "true");
-	}
-	
-	public static @P(140) class Rust_VariableExpression extends PrimaryOperator
-	{
-		public @S(10) Rust_Variable variable;
-	}
-	
-	public static @P(150) class Rust_RangeExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Rust_Expression expression1;
-		public @S(30) Rust_Punctuation dots = new Rust_Punctuation("..");
-		public @S(40) Rust_Expression expression2;
-		public @S(50) PunctuationRightParen rightParen;
-	}
-	
-	public static @P(160) class Rust_ParenthesizedExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Rust_Expression expression;
-		public @S(30) PunctuationRightParen rightParen;
-	}
-	
-	public static @P(170) class Rust_ExpressionArray extends PrimaryOperator
-	{
-		public @S(10) PunctuationAmpersand ampersand;
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) SeparatedList<Rust_Expression,PunctuationComma> exprs;
-		public @S(40) PunctuationRightBracket rightBracket;
-	}
+	public @P(100) Rust_MethodInvocation methodInvocation;
+	public @P(110) Rust_NegativeExpression negativeExpression;
+	public @P(120) Rust_NotExpression notExpression;
+	public @P(130) Rust_BuiltIn builtIn;
+	public @P(140) Rust_VariableExpression variableExpression;
+	public @P(150) Rust_RangeExpression rangeExpression;
+	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(170) Rust_ExpressionArray expressionArray;
 	
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class Rust_SubscriptExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression expr = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) @OPT Rust_Expression subscr1;
-		public @S(40) @OPT Rust_Punctuation dots = new Rust_Punctuation("..");
-		public @S(50) @OPT Rust_Expression subscr2;
-		public @S(60) PunctuationRightBracket rightBracket;
-	}
-
-	public static @P(510) class Rust_Subfield extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationPeriod dot;
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(520) class Rust_MultiplicativeExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("*", "/", "%");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(530) class Rust_AdditiveExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("+", "-");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(540) class Rust_ShiftExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice(">>>", "<<", ">>");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(550) class Rust_RelationalExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("<", ">", "<=", ">=");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(560) class Rust_EqualityExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("==", "!=");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(570) class Rust_ConditionalAndExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_Punctuation andOperator = new Rust_Punctuation("&&");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(580) class Rust_ConditionalOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_Punctuation orOperator = new Rust_Punctuation("||");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(590) class Rust_DotDotExpression extends PrecedenceOperator
-	{
-		public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Rust_Punctuation dotDotOperator = new Rust_Punctuation("..");
-		public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	}
+	public @P(500) Rust_SubscriptExpression subscriptExpression;
+	public @P(510) Rust_Subfield subfield;
+	public @P(520) Rust_MultiplicativeExpression multiplicativeExpression;
+	public @P(530) Rust_AdditiveExpression additiveExpression;
+	public @P(540) Rust_ShiftExpression shiftExpression;
+	public @P(550) Rust_RelationalExpression relationalExpression;
+	public @P(560) Rust_EqualityExpression equalityExpression;
+	public @P(570) Rust_ConditionalAndExpression conditionalAndExpression;
+	public @P(580) Rust_ConditionalOrExpression conditionalOrExpression;
+	public @P(590) Rust_DotDotExpression dotDotExpression;
 }
