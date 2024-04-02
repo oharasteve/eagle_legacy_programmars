@@ -4,7 +4,7 @@
 package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.programmar.SQL.SQL_Expression;
-import com.eagle.programmar.SQL.SQL_Expression.SQL_VariableExpression;
+import com.eagle.programmar.SQL.Expressions.SQL_VariableExpression;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationEquals;

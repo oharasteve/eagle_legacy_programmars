@@ -3,27 +3,31 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
-import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
+import com.eagle.programmar.PLI.Expressions.PLI_AdditiveExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_AndExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_AndThenExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_CommentExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_ExponentExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_FieldReference;
+import com.eagle.programmar.PLI.Expressions.PLI_MultiplicativeExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_NegativeExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_NotExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_OrElseExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_OrExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_ParenthesizedExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_RelationalExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_RepeatedBitLiteral;
+import com.eagle.programmar.PLI.Expressions.PLI_RepeatedHexLiteral;
+import com.eagle.programmar.PLI.Expressions.PLI_RepeatedLiteral;
+import com.eagle.programmar.PLI.Expressions.PLI_StrCatExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_VariableOrFunctionCall;
 import com.eagle.programmar.PLI.Terminals.PLI_BitLiteral;
-import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.programmar.PLI.Terminals.PLI_HexNumber;
-import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_Literal;
 import com.eagle.programmar.PLI.Terminals.PLI_Number;
-import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
-import com.eagle.programmar.PLI.Terminals.PLI_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class PLI_Expression extends PrecedenceChooser
 {
@@ -54,143 +58,26 @@ public class PLI_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public static @P(100) class PLI_RepeatedBitLiteral extends PrimaryOperator
-	{
-		public @S(10) TokenList<PLI_RepeatCount> repeat;
-		public @S(20) PLI_BitLiteral literal;
-	}
-	
-	public static @P(110) class PLI_RepeatedHexLiteral extends PrimaryOperator
-	{
-		public @S(10) TokenList<PLI_RepeatCount> repeat;
-		public @S(20) PLI_HexNumber literal;
-	}
-	
-	public static @P(120) class PLI_RepeatedLiteral extends PrimaryOperator
-	{
-		public @S(10) TokenList<PLI_RepeatCount> repeat;
-		public @S(20) PLI_Literal literal;
-	}
-	
-	public static @P(130) class PLI_NegativeExpression extends PrimaryOperator
-	{
-		public @S(10) PLI_PunctuationChoice operator = new PLI_PunctuationChoice("-", "+");
-		public @S(20) PLI_Expression expr;
-	}
-	
-	public static @P(140) class PLI_NotExpression extends PrimaryOperator
-	{
-		public @S(10) PLI_Punctuation notOperator = new PLI_Punctuation('^');
-		public @S(20) PLI_Expression expr;
-	}
-	
-	public static @P(150) class PLI_FieldReference extends PrimaryOperator
-	{
-		public @S(10) PLI_Identifier_Reference var;
-		public @S(20) PunctuationPeriod dot;
-		public @S(30) PLI_Identifier_Reference field;
-	}
-	
-	public static @P(160) class PLI_VariableOrFunctionCall extends PrimaryOperator
-	{
-		public @S(10) PLI_Identifier_Reference fn;
-		public @S(20) @OPT PLI_Subscript subscript;
-	}
-
-	public static @P(170) class PLI_ParenthesizedExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) PLI_Expression expr;
-		public @S(30) @OPT PLI_Expression_Do expressionDo;
-		public @S(40) PunctuationRightParen rightParen;
-		
-		public static class PLI_Expression_Do extends TokenSequence
-		{
-			public @S(10) PLI_Keyword DO = new PLI_Keyword("DO");
-			public @S(20) PLI_Variable_Definition var;
-			public @S(30) PunctuationEquals equals;
-			public @S(40) PLI_Expression start;
-			public @S(50) PLI_Keyword TO = new PLI_Keyword("TO");
-			public @S(60) PLI_Expression stop;
-		}
-	}
-	
-	public static @P(180) class PLI_CommentExpression extends PrimaryOperator
-	{
-		public @S(10) PLI_Comment comment;
-		public @S(20) PLI_Expression expr;
-	}
+	public @P(100) PLI_RepeatedBitLiteral repeatedBitLiteral;
+	public @P(110) PLI_RepeatedHexLiteral repeatedHexLiteral;
+	public @P(120) PLI_RepeatedLiteral repeatedLiteral;
+	public @P(130) PLI_NegativeExpression negativeExpression;
+	public @P(140) PLI_NotExpression notExpression;
+	public @P(150) PLI_FieldReference fieldReference;
+	public @P(160) PLI_VariableOrFunctionCall variableOrFunctionCall;
+	public @P(170) PLI_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) PLI_CommentExpression commentExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(190) class PLI_ExponentExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_Punctuation exponOper = new PLI_Punctuation("**");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(200) class PLI_MultiplicativeExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_PunctuationChoice multOper = new PLI_PunctuationChoice("*", "/");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(210) class PLI_AdditiveExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_PunctuationChoice addOper = new PLI_PunctuationChoice("+", "-");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(220) class PLI_StrCatExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_Punctuation catOper = new PLI_Punctuation("||");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(230) class PLI_RelationalExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_PunctuationChoice operator = new PLI_PunctuationChoice(
-				"^>", "^<", "^=", "<=", ">=", ">", "<", "=");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(240) class PLI_AndExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_Punctuation andOper = new PLI_Punctuation('&');
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(250) class PLI_OrExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_PunctuationChoice orOper = new PLI_PunctuationChoice("^", "|", "!");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(260) class PLI_AndThenExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_Punctuation andThen1 = new PLI_Punctuation("&:");
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(270) class PLI_OrElseExpression extends PrecedenceOperator
-	{
-		public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PLI_OrElseOperator orElseOper;
-		public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
-
-		public static class PLI_OrElseOperator extends TokenChooser
-		{
-			public @CHOICE PLI_Punctuation orElse1 = new PLI_Punctuation("!:");
-			public @CHOICE PLI_Punctuation orElse2 = new PLI_Punctuation("|:");
-		}
-	}
+	public @P(500) PLI_ExponentExpression exponentExpression;
+	public @P(510) PLI_MultiplicativeExpression multiplicativeExpression;
+	public @P(520) PLI_AdditiveExpression additiveExpression;
+	public @P(530) PLI_StrCatExpression strCatExpression;
+	public @P(540) PLI_RelationalExpression relationalExpression;
+	public @P(550) PLI_AndExpression andExpression;
+	public @P(560) PLI_OrExpression orExpression;
+	public @P(570) PLI_AndThenExpression andThenExpression;
+	public @P(580) PLI_OrElseExpression orElseExpression;
 }
