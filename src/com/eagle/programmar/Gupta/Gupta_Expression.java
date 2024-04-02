@@ -3,17 +3,18 @@
 
 package com.eagle.programmar.Gupta;
 
-import com.eagle.programmar.Gupta.Symbols.Gupta_Identifier_Reference;
+import com.eagle.programmar.Gupta.Expressions.Gupta_Additive_Expression;
+import com.eagle.programmar.Gupta.Expressions.Gupta_FunctionCall;
+import com.eagle.programmar.Gupta.Expressions.Gupta_IdentifierExpression;
+import com.eagle.programmar.Gupta.Expressions.Gupta_Multiplicative_Expression;
+import com.eagle.programmar.Gupta.Expressions.Gupta_Parens;
+import com.eagle.programmar.Gupta.Expressions.Gupta_StrCat_Expression;
+import com.eagle.programmar.Gupta.Expressions.Gupta_UnarySign;
 import com.eagle.programmar.Gupta.Terminals.Gupta_Literal;
 import com.eagle.programmar.Gupta.Terminals.Gupta_Number;
-import com.eagle.programmar.Gupta.Terminals.Gupta_Punctuation;
-import com.eagle.programmar.Gupta.Terminals.Gupta_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Gupta_Expression extends PrecedenceChooser
 {
@@ -42,50 +43,15 @@ public class Gupta_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 	
-	public static @P(100) class Gupta_Parens extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Gupta_Expression expr;
-		public @S(30) PunctuationRightParen rightParen;		
-	}
-	
-	public static @P(110) class Gupta_FunctionCall extends PrimaryOperator
-	{
-		public @S(10) Gupta_Function_Call fnCall;
-	}
-	
-	public static @P(120) class Gupta_IdentifierExpression extends PrimaryOperator
-	{
-		public @S(10) Gupta_Identifier_Reference identifier;
-	}
-	
-	public static @P(130) class Gupta_UnarySign extends PrimaryOperator
-	{
-		public @S(10) Gupta_PunctuationChoice sign = new Gupta_PunctuationChoice("-", "+");
-		public @S(20) Gupta_Expression exp;
-	}
+	public @P(100) Gupta_Parens parens;
+	public @P(110) Gupta_FunctionCall functionCall;
+	public @P(120) Gupta_IdentifierExpression identifierExpression;
+	public @P(130) Gupta_UnarySign unarySign;
 	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public static @P(140) class Gupta_Multiplicative_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Gupta_PunctuationChoice timesDivide = new Gupta_PunctuationChoice("*", "/");
-		public @S(30) Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(150) class Gupta_Additive_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Gupta_PunctuationChoice timesDivide = new Gupta_PunctuationChoice("+", "-");
-		public @S(30) Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(160) class Gupta_StrCat_Expression extends PrecedenceOperator 
-	{
-		public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Gupta_Punctuation strCat = new Gupta_Punctuation("||");
-		public @S(30) Gupta_Expression right = new Gupta_Expression(this, AllowedPrecedence.HIGHER);
-	}
+	public @P(500) Gupta_Multiplicative_Expression multiplicative_Expression;
+	public @P(510) Gupta_Additive_Expression additive_Expression;
+	public @P(520) Gupta_StrCat_Expression strCat_Expression;
 }

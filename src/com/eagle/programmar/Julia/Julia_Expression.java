@@ -3,27 +3,32 @@
 
 package com.eagle.programmar.Julia;
 
-import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
-import com.eagle.programmar.Julia.Terminals.Julia_KeywordChoice;
+import com.eagle.programmar.Julia.Expressions.Julia_AdditiveExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_AssignmentExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_BracketsExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_BuiltIn;
+import com.eagle.programmar.Julia.Expressions.Julia_ConditionalAndExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_ConditionalOrExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_EqualityExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_LogicalNotExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_MethodInvocation;
+import com.eagle.programmar.Julia.Expressions.Julia_MultiplicativeExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_NegativeExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_NotExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_ParenthesizedExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_PostIncrementExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_PreIncrementExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_RangeExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_RelationalExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_Subfield;
+import com.eagle.programmar.Julia.Expressions.Julia_SubscriptExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_VariableExpression;
 import com.eagle.programmar.Julia.Terminals.Julia_Literal;
 import com.eagle.programmar.Julia.Terminals.Julia_Number;
-import com.eagle.programmar.Julia.Terminals.Julia_Punctuation;
-import com.eagle.programmar.Julia.Terminals.Julia_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Julia_Expression extends PrecedenceChooser implements AbstractExpression
 {
@@ -52,161 +57,28 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public static @P(100) class Julia_MethodInvocation extends PrimaryOperator
-	{
-		public @S(10) Julia_Variable methodName;
-		public @S(20) @OPT Julia_Punctuation question = new Julia_Punctuation("?");
-		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) @OPT SeparatedList<Julia_Expression,PunctuationComma> argList;
-		public @S(50) PunctuationRightParen rightParen;
-	}
-
-	public static @P(110) class Julia_PreIncrementExpression extends PrimaryOperator
-	{
-		public @S(10) Julia_PunctuationChoice preIncrementOperator = new Julia_PunctuationChoice("++", "--");
-		public @S(20) Julia_Variable var;
-	}
-
-	public static @P(120) class Julia_PostIncrementExpression extends PrimaryOperator
-	{
-		public @S(10) Julia_Variable var;
-		public @S(20) Julia_PunctuationChoice postIncrementOperator = new Julia_PunctuationChoice("++", "--");
-	}
-
-	public static @P(130) class Julia_NegativeExpression extends PrimaryOperator
-	{
-		public @S(10) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("-");
-		public @S(20) Julia_Expression expr;
-	}
-
-	public static @P(140) class Julia_LogicalNotExpression extends PrimaryOperator
-	{
-		public @S(10) Julia_Punctuation logicalNotOperator = new Julia_Punctuation('~');
-		public @S(20) Julia_Expression expr;
-	}
+	public @P(100) Julia_MethodInvocation methodInvocation;
+	public @P(110) Julia_PreIncrementExpression preIncrementExpression;
+	public @P(120) Julia_PostIncrementExpression postIncrementExpression;
+	public @P(130) Julia_NegativeExpression negativeExpression;
+	public @P(140) Julia_LogicalNotExpression logicalNotExpression;
+	public @P(150) Julia_NotExpression notExpression;
+	public @P(160) Julia_BuiltIn builtIn;
+	public @P(170) Julia_VariableExpression variableExpression;
+	public @P(180) Julia_BracketsExpression bracketsExpression;
+	public @P(190) Julia_ParenthesizedExpression parenthesizedExpression;
 	
-	public static @P(150) class Julia_NotExpression extends PrimaryOperator
-	{
-		public @S(10) Julia_Punctuation notOperator = new Julia_Punctuation('!');
-		public @S(20) Julia_Expression expr;
-	}
-	
-	public static @P(160) class Julia_BuiltIn extends PrimaryOperator
-	{
-		public @S(10) Julia_KeywordChoice builtinConstant = new Julia_KeywordChoice("false", "true");
-	}
-	
-	public static @P(170) class Julia_VariableExpression extends PrimaryOperator
-	{
-		public @S(10) Julia_Variable variable;
-	}
-	
-	public static @P(180) class Julia_BracketsExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) SeparatedList<Julia_Expression,PunctuationComma> expression;
-		public @S(30) PunctuationRightBracket rightBracket;
-	}
-
-	public static @P(190) class Julia_ParenthesizedExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Julia_Expression expression;
-		public @S(30) PunctuationRightParen rightParen;
-	}
-
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class Julia_SubscriptExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression expr = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) @OPT Julia_Expression subscr1;
-		public @S(40) @OPT PunctuationColon colon;
-		public @S(50) @OPT Julia_SubscriptionEnd subscr2;
-		public @S(60) PunctuationRightBracket rightBracket;
-		
-		public static class Julia_SubscriptionEnd extends TokenChooser
-		{
-			public @CHOICE Julia_Keyword END = new Julia_Keyword("end");
-			public @CHOICE Julia_Expression subscr2;
-		}
-	}
-
-	public static @P(510) class Julia_Subfield extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationPeriod dot;
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(520) class Julia_MultiplicativeExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("*", "/", "%");
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(530) class Julia_AdditiveExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("+", "-");
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(540) class Julia_RelationalExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("<", ">", "<=", ">=");
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(550) class Julia_EqualityExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("==", "!=");
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(560) class Julia_ConditionalAndExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Julia_Punctuation andOperator = new Julia_Punctuation("&&");
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(570) class Julia_ConditionalOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Julia_Punctuation orOperator = new Julia_Punctuation("||");
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(580) class Julia_AssignmentExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression var = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice(
-				":=",
-				"*=",
-				"/=",
-				"%=",
-				"+=",
-				"-=");
-		public @S(30) Julia_Expression expr;
-	}
-	
-	public static @P(590) class Julia_RangeExpression extends PrecedenceOperator
-	{
-		public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationColon colon;
-		public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(40) @OPT Julia_Range_Increment increment;
-		
-		public static class Julia_Range_Increment extends TokenSequence
-		{
-			public @S(10) PunctuationColon colon;
-			public @S(20) Julia_Expression expr;
-		}
-	}
+	public @P(500) Julia_SubscriptExpression subscriptExpression;
+	public @P(510) Julia_Subfield subfield;
+	public @P(520) Julia_MultiplicativeExpression multiplicativeExpression;
+	public @P(530) Julia_AdditiveExpression additiveExpression;
+	public @P(540) Julia_RelationalExpression relationalExpression;
+	public @P(550) Julia_EqualityExpression equalityExpression;
+	public @P(560) Julia_ConditionalAndExpression conditionalAndExpression;
+	public @P(570) Julia_ConditionalOrExpression conditionalOrExpression;
+	public @P(580) Julia_AssignmentExpression assignmentExpression;
+	public @P(590) Julia_RangeExpression rangeExpression;
 }

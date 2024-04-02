@@ -3,40 +3,64 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassElement;
-import com.eagle.programmar.Javascript.Javascript_Class.Javascript_ClassExtends;
-import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Definition;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Definition;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Reference;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
-import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
+import com.eagle.programmar.Javascript.Expressions.Javascript_AdditiveExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_AndExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_AssignmentExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_AwaitFunctionCall;
+import com.eagle.programmar.Javascript.Expressions.Javascript_BuiltInVar;
+import com.eagle.programmar.Javascript.Expressions.Javascript_Builtin_Function;
+import com.eagle.programmar.Javascript.Expressions.Javascript_CastExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationWithInitializers;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationWithSubscript;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ClassExpr;
+import com.eagle.programmar.Javascript.Expressions.Javascript_CommentExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ConditionalAndExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ConditionalOrExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_DeleteExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_DotClass;
+import com.eagle.programmar.Javascript.Expressions.Javascript_EllipsisExpr;
+import com.eagle.programmar.Javascript.Expressions.Javascript_EqualityExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ExclusiveOrExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ExpressionList;
+import com.eagle.programmar.Javascript.Expressions.Javascript_FunctionCall;
+import com.eagle.programmar.Javascript.Expressions.Javascript_FunctionExpr;
+import com.eagle.programmar.Javascript.Expressions.Javascript_InExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_InclusiveOrExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_InstanceOfExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_LambdaFunction;
+import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalNotExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_MultiplicativeExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_NegativeExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_NewNoArgsExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_NotExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ObjectLiteral;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ParenthesizedFunction;
+import com.eagle.programmar.Javascript.Expressions.Javascript_Parenthesized_Expression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_PostDecrementExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_PostIncrementExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_Power_Expression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_PreDecrementExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_PreIncrementExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_RelationalExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_ShiftExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_SimpleArray;
+import com.eagle.programmar.Javascript.Expressions.Javascript_StrangeFunction;
+import com.eagle.programmar.Javascript.Expressions.Javascript_StringFunction;
+import com.eagle.programmar.Javascript.Expressions.Javascript_Subfield;
+import com.eagle.programmar.Javascript.Expressions.Javascript_SubscriptExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_TemplateExpr;
+import com.eagle.programmar.Javascript.Expressions.Javascript_TrueFalseExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_TypeOfExpr;
+import com.eagle.programmar.Javascript.Expressions.Javascript_VariableExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_VoidExpr;
 import com.eagle.programmar.Javascript.Terminals.Javascript_HexNumber;
-import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
-import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Literal;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Number;
-import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
-import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_RegularExpression;
-import com.eagle.programmar.Javascript.Terminals.Javascript_TemplateLiteral;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Javascript_Expression extends PrecedenceChooser
 {
@@ -67,440 +91,59 @@ public class Javascript_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public static @P(100) class Javascript_Builtin_Function extends PrimaryOperator
-	{
-		public @S(10) Javascript_KeywordChoice fn = new Javascript_KeywordChoice(
-				"eval"
-		);
-	}
-	
-	public static @P(110) class Javascript_DotClass extends PrimaryOperator
-	{
-		public @S(10) Javascript_Type jtype;
-		public @S(20) PunctuationPeriod dot;
-		public @S(30) Javascript_Keyword CLASS = new Javascript_Keyword("class");
-	}
-	
-	// Problem is (int)x and (num)/x. Ambiguous for the parser. It needs a real backtracker.
-	public static @P(120) class Javascript_CastExpression extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Javascript_Type jtype;
-		public @S(30) PunctuationRightParen rightParen;
-		public @S(40) Javascript_Expression expr;
-	}
-	
-	public static @P(130) class Javascript_ExpressionList extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT TokenList<Javascript_Comment> comment;
-		public @S(30) @OPT Javascript_ArgumentList valueList;
-		public @S(40) PunctuationRightBrace rightBrace;
-	}
-	
-	public static @P(140) class Javascript_StringFunction extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword STRING = new Javascript_Keyword("String");
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) Javascript_Expression expr;
-		public @S(40) PunctuationRightParen rightParen;
-	}
-
-	public static @P(150) class Javascript_DeleteExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword DELETE = new Javascript_Keyword("delete");
-		public @S(20) Javascript_Expression expr;
-	}
-
-	public static @P(160) class Javascript_ClassCreationExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword NEW = new Javascript_Keyword("new");
-		public @S(20) Javascript_Type jtype;
-		public @S(30) Javascript_ParenthesizedExpression arguments;
-	}
-	
-	public static @P(170) class Javascript_ClassCreationWithInitializers extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword NEW = new Javascript_Keyword("new");
-		public @S(20) Javascript_Type jtype;
-		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) Javascript_ArgumentList valueList;
-		public @S(50) PunctuationRightBrace rightBrace;
-	}
-	
-	public static @P(180) class Javascript_ClassCreationWithSubscript extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword NEW = new Javascript_Keyword("new");
-		public @S(20) Javascript_Type jtype;
-		public @S(30) TokenList<Javascript_Subscript> subscripts;
-	}
-
-	public static @P(190) class Javascript_NewNoArgsExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword NEW = new Javascript_Keyword("new");
-		public @S(20) Javascript_Type jtype;
-	}
-	
-	public static @P(200) class Javascript_AwaitFunctionCall extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword AWAIT = new Javascript_Keyword("await");
-		public @S(20) Javascript_Variable functionName;
-		public @S(30) @OPT Javascript_ParenthesizedExpression arguments;
-	}
-	
-	public static @P(210) class Javascript_FunctionCall extends PrimaryOperator
-	{
-		public @S(10) Javascript_Variable functionName;
-		public @S(20) Javascript_ParenthesizedExpression arguments;
-	}
-	
-	public static @P(220) class Javascript_PreIncrementExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Punctuation preIncrementOperator = new Javascript_Punctuation("++");
-		public @S(20) Javascript_Variable var;
-	}
-
-	public static @P(230) class Javascript_PreDecrementExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Punctuation preDecrementOperator = new Javascript_Punctuation("--");
-		public @S(20) Javascript_Variable var;
-	}
-	
-	public static @P(240) class Javascript_PostIncrementExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Variable var;
-		public @S(20) Javascript_Punctuation postIncrementOperator = new Javascript_Punctuation("++");
-	}
-
-	public static @P(250) class Javascript_PostDecrementExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Variable var;
-		public @S(20) Javascript_Punctuation postDecrementOperator = new Javascript_Punctuation("--");
-	}
-	
-	public static @P(260) class Javascript_NegativeExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("-", "+");
-		public @S(20) Javascript_Expression expr;
-	}
-
-	public static @P(270) class Javascript_LogicalNotExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Punctuation logicalNotOperator = new Javascript_Punctuation('~');
-		public @S(20) Javascript_Expression expr;
-	}
-	
-	public static @P(280) class Javascript_NotExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Punctuation notOperator = new Javascript_Punctuation('!');
-		public @S(20) Javascript_Expression expr;
-	}
-	
-	public static @P(290) class Javascript_BuiltInVar extends PrimaryOperator
-	{
-		public @S(10) Javascript_KeywordChoice logicalConstant = new Javascript_KeywordChoice(
-				"arguments",
-				"false",
-				"null",
-				"String",
-				"super",
-				"this",
-				"true"
-			);
-	}
-	
-	public static @P(300) class Javascript_TemplateExpr extends PrimaryOperator
-	{
-		public @S(10) @OPT Javascript_Function_Reference func;
-		public @S(20) Javascript_TemplateLiteral template;
-	}
-
-	public static @P(310) class Javascript_LambdaFunction extends PrimaryOperator
-	{
-		public @S(10) @OPT Javascript_Keyword ASYNC = new Javascript_Keyword("async");
-		public @S(20) Javascript_LambdaParams params;
-		public @S(30) Javascript_Punctuation arrow = new Javascript_Punctuation("=>");
-		public @S(40) Javascript_LambdaBody body;
-		
-		public static class Javascript_LambdaParams extends TokenChooser
-		{
-			public @CHOICE Javascript_Variable_Definition param;
-			
-			public @CHOICE static class Javascript_LambdaManyParams extends TokenSequence
-			{
-				public @S(10) PunctuationLeftParen leftParen;
-				public @S(20) @OPT SeparatedList<Javascript_Variable_Definition,PunctuationComma> params;
-				public @S(30) PunctuationRightParen rightParen;
-			}
-		}
-		public static class Javascript_LambdaBody extends TokenChooser
-		{
-			public @CHOICE Javascript_FunctionBody block;
-			public @CHOICE Javascript_Statement stmt;
-		}
-	}
-
-	public static @P(320) class Javascript_VariableExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Variable variable;
-	}
-	
-	public static @P(330) class Javascript_StrangeFunction extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Javascript_Number zero;
-		public @S(30) PunctuationComma comma;
-		public @S(40) Javascript_Variable function;
-		public @S(50) PunctuationRightParen rightParen;
-		public @S(60) Javascript_ParenthesizedExpression arguments;
-	}
-
-	public static @P(340) class Javascript_ParenthesizedFunction extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Javascript_Function function;
-		public @S(30) PunctuationRightParen rightParen;
-		public @S(40) Javascript_ParenthesizedExpression arguments;
-	}
-
-	// Problem is (int)x and (num)/x. Ambiguous for the parser. It needs a real backtracker.
-	public static @P(350) class Javascript_Parenthesized_Expression extends PrimaryOperator
-	{
-		public @S(10) Javascript_ParenthesizedExpression expr;
-	}
-	
-	public static @P(360) class Javascript_SimpleArray extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @OPT Javascript_Expression expr;
-		public @S(30) @OPT TokenList<Javascript_MoreArray> more;
-		public @S(40) PunctuationRightBracket rightBracket;
-		
-		public static class Javascript_MoreArray extends TokenSequence
-		{
-			public @S(10) PunctuationComma comma;
-			public @S(20) @OPT Javascript_Expression expr;
-		}
-	}
-	
-	public static @P(370) class Javascript_CommentExpression extends PrimaryOperator
-	{
-		public @S(10) Javascript_Comment comment;
-		public @S(20) Javascript_Expression expr;
-	}
-	
-	public static @P(380) class Javascript_ObjectLiteral extends PrimaryOperator
-	{
-		// Don't use @INDENT here. Messes up 'return' statements that return an object literal.
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) SeparatedList<Javascript_ObjectLiteralItem,PunctuationComma> items;
-		public @S(30) @OPT PunctuationComma comma;
-		public @S(40) @OPT TokenList<Javascript_Comment> comments;
-		public @S(50) PunctuationRightBrace rightBrace;
-		
-		public static class Javascript_ObjectLiteralItem extends TokenChooser
-		{
-			public @CHOICE static class Javascript_ObjectFunction extends TokenSequence
-			{
-				public @S(10) @OPT TokenList<Javascript_Comment> comments;
-				public @S(20) @OPT Javascript_Keyword STATIC = new Javascript_Keyword("static");
-				public @S(30) @OPT Javascript_KeywordChoice prefix = new Javascript_KeywordChoice("get", "set");
-				public @S(40) Javascript_FunctionImplementation function;
-			}
-			
-			public @LAST static class Javascript_ObjecLiteraltData extends TokenSequence
-			{
-				public @S(10) Javascript_ObjectFieldName name;
-				public @S(20) @OPT Javascript_ObjectFieldValue value;
-				
-				public static class Javascript_ObjectFieldName extends TokenChooser
-				{
-					public @CHOICE Javascript_Number number;
-					public @CHOICE Javascript_Literal literal;
-					public @CHOICE Javascript_Field_Definition field;
-				}
-				
-				public static class Javascript_ObjectFieldValue extends TokenSequence
-				{
-					public @S(10) PunctuationColon colon;
-					public @S(20) Javascript_Expression expr;
-				}
-			}
-		}
-	}
-
-	public static @P(390) class Javascript_FunctionExpr extends PrimaryOperator
-	{
-		public @S(10) Javascript_Function function;
-		public @S(20) @OPT Javascript_ParenthesizedExpression args;
-	}
-	
-	public static @P(400) class Javascript_ClassExpr extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword CLASS = new Javascript_Keyword("class");
-		public @S(20) @OPT Javascript_Class_Definition className;
-		public @S(30) @OPT Javascript_ClassExtends extend;
-		public @S(40) PunctuationLeftBrace leftBrace;
-		public @S(50) TokenList<Javascript_ClassElement> elements;
-		public @S(60) PunctuationRightBrace rightBrace;
-	}
-	
-	public static @P(410) class Javascript_TypeOfExpr extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword TYPEOF = new Javascript_Keyword("typeof");
-		public @S(20) Javascript_TypeOfWhat what;
-		
-		public static class Javascript_TypeOfWhat extends TokenChooser
-		{
-			public @CHOICE Javascript_Variable var;
-
-			public @CHOICE static class Javascript_TypeOfParens extends TokenSequence
-			{
-				public @S(10) PunctuationLeftParen leftParen;
-				public @S(20) Javascript_Variable var;
-				public @S(30) PunctuationRightParen rightParen;
-			}
-		}
-	}
-	
-	public static @P(420) class Javascript_VoidExpr extends PrimaryOperator
-	{
-		public @S(10) Javascript_Keyword VOID = new Javascript_Keyword("void");
-		public @S(20) Javascript_Number number;
-	}
-	
-	public static @P(430) class Javascript_EllipsisExpr extends PrimaryOperator
-	{
-		public @S(10) Javascript_Punctuation ellipsis = new Javascript_Punctuation("...");
-		public @S(20) Javascript_Expression expr;
-	}
+	public @P(100) Javascript_Builtin_Function builtin_Function;
+	public @P(110) Javascript_DotClass dotClass;
+	public @P(120) Javascript_CastExpression castExpression;
+	public @P(130) Javascript_ExpressionList expressionList;
+	public @P(140) Javascript_StringFunction stringFunction;
+	public @P(150) Javascript_DeleteExpression deleteExpression;
+	public @P(160) Javascript_ClassCreationExpression classCreationExpression;
+	public @P(170) Javascript_ClassCreationWithInitializers classCreationWithInitializers;
+	public @P(180) Javascript_ClassCreationWithSubscript classCreationWithSubscript;
+	public @P(190) Javascript_NewNoArgsExpression newNoArgsExpression;
+	public @P(200) Javascript_AwaitFunctionCall awaitFunctionCall;
+	public @P(210) Javascript_FunctionCall functionCall;
+	public @P(220) Javascript_PreIncrementExpression preIncrementExpression;
+	public @P(230) Javascript_PreDecrementExpression preDecrementExpression;
+	public @P(240) Javascript_PostIncrementExpression postIncrementExpression;
+	public @P(250) Javascript_PostDecrementExpression postDecrementExpression;
+	public @P(260) Javascript_NegativeExpression negativeExpression;
+	public @P(270) Javascript_LogicalNotExpression logicalNotExpression;
+	public @P(280) Javascript_NotExpression notExpression;
+	public @P(290) Javascript_BuiltInVar builtInVar;
+	public @P(300) Javascript_TemplateExpr templateExpr;
+	public @P(310) Javascript_LambdaFunction lambdaFunction;
+	public @P(320) Javascript_VariableExpression variableExpression;
+	public @P(330) Javascript_StrangeFunction strangeFunction;
+	public @P(340) Javascript_ParenthesizedFunction parenthesizedFunction;
+	public @P(350) Javascript_Parenthesized_Expression parenthesized_Expression;
+	public @P(360) Javascript_SimpleArray simpleArray;
+	public @P(370) Javascript_CommentExpression commentExpression;
+	public @P(380) Javascript_ObjectLiteral objectLiteral;
+	public @P(390) Javascript_FunctionExpr functionExpr;
+	public @P(400) Javascript_ClassExpr classExpr;
+	public @P(410) Javascript_TypeOfExpr typeOfExpr;
+	public @P(420) Javascript_VoidExpr voidExpr;
+	public @P(430) Javascript_EllipsisExpr ellipsisExpr;
 	
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class Javascript_SubscriptExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationLeftBracket leftBracket;
-		public @S(30) Javascript_Expression subscr = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(40) PunctuationRightBracket rightBracket;
-	}
-
-	public static @P(510) class Javascript_Subfield extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationPeriod dot;
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(520) class Javascript_Power_Expression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) Javascript_Punctuation stars = new Javascript_Punctuation("**");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-	}
-	
-	public static @P(530) class Javascript_MultiplicativeExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("*", "/", "%");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(540) class Javascript_AdditiveExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("+", "-");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(550) class Javascript_ShiftExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(">>>", "<<", ">>");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(560) class Javascript_RelationalExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("<", ">", "<=", ">=");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(570) class Javascript_InstanceOfExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Keyword instanceOperator = new Javascript_Keyword("instanceof");
-		public @S(30) Javascript_Type type;
-	}
-
-	public static @P(580) class Javascript_InExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Keyword inOperator = new Javascript_Keyword("in");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(590) class Javascript_EqualityExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("!==", "===", "==", "!=");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(40) @OPT Javascript_Comment comment;
-	}
-
-	public static @P(600) class Javascript_AndExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Punctuation bitwiseAndOperator = new Javascript_Punctuation('&');
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(610) class Javascript_ExclusiveOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Punctuation bitwiseXOrOperator = new Javascript_Punctuation('^');
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(620) class Javascript_InclusiveOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Punctuation bitwiseOrOperator = new Javascript_Punctuation('|');
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(630) class Javascript_ConditionalAndExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Punctuation andOperator = new Javascript_Punctuation("&&");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(640) class Javascript_ConditionalOrExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-		public @S(20) Javascript_Punctuation orOperator = new Javascript_Punctuation("||");
-		public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	}
-	
-	public static @P(650) class Javascript_TrueFalseExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) Javascript_Punctuation questionMark = new Javascript_Punctuation('?');
-		public @S(30) @OPT TokenList<Javascript_Comment> comments1;
-		public @S(40) Javascript_Expression middle = new Javascript_Expression(this, AllowedPrecedence.ANY);
-		public @S(50) PunctuationColon colon;
-		public @S(60) @OPT TokenList<Javascript_Comment> comments2;
-		public @S(70) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-	}
-	
-	public static @P(660) class Javascript_AssignmentExpression extends PrecedenceOperator
-	{
-		public @S(10) Javascript_Expression var = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-		public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(
-				"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
-		public @S(30) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-	}
+	public @P(500) Javascript_SubscriptExpression subscriptExpression;
+	public @P(510) Javascript_Subfield subfield;
+	public @P(520) Javascript_Power_Expression power_Expression;
+	public @P(530) Javascript_MultiplicativeExpression multiplicativeExpression;
+	public @P(540) Javascript_AdditiveExpression additiveExpression;
+	public @P(550) Javascript_ShiftExpression shiftExpression;
+	public @P(560) Javascript_RelationalExpression relationalExpression;
+	public @P(570) Javascript_InstanceOfExpression instanceOfExpression;
+	public @P(580) Javascript_InExpression inExpression;
+	public @P(590) Javascript_EqualityExpression equalityExpression;
+	public @P(600) Javascript_AndExpression andExpression;
+	public @P(610) Javascript_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(620) Javascript_InclusiveOrExpression inclusiveOrExpression;
+	public @P(630) Javascript_ConditionalAndExpression conditionalAndExpression;
+	public @P(640) Javascript_ConditionalOrExpression conditionalOrExpression;
+	public @P(650) Javascript_TrueFalseExpression trueFalseExpression;
+	public @P(660) Javascript_AssignmentExpression assignmentExpression;
 }
