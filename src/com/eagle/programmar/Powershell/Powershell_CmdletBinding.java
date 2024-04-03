@@ -41,7 +41,7 @@ public class Powershell_CmdletBinding extends TokenSequence
 		public @S(10) Powershell_Keyword PARAM = new Powershell_Keyword("Param");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT Powershell_EndOfLine eoln1;
-		public @S(40) TokenList<Powershell_CmdletParam> params;
+		public @S(40) @OPT TokenList<Powershell_CmdletParam> params;
 		public @S(50) PunctuationRightParen rightParen;
 		public @S(60) @OPT Powershell_EndOfLine eoln2;
 		

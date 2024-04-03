@@ -90,6 +90,12 @@ public class SQL_CreateTableField extends TokenSequence
 
 	public static class SQL_CreateFieldKey extends TokenChooser
 	{
+		public @CHOICE static class SQL_CreateUsing extends TokenSequence
+		{
+			public @S(10) SQL_Keyword USING = new SQL_Keyword("USING");
+			public @S(20) SQL_Keyword BTREE = new SQL_Keyword("BTREE");
+		}
+
 		public @CHOICE static class SQL_CreateFieldPrimaryKey extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;

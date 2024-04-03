@@ -1,3 +1,6 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Apr 1, 2024
+
 package com.eagle.programmar.PLI.Expressions;
 
 import com.eagle.programmar.PLI.PLI_Expression;
@@ -11,4 +14,3 @@ public class PLI_RelationalExpression extends PrecedenceOperator
 			"^>", "^<", "^=", "<=", ">=", ">", "<", "=");
 	public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
 }
-

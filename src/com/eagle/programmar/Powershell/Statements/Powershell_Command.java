@@ -34,8 +34,8 @@ public class Powershell_Command extends TokenSequence
 		
 		public static class Powershell_CommandOneArg extends TokenChooser
 		{
+			public @FIRST Powershell_Filename filename;   	// Tricky
 			public @CHOICE Powershell_Expression expression;
-			public @FIRST Powershell_Filename filename;
 		}
 	}
 }

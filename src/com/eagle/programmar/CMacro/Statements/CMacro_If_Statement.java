@@ -108,7 +108,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	//////////////////////////////////////////////////////////////
 	// Evaluation routine, for macros
 	
-	private boolean getBooleanValue(CMacro_Expression cond, CMacro_Preprocess preprocessor)
+	private static boolean getBooleanValue(CMacro_Expression cond, CMacro_Preprocess preprocessor)
 	{
 		AbstractToken which = cond.getWhich();
 		if (! (which instanceof EagleRunnable))
@@ -119,7 +119,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		EagleRunnable runnable = (EagleRunnable) which;
 		CMacro_Interpreter interpreter = new CMacro_Interpreter(preprocessor._parser, preprocessor._symbolTable);
 		runnable.interpret(interpreter);
-		boolean val = interpreter.getBoolValue(this);
+		boolean val = interpreter.getBoolValue(cond);
 		return val;
 	}
 }

@@ -49,6 +49,7 @@ public class SQL_CreateTableStatement extends TokenSequence
 			public @S(50) PunctuationRightParen rightParen;
 		}
 	}
+	
 	public static class SQL_IfTableNotExists extends TokenSequence
 	{
 		public @S(10) SQL_Keyword IF = new SQL_Keyword("IF");
@@ -72,6 +73,13 @@ public class SQL_CreateTableStatement extends TokenSequence
 			public @S(10) SQL_Keyword CHARSET = new SQL_Keyword("CHARSET");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
+		}
+		
+		public @CHOICE static class SQL_CreateCollate extends TokenSequence
+		{
+			public @S(10) SQL_Keyword COLLATE = new SQL_Keyword("COLLATE");
+			public @S(20) PunctuationEquals equals;
+			public @S(30) SQL_KeywordChoice collseq = new SQL_KeywordChoice("utf8_general_ci");
 		}
 		
 		public @CHOICE static class SQL_CreateComment extends TokenSequence

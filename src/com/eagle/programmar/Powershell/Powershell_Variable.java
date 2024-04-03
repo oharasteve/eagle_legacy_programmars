@@ -30,7 +30,8 @@ public class Powershell_Variable extends TokenSequence
 		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice(
 				"env",
 				"global",
-				"script");
+				"script",
+				"variable");
 		public @S(20) PunctuationColon colon;
 	}
 }

@@ -26,7 +26,9 @@ public class Powershell_Type extends TokenSequence
 				"Double",
 				"Float",
 				"Int",
+				"Int32",
 				"Int64",
+				"Long",
 				"PSCredential",
 				"SecureString",
 				"String");

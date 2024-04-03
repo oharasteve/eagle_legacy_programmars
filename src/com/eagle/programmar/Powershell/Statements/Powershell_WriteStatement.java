@@ -15,8 +15,9 @@ public class Powershell_WriteStatement extends TokenSequence
 	public @S(10) Powershell_KeywordChoice WRITE = new Powershell_KeywordChoice(
 			"Write-Host",
 			"Write-Output");
-	public @S(20) @OPT TokenList<Powershell_WriteOption> options;
+	public @S(20) @OPT TokenList<Powershell_WriteOption> options1;
 	public @S(30) Powershell_Expression expr;
+	public @S(40) @OPT TokenList<Powershell_WriteOption> options2;
 	
 	public static class Powershell_WriteOption extends TokenChooser
 	{
@@ -24,7 +25,7 @@ public class Powershell_WriteStatement extends TokenSequence
 		{
 			public @S(10) Powershell_Keyword FGColor = new Powershell_Keyword("-ForegroundColor");
 			public @S(20) Powershell_KeywordChoice COLOR = new Powershell_KeywordChoice(
-					"Green");
+					"Green", "Yellow");
 		}
 	}
 }

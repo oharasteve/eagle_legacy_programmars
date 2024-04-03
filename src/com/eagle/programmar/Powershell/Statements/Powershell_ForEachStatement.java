@@ -8,6 +8,7 @@ import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Statement;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -29,7 +30,7 @@ public class Powershell_ForEachStatement extends TokenSequence
 	public static class Powershell_ForEach extends TokenChooser
 	{
 		public @CHOICE Powershell_Punctuation percent = new Powershell_Punctuation("%");
-		public @CHOICE Powershell_Keyword FOREACH = new Powershell_Keyword("ForEach");
+		public @CHOICE Powershell_KeywordChoice FOREACH = new Powershell_KeywordChoice("ForEach", "ForEach-Object");
 	}
 
 	public static class Powershell_ForEachParams extends TokenSequence

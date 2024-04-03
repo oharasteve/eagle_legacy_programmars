@@ -7,7 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Parameter_List;
-import com.eagle.programmar.Python.Python_Parameter_List.Python_Parameters.Python_Params;
+import com.eagle.programmar.Python.Python_Params;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
