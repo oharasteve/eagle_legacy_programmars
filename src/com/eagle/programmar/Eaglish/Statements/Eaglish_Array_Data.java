@@ -42,15 +42,14 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable
 			for (int i = 0; i < init.values.getPrimaryCount(); i++)
 			{
 				Eaglish_Expression expr = init.values.getPrimaryElement(i);
-				interpreter.tryToInterpret(expr);
 				String val = interpreter.getStrValue(expr);
 				vals.add(new StringValue(val));
-				System.out.println("************ Array[" + i + "] = " + val);
+				if (interpreter._TRACE) System.err.println("*** " + var.toString() + "[" + i + "] = " + val);
 			}
 		}
 		
 		ArrayValue array = new ArrayValue();
 		array.setValue(vals);
-		interpreter._symbolTable.setSymbol(var._name, array);
+		interpreter._symbolTable.setSymbol(var.toString(), array);
 	}
 }

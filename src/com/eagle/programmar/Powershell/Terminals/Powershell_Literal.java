@@ -11,6 +11,6 @@ public class Powershell_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericLiteral(lines, "\"'", false, '?', true, false);
+		return genericLiteral(lines, "\"'", true, '`', true, false); // Careful with the funny backtick
 	}
 }

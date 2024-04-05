@@ -4,8 +4,8 @@
 package com.eagle.programmar.CMacro;
 
 import com.eagle.core.EagleInterpreter;
+import com.eagle.math.EagleSymbolTable;
 import com.eagle.parsers.ParserManager;
-import com.eagle.preprocess.EagleSymbolTable;
 
 public class CMacro_Interpreter extends EagleInterpreter
 {

@@ -8,10 +8,7 @@ import com.eagle.programmar.Eaglish.Eaglish_Type;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Parameter_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Eaglish_Parameter_Statement extends TokenSequence
 {
@@ -21,12 +18,6 @@ public class Eaglish_Parameter_Statement extends TokenSequence
 	public @S(40) Eaglish_Type type;
 	public @S(50) @OPT Eaglish_ParemeterDefaultValue defaultValue;
 	public @S(60) Eaglish_EndOfLine eoln;
-	
-	public static class Eaglish_Array_InitialValues extends TokenSequence
-	{
-		public @S(10) PunctuationEquals equals;
-		public @S(20) SeparatedList<Eaglish_Expression, PunctuationComma> values;
-	}
 	
 	public static class Eaglish_ParemeterDefaultValue extends TokenSequence
 	{

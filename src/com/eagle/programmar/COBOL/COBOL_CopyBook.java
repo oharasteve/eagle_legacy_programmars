@@ -4,11 +4,11 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.core.EagleProject;
+import com.eagle.math.EagleSymbolTable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleTracer;
 import com.eagle.parsers.ParserManager;
 import com.eagle.preprocess.EagleInclude;
-import com.eagle.preprocess.EagleSymbolTable;
 import com.eagle.tokens.AbstractToken;
 
 public class COBOL_CopyBook extends EagleInclude

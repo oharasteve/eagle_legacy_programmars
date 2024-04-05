@@ -16,6 +16,8 @@ public class Powershell_Relational_Expression extends PrecedenceOperator
 			"-eq",
 			"-ge",
 			"-gt",
+			"-ieq",
+			"-ine",
 			"-le",
 			"-lt",
 			"-ne");

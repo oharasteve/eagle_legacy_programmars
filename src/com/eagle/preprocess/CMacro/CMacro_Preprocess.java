@@ -6,13 +6,13 @@ package com.eagle.preprocess.CMacro;
 import java.io.IOException;
 
 import com.eagle.core.EagleProject;
+import com.eagle.math.EagleSymbolTable;
 import com.eagle.math.TokenValue;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.parsers.EagleTracer;
 import com.eagle.parsers.ParserManager;
 import com.eagle.preprocess.EagleInclude;
-import com.eagle.preprocess.EagleSymbolTable;
 import com.eagle.preprocess.FindIncludeFile;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.C_Statement;

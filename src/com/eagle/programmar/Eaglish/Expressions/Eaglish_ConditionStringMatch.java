@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.Eaglish.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_ConditionStringMatch extends PrecedenceOperator
+public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Eaglish_Expression left = new Eaglish_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Eaglish_KeywordChoice matchOperator = new Eaglish_KeywordChoice("ENDS_WITH", "STARTS_WITH");
@@ -20,5 +22,25 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator
 	{
 		public @S(10) Eaglish_Keyword AT = new Eaglish_Keyword("AT");
 		public @S(20) Eaglish_Expression position;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String leftStr = interpreter.getStrValue(left);
+		String rightStr = interpreter.getStrValue(right);
+		String oper = matchOperator.getValue();
+
+		switch (oper)
+		{
+		case "ENDS_WITH":
+			interpreter.pushBool(leftStr.endsWith(rightStr));
+			break;
+		case "STARTS_WITH":
+			interpreter.pushBool(leftStr.startsWith(rightStr));
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + oper);	
+		}
 	}
 }

@@ -35,6 +35,8 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (interpreter._TRACE) System.err.println("*** Calling " + name);
+		
 		// Have to search for the FUNCTION definition
 		Eaglish_Function_Block rightFn = null;
 		for (AbstractFunction absFn : interpreter._functionList)
@@ -81,7 +83,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		for (int i = 0; i < actual; i++)
 		{
 			Eaglish_Parameter_Statement param = rightFn.parameterStatements._elements.get(i);
-			interpreter._symbolTable.removeSymbol(param.param.getValue());
+			interpreter._symbolTable.removeSymbols(param.param.getValue());
 		}
 	}
 }

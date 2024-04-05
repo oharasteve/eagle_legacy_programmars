@@ -23,7 +23,7 @@ public class Powershell_IfStatement extends TokenSequence
 	public @S(50) @OPT Powershell_EndOfLine eoln1;
 	public @S(60) PunctuationLeftBrace leftBrace;
 	public @S(70) @OPT Powershell_EndOfLine eoln2;
-	public @S(80) TokenList<Powershell_Statement> stmts;
+	public @S(80) @OPT TokenList<Powershell_Statement> stmts;
 	public @S(90) PunctuationRightBrace rightBrace;
 	public @S(100) @OPT Powershell_EndOfLine eoln3;
 	public @S(110) @OPT TokenList<Powershell_IfElseIfStatement> elseIfStmts;
