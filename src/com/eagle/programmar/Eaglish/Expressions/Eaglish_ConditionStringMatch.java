@@ -30,6 +30,12 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 		String leftStr = interpreter.getStrValue(left);
 		String rightStr = interpreter.getStrValue(right);
 		String oper = matchOperator.getValue();
+		
+		int sc = 0;
+		if (atClause.isPresent())
+		{
+			sc = interpreter.getIntValue(atClause.position);
+		}
 
 		switch (oper)
 		{
@@ -37,7 +43,7 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 			interpreter.pushBool(leftStr.endsWith(rightStr));
 			break;
 		case "STARTS_WITH":
-			interpreter.pushBool(leftStr.startsWith(rightStr));
+			interpreter.pushBool(leftStr.startsWith(rightStr, sc));
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);	

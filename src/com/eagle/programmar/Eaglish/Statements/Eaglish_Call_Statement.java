@@ -38,25 +38,25 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		if (interpreter._TRACE) System.err.println("*** Calling " + name);
 		
 		// Have to search for the FUNCTION definition
-		Eaglish_Function_Block rightFn = null;
+		Eaglish_Function_Block func = null;
 		for (AbstractFunction absFn : interpreter._functionList)
 		{
 			Eaglish_Function_Block fn = (Eaglish_Function_Block) absFn;
 			if (fn.var.getValue().equalsIgnoreCase(name.getValue()))
 			{
 				// Found it!
-				rightFn = fn;
+				func = fn;
 				break;
 			}
 		}
 		
-		if (rightFn == null)
+		if (func == null)
 		{
 			throw new RuntimeException("Unable to find a FUNCTION named " + name);
 		}
 		
 		// Count the parameters
-		int expected = rightFn.parameterStatements.size();
+		int expected = func.parameterStatements.size();
 		int actual = callParams.args.getPrimaryCount(); 
 		if (actual != expected)
 		{
@@ -66,7 +66,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		// Assign all the parameters
 		for (int i = 0; i < actual; i++)
 		{
-			Eaglish_Parameter_Statement param = rightFn.parameterStatements._elements.get(i);
+			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			Eaglish_Expression arg = callParams.args.getPrimaryElement(i);
 			interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
@@ -74,7 +74,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		}
 		
 		// Evaluate the function
-		for (Eaglish_Statement stmt : rightFn.statements._elements)
+		for (Eaglish_Statement stmt : func.statements._elements)
 		{
 			interpreter.tryToInterpret(stmt.getWhich());
 		}
@@ -82,7 +82,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		// Remove all the parameters
 		for (int i = 0; i < actual; i++)
 		{
-			Eaglish_Parameter_Statement param = rightFn.parameterStatements._elements.get(i);
+			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			interpreter._symbolTable.removeSymbols(param.param.getValue());
 		}
 	}

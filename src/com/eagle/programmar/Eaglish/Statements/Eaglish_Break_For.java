@@ -4,19 +4,19 @@
 package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_Break_For extends TokenSequence implements EagleRunnable
+public class Eaglish_Break_For extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) Eaglish_Keyword BREAK_FOR = new Eaglish_Keyword("BREAK_FOR");
 	public @S(20) Eaglish_EndOfLine eoln;
 	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		throw new RuntimeException("Uh oh! How to do I implement BREAK?");
+		return Eagle_Statement_Result.BREAK;
 	}
 }

@@ -4,15 +4,16 @@
 package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
+import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_If_Block extends TokenSequence implements EagleRunnable
+public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) Eaglish_Keyword IF = new Eaglish_Keyword("IF");
 	public @S(20) Eaglish_Expression condition;
@@ -43,8 +44,11 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnable
 	}
 	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+
+		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
 		TokenList<Eaglish_Statement> todo = null;
 		
 		boolean cond1 = interpreter.getBoolValue(condition);
@@ -77,10 +81,9 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnable
 		
 		if (todo != null)
 		{
-			for (Eaglish_Statement stmt : todo._elements)
-			{
-				interpreter.tryToInterpret(stmt);
-			}
+			result = interpreter.interpretBlock(todo._elements);
 		}
+		
+		return result;
 	}
 }

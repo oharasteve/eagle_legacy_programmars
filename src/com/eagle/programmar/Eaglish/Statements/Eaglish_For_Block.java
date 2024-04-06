@@ -4,9 +4,10 @@
 package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.math.IntegerValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
+import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
@@ -16,7 +17,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Eaglish_For_Block extends TokenSequence implements EagleRunnable
+public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) Eaglish_Keyword FOR = new Eaglish_Keyword("FOR");
 	public @S(20) Eaglish_Variable_Definition var;
@@ -32,8 +33,9 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnable
 	public @S(100) Eaglish_EndOfLine eoln2;
 	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
+		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
 		int start = interpreter.getIntValue(startValue);
 		int stop = interpreter.getIntValue(stopValue);
 		
@@ -44,24 +46,22 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnable
 			for (int i = start; i <= stop; i++)
 			{
 				interpreter._symbolTable.setSymbol(var.toString(), new IntegerValue(i));
-				for (Eaglish_Statement stmt : statements._elements)
-				{
-					interpreter.tryToInterpret(stmt);
-				}
+				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
+				if (result == Eagle_Statement_Result.BREAK) break;
 			}
 			break;
 		case "DOWN_TO":
 			for (int i = start; i >= stop; i--)
 			{
 				interpreter._symbolTable.setSymbol(var.toString(), new IntegerValue(i));
-				for (Eaglish_Statement stmt : statements._elements)
-				{
-					interpreter.tryToInterpret(stmt);
-				}
+				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
+				if (result == Eagle_Statement_Result.BREAK) break;
 			}
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + which);
 		}
+		
+		return Eagle_Statement_Result.NORMAL;
 	}
 }

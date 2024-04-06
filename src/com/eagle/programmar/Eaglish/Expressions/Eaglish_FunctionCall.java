@@ -5,14 +5,14 @@ package com.eagle.programmar.Eaglish.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Function_Block;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Parameter_Statement;
-import com.eagle.programmar.Eaglish.Symbols.Eaglish_Function_Definition;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Identifier_Reference;
-import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -31,18 +31,23 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 	{
 		if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 		
-		// Search for the function definition
-		Eaglish_Function_Definition def = (Eaglish_Function_Definition) name.findDefinitionInScope();
-		if (def == null)
+		// Have to search for the FUNCTION definition
+		Eaglish_Function_Block func = null;
+		for (AbstractFunction absFn : interpreter._functionList)
 		{
-			throw new RuntimeException("No function called " + name);
+			Eaglish_Function_Block fn = (Eaglish_Function_Block) absFn;
+			if (fn.var.getValue().equalsIgnoreCase(name.getValue()))
+			{
+				// Found it!
+				func = fn;
+				break;
+			}
 		}
-		AbstractToken parent = def.getParent();
-		if (! (parent instanceof Eaglish_Function_Block))
+		
+		if (func == null)
 		{
-			throw new RuntimeException("Cannot call " + name + " becuase it is not a Function");
+			throw new RuntimeException("Unable to find a FUNCTION named " + name);
 		}
-		Eaglish_Function_Block func = (Eaglish_Function_Block) parent;
 		
 		// Make sure the function args match up
 		if (! func.returnsStatement.isPresent())
@@ -68,7 +73,8 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		// And transfer control to the function
 		for (Eaglish_Statement stmt : func.statements._elements)
 		{
-			interpreter.tryToInterpret(stmt);
+			Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);
+			if (result != Eagle_Statement_Result.NORMAL) break; 
 		}
 		
 		// The result was already put on the runtime stack

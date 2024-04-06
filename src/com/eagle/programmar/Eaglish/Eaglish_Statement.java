@@ -4,7 +4,7 @@
 package com.eagle.programmar.Eaglish;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Add_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Array_Data;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Break_For;
@@ -21,7 +21,7 @@ import com.eagle.programmar.Eaglish.Statements.Eaglish_String_Data;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_CommentEoln;
 import com.eagle.tokens.TokenChooser;
 
-public class Eaglish_Statement extends TokenChooser implements EagleRunnable
+public class Eaglish_Statement extends TokenChooser implements EagleRunnableWithResult
 {
 	public @CHOICE Eaglish_Add_Statement addStatement;
 	public @CHOICE Eaglish_Array_Data arrayStatement;
@@ -39,8 +39,8 @@ public class Eaglish_Statement extends TokenChooser implements EagleRunnable
 	public @CHOICE Eaglish_String_Data stringData;
 	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(this.getWhich());
+		return interpreter.tryToInterpret(this.getWhich());
 	}
 }
