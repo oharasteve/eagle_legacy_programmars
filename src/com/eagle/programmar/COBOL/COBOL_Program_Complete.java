@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL;
 
+import java.util.HashMap;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
@@ -43,8 +45,26 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 	}
 	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public void interpret(EagleInterpreter interp)
 	{
+		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
+		
+		// Pass 1 : Collect all the paragraph names
+		interpreter._paragraphs = new HashMap<String,COBOL_Paragraph>();
+		for (COBOL_Section section : procedureDiv.sections._elements)
+		{
+			for (COBOL_Paragraph paragraph : section.paragraphs._elements)
+			{
+				if (paragraph.paragraphHeaders._elements.size() > 0)
+				{
+					String paragraphName = paragraph.paragraphHeaders._elements.get(0).paragraphName.getValue();
+					interpreter._paragraphs.put(paragraphName, paragraph);
+					if (interpreter._TRACE) System.err.println("*** Found paragraph " + paragraphName);
+				}
+			}
+		}
+		
+		// Pass 2 -- now run it
 		interpreter.tryToInterpret(procedureDiv);
 	}
 }

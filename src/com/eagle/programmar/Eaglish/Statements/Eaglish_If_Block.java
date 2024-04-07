@@ -46,9 +46,8 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
-		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-
 		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		TokenList<Eaglish_Statement> todo = null;
 		
 		boolean cond1 = interpreter.getBoolValue(condition);

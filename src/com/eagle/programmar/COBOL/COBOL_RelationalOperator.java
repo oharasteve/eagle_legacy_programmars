@@ -17,7 +17,14 @@ public class COBOL_RelationalOperator extends TokenChooser
 	{
 		public @S(10) COBOL_Keyword GREATER = new COBOL_Keyword("GREATER");
 		public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
-		public @S(30) @OPT COBOL_OrEqual orEqual;
+		public @S(30) @OPT COBOL_GreaterOrEqual orEqual;
+
+		public static class COBOL_GreaterOrEqual extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
+			public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
+			public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		}
 	}
 	
 	public @CHOICE static class COBOL_Equal extends TokenSequence
@@ -30,13 +37,13 @@ public class COBOL_RelationalOperator extends TokenChooser
 	{
 		public @S(10) COBOL_Keyword LESS = new COBOL_Keyword("LESS");
 		public @S(20) @OPT COBOL_Keyword THAN = new COBOL_Keyword("THAN");
-		public @S(30) @OPT COBOL_OrEqual orEqual;
-	}
+		public @S(30) @OPT COBOL_LessOrEqual orEqual;
 
-	public @CHOICE static class COBOL_OrEqual extends TokenSequence
-	{
-		public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
-		public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
-		public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		public static class COBOL_LessOrEqual extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword OR = new COBOL_Keyword("OR");
+			public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
+			public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		}
 	}
 }

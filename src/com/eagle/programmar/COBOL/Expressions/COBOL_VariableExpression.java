@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -10,7 +13,7 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class COBOL_VariableExpression extends PrimaryOperator
+public class COBOL_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) COBOL_VariableRef variable;
 
@@ -25,5 +28,26 @@ public class COBOL_VariableExpression extends PrimaryOperator
 			public @S(10) COBOL_Keyword OF = new COBOL_Keyword("OF");
 			public @S(20) COBOL_Identifier_Reference id;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (variable.subscript.isPresent() && variable.subscript.size() > 0)
+		{
+			throw new RuntimeException("Cannot handle subscripts");
+		}
+		if (variable.ofList.isPresent() && variable.ofList.size() > 0)
+		{
+			throw new RuntimeException("Cannot handle field references");
+		}
+
+		String varName = variable.id.getValue();
+		EagleValue val = interpreter._symbolTable.findSymbol(varName);
+		if (val == null)
+		{
+			throw new RuntimeException("Unable to find a variable named " + varName);
+		}
+		interpreter.pushEagleValue(val);
 	}
 }

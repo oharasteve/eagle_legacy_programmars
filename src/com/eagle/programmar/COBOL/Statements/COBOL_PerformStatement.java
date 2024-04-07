@@ -3,19 +3,26 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
+import com.eagle.programmar.COBOL.COBOL_Interpreter;
+import com.eagle.programmar.COBOL.COBOL_Paragraph;
+import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_SentenceOrComment;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
+import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_PerformWhat.COBOL_PerformParagraph;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class COBOL_PerformStatement extends COBOL_AbstractStatement
+public class COBOL_PerformStatement extends COBOL_AbstractStatement implements EagleRunnable
 {
 	public @S(10) @DOC("rlpsperf.htm") COBOL_Keyword PERFORM = new COBOL_Keyword("PERFORM");
 	public @S(20) @OPT COBOL_PerformTestWhen testWhen;
@@ -89,6 +96,46 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement
 		{
 			public @S(10) COBOL_Keyword UNTIL = new COBOL_Keyword("UNTIL");
 			public @S(20) COBOL_Expression condition;
+		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interp)
+	{
+		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
+		
+		if (testWhen.isPresent()) throw new RuntimeException("Can't handle PERFORM TEST yet");
+		AbstractToken which = what.getWhich();
+		if (! (which instanceof COBOL_PerformParagraph))
+		{
+			throw new RuntimeException("Can only handle simple PERFORMs right now");
+		}
+		COBOL_PerformParagraph para = (COBOL_PerformParagraph) which;
+		if (para.performThrough.isPresent() || para.testWhen.isPresent())
+		{
+			throw new RuntimeException("Can only PERFORM one paragraph right now");
+		}
+		
+		String startPara = para.performStartParagraph.getValue();
+		if (interpreter._TRACE) System.err.println("*** Calling " + startPara);
+		
+		// Have to search for the PARAGRAPH definition
+		COBOL_Paragraph paragraph = null;
+		if (interpreter._paragraphs.containsKey(startPara))
+		{
+			// Found it!
+			paragraph = interpreter._paragraphs.get(startPara);
+		}
+		
+		if (paragraph == null)
+		{
+			throw new RuntimeException("Unable to find a Paragraph named " + startPara);
+		}
+		
+		// Evaluate the paragraph
+		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
+		{
+			interpreter.tryToInterpret(sentence.getWhich());
 		}
 	}
 }
