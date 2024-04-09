@@ -3,17 +3,23 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.COBOL_Variable;
+import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
+import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement.COBOL_AddType.COBOL_AddNoGiving;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class COBOL_AddStatement extends COBOL_AbstractStatement
+public class COBOL_AddStatement extends COBOL_AbstractStatement implements EagleRunnable
 {
 	public @S(10) @DOC("rlpsadd.htm") COBOL_Keyword ADD = new COBOL_Keyword("ADD");
 	public @S(20) COBOL_AddType type;
@@ -67,5 +73,28 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 		public @S(30) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
 		public @S(40) COBOL_Keyword ERROR = new COBOL_Keyword("ERROR");
 		public @S(50) TokenList<COBOL_Statement> actions;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		AbstractToken which = type.getWhich();
+		if (! (which instanceof COBOL_AddNoGiving))
+		{
+			throw new RuntimeException("Cannot handle " + which + " yet");
+		}
+		COBOL_AddNoGiving noGiving = (COBOL_AddNoGiving) which;
+		if (noGiving.moreExprs.isPresent() && noGiving.moreExprs.size() > 0)
+		{
+			throw new RuntimeException("Cannot handle multiple expressions yet");
+		}
+		
+		AbstractToken which2 = noGiving.addTo.var.getWhich();
+		if (which2 instanceof COBOL_UserVariable)
+		{
+			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
+			EagleValue val = interpreter.getEagleValue(noGiving.expr);
+			interpreter._symbolTable.setSymbol(variable.id.getValue(), val);
+		}
 	}
 }

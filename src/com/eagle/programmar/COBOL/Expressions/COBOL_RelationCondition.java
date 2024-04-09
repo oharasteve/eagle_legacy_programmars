@@ -29,6 +29,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		boolean not = NOT.isPresent();
 		
 		if (leftValue.isInteger() && rightValue.isInteger())
 		{
@@ -90,6 +91,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 			}
 			else throw new RuntimeException("Unable to handle " + which.getClass().getName());
 			
+			if (not) result = ! result;
 			interpreter.pushBool(result);
 		}
 	}

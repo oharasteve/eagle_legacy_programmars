@@ -38,6 +38,9 @@ public class COBOL_BuiltIn extends PrimaryOperator implements EagleRunnable
 		case "TRUE":
 			interpreter.pushBool(true);
 			break;
+		case "SPACES":
+			interpreter.pushStr("");
+			break;
 		default:
 			throw new RuntimeException("Can't handle BuiltIn's other than TRUE/FALSE: " + name);
 		}
