@@ -9,10 +9,8 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
-import com.eagle.programmar.COBOL.COBOL_Subscript.COBOL_SubscriptType.COBOL_RegularSubscript;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -56,22 +54,8 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 				throw new RuntimeException("Cannot have a subscript on " + varName);
 			}
 			ArrayList<EagleValue> avals = val.forceArrayValue();
-
-			AbstractToken which = variable.subscript.first().which.getWhich();
-			if (which instanceof COBOL_RegularSubscript)
-			{
-				COBOL_RegularSubscript subscr = (COBOL_RegularSubscript) which;
-				if (subscr.range.isPresent())
-				{
-					throw new RuntimeException("Cannot handle subscript ranges yet");
-				}
-				int subscript = interpreter.getIntValue(subscr.expr);
-				interpreter.pushEagleValue(avals.get(subscript));
-			}
-			else
-			{
-				throw new RuntimeException("Cannot handle " + which);
-			}
+			int subscript = variable.subscript.first().getSubscriptValue(interpreter);
+			interpreter.pushEagleValue(avals.get(subscript));
 		}
 		else
 		{

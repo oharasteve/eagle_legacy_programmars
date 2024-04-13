@@ -7,9 +7,8 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Parameter_List;
-import com.eagle.programmar.Python.Python_Params;
+import com.eagle.programmar.Python.Python_Params.Python_Param;
 import com.eagle.programmar.Python.Python_Variable;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 
@@ -22,10 +21,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Assume print(expr);
-		AbstractToken what = args.first().params.getWhich();
-		if (! (what instanceof Python_Params)) throw new RuntimeException("Unexpected arg: " + what.toString());
-		Python_Params params = (Python_Params) what;
-		EagleValue result = interpreter.getEagleValue(params.expr);
+		Python_Param param = args.first().params.param;
+		EagleValue result = interpreter.getEagleValue(param.expr);
 		System.out.println(result.toString());
 	}
 }

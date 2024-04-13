@@ -8,6 +8,7 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
+import com.eagle.programmar.Python.Statements.Python_AwaitStatement;
 import com.eagle.programmar.Python.Statements.Python_BreakStatement;
 import com.eagle.programmar.Python.Statements.Python_ClassDeclaration;
 import com.eagle.programmar.Python.Statements.Python_ContinueStatement;
@@ -81,6 +82,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	{
 		public @CHOICE Python_Assignment assignment;
 		public @CHOICE Python_AssertStatement assertStatement;
+		public @CHOICE Python_AwaitStatement awaitStatement;
 		public @CHOICE Python_BreakStatement breakStatement;
 		public @CHOICE Python_ClassDeclaration classDeclaration;
 		public @CHOICE Python_ContinueStatement continueStatement;

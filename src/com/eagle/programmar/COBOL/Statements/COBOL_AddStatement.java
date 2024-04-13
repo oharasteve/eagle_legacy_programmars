@@ -11,7 +11,6 @@ import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
-import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement.COBOL_AddType.COBOL_AddNoGiving;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -28,38 +27,41 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 	
 	public static class COBOL_AddType extends TokenChooser
 	{
-		public @CHOICE static class COBOL_AddNoGiving extends TokenSequence
-		{
-			public @S(10) COBOL_Expression expr;
-			public @S(20) @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
-			public @S(30) @OPT COBOL_AddTo addTo;
-
-			public static class COBOL_AddTo extends TokenSequence
-			{
-				public @S(10) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-				public @S(20) COBOL_Variable var;
-				public @S(30) @OPT TokenList<COBOL_AddMoreVars> moreVars;
-				
-				public static class COBOL_AddMoreVars extends TokenSequence
-				{
-					public @S(10) @OPT PunctuationComma comma;
-					public @S(20) COBOL_Variable var;
-				}
-			}
-		}
-		
-		public @FIRST static class COBOL_AddWithGiving extends TokenSequence
-		{
-			public @S(10) COBOL_Expression expr;
-			public @S(20) @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
-			public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
-			public @S(40) @OPT COBOL_Expression toExpr;
-			public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-			public @S(60) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
-			public @S(70) TokenList<COBOL_Variable> vars;
-		}
+		public @FIRST COBOL_AddWithGiving addWithGiving;
+		public @CHOICE COBOL_AddNoGiving addNoGiving;
 	}
 	
+	public static class COBOL_AddWithGiving extends TokenSequence
+	{
+		public @S(10) COBOL_Expression expr;
+		public @S(20) @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
+		public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+		public @S(40) @OPT COBOL_Expression toExpr;
+		public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+		public @S(60) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
+		public @S(70) TokenList<COBOL_Variable> vars;
+	}
+
+	public static class COBOL_AddNoGiving extends TokenSequence
+	{
+		public @S(10) COBOL_Expression expr;
+		public @S(20) @OPT TokenList<COBOL_AddMoreExprs> moreExprs;
+		public @S(30) @OPT COBOL_AddTo addTo;
+
+		public static class COBOL_AddTo extends TokenSequence
+		{
+			public @S(10) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
+			public @S(20) COBOL_Variable var;
+			public @S(30) @OPT TokenList<COBOL_AddMoreVars> moreVars;
+			
+			public static class COBOL_AddMoreVars extends TokenSequence
+			{
+				public @S(10) @OPT PunctuationComma comma;
+				public @S(20) COBOL_Variable var;
+			}
+		}
+	}
+
 	public static class COBOL_AddMoreExprs extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;

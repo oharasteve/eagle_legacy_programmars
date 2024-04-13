@@ -11,7 +11,6 @@ import com.eagle.programmar.COBOL.COBOL_Interpreter;
 import com.eagle.programmar.COBOL.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_SentenceOrComment;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
-import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_PerformWhat.COBOL_PerformParagraph;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -42,15 +41,17 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		public @S(20) COBOL_Identifier_Reference performEndParagraph;
 	}
 
+	public static class COBOL_PerformParagraph extends TokenSequence
+	{
+		public @S(10) COBOL_Identifier_Reference performStartParagraph;
+		public @S(20) @OPT COBOL_Paragraph_or_Section_Thru performThrough;
+		public @S(30) @OPT COBOL_PerformTestWhen testWhen;
+		public @S(40) @OPT TokenList<COBOL_PerformClause> clauseList;
+	}
+
 	public static class COBOL_PerformWhat extends TokenChooser
 	{
-		public @CHOICE static class COBOL_PerformParagraph extends TokenSequence
-		{
-			public @S(10) COBOL_Identifier_Reference performStartParagraph;
-			public @S(20) @OPT COBOL_Paragraph_or_Section_Thru performThrough;
-			public @S(30) @OPT COBOL_PerformTestWhen testWhen;
-			public @S(40) @OPT TokenList<COBOL_PerformClause> clauseList;
-		}
+		public @CHOICE COBOL_PerformParagraph performParagraph;
 		
 		public @CHOICE static class COBOL_PerformNothing extends TokenSequence
 		{

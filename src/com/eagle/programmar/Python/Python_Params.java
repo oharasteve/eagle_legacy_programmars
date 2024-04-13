@@ -11,15 +11,16 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationSlash;
+import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Python_Params extends TokenSequence
 {
-	public @S(10) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-	public @S(20) Python_Expression expr;
-	public @S(30) @OPT Python_ParamType type;
-	public @S(40) @OPT Python_InitValue initValue;
-	public @S(50) @OPT TokenList<Python_MoreParams> moreParams;
-	public @S(60) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
+	public @S(10) Python_Param param;
+	public @S(20) @OPT Python_ParamType type;
+	public @S(30) @OPT Python_InitValue initValue;
+	public @S(40) @OPT TokenList<Python_MoreParams> moreParams;
+	public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	
 	public static class Python_ParamType extends TokenSequence
 	{
@@ -27,6 +28,19 @@ public class Python_Params extends TokenSequence
 		public @S(20) Python_Type type;
 	}
 	
+	public static class Python_Param extends TokenChooser
+	{
+		public @CHOICE Python_Expression expr;
+		public @LAST PunctuationSlash slash;	// Means end of positional arguments
+		public @LAST PunctuationStar star;	    // Means end of positional or keyword arguments
+
+		public @CHOICE static class PythonParamStar extends TokenSequence
+		{
+			public @S(10) Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
+			public @S(20) Python_Expression expr;
+		}
+	}
+
 	public static class Python_MoreParams extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationComma comma;
@@ -34,16 +48,5 @@ public class Python_Params extends TokenSequence
 		public @S(30) Python_Param param;
 		public @S(40) @OPT Python_ParamType type;
 		public @S(50) @OPT Python_InitValue initValue;
-		
-		public static class Python_Param extends TokenChooser
-		{
-			public @CHOICE Python_Expression expr;
-
-			public @CHOICE static class PythonParamStar extends TokenSequence
-			{
-				public @S(10) Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-				public @S(20) @OPT Python_Expression expr;
-			}
-		}
 	}
 }

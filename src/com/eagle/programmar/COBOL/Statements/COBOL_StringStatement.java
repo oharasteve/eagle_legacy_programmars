@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
-import com.eagle.programmar.COBOL.Statements.COBOL_StringStatement.COBOL_StringWhat.COBOL_StringDelimited.COBOL_StringDelimitByWhat.COBOL_StringDelimitSpaces;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_HexNumber;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -44,14 +43,15 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 				public @CHOICE COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
 				public @CHOICE COBOL_HexNumber hex;
 				public @CHOICE COBOL_Literal literal;
-				
-				public @CHOICE static class COBOL_StringDelimitSpaces extends TokenSequence
-				{
-					public @S(10) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-					public @S(20) COBOL_KeywordChoice SPACES = new COBOL_KeywordChoice("SPACE", "SPACES");
-				}
+				public @CHOICE COBOL_StringDelimitSpaces stringDelimitSpaces;
 			}
 		}
+	}
+
+	public static class COBOL_StringDelimitSpaces extends TokenSequence
+	{
+		public @S(10) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
+		public @S(20) COBOL_KeywordChoice SPACES = new COBOL_KeywordChoice("SPACE", "SPACES");
 	}
 
 	public static class COBOL_StringPiece extends TokenSequence

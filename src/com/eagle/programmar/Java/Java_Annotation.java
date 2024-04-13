@@ -37,8 +37,10 @@ public class Java_Annotation extends TokenChooser
 	public @CHOICE static class Java_AnnotationList extends TokenSequence
 	{
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-		public @S(20) Java_KeywordChoice ATTR =
-				new Java_KeywordChoice("Nullable", "AccessoryAction", "PageTransition");
+		public @S(20) Java_KeywordChoice ATTR = new Java_KeywordChoice(
+				"AccessoryAction",
+				"Nullable",
+				"PageTransition");
 	}
 	
 	public @LAST static class Java_AnnotationSimple extends TokenSequence

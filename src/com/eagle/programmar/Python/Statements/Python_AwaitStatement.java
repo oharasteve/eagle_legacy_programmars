@@ -9,6 +9,13 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_AwaitStatement extends TokenSequence
 {
-	public @S(10) Python_Keyword AWAIT = new Python_Keyword("await");
-	public @S(20) Python_Expression condition;
+	public @S(10) @OPT Python_IfAwait ifAwait;
+	public @S(20) Python_Keyword AWAIT = new Python_Keyword("await");
+	public @S(30) Python_Expression condition;
+	
+	public static class Python_IfAwait extends TokenSequence
+	{
+		public @S(10) Python_Keyword IF = new Python_Keyword("if");
+		public @S(20) @OPT Python_Keyword NOT = new Python_Keyword("not");
+	}
 }

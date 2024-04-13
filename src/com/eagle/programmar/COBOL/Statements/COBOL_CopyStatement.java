@@ -35,7 +35,7 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 		
 		public static class COBOL_CopyReplace extends TokenSequence
 		{
-			public @S(10) COBOL_Identifier_Reference from;
+			public @S(10) COBOL_Expression from;
 			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
 			public @S(30) COBOL_Expression to;
 		}
