@@ -6,9 +6,11 @@ package com.eagle.programmar.Python.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Parameter_List;
 import com.eagle.programmar.Python.Python_Params.Python_Param;
 import com.eagle.programmar.Python.Python_Variable;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 
@@ -22,7 +24,12 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 	{
 		// Assume print(expr);
 		Python_Param param = args.first().params.param;
-		EagleValue result = interpreter.getEagleValue(param.expr);
-		System.out.println(result.toString());
+		AbstractToken which = param.getWhich();
+		if (which instanceof Python_Expression)
+		{
+			Python_Expression expr = (Python_Expression) which;
+			EagleValue result = interpreter.getEagleValue(expr);
+			System.out.println(result.toString());
+		}
 	}
 }

@@ -24,7 +24,10 @@ public class Template_Syntax extends EagleSyntax
 	}
 	
 	private static String[] reservedWords = new String[] {
+		"and",
 		"data",
+		"not",
+		"or",
 		"print",
 	};
 }

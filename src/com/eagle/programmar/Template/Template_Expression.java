@@ -4,10 +4,12 @@
 package com.eagle.programmar.Template;
 
 import com.eagle.programmar.Template.Expressions.Template_AdditiveExpression;
+import com.eagle.programmar.Template.Expressions.Template_AndExpression;
 import com.eagle.programmar.Template.Expressions.Template_MultiplicativeExpression;
-import com.eagle.programmar.Template.Expressions.Template_Negative;
-import com.eagle.programmar.Template.Expressions.Template_NotOp;
-import com.eagle.programmar.Template.Expressions.Template_Parens;
+import com.eagle.programmar.Template.Expressions.Template_NegativeExpression;
+import com.eagle.programmar.Template.Expressions.Template_NotExpression;
+import com.eagle.programmar.Template.Expressions.Template_OrExpression;
+import com.eagle.programmar.Template.Expressions.Template_ParenExpression;
 import com.eagle.programmar.Template.Expressions.Template_RelationalExpression;
 import com.eagle.programmar.Template.Symbols.Template_Identifier_Reference;
 import com.eagle.programmar.Template.Terminals.Template_Literal;
@@ -45,14 +47,16 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 	
-	public @P(100) Template_Parens parens;
-	public @P(110) Template_Negative negative;
-	public @P(120) Template_NotOp notOp;
+	public @P(100) Template_NegativeExpression negativeExpression;
+	public @P(110) Template_NotExpression notExpression;
+	public @P(120) Template_ParenExpression parenExpression;
 	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 	
-	public @P(130) Template_MultiplicativeExpression multiplicativeExpression;
-	public @P(140) Template_AdditiveExpression additiveExpression;
-	public @P(150) Template_RelationalExpression relationalExpression;
+	public @P(500) Template_MultiplicativeExpression multiplicativeExpression;
+	public @P(510) Template_AdditiveExpression additiveExpression;
+	public @P(520) Template_RelationalExpression relationalExpression;
+	public @P(530) Template_AndExpression andExpression;
+	public @P(540) Template_OrExpression orExpression;
 }
