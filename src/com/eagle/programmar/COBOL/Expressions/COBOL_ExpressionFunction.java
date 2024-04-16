@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Variable;
-import com.eagle.programmar.COBOL.Expressions.COBOL_ExpressionFunction.COBOL_FunctionArgs.COBOL_FunctionParameter;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -45,25 +44,25 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		public @CHOICE COBOL_Variable userFunc;
 	}
 
+	public static class COBOL_FunctionParameter extends TokenSequence
+	{
+		public @S(10) COBOL_Expression parameter;
+		public @S(20) @OPT COBOL_ExpressionFunctionRange range;
+		public @S(30) @OPT COBOL_KeywordChoice LEADING = new COBOL_KeywordChoice("LEADING", "TRAILING");
+		public @S(40) @OPT PunctuationComma comma;
+		
+		public static class COBOL_ExpressionFunctionRange extends TokenSequence
+		{
+			public @S(10) PunctuationColon colon;
+			public @S(20) COBOL_Expression parameter;
+		}
+	}
+
 	public static class COBOL_FunctionArgs extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) TokenList<COBOL_FunctionParameter> parameters;
 		public @S(30) PunctuationRightParen rightParen;
-		
-		public static class COBOL_FunctionParameter extends TokenSequence
-		{
-			public @S(10) COBOL_Expression parameter;
-			public @S(20) @OPT COBOL_ExpressionFunctionRange range;
-			public @S(30) @OPT COBOL_KeywordChoice LEADING = new COBOL_KeywordChoice("LEADING", "TRAILING");
-			public @S(40) @OPT PunctuationComma comma;
-			
-			public static class COBOL_ExpressionFunctionRange extends TokenSequence
-			{
-				public @S(10) PunctuationColon colon;
-				public @S(20) COBOL_Expression parameter;
-			}
-		}
 	}
 	
 	@Override
