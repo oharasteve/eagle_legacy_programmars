@@ -21,6 +21,7 @@ public class Powershell_Type extends TokenSequence
 	{
 		public @CHOICE Powershell_KeywordChoice PRIMITIVE = new Powershell_KeywordChoice(
 				"Array",
+				"Boolean",
 				"Char",
 				"DateTime",
 				"Double",

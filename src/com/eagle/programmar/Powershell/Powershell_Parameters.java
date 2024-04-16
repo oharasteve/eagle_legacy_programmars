@@ -45,6 +45,17 @@ public class Powershell_Parameters extends TokenSequence
 			public @S(60) PunctuationRightParen rightParen;
 			public @S(70) PunctuationRightBracket rightBracket;
 			public @S(80) @OPT Powershell_EndOfLine eoln2;
+			public @S(90) @OPT Powershell_CastParam cast;
+			public @S(100) Powershell_Variable param;
+			public @S(110) @OPT PunctuationComma comma;
+			public @S(120) @OPT Powershell_EndOfLine eoln3;
+			
+			public static class Powershell_CastParam extends TokenSequence
+			{
+				public @S(10) PunctuationLeftBracket leftBracket;
+				public @S(20) Powershell_Type type;
+				public @S(30) PunctuationRightBracket rightBracket;
+			}
 			
 			public static class Powershell_ParameterOption extends TokenChooser
 			{
@@ -71,17 +82,6 @@ public class Powershell_Parameters extends TokenSequence
 			}
 		}
 		
-		public @CHOICE static class Powershell_CastParam extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) Powershell_Type type;
-			public @S(30) PunctuationRightBracket rightBracket;
-			public @S(40) @OPT Powershell_EndOfLine eoln1;
-			public @S(50) Powershell_Variable param;
-			public @S(60) @OPT PunctuationComma comma;
-			public @S(70) @OPT Powershell_EndOfLine eoln2;
-		}
-
 		public @CHOICE static class Powershell_ParamSwitch extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
