@@ -32,11 +32,16 @@ public class Python_ClassDeclaration extends TokenSequence implements AbstractCl
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT Python_EndOfLine eoln;
-		public @S(30) @OPT Python_Type type;
-		public @S(40) @OPT Python_ClassSuper superClass;
-		public @S(50) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes; 
-		public @S(60) PunctuationRightParen rightParen;
+		public @S(30) @OPT Python_WhatSuper whatSuper;
+		public @S(40) PunctuationRightParen rightParen;
 
+		public static class Python_WhatSuper extends TokenSequence
+		{
+			public @S(10) Python_Type type;
+			public @S(20) @OPT Python_ClassSuper superClass;
+			public @S(30) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes; 
+		}
+		
 		public static class Python_MoreTypes extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
