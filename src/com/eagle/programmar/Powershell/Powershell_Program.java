@@ -21,8 +21,10 @@ public class Powershell_Program extends EagleLanguage
 		return "https://docs.microsoft.com/en-us/powershell/scripting/lang-spec/";
 	}
 	
-	public @S(10) @OPT TokenList<Powershell_Directive> directives;
-	public @S(20) @OPT Powershell_CmdletBinding cmtletBinding;
-	public @S(30) @OPT TokenList<Powershell_CommentEoln> comments;
-	public @S(40) @OPT TokenList<Powershell_Statement> statements;
+	public @S(10) @OPT TokenList<Powershell_CommentEoln> comments1;
+	public @S(20) @OPT TokenList<Powershell_Directive> directives;
+	public @S(30) @OPT Powershell_CmdletBinding cmdletBinding;
+	public @S(40) @OPT Powershell_Parameters parameters;
+	public @S(50) @OPT TokenList<Powershell_CommentEoln> comments2;
+	public @S(60) @OPT TokenList<Powershell_Statement> statements;
 }

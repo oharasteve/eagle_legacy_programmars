@@ -21,6 +21,8 @@ public class Powershell_WriteStatement extends TokenSequence
 	
 	public static class Powershell_WriteOption extends TokenChooser
 	{
+		public @CHOICE Powershell_KeywordChoice NONEWLINE = new Powershell_KeywordChoice("-NoNewLine");
+		
 		public @CHOICE static class Powershell_WriteOptionColor extends TokenSequence
 		{
 			public @S(10) Powershell_Keyword FGColor = new Powershell_Keyword("-ForegroundColor");

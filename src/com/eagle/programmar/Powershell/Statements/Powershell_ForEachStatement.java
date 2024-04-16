@@ -22,10 +22,11 @@ public class Powershell_ForEachStatement extends TokenSequence
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#844-the-foreach-statement") Powershell_ForEach foreach;
 	public @S(20) @OPT Powershell_ForEachParams params;
-	public @S(30) PunctuationLeftBrace leftBrace;
-	public @S(40) @OPT Powershell_EndOfLine eoln;
-	public @S(50) TokenList<Powershell_Statement> stmts;
-	public @S(60) PunctuationRightBrace rightBrace;
+	public @S(30) @OPT Powershell_EndOfLine eoln1;
+	public @S(40) PunctuationLeftBrace leftBrace;
+	public @S(50) @OPT Powershell_EndOfLine eoln2;
+	public @S(60) TokenList<Powershell_Statement> stmts;
+	public @S(70) PunctuationRightBrace rightBrace;
 	
 	public static class Powershell_ForEach extends TokenChooser
 	{
