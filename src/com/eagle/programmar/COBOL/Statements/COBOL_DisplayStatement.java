@@ -126,9 +126,10 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 				{
 					COBOL_Expression expr = (COBOL_Expression) token;
 					EagleValue result = interpreter.getEagleValue(expr);
-					System.out.println(result.toString());
+					System.out.print(result.toString());
 				}
 			}
+			System.out.println();
 		}
 	}
 	

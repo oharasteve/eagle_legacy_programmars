@@ -83,7 +83,20 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 			break;
 		case "TRIM":
 			String str2 = oneStringArg(interpreter, funcName);
-			interpreter.pushStr(str2.trim());
+			boolean leading = true;
+			COBOL_FunctionParameter arg = args.parameters.first();
+			if (arg.LEADING.isPresent())
+			{
+				if (arg.LEADING.getValue().equals("TRAILING")) leading = false;
+			}
+			if (leading)
+			{
+				interpreter.pushStr(str2.stripLeading());
+			}
+			else
+			{
+				interpreter.pushStr(str2.stripTrailing());
+			}
 			break;
 		default:
 			throw new RuntimeException("UNable to evaluate function " + func);
