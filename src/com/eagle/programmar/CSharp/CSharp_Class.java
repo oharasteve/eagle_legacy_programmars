@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Directives.CSharp_PragmaDirective;
 import com.eagle.programmar.CSharp.Directives.CSharp_RegionDirective;
@@ -27,7 +29,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Class extends TokenSequence implements AbstractClass, EagleScopeInterface
+public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass, EagleScopeInterface
 {
 	public @S(10) @OPT TokenList<CSharp_AnnotationOrComment> annotationOrComment;
 	public @S(20) @OPT TokenList<CSharp_ClassModifier> modifiers;
@@ -109,6 +111,15 @@ public class CSharp_Class extends TokenSequence implements AbstractClass, EagleS
 		{
 			public @S(10) CSharp_Keyword STATIC = new CSharp_Keyword("static");
 			public @S(20) @NEWLINE CSharp_Statement statement;
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (CSharp_ClassElement element : elements._elements)
+		{
+			interpreter.tryToInterpret(element.getWhich());
 		}
 	}
 

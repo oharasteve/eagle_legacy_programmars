@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
@@ -14,13 +17,13 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Data extends TokenSequence
+public class CSharp_Data extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @NEWLINE CSharp_DataBeforeSemicolon dataBody;
 	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
 	public @S(30) @OPT TokenList<CSharp_Comment> comments;
 
-	public static class CSharp_DataBeforeSemicolon extends TokenSequence
+	public static class CSharp_DataBeforeSemicolon extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) @OPT TokenList<CSharp_Annotation> annotation1;
 		public @S(20) @OPT TokenList<CSharp_DataModifier> modifiers;
@@ -31,6 +34,13 @@ public class CSharp_Data extends TokenSequence
 		public @S(70) @OPT PunctuationRightBracket rightBracket;
 		public @S(80) @OPT CSharp_DataInitialValue initialValue;
 		public @S(90) @OPT TokenList<CSharp_MoreIdentifiers> moreIds;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			EagleValue value = interpreter.getEagleValue(initialValue.expression);
+			interpreter._symbolTable.setSymbol(id.toString(), value);
+		}
 	}
 	
 	public static class CSharp_DataModifier extends TokenSequence
@@ -51,5 +61,11 @@ public class CSharp_Data extends TokenSequence
 		public @S(30) @OPT PunctuationLeftBracket leftBracket;
 		public @S(40) @OPT PunctuationRightBracket rightBracket;
 		public @S(50) @OPT CSharp_DataInitialValue initialValue;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(dataBody);
 	}
 }

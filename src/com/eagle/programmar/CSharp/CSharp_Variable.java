@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
@@ -13,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_Variable extends TokenSequence implements AbstractVariable
+public class CSharp_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) CSharp_VariableIdentifier first;
 	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
@@ -39,5 +42,13 @@ public class CSharp_Variable extends TokenSequence implements AbstractVariable
 			public @S(50) CSharp_Identifier_Reference id;
 			public @S(60) @NOSPACE PunctuationRightParen rightParen2;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		CSharp_Identifier_Reference which = (CSharp_Identifier_Reference) first.getWhich();
+		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		interpreter.pushEagleValue(value);
 	}
 }

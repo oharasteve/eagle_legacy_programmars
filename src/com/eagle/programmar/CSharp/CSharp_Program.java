@@ -3,7 +3,9 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
@@ -19,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Program extends EagleLanguage
+public class CSharp_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String CSHARP = "CSharp";
 	
@@ -110,5 +112,11 @@ public class CSharp_Program extends EagleLanguage
 		public @CHOICE @NEWLINE CSharp_Enum enumeration;
 		public @CHOICE @NEWLINE CSharp_Method method;
 		public @CHOICE @NEWLINE CSharp_Directive directive;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(myClasses.first().getWhich());
 	}
 }
