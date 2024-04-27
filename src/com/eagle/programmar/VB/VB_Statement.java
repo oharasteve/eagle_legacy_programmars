@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.VB;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.VB.Statements.VB_AssignmentStatement;
 import com.eagle.programmar.VB.Statements.VB_AttributeStatement;
 import com.eagle.programmar.VB.Statements.VB_BeginStatement;
@@ -10,6 +12,7 @@ import com.eagle.programmar.VB.Statements.VB_CallStatement;
 import com.eagle.programmar.VB.Statements.VB_CloseStatement;
 import com.eagle.programmar.VB.Statements.VB_DataDeclaration;
 import com.eagle.programmar.VB.Statements.VB_ExitStatement;
+import com.eagle.programmar.VB.Statements.VB_ExpressionStatement;
 import com.eagle.programmar.VB.Statements.VB_ForEachStatement;
 import com.eagle.programmar.VB.Statements.VB_ForStatement;
 import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
@@ -24,20 +27,14 @@ import com.eagle.programmar.VB.Statements.VB_SetStatement;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
 import com.eagle.programmar.VB.Statements.VB_VersionStatement;
 import com.eagle.programmar.VB.Statements.VB_WscriptEcho;
-import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Label_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class VB_Statement extends TokenSequence
+public class VB_Statement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) VB_BaseStatement baseStatement;
 	public @S(20) @OPT VB_Comment comment;
@@ -69,23 +66,18 @@ public class VB_Statement extends TokenSequence
 		public @CHOICE VB_VersionStatement versionStatement;
 		public @CHOICE VB_WscriptEcho wscriptEcho;
 		
-		public @LAST static class VB_InvokeFunction extends TokenSequence
-		{
-			public @S(10) SeparatedList<VB_Identifier_Reference,PunctuationPeriod> names;
-			public @S(20) @OPT VB_InvokeFunctionArgs args;
-			
-			public static class VB_InvokeFunctionArgs extends TokenSequence
-			{
-				public @S(10) PunctuationLeftParen leftParen;
-				public @S(20) @OPT SeparatedList<VB_Expression,PunctuationComma> args;
-				public @S(30) PunctuationRightParen rightParen;
-			}
-		}
-		
+		public @LAST VB_ExpressionStatement expressionStatement;
+
 		public @CHOICE static class VB_Label extends TokenSequence
 		{
 			public @S(10) VB_Label_Definition lbl;
 			public @S(20) PunctuationColon colon;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(baseStatement.getWhich());
 	}
 }

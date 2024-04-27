@@ -3,15 +3,25 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class VB_WscriptEcho extends TokenSequence
+public class VB_WscriptEcho extends TokenSequence implements EagleRunnable
 {
 	public @S(10) VB_Keyword WSCRIPT = new VB_Keyword("wscript");
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) VB_Keyword ECHO = new VB_Keyword("echo");
 	public @S(40) VB_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue result = interpreter.getEagleValue(expr);
+		System.out.println(result.toString());
+	}
 }

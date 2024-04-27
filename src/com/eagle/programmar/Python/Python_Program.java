@@ -24,7 +24,6 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 
 	public @S(10) @OPT TokenList<Python_Statement> entries;
 
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

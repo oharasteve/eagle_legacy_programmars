@@ -3,10 +3,12 @@
 
 package com.eagle.programmar.VB;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
-public class VB_Program extends EagleLanguage
+public class VB_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String VB = "VB";
 	
@@ -22,4 +24,13 @@ public class VB_Program extends EagleLanguage
 	}
 	
 	public @S(10) @OPT TokenList<VB_Statement> elements;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (VB_Statement stmt : elements._elements)
+		{
+			interpreter.tryToInterpret(stmt);
+		}
+	}
 }
