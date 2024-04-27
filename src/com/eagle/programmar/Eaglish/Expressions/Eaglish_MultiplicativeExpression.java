@@ -10,6 +10,7 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenChooser;
 
 public class Eaglish_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
@@ -27,36 +28,26 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator impleme
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
 		AbstractToken which = operator.getWhich();
-		if (which instanceof Eaglish_PunctuationChoice)
+		if (which instanceof TerminalToken)
 		{
-			Eaglish_PunctuationChoice oper = (Eaglish_PunctuationChoice) which;
-			switch (oper.getValue())
+			String oper = ((TerminalToken) which).getValue();
+			int leftValue = interpreter.getIntValue(left);
+			int rightValue = interpreter.getIntValue(right);
+			switch (oper)
 			{
 			case "*":
 				interpreter.pushInt(leftValue * rightValue);
-				break;
-			default:
-				throw new RuntimeException("Unable to handle " + oper + " in Eaglish_MultiplicativeExpression");	
-			}
-		}
-		else if (which instanceof Eaglish_KeywordChoice)
-		{
-			Eaglish_KeywordChoice oper = (Eaglish_KeywordChoice) which;
-			switch (oper.getValue())
-			{
+				return;
 			case "DIVIDE_TRUNCATE":
 				interpreter.pushInt(leftValue / rightValue);
-				break;
+				return;
 			case "REMAINDER":
 				interpreter.pushInt(leftValue % rightValue);
-				break;
-			default:
-				throw new RuntimeException("Unable to handle " + oper + " in Eaglish_MultiplicativeExpression");	
+				return;
 			}
+			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_MultiplicativeExpression");	
 		}
-		else throw new RuntimeException("Unexpected operator: " + which.getClass().getName());
+		throw new RuntimeException("Unexpected operator: " + which.getClass().getName());
 	}
 }

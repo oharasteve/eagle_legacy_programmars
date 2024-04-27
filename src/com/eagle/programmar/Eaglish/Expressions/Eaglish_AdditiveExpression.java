@@ -18,19 +18,18 @@ public class Eaglish_AdditiveExpression extends PrecedenceOperator implements Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		String oper = operator.getValue();
 		int leftValue = interpreter.getIntValue(left);
 		int rightValue = interpreter.getIntValue(right);
-		String oper = operator.getValue();
 		switch (oper)
 		{
 		case "+":
 			interpreter.pushInt(leftValue + rightValue);
-			break;
+			return;
 		case "-":
 			interpreter.pushInt(leftValue - rightValue);
-			break;
-		default:
-			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_AdditiveExpression");	
+			return;
 		}
+		throw new RuntimeException("Unable to handle " + oper + " in Eaglish_AdditiveExpression");	
 	}
 }

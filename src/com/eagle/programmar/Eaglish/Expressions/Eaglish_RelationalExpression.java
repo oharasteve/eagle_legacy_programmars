@@ -11,6 +11,7 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenChooser;
 
 public class Eaglish_RelationalExpression extends PrecedenceOperator implements EagleRunnable
@@ -28,89 +29,58 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue leftValue = interpreter.getEagleValue(left);
-		EagleValue rightValue = interpreter.getEagleValue(right);
-		
-		if (leftValue.isString() && rightValue.isString())
+		AbstractToken which = operator.getWhich();
+		if (which instanceof TerminalToken)
 		{
-			String leftStr = interpreter.getStrValue(left);
-			String rightStr = interpreter.getStrValue(right);
-			AbstractToken which = operator.getWhich();
-			if (which instanceof Eaglish_PunctuationChoice)
+			String oper = ((TerminalToken) which).getValue();
+			EagleValue leftValue = interpreter.getEagleValue(left);
+			EagleValue rightValue = interpreter.getEagleValue(right);
+			
+			if (leftValue.isString() && rightValue.isString())
 			{
-				String oper = ((Eaglish_PunctuationChoice) which).getValue();
+				String leftStr = interpreter.getStrValue(left);
+				String rightStr = interpreter.getStrValue(right);
 				switch (oper)
 				{
-				case "=":
+				case "=", "EQUALS":
 					interpreter.pushBool(leftStr.equals(rightStr));
-					break;
-				default:
-					throw new RuntimeException("Unable to handle " + oper);	
-				}
-			}
-			else if (which instanceof Eaglish_KeywordChoice)
-			{
-				String oper = ((Eaglish_KeywordChoice) which).getValue();
-				switch (oper)
-				{
-				case "EQUALS":
-					interpreter.pushBool(leftStr.equals(rightStr));
-					break;
+					return;
 				case "NOT_EQUALS":
 					interpreter.pushBool(! leftStr.equals(rightStr));
-					break;
+					return;
 				default:
-					throw new RuntimeException("Unable to handle " + oper);	
+					throw new RuntimeException("Unable to handle " + oper + " with strings");	
 				}
 			}
-			else throw new RuntimeException("Unable to handle " + which.getClass().getName());
-		}
-
-		else if (leftValue.isInteger() && rightValue.isInteger())
-		{
-			int leftInt = interpreter.getIntValue(left);
-			int rightInt = interpreter.getIntValue(right);
-			AbstractToken which = operator.getWhich();
-			if (which instanceof Eaglish_PunctuationChoice)
+			else if (leftValue.isInteger() && rightValue.isInteger())
 			{
-				String oper = ((Eaglish_PunctuationChoice) which).getValue();
+				int leftInt = interpreter.getIntValue(left);
+				int rightInt = interpreter.getIntValue(right);
 				switch (oper)
 				{
-				case "=":
+				case "=", "EQUALS":
 					interpreter.pushBool(leftInt == rightInt);
-					break;
-				case "<":
-					interpreter.pushBool(leftInt < rightInt);
-					break;
-				case "<=":
-					interpreter.pushBool(leftInt <= rightInt);
-					break;
-				case ">":
-					interpreter.pushBool(leftInt > rightInt);
-					break;
-				case ">=":
-					interpreter.pushBool(leftInt >= rightInt);
-					break;
-				default:
-					throw new RuntimeException("Unable to handle " + oper);	
-				}
-			}
-			else if (which instanceof Eaglish_KeywordChoice)
-			{
-				String oper = ((Eaglish_KeywordChoice) which).getValue();
-				switch (oper)
-				{
-				case "EQUALS":
-					interpreter.pushBool(leftInt == rightInt);
-					break;
+					return;
 				case "NOT_EQUALS":
 					interpreter.pushBool(leftInt != rightInt);
-					break;
+					return;
+				case "<":
+					interpreter.pushBool(leftInt < rightInt);
+					return;
+				case "<=":
+					interpreter.pushBool(leftInt <= rightInt);
+					return;
+				case ">":
+					interpreter.pushBool(leftInt > rightInt);
+					return;
+				case ">=":
+					interpreter.pushBool(leftInt >= rightInt);
+					return;
 				default:
-					throw new RuntimeException("Unable to handle " + oper);	
+					throw new RuntimeException("Unable to handle " + oper + " with integers");	
 				}
 			}
-			else throw new RuntimeException("Unable to handle " + which.getClass().getName());
 		}
+		throw new RuntimeException("Unexpected operator: " + which.getClass().getName());
 	}
 }

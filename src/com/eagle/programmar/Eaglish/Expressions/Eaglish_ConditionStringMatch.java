@@ -41,10 +41,10 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 		{
 		case "ENDS_WITH":
 			interpreter.pushBool(leftStr.endsWith(rightStr));
-			break;
+			return;
 		case "STARTS_WITH":
 			interpreter.pushBool(leftStr.startsWith(rightStr, sc));
-			break;
+			return;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);	
 		}

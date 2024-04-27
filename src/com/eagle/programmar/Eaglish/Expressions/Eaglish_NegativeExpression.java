@@ -23,10 +23,10 @@ public class Eaglish_NegativeExpression extends PrimaryOperator implements Eagle
 		{
 		case "-" :
 			interpreter.pushInt(-value);
-			break;
+			return;
 		case "+" :
 			interpreter.pushInt(value);
-			break;
+			return;
 		default:
 			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_NegativeExpression");	
 		}

@@ -19,16 +19,23 @@ public class Eaglish_ConditionalOrExpression extends PrecedenceOperator implemen
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftValue = interpreter.getBoolValue(left);
-		boolean rightValue = interpreter.getBoolValue(right);
 		String oper = orOperator.getValue();
 		switch (oper)
 		{
 		case "OR":
-			interpreter.pushBool(leftValue || rightValue);
-			break;
+			if (leftValue)
+			{
+				// Short circuit operation. Don't bother with RHS
+				interpreter.pushBool(true);
+				return;
+			}
+			boolean rightVal = interpreter.getBoolValue(right);
+			interpreter.pushBool(rightVal);
+			return;
 		case "XOR":
+			boolean rightValue = interpreter.getBoolValue(right);
 			interpreter.pushBool(leftValue ^ rightValue);
-			break;
+			return;
 		default:
 			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_ConditionalOrExpression");
 		}
