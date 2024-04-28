@@ -22,7 +22,7 @@ public class VB_MultiplicativeExpression extends PrecedenceOperator implements E
 	public static class VB_MultiplyOperation extends TokenChooser
 	{
 		public @CHOICE VB_Keyword MOD = new VB_Keyword("mod");
-		public @CHOICE VB_PunctuationChoice op = new VB_PunctuationChoice("*", "/", "%", "\\");
+		public @CHOICE VB_PunctuationChoice op = new VB_PunctuationChoice("*", "/", "\\");
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class VB_MultiplicativeExpression extends PrecedenceOperator implements E
 			case "/" :
 				interpreter.pushDouble((double)leftValue / rightValue);
 				return;
-			case "%" :
+			case "mod" :
 				interpreter.pushInt(leftValue % rightValue);
 				return;
 			case "\\" :
