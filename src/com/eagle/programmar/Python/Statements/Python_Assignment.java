@@ -8,7 +8,9 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Type;
+import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
+import com.eagle.programmar.Python.Python_VariableList.Python_Variable_or_List;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
@@ -44,6 +46,8 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(varList._name.toString(), value);
+		Python_Variable_or_List vl = (Python_Variable_or_List) varList.vars.first();
+		Python_Variable v = (Python_Variable) vl.getWhich();
+		interpreter._symbolTable.setSymbol(v.var.getWhich().toString(), value);
 	}
 }
