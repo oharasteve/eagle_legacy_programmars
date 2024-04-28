@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.C.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.C.C_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
-public class C_VariableExpression extends PrimaryOperator
+public class C_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) C_Variable variable;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(variable);
+	}
 }

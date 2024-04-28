@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.C.Expressions;
 
-import com.eagle.programmar.C.C_ParenthesizedExpression;
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.C.C_ParenthesizedExpressions;
 import com.eagle.tokens.PrimaryOperator;
 
-public class C_Parenthesized_Expression extends PrimaryOperator
+public class C_Parenthesized_Expression extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) C_ParenthesizedExpression expr;
+	public @S(10) C_ParenthesizedExpressions exprs;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(exprs.expression.first());
+	}
 }

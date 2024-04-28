@@ -3,7 +3,9 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
@@ -11,7 +13,7 @@ import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class C_Program extends EagleLanguage
+public class C_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String C = "C";
 	
@@ -118,5 +120,14 @@ public class C_Program extends EagleLanguage
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 		
 		// NOTE: C++ adds the 'extern' statement here. See the constructor in CPlus_Program.java
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (C_StatementOrComment element : elements._elements)
+		{
+			interpreter.tryToInterpret(element);
+		}
 	}
 }

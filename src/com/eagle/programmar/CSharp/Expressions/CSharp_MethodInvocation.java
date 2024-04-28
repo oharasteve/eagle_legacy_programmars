@@ -25,7 +25,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// Assume Console.WriteLine(expr.exp);
+		// Assume Console.WriteLine()
 		CSharp_ArgumentOut argout = (CSharp_ArgumentOut) argList.arg.getWhich();
 		EagleValue result = interpreter.getEagleValue(argout.arg);
 		System.out.println(result.toString());

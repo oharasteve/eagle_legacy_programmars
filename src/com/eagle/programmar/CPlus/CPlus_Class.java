@@ -4,7 +4,7 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Generic;
-import com.eagle.programmar.C.C_ParenthesizedExpression;
+import com.eagle.programmar.C.C_ParenthesizedExpressions;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
@@ -38,7 +38,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public static class CPlus_ClassModifier extends TokenSequence
 	{
 		public @S(10) C_KeywordChoice modifier = new C_KeywordChoice(C_Program.getModifiers());
-		public @S(20) @OPT C_ParenthesizedExpression args;
+		public @S(20) @OPT C_ParenthesizedExpressions args;
 	}
 
 	public static class CPlus_ClassBody extends TokenChooser

@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
-	public @S(10) CSharp_VariableIdentifier first;
+	public @S(10) CSharp_VariableIdentifier firstId;
 	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
 	public @S(30) @OPT TokenList<CSharp_Subscript> subscript;
 	
@@ -47,7 +47,7 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		CSharp_Identifier_Reference which = (CSharp_Identifier_Reference) first.getWhich();
+		CSharp_Identifier_Reference which = (CSharp_Identifier_Reference) firstId.getWhich();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}

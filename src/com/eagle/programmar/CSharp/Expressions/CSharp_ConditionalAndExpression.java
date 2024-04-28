@@ -19,7 +19,14 @@ public class CSharp_ConditionalAndExpression extends PrecedenceOperator implemen
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftValue = interpreter.getBoolValue(left);
-		boolean rightValue = interpreter.getBoolValue(right);
-		interpreter.pushBool(leftValue && rightValue);
+		if (leftValue)
+		{
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(leftValue && rightValue);
+		}
+		else
+		{
+			interpreter.pushBool(false);
+		}
 	}
 }

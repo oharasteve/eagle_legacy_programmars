@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.TokenChooser;
@@ -14,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class C_Variable extends TokenSequence implements AbstractVariable
+public class C_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) @OPT TokenList<C_VariableStar> stars;
 	public @S(20) C_VariableIdentifier firstId;
@@ -75,5 +78,13 @@ public class C_Variable extends TokenSequence implements AbstractVariable
 			public @S(20) @OPT C_Punctuation tilde = new C_Punctuation("~");
 			public @S(30) C_Identifier_Reference id;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		C_Identifier_Reference which = (C_Identifier_Reference) firstId.getWhich();
+		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		interpreter.pushEagleValue(value);
 	}
 }

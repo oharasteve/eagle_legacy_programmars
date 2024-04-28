@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_Function.C_FunctionParameter;
 import com.eagle.programmar.C.C_Function.C_MoreParameterDefs;
 import com.eagle.programmar.C.Symbols.C_Field_Definition;
@@ -21,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class C_Data extends TokenChooser
 {
-	public @CHOICE static class C_RegularData extends TokenSequence
+	public @CHOICE static class C_RegularData extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) @OPT TokenList<C_DataModifiers> modifiers;
 		public @S(20) C_Type ctype;
@@ -40,6 +43,14 @@ public class C_Data extends TokenChooser
 			public @S(30) C_Variable_Definition id;
 			public @S(40) @OPT TokenList<C_Subscript> subscripts;
 			public @S(50) @OPT C_DataInitialValue initialValue;
+		}
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			EagleValue value = interpreter.getEagleValue(initialValue.expression);
+			interpreter._symbolTable.setSymbol(id.toString(), value);
+			// System.out.println("************** Added " + id + " = " + value);
 		}
 	}
 	
