@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.TokenList;
@@ -11,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Javascript_Data extends TokenSequence
+public class Javascript_Data extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Javascript_Type type;
 	public @S(20) Javascript_Variable_Definition var;
@@ -31,5 +34,12 @@ public class Javascript_Data extends TokenSequence
 		public @S(20) @OPT TokenList<Javascript_Comment> comments;
 		public @S(30) Javascript_Variable_Definition var;
 		public @S(40) @OPT Javascript_InitData init;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter.getEagleValue(init.expr);
+		interpreter._symbolTable.setSymbol(var.toString(), value);
 	}
 }

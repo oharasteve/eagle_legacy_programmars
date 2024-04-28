@@ -26,7 +26,7 @@ public class CSharp_ConditionalOrExpression extends PrecedenceOperator implement
 		else
 		{
 			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue || rightValue);
+			interpreter.pushBool(rightValue);
 		}
 	}
 }

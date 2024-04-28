@@ -22,7 +22,7 @@ public class C_ConditionalAndExpression extends PrecedenceOperator implements Ea
 		if (leftValue)
 		{
 			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue && rightValue);
+			interpreter.pushBool(rightValue);
 		}
 		else
 		{

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Javascript.Statements.Javascript_BreakStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;
@@ -25,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Javascript_Statement extends TokenSequence
+public class Javascript_Statement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT Javascript_Label label;
 	public @S(20) Javascript_RealStatement statement;
@@ -48,7 +50,7 @@ public class Javascript_Statement extends TokenSequence
 			public @S(30) PunctuationRightBrace rightBrace;
 		}
 		
-		public @LAST static class Javascript_ExpressionStmt extends TokenSequence
+		public @LAST static class Javascript_ExpressionStmt extends TokenSequence implements EagleRunnable
 		{
 			public @S(10) Javascript_Expression expression;
 			public @S(20) @OPT TokenList<Javascript_MoreStatements> moreStatements;
@@ -58,6 +60,12 @@ public class Javascript_Statement extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;
 				public @S(20) Javascript_Statement statement;
+			}
+						
+			@Override
+			public void interpret(EagleInterpreter interpreter)
+			{
+				interpreter.tryToInterpret(expression);
 			}
 		}
 		
@@ -81,5 +89,11 @@ public class Javascript_Statement extends TokenSequence
 	{
 		public @CHOICE Javascript_Statement statement;
 		public @CHOICE Javascript_Comment comment;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(statement.getWhich());
 	}
 }

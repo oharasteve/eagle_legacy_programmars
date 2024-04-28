@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
@@ -14,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_Variable extends TokenSequence
+public class Javascript_Variable extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Javascript_VariableIdentifier firstId;
 	public @S(20) @OPT TokenList<Javascript_DotField> moreIds;
@@ -30,7 +33,7 @@ public class Javascript_Variable extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen1;
 			public @S(20) PunctuationLeftParen leftParen2;
-			public @S(30) Javascript_Type jtype;
+			public @S(30) Javascript_Type jstype;
 			public @S(40) PunctuationRightParen rightParen1;
 			public @S(50) Javascript_Identifier_Reference id;
 			public @S(60) PunctuationRightParen rightParen2;
@@ -41,5 +44,12 @@ public class Javascript_Variable extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;
 		public @S(20) Javascript_Field_Reference id;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter._symbolTable.findSymbol(firstId.getWhich().toString());
+		interpreter.pushEagleValue(value);
 	}
 }

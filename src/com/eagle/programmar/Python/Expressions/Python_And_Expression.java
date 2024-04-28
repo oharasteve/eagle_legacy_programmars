@@ -22,7 +22,15 @@ public class Python_And_Expression extends PrecedenceOperator implements EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftValue = interpreter.getBoolValue(left);
-		boolean rightValue = interpreter.getBoolValue(right);
-		interpreter.pushBool(leftValue && rightValue);
+		if (leftValue)
+		{
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(rightValue);
+		}
+		else
+		{
+			// Short circuit, don't bother with RHS
+			interpreter.pushBool(false);
+		}
 	}
 }

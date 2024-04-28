@@ -3,12 +3,14 @@
 
 package com.eagle.programmar.Javascript.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Javascript_BuiltInVar extends PrimaryOperator
+public class Javascript_BuiltInVar extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Javascript_KeywordChoice logicalConstant = new Javascript_KeywordChoice(
+	public @S(10) Javascript_KeywordChoice builtinConstant = new Javascript_KeywordChoice(
 			"arguments",
 			"false",
 			"null",
@@ -17,4 +19,19 @@ public class Javascript_BuiltInVar extends PrimaryOperator
 			"this",
 			"true"
 		);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		switch (builtinConstant.toString())
+		{
+		case "false" :
+			interpreter.pushBool(false);
+			return;
+		case "true" :
+			interpreter.pushBool(true);
+			return;
+		}
+		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
+	}
 }

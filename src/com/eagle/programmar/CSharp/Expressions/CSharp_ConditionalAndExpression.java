@@ -22,7 +22,7 @@ public class CSharp_ConditionalAndExpression extends PrecedenceOperator implemen
 		if (leftValue)
 		{
 			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue && rightValue);
+			interpreter.pushBool(rightValue);
 		}
 		else
 		{

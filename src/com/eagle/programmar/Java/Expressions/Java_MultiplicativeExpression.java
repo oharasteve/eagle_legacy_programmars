@@ -24,15 +24,14 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator implements
 		{
 		case "*" :
 			interpreter.pushInt(leftValue * rightValue);
-			break;
+			return;
 		case "/" :
 			interpreter.pushInt(leftValue / rightValue);
-			break;
+			return;
 		case "%" :
 			interpreter.pushInt(leftValue % rightValue);
-			break;
-		default:
-			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+			return;
 		}
+		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 	}
 }

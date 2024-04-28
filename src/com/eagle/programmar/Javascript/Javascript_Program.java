@@ -3,12 +3,14 @@
 
 package com.eagle.programmar.Javascript;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Javascript_Program extends EagleLanguage
+public class Javascript_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String JAVASCRIPT = "Javascript";
 	
@@ -31,5 +33,14 @@ public class Javascript_Program extends EagleLanguage
 		public @CHOICE Javascript_Function function;
 		public @CHOICE Javascript_Statement statement;
 		public @CHOICE Javascript_Class clss;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (Javascript_Element element : elements._elements)
+		{
+			interpreter.tryToInterpret(element.getWhich());
+		}
 	}
 }

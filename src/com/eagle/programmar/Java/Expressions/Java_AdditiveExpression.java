@@ -24,12 +24,11 @@ public class Java_AdditiveExpression extends PrecedenceOperator implements Eagle
 		{
 		case "+" :
 			interpreter.pushInt(leftValue + rightValue);
-			break;
+			return;
 		case "-" :
 			interpreter.pushInt(leftValue - rightValue);
-			break;
-		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			return;
 		}
+		throw new RuntimeException("Unexpected additive operator: " + operator);
 	}
 }

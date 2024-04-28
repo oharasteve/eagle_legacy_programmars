@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Javascript.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_ParenthesizedExpression;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Javascript_Parenthesized_Expression extends PrimaryOperator
+public class Javascript_Parenthesized_Expression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Javascript_ParenthesizedExpression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(expr);
+	}
 }

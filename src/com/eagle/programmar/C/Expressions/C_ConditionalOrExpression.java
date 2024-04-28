@@ -26,7 +26,7 @@ public class C_ConditionalOrExpression extends PrecedenceOperator implements Eag
 		else
 		{
 			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue || rightValue);
+			interpreter.pushBool(rightValue);
 		}
 	}
 }

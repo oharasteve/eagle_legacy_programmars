@@ -22,7 +22,15 @@ public class Python_Or_Expression extends PrecedenceOperator implements EagleRun
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftValue = interpreter.getBoolValue(left);
-		boolean rightValue = interpreter.getBoolValue(right);
-		interpreter.pushBool(leftValue || rightValue);
+		if (leftValue)
+		{
+			// Short circuit, don't bother with RHS
+			interpreter.pushBool(true);
+		}
+		else
+		{
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(rightValue);
+		}
 	}
 }
