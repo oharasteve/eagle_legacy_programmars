@@ -11,8 +11,6 @@ import com.eagle.programmar.HTML.HTML_Program;
 import com.eagle.programmar.HTML.HTML_Syntax;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
-import com.eagle.programmar.Perl.Perl_StatementOrComment;
-import com.eagle.programmar.Perl.Perl_Syntax;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -57,11 +55,6 @@ public class PHP_Program extends EagleLanguage implements EagleRunnable
 	{
 		public @S(10) PHP_StartTag startTag;
 		public @S(20) PHP_Body body;
-		
-		public static class PHP_Element extends TokenChooser
-		{
-			public @CHOICE @SYNTAX(Perl_Syntax.class) Perl_StatementOrComment statement;
-		}
 	}
 
 	@Override
