@@ -3,7 +3,15 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.ArrayValue;
+import com.eagle.math.EagleValue;
+import com.eagle.math.IntegerValue;
+import com.eagle.math.StringValue;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
+import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Literal;
+import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Number;
 import com.eagle.programmar.COBOL.Picture.COBOL_BlankWhenZero;
 import com.eagle.programmar.COBOL.Picture.COBOL_ObjectReference;
 import com.eagle.programmar.COBOL.Picture.COBOL_PictureClause;
@@ -22,13 +30,14 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_CommentToEndOfLine;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class COBOL_DataDeclaration extends TokenSequence
+public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT TokenList<COBOL_Comment> comments;
 	public @S(20) COBOL_Level level;
@@ -127,5 +136,113 @@ public class COBOL_DataDeclaration extends TokenSequence
 	{
 		public @S(10) PunctuationStar star;
 		public @S(20) COBOL_CommentToEndOfLine comment;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
+		{
+			COBOL_Data_Definition dataDef = (COBOL_Data_Definition) fieldName.getWhich();
+			String varName = dataDef.getValue();
+			String pic = null;
+			String redefines = null;
+			IntegerValue initInteger = new IntegerValue(0);
+			StringValue initString = new StringValue("");
+			for (COBOL_DataClause clause : clauses._elements)
+			{
+				AbstractToken which = clause.getWhich();
+				if (which instanceof COBOL_PictureClause)
+				{
+					COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+					pic = picClause.picture.getValue().toUpperCase();
+				}
+				if (which instanceof COBOL_RedefinesClause)
+				{
+					COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
+					redefines = redefinesClause.id.getValue();
+				}
+				if (which instanceof COBOL_ValueClause)
+				{
+					COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
+					COBOL_Picture_Value picValue = valueClause.values.first();
+					if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
+					{
+						COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
+						initInteger = new IntegerValue(Integer.parseInt(num.number.getValue()));
+					}
+					else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+					{
+						COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
+						initString = new StringValue(lit.literal.getValue());
+					}
+					break;
+				}
+
+			}
+			
+			// Check for REDEFINES first
+			if (redefines != null)
+			{
+				EagleValue value = interpreter._symbolTable.findSymbol(redefines);
+				if (value != null)
+				{
+					// Change the name of the symbol
+					interpreter._symbolTable.removeSymbols(redefines);
+					interpreter._symbolTable.setSymbol(varName, value);
+				}
+			}
+			
+			// Now check for PICTURE
+			else if (pic == null)
+			{
+				ArrayValue array = collectArrayValues(this);
+				interpreter._symbolTable.setSymbol(varName, array);
+			}
+			else if (pic.startsWith("X"))
+			{
+				interpreter._symbolTable.setSymbol(varName, initString);
+			}
+			else if (pic.startsWith("Z") || pic.startsWith("9"))
+			{
+				interpreter._symbolTable.setSymbol(varName, initInteger);
+			}
+			else
+			{
+				System.err.println("*** data " + level + " " + varName + " " + pic);
+			}
+		}
+	}
+	
+	private static ArrayValue collectArrayValues(COBOL_DataDeclaration dataDeclaration)
+	{
+		// Look at all the children
+		ArrayValue array = new ArrayValue();
+		for (COBOL_CopyOrDataDeclaration child : dataDeclaration.children._elements)
+		{
+			AbstractToken which = child.getWhich();
+			if (which instanceof COBOL_DataDeclaration)
+			{
+				COBOL_DataDeclaration dataDeclaration2 = (COBOL_DataDeclaration) which;
+				for (COBOL_DataClause clause2 : dataDeclaration2.clauses._elements)
+				{
+					AbstractToken whichValue = clause2.getWhich();
+					if (whichValue instanceof COBOL_ValueClause)
+					{
+						COBOL_ValueClause valueClause = (COBOL_ValueClause) whichValue;
+						COBOL_Picture_Value picValue = valueClause.values.first();
+						if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+						{
+							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
+							StringValue str = new StringValue(lit.literal.getValue());
+							// System.err.println("************** Adding " + str.toString());
+							array.addValue(str);
+						}
+						break;
+					}
+				}
+			}
+		}
+		return array;
 	}
 }

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.TokenChooser;
@@ -48,12 +50,21 @@ public class COBOL_DataDivision extends TokenSequence
 		public @CHOICE COBOL_FileDescriptor fileDescriptor;
 	}
 	
-	public static class COBOL_WorkingStorageSection extends TokenSequence
+	public static class COBOL_WorkingStorageSection extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) COBOL_Keyword WORKINGSTORAGE = new COBOL_Keyword("WORKING-STORAGE");
 		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)
+			{
+				interpreter.tryToInterpret(decl.getWhich());
+			}
+		}
 	}
 		
 	public static class COBOL_LocalStorageSection extends TokenSequence
