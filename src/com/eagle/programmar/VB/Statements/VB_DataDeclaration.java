@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Subscript;
 import com.eagle.programmar.VB.VB_Type;
@@ -14,7 +17,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class VB_DataDeclaration extends TokenSequence
+public class VB_DataDeclaration extends TokenSequence implements EagleRunnable
 {
 	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice(
 			"private", "public", "dim", "const");
@@ -42,5 +45,15 @@ public class VB_DataDeclaration extends TokenSequence
 		public @S(10) PunctuationComma comma;
 		public @S(20) VB_Variable_Definition var;
 		public @S(30) @OPT VB_Subscript subscript;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (initializer.isPresent())
+		{
+			EagleValue value = interpreter.getEagleValue(initializer.expr);
+			interpreter._symbolTable.setSymbol(var.toString(), value);
+		}
 	}
 }

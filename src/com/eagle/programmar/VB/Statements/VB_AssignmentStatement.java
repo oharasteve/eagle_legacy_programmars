@@ -3,14 +3,24 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Variable;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class VB_AssignmentStatement extends TokenSequence
+public class VB_AssignmentStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) VB_Variable var;
 	public @S(20) PunctuationEquals equals;
 	public @S(30) VB_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter.getEagleValue(expr);
+		interpreter._symbolTable.setSymbol(var.var.getValue(), value);
+	}
 }
