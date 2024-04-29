@@ -32,6 +32,7 @@ public class Perl_Reserved_Words
 			"no",
 			"or",
 			"package",
+			"print",
 			// "q",		// These are funny quotes for string literals
 			"qq",		// See https://blog.katastros.com/a?ID=00250-48fe9f7b-2996-4c75-ac9a-b54ab4ae0ef1
 			"qr",

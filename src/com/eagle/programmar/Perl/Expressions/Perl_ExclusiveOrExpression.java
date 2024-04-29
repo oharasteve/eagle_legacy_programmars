@@ -3,13 +3,23 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Perl_ExclusiveOrExpression extends PrecedenceOperator
+public class Perl_ExclusiveOrExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Perl_Punctuation bitwiseXOrOperator = new Perl_Punctuation('^');
 	public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		boolean leftValue = interpreter.getBoolValue(left);
+		boolean rightValue = interpreter.getBoolValue(right);
+		interpreter.pushBool(leftValue ^ rightValue);
+	}
 }

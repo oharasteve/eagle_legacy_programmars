@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Perl;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
@@ -23,7 +26,7 @@ public class Perl_Variable extends TokenChooser
 {
 	public @CHOICE Perl_Identifier_Reference variable;
 	
-	public @CHOICE static class Perl_UserVariable extends TokenSequence
+	public @CHOICE static class Perl_UserVariable extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Perl_Identifier_Reference id;
 		public @S(20) @OPT TokenList<Perl_Subscript> subscript;
@@ -36,6 +39,21 @@ public class Perl_Variable extends TokenChooser
 			public @S(10) Perl_Punctuation arrow = new Perl_Punctuation("->");
 			public @S(20) Perl_Identifier_Reference fld;
 			public @S(30) @OPT TokenList<Perl_Subscript> subscripts;
+		}
+		
+		public static class Perl_VarFunctionCall extends TokenSequence
+		{
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) @OPT Perl_Comment comment;
+			public @S(30) @OPT SeparatedList<Perl_Expression,PunctuationComma> parameters;
+			public @S(40) PunctuationRightParen rightParen;
+		}
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+			interpreter.pushEagleValue(value);
 		}
 	}
 
@@ -147,13 +165,5 @@ public class Perl_Variable extends TokenChooser
 		public @S(30) @OPT PunctuationComma comma;
 		public @S(40) SeparatedList<Perl_Expression,PunctuationComma> args;
 		public @S(50) PunctuationRightParen rightParen;
-	}
-	
-	public @CHOICE static class Perl_VarFunctionCall extends TokenSequence
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT Perl_Comment comment;
-		public @S(30) @OPT SeparatedList<Perl_Expression,PunctuationComma> parameters;
-		public @S(40) PunctuationRightParen rightParen;
 	}
 }

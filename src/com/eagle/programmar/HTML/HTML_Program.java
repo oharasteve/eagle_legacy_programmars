@@ -3,7 +3,9 @@
 
 package com.eagle.programmar.HTML;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
@@ -19,7 +21,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class HTML_Program extends EagleLanguage
+public class HTML_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String HTML = "HTML";
 	
@@ -78,6 +80,19 @@ public class HTML_Program extends EagleLanguage
 		{
 			// In a separate class just to enable @NEWLINE
 			public @S(10) @NEWLINE HTML_Text text;
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (HTML_Element element : elements._elements)
+		{
+			if (element.getWhich() instanceof PHP_Section)
+			{
+				PHP_Section section = (PHP_Section) element.getWhich();
+				interpreter.tryToInterpret(section.body.getWhich());
+			}
 		}
 	}
 }
