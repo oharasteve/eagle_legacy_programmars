@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
@@ -10,7 +12,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Powershell_WriteStatement extends TokenSequence
+public class Powershell_WriteStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Powershell_KeywordChoice WRITE = new Powershell_KeywordChoice(
 			"Write-Host",
@@ -29,5 +31,12 @@ public class Powershell_WriteStatement extends TokenSequence
 			public @S(20) Powershell_KeywordChoice COLOR = new Powershell_KeywordChoice(
 					"Green", "Yellow");
 		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String result = interpreter.getStrValue(expr);
+		System.out.println(result);
 	}
 }

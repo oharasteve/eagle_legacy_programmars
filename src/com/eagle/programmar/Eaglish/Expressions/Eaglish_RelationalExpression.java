@@ -80,7 +80,21 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 					throw new RuntimeException("Unable to handle " + oper + " with integers");	
 				}
 			}
+			else if (leftValue.isBoolean() && rightValue.isBoolean())
+			{
+				boolean leftBool = interpreter.getBoolValue(left);
+				boolean rightBool = interpreter.getBoolValue(right);
+				switch (oper)
+				{
+				case "=", "EQUALS":
+					interpreter.pushBool(leftBool == rightBool);
+					return;
+				case "NOT_EQUALS":
+					interpreter.pushBool(leftBool != rightBool);
+					return;
+				}
+			}
 		}
-		throw new RuntimeException("Unexpected operator: " + which.getClass().getName());
+		throw new RuntimeException("Unexpected operator: " + which);
 	}
 }

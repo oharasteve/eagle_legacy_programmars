@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.tokens.TokenSequence;
 
-public class Powershell_AssignmentStatement extends TokenSequence
+public class Powershell_AssignmentStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Powershell_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(expr);
+	}
 }

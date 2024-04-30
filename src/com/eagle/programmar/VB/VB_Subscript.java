@@ -12,6 +12,6 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class VB_Subscript extends TokenSequence
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) SeparatedList<VB_Expression,PunctuationComma> exprs;
+	public @S(20) @OPT SeparatedList<VB_Expression, PunctuationComma> exprs;
 	public @S(30) PunctuationRightParen rightParen;
 }

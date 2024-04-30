@@ -17,6 +17,13 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 	}
 	
 	@Override
+	public String booleanName(boolean flag)
+	{
+		if (flag) return "True";
+		return "False";
+	}
+
+	@Override
 	public String getDocRoot()
 	{
 		return "https://docs.python.org/3.10/reference/";

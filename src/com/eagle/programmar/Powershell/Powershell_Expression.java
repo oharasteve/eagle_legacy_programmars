@@ -73,16 +73,16 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(140) Powershell_Negative negative;
 	public @P(150) Powershell_BangOp bangOp;
 	public @P(160) Powershell_NotOp notOp;
-	public @P(170) Powershell_Lists lists;
-	public @P(180) Powershell_Dictionary dictionary;
-	public @P(190) Powershell_FunctionCall functionCall;
-	public @P(200) Powershell_Cast cast;
-	public @P(210) Powershell_EvaluateExpression evaluateExpression;
-	public @P(220) Powershell_BuiltIn builtIn;
-	public @P(230) Powershell_BuiltinVariable builtinVariable;
-	public @P(240) Powershell_VariableExpression variableExpression;
-	public @P(250) Powershell_LibraryVariable libraryVariable;
-	public @P(260) Powershell_ParenthesizedExpression parenthesizedExpression;
+	public @P(170) Powershell_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Powershell_Lists lists;
+	public @P(190) Powershell_Dictionary dictionary;
+	public @P(200) Powershell_FunctionCall functionCall;
+	public @P(210) Powershell_Cast cast;
+	public @P(220) Powershell_EvaluateExpression evaluateExpression;
+	public @P(230) Powershell_BuiltIn builtIn;
+	public @P(240) Powershell_BuiltinVariable builtinVariable;
+	public @P(250) Powershell_VariableExpression variableExpression;
+	public @P(260) Powershell_LibraryVariable libraryVariable;
 	public @P(270) Powershell_CallCommand callCommand;
 	
 	///////////////////////////////////////////////////////////////////////////

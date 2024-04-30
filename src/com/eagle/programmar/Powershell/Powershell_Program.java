@@ -3,10 +3,12 @@
 
 package com.eagle.programmar.Powershell;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
-public class Powershell_Program extends EagleLanguage
+public class Powershell_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String POWERHSELL = "Powershell";
 	
@@ -15,6 +17,13 @@ public class Powershell_Program extends EagleLanguage
 		super(POWERHSELL, new Powershell_Syntax());
 	}
 	
+	@Override
+	public String booleanName(boolean flag)
+	{
+		if (flag) return "$True";
+		return "$False";
+	}
+
 	@Override
 	public String getDocRoot()
 	{
@@ -27,4 +36,13 @@ public class Powershell_Program extends EagleLanguage
 	public @S(40) @OPT Powershell_Parameters parameters;
 	public @S(50) @OPT TokenList<Powershell_CommentEoln> comments2;
 	public @S(60) @OPT TokenList<Powershell_Statement> statements;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (Powershell_Statement stmt : statements._elements)
+		{
+			interpreter.tryToInterpret(stmt.element.getWhich());
+		}
+	}
 }

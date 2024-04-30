@@ -10,10 +10,12 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
@@ -36,7 +38,7 @@ public class Java_SwitchStatement extends TokenSequence implements EagleScopeInt
 		public @CHOICE static class Java_CaseClause extends TokenSequence
 		{
 			public @S(10) @NEWLINE Java_Keyword CASE = new Java_Keyword("case");
-			public @S(20) Java_Expression expr;
+			public @S(20) SeparatedList<Java_Expression,PunctuationComma> exprList;
 			public @S(30) @NOSPACE PunctuationColon colon;
 			public @S(40) @OPT TokenList<Java_StatementOrComment> statements;
 		}

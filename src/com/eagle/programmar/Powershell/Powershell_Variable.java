@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Powershell;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Variable_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
@@ -11,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class Powershell_Variable extends TokenSequence
+public class Powershell_Variable extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Powershell_Punctuation DOLLAR = new Powershell_Punctuation("$");
 	public @S(20) @OPT Powershell_VariableScope scope;
@@ -33,5 +36,12 @@ public class Powershell_Variable extends TokenSequence
 				"script",
 				"variable");
 		public @S(20) PunctuationColon colon;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		interpreter.pushEagleValue(value);
 	}
 }

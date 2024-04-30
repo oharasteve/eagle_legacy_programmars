@@ -5,7 +5,6 @@ package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Parameter_List;
 import com.eagle.programmar.Python.Python_Params.Python_Param;
@@ -28,8 +27,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		if (which instanceof Python_Expression)
 		{
 			Python_Expression expr = (Python_Expression) which;
-			EagleValue result = interpreter.getEagleValue(expr);
-			System.out.println(result.toString());
+			String result = interpreter.getStrValue(expr);
+			System.out.println(result);
 		}
 	}
 }
