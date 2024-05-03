@@ -12,6 +12,7 @@ public class Perl_Reserved_Words
 			"cmp",
 			"continue",
 			"default",		// I added
+			"die",			// I added
 			"do",
 			"else",
 			"elsif",
