@@ -67,7 +67,8 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 			Eaglish_Expression arg = args.getPrimaryElement(i);
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter._symbolTable.setSymbol(param.param.getValue(), val);
+			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(),
+					param.getStartChar(), param.param.getValue(), val);
 		}
 		
 		// And transfer control to the function

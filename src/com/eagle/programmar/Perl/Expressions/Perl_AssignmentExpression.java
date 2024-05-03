@@ -26,7 +26,8 @@ public class Perl_AssignmentExpression extends PrecedenceOperator implements Eag
 		{
 			Perl_VariableExpression varExpr = (Perl_VariableExpression) var.getWhich();
 			Perl_UserVariable userVar = (Perl_UserVariable) varExpr.variable.getWhich();
-			interpreter._symbolTable.setSymbol(userVar.id.getValue(), value);
+			interpreter._symbolTable.setSymbol(userVar.getFileName(), userVar.getStartLine(),
+					userVar.getStartChar(), userVar.id.getValue(), value);
 		}
 	}
 }

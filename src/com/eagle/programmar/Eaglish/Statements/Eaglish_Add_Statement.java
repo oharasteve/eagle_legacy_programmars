@@ -33,7 +33,8 @@ public class Eaglish_Add_Statement extends TokenSequence implements EagleRunnabl
 		if (which instanceof Eaglish_Identifier_Reference)
 		{
 			Eaglish_Identifier_Reference id = (Eaglish_Identifier_Reference) which;
-			interpreter._symbolTable.setSymbol(id.getValue(), val);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+					var.getStartChar(), id.getValue(), val);
 		}
 		else throw new RuntimeException("Unable to process " + which);
 	}

@@ -96,7 +96,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 		{
 			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
 			EagleValue val = interpreter.getEagleValue(noGiving.expr);
-			interpreter._symbolTable.setSymbol(variable.id.getValue(), val);
+			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(),
+					variable.getStartChar(), variable.id.getValue(), val);
 		}
 	}
 }

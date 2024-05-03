@@ -45,7 +45,8 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		case "TO":
 			for (int i = start; i <= stop; i++)
 			{
-				interpreter._symbolTable.setSymbol(var.toString(), new IntegerValue(i));
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+						var.getStartChar(), var.toString(), new IntegerValue(i));
 				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
 				if (result == Eagle_Statement_Result.BREAK) break;
 			}
@@ -53,7 +54,8 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		case "DOWN_TO":
 			for (int i = start; i >= stop; i--)
 			{
-				interpreter._symbolTable.setSymbol(var.toString(), new IntegerValue(i));
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+						var.getStartChar(), var.toString(), new IntegerValue(i));
 				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
 				if (result == Eagle_Statement_Result.BREAK) break;
 			}

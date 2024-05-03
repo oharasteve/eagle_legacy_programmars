@@ -21,6 +21,7 @@ public class VB_AssignmentStatement extends TokenSequence implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.var.getValue(), value);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+				var.getStartChar(), var.var.getValue(), value);
 	}
 }

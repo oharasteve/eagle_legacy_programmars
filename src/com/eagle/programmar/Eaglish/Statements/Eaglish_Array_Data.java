@@ -50,6 +50,7 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable
 		
 		ArrayValue array = new ArrayValue();
 		array.setValue(vals);
-		interpreter._symbolTable.setSymbol(var.toString(), array);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+				var.getStartChar(), var.toString(), array);
 	}
 }

@@ -70,7 +70,8 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 			Eaglish_Expression arg = callParams.args.getPrimaryElement(i);
 			interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter._symbolTable.setSymbol(param.param.getValue(), val);
+			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(),
+					param.getStartChar(), param.param.getValue(), val);
 		}
 		
 		// Evaluate the function

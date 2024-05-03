@@ -182,35 +182,37 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			}
 			
 			// Check for REDEFINES first
+			EagleValue value = null;
 			if (redefines != null)
 			{
-				EagleValue value = interpreter._symbolTable.findSymbol(redefines);
+				value = interpreter._symbolTable.findSymbol(redefines);
 				if (value != null)
 				{
 					// Change the name of the symbol
 					interpreter._symbolTable.removeSymbols(redefines);
-					interpreter._symbolTable.setSymbol(varName, value);
 				}
 			}
 			
 			// Now check for PICTURE
 			else if (pic == null)
 			{
-				ArrayValue array = collectArrayValues(this);
-				interpreter._symbolTable.setSymbol(varName, array);
+				value = collectArrayValues(this);
 			}
 			else if (pic.startsWith("X"))
 			{
-				interpreter._symbolTable.setSymbol(varName, initString);
+				value = initString;
 			}
 			else if (pic.startsWith("Z") || pic.startsWith("9"))
 			{
-				interpreter._symbolTable.setSymbol(varName, initInteger);
+				value = initInteger;
 			}
 			else
 			{
 				System.err.println("*** data " + level + " " + varName + " " + pic);
 			}
+			interpreter._symbolTable.setSymbol(dataDef.getFileName(), dataDef.getStartLine(),
+					dataDef.getStartChar(), varName, value);
+
 		}
 	}
 	

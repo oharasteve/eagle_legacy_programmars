@@ -25,6 +25,7 @@ public class Template_AssignmentStatement extends TokenSequence implements Eagle
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		Template_Identifier_Reference id = (Template_Identifier_Reference) var.getWhich();
-		interpreter._symbolTable.setSymbol(id.getValue(), value);
+		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(),
+				id.getStartChar(), id.getValue(), value);
 	}
 }

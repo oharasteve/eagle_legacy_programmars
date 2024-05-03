@@ -48,6 +48,7 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable
 		EagleValue value = interpreter.getEagleValue(expr);
 		Python_Variable_or_List vl = (Python_Variable_or_List) varList.vars.first();
 		Python_Variable v = (Python_Variable) vl.getWhich();
-		interpreter._symbolTable.setSymbol(v.var.getWhich().toString(), value);
+		interpreter._symbolTable.setSymbol(v.getFileName(), v.getStartLine(),
+				v.getStartChar(), v.var.getWhich().toString(), value);
 	}
 }

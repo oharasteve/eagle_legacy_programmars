@@ -29,7 +29,8 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 		{
 			Powershell_VariableExpression pVar = (Powershell_VariableExpression) var.getWhich();
 			EagleValue value = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(pVar.variable.id.getValue(), value);
+			interpreter._symbolTable.setSymbol(pVar.getFileName(), pVar.getStartLine(),
+					pVar.getStartChar(), pVar.variable.id.getValue(), value);
 		}
 	}
 }
