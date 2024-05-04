@@ -6,6 +6,8 @@ package com.eagle.programmar.Eaglish.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.math.IntegerValue;
+import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.metrics.ForLoopSummary;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
@@ -32,6 +34,8 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 	public @S(90) Eaglish_Keyword END_FOR = new Eaglish_Keyword("END_FOR");
 	public @S(100) Eaglish_EndOfLine eoln2;
 	
+	private @SKIP ForLoopSummary _summary = null;
+	
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
@@ -39,31 +43,56 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		int start = interpreter.getIntValue(startValue);
 		int stop = interpreter.getIntValue(stopValue);
 		
+		if (_summary == null)
+		{
+			_summary =  new ForLoopSummary(getFileName(), getStartLine(), getStartChar());
+		}
+		ForLoopMetrics metrics = new ForLoopMetrics();
+		
 		String which = TO.getValue();
 		switch (which)
 		{
 		case "TO":
 			for (int i = start; i <= stop; i++)
 			{
+				metrics.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
 						var.getStartChar(), var.toString(), new IntegerValue(i));
 				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
-				if (result == Eagle_Statement_Result.BREAK) break;
+				if (result == Eagle_Statement_Result.BREAK)
+				{
+					metrics.broke();
+					break;
+				}
+				else if (result == Eagle_Statement_Result.CONTINUE)
+				{
+					metrics.continued();
+				}
 			}
 			break;
 		case "DOWN_TO":
 			for (int i = start; i >= stop; i--)
 			{
+				metrics.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
 						var.getStartChar(), var.toString(), new IntegerValue(i));
 				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
-				if (result == Eagle_Statement_Result.BREAK) break;
+				if (result == Eagle_Statement_Result.BREAK)
+				{
+					metrics.broke();
+					break;
+				}
+				else if (result == Eagle_Statement_Result.CONTINUE)
+				{
+					metrics.continued();
+				}
 			}
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		
+		_summary.competedLoop(metrics);
 		return Eagle_Statement_Result.NORMAL;
 	}
 }
