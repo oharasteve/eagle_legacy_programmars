@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
-import com.eagle.metrics.IfCondSummary;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
@@ -31,7 +31,7 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 	public @S(70) Eaglish_Keyword END_IF = new Eaglish_Keyword("END_IF");
 	public @S(80) Eaglish_EndOfLine eoln2;
 	
-	private @SKIP ArrayList<IfCondSummary> _summaries = null;
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 	
 	public static class Eaglish_If_ElseIf_Block extends TokenSequence
 	{
@@ -55,18 +55,23 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		TokenList<Eaglish_Statement> todo = null;
 		
-		if (_summaries == null)
+		if (_metrics == null)
 		{
-			_summaries = new ArrayList<IfCondSummary>();
-			_summaries.add(new IfCondSummary(getFileName(), getStartLine(), getStartChar()));
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(getFileName(), getStartLine(), getStartChar()));
 			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
 			{
-				_summaries.add(new IfCondSummary(elif.getFileName(), elif.getStartLine(), elif.getStartChar()));
+				_metrics.add(new IfCondMetrics(elif.getFileName(), elif.getStartLine(), elif.getStartChar()));
+			}
+			if (elseBlock.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(elseBlock.getFileName(), elseBlock.getStartLine(), elseBlock.getStartChar()));
 			}
 		}
 
 		boolean cond1 = interpreter.getBoolValue(condition);
-		_summaries.get(0).completedIf(cond1);
+		_metrics.get(0).completedIf(cond1);
 		if (cond1)
 		{
 			todo = statements;
@@ -78,7 +83,7 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
 			{
 				boolean cond2 = interpreter.getBoolValue(elif.condition);
-				_summaries.get(seq).completedIf(cond2);
+				_metrics.get(seq).completedIf(cond2);
 				seq++;
 				if (cond2)
 				{
@@ -92,6 +97,7 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 			{
 				if (elseBlock.isPresent())
 				{
+					_metrics.get(seq).completedIf(true);
 					todo = elseBlock.statements;
 				}
 			}
