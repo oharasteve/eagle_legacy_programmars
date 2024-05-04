@@ -3,8 +3,11 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondSummary;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
@@ -28,6 +31,8 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 	public @S(70) Eaglish_Keyword END_IF = new Eaglish_Keyword("END_IF");
 	public @S(80) Eaglish_EndOfLine eoln2;
 	
+	private @SKIP ArrayList<IfCondSummary> _summaries = null;
+	
 	public static class Eaglish_If_ElseIf_Block extends TokenSequence
 	{
 		public @S(10) Eaglish_Keyword ELSE_IF = new Eaglish_Keyword("ELSE_IF");
@@ -50,17 +55,31 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		TokenList<Eaglish_Statement> todo = null;
 		
+		if (_summaries == null)
+		{
+			_summaries = new ArrayList<IfCondSummary>();
+			_summaries.add(new IfCondSummary(getFileName(), getStartLine(), getStartChar()));
+			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
+			{
+				_summaries.add(new IfCondSummary(elif.getFileName(), elif.getStartLine(), elif.getStartChar()));
+			}
+		}
+
 		boolean cond1 = interpreter.getBoolValue(condition);
+		_summaries.get(0).completedIf(cond1);
 		if (cond1)
 		{
 			todo = statements;
 		}
 		else
 		{
+			int seq = 1;
 			// Check for each 'else if'
 			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
 			{
 				boolean cond2 = interpreter.getBoolValue(elif.condition);
+				_summaries.get(seq).completedIf(cond2);
+				seq++;
 				if (cond2)
 				{
 					todo = elif.statements;
