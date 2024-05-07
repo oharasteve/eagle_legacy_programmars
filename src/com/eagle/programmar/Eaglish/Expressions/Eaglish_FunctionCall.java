@@ -71,6 +71,9 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 					param.getStartChar(), param.param.getValue(), val);
 		}
 		
+		// Prepare to evaluate the function
+		long startTime = System.nanoTime();
+
 		// And transfer control to the function
 		for (Eaglish_Statement stmt : func.statements._elements)
 		{
@@ -79,6 +82,8 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		}
 		
 		// The result was already put on the runtime stack
+		long elapsedTime = System.nanoTime() - startTime;
+		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 		
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

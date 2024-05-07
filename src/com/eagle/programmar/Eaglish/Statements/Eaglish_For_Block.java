@@ -55,6 +55,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		case "TO":
 			for (int i = start; i <= stop; i++)
 			{
+				// 100% identical to "DOWN_TO" below
 				metric.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
 						var.getStartChar(), var.toString(), new IntegerValue(i));

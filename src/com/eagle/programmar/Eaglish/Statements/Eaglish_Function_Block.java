@@ -5,6 +5,7 @@ package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Function_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
@@ -25,11 +26,15 @@ public class Eaglish_Function_Block extends AbstractFunction implements EagleRun
 	public @S(70) Eaglish_Keyword END_FUNCTION = new Eaglish_Keyword("END_FUNCTION");
 	public @S(80) Eaglish_EndOfLine eoln2;
 	
+	public @SKIP CallMetrics _metrics;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		_metrics = new CallMetrics(var.getValue(), getFileName(), getStartLine(), getStartChar());
+		
 		// Don't do anything here.
 		// We searched for all the function in a preliminary pass
-		// And we only evaluate when it called
+		// And we only evaluate when it is called
 	}
 }

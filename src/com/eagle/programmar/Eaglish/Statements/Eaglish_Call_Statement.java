@@ -75,10 +75,13 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		}
 		
 		// Evaluate the function
+		long startTime = System.nanoTime();
 		for (Eaglish_Statement stmt : func.statements._elements)
 		{
 			interpreter.tryToInterpret(stmt.getWhich());
 		}
+		long elapsedTime = System.nanoTime() - startTime;
+		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 		
 		// Remove all the parameters
 		for (int i = 0; i < actual; i++)
