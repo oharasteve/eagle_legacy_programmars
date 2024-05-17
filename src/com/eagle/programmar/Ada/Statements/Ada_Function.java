@@ -9,6 +9,7 @@ import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Symbols.Ada_Variable_Definition;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -17,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Function extends TokenSequence
+public class Ada_Function extends AbstractFunction
 {
 	public @S(10) Ada_Keyword FUNCTION = new Ada_Keyword("function");
 	public @S(20) Ada_Function_Definition id;

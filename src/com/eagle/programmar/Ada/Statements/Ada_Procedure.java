@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
@@ -12,7 +14,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Procedure extends TokenSequence
+public class Ada_Procedure extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Ada_Keyword PROCEDURE = new Ada_Keyword("procedure");
 	public @S(20) Ada_Function_Definition id;
@@ -25,4 +27,20 @@ public class Ada_Procedure extends TokenSequence
 	public @S(90) Ada_Keyword END = new Ada_Keyword("end");
 	public @S(100) @OPT Ada_Identifier_Reference name;
 	public @S(110) PunctuationSemicolon semicolon;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Process data
+		for (Ada_Statement stmt : stmts1._elements)
+		{
+			interpreter.tryToInterpret(stmt.getWhich());
+		}
+		
+		// Process actions
+		for (Ada_Statement stmt : stmts2._elements)
+		{
+			interpreter.tryToInterpret(stmt.getWhich());
+		}
+	}
 }

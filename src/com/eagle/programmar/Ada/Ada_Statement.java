@@ -11,6 +11,7 @@ import com.eagle.programmar.Ada.Statements.Ada_Function;
 import com.eagle.programmar.Ada.Statements.Ada_FunctionCall;
 import com.eagle.programmar.Ada.Statements.Ada_IfStatement;
 import com.eagle.programmar.Ada.Statements.Ada_Procedure;
+import com.eagle.programmar.Ada.Statements.Ada_PutIntegerStatement;
 import com.eagle.programmar.Ada.Statements.Ada_PutStatement;
 import com.eagle.programmar.Ada.Statements.Ada_ReturnStatement;
 import com.eagle.programmar.Ada.Statements.Ada_WithUseStatement;
@@ -27,7 +28,8 @@ public class Ada_Statement extends TokenChooser
 	public @CHOICE Ada_Function function;
 	public @CHOICE Ada_FunctionCall functionCall;
 	public @CHOICE Ada_IfStatement ifStatement;
-	public @CHOICE Ada_PutStatement putsStatement;
+	public @CHOICE Ada_PutStatement putStatement;
+	public @CHOICE Ada_PutIntegerStatement putIntegerStatement;
 	public @CHOICE Ada_Procedure procedure;
 	public @CHOICE Ada_ReturnStatement returnStatement;
 	public @CHOICE Ada_WithUseStatement withUseStatement;

@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.Ada.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class Ada_MultiplicativeExpression extends PrecedenceOperator
+public class Ada_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Ada_MultOper operator;
@@ -19,5 +21,25 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @CHOICE Ada_PunctuationChoice operator = new Ada_PunctuationChoice("*", "/");
 		public @CHOICE Ada_Keyword MOD = new Ada_Keyword("mod");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (operator.getWhich().toString())
+		{
+		case "*" :
+			interpreter.pushInt(leftValue * rightValue);
+			return;
+		case "/" :
+			interpreter.pushInt(leftValue / rightValue);
+			return;
+		case "mod" :
+			interpreter.pushInt(leftValue % rightValue);
+			return;
+		}
+		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 	}
 }

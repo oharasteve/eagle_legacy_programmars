@@ -7,6 +7,7 @@ import com.eagle.programmar.Ada.Expressions.Ada_AdditiveExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_AssignmentExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_BracketsExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_BuiltIn;
+import com.eagle.programmar.Ada.Expressions.Ada_BuiltinFunction;
 import com.eagle.programmar.Ada.Expressions.Ada_ConditionalAndExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_ConditionalOrExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_EqualityExpression;
@@ -57,16 +58,17 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	///////////////////////////////////////////////
 	// Primary expressions
 	
-	public @P(100) Ada_MethodInvocation methodInvocation;
-	public @P(110) Ada_PreIncrementExpression preIncrementExpression;
-	public @P(120) Ada_PostIncrementExpression postIncrementExpression;
-	public @P(130) Ada_NegativeExpression negativeExpression;
-	public @P(140) Ada_LogicalNotExpression logicalNotExpression;
-	public @P(150) Ada_NotExpression notExpression;
-	public @P(160) Ada_BuiltIn builtIn;
-	public @P(170) Ada_VariableExpression variableExpression;
-	public @P(180) Ada_BracketsExpression bracketsExpression;
-	public @P(190) Ada_ParenthesizedExpression parenthesizedExpression;
+	public @P(100) Ada_BuiltinFunction builtinFunction;
+	public @P(110) Ada_MethodInvocation methodInvocation;
+	public @P(120) Ada_PreIncrementExpression preIncrementExpression;
+	public @P(130) Ada_PostIncrementExpression postIncrementExpression;
+	public @P(140) Ada_NegativeExpression negativeExpression;
+	public @P(150) Ada_LogicalNotExpression logicalNotExpression;
+	public @P(160) Ada_NotExpression notExpression;
+	public @P(170) Ada_BuiltIn builtIn;
+	public @P(180) Ada_VariableExpression variableExpression;
+	public @P(190) Ada_BracketsExpression bracketsExpression;
+	public @P(200) Ada_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

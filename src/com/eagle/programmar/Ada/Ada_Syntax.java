@@ -75,6 +75,7 @@ public class Ada_Syntax extends EagleSyntax
 			"private",
 			"procedure",
 			"protected",
+			"put",
 			"raise",
 			"range",
 			"record",
