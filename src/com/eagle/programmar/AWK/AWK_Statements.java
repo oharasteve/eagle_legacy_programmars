@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.AWK;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.AWK.Statements.AWK_Assignment;
 import com.eagle.programmar.AWK.Statements.AWK_BreakStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ContinueStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ExitStatement;
@@ -22,7 +25,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class AWK_Statements extends TokenSequence
+public class AWK_Statements extends TokenSequence implements EagleRunnable
 {
 	public @S(10) SeparatedList<AWK_Statement,PunctuationSemicolon> statements;
 	public @S(20) @OPT PunctuationSemicolon semicolon;
@@ -46,10 +49,15 @@ public class AWK_Statements extends TokenSequence
 		public @CHOICE AWK_SwitchStatement switchStatement;
 		public @CHOICE AWK_WhileStatement whileStatement;
 		
-		public @LAST static class AWK_Assignment extends TokenSequence
+		public @LAST AWK_Assignment assignmentStatement; 
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (int i = 0; i < statements.getPrimaryCount(); i++)
 		{
-			public @S(10) AWK_Expression assignment;
-			public @S(20) @OPT PunctuationSemicolon semicolon;
+			interpreter.tryToInterpret(statements.getPrimaryElement(i).getWhich());
 		}
 	}
 }

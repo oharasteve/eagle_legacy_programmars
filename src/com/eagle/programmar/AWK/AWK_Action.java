@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.AWK;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.TokenChooser;
@@ -11,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class AWK_Action extends TokenSequence
+public class AWK_Action extends TokenSequence implements EagleRunnable
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT AWK_EndOfLine eoln1;
@@ -24,5 +26,14 @@ public class AWK_Action extends TokenSequence
 		public @CHOICE AWK_Statements statements;
 		public @CHOICE AWK_Comment comment;
 		public @CHOICE AWK_Action action;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (AWK_StatementOrComment stmt : statements._elements)
+		{
+			interpreter.tryToInterpret(stmt.getWhich());
+		}
 	}
 }

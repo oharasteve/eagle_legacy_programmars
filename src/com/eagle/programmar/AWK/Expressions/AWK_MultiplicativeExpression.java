@@ -3,13 +3,41 @@
 
 package com.eagle.programmar.AWK.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.Terminals.AWK_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class AWK_MultiplicativeExpression extends PrecedenceOperator
+public class AWK_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) AWK_Expression left = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) AWK_PunctuationChoice operator = new AWK_PunctuationChoice("*", "/", "%");
 	public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (operator.toString())
+		{
+		case "*" :
+			interpreter.pushInt(leftValue * rightValue);
+			return;
+		case "/" :
+			if (leftValue % rightValue == 0)
+			{
+				interpreter.pushInt(leftValue / rightValue);
+				return;
+			}
+			interpreter.pushDouble(leftValue / (double)rightValue);
+			return;
+		case "%" :
+			interpreter.pushInt(leftValue % rightValue);
+			return;
+		default:
+			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+		}
+	}
 }

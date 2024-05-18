@@ -3,13 +3,17 @@
 
 package com.eagle.programmar.AWK;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.AWK.Symbols.AWK_Identifier_Reference;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class AWK_Variable extends TokenSequence
+public class AWK_Variable extends TokenSequence implements AbstractVariable, EagleRunnable
 {
 	public @S(10) AWK_Identifier_Reference id;
 	public @S(20) @OPT TokenList<AWK_VarSubscript> subscripts;
@@ -19,5 +23,12 @@ public class AWK_Variable extends TokenSequence
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) AWK_Expression expr;
 		public @S(30) PunctuationRightBracket rightBracket;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		interpreter.pushEagleValue(value);
 	}
 }

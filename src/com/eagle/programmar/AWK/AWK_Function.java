@@ -8,6 +8,7 @@ import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -16,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_Function extends TokenSequence
+public class AWK_Function extends AbstractFunction
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Identifier name;

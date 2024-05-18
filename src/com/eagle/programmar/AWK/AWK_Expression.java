@@ -11,6 +11,7 @@ import com.eagle.programmar.AWK.Expressions.AWK_DollarParensExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_GetLine;
 import com.eagle.programmar.AWK.Expressions.AWK_InExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_MultiplicativeExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_NegativeExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_NotExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_OrExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_ParenthesizedExpression;
@@ -25,6 +26,7 @@ import com.eagle.programmar.AWK.Expressions.AWK_Strings;
 import com.eagle.programmar.AWK.Expressions.AWK_SubscriptExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_TrueFalseExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_UserFunctionCall;
+import com.eagle.programmar.AWK.Expressions.AWK_VariableExpression;
 import com.eagle.programmar.AWK.Terminals.AWK_Number;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
@@ -64,10 +66,12 @@ public class AWK_Expression extends PrecedenceChooser
 	public @P(150) AWK_PreDecrementExpression preDecrementExpression;
 	public @P(160) AWK_PostIncrementExpression postIncrementExpression;
 	public @P(170) AWK_PostDecrementExpression postDecrementExpression;
-	public @P(180) AWK_Strings strings;
-	public @P(190) AWK_NotExpression notExpression;
-	public @P(200) AWK_ParenthesizedExpression parenthesizedExpression;
-	public @P(210) AWK_DollarParensExpression dollarParensExpression;
+	public @P(180) AWK_NegativeExpression negativeExpression;
+	public @P(190) AWK_VariableExpression variableExpression;
+	public @P(200) AWK_Strings strings;
+	public @P(210) AWK_NotExpression notExpression;
+	public @P(220) AWK_ParenthesizedExpression parenthesizedExpression;
+	public @P(230) AWK_DollarParensExpression dollarParensExpression;
 	
 	///////////////////////////////////////////////
 	// Binary expressions
