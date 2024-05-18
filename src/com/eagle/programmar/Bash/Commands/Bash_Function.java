@@ -7,6 +7,7 @@ import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -15,9 +16,9 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Bash_Function extends TokenChooser
+public class Bash_Function extends TokenChooser implements AbstractFunction
 {
-	public @CHOICE static class Bash_Function_Explicit extends TokenSequence
+	public @CHOICE static class Bash_Function_Explicit extends TokenSequence implements AbstractFunction
 	{
 		public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
 		public @S(20) Bash_Function_Definition fnName;

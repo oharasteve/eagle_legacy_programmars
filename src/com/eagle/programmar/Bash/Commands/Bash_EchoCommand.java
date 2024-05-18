@@ -3,15 +3,15 @@
 
 package com.eagle.programmar.Bash.Commands;
 
-import com.eagle.parsers.EagleFileReader;
-import com.eagle.parsers.EagleLineReader;
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Bash.Terminals.Bash_EchoWhat;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-public class Bash_EchoCommand extends TokenSequence
+public class Bash_EchoCommand extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("#index-echo") Bash_Keyword ECHO = new Bash_Keyword("echo");
 	public @S(20) @OPT TokenList<Bash_EchoOption> options;
@@ -22,40 +22,10 @@ public class Bash_EchoCommand extends TokenSequence
 		public @CHOICE Bash_Keyword N = new Bash_Keyword("-n");
 	}
 	
-	public static class Bash_EchoWhat extends TerminalLiteralToken
+	@Override
+	public void interpret(EagleInterpreter interpreter)
 	{
-		@Override
-		public boolean parse(EagleFileReader lines)
-		{
-			if (findStart(lines) == FOUND.EOF) return false;
-
-			EagleLineReader rec = lines.get(_currentLine);
-			int recLen = rec.length();
-			int endChar = _currentChar;
-			if (endChar >= recLen) return false;
-
-			boolean inQuotes1 = false;
-			boolean inQuotes2 = false;
-			while (endChar < recLen)
-			{
-				char ch = rec.charAt(endChar);
-				if (! inQuotes2 && ch == '\'') inQuotes1 = ! inQuotes1;
-				if (! inQuotes1 && ch == '"') inQuotes2 = ! inQuotes2;
-				
-				if (! inQuotes1 && ! inQuotes2)
-				{
-					if (ch == '<' || ch == '>' || ch == '|' || ch == '&' || ch == ';')
-					{
-						endChar--;
-						break;
-					}
-				}
-				endChar++;
-			}
-			
-			foundIt(_currentLine, endChar);
-			_txt += rec.substring(_currentChar, endChar);
-			return true;
-		}
+		String result = interpreter.getStrValue(what);
+		System.out.println(result);
 	}
 }

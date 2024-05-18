@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Function extends AbstractFunction
+public class Ada_Function extends TokenSequence implements AbstractFunction
 {
 	public @S(10) Ada_Keyword FUNCTION = new Ada_Keyword("function");
 	public @S(20) Ada_Function_Definition id;

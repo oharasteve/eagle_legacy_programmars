@@ -22,7 +22,7 @@ public class Bash_Syntax extends EagleSyntax
 		_punctuationExceptions = new String[] {
 				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>",
 				"$#", "$?", "$@", "$*", "&&", "||", "&>>",
-				"+=", "-="};
+				"+=", "-=", ">=", "<="};
 		
 		addReservedWords(Bash_Reserved_Words.RESERVED_WORDS);
 	}

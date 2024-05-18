@@ -7,8 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
-import com.eagle.programmar.AWK.Statements.AWK_PrintStatement.AWK_PrintParameters.AWK_Print_NoParens;
-import com.eagle.programmar.AWK.Statements.AWK_PrintStatement.AWK_PrintParameters.AWK_Print_WithParens;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -22,17 +20,20 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 	
 	public static class AWK_PrintParameters extends TokenChooser
 	{
-		public @FIRST static class AWK_Print_WithParens extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) @OPT AWK_ArgumentList argList;
-			public @S(30) PunctuationRightParen rightParen;
-		}
-		
-		public @CHOICE static class AWK_Print_NoParens extends TokenSequence
-		{
-			public @S(10) @OPT AWK_ArgumentList argList;
-		}
+		public @FIRST AWK_Print_WithParens withParens;
+		public @CHOICE AWK_Print_NoParens noParens;
+	}
+
+	public static class AWK_Print_WithParens extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT AWK_ArgumentList argList;
+		public @S(30) PunctuationRightParen rightParen;
+	}
+	
+	public static class AWK_Print_NoParens extends TokenSequence
+	{
+		public @S(10) @OPT AWK_ArgumentList argList;
 	}
 
 	@Override

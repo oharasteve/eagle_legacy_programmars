@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_Function extends AbstractFunction
+public class AWK_Function extends TokenSequence implements AbstractFunction
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Identifier name;

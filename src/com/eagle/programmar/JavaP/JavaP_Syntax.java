@@ -63,6 +63,7 @@ public class JavaP_Syntax extends EagleSyntax
 			"bipush",
 			"caload",
 			"checkcast",
+			"dadd",
 			"dcmpl", "dcmpg",
 			"dconst_0", "dconst_1",
 			"ddiv",

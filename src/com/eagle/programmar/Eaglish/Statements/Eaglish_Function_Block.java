@@ -12,8 +12,9 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_Function_Block extends AbstractFunction implements EagleRunnable
+public class Eaglish_Function_Block extends TokenSequence implements EagleRunnable, AbstractFunction
 {
 	public @S(10) Eaglish_Keyword FUNCTION = new Eaglish_Keyword("FUNCTION");
 	public @S(20) Eaglish_Function_Definition var;
