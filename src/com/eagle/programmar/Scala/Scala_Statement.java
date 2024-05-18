@@ -24,8 +24,8 @@ public class Scala_Statement extends TokenChooser
 	public @CHOICE Scala_BreakStatement breakStatement;
 	public @CHOICE Scala_BreakableStatement breakableStatement;
 	public @CHOICE Scala_CommentEoln comment;
-	public @CHOICE Scala_Var val;
-	public @CHOICE Scala_Val var;
+	public @CHOICE Scala_Var var;
+	public @CHOICE Scala_Val val;
 	public @CHOICE Scala_ForStatement forStatement;
 	public @CHOICE Scala_Function function;
 	public @CHOICE Scala_FunctionCall functionCall;

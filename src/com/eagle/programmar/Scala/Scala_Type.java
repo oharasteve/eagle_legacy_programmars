@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Scala;
 
-import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.programmar.Scala.Terminals.Scala_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -20,7 +19,7 @@ public class Scala_Type extends TokenChooser
 	
 	public static @CHOICE class Scala_TypeArray extends TokenSequence
 	{
-		public @S(10) Scala_Keyword LIST = new Scala_Keyword("List");
+		public @S(10) Scala_KeywordChoice LIST = new Scala_KeywordChoice("Array", "List");
 		public @S(20) PunctuationLeftBracket leftBracket;
 		public @S(30) Scala_Type subtype;
 		public @S(40) PunctuationRightBracket rightBracket;

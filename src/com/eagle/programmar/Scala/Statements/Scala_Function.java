@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Scala.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Scala.Scala_Statement;
 import com.eagle.programmar.Scala.Scala_Type;
 import com.eagle.programmar.Scala.Symbols.Scala_Function_Definition;
@@ -16,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Scala_Function extends TokenSequence
+public class Scala_Function extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
 	public @S(20) Scala_Function_Definition id;
@@ -43,5 +45,19 @@ public class Scala_Function extends TokenSequence
 		public @S(10) Scala_Variable_Definition var;
 		public @S(20) PunctuationColon colon;
 		public @S(30) Scala_Type type;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (id.getValue().equals("main"))
+		{
+			// Run the main program
+			interpreter.tryToInterpret(stmt.getWhich());
+		}
+		else
+		{
+			throw new RuntimeException("Cannot run " + id.getValue() + " diectly.");
+		}
 	}
 }
