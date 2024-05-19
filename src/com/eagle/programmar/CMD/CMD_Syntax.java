@@ -20,5 +20,7 @@ public class CMD_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", "||" };
+		
+		addReservedWords(new String[] { "not" });
 	}
 }

@@ -7,13 +7,10 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
-import com.eagle.programmar.Eaglish.Eaglish_Program;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Eaglish_Literal extends TerminalLiteralToken implements EagleRunnable
 {
-	private Eaglish_Program _lang = new Eaglish_Program();
-	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -51,7 +48,7 @@ public class Eaglish_Literal extends TerminalLiteralToken implements EagleRunnab
 			if (second < 0) throw new RuntimeException("Missing ^ in " + txt);
 			String var = txt.substring(first + 1, second);
 			Eaglish_Expression expr = new Eaglish_Expression();
-			if (! interpreter._parser.parseLine(var, _lang, expr))
+			if (! interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + var);
 			}

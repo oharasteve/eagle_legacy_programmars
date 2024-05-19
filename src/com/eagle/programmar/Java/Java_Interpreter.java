@@ -6,15 +6,16 @@ package com.eagle.programmar.Java;
 import java.util.ArrayList;
 
 import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleSymbolTable;
 import com.eagle.parsers.ParserManager;
 
 public class Java_Interpreter extends EagleInterpreter
 {
-	public Java_Interpreter(ParserManager parser, EagleSymbolTable symbolTable)
+	public Java_Interpreter(ParserManager parser, EagleLanguage lang, EagleSymbolTable symbolTable)
 	{
-		super(parser, symbolTable);
+		super(parser, lang, symbolTable);
 	}
 
 	public Eagle_Statement_Result interpretBlock(ArrayList<Java_Statement> stmts)

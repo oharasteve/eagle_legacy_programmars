@@ -11,6 +11,6 @@ public class CMacro_Interpreter extends EagleInterpreter
 {
 	public CMacro_Interpreter(ParserManager parser, EagleSymbolTable symbolTable)
 	{
-		super(parser, symbolTable);
+		super(parser, null, symbolTable);
 	}
 }

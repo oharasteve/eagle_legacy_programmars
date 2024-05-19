@@ -3,21 +3,51 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.programmar.CMD.Symbols.CMD_Identifier_Reference;
+import com.eagle.programmar.CMD.Expressions.CMD_AdditiveExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_MultiplicativeExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_NegativeExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_ParenthesizedExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_VariableExpression;
+import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
-import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
-import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrecedenceChooser;
+import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 
-public class CMD_Expression extends TokenSequence
+public class CMD_Expression extends PrecedenceChooser
 {
-	public @S(10) CMD_Expr_Item item1;
-	public @S(20) CMD_Punctuation plus = new CMD_Punctuation('+');
-	public @S(30) CMD_Expr_Item item2;
-	
-	public static class CMD_Expr_Item extends TokenChooser
+	private static OperatorList _operators = new OperatorList();
+
+	public CMD_Expression()
 	{
-		public @CHOICE CMD_Number number;
-		public @CHOICE CMD_Identifier_Reference var;
+	    super(_operators);
 	}
+
+	public CMD_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
+	{
+	    super(_operators, allowed, token.getClass());
+	}
+	
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	//
+
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) CMD_Number number;
+	public @P(20) CMD_Literal literal;
+	
+	///////////////////////////////////////////////
+	// Primary expressions
+	
+	public @P(100) CMD_ParenthesizedExpression parensExpression;
+	public @P(110) CMD_NegativeExpression negativeExpression;
+	public @P(120) CMD_VariableExpression variableExpression;
+
+	///////////////////////////////////////////////
+	// Binary expressions
+
+	public @P(500) CMD_MultiplicativeExpression multiplicativeExpression;
+	public @P(510) CMD_AdditiveExpression additiveExpression;
 }
