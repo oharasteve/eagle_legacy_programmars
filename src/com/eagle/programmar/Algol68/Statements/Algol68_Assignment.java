@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Algol68.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.IntegerValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Algol68_Variable;
+import com.eagle.programmar.Algol68.Symbols.Algol68_Identifier_Reference;
 import com.eagle.programmar.Algol68.Terminals.Algol68_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_Assignment extends TokenSequence
+public class Algol68_Assignment extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT Algol68_Type type;
 	public @S(20) Algol68_Variable var;
@@ -18,4 +22,14 @@ public class Algol68_Assignment extends TokenSequence
 			"=", "+=", ":=", "+:=");
 	public @S(40) Algol68_Expression value;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int x = interpreter.getIntValue(value);
+		IntegerValue val = new IntegerValue(x);
+		Algol68_Identifier_Reference id = (Algol68_Identifier_Reference) var.vars.first();
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+				var.getStartChar(), id.getValue(), val);
+	}
 }

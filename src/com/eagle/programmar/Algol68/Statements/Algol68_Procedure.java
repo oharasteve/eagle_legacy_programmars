@@ -9,6 +9,7 @@ import com.eagle.programmar.Algol68.Algol68_Variable;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Procedure_Definition;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Variable_Definition;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -19,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_Procedure extends TokenSequence
+public class Algol68_Procedure extends TokenSequence implements AbstractFunction
 {
 	public @S(10) Algol68_Keyword PROCEDURE = new Algol68_Keyword("PROC");
 	public @S(20) Algol68_Procedure_Definition id;

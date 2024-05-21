@@ -3,8 +3,13 @@
 
 package com.eagle.programmar.Algol68;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Algol68.Algol68_Program.Algol68_Element.Algol68_Main;
+import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -12,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Algol68_Program extends EagleLanguage
+public class Algol68_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String ALGOL68 = "Algol68";
 	
@@ -21,6 +26,13 @@ public class Algol68_Program extends EagleLanguage
 		super(ALGOL68, new Algol68_Syntax());
 	}
 	
+	@Override
+	public String booleanName(boolean flag)
+	{
+		if (flag) return "TRUE";
+		return "FALSE";
+	}
+
 	@Override
 	public String getDocRoot()
 	{
@@ -40,6 +52,44 @@ public class Algol68_Program extends EagleLanguage
 			public @S(30) PunctuationLeftParen leftParen;
 			public @S(40) TokenList<Algol68_Element> elements;
 			public @S(50) PunctuationRightParen rightParen;
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// First pass, just collect all the FUNCTION definitions
+		for (Algol68_Element element : elements._elements)
+		{
+			AbstractToken which = element.getWhich();
+			if (which instanceof Algol68_Statement)
+			{
+				Algol68_Statement stmt = (Algol68_Statement) which;
+				if (stmt.getWhich() instanceof Algol68_Procedure)
+				{
+					Algol68_Procedure fn = (Algol68_Procedure) stmt.getWhich();
+					interpreter._functionList.add(fn);
+				}
+			}
+		}
+		
+		// Second pass, execute the program
+		for (Algol68_Element element : elements._elements)
+		{
+			AbstractToken which = element.getWhich();
+			if (which instanceof Algol68_Main)
+			{
+				Algol68_Main main = (Algol68_Main) which;
+				for (Algol68_Element elt : main.elements._elements)
+				{
+					interpreter.tryToInterpret(elt.getWhich());
+				}
+			}
+			else if (which instanceof Algol68_Statement)
+			{
+				Algol68_Statement stmt = (Algol68_Statement) which;
+				interpreter.tryToInterpret(stmt.getWhich());
+			}
 		}
 	}
 }

@@ -25,6 +25,7 @@ public class Ada_PutStatement extends TokenSequence implements EagleRunnable
 		public @S(10) Ada_Keyword UNBOUNDED_IO = new Ada_Keyword("Unbounded_IO");
 		public @S(20) PunctuationPeriod dot;
 	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

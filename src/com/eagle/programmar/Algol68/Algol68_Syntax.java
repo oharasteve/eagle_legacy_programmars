@@ -19,7 +19,7 @@ public class Algol68_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {
-				":=", "((", "))", "+:=" };
+				":=", "((", "))", "+:=", ">=", "<=", "~+", "/=" };
 		
 		addReservedWords(reservedWords);
 	}
