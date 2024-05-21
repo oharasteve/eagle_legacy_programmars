@@ -8,14 +8,11 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnable
 {
-	private static CMD_Program _lang = new CMD_Program();
-
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -121,7 +118,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 			if (second < 0) throw new RuntimeException("Missing % in " + txt);
 			String var = txt.substring(first + 1, second);
 			Eaglish_Expression expr = new Eaglish_Expression();
-			if (! interpreter._parser.parseLine(var, _lang, expr))
+			if (! interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + var);
 			}

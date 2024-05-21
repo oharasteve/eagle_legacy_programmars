@@ -8,13 +8,10 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.Bash.Bash_Expression;
-import com.eagle.programmar.Bash.Bash_Program;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
 {
-	private Bash_Program _lang = new Bash_Program();
-
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -81,7 +78,7 @@ public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
 			if (second < 0) throw new RuntimeException("Missing )) in " + txt);
 			String var = txt.substring(first + 3, second);
 			Bash_Expression expr = new Bash_Expression();
-			if (! interpreter._parser.parseLine(var, _lang, expr))
+			if (! interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + var);
 			}

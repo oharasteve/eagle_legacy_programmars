@@ -4,12 +4,12 @@
 package com.eagle.programmar.Algol68.Expressions;
 
 import com.eagle.programmar.Algol68.Algol68_Expression;
-import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
+import com.eagle.programmar.Algol68.Terminals.Algol68_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
 
 public class Algol68_ConditionalOrExpression extends PrecedenceOperator
 {
 	public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Algol68_Keyword orOperator = new Algol68_Keyword("or");
+	public @S(20) Algol68_KeywordChoice orOperator = new Algol68_KeywordChoice("or", "xor");
 	public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 }
