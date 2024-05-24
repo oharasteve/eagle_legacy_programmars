@@ -15,11 +15,11 @@ public class CMD_Grep_Statement extends TokenSequence
 {
 	public @S(10) CMD_Keyword GREP = new CMD_Keyword("grep");
 	public @S(20) TokenList<CMD_Grep_Parameter> params;
-	
+
 	public static class CMD_Grep_Parameter extends TokenChooser
 	{
 		public @CHOICE CMD_Argument srcFile;
-		
+
 		public @CHOICE static class CMD_Grep_Option_e extends TokenSequence
 		{
 			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');

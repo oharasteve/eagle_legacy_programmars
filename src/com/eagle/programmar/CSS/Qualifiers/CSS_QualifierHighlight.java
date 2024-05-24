@@ -15,11 +15,10 @@ public class CSS_QualifierHighlight extends TokenSequence
 	public @S(10) CSS_Keyword HIGHLIGHT = new CSS_Keyword("highlight");
 	public @S(20) PunctuationEquals equals;
 	public @S(30) CSS_QualifierWhichHighlight which;
-	
+
 	public static class CSS_QualifierWhichHighlight extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice STRONG = new CSS_KeywordChoice(
-				"strong");
+		public @CHOICE CSS_KeywordChoice STRONG = new CSS_KeywordChoice("strong");
 		public @CHOICE CSS_Literal literal;
 	}
 }

@@ -24,7 +24,7 @@ public class Delphi_Property extends TokenSequence
 	public @S(50) Delphi_Type type;
 	public @S(60) TokenList<Delphi_PropertyReadWrite> readWrites;
 	public @S(70) PunctuationSemicolon semicolon;
-	
+
 	public static class Delphi_PropertyReadWrite extends TokenChooser
 	{
 		public @CHOICE static class Delphi_PropertyRead extends TokenSequence
@@ -32,14 +32,14 @@ public class Delphi_Property extends TokenSequence
 			public @S(10) Delphi_Keyword READ = new Delphi_Keyword("Read");
 			public @S(20) Delphi_Identifier_Reference readVar;
 		}
-		
+
 		public @CHOICE static class Delphi_PropertyWrite extends TokenSequence
 		{
 			public @S(10) Delphi_Keyword WRITE = new Delphi_Keyword("Write");
 			public @S(20) Delphi_Identifier_Reference writeVar;
 		}
 	}
-	
+
 	public static class Delphi_PropertySubscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

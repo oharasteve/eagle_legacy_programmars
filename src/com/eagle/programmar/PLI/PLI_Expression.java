@@ -35,16 +35,17 @@ public class PLI_Expression extends PrecedenceChooser
 
 	public PLI_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public PLI_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////

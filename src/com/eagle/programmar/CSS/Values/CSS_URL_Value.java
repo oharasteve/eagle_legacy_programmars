@@ -21,11 +21,11 @@ public class CSS_URL_Value extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) CSS_File file;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	public static class CSS_File extends TokenChooser
 	{
 		public @CHOICE CSS_FileName fileName;
-		
+
 		public @CHOICE static class CSS_FileInline extends TokenSequence
 		{
 			public @S(10) CSS_Keyword DATA = new CSS_Keyword("data");

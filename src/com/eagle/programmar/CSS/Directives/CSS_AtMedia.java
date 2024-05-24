@@ -27,30 +27,30 @@ public class CSS_AtMedia extends TokenSequence
 	public @S(60) @OPT CSS_Comment comment;
 	public @S(70) TokenList<CSS_Body> bodies;
 	public @S(80) PunctuationRightBrace rightBrace;
-	
+
 	public static class CSS_MediaParam extends TokenChooser
 	{
 		public @CHOICE CSS_Keyword ALL = new CSS_Keyword("all");
-		
+
 		public @CHOICE static class CSS_MediaParamParens extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) CSS_Line line;
 			public @S(30) PunctuationRightParen rightParen;
 		}
-		
+
 		public @CHOICE static class CSS_MediaScreen extends TokenSequence
 		{
 			public @S(10) @OPT CSS_Keyword ONLY = new CSS_Keyword("only");
 			public @S(20) CSS_Keyword SCREEN = new CSS_Keyword("screen");
 		}
-		
+
 		public @CHOICE static class CSS_MediaPrint extends TokenSequence
 		{
 			public @S(10) CSS_Keyword PRINT = new CSS_Keyword("print");
 		}
 	}
-	
+
 	public static class CSS_MoreMediaParam extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;

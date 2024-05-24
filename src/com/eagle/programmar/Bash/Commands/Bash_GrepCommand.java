@@ -16,7 +16,7 @@ public class Bash_GrepCommand extends TokenSequence
 	public @S(20) @OPT TokenList<Bash_GrepOption> options;
 	public @S(30) @OPT Bash_Literal pattern;
 	public @S(40) @OPT Bash_FilenameOrLiteral filename;
-	
+
 	public static class Bash_GrepOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice I = new Bash_KeywordChoice("-i", "-v", "-E", "-q", "-qE");

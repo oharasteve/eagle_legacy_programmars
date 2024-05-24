@@ -21,7 +21,7 @@ public class SQL_ForStatement extends TokenSequence
 	public @S(50) SQL_Punctuation dotDot = new SQL_Punctuation("..");
 	public @S(60) SQL_Expression finish;
 	public @S(70) SQL_Keyword LOOP1 = new SQL_Keyword("LOOP");
-	
+
 	public @S(80) TokenList<SQL_StatementOrComment> statements;
 
 	public @S(90) SQL_Keyword END = new SQL_Keyword("END");

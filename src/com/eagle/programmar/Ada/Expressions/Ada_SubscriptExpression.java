@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Ada.Expressions;
 
-public class Ada_SubscriptExpression {
+public class Ada_SubscriptExpression
+{
 
 }

@@ -17,8 +17,9 @@ public class Natural_Keyword extends TerminalKeywordToken
 	{
 		super(word);
 
-		// Dang, didn't work. No instances are created in time ... 
+		// Dang, didn't work. No instances are created in time ...
 		// Add it to the global list of reserved keywords
-		// if (!Natural_Program.keywords.contains(word)) Natural_Program.keywords.put(word, word);
+		// if (!Natural_Program.keywords.contains(word))
+		// Natural_Program.keywords.put(word, word);
 	}
 }

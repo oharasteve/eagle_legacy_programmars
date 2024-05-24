@@ -21,26 +21,26 @@ public class Go_Function extends TokenSequence
 	public @S(10) @DOC("#Function_declarations") Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) @OPT SeparatedList<Go_FunctionParamater,PunctuationComma> parameters;
+	public @S(40) @OPT SeparatedList<Go_FunctionParamater, PunctuationComma> parameters;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) @OPT Go_FuncReturnType returnType;
 	public @S(70) Go_Statement stmt;
-	
+
 	public static class Go_FunctionParamater extends TokenSequence
 	{
 		public @S(10) Go_Variable_Definition var;
 		public @S(20) @OPT PunctuationStar star;
 		public @S(30) Go_Type type;
 	}
-	
+
 	public static class Go_FuncReturnType extends TokenChooser
 	{
 		public @CHOICE Go_Type type;
-		
+
 		public @CHOICE static class Go_FuncReturnMulti extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) SeparatedList<Go_Type,PunctuationComma> types;
+			public @S(20) SeparatedList<Go_Type, PunctuationComma> types;
 			public @S(30) PunctuationRightParen rightParen;
 		}
 	}

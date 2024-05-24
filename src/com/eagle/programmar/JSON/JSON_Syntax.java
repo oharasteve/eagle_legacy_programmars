@@ -13,7 +13,7 @@ public class JSON_Syntax extends EagleSyntax
 	{
 		return "JSON";
 	}
-	
+
 	public JSON_Syntax()
 	{
 		_isCaseSensitive = false;

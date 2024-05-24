@@ -24,7 +24,7 @@ public class Powershell_TryStatement extends TokenSequence
 	public @S(60) PunctuationRightBrace rightBrace;
 	public @S(70) @OPT TokenList<Powershell_CatchBlock> catchBlocks;
 	public @S(80) @OPT Powershell_FinallyBlock finallyBlock;
-	
+
 	public static class Powershell_CatchBlock extends TokenSequence
 	{
 		public @S(10) Powershell_Keyword CATCH = new Powershell_Keyword("Catch");
@@ -33,7 +33,7 @@ public class Powershell_TryStatement extends TokenSequence
 		public @S(40) @OPT Powershell_EndOfLine eoln;
 		public @S(50) @OPT TokenList<Powershell_Statement> statements;
 		public @S(60) PunctuationRightBrace rightBrace;
-		
+
 		public static class Powershell_CatchType extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
@@ -41,7 +41,7 @@ public class Powershell_TryStatement extends TokenSequence
 			public @S(30) PunctuationRightBracket rightBracket;
 		}
 	}
-	
+
 	public static class Powershell_FinallyBlock extends TokenSequence
 	{
 		public @S(10) Powershell_Keyword FINALLY = new Powershell_Keyword("Finally");

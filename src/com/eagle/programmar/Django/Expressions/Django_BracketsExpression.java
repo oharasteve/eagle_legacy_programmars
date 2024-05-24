@@ -13,6 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Django_BracketsExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) @OPT SeparatedList<Django_Expression,PunctuationComma> exprs;
+	public @S(20) @OPT SeparatedList<Django_Expression, PunctuationComma> exprs;
 	public @S(30) PunctuationRightBracket rightBracket;
 }

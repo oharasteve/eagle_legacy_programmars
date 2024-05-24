@@ -16,17 +16,19 @@ import com.eagle.tokens.UnparsedElement;
 
 public class CMD_Unparsed_Statement extends UnparsedElement
 {
-	static String[] PUNCTS = new String[] { "%", ".", ",", "=", "(", ")", "[", "]", "\\", ";" };
+	static String[] PUNCTS = new String[] {
+			"%", ".", ",", "=", "(", ")", "[", "]", "\\", ";"
+	};
 
 	@Override
 	public @SKIP TokenList<? extends AbstractToken> unparsedPieces()
 	{
 		return elements;
 	}
-	
+
 	public @S(10) TokenList<CMD_UnparsedElement> elements;
 	public @S(20) CMD_EndOfLine eoln;
-	
+
 	public static class CMD_UnparsedElement extends TokenChooser
 	{
 		public @CHOICE CMD_Identifier_Reference id;

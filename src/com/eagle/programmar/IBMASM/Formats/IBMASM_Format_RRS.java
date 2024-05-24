@@ -12,26 +12,23 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_RRS extends TokenSequence
 {
-	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
-		"BXH",		// Branch/high
-		"BXLE",		// Branch/low-equal
-		"HIO",		// Halt I/O
-		"LPSW",		// Load PSW
-		"LM",		// Load multiple
-		"RDD",		// Read direct
-		"SIO",		// Start I/O
-		"SSM",		// Set system mask
-		"STM",		// Store multiple
-		"TCH",		// Test channel
-		"TIO",		// Test I/O
-		"TS",		// Test-and-set
-		"WRD",		// Write direct
-		
-		"CDS",
-		"CLM",
-		"CS"		// Compare and Swap
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice("BXH", // Branch/high
+			"BXLE", // Branch/low-equal
+			"HIO", // Halt I/O
+			"LPSW", // Load PSW
+			"LM", // Load multiple
+			"RDD", // Read direct
+			"SIO", // Start I/O
+			"SSM", // Set system mask
+			"STM", // Store multiple
+			"TCH", // Test channel
+			"TIO", // Test I/O
+			"TS", // Test-and-set
+			"WRD", // Write direct
+
+			"CDS", "CLM", "CS" // Compare and Swap
 	);
-	
+
 	public @S(20) IBMASM_Spaces spaces;
 	public @S(30) IBMASM_Register register1;
 	public @S(40) PunctuationComma comma1;

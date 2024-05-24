@@ -26,18 +26,18 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 	public @S(40) TokenList<COBOL_StringPiece> pieces;
 	public @S(50) @OPT COBOL_StringWith with;
 	public @S(60) @OPT COBOL_Keyword ENDSTRING = new COBOL_Keyword("END-STRING");
-	
+
 	public static class COBOL_StringWhat extends TokenSequence
 	{
 		public @S(10) COBOL_Expression expr;
 		public @S(20) @OPT COBOL_StringDelimited delimit;
-		
+
 		public static class COBOL_StringDelimited extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword DELIMITED = new COBOL_Keyword("DELIMITED");
 			public @S(20) @OPT COBOL_Keyword BY = new COBOL_Keyword("BY");
 			public @S(30) COBOL_StringDelimitByWhat what;
-			
+
 			public static class COBOL_StringDelimitByWhat extends TokenChooser
 			{
 				public @CHOICE COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
@@ -59,7 +59,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) COBOL_Identifier_Reference intoVar;
 		public @S(30) @OPT COBOL_StringCount count;
-		
+
 		public static class COBOL_StringCount extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword COUNT = new COBOL_Keyword("COUNT");
@@ -67,7 +67,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 			public @S(30) COBOL_Identifier_Reference countVar;
 		}
 	}
-	
+
 	public static class COBOL_StringWith extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword WITH = new COBOL_Keyword("WITH");
@@ -86,23 +86,23 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		{
 			throw new RuntimeException("Cannot handle POINTER yet");
 		}
-		
+
 		StringBuffer result = new StringBuffer();
 		for (COBOL_StringWhat what : elements._elements)
 		{
 			if (what.delimit.isPresent())
 			{
 				AbstractToken which = what.delimit.what.getWhich();
-				if (! (which instanceof COBOL_StringDelimitSpaces))
+				if (!(which instanceof COBOL_StringDelimitSpaces))
 				{
 					throw new RuntimeException("Can only DELIMIT BY SPACES");
 				}
 			}
-			
+
 			String piece = interpreter.getStrValue(what.expr);
 			result.append(piece);
 		}
-		
+
 		interpreter.pushStr(result.toString());
 	}
 }

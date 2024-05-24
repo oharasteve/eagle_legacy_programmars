@@ -17,7 +17,7 @@ public class Python_Or_Expression extends PrecedenceOperator implements EagleRun
 	public @S(20) Python_Keyword OR = new Python_Keyword("or");
 	public @S(30) @OPT TokenList<Python_Comment> comment;
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

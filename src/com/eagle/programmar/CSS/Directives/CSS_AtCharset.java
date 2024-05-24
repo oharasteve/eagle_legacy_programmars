@@ -17,7 +17,7 @@ public class CSS_AtCharset extends TokenSequence
 	public @S(30) @OPT CSS_AtCharsetACD acd;
 	public @S(40) CSS_Literal charset;
 	public @S(50) PunctuationSemicolon semicolon;
-	
+
 	public static class CSS_AtCharsetACD extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation backSlash = new CSS_Punctuation("\\");

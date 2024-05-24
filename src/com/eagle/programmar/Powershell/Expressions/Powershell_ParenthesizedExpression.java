@@ -16,7 +16,7 @@ public class Powershell_ParenthesizedExpression extends PrimaryOperator implemen
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Powershell_Expression expression;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

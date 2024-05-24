@@ -19,14 +19,14 @@ public class VB_IfStatement extends TokenSequence
 	public @S(20) VB_Expression condition;
 	public @S(30) VB_Keyword THEN = new VB_Keyword("then");
 	public @S(40) VB_IfType ifType;
-	
+
 	public static class VB_IfType extends TokenChooser
 	{
 		public @CHOICE static class VB_IfOneLiner extends TokenSequence
 		{
 			public @S(10) VB_BaseStatement thenStatement;
 		}
-		
+
 		public @CHOICE static class VB_IfMultiLiner extends TokenSequence
 		{
 			public @S(10) VB_EndOfLine eoln;
@@ -47,7 +47,7 @@ public class VB_IfStatement extends TokenSequence
 		public @S(50) VB_EndOfLine eoln;
 		public @S(60) TokenList<VB_Statement> elseIfStatement;
 	}
-	
+
 	public static class VB_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<VB_Comment> comments;

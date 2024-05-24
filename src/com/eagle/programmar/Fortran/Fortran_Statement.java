@@ -36,7 +36,7 @@ public class Fortran_Statement extends TokenChooser
 	public @CHOICE Fortran_ProgramBlock programBlock;
 	public @CHOICE Fortran_Subroutine subroutine;
 	public @CHOICE Fortran_WriteStatement writeStatement;
-	
+
 	public @CHOICE static class Fortran_CommentEOLN extends TokenSequence
 	{
 		public @S(10) Fortran_Comment comment;

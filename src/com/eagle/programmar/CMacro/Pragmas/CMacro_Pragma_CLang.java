@@ -16,24 +16,24 @@ public class CMacro_Pragma_CLang extends TokenSequence
 	public @S(10) CMacro_KeywordChoice CLANG = new CMacro_KeywordChoice("clang", "GCC");
 	public @S(20) CMacro_KeywordChoice DIAGNOSTIC = new CMacro_KeywordChoice("diagnostic", "optimize");
 	public @S(30) CMacro_Pragma_CLang_What what;
-	
+
 	public static class CMacro_Pragma_CLang_What extends TokenChooser
 	{
 		public @CHOICE CMacro_Literal literal;
-		
+
 		public @CHOICE CMacro_KeywordChoice PUSH = new CMacro_KeywordChoice("push", "pop");
-		
+
 		public @CHOICE static class CMacro_Pragma_CLangOptimize extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) CMacro_Literal literal;	// Such as "fp-contract=off"
+			public @S(20) CMacro_Literal literal; // Such as "fp-contract=off"
 			public @S(30) PunctuationRightParen rightParen;
 		}
-		
+
 		public @CHOICE static class CMacro_Pragma_CLangIgnored extends TokenSequence
 		{
 			public @S(10) CMacro_Keyword IGNORED = new CMacro_Keyword("ignored");
-			public @S(20) CMacro_Literal warning;	// e.g., "-Wunguarded-availability"
+			public @S(20) CMacro_Literal warning; // e.g., "-Wunguarded-availability"
 		}
 	}
 }

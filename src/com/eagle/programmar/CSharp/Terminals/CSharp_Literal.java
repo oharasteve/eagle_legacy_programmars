@@ -13,7 +13,7 @@ public class CSharp_Literal extends TerminalLiteralToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		if (rec.charAt(_currentChar) == '@')
 		{
@@ -22,7 +22,7 @@ public class CSharp_Literal extends TerminalLiteralToken
 			lines.setCurrentChar(_currentChar);
 			return false;
 		}
-		
+
 		// An "interpolated" string can have {{ and }} in it
 		if (rec.charAt(_currentChar) == '$')
 		{
@@ -31,7 +31,7 @@ public class CSharp_Literal extends TerminalLiteralToken
 			lines.setCurrentChar(_currentChar);
 			return false;
 		}
-		
+
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 }

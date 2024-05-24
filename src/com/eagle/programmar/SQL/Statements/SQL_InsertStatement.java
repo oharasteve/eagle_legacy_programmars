@@ -23,19 +23,19 @@ public class SQL_InsertStatement extends TokenSequence
 	public @S(40) SQL_Identifier_Reference table;
 	public @S(50) SQL_InsertClause clause;
 	public @S(60) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_OrReplace extends TokenSequence
 	{
 		public @S(10) SQL_Keyword OR = new SQL_Keyword("OR");
 		public @S(20) SQL_Keyword REPLACE = new SQL_Keyword("REPLACE");
 	}
-	
+
 	public static class SQL_InsertClause extends TokenChooser
 	{
 		public @CHOICE static class SQL_InsertSet extends TokenSequence
 		{
 			public @S(10) SQL_Keyword SET = new SQL_Keyword("SET");
-			public @S(20) SeparatedList<SQL_InsertAssignment,PunctuationComma> assignments;
+			public @S(20) SeparatedList<SQL_InsertAssignment, PunctuationComma> assignments;
 
 			public static class SQL_InsertAssignment extends TokenSequence
 			{
@@ -44,24 +44,24 @@ public class SQL_InsertStatement extends TokenSequence
 				public @S(30) SQL_Expression value;
 			}
 		}
-		
+
 		public @CHOICE static class SQL_InsertValues extends TokenSequence
 		{
 			public @S(10) @OPT SQL_InsertNames insertNames;
 			public @S(20) SQL_Keyword VALUES = new SQL_Keyword("VALUES");
-			public @S(30) SeparatedList<SQL_InsertValue,PunctuationComma> value;
-			
+			public @S(30) SeparatedList<SQL_InsertValue, PunctuationComma> value;
+
 			public static class SQL_InsertValue extends TokenSequence
 			{
 				public @S(10) PunctuationLeftParen leftParen;
-				public @S(20) SeparatedList<SQL_Expression,PunctuationComma> values;
+				public @S(20) SeparatedList<SQL_Expression, PunctuationComma> values;
 				public @S(30) PunctuationRightParen rightParen;
 			}
-			
+
 			public static class SQL_InsertNames extends TokenSequence
 			{
 				public @S(10) PunctuationLeftParen leftParen;
-				public @S(20) SeparatedList<SQL_Identifier_Reference,PunctuationComma> vars;
+				public @S(20) SeparatedList<SQL_Identifier_Reference, PunctuationComma> vars;
 				public @S(30) PunctuationRightParen rightParen;
 			}
 		}

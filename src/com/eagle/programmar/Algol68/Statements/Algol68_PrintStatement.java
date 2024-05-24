@@ -20,14 +20,14 @@ public class Algol68_PrintStatement extends TokenSequence implements EagleRunnab
 {
 	public @S(10) Algol68_Keyword PRINT = new Algol68_Keyword("PRINT");
 	public @S(20) Algol68_Punctuation doubleLeftParen = new Algol68_Punctuation("((");
-	public @S(30) SeparatedList<Algol68_PrintWhat,PunctuationComma> what;
+	public @S(30) SeparatedList<Algol68_PrintWhat, PunctuationComma> what;
 	public @S(40) Algol68_Punctuation doubleRightParen = new Algol68_Punctuation("))");
 	public @S(50) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Algol68_PrintWhat extends TokenChooser
 	{
 		public @CHOICE Algol68_Expression expr;
-		
+
 		public @CHOICE static class Algol68_PrintNewLine extends TokenSequence
 		{
 			public @S(10) Algol68_Keyword NEW = new Algol68_Keyword("NEW");
@@ -50,7 +50,8 @@ public class Algol68_PrintStatement extends TokenSequence implements EagleRunnab
 			{
 				System.out.println();
 			}
-			else throw new RuntimeException("Unable to print " + what);
+			else
+				throw new RuntimeException("Unable to print " + what);
 		}
 	}
 }

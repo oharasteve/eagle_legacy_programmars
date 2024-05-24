@@ -9,17 +9,17 @@ import com.eagle.tokens.TokenList;
 public class TCL_Program extends EagleLanguage
 {
 	public static final String TCL = "TCL";
-	
+
 	public TCL_Program()
 	{
 		super(TCL, new TCL_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "https://www.tcl.tk/man/tcl8.7/";
 	}
-	
+
 	public @S(10) TokenList<TCL_Statement> statements;
-}	
+}

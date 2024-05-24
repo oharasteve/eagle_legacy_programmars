@@ -16,13 +16,13 @@ public class JavaP_OneClassMethodParameters extends TokenSequence
 	public @S(10) JavaP_Keyword METHODPARAMETERS = new JavaP_Keyword("MethodParameters");
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_EndOfLine eoln1;
-	
+
 	public @S(40) JavaP_Keyword NAME = new JavaP_Keyword("Name");
 	public @S(50) JavaP_Keyword FLAGS = new JavaP_Keyword("Flags");
 	public @S(60) JavaP_EndOfLine eoln2;
-	
+
 	public @S(70) @OPT TokenList<JavaP_OneClassMethodParameter> params;
-	
+
 	public static class JavaP_OneClassMethodParameter extends TokenSequence
 	{
 		public @S(10) JavaP_QualifiedName name;

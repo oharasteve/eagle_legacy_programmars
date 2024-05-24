@@ -22,16 +22,17 @@ public class CSharp_UnparsedStatement extends UnparsedElement
 	private static EagleSyntax SYNTAX = new CSharp_Syntax();
 	static String[] KEYWORDS = SYNTAX.allReservedWords();
 	static String[] PUNCTS = new String[] {
-			"+", "-", "*", "/", ".", ",", "?", ":", "<", "=", ">", "(", ")", "[", "]", "&", "|" };
+			"+", "-", "*", "/", ".", ",", "?", ":", "<", "=", ">", "(", ")", "[", "]", "&", "|"
+	};
 
 	@Override
 	public @SKIP TokenList<? extends AbstractToken> unparsedPieces()
 	{
 		return elements;
 	}
-	
+
 	public TokenList<CSharp_UnparsedElement> elements;
-	
+
 	public static class CSharp_UnparsedElement extends TokenChooser
 	{
 		public @CHOICE CSharp_Identifier_Reference id;

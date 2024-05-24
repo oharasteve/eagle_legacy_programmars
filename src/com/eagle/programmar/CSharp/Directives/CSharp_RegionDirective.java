@@ -15,7 +15,7 @@ public class CSharp_RegionDirective extends TokenSequence
 	public @S(10) CSharp_Punctuation pound1 = new CSharp_Punctuation('#');
 	public @S(20) CSharp_Keyword REGION = new CSharp_Keyword("region");
 	public @S(30) CSharp_CommentToEndOfLine regionName;
-	
+
 	public @S(40) TokenList<CSharp_ClassElement> elements;
 
 	public @S(50) CSharp_Punctuation pound2 = new CSharp_Punctuation('#');

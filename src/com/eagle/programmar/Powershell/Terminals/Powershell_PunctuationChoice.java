@@ -13,16 +13,16 @@ public class Powershell_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Powershell_PunctuationChoice(String... puncts)
 	{
 		super(puncts);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! super.parse(lines)) return false;
+		if (!super.parse(lines)) return false;
 		return super.dontAllowLettersAfterHyphen(lines);
 	}
 }

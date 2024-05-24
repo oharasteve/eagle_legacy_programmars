@@ -18,12 +18,12 @@ import com.eagle.tokens.TokenSequence;
 public class Scala_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String SCALA = "Scala";
-	
+
 	public Scala_Program()
 	{
 		super(SCALA, new Scala_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -31,7 +31,7 @@ public class Scala_Program extends EagleLanguage implements EagleRunnable
 	}
 
 	public @S(10) TokenList<Scala_Element> elements;
-	
+
 	public static class Scala_Element extends TokenChooser
 	{
 		public @CHOICE Scala_CommentEoln comment;

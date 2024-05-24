@@ -25,13 +25,13 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable
 	public @S(20) Eaglish_Variable_Definition var;
 	public @S(30) @OPT Eaglish_Array_InitialValues init;
 	public @S(40) Eaglish_EndOfLine eoln;
-	
+
 	public static class Eaglish_Array_InitialValues extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) SeparatedList<Eaglish_Expression, PunctuationComma> values;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -47,10 +47,10 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable
 				if (interpreter._TRACE) System.err.println("*** " + var.toString() + "[" + i + "] = " + val);
 			}
 		}
-		
+
 		ArrayValue array = new ArrayValue();
 		array.setValue(vals);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-				var.getStartChar(), var.toString(), array);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.toString(),
+				array);
 	}
 }

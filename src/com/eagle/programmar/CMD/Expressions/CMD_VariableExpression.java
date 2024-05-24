@@ -10,7 +10,8 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class CMD_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
-	// Because CMD_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
+	// Because CMD_Variable is not a TerminalToken, it has to be wrapped in a
+	// PrimaryOperator
 	public @S(10) CMD_Variable variable;
 
 	@Override

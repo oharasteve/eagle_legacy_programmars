@@ -12,7 +12,7 @@ public class AWK_ArgumentList extends TokenSequence
 {
 	public @S(10) AWK_Expression expr;
 	public @S(20) @OPT TokenList<AWK_MoreArguments> more;
-	
+
 	public static class AWK_MoreArguments extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;

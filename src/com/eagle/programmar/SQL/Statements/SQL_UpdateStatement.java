@@ -17,7 +17,7 @@ public class SQL_UpdateStatement extends TokenSequence
 	public @S(10) @DOC("sql_update.asp") SQL_Keyword UPDATE = new SQL_Keyword("UPDATE");
 	public @S(20) SQL_Identifier_Reference table;
 	public @S(30) SQL_Keyword SET = new SQL_Keyword("SET");
-	public @S(40) SeparatedList<SQL_UpdateAssignment,PunctuationComma> assignments;
+	public @S(40) SeparatedList<SQL_UpdateAssignment, PunctuationComma> assignments;
 	public @S(50) SQL_Keyword WHERE = new SQL_Keyword("WHERE");
 	public @S(60) SQL_Expression condition;
 	public @S(70) PunctuationSemicolon semicolon;

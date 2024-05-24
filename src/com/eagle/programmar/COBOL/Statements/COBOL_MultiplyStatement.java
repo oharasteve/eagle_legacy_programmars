@@ -25,7 +25,8 @@ public class COBOL_MultiplyStatement extends COBOL_AbstractStatement
 		public @CHOICE static class COBOL_MultiplyNoGiving extends TokenSequence
 		{
 			// This seems backwards. MULTIPLY -1 BY X. Oh well.
-			// Look at https://www.ibm.com/support/knowledgecenter/SS6SG3_6.3.0/lr/ref/rlpsmult.html
+			// Look at
+			// https://www.ibm.com/support/knowledgecenter/SS6SG3_6.3.0/lr/ref/rlpsmult.html
 			public @S(10) COBOL_Expression expression;
 			public @S(20) COBOL_Keyword BY = new COBOL_Keyword("BY");
 			public @S(30) COBOL_Variable var;
@@ -39,7 +40,7 @@ public class COBOL_MultiplyStatement extends COBOL_AbstractStatement
 			public @S(40) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
 			public @S(50) COBOL_Variable var;
 			public @S(60) @OPT TokenList<COBOL_MultiplyMoreVars> moreVars;
-			
+
 			public static class COBOL_MultiplyMoreVars extends TokenSequence
 			{
 				public @S(10) @OPT PunctuationComma comma;
@@ -47,7 +48,7 @@ public class COBOL_MultiplyStatement extends COBOL_AbstractStatement
 			}
 		}
 	}
-	
+
 	public static class COBOL_MultiplyOnSizeError extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword ON = new COBOL_Keyword("ON");

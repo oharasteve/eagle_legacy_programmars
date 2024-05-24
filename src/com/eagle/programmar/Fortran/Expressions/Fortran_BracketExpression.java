@@ -13,6 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Fortran_BracketExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) SeparatedList<Fortran_Expression,PunctuationComma> expression;
+	public @S(20) SeparatedList<Fortran_Expression, PunctuationComma> expression;
 	public @S(30) PunctuationRightBracket rightBracket;
 }

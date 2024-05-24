@@ -1,4 +1,4 @@
-	// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Aug 8, 2011
 
 package com.eagle.programmar.C;
@@ -26,11 +26,11 @@ public class C_TypeDef extends TokenSequence
 	public @S(40) C_TypeDef_What what;
 	public @S(50) @OPT TokenList<C_TypedefAttributes> attributes;
 	public @S(60) PunctuationSemicolon semicolon;
-	
+
 	public static class C_TypeDef_What extends TokenChooser
 	{
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-		
+
 		public @CHOICE static class C_TypeDef_Data extends TokenSequence
 		{
 			public @S(10) C_Type type;
@@ -38,7 +38,7 @@ public class C_TypeDef extends TokenSequence
 			public @S(30) C_Type_Definition typeName;
 			public @S(40) @OPT C_Subscript subscript;
 			public @S(50) @OPT TokenList<C_TypeDefMore> more;
-			
+
 			public static class C_TypeDefMore extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;
@@ -47,7 +47,7 @@ public class C_TypeDef extends TokenSequence
 				public @S(40) @OPT C_Subscript subscript;
 			}
 		}
-		
+
 		public @LAST static class C_TypeDef_Function extends TokenSequence
 		{
 			public @S(10) C_Type returnType;
@@ -58,7 +58,8 @@ public class C_TypeDef extends TokenSequence
 			public @S(60) C_Function_ParameterDefs params;
 		}
 
-		// Just like C_TypeDef_Function but no parens ... I didn't know this was valid syntax!
+		// Just like C_TypeDef_Function but no parens ... I didn't know this was valid
+		// syntax!
 		public @FIRST static class C_TypeDef_NoParensFunction extends TokenSequence
 		{
 			public @S(10) C_Type returnType;
@@ -76,7 +77,7 @@ public class C_TypeDef extends TokenSequence
 		public @S(50) @OPT TokenList<C_TypedefMoreAttributes> more;
 		public @S(60) PunctuationRightParen righttParen1;
 		public @S(70) PunctuationRightParen righttParen2;
-		
+
 		public static class C_TypedefAttribute extends TokenChooser
 		{
 			public @CHOICE static class C_TypedefAttributeMode extends TokenSequence
@@ -87,7 +88,7 @@ public class C_TypeDef extends TokenSequence
 				public @S(40) PunctuationRightParen righttParen;
 			}
 		}
-		
+
 		public static class C_TypedefMoreAttributes extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;

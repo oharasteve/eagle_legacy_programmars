@@ -37,16 +37,17 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public Rust_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Rust_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -60,7 +61,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
 	public @P(120) Rust_NotExpression notExpression;
@@ -69,7 +70,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(150) Rust_RangeExpression rangeExpression;
 	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
 	public @P(170) Rust_ExpressionArray expressionArray;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

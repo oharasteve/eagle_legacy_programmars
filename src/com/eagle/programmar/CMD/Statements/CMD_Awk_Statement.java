@@ -15,7 +15,7 @@ public class CMD_Awk_Statement extends TokenSequence
 	public @S(10) CMD_Keyword AWK = new CMD_Keyword("awk");
 	public @S(20) @OPT TokenList<CMD_Awk_Option> opts;
 	public @S(30) @OPT TokenList<CMD_Argument> arg;
-	
+
 	public static class CMD_Awk_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Awk_Option_F extends TokenSequence

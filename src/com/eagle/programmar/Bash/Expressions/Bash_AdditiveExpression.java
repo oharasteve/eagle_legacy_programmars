@@ -22,10 +22,10 @@ public class Bash_AdditiveExpression extends PrecedenceOperator implements Eagle
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "+" :
+		case "+":
 			interpreter.pushInt(leftValue + rightValue);
 			break;
-		case "-" :
+		case "-":
 			interpreter.pushInt(leftValue - rightValue);
 			break;
 		default:

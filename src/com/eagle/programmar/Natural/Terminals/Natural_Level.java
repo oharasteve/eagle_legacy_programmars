@@ -39,7 +39,7 @@ public class Natural_Level extends TerminalLevelToken
 		// Passed all the tests!
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{

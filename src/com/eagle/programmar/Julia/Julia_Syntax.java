@@ -12,16 +12,16 @@ public class Julia_Syntax extends EagleSyntax
 	{
 		return "Julia";
 	}
-	
+
 	public Julia_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"==", "!=", "<=", ">=", "++", "--",
-				"+=", "-=", "*=", "/=" };
-		
+				"==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/="
+		};
+
 		addReservedWords(reservedWords);
 	}
 

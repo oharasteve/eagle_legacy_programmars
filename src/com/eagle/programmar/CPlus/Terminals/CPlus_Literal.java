@@ -10,8 +10,9 @@ import com.eagle.programmar.C.Terminals.C_Literal;
 public class CPlus_Literal extends C_Literal
 {
 	private static final String[] PREFIXES = new String[] {
-		"u8R", "u8", "u", "L", "R", "LR" };
-	
+			"u8R", "u8", "u", "L", "R", "LR"
+	};
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -19,7 +20,7 @@ public class CPlus_Literal extends C_Literal
 
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
-		
+
 		// Pick up the prefix(es), if they are present
 		char pre1 = ' ';
 		char pre2 = ' ';
@@ -35,7 +36,7 @@ public class CPlus_Literal extends C_Literal
 			if (len >= 3 && pre3 != prefix.charAt(2)) continue;
 			if (len >= 2 && pre2 != prefix.charAt(1)) continue;
 			if (len >= 1 && pre1 != prefix.charAt(0)) continue;
-			
+
 			prefixLen = len;
 			_currentChar += prefixLen;
 			lines.setCurrentChar(_currentChar);
@@ -46,8 +47,10 @@ public class CPlus_Literal extends C_Literal
 		boolean ok = genericLiteral(lines, "\"'", true, '\\', false, false);
 		if (ok)
 		{
-			if (prefixLen == 1) _txt = pre1 + _txt;
-			else if (prefixLen == 2) _txt = pre1 + pre2 + _txt;
+			if (prefixLen == 1)
+				_txt = pre1 + _txt;
+			else if (prefixLen == 2)
+				_txt = pre1 + pre2 + _txt;
 			else if (prefixLen == 3) _txt = pre1 + pre2 + pre3 + _txt;
 		}
 		_currentChar -= prefixLen;

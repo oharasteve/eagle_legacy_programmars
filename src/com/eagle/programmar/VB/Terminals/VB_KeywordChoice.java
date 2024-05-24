@@ -12,7 +12,7 @@ public class VB_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public VB_KeywordChoice(String... words)
 	{
 		super(words);

@@ -22,11 +22,11 @@ public class Scala_FunctionCall extends TokenSequence implements EagleRunnable
 	public @S(20) @OPT Scala_FunctionArguments args;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 	public @S(40) Scala_EOLN eoln;
-	
+
 	public static class Scala_FunctionArguments extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Scala_Expression,PunctuationComma> arguments;
+		public @S(20) SeparatedList<Scala_Expression, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 

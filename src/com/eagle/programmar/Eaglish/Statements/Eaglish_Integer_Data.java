@@ -19,13 +19,13 @@ public class Eaglish_Integer_Data extends TokenSequence implements EagleRunnable
 	public @S(20) Eaglish_Variable_Definition var;
 	public @S(30) @OPT Eaglish_Integer_InitialValue init;
 	public @S(40) Eaglish_EndOfLine eoln;
-	
+
 	public static class Eaglish_Integer_InitialValue extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) Eaglish_Expression value;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -33,8 +33,8 @@ public class Eaglish_Integer_Data extends TokenSequence implements EagleRunnable
 		{
 			int x = interpreter.getIntValue(init.value);
 			IntegerValue val = new IntegerValue(x);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-					var.getStartChar(), var.getValue(), val);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.getValue(), val);
 		}
 	}
 }

@@ -29,16 +29,17 @@ public class Django_Expression extends PrecedenceChooser
 
 	public Django_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Django_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -49,7 +50,7 @@ public class Django_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Django_ExpressionRange expressionRange;
 	public @P(110) Django_NotExpression notExpression;
 	public @P(120) Django_DefinedExpression definedExpression;
@@ -57,7 +58,7 @@ public class Django_Expression extends PrecedenceChooser
 	public @P(140) Django_ParensExpression parensExpression;
 	public @P(150) Django_FunctionExpression functionExpression;
 	public @P(160) Django_VariableExpression variableExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

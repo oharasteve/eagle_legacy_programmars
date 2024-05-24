@@ -30,6 +30,6 @@ public class VB_AdditiveExpression extends PrecedenceOperator implements EagleRu
 			interpreter.pushInt(leftValue - rightValue);
 			return;
 		}
-		throw new RuntimeException("Unable to handle " + oper + " in VB_AdditiveExpression");	
+		throw new RuntimeException("Unable to handle " + oper + " in VB_AdditiveExpression");
 	}
 }

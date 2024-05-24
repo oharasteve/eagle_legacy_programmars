@@ -15,7 +15,7 @@ public class Template_ParenExpression extends PrimaryOperator implements EagleRu
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Template_Expression expr;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

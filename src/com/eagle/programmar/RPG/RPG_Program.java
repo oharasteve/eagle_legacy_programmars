@@ -56,7 +56,7 @@ public abstract class RPG_Program extends EagleLanguage
 	public static class RPG_Spec_or_Directive extends TokenChooser
 	{
 		public @CHOICE RPG_Comment comment;
-		
+
 		public @CHOICE RPG_Title_Directive titleDirective;
 		public @CHOICE RPG_Eject_Directive ejectDirective;
 		public @CHOICE RPG_Space_Directive spaceDirective;
@@ -75,11 +75,11 @@ public abstract class RPG_Program extends EagleLanguage
 
 	// Components of an RPG Program
 	public @S(10) TokenList<RPG_Item> items;
-	
+
 	public static class RPG_III_Program extends RPG_Program
 	{
 		public static final String RPGIII = "RPG_III";
-		
+
 		public RPG_III_Program()
 		{
 			super(RPGIII);
@@ -89,17 +89,18 @@ public abstract class RPG_Program extends EagleLanguage
 		public void findLanguageOverrides(EagleOverrideManager overrider)
 		{
 			overrider.override(RPG_C_Calculation_Specification.class, RPG_C_Calculation_Specification_III.class);
-			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_III.class);	// Not available in RPG III
+			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_III.class); // Not available in
+																									// RPG III
 			overrider.override(RPG_F_File_Specification.class, RPG_F_File_Specification_III.class);
 			overrider.override(RPG_H_Header_Specification.class, RPG_H_Header_Specification_III.class);
 			overrider.override(RPG_O_Output_Specification.class, RPG_O_Output_Specification_III.class);
 		}
 	}
-	
+
 	public static class RPG_IV_Program extends RPG_Program
 	{
 		public static final String RPGIV = "RPG_IV";
-		
+
 		public RPG_IV_Program()
 		{
 			super(RPGIV);

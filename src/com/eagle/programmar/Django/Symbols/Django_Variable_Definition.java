@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Django.Symbols;
 
-
 public class Django_Variable_Definition extends Django_Identifier_Definition
 {
 	@Override

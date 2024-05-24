@@ -5,7 +5,7 @@ package com.eagle.programmar.Ruby.Symbols;
 
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Ruby_Identifier_Definition  extends Ruby_Identifier implements DefinitionInterface
+public abstract class Ruby_Identifier_Definition extends Ruby_Identifier implements DefinitionInterface
 {
 
 }

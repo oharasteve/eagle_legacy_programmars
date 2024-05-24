@@ -18,8 +18,7 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT Algol68_Type type;
 	public @S(20) Algol68_Variable var;
-	public @S(30) Algol68_PunctuationChoice equals = new Algol68_PunctuationChoice(
-			"=", "+=", ":=", "+:=");
+	public @S(30) Algol68_PunctuationChoice equals = new Algol68_PunctuationChoice("=", "+=", ":=", "+:=");
 	public @S(40) Algol68_Expression value;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 
@@ -29,7 +28,7 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable
 		int x = interpreter.getIntValue(value);
 		IntegerValue val = new IntegerValue(x);
 		Algol68_Identifier_Reference id = (Algol68_Identifier_Reference) var.vars.first();
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-				var.getStartChar(), id.getValue(), val);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+				val);
 	}
 }

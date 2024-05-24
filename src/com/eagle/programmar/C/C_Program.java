@@ -16,35 +16,28 @@ import com.eagle.tokens.TokenList;
 public class C_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String C = "C";
-	
+
 	public C_Program()
 	{
 		super(C, new C_Syntax());
 	}
-	
+
 	// Called from C++ constructor
 	public C_Program(String name, EagleSyntax syntax)
 	{
 		super(name, syntax);
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.gnu.org/s/gnu-c-manual/gnu-c-manual.html";
 	}
-	
+
 	private static String[] primitives = new String[] {
-			"auto",
-			"char",
-			"double",
-			"float",
-			"int",
-			"long",
-			"short",
-			"void"
+			"auto", "char", "double", "float", "int", "long", "short", "void"
 	};
-	
+
 	// Careful, this gets added to in some projects
 	private static String[] modifiers = new String[] {
 			"const",
@@ -69,7 +62,7 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 			if (primitives[i].equals(primitive)) return;
 		}
 
-		String[] temp = new String[n+1];
+		String[] temp = new String[n + 1];
 		for (int i = 0; i < n; i++)
 		{
 			temp[i] = primitives[i];
@@ -77,7 +70,7 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 		temp[n] = primitive;
 		primitives = temp;
 	}
-	
+
 	public static void addModifier(String modifier)
 	{
 		// Append to an array
@@ -87,7 +80,7 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 			if (modifiers[i].equals(modifier)) return;
 		}
 
-		String[] temp = new String[n+1];
+		String[] temp = new String[n + 1];
 		for (int i = 0; i < n; i++)
 		{
 			temp[i] = modifiers[i];
@@ -95,17 +88,17 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 		temp[n] = modifier;
 		modifiers = temp;
 	}
-	
+
 	public static String[] getPrimitives()
 	{
 		return primitives;
 	}
-	
+
 	public static String[] getModifiers()
 	{
 		return modifiers;
 	}
-	
+
 	// Note that CPlus_Program has an S(9) and ObjectiveC_Program has an S(8)
 	public @S(10) @OPT TokenList<C_StatementOrComment> elements;
 
@@ -118,10 +111,11 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 		public @LAST C_Statement statement;
 		public @CHOICE C_Enum cenum;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-		
-		// NOTE: C++ adds the 'extern' statement here. See the constructor in CPlus_Program.java
+
+		// NOTE: C++ adds the 'extern' statement here. See the constructor in
+		// CPlus_Program.java
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

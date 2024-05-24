@@ -14,6 +14,6 @@ public class Python_PrintStatement extends TokenSequence
 {
 	public @S(10) @NOSPACE Python_Keyword PRINT = new Python_Keyword("print");
 	public @S(20) @OPT Python_Punctuation greaterGreater = new Python_Punctuation(">>");
-	public @S(30) @OPT SeparatedList<Python_Expression,PunctuationComma> exprs;
+	public @S(30) @OPT SeparatedList<Python_Expression, PunctuationComma> exprs;
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
 }

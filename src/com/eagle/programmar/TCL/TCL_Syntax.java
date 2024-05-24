@@ -12,23 +12,21 @@ public class TCL_Syntax extends EagleSyntax
 	{
 		return "TCL";
 	}
-	
+
 	public TCL_Syntax()
 	{
 		_isCaseSensitive = false;
 		// _continuationChar = "+"; // THIS DOESN'T WORK WELL AT ALL.
 		_extraCharacters = "_";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "--", "&&", "||", "<=", ">=", "<>", "!=", "==" };
-		
+		_punctuationExceptions = new String[] {
+				"--", "&&", "||", "<=", ">=", "<>", "!=", "=="
+		};
+
 		addReservedWords(keywords);
 	}
 
 	private String[] keywords = new String[] {
-		"and",
-		"break",
-		"not",
-		"or",
-		"set",
+			"and", "break", "not", "or", "set",
 	};
 }

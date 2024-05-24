@@ -16,7 +16,7 @@ public class COBOL_ParenthesizedExpression extends PrimaryOperator implements Ea
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) COBOL_Expression expr;
 	public @S(30) PunctuationRightParen rightParen;
-		
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

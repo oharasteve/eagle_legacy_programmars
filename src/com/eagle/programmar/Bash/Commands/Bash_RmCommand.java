@@ -15,7 +15,7 @@ public class Bash_RmCommand extends TokenSequence
 	public @S(10) Bash_Keyword RM = new Bash_Keyword("rm");
 	public @S(20) TokenList<Bash_RmOption> options;
 	public @S(30) TokenList<Bash_FilenameOrLiteral> files;
-	
+
 	public static class Bash_RmOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice RF = new Bash_KeywordChoice("-r", "-f", "-rf");

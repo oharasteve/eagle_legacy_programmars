@@ -23,7 +23,7 @@ public class Go_TypeDefinition extends TokenSequence
 	public @S(60) TokenList<Go_StructLine> structLine;
 	public @S(70) PunctuationRightBrace rightBrace;
 	public @S(80) Go_EOLN eoln2;
-	
+
 	public static class Go_StructLine extends TokenSequence
 	{
 		public @S(10) Go_Variable_Definition fieldName;

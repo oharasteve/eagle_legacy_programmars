@@ -12,18 +12,21 @@ public class AWK_Syntax extends EagleSyntax
 	{
 		return "AWK";
 	}
-	
+
 	public AWK_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "==", "!=", "<=", ">=", "++", "--", "+=", "!~" };
-		
+		_punctuationExceptions = new String[] {
+				"==", "!=", "<=", ">=", "++", "--", "+=", "!~"
+		};
+
 		addReservedWords(reservedWords);
 	}
 
-	// From https://www.gnu.org/software/gawk/manual/html_node/Glossary.html under "Keyword"
+	// From https://www.gnu.org/software/gawk/manual/html_node/Glossary.html under
+	// "Keyword"
 	private static String[] reservedWords = new String[] {
 			"BEGIN",
 			"BEGINFILE",

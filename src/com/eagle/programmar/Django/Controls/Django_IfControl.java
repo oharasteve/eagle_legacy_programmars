@@ -17,15 +17,15 @@ public class Django_IfControl extends TokenSequence
 	public @S(20) Django_Expression expr;
 	public @S(30) @OPT PunctuationHyphen dash2;
 	public @S(40) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
-	
+
 	public @S(50) TokenList<Django_Element> html;
 
 	public @S(60) @OPT Django_IfElseControl ifElse;
-	
+
 	public @S(70) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
 	public @S(80) @OPT PunctuationHyphen dash3;
 	public @S(90) Django_Keyword ENDIF = new Django_Keyword("endif");
-	
+
 	public static class Django_IfElseControl extends TokenSequence
 	{
 		public @S(10) HTML_Punctuation bracePercent = new HTML_Punctuation("{%");
@@ -33,7 +33,7 @@ public class Django_IfControl extends TokenSequence
 		public @S(30) Django_Keyword ELSE = new Django_Keyword("else");
 		public @S(40) @OPT PunctuationHyphen dash2;
 		public @S(50) HTML_Punctuation percentBrace = new HTML_Punctuation("%}");
-		
+
 		public @S(60) TokenList<Django_Element> html;
 	}
 }

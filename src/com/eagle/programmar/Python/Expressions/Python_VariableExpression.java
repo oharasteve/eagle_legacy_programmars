@@ -11,7 +11,7 @@ import com.eagle.tokens.PrimaryOperator;
 public class Python_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Python_Variable variable;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

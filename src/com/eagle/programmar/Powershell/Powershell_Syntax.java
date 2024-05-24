@@ -12,7 +12,7 @@ public class Powershell_Syntax extends EagleSyntax
 	{
 		return "Powershell";
 	}
-	
+
 	public Powershell_Syntax()
 	{
 		_isCaseSensitive = false;
@@ -20,15 +20,12 @@ public class Powershell_Syntax extends EagleSyntax
 		_extraCharacters = "_-";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"<=", ">=", "==", "!=",
-				"::", "++", "--",
-				"*>", ">>",
-				"$?", "$_",
-				"<#", "#>" };
-		
+				"<=", ">=", "==", "!=", "::", "++", "--", "*>", ">>", "$?", "$_", "<#", "#>"
+		};
+
 		// Breaks everything - problem is the EOLN, not the comment itself.
 		// _commentInstance = new Powershell_Comment();
-		
+
 		addReservedWords(Powershell_Reserved_Words.RESERVED_WORDS);
 	}
 }

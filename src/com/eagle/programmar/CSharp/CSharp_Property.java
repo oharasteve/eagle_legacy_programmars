@@ -24,16 +24,16 @@ public class CSharp_Property extends TokenSequence
 	public @S(30) CSharp_Type type;
 	public @S(40) CSharp_Variable_Definition id;
 	public @S(50) @OPT CSharp_PropertySubscript subscript;
-	
+
 	public @S(60) PunctuationLeftBrace leftBrace;
 	public @S(70) @OPT TokenList<CSharp_GetterSetter> getSet;
 	public @S(80) PunctuationRightBrace rightBrace;
-	
+
 	public static class CSharp_PropertyModifier extends TokenSequence
 	{
 		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
-	
+
 	public static class CSharp_PropertySubscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -41,7 +41,7 @@ public class CSharp_Property extends TokenSequence
 		public @S(30) @OPT TokenList<CSharp_MoreParameters> moreParams;
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static class CSharp_GetterSetter extends TokenChooser
 	{
 		public @CHOICE static class CSharp_GetterNoBody extends TokenSequence
@@ -49,7 +49,7 @@ public class CSharp_Property extends TokenSequence
 			public @S(10) CSharp_Keyword get = new CSharp_Keyword("get");
 			public @S(20) PunctuationSemicolon semicolon;
 		}
-		
+
 		public @CHOICE static class CSharp_GetterBody extends TokenSequence
 		{
 			public @S(10) CSharp_Keyword get = new CSharp_Keyword("get");
@@ -62,7 +62,7 @@ public class CSharp_Property extends TokenSequence
 			public @S(20) CSharp_Keyword set = new CSharp_Keyword("set");
 			public @S(30) PunctuationSemicolon semicolon;
 		}
-		
+
 		public @CHOICE static class CSharp_SetterBody extends TokenSequence
 		{
 			public @S(10) CSharp_Keyword set = new CSharp_Keyword("set");

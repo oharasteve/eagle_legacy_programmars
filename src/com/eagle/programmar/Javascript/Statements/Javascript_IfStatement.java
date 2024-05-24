@@ -18,14 +18,14 @@ public class Javascript_IfStatement extends TokenSequence
 {
 	public @S(10) @DOC("js_if_else.asp") Javascript_Keyword IF = new Javascript_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Javascript_Expression,PunctuationComma> conditions;
+	public @S(30) SeparatedList<Javascript_Expression, PunctuationComma> conditions;
 	public @S(40) @OPT TokenList<Javascript_Comment> comment1;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) @OPT TokenList<Javascript_Comment> comments2;
 	public @S(70) Javascript_Statement thenStatement;
 	public @S(80) @OPT TokenList<Javascript_Comment> comments3;
 	public @S(90) @OPT Javascript_IfElseClause elseClause;
-	
+
 	public static class Javascript_IfElseClause extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword ELSE = new Javascript_Keyword("else");

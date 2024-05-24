@@ -20,7 +20,7 @@ public class Django_ForControl extends TokenSequence
 	public @S(40) Django_Expression expr;
 	public @S(50) @OPT PunctuationHyphen dash2;
 	public @S(60) HTML_Punctuation percentBrace = new HTML_Punctuation("%}");
-	
+
 	public @S(70) TokenList<Django_Element> html;
 
 	public @S(80) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");

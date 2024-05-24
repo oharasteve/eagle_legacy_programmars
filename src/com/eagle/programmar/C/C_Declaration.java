@@ -12,9 +12,7 @@ public class C_Declaration extends TokenSequence
 {
 	public @S(10) C_Punctuation leftBracket1 = new C_Punctuation("[");
 	public @S(20) C_Punctuation leftBracket2 = new C_Punctuation("[");
-	public @S(30) C_KeywordChoice DECLARATION = new C_KeywordChoice(
-			"fallthrough", "__fallthrough__",
-			"maybe_unused",
+	public @S(30) C_KeywordChoice DECLARATION = new C_KeywordChoice("fallthrough", "__fallthrough__", "maybe_unused",
 			"nodiscard");
 	public @S(40) C_Punctuation rightBracket1 = new C_Punctuation("]");
 	public @S(50) C_Punctuation rightBracket2 = new C_Punctuation("]");

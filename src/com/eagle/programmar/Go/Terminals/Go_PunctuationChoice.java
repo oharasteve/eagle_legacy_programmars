@@ -12,7 +12,7 @@ public class Go_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Go_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

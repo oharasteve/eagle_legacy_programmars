@@ -19,7 +19,7 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 	public @S(10) Eaglish_Expression left = new Eaglish_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Eaglish_RelationalOperator operator;
 	public @S(30) Eaglish_Expression right = new Eaglish_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Eaglish_RelationalOperator extends TokenChooser
 	{
 		public @CHOICE Eaglish_PunctuationChoice operSymbol = new Eaglish_PunctuationChoice("=", "<", ">", "<=", ">=");
@@ -35,7 +35,7 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 			String oper = ((TerminalToken) which).getValue();
 			EagleValue leftValue = interpreter.getEagleValue(left);
 			EagleValue rightValue = interpreter.getEagleValue(right);
-			
+
 			if (leftValue.isString() && rightValue.isString())
 			{
 				String leftStr = interpreter.getStrValue(left);
@@ -46,10 +46,10 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 					interpreter.pushBool(leftStr.equals(rightStr));
 					return;
 				case "NOT_EQUALS":
-					interpreter.pushBool(! leftStr.equals(rightStr));
+					interpreter.pushBool(!leftStr.equals(rightStr));
 					return;
 				default:
-					throw new RuntimeException("Unable to handle " + oper + " with strings");	
+					throw new RuntimeException("Unable to handle " + oper + " with strings");
 				}
 			}
 			else if (leftValue.isInteger() && rightValue.isInteger())
@@ -77,7 +77,7 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 					interpreter.pushBool(leftInt >= rightInt);
 					return;
 				default:
-					throw new RuntimeException("Unable to handle " + oper + " with integers");	
+					throw new RuntimeException("Unable to handle " + oper + " with integers");
 				}
 			}
 			else if (leftValue.isBoolean() && rightValue.isBoolean())

@@ -16,11 +16,10 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 public class Bash_BashProgram extends TokenSequence
 {
 	public @S(10) Bash_SheBang shebang;
-	public @S(20) @OPT SeparatedList<PunctuationSlash,Bash_Identifier_Reference> dir;
+	public @S(20) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;
 	public @S(30) @OPT PunctuationSlash slash;
 	public @S(40) @OPT Bash_Keyword ENV = new Bash_Keyword("env");
-	public @S(50) Bash_KeywordChoice BASH = new Bash_KeywordChoice(
-			"bash", "csh", "sh", "tcsh", "zsh");
+	public @S(50) Bash_KeywordChoice BASH = new Bash_KeywordChoice("bash", "csh", "sh", "tcsh", "zsh");
 	public @S(60) @OPT TokenList<Bash_BashOption> options;
 
 	public static class Bash_BashOption extends TokenChooser

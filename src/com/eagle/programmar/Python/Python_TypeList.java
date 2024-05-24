@@ -14,7 +14,7 @@ public class Python_TypeList extends TokenSequence
 	public @S(20) Python_Type type;
 	public @S(30) @OPT TokenList<Python_MoreCommaList> moreTypes;
 	public @S(40) @OPT Python_EndOfLine eoln2;
-	
+
 	public static class Python_MoreCommaList extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

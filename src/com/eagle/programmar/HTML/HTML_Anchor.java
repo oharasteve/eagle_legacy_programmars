@@ -25,10 +25,10 @@ public class HTML_Anchor extends TokenChooser
 		{
 			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
 			public @S(20) @NOSPACE HTML_Keyword A = new HTML_Keyword("a");
-			public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+			public @S(30) @OPT TokenList<HTML_Attribute> attributes;
 			public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 		}
-		
+
 		public static class HTML_EndAnchor extends TokenSequence
 		{
 			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");
@@ -38,9 +38,13 @@ public class HTML_Anchor extends TokenChooser
 	}
 
 	// Tried all sorts of things to get this to work. No dice.
-	// Test case 1: /www/rrcc\lh_tr_2006\7B.htm (times out if above catches the name. No bogus entries)
-	// Test case 2: /wwwa/Dox/Supplier_Portal/SupplierSearch/SupplierSearch/help.html (has bogus entries)
-	// public @LAST @CURIOUS("Extra end anchor name") HTML_EndAnchor bogusAnchorNameEnd;
+	// Test case 1: /www/rrcc\lh_tr_2006\7B.htm (times out if above catches the
+	// name. No bogus entries)
+	// Test case 2:
+	// /wwwa/Dox/Supplier_Portal/SupplierSearch/SupplierSearch/help.html (has bogus
+	// entries)
+	// public @LAST @CURIOUS("Extra end anchor name") HTML_EndAnchor
+	// bogusAnchorNameEnd;
 
 	// This is an oddball case. An anchor with no closing </a> (in theory).
 	public @FIRST static class HTML_AnchorName extends TokenSequence
@@ -52,7 +56,7 @@ public class HTML_Anchor extends TokenChooser
 		public @S(50) @NOSPACE HTML_Value value;
 		public @S(60) @NOSPACE HTML_PunctuationChoice endTag = new HTML_PunctuationChoice("/>", ">");
 		public @S(70) @OPT @CURIOUS("Extra end anchor name") HTML_EndAnchorName bogusAnchorNameEnd;
-		
+
 		public static class HTML_EndAnchorName extends TokenSequence
 		{
 			public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("</");

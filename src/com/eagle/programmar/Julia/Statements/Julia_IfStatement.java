@@ -19,7 +19,7 @@ public class Julia_IfStatement extends TokenSequence
 	public @S(50) @OPT Julia_IfElseClause elseClause;
 	public @S(60) Julia_Keyword END = new Julia_Keyword("end");
 	public @S(70) Julia_EOLN eoln2;
-	
+
 	public static class Julia_IfElseClause extends TokenSequence
 	{
 		public @S(10) Julia_Keyword ELSE = new Julia_Keyword("else");

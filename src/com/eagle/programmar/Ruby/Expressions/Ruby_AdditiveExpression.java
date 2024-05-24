@@ -13,4 +13,3 @@ public class Ruby_AdditiveExpression extends PrecedenceOperator
 	public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("+", "-");
 	public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 }
-

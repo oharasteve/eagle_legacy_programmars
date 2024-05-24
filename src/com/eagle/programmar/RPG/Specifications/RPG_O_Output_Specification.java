@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 public abstract class RPG_O_Output_Specification extends TokenSequence
 {
 	public @S(10) RPG_O_Output_Spec spec;
-	
+
 	public static class RPG_O_Output_Spec extends TokenChooser
 	{
 		public @CHOICE RPG_O_Output_Program_Record_Id recordId;
@@ -21,7 +21,7 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		public @CHOICE RPG_O_Output_External_Record_Id externalRecordId;
 		public @CHOICE RPG_O_Output_External_Field_Descr externalFieldDescr;
 	}
-		
+
 	public abstract static class RPG_O_Output_Program_Record_Id extends TokenSequence
 	{
 		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
@@ -32,7 +32,7 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		public @S(60) @OPT RPG_Literal exceptName;
 		public @S(70) RPG_Blanks blank1;
 	}
-	
+
 	public abstract static class RPG_O_Output_Program_Field_Descr extends TokenSequence
 	{
 		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
@@ -46,7 +46,7 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		public @S(90) @OPT RPG_Literal constantOrEditWord;
 		public @S(100) RPG_Blanks blank2;
 	}
-	
+
 	public abstract static class RPG_O_Output_External_Record_Id extends TokenSequence
 	{
 		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");
@@ -56,7 +56,7 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 		public @S(50) @OPT RPG_Literal exceptName;
 		public @S(60) RPG_Blanks blank1;
 	}
-	
+
 	public abstract static class RPG_O_Output_External_Field_Descr extends TokenSequence
 	{
 		public @S(10) RPG_Keyword O = new RPG_Keyword(6, 6, "O");

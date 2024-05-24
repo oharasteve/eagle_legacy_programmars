@@ -46,7 +46,7 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator impleme
 				interpreter.pushInt(leftValue % rightValue);
 				return;
 			}
-			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_MultiplicativeExpression");	
+			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_MultiplicativeExpression");
 		}
 		throw new RuntimeException("Unexpected operator: " + which.getClass().getName());
 	}

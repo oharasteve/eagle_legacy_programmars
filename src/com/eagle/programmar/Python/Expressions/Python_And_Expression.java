@@ -17,7 +17,7 @@ public class Python_And_Expression extends PrecedenceOperator implements EagleRu
 	public @S(20) Python_Keyword AND = new Python_Keyword("and");
 	public @S(30) @OPT TokenList<Python_Comment> comment;
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

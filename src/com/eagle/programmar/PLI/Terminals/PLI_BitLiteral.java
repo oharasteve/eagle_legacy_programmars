@@ -27,15 +27,15 @@ public class PLI_BitLiteral extends TerminalLiteralToken
 			endChar++;
 		}
 
-		if (endChar+1 >= recLen) return false;
+		if (endChar + 1 >= recLen) return false;
 		if (rec.charAt(endChar) != '\'') return false;
-		if (Character.toUpperCase(rec.charAt(endChar+1)) != 'B') return false;
-			
+		if (Character.toUpperCase(rec.charAt(endChar + 1)) != 'B') return false;
+
 		_txt = rec.substring(_currentChar, endChar);
-		foundIt(_currentLine, endChar+1);
+		foundIt(_currentLine, endChar + 1);
 		return true;
 	}
-	
+
 	@Override
 	public String showString()
 	{

@@ -31,13 +31,13 @@ public class Ada_Function extends TokenSequence implements AbstractFunction
 	public @S(90) Ada_Keyword END = new Ada_Keyword("end");
 	public @S(100) @OPT Ada_Identifier_Reference id2;
 	public @S(110) PunctuationSemicolon semicolon;
-	
+
 	public static class Ada_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Ada_Parameter,PunctuationSemicolon> parameters;
+		public @S(20) @OPT SeparatedList<Ada_Parameter, PunctuationSemicolon> parameters;
 		public @S(30) PunctuationRightParen rightParen;
-		
+
 		public static class Ada_Parameter extends TokenSequence
 		{
 			public @S(10) Ada_Variable_Definition param;
@@ -45,7 +45,7 @@ public class Ada_Function extends TokenSequence implements AbstractFunction
 			public @S(30) Ada_Type type;
 		}
 	}
-	
+
 	public static class Ada_FunctionReturns extends TokenSequence
 	{
 		public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");

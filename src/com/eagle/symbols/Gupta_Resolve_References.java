@@ -3,11 +3,10 @@
 
 package com.eagle.symbols;
 
-
 public class Gupta_Resolve_References extends Eagle_Resolve_References
 {
-	//private static final boolean _trace = false;
-	
+	// private static final boolean _trace = false;
+
 	public void resolveReferences()
 	{
 	}

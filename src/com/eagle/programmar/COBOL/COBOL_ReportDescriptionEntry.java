@@ -27,27 +27,27 @@ public class COBOL_ReportDescriptionEntry extends TokenChooser
 		public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
 		public @S(40) COBOL_Number count;
 	}
-	
+
 	public @CHOICE static class COBOL_ReportDescriptionHeading extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword HEADING = new COBOL_Keyword("HEADING");
 		public @S(20) COBOL_Number count;
 	}
-	
+
 	public @CHOICE static class COBOL_ReportDescriptionFirstDetail extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword FIRST = new COBOL_Keyword("FIRST");
 		public @S(20) COBOL_Keyword DETAIL = new COBOL_Keyword("DETAIL");
 		public @S(30) COBOL_Number count;
 	}
-	
+
 	public @CHOICE static class COBOL_ReportDescriptionLastDetail extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword LAST = new COBOL_Keyword("LAST");
 		public @S(20) COBOL_Keyword DETAIL = new COBOL_Keyword("DETAIL");
 		public @S(30) COBOL_Number count;
 	}
-	
+
 	public @CHOICE static class COBOL_ReportDescriptionFooting extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword FOOTING = new COBOL_Keyword("FOOTING");

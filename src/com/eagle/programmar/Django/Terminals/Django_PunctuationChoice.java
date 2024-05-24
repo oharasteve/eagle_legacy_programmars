@@ -12,7 +12,7 @@ public class Django_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Django_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

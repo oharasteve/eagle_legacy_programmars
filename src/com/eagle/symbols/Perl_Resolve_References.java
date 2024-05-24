@@ -19,28 +19,26 @@ public class Perl_Resolve_References extends Eagle_Resolve_References
 	{
 		Perl_Program program = (Perl_Program) language;
 		resolveFunctionReferences(program);
-		//resolveVariableReferences(program);
+		// resolveVariableReferences(program);
 	}
-	
+
 	private void resolveFunctionReferences(Perl_Program program)
 	{
 		EagleScope scope = program.getScope();
 		ArrayList<AbstractToken> functionDefinitions = new ArrayList<AbstractToken>();
-		findAllInstances(functionDefinitions, program,
-				Perl_Function_Definition.class);
+		findAllInstances(functionDefinitions, program, Perl_Function_Definition.class);
 
 		ArrayList<AbstractToken> functionReferences = new ArrayList<AbstractToken>();
-		findAllInstances(functionReferences, program,
-				Perl_Identifier_Reference.class);
-		
+		findAllInstances(functionReferences, program, Perl_Identifier_Reference.class);
+
 		for (AbstractToken defToken : functionDefinitions)
 		{
 			Perl_Function_Definition def = (Perl_Function_Definition) defToken;
 			scope.addSymbol(def);
 			if (_trace)
 			{
-				System.out.println("Function definition for " + def + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("Function definition for " + def + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
 
@@ -49,7 +47,7 @@ public class Perl_Resolve_References extends Eagle_Resolve_References
 		{
 			Perl_Identifier_Reference ref = (Perl_Identifier_Reference) refToken;
 			int foundAny = 0;
-			
+
 			for (AbstractToken defToken : functionDefinitions)
 			{
 				Perl_Function_Definition function = (Perl_Function_Definition) defToken;
@@ -57,8 +55,8 @@ public class Perl_Resolve_References extends Eagle_Resolve_References
 				if (ref.toString().equalsIgnoreCase(functionName))
 				{
 					if (foundAny == 1) System.err.println("**** Duplicate function definition for " + functionName);
-					if (_trace) System.out.println("Function reference to " + functionName + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (_trace) System.out.println("Function reference to " + functionName + " at "
+							+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 					ref.setDefinition(function);
 					function.addReference(ref);
 					foundAny++;

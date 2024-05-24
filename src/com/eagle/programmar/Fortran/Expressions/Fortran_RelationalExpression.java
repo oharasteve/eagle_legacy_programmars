@@ -7,7 +7,7 @@ import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Terminals.Fortran_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Fortran_RelationalExpression  extends PrecedenceOperator
+public class Fortran_RelationalExpression extends PrecedenceOperator
 {
 	public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Fortran_PunctuationChoice operator = new Fortran_PunctuationChoice("<", ">", "<=", ">=");

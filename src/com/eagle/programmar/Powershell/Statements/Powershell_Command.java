@@ -16,25 +16,25 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Powershell_Command extends TokenSequence
 {
-	public @S(10) Powershell_WhichCommand which;		// Like Get-Content or javac
+	public @S(10) Powershell_WhichCommand which; // Like Get-Content or javac
 	public @S(20) @OPT TokenList<Powershell_CommandArg> arg;
-	
+
 	public static class Powershell_WhichCommand extends TokenChooser
 	{
 		public @CHOICE PunctuationAmpersand ampersand;
 		public @CHOICE PunctuationPeriod dot;
-		public @CHOICE Powershell_VerbNoun verbNoun;		// Like Get-Content for example
+		public @CHOICE Powershell_VerbNoun verbNoun; // Like Get-Content for example
 		public @LAST Powershell_Function_Reference id;
 	}
-	
+
 	public static class Powershell_CommandArg extends TokenSequence
 	{
 		public @S(10) Powershell_CommandOneArg arg;
 		public @S(20) @OPT PunctuationComma comma;
-		
+
 		public static class Powershell_CommandOneArg extends TokenChooser
 		{
-			public @FIRST Powershell_Filename filename;   	// Tricky
+			public @FIRST Powershell_Filename filename; // Tricky
 			public @CHOICE Powershell_Expression expression;
 		}
 	}

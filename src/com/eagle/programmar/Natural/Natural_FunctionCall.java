@@ -10,8 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Natural_FunctionCall extends TokenSequence
 {
-	public @S(10) Natural_KeywordChoice fnName = new Natural_KeywordChoice(
-			Natural_Functions.builtinFunctions );
+	public @S(10) Natural_KeywordChoice fnName = new Natural_KeywordChoice(Natural_Functions.builtinFunctions);
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Natural_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;

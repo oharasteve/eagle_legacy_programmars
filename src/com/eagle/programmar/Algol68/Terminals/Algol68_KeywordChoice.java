@@ -12,7 +12,7 @@ public class Algol68_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Algol68_KeywordChoice(String... words)
 	{
 		super(words);

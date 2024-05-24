@@ -23,20 +23,12 @@ public class C_FunctionAttributes extends TokenSequence
 	public @S(50) @OPT TokenList<C_FunctionMoreAttributes> more;
 	public @S(60) PunctuationRightParen rightParen1;
 	public @S(70) PunctuationRightParen rightParen2;
-	
+
 	public static class C_FunctionAttribute extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice ATTR = new C_KeywordChoice(
-				"__const__",
-				"__deprecated__",
-				"__leaf__",
-				"__malloc__",
-				"__noreturn__",
-				"__nothrow__",
-				"__pure__",
-				"__warn_unused_result__"
-		);
-		
+		public @CHOICE C_KeywordChoice ATTR = new C_KeywordChoice("__const__", "__deprecated__", "__leaf__",
+				"__malloc__", "__noreturn__", "__nothrow__", "__pure__", "__warn_unused_result__");
+
 		public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence
 		{
 			public @S(10) C_Keyword FORMAT = new C_Keyword("__format__");
@@ -48,7 +40,7 @@ public class C_FunctionAttributes extends TokenSequence
 			public @S(70) C_Number number2;
 			public @S(80) PunctuationRightParen rightParen;
 		}
-		
+
 		public @CHOICE static class C_FunctionAttributeNonNull extends TokenSequence
 		{
 			public @S(10) C_Keyword NONNULL = new C_Keyword("__nonnull__");
@@ -57,7 +49,6 @@ public class C_FunctionAttributes extends TokenSequence
 			public @S(40) PunctuationRightParen rightParen;
 		}
 
-	
 		public @CHOICE static class C_FunctionAttributeAllocSize extends TokenSequence
 		{
 			public @S(10) C_Keyword NONNULL = new C_Keyword("__alloc_size__");
@@ -66,7 +57,7 @@ public class C_FunctionAttributes extends TokenSequence
 			public @S(40) PunctuationRightParen rightParen;
 		}
 	}
-	
+
 	public static class C_FunctionMoreAttributes extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

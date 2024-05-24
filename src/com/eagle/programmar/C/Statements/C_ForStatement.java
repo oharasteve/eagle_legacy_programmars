@@ -51,14 +51,14 @@ public class C_ForStatement extends TokenChooser
 				public @S(10) C_Assignment assignment;
 			}
 		}
-		
+
 		public static class C_MoreLoopIncrements extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) C_ForLoopVariable forVar;
 		}
 	}
-	
+
 	public @CHOICE static class C_ForCollectionStatement extends TokenSequence
 	{
 		public @S(10) C_Keyword FOR = new C_Keyword("for");

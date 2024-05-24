@@ -9,6 +9,6 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class AWK_PostIncrementExpression extends PrimaryOperator
 {
-	public @S(10) AWK_Variable var;		// Cannot be just AWK_Expression -- infinite loop
+	public @S(10) AWK_Variable var; // Cannot be just AWK_Expression -- infinite loop
 	public @S(20) AWK_Punctuation operator = new AWK_Punctuation("++");
 }

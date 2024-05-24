@@ -23,7 +23,7 @@ public class JavaP_OneClassFlags extends TokenSequence
 	public @S(30) @OPT JavaP_OneFlagCode flagCode;
 	public @S(40) @OPT SeparatedList<JavaP_OneClassFlag, PunctuationComma> flags;
 	public @S(50) JavaP_EndOfLine eoln;
-	
+
 	public static class JavaP_OneFlagCode extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

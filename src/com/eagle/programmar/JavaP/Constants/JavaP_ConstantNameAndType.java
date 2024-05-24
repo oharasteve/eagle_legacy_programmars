@@ -15,7 +15,7 @@ public class JavaP_ConstantNameAndType extends TokenSequence implements JavaP_Co
 	public @S(20) JavaP_Symbol_Reference name;
 	public @S(30) PunctuationColon colon;
 	public @S(40) JavaP_Symbol_Reference type;
-	
+
 	@Override
 	public String showConstant()
 	{

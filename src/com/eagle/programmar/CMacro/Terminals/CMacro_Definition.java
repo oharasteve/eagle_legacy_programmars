@@ -14,19 +14,19 @@ public class CMacro_Definition extends TerminalLiteralToken
 	{
 		_currentLine = lines.getCurrentLine();
 		_currentChar = lines.getCurrentChar();
-		
+
 		// Need to see if it is continued (with a backslash)
 		StringBuffer macroValue = new StringBuffer();
 		int lastLine = _currentLine;
 		int firstChar = _currentChar;
 		boolean continued = true;
 		int maxLine = lines.numberLines();
-		
+
 		// Skip the space after the macro name
 		EagleLineReader rec = lines.get(lastLine);
 		int recLen = rec.length();
 		if (_currentChar + 1 < recLen) _currentChar++;
-		
+
 		while (continued && lastLine < maxLine)
 		{
 			rec = lines.get(lastLine);
@@ -42,22 +42,22 @@ public class CMacro_Definition extends TerminalLiteralToken
 					continued = true;
 					break;
 				}
-				
+
 				if (ch != ' ' && ch != '\t')
 				{
-					break;	// We're good. Last non-blank character is not a backslash (\)
+					break; // We're good. Last non-blank character is not a backslash (\)
 				}
-				
+
 				lastNonblank--;
 			}
-			macroValue.append(rec.substring(firstChar, lastNonblank+1));
+			macroValue.append(rec.substring(firstChar, lastNonblank + 1));
 			if (!continued) break;
-			
+
 			macroValue.append('\n');
 			firstChar = 0;
 			lastLine++;
 		}
-		
+
 		foundIt(lastLine, recLen);
 		_txt = macroValue.toString();
 		return true;

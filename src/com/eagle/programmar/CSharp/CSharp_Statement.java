@@ -36,18 +36,18 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class CSharp_Statement extends TokenChooser implements AbstractStatement
 {
 	public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
-	
+
 	public @CHOICE CSharp_Data data;
 	public @CHOICE CSharp_Class myclass;
 	public @CHOICE CSharp_Enum enumeration;
 	public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
-	
+
 	public @CHOICE static class CSharp_StatementBlock extends TokenSequence implements EagleScopeInterface
 	{
 		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT TokenList<CSharp_StatementOrComment> statements;
 		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
-		
+
 		private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
 
 		@Override
@@ -79,6 +79,6 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 
 	// Do this one after the others, just because it is so slow
 	public @CHOICE CSharp_ExpressionStatement assignmentStatement;
-	
-	//public @LAST CSharp_UnparsedStatement unparsed;
+
+	// public @LAST CSharp_UnparsedStatement unparsed;
 }

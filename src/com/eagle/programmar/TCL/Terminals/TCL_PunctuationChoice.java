@@ -12,7 +12,7 @@ public class TCL_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public TCL_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

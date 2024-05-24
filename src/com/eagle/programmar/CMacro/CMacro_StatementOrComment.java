@@ -29,7 +29,7 @@ public class CMacro_StatementOrComment extends TokenSequence
 	public static class CMacro_StmtBody extends TokenChooser
 	{
 		public @FIRST CMacro_IfDefCPlusPlus ifdefCPlusPlus;
-		
+
 		public @CHOICE CMacro_Define_Statement defineStatement;
 		public @CHOICE CMacro_Error_Statement errorStatement;
 		public @CHOICE CMacro_If_Statement ifStatement;

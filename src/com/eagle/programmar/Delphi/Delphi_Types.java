@@ -14,7 +14,7 @@ public class Delphi_Types extends TokenSequence
 {
 	public @S(10) Delphi_Keyword TYPE = new Delphi_Keyword("Type");
 	public @S(20) @OPT TokenList<Delphi_MoreTypes> moreTypes;
-	
+
 	public static class Delphi_MoreTypes extends TokenSequence
 	{
 		public @S(10) Delphi_Type_Definition name;

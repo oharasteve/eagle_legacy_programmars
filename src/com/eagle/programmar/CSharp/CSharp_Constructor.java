@@ -36,8 +36,7 @@ public class CSharp_Constructor extends TokenSequence implements EagleScopeInter
 	public static class CSharp_ExtendsBase extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
-		public @S(20) CSharp_KeywordChoice baseOrthis = new CSharp_KeywordChoice(
-				"base", "this");
+		public @S(20) CSharp_KeywordChoice baseOrthis = new CSharp_KeywordChoice("base", "this");
 		public @S(30) PunctuationLeftParen leftParen;
 		public @S(40) @OPT CSharp_ArgumentList argList;
 		public @S(50) PunctuationRightParen rightParen;

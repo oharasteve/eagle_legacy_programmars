@@ -17,9 +17,9 @@ public class COBOL_Partial_Fixed_Format extends COBOL_Program
 	{
 		super(COBOLPartial, new COBOL_Fixed_Format_Syntax());
 	}
-	
+
 	public @S(10) TokenList<COBOL_PartialWhat> pieces;
-	
+
 	public static class COBOL_PartialWhat extends TokenChooser
 	{
 		public @CHOICE COBOL_Directive directive;

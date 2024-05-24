@@ -24,7 +24,7 @@ public abstract class RPG_H_Header_Specification extends TokenSequence
 		public @S(100) @OPT RPG_Keyword transparencyCheck = new RPG_Keyword(57, 57, "1");
 		public @S(110) @OPT RPG_Literal programIdentification = new RPG_Literal(75, 80);
 	}
-	
+
 	public static class RPG_H_Header_Specification_IV extends RPG_H_Header_Specification
 	{
 		public @S(10) RPG_Keyword H = new RPG_Keyword(6, 6, "H");

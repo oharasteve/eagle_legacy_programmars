@@ -16,7 +16,7 @@ public class Bash_ReadCommand extends TokenSequence
 	public @S(10) Bash_Keyword READ = new Bash_Keyword("read");
 	public @S(20) @OPT TokenList<Bash_ReadOption> options;
 	public @S(30) TokenList<Bash_Identifier_Reference> ids;
-	
+
 	public static class Bash_ReadOption extends TokenChooser
 	{
 		public @CHOICE static class Bash_ReadPrompt extends TokenSequence

@@ -18,7 +18,7 @@ public class JavaP_NestMembers extends TokenSequence
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_EndOfLine eoln1;
 	public @S(40) TokenList<JavaP_NestMember> members;
-	
+
 	public static class JavaP_NestMember extends TokenSequence
 	{
 		public @S(10) SeparatedList<JavaP_Identifier, PunctuationSlash> className;

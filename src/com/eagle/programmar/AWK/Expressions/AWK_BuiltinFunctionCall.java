@@ -11,15 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class AWK_BuiltinFunctionCall extends PrimaryOperator
 {
-	public @S(10) AWK_KeywordChoice function = new AWK_KeywordChoice(
-			"index",
-			"int",
-			"length",
-			"match",
-			"sprintf",
-			"strftime",
-			"substr"
-	);
+	public @S(10) AWK_KeywordChoice function = new AWK_KeywordChoice("index", "int", "length", "match", "sprintf",
+			"strftime", "substr");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT AWK_ArgumentList argList;
 	public @S(40) PunctuationRightParen rightParen;

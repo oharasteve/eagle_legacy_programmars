@@ -16,7 +16,7 @@ public class COBOL_SetStatement extends COBOL_AbstractStatement
 	public @S(20) COBOL_Identifier_Reference id;
 	public @S(30) COBOL_SetHow how;
 	public @S(40) COBOL_Expression expr;
-	
+
 	public static class COBOL_SetHow extends TokenChooser
 	{
 		public @CHOICE static class COBOL_SetTo extends TokenSequence

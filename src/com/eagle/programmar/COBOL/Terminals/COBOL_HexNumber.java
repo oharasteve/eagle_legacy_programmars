@@ -17,9 +17,9 @@ public class COBOL_HexNumber extends TerminalHexNumberToken
 		int recLen = rec.length();
 		char ch = rec.charAt(_currentChar);
 		if (ch != 'X' && ch != 'x') return false;
-		if (_currentChar + 3 >= recLen) return false;	// Not long enough
+		if (_currentChar + 3 >= recLen) return false; // Not long enough
 		if (rec.charAt(_currentChar + 1) != '"') return false;
-			
+
 		int endChar = _currentChar + 2;
 		while (true)
 		{

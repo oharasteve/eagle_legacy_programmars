@@ -16,7 +16,7 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator implements 
 	public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Ada_MultOper operator;
 	public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Ada_MultOper extends TokenChooser
 	{
 		public @CHOICE Ada_PunctuationChoice operator = new Ada_PunctuationChoice("*", "/");
@@ -30,13 +30,13 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator implements 
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.getWhich().toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			interpreter.pushInt(leftValue / rightValue);
 			return;
-		case "mod" :
+		case "mod":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		}

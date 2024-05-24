@@ -20,29 +20,25 @@ public class Natural_DDM extends TokenSequence
 {
 	public @S(10) Natural_Identifier_Reference name;
 	public @S(20) TokenList<Natural_DDM_Line> lines;
-	
+
 	public static class Natural_DDM_Line extends TokenSequence
 	{
-		public @S(10) @OPT Natural_KeywordChoice Ty = new Natural_KeywordChoice(
-				"GR", "MU", "PE", "SB", "SP");
+		public @S(10) @OPT Natural_KeywordChoice Ty = new Natural_KeywordChoice("GR", "MU", "PE", "SB", "SP");
 		public @S(20) Natural_Level Level;
 		public @S(30) Natural_Identifier_Reference FieldName;
-		public @S(40) @OPT Natural_KeywordChoice F = new Natural_KeywordChoice(
-				"A", "B", "P", "U");
+		public @S(40) @OPT Natural_KeywordChoice F = new Natural_KeywordChoice("A", "B", "P", "U");
 		public @S(50) @OPT Natural_Float Length;
 		public @S(60) @OPT Natural_Number Occurs;
 		public @S(70) @OPT Natural_Keyword D = new Natural_Keyword("D");
 		public @S(80) @OPT Natural_Keyword U = new Natural_Keyword("U");
 		public @S(90) Natural_Identifier_Reference DB;
-		public @S(100) @OPT Natural_KeywordChoice S = new Natural_KeywordChoice(
-				"F", "N");
-		
-		
+		public @S(100) @OPT Natural_KeywordChoice S = new Natural_KeywordChoice("F", "N");
+
 		// These are special -- context-sensitive, must have smaller Level numbers
 		public @OPT TokenList<Natural_DDM_Line> children;
 	}
-	
-	/*                          123456789.123456789.123456789.123456789.123456789.123456789.1234 */
+
+	/* 123456789.123456789.123456789.123456789.123456789.123456789.1234 */
 	private final String HDR = "Ty L Field name                       F  Length   Occ   D U DB S";
 
 	public void customReader(String fileName)
@@ -60,38 +56,38 @@ public class Natural_DDM extends TokenSequence
 			{
 				if (rec.trim().length() == 0) continue;
 				String level = rec.substring(3, 4);
-				if (level.equals("-")) continue;	// Skip header and footer markers
+				if (level.equals("-")) continue; // Skip header and footer markers
 
-				Natural_DDM_Line line = new Natural_DDM_Line();		// @SKIP -- this instance is ok
-				
+				Natural_DDM_Line line = new Natural_DDM_Line(); // @SKIP -- this instance is ok
+
 				String ty = rec.substring(0, 2).trim().toUpperCase();
 				if (ty.length() > 0) line.Ty.setValue(ty);
-				
+
 				line.Level.setValue(level);
-				
+
 				line.FieldName.setValue(rec.substring(6, 38).trim());
-				
+
 				String f = rec.substring(39, 40).trim().toUpperCase();
 				if (f.length() > 0) line.F.setValue(f);
-				
+
 				String len = rec.substring(42, 50).trim();
 				if (len.length() > 0) line.Length.setValue(len);
-				
+
 				String occ = rec.substring(51, 56).trim();
 				if (occ.length() > 0) line.Occurs.setValue(occ);
-				
+
 				String d = rec.substring(57, 58).trim().toUpperCase();
 				if (d.length() > 0) line.D.setValue(d);
-				
+
 				String u = rec.substring(59, 60).trim().toUpperCase();
 				if (u.length() > 0) line.U.setValue(u);
-				
+
 				String db = rec.substring(61, 63).trim().toUpperCase();
 				line.DB.setValue(db);
-				
+
 				String s = rec.substring(64, 65).trim().toUpperCase();
 				if (s.length() > 0) line.D.setValue(s);
-				
+
 				lines.addToken(line);
 			}
 			br.close();

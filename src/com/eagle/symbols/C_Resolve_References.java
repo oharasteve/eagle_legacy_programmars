@@ -30,9 +30,10 @@ public class C_Resolve_References extends Eagle_Resolve_References
 		connectReferences(syntax, scope, program, CMacro_Define_Definition.class, CMacro_Identifier_Reference.class);
 		connectReferences(syntax, scope, program, C_Function_Definition.class, C_Identifier_Reference.class);
 		connectReferences(syntax, scope, program, C_Type_Definition.class, C_Identifier_Reference.class);
-		connectReferencesOutside(syntax, scope, program, C_Variable_Definition.class, C_Identifier_Reference.class, C_Function.class);
+		connectReferencesOutside(syntax, scope, program, C_Variable_Definition.class, C_Identifier_Reference.class,
+				C_Function.class);
 		connectReferences(syntax, scope, program, C_Field_Definition.class, C_Identifier_Reference.class);
-		
+
 		// Find all the functions in the program
 		ArrayList<AbstractToken> functions = findAllInstances(program, C_Function.class);
 		for (AbstractToken fn : functions)

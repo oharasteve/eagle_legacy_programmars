@@ -13,7 +13,7 @@ public class SQL_Identifier extends TerminalIdentifierToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		// Have to see if it starts with a quote first!
 		EagleLineReader rec = lines.get(_currentLine);
 		char ch = rec.charAt(_currentChar);
@@ -28,17 +28,17 @@ public class SQL_Identifier extends TerminalIdentifierToken
 				endChar++;
 				if (endChar >= recLen) break;
 				ch = rec.charAt(endChar);
-				
+
 				if (ch == quote && prevCh != '\\') break;
 				if (prevCh == '\\' && ch == '\\') ch = ' ';
-				
+
 				prevCh = ch;
 			}
 			foundIt(_currentLine, endChar);
-			_id = rec.substring(_currentChar, endChar+1);
+			_id = rec.substring(_currentChar, endChar + 1);
 			return true;
 		}
-		
-		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"_", true, false);
+
+		return genericIdentifier(lines, ALPHAS, ALPHAS + DIGITS + "_", true, false);
 	}
 }

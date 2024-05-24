@@ -29,34 +29,34 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @S(50) @OPT FSharp_Comment comment;
 	public @S(60) @OPT FSharp_EndOfLine eoln;
-	
+
 	public static class FSharp_StatementOrComment extends TokenChooser
 	{
-		public @SKIP FSharp_MultilineStatement multiStatement;	// Only needed for Transformation
-		
+		public @SKIP FSharp_MultilineStatement multiStatement; // Only needed for Transformation
+
 		public @CHOICE FSharp_Statement_List statements;
 		public @CHOICE FSharp_EndOfLine eoln;
-		
+
 		public @FIRST static class FSharp_CommentList extends TokenSequence
 		{
-			public @S(10) SeparatedList<FSharp_Comment,FSharp_EndOfLine> comments;
+			public @S(10) SeparatedList<FSharp_Comment, FSharp_EndOfLine> comments;
 		}
 	}
-	
+
 	public static class FSharp_Statement_List extends TokenSequence
 	{
 		// This StartOfLine should be removed. But it breaks lots of FSharpg
 		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
-		public @S(20) SeparatedList<FSharp_Simple_Statement,FSharp_Statement_Separator> statements;
+		public @S(20) SeparatedList<FSharp_Simple_Statement, FSharp_Statement_Separator> statements;
 	}
-	
+
 	public static class FSharp_Statement_Separator extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
 		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
 	}
-	
+
 	public static class FSharp_Simple_Statement extends TokenChooser
 	{
 		public @CHOICE FSharp_Assignment assignment;
@@ -65,10 +65,10 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE FSharp_IfStatement ifStatement;
 		public @CHOICE FSharp_LetStatement letStatement;
 		public @CHOICE FSharp_PrintfnStatement printfnStatement;
-		
+
 		public @LAST FSharp_Expression returnValue;
 	}
-	
+
 	public static class FSharp_MultilineStatement extends TokenSequence
 	{
 		public @S(10) @OPT FSharp_Comment comment;
@@ -80,10 +80,10 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 	{
 		public @CHOICE FSharp_Punctuation dots = new FSharp_Punctuation("...");
 		public @CHOICE FSharp_MultilineStatement multilineStatement;
-		
+
 		public @CHOICE static class FSharp_SingleLineStatement extends TokenSequence
 		{
-			public @S(10) SeparatedList<FSharp_Simple_Statement,PunctuationSemicolon> statements;
+			public @S(10) SeparatedList<FSharp_Simple_Statement, PunctuationSemicolon> statements;
 			public @S(20) @OPT FSharp_Comment comment;
 			public @S(30) @OPT FSharp_EndOfLine eoln;
 		}

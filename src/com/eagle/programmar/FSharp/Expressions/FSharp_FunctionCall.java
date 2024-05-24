@@ -15,6 +15,6 @@ public class FSharp_FunctionCall extends PrimaryOperator
 {
 	public @S(10) FSharp_Variable functionName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<FSharp_Expression,PunctuationComma> argList;
+	public @S(30) @OPT SeparatedList<FSharp_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 }

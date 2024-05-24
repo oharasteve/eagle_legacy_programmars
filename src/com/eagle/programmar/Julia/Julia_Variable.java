@@ -14,9 +14,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Julia_Variable extends TokenSequence
 {
 	public @S(10) @OPT Julia_Punctuation dollar = new Julia_Punctuation("$");
-	public @S(20) SeparatedList<Julia_Identifier_Reference,PunctuationPeriod> vars;
+	public @S(20) SeparatedList<Julia_Identifier_Reference, PunctuationPeriod> vars;
 	public @S(30) @OPT Julia_Subscript subscript;
-	
+
 	public static class Julia_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

@@ -19,9 +19,9 @@ public class Perl_FunctionExpression extends PrimaryOperator
 	public @S(20) Perl_Function_Parameters params;
 	public @S(30) @OPT Perl_FunctionUse use;
 	public @S(40) Perl_FunctionBlock block;
-	
+
 	public static class Perl_FunctionUse extends TokenSequence
-	{	
+	{
 		public @S(10) Perl_Keyword USE = new Perl_Keyword("use");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) Perl_Punctuation ampersand = new Perl_Punctuation('&');

@@ -12,8 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Ada_Assignment extends TokenSequence
 {
 	public @S(10) Ada_Variable var;
-	public @S(20) Ada_PunctuationChoice equals = new Ada_PunctuationChoice(
-			"=", "+=", "-=", "*=", "/=", ":=");
+	public @S(20) Ada_PunctuationChoice equals = new Ada_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
 	public @S(30) Ada_Expression value;
 	public @S(40) PunctuationSemicolon semicolon;
 }

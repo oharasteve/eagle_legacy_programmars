@@ -37,7 +37,7 @@ public class Eaglish_Statement extends TokenChooser implements EagleRunnableWith
 	public @CHOICE Eaglish_Return_Statement returnStatement;
 	public @CHOICE Eaglish_Set_Statement setStatement;
 	public @CHOICE Eaglish_String_Data stringData;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

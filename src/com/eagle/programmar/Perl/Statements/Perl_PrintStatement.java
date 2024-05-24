@@ -15,9 +15,9 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Perl_PrintStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Perl_KeywordChoice PRINT = new Perl_KeywordChoice("print", "printf");
-	public @S(20) SeparatedList<Perl_Expression,PunctuationComma> strings;
+	public @S(20) SeparatedList<Perl_Expression, PunctuationComma> strings;
 	public @S(30) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

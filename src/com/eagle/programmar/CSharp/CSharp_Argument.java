@@ -14,7 +14,7 @@ public class CSharp_Argument extends TokenChooser
 		public @S(10) CSharp_Keyword REF = new CSharp_Keyword("ref");
 		public @S(20) CSharp_Expression arg;
 	}
-	
+
 	public @CHOICE static class CSharp_ArgumentOutType extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword OUT = new CSharp_Keyword("out");

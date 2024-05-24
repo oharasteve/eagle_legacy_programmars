@@ -19,9 +19,9 @@ public class HTML_Tag extends TokenSequence
 	public @S(10) @NEWLINE HTML_Punctuation startTag = new HTML_Punctuation('<');
 	public @S(20) @OPT @NOSPACE HTML_Tag_Namespace tagNamespace;
 	public @S(30) @NOSPACE HTML_Identifier tag;
-	public @S(40) @OPT TokenList<HTML_TagElement> attributes; 
+	public @S(40) @OPT TokenList<HTML_TagElement> attributes;
 	public @S(50) @NOSPACE HTML_PunctuationChoice closer = new HTML_PunctuationChoice(">", "/>");
-	
+
 	public static class HTML_TagElement extends TokenChooser
 	{
 		public @CHOICE HTML_Attribute attribute;
@@ -29,13 +29,13 @@ public class HTML_Tag extends TokenSequence
 		public @CHOICE Django_Insert insert;
 		public @CHOICE Django_Comment comment;
 	}
-	
+
 	public static class HTML_Tag_Namespace extends TokenSequence
 	{
 		public @S(10) HTML_Identifier ns;
 		public @S(20) PunctuationColon colon;
 	}
-	
+
 	public static class HTML_EndTag extends TokenSequence
 	{
 		public @S(10) @NEWLINE HTML_Punctuation startTag = new HTML_Punctuation("</");

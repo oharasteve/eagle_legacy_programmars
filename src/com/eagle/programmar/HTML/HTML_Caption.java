@@ -13,7 +13,7 @@ public class HTML_Caption extends TokenSequence
 {
 	public @S(10) @INDENT HTML_Punctuation startTag = new HTML_Punctuation('<');
 	public @S(20) @NOSPACE HTML_Keyword CAPTION = new HTML_Keyword("caption");
-	public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+	public @S(30) @OPT TokenList<HTML_Attribute> attributes;
 	public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	public @S(50) @OPT TokenList<HTML_Element> elements;
 	public @S(60) @OUTDENT HTML_EndCaption endCaption;

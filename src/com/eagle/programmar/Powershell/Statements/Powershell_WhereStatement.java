@@ -20,7 +20,7 @@ public class Powershell_WhereStatement extends TokenSequence
 	public @S(30) @OPT Powershell_EndOfLine eoln;
 	public @S(40) TokenList<Powershell_Statement> stmts;
 	public @S(50) PunctuationRightBrace rightBrace;
-	
+
 	public static class Powershell_Where extends TokenChooser
 	{
 		public @CHOICE Powershell_Punctuation percent = new Powershell_Punctuation("?");

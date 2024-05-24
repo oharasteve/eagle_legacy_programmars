@@ -15,7 +15,7 @@ public class SQL_BeginStatement extends TokenSequence
 	public @S(10) SQL_Keyword BEGIN = new SQL_Keyword("BEGIN");
 	public @S(20) SQL_BeginWhat what;
 	public @S(30) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_BeginWhat extends TokenChooser
 	{
 		public @CHOICE static class SQL_BeginEnd extends TokenSequence
@@ -24,7 +24,7 @@ public class SQL_BeginStatement extends TokenSequence
 			public @S(20) @OPT SQL_CommitStatement commit;
 			public @S(30) SQL_Keyword END = new SQL_Keyword("END");
 		}
-		
+
 		public @FIRST static class SQL_BeginTransaction extends TokenSequence
 		{
 			public @S(10) SQL_Keyword TRANSACTION = new SQL_Keyword("TRANSACTION");

@@ -14,11 +14,10 @@ public class SQL_CurrentTimeStamp extends PrimaryOperator
 	// For some reason, this sometimes has parens after it
 	public @S(10) SQL_Keyword TIMESTAMP = new SQL_Keyword("CURRENT_TIMESTAMP");
 	public @S(20) @OPT SQL_CurrentTimeStampFunction func;
-	
+
 	public static class SQL_CurrentTimeStampFunction extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) PunctuationRightParen rightParen;
 	}
 }
-

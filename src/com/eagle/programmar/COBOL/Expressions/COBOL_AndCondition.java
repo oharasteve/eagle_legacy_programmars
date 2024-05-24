@@ -16,7 +16,7 @@ public class COBOL_AndCondition extends PrecedenceOperator implements EagleRunna
 	public @S(20) COBOL_Keyword AND = new COBOL_Keyword("AND");
 	public @S(30) @OPT COBOL_RelationalOperator relationalOperator;
 	public @S(40) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

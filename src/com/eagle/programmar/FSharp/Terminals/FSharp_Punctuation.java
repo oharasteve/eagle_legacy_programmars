@@ -17,7 +17,7 @@ public class FSharp_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	public FSharp_Punctuation(String punct)
 	{
 		super(punct);

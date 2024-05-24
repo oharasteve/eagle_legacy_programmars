@@ -28,17 +28,12 @@ public class CSS_Qualifier extends TokenSequence
 
 	public static class CSS_QualifierChoice extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice choice = new CSS_KeywordChoice(
-				"has-element-focus",
-				"multiple",
-				"readonly",
-				"selected",
-				"size",
-				"subframe");
-		
+		public @CHOICE CSS_KeywordChoice choice = new CSS_KeywordChoice("has-element-focus", "multiple", "readonly",
+				"selected", "size", "subframe");
+
 		public @CHOICE CSS_QualifierClass qualifierClass;
 		public @CHOICE CSS_QualiferCode qualifierCode;
-		public @CHOICE CSS_QualifierDataToggle qualifierDataToggle; 
+		public @CHOICE CSS_QualifierDataToggle qualifierDataToggle;
 		public @CHOICE CSS_QualifierDir qualifierDir;
 		public @CHOICE CSS_QualifierFrame qualifierFrame;
 		public @CHOICE CSS_QualifierHighlight qualifierHighlight;

@@ -14,5 +14,5 @@ public class Delphi_Cast extends PrimaryOperator
 	public @S(10) Delphi_Type type;
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Delphi_Expression expr;
-	public @S(40) PunctuationRightParen rightParen;		
+	public @S(40) PunctuationRightParen rightParen;
 }

@@ -33,7 +33,7 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 	public @S(70) @OPT Java_MethodThrows jthrows;
 	public @S(80) @OPT Java_Comment comment;
 	public @S(90) Java_MethodBody body;
-	
+
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{
 		public @CHOICE static class Java_MethodType extends TokenSequence
@@ -49,7 +49,7 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 			public @S(20) Java_Method_Definition methodName;
 			public @S(30) Java_ParameterList parameters;
 		}
-		
+
 		public @CHOICE static class Java_MethodTwoTypes extends TokenSequence
 		{
 			public @S(10) Java_GenericType genericType;
@@ -58,36 +58,36 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 			public @S(40) Java_ParameterList parameters;
 		}
 	}
-	
+
 	public static class Java_EmptyBrackets extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static class Java_MethodDefault extends TokenSequence
 	{
 		public @S(10) Java_Keyword DEFAULT = new Java_Keyword("default");
 		public @S(20) @OPT Java_Expression expr;
 	}
-	
+
 	public static class Java_MethodModifier extends TokenChooser
 	{
 		public @FIRST @NEWLINE Java_Comment comment;
 		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 		public @CHOICE Java_Annotation annotation;
 	}
-	
+
 	public static class Java_MethodThrows extends TokenSequence
 	{
 		public @S(10) Java_Keyword jthrows = new Java_Keyword("throws");
-		public @S(20) SeparatedList<Java_Variable,PunctuationComma> jclass;
+		public @S(20) SeparatedList<Java_Variable, PunctuationComma> jclass;
 	}
-	
+
 	public static class Java_MethodBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
-		
+
 		public @CHOICE static class Java_MethodImplementation extends TokenSequence
 		{
 			public @S(10) @OPT @NEWLINE TokenList<Java_Comment> comment1;
@@ -96,7 +96,7 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
 		}
 	}
-	
+
 	public static class Java_Constructor extends TokenSequence
 	{
 		public @S(10) @OPT @BLANKLINE TokenList<Java_Annotation> annotation;
@@ -107,15 +107,15 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 		public @S(60) @OPT Java_Comment comment;
 		public @S(70) Java_MethodBody body;
 	}
-		
+
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-	
+
 	@Override
 	public EagleScope getScope()
 	{
 		return _scope;
 	}
-	
+
 //	@Override
 //	public void setScope(EagleScope scope)
 //	{

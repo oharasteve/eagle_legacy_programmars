@@ -12,5 +12,5 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Perl_JoinExpression extends PrimaryOperator
 {
 	public @S(10) Perl_Keyword JOIN = new Perl_Keyword("join");
-	public @S(20) SeparatedList<Perl_Expression,PunctuationComma> items;
+	public @S(20) SeparatedList<Perl_Expression, PunctuationComma> items;
 }

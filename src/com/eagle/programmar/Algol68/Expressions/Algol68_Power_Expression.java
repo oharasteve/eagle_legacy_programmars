@@ -14,7 +14,7 @@ public class Algol68_Power_Expression extends PrecedenceOperator implements Eagl
 	public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Algol68_Punctuation stars = new Algol68_Punctuation("**");
 	public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

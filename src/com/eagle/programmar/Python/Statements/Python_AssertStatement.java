@@ -13,7 +13,7 @@ public class Python_AssertStatement extends TokenSequence
 	public @S(10) @DOC("simple_stmts.html#the-assert-statement") Python_Keyword ASSERT = new Python_Keyword("assert");
 	public @S(20) Python_Expression condition;
 	public @S(30) @OPT Python_AssertMessage message;
-	
+
 	public static class Python_AssertMessage extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

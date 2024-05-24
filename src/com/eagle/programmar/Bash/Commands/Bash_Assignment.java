@@ -21,7 +21,7 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable
 	public @S(30) Bash_Variable variable;
 	public @S(40) Bash_PunctuationChoice equals = new Bash_PunctuationChoice("=", "+=", "-=");
 	public @S(50) @OPT Bash_AssignWhat what;
-	
+
 	public static class Bash_AssignWhat extends TokenChooser
 	{
 		public @CHOICE Bash_Expression value;
@@ -31,7 +31,7 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (! (what.getWhich() instanceof Bash_Expression))
+		if (!(what.getWhich() instanceof Bash_Expression))
 		{
 			throw new RuntimeException("Unexpected assignment variable: " + what.getWhich());
 		}
@@ -42,8 +42,8 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable
 		case "=":
 			int x = interpreter.getIntValue(expr);
 			IntegerValue val = new IntegerValue(x);
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(),
-					variable.getStartChar(), variable.id.getValue(), val);
+			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+					variable.id.getValue(), val);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

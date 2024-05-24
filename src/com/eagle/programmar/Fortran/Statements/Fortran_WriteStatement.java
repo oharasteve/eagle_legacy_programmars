@@ -23,7 +23,7 @@ public class Fortran_WriteStatement extends TokenSequence
 	public @S(40) PunctuationComma comma;
 	public @S(50) Fortran_Literal format;
 	public @S(60) PunctuationRightParen rightParen;
-	public @S(70) SeparatedList<Fortran_Variable_Reference,PunctuationComma> parameters;
+	public @S(70) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(80) @OPT Fortran_Comment comment;
 	public @S(90) Fortran_EOLN eoln;
 }

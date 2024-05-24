@@ -8,21 +8,23 @@ import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Delphi_Procedure extends TokenSequence
+public class Delphi_Procedure extends TokenSequence implements AbstractFunction
 {
 	public @S(10) Delphi_ProcedureForward forward;
 	public @S(20) @OPT TokenList<Delphi_Header> headers;
 	public @S(30) @OPT Delphi_BeginEnd body;
 	public @S(40) @OPT TokenList<Delphi_Comment> comments;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Delphi_ProcedureForward extends TokenSequence
 	{
-		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Procedure_Declarations") Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice("Procedure", "Constructor", "Destructor");
+		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Procedure_Declarations") Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice(
+				"Procedure", "Constructor", "Destructor");
 		public @S(20) Delphi_Variable name;
 		public @S(30) @OPT Delphi_Arguments args;
 		public @S(40) PunctuationSemicolon semicolon;

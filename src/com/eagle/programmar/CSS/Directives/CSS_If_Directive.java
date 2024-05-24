@@ -20,11 +20,11 @@ public class CSS_If_Directive extends TokenSequence
 	public @S(40) PunctuationEquals equals;
 	public @S(50) CSS_Literal literal;
 	public @S(60) CSS_Punctuation greaterThan = new CSS_Punctuation('>');
-	
+
 	public @S(70) TokenList<CSS_Entry> entries;
-	
+
 	public @S(80) CSS_EndIf endIf;
-	
+
 	public static class CSS_EndIf extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation lessThan = new CSS_Punctuation('<');

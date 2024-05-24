@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Natural.Symbols;
 
-
 public class Natural_Data_Definition extends Natural_Identifier_Definition
 {
 	@Override

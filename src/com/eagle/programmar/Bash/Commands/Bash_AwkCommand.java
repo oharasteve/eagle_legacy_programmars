@@ -15,7 +15,7 @@ public class Bash_AwkCommand extends TokenSequence
 	public @S(10) Bash_Keyword AWK = new Bash_Keyword("awk");
 	public @S(20) @OPT TokenList<Bash_AwkOption> options;
 	public @S(30) @OPT Bash_FilenameOrLiteral fileName;
-	
+
 	public static class Bash_AwkOption extends TokenChooser
 	{
 		public @CHOICE static class Bash_AwkOptionSmallF extends TokenSequence

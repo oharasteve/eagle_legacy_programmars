@@ -12,7 +12,7 @@ public class PPSM_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public PPSM_KeywordChoice(String... words)
 	{
 		super(words);

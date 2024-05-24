@@ -15,6 +15,6 @@ public class Rust_ExpressionArray extends PrimaryOperator
 {
 	public @S(10) PunctuationAmpersand ampersand;
 	public @S(20) PunctuationLeftBracket leftBracket;
-	public @S(30) SeparatedList<Rust_Expression,PunctuationComma> exprs;
+	public @S(30) SeparatedList<Rust_Expression, PunctuationComma> exprs;
 	public @S(40) PunctuationRightBracket rightBracket;
 }

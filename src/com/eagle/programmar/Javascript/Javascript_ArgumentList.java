@@ -15,7 +15,7 @@ public class Javascript_ArgumentList extends PrimaryOperator
 	public @S(20) @OPT TokenList<Javascript_Comment> comment;
 	public @S(30) @OPT TokenList<Javascript_MoreArguments> moreArgs;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	public static class Javascript_MoreArguments extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

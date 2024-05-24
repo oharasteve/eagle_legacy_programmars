@@ -10,25 +10,18 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Javascript_BuiltInVar extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Javascript_KeywordChoice builtinConstant = new Javascript_KeywordChoice(
-			"arguments",
-			"false",
-			"null",
-			"String",
-			"super",
-			"this",
-			"true"
-		);
+	public @S(10) Javascript_KeywordChoice builtinConstant = new Javascript_KeywordChoice("arguments", "false", "null",
+			"String", "super", "this", "true");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtinConstant.toString())
 		{
-		case "false" :
+		case "false":
 			interpreter.pushBool(false);
 			return;
-		case "true" :
+		case "true":
 			interpreter.pushBool(true);
 			return;
 		}

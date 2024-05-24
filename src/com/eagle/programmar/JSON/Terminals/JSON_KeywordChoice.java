@@ -12,7 +12,7 @@ public class JSON_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public JSON_KeywordChoice(String... words)
 	{
 		super(words);

@@ -22,13 +22,13 @@ public class CMD_Call_Statement extends TokenSequence
 	public static class CMD_Call_Parameter extends TokenChooser
 	{
 		public @CHOICE CMD_Argument arg;
-		
+
 		public @CHOICE static class CMD_Call_Minus_Option extends TokenSequence
 		{
 			public @S(10) PunctuationHyphen minus;
 			public @S(20) CMD_Argument option;
 		}
-		
+
 		public @CHOICE static class CMD_Call_Slash_Option extends TokenSequence
 		{
 			public @S(10) PunctuationSlash slash;

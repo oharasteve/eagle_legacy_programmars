@@ -15,13 +15,10 @@ public class CSS_QualifierRole extends TokenSequence
 	public @S(10) CSS_Keyword ROLE = new CSS_Keyword("role");
 	public @S(20) PunctuationEquals equals;
 	public @S(30) CSS_QualifierWhichRole which;
-	
+
 	public static class CSS_QualifierWhichRole extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice value = new CSS_KeywordChoice(
-				"button",
-				"number",
-				"text");
+		public @CHOICE CSS_KeywordChoice value = new CSS_KeywordChoice("button", "number", "text");
 		public @CHOICE CSS_Literal literal;
 	}
 }

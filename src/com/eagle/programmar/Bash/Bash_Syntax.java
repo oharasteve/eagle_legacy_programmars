@@ -12,7 +12,7 @@ public class Bash_Syntax extends EagleSyntax
 	{
 		return "Bash";
 	}
-	
+
 	public Bash_Syntax()
 	{
 		_isCaseSensitive = true;
@@ -20,10 +20,29 @@ public class Bash_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"==", "!=", "[[", "]]", "((", "))", "..", "#!", ">>", "&>",
-				"$#", "$?", "$@", "$*", "&&", "||", "&>>",
-				"+=", "-=", ">=", "<="};
-		
+				"==",
+				"!=",
+				"[[",
+				"]]",
+				"((",
+				"))",
+				"..",
+				"#!",
+				">>",
+				"&>",
+				"$#",
+				"$?",
+				"$@",
+				"$*",
+				"&&",
+				"||",
+				"&>>",
+				"+=",
+				"-=",
+				">=",
+				"<="
+		};
+
 		addReservedWords(Bash_Reserved_Words.RESERVED_WORDS);
 	}
 }

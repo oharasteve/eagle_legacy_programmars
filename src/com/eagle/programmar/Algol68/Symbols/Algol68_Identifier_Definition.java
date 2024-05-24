@@ -5,7 +5,7 @@ package com.eagle.programmar.Algol68.Symbols;
 
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Algol68_Identifier_Definition  extends Algol68_Identifier implements DefinitionInterface
+public abstract class Algol68_Identifier_Definition extends Algol68_Identifier implements DefinitionInterface
 {
 
 }

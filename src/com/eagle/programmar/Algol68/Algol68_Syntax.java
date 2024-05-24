@@ -12,15 +12,16 @@ public class Algol68_Syntax extends EagleSyntax
 	{
 		return "Algol68";
 	}
-	
+
 	public Algol68_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {
-				":=", "((", "))", "+:=", ">=", "<=", "~+", "/=" };
-		
+				":=", "((", "))", "+:=", ">=", "<=", "~+", "/="
+		};
+
 		addReservedWords(reservedWords);
 	}
 

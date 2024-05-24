@@ -25,7 +25,7 @@ public class Perl_ForStatement extends TokenChooser
 		public @S(60) PunctuationRightParen rightParen;
 		public @S(70) Perl_Statement stmt;
 	}
-	
+
 	public @CHOICE static class Perl_ForLikeC extends TokenSequence
 	{
 		public @S(10) @DOC("control-structures.for.php") Perl_Keyword FOR = new Perl_Keyword("for");

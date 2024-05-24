@@ -11,7 +11,6 @@ public class Django_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS+"_-", ALPHAS+DIGITS+"_-", true, false);
+		return genericIdentifier(lines, ALPHAS + "_-", ALPHAS + DIGITS + "_-", true, false);
 	}
 }
-	

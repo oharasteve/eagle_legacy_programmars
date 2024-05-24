@@ -24,13 +24,13 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 	public @S(20) COBOL_AddType type;
 	public @S(30) @OPT TokenList<COBOL_AddOnSizeError> onErrorList;
 	public @S(40) @OPT COBOL_Keyword ENDADD = new COBOL_Keyword("END-ADD");
-	
+
 	public static class COBOL_AddType extends TokenChooser
 	{
 		public @FIRST COBOL_AddWithGiving addWithGiving;
 		public @CHOICE COBOL_AddNoGiving addNoGiving;
 	}
-	
+
 	public static class COBOL_AddWithGiving extends TokenSequence
 	{
 		public @S(10) COBOL_Expression expr;
@@ -53,7 +53,7 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 			public @S(10) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
 			public @S(20) COBOL_Variable var;
 			public @S(30) @OPT TokenList<COBOL_AddMoreVars> moreVars;
-			
+
 			public static class COBOL_AddMoreVars extends TokenSequence
 			{
 				public @S(10) @OPT PunctuationComma comma;
@@ -76,12 +76,12 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 		public @S(40) COBOL_Keyword ERROR = new COBOL_Keyword("ERROR");
 		public @S(50) TokenList<COBOL_Statement> actions;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AbstractToken which = type.getWhich();
-		if (! (which instanceof COBOL_AddNoGiving))
+		if (!(which instanceof COBOL_AddNoGiving))
 		{
 			throw new RuntimeException("Cannot handle " + which + " yet");
 		}
@@ -90,14 +90,14 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 		{
 			throw new RuntimeException("Cannot handle multiple expressions yet");
 		}
-		
+
 		AbstractToken which2 = noGiving.addTo.var.getWhich();
 		if (which2 instanceof COBOL_UserVariable)
 		{
 			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
 			EagleValue val = interpreter.getEagleValue(noGiving.expr);
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(),
-					variable.getStartChar(), variable.id.getValue(), val);
+			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+					variable.id.getValue(), val);
 		}
 	}
 }

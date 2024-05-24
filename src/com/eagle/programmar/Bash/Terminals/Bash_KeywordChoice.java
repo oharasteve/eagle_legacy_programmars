@@ -12,7 +12,7 @@ public class Bash_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Bash_KeywordChoice(String... words)
 	{
 		super(words);

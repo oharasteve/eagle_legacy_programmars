@@ -24,7 +24,7 @@ public class IntelASM_IncludeDirective extends TokenSequence
 
 		public @CHOICE static class IntelASM_BareFilename extends TokenSequence
 		{
-			public @S(10) SeparatedList<IntelASM_Identifier_Reference,PunctuationPeriod> name;
+			public @S(10) SeparatedList<IntelASM_Identifier_Reference, PunctuationPeriod> name;
 		}
 	}
 }

@@ -23,9 +23,9 @@ public class Bash_IfStatement extends TokenSequence
 	public @S(70) @OPT TokenList<Bash_If_Elif> elseIfBlock;
 
 	public @S(80) @OPT Bash_If_Else elseBlock;
-	
+
 	public @S(90) Bash_Keyword FI = new Bash_Keyword("fi");
-	
+
 	public static class Bash_If_Elif extends TokenSequence
 	{
 		public @S(10) Bash_Keyword ELIF = new Bash_Keyword("elif");
@@ -33,7 +33,7 @@ public class Bash_IfStatement extends TokenSequence
 		public @S(30) Bash_EndOfLine eoln;
 		public @S(40) TokenList<Bash_Statement> statements;
 	}
-	
+
 	public static class Bash_If_Else extends TokenSequence
 	{
 		public @S(10) Bash_Keyword ELSE = new Bash_Keyword("else");

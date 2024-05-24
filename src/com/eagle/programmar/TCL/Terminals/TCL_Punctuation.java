@@ -17,7 +17,7 @@ public class TCL_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	public TCL_Punctuation(String punct)
 	{
 		super(punct);

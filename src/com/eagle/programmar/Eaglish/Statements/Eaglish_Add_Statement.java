@@ -21,21 +21,22 @@ public class Eaglish_Add_Statement extends TokenSequence implements EagleRunnabl
 	public @S(30) Eaglish_Keyword TO = new Eaglish_Keyword("TO");
 	public @S(40) Eaglish_Variable var;
 	public @S(50) Eaglish_EndOfLine eoln;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int x = interpreter.getIntValue(expr);
 		int prev = interpreter.getIntValue(var);
 		IntegerValue val = new IntegerValue(prev + x);
-		
+
 		AbstractToken which = var.var.getWhich();
 		if (which instanceof Eaglish_Identifier_Reference)
 		{
 			Eaglish_Identifier_Reference id = (Eaglish_Identifier_Reference) which;
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-					var.getStartChar(), id.getValue(), val);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+					val);
 		}
-		else throw new RuntimeException("Unable to process " + which);
+		else
+			throw new RuntimeException("Unable to process " + which);
 	}
 }

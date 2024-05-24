@@ -20,10 +20,10 @@ public class PLI_Entry extends TokenSequence
 	public @S(10) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
 	public @S(20) PLI_Procedure_Definition id1;
 	public @S(30) PunctuationColon colon;
-	
+
 	public @S(40) PLI_Keyword ENTRY = new PLI_Keyword("ENTRY");
 	public @S(50) @OPT PLI_Procedure_Parameters params;
-	
+
 	public @S(60) @OPT PLI_ProcedureOptions options1;
 	public @S(70) @OPT PLI_ProcedureReturns returns;
 	public @S(80) @OPT PLI_ProcedureOptions options2;

@@ -12,7 +12,7 @@ public class MSSolution_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public MSSolution_KeywordChoice(String... words)
 	{
 		super(words);

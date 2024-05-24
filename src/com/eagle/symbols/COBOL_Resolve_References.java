@@ -35,7 +35,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 		resolveParagraphSectionReferences(scope, program);
 		resolveFileReferences(scope, program);
 		resolveDataReferences(scope, program);
-		
+
 		// Ick, might have embedded programs
 		if (program.nestedPrograms != null)
 		{
@@ -45,29 +45,26 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			}
 		}
 	}
-	
+
 	private void resolveParagraphSectionReferences(EagleScope scope, COBOL_Program_Complete program)
 	{
 		ArrayList<AbstractToken> sectionDefinitions = new ArrayList<AbstractToken>();
-		findAllInstances(sectionDefinitions, program.procedureDiv,
-				COBOL_Section_Definition.class);
+		findAllInstances(sectionDefinitions, program.procedureDiv, COBOL_Section_Definition.class);
 
 		ArrayList<AbstractToken> paragraphDefinitions = new ArrayList<AbstractToken>();
-		findAllInstances(paragraphDefinitions, program.procedureDiv,
-				COBOL_Paragraph_Definition.class);
+		findAllInstances(paragraphDefinitions, program.procedureDiv, COBOL_Paragraph_Definition.class);
 
 		ArrayList<AbstractToken> paragraphSectionReferences = new ArrayList<AbstractToken>();
-		findAllInstances(paragraphSectionReferences, program.procedureDiv,
-				COBOL_Identifier_Reference.class);
-		
+		findAllInstances(paragraphSectionReferences, program.procedureDiv, COBOL_Identifier_Reference.class);
+
 		for (AbstractToken defToken : sectionDefinitions)
 		{
 			COBOL_Section_Definition def = (COBOL_Section_Definition) defToken;
 			scope.addSymbol(def);
 			if (_trace)
 			{
-				System.out.println("Section definition for " + def + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("Section definition for " + def + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
 
@@ -77,8 +74,8 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			scope.addSymbol(def);
 			if (_trace)
 			{
-				System.out.println("Paragraph definition for " + def + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("Paragraph definition for " + def + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
 
@@ -87,16 +84,17 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 		{
 			COBOL_Identifier_Reference ref = (COBOL_Identifier_Reference) refToken;
 			int foundAny = 0;
-			
+
 			for (AbstractToken defToken : sectionDefinitions)
 			{
 				COBOL_Section_Definition section = (COBOL_Section_Definition) defToken;
 				String sectionName = section.toString();
 				if (ref.toString().equalsIgnoreCase(sectionName))
 				{
-					if (foundAny == 1) throw new EagleSymbolException("Duplicate section definition for " + sectionName);
-					if (_trace) System.out.println("Section reference to " + sectionName + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (foundAny == 1)
+						throw new EagleSymbolException("Duplicate section definition for " + sectionName);
+					if (_trace) System.out.println("Section reference to " + sectionName + " at "
+							+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 					ref.setDefinition(section);
 					section.addReference(ref);
 					foundAny++;
@@ -109,22 +107,23 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				String paragraphName = paragraph.toString();
 				if (ref.toString().equalsIgnoreCase(paragraphName))
 				{
-					if (foundAny == 1) throw new EagleSymbolException("Duplicate paragraph definition for " + paragraphName);
-					if (_trace) System.out.println("Paragraph reference to " + paragraphName + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (foundAny == 1)
+						throw new EagleSymbolException("Duplicate paragraph definition for " + paragraphName);
+					if (_trace) System.out.println("Paragraph reference to " + paragraphName + " at "
+							+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 					ref.setDefinition(paragraph);
 					paragraph.addReference(ref);
 					foundAny++;
 				}
 			}
-			
+
 			if (foundAny == 0)
 			{
 				System.err.println("*** Unable to find a Section / Paragraph Definition for " + ref);
 			}
 		}
 	}
-	
+
 	private void resolveFileReferences(EagleScope scope, COBOL_Program_Complete program)
 	{
 		ArrayList<AbstractToken> fileDescriptors = new ArrayList<AbstractToken>();
@@ -134,15 +133,15 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 		findAllInstances(fileReferences, program.environmentDiv, COBOL_Identifier_Reference.class);
 		findAllInstances(fileReferences, program.dataDiv, COBOL_Identifier_Reference.class);
 		findAllInstances(fileReferences, program.procedureDiv, COBOL_Identifier_Reference.class);
-		
+
 		for (AbstractToken defToken : fileDescriptors)
 		{
 			COBOL_FileDescriptor def = (COBOL_FileDescriptor) defToken;
 			scope.addSymbol(def.id);
 			if (_trace)
 			{
-				System.out.println("File definition for " + def.id + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("File definition for " + def.id + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
 
@@ -158,22 +157,22 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				if (ref.toString().equalsIgnoreCase(def.toString()))
 				{
 					if (foundAny == 1) throw new EagleSymbolException("Duplicate file definition for " + def);
-					if (_trace) System.out.println("File reference to " + def + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (_trace) System.out.println("File reference to " + def + " at " + (ref.getStartLine() + 1) + "/"
+							+ (ref.getStartChar() + 1));
 					ref.setDefinition(def);
 					def.addReference(ref);
-					//def.parentDef = defParent;
+					// def.parentDef = defParent;
 					foundAny++;
 				}
 			}
-			
+
 			if (foundAny == 0)
 			{
 				System.err.println("*** Unable to find a File Definition for " + ref);
 			}
 		}
 	}
-	
+
 	private void resolveDataReferences(EagleScope scope, COBOL_Program_Complete program)
 	{
 		ArrayList<AbstractToken> dataDeclarations = new ArrayList<AbstractToken>();
@@ -181,10 +180,10 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 
 		ArrayList<AbstractToken> reportDataLines = new ArrayList<AbstractToken>();
 		findAllInstances(reportDataLines, program.dataDiv, COBOL_ReportLine_Definition.class);
-		
+
 		ArrayList<AbstractToken> reportDescriptions = new ArrayList<AbstractToken>();
 		findAllInstances(reportDescriptions, program.dataDiv, COBOL_ReportDescription.class);
-		
+
 		ArrayList<AbstractToken> dataReferences = new ArrayList<AbstractToken>();
 		findAllInstances(dataReferences, program.environmentDiv, COBOL_Identifier_Reference.class);
 		findAllInstances(dataReferences, program.dataDiv, COBOL_Identifier_Reference.class);
@@ -199,8 +198,8 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 				scope.addSymbol((COBOL_Data_Definition) whichDef);
 				if (_trace)
 				{
-					System.out.println("Data definition for " + whichDef + " at " +
-							(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+					System.out.println("Data definition for " + whichDef + " at " + (def.getStartLine() + 1) + "/"
+							+ (def.getStartChar() + 1));
 				}
 			}
 		}
@@ -210,11 +209,11 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 			scope.addSymbol(def);
 			if (_trace)
 			{
-				System.out.println("Data definition for " + def + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("Data definition for " + def + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
-		
+
 		// Match 'em up!
 		for (AbstractToken refToken : dataReferences)
 		{
@@ -230,11 +229,11 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					if (ref.toString().equalsIgnoreCase(def.toString()))
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate data definition for " + def);
-						if (_trace) System.out.println("Data reference to " + def + " at " +
-								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+						if (_trace) System.out.println("Data reference to " + def + " at " + (ref.getStartLine() + 1)
+								+ "/" + (ref.getStartChar() + 1));
 						ref.setDefinition(def);
 						def.addReference(ref);
-						//def.parentDef = defParent;
+						// def.parentDef = defParent;
 						foundAny++;
 					}
 				}
@@ -254,11 +253,11 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 								if (ref.toString().equalsIgnoreCase(index.toString()))
 								{
 									if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
-									if (_trace) System.out.println("Data reference to " + ref + " at " +
-											(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+									if (_trace) System.out.println("Data reference to " + ref + " at "
+											+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 									ref.setDefinition(index);
 									index.addReference(ref);
-									//index.parentDef = defParent;
+									// index.parentDef = defParent;
 									foundAny++;
 								}
 							}
@@ -266,7 +265,7 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					}
 				}
 			}
-			
+
 			if (foundAny == 0)
 			{
 				// Maybe it is a report line
@@ -277,11 +276,11 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					if (ref.toString().equalsIgnoreCase(def3.toString()))
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
-						if (_trace) System.out.println("Data reference to " + ref + " at " +
-								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+						if (_trace) System.out.println("Data reference to " + ref + " at " + (ref.getStartLine() + 1)
+								+ "/" + (ref.getStartChar() + 1));
 						ref.setDefinition(def3);
 						def3.addReference(ref);
-						//def3.parentDef = defParent3;
+						// def3.parentDef = defParent3;
 						foundAny++;
 					}
 				}
@@ -296,15 +295,15 @@ public class COBOL_Resolve_References extends Eagle_Resolve_References
 					if (ref.toString().equalsIgnoreCase(def2.toString()))
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
-						if (_trace) System.out.println("Data reference to " + ref + " at " +
-								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+						if (_trace) System.out.println("Data reference to " + ref + " at " + (ref.getStartLine() + 1)
+								+ "/" + (ref.getStartChar() + 1));
 						ref.setDefinition(def2);
 						def2.addReference(ref);
 						foundAny++;
 					}
 				}
 			}
-			
+
 			if (foundAny == 0)
 			{
 				System.err.println("*** Unable to find a Data Definition for " + ref);

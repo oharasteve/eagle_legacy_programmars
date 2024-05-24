@@ -20,23 +20,25 @@ public class Delphi_Preprocess extends EagleInclude
 {
 	private FindIncludeFile _findInclude;
 	private static final boolean DEBUG = false;
-	
-    private static final String StartInclude = "{$I ";
+
+	private static final String StartInclude = "{$I ";
 	private static final String EndInclude = "}";
-	
-	public Delphi_Preprocess(EagleProject project, FindIncludeFile findInclude, EagleSymbolTable symbolTable, EagleTracer tracer)
+
+	public Delphi_Preprocess(EagleProject project, FindIncludeFile findInclude, EagleSymbolTable symbolTable,
+			EagleTracer tracer)
 	{
 		super(project, symbolTable, tracer);
 		_findInclude = findInclude;
 	}
-	
+
 	@Override // Recursive
 	public EagleFileReader preprocessFile(ParserManager parser, EagleFileReader lines)
 	{
 		if (DEBUG)
 		{
 			System.out.println("===================================================");
-			System.out.println("================ Pre-processing " + lines.getFileName() + " lines=" + lines.numberLines());
+			System.out.println(
+					"================ Pre-processing " + lines.getFileName() + " lines=" + lines.numberLines());
 			System.out.println();
 		}
 
@@ -44,11 +46,12 @@ public class Delphi_Preprocess extends EagleInclude
 		{
 			if (_project != null)
 			{
-				// The outermost #include file has already been repaired -- don't try to do it twice
+				// The outermost #include file has already been repaired -- don't try to do it
+				// twice
 				_project.performRepairs(lines.getFileName(), lines);
 			}
-		}	
-		
+		}
+
 		// Save origin information for every line
 		for (int i = 0; i < lines.numberLines(); i++)
 		{
@@ -64,7 +67,7 @@ public class Delphi_Preprocess extends EagleInclude
 		{
 			EagleLineReader line = lines.get(i);
 			_newLines.addLine(line);
-			
+
 			if (line.indexOf(StartInclude) >= 0)
 			{
 				String trimmedLine = line.trim();
@@ -88,7 +91,7 @@ public class Delphi_Preprocess extends EagleInclude
 				}
 			}
 		}
-		
+
 		return _newLines;
 	}
 
@@ -96,11 +99,12 @@ public class Delphi_Preprocess extends EagleInclude
 	public void copyElement(AbstractToken token)
 	{
 		if (token instanceof TerminalEndOfLine) return;
-		
-		//System.out.println("******************* token = " + token.getClass().getName());
+
+		// System.out.println("******************* token = " +
+		// token.getClass().getName());
 		for (int seq = token.getStartLine(); seq <= token.getEndLine(); seq++)
 		{
-			if (seq == token.getEndLine() && token.getEndChar() < 0) break;	// Went a little too far with EOLN
+			if (seq == token.getEndLine() && token.getEndChar() < 0) break; // Went a little too far with EOLN
 			EagleLineReader oldLine = _oldLines.get(seq);
 			_newLines.addLine(oldLine);
 		}

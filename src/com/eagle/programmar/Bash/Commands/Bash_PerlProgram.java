@@ -18,14 +18,14 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 public class Bash_PerlProgram extends TokenSequence
 {
 	public @S(10) Bash_SheBang shebang;
-	public @S(20) @OPT SeparatedList<PunctuationSlash,Bash_Identifier_Reference> dir;
+	public @S(20) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;
 	public @S(30) @OPT PunctuationSlash slash;
 	public @S(40) Bash_Keyword PERL = new Bash_Keyword("perl");
 	public @S(50) @OPT TokenList<Bash_PerlOption> options;
 	public @S(60) Bash_RealEndOfLine eoln;
-	
+
 	public @S(70) @SYNTAX(Perl_Syntax.class) Perl_Program perlProg;
-	
+
 	public static class Bash_PerlOption extends TokenChooser
 	{
 		public @CHOICE Bash_Keyword W = new Bash_Keyword("-w");

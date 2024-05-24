@@ -67,7 +67,7 @@ public class EagleLanguageLookup extends LanguageLookup
 			setLanguageSuffix(suffix, name);
 		}
 	}
-	
+
 	public EagleLanguageLookup()
 	{
 		// The third, etc arguments are suffixes for this language

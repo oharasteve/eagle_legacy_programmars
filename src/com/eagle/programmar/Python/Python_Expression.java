@@ -50,16 +50,17 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public Python_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Python_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -72,7 +73,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
-	
+
 	public @P(100) Python_FunnyConstructor funnyConstructor;
 	public @P(110) Python_Parens parens;
 	public @P(120) Python_BracesColons bracesColons;
@@ -89,10 +90,10 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(230) Python_StarStar_Expression starStarExpression;
 	public @P(240) Python_Lambda_Expression lambdaExpression;
 	public @P(250) Python_Yield yield;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
-	
+
 	public @P(500) Python_SubscriptExpression subscriptExpression;
 	public @P(510) Python_Subfield subfield;
 	public @P(520) Python_Power_Expression powerExpression;

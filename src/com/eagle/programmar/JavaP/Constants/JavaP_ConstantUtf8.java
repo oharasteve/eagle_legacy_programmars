@@ -12,7 +12,7 @@ public class JavaP_ConstantUtf8 extends TokenSequence implements JavaP_ConstantS
 {
 	public @S(10) JavaP_KeywordChoice UTF8 = new JavaP_KeywordChoice("Asciz", "Utf8");
 	public @S(20) @OPT JavaP_RestOfLine value;
-		
+
 	@Override
 	public String showConstant()
 	{

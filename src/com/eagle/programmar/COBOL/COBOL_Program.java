@@ -15,7 +15,7 @@ public abstract class COBOL_Program extends EagleLanguage
 	{
 		super(name, syntax);
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{

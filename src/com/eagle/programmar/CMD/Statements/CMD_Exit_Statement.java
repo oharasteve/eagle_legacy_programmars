@@ -15,7 +15,7 @@ public class CMD_Exit_Statement extends TokenSequence
 	public @S(10) @DOC("exit.mspx") CMD_Keyword EXIT = new CMD_Keyword("exit");
 	public @S(20) @OPT TokenList<CMD_Exit_Option> opts;
 	public @S(30) @OPT CMD_Argument exitValue;
-	
+
 	public static class CMD_Exit_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Exit_Option_B extends TokenSequence

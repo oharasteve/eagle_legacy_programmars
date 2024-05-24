@@ -21,14 +21,14 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("set.mspx") CMD_Keyword SET = new CMD_Keyword("set");
 	public @S(20) CMD_Set_What setWhat;
-	
+
 	public static class CMD_Set_Regular extends TokenSequence
 	{
 		public @S(10) CMD_Variable_Definition var;
 		public @S(20) PunctuationEquals equals;
 		public @S(30) CMD_RestOfLine value;
 	}
-	
+
 	public static class CMD_Set_Assigment extends TokenSequence
 	{
 		public @S(10) PunctuationSlash slash;
@@ -37,7 +37,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable
 		public @S(40) PunctuationEquals equals;
 		public @S(50) CMD_Expression expr;
 	}
-	
+
 	public static class CMD_Set_Prompt extends TokenSequence
 	{
 		public @S(10) PunctuationSlash slash;
@@ -62,16 +62,16 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable
 		{
 			CMD_Set_Regular cmd = (CMD_Set_Regular) which;
 			EagleValue val = interpreter.getEagleValue(cmd.value);
-			interpreter._symbolTable.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(),
-					cmd.var.getStartChar(), cmd.var.getValue(), val);
+			interpreter._symbolTable.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(), cmd.var.getStartChar(),
+					cmd.var.getValue(), val);
 		}
 		else if (which instanceof CMD_Set_Assigment)
 		{
 			CMD_Set_Assigment cmd = (CMD_Set_Assigment) which;
 			int x = interpreter.getIntValue(cmd.expr);
 			IntegerValue val = new IntegerValue(x);
-			interpreter._symbolTable.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(),
-					cmd.var.getStartChar(), cmd.var.getValue(), val);
+			interpreter._symbolTable.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(), cmd.var.getStartChar(),
+					cmd.var.getValue(), val);
 		}
 		else
 		{

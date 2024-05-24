@@ -16,7 +16,7 @@ public class SQL_DeclareStatement extends TokenSequence
 {
 	public @S(10) SQL_Keyword DECLARE = new SQL_Keyword("DECLARE");
 	public @S(20) TokenList<SQL_Declaration> declarations;
-	
+
 	public static class SQL_Declaration extends TokenSequence
 	{
 		public @S(10) SQL_Declare_Definition definition;

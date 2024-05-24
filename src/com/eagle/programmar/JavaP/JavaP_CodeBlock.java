@@ -20,14 +20,14 @@ public class JavaP_CodeBlock extends TokenSequence
 	public @S(10) JavaP_Keyword CODE = new JavaP_Keyword("Code");
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_EndOfLine eoln;
-	
+
 	public @S(40) @OPT TokenList<JavaP_CodeDetails> details;
 
 	public static class JavaP_CodeDetails extends TokenChooser
 	{
-		public @CHOICE JavaP_CodeLocalValues localValues; 
-		public @CHOICE JavaP_CodeStackInfo stackInfo; 
-		public @CHOICE JavaP_CodeLineNumbers lineNumbers; 
+		public @CHOICE JavaP_CodeLocalValues localValues;
+		public @CHOICE JavaP_CodeStackInfo stackInfo;
+		public @CHOICE JavaP_CodeLineNumbers lineNumbers;
 		public @CHOICE JavaP_StackMapTable stackMap;
 		public @CHOICE JavaP_CodeExceptions codeExceptions;
 	}

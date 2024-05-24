@@ -17,20 +17,20 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 	public @S(20) Eaglish_KeywordChoice matchOperator = new Eaglish_KeywordChoice("ENDS_WITH", "STARTS_WITH");
 	public @S(30) Eaglish_Expression right = new Eaglish_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(40) @OPT Eaglish_Condition_MatchAt atClause;
-	
+
 	public static class Eaglish_Condition_MatchAt extends TokenSequence
 	{
 		public @S(10) Eaglish_Keyword AT = new Eaglish_Keyword("AT");
 		public @S(20) Eaglish_Expression position;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String leftStr = interpreter.getStrValue(left);
 		String rightStr = interpreter.getStrValue(right);
 		String oper = matchOperator.getValue();
-		
+
 		int sc = 0;
 		if (atClause.isPresent())
 		{
@@ -46,7 +46,7 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 			interpreter.pushBool(leftStr.startsWith(rightStr, sc));
 			return;
 		default:
-			throw new RuntimeException("Unable to handle " + oper);	
+			throw new RuntimeException("Unable to handle " + oper);
 		}
 	}
 }

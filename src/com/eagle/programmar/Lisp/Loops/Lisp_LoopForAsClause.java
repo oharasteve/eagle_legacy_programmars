@@ -17,13 +17,13 @@ public class Lisp_LoopForAsClause extends TokenSequence
 	public @S(10) Lisp_KeywordChoice FOR = new Lisp_KeywordChoice("for", "as");
 	public @S(20) Lisp_Variable var;
 	public @S(30) TokenList<Lisp_LoopForClause> forClause;
-	
+
 	public static class Lisp_LoopForClause extends TokenChooser
 	{
 		public @CHOICE static class Lisp_ForArithmetic extends TokenSequence
 		{
-			public @S(10) Lisp_KeywordChoice direction = new Lisp_KeywordChoice(
-					"across", "below", "from", "in", "on", "to");
+			public @S(10) Lisp_KeywordChoice direction = new Lisp_KeywordChoice("across", "below", "from", "in", "on",
+					"to");
 			public @S(20) Lisp_SExpr expr;
 		}
 
@@ -32,7 +32,7 @@ public class Lisp_LoopForAsClause extends TokenSequence
 			public @S(10) PunctuationEquals equals;
 			public @S(20) Lisp_SExpr expr;
 			public @S(30) @OPT Lisp_LoopForThen thenClause;
-			
+
 			public static class Lisp_LoopForThen extends TokenSequence
 			{
 				public @S(10) Lisp_Keyword THEN = new Lisp_Keyword("then");

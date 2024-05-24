@@ -15,15 +15,16 @@ public abstract class Eagle_RunTest_CSharp extends Eagle_RunTest
 {
 	private EagleProject _proj;
 	private ProgramEntry _entry;
-	
+
 	public Eagle_RunTest_CSharp(EagleProject proj, ProgramEntry entry)
 	{
 		_proj = proj;
 		_entry = entry;
 	}
-	
+
 	@Override
-	@Test public void runTest()
+	@Test
+	public void runTest()
 	{
 		// Stupid csc.exe doesn't allow forward slash in file names ....
 		String csFileName = EaglePath.combinePaths(_proj._artifactBase, _entry.csFile).replaceAll("/", "\\\\");
@@ -48,7 +49,7 @@ public abstract class Eagle_RunTest_CSharp extends Eagle_RunTest
 		args = new ArrayList<String>();
 		args.add(exeName);
 		run(_proj, _entry, args, csFileName);
-		
+
 		// Compare results in output file
 		diff(_proj, _entry, csFileName);
 	}

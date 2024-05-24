@@ -47,23 +47,24 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @S(50) @OPT Python_Comment comment;
 	public @S(60) @OPT Python_EndOfLine eoln;
-	
+
 	public static class Python_StatementOrComment extends TokenChooser
 	{
-		// Only needed for Transformation. Look at createStatementBlock in Generate_Python_Statement
+		// Only needed for Transformation. Look at createStatementBlock in
+		// Generate_Python_Statement
 		public @SKIP Python_MultilineStatement multiStatement;
-		
+
 		public @FIRST Python_CommentList comments;
 		public @CHOICE Python_Statement_List statements;
 		public @CHOICE Python_EndOfLine eoln;
 	}
-	
+
 	public static class Python_Statement_List extends TokenSequence implements EagleRunnable
 	{
 		// This StartOfLine should be removed. But it breaks lots of Pythong
 		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
 		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) SeparatedList<Python_Simple_Statement,Python_Statement_Separator> statements;
+		public @S(20) SeparatedList<Python_Simple_Statement, Python_Statement_Separator> statements;
 
 		@Override
 		public void interpret(EagleInterpreter interpreter)
@@ -71,13 +72,13 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 			interpreter.tryToInterpret(statements.first());
 		}
 	}
-	
+
 	public static class Python_Statement_Separator extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
 		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
 	}
-	
+
 	public static class Python_Simple_Statement extends TokenChooser implements EagleRunnable
 	{
 		public @CHOICE Python_Assignment assignment;
@@ -102,8 +103,8 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_WhileStatement whileStatement;
 		public @CHOICE Python_WithStatement withStatement;
 		public @CHOICE Python_YieldStatement yieldStatement;
-		
-		public @LAST Python_ExpressionStatement expression;		// Avoid conflict with 'for' statement
+
+		public @LAST Python_ExpressionStatement expression; // Avoid conflict with 'for' statement
 
 		@Override
 		public void interpret(EagleInterpreter interpreter)

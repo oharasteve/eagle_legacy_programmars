@@ -21,12 +21,12 @@ public class C_UnparsedStatement extends UnparsedElement
 	}
 
 	public C_SkipToSemicolon unparsedStatement;
-	
+
 	public String getUnparsedElement()
 	{
 		return unparsedStatement.toString();
 	}
-	
+
 	public static class C_SkipToSemicolon extends TerminalCommentToken
 	{
 		public C_SkipToSemicolon()
@@ -43,7 +43,7 @@ public class C_UnparsedStatement extends UnparsedElement
 		public boolean parse(EagleFileReader lines)
 		{
 			if (findStart(lines) == FOUND.EOF) return false;
-			
+
 			boolean inQuotes1 = false;
 			boolean inQuotes2 = false;
 			_comment = "";
@@ -52,30 +52,30 @@ public class C_UnparsedStatement extends UnparsedElement
 				EagleLineReader rec = lines.get(_currentLine);
 				if (rec == null) return false;
 				_endChar = rec.length();
-				if (_currentChar >= _endChar) break;	// What happened? Already too far?
+				if (_currentChar >= _endChar) break; // What happened? Already too far?
 				_comment += rec.substring(_currentChar, _endChar).trim();
-				
+
 				while (_currentChar < _endChar)
 				{
 					char ch = rec.charAt(_currentChar);
-					if (ch == '\'' && ! inQuotes2)
+					if (ch == '\'' && !inQuotes2)
 					{
-						inQuotes1 = ! inQuotes1;
+						inQuotes1 = !inQuotes1;
 					}
-					if (ch == '"' && ! inQuotes1)
+					if (ch == '"' && !inQuotes1)
 					{
-						inQuotes2 = ! inQuotes2;
+						inQuotes2 = !inQuotes2;
 					}
-					else if (ch == ';' && ! inQuotes1 && ! inQuotes2)
+					else if (ch == ';' && !inQuotes1 && !inQuotes2)
 					{
 						if (_comment.length() == 0) return false;
-						foundIt(_currentLine, _endChar-2);		// Can't consume the semicolon!
+						foundIt(_currentLine, _endChar - 2); // Can't consume the semicolon!
 						return true;
 					}
-					
+
 					_currentChar++;
 				}
-				
+
 				_comment += " ";
 			}
 			return false;

@@ -16,7 +16,7 @@ public class COBOL_DataDivision extends TokenSequence
 {
 	public @S(10) @OPT COBOL_DataDivisionHeader header;
 	public @S(20) TokenList<COBOL_DataSection> sections;
-	
+
 	public static class COBOL_DataDivisionHeader extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword DATA = new COBOL_Keyword("DATA");
@@ -34,7 +34,7 @@ public class COBOL_DataDivision extends TokenSequence
 		public @CHOICE COBOL_LinkageSection linkageSection;
 		public @CHOICE COBOL_ReportSection reportSection;
 	}
-	
+
 	public static class COBOL_FileSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword FILE = new COBOL_Keyword("FILE");
@@ -42,21 +42,21 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) TokenList<COBOL_Copy_or_FileDescriptor> fileDescriptors;
 	}
-	
+
 	public static class COBOL_Copy_or_FileDescriptor extends TokenChooser
 	{
 		public @CHOICE COBOL_Copy_Directive copyDirective;
 		public @CHOICE COBOL_Comment comment;
 		public @CHOICE COBOL_FileDescriptor fileDescriptor;
 	}
-	
+
 	public static class COBOL_WorkingStorageSection extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) COBOL_Keyword WORKINGSTORAGE = new COBOL_Keyword("WORKING-STORAGE");
 		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
@@ -66,7 +66,7 @@ public class COBOL_DataDivision extends TokenSequence
 			}
 		}
 	}
-		
+
 	public static class COBOL_LocalStorageSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword LOCALSTORAGE = new COBOL_Keyword("LOCAL-STORAGE");
@@ -74,7 +74,7 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) @OPT TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
 	}
-		
+
 	public static class COBOL_LinkageSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword LINKAGE = new COBOL_Keyword("LINKAGE");
@@ -82,7 +82,7 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
 	}
-	
+
 	public static class COBOL_ReportSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
@@ -90,7 +90,7 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(30) PunctuationPeriod dot;
 		public @S(40) TokenList<COBOL_ReportEntry> reportEntries;
 	}
-	
+
 	public static class COBOL_CopyOrDataDeclaration extends TokenChooser
 	{
 		public @CHOICE COBOL_Copy_Directive copyBook;

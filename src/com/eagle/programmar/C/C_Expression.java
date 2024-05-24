@@ -55,16 +55,17 @@ public class C_Expression extends PrecedenceChooser
 
 	public C_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public C_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -73,7 +74,7 @@ public class C_Expression extends PrecedenceChooser
 	public @P(10) C_HexNumber hex;
 	public @P(20) C_Number number;
 	public @P(30) C_Character_Literal characters;
-	
+
 	///////////////////////////////////////////////
 	// Primary expressions
 
@@ -120,12 +121,13 @@ public class C_Expression extends PrecedenceChooser
 	public @P(620) C_ConditionalOrExpression conditionalOrExpression;
 	public @P(630) C_TrueFalseExpression trueFalseExpression;
 	public @P(640) C_AssignmentExpression assignmentExpression;
-	
+
 	//
 	// Not easy to have CPlus_Expression extend C_Expression.
 	// Have to use <generics> to make it work. C_Expression and CPlus_Expression
 	// would both have to derive off a generic base class which we are avoiding.
 	//
 
-	// NOTE: C++ adds the 'new' operator here. See CPlus_Expression.java and the constructor in CPlus_Program.java
+	// NOTE: C++ adds the 'new' operator here. See CPlus_Expression.java and the
+	// constructor in CPlus_Program.java
 }

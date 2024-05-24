@@ -29,33 +29,32 @@ public class CSS_TagList extends TokenSequence
 	public @S(60) @OPT CSS_Qualifier qualifier;
 	public @S(70) @OPT TokenList<CSS_MoreQualifiers> moreQualifiers;
 	public @S(80) @OPT TokenList<CSS_ColonOption> colonOption;
-	public @S(90) @OPT CSS_PunctuationChoice separator =
-			new CSS_PunctuationChoice(",", "+", "~", ">");
+	public @S(90) @OPT CSS_PunctuationChoice separator = new CSS_PunctuationChoice(",", "+", "~", ">");
 
 	public static class CSS_MoreQualifiers extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) CSS_Qualifier qualifier;
 	}
-	
+
 	public static class CSS_Tag extends TokenChooser
 	{
 		public @CHOICE CSS_Identifier id;
 		public @CHOICE CSS_DotClass dotClass;
 		public @CHOICE PunctuationStar star;
-		
+
 		public @CHOICE static class CSS_Id_DotClass extends TokenSequence
 		{
 			public @S(10) CSS_Identifier id;
 			public @S(20) CSS_DotClass dotClass;
 		}
 	}
-	
+
 	public static class CSS_DotClass extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;
 		public @S(20) CSS_DotWhat what;
-		
+
 		public static class CSS_DotWhat extends TokenChooser
 		{
 			public @CHOICE CSS_Keyword MEDIA = new CSS_Keyword("media");
@@ -68,52 +67,33 @@ public class CSS_TagList extends TokenSequence
 		public @S(10) PunctuationColon colon;
 		public @S(20) CSS_ColonWhat what;
 		public @S(30) @OPT PunctuationComma comma;
-		
+
 		public static class CSS_ColonWhat extends TokenChooser
 		{
-			public @CHOICE CSS_KeywordChoice option = new CSS_KeywordChoice(
-					"active",
-					"after",
-					"before",
-					"checked",
-					"decrement",
-					"default",
-					"end",
-					"first-child",
-					"focus",
-					"horizontal", 
-					"hover",
-					"increment",
-					"last-child",
-					"link",
-					"-moz-any-link",
-					"-o-prefocus",
-					"start",
-					"vertical",
-					"visited");
-			
+			public @CHOICE CSS_KeywordChoice option = new CSS_KeywordChoice("active", "after", "before", "checked",
+					"decrement", "default", "end", "first-child", "focus", "horizontal", "hover", "increment",
+					"last-child", "link", "-moz-any-link", "-o-prefocus", "start", "vertical", "visited");
+
 			public @CHOICE static class CSS_Nth_Child extends TokenSequence
 			{
-				public @S(10) CSS_KeywordChoice NTH_CHILD = new CSS_KeywordChoice(
-						"nth-child",
-						"nth-last-child");
+				public @S(10) CSS_KeywordChoice NTH_CHILD = new CSS_KeywordChoice("nth-child", "nth-last-child");
 				public @S(20) PunctuationLeftParen leftParen;
 				public @S(30) CSS_Value value;
 				public @S(40) PunctuationRightParen rightParen;
 			}
-			
+
 			public @CHOICE static class CSS_ColonNot extends TokenSequence
 			{
 				public @S(10) CSS_Keyword NOT = new CSS_Keyword("not");
 				public @S(20) PunctuationLeftParen leftParen;
 				public @S(30) CSS_ColonNotWhat what;
 				public @S(40) PunctuationRightParen rightParen;
-				
+
 				public static class CSS_ColonNotWhat extends TokenChooser
 				{
 					public @CHOICE CSS_Qualifier qualifier;
 					public @CHOICE CSS_Keyword BODY = new CSS_Keyword("body");
-					
+
 					public @CHOICE static class CSS_ColonNotClass extends TokenSequence
 					{
 						public @S(10) CSS_PunctuationChoice separator = new CSS_PunctuationChoice(".", ":");

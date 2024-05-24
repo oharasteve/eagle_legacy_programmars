@@ -11,7 +11,6 @@ public class Eaglish_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"_", true, false);
+		return genericIdentifier(lines, ALPHAS, ALPHAS + DIGITS + "_", true, false);
 	}
 }
-	

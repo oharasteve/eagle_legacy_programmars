@@ -24,7 +24,7 @@ public class Natural_DefineStatement extends TokenSequence
 	public @S(30) Natural_Keyword LOCAL = new Natural_Keyword("LOCAL");
 	public @S(40) TokenList<Natural_DataLine> dataLines;
 	public @S(50) Natural_Keyword ENDDEFINE = new Natural_Keyword("END-DEFINE");
-	
+
 	public static class Natural_DataLine extends TokenSequence
 	{
 		public @S(10) @OPT Natural_Comment comment;
@@ -35,21 +35,21 @@ public class Natural_DefineStatement extends TokenSequence
 		public @S(60) @OPT Natural_DataDeclaration dataDeclaration;
 		public @S(70) @OPT Natural_Subscript subscript;
 		public @S(80) @OPT Natural_DataInitialization init;
-		
+
 		public static class Natural_DataView extends TokenSequence
 		{
 			public @S(10) Natural_Keyword VIEW = new Natural_Keyword("VIEW");
 			public @S(20) Natural_Keyword OF = new Natural_Keyword("OF");
 			public @S(30) Natural_Identifier_Reference dbTable;
 		}
-		
+
 		public static class Natural_DataDeclaration extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) Natural_DataType dataType;
 			public @S(30) PunctuationRightParen rightParen;
 		}
-		
+
 		public static class Natural_DataInitialization extends TokenSequence
 		{
 			public @S(10) Natural_Keyword INIT = new Natural_Keyword("INIT");
@@ -57,12 +57,12 @@ public class Natural_DefineStatement extends TokenSequence
 			public @S(30) Natural_Literal literal;
 			public @S(40) Natural_Punctuation greaterThan = new Natural_Punctuation('>');
 		}
-		
+
 		// These are special -- they are not parsed. A post-edit step fills them in.
 		public @SKIP TokenList<Natural_DataLine> children = new TokenList<Natural_DataLine>();
 		public Natural_DataParent parentDeclContainer = new Natural_DataParent();
-		
-		public static class Natural_DataParent	// Does NOT extend GenericToken -- don't want this parsed or looked at
+
+		public static class Natural_DataParent // Does NOT extend GenericToken -- don't want this parsed or looked at
 		{
 			public Natural_DataLine parentDecl;
 		}

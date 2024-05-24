@@ -26,9 +26,9 @@ public class MSSolution_Project extends TokenSequence
 	public @S(90) PunctuationComma comma2;
 	public @S(100) MSSolution_Literal guid2;
 	public @S(110) MSSolution_EndOfLine eoln1;
-	
+
 	public @S(120) @OPT TokenList<MSSolution_ProjectSection> projectSection;
-	
+
 	public @S(130) MSSolution_Keyword ENDPROJECT = new MSSolution_Keyword("EndProject");
 	public @S(140) MSSolution_EndOfLine eoln2;
 }

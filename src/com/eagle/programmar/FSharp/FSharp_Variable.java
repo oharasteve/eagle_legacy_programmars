@@ -27,22 +27,23 @@ public class FSharp_Variable extends TokenSequence implements AbstractVariable
 	public @S(40) @OPT TokenList<FSharp_Subscript> subscript2;
 	public @S(50) @OPT TokenList<FSharp_DotVariable> moreFields2;
 	// public @S(60) @OPT FSharp_ColonType colonType;
-	
+
 	public static class FSharp_SelfOrVariable extends TokenChooser
 	{
 		public @CHOICE FSharp_Keyword SELF = new FSharp_Keyword("self");
 		public @CHOICE FSharp_Identifier_Reference id;
 		public @CHOICE FSharp_DotVariable dotVariable;
-		public @CHOICE FSharp_PunctuationChoice dotDot = new FSharp_PunctuationChoice("..", ".", "_1", "_2", "__", "_$", "_");
+		public @CHOICE FSharp_PunctuationChoice dotDot = new FSharp_PunctuationChoice("..", ".", "_1", "_2", "__", "_$",
+				"_");
 	}
-	
+
 	public static class FSharp_DotVariable extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot1;
 		public @S(20) @OPT PunctuationPeriod dot2;
 		public @S(30) FSharp_Identifier_Reference fld;
 	}
-	
+
 	public static class FSharp_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -52,7 +53,7 @@ public class FSharp_Variable extends TokenSequence implements AbstractVariable
 		public static class FSharp_Subscript_Body extends TokenSequence
 		{
 			public @S(10) @OPT FSharp_EndOfLine eoln;
-			public @S(20) SeparatedList<FSharp_Subscript_Dimension,PunctuationComma> dimensions;
+			public @S(20) SeparatedList<FSharp_Subscript_Dimension, PunctuationComma> dimensions;
 		}
 
 		public static class FSharp_Subscript_Dimension extends TokenSequence
@@ -69,7 +70,7 @@ public class FSharp_Variable extends TokenSequence implements AbstractVariable
 			}
 		}
 	}
-	
+
 	public static class FSharp_ColonType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;

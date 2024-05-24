@@ -48,12 +48,12 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 		public @S(40) @NOSPACE PunctuationRightParen rightParen;
 		public @S(50) @OPT CSharp_Comment comment3;
 	}
-	
+
 	public static class CSharp_MethodModifiers extends TokenSequence
 	{
 		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
-	
+
 	public static class CSharp_MethodParameter extends TokenSequence
 	{
 		public @S(10) @OPT CSharp_Annotation annotation;
@@ -62,20 +62,20 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 		public @S(40) CSharp_Variable_Definition id;
 		public @S(50) @OPT CSharp_Punctuation emptySubscript = new CSharp_Punctuation("[]");
 		public @S(60) @OPT CSharp_MethodParamDefault defValue;
-		
+
 		public static class CSharp_MethodParamDefault extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
 			public @S(20) CSharp_Expression value;
 		}
 	}
-	
+
 	public static class CSharp_MoreParameters extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) CSharp_MethodParameter param;
 	}
-	
+
 	public static class CSharp_MethodWhere extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword WHERE = new CSharp_Keyword("where");
@@ -83,12 +83,12 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 		public @S(30) PunctuationColon colon;
 		public @S(40) CSharp_Type type;
 	}
-	
+
 	public static class CSharp_MethodBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
 		public @CHOICE CSharp_MethodImplementation implementation;
-		
+
 		public @CHOICE static class CSharp_MethodLambda extends TokenSequence
 		{
 			public @S(10) CSharp_Punctuation equalsGreater = new CSharp_Punctuation("=>");

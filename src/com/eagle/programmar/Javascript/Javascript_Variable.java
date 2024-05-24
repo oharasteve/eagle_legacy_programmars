@@ -22,13 +22,13 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 	public @S(10) Javascript_VariableIdentifier firstId;
 	public @S(20) @OPT TokenList<Javascript_DotField> moreIds;
 	public @S(30) @OPT TokenList<Javascript_Subscript> subscript;
-	
+
 	public static class Javascript_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE Javascript_Identifier_Reference id;
 		public @CHOICE Javascript_KeywordChoice THIS = new Javascript_KeywordChoice("this");
 		public @LAST Javascript_PunctuationChoice dollar = new Javascript_PunctuationChoice("$", "_");
-		
+
 		public @CHOICE static class Javascript_CastedVariable extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen1;

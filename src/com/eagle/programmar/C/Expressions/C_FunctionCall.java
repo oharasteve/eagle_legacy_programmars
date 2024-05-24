@@ -24,7 +24,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT C_ArgumentList argList;
 	public @S(60) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

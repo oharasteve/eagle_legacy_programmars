@@ -19,13 +19,13 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 		spec.externalRecordId = new RPG_O_Output_External_Record_Id_IV();
 		spec.externalFieldDescr = new RPG_O_Output_External_Field_Descr_IV();
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_IV extends RPG_O_Output_Program_Record_Id
 	{
 		public RPG_O_Output_Program_Record_Id_IV()
 		{
 			piece = new RPG_O_Output_Program_Record_Id_Piece_IV();
-			
+
 			skipBefore = new RPG_Literal(46, 48);
 			skipAfter = new RPG_Literal(49, 51);
 			indicators = new RPG_Literal(21, 29);
@@ -33,7 +33,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank1 = new RPG_Blanks(52, 80);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece_IV extends RPG_O_Output_Program_Record_Id_Piece
 	{
 		public RPG_O_Output_Program_Record_Id_Piece_IV()
@@ -57,7 +57,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			skipAfter = new RPG_Literal(49, 51);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece2_IV extends RPG_O_Output_Program_Record_Id_Piece2
 	{
 		public RPG_O_Output_Program_Record_Id_Piece2_IV()
@@ -67,7 +67,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(19, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece3_IV extends RPG_O_Output_Program_Record_Id_Piece3
 	{
 		public RPG_O_Output_Program_Record_Id_Piece3_IV()
@@ -77,7 +77,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(21, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Field_Descr_IV extends RPG_O_Output_Program_Field_Descr
 	{
 		public RPG_O_Output_Program_Field_Descr_IV()
@@ -90,10 +90,10 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			endPosition = new RPG_Literal(47, 51);
 			dataFormat = new RPG_KeywordChoice(52, 52, "P", "B", "L", "R");
 			constantOrEditWord = new RPG_Literal(53, 80);
-			blank2 = new RPG_Blanks(0, 0);		// Not Applicable
+			blank2 = new RPG_Blanks(0, 0); // Not Applicable
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_IV extends RPG_O_Output_External_Record_Id
 	{
 		public RPG_O_Output_External_Record_Id_IV()
@@ -106,7 +106,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank1 = new RPG_Blanks(40, 80);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece_IV extends RPG_O_Output_External_Record_Id_Piece
 	{
 		public RPG_O_Output_External_Record_Id_Piece_IV()
@@ -116,7 +116,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			piece3 = new RPG_O_Output_External_Record_Id_Piece3_IV();
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece1_IV extends RPG_O_Output_External_Record_Id_Piece1
 	{
 		public RPG_O_Output_External_Record_Id_Piece1_IV()
@@ -127,7 +127,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(19, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece2_IV extends RPG_O_Output_External_Record_Id_Piece2
 	{
 		public RPG_O_Output_External_Record_Id_Piece2_IV()
@@ -137,7 +137,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(19, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece3_IV extends RPG_O_Output_External_Record_Id_Piece3
 	{
 		public RPG_O_Output_External_Record_Id_Piece3_IV()
@@ -147,7 +147,7 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(21, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Field_Descr_IV extends RPG_O_Output_External_Field_Descr
 	{
 		public RPG_O_Output_External_Field_Descr_IV()

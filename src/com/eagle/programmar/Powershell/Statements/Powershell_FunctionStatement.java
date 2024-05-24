@@ -23,7 +23,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_FunctionStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword("Function");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword(
+			"Function");
 	public @S(20) Powershell_Function_Definition name;
 	public @S(30) @OPT Powershell_FunctionParams params;
 	public @S(40) @OPT Powershell_EndOfLine eoln1;
@@ -31,19 +32,19 @@ public class Powershell_FunctionStatement extends TokenSequence
 	public @S(60) @OPT Powershell_EndOfLine eoln2;
 	public @S(70) @OPT TokenList<Powershell_Statement> stmts;
 	public @S(80) PunctuationRightBrace rightBrace;
-	
+
 	public static class Powershell_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<Powershell_FunctionParam, PunctuationComma> params;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class Powershell_FunctionParam extends TokenSequence
 	{
 		public @S(10) @OPT Powershell_CastParameter cast;
 		public @S(20) Powershell_Variable var;
-		
+
 		public static class Powershell_CastParameter extends PrimaryOperator
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;

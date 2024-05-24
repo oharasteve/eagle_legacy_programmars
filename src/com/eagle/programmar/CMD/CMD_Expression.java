@@ -20,16 +20,17 @@ public class CMD_Expression extends PrecedenceChooser
 
 	public CMD_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public CMD_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-	
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -37,10 +38,10 @@ public class CMD_Expression extends PrecedenceChooser
 
 	public @P(10) CMD_Number number;
 	public @P(20) CMD_Literal literal;
-	
+
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) CMD_ParenthesizedExpression parensExpression;
 	public @P(110) CMD_NegativeExpression negativeExpression;
 	public @P(120) CMD_VariableExpression variableExpression;

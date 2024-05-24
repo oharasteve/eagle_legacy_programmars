@@ -5,7 +5,8 @@ package com.eagle.programmar.VB;
 
 public class VB_Reserved_Words
 {
-	// From https://docs.microsoft.com/en-us/dotnet/visual-basic/language-reference/keywords/
+	// From
+	// https://docs.microsoft.com/en-us/dotnet/visual-basic/language-reference/keywords/
 	public static final String[] RESERVED_WORDS = new String[] {
 			"AddHandler",
 			"AddressOf",

@@ -17,7 +17,7 @@ public class Delphi_Consts extends TokenSequence
 	public @S(10) Delphi_Keyword CONST = new Delphi_Keyword("Const");
 	public @S(20) @OPT TokenList<Delphi_Comment> comments;
 	public @S(30) TokenList<Delphi_Const> constants;
-	
+
 	public static class Delphi_Const extends TokenSequence
 	{
 		public @S(10) Delphi_Variable_Definition constant;
@@ -26,7 +26,7 @@ public class Delphi_Consts extends TokenSequence
 		public @S(40) Delphi_Expression expr;
 		public @S(50) PunctuationSemicolon semicolon;
 		public @S(60) @OPT TokenList<Delphi_Comment> comments;
-		
+
 		public static class Delphi_ConstType extends TokenSequence
 		{
 			public @S(10) PunctuationColon colon;

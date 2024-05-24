@@ -13,7 +13,7 @@ public class CSharp_ArgumentList extends TokenSequence
 	public @S(10) @OPT CSharp_Argument arg;
 	public @S(20) @OPT TokenList<CSharp_MoreArguments> moreArgs;
 	public @S(30) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	public static class CSharp_MoreArguments extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

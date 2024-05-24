@@ -96,6 +96,6 @@ public class COBOL_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE COBOL_UnstringStatement unstringStatement;
 	public @CHOICE COBOL_UseStatement useStatement;
 	public @CHOICE COBOL_WriteStatement writeStatement;
-	
-	//public @LAST COBOL_UnparsedStatement unparsedStatement;
+
+	// public @LAST COBOL_UnparsedStatement unparsedStatement;
 }

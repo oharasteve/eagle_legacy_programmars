@@ -12,7 +12,7 @@ public class Ruby_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Ruby_KeywordChoice(String... words)
 	{
 		super(words);

@@ -44,11 +44,11 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 			public @S(30) C_Identifier_Reference methodName;
 		}
 	}
-	
+
 	public static class CPlus_MethodBody extends TokenChooser
 	{
 		public @LAST C_FunctionBody body;
-		
+
 		public @CHOICE static class CPlus_MethodUsing extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBrace leftBrace;

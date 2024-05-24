@@ -5,7 +5,7 @@ package com.eagle.programmar.Go.Symbols;
 
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Go_Identifier_Definition  extends Go_Identifier implements DefinitionInterface
+public abstract class Go_Identifier_Definition extends Go_Identifier implements DefinitionInterface
 {
 
 }

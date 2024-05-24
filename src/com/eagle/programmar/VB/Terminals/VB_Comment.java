@@ -14,17 +14,17 @@ public class VB_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public VB_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar >= nc || rec.charAt(_currentChar) != '\'') return false;

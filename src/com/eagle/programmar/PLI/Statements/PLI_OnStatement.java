@@ -17,10 +17,10 @@ public class PLI_OnStatement extends TokenSequence
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) @DOC("7.36") PLI_Keyword ON = new PLI_Keyword("ON");
-	public @S(30) SeparatedList<PLI_Signal,PunctuationComma> signals;
+	public @S(30) SeparatedList<PLI_Signal, PunctuationComma> signals;
 	public @S(40) @OPT PLI_Keyword SNAP = new PLI_Keyword("SNAP");
 	public @S(50) PLI_OnAction action;
-		
+
 	public static class PLI_OnAction extends TokenChooser
 	{
 		public @CHOICE PLI_Statement stmt;

@@ -14,7 +14,7 @@ public class RPG_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public RPG_Comment(String comment)
 	{
 		super(comment);
@@ -25,8 +25,8 @@ public class RPG_Comment extends TerminalCommentToken
 	{
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
-		if (6 >= nc) return false;	// Need room for 7 columns
-		
+		if (6 >= nc) return false; // Need room for 7 columns
+
 		/* Is it a comment? Star in column 7 means yes */
 		if (rec.charAt(6) == '*')
 		{

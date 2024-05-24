@@ -12,7 +12,7 @@ public class Natural_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Natural_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

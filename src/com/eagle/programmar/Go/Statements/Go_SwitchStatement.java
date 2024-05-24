@@ -23,7 +23,7 @@ public class Go_SwitchStatement extends TokenSequence
 	public @S(50) TokenList<Go_SwitchCase> switchCases;
 	public @S(60) PunctuationRightBrace rightBrace;
 	public @S(70) Go_EOLN eoln2;
-	
+
 	public static class Go_SwitchCase extends TokenSequence
 	{
 		public @S(10) Go_Keyword CASE = new Go_Keyword("case");

@@ -16,7 +16,7 @@ public class CMD_FindStr_Statement extends TokenSequence
 	public @S(10) CMD_Keyword FINDSTR = new CMD_Keyword("FINDSTR");
 	public @S(20) @OPT TokenList<CMD_FindStrOption> options;
 	public @S(30) CMD_Literal pattern;
-	
+
 	public static class CMD_FindStrOption extends TokenChooser
 	{
 		public @CHOICE static class Powershell_FindStrOptionLetter extends TokenSequence

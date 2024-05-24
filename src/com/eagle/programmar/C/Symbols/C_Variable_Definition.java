@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.C.Symbols;
 
-
 public class C_Variable_Definition extends C_Identifier_Definition
 {
 	@Override

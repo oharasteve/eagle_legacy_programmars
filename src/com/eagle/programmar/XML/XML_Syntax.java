@@ -13,7 +13,7 @@ public class XML_Syntax extends EagleSyntax
 	{
 		return "XML";
 	}
-	
+
 	public XML_Syntax()
 	{
 		_isCaseSensitive = false;

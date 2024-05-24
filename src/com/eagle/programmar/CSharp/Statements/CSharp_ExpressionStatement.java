@@ -15,7 +15,7 @@ public class CSharp_ExpressionStatement extends TokenSequence implements EagleRu
 	public @S(10) @NEWLINE CSharp_Expression expr;
 	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
 	public @S(30) @OPT CSharp_Comment comment;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

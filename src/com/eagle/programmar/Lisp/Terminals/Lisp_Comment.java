@@ -14,17 +14,17 @@ public class Lisp_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Lisp_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		if (rec.charAt(_currentChar) != ';') return false;
 

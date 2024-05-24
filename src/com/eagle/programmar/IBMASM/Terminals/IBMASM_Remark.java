@@ -14,7 +14,7 @@ public class IBMASM_Remark extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public IBMASM_Remark(String remark)
 	{
 		super(remark);

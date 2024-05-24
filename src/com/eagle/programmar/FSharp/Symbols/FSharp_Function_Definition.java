@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.FSharp.Symbols;
 
-
 public class FSharp_Function_Definition extends FSharp_Identifier_Definition
 {
 	@Override

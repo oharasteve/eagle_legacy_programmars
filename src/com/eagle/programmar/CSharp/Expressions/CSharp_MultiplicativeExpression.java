@@ -22,13 +22,13 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator implemen
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			interpreter.pushInt(leftValue / rightValue);
 			return;
-		case "%" :
+		case "%":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		}

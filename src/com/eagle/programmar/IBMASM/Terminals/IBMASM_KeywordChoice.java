@@ -12,7 +12,7 @@ public class IBMASM_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public IBMASM_KeywordChoice(String... words)
 	{
 		super(words);

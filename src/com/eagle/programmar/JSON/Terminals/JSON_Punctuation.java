@@ -5,7 +5,7 @@ package com.eagle.programmar.JSON.Terminals;
 
 import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
-public class JSON_Punctuation  extends TerminalPunctuationToken
+public class JSON_Punctuation extends TerminalPunctuationToken
 {
 	// Need default constructor for reading from the XML file
 	public JSON_Punctuation()

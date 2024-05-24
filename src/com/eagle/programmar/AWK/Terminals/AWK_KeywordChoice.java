@@ -12,7 +12,7 @@ public class AWK_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public AWK_KeywordChoice(String... words)
 	{
 		super(words);

@@ -12,7 +12,7 @@ public class MSSolution_Syntax extends EagleSyntax
 	{
 		return "MSSolution";
 	}
-	
+
 	public MSSolution_Syntax()
 	{
 		_isCaseSensitive = true;

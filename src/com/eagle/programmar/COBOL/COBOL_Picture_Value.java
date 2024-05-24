@@ -18,12 +18,11 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 public class COBOL_Picture_Value extends TokenChooser
 {
 	public @LAST COBOL_Expression expression;
-	
+
 	public @CHOICE static class COBOL_Picture_Value_Keyword extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
-		public @S(20) COBOL_KeywordChoice constants = new COBOL_KeywordChoice(
-				"ZERO", "ZEROS", "SPACE", "SPACES",
+		public @S(20) COBOL_KeywordChoice constants = new COBOL_KeywordChoice("ZERO", "ZEROS", "SPACE", "SPACES",
 				"LOW-VALUE", "LOW-VALUES", "HIGH-VALUE", "HIGH-VALUES");
 	}
 
@@ -32,7 +31,7 @@ public class COBOL_Picture_Value extends TokenChooser
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) COBOL_Literal literal;
 		public @S(30) @OPT COBOL_ThruLiteral thru;
-		
+
 		public static class COBOL_ThruLiteral extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword thru = new COBOL_Keyword("THRU");
@@ -52,12 +51,12 @@ public class COBOL_Picture_Value extends TokenChooser
 		public @S(20) @OPT COBOL_Punctuation ampersand = new COBOL_Punctuation('&');
 		public @S(30) COBOL_HexNumber hex;
 	}
-	
+
 	public @CHOICE static class COBOL_PictureNext extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
 		public @S(20) @OPT COBOL_PictureNextMinus minus;
-		
+
 		public static class COBOL_PictureNextMinus extends TokenSequence
 		{
 			public @S(10) PunctuationHyphen minus;

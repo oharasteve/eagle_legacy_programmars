@@ -36,10 +36,10 @@ public class C_Type extends TokenSequence implements AbstractType
 
 	public static class C_TypeModifier extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice EXTENSION = 
-				new C_KeywordChoice("__extension__", "const", "volatile", "register", "static");
+		public @CHOICE C_KeywordChoice EXTENSION = new C_KeywordChoice("__extension__", "const", "volatile", "register",
+				"static");
 	}
-	
+
 	public static class C_NamespaceType extends TokenSequence
 	{
 		public @S(10) C_Identifier_Reference namespace;
@@ -49,9 +49,9 @@ public class C_Type extends TokenSequence implements AbstractType
 	public static class C_TypeBase extends TokenChooser
 	{
 		public @CHOICE C_Enum enumeration;
-		public @LAST C_Keyword UNSIGNED = new C_Keyword("unsigned");	// All by itself is ok too
-		
-		public @FIRST C_TypeShortUnsignedInt typeShortUnsigned;	// This one isn't handled by C_TypePrimitive
+		public @LAST C_Keyword UNSIGNED = new C_Keyword("unsigned"); // All by itself is ok too
+
+		public @FIRST C_TypeShortUnsignedInt typeShortUnsigned; // This one isn't handled by C_TypePrimitive
 		public @CHOICE C_TypeUnion typeUnion;
 		public @CHOICE C_TypeStruct typeStruct;
 		public @CHOICE C_TypeLongLong typeLongLong;
@@ -59,7 +59,7 @@ public class C_Type extends TokenSequence implements AbstractType
 		public @CHOICE C_TypeUserDefined typeUsedDefined;
 		public @LAST C_TypeSimpleUnion typeSimpleUnion;
 	}
-	
+
 	public static class C_TypeFunction extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

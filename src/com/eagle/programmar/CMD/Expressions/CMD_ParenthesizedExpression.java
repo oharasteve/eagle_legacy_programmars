@@ -15,7 +15,7 @@ public class CMD_ParenthesizedExpression extends PrimaryOperator implements Eagl
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) CMD_Expression expression;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

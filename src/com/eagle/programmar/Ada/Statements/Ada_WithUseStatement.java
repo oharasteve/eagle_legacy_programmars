@@ -13,9 +13,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Ada_WithUseStatement extends TokenSequence
 {
 	public @S(10) Ada_Keyword WITH = new Ada_Keyword("with");
-	public @S(20) SeparatedList<Ada_Identifier_Reference,PunctuationPeriod> withs;
+	public @S(20) SeparatedList<Ada_Identifier_Reference, PunctuationPeriod> withs;
 	public @S(30) PunctuationSemicolon semicolon1;
 	public @S(40) Ada_Keyword USE = new Ada_Keyword("use");
-	public @S(50) SeparatedList<Ada_Identifier_Reference,PunctuationPeriod> uses;
+	public @S(50) SeparatedList<Ada_Identifier_Reference, PunctuationPeriod> uses;
 	public @S(60) PunctuationSemicolon semicolon2;
 }

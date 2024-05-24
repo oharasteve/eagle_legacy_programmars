@@ -15,6 +15,6 @@ public class Fortran_Data extends TokenSequence
 {
 	public @S(10) Fortran_Type type;
 	public @S(20) Fortran_Punctuation colobColon = new Fortran_Punctuation("::");
-	public @S(30) SeparatedList<Fortran_Variable_Definition,PunctuationComma> variables;
+	public @S(30) SeparatedList<Fortran_Variable_Definition, PunctuationComma> variables;
 	public @S(40) Fortran_EOLN eoln;
 }

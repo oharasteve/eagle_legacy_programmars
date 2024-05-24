@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CSharp.Symbols;
 
-
 public class CSharp_Type_Definition extends CSharp_Identifier_Definition
 {
 	@Override

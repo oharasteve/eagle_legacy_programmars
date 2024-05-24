@@ -22,13 +22,13 @@ public class C_MultiplicativeExpression extends PrecedenceOperator implements Ea
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			interpreter.pushInt(leftValue / rightValue);
 			return;
-		case "%" :
+		case "%":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		}

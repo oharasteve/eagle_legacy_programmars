@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CMacro.Symbols;
 
-
 public class CMacro_Define_Definition extends CMacro_Identifier_Definition
 {
 	@Override

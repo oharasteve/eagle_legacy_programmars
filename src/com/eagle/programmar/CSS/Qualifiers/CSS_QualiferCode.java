@@ -11,15 +11,10 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class CSS_QualiferCode extends TokenSequence
 {
-	public @S(10) CSS_KeywordChoice CODE = new CSS_KeywordChoice(
-			"controls",
-			"data-original-title",
-			"disabled",
-			"hidden",
-			"href",
-			"title");
+	public @S(10) CSS_KeywordChoice CODE = new CSS_KeywordChoice("controls", "data-original-title", "disabled",
+			"hidden", "href", "title");
 	public @S(20) @OPT CSS_BracketsHatEquals hatEquals;
-	
+
 	public static class CSS_BracketsHatEquals extends TokenSequence
 	{
 		public @S(10) CSS_Punctuation hat = new CSS_Punctuation('^');

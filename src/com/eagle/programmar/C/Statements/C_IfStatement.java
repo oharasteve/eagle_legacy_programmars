@@ -22,7 +22,7 @@ public class C_IfStatement extends TokenSequence
 	public @S(60) @OPT TokenList<C_Comment> comments;
 	public @S(70) C_Statement thenStatement;
 	public @S(80) @OPT C_IfElseClause elseClause;
-	
+
 	public static class C_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<C_Comment> comment1;

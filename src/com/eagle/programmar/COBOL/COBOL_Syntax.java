@@ -12,18 +12,20 @@ public abstract class COBOL_Syntax extends EagleSyntax
 	{
 		return "COBOL";
 	}
-	
+
 	public COBOL_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "-";
-		_punctuationExceptions = new String[] { "**" };
-		
+		_punctuationExceptions = new String[] {
+				"**"
+		};
+
 		addReservedWords(COBOL_Reserved_Words.RESERVED_WORDS);
 		// findFirstWords(COBOL_Statement.class);
 	}
-	
+
 	public static class COBOL_Fixed_Format_Syntax extends COBOL_Syntax
 	{
 		@Override
@@ -31,16 +33,16 @@ public abstract class COBOL_Syntax extends EagleSyntax
 		{
 			return "COBOL Fixed";
 		}
-		
+
 		public COBOL_Fixed_Format_Syntax()
 		{
-			_commentColumn = 6;		// 0 = first for all these
-			_earliestComment = 11;	// Comments to end-of-line must start in column 12 or later
+			_commentColumn = 6; // 0 = first for all these
+			_earliestComment = 11; // Comments to end-of-line must start in column 12 or later
 			_fixedStartColumn = 6;
 			_fixedEndColumn = 72;
 		}
 	}
-	
+
 	public static class COBOL_Free_Format_Syntax extends COBOL_Syntax
 	{
 		@Override
@@ -48,11 +50,11 @@ public abstract class COBOL_Syntax extends EagleSyntax
 		{
 			return "COBOL Free";
 		}
-		
+
 		public COBOL_Free_Format_Syntax()
 		{
-			_commentColumn = 0;	    // Default is 0 anyways
-			_earliestComment = 1;	// Comments to end-of-line must start in column 2 or later
+			_commentColumn = 0; // Default is 0 anyways
+			_earliestComment = 1; // Comments to end-of-line must start in column 2 or later
 		}
 	}
 }

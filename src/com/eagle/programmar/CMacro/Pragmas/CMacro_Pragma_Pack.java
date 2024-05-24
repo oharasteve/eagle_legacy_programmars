@@ -17,6 +17,6 @@ public class CMacro_Pragma_Pack extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT CMacro_KeywordChoice PUSH = new CMacro_KeywordChoice("push", "pop");
 	public @S(40) @OPT PunctuationComma comma;
-	public @S(50) @OPT CMacro_Number number;	// 1 perhaps
+	public @S(50) @OPT CMacro_Number number; // 1 perhaps
 	public @S(60) PunctuationRightParen rightParen;
 }

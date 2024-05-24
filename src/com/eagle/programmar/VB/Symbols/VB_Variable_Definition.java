@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.VB.Symbols;
 
-
 public class VB_Variable_Definition extends VB_Identifier_Definition
 {
 	@Override

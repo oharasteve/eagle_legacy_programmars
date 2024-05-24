@@ -25,7 +25,7 @@ public class VB_ForStatement extends TokenSequence
 	public @S(90) TokenList<VB_Statement> action;
 	public @S(100) VB_Keyword NEXT = new VB_Keyword("next");
 	public @S(110) @OPT VB_Identifier_Reference var2;
-	
+
 	public static class VB_ForStep extends TokenSequence
 	{
 		public @S(10) VB_Keyword STEP = new VB_Keyword("step");

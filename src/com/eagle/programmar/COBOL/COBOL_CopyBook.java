@@ -17,9 +17,9 @@ public class COBOL_CopyBook extends EagleInclude
 	{
 		super(project, symbolTable, tracer);
 	}
-	
+
 	// TODO: Handle COBOL Copybooks with REPLACEMENT
-	
+
 	@Override
 	public EagleFileReader preprocessFile(ParserManager parser, EagleFileReader lines)
 	{

@@ -23,7 +23,7 @@ public class AWK_ForStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT AWK_EndOfLine eoln;
 	public @S(60) AWK_ForBlock block;
-	
+
 	public static class AWK_ForWhat extends TokenChooser
 	{
 		public @CHOICE static class AWK_ForIteration extends TokenSequence
@@ -34,7 +34,7 @@ public class AWK_ForStatement extends TokenSequence
 			public @S(40) PunctuationSemicolon semicolon2;
 			public @S(50) AWK_Expression increment;
 		}
-		
+
 		public @CHOICE static class AWK_ForEach extends TokenSequence
 		{
 			public @S(10) AWK_Variable var;
@@ -42,7 +42,7 @@ public class AWK_ForStatement extends TokenSequence
 			public @S(30) AWK_Expression value;
 		}
 	}
-	
+
 	public static class AWK_ForBlock extends TokenChooser
 	{
 		public @CHOICE AWK_Statement stmt;

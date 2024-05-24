@@ -7,7 +7,7 @@ import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Perl_AndExpression  extends PrecedenceOperator
+public class Perl_AndExpression extends PrecedenceOperator
 {
 	public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Perl_Punctuation bitwiseAndOperator = new Perl_Punctuation('&');

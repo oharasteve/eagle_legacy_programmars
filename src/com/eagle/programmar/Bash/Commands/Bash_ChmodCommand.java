@@ -22,24 +22,24 @@ public class Bash_ChmodCommand extends TokenSequence
 	public @S(30) Bash_ChmodCode code;
 	public @S(40) @OPT TokenList<Bash_ChmodMoreCodes> moreCodes;
 	public @S(50) Bash_FilenameOrLiteral filename;
-	
+
 	public static class Bash_ChmodOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice Re = new Bash_KeywordChoice("-R", "-e");
 	}
-	
+
 	public static class Bash_ChmodMoreCodes extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) Bash_ChmodCode code;
 	}
-	
+
 	public static class Bash_ChmodCode extends TokenChooser
 	{
 		public @CHOICE Bash_Number number;
 		public @CHOICE Bash_ChmodLetters letters;
 	}
-	
+
 	public static class Bash_ChmodLetters extends TerminalLiteralToken
 	{
 		@Override
@@ -52,7 +52,7 @@ public class Bash_ChmodCommand extends TokenSequence
 			int endChar = _currentChar;
 			if (endChar >= recLen) return false;
 			char ch;
-			
+
 			// all user group other
 			while (endChar < recLen)
 			{
@@ -65,7 +65,7 @@ public class Bash_ChmodCommand extends TokenSequence
 			ch = rec.charAt(endChar);
 			if (ch != '+' && ch != '-' && ch != '=') return false;
 			endChar++;
-			
+
 			// read write execute
 			while (endChar < recLen)
 			{

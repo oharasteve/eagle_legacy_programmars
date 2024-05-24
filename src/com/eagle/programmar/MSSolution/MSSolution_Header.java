@@ -19,13 +19,13 @@ public class MSSolution_Header extends TokenSequence
 	public @S(20) @OPT MSSolution_CommentLine comment;
 	public @S(30) @OPT MSSolution_HeaderVisual visual;
 	public @S(40) @OPT MSSolution_HeaderMinimum minimum;
-	
+
 	public static class MSSolution_CommentLine extends TokenSequence
 	{
 		public @S(10) MSSolution_Comment comment;
 		public @S(20) MSSolution_EndOfLine eoln;
 	}
-	
+
 	public static class MSSolution_HeaderMicrosoft extends TokenSequence
 	{
 		public @S(10) MSSolution_Keyword MICROSOFT = new MSSolution_Keyword("Microsoft");
@@ -36,23 +36,24 @@ public class MSSolution_Header extends TokenSequence
 		public @S(60) PunctuationComma comma;
 		public @S(70) MSSolution_Keyword FORMAT = new MSSolution_Keyword("Format");
 		public @S(80) MSSolution_Keyword VERSION = new MSSolution_Keyword("Version");
-		public @S(90) SeparatedList<MSSolution_Integer,PunctuationPeriod> version;
+		public @S(90) SeparatedList<MSSolution_Integer, PunctuationPeriod> version;
 		public @S(100) MSSolution_EndOfLine eoln;
 	}
-	
+
 	public static class MSSolution_HeaderVisual extends TokenSequence
 	{
 		public @S(10) MSSolution_Keyword VISUALSTUDIOVERSION = new MSSolution_Keyword("VisualStudioVersion");
 		public @S(20) PunctuationEquals equals;
-		public @S(30) SeparatedList<MSSolution_Integer,PunctuationPeriod> version;
+		public @S(30) SeparatedList<MSSolution_Integer, PunctuationPeriod> version;
 		public @S(40) MSSolution_EndOfLine eoln;
 	}
-	
+
 	public static class MSSolution_HeaderMinimum extends TokenSequence
 	{
-		public @S(10) MSSolution_Keyword MINIMUMVISUALSTUDIOVERSION = new MSSolution_Keyword("MinimumVisualStudioVersion");
+		public @S(10) MSSolution_Keyword MINIMUMVISUALSTUDIOVERSION = new MSSolution_Keyword(
+				"MinimumVisualStudioVersion");
 		public @S(20) PunctuationEquals equals;
-		public @S(30) SeparatedList<MSSolution_Integer,PunctuationPeriod> version;
+		public @S(30) SeparatedList<MSSolution_Integer, PunctuationPeriod> version;
 		public @S(40) MSSolution_EndOfLine eoln;
 	}
 }

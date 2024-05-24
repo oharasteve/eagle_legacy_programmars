@@ -26,7 +26,7 @@ public class Natural_EditMask extends TerminalLiteralToken
 				endChar++;
 				if (endChar >= recLen) return false;
 				ch = rec.charAt(endChar);
-				if (ch == '\'') inQuotes = ! inQuotes;
+				if (ch == '\'') inQuotes = !inQuotes;
 				if (!inQuotes && ch == '(') parenCount++;
 				if (!inQuotes && ch == ')')
 				{
@@ -40,7 +40,7 @@ public class Natural_EditMask extends TerminalLiteralToken
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String showString()
 	{

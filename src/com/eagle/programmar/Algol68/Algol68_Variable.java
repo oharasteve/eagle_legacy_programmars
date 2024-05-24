@@ -16,9 +16,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Algol68_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
-	public @S(10) SeparatedList<Algol68_Identifier_Reference,PunctuationPeriod> vars;
+	public @S(10) SeparatedList<Algol68_Identifier_Reference, PunctuationPeriod> vars;
 	public @S(20) @OPT Algol68_Subscript subscript;
-	
+
 	public static class Algol68_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

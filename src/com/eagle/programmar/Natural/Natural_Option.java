@@ -23,7 +23,6 @@ public class Natural_Option extends TokenSequence
 	public @S(20) TokenList<Natural_OptionChoice> options;
 	public @S(30) PunctuationRightParen rightParen;
 
-
 	public static class Natural_OptionChoice extends TokenChooser
 	{
 		public @CHOICE static class Natural_OptionAD extends TokenSequence
@@ -88,7 +87,7 @@ public class Natural_Option extends TokenSequence
 			public @S(20) PunctuationEquals equals;
 			public @S(30) Natural_Literal ip;
 		}
-		
+
 		public @CHOICE static class Natural_OptionIP extends TokenSequence
 		{
 			public @S(10) Natural_Keyword IP = new Natural_Keyword("IP");
@@ -116,14 +115,14 @@ public class Natural_Option extends TokenSequence
 			public @S(20) PunctuationEquals equals;
 			public @S(30) Natural_PunctuationChoice lc = new Natural_PunctuationChoice("<");
 		}
-		
+
 		public @CHOICE static class Natural_OptionLC3 extends TokenSequence
 		{
 			public @S(10) Natural_Keyword LC = new Natural_Keyword("LC");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) Natural_KeywordChoice lc = new Natural_KeywordChoice("USD");
 		}
-		
+
 		public @CHOICE static class Natural_OptionNL extends TokenSequence
 		{
 			public @S(10) Natural_Keyword NL = new Natural_Keyword("NL");
@@ -151,21 +150,21 @@ public class Natural_Option extends TokenSequence
 			public @S(20) PunctuationEquals equals;
 			public @S(30) Natural_Literal tc;
 		}
-		
+
 		public @CHOICE static class Natural_OptionTC2 extends TokenSequence
 		{
 			public @S(10) Natural_Keyword TC = new Natural_Keyword("TC");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) Natural_PunctuationChoice tc = new Natural_PunctuationChoice(">");
 		}
-		
+
 		public @CHOICE static class Natural_OptionTC3 extends TokenSequence
 		{
 			public @S(10) Natural_Keyword TC = new Natural_Keyword("TC");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) Natural_EditMask tc;
 		}
-		
+
 		public @CHOICE static class Natural_OptionUC extends TokenSequence
 		{
 			public @S(10) Natural_Keyword UC = new Natural_Keyword("UC");

@@ -14,7 +14,7 @@ public class Julia_RangeExpression extends PrecedenceOperator
 	public @S(20) PunctuationColon colon;
 	public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(40) @OPT Julia_Range_Increment increment;
-	
+
 	public static class Julia_Range_Increment extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;

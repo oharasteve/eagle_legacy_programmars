@@ -9,7 +9,7 @@ import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 public class Python3_Program extends Python_Program
 {
 	public static final String PYTHON3 = "Python3";
-	
+
 	public Python3_Program()
 	{
 		super(PYTHON3, new Python_Syntax());
@@ -17,7 +17,7 @@ public class Python3_Program extends Python_Program
 
 	public static class Python3_Simple_Statement extends Python_Simple_Statement
 	{
-		
+
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class Python3_Program extends Python_Program
 	{
 		overrider.override(Python_Simple_Statement.class, Python3_Simple_Statement.class);
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{

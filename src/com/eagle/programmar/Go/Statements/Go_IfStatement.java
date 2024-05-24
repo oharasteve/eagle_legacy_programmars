@@ -14,7 +14,7 @@ public class Go_IfStatement extends TokenSequence
 	public @S(20) Go_Expression condition;
 	public @S(30) Go_Statement thenStatement;
 	public @S(40) @OPT Go_IfElseClause elseClause;
-	
+
 	public static class Go_IfElseClause extends TokenSequence
 	{
 		public @S(10) Go_Keyword ELSE = new Go_Keyword("else");

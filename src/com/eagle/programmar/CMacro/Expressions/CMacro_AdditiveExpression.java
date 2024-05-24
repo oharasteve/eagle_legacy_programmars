@@ -14,7 +14,7 @@ public class CMacro_AdditiveExpression extends PrecedenceOperator implements Eag
 	public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CMacro_PunctuationChoice operator = new CMacro_PunctuationChoice("+", "-");
 	public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

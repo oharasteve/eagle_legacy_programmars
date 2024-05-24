@@ -36,16 +36,17 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 
 	public Algol68_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Algol68_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -56,7 +57,7 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Algol68_ArrayInfo arrayInfo;
 	public @P(110) Algol68_MethodInvocation methodInvocation;
 	public @P(120) Algol68_PreIncrementExpression preIncrementExpression;
@@ -67,7 +68,7 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(170) Algol68_VariableExpression variableExpression;
 	public @P(180) Algol68_BracketsExpression bracketsExpression;
 	public @P(190) Algol68_ParenthesizedExpression parenthesizedExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

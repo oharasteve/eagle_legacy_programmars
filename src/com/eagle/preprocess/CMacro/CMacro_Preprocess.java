@@ -35,26 +35,27 @@ public class CMacro_Preprocess extends EagleInclude
 {
 	private static final boolean DEBUG = false;
 	private static final boolean VERBOSE = false;
-	
+
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
-	
-	public CMacro_Preprocess(EagleProject project, FindIncludeFile findInclude, EagleSymbolTable symbolTable, EagleTracer tracer)
+
+	public CMacro_Preprocess(EagleProject project, FindIncludeFile findInclude, EagleSymbolTable symbolTable,
+			EagleTracer tracer)
 	{
 		super(project, symbolTable, tracer);
 		_findInclude = findInclude;
 	}
-	
+
 	public CMacro_Preprocess(CMacro_Preprocess preprocessor)
 	{
 		this(preprocessor._project, preprocessor._findInclude, preprocessor._symbolTable, preprocessor._tracer);
 	}
-	
+
 	@Override // Recursive
 	public EagleFileReader preprocessFile(ParserManager parser, EagleFileReader lines)
 	{
 		_parser = parser;
-		
+
 		StringBuffer sb = new StringBuffer("*** Pre-processing ");
 		for (int i = 0; i < _depth; i++) sb.append(". ");
 		sb.append(lines.getFileName()).append(" lines=").append(lines.numberLines());
@@ -64,20 +65,21 @@ public class CMacro_Preprocess extends EagleInclude
 		{
 			if (_project != null)
 			{
-				// The outermost #include file has already been repaired -- don't try to do it twice
+				// The outermost #include file has already been repaired -- don't try to do it
+				// twice
 				_project.performRepairs(lines.getFileName(), lines);
 			}
 		}
-	
+
 		_oldLines = lines;
 		if (VERBOSE)
 		{
 			for (int i = 0; i < _depth; i++) System.out.print("  ");
 			System.out.println("*** Starting to read " + lines.getFileName());
 		}
-		
+
 		// Parse the include file
-		parser._parser.setTracer(_tracer);		// For debugging
+		parser._parser.setTracer(_tracer); // For debugging
 		CMacro_Program pgm = new CMacro_Program();
 		if (_tracer != null)
 		{
@@ -94,12 +96,12 @@ public class CMacro_Preprocess extends EagleInclude
 			System.err.println("Unable to parse " + lines.getFileName());
 			return null;
 		}
-		
+
 //		DumpTree dump = new DumpTree();
 //		dump.dump(System.out, pgm, DumpTree.Width.WIDE, 0, true);
-		
+
 		boolean changed = false;
-		
+
 		// Look for all the #if's and #include's etc.
 		for (CMacro_Element element : pgm.elements._elements)
 		{
@@ -111,20 +113,20 @@ public class CMacro_Preprocess extends EagleInclude
 			{
 				StringBuffer msg = new StringBuffer("Failed preprocessing ").append(element.getWhich()).append('\n');
 				msg.append("File ").append(lines.getFileName());
-				msg.append(", line ").append(Integer.toString(element.getStartLine()+1)).append('\n');
+				msg.append(", line ").append(Integer.toString(element.getStartLine() + 1)).append('\n');
 				msg.append(lines.get(element.getStartLine()).toString()).append('\n');
-				
+
 				for (int i = 0; i < element.getStartChar(); i++) msg.append(' ');
 				msg.append("^ ");
 				msg.append(ex.getMessage());
-				//System.err.println(msg.toString());
+				// System.err.println(msg.toString());
 				ex.printStackTrace(System.err);
-				return lines;	// Can't preprocess it -- leave it alone
+				return lines; // Can't preprocess it -- leave it alone
 			}
 		}
-		
-		if (! changed) return lines;
-		
+
+		if (!changed) return lines;
+
 		// Some multiline comments still there and should be split apart
 		_newLines.splitApartMultilineStrings();
 
@@ -137,7 +139,7 @@ public class CMacro_Preprocess extends EagleInclude
 			if (srcFile.startsWith(baseDir))
 			{
 				int pathLen = baseDir.length();
-				String prepName = srcFile.substring(pathLen+1);
+				String prepName = srcFile.substring(pathLen + 1);
 				try
 				{
 					_savePreprocessedFile.saveHtml(_project._artifactBase, prepName, _newLines);
@@ -148,7 +150,7 @@ public class CMacro_Preprocess extends EagleInclude
 				}
 			}
 		}
-		
+
 		// Save origin information
 		String oldFileName = lines.getFileName();
 		if (VERBOSE)
@@ -162,7 +164,8 @@ public class CMacro_Preprocess extends EagleInclude
 			String origFile = newLine.getOriginalFileName();
 			if (origFile == null)
 			{
-				// if (DEBUG) System.out.println("***** 1 Setting line# to " + origLine + " in " + oldFileName + " for " + line.toString());
+				// if (DEBUG) System.out.println("***** 1 Setting line# to " + origLine + " in "
+				// + oldFileName + " for " + line.toString());
 				newLine.setOriginalLocation(oldFileName);
 			}
 		}
@@ -171,7 +174,7 @@ public class CMacro_Preprocess extends EagleInclude
 		for (int i = 0; i < _depth; i++) sb.append(". ");
 		sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
 		System.out.println(sb);
-		
+
 		return _newLines;
 	}
 
@@ -180,7 +183,7 @@ public class CMacro_Preprocess extends EagleInclude
 		if (token instanceof CMacro_Processable)
 		{
 			CMacro_Processable macro = ((CMacro_Processable) token);
-	
+
 			// Route it to its own controller
 			if (macro.processMacro(this))
 			{
@@ -189,8 +192,9 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 		return false;
 	}
-	
-	// Returns true always, even if nothing was changed in the file (not including the symbol table)
+
+	// Returns true always, even if nothing was changed in the file (not including
+	// the symbol table)
 	public boolean preprocessCMacroElement(ParserManager parser, CMacro_Element element)
 	{
 		// Ignore all the rest of the stuff
@@ -208,8 +212,9 @@ public class CMacro_Preprocess extends EagleInclude
 		copyElement(whichStatement);
 		return true;
 	}
-	
-	// Returns true always, even if nothing was changed in the file (not including the symbol table)
+
+	// Returns true always, even if nothing was changed in the file (not including
+	// the symbol table)
 	public boolean preprocessCStatement(C_StatementOrComment element)
 	{
 		AbstractToken whichStatement = element.getWhich();
@@ -226,14 +231,14 @@ public class CMacro_Preprocess extends EagleInclude
 		copyElement(element);
 		return true;
 	}
-	
+
 	@Override
 	public void copyElement(AbstractToken token)
 	{
 		if (token instanceof TerminalEndOfLine) return;
-		
+
 		if (DEBUG) System.out.println("******************* token = " + token.getClass().getName());
-		
+
 		String oldLine;
 		String oldFileName = token.getFileName();
 		int oldLineNumber = token.getStartLine() + 1;
@@ -254,10 +259,10 @@ public class CMacro_Preprocess extends EagleInclude
 			oldLine = _oldLines.get(seq).toString();
 		}
 		if (DEBUG) System.out.println("***** Copying " + oldLine);
-		
+
 		// Returns null if nothing has changed
 		String newLine = replaceWords(token.getStartLine(), oldFileName, oldLine, 0);
-		
+
 		if (newLine == null)
 		{
 			_newLines.add(oldLine, oldFileName, oldLineNumber);
@@ -296,11 +301,11 @@ public class CMacro_Preprocess extends EagleInclude
 			String prtLine = oldLine;
 			if (oldLine.length() > 100) prtLine = oldLine.substring(0, 100) + " ...";
 			System.err.println("Exceeded maximum macro depth at line " + lineNum + ":  " + prtLine);
-			return null;	// Must be stuck in a loop ... bail out now
+			return null; // Must be stuck in a loop ... bail out now
 		}
-		
+
 		String newLine = null;
-		
+
 		int sc = 0;
 		int len = oldLine.length();
 		boolean inQuotes = false;
@@ -310,22 +315,23 @@ public class CMacro_Preprocess extends EagleInclude
 			char ch = oldLine.charAt(sc);
 			if (ch == '"')
 			{
-				inQuotes = ! inQuotes;
+				inQuotes = !inQuotes;
 			}
 			if (ch == '\n') inQuotes = false;
-			
-			if (! inQuotes && (Character.isLetter(ch) || ch == '_'))
+
+			if (!inQuotes && (Character.isLetter(ch) || ch == '_'))
 			{
 				// Found a word!
 				int ec = sc;
 				while (ec <= len)
 				{
-					ch = ' ';	// Pretend there is a space at the end of the line
+					ch = ' '; // Pretend there is a space at the end of the line
 					if (ec < len) ch = oldLine.charAt(ec);
-					if (! Character.isLetterOrDigit(ch) && ch != '_')
+					if (!Character.isLetterOrDigit(ch) && ch != '_')
 					{
 						String word = oldLine.substring(sc, ec);
-						// System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it is a macro");
+						// System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it
+						// is a macro");
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!
@@ -338,30 +344,31 @@ public class CMacro_Preprocess extends EagleInclude
 								{
 									String newPiece = defineStatement.value.getValue();
 									String changedLine;
-									if (defineStatement.params != null &&
-											defineStatement.params.countTokens() > 0 &&
-											defineStatement.params.isPresent())
+									if (defineStatement.params != null && defineStatement.params.countTokens() > 0
+											&& defineStatement.params.isPresent())
 									{
 										// Macro function, ugh
-										if (ec < len && oldLine.charAt(ec) == ' ') ec++;	// Trim leading space
-										changedLine = processDefineFunction(lineNum, sc, ec, word, oldLine, newPiece, defineStatement, fname);
+										if (ec < len && oldLine.charAt(ec) == ' ') ec++; // Trim leading space
+										changedLine = processDefineFunction(lineNum, sc, ec, word, oldLine, newPiece,
+												defineStatement, fname);
 									}
 									else
 									{
 										if (VERBOSE)
 										{
 											for (int i = 0; i <= _depth; i++) System.out.print("  ");
-											System.out.println("****** " + fname + ":" + (lineNum+1) + " Replacing " + word + " with '" + newPiece + "'");
+											System.out.println("****** " + fname + ":" + (lineNum + 1) + " Replacing "
+													+ word + " with '" + newPiece + "'");
 										}
-										
+
 										// Apply the change
 										changedLine = oldLine.substring(0, sc) + newPiece + oldLine.substring(ec);
 									}
-									
+
 									if (changedLine == null) return null;
 
 									if (DEBUG) System.out.println("************ " + changedLine);
-									String moreChanges = replaceWords(lineNum, fname, changedLine, depth+1);		// Recursive
+									String moreChanges = replaceWords(lineNum, fname, changedLine, depth + 1); // Recursive
 									if (moreChanges != null) return moreChanges;
 									return changedLine;
 								}
@@ -375,37 +382,43 @@ public class CMacro_Preprocess extends EagleInclude
 					}
 					ec++;
 				}
-				sc = ec;	// Keep looking across the line for another word
+				sc = ec; // Keep looking across the line for another word
 			}
 
 			sc++;
 		}
-		
+
 		return newLine;
 	}
-	
+
 	// Handle macro functions.
 	private static String processDefineFunction(int line, int sc, int ec, String word, String oldLine, String newPiece,
 			CMacro_Define_Statement defineStatement, String fname)
 	{
 		int nc = oldLine.length();
 		if (ec >= nc) return null;
-		
+
 		if (oldLine.charAt(ec) != '(')
 		{
-			return null;	// Don't expand the macro -- it was supposed to be a function, but no params were passed
-			//throw new RuntimeException("Expected a left paren, not " + oldLine.substring(ec));
+			return null; // Don't expand the macro -- it was supposed to be a function, but no params
+							// were passed
+			// throw new RuntimeException("Expected a left paren, not " +
+			// oldLine.substring(ec));
 		}
-		
-		// System.out.println("******* ec-sc=" + (ec-sc) + "  oldLine = " + oldLine.substring(sc));
-		// int rparen = oldLine.indexOf(')', ec); // too simple! Might be embedded right parens!
+
+		// System.out.println("******* ec-sc=" + (ec-sc) + " oldLine = " +
+		// oldLine.substring(sc));
+		// int rparen = oldLine.indexOf(')', ec); // too simple! Might be embedded right
+		// parens!
 		int rparen = -1;
 		int depth = 0;
-		// Have to search for a matching right paren because there may be additional left parens in there
-		for (int i = ec + 1; i <nc; i++)
+		// Have to search for a matching right paren because there may be additional
+		// left parens in there
+		for (int i = ec + 1; i < nc; i++)
 		{
 			char ch = oldLine.charAt(i);
-			if (ch == '(') depth++;
+			if (ch == '(')
+				depth++;
 			else if (ch == ')')
 			{
 				if (depth <= 0)
@@ -418,17 +431,19 @@ public class CMacro_Preprocess extends EagleInclude
 		}
 		if (rparen < 0)
 		{
-			System.err.println("*** Line " + (line+1) + " is missing right paren in " + oldLine.substring(ec));
-			System.err.println("    Used at (or after) line " + (line+1) + " of " + fname);
-			System.err.println("    #define is at line " + (defineStatement.getStartLine()+1) + " of " + defineStatement.getFileName());
+			System.err.println("*** Line " + (line + 1) + " is missing right paren in " + oldLine.substring(ec));
+			System.err.println("    Used at (or after) line " + (line + 1) + " of " + fname);
+			System.err.println("    #define is at line " + (defineStatement.getStartLine() + 1) + " of "
+					+ defineStatement.getFileName());
 			return null;
 		}
-		if (DEBUG) System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
-		
-		String actualParamString = oldLine.substring(ec+1, rparen).trim();
+		if (DEBUG)
+			System.out.println("******* ec=" + ec + " rparen=" + rparen + "  remainder = " + oldLine.substring(rparen));
+
+		String actualParamString = oldLine.substring(ec + 1, rparen).trim();
 		String[] actualParams = fancySplit(actualParamString);
 
-		SeparatedList<CMacro_Param,PunctuationComma> formalParams = defineStatement.params.params;
+		SeparatedList<CMacro_Param, PunctuationComma> formalParams = defineStatement.params.params;
 		int paramCount = 0;
 		if (formalParams != null) paramCount = formalParams.getPrimaryCount();
 		if (paramCount > 0)
@@ -442,11 +457,12 @@ public class CMacro_Preprocess extends EagleInclude
 
 		if (actualParams.length != paramCount)
 		{
-			System.err.println("*** Number of parameters for " + word + " does not match, actual=" +
-				actualParams.length + ", expected=" + paramCount);
+			System.err.println("*** Number of parameters for " + word + " does not match, actual=" + actualParams.length
+					+ ", expected=" + paramCount);
 			if (actualParamString.length() > 0) System.err.println("    Actual parameter string: " + actualParamString);
-			System.err.println("    Used at (or after) line " + (line+1) + " of " + fname);
-			System.err.println("    #define is at line " + (defineStatement.getStartLine()+1) + " of " + defineStatement.getFileName());
+			System.err.println("    Used at (or after) line " + (line + 1) + " of " + fname);
+			System.err.println("    #define is at line " + (defineStatement.getStartLine() + 1) + " of "
+					+ defineStatement.getFileName());
 			return null;
 		}
 
@@ -461,19 +477,20 @@ public class CMacro_Preprocess extends EagleInclude
 			{
 				formalParam = ((CMacro_Parameter_Definition) which).toString();
 			}
-			if (! formalParam.equals(actualParam.trim()))		// Don't get stuck in a loop!
+			if (!formalParam.equals(actualParam.trim())) // Don't get stuck in a loop!
 			{
-				//System.out.println("Replacing " + formalParam + " with " + actualParam.trim() + " in " + changedPiece);
-	
+				// System.out.println("Replacing " + formalParam + " with " + actualParam.trim()
+				// + " in " + changedPiece);
+
 				int start = -1;
 				while (true)
 				{
-					start = changedPiece.indexOf(formalParam, start+1);
+					start = changedPiece.indexOf(formalParam, start + 1);
 					if (start < 0) break;
-	
+
 					if (start > 0)
 					{
-						char ch = changedPiece.charAt(start-1);
+						char ch = changedPiece.charAt(start - 1);
 						if (ch == '_' || Character.isLetterOrDigit(ch)) continue;
 					}
 					int end = start + formalParam.length();
@@ -482,36 +499,36 @@ public class CMacro_Preprocess extends EagleInclude
 						char ch = changedPiece.charAt(end);
 						if (ch == '_' || Character.isLetterOrDigit(ch)) continue;
 					}
-	
+
 					// Ok, make the change!
 					String trimmedParam = actualParam.trim();
 					changedPiece = changedPiece.substring(0, start) + trimmedParam + changedPiece.substring(end);
-					start = start + trimmedParam.length() - formalParam.length();	// Don't look at it again
+					start = start + trimmedParam.length() - formalParam.length(); // Don't look at it again
 				}
 			}
-			
+
 			index++;
 		}
-		
+
 		// Now, toss all the ## entries
 		int pound = -1;
 		while (true)
 		{
-			pound = changedPiece.indexOf("##", pound+1);
+			pound = changedPiece.indexOf("##", pound + 1);
 			if (pound < 0) break;
 			changedPiece = changedPiece.substring(0, pound) + changedPiece.substring(pound + 2);
 		}
 
-		return oldLine.substring(0, sc) + changedPiece + oldLine.substring(rparen+1);
+		return oldLine.substring(0, sc) + changedPiece + oldLine.substring(rparen + 1);
 	}
-	
+
 	public static String[] fancySplit(String line)
 	{
-		if (line.length() == 0) return new String[0];	// #define x() with no parameters. Odd, yes?
-		
+		if (line.length() == 0) return new String[0]; // #define x() with no parameters. Odd, yes?
+
 		if (line.indexOf('(') < 0 && line.indexOf('"') < 0)
 		{
-			return line.split(",");	// Normal case
+			return line.split(","); // Normal case
 		}
 		char replace = '?';
 		if (line.indexOf(replace) >= 0)
@@ -520,47 +537,49 @@ public class CMacro_Preprocess extends EagleInclude
 			// Try a different replace char?
 			return line.split(",");
 		}
-		
+
 		StringBuffer buff = new StringBuffer(line);
 		int parenDepth = 0;
 		boolean inQuotes = false;
-		char prevCh = ' ';	// Anything but a backslash
+		char prevCh = ' '; // Anything but a backslash
 		for (int i = 0; i < buff.length(); i++)
 		{
 			char ch = buff.charAt(i);
 			if (prevCh != '\\' && ch == '"')
 			{
-				inQuotes = ! inQuotes;
+				inQuotes = !inQuotes;
 			}
 			else if (inQuotes && ch == ',')
 			{
-				buff.setCharAt(i, replace);  // Smash the comma for a moment
+				buff.setCharAt(i, replace); // Smash the comma for a moment
 			}
-			else if (! inQuotes)
+			else if (!inQuotes)
 			{
-				if (ch == '(') parenDepth++;
-				else if (ch == ')') parenDepth--;
+				if (ch == '(')
+					parenDepth++;
+				else if (ch == ')')
+					parenDepth--;
 				else if (ch == ',' && parenDepth > 0)
 				{
-					buff.setCharAt(i, replace);  // Smash the comma for a moment
+					buff.setCharAt(i, replace); // Smash the comma for a moment
 				}
 			}
-			
+
 			prevCh = ch;
 		}
-		
+
 		String[] result = buff.toString().split(",");
 		int numPieces = result.length;
 		for (int i = 0; i < numPieces; i++)
 		{
 			if (result[i].indexOf(replace) >= 0)
 			{
-				result[i] = result[i].replaceAll("\\"+replace, ",");
+				result[i] = result[i].replaceAll("\\" + replace, ",");
 			}
 		}
 		return result;
 	}
-	
+
 	public void addLine(EagleLineReader line)
 	{
 		_newLines.addLine(line);

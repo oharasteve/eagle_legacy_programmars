@@ -12,7 +12,7 @@ public class MSSolution_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public MSSolution_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

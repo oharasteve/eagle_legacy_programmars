@@ -27,9 +27,9 @@ public class JavaP_StackMapTable extends TokenSequence
 	public @S(40) PunctuationEquals equals;
 	public @S(50) JavaP_Number entries;
 	public @S(60) JavaP_EndOfLine eoln;
-	
+
 	public @S(70) @OPT TokenList<JavaP_StackMapFrame> frames;
-	
+
 	public static class JavaP_StackMapFrame extends TokenSequence
 	{
 		public @S(10) JavaP_Keyword FRAMETYPE = new JavaP_Keyword("frame_type");
@@ -37,7 +37,7 @@ public class JavaP_StackMapTable extends TokenSequence
 		public @S(30) JavaP_Number frameType;
 		public @S(40) @OPT JavaP_Comment comment;
 		public @S(50) JavaP_EndOfLine eoln;
-		
+
 		public @S(60) @OPT JavaP_StackMapOffset offsetDelta;
 		public @S(70) @OPT JavaP_StackMapLocals locals;
 		public @S(80) @OPT JavaP_StackMapStack stack;
@@ -49,20 +49,21 @@ public class JavaP_StackMapTable extends TokenSequence
 			public @S(30) JavaP_Number delta;
 			public @S(40) JavaP_EndOfLine eoln;
 		}
-		
+
 		public static class JavaP_StackMapLocals extends TokenSequence
 		{
 			public @S(10) JavaP_Keyword LOCALS = new JavaP_Keyword("locals");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) PunctuationLeftBracket leftBracket;
-			public @S(40) @OPT SeparatedList<JavaP_StackMapLocal,PunctuationComma> locals;
+			public @S(40) @OPT SeparatedList<JavaP_StackMapLocal, PunctuationComma> locals;
 			public @S(50) PunctuationRightBracket rightBracket;
 			public @S(60) JavaP_EndOfLine eoln;
-			
+
 			public static class JavaP_StackMapLocal extends TokenChooser
 			{
-				public @CHOICE JavaP_KeywordChoice type = new JavaP_KeywordChoice("bogus", "double", "int", "long", "top");
-				
+				public @CHOICE JavaP_KeywordChoice type = new JavaP_KeywordChoice("bogus", "double", "int", "long",
+						"top");
+
 				public @CHOICE static class JavaP_StackMapLocalClass extends TokenSequence
 				{
 					public @S(10) JavaP_Keyword CLASS = new JavaP_Keyword("class");
@@ -76,10 +77,10 @@ public class JavaP_StackMapTable extends TokenSequence
 			public @S(10) JavaP_Keyword STACK = new JavaP_Keyword("stack");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) PunctuationLeftBracket leftBracket;
-			public @S(40) SeparatedList<JavaP_StackMapStackClass,PunctuationComma> stackClasses;
+			public @S(40) SeparatedList<JavaP_StackMapStackClass, PunctuationComma> stackClasses;
 			public @S(50) PunctuationRightBracket rightBracket;
 			public @S(60) JavaP_EndOfLine eoln;
-			
+
 			public static class JavaP_StackMapStackClass extends TokenSequence
 			{
 				public @S(10) @OPT JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "uninitialized");

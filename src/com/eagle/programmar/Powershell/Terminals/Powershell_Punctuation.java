@@ -23,11 +23,11 @@ public class Powershell_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! super.parse(lines)) return false;
+		if (!super.parse(lines)) return false;
 		return super.dontAllowLettersAfterHyphen(lines);
 	}
 }

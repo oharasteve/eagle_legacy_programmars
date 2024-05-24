@@ -22,16 +22,17 @@ public class Gupta_Expression extends PrecedenceChooser
 
 	public Gupta_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Gupta_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -42,15 +43,15 @@ public class Gupta_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
-	
+
 	public @P(100) Gupta_Parens parens;
 	public @P(110) Gupta_FunctionCall functionCall;
 	public @P(120) Gupta_IdentifierExpression identifierExpression;
 	public @P(130) Gupta_UnarySign unarySign;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
-	
+
 	public @P(500) Gupta_Multiplicative_Expression multiplicative_Expression;
 	public @P(510) Gupta_Additive_Expression additive_Expression;
 	public @P(520) Gupta_StrCat_Expression strCat_Expression;

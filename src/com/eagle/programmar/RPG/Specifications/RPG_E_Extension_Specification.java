@@ -29,6 +29,6 @@ public class RPG_E_Extension_Specification extends TokenSequence
 	public @S(130) @OPT RPG_KeywordChoice dataFormat2 = new RPG_KeywordChoice(55, 55, "P", "B", "L", "R");
 	public @S(140) @OPT RPG_Number positions2 = new RPG_Number(56, 56);
 	public @S(150) @OPT RPG_KeywordChoice sequence2 = new RPG_KeywordChoice(57, 57, "A", "D");
-	
+
 	public @S(160) @OPT RPG_Literal comments = new RPG_Literal(58, 74);
 }

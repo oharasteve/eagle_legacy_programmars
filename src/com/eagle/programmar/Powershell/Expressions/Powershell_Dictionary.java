@@ -24,7 +24,7 @@ public class Powershell_Dictionary extends PrimaryOperator
 	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) @OPT Powershell_DictionaryValues expressions;
 	public @S(40) PunctuationRightBrace rightBrace;
-	
+
 	public static class Powershell_DictionaryValues extends TokenSequence
 	{
 		public @S(10) @OPT Powershell_EndOfLine eoln1;
@@ -34,12 +34,13 @@ public class Powershell_Dictionary extends PrimaryOperator
 		public @S(50) @OPT TokenList<Powershell_MoreDictExpressions> more;
 		public @S(60) @OPT Powershell_Comment comment;
 		public @S(70) @OPT Powershell_EndOfLine eoln2;
-		
+
 		public static class Powershell_Field extends TokenChooser
 		{
 			public @CHOICE Powershell_Field_Reference field;
 			public @CHOICE Powershell_Literal literal;
 		}
+
 		public static class Powershell_MoreDictExpressions extends TokenSequence
 		{
 			public @S(10) @OPT PunctuationSemicolon semicolon;

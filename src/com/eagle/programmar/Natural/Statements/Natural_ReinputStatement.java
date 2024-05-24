@@ -16,13 +16,13 @@ public class Natural_ReinputStatement extends TokenSequence
 	public @S(40) Natural_Literal literal;
 	public @S(50) @OPT Natural_Reinput_Mark mark;
 	public @S(60) @OPT Natural_Reinput_Alarm alarm;
-	
+
 	public static class Natural_Reinput_Mark extends TokenSequence
 	{
 		public @S(10) Natural_Keyword MARK = new Natural_Keyword("MARK");
 		public @S(20) Natural_Number num;
 	}
-	
+
 	public static class Natural_Reinput_Alarm extends TokenSequence
 	{
 		public @S(10) @OPT Natural_Keyword AND = new Natural_Keyword("AND");

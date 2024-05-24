@@ -12,22 +12,14 @@ public class CPlus_Syntax extends C_Syntax
 	{
 		return "Cpp";
 	}
-	
+
 	public CPlus_Syntax()
 	{
 		addReservedWords(C_Syntax.C_reservedWords);
 		addReservedWords(reservedWords);
 	}
-	
+
 	private static String[] reservedWords = new String[] {
-			"auto",
-			"class",
-			"false",
-			"final",
-			"namespace",
-			"new",
-			"operator",
-			"true",
-			"using"
+			"auto", "class", "false", "final", "namespace", "new", "operator", "true", "using"
 	};
 }

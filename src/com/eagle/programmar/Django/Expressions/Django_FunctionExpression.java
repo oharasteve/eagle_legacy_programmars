@@ -15,6 +15,6 @@ public class Django_FunctionExpression extends PrimaryOperator
 {
 	public @S(10) Django_Variable var;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<Django_Expression,PunctuationComma> exprs;
+	public @S(30) @OPT SeparatedList<Django_Expression, PunctuationComma> exprs;
 	public @S(40) PunctuationRightParen rightParen;
 }

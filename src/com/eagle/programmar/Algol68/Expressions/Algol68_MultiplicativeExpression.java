@@ -16,7 +16,7 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator impleme
 	public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Algol68_MultOper operator;
 	public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Algol68_MultOper extends TokenChooser
 	{
 		public @CHOICE Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("*", "/", "%");
@@ -30,10 +30,10 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator impleme
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.getWhich().toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/", "over" :
+		case "/", "over":
 			if (leftValue % rightValue == 0)
 			{
 				interpreter.pushInt(leftValue / rightValue);
@@ -41,7 +41,7 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator impleme
 			}
 			interpreter.pushDouble(leftValue / (double) rightValue);
 			return;
-		case "%", "mod" :
+		case "%", "mod":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		}

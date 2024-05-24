@@ -15,8 +15,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class VB_FunctionDeclaration extends TokenSequence
 {
-	public @S(10) @OPT VB_KeywordChoice modifier = new VB_KeywordChoice(
-			"private", "public");
+	public @S(10) @OPT VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public");
 	public @S(20) VB_Keyword FUNCTION1 = new VB_Keyword("function");
 	public @S(30) VB_Sub_Definition name;
 	public @S(40) VB_Parameters params;

@@ -36,7 +36,7 @@ public class Ada_Procedure extends TokenSequence implements EagleRunnable
 		{
 			interpreter.tryToInterpret(stmt.getWhich());
 		}
-		
+
 		// Process actions
 		for (Ada_Statement stmt : stmts2._elements)
 		{

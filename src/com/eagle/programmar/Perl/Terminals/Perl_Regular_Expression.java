@@ -17,8 +17,8 @@ public class Perl_Regular_Expression extends TokenChooser
 		{
 			EagleLineReader rec = lines.get(_currentLine);
 			int recLen = rec.length();
-			if (_currentChar+2 >= recLen) return false;
-			
+			if (_currentChar + 2 >= recLen) return false;
+
 			char ch = rec.charAt(_currentChar);
 			if (ch == 's')
 			{
@@ -33,7 +33,7 @@ public class Perl_Regular_Expression extends TokenChooser
 						{
 							if (endChar + 1 < recLen)
 							{
-								if (rec.charAt(endChar+1) == 'g') endChar++;
+								if (rec.charAt(endChar + 1) == 'g') endChar++;
 								foundIt(_currentLine, endChar);
 								return true;
 							}
@@ -41,11 +41,11 @@ public class Perl_Regular_Expression extends TokenChooser
 					}
 				}
 			}
-			
+
 			return false;
 		}
 	}
-	
+
 	public @CHOICE static class Perl_RegularTranslation extends TerminalRegularExpression
 	{
 		@Override
@@ -53,8 +53,8 @@ public class Perl_Regular_Expression extends TokenChooser
 		{
 			EagleLineReader rec = lines.get(_currentLine);
 			int recLen = rec.length();
-			if (_currentChar+3 >= recLen) return false;
-			
+			if (_currentChar + 3 >= recLen) return false;
+
 			char ch = rec.charAt(_currentChar);
 			if (ch == 't')
 			{
@@ -80,11 +80,11 @@ public class Perl_Regular_Expression extends TokenChooser
 					}
 				}
 			}
-			
+
 			return false;
 		}
 	}
-	
+
 	public @CHOICE static class Perl_RegularQuery extends TerminalRegularExpression
 	{
 		@Override
@@ -92,8 +92,8 @@ public class Perl_Regular_Expression extends TokenChooser
 		{
 			EagleLineReader rec = lines.get(_currentLine);
 			int recLen = rec.length();
-			if (_currentChar+3 >= recLen) return false;
-			
+			if (_currentChar + 3 >= recLen) return false;
+
 			char ch = rec.charAt(_currentChar);
 			if (ch == 'q')
 			{
@@ -115,11 +115,11 @@ public class Perl_Regular_Expression extends TokenChooser
 					}
 				}
 			}
-			
+
 			return false;
 		}
 	}
-	
+
 	public @CHOICE static class Perl_RegularMatch extends TerminalRegularExpression
 	{
 		@Override
@@ -127,8 +127,8 @@ public class Perl_Regular_Expression extends TokenChooser
 		{
 			EagleLineReader rec = lines.get(_currentLine);
 			int recLen = rec.length();
-			if (_currentChar+3 >= recLen) return false;
-			
+			if (_currentChar + 3 >= recLen) return false;
+
 			char ch = rec.charAt(_currentChar);
 			if (ch == 'm')
 			{
@@ -146,11 +146,11 @@ public class Perl_Regular_Expression extends TokenChooser
 					}
 				}
 			}
-			
+
 			return false;
 		}
 	}
-	
+
 	public @CHOICE static class Perl_RegularCondition extends TerminalRegularExpression
 	{
 		@Override
@@ -158,8 +158,8 @@ public class Perl_Regular_Expression extends TokenChooser
 		{
 			EagleLineReader rec = lines.get(_currentLine);
 			int recLen = rec.length();
-			if (_currentChar+2 >= recLen) return false;
-			
+			if (_currentChar + 2 >= recLen) return false;
+
 			char marker = rec.charAt(_currentChar);
 			if (marker == '/')
 			{
@@ -168,17 +168,17 @@ public class Perl_Regular_Expression extends TokenChooser
 				{
 					if (endChar + 1 < recLen)
 					{
-						if (rec.charAt(endChar+1) == 'i') endChar++;
+						if (rec.charAt(endChar + 1) == 'i') endChar++;
 						foundIt(_currentLine, endChar);
 						return true;
 					}
 				}
 			}
-			
+
 			return false;
 		}
 	}
-	
+
 	static int myIndexOf(EagleLineReader rec, char marker, int sc)
 	{
 		int len = rec.length();
@@ -186,9 +186,9 @@ public class Perl_Regular_Expression extends TokenChooser
 		for (int i = sc; i < len; i++)
 		{
 			char ch = rec.charAt(i);
-			if (ch == marker && prev != '\\') return i;		// Found it!
+			if (ch == marker && prev != '\\') return i; // Found it!
 			prev = ch;
 		}
-		return -1;	// Not found
+		return -1; // Not found
 	}
 }

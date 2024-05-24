@@ -11,6 +11,6 @@ public class CSS_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS+DIGITS+"#-_", ALPHAS+DIGITS+"#-._", true, false);
+		return genericIdentifier(lines, ALPHAS + DIGITS + "#-_", ALPHAS + DIGITS + "#-._", true, false);
 	}
 }

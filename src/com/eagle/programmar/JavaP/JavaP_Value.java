@@ -22,20 +22,20 @@ public class JavaP_Value extends TokenChooser
 	public @CHOICE JavaP_Symbol_Reference symbol;
 	public @LAST JavaP_QualifiedName name;
 	public @CHOICE JavaP_Literal literal;
-	
+
 	public @CHOICE static class JavaP_ValueLClass extends TokenSequence
 	{
 		public @S(10) JavaP_LClassName className;
 		public @S(20) PunctuationSemicolon semicolon;
 	}
-	
+
 	public @CHOICE static class JavaP_ValueInit extends TokenSequence
 	{
 		public @S(10) JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
 		public @S(20) JavaP_Keyword INIT = new JavaP_Keyword("init");
 		public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 	}
-	
+
 	public @CHOICE static class JavaP_ValueArray extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

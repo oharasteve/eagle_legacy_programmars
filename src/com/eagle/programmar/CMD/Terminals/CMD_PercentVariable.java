@@ -18,15 +18,15 @@ public class CMD_PercentVariable extends TerminalIdentifierToken
 		int endChar = _currentChar + 3;
 		if (endChar >= recLen) return false;
 		if (rec.charAt(_currentChar) != '%') return false;
-		if (rec.charAt(_currentChar+1) != '%') return false;
+		if (rec.charAt(_currentChar + 1) != '%') return false;
 		// More stuff goes here, starting with ~
-		if (!Character.isLetterOrDigit(rec.charAt(_currentChar+2))) return false;
+		if (!Character.isLetterOrDigit(rec.charAt(_currentChar + 2))) return false;
 
 		_id = rec.substring(_currentChar, endChar);
 		foundIt(_currentLine, endChar - 1);
 		return true;
 	}
-	
+
 	@Override
 	public String showString()
 	{

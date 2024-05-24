@@ -11,7 +11,7 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Ada_BuiltinFunction  extends PrimaryOperator implements EagleRunnable
+public class Ada_BuiltinFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Ada_KeywordChoice func = new Ada_KeywordChoice("To_Unbounded_String");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -25,4 +25,3 @@ public class Ada_BuiltinFunction  extends PrimaryOperator implements EagleRunnab
 		interpreter.pushStr(val);
 	}
 }
-

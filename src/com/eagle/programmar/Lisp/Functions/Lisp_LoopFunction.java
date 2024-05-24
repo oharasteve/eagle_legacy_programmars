@@ -27,37 +27,37 @@ public class Lisp_LoopFunction extends TokenSequence
 	public @S(20) @DOC("m_loop.htm") Lisp_Keyword LOOP = new Lisp_Keyword("loop");
 	public @S(30) Lisp_LoopType loopType;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	public static class Lisp_LoopType extends TokenChooser
 	{
 		public @CHOICE Lisp_SExpr simpleExpr;
-		
+
 		public @CHOICE static class Lisp_LoopFancy extends TokenSequence
 		{
 			public @S(10) @OPT Lisp_LoopNamed named;
 			public @S(20) @OPT TokenList<Lisp_LoopVariableClause> variableClauses;
 			public @S(30) TokenList<Lisp_LoopMainClause> mainClauses;
-			
+
 			public static class Lisp_LoopNamed extends TokenSequence
 			{
 				public @S(10) Lisp_Keyword NAMED = new Lisp_Keyword("named");
 				public @S(20) Lisp_Variable_Definition name;
 			}
-			
+
 			public static class Lisp_LoopVariableClause extends TokenChooser
 			{
 				public @CHOICE Lisp_LoopInitialFinal initialFinal;
 				public @CHOICE Lisp_LoopWith with;
-				public @CHOICE Lisp_LoopForAsClause forAs; 
+				public @CHOICE Lisp_LoopForAsClause forAs;
 			}
-			
+
 			public static class Lisp_LoopMainClause extends TokenChooser
 			{
 				public @CHOICE Lisp_LoopInitialFinal initialFinal;
 				public @CHOICE Lisp_LoopUnconditionalDo unconditionalDo;
 				public @CHOICE Lisp_LoopUnconditionalReturn unconditionalReturn;
 				public @CHOICE Lisp_LoopListAccumulation listAccumulation;
-				public @CHOICE Lisp_LoopNumericAccumulation numericAccumulation; 
+				public @CHOICE Lisp_LoopNumericAccumulation numericAccumulation;
 				public @CHOICE Lisp_LoopConditional conditional;
 				public @CHOICE Lisp_LoopTerminationTest terminationTest;
 			}

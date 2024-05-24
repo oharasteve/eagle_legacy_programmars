@@ -10,20 +10,17 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Powershell_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Powershell_KeywordChoice builtin = new Powershell_KeywordChoice(
-			"length",
-			"$False",
-			"$True");
+	public @S(10) Powershell_KeywordChoice builtin = new Powershell_KeywordChoice("length", "$False", "$True");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtin.toString())
 		{
-		case "$False" :
+		case "$False":
 			interpreter.pushBool(false);
 			return;
-		case "$True" :
+		case "$True":
 			interpreter.pushBool(true);
 			return;
 		}

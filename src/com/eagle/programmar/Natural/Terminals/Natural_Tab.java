@@ -33,7 +33,7 @@ public class Natural_Tab extends TerminalLiteralToken
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String showString()
 	{

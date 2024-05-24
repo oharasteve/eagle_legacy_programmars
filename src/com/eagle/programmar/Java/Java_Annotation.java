@@ -26,23 +26,20 @@ public class Java_Annotation extends TokenChooser
 		public @S(40) @OPT @NOSPACE SeparatedList<Java_Expression, PunctuationComma> expressions;
 		public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	}
-	
+
 	public @CHOICE static class Java_AnnotationCallList extends TokenSequence
 	{
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-		public @S(20) @NOSPACE SeparatedList<Java_Identifier,PunctuationPeriod> idList;
+		public @S(20) @NOSPACE SeparatedList<Java_Identifier, PunctuationPeriod> idList;
 		public @S(30) @OPT TokenList<Java_Comment> comments;
 	}
-	
+
 	public @CHOICE static class Java_AnnotationList extends TokenSequence
 	{
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
-		public @S(20) Java_KeywordChoice ATTR = new Java_KeywordChoice(
-				"AccessoryAction",
-				"Nullable",
-				"PageTransition");
+		public @S(20) Java_KeywordChoice ATTR = new Java_KeywordChoice("AccessoryAction", "Nullable", "PageTransition");
 	}
-	
+
 	public @LAST static class Java_AnnotationSimple extends TokenSequence
 	{
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');

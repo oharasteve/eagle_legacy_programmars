@@ -35,35 +35,35 @@ public class Delphi_Class extends TokenSequence implements AbstractClass
 		public @S(20) Delphi_Type parentType;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class Delphi_Class_Entry extends TokenChooser
 	{
 		public @CHOICE Delphi_Comment comment;
 		public @CHOICE Delphi_ProcedureForward procedure;
 		public @CHOICE Delphi_FunctionForward function;
 		public @CHOICE Delphi_Property property;
-		
+
 		public @CHOICE static class Delphi_Field extends TokenSequence
 		{
-			public @S(10) SeparatedList<Delphi_Variable_Definition,PunctuationComma> variables;
+			public @S(10) SeparatedList<Delphi_Variable_Definition, PunctuationComma> variables;
 			public @S(20) PunctuationColon colon;
 			public @S(30) Delphi_Type type;
 			public @S(40) PunctuationSemicolon semicolon;
 		}
 	}
-	
+
 	public static class Delphi_PrivateEntries extends TokenSequence
 	{
 		public @S(10) Delphi_Keyword PRIVATE = new Delphi_Keyword("Private");
 		public @S(20) TokenList<Delphi_Class_Entry> classEntries;
 	}
-	
+
 	public static class Delphi_ProtectedEntries extends TokenSequence
 	{
 		public @S(10) Delphi_Keyword PROTECTED = new Delphi_Keyword("Protected");
 		public @S(20) TokenList<Delphi_Class_Entry> classEntries;
 	}
-	
+
 	public static class Delphi_PublicEntries extends TokenSequence
 	{
 		public @S(10) Delphi_Keyword PUBLIC = new Delphi_Keyword("Public");

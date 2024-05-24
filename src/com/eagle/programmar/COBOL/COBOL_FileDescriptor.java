@@ -27,7 +27,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 	public @S(80) @OPT COBOL_FD_RecordingMode recordingMode;
 	public @S(90) PunctuationPeriod dot;
 	public @S(100) @OPT TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
-	
+
 	public static class COBOL_FD_ReportExternal extends TokenChooser
 	{
 		public static @CHOICE class COBOL_FD_ReportIs extends TokenSequence
@@ -37,6 +37,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 			public @S(30) @OPT COBOL_Keyword EXTERNAL = new COBOL_Keyword("EXTERNAL");
 			public @S(40) @OPT COBOL_Identifier_Reference reportId;
 		}
+
 		public static @CHOICE class COBOL_FD_IsExternal extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
@@ -44,7 +45,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 			public @S(30) @OPT COBOL_Identifier_Reference reportId;
 		}
 	}
-	
+
 	public static class COBOL_FD_RecordContains extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
@@ -52,7 +53,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 		public @S(30) COBOL_Number count;
 		public @S(40) COBOL_Keyword CHARACTERS = new COBOL_Keyword("CHARACTERS");
 	}
-	
+
 	public static class COBOL_FD_RecordIsVarying extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
@@ -64,7 +65,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 		public @S(70) COBOL_Keyword ON = new COBOL_Keyword("ON");
 		public @S(80) COBOL_Identifier_Reference what;
 	}
-	
+
 	public static class COBOL_FD_LabelRecordStandard extends TokenSequence
 	{
 		// LABEL RECORD STANDARD VALUE OF FILE-ID "HLP\APACHELP.APC"
@@ -73,7 +74,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 		public @S(30) @OPT COBOL_KeywordChoice IS1 = new COBOL_KeywordChoice("IS", "ARE");
 		public @S(40) COBOL_Keyword STANDARD = new COBOL_Keyword("STANDARD");
 		public @S(50) @OPT COBOL_FD_LabelRecordValue labelValue;
-		
+
 		public static class COBOL_FD_LabelRecordValue extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword VALUE = new COBOL_Keyword("VALUE");
@@ -81,7 +82,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 			public @S(30) COBOL_Keyword FILEID = new COBOL_Keyword("FILE-ID");
 			public @S(40) @OPT COBOL_Keyword IS2 = new COBOL_Keyword("IS");
 			public @S(50) COBOL_FileId fileId;
-			
+
 			public static class COBOL_FileId extends TokenChooser
 			{
 				public @CHOICE COBOL_Identifier_Reference fileRef;
@@ -89,7 +90,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 			}
 		}
 	}
-	
+
 	public static class COBOL_FD_RecordingMode extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword RECORDING = new COBOL_Keyword("RECORDING");
@@ -105,7 +106,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 		public @S(20) COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
 		public @S(30) COBOL_Keyword OMITTED = new COBOL_Keyword("OMITTED");
 		public @S(40) @OPT COBOL_FD_Linage linage;
-		
+
 		public static class COBOL_FD_Linage extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword LINAGE = new COBOL_Keyword("LINAGE");

@@ -13,7 +13,7 @@ public class Perl_Syntax extends EagleSyntax
 	{
 		return "Perl";
 	}
-	
+
 	public Perl_Syntax()
 	{
 		_isCaseSensitive = true;
@@ -21,8 +21,9 @@ public class Perl_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_commentInstance = new Perl_Comment();
 		_punctuationExceptions = new String[] {
-				"===", "!==", "::", "==", "->", "<=", ">=", "<<", ">>", "!=", "=>", "=~", "?>", "//", "/*", "**" };
-		
+				"===", "!==", "::", "==", "->", "<=", ">=", "<<", ">>", "!=", "=>", "=~", "?>", "//", "/*", "**"
+		};
+
 		addReservedWords(Perl_Reserved_Words.RESERVED_WORDS);
 	}
 }

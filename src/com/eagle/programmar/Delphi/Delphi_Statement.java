@@ -28,7 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Delphi_Statement extends TokenChooser implements AbstractStatement
 {
 	public @CHOICE PunctuationSemicolon semicolon;
-	
+
 	public @CHOICE Delphi_Assignment assignment;
 	public @CHOICE Delphi_BeginEnd beginEnd;
 	public @CHOICE Delphi_Break_Statement breakStatement;

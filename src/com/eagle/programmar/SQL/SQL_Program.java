@@ -11,23 +11,23 @@ import com.eagle.tokens.TokenList;
 public class SQL_Program extends EagleLanguage
 {
 	public static final String SQL = "SQL";
-	
+
 	public SQL_Program()
 	{
 		super(SQL, new SQL_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.w3schools.com/sql/";
 	}
-	
+
 	public @S(10) TokenList<SQL_StatementOrComment> statements;
-	
+
 	public static class SQL_StatementOrComment extends TokenChooser
 	{
 		public @CHOICE SQL_Statement statement;
 		public @CHOICE SQL_Comment comment;
 	}
-}	
+}

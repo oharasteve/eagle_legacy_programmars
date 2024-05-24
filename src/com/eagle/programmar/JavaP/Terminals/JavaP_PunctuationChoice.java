@@ -12,7 +12,7 @@ public class JavaP_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public JavaP_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

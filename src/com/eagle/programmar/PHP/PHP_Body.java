@@ -16,14 +16,14 @@ public class PHP_Body extends TokenChooser
 	public @CHOICE static class PHP_MissingEnd extends TokenSequence
 	{
 		public @S(10) TokenList<PHP_Element> elements;
-		public @S(20) PHP_EndOfFile eof;	// Can't be inside another class ...
+		public @S(20) PHP_EndOfFile eof; // Can't be inside another class ...
 	}
-	
+
 	public @CHOICE static class PHP_NormalBlock extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) TokenList<PHP_Element> elements;
 		public @S(20) PHP_EndTag endTag;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{

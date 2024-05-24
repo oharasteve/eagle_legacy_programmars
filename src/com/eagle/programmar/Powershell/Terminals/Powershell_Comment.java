@@ -14,17 +14,17 @@ public class Powershell_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Powershell_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		if (_currentChar < rec.length())
 		{
@@ -34,13 +34,13 @@ public class Powershell_Comment extends TerminalCommentToken
 				return super.possibleCommentToEndOfLine(rec, "#");
 			}
 		}
-		
-		if (_currentChar+1 < rec.length())
+
+		if (_currentChar + 1 < rec.length())
 		{
 			char ch1 = rec.charAt(_currentChar);
 			if (ch1 == '/')
 			{
-				char ch2 = rec.charAt(_currentChar+1);
+				char ch2 = rec.charAt(_currentChar + 1);
 				if (ch2 == '/')
 				{
 					return super.possibleCommentToEndOfLine(rec, "//");
@@ -52,7 +52,7 @@ public class Powershell_Comment extends TerminalCommentToken
 			}
 			else if (ch1 == '<')
 			{
-				char ch2 = rec.charAt(_currentChar+1);
+				char ch2 = rec.charAt(_currentChar + 1);
 				if (ch2 == '#')
 				{
 					return super.possibleCommentPair2(lines, rec, "<#", "#>");

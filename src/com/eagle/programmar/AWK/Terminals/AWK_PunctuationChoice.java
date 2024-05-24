@@ -12,7 +12,7 @@ public class AWK_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public AWK_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

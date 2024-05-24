@@ -11,16 +11,16 @@ import com.eagle.tokens.PrimaryOperator;
 public class Algol68_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Algol68_KeywordChoice builtinConstant = new Algol68_KeywordChoice("FALSE", "TRUE");
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtinConstant.toString())
 		{
-		case "FALSE" :
+		case "FALSE":
 			interpreter.pushBool(false);
 			break;
-		case "TRUE" :
+		case "TRUE":
 			interpreter.pushBool(true);
 			break;
 		default:

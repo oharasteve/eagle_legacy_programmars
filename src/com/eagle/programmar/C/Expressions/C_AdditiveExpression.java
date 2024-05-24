@@ -22,10 +22,10 @@ public class C_AdditiveExpression extends PrecedenceOperator implements EagleRun
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "+" :
+		case "+":
 			interpreter.pushInt(leftValue + rightValue);
 			break;
-		case "-" :
+		case "-":
 			interpreter.pushInt(leftValue - rightValue);
 			break;
 		default:

@@ -15,6 +15,6 @@ public class VB_FunctionCall extends PrimaryOperator
 {
 	public @S(10) VB_Identifier_Reference fnName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<VB_Expression,PunctuationComma> args;
+	public @S(30) SeparatedList<VB_Expression, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
 }

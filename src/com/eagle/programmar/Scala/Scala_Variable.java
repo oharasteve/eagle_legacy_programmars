@@ -15,9 +15,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Scala_Variable extends TokenSequence implements EagleRunnable
 {
-	public @S(10) SeparatedList<Scala_Identifier_Reference,PunctuationPeriod> vars;
+	public @S(10) SeparatedList<Scala_Identifier_Reference, PunctuationPeriod> vars;
 	public @S(20) @OPT Scala_Subscript subscript;
-	
+
 	public static class Scala_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

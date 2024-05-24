@@ -18,13 +18,13 @@ public class Perl_NamespaceStatement extends TokenSequence
 	public @S(20) @OPT Perl_Identifier_Reference id;
 	public @S(30) @OPT TokenList<Perl_MoreSpace> more;
 	public @S(40) Perl_NamespaceBody body;
-	
+
 	public static class Perl_NamespaceBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
 		public @CHOICE Perl_StatementBlock block;
 	}
-	
+
 	public static class Perl_MoreSpace extends TokenSequence
 	{
 		public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');

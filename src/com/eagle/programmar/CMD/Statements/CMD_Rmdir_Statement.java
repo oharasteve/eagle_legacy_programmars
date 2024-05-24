@@ -15,7 +15,7 @@ public class CMD_Rmdir_Statement extends TokenSequence
 	public @S(10) @DOC("rmdir.mspx") CMD_Keyword RMDIR = new CMD_Keyword("rmdir");
 	public @S(20) @OPT TokenList<CMD_Rmdir_Option> opts;
 	public @S(30) CMD_Argument dir;
-	
+
 	public static class CMD_Rmdir_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Rmdir_Option_Q extends TokenSequence

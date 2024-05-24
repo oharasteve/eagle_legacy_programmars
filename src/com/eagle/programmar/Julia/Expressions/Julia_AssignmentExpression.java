@@ -10,12 +10,6 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Julia_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Julia_Expression var = new Julia_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice(
-			":=",
-			"*=",
-			"/=",
-			"%=",
-			"+=",
-			"-=");
+	public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice(":=", "*=", "/=", "%=", "+=", "-=");
 	public @S(30) Julia_Expression expr;
 }

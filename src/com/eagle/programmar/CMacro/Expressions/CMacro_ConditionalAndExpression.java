@@ -14,12 +14,12 @@ public class CMacro_ConditionalAndExpression extends PrecedenceOperator implemen
 	public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CMacro_Punctuation andOperator = new CMacro_Punctuation("&&");
 	public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftVal = interpreter.getBoolValue(left);
-		if (! leftVal)
+		if (!leftVal)
 		{
 			// Short circuit a bit
 			interpreter.pushBool(false);

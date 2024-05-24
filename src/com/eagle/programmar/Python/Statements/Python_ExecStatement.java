@@ -12,5 +12,5 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Python_ExecStatement extends TokenSequence
 {
 	public @S(10) Python_Keyword EXEC = new Python_Keyword("exec");
-	public @S(20) SeparatedList<Python_Expression,PunctuationComma> exprs;
+	public @S(20) SeparatedList<Python_Expression, PunctuationComma> exprs;
 }

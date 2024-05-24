@@ -67,16 +67,17 @@ public class Perl_Expression extends PrecedenceChooser
 
 	public Perl_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Perl_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -89,14 +90,14 @@ public class Perl_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Perl_ClassCastExpression classCastExpression;
 	public @P(110) Perl_Expression_List expression_List;
 	public @P(120) Perl_ClassCreationExpression classCreationExpression;
 	public @P(130) Perl_CloneExpression cloneExpression;
 	public @P(140) Perl_DefinedExpression definedExpression;
 	public @P(150) Perl_MethodInvocation methodInvocation;
-	public @P(160) Perl_BracesInvocation bracesInvocation;	
+	public @P(160) Perl_BracesInvocation bracesInvocation;
 	public @P(170) Perl_PreIncrementExpression preIncrementExpression;
 	public @P(180) Perl_PreDecrementExpression preDecrementExpression;
 	public @P(190) Perl_PostIncrementExpression postIncrementExpression;
@@ -120,7 +121,7 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(370) Perl_FileIO fileIO;
 	public @P(380) Perl_PercentExpression percentExpression;
 	public @P(390) Perl_JoinExpression joinExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 
@@ -144,4 +145,4 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(670) Perl_ConditionalOrExpression conditionalOrExpression;
 	public @P(680) Perl_TrueFalseExpression trueFalseExpression;
 	public @P(690) Perl_AssignmentExpression assignmentExpression;
-  }
+}

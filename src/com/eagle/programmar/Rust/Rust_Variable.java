@@ -12,7 +12,7 @@ public class Rust_Variable extends TokenSequence
 {
 	public @S(10) Rust_Identifier_Reference var;
 	public @S(20) @OPT Rust_Subscript subscript;
-	
+
 	public static class Rust_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

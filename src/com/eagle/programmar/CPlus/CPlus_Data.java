@@ -18,8 +18,8 @@ public class CPlus_Data extends TokenSequence
 {
 	public @S(10) @OPT TokenList<C_DataModifiers> modifiers;
 	public @S(20) C_Type ctype;
-	public @S(30) SeparatedList<CPlus_Datum,PunctuationComma> data;
-	
+	public @S(30) SeparatedList<CPlus_Datum, PunctuationComma> data;
+
 	public static class CPlus_Datum extends TokenSequence
 	{
 		public @S(10) @OPT CPlus_NamespaceList namespaces;

@@ -12,7 +12,7 @@ public class CMacro_CommentRestOfLine extends TerminalCommentRestOfLineToken
 	{
 		this("");
 	}
-	
+
 	public CMacro_CommentRestOfLine(String comment)
 	{
 		super(comment);

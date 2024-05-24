@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenList;
 public class Fortran_Program extends EagleLanguage
 {
 	public static final String FORTRAN = "Fortran";
-	
+
 	public Fortran_Program()
 	{
 		super(FORTRAN, new Fortran_Syntax());
@@ -20,6 +20,6 @@ public class Fortran_Program extends EagleLanguage
 	{
 		return "https://docs.oracle.com/cd/E19957-01/805-4939/";
 	}
-	
+
 	public @S(10) TokenList<Fortran_Statement> statements;
 }

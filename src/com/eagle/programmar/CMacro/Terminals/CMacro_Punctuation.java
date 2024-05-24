@@ -17,7 +17,7 @@ public class CMacro_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	public CMacro_Punctuation(String punct)
 	{
 		super(punct);

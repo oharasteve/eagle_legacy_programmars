@@ -12,19 +12,21 @@ public class Ada_Syntax extends EagleSyntax
 	{
 		return "Ada";
 	}
-	
+
 	public Ada_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {
-				":=", "/=", "..", "=>", "<=", ">=" };
-		
+				":=", "/=", "..", "=>", "<=", ">="
+		};
+
 		addReservedWords(reservedWords);
 	}
 
-	// From https://www.adaic.org/resources/add_content/standards/05rm/html/RM-2-9.html
+	// From
+	// https://www.adaic.org/resources/add_content/standards/05rm/html/RM-2-9.html
 	private static String[] reservedWords = new String[] {
 			"abort",
 			"abs",

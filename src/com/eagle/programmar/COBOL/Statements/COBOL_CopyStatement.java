@@ -21,7 +21,7 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 	public @S(20) COBOL_FileNameOrLiteral fileName;
 	public @S(30) @OPT COBOL_CopyIn in;
 	public @S(40) @OPT COBOL_CopyReplacing replacing;
-	
+
 	public static class COBOL_CopyIn extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword IN = new COBOL_Keyword("IN");
@@ -32,7 +32,7 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 	{
 		public @S(10) COBOL_Keyword REPLACING = new COBOL_Keyword("REPLACING");
 		public @S(20) TokenList<COBOL_CopyReplace> replacements;
-		
+
 		public static class COBOL_CopyReplace extends TokenSequence
 		{
 			public @S(10) COBOL_Expression from;
@@ -46,11 +46,11 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 		public @CHOICE COBOL_FileName fileNmae;
 		public @CHOICE COBOL_Literal literal;
 	}
-	
+
 	public static class COBOL_FileName extends TerminalToken
 	{
 		private String id;
-		
+
 		@Override
 		public boolean parse(EagleFileReader lines)
 		{
@@ -67,29 +67,30 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 					if (endChar >= recLen) break;
 					ch = rec.charAt(endChar);
 					if (!Character.isLetterOrDigit(ch) && ch != '-' && ch != '.') break;
-					if (ch == '.' && (endChar+1 == recLen || !Character.isLetterOrDigit(rec.charAt(endChar+1)))) break;
+					if (ch == '.' && (endChar + 1 == recLen || !Character.isLetterOrDigit(rec.charAt(endChar + 1))))
+						break;
 				}
-				
+
 				id = rec.substring(_currentChar, endChar);
-				
+
 				foundIt(_currentLine, endChar - 1);
 				return true;
 			}
 			return false;
 		}
-		
+
 		@Override
 		public String toString()
 		{
 			return id;
 		}
-		
+
 		@Override
 		public void setValue(String val)
 		{
 			id = val;
 		}
-		
+
 		@Override
 		public String showString()
 		{

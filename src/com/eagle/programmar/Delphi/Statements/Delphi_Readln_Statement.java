@@ -15,7 +15,7 @@ public class Delphi_Readln_Statement extends TokenSequence
 {
 	public @S(10) @DOC("System.Readln") Delphi_Keyword READLN = new Delphi_Keyword("ReadLn");
 	public @S(20) @OPT Delphi_Readln_What what;
-	
+
 	public static class Delphi_Readln_What extends TokenChooser
 	{
 		public @CHOICE static class Delphi_Readln_NoFile extends TokenSequence
@@ -24,7 +24,7 @@ public class Delphi_Readln_Statement extends TokenSequence
 			public @S(20) Delphi_Identifier_Reference var;
 			public @S(30) PunctuationRightParen rightParen;
 		}
-		
+
 		public @CHOICE static class Delphi_Readln_FromFile extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;

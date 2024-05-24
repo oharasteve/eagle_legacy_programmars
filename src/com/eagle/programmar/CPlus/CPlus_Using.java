@@ -21,7 +21,7 @@ public class CPlus_Using extends TokenSequence
 	public @S(20) @OPT C_Keyword NAMESPACE = new C_Keyword("namespace");
 	public @S(30) CPlus_UsingWhat what;
 	public @S(40) PunctuationSemicolon semicolon;
-	
+
 	public static class CPlus_UsingWhat extends TokenChooser
 	{
 		public @FIRST CPlus_UsingType1 type1;
@@ -29,21 +29,21 @@ public class CPlus_Using extends TokenSequence
 		public @CHOICE C_Expression expr;
 		public @CHOICE CPlus_UsingColons colons;
 	}
-	
+
 	public static class CPlus_UsingType1 extends TokenSequence
 	{
 		public @S(10) C_Keyword TYPE = new C_Keyword("type");
 		public @S(20) PunctuationEquals equals;
 		public @S(30) CPlus_UsingColons type;
 	}
-	
+
 	public static class CPlus_UsingType2 extends TokenSequence
 	{
 		public @S(10) C_Type type1;
 		public @S(20) PunctuationEquals equals;
 		public @S(30) CPlus_UsingColons type2;
 	}
-	
+
 	public static class CPlus_UsingColons extends TokenSequence
 	{
 		public @S(10) @OPT C_Punctuation colonColon = new C_Punctuation("::");

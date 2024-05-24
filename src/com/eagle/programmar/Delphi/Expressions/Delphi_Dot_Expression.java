@@ -7,7 +7,7 @@ import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class Delphi_Dot_Expression extends PrecedenceOperator 
+public class Delphi_Dot_Expression extends PrecedenceOperator
 {
 	public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;

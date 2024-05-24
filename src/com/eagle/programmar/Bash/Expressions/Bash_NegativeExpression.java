@@ -20,7 +20,7 @@ public class Bash_NegativeExpression extends PrimaryOperator implements EagleRun
 		int val = interpreter.getIntValue(expr);
 		switch (operator.toString())
 		{
-		case "-" :
+		case "-":
 			interpreter.pushInt(-val);
 			break;
 		default:

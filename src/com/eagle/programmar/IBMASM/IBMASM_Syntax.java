@@ -12,13 +12,13 @@ public class IBMASM_Syntax extends EagleSyntax
 	{
 		return "IBMASM";
 	}
-	
+
 	public IBMASM_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = "_";
 		_extraCharacters = "";
-		_allowDigitsInKeywords = false;		// So XL4 comes back as XL then 4 as two separate tokens
+		_allowDigitsInKeywords = false; // So XL4 comes back as XL then 4 as two separate tokens
 		_autoAdvance = false;
 	}
 }

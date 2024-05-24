@@ -15,7 +15,7 @@ public class Bash_ParenthesizedExpression extends PrimaryOperator implements Eag
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Bash_Expression expression;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

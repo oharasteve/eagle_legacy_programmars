@@ -12,7 +12,7 @@ public class Bash_SheBang extends Bash_Punctuation
 	{
 		super("#!");
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -23,7 +23,7 @@ public class Bash_SheBang extends Bash_Punctuation
 		if (_currentLine > 0 || _currentChar > 0) return false;
 		if (rec.length() < 2) return false;
 		if (rec.charAt(0) != '#' || rec.charAt(1) != '!') return false;
-		
+
 		// Yep, it is a she-bang
 		foundIt(_currentLine, _currentChar + 1);
 		return true;

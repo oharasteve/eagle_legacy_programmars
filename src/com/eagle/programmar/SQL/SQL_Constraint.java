@@ -20,16 +20,16 @@ public class SQL_Constraint extends TokenSequence
 	public @S(30) SQL_KeywordChoice FOREIGN = new SQL_KeywordChoice("FOREIGN", "PRIMARY");
 	public @S(40) SQL_Keyword KEY = new SQL_Keyword("KEY");
 	public @S(50) PunctuationLeftParen leftParen1;
-	public @S(60) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyField1;
+	public @S(60) SeparatedList<SQL_Identifier_Reference, PunctuationComma> keyField1;
 	public @S(70) PunctuationRightParen rightParen1;
 	public @S(80) @OPT SQL_ConstraintReference references;
-	
+
 	public static class SQL_ConstraintReference extends TokenSequence
 	{
 		public @S(10) SQL_Keyword REFERENCES = new SQL_Keyword("REFERENCES");
 		public @S(20) SQL_Identifier_Reference referenceField;
 		public @S(30) PunctuationLeftParen leftParen2;
-		public @S(40) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyField2;
+		public @S(40) SeparatedList<SQL_Identifier_Reference, PunctuationComma> keyField2;
 		public @S(50) PunctuationRightParen rightParen2;
 	}
 }

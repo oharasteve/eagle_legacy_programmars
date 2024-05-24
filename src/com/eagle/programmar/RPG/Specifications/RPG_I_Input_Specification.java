@@ -20,24 +20,24 @@ public class RPG_I_Input_Specification extends TokenChooser
 		public @S(30) @OPT RPG_KeywordChoice number = new RPG_KeywordChoice(17, 17, "1", "N");
 		public @S(40) @OPT RPG_Keyword option = new RPG_Keyword(18, 18, "O");
 		public @S(50) RPG_Literal indicator = new RPG_Literal(19, 20);
-		
+
 		public @S(60) @OPT RPG_Number position1 = new RPG_Number(21, 24);
 		public @S(70) @OPT RPG_Keyword not1 = new RPG_Keyword(25, 25, "N");
 		public @S(80) @OPT RPG_KeywordChoice codePart1 = new RPG_KeywordChoice(26, 26, "C", "Z", "D");
 		public @S(90) @OPT RPG_Literal character1 = new RPG_Literal(27, 27);
-		
+
 		public @S(100) @OPT RPG_Number position2 = new RPG_Number(28, 31);
 		public @S(110) @OPT RPG_Keyword not2 = new RPG_Keyword(32, 32, "N");
 		public @S(120) @OPT RPG_KeywordChoice codePart2 = new RPG_KeywordChoice(33, 33, "C", "Z", "D");
 		public @S(130) @OPT RPG_Literal character2 = new RPG_Literal(34, 34);
-		
+
 		public @S(140) @OPT RPG_Number position3 = new RPG_Number(35, 38);
 		public @S(150) @OPT RPG_Keyword not3 = new RPG_Keyword(39, 39, "N");
 		public @S(160) @OPT RPG_KeywordChoice codePart3 = new RPG_KeywordChoice(40, 40, "C", "Z", "D");
 		public @S(170) @OPT RPG_Literal character3 = new RPG_Literal(41, 41);
-		
+
 		public @S(180) RPG_Blanks blank1 = new RPG_Blanks(42, 74);
-		
+
 		public static class RPG_I_Input_Program_Record_Id_Piece extends TokenChooser
 		{
 			public @CHOICE static class RPG_I_Input_Program_Record_Id_Piece1 extends TokenSequence
@@ -49,8 +49,7 @@ public class RPG_I_Input_Specification extends TokenChooser
 			public @CHOICE static class RPG_I_Input_Program_Record_Id_Piece2 extends TokenSequence
 			{
 				public @S(10) RPG_Blanks blank1 = new RPG_Blanks(7, 13);
-				public @S(20) RPG_KeywordChoice logicalRelation = new RPG_KeywordChoice(14, 16,
-						"AND", "OR");
+				public @S(20) RPG_KeywordChoice logicalRelation = new RPG_KeywordChoice(14, 16, "AND", "OR");
 			}
 		}
 	}
@@ -59,8 +58,7 @@ public class RPG_I_Input_Specification extends TokenChooser
 	{
 		public @S(10) RPG_Keyword I = new RPG_Keyword(6, 6, "I");
 		public @S(20) RPG_Blanks blank1 = new RPG_Blanks(7, 42);
-		public @S(30) @OPT RPG_KeywordChoice dataFormat = new RPG_KeywordChoice(43, 43,
-				"P", "B", "L", "R");
+		public @S(30) @OPT RPG_KeywordChoice dataFormat = new RPG_KeywordChoice(43, 43, "P", "B", "L", "R");
 		public @S(40) RPG_Number from = new RPG_Number(44, 47);
 		public @S(50) RPG_Number to = new RPG_Number(48, 51);
 		public @S(60) @OPT RPG_Number decimalPositions = new RPG_Number(52, 52);
@@ -121,7 +119,7 @@ public class RPG_I_Input_Specification extends TokenChooser
 		public @S(60) @OPT RPG_Number decimalPositions = new RPG_Number(52, 52);
 		public @S(70) RPG_Literal fieldName = new RPG_Literal(53, 58);
 		public @S(80) RPG_Blanks blank4 = new RPG_Blanks(59, 74);
-		
+
 		public static class RPG_I_Input_Data_Subfield_Init extends TokenChooser
 		{
 			public @CHOICE static class RPG_I_Input_Data_Subfield_Init1 extends TokenSequence
@@ -149,9 +147,8 @@ public class RPG_I_Input_Specification extends TokenChooser
 
 			public @CHOICE static class RPG_I_Input_Data_Subfield_Position2 extends TokenSequence
 			{
-				public @S(10) RPG_KeywordChoice keyword = new RPG_KeywordChoice(44, 51,
-						"*STATUS", "*PROGRAM", "*PARMS", "*ROUTINE",
-						"*FILE", "*RECORD", "*OPCODE", "*STATUS");
+				public @S(10) RPG_KeywordChoice keyword = new RPG_KeywordChoice(44, 51, "*STATUS", "*PROGRAM", "*PARMS",
+						"*ROUTINE", "*FILE", "*RECORD", "*OPCODE", "*STATUS");
 			}
 		}
 	}

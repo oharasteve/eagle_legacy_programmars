@@ -22,11 +22,11 @@ public class CPlus_Program extends C_Program
 {
 	public static final String CPP = "Cpp";
 //	private static C_Expression _fakeExpr = null;
-	
+
 	public CPlus_Program()
 	{
 		super(CPP, new CPlus_Syntax());
-		
+
 //		// Can't easily have CPlus_Expression extend C_Expression. It's that old robot leg problem.
 //		if (_fakeExpr == null)
 //		{
@@ -35,13 +35,13 @@ public class CPlus_Program extends C_Program
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceGlobal.clas);
 //			fake.addOperator(CPlus_Expression.CPlus_NamespaceSub.class);
 //		}
-		
-		C_Program.addPrimitive("BOOL");		// Might be ObjectiveC only
-		
+
+		C_Program.addPrimitive("BOOL"); // Might be ObjectiveC only
+
 		TokenChooser.addChoice(C_StatementOrComment.class, CPlus_Extern.class);
 		TokenChooser.addChoice(C_StatementOrComment.class, CPlus_Constructor.class);
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -51,10 +51,11 @@ public class CPlus_Program extends C_Program
 	@Override
 	public void findLanguageOverrides(EagleOverrideManager overrider)
 	{
-		// overrider.override(C_Expression.class, CPlus_Expression.class); // Times out at 60 seconds. Why?
+		// overrider.override(C_Expression.class, CPlus_Expression.class); // Times out
+		// at 60 seconds. Why?
 		overrider.override(C_Literal.class, CPlus_Literal.class);
 	}
-	
+
 	// Step is 9 to avoid duplicate @S(10) in C_Program
 	public @S(9) @OPT TokenList<CPlus_Element> items;
 

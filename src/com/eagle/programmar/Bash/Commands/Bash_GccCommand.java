@@ -16,7 +16,7 @@ public class Bash_GccCommand extends TokenSequence
 	public @S(20) @OPT TokenList<Bash_GccOption> options1;
 	public @S(30) Bash_FilenameOrLiteral fileName;
 	public @S(40) @OPT TokenList<Bash_GccOption> options2;
-	
+
 	public static class Bash_GccOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice G = new Bash_KeywordChoice("-g", "-Wall");

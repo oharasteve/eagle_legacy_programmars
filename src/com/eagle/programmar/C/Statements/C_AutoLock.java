@@ -24,7 +24,7 @@ public class C_AutoLock extends TokenSequence
 	public @S(60) C_Expression expr;
 	public @S(70) PunctuationRightParen rightParen;
 	public @S(80) PunctuationSemicolon semicolon;
-	
+
 	public static class C_AutoLockMutex extends TokenSequence
 	{
 		public @S(10) C_Keyword MUTEX = new C_Keyword("Mutex");

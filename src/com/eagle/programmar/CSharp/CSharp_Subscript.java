@@ -15,7 +15,7 @@ public class CSharp_Subscript extends TokenSequence
 	public @S(20) @OPT @NOSPACE CSharp_Expression expr;
 	public @S(30) @OPT @NOSPACE TokenList<CSharp_MoreSubscripts> more;
 	public @S(40) @NOSPACE PunctuationRightBracket rightBracket;
-	
+
 	public static class CSharp_MoreSubscripts extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

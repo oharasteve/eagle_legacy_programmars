@@ -15,8 +15,7 @@ public class VB_OpenStatement extends TokenSequence
 	public @S(10) VB_Keyword OPEN = new VB_Keyword("open");
 	public @S(20) VB_Expression fileName;
 	public @S(30) VB_Keyword FOR = new VB_Keyword("for");
-	public @S(40) VB_KeywordChoice inputOutput = new VB_KeywordChoice(
-			"input", "output");
+	public @S(40) VB_KeywordChoice inputOutput = new VB_KeywordChoice("input", "output");
 	public @S(50) VB_Keyword AS = new VB_Keyword("as");
 	public @S(60) VB_Punctuation pound = new VB_Punctuation('#');
 	public @S(70) VB_Number channel;

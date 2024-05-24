@@ -40,16 +40,17 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 
 	public Go_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Go_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -60,7 +61,7 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Go_MethodInvocation methodInvocation;
 	public @P(110) Go_Constructor constructor;
 	public @P(120) Go_PreIncrementExpression preIncrementExpression;
@@ -77,7 +78,7 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	public @P(230) Go_EmptyArrayExpression emptyArrayExpression;
 	public @P(240) Go_StarExpression starExpression;
 	public @P(250) Go_AmpersandExpression ampersandExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

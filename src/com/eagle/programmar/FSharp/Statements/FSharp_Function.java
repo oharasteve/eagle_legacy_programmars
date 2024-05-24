@@ -23,12 +23,12 @@ public class FSharp_Function extends TokenSequence
 	public @S(10) @DOC("functions/") FSharp_Keyword LET = new FSharp_Keyword("let");
 	public @S(20) FSharp_Function_Definition func;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<FSharp_FunctionParam,PunctuationComma> params;
+	public @S(40) SeparatedList<FSharp_FunctionParam, PunctuationComma> params;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) PunctuationEquals equals;
 	public @S(70) FSharp_EndOfLine eoln;
 	public @S(80) TokenList<FSharp_Statement> statements;
-	
+
 	public static class FSharp_FunctionParam extends TokenSequence
 	{
 		public @S(10) FSharp_Variable_Definition var;

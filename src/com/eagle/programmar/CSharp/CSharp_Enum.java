@@ -33,26 +33,26 @@ public class CSharp_Enum extends TokenSequence implements EagleScopeInterface
 	public @S(110) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @S(120) PunctuationRightBrace rightBrace;
 	public @S(130) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class CSharp_Enum_Basetype extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) CSharp_Type type;
 	}
-	
+
 	public static class CSharp_MoreEnums extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) CSharp_Variable_Definition nextEnum;
 		public @S(30) @OPT CSharp_EnumInitializer initialize;
 	}
-	
+
 	public static class CSharp_EnumInitializer extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) CSharp_Expression expr;
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
 
 	@Override

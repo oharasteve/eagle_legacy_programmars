@@ -33,22 +33,22 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 
 	public @S(90) Eaglish_Keyword END_FOR = new Eaglish_Keyword("END_FOR");
 	public @S(100) Eaglish_EndOfLine eoln2;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
 		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
 		int start = interpreter.getIntValue(startValue);
 		int stop = interpreter.getIntValue(stopValue);
-		
+
 		if (_metrics == null)
 		{
-			_metrics =  new ForLoopMetrics(getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(getFileName(), getStartLine(), getStartChar());
 		}
 		ForLoopMetric metric = new ForLoopMetric();
-		
+
 		String which = TO.getValue();
 		switch (which)
 		{
@@ -57,8 +57,8 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 			{
 				// 100% identical to "DOWN_TO" below
 				metric.iterate();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-						var.getStartChar(), var.toString(), new IntegerValue(i));
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+						var.toString(), new IntegerValue(i));
 				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
 				if (result == Eagle_Statement_Result.BREAK)
 				{
@@ -76,8 +76,8 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 			{
 				// 100% identical to "TO" above
 				metric.iterate();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-						var.getStartChar(), var.toString(), new IntegerValue(i));
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+						var.toString(), new IntegerValue(i));
 				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
 				if (result == Eagle_Statement_Result.BREAK)
 				{
@@ -93,7 +93,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		default:
 			throw new RuntimeException("Unable to handle " + which);
 		}
-		
+
 		_metrics.competedLoop(metric);
 		return Eagle_Statement_Result.NORMAL;
 	}

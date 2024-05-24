@@ -34,7 +34,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public @S(60) @OPT C_Generic generic;
 	public @S(70) @OPT CPlus_ClassExtendList extendsClasses;
 	public @S(80) CPlus_ClassBody body;
-	
+
 	public static class CPlus_ClassModifier extends TokenSequence
 	{
 		public @S(10) C_KeywordChoice modifier = new C_KeywordChoice(C_Program.getModifiers());
@@ -44,7 +44,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public static class CPlus_ClassBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
-		
+
 		public @CHOICE static class CPlus_ClassBlockBody extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBrace leftBrace;
@@ -52,7 +52,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 			public @S(30) PunctuationRightBrace rightBrace;
 		}
 	}
-	
+
 	public static class CPlus_ClassElement extends TokenChooser
 	{
 		public @FIRST CPlus_Constructor constructor;
@@ -64,19 +64,19 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 		public @CHOICE CPlus_Using using;
 		public @CHOICE CPlus_Template template;
 		public @LAST C_StatementOrComment c_stmt;
-		
+
 		public @CHOICE static class CPlus_ClassPublicPrivate extends TokenSequence
 		{
 			public @S(10) C_KeywordChoice PUBLIC = new C_KeywordChoice("public", "private", "protected");
 			public @S(20) PunctuationColon colon;
 		}
 	}
-	
+
 	public static class CPlus_ClassExtendList extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
-		public @S(20) SeparatedList<CPlus_ClassExtends,PunctuationComma> extendsClasses;
-		
+		public @S(20) SeparatedList<CPlus_ClassExtends, PunctuationComma> extendsClasses;
+
 		public static class CPlus_ClassExtends extends TokenSequence
 		{
 			public @S(10) @OPT C_Keyword PUBLIC = new C_Keyword("public");
@@ -84,7 +84,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 			public @S(30) @OPT TokenList<CPlus_ExtendsNamespace> extendsNamespace;
 			public @S(40) C_Identifier_Reference otherClass;
 			public @S(50) @OPT C_Generic generic;
-			
+
 			public static class CPlus_ExtendsNamespace extends TokenSequence
 			{
 				public @S(10) C_Identifier_Reference otherNamespace;

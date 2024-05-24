@@ -35,19 +35,20 @@ import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 public class AWK_Expression extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
-	
+
 	public AWK_Expression()
 	{
 		super(_operators);
 	}
-	
+
 	public AWK_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
-	{ 
+	{
 		super(_operators, allowed, token.getClass());
 	}
-	
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -72,7 +73,7 @@ public class AWK_Expression extends PrecedenceChooser
 	public @P(210) AWK_NotExpression notExpression;
 	public @P(220) AWK_ParenthesizedExpression parenthesizedExpression;
 	public @P(230) AWK_DollarParensExpression dollarParensExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

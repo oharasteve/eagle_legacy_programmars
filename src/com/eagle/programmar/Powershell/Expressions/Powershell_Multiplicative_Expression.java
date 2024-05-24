@@ -24,20 +24,20 @@ public class Powershell_Multiplicative_Expression extends PrecedenceOperator imp
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			if (leftValue % rightValue == 0)
 			{
 				interpreter.pushInt(leftValue / rightValue);
 			}
 			else
 			{
-				interpreter.pushDouble((double)leftValue / rightValue);
+				interpreter.pushDouble((double) leftValue / rightValue);
 			}
 			return;
-		case "%" :
+		case "%":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		}

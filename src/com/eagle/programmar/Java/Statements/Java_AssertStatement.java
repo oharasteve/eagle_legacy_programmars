@@ -15,7 +15,7 @@ public class Java_AssertStatement extends TokenSequence
 	public @S(20) Java_Expression condition;
 	public @S(30) @OPT Java_AssertMessage message;
 	public @S(40) @NOSPACE PunctuationSemicolon semicolon;
-	
+
 	public static class Java_AssertMessage extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;

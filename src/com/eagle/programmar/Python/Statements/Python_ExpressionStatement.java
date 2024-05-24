@@ -16,13 +16,13 @@ public class Python_ExpressionStatement extends TokenSequence implements EagleRu
 	public @S(10) @NOSPACE Python_Expression expression;
 	public @S(20) @OPT Python_ExpressionType type;
 	public @S(30) @OPT Python_Comment comment;
-	
+
 	public static class Python_ExpressionType extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationColon colon;
 		public @S(20) Python_Type type;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

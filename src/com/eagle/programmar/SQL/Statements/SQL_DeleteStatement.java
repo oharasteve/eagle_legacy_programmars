@@ -16,7 +16,7 @@ public class SQL_DeleteStatement extends TokenSequence
 	public @S(30) SQL_Identifier_Reference table;
 	public @S(40) @OPT SQL_DeleteWhere where;
 	public @S(50) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_DeleteWhere extends TokenSequence
 	{
 		public @S(10) SQL_Keyword WHERE = new SQL_Keyword("WHERE");

@@ -12,7 +12,7 @@ public class TCL_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public TCL_KeywordChoice(String... words)
 	{
 		super(words);

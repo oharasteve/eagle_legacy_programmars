@@ -20,17 +20,17 @@ public class Ada_FunctionCall extends TokenSequence
 	public @S(10) Ada_Variable func;
 	public @S(20) @OPT Ada_FunctionArguments args;
 	public @S(30) PunctuationSemicolon semicolon;
-	
+
 	public static class Ada_FunctionArguments extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Ada_FunctionArg,PunctuationComma> arguments;
+		public @S(20) SeparatedList<Ada_FunctionArg, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 
 		public static class Ada_FunctionArg extends TokenChooser
 		{
 			public @CHOICE Ada_Expression expr;
-			
+
 			public @CHOICE static class Ada_FunctionSetArg extends TokenSequence
 			{
 				public @S(10) Ada_Identifier_Reference id;

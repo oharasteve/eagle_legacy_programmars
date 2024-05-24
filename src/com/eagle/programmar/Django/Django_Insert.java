@@ -23,7 +23,7 @@ public class Django_Insert extends TokenSequence
 	public @S(20) @OPT Django_PunctuationChoice plus = new Django_PunctuationChoice("+", "-", "/");
 	public @S(30) Django_InsertWhat what;
 	public @S(40) HTML_Punctuation endBraceBrace = new HTML_Punctuation("}}");
-	
+
 	public static class Django_InsertWhat extends TokenChooser
 	{
 		public @CHOICE static class Django_InsertSuper extends TokenSequence
@@ -45,12 +45,12 @@ public class Django_Insert extends TokenSequence
 			public @S(30) @OPT Django_OrWhat what;
 		}
 	}
-	
+
 	public static class Django_InsertDot extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;
 		public @S(20) Django_InsertDotWhat what;
-		
+
 		public static class Django_InsertDotWhat extends TokenChooser
 		{
 			public @CHOICE Django_Number number;
@@ -61,12 +61,7 @@ public class Django_Insert extends TokenSequence
 	public static class Django_OrWhat extends TokenSequence
 	{
 		public @S(10) Django_Punctuation verticalBar = new Django_Punctuation('|');
-		public @S(20) Django_KeywordChoice DATE = new Django_KeywordChoice(
-				"capfirst",
-				"date",
-				"escape",
-				"safe"
-		);
+		public @S(20) Django_KeywordChoice DATE = new Django_KeywordChoice("capfirst", "date", "escape", "safe");
 		public @S(30) @OPT PunctuationColon colon;
 		public @S(40) @OPT Django_Literal literal;
 	}

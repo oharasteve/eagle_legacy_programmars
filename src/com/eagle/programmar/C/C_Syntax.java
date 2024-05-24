@@ -13,22 +13,22 @@ public class C_Syntax extends EagleSyntax
 	{
 		return "C";
 	}
-	
+
 	public C_Syntax()
 	{
 		_isCaseSensitive = true;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
-		_commentInstance = new CMacro_Comment();    // Doesn't work at all
+		_commentInstance = new CMacro_Comment(); // Doesn't work at all
 		_punctuationExceptions = new String[] {
-				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->",
-				"++", "--", "::", "+=", "-=", "...", ">>", "<<"
+				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::", "+=", "-=", "...", ">>", "<<"
 		};
-		
+
 		addReservedWords(C_reservedWords);
 	}
-	
-	// From https://www.ibm.com/docs/en/developer-for-zos/14.2.0?topic=programs-c-reserved-keywords
+
+	// From
+	// https://www.ibm.com/docs/en/developer-for-zos/14.2.0?topic=programs-c-reserved-keywords
 	// Left off _Packed which looks IBM-specific
 	protected static String[] C_reservedWords = new String[] {
 			"auto",

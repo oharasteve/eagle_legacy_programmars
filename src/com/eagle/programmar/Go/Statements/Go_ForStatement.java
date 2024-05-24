@@ -19,7 +19,7 @@ public class Go_ForStatement extends TokenChooser
 	public @CHOICE static class Go_ForLoop extends TokenSequence
 	{
 		public @S(10) @DOC("#For_statements") Go_Keyword FOR = new Go_Keyword("for");
-		public @S(20) SeparatedList<Go_Variable,PunctuationComma> vars;
+		public @S(20) SeparatedList<Go_Variable, PunctuationComma> vars;
 		public @S(30) Go_Punctuation colonEquals = new Go_Punctuation(":=");
 		public @S(40) Go_Expression initValue;
 		public @S(50) PunctuationSemicolon semiColon1;
@@ -32,7 +32,7 @@ public class Go_ForStatement extends TokenChooser
 	public @CHOICE static class Go_ForRange extends TokenSequence
 	{
 		public @S(10) @DOC("#For_statements") Go_Keyword FOR = new Go_Keyword("for");
-		public @S(20) SeparatedList<Go_Variable,PunctuationComma> vars;
+		public @S(20) SeparatedList<Go_Variable, PunctuationComma> vars;
 		public @S(30) Go_Punctuation colonEquals = new Go_Punctuation(":=");
 		public @S(40) Go_Keyword RANGE = new Go_Keyword("range");
 		public @S(50) Go_Variable variable;

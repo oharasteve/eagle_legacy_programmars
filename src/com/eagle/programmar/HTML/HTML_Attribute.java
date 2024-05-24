@@ -22,18 +22,18 @@ public class HTML_Attribute extends TokenSequence
 {
 	public @S(10) HTML_IdentifierOrKeyword attribute;
 	public @S(20) @OPT HTML_AttributeValue val;
-	
+
 	public static class HTML_AttributeValue extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationEquals equals;
 		public @S(20) @NOSPACE HTML_Value value;
 	}
-	
+
 	public static class HTML_IdentifierOrKeyword extends TokenChooser
 	{
 		public @CHOICE HTML_Identifier attribute;
 		public @CHOICE HTML_Keyword style = new HTML_Keyword("style");
-		
+
 		public @CHOICE static class HTML_Namespace extends TokenSequence
 		{
 			public @S(10) HTML_Identifier id1;
@@ -41,31 +41,31 @@ public class HTML_Attribute extends TokenSequence
 			public @S(30) HTML_Identifier id2;
 		}
 	}
-	
+
 	public static class HTML_Value extends TokenChooser
 	{
 		public @FIRST HTML_HexNumber hex;
 		public @FIRST HTML_Number number;
 		public @FIRST HTML_Literal literal;
-		
+
 		public @CHOICE static class HTML_Id_Value extends TokenSequence
 		{
-			public @S(10) SeparatedList<HTML_Identifier,PunctuationComma> id;
+			public @S(10) SeparatedList<HTML_Identifier, PunctuationComma> id;
 			public @S(20) @OPT HTML_Id_DotValue dotValue;
-			
+
 			public static class HTML_Id_DotValue extends TokenSequence
 			{
 				public @S(10) HTML_PunctuationChoice dotOrColon = new HTML_PunctuationChoice(".", ":");
 				public @S(20) HTML_Identifier id;
 			}
 		}
-		
+
 		public @CHOICE static class HTML_Label extends TokenSequence
 		{
 			public @S(10) HTML_Punctuation poundSign = new HTML_Punctuation('#');
 			public @S(20) HTML_Identifier label;
 		}
-		
+
 		public @CHOICE static class HTML_Strange_Number extends TokenSequence
 		{
 			public @S(10) HTML_Punctuation plus = new HTML_Punctuation('+');

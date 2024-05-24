@@ -30,16 +30,17 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 
 	public Fortran_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Fortran_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -50,7 +51,7 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Fortran_NegativeExpression negativeExpression;
 	public @P(110) Fortran_FunctionCall functionCall;
 	public @P(120) Fortran_Subscript subscript;

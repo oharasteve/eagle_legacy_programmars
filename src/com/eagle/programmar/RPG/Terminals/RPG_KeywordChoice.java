@@ -10,13 +10,13 @@ import com.eagle.tokens.terminals.TerminalKeywordChoice;
 public class RPG_KeywordChoice extends TerminalKeywordChoice
 {
 	private int fixedSc, fixedEc;
-	
+
 	// Need default constructor for reading from the XML file
 	public RPG_KeywordChoice()
 	{
 		this(0, 0, new String[0]);
 	}
-	
+
 	public RPG_KeywordChoice(int sc, int ec, String... words)
 	{
 		super(words);
@@ -29,7 +29,7 @@ public class RPG_KeywordChoice extends TerminalKeywordChoice
 	{
 		EagleLineReader rec = lines.get(_currentLine);
 		_endChar = rec.length();
-		if (_endChar < fixedSc || fixedSc < 0) return false;	// Too short
+		if (_endChar < fixedSc || fixedSc < 0) return false; // Too short
 		if (_endChar > fixedEc) _endChar = fixedEc;
 		String piece = rec.substring(fixedSc, _endChar).trim();
 		for (int i = 0; i < _words.length; i++)

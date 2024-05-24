@@ -21,7 +21,7 @@ public class Python_SubscriptExpression extends PrecedenceOperator
 	public @S(40) @SYNTAX(Python_Multiline_Syntax.class) Python_SubscrExpr subscr;
 	public @S(50) PunctuationRightBracket rightBracket;
 	public @S(60) @OPT Python_Parameter_List moreArguments;
-	
+
 	public static class Python_SubscrExpr extends TokenSequence
 	{
 		public @S(10) @OPT Python_Expression subscr;

@@ -11,12 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Scala_Type extends TokenChooser
 {
-	public @CHOICE Scala_KeywordChoice type = new Scala_KeywordChoice(
-			"bool",
-			"Boolean",
-			"int",
-			"string");
-	
+	public @CHOICE Scala_KeywordChoice type = new Scala_KeywordChoice("bool", "Boolean", "int", "string");
+
 	public static @CHOICE class Scala_TypeArray extends TokenSequence
 	{
 		public @S(10) Scala_KeywordChoice LIST = new Scala_KeywordChoice("Array", "List");

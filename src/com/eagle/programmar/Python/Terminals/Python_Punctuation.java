@@ -17,7 +17,7 @@ public class Python_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	public Python_Punctuation(String punct)
 	{
 		super(punct);

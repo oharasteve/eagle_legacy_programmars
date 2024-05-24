@@ -14,7 +14,7 @@ public class Fortran_EqualityExpression extends PrecedenceOperator
 	public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Fortran_EqOper oper;
 	public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Fortran_EqOper extends TokenChooser
 	{
 		public @CHOICE Fortran_KeywordChoice EQ = new Fortran_KeywordChoice(".EQ.", ".NE.");

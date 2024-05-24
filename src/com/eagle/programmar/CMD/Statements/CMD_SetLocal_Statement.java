@@ -10,6 +10,5 @@ import com.eagle.tokens.TokenSequence;
 public class CMD_SetLocal_Statement extends TokenSequence
 {
 	public @S(10) @DOC("setlocal.mspx") CMD_Keyword SETLOCAL = new CMD_Keyword("setlocal");
-	public @S(20) @OPT CMD_KeywordChoice setWhat = new CMD_KeywordChoice(
-			"ENABLEEXTENSIONS", "ENABLEDELAYEDEXPANSION");
+	public @S(20) @OPT CMD_KeywordChoice setWhat = new CMD_KeywordChoice("ENABLEEXTENSIONS", "ENABLEDELAYEDEXPANSION");
 }

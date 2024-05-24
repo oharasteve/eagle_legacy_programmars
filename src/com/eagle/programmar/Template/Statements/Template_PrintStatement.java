@@ -16,7 +16,7 @@ public class Template_PrintStatement extends TokenSequence implements EagleRunna
 	public @S(10) Template_Keyword PRINT = new Template_Keyword("print");
 	public @S(20) Template_Expression expr;
 	public @S(30) PunctuationSemicolon semicolon;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

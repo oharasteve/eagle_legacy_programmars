@@ -8,9 +8,5 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class SQL_Builtin extends PrimaryOperator
 {
-	public @S(10) SQL_KeywordChoice SYSTIMESTAMP = new SQL_KeywordChoice(
-			"FALSE",
-			"NULL",
-			"SYSTIMESTAMP",
-			"TRUE");
+	public @S(10) SQL_KeywordChoice SYSTIMESTAMP = new SQL_KeywordChoice("FALSE", "NULL", "SYSTIMESTAMP", "TRUE");
 }

@@ -15,7 +15,7 @@ public class Bash_LispCommand extends TokenSequence
 	public @S(10) Bash_Keyword LISP = new Bash_Keyword("clisp");
 	public @S(20) @OPT TokenList<Bash_LispOption> options;
 	public @S(30) @OPT Bash_FilenameOrLiteral fileName;
-	
+
 	public static class Bash_LispOption extends TokenChooser
 	{
 		public @CHOICE Bash_Keyword Q = new Bash_Keyword("-q");

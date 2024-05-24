@@ -30,10 +30,10 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Rust_PrintlnStatement printlnStatement;
 	public @CHOICE Rust_ReturnStatement returnStatement;
 	public @CHOICE Rust_Use useStatement;
-	
+
 	public @LAST Rust_AssignmentStatement assignmentStatement;
 	public @LAST Rust_FunctionCall functionCall;
-	
+
 	public static @CHOICE class Rust_Block_Statement extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;

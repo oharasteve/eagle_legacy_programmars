@@ -14,7 +14,7 @@ public class CMD_Goto_Statement extends TokenSequence
 	public @S(10) @DOC("goto.mspx") CMD_Keyword GOTO = new CMD_Keyword("goto");
 	public @S(20) @OPT PunctuationColon colon;
 	public @S(30) CMD_Goto_What gotoWhat;
-	
+
 	public static class CMD_Goto_What extends TokenChooser
 	{
 		public @CHOICE CMD_Identifier_Reference label;

@@ -27,14 +27,14 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 	public @S(20) @OPT COBOL_PerformTestWhen testWhen;
 	public @S(30) @OPT COBOL_PerformWhat what;
 	public @S(40) @OPT COBOL_Keyword ENDPERFORM = new COBOL_Keyword("END-PERFORM");
-	
+
 	public static class COBOL_PerformTestWhen extends TokenSequence
 	{
 		public @S(10) @OPT COBOL_Keyword WITH = new COBOL_Keyword("WITH");
 		public @S(20) COBOL_Keyword TEST = new COBOL_Keyword("TEST");
 		public @S(30) COBOL_KeywordChoice when = new COBOL_KeywordChoice("BEFORE", "AFTER");
 	}
-	
+
 	public static class COBOL_Paragraph_or_Section_Thru extends TokenSequence
 	{
 		public @S(10) COBOL_KeywordChoice THRU = new COBOL_KeywordChoice("THRU", "THROUGH");
@@ -52,18 +52,18 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 	public static class COBOL_PerformWhat extends TokenChooser
 	{
 		public @CHOICE COBOL_PerformParagraph performParagraph;
-		
+
 		public @CHOICE static class COBOL_PerformNothing extends TokenSequence
 		{
 			public @S(10) TokenList<COBOL_PerformClause> clauseList;
 		}
-		
+
 		public @CHOICE static class COBOL_PerformInline extends TokenSequence
 		{
 			public @S(10) @OPT TokenList<COBOL_PerformClause> clauseList;
 			public @S(20) TokenList<COBOL_StatementOrComment> statements;
 		}
-		
+
 		public @FIRST static class COBOL_PerformTimes extends TokenSequence
 		{
 			public @S(10) COBOL_Identifier_Reference performStartParagraph;
@@ -71,7 +71,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 			public @S(30) COBOL_Expression times;
 			public @S(40) COBOL_Keyword TIMES = new COBOL_Keyword("TIMES");
 		}
-		
+
 		public @CHOICE static class COBOL_PerformTimesInline extends TokenSequence
 		{
 			public @S(10) COBOL_Number times;
@@ -79,7 +79,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 			public @S(30) TokenList<COBOL_StatementOrComment> statements;
 		}
 	}
-	
+
 	public static class COBOL_PerformClause extends TokenChooser
 	{
 		public @CHOICE static class COBOL_PerformVarying extends TokenSequence
@@ -92,22 +92,22 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 			public @S(60) COBOL_Expression by;
 			public @S(70) @OPT COBOL_PerformUntil until;
 		}
-		
+
 		public @CHOICE static class COBOL_PerformUntil extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword UNTIL = new COBOL_Keyword("UNTIL");
 			public @S(20) COBOL_Expression condition;
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interp)
 	{
 		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
-		
+
 		if (testWhen.isPresent()) throw new RuntimeException("Can't handle PERFORM TEST yet");
 		AbstractToken which = what.getWhich();
-		if (! (which instanceof COBOL_PerformParagraph))
+		if (!(which instanceof COBOL_PerformParagraph))
 		{
 			throw new RuntimeException("Can only handle simple PERFORMs right now");
 		}
@@ -116,10 +116,10 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		{
 			throw new RuntimeException("Can only PERFORM one paragraph right now");
 		}
-		
+
 		String startPara = para.performStartParagraph.getValue();
 		if (interpreter._TRACE) System.err.println("*** Calling " + startPara);
-		
+
 		// Have to search for the PARAGRAPH definition
 		COBOL_Paragraph paragraph = null;
 		if (interpreter._paragraphs.containsKey(startPara))
@@ -127,12 +127,12 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 			// Found it!
 			paragraph = interpreter._paragraphs.get(startPara);
 		}
-		
+
 		if (paragraph == null)
 		{
 			throw new RuntimeException("Unable to find a Paragraph named " + startPara);
 		}
-		
+
 		// Evaluate the paragraph
 		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
 		{

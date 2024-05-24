@@ -9,12 +9,12 @@ import com.eagle.programmar.Gupta.Declarations.Gupta_Application;
 public class Gupta_Program extends EagleLanguage
 {
 	public static final String GUPTA = "Gupta";
-	
+
 	public Gupta_Program()
 	{
 		super(GUPTA, new Gupta_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{

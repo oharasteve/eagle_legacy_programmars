@@ -16,6 +16,6 @@ public class Go_MethodInvocation extends PrimaryOperator
 {
 	public @S(10) Go_Variable methodName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT @SYNTAX(Go_Multiline_Syntax.class) SeparatedList<Go_Expression,PunctuationComma> argList;
+	public @S(30) @OPT @SYNTAX(Go_Multiline_Syntax.class) SeparatedList<Go_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 }

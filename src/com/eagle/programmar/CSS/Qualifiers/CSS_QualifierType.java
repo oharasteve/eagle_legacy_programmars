@@ -16,25 +16,11 @@ public class CSS_QualifierType extends TokenSequence
 	public @S(20) PunctuationEquals equals;
 	public @S(30) CSS_QualifierWhichType which;
 	public @S(40) @OPT @CURIOUS("What does this mean>") CSS_Keyword I = new CSS_Keyword("i");
-	
+
 	public static class CSS_QualifierWhichType extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice value = new CSS_KeywordChoice(
-				"button",
-				"checkbox",
-				"date",
-				"datetime-local",
-				"email",
-				"file",
-				"month",
-				"number",
-				"password",
-				"radio",
-				"range",
-				"reset",
-				"search",
-				"submit",
-				"time",
+		public @CHOICE CSS_KeywordChoice value = new CSS_KeywordChoice("button", "checkbox", "date", "datetime-local",
+				"email", "file", "month", "number", "password", "radio", "range", "reset", "search", "submit", "time",
 				"text");
 		public @CHOICE CSS_Literal literal;
 	}

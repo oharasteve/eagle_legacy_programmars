@@ -41,12 +41,12 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 	public @S(110) @OUTDENT PunctuationRightBrace rightBrace;
 	public @S(120) @OPT @NEWLINE TokenList<Java_Comment> comments3;
 	public @S(130) @CURIOUS("Extra semicolon") @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Java_ClassModifierList extends TokenSequence
 	{
 		public @S(10) TokenList<Java_ClassModifier> modifiers;
 	}
-	
+
 	public static class Java_ClassModifier extends TokenChooser
 	{
 		public @FIRST @NEWLINE Java_Comment comment;
@@ -57,48 +57,48 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 	public static class Java_ClassExtends extends TokenSequence
 	{
 		public @S(10) Java_Keyword EXTENDS = new Java_Keyword("extends");
-		public @S(20) SeparatedList<Java_Identifier_Reference,PunctuationPeriod> classNames;
+		public @S(20) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> classNames;
 		public @S(30) @OPT Java_GenericType genericType;
 		public @S(40) @OPT TokenList<Java_MoreExtends> moreExtend;
-		
+
 		public static class Java_MoreExtends extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
-			public @S(20) SeparatedList<Java_Identifier_Reference,PunctuationPeriod> classNames;
+			public @S(20) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> classNames;
 			public @S(30) @OPT Java_GenericType genericType;
 		}
 	}
-	
+
 	public static class Java_ClassImplements extends TokenSequence
 	{
 		public @S(10) Java_Keyword IMPLEMENTS = new Java_Keyword("implements");
-		public @S(20) SeparatedList<Java_Identifier_Reference,PunctuationPeriod> classNames;
+		public @S(20) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> classNames;
 		public @S(30) @OPT Java_GenericType genericType;
 		public @S(40) @OPT TokenList<Java_MoreImplements> moreImpl;
-		
+
 		public static class Java_MoreImplements extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) @OPT Java_Comment comment;
-			public @S(30) SeparatedList<Java_Identifier_Reference,PunctuationPeriod> classNames;
+			public @S(30) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> classNames;
 			public @S(40) @OPT Java_GenericType genericType;
 		}
 	}
-	
+
 	public static class Java_ClassElement extends TokenChooser
 	{
 		public @FIRST @NEWLINE Java_Comment comment;
 		public @CHOICE @NEWLINE Java_Method jmethod;
 		public @FIRST @NEWLINE Java_Constructor constructor;
 		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon;
-		
+
 		public @CHOICE static class Java_StaticStatement extends TokenSequence implements EagleRunnable
 		{
 			public @S(10) @OPT Java_Keyword PRIVATE = new Java_Keyword("private");
 			public @S(20) @OPT Java_Annotation annotation;
 			public @S(30) @OPT Java_Keyword STATIC = new Java_Keyword("static");
 			public @S(40) Java_Statement statement;
-			
+
 			@Override
 			public void interpret(EagleInterpreter interpreter)
 			{
@@ -106,7 +106,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 			}
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -115,15 +115,15 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 			interpreter.tryToInterpret(element.getWhich());
 		}
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-	
+
 	@Override
 	public EagleScope getScope()
 	{
 		return _scope;
 	}
-	
+
 //	@Override
 //	public void setScope(EagleScope scope)
 //	{

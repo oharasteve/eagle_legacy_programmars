@@ -14,7 +14,7 @@ public class Template_AndExpression extends PrecedenceOperator implements EagleR
 	public @S(10) Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Template_Keyword AND = new Template_Keyword("and");
 	public @S(30) Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

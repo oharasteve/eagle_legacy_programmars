@@ -12,24 +12,12 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSS_Color extends TokenChooser
 {
-	public @CHOICE CSS_KeywordChoice color = new CSS_KeywordChoice(
-			"black",
-			"blue",
-			"green",
-			"red",
-			"white"
-	);
+	public @CHOICE CSS_KeywordChoice color = new CSS_KeywordChoice("black", "blue", "green", "red", "white");
 
 	public @CHOICE static class CSS_QualifiedColor extends TokenSequence
 	{
-		public @S(10) @OPT CSS_KeywordChoice qualifyColor = new CSS_KeywordChoice(
-				"dark",
-				"light"
-		);
-		public @S(20) CSS_KeywordChoice baseColor = new CSS_KeywordChoice(
-				"gray",
-				"grey"
-		);
+		public @S(10) @OPT CSS_KeywordChoice qualifyColor = new CSS_KeywordChoice("dark", "light");
+		public @S(20) CSS_KeywordChoice baseColor = new CSS_KeywordChoice("gray", "grey");
 	}
 
 	public @CHOICE static class CSS_RGB_Value extends TokenSequence
@@ -43,7 +31,7 @@ public class CSS_Color extends TokenChooser
 		public @S(70) CSS_Number blue;
 		public @S(80) PunctuationRightParen rightParen;
 	}
-	
+
 	public @CHOICE static class CSS_RGBA_Value extends TokenSequence
 	{
 		public @S(10) CSS_Keyword RGBA = new CSS_Keyword("rgba");
@@ -58,7 +46,7 @@ public class CSS_Color extends TokenChooser
 		public @S(100) PunctuationRightParen rightParen;
 		public @S(110) @OPT CSS_NumericValue percentage;
 	}
-	
+
 	public @CHOICE static class CSS_HSL_Value extends TokenSequence
 	{
 		public @S(10) CSS_Keyword HSL = new CSS_Keyword("hsl");
@@ -72,7 +60,7 @@ public class CSS_Color extends TokenChooser
 		public @S(90) @OPT CSS_Punctuation pct2 = new CSS_Punctuation('%');
 		public @S(100) PunctuationRightParen rightParen;
 	}
-	
+
 	public @CHOICE static class CSS_Transparent extends TokenSequence
 	{
 		public @S(10) CSS_Keyword TRANSPARENT = new CSS_Keyword("transparent");

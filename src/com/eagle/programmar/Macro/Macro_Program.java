@@ -8,17 +8,17 @@ import com.eagle.core.EagleLanguage;
 public class Macro_Program extends EagleLanguage
 {
 	public static final String MACRO = "Macro";
-	
+
 	public Macro_Program()
 	{
 		super(MACRO, new Macro_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "TBD";
 	}
-	
+
 	// Add body
 }

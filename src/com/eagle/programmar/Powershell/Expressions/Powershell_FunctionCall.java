@@ -22,7 +22,7 @@ public class Powershell_FunctionCall extends PrimaryOperator
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT Powershell_ExpressionList arguments;
 	public @S(60) PunctuationRightParen rightParen;
-	
+
 	public static class Powershell_DiscardResult extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

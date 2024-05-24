@@ -15,6 +15,6 @@ public class Fortran_Subscript extends PrimaryOperator
 {
 	public @S(10) Fortran_Identifier_Reference variable;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Fortran_Expression,PunctuationColon> args;
+	public @S(30) SeparatedList<Fortran_Expression, PunctuationColon> args;
 	public @S(40) PunctuationRightParen rightParen;
 }

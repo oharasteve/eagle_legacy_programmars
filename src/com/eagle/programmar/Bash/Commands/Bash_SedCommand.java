@@ -18,7 +18,7 @@ public class Bash_SedCommand extends TokenSequence
 	public @S(20) @OPT TokenList<Bash_SedOption> options;
 	public @S(30) @OPT Bash_Literal commands;
 	public @S(40) @OPT Bash_FilenameOrLiteral filename;
-	
+
 	public static class Bash_SedOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice E = new Bash_KeywordChoice("-E", "-e", "-i", "-r");

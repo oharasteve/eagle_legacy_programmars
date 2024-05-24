@@ -13,7 +13,7 @@ public class Eaglish_NegativeExpression extends PrimaryOperator implements Eagle
 {
 	public @S(10) Eaglish_PunctuationChoice operator = new Eaglish_PunctuationChoice("-", "+");
 	public @S(20) Eaglish_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -21,14 +21,14 @@ public class Eaglish_NegativeExpression extends PrimaryOperator implements Eagle
 		String oper = operator.getValue();
 		switch (oper)
 		{
-		case "-" :
+		case "-":
 			interpreter.pushInt(-value);
 			return;
-		case "+" :
+		case "+":
 			interpreter.pushInt(value);
 			return;
 		default:
-			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_NegativeExpression");	
+			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_NegativeExpression");
 		}
 	}
 }

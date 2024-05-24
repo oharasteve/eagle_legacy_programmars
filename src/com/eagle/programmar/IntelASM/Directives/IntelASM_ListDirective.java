@@ -10,8 +10,5 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 public class IntelASM_ListDirective extends TokenSequence
 {
 	public @S(10) PunctuationPeriod dot;
-	public @S(20) IntelASM_KeywordChoice directive = new IntelASM_KeywordChoice(
-			"list",
-			"xlist"
-	);
+	public @S(20) IntelASM_KeywordChoice directive = new IntelASM_KeywordChoice("list", "xlist");
 }

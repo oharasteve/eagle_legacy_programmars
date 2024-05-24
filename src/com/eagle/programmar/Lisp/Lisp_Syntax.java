@@ -13,27 +13,18 @@ public class Lisp_Syntax extends EagleSyntax
 	{
 		return "Lisp";
 	}
-	
+
 	public Lisp_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new Lisp_Comment();
-		
+
 		addReservedWords(keywords);
 	}
 
 	private String[] keywords = new String[] {
-			"char",
-			"defmacro",
-			"defparameter",
-			"defun",
-			"if",
-			"do",
-			"let",
-			"nil",
-			"prog",
-			"string"
+			"char", "defmacro", "defparameter", "defun", "if", "do", "let", "nil", "prog", "string"
 	};
 }

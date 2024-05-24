@@ -21,7 +21,7 @@ public class COBOL_InvokeStatement extends COBOL_AbstractStatement
 	public @S(30) COBOL_Literal entryPoint;
 	public @S(40) @OPT COBOL_InvokeUsing using;
 	public @S(50) @OPT COBOL_InvokeReturning returning;
-	
+
 	public static class COBOL_InvokeUsing extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword USING = new COBOL_Keyword("USING");
@@ -29,13 +29,13 @@ public class COBOL_InvokeStatement extends COBOL_AbstractStatement
 		public @S(30) COBOL_Expression expr;
 		public @S(40) @OPT COBOL_InvokeSize size;
 		public @S(50) @OPT TokenList<COBOL_InvokeMoreUsing> more;
-		
+
 		public static class COBOL_InvokeSize extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
 			public @S(20) COBOL_Number size;
 		}
-		
+
 		public static class COBOL_InvokeMoreUsing extends TokenSequence
 		{
 			public @S(10) @OPT PunctuationComma comma;
@@ -43,15 +43,14 @@ public class COBOL_InvokeStatement extends COBOL_AbstractStatement
 			public @S(30) COBOL_Expression expr;
 			public @S(40) @OPT COBOL_InvokeSize size;
 		}
-		
+
 		public static class COBOL_InvokeBy extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword BY = new COBOL_Keyword("BY");
-			public @S(20) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice(
-					"CONTENT", "REFERENCE", "VALUE");
+			public @S(20) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice("CONTENT", "REFERENCE", "VALUE");
 		}
 	}
-	
+
 	public static class COBOL_InvokeReturning extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword RETURNING = new COBOL_Keyword("RETURNING");

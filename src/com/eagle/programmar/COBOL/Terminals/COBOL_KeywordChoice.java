@@ -12,7 +12,7 @@ public class COBOL_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public COBOL_KeywordChoice(String... words)
 	{
 		super(words);

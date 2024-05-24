@@ -19,7 +19,7 @@ public class AWK_WhileStatement extends TokenSequence
 	public @S(30) AWK_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) AWK_WhileBlock block;
-	
+
 	public static class AWK_WhileBlock extends TokenChooser
 	{
 		public @CHOICE AWK_Statement stmt;

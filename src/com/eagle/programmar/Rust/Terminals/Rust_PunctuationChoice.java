@@ -12,7 +12,7 @@ public class Rust_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Rust_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

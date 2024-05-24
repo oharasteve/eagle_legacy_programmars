@@ -13,6 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Julia_BracketsExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) SeparatedList<Julia_Expression,PunctuationComma> expression;
+	public @S(20) SeparatedList<Julia_Expression, PunctuationComma> expression;
 	public @S(30) PunctuationRightBracket rightBracket;
 }

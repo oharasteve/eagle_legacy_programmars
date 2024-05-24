@@ -18,7 +18,7 @@ public class IntelASM_Directive extends TokenSequence
 {
 	public @S(10) IntelASM_DirectiveList directive;
 	public @S(20) IntelASM_EndOfLine eoln;
-	
+
 	public static class IntelASM_DirectiveList extends TokenChooser
 	{
 		public @CHOICE IntelASM_CpuDirective cpuDirective;

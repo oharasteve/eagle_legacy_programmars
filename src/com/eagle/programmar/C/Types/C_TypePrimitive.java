@@ -17,7 +17,7 @@ public class C_TypePrimitive extends TokenSequence
 	public @S(30) C_KeywordChoice primitive = new C_KeywordChoice(C_Program.getPrimitives());
 	public @S(40) @OPT C_Keyword INT = new C_Keyword("int");
 	public @S(50) @OPT TokenList<C_TypeStar> stars;
-	
+
 	public static class C_TypeStar extends TokenSequence
 	{
 		public @S(10) C_PunctuationChoice starAmpersand = new C_PunctuationChoice("*", "&&", "&");

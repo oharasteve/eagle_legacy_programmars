@@ -15,7 +15,7 @@ public class Perl_ArgumentList extends TokenSequence
 	public @S(30) @OPT TokenList<Perl_MoreArguments> moreArgs;
 	public @S(40) @OPT PunctuationComma comma;
 	public @S(50) @OPT TokenList<Perl_Comment> comments2;
-	
+
 	public static class Perl_MoreArguments extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

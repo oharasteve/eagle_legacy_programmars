@@ -7,7 +7,7 @@ import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class COBOL_ExponentExpression  extends PrecedenceOperator
+public class COBOL_ExponentExpression extends PrecedenceOperator
 {
 	public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) COBOL_Punctuation starStar = new COBOL_Punctuation("**");

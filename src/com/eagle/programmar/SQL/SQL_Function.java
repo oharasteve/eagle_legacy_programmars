@@ -21,20 +21,20 @@ public class SQL_Function extends TokenSequence
 {
 	public @S(10) SQL_FunctionName funcName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<SQL_FunctionParam,PunctuationComma> params;
+	public @S(30) @OPT SeparatedList<SQL_FunctionParam, PunctuationComma> params;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_FunctionParam extends TokenChooser
 	{
 		public @CHOICE SQL_Expression arg;
-		
+
 		public @CHOICE static class SQL_FunctionColonParam extends TokenSequence
 		{
 			public @S(10) PunctuationColon colon;
 			public @S(20) SQL_Expression arg;
 		}
-		
+
 		public @FIRST static class SQL_FunctionNamedParam extends TokenSequence
 		{
 			public @S(10) SQL_Identifier_Reference parameterName;
@@ -42,38 +42,28 @@ public class SQL_Function extends TokenSequence
 			public @S(30) SQL_Expression arg;
 		}
 	}
-	
+
 	public static class SQL_FunctionName extends TokenChooser
 	{
 		public @LAST SQL_Variable var;
-		
-		public @FIRST SQL_KeywordChoice fnName = new SQL_KeywordChoice(
-				"COALESCE",
-				"CONCAT",
-				"COUNT",
-				"CURRENT_TIMESTAMP",
-				"LENGTH",
-				"MIN",
-				"RUN_METRIC",
-				"SUBSTRING",
-				"SYS_EXTRACT_UTC",
-				"SYS_GUID"
-		);
-		
+
+		public @FIRST SQL_KeywordChoice fnName = new SQL_KeywordChoice("COALESCE", "CONCAT", "COUNT",
+				"CURRENT_TIMESTAMP", "LENGTH", "MIN", "RUN_METRIC", "SUBSTRING", "SYS_EXTRACT_UTC", "SYS_GUID");
+
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence
 		{
 			public @S(10) SQL_Keyword DBMSSCHEDULER = new SQL_Keyword("DBMS_SCHEDULER");
 			public @S(20) PunctuationPeriod dot;
 			public @S(30) SQL_KeywordChoice DROPJOB = new SQL_KeywordChoice("CREATE_JOB", "DROP_JOB");
 		}
-		
+
 		public @CHOICE static class SQL_FunctionLOB extends TokenSequence
 		{
 			public @S(10) SQL_Keyword DBMSLOB = new SQL_Keyword("DBMS_LOB");
 			public @S(20) PunctuationPeriod dot;
 			public @S(30) SQL_Keyword GETLENGTH = new SQL_Keyword("GETLENGTH");
 		}
-		
+
 		public @CHOICE static class SQL_FunctionJOB extends TokenSequence
 		{
 			public @S(10) SQL_Keyword DBMSJOB = new SQL_Keyword("DBMS_JOB");

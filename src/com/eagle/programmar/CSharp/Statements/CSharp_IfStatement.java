@@ -21,7 +21,7 @@ public class CSharp_IfStatement extends TokenSequence
 	public @S(50) @OPT TokenList<CSharp_Comment> comments1;
 	public @S(60) CSharp_Statement thenStatement;
 	public @S(70) @OPT CSharp_IfElseClause elseClause;
-	
+
 	public static class CSharp_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<CSharp_Comment> comments2;

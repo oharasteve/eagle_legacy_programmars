@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Powershell_IsExpression extends PrecedenceOperator
 {
 	public @S(10) Powershell_Expression expr = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Powershell_Keyword IS = new Powershell_Keyword("-is"); 
+	public @S(20) Powershell_Keyword IS = new Powershell_Keyword("-is");
 	public @S(30) PunctuationLeftBracket leftBracket;
 	public @S(40) Powershell_Type type;
 	public @S(50) PunctuationRightBracket rightBracket;

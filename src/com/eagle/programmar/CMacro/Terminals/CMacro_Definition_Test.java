@@ -20,12 +20,12 @@ public class CMacro_Definition_Test extends TestCase
 		lines.add(" int b;", "none", 2);
 		lines.setCurrentLine(1);
 		lines.setCurrentChar(12);
-		
+
 		CMacro_Definition definition = new CMacro_Definition();
 		assertTrue(definition.parse(lines));
 		assertEquals("alphabet", definition.getValue());
 	}
-	
+
 	@Test
 	public void testTwoLines()
 	{
@@ -36,7 +36,7 @@ public class CMacro_Definition_Test extends TestCase
 		lines.add(" int b;", "none", 3);
 		lines.setCurrentLine(1);
 		lines.setCurrentChar(12);
-		
+
 		CMacro_Definition definition = new CMacro_Definition();
 		assertTrue(definition.parse(lines));
 		assertEquals("alphabet \\\n soup", definition.getValue());
@@ -45,7 +45,7 @@ public class CMacro_Definition_Test extends TestCase
 		assertEquals(2, definition.getEndLine());
 		assertEquals(6, definition.getEndChar());
 	}
-	
+
 	@Test
 	public void testThreeLines()
 	{
@@ -56,7 +56,7 @@ public class CMacro_Definition_Test extends TestCase
 		lines.add(" gamma \\", "none", 3);
 		lines.setCurrentLine(1);
 		lines.setCurrentChar(12);
-		
+
 		CMacro_Definition definition = new CMacro_Definition();
 		assertTrue(definition.parse(lines));
 		assertEquals("alpha \\\nbeta \\\n gamma \\\n", definition.getValue());

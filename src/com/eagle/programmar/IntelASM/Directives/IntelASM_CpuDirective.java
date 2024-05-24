@@ -12,16 +12,10 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class IntelASM_CpuDirective extends TokenSequence
 {
 	public @S(10) IntelASM_Keyword CPU = new IntelASM_Keyword("cpu");
-	public @S(20) SeparatedList<IntelASM_CPUValue,PunctuationComma> values;
-	
+	public @S(20) SeparatedList<IntelASM_CPUValue, PunctuationComma> values;
+
 	public static class IntelASM_CPUValue extends TokenSequence
 	{
-		public @S(10) IntelASM_KeywordChoice cpu = new IntelASM_KeywordChoice(
-				"MMX",
-				"SSE",
-				"SSE2",
-				"SSE3",
-				"SSSE3"
-		);
+		public @S(10) IntelASM_KeywordChoice cpu = new IntelASM_KeywordChoice("MMX", "SSE", "SSE2", "SSE3", "SSSE3");
 	}
 }

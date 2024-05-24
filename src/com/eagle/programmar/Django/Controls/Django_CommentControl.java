@@ -14,7 +14,7 @@ public class Django_CommentControl extends TokenSequence
 	public @S(10) Django_Keyword COMMENT = new Django_Keyword("comment");
 	public @S(20) @OPT PunctuationHyphen dash2;
 	public @S(30) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
-	
+
 	public @S(40) Django_CommentUntilBrace comment;
 
 	public @S(50) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");

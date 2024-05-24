@@ -17,20 +17,13 @@ public class Perl_UseStatement extends TokenSequence
 	public @S(10) Perl_Keyword USE = new Perl_Keyword("use");
 	public @S(20) Perl_UseWhat what;
 	public @S(30) @OPT Perl_UseAs as;
-	
+
 	public static class Perl_UseWhat extends TokenChooser
 	{
 		public @FIRST static class Perl_UseRemote extends TokenSequence
 		{
-			public @S(10) Perl_KeywordChoice NET = new Perl_KeywordChoice(
-					"File",
-					"Getopt",
-					"IPC",
-					"List",
-					"MIME",
-					"Net",
-					"Time",
-					"Win32");
+			public @S(10) Perl_KeywordChoice NET = new Perl_KeywordChoice("File", "Getopt", "IPC", "List", "MIME",
+					"Net", "Time", "Win32");
 			public @S(20) @OPT Perl_Punctuation colonColon = new Perl_Punctuation("::");
 			public @S(30) @OPT Perl_Identifier_Reference id;
 		}
@@ -48,7 +41,7 @@ public class Perl_UseStatement extends TokenSequence
 			}
 		}
 	}
-	
+
 	public static class Perl_UseAs extends TokenSequence
 	{
 		public @S(10) Perl_Keyword AS = new Perl_Keyword("as");

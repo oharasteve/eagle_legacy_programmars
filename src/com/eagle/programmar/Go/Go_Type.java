@@ -18,20 +18,17 @@ public class Go_Type extends TokenSequence
 	public @S(10) @OPT Go_TypeArray array;
 	public @S(20) @OPT PunctuationStar star;
 	public @S(30) Go_TypeWhat what;
-	
+
 	public static class Go_TypeWhat extends TokenChooser
 	{
-		public @CHOICE Go_KeywordChoice primitive = new Go_KeywordChoice(
-				"bool",
-				"int",
-				"string");
-		
+		public @CHOICE Go_KeywordChoice primitive = new Go_KeywordChoice("bool", "int", "string");
+
 		public @LAST static class Go_UserType extends TokenSequence
 		{
-			public @S(10) SeparatedList<Go_Identifier_Reference,PunctuationPeriod> ids;
+			public @S(10) SeparatedList<Go_Identifier_Reference, PunctuationPeriod> ids;
 		}
 	}
-	
+
 	public static class Go_TypeArray extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

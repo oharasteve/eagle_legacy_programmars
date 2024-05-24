@@ -13,9 +13,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Go_Assignment extends TokenSequence
 {
-	public @S(10) SeparatedList<Go_Variable,PunctuationComma> vars;
-	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice(
-			"=", "+=", "-=", "*=", "/=", ":=");
+	public @S(10) SeparatedList<Go_Variable, PunctuationComma> vars;
+	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
 	public @S(30) Go_Expression value;
 	public @S(40) Go_EOLN eoln;
 }

@@ -27,14 +27,14 @@ public class Perl_ForEachStatement extends TokenChooser
 		public @S(70) @OPT Perl_ForEachArrow arrow;
 		public @S(80) PunctuationRightParen rightParen;
 		public @S(90) Perl_Statement stmt;
-		
+
 		public static class Perl_ForEachArrow extends TokenSequence
 		{
 			public @S(10) Perl_Punctuation equalsGreater = new Perl_Punctuation("=>");
 			public @S(20) Perl_Variable var;
 		}
 	}
-	
+
 	public @CHOICE static class Perl_ForEachNoAsStatement extends TokenSequence
 	{
 		public @S(10) @DOC("control-structures.foreach.php") Perl_Keyword FOREACH = new Perl_Keyword("foreach");
@@ -43,7 +43,7 @@ public class Perl_ForEachStatement extends TokenChooser
 		public @S(40) Perl_Expression expr;
 		public @S(50) PunctuationRightParen rightParen;
 		public @S(60) Perl_Statement stmt;
-		
+
 		public static class Perl_ForEachVariable extends TokenSequence
 		{
 			public @S(10) @OPT Perl_Keyword MY = new Perl_Keyword("my");

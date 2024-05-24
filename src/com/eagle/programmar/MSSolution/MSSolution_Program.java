@@ -10,18 +10,18 @@ import com.eagle.tokens.TokenList;
 public class MSSolution_Program extends EagleLanguage
 {
 	public static final String MSSOLUTION = "MSSolution";
-	
+
 	public MSSolution_Program()
 	{
 		super(MSSOLUTION, new MSSolution_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "TBD";
 	}
-	
+
 	public @S(10) @OPT MSSolution_EndOfLine eoln;
 	public @S(20) MSSolution_Header header;
 	public @S(30) TokenList<MSSolution_Project> projects;

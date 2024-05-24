@@ -25,19 +25,19 @@ public class Natural_Subscript extends TokenSequence
 		{
 			public @S(10) Natural_Label label;
 		}
-		
+
 		public @CHOICE static class Natural_Subscript_Contents_Normal extends TokenSequence
 		{
 			public @S(10) Natural_Expression subscript;
 			public @S(20) @OPT Natural_Subscript_Range subscriptRange;
 			public @S(30) @OPT Natural_Second_Subscript secondSubscript;
-			
+
 			public static class Natural_Subscript_Range extends TokenSequence
 			{
 				public @S(10) PunctuationColon colon;
 				public @S(20) Natural_Expression subscript;
 			}
-			
+
 			public static class Natural_Second_Subscript extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;

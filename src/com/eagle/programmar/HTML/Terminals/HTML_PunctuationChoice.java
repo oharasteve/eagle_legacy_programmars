@@ -12,7 +12,7 @@ public class HTML_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public HTML_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -20,9 +20,9 @@ public class Ada_Package extends TokenSequence
 	public @S(20) Ada_Package_Definition pkg;
 	public @S(30) Ada_Keyword IS = new Ada_Keyword("is");
 	public @S(40) Ada_Keyword NEW = new Ada_Keyword("new");
-	public @S(50) SeparatedList<Ada_Identifier_Reference,PunctuationPeriod> ids;
+	public @S(50) SeparatedList<Ada_Identifier_Reference, PunctuationPeriod> ids;
 	public @S(60) PunctuationLeftParen leftParen;
-	public @S(70) SeparatedList<Ada_Identifier_Reference,PunctuationComma> params;
+	public @S(70) SeparatedList<Ada_Identifier_Reference, PunctuationComma> params;
 	public @S(80) PunctuationRightParen rightParen;
 	public @S(90) PunctuationSemicolon semicolon;
 }

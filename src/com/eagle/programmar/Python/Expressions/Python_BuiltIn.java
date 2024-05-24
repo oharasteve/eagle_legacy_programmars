@@ -11,16 +11,16 @@ import com.eagle.tokens.PrimaryOperator;
 public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Python_KeywordChoice builtins = new Python_KeywordChoice("None", "False", "True");
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtins.toString())
 		{
-		case "False" :
+		case "False":
 			interpreter.pushBool(false);
 			break;
-		case "True" :
+		case "True":
 			interpreter.pushBool(true);
 			break;
 		default:

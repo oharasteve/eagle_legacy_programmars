@@ -16,7 +16,7 @@ public class CMD_Copy_Statement extends TokenSequence
 	public @S(20) @OPT TokenList<CMD_Copy_Option> opts;
 	public @S(30) CMD_Argument copyFrom;
 	public @S(40) @OPT CMD_Argument copyTo;
-	
+
 	public static class CMD_Copy_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Copy_Option_Y extends TokenSequence

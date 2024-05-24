@@ -11,14 +11,14 @@ public class AWK_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_", false, false)) return true;
-		
+		if (genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_", false, false)) return true;
+
 		// Check for $1 etc
-		if (genericIdentifier(lines, "$", ALPHAS+DIGITS+"_", false, false))
+		if (genericIdentifier(lines, "$", ALPHAS + DIGITS + "_", false, false))
 		{
 			if (_id.length() > 1) return true;
 		}
-		
+
 		return false;
 	}
 }

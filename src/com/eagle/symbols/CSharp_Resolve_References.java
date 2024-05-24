@@ -28,12 +28,13 @@ public class CSharp_Resolve_References extends Eagle_Resolve_References
 		CSharp_Program program = (CSharp_Program) language;
 		EagleScope scope = program.getScope();
 		EagleSyntax syntax = program.getSyntax();
-		
+
 		// Handle all the globally scoped references
 		connectReferences(syntax, scope, program, CSharp_Class_Definition.class, CSharp_Identifier_Reference.class);
 		connectReferences(syntax, scope, program, CSharp_Method_Definition.class, CSharp_Identifier_Reference.class);
-		connectReferencesOutside(syntax, scope, program, CSharp_Variable_Definition.class, CSharp_Identifier_Reference.class, CSharp_Method.class);
-		
+		connectReferencesOutside(syntax, scope, program, CSharp_Variable_Definition.class,
+				CSharp_Identifier_Reference.class, CSharp_Method.class);
+
 		// Find all the methods in the program
 		ArrayList<AbstractToken> methods = findAllInstances(program, CSharp_Method.class);
 		for (AbstractToken meth : methods)
@@ -61,18 +62,18 @@ public class CSharp_Resolve_References extends Eagle_Resolve_References
 		for (AbstractToken imp : imports)
 		{
 			CSharp_Using jimport = (CSharp_Using) imp;
-			
+
 			CSharp_Identifier firstId = jimport.id.getPrimaryElement(0);
 			String name = firstId.getValue();
-			//TokenList<CSharp_DotIdentifier> dotIds = jimport.dotId;
-			//for (CSharp_DotIdentifier dotId : dotIds)
-			//{
-			//	if (dotId.idStar.whichToken instanceof CSharp_Identifier)
-			//	name += "/" + ((CSharp_Identifier) dotId.idStar.whichToken).getValue();
-			//}
-			
+			// TokenList<CSharp_DotIdentifier> dotIds = jimport.dotId;
+			// for (CSharp_DotIdentifier dotId : dotIds)
+			// {
+			// if (dotId.idStar.whichToken instanceof CSharp_Identifier)
+			// name += "/" + ((CSharp_Identifier) dotId.idStar.whichToken).getValue();
+			// }
+
 			ProgramEntry yours = (ProgramEntry) project.findEntry(name);
-			if (yours == null) continue;	// Couldn't find it, maybe it didn't parse?
+			if (yours == null) continue; // Couldn't find it, maybe it didn't parse?
 			CSharp_Program program2 = (CSharp_Program) project.loadProgramFromXML(yours);
 
 			// Find all the unresolved class references
@@ -89,7 +90,8 @@ public class CSharp_Resolve_References extends Eagle_Resolve_References
 						CSharp_Identifier_Reference def = (CSharp_Identifier_Reference) cls2;
 						if (ref.getValue().equals(def.getValue()))
 						{
-							System.out.println("*** Found a definition for " + ref.getValue() + " in " + yours.sourceFile);
+							System.out.println(
+									"*** Found a definition for " + ref.getValue() + " in " + yours.sourceFile);
 						}
 					}
 				}

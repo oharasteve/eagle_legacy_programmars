@@ -15,7 +15,7 @@ public class CMD_CD_Statement extends TokenSequence
 	public @S(10) @DOC("chdir.mspx") CMD_Keyword CD = new CMD_Keyword("cd");
 	public @S(20) @OPT TokenList<CMD_CD_Option> opts;
 	public @S(30) CMD_Argument dir;
-	
+
 	public static class CMD_CD_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_CD_Option_D extends TokenSequence

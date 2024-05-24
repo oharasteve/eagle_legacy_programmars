@@ -12,5 +12,5 @@ public class CMacro_Pragma_Warn extends TokenSequence
 {
 	public @S(10) CMacro_Keyword WARN = new CMacro_Keyword("warn");
 	public @S(20) @OPT PunctuationHyphen minus;
-	public @S(30) CMacro_Number what;	// 8004 8008 8066 perhaps
+	public @S(30) CMacro_Number what; // 8004 8008 8066 perhaps
 }

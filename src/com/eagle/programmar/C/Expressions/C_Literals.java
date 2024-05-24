@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenList;
 public class C_Literals extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) TokenList<C_Literal> literals;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

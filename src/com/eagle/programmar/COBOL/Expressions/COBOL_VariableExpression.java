@@ -58,7 +58,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 				interpreter.pushEagleValue(avals.get(subscript));
 				return;
 			}
-			
+
 			String str = null;
 			if (val.isInteger())
 			{
@@ -69,7 +69,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 			{
 				str = val.forceStringValue();
 			}
-			
+
 			if (str != null)
 			{
 				AbstractToken which = variable.subscript.first().type.getWhich();
@@ -80,7 +80,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 					{
 						int sc = interpreter.getIntValue(subscript.expr);
 						int ec = interpreter.getIntValue(subscript.range.expr);
-						String piece = str.substring(sc-1, ec);
+						String piece = str.substring(sc - 1, ec);
 						interpreter.pushStr(piece);
 						return;
 					}

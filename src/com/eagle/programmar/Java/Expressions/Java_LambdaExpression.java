@@ -25,24 +25,24 @@ public class Java_LambdaExpression extends PrimaryOperator
 	public @S(10) Java_LambdaVariables params;
 	public @S(20) Java_Punctuation arrow = new Java_Punctuation("->");
 	public @S(30) Java_LambdaValue value;
-	
+
 	public static class Java_LambdaVariables extends TokenChooser
 	{
 		public @CHOICE Java_Identifier id;
-		
+
 		public @CHOICE static class Java_LambdaVariableList extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen lParen;
-			public @S(20) @OPT SeparatedList<Java_Identifier,PunctuationComma> params;
+			public @S(20) @OPT SeparatedList<Java_Identifier, PunctuationComma> params;
 			public @S(30) PunctuationRightParen rParen;
 		}
-		
+
 		public @CHOICE static class Java_LambdaTypedVariableList extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen lParen;
-			public @S(20) @OPT SeparatedList<Java_TypedIdentifier,PunctuationComma> params;
+			public @S(20) @OPT SeparatedList<Java_TypedIdentifier, PunctuationComma> params;
 			public @S(30) PunctuationRightParen rParen;
-			
+
 			public static class Java_TypedIdentifier extends TokenSequence
 			{
 				public @S(10) @OPT Java_Annotation annotation;

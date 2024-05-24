@@ -10,12 +10,6 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Ruby_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Ruby_Expression var = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Ruby_PunctuationChoice equals = new Ruby_PunctuationChoice(
-			":=",
-			"*=",
-			"/=",
-			"%=",
-			"+=",
-			"-=");
+	public @S(20) Ruby_PunctuationChoice equals = new Ruby_PunctuationChoice(":=", "*=", "/=", "%=", "+=", "-=");
 	public @S(30) Ruby_Expression expr;
 }

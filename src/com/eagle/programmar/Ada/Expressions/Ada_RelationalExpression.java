@@ -22,16 +22,16 @@ public class Ada_RelationalExpression extends PrecedenceOperator implements Eagl
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "<" :
+		case "<":
 			interpreter.pushBool(leftValue < rightValue);
 			return;
-		case "<=" :
+		case "<=":
 			interpreter.pushBool(leftValue <= rightValue);
 			return;
-		case ">" :
+		case ">":
 			interpreter.pushBool(leftValue > rightValue);
 			return;
-		case ">=" :
+		case ">=":
 			interpreter.pushBool(leftValue >= rightValue);
 			return;
 		}

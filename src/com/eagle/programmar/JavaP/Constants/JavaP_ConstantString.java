@@ -12,7 +12,7 @@ public class JavaP_ConstantString extends TokenSequence implements JavaP_Constan
 {
 	public @S(10) JavaP_Keyword STRING = new JavaP_Keyword("String");
 	public @S(20) JavaP_Symbol_Reference symbol;
-	
+
 	@Override
 	public String showConstant()
 	{

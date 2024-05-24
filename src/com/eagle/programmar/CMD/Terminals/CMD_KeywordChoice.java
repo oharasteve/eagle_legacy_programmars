@@ -12,7 +12,7 @@ public class CMD_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public CMD_KeywordChoice(String... words)
 	{
 		super(words);

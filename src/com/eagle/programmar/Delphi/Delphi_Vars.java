@@ -17,10 +17,10 @@ public class Delphi_Vars extends TokenSequence
 {
 	public @S(10) Delphi_Keyword VAR = new Delphi_Keyword("Var");
 	public @S(20) TokenList<Delphi_Var> vars;
-	
+
 	public static class Delphi_Var extends TokenSequence
 	{
-		public @S(10) SeparatedList<Delphi_Variable_Definition,PunctuationComma> vars;
+		public @S(10) SeparatedList<Delphi_Variable_Definition, PunctuationComma> vars;
 		public @S(20) PunctuationColon colon;
 		public @S(30) Delphi_Type type;
 		public @S(40) PunctuationSemicolon semicolon;

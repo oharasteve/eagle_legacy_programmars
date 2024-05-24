@@ -12,7 +12,7 @@ public class CMacro_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public CMacro_KeywordChoice(String... words)
 	{
 		super(words);

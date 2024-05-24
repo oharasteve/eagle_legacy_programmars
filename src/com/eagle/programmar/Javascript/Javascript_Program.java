@@ -13,20 +13,20 @@ import com.eagle.tokens.TokenList;
 public class Javascript_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String JAVASCRIPT = "Javascript";
-	
+
 	public Javascript_Program()
 	{
 		super(JAVASCRIPT, new Javascript_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.w3schools.com/js/";
 	}
-	
+
 	public @S(10) @OPT TokenList<Javascript_Element> elements;
-	
+
 	public static class Javascript_Element extends TokenChooser
 	{
 		public @CHOICE Javascript_Comment comment;

@@ -19,7 +19,7 @@ public class Perl_VarStatement extends TokenSequence
 	public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
 	public @S(30) Perl_Variable_Definition var;
 	public @S(40) @OPT Perl_Variable_Init init;
-	
+
 	public static class Perl_VarPrefix extends TokenChooser
 	{
 		public @CHOICE Perl_KeywordChoice modifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);

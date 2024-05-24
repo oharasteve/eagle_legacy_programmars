@@ -19,7 +19,7 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 	public @S(30) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
 	public @S(40) COBOL_SubtractType type;
 	public @S(50) @OPT COBOL_Keyword ROUNDED = new COBOL_Keyword("ROUNDED");
-	
+
 	public static class COBOL_SubtractMoreVars extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
@@ -33,7 +33,7 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 			public @S(10) COBOL_Variable var;
 			public @S(20) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
 		}
-		
+
 		public @FIRST static class COBOL_SubtractWithGiving extends TokenSequence
 		{
 			public @S(10) COBOL_Expression expr;
@@ -41,7 +41,7 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 			public @S(30) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
 			public @S(40) COBOL_Variable result;
 			public @S(50) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
-			
+
 			public static class COBOL_SubtractMoreExprs extends TokenSequence
 			{
 				public @S(10) @OPT PunctuationComma comma;

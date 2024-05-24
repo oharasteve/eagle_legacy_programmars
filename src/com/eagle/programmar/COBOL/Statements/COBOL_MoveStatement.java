@@ -27,7 +27,7 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 	public @S(50) @OPT COBOL_Variable var;
 	public @S(60) @OPT TokenList<COBOL_MoveMore> more;
 	public @S(70) @OPT @CURIOUS("MOVE: Extra comma") PunctuationComma comma;
-	
+
 	public static class COBOL_MoveMore extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
@@ -41,15 +41,15 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 	{
 		if (ALL.isPresent()) throw new RuntimeException("Can't handle MOVE ALL yet");
 		if (more.isPresent() && more.size() > 0) throw new RuntimeException("Can't handle multiple MOVEs yet");
-		
+
 		EagleValue val = interpreter.getEagleValue(expr);
 		AbstractToken which = var.getWhich();
-		if (! (which instanceof COBOL_UserVariable))
+		if (!(which instanceof COBOL_UserVariable))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		COBOL_UserVariable variable = (COBOL_UserVariable) which;
-		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(),
-				variable.getStartChar(), variable.id.getValue(), val);
+		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+				variable.id.getValue(), val);
 	}
 }

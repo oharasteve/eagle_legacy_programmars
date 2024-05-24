@@ -13,7 +13,7 @@ public class Eaglish_Variable_Definition extends Eaglish_Identifier_Definition i
 	{
 		return DefinitionType.VARIABLE;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

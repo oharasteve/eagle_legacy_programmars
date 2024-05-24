@@ -9,12 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Lisp_LoopListAccumulation extends TokenSequence
 {
-	public @S(10) Lisp_KeywordChoice operation = new Lisp_KeywordChoice(
-			"append",
-			"appenging",
-			"collect",
-			"collecting",
-			"nconc",
-			"nconcing");
+	public @S(10) Lisp_KeywordChoice operation = new Lisp_KeywordChoice("append", "appenging", "collect", "collecting",
+			"nconc", "nconcing");
 	public @S(20) Lisp_SExpr expr;
 }

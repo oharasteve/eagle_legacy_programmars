@@ -21,13 +21,13 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 	public @S(30) @OPT Javascript_InitData init;
 	public @S(40) @OPT TokenList<Javascript_More_Variables> moreVars;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Javascript_InitData extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) Javascript_Expression expr;
 	}
-	
+
 	public static class Javascript_More_Variables extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
@@ -40,7 +40,7 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(init.expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-				var.getStartChar(), var.toString(), value);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.toString(),
+				value);
 	}
 }

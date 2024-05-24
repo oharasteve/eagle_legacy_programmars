@@ -12,7 +12,7 @@ public class Perl_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Perl_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

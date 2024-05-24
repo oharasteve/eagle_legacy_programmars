@@ -12,7 +12,7 @@ public class Django_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Django_KeywordChoice(String... words)
 	{
 		super(words);

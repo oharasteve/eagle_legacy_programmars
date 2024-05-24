@@ -15,7 +15,7 @@ import com.eagle.parsers.ParserManager;
 public class COBOL_Interpreter extends EagleInterpreter
 {
 	public HashMap<String, COBOL_Paragraph> _paragraphs = null;
-	
+
 	public COBOL_Interpreter(ParserManager parser, EagleLanguage lang, EagleSymbolTable symbolTable)
 	{
 		super(parser, lang, symbolTable);

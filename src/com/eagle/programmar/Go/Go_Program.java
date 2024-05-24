@@ -17,12 +17,12 @@ import com.eagle.tokens.TokenSequence;
 public class Go_Program extends EagleLanguage
 {
 	public static final String GO = "Go";
-	
+
 	public Go_Program()
 	{
 		super(GO, new Go_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -30,7 +30,7 @@ public class Go_Program extends EagleLanguage
 	}
 
 	public @S(10) TokenList<Go_Element> elements;
-	
+
 	public static class Go_Element extends TokenChooser
 	{
 		public @CHOICE Go_CommentEoln comment;
@@ -40,7 +40,7 @@ public class Go_Program extends EagleLanguage
 		public @CHOICE Go_Function function;
 		public @CHOICE Go_Statement stmt;
 	}
-	
+
 	public static class Go_CommentEoln extends TokenSequence
 	{
 		public @S(10) Go_Comment comment;

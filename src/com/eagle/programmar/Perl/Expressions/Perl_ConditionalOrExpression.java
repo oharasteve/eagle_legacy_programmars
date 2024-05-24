@@ -16,7 +16,7 @@ public class Perl_ConditionalOrExpression extends PrecedenceOperator implements 
 	public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Perl_OrOperator oper;
 	public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Perl_OrOperator extends TokenChooser
 	{
 		public @CHOICE Perl_Punctuation orOperator = new Perl_Punctuation("||");

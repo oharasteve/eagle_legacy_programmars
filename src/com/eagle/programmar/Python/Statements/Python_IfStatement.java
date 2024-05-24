@@ -21,7 +21,7 @@ public class Python_IfStatement extends TokenSequence
 	public @S(50) @OPT TokenList<Python_IfElif> ifElif;
 	public @S(60) @OPT Python_IfElse ifElse;
 	public @S(70) @OPT TokenList<Python_Comment> comments;
-	
+
 	public static class Python_IfElif extends TokenSequence
 	{
 		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
@@ -30,7 +30,7 @@ public class Python_IfStatement extends TokenSequence
 		public @S(40) @NOSPACE PunctuationColon colon;
 		public @S(50) Python_SingleOrMultiLineStatement elifStatement;
 	}
-		
+
 	public static class Python_IfElse extends TokenSequence
 	{
 		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();

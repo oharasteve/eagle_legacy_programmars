@@ -12,7 +12,7 @@ public class Go_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Go_KeywordChoice(String... words)
 	{
 		super(words);

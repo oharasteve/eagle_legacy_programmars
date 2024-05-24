@@ -14,14 +14,11 @@ public class Ada_Type extends TokenSequence
 {
 	public @S(10) @OPT Ada_Keyword CONSTANT = new Ada_Keyword("constant");
 	public @S(20) Ada_WhichType which;
-	
+
 	public static class Ada_WhichType extends TokenChooser
 	{
-		public @CHOICE Ada_KeywordChoice primitives = new Ada_KeywordChoice(
-				"Boolean",
-				"Integer",
-				"Unbounded_String");
-		
+		public @CHOICE Ada_KeywordChoice primitives = new Ada_KeywordChoice("Boolean", "Integer", "Unbounded_String");
+
 		public @CHOICE static class Ada_ArrayType extends TokenSequence
 		{
 			public @S(10) Ada_Keyword ARRAY = new Ada_Keyword("array");

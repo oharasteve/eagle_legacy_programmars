@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.IntelASM.Symbols;
 
-
 public class IntelASM_Define_Definition extends IntelASM_Identifier_Definition
 {
 	@Override

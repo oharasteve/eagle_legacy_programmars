@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenList;
 public class PLI_Program extends EagleLanguage
 {
 	public static final String PLI = "PL/I";
-	
+
 	public PLI_Program()
 	{
 		super(PLI, new PLI_Syntax());
@@ -23,10 +23,10 @@ public class PLI_Program extends EagleLanguage
 	{
 		return "http://publibfp.boulder.ibm.com/cgi-bin/bookmgr/BOOKS/IBM3L101/";
 	}
-	
+
 	// Components of a PL/I Program
 	public @S(10) @OPT TokenList<PLI_Element> elements;
-	
+
 	public static class PLI_Element extends TokenChooser
 	{
 		public @CHOICE PLI_Comment comment;

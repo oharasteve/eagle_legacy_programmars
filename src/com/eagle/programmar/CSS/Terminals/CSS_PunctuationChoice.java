@@ -12,7 +12,7 @@ public class CSS_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public CSS_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

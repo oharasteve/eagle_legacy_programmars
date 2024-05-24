@@ -12,7 +12,7 @@ public class IntelASM_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public IntelASM_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

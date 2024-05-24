@@ -12,7 +12,7 @@ public class CSharp_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public CSharp_KeywordChoice(String... words)
 	{
 		super(words);

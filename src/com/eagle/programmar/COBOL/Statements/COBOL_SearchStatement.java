@@ -19,7 +19,7 @@ public class COBOL_SearchStatement extends COBOL_AbstractStatement
 	public @S(40) @OPT COBOL_SearchAtEndAction atEnd;
 	public @S(50) TokenList<COBOL_SearchWhenClause> whens;
 	public @S(60) @OPT COBOL_Keyword ENDSEARCH = new COBOL_Keyword("END-SEARCH");
-	
+
 	public static class COBOL_SearchAtEndAction extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword AT = new COBOL_Keyword("AT");
@@ -31,6 +31,6 @@ public class COBOL_SearchStatement extends COBOL_AbstractStatement
 	{
 		public @S(10) COBOL_Keyword WHEN = new COBOL_Keyword("WHEN");
 		public @S(20) COBOL_Expression condition;
-		public @S(30) TokenList<COBOL_Statement> statements; 
+		public @S(30) TokenList<COBOL_Statement> statements;
 	}
 }

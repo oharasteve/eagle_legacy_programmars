@@ -17,6 +17,6 @@ public class Rust_MethodInvocation extends PrimaryOperator
 	public @S(10) Java_Variable methodName;
 	public @S(20) @OPT Rust_Punctuation bang = new Rust_Punctuation("!");
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) @OPT SeparatedList<Rust_Expression,PunctuationComma> argList;
+	public @S(40) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
 	public @S(50) PunctuationRightParen rightParen;
 }

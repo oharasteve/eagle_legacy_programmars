@@ -21,7 +21,7 @@ public class PLI_AnswerStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT TokenList<PLI_AnswerClause> clauses;
 	public @S(60) PunctuationSemicolon semicolon;
-	
+
 	public static class PLI_AnswerClause extends TokenChooser
 	{
 		public @CHOICE PLI_KeywordChoice SKIP = new PLI_KeywordChoice("SKIP", "NOSCAN");

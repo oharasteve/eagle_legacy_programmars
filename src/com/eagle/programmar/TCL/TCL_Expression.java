@@ -27,16 +27,17 @@ public class TCL_Expression extends PrecedenceChooser
 
 	public TCL_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public TCL_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -58,7 +59,7 @@ public class TCL_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Binary expressions
-	
+
 	public @P(500) TCL_MultiplicativeExpression multiplicativeExpression;
 	public @P(510) TCL_AdditiveExpression additiveExpression;
 	public @P(520) TCL_RelationalExpression relationalExpression;

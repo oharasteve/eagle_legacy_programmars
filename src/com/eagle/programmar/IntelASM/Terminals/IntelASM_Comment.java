@@ -14,17 +14,17 @@ public class IntelASM_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public IntelASM_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar < nc && rec.charAt(_currentChar) == ';')
@@ -34,7 +34,7 @@ public class IntelASM_Comment extends TerminalCommentToken
 			return true;
 		}
 
-		if (_currentChar+1 < nc && rec.charAt(_currentChar) == '/' && rec.charAt(_currentChar+1) == '/')
+		if (_currentChar + 1 < nc && rec.charAt(_currentChar) == '/' && rec.charAt(_currentChar + 1) == '/')
 		{
 			return super.possibleCommentToEndOfLine(rec, "//");
 		}

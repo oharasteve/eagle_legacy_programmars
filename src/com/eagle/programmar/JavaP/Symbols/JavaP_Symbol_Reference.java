@@ -15,7 +15,7 @@ public class JavaP_Symbol_Reference extends JavaP_HashNumber implements Referenc
 	{
 		JavaP_Symbol_Definition def = (JavaP_Symbol_Definition) searchForDefinition();
 		AbstractToken parent = def.getParent();
-		if (! (parent instanceof JavaP_Constant))
+		if (!(parent instanceof JavaP_Constant))
 		{
 			throw new RuntimeException("Expected " + def + " to have a parent of type JavaP_Constant, not " + parent);
 		}
@@ -26,7 +26,7 @@ public class JavaP_Symbol_Reference extends JavaP_HashNumber implements Referenc
 			JavaP_ConstantShowable showable = (JavaP_ConstantShowable) whichConst;
 			return showable.showConstant();
 		}
-		
+
 		return def.toString();
 	}
 }

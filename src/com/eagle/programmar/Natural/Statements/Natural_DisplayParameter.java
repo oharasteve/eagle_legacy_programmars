@@ -16,7 +16,7 @@ public class Natural_DisplayParameter extends TokenSequence
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Natural_DisplayParameterContents contents;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	public static class Natural_DisplayParameterContents extends TokenChooser
 	{
 		public @CHOICE Natural_DisplayParametersAD parameterAD;
@@ -43,22 +43,19 @@ public class Natural_DisplayParameter extends TokenSequence
 			public @S(30) Natural_DisplayParametersPM parameters;
 		}
 	}
-	
+
 	public static class Natural_DisplayParametersAD extends TokenSequence
 	{
-		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice(
-				"B", "C", "D", "I", "N", "U", "V");
+		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice("B", "C", "D", "I", "N", "U", "V");
 	}
-	
+
 	public static class Natural_DisplayParametersCD extends TokenSequence
 	{
-		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice(
-				"BL", "GR", "NE", "PI", "RE", "TU", "YE");
+		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice("BL", "GR", "NE", "PI", "RE", "TU", "YE");
 	}
 
 	public static class Natural_DisplayParametersPM extends TokenSequence
 	{
-		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice(
-				"C", "D", "I", "N");
+		public @S(10) Natural_KeywordChoice param = new Natural_KeywordChoice("C", "D", "I", "N");
 	}
 }

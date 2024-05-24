@@ -20,7 +20,7 @@ public class Algol68_IfStatement extends TokenSequence
 	public @S(60) @OPT Algol68_IfElseClause elseClause;
 	public @S(70) Algol68_Keyword END = new Algol68_Keyword("FI");
 	public @S(80) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Algol68_IfElifClause extends TokenSequence
 	{
 		public @S(10) Algol68_Keyword ELIF = new Algol68_Keyword("ELIF");
@@ -28,7 +28,7 @@ public class Algol68_IfStatement extends TokenSequence
 		public @S(30) Algol68_Keyword THEN = new Algol68_Keyword("THEN");
 		public @S(40) TokenList<Algol68_Statement> elseStatements;
 	}
-	
+
 	public static class Algol68_IfElseClause extends TokenSequence
 	{
 		public @S(10) Algol68_Keyword ELSE = new Algol68_Keyword("ELSE");

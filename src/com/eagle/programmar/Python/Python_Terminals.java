@@ -28,7 +28,7 @@ public class Python_Terminals extends EagleLanguage
 	{
 		return null;
 	}
-	
+
 	@Override
 	public TokenList<? extends AbstractToken> getTerminals()
 	{
@@ -37,7 +37,7 @@ public class Python_Terminals extends EagleLanguage
 
 	// Just collect a list of all the terminals
 	public TokenList<Python_Terminal> _terminals;
-	
+
 	// Need to use this, so there are no punctuation exceptions like "+="
 	public static class Python_Terminal_Syntax extends Python_Multiline_Syntax
 	{
@@ -55,7 +55,7 @@ public class Python_Terminals extends EagleLanguage
 		public @CHOICE Python_Literal literal;
 		public @CHOICE Python_KeywordChoice keywords = new Python_KeywordChoice(getSyntax().allReservedWords());
 		public @CHOICE Python_Identifier id;
-		public @CHOICE Python_PunctuationChoice puncts = new Python_PunctuationChoice(
-				"+", "-", "*", "/", "%", ",", ".", "=", "<", ">", ":", ";", "_", "!", "@", "(", ")", "[", "]", "{", "}");
+		public @CHOICE Python_PunctuationChoice puncts = new Python_PunctuationChoice("+", "-", "*", "/", "%", ",", ".",
+				"=", "<", ">", ":", ";", "_", "!", "@", "(", ")", "[", "]", "{", "}");
 	}
 }

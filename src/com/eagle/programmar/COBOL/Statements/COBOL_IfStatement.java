@@ -21,19 +21,19 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 	public @S(40) TokenList<COBOL_StatementOrComment> thenActions;
 	public @S(50) @OPT COBOL_Else elseClause;
 	public @S(60) @OPT COBOL_Keyword ENDIF = new COBOL_Keyword("END-IF");
-	
+
 	public static class COBOL_Else extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword ELSE = new COBOL_Keyword("ELSE");
 		public @S(20) TokenList<COBOL_StatementOrComment> elseActions;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
 		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		
+
 		boolean cond = interpreter.getBoolValue(condition);
 		if (cond)
 		{
@@ -43,7 +43,7 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 		{
 			result = interpreter.interpretBlock(elseClause.elseActions._elements);
 		}
-		
+
 		return result;
 	}
 }

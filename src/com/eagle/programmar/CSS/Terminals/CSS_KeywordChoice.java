@@ -12,7 +12,7 @@ public class CSS_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public CSS_KeywordChoice(String... words)
 	{
 		super(words);

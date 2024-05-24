@@ -16,14 +16,14 @@ public class VB_Variable extends TokenSequence implements EagleRunnable
 	public @S(10) VB_Identifier_Reference var;
 	public @S(20) @OPT VB_Subscript subscript;
 	public @S(30) @OPT TokenList<VB_VariableField> dotFields;
-	
+
 	public static class VB_VariableField extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;
 		public @S(20) VB_Identifier_Reference var;
 		public @S(30) @OPT VB_Subscript subscript;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

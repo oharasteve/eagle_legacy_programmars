@@ -14,7 +14,7 @@ public class Rust_IfStatement extends TokenSequence
 	public @S(20) Rust_Expression condition;
 	public @S(30) Rust_Statement stmt;
 	public @S(40) @OPT Rust_IfElseClause elseClause;
-	
+
 	public static class Rust_IfElseClause extends TokenSequence
 	{
 		public @S(10) Rust_Keyword ELSE = new Rust_Keyword("else");

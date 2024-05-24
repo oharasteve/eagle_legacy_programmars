@@ -12,7 +12,7 @@ public class Python_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Python_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

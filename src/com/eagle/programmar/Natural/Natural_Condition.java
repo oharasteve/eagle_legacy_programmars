@@ -19,11 +19,11 @@ public class Natural_Condition extends TokenSequence
 	public @S(10) Natural_Condition_Base baseExpr;
 	public @S(20) @OPT Natural_OperatorExpression opExpr;
 	public @S(30) @OPT TokenList<Natural_AndOr> clauses;
-	
+
 	public static class Natural_Condition_Base extends TokenChooser
 	{
 		public @CHOICE Natural_Expression expr;
-		
+
 		public @CHOICE static class Natural_NotCondition extends TokenSequence
 		{
 			public @S(10) Natural_Keyword NOT = new Natural_Keyword("NOT");
@@ -32,7 +32,7 @@ public class Natural_Condition extends TokenSequence
 			public @S(40) PunctuationRightParen rightParen;
 		}
 	}
-	
+
 	public static class Natural_AndOr extends TokenSequence
 	{
 		public @S(10) @OPT Natural_Comment comment;
@@ -45,18 +45,19 @@ public class Natural_Condition extends TokenSequence
 		public @S(10) @OPT Natural_Condition_Base baseExpr;
 		public @S(20) Natural_OperatorExpression opExpr;
 	}
-	
+
 	public static class Natural_OperatorExpression extends TokenSequence
 	{
 		public @S(10) Natural_Relational_Operator operator;
 		public @S(20) Natural_Expression expr;
 		public @S(30) @OPT Natural_ThruCondition thru;
-		
+
 		public static class Natural_Relational_Operator extends TokenChooser
 		{
-			public @CHOICE Natural_PunctuationChoice operator = new Natural_PunctuationChoice(">=", "<=", "<", ">", "=");
+			public @CHOICE Natural_PunctuationChoice operator = new Natural_PunctuationChoice(">=", "<=", "<", ">",
+					"=");
 			public @CHOICE Natural_KeywordChoice GT = new Natural_KeywordChoice("GT", "LT", "NE");
-			
+
 			public @CHOICE static class Natural_Not_Equals extends TokenSequence
 			{
 				public @S(10) Natural_Keyword NOT = new Natural_Keyword("NOT");
@@ -68,14 +69,14 @@ public class Natural_Condition extends TokenSequence
 				public @S(10) Natural_Keyword LESS = new Natural_Keyword("LESS");
 				public @S(20) Natural_Keyword THAN = new Natural_Keyword("THAN");
 			}
-			
+
 			public @CHOICE static class Natural_Greater_Than extends TokenSequence
 			{
 				public @S(10) Natural_Keyword GREATER = new Natural_Keyword("GREATER");
 				public @S(20) Natural_Keyword THAN = new Natural_Keyword("THAN");
 			}
 		}
-		
+
 		public static class Natural_ThruCondition extends TokenSequence
 		{
 			public @S(10) Natural_Keyword THRU = new Natural_Keyword("THRU");

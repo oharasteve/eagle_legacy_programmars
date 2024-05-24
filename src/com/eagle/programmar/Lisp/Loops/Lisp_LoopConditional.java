@@ -16,13 +16,13 @@ public class Lisp_LoopConditional extends TokenSequence
 	public @S(30) @OPT TokenList<Lisp_LoopMoreSelectableClause> more;
 	public @S(40) @OPT Lisp_LoopConditionalElse conditionalElse;
 	public @S(50) @OPT Lisp_Keyword END = new Lisp_Keyword("end");
-	
+
 	public static class Lisp_LoopMoreSelectableClause extends TokenSequence
 	{
 		public @S(10) Lisp_Keyword AND = new Lisp_Keyword("and");
 		public @S(20) Lisp_SExpr value;
 	}
-	
+
 	public static class Lisp_LoopConditionalElse extends TokenSequence
 	{
 		public @S(10) Lisp_Keyword ELSE = new Lisp_Keyword("else");

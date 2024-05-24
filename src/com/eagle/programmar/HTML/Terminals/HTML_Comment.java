@@ -14,17 +14,17 @@ public class HTML_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public HTML_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		char ch = rec.charAt(_currentChar);
 		if (ch == '<')

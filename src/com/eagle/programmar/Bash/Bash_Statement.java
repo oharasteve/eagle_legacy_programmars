@@ -38,7 +38,7 @@ public class Bash_Statement extends TokenSequence
 {
 	public @S(10) Bash_Element element;
 	public @S(20) @OPT Bash_EndOfLine eoln;
-	
+
 	public static class Bash_Element extends TokenChooser
 	{
 		public @CHOICE Bash_AwkCommand awkCommand;
@@ -64,11 +64,11 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_SetCommand setCommand;
 		public @CHOICE Bash_TeeCommand teeCommand;
 		public @CHOICE Bash_WhileStatement whileStatement;
-		
+
 		public @CHOICE Bash_BashProgram bashProgram;
 		public @CHOICE Bash_PerlProgram perlProgram;
 		public @CHOICE Bash_PythonProgram pythonProgram;
-		
+
 		public @LAST Bash_Assignment assignment;
 		public @LAST Bash_FunctionCall functionCall;
 		public @LAST Bash_Condition condition;

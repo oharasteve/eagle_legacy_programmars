@@ -12,7 +12,7 @@ public class Property_Syntax extends EagleSyntax
 	{
 		return "Property";
 	}
-	
+
 	public Property_Syntax()
 	{
 		_isCaseSensitive = false;

@@ -28,14 +28,14 @@ public class Bash_Function extends TokenChooser implements AbstractFunction
 		public @S(60) Bash_EndOfLine eoln2;
 		public @S(70) TokenList<Bash_Statement> statements;
 		public @S(80) PunctuationRightBrace rightBrace;
-		
+
 		public static class Bash_FunctionParams extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) PunctuationRightParen rightParen;
 		}
 	}
-	
+
 	public @CHOICE static class Bash_Function_Implicit extends TokenSequence
 	{
 		public @S(10) Bash_Function_Definition fnName;

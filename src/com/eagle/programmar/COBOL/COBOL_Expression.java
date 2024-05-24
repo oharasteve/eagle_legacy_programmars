@@ -35,16 +35,17 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 
 	public COBOL_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public COBOL_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -56,7 +57,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) COBOL_LengthExpression lengthExpression;
 	public @P(110) COBOL_AddressExpression addressExpression;
 	public @P(120) COBOL_LinageCounterExpression linageCounterExpression;
@@ -69,7 +70,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 
 	///////////////////////////////////////////////
 	// Binary expressions
-	
+
 	public @P(500) COBOL_ThroughExpression throughExpression;
 	public @P(510) COBOL_ConcatenateExpression concatenateExpression;
 	public @P(520) COBOL_ExponentExpression exponentExpression;

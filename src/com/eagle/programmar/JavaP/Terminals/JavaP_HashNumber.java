@@ -1,4 +1,4 @@
-	// Copyright Eagle Legacy Modernization, LLC, 2010-date
+// Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Nov 3, 2015
 
 package com.eagle.programmar.JavaP.Terminals;
@@ -11,8 +11,8 @@ public class JavaP_HashNumber extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! genericIdentifier(lines, "#", DIGITS, false, true)) return false;
-		if (_id.length() < 2) return false;	// Need at least one digit
+		if (!genericIdentifier(lines, "#", DIGITS, false, true)) return false;
+		if (_id.length() < 2) return false; // Need at least one digit
 		return true;
 	}
 }

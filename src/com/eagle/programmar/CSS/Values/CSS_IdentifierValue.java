@@ -15,13 +15,13 @@ public class CSS_IdentifierValue extends TokenSequence
 {
 	public @S(10) CSS_Identifier id;
 	public @S(20) @OPT CSS_FunctionCall functionCall;
-	
+
 	public static class CSS_FunctionCall extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT CSS_FunctionParams params;
 		public @S(30) PunctuationRightParen rightParen;
-		
+
 		public static class CSS_FunctionParams extends TokenSequence
 		{
 			public @S(10) CSS_Value value;

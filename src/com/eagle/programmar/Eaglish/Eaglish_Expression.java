@@ -29,16 +29,17 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 
 	public Eaglish_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Eaglish_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -56,7 +57,7 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(130) Eaglish_ParenthesizedExpression parenExpr;
 	public @P(140) Eaglish_BuiltInExpression builtinExpr;
 	public @P(150) Eaglish_VariableExpression varExpr;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

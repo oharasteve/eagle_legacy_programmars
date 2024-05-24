@@ -23,13 +23,13 @@ public class Java_Type extends TokenSequence implements AbstractType
 	public @S(20) Java_TypeName typeName;
 	public @S(30) @OPT @NOSPACE Java_GenericType genericType;
 	public @S(40) @OPT @NOSPACE TokenList<Java_ArrayType> arrayTypes;
-	
+
 	public static class Java_ArrayType extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationLeftBracket leftBracket;
 		public @S(20) @NOSPACE PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static class Java_GenericType extends TokenSequence
 	{
 		public @S(10) Java_Punctuation lessThan = new Java_Punctuation('<');
@@ -37,7 +37,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		public @S(30) @OPT Java_Punctuation emptySubscript = new Java_Punctuation("[]");
 		public @S(40) @OPT TokenList<Java_MoreTypes> moreType;
 		public @S(50) @NOSPACE Java_Punctuation greaterThan = new Java_Punctuation('>');
-		
+
 		public static class Java_MoreTypes extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
@@ -48,23 +48,22 @@ public class Java_Type extends TokenSequence implements AbstractType
 	// Delay finding this one until after looking for [] and <>
 	public static class Java_TypeName extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice primitive = new Java_KeywordChoice(
-				"void", "boolean", "byte", "short", "int",
+		public @CHOICE Java_KeywordChoice primitive = new Java_KeywordChoice("void", "boolean", "byte", "short", "int",
 				"long", "char", "float", "double", "String", "class");
-		
+
 		public @CHOICE static class Java_IdList extends TokenSequence
 		{
 			public @S(10) Java_Identifier_Reference typeName;
 			public @S(20) @OPT Java_ExtendsType extendsType;
 			public @S(30) @OPT TokenList<Java_MoreIds> moreIds;
 			public @S(40) @OPT Java_ExtendsMultiple multiple;
-			
+
 			public static class Java_MoreIds extends TokenSequence
 			{
 				public @S(10) @NOSPACE PunctuationPeriod dot;
 				public @S(20) @NOSPACE Java_TypeName nextId;
 			}
-			
+
 			public static class Java_ExtendsMultiple extends TokenSequence
 			{
 				public @S(10) Java_Punctuation ampersand = new Java_Punctuation('&');
@@ -80,7 +79,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 			public @S(20) @OPT Java_ExtendsType extendsType;
 		}
 	}
-	
+
 	public static class Java_ExtendsType extends TokenSequence
 	{
 		public @S(10) Java_KeywordChoice EXTENDS = new Java_KeywordChoice("extends", "super");

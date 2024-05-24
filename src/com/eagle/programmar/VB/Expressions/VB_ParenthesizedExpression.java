@@ -16,7 +16,7 @@ public class VB_ParenthesizedExpression extends PrimaryOperator implements Eagle
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) VB_Expression expression;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -12,8 +12,7 @@ import com.eagle.tokens.TokenSequence;
 public class Julia_Assignment extends TokenSequence
 {
 	public @S(10) Julia_Variable var;
-	public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice(
-			"=", "+=", "-=", "*=", "/=", ":=");
+	public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
 	public @S(30) Julia_Expression value;
 	public @S(40) Julia_EOLN eoln;
 }

@@ -21,23 +21,23 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Include_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
-	public @S(20) @DOC("Include-Syntax.html") CMacro_KeywordChoice INCLUDE =
-			new CMacro_KeywordChoice("include", "include_next", "import");
+	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#');
+	public @S(20) @DOC("Include-Syntax.html") CMacro_KeywordChoice INCLUDE = new CMacro_KeywordChoice("include",
+			"include_next", "import");
 	public @S(30) CMacro_IncludeWhat what;
 	public @S(40) @OPT TokenList<CMacro_Comment> comments;
-	
+
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{
 		public @CHOICE CMacro_Literal filename;
 		public @CHOICE CMacro_IncludeSys sys;
 	}
-	
+
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
-		AbstractToken which = what.getWhich(); 
-		if (! (which instanceof CMacro_Literal)) return false;
+		AbstractToken which = what.getWhich();
+		if (!(which instanceof CMacro_Literal)) return false;
 		String fileName = ((CMacro_Literal) which).getValue();
 		EagleFileReader macro;
 		try
@@ -45,7 +45,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 			if (fileName.startsWith("\"") && fileName.endsWith("\""))
 			{
 				int len = fileName.length();
-				fileName = fileName.substring(1, len-1);
+				fileName = fileName.substring(1, len - 1);
 			}
 			macro = preprocessor._findInclude.findFile("", fileName);
 		}
@@ -58,7 +58,8 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 		try
 		{
 			CMacro_Preprocess innerPreprocessor = new CMacro_Preprocess(preprocessor);
-			EagleFileReader macroLines = innerPreprocessor.preprocessFile(preprocessor._parser, macro, preprocessor._depth+1);
+			EagleFileReader macroLines = innerPreprocessor.preprocessFile(preprocessor._parser, macro,
+					preprocessor._depth + 1);
 			if (macroLines == null) return false;
 			for (EagleLineReader line : macroLines.lines())
 			{
@@ -72,7 +73,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 			// Failed -- just leave the #include alone
 			return true;
 		}
-		
+
 		return true;
 	}
 }

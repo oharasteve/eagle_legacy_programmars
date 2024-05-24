@@ -45,15 +45,16 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 	public @S(40) @OPT TokenList<COBOL_DataClause> clauses;
 	public @S(50) PunctuationPeriod dot;
 	public @S(60) @OPT COBOL_DataComment comment;
-	
-	// These are special -- context-sensitive, must have larger (deeper) Level numbers
+
+	// These are special -- context-sensitive, must have larger (deeper) Level
+	// numbers
 	public @S(70) @OPT TokenList<COBOL_CopyOrDataDeclaration> children;
 
 	public static class COBOL_DataClause extends TokenChooser
 	{
 		public @CHOICE COBOL_Type primitive;
-		
-		public @CHOICE COBOL_BlankWhenZero blankWhenZero; 
+
+		public @CHOICE COBOL_BlankWhenZero blankWhenZero;
 		public @CHOICE COBOL_Justified justified;
 		public @CHOICE COBOL_ObjectReference objectReference;
 		public @CHOICE COBOL_OccursClause occurs;
@@ -68,25 +69,25 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		public @CHOICE COBOL_ValueClause valueClause;
 		public @CHOICE COBOL_ValueIsGlobal isGlobal;
 	}
-	
+
 	public static class COBOL_Justified extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword JUSTIFIED = new COBOL_Keyword("JUSTIFIED");
 		public @S(20) COBOL_Keyword RIGHT = new COBOL_Keyword("RIGHT");
 	}
-	
+
 	public static class COBOL_DataFieldName extends TokenChooser
 	{
 		public @CHOICE COBOL_Keyword FILLER = new COBOL_Keyword("FILLER");
 		public @CHOICE COBOL_Data_Definition id;
 	}
-	
+
 	public static class COBOL_TypeLiteral extends TokenChooser
 	{
 		public @CHOICE COBOL_Keyword TYPE = new COBOL_Keyword("TYPE");
 		public @CHOICE COBOL_Literal type;
 	}
-	
+
 	public static class COBOL_OccursClause extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword OCCURS = new COBOL_Keyword("OCCURS");
@@ -96,20 +97,20 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		public @S(50) @OPT COBOL_Depending depends;
 		public @S(60) @OPT COBOL_OccursKey key;
 		public @S(70) @OPT COBOL_IndexedBy indexedBy;
-		
+
 		public static class COBOL_Depending extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword DEPENDING = new COBOL_Keyword("DEPENDING");
 			public @S(20) COBOL_Keyword ON = new COBOL_Keyword("ON");
 			public @S(30) COBOL_Identifier_Reference index;
 		}
-		
+
 		public static class COBOL_OccursTo extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword TO = new COBOL_Keyword("TO");
 			public @S(20) COBOL_Expression count;
 		}
-		
+
 		public static class COBOL_OccursKey extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword ASCENDING = new COBOL_Keyword("ASCENDING");
@@ -117,7 +118,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			public @S(30) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(40) COBOL_Identifier_Reference index;
 		}
-		
+
 		public static class COBOL_IndexedBy extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword INDEXED = new COBOL_Keyword("INDEXED");
@@ -125,19 +126,19 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			public @S(30) COBOL_Index_Definition index;
 		}
 	}
-	
+
 	public static class COBOL_ValueIsGlobal extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
 		public @S(20) COBOL_Keyword GLOBAL = new COBOL_Keyword("GLOBAL");
 	}
-	
+
 	public static class COBOL_DataComment extends TokenSequence
 	{
 		public @S(10) PunctuationStar star;
 		public @S(20) COBOL_CommentToEndOfLine comment;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -180,7 +181,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				}
 
 			}
-			
+
 			// Check for REDEFINES first
 			EagleValue value = null;
 			if (redefines != null)
@@ -192,7 +193,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					interpreter._symbolTable.removeSymbols(redefines);
 				}
 			}
-			
+
 			// Now check for PICTURE
 			else if (pic == null)
 			{
@@ -210,12 +211,12 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				System.err.println("*** data " + level + " " + varName + " " + pic);
 			}
-			interpreter._symbolTable.setSymbol(dataDef.getFileName(), dataDef.getStartLine(),
-					dataDef.getStartChar(), varName, value);
+			interpreter._symbolTable.setSymbol(dataDef.getFileName(), dataDef.getStartLine(), dataDef.getStartChar(),
+					varName, value);
 
 		}
 	}
-	
+
 	private static ArrayValue collectArrayValues(COBOL_DataDeclaration dataDeclaration)
 	{
 		// Look at all the children

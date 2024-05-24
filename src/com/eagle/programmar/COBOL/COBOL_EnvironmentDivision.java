@@ -21,7 +21,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 	public @S(30) PunctuationPeriod dot;
 	public @S(40) @OPT TokenList<COBOL_Comment> comments1;
 	public @S(50) @OPT TokenList<COBOL_EnvironmentEntry> entries;
-	
+
 	public static class COBOL_EnvironmentEntry extends TokenChooser
 	{
 		public @CHOICE COBOL_ClassControl classControl;
@@ -30,14 +30,14 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 		public @CHOICE COBOL_SpecialNames specialNames;
 		public @CHOICE COBOL_FileControl fileControl;
 	}
-	
+
 	public static class COBOL_ClassControl extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword CLASSCONTROL = new COBOL_Keyword("CLASS-CONTROL");
 		public @S(20) PunctuationPeriod dot1;
 		public @S(30) TokenList<COBOL_ClassControlIs> controlIsList;
 		public @S(40) PunctuationPeriod dot2;
-		
+
 		public static class COBOL_ClassControlIs extends TokenSequence
 		{
 			public @S(10) COBOL_Class_Definition classDef;
@@ -46,7 +46,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 			public @S(40) COBOL_Literal name;
 		}
 	}
-	
+
 	public static class COBOL_ConfigurationSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword CONFIGURATION = new COBOL_Keyword("CONFIGURATION");
@@ -56,7 +56,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 		public @S(50) @OPT TokenList<COBOL_Computer> computers;
 		public @S(60) @OPT COBOL_SpecialNames specialNames;
 		public @S(70) @OPT TokenList<COBOL_Comment> comments2;
-		
+
 		public static class COBOL_Computer extends TokenSequence
 		{
 			public @S(10) COBOL_KeywordChoice source = new COBOL_KeywordChoice("SOURCE-COMPUTER", "OBJECT-COMPUTER");
@@ -65,7 +65,7 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 			public @S(40) PunctuationPeriod dot2;
 		}
 	}
-	
+
 	public static class COBOL_InputOutputSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword INPUTOUTPUT = new COBOL_Keyword("INPUT-OUTPUT");
@@ -74,14 +74,14 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 		public @S(40) @OPT TokenList<COBOL_Comment> comments1;
 		public @S(50) @OPT TokenList<COBOL_IOSectionEntry> entries;
 	}
-	
+
 	public static class COBOL_IOSectionEntry extends TokenChooser
 	{
 		public @CHOICE COBOL_FileControl fileControl;
 		public @CHOICE COBOL_IOControl ioControl;
 		public @CHOICE COBOL_IOControlSelect selectControl;
 	}
-	
+
 	public static class COBOL_IOControl extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword IOCONTROL = new COBOL_Keyword("I-O-CONTROL");

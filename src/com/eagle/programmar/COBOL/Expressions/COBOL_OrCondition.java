@@ -16,7 +16,7 @@ public class COBOL_OrCondition extends PrecedenceOperator implements EagleRunnab
 	public @S(20) COBOL_Keyword OR = new COBOL_Keyword("OR");
 	public @S(30) @OPT COBOL_RelationalOperator relationalOperator;
 	public @S(40) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

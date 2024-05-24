@@ -11,17 +11,17 @@ public class Powershell_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if ( ! genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_-", false, false)) return false;
+		if (!genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_-", false, false)) return false;
 		removeTrailingHyphens();
 		return true;
 	}
-	
+
 	protected void removeTrailingHyphens()
 	{
 		// Cannot have the last character be a minus sign (-) in an identifier
 		while (_id.endsWith("-"))
 		{
-			_id = _id.substring(0, _id.length() - 1);	// Toss the - at the end
+			_id = _id.substring(0, _id.length() - 1); // Toss the - at the end
 			_currentChar--;
 			_endChar--;
 		}

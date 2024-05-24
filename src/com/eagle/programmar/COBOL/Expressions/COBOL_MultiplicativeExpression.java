@@ -30,7 +30,7 @@ public class COBOL_MultiplicativeExpression extends PrecedenceOperator implement
 			interpreter.pushInt(leftValue / rightValue);
 			break;
 		default:
-			throw new RuntimeException("Unable to handle " + timesDivide + " in COBOL_MultiplicativeExpression");	
+			throw new RuntimeException("Unable to handle " + timesDivide + " in COBOL_MultiplicativeExpression");
 		}
 	}
 }

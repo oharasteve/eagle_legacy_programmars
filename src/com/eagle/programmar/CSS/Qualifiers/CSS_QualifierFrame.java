@@ -10,10 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class CSS_QualifierFrame extends TokenSequence
 {
-	public @S(10) CSS_KeywordChoice FRAME = new CSS_KeywordChoice(
-			"aria-valuenow",
-			"frame",
-			"page");
+	public @S(10) CSS_KeywordChoice FRAME = new CSS_KeywordChoice("aria-valuenow", "frame", "page");
 	public @S(20) PunctuationEquals equals;
 	public @S(30) CSS_Literal literal;
 }

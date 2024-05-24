@@ -24,7 +24,7 @@ public class AWK_Function extends TokenSequence implements AbstractFunction
 	public @S(30) AWK_Function_ParameterDefs parameters;
 	public @S(40) @OPT TokenList<AWK_Comment> comments;
 	public @S(50) AWK_FunctionBody body;
-	
+
 	public static class AWK_Function_ParameterDefs extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -41,7 +41,7 @@ public class AWK_Function extends TokenSequence implements AbstractFunction
 		public @S(20) @OPT AWK_Comment comment;
 		public @S(30) AWK_Identifier param;
 	}
-	
+
 	public static class AWK_FunctionBody extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;

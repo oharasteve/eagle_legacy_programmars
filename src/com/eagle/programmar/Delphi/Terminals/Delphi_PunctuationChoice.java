@@ -12,7 +12,7 @@ public class Delphi_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Delphi_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

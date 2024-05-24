@@ -25,11 +25,11 @@ public class CMD_Perl_Statement extends TokenSequence
 	public @S(70) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 	public @S(80) CMD_Rem_Statement remStatement;
 	public @S(90) CMD_EndOfLine eoln3;
-	
+
 	public @S(100) @SYNTAX(Perl_Syntax.class) Perl_Program perlProgram;
 
 	public @S(110) @SYNTAX(Perl_Syntax.class) Perl_Keyword END = new Perl_Keyword("__END__");
-	
+
 	public static class CMD_Perl_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Perl_Option_E extends TokenSequence

@@ -27,7 +27,7 @@ public class Powershell_ForEachStatement extends TokenSequence
 	public @S(50) @OPT Powershell_EndOfLine eoln2;
 	public @S(60) TokenList<Powershell_Statement> stmts;
 	public @S(70) PunctuationRightBrace rightBrace;
-	
+
 	public static class Powershell_ForEach extends TokenChooser
 	{
 		public @CHOICE Powershell_Punctuation percent = new Powershell_Punctuation("%");

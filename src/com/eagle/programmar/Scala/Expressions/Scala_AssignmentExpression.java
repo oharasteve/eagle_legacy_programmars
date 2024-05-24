@@ -10,12 +10,6 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Scala_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Scala_Expression var = new Scala_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Scala_PunctuationChoice equals = new Scala_PunctuationChoice(
-			":=",
-			"*=",
-			"/=",
-			"%=",
-			"+=",
-			"-=");
+	public @S(20) Scala_PunctuationChoice equals = new Scala_PunctuationChoice(":=", "*=", "/=", "%=", "+=", "-=");
 	public @S(30) Scala_Expression expr;
 }

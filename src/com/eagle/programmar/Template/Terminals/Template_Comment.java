@@ -14,19 +14,19 @@ public class Template_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Template_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
-		if (_currentChar+1 < rec.length())
+		if (_currentChar + 1 < rec.length())
 		{
 			char ch1 = rec.charAt(_currentChar);
 			if (ch1 == '/')

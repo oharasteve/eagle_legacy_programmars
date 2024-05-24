@@ -14,7 +14,7 @@ public class COBOL_Sentence extends TokenSequence implements EagleRunnable
 	public @S(10) TokenList<COBOL_StatementOrComment> statements;
 	public @S(20) @OPT PunctuationPeriod dot1;
 	public @S(30) @CURIOUS("SENTENCE: Extra dot") @OPT PunctuationPeriod dot2;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

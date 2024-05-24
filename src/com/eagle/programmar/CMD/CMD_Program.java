@@ -18,34 +18,34 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 public class CMD_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String CMD = "CMD";
-	
+
 	public CMD_Program()
 	{
 		super(CMD, new CMD_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/";
 	}
-	
+
 	public @S(10) @OPT TokenList<CMD_CommandOrLabelOrUnparsed> commands;
-	
+
 	public @SKIP static class CMD_CommandOrLabelOrUnparsed extends TokenChooser
 	{
 		public @CHOICE CMD_Command command;
 		public @CHOICE CMD_Label label;
 		public @LAST CMD_Unparsed_Statement unparsed;
 	}
-	
+
 	public @SKIP static class CMD_Label extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) CMD_Label_Definition label;
 		public @S(30) CMD_EndOfLine eoln;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -59,7 +59,7 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 				interpreter._functionList.add(fn);
 			}
 		}
-		
+
 		// Second pass, execute the program
 		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
 		{

@@ -12,7 +12,7 @@ public class Lisp_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Lisp_KeywordChoice(String... words)
 	{
 		super(words);

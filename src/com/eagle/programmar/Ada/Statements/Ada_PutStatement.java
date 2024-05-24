@@ -19,13 +19,13 @@ public class Ada_PutStatement extends TokenSequence implements EagleRunnable
 	public @S(20) Ada_KeywordChoice PUT = new Ada_KeywordChoice("put", "put_line");
 	public @S(30) Ada_Expression expr;
 	public @S(40) PunctuationSemicolon semicolon;
-	
+
 	public static class Ada_Put_Unbounded_IO extends TokenSequence
 	{
 		public @S(10) Ada_Keyword UNBOUNDED_IO = new Ada_Keyword("Unbounded_IO");
 		public @S(20) PunctuationPeriod dot;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

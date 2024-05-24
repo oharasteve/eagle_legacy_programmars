@@ -19,7 +19,7 @@ public class Scala_IfStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) Scala_Statement thenStatement;
 	public @S(60) @OPT Scala_IfElseClause elseClause;
-	
+
 	public static class Scala_IfElseClause extends TokenSequence
 	{
 		public @S(10) Scala_Keyword ELSE = new Scala_Keyword("else");

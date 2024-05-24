@@ -30,7 +30,7 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable
 			public @S(10) TokenList<COBOL_CopyOrDataDeclaration> data;
 		}
 	}
-	
+
 	public static class COBOL_ParagraphHeader extends TokenSequence
 	{
 		public @S(10) COBOL_Paragraph_Definition paragraphName;

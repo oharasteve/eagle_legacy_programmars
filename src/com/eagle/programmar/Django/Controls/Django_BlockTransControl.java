@@ -18,13 +18,13 @@ public class Django_BlockTransControl extends TokenSequence
 	public @S(20) @OPT Django_BlockControlWith with;
 	public @S(30) @OPT PunctuationHyphen dash2;
 	public @S(40) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
-	
+
 	public @S(50) @OPT TokenList<Django_Element> html;
 
 	public @S(60) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");
 	public @S(70) @OPT PunctuationHyphen dash3;
 	public @S(80) Django_Keyword ENDBLOCK = new Django_Keyword("endblocktrans");
-	
+
 	public static class Django_BlockControlWith extends TokenSequence
 	{
 		public @S(10) Django_Keyword WITH = new Django_Keyword("with");

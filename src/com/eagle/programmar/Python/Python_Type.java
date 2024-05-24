@@ -30,7 +30,7 @@ public class Python_Type extends TokenChooser implements AbstractType
 		public @S(20) @OPT Python_TypeList typeList;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public @CHOICE static class Python_TypeBrackets extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -38,17 +38,9 @@ public class Python_Type extends TokenChooser implements AbstractType
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
-	public @CHOICE Python_KeywordChoice PRIMITIVES = new Python_KeywordChoice(
-			"Any",
-			"None",
-			"bool",
-			"bytes",
-			"float",
-			"int",
-			"object",
-			"str",
-			"Text");
-	
+	public @CHOICE Python_KeywordChoice PRIMITIVES = new Python_KeywordChoice("Any", "None", "bool", "bytes", "float",
+			"int", "object", "str", "Text");
+
 	public @FIRST static class Python_MetaClass extends TokenSequence
 	{
 		public @S(10) Python_Keyword METEACLASS = new Python_Keyword("metaclass");
@@ -59,38 +51,24 @@ public class Python_Type extends TokenChooser implements AbstractType
 	public @FIRST static class Python_StructuredType extends TokenSequence
 	{
 		public @S(10) @OPT Python_TypeTyping typing;
-		public @S(20) Python_KeywordChoice TUPLE = new Python_KeywordChoice(
-				"Awaitable", "awaitable",
-				"Callable", "callable",
-				"Coroutine", "coroutine",
-				"DefaultDict", "defaultdict",
-				"Dict", "dict",
-				"Generic", "generic",
-				"Iterable", "iterable",
-				"Iterator", "iterator",
-				"List", "list",
-				"Map", "map",
-				"Mapping", "mapping",
-				"MutableMapping", "mutablemapping",
-				"Optional", "optional",
-				"Sequence", "sequence",
-				"Set", "set",
-				"Tuple", "tuple",
-				"Type", "type",
-				"Union", "union");
+		public @S(20) Python_KeywordChoice TUPLE = new Python_KeywordChoice("Awaitable", "awaitable", "Callable",
+				"callable", "Coroutine", "coroutine", "DefaultDict", "defaultdict", "Dict", "dict", "Generic",
+				"generic", "Iterable", "iterable", "Iterator", "iterator", "List", "list", "Map", "map", "Mapping",
+				"mapping", "MutableMapping", "mutablemapping", "Optional", "optional", "Sequence", "sequence", "Set",
+				"set", "Tuple", "tuple", "Type", "type", "Union", "union");
 		public @S(30) Python_TypeBrackets typeList;
-		
+
 		public static class Python_TypeTyping extends TokenSequence
 		{
 			public @S(10) Python_Keyword TYPING = new Python_Keyword("typing");
 			public @S(20) PunctuationPeriod dot;
 		}
 	}
-	
+
 	public @CHOICE static class Python_Regular_Class extends TokenSequence
 	{
-		public @S(10) SeparatedList<Python_TypeName,PunctuationPeriod> superClass;
-		
+		public @S(10) SeparatedList<Python_TypeName, PunctuationPeriod> superClass;
+
 		public static class Python_TypeName extends TokenChooser
 		{
 			public @CHOICE Python_Keyword SELF = new Python_Keyword("self");

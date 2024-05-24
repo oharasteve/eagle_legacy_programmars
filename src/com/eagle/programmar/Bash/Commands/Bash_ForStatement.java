@@ -18,10 +18,10 @@ public class Bash_ForStatement extends TokenSequence
 	public @S(30) Bash_Keyword IN = new Bash_Keyword("in");
 	public @S(40) TokenList<Bash_Expression> values;
 	public @S(50) Bash_EndOfLine eoln1;
-	
+
 	public @S(60) Bash_Keyword DO = new Bash_Keyword("do");
 	public @S(70) @OPT Bash_EndOfLine eoln2;
 	public @S(80) TokenList<Bash_Statement> statements;
-	
+
 	public @S(90) Bash_Keyword DONE = new Bash_Keyword("done");
 }

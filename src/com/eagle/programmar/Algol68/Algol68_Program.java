@@ -20,12 +20,12 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Algol68_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String ALGOL68 = "Algol68";
-	
+
 	public Algol68_Program()
 	{
 		super(ALGOL68, new Algol68_Syntax());
 	}
-	
+
 	@Override
 	public String booleanName(boolean flag)
 	{
@@ -40,11 +40,11 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 	}
 
 	public @S(10) TokenList<Algol68_Element> elements;
-	
+
 	public static class Algol68_Element extends TokenChooser
 	{
 		public @CHOICE Algol68_Statement statement;
-		
+
 		public @CHOICE static class Algol68_Main extends TokenSequence
 		{
 			public @S(10) Algol68_Keyword MAIN = new Algol68_Keyword("MAIN");
@@ -72,7 +72,7 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 				}
 			}
 		}
-		
+
 		// Second pass, execute the program
 		for (Algol68_Element element : elements._elements)
 		{

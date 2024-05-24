@@ -17,7 +17,7 @@ public class TCL_IfStatement extends TokenSequence
 	public @S(40) TCL_PunctuationChoice right = new TCL_PunctuationChoice("}", ")");
 	public @S(50) TCL_Statement stmt;
 	public @S(60) @OPT TCL_ElseClause elseClause;
-	
+
 	public static class TCL_ElseClause extends TokenSequence
 	{
 		public @S(10) TCL_Keyword ELSE = new TCL_Keyword("else");

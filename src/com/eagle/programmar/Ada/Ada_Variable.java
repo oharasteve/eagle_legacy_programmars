@@ -18,9 +18,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Ada_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) @OPT Ada_Punctuation dollar = new Ada_Punctuation("$");
-	public @S(20) SeparatedList<Ada_Identifier_Reference,PunctuationPeriod> vars;
+	public @S(20) SeparatedList<Ada_Identifier_Reference, PunctuationPeriod> vars;
 	public @S(30) @OPT Ada_Subscript subscript;
-	
+
 	public static class Ada_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

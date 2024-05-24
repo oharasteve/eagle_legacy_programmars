@@ -14,17 +14,17 @@ public class JavaP_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public JavaP_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar + 1 >= nc) return false;
@@ -33,9 +33,9 @@ public class JavaP_Comment extends TerminalCommentToken
 		char ch = rec.charAt(_currentChar + 1);
 		switch (ch)
 		{
-		case '/' :
+		case '/':
 			return super.possibleCommentToEndOfLine(rec, "//");
-		case '*' :
+		case '*':
 			return super.possibleCommentPair2(lines, rec, "/*", "*/");
 		}
 		return false;

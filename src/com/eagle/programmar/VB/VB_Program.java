@@ -11,18 +11,18 @@ import com.eagle.tokens.TokenList;
 public class VB_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String VB = "VB";
-	
+
 	public VB_Program()
 	{
 		super(VB, new VB_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://msdn.microsoft.com/en-us/library/";
 	}
-	
+
 	public @S(10) @OPT TokenList<VB_Statement> elements;
 
 	@Override

@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class Lisp_LoopTerminationTest extends TokenSequence
 {
-	public @S(10) Lisp_KeywordChoice when = new Lisp_KeywordChoice(
-			"while", "until", "repeat", "always", "never", "thereis");
+	public @S(10) Lisp_KeywordChoice when = new Lisp_KeywordChoice("while", "until", "repeat", "always", "never",
+			"thereis");
 	public @S(20) Lisp_SExpr condition;
 }

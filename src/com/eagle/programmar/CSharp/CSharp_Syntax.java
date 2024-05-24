@@ -15,19 +15,22 @@ public class CSharp_Syntax extends EagleSyntax
 	{
 		return "CSharp";
 	}
-	
+
 	public CSharp_Syntax()
 	{
 		_isCaseSensitive = isCaseSensitive;
 		_continuationChar = null;
 		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "//", "...", "::" };
+		_punctuationExceptions = new String[] {
+				"!=", "<=", "==", ">=", "=>", "//", "...", "::"
+		};
 		_commentInstance = new CSharp_Comment();
-		
+
 		addReservedWords(reservedWords);
 	}
-	
-	// From https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
+
+	// From
+	// https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
 	private static String[] reservedWords = new String[] {
 			"abstract",
 			"as",

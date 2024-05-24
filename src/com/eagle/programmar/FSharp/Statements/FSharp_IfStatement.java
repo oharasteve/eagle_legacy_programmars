@@ -18,7 +18,7 @@ public class FSharp_IfStatement extends TokenSequence
 	public @S(40) FSharp_SingleOrMultiLineStatement ifThen;
 	public @S(50) @OPT TokenList<FSharp_IfElif> ifElif;
 	public @S(60) @OPT FSharp_IfElse ifElse;
-	
+
 	public static class FSharp_IfElif extends TokenSequence
 	{
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
@@ -26,7 +26,7 @@ public class FSharp_IfStatement extends TokenSequence
 		public @S(30) FSharp_Expression condition;
 		public @S(40) FSharp_SingleOrMultiLineStatement elifStatement;
 	}
-		
+
 	public static class FSharp_IfElse extends TokenSequence
 	{
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();

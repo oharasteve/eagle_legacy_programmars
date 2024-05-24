@@ -27,7 +27,7 @@ public class Natural_DisplayStatement extends TokenSequence
 	public @S(20) @OPT Natural_Keyword NOTITLE = new Natural_Keyword("NOTITLE");
 	public @S(30) @OPT Natural_DisplayFunctions displayFns;
 	public @S(40) TokenList<Natural_DisplayElement> displayElement;
-	
+
 	public static class Natural_DisplayFunctions extends TokenSequence
 	{
 		public @S(10) @OPT Natural_Keyword AND = new Natural_Keyword("AND");
@@ -35,7 +35,7 @@ public class Natural_DisplayStatement extends TokenSequence
 		public @S(30) @OPT Natural_Keyword SYSTEM = new Natural_Keyword("SYSTEM");
 		public @S(40) Natural_Keyword FUNCTIONS = new Natural_Keyword("FUNCTIONS");
 	}
-	
+
 	public static class Natural_DisplayElement extends TokenChooser
 	{
 		public @CHOICE Natural_Option displayOption;
@@ -47,7 +47,7 @@ public class Natural_DisplayStatement extends TokenSequence
 		public @CHOICE Natural_KeywordChoice option = new Natural_KeywordChoice("HORIZ", "UNDERLINED", "TRAILER");
 		public @CHOICE Natural_FunctionCall fnCall;
 		public @CHOICE Natural_DisplayParameter parameter;
-		
+
 		public @CHOICE static class Natural_Justified extends TokenSequence
 		{
 			public @S(10) Natural_Keyword LEFT = new Natural_Keyword("LEFT");
@@ -60,33 +60,33 @@ public class Natural_DisplayStatement extends TokenSequence
 			public @S(20) PunctuationStar star;
 			public @S(30) Natural_Variable var;
 		}
-		
+
 		public @CHOICE static class Natural_FieldAndLinePositioning extends TokenSequence
 		{
 			public @S(10) Natural_Keyword P = new Natural_Keyword("P");
 			public @S(20) PunctuationStar star;
 			public @S(30) Natural_Variable var;
 		}
-		
+
 		public @CHOICE static class Natural_Vertical extends TokenSequence
 		{
 			public @S(10) Natural_Keyword VERT = new Natural_Keyword("VERT");
 			public @S(20) @OPT Natural_Keyword AS = new Natural_Keyword("AS");
 			public @S(30) Natural_Literal literal;
 		}
-		
+
 		public @CHOICE static class Natural_VerticalCaptioned extends TokenSequence
 		{
 			public @S(10) Natural_Keyword VERT = new Natural_Keyword("VERT");
 			public @S(20) @OPT Natural_Keyword AS = new Natural_Keyword("AS");
 			public @S(30) Natural_Keyword CAPTIONED = new Natural_Keyword("CAPTIONED");
 		}
-		
+
 		public @CHOICE static class Natural_Display_Literal extends TokenSequence
 		{
 			public @S(10) Natural_Literal literal;
 			public @S(20) @OPT Natural_LiteralCount count;
-			
+
 			public static class Natural_LiteralCount extends TokenSequence
 			{
 				public @S(10) PunctuationLeftParen leftParen;
@@ -94,7 +94,7 @@ public class Natural_DisplayStatement extends TokenSequence
 				public @S(30) PunctuationRightParen rightParen;
 			}
 		}
-		
+
 		public @CHOICE static class Natural_Relative_Positioning extends TokenSequence
 		{
 			public @S(10) Natural_Number lines;

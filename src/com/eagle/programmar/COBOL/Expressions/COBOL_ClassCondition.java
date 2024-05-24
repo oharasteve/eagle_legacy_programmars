@@ -13,12 +13,6 @@ public class COBOL_ClassCondition extends PrimaryOperator
 	public @S(10) COBOL_Variable var;
 	public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 	public @S(30) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
-	public @S(40) COBOL_KeywordChoice type = new COBOL_KeywordChoice(
-			"ALPHABETIC",
-			"ALPHABETIC-LOWER",
-			"ALPHABETIC-UPPER",
-			"NEGATIVE",
-			"NUMERIC", 
-			"POSITIVE",
-			"ZERO");
+	public @S(40) COBOL_KeywordChoice type = new COBOL_KeywordChoice("ALPHABETIC", "ALPHABETIC-LOWER",
+			"ALPHABETIC-UPPER", "NEGATIVE", "NUMERIC", "POSITIVE", "ZERO");
 }

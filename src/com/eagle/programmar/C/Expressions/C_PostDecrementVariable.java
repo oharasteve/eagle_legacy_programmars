@@ -9,6 +9,6 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class C_PostDecrementVariable extends PrimaryOperator
 {
-	public @S(10) C_Variable var;		// Cannot be just C_Expression -- infinite loop
+	public @S(10) C_Variable var; // Cannot be just C_Expression -- infinite loop
 	public @S(20) C_Punctuation postDecrementOperator = new C_Punctuation("--");
 }

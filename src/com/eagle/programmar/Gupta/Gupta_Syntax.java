@@ -13,13 +13,13 @@ public class Gupta_Syntax extends EagleSyntax
 	{
 		return "Gupta";
 	}
-	
+
 	public Gupta_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
-		
+
 		findFirstWords(Gupta_Global_Declarations.class);
 	}
 }

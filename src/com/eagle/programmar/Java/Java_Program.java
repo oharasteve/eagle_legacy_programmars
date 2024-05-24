@@ -20,32 +20,32 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class Java_Program extends EagleLanguage implements EagleRunnable, EagleScopeInterface
 {
 	public static final String JAVA = "Java";
-	
+
 	public Java_Program()
 	{
 		super(JAVA, new Java_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://docs.oracle.com/javase/specs/jls/se5.0/html/";
 	}
-	
+
 	public static final String[] MODIFIERS = new String[] {
-		"abstract",
-		"default",
-		"final",
-		"native",
-		"private",
-		"protected",
-		"public",
-		"static",
-		"strictfp",
-		"synchronized",
-		"transient",
-		"volatile"
-	}; 
+			"abstract",
+			"default",
+			"final",
+			"native",
+			"private",
+			"protected",
+			"public",
+			"static",
+			"strictfp",
+			"synchronized",
+			"transient",
+			"volatile"
+	};
 
 	public @S(10) @OPT TokenList<Java_Comment> comments1;
 	public @S(20) @OPT Java_Annotation annotation;
@@ -53,7 +53,7 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 	public @S(40) @OPT Java_Package jpackage;
 	public @S(50) @OPT TokenList<Java_ImportOrComment> jimportList;
 	public @S(60) @OPT TokenList<Java_ClassOrEnum> classOrEnumList;
-	
+
 	public static class Java_ClassOrEnum extends TokenChooser
 	{
 		public @CHOICE Java_Class jclass;
@@ -66,21 +66,21 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 		public @S(20) Java_Identifier id;
 		public @S(30) @OPT TokenList<Java_MorePackageIds> moreIds;
 		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
-		
+
 		public static class Java_MorePackageIds extends TokenSequence
 		{
 			public @S(10) @NOSPACE PunctuationPeriod dot;
 			public @S(20) @NOSPACE Java_Identifier id;
 		}
 	}
-	
+
 	public static class Java_ImportOrComment extends TokenChooser
 	{
 		public @CHOICE @NEWLINE Java_Comment comment;
 		public @CHOICE @NEWLINE Java_Import jimport;
 		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon semicolon;
 	}
-	
+
 	public static class Java_Import extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword IMPORT = new Java_Keyword("import");
@@ -93,7 +93,7 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 		{
 			public @S(10) @NOSPACE PunctuationPeriod dot;
 			public @S(20) @NOSPACE Java_IdentifierStar idStar;
-			
+
 			public static class Java_IdentifierStar extends TokenChooser
 			{
 				public @CHOICE @NOSPACE Java_Identifier id;

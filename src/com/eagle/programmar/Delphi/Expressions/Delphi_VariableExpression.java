@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Delphi_VariableExpression extends PrimaryOperator
+public class Delphi_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Delphi_Variable variable;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(variable);
+	}
 }

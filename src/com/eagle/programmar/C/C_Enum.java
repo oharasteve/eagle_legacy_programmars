@@ -26,13 +26,13 @@ public class C_Enum extends TokenSequence
 	public @S(40) @OPT C_EnumType enumType;
 	public @S(50) @OPT C_TypeEnumValues values;
 	public @S(60) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class C_EnumType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) C_Type type;
 	}
-	
+
 	public static class C_TypeEnumValues extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
@@ -42,7 +42,7 @@ public class C_Enum extends TokenSequence
 		public @S(50) @OPT TokenList<C_Comment> comment2;
 		public @S(60) @OPT TokenList<C_MoreEnums> moreEnums;
 		public @S(70) PunctuationRightBrace rightBrace;
-		
+
 		public static class C_MoreEnums extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
@@ -51,7 +51,7 @@ public class C_Enum extends TokenSequence
 			public @S(40) @OPT C_EnumInitializer init;
 			public @S(50) @OPT TokenList<C_Comment> comment2;
 		}
-		
+
 		public static class C_EnumInitializer extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;

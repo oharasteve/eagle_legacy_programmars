@@ -18,12 +18,12 @@ public class HTML_Style extends TokenSequence
 	public @S(10) @INDENT HTML_StartStyle startStyle;
 	public @S(20) HTML_StyleBody body;
 	public @S(30) @OUTDENT HTML_EndStyle endStyle;
-	
+
 	public static class HTML_StyleBody extends TokenChooser
 	{
 		public @LAST @SYNTAX(CSS_Syntax.class) CSS_Program css;
 		public @CHOICE HTML_CData cdata;
-		
+
 		public @CHOICE static class HTML_StyleInclude extends TokenSequence
 		{
 			public @S(10) HTML_Punctuation leftBrace = new HTML_Punctuation("{%");
@@ -37,7 +37,7 @@ public class HTML_Style extends TokenSequence
 	{
 		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
 		public @S(20) @NOSPACE @DOC("html_styles.asp") HTML_Keyword STYLE = new HTML_Keyword("style");
-		public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+		public @S(30) @OPT TokenList<HTML_Attribute> attributes;
 		public @S(40) @NOSPACE HTML_Punctuation endTag1 = new HTML_Punctuation('>');
 	}
 

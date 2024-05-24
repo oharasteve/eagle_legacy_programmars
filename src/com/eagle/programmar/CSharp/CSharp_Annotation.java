@@ -31,7 +31,7 @@ public class CSharp_Annotation extends TokenSequence
 		public @S(20) @OPT CSharp_AnnotionAssembly assembly;
 		public @S(30) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
 		public @S(40) @OPT CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
-		public @S(50) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
+		public @S(50) SeparatedList<CSharp_Identifier, PunctuationPeriod> ids;
 		public @S(60) @OPT CSharp_AnnotationParams params;
 	}
 
@@ -40,20 +40,20 @@ public class CSharp_Annotation extends TokenSequence
 		public @S(10) CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
 		public @S(20) CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
 	}
-	
+
 	public static class CSharp_AnnotionAssembly extends TokenSequence
 	{
 		public @S(10) CSharp_KeywordChoice ASSEMBLY = new CSharp_KeywordChoice("assembly", "return");
 		public @S(20) PunctuationColon colon;
 	}
-	
+
 	public static class CSharp_AnnotationParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT CSharp_ArgumentList argList;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class CSharp_MoreAnnotations extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

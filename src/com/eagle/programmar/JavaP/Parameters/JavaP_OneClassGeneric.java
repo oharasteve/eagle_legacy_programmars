@@ -12,6 +12,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class JavaP_OneClassGeneric extends TokenSequence
 {
 	public @S(10) JavaP_Punctuation lessThan = new JavaP_Punctuation('<');
-	public @S(20) SeparatedList<JavaP_MethodArgument,PunctuationComma> names;
+	public @S(20) SeparatedList<JavaP_MethodArgument, PunctuationComma> names;
 	public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 }

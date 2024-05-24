@@ -18,31 +18,29 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class HTML_DocType extends TokenSequence
 {
-	static String[] SUFFIXES = new String[] { "+", "?", "*" };
-	
+	static String[] SUFFIXES = new String[] {
+			"+", "?", "*"
+	};
+
 	public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<!");
-	public @S(20) @NOSPACE HTML_KeywordChoice DOCTYPE = new HTML_KeywordChoice(
-			"ATTLIST",
-			"DOCTYPE",
-			"ELEMENT",
-			"ENTITY",
-			"NOTATION");
-	public @S(30) TokenList<HTML_DocValue> values; 
+	public @S(20) @NOSPACE HTML_KeywordChoice DOCTYPE = new HTML_KeywordChoice("ATTLIST", "DOCTYPE", "ELEMENT",
+			"ENTITY", "NOTATION");
+	public @S(30) TokenList<HTML_DocValue> values;
 	public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
-	
+
 	public static class HTML_DocValue extends TokenChooser
 	{
 		public @CHOICE HTML_Value value;
 		public @CHOICE HTML_DocType docType;
 		public @CHOICE HTML_Comment comment;
-		
+
 		public @CHOICE static class HTML_DocBrackets extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) TokenList<HTML_DocValue> values; 
+			public @S(20) TokenList<HTML_DocValue> values;
 			public @S(30) PunctuationRightBracket rightBracket;
 		}
-		
+
 		public @CHOICE static class HTML_DocParens extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
@@ -51,7 +49,7 @@ public class HTML_DocType extends TokenSequence
 			public @S(40) @OPT TokenList<HTML_DocMoreValues> more;
 			public @S(50) PunctuationRightParen rightParen;
 			public @S(60) @OPT HTML_Punctuation plus = new HTML_Punctuation('+');
-			
+
 			public static class HTML_DocMoreValues extends TokenSequence
 			{
 				public @S(10) HTML_PunctuationChoice commaOrBar = new HTML_PunctuationChoice(",", "|");

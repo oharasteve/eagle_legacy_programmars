@@ -20,14 +20,14 @@ public class AWK_Action extends TokenSequence implements EagleRunnable
 	public @S(30) @OPT TokenList<AWK_StatementOrComment> statements;
 	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) @OPT AWK_EndOfLine eoln2;
-	
+
 	public static class AWK_StatementOrComment extends TokenChooser
 	{
 		public @CHOICE AWK_Statements statements;
 		public @CHOICE AWK_Comment comment;
 		public @CHOICE AWK_Action action;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

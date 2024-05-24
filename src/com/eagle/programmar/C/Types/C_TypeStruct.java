@@ -34,7 +34,7 @@ public class C_TypeStruct extends TokenSequence
 	public @S(50) @OPT C_Comment comment2;
 	public @S(60) @OPT C_StructBody body;
 	public @S(70) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class C_StructBody extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
@@ -49,7 +49,7 @@ public class C_TypeStruct extends TokenSequence
 		public @CHOICE C_FunctionPointer functionPtr;
 		public @LAST C_TypeUnion union;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-		
+
 		public @CHOICE static class C_Field extends TokenSequence
 		{
 			public @S(10) C_Type jtype;
@@ -60,7 +60,7 @@ public class C_TypeStruct extends TokenSequence
 			public @S(60) @OPT TokenList<C_MoreFields> more;
 			public @S(70) PunctuationSemicolon semicolon;
 			public @S(80) @OPT TokenList<C_Comment> comments;
-			
+
 			public static class C_TypeNumberOfBits extends TokenSequence
 			{
 				public @S(10) PunctuationColon colon;
@@ -76,7 +76,7 @@ public class C_TypeStruct extends TokenSequence
 				public @S(50) @OPT TokenList<C_Subscript> subscripts;
 				public @S(60) @OPT C_FieldInitialValue initialValue;
 			}
-			
+
 			public static class C_FieldInitialValue extends TokenSequence
 			{
 				public @S(10) PunctuationEquals equals;

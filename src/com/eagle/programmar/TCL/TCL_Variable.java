@@ -12,7 +12,7 @@ public class TCL_Variable extends TokenSequence
 {
 	public @S(10) TCL_Identifier_Reference id;
 	public @S(20) @OPT TCL_Subscript subscript;
-	
+
 	public static class TCL_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

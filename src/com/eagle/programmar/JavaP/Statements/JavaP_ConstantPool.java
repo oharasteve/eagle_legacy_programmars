@@ -27,9 +27,9 @@ public class JavaP_ConstantPool extends TokenSequence
 	public @S(20) JavaP_Keyword POOL = new JavaP_Keyword("pool");
 	public @S(30) PunctuationColon colon;
 	public @S(40) JavaP_EndOfLine eoln;
-	
+
 	public @S(50) TokenList<JavaP_Constant> constants;
-	
+
 	public static class JavaP_Constant extends TokenSequence
 	{
 		public @S(10) @OPT JavaP_Keyword CONST = new JavaP_Keyword("const");
@@ -39,7 +39,7 @@ public class JavaP_ConstantPool extends TokenSequence
 		public @S(50) @OPT PunctuationSemicolon semicolon;
 		public @S(60) @OPT JavaP_Comment comment;
 		public @S(70) JavaP_EndOfLine eoln;
-		
+
 		public static class JavaP_ConstantType extends TokenChooser
 		{
 			// All of these need to implement the JavaP_ConstantShowable interface
@@ -52,7 +52,7 @@ public class JavaP_ConstantPool extends TokenSequence
 			public @CHOICE JavaP_ConstantUtf8 constantUtf8;
 		}
 	}
-	
+
 	public interface JavaP_ConstantShowable
 	{
 		public String showConstant();

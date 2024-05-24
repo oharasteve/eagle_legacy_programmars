@@ -19,7 +19,7 @@ public class Python_Comment extends TerminalCommentToken implements AbstractComm
 	{
 		super(comment, hasEOLN);
 	}
-	
+
 	public Python_Comment(String comment)
 	{
 		super(comment);
@@ -34,20 +34,20 @@ public class Python_Comment extends TerminalCommentToken implements AbstractComm
 		if (_currentChar < nc)
 		{
 			char ch = rec.charAt(_currentChar);
-				
+
 			if (ch == '#')
 			{
 				foundIt(_currentLine, nc);
 				_comment = rec.substring(_currentChar, nc);
 				return true;
 			}
-			
+
 			if (ch == '/')
 			{
 				return super.possibleCommentPair2(lines, rec, "/*", "*/");
 			}
 		}
-		
+
 		return false;
 	}
 }

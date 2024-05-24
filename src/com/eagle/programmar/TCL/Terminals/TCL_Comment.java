@@ -23,7 +23,7 @@ public class TCL_Comment extends TerminalCommentToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar >= nc || rec.charAt(_currentChar) != '#') return false;

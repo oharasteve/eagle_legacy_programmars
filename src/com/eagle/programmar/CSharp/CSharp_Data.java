@@ -34,27 +34,27 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		public @S(70) @OPT PunctuationRightBracket rightBracket;
 		public @S(80) @OPT CSharp_DataInitialValue initialValue;
 		public @S(90) @OPT TokenList<CSharp_MoreIdentifiers> moreIds;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
 			EagleValue value = interpreter.getEagleValue(initialValue.expression);
-			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(),
-					id.getStartChar(), id.toString(), value);
+			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
+					value);
 		}
 	}
-	
+
 	public static class CSharp_DataModifier extends TokenSequence
 	{
 		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
-	
+
 	public static class CSharp_DataInitialValue extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) CSharp_Expression expression;
 	}
-	
+
 	public static class CSharp_MoreIdentifiers extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

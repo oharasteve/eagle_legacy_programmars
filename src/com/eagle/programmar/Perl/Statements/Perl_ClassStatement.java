@@ -32,19 +32,19 @@ public class Perl_ClassStatement extends TokenSequence
 	{
 		public @S(10) Perl_KeywordChoice modifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);
 	}
-	
+
 	public static class Perl_ClassExtends extends TokenSequence
 	{
 		public @S(10) Perl_KeywordChoice EXTENDS = new Perl_KeywordChoice("extends", "implements");
 		public @S(20) TokenList<Perl_ExtendsName> extendsName;
 		public @S(30) @OPT TokenList<Perl_MoreExtends> moreExtends;
-		
+
 		public static class Perl_ExtendsName extends TokenSequence
 		{
 			public @S(10) @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 			public @S(20) Perl_Identifier_Reference id;
 		}
-		
+
 		public static class Perl_MoreExtends extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;

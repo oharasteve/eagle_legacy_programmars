@@ -10,7 +10,8 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Bash_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
-	// Because Bash_Variable is not a TerminalToken, it has to be wrapped in a PrimaryOperator
+	// Because Bash_Variable is not a TerminalToken, it has to be wrapped in a
+	// PrimaryOperator
 	public @S(10) Bash_Variable variable;
 
 	@Override

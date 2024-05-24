@@ -12,8 +12,7 @@ import com.eagle.tokens.TokenSequence;
 public class Scala_Assignment extends TokenSequence
 {
 	public @S(10) Scala_Variable var;
-	public @S(20) Scala_PunctuationChoice equals = new Scala_PunctuationChoice(
-			"=", "+=", "-=", "*=", "/=", ":=");
+	public @S(20) Scala_PunctuationChoice equals = new Scala_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
 	public @S(30) Scala_Expression value;
 	public @S(40) Scala_EOLN eoln;
 }

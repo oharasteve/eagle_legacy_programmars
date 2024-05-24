@@ -22,7 +22,7 @@ public class Python_BracesColons extends PrimaryOperator
 	public @S(30) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_Dictionary dictionary;
 	public @S(40) @OPT Python_EndOfLine eoln2;
 	public @S(50) PunctuationRightBrace rightBrace;
-	
+
 	public static class Python_Dictionary extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<Python_Comment> comment1;
@@ -30,7 +30,7 @@ public class Python_BracesColons extends PrimaryOperator
 		public @S(30) @OPT TokenList<Python_MoreDictionaryElement> nextElement;
 		public @S(40) @OPT PunctuationComma comma;
 		public @S(50) @OPT TokenList<Python_Comment> comment2;
-		
+
 		public static class Python_DictionaryElement extends TokenSequence
 		{
 			public @S(10) Python_Expression key;
@@ -39,7 +39,7 @@ public class Python_BracesColons extends PrimaryOperator
 			public @S(40) @OPT Python_Comment comment;
 			public @S(50) Python_Expression value;
 		}
-		
+
 		public static class Python_MoreDictionaryElement extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;

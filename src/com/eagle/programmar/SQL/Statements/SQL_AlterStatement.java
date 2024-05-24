@@ -16,7 +16,7 @@ public class SQL_AlterStatement extends TokenSequence
 	public @S(10) SQL_Keyword ALTER = new SQL_Keyword("ALTER");
 	public @S(20) SQL_AlterWhat what;
 	public @S(30) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_AlterWhat extends TokenChooser
 	{
 		public @CHOICE static class SQL_AlterTable extends TokenSequence
@@ -26,7 +26,7 @@ public class SQL_AlterStatement extends TokenSequence
 			public @S(30) SQL_KeywordChoice ADD = new SQL_KeywordChoice("ADD");
 			public @S(40) SQL_Constraint constraint;
 			public @S(50) @OPT SQL_OnDelete onDelete;
-			
+
 			public static class SQL_OnDelete extends TokenSequence
 			{
 				public @S(10) SQL_Keyword ON = new SQL_Keyword("ON");

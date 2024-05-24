@@ -13,7 +13,7 @@ public class Perl_Literal extends TerminalLiteralToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		// Check for <<<STOPPER lines STOPPER
 		EagleLineReader rec = lines.get(_currentLine);
 		if (multilineStopper(lines, rec, "<<<")) return true;

@@ -14,9 +14,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Ruby_Variable extends TokenSequence
 {
 	public @S(10) @OPT Ruby_Punctuation dollar = new Ruby_Punctuation("$");
-	public @S(20) SeparatedList<Ruby_Identifier_Reference,PunctuationPeriod> vars;
+	public @S(20) SeparatedList<Ruby_Identifier_Reference, PunctuationPeriod> vars;
 	public @S(30) @OPT Ruby_Subscript subscript;
-	
+
 	public static class Ruby_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

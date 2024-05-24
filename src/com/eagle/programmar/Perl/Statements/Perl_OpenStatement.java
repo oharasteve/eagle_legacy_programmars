@@ -17,7 +17,7 @@ public class Perl_OpenStatement extends TokenSequence
 {
 	public @S(10) Perl_Keyword OPEN = new Perl_Keyword("open");
 	public @S(20) Perl_OpenWhat what;
-	
+
 	public static class Perl_OpenWhat extends TokenChooser
 	{
 		public @CHOICE static class Perl_OpenWithDirection extends TokenSequence

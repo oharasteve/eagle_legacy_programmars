@@ -37,16 +37,17 @@ public class VB_Expression extends PrecedenceChooser
 
 	public VB_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public VB_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -57,7 +58,7 @@ public class VB_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) VB_BuiltIn builtIn;
 	public @P(110) VB_FunctionCall functionCall;
 	public @P(120) VB_NegativeExpression negativeExpression;
@@ -65,7 +66,7 @@ public class VB_Expression extends PrecedenceChooser
 	public @P(140) VB_VariableExpression variableExpression;
 	public @P(150) VB_ParenthesizedExpression parenthesizedExpression;
 	public @P(160) VB_CommentExpression commentExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

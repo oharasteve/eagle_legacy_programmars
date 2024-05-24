@@ -13,7 +13,7 @@ public class Eaglish_Break_For extends TokenSequence implements EagleRunnableWit
 {
 	public @S(10) Eaglish_Keyword BREAK_FOR = new Eaglish_Keyword("BREAK_FOR");
 	public @S(20) Eaglish_EndOfLine eoln;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

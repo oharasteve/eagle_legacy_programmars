@@ -20,20 +20,20 @@ public class CPlus_ArgumentList extends TokenSequence
 	public @S(20) @OPT C_Comment comment;
 	public @S(30) @OPT TokenList<CPlus_MoreArguments> moreArgs;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	public static class CPlus_ExpressionArg extends TokenChooser
 	{
 		public @FIRST C_Expression expr;
 		public @CHOICE C_Keyword CONST = new C_Keyword("const");
 		public @CHOICE C_TypePrimitive primitiveType;
-		
+
 		public @CHOICE static class CPlus_ExpressionArgType extends TokenSequence
 		{
 			public @S(10) C_Identifier_Reference typeRef;
 			public @S(20) TokenList<C_TypeStar> stars;
 		}
 	}
-	
+
 	public static class CPlus_MoreArguments extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

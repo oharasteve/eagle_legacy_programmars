@@ -24,7 +24,7 @@ public class Java_IfStatement extends TokenSequence
 	public @S(70) @OPT TokenList<Java_Comment> comment2;
 	public @S(80) Java_Statement thenStatement;
 	public @S(90) @OPT Java_IfElseClause elseClause;
-	
+
 	public static class Java_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<Java_Comment> comment3;

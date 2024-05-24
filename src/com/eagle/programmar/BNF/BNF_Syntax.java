@@ -12,11 +12,13 @@ public class BNF_Syntax extends EagleSyntax
 	{
 		return "BNF";
 	}
-	
+
 	public BNF_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
-		_punctuationExceptions = new String[] { "::=" };
+		_punctuationExceptions = new String[] {
+				"::="
+		};
 	}
 }

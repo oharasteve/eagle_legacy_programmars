@@ -13,11 +13,11 @@ public class CMacro_NotExpression extends PrimaryOperator implements EagleRunnab
 {
 	public @S(10) CMacro_Punctuation notOperator = new CMacro_Punctuation('!');
 	public @S(20) CMacro_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean val = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! val);
+		interpreter.pushBool(!val);
 	}
 }

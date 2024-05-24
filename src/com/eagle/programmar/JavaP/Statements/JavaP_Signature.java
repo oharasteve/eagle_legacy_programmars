@@ -21,7 +21,7 @@ public class JavaP_Signature extends TokenSequence
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_SignatureChoice choice;
 	public @S(40) JavaP_EndOfLine eoln;
-	
+
 	public static class JavaP_SignatureChoice extends TokenChooser
 	{
 		public @CHOICE static class JavaP_SignatureLength extends TokenSequence
@@ -32,7 +32,7 @@ public class JavaP_Signature extends TokenSequence
 			public @S(40) JavaP_EndOfLine eoln;
 			public @S(50) TokenList<JavaP_HexNoPrefix> numbers;
 		}
-		
+
 		public @CHOICE static class JavaP_SignatureNoLength extends TokenSequence
 		{
 			public @S(10) JavaP_Value value;

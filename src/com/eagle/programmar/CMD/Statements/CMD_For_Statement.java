@@ -32,13 +32,13 @@ public class CMD_For_Statement extends TokenSequence
 	public @S(90) CMD_Keyword DO = new CMD_Keyword("do");
 	public @S(100) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 	public @S(110) CMD_Statement stmt;
-	
+
 	public static class CMD_For_More_Params extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) CMD_Argument arg;
 	}
-	
+
 	public static class CMD_For_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_For_Option_D extends TokenSequence
@@ -53,7 +53,7 @@ public class CMD_For_Statement extends TokenSequence
 			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
 			public @S(30) @OPT CMD_Literal opts;
 		}
-	
+
 		public @CHOICE static class CMD_For_Option_L extends TokenSequence
 		{
 			public @S(10) PunctuationSlash slash;
@@ -65,12 +65,12 @@ public class CMD_For_Statement extends TokenSequence
 			public @S(10) PunctuationSlash slash;
 			public @S(20) CMD_Keyword R = new CMD_Keyword("r");
 			public @S(30) @OPT CMD_For_R forR;
-			
+
 			public static class CMD_For_R extends TokenChooser
 			{
 				public @CHOICE CMD_Literal dir;
 				public @CHOICE CMD_Identifier dirName;
-				
+
 				public @CHOICE static class CMD_For_R_pct extends TokenSequence
 				{
 					public @S(10) CMD_Punctuation percent = new CMD_Punctuation('%');

@@ -11,12 +11,12 @@ import com.eagle.tokens.TokenList;
 public class Powershell_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String POWERHSELL = "Powershell";
-	
+
 	public Powershell_Program()
 	{
 		super(POWERHSELL, new Powershell_Syntax());
 	}
-	
+
 	@Override
 	public String booleanName(boolean flag)
 	{
@@ -29,7 +29,7 @@ public class Powershell_Program extends EagleLanguage implements EagleRunnable
 	{
 		return "https://docs.microsoft.com/en-us/powershell/scripting/lang-spec/";
 	}
-	
+
 	public @S(10) @OPT TokenList<Powershell_CommentEoln> comments1;
 	public @S(20) @OPT TokenList<Powershell_Directive> directives;
 	public @S(30) @OPT Powershell_CmdletBinding cmdletBinding;

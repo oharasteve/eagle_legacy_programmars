@@ -26,22 +26,22 @@ public class PLI_Literal extends TerminalLiteralToken
 				ch = rec.charAt(endChar);
 				if (ch == '\'')
 				{
-					if (endChar+1 >= recLen) break;
-					if (rec.charAt(endChar+1) != '\'')
+					if (endChar + 1 >= recLen) break;
+					if (rec.charAt(endChar + 1) != '\'')
 					{
 						break;
 					}
-					endChar++;	// Doubled up single quotes
+					endChar++; // Doubled up single quotes
 				}
 			}
-			
+
 			// Look for '0'B and '0a'X
-			if (endChar+1 < recLen)
+			if (endChar + 1 < recLen)
 			{
-				char nextChar = Character.toUpperCase(rec.charAt(endChar+1));
+				char nextChar = Character.toUpperCase(rec.charAt(endChar + 1));
 				if (nextChar == 'B' || nextChar == 'X') return false;
 			}
-			
+
 			foundIt(_currentLine, endChar);
 			_txt = rec.substring(_currentChar + 1, endChar);
 			return true;

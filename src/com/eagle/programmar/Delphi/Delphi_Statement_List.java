@@ -16,7 +16,7 @@ public class Delphi_Statement_List extends TokenSequence
 	public @S(40) @OPT TokenList<Delphi_Comment> comments2;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 	public @S(60) @OPT TokenList<Delphi_Comment> comments3;
-	
+
 	public static class Delphi_MoreStatements extends TokenSequence
 	{
 		public @S(10) PunctuationSemicolon semicolon;

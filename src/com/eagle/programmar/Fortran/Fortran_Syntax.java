@@ -12,7 +12,7 @@ public class Fortran_Syntax extends EagleSyntax
 	{
 		return "Fortran";
 	}
-	
+
 	public Fortran_Syntax()
 	{
 		_autoAdvance = false;
@@ -21,16 +21,18 @@ public class Fortran_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_fixedStartColumn = 6;
 		_fixedEndColumn = 72;
-		
-		_continuationColumn = 5;	// if 6th column is a * then continue previous line
+
+		_continuationColumn = 5; // if 6th column is a * then continue previous line
 		_continuationColumnChar = '*';
-		
-		//_commentInstance = new Fortran_Comment();
-		_punctuationExceptions = new String[] { "/=", "::", "//" };
-		
+
+		// _commentInstance = new Fortran_Comment();
+		_punctuationExceptions = new String[] {
+				"/=", "::", "//"
+		};
+
 		addReservedWords(keywords);
 	}
-	
+
 	private String[] keywords = new String[] {
 			"call",
 			"common",

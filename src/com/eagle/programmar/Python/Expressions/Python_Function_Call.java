@@ -17,7 +17,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 {
 	public @S(10) Python_Variable name;
 	public @S(20) @NOSPACE TokenList<Python_Parameter_List> args;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -39,11 +39,11 @@ public class VB_Statement extends TokenSequence implements EagleRunnable
 	public @S(10) VB_BaseStatement baseStatement;
 	public @S(20) @OPT VB_Comment comment;
 	public @S(30) VB_EndOfLine eoln;
-	
+
 	public static class VB_BaseStatement extends TokenChooser
 	{
 		public @CHOICE VB_Comment comment;
-		
+
 		public @CHOICE VB_AssignmentStatement assignmentStatement;
 		public @CHOICE VB_AttributeStatement attributeStatement;
 		public @CHOICE VB_BeginStatement beginStatement;
@@ -65,7 +65,7 @@ public class VB_Statement extends TokenSequence implements EagleRunnable
 		public @CHOICE VB_SubDeclaration subDefinition;
 		public @CHOICE VB_VersionStatement versionStatement;
 		public @CHOICE VB_WscriptEcho wscriptEcho;
-		
+
 		public @LAST VB_ExpressionStatement expressionStatement;
 
 		public @CHOICE static class VB_Label extends TokenSequence

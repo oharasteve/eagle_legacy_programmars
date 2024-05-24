@@ -8,8 +8,5 @@ import com.eagle.tokens.TokenChooser;
 
 public class Eaglish_Type extends TokenChooser
 {
-	public @CHOICE Eaglish_KeywordChoice types = new Eaglish_KeywordChoice(
-			"BOOLEAN",
-			"INTEGER",
-			"STRING");
+	public @CHOICE Eaglish_KeywordChoice types = new Eaglish_KeywordChoice("BOOLEAN", "INTEGER", "STRING");
 }

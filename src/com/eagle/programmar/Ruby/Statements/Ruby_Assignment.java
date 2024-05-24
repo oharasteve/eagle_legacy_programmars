@@ -12,8 +12,7 @@ import com.eagle.tokens.TokenSequence;
 public class Ruby_Assignment extends TokenSequence
 {
 	public @S(10) Ruby_Variable var;
-	public @S(20) Ruby_PunctuationChoice equals = new Ruby_PunctuationChoice(
-			"=", "+=", "-=", "*=", "/=", ":=");
+	public @S(20) Ruby_PunctuationChoice equals = new Ruby_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
 	public @S(30) Ruby_Expression value;
 	public @S(40) Ruby_EOLN eoln;
 }

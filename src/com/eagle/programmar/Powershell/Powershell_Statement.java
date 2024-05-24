@@ -33,7 +33,7 @@ public class Powershell_Statement extends TokenSequence
 	public @S(10) Powershell_Element element;
 	public @S(20) @OPT Powershell_Comment comment;
 	public @S(30) @OPT Powershell_EndOfLine eoln;
-	
+
 	public static class Powershell_Element extends TokenChooser
 	{
 		public @CHOICE Powershell_BeginBlock beginBlock;
@@ -57,7 +57,7 @@ public class Powershell_Statement extends TokenSequence
 
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_Xcopy_Statement xcopyStatement;
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement findstrStatement;
-	
+
 		public @LAST Powershell_Command command;
 		public @LAST Powershell_AssignmentStatement assignmentStatement;
 	}

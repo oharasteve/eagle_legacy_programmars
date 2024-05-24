@@ -30,9 +30,9 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 
 	public @S(70) Eaglish_Keyword END_IF = new Eaglish_Keyword("END_IF");
 	public @S(80) Eaglish_EndOfLine eoln2;
-	
+
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
-	
+
 	public static class Eaglish_If_ElseIf_Block extends TokenSequence
 	{
 		public @S(10) Eaglish_Keyword ELSE_IF = new Eaglish_Keyword("ELSE_IF");
@@ -40,21 +40,21 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 		public @S(30) Eaglish_EndOfLine eoln1;
 		public @S(40) @OPT TokenList<Eaglish_Statement> statements;
 	}
-	
+
 	public static class Eaglish_If_Else_Block extends TokenSequence
 	{
 		public @S(10) Eaglish_Keyword ELSE = new Eaglish_Keyword("ELSE");
 		public @S(20) Eaglish_EndOfLine eoln1;
 		public @S(30) @OPT TokenList<Eaglish_Statement> statements;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
 	{
 		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		TokenList<Eaglish_Statement> todo = null;
-		
+
 		if (_metrics == null)
 		{
 			// Had to delay to make sure line number etc are all set
@@ -66,7 +66,8 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 			}
 			if (elseBlock.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(elseBlock.getFileName(), elseBlock.getStartLine(), elseBlock.getStartChar()));
+				_metrics.add(
+						new IfCondMetrics(elseBlock.getFileName(), elseBlock.getStartLine(), elseBlock.getStartChar()));
 			}
 		}
 
@@ -91,7 +92,7 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 					break;
 				}
 			}
-			
+
 			// Check for 'else'
 			if (todo == null)
 			{
@@ -102,12 +103,12 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 				}
 			}
 		}
-		
+
 		if (todo != null)
 		{
 			result = interpreter.interpretBlock(todo._elements);
 		}
-		
+
 		return result;
 	}
 }

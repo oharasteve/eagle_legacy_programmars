@@ -21,7 +21,7 @@ public class IntelASM_MacroDirective extends TokenSequence
 	public @S(50) IntelASM_EndOfLine eoln;
 	public @S(60) TokenList<IntelASM_Line> lines;
 	public @S(70) IntelASM_EndMacro endMacro;
-	
+
 	public static class IntelASM_EndMacro extends TokenSequence
 	{
 		public @S(10) IntelASM_Punctuation percent = new IntelASM_Punctuation('%');

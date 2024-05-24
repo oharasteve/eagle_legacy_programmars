@@ -27,7 +27,7 @@ public class Fortran_DoStatement extends TokenSequence
 	public @S(100) Fortran_Keyword END = new Fortran_Keyword("END");
 	public @S(110) Fortran_Keyword DO2 = new Fortran_Keyword("DO");
 	public @S(120) Fortran_EOLN eoln2;
-	
+
 	public static class Fortran_DoIncrement extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

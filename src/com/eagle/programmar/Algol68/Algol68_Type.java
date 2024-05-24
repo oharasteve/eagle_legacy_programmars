@@ -11,12 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Algol68_Type extends TokenChooser
 {
-	public @CHOICE Algol68_KeywordChoice primitives = new Algol68_KeywordChoice(
-			"BOOL",
-			"INT",
-			"STRING",
-			"VOID");
-	
+	public @CHOICE Algol68_KeywordChoice primitives = new Algol68_KeywordChoice("BOOL", "INT", "STRING", "VOID");
+
 	public @CHOICE static class Algol68_ArrayType extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

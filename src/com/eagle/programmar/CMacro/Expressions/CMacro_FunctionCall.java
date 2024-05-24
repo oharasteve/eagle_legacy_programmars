@@ -16,7 +16,7 @@ public class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnabl
 {
 	public @S(10) CMacro_Keyword DEFINED = new CMacro_Keyword("defined");
 	public @S(20) CMacro_FunctionType funcType;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -37,7 +37,7 @@ public class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnabl
 		boolean val = interpreter._symbolTable.isDefined(name);
 		interpreter.pushBool(val);
 	}
-	
+
 	public static class CMacro_FunctionType extends TokenChooser
 	{
 		public @CHOICE CMacro_Identifier_Reference variable;

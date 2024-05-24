@@ -13,7 +13,7 @@ public class Perl_NotExpression extends PrimaryOperator
 {
 	public @S(10) Perl_NotOperator oper;
 	public @S(20) Perl_Expression expr;
-	
+
 	public static class Perl_NotOperator extends TokenChooser
 	{
 		public @CHOICE Perl_Punctuation notOperator = new Perl_Punctuation('!');

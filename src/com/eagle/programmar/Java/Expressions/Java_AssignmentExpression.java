@@ -10,18 +10,7 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Java_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Java_Expression var = new Java_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Java_PunctuationChoice equals = new Java_PunctuationChoice(
-			"=",
-			"*=",
-			"/=",
-			"%=",
-			"+=",
-			"-=",
-			"<<=",
-			">>=",
-			">>>=",
-			"&=",
-			"^=",
-			"|=");
+	public @S(20) Java_PunctuationChoice equals = new Java_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=", "<<=",
+			">>=", ">>>=", "&=", "^=", "|=");
 	public @S(30) Java_Expression expr;
 }

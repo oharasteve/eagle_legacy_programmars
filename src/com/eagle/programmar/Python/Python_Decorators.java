@@ -13,13 +13,13 @@ public class Python_Decorators extends TokenSequence
 {
 	public @S(10) Python_Decorator decorator;
 	public @S(20) @OPT TokenList<Python_MoreDecorators> moreDecorators;
-	
+
 	public static class Python_MoreDecorators extends TokenChooser
 	{
 		public @CHOICE Python_Decorator decorator;
 		public @CHOICE Python_CommentEoln comment;
 	}
-	
+
 	public static class Python_Decorator extends TokenSequence
 	{
 		public @S(10) Python_Punctuation atSign = new Python_Punctuation('@');

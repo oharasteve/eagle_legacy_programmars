@@ -24,7 +24,7 @@ public class Natural_Comment extends TerminalCommentToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(this._currentLine);
 		int nc = rec.length();
 
@@ -42,7 +42,7 @@ public class Natural_Comment extends TerminalCommentToken
 				nextChar = rec.charAt(_currentChar + 1);
 				_comment = rec.substring(_currentChar, nc);
 			}
-			
+
 			if ((firstChar == '*' && nextChar == ' ') || nextChar == '*')
 			{
 				foundIt(_currentLine, nc);

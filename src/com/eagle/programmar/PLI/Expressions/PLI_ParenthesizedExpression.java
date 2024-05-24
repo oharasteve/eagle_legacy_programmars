@@ -18,7 +18,7 @@ public class PLI_ParenthesizedExpression extends PrimaryOperator
 	public @S(20) PLI_Expression expr;
 	public @S(30) @OPT PLI_Expression_Do expressionDo;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	public static class PLI_Expression_Do extends TokenSequence
 	{
 		public @S(10) PLI_Keyword DO = new PLI_Keyword("DO");

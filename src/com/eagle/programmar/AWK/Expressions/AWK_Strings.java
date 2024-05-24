@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenList;
 public class AWK_Strings extends PrimaryOperator
 {
 	public @S(10) TokenList<AWK_StringPiece> pieces;
-	
+
 	public static class AWK_StringPiece extends TokenChooser
 	{
 		public @CHOICE AWK_Literal literal;

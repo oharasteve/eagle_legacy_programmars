@@ -21,18 +21,18 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	public @S(10) CSharp_VariableIdentifier firstId;
 	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
 	public @S(30) @OPT TokenList<CSharp_Subscript> subscript;
-	
+
 	public static class CSharp_MoreVariableIdentifiers extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationPeriod dot;
 		public @S(20) @NOSPACE CSharp_VariableIdentifier nextId;
 	}
-	
+
 	public static class CSharp_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE CSharp_KeywordChoice builtIn = new CSharp_KeywordChoice("this", "base", "class");
 		public @CHOICE CSharp_Identifier_Reference id;
-		
+
 		public @CHOICE static class CSharp_CastedVariable extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen1;

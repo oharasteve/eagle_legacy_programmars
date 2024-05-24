@@ -21,7 +21,7 @@ public class Algol68_ForStatement extends TokenSequence
 	public @S(50) TokenList<Algol68_Statement> statements;
 	public @S(60) Algol68_Keyword OD = new Algol68_Keyword("OD");
 	public @S(70) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Algol68_ForClause extends TokenSequence
 	{
 		public @S(10) Algol68_KeywordChoice FROM = new Algol68_KeywordChoice("FROM", "BY", "TO", "WHILE");

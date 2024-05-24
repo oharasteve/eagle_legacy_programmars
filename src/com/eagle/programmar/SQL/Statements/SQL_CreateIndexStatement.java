@@ -24,11 +24,11 @@ public class SQL_CreateIndexStatement extends TokenSequence
 	public @S(60) SQL_Keyword ON = new SQL_Keyword("ON");
 	public @S(70) SQL_Identifier_Reference table;
 	public @S(80) PunctuationLeftParen leftParen;
-	public @S(90) SeparatedList<SQL_Identifier_Reference,PunctuationComma> keyFields;
+	public @S(90) SeparatedList<SQL_Identifier_Reference, PunctuationComma> keyFields;
 	public @S(100) PunctuationRightParen rightParen;
 	public @S(110) @OPT SQL_CreateIndexWhere where;
 	public @S(120) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_IfIndexNotExists extends TokenSequence
 	{
 		public @S(10) SQL_Keyword IF = new SQL_Keyword("IF");

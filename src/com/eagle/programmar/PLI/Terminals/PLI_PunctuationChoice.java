@@ -12,7 +12,7 @@ public class PLI_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public PLI_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -13,17 +13,19 @@ public class Python_Syntax extends EagleSyntax
 	{
 		return "Python";
 	}
-	
+
 	public Python_Syntax()
 	{
 		_isCaseSensitive = true;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { ">>", "|=", "+=", "-=", "__", "_$", "**", ":=", "->", "..." };
-		
+		_punctuationExceptions = new String[] {
+				">>", "|=", "+=", "-=", "__", "_$", "**", ":=", "->", "..."
+		};
+
 		_commentInstance = new Python_Comment();
-		
+
 		addReservedWords(reservedWords);
 	}
 
@@ -63,7 +65,7 @@ public class Python_Syntax extends EagleSyntax
 			"with",
 			"yield",
 	};
-	
+
 	public static class Python_Multiline_Syntax extends Python_Syntax
 	{
 		@Override
@@ -71,7 +73,7 @@ public class Python_Syntax extends EagleSyntax
 		{
 			return "Python Multi";
 		}
-		
+
 		public Python_Multiline_Syntax()
 		{
 			_autoAdvance = true;

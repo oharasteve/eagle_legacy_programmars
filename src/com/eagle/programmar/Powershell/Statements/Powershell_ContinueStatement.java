@@ -8,5 +8,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Powershell_ContinueStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#851-the-continue-statement") Powershell_Keyword CONTINUE = new Powershell_Keyword("Continue");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#851-the-continue-statement") Powershell_Keyword CONTINUE = new Powershell_Keyword(
+			"Continue");
 }

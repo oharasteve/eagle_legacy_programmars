@@ -21,7 +21,7 @@ public class Fortran_IfStatement extends TokenSequence
 	public @S(70) Fortran_Keyword END = new Fortran_Keyword("END");
 	public @S(80) Fortran_Keyword IF2 = new Fortran_Keyword("IF");
 	public @S(90) Fortran_EOLN eoln2;
-	
+
 	public static class Fortran_IfElseBlock extends TokenSequence
 	{
 		public @S(10) Fortran_Keyword ELSE = new Fortran_Keyword("ELSE");

@@ -19,7 +19,7 @@ public class Javascript_Function extends TokenSequence
 	public @S(30) @OPT Javascript_Keyword DEFAULT = new Javascript_Keyword("default");
 	public @S(40) @OPT Javascript_Keyword FUNCTION = new Javascript_Keyword("function");
 	public @S(50) Javascript_FunctionImplementation implementation;
-	
+
 	public static class Javascript_FunctionImplementation extends TokenSequence
 	{
 		public @S(10) @OPT Javascript_Function_Definition functionName;

@@ -12,18 +12,20 @@ public class Delphi_Syntax extends EagleSyntax
 	{
 		return "Delphi";
 	}
-	
+
 	public Delphi_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
-		//_commentInstance = new Delphi_Comment();
-		_punctuationExceptions = new String[] { "<>", "<=", ">=", ":=", ".." };
-		
+		// _commentInstance = new Delphi_Comment();
+		_punctuationExceptions = new String[] {
+				"<>", "<=", ">=", ":=", ".."
+		};
+
 		addReservedWords(reservedWords);
 	}
-	
+
 	// From https://en.wikibooks.org/wiki/Delphi_Programming/Reserved_keywords
 	private static String[] reservedWords = new String[] {
 			"and",
@@ -66,7 +68,7 @@ public class Delphi_Syntax extends EagleSyntax
 			"object",
 			"of",
 			"or",
-			// "out",	// Not really reserved. And often used.
+			// "out", // Not really reserved. And often used.
 			"packed",
 			"procedure",
 			"program",

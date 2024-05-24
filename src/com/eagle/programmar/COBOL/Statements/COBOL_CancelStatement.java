@@ -13,7 +13,7 @@ public class COBOL_CancelStatement extends COBOL_AbstractStatement
 {
 	public @S(10) @DOC("rlpscanc.htm") COBOL_Keyword CANCEL = new COBOL_Keyword("CANCEL");
 	public @S(20) COBOL_CancelWhat what;
-	
+
 	public static class COBOL_CancelWhat extends TokenChooser
 	{
 		public @CHOICE COBOL_Literal literal;

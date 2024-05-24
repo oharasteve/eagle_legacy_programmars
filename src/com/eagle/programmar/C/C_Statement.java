@@ -31,18 +31,19 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 {
 	public @CHOICE C_Data jdata;
 	public @CHOICE C_Label label;
-	public @CHOICE PunctuationSemicolon semicolon;	// Empty for loop body is ok
-	
+	public @CHOICE PunctuationSemicolon semicolon; // Empty for loop body is ok
+
 	public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-	
+
 	public @CHOICE static class C_StatementBlock extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) @OPT TokenList<C_StatementOrComment> statements;
 		public @S(30) PunctuationRightBrace rightBrace;
 	}
+
 	public @CHOICE C_Embed_Assembler assembler;
-	
+
 	public @CHOICE C_AutoLock autoLock;
 	public @CHOICE C_BreakStatement breakStatement;
 	public @CHOICE C_ContinueStatement continueStatement;
@@ -53,12 +54,12 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE C_ReturnStatement returnStatement;
 	public @CHOICE C_SwitchStatement switchStatement;
 	public @CHOICE C_WhileStatement whileStatement;
-	
-	public @CHOICE C_Declaration declaration;		// Like [[fallthrough]]
-	public @LAST C_TypeStruct structDefinition;		// Like struct bob_t;
+
+	public @CHOICE C_Declaration declaration; // Like [[fallthrough]]
+	public @LAST C_TypeStruct structDefinition; // Like struct bob_t;
 
 	// Do this one last, just because it is so slow
 	public @CHOICE C_ExpressionStatement assignmentStatement;
-	
-	//public @LAST C_UnparsedStatement unparsedStatement;
+
+	// public @LAST C_UnparsedStatement unparsedStatement;
 }

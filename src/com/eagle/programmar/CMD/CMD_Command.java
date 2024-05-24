@@ -72,13 +72,13 @@ public class CMD_Command extends TokenSequence
 			public @S(30) TokenList<CMD_CommandOrLabel> commands;
 			public @S(40) PunctuationRightParen rightParen;
 			public @S(50) @OPT CMD_IfElse ifElse;
-			
+
 			public static class CMD_CommandOrLabel extends TokenChooser
 			{
 				public @CHOICE CMD_Command command;
 				public @CHOICE CMD_Label label;
 			}
-			
+
 			public static class CMD_IfElse extends TokenSequence
 			{
 				public @S(10) CMD_Keyword ELSE = new CMD_Keyword("else");
@@ -86,19 +86,19 @@ public class CMD_Command extends TokenSequence
 				public @S(30) CMD_Statement stmt;
 			}
 		}
-		
+
 		public @LAST static class CMD_GenericStatement extends TokenSequence
 		{
 			public @S(10) CMD_Argument programName;
 			public @S(20) @OPT TokenList<CMD_GenericArgument> args;
-			
+
 			public static class CMD_GenericArgument extends TokenChooser
 			{
 				public @CHOICE CMD_Argument arg;
 				public @CHOICE CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
 			}
 		}
-		
+
 		public @CHOICE CMD_Awk_Statement awkCommand;
 		public @CHOICE CMD_Call_Statement callCommand;
 		public @CHOICE CMD_CD_Statement cdCommand;
@@ -125,7 +125,7 @@ public class CMD_Command extends TokenSequence
 		public @CHOICE CMD_Shift_Statement shiftCommand;
 		public @CHOICE CMD_Xcopy_Statement xcopyCommand;
 	}
-	
+
 	public static class CMD_Redirect_Input extends TokenSequence
 	{
 		public @S(10) CMD_Punctuation less = new CMD_Punctuation('<');
@@ -151,20 +151,20 @@ public class CMD_Command extends TokenSequence
 		public @S(30) CMD_Punctuation ampersand = new CMD_Punctuation("&");
 		public @S(40) CMD_Number one;
 	}
-	
+
 	public static class CMD_Redirect_Error_File extends TokenSequence
 	{
 		public @S(10) CMD_Number two;
 		public @S(20) CMD_Punctuation greater = new CMD_Punctuation(">");
 		public @S(30) CMD_Argument file;
 	}
-	
+
 	public static class CMD_More_Statements extends TokenSequence
 	{
 		public @S(10) CMD_Statement_Separator separator;
 		public @S(20) CMD_Statement command;
 		public @S(30) @OPT TokenList<CMD_Redirect> redirects;
-		
+
 		public static class CMD_Statement_Separator extends TokenChooser
 		{
 			public @CHOICE CMD_PunctuationChoice separator = new CMD_PunctuationChoice("||", "|", "&&");

@@ -14,7 +14,7 @@ public class VB_ArgumentList extends TokenSequence
 	public @S(20) @OPT TokenList<VB_Comment> comment;
 	public @S(30) @OPT TokenList<VB_MoreArguments> moreArgs;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	public static class VB_MoreArguments extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

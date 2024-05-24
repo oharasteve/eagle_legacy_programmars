@@ -26,7 +26,7 @@ public class PHP_IfBlock extends TokenSequence
 	public @S(30) @SYNTAX(Perl_Syntax.class) PHP_IfElse elseBlock;
 	public @S(40) TokenList<PHP_Entry> elsePart;
 	public @S(50) @SYNTAX(Perl_Syntax.class) PHP_EndIf endIf;
-	
+
 	public static class PHP_IfCondition extends TokenSequence
 	{
 		public @S(10) PHP_StartTag startTag;

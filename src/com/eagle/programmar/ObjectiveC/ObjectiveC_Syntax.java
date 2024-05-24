@@ -12,16 +12,14 @@ public class ObjectiveC_Syntax extends C_Syntax
 	{
 		return "ObjC";
 	}
-	
+
 	public ObjectiveC_Syntax()
 	{
 		addReservedWords(C_Syntax.C_reservedWords);
 		addReservedWords(reservedWords);
 	}
-	
+
 	private static String[] reservedWords = new String[] {
-		"BOOL",
-		"NO",
-		"YES",
+			"BOOL", "NO", "YES",
 	};
 }

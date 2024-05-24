@@ -12,7 +12,7 @@ public class Ruby_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Ruby_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -25,19 +25,19 @@ public class Python_TryStatement extends TokenSequence
 	public @S(60) @OPT TokenList<Python_TryExcept> tryExcept;
 	public @S(70) @OPT Python_TryElse tryElse;
 	public @S(80) @OPT Python_TryFinally tryFinally;
-	
+
 	public static class Python_TryExcept extends TokenSequence
 	{
 		public @S(10) Python_Keyword EXCEPT = new Python_Keyword("except");
-		public @S(20) @OPT SeparatedList<Python_TryExceptClause,PunctuationComma> tryExceptClauses;
+		public @S(20) @OPT SeparatedList<Python_TryExceptClause, PunctuationComma> tryExceptClauses;
 		public @S(30) PunctuationColon colon;
 		public @S(40) Python_SingleOrMultiLineStatement exceptWhat;
-		
+
 		public static class Python_TryExceptClause extends TokenSequence
 		{
 			public @S(10) Python_Expression condition;
 			public @S(20) @OPT Python_TryExceptAs tryExceptAs;
-			
+
 			public static class Python_TryExceptAs extends TokenSequence
 			{
 				public @S(10) Python_Keyword AS = new Python_Keyword("as");

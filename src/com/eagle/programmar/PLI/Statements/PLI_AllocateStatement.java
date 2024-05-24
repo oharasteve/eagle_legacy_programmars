@@ -21,12 +21,12 @@ public class PLI_AllocateStatement extends TokenSequence
 	public @S(20) PLI_AllocateVariable var;
 	public @S(30) @OPT TokenList<PLI_Allocate_MoreVars> moreIds;
 	public @S(40) PunctuationSemicolon semicolon;
-	
+
 	public static class PLI_AllocateVariable extends TokenSequence
 	{
 		public @S(10) PLI_Identifier_Reference id;
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<PLI_AllocateSize,PunctuationComma> sizes;
+		public @S(30) SeparatedList<PLI_AllocateSize, PunctuationComma> sizes;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
@@ -36,7 +36,7 @@ public class PLI_AllocateStatement extends TokenSequence
 		public @S(20) @OPT PunctuationColon colon;
 		public @S(30) @OPT PLI_Expression size2;
 	}
-	
+
 	public static class PLI_Allocate_MoreVars extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

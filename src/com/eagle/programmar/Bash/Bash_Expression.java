@@ -32,16 +32,17 @@ public class Bash_Expression extends PrecedenceChooser
 
 	public Bash_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Bash_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-	
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -49,10 +50,10 @@ public class Bash_Expression extends PrecedenceChooser
 
 	public @P(10) Bash_Number number;
 	public @P(20) Bash_Literal literal;
-	
+
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Bash_DollarNumber dollarNumber;
 	public @P(110) Bash_DollarPound dollarPound;
 	public @P(120) Bash_DollarExpr dollarExpr;

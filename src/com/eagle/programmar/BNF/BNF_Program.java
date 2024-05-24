@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenList;
 public class BNF_Program extends EagleLanguage
 {
 	public static final String BNF = "BNF";
-	
+
 	public BNF_Program()
 	{
 		super(BNF, new BNF_Syntax());

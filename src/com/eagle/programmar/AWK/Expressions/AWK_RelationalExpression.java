@@ -41,7 +41,7 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 			interpreter.pushBool(leftInt >= rightInt);
 			return;
 		default:
-			throw new RuntimeException("Unable to handle " + operator.getValue() + " with integers");	
+			throw new RuntimeException("Unable to handle " + operator.getValue() + " with integers");
 		}
 	}
 }

@@ -16,8 +16,8 @@ public class JavaP_OneClassExceptions extends TokenSequence
 	public @S(10) JavaP_Keyword EXCEPTIONS = new JavaP_Keyword("Exceptions");
 	public @S(20) PunctuationColon colon1;
 	public @S(30) JavaP_EndOfLine eoln1;
-	
+
 	public @S(40) JavaP_Keyword THROWS = new JavaP_Keyword("throws");
-	public @S(50) SeparatedList<JavaP_QualifiedName,PunctuationComma> name;
+	public @S(50) SeparatedList<JavaP_QualifiedName, PunctuationComma> name;
 	public @S(60) @OPT JavaP_EndOfLine eoln2;
 }

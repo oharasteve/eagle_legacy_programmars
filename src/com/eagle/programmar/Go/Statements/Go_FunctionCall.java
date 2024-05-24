@@ -17,7 +17,7 @@ public class Go_FunctionCall extends TokenSequence
 {
 	public @S(10) Go_Variable func;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<Go_Expression,PunctuationComma> arguments;
+	public @S(30) @OPT SeparatedList<Go_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 	public @S(60) Go_EOLN eoln;

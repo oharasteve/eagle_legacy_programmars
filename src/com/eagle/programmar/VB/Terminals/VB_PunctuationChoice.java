@@ -12,7 +12,7 @@ public class VB_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public VB_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

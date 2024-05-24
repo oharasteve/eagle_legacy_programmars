@@ -10,17 +10,7 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Powershell_Match_Expression extends PrecedenceOperator
 {
 	public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice(
-			"-cmatch",
-			"-contains",
-			"-f",
-			"-in",
-			"-join",
-			"-match",
-			"-notin",
-			"-notlike",
-			"-notmatch",
-			"-replace",
-			"-split");
+	public @S(20) Powershell_KeywordChoice operator = new Powershell_KeywordChoice("-cmatch", "-contains", "-f", "-in",
+			"-join", "-match", "-notin", "-notlike", "-notmatch", "-replace", "-split");
 	public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 }

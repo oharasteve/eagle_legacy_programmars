@@ -10,7 +10,7 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Javascript_ClassCreationWithInitializers  extends PrimaryOperator
+public class Javascript_ClassCreationWithInitializers extends PrimaryOperator
 {
 	public @S(10) Javascript_Keyword NEW = new Javascript_Keyword("new");
 	public @S(20) Javascript_Type jtype;

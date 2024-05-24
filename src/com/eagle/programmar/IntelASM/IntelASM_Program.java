@@ -12,20 +12,20 @@ import com.eagle.tokens.TokenList;
 public class IntelASM_Program extends EagleLanguage
 {
 	public static final String INTELASM = "IntelASM";
-	
+
 	public IntelASM_Program()
 	{
 		super(INTELASM, new IntelASM_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "TBD";
 	}
-	
+
 	public @S(10) TokenList<IntelASM_Line> lines;
-	
+
 	public static class IntelASM_Line extends TokenChooser
 	{
 		public @CHOICE IntelASM_EndOfLine blankLine;

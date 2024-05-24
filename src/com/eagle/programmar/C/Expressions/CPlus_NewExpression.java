@@ -20,11 +20,11 @@ public class CPlus_NewExpression extends PrimaryOperator
 	public @S(10) C_Keyword NEW = new C_Keyword("new");
 	public @S(20) C_Type type;
 	public @S(30) @OPT CPlus_NewWhat what;
-	
+
 	public static class CPlus_NewWhat extends TokenChooser
 	{
 		public @CHOICE C_Subscript size;
-		
+
 		public @CHOICE static class CPlus_Parentheses extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;

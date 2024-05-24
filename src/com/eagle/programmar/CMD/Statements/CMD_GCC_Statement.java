@@ -14,11 +14,11 @@ public class CMD_GCC_Statement extends TokenSequence
 {
 	public @S(10) CMD_Keyword GCC = new CMD_Keyword("gcc");
 	public @S(20) TokenList<CMD_GCC_Parameter> params;
-	
+
 	public static class CMD_GCC_Parameter extends TokenChooser
 	{
 		public @CHOICE CMD_Argument srcFile;
-		
+
 		public @CHOICE static class CMD_GCC_Option_O extends TokenSequence
 		{
 			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');

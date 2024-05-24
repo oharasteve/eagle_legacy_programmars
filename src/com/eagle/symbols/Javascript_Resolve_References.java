@@ -24,11 +24,11 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 
 		// Resolve all the function references
 		resolveFunctionReferences(program, scope);
-		
+
 		// Find all the functions
 		ArrayList<AbstractToken> functions = new ArrayList<AbstractToken>();
 		findAllInstances(functions, program, Javascript_Function.class);
-		
+
 		// Now attach all local variables to their surrounding functions
 		for (AbstractToken token : functions)
 		{
@@ -40,25 +40,23 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 		// And finally, resolve all the variable references
 		resolveVariableReferences(program, scope);
 	}
-	
+
 	private void resolveFunctionReferences(Javascript_Program program, EagleScope scope)
 	{
 		ArrayList<AbstractToken> functionDefinitions = new ArrayList<AbstractToken>();
-		findAllInstances(functionDefinitions, program,
-				Javascript_Function_Definition.class);
+		findAllInstances(functionDefinitions, program, Javascript_Function_Definition.class);
 
 		ArrayList<AbstractToken> functionReferences = new ArrayList<AbstractToken>();
-		findAllInstances(functionReferences, program,
-				Javascript_Identifier_Reference.class);
-		
+		findAllInstances(functionReferences, program, Javascript_Identifier_Reference.class);
+
 		for (AbstractToken defToken : functionDefinitions)
 		{
 			Javascript_Function_Definition def = (Javascript_Function_Definition) defToken;
 			scope.addSymbol(def);
 			if (_trace)
 			{
-				System.out.println("Function definition for " + def + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("Function definition for " + def + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
 
@@ -67,7 +65,7 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 		{
 			Javascript_Identifier_Reference ref = (Javascript_Identifier_Reference) refToken;
 			int foundAny = 0;
-			
+
 			for (AbstractToken defToken : functionDefinitions)
 			{
 				Javascript_Function_Definition function = (Javascript_Function_Definition) defToken;
@@ -75,8 +73,8 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 				if (ref.toString().equals(functionName))
 				{
 					if (foundAny == 1) System.err.println("**** Duplicate function definition for " + functionName);
-					if (_trace) System.out.println("Function reference to " + functionName + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (_trace) System.out.println("Function reference to " + functionName + " at "
+							+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 					ref.setDefinition(function);
 					function.addReference(ref);
 					foundAny++;
@@ -94,42 +92,36 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 		ArrayList<AbstractToken> variableDefinitions = new ArrayList<AbstractToken>();
 		findAllInstances(variableDefinitions, fn, Javascript_Variable_Definition.class);
 		/*
-		for (AbstractToken defToken : variableDefinitions)
-		{
-			Javascript_Variable_Definition def = (Javascript_Variable_Definition) defToken;
-			def.containingFunction = fn;
-			// System.out.println("&&&&&&&& Definition " + def + " is in " + fn);
-		}
-
-		ArrayList<AbstractToken> variableReferences = new ArrayList<AbstractToken>();
-		EagleUtilities.findAllInstances(variableReferences, fn, Javascript_Variable_Reference.class);
-		for (AbstractToken refToken : variableReferences)
-		{
-			Javascript_Variable_Reference ref = (Javascript_Variable_Reference) refToken;
-			ref.containingFunction = fn;
-			// System.out.println("&&&&&&&& Reference " + ref + " is in " + fn);
-		}
-		*/
+		 * for (AbstractToken defToken : variableDefinitions) {
+		 * Javascript_Variable_Definition def = (Javascript_Variable_Definition)
+		 * defToken; def.containingFunction = fn; //
+		 * System.out.println("&&&&&&&& Definition " + def + " is in " + fn); }
+		 * 
+		 * ArrayList<AbstractToken> variableReferences = new ArrayList<AbstractToken>();
+		 * EagleUtilities.findAllInstances(variableReferences, fn,
+		 * Javascript_Variable_Reference.class); for (AbstractToken refToken :
+		 * variableReferences) { Javascript_Variable_Reference ref =
+		 * (Javascript_Variable_Reference) refToken; ref.containingFunction = fn; //
+		 * System.out.println("&&&&&&&& Reference " + ref + " is in " + fn); }
+		 */
 	}
-	
+
 	private void resolveVariableReferences(Javascript_Program program, EagleScope scope)
 	{
 		ArrayList<AbstractToken> variableDefinitions = new ArrayList<AbstractToken>();
-		findAllInstances(variableDefinitions, program,
-				Javascript_Variable_Definition.class);
+		findAllInstances(variableDefinitions, program, Javascript_Variable_Definition.class);
 
 		ArrayList<AbstractToken> variableReferences = new ArrayList<AbstractToken>();
-		findAllInstances(variableReferences, program,
-				Javascript_Identifier_Reference.class);
-		
+		findAllInstances(variableReferences, program, Javascript_Identifier_Reference.class);
+
 		for (AbstractToken defToken : variableDefinitions)
 		{
 			Javascript_Variable_Definition def = (Javascript_Variable_Definition) defToken;
 			scope.addSymbol(def);
 			if (_trace)
 			{
-				System.out.println("Variable definition for " + def + " at " +
-						(def.getStartLine()+1) + "/" + (def.getStartChar()+1));
+				System.out.println("Variable definition for " + def + " at " + (def.getStartLine() + 1) + "/"
+						+ (def.getStartChar() + 1));
 			}
 		}
 
@@ -138,24 +130,24 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 		{
 			Javascript_Identifier_Reference ref = (Javascript_Identifier_Reference) refToken;
 			DefinitionInterface def = ref.searchForDefinition();
-			if (def != null) continue;	// Already found a definition for this
-			
+			if (def != null) continue; // Already found a definition for this
+
 			int foundAny = 0;
 			for (AbstractToken defToken : variableDefinitions)
 			{
 				Javascript_Variable_Definition variable = (Javascript_Variable_Definition) defToken;
 				String variableName = variable.toString();
-				if (ref.toString().equals(variableName) )//&& variable.containingFunction == ref.containingFunction)
+				if (ref.toString().equals(variableName))// && variable.containingFunction == ref.containingFunction)
 				{
 					if (foundAny == 1) System.err.println("**** Duplicate variable definition for " + variableName);
-					if (_trace) System.out.println("Variable reference to " + variableName + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (_trace) System.out.println("Variable reference to " + variableName + " at "
+							+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 					ref.setDefinition(variable);
 					variable.addReference(ref);
 					foundAny++;
 				}
 			}
-			
+
 			// Check for global ones next
 			if (foundAny == 0)
 			{
@@ -163,20 +155,20 @@ public class Javascript_Resolve_References extends Eagle_Resolve_References
 				{
 					Javascript_Variable_Definition variable = (Javascript_Variable_Definition) defToken;
 					String variableName = variable.toString();
-					if (ref.toString().equals(variableName) )//&& variable.containingFunction == null)
+					if (ref.toString().equals(variableName))// && variable.containingFunction == null)
 					{
 						if (foundAny == 1) System.err.println("**** Duplicate variable definition for " + variableName);
-						if (_trace) System.out.println("Variable reference to " + variableName + " at " +
-								(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+						if (_trace) System.out.println("Variable reference to " + variableName + " at "
+								+ (ref.getStartLine() + 1) + "/" + (ref.getStartChar() + 1));
 						ref.setDefinition(variable);
 						variable.addReference(ref);
 						foundAny++;
 					}
 				}
 			}
-			
+
 			// Well, maybe use the first reference as the definition I guess. But how?
-			
+
 			// Give up
 			if (foundAny == 0)
 			{

@@ -18,10 +18,10 @@ public class VB_BuiltIn extends PrimaryOperator implements EagleRunnable
 		String builtIn = builtIns.getValue();
 		switch (builtIn)
 		{
-		case "true" :
+		case "true":
 			interpreter.pushBool(true);
 			break;
-		case "false" :
+		case "false":
 			interpreter.pushBool(false);
 			break;
 		default:

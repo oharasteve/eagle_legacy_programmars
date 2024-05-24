@@ -25,7 +25,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class CSS_Value extends TokenChooser
 {
-	public @CHOICE CSS_Alpha_Value alphaValue; 
+	public @CHOICE CSS_Alpha_Value alphaValue;
 	public @CHOICE CSS_Attr attr;
 	public @CHOICE CSS_Color color;
 	public @CHOICE CSS_Cubic_Bezier cubicBezier;
@@ -34,7 +34,7 @@ public class CSS_Value extends TokenChooser
 	public @CHOICE CSS_HexNumber hex;
 	public @CHOICE CSS_Important important;
 	public @CHOICE CSS_Literal lit;
-	public @CHOICE CSS_Microsoft_Gradient msGradient; 
+	public @CHOICE CSS_Microsoft_Gradient msGradient;
 	public @CHOICE CSS_NumericValue numericValue;
 	public @CHOICE CSS_Rect rect;
 	public @CHOICE CSS_RotateValue rotateValue;

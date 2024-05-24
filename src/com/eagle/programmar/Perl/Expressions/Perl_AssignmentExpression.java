@@ -14,10 +14,10 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Perl_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Perl_Expression var = new Perl_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice(
-			"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=", ".=");
+	public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=", "<<=",
+			">>=", ">>>=", "&=", "^=", "|=", ".=");
 	public @S(30) Perl_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -26,8 +26,8 @@ public class Perl_AssignmentExpression extends PrecedenceOperator implements Eag
 		{
 			Perl_VariableExpression varExpr = (Perl_VariableExpression) var.getWhich();
 			Perl_UserVariable userVar = (Perl_UserVariable) varExpr.variable.getWhich();
-			interpreter._symbolTable.setSymbol(userVar.getFileName(), userVar.getStartLine(),
-					userVar.getStartChar(), userVar.id.getValue(), value);
+			interpreter._symbolTable.setSymbol(userVar.getFileName(), userVar.getStartLine(), userVar.getStartChar(),
+					userVar.id.getValue(), value);
 		}
 	}
 }

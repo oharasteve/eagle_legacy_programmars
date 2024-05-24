@@ -12,7 +12,7 @@ public class Eaglish_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Eaglish_KeywordChoice(String... words)
 	{
 		super(words);

@@ -17,7 +17,7 @@ public class Javascript_SimpleArray extends PrimaryOperator
 	public @S(20) @OPT Javascript_Expression expr;
 	public @S(30) @OPT TokenList<Javascript_MoreArray> more;
 	public @S(40) PunctuationRightBracket rightBracket;
-	
+
 	public static class Javascript_MoreArray extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

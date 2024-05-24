@@ -8,7 +8,7 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Powershell_BuiltinVariable extends PrimaryOperator
 {
-	// Doesn't work to put this up at the top. Ends up with just a Powershell_Punctuation('\0')
-	public @S(10) Powershell_PunctuationChoice dollarQuestion = new Powershell_PunctuationChoice(
-			"$?", "$_");
+	// Doesn't work to put this up at the top. Ends up with just a
+	// Powershell_Punctuation('\0')
+	public @S(10) Powershell_PunctuationChoice dollarQuestion = new Powershell_PunctuationChoice("$?", "$_");
 }

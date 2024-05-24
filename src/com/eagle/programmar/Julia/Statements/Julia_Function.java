@@ -24,11 +24,11 @@ public class Julia_Function extends TokenSequence
 	public @S(50) TokenList<Julia_Statement> stmts;
 	public @S(60) Julia_Keyword END = new Julia_Keyword("end");
 	public @S(70) Julia_EOLN eoln2;
-	
+
 	public static class Julia_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Julia_Variable,PunctuationComma> parameters;
+		public @S(20) @OPT SeparatedList<Julia_Variable, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 }

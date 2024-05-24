@@ -12,7 +12,7 @@ public class Rust_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Rust_KeywordChoice(String... words)
 	{
 		super(words);

@@ -6,13 +6,6 @@ package com.eagle.programmar.Natural;
 public class Natural_Functions
 {
 	public static String[] builtinFunctions = new String[] {
-		"AVER",
-		"COUNT",
-		"MAX",
-		"MIN",
-		"NAVER",
-		"NCOUNT",
-		"NMIN",
-		"OLD"
-		};
+			"AVER", "COUNT", "MAX", "MIN", "NAVER", "NCOUNT", "NMIN", "OLD"
+	};
 }

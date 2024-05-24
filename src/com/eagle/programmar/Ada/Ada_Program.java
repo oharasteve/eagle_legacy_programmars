@@ -15,12 +15,12 @@ import com.eagle.tokens.TokenList;
 public class Ada_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String ADA = "Ada";
-	
+
 	public Ada_Program()
 	{
 		super(ADA, new Ada_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -28,7 +28,7 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 	}
 
 	public @S(10) TokenList<Ada_Element> elements;
-	
+
 	public static class Ada_Element extends TokenChooser
 	{
 		public @CHOICE Ada_Comment comment;
@@ -52,7 +52,7 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 				}
 			}
 		}
-		
+
 		// Second pass, execute the program
 		for (Ada_Element element : elements._elements)
 		{

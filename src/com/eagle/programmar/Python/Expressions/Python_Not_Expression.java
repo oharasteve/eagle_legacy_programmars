@@ -7,7 +7,7 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Python_Not_Expression extends PrimaryOperator 
+public class Python_Not_Expression extends PrimaryOperator
 {
 	public @S(10) Python_Keyword NOT = new Python_Keyword("not");
 	public @S(20) Python_Expression expr;

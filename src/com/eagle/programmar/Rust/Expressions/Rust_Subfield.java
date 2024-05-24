@@ -13,4 +13,3 @@ public class Rust_Subfield extends PrecedenceOperator
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 }
-

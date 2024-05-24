@@ -13,4 +13,3 @@ public class Julia_EqualityExpression extends PrecedenceOperator
 	public @S(20) Julia_PunctuationChoice operator = new Julia_PunctuationChoice("==", "!=");
 	public @S(30) Julia_Expression right = new Julia_Expression(this, AllowedPrecedence.HIGHER);
 }
-

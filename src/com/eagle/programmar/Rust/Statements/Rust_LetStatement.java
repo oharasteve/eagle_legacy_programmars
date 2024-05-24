@@ -20,7 +20,7 @@ public class Rust_LetStatement extends TokenSequence
 	public @S(50) Rust_Expression expr;
 	public @S(60) @OPT Rust_LetAs letAs;
 	public @S(70) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Rust_LetAs extends TokenSequence
 	{
 		public @S(10) Rust_Keyword AS = new Rust_Keyword("as");

@@ -26,23 +26,23 @@ public class Perl_Comment extends TerminalCommentToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		char ch = rec.charAt(_currentChar);
-		
+
 		if (ch == '#')
 		{
 			foundIt(_currentLine, nc);
 			_comment = rec.substring(_currentChar, nc);
 			return true;
 		}
-		
+
 		if (ch == '/')
 		{
 			if (_currentChar + 1 >= nc) return false;
 			ch = rec.charAt(_currentChar + 1);
 			switch (ch)
 			{
-			case '/' :
+			case '/':
 				return super.possibleCommentToEndOfLine(rec, "//");
-			case '*' :
+			case '*':
 				return super.possibleCommentPair2(lines, rec, "/*", "*/");
 			}
 		}

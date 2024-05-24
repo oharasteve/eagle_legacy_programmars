@@ -18,18 +18,18 @@ public class Go_Import extends TokenSequence
 	public @S(10) @DOC("#Import_declarations") Go_Keyword IMPORT = new Go_Keyword("import");
 	public @S(20) Go_ImportWhat what;
 	public @S(30) Go_EOLN eoln;
-	
+
 	public static class Go_ImportWhat extends TokenChooser
 	{
 		public @CHOICE Go_Literal literal;
-		
+
 		public @CHOICE static class Go_ImportList extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) Go_EOLN eoln;
 			public @S(30) TokenList<Go_ImportLine> imports;
 			public @S(40) PunctuationRightParen rightParen;
-			
+
 			public static class Go_ImportLine extends TokenSequence
 			{
 				public @S(10) @OPT Go_Variable_Definition var;

@@ -16,7 +16,7 @@ public class Eaglish_ParenthesizedExpression extends PrimaryOperator implements 
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Eaglish_Expression expr;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

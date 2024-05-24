@@ -18,7 +18,7 @@ public class COBOL_OpenStatement extends COBOL_AbstractStatement
 	public @S(30) COBOL_Identifier_Reference file;
 	public @S(40) @OPT TokenList<COBOL_OpenFileList> moreFiles;
 	public @S(50) @OPT COBOL_Keyword LOCK = new COBOL_Keyword("LOCK");
-	
+
 	public static class COBOL_OpenFileList extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;

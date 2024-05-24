@@ -18,10 +18,10 @@ public class Eaglish_BuiltInExpression extends PrimaryOperator implements EagleR
 		String builtIn = builtIns.getValue();
 		switch (builtIn)
 		{
-		case "TRUE" :
+		case "TRUE":
 			interpreter.pushBool(true);
 			break;
-		case "FALSE" :
+		case "FALSE":
 			interpreter.pushBool(false);
 			break;
 		default:

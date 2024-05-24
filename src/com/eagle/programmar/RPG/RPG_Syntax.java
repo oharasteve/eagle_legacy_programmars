@@ -12,7 +12,7 @@ public class RPG_Syntax extends EagleSyntax
 	{
 		return "RPG";
 	}
-	
+
 	public RPG_Syntax()
 	{
 		_isCaseSensitive = false;

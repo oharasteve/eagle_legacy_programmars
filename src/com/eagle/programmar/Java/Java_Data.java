@@ -29,18 +29,18 @@ public class Java_Data extends TokenSequence implements EagleRunnable
 	public @S(80) @OPT TokenList<Java_MoreIdentifiers> moreIds;
 	public @S(90) @NOSPACE PunctuationSemicolon semicolon;
 	public @S(100) @OPT TokenList<Java_Comment> comments;
-	
+
 	public static class Java_DataSubscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static class Java_DataModifier extends TokenSequence
 	{
 		public @S(10) Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 	}
-	
+
 	public static class Java_DataInitialValue extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) PunctuationEquals equals;
@@ -53,7 +53,7 @@ public class Java_Data extends TokenSequence implements EagleRunnable
 			interpreter.pushEagleValue(value);
 		}
 	}
-	
+
 	public static class Java_MoreIdentifiers extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
@@ -67,7 +67,7 @@ public class Java_Data extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(initialValue);
-		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(),
-				id.getStartChar(), id.toString(), value);
+		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
+				value);
 	}
 }

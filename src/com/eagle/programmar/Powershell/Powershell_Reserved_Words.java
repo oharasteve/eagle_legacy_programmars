@@ -3,19 +3,21 @@
 
 package com.eagle.programmar.Powershell;
 
-public class Powershell_Reserved_Words {
-	// From https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_reserved_words?view=powershell-7.2
+public class Powershell_Reserved_Words
+{
+	// From
+	// https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_reserved_words?view=powershell-7.2
 	public static final String[] RESERVED_WORDS = new String[] {
-			// "assembly",	// Reflection.Assembly is common
-			// "base",		// Why?
+			// "assembly", // Reflection.Assembly is common
+			// "base", // Why?
 			"begin",
 			"break",
 			"catch",
-			// "class",		// I removed
+			// "class", // I removed
 			"command",
 			"configuration",
 			"continue",
-			// "data",		// Not really
+			// "data", // Not really
 			"define",
 			"do",
 			"dynamicparam",
@@ -24,7 +26,7 @@ public class Powershell_Reserved_Words {
 			"end",
 			"enum",
 			"exit",
-			// "filter",	// I removed
+			// "filter", // I removed
 			"finally",
 			"for",
 			"foreach",
@@ -36,9 +38,9 @@ public class Powershell_Reserved_Words {
 			"inlinescript",
 			"interface",
 			"module",
-			// "namespace",	// I removed
+			// "namespace", // I removed
 			"parallel",
-			// "param",		// I removed
+			// "param", // I removed
 			"private",
 			"process",
 			"public",
@@ -53,8 +55,8 @@ public class Powershell_Reserved_Words {
 			"until",
 			"using",
 			"var",
-			"where",			// I added
-			"where-object",		// I added
+			"where", // I added
+			"where-object", // I added
 			"while",
 			"workflow",
 	};

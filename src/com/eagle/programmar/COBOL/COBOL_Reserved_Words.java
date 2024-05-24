@@ -117,7 +117,7 @@ public class COBOL_Reserved_Words
 			"DIVISION",
 			"DOWN",
 			"DUPLICATES",
-			// "DYNAMIC",		// I removed
+			// "DYNAMIC", // I removed
 			"EGCS",
 			"EGI",
 			"EJECT",
@@ -260,7 +260,7 @@ public class COBOL_Reserved_Words
 			"OR",
 			"ORDER",
 			"ORGANIZATION",
-			// "OTHER",		// Not really 
+			// "OTHER", // Not really
 			"OUTPUT",
 			"OVERFLOW",
 			"OVERRIDE",
@@ -343,7 +343,7 @@ public class COBOL_Reserved_Words
 			"SEPARATE",
 			"SEQUENCE",
 			"SEQUENTIAL",
-			// "SERVICE",		// Not really reserved
+			// "SERVICE", // Not really reserved
 			"SET",
 			"SHIFT-IN",
 			"SHIFT-OUT",

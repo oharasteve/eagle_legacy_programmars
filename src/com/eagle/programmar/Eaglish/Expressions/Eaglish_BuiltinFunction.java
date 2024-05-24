@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Eaglish_BuiltinFunction  extends PrimaryOperator implements EagleRunnable
+public class Eaglish_BuiltinFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Eaglish_KeywordChoice func = new Eaglish_KeywordChoice("LENGTH");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -36,12 +36,13 @@ public class Eaglish_BuiltinFunction  extends PrimaryOperator implements EagleRu
 		default:
 			throw new RuntimeException("Unexpected function " + which);
 		}
-		
+
 		// Verify arg count
 		int argCount = args.getPrimaryCount();
 		if (argCount != paramCount)
 		{
-			throw new RuntimeException("Function " + which + " expects #args = " + paramCount + ", but was given " + argCount);
+			throw new RuntimeException(
+					"Function " + which + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
 		// Call the function
@@ -57,4 +58,3 @@ public class Eaglish_BuiltinFunction  extends PrimaryOperator implements EagleRu
 		}
 	}
 }
-

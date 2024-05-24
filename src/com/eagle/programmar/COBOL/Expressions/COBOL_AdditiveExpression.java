@@ -30,7 +30,7 @@ public class COBOL_AdditiveExpression extends PrecedenceOperator implements Eagl
 			interpreter.pushInt(leftValue - rightValue);
 			break;
 		default:
-			throw new RuntimeException("Unable to handle " + plusMinus + " in COBOL_AdditiveExpression");	
+			throw new RuntimeException("Unable to handle " + plusMinus + " in COBOL_AdditiveExpression");
 		}
 	}
 }

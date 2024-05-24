@@ -12,7 +12,7 @@ public class SQL_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public SQL_KeywordChoice(String... words)
 	{
 		super(words);

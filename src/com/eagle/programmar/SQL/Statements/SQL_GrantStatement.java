@@ -17,11 +17,11 @@ public class SQL_GrantStatement extends TokenSequence
 	public @S(30) SQL_Keyword TO = new SQL_Keyword("TO");
 	public @S(40) SQL_Identifier_Reference role;
 	public @S(50) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_GrantPermission extends TokenChooser
 	{
 		public @CHOICE SQL_Identifier_Reference permission;
-		
+
 		public @CHOICE static class SQL_GrantPermissionOn extends TokenSequence
 		{
 			public @S(10) SQL_KeywordChoice EXECUTE = new SQL_KeywordChoice("EXECUTE", "SELECT");

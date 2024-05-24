@@ -21,7 +21,7 @@ public class COBOL_MergeStatement extends COBOL_AbstractStatement
 	public @S(60) COBOL_Identifier_Reference key;
 	public @S(70) @OPT TokenList<COBOL_MergeKey> moreKeys;
 	public @S(80) TokenList<COBOL_MergeEntry> entries;
-	
+
 	public static class COBOL_MergeEntry extends TokenChooser
 	{
 		public @CHOICE COBOL_MergeUsing using;
@@ -34,7 +34,7 @@ public class COBOL_MergeStatement extends COBOL_AbstractStatement
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) COBOL_Identifier_Reference key;
 	}
-	
+
 	public static class COBOL_MergeUsing extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword USING = new COBOL_Keyword("USING");
@@ -47,18 +47,18 @@ public class COBOL_MergeStatement extends COBOL_AbstractStatement
 			public @S(20) COBOL_Identifier_Reference using;
 		}
 	}
-	
+
 	public static class COBOL_MergeGiving extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
 		public @S(20) COBOL_Identifier_Reference giving;
 	}
-	
+
 	public static class COBOL_MergeOutput extends TokenSequence
 	{
-		public @S(10) COBOL_Keyword OUTPUT  = new COBOL_Keyword("OUTPUT");
-		public @S(20) COBOL_Keyword PROCEDURE  = new COBOL_Keyword("PROCEDURE");
-		public @S(30) COBOL_Keyword IS  = new COBOL_Keyword("IS");
+		public @S(10) COBOL_Keyword OUTPUT = new COBOL_Keyword("OUTPUT");
+		public @S(20) COBOL_Keyword PROCEDURE = new COBOL_Keyword("PROCEDURE");
+		public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
 		public @S(40) COBOL_Identifier_Reference procedure;
 	}
 }

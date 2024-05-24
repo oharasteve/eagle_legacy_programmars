@@ -12,14 +12,16 @@ public class Ruby_Syntax extends EagleSyntax
 	{
 		return "Ruby";
 	}
-	
+
 	public Ruby_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "==", "!=", "<=", ">=", "++", "--", "+=", ".." };
-		
+		_punctuationExceptions = new String[] {
+				"==", "!=", "<=", ">=", "++", "--", "+=", ".."
+		};
+
 		addReservedWords(reservedWords);
 	}
 

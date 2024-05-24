@@ -10,12 +10,12 @@ import com.eagle.tokens.TokenList;
 public class Natural_Program extends EagleLanguage
 {
 	public static final String NATURAL = "Natural";
-	
+
 	public Natural_Program()
 	{
 		super(NATURAL, new Natural_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{

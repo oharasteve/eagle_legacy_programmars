@@ -16,7 +16,7 @@ public class COBOL_ReportEntry extends TokenSequence
 {
 	public @S(10) COBOL_ReportDescription rd;
 	public @S(20) TokenList<COBOL_ReportDataLine> dataLines;
-	
+
 	public static class COBOL_ReportDescription extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword RD = new COBOL_Keyword("RD");
@@ -24,7 +24,7 @@ public class COBOL_ReportEntry extends TokenSequence
 		public @S(30) TokenList<COBOL_ReportDescriptionEntry> descriptionEntries;
 		public @S(40) PunctuationPeriod dot;
 	}
-	
+
 	public static class COBOL_ReportDataLine extends TokenSequence
 	{
 		public @S(10) COBOL_Level O1;
@@ -36,7 +36,7 @@ public class COBOL_ReportEntry extends TokenSequence
 		public @S(70) PunctuationPeriod dot;
 		public @S(80) TokenList<COBOL_ReportLine> reportLines;
 	}
-	
+
 	public static class COBOL_ReportNextGroup extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");

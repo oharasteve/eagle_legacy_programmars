@@ -13,26 +13,21 @@ public class CSS_Syntax extends EagleSyntax
 	{
 		return "CSS";
 	}
-	
+
 	public CSS_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
-		_punctuationExceptions = new String[] { "::", "--" };
+		_punctuationExceptions = new String[] {
+				"::", "--"
+		};
 		_commentInstance = new CSS_Comment();
-		
+
 		addReservedWords(keywords);
 	}
 
 	private String[] keywords = new String[] {
-		"media",
-		"-moz-document",
-		"namespace",
-		"not",
-		"rgb",
-		"rgba",
-		"rotate",
-		"url-prefix"
+			"media", "-moz-document", "namespace", "not", "rgb", "rgba", "rotate", "url-prefix"
 	};
 }

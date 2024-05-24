@@ -16,7 +16,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Powershell_IfStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword IF = new Powershell_Keyword("If");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword IF = new Powershell_Keyword(
+			"If");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Powershell_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;
@@ -28,7 +29,7 @@ public class Powershell_IfStatement extends TokenSequence
 	public @S(100) @OPT Powershell_EndOfLine eoln3;
 	public @S(110) @OPT TokenList<Powershell_IfElseIfStatement> elseIfStmts;
 	public @S(120) @OPT Powershell_IfElseStatement elseStmt;
-	
+
 	public static class Powershell_IfElseIfStatement extends TokenSequence
 	{
 		public @S(10) Powershell_Keyword ELSEIF = new Powershell_Keyword("ElseIf");
@@ -41,7 +42,7 @@ public class Powershell_IfStatement extends TokenSequence
 		public @S(80) PunctuationRightBrace rightBrace;
 		public @S(90) @OPT Powershell_EndOfLine eoln2;
 	}
-	
+
 	public static class Powershell_IfElseStatement extends TokenSequence
 	{
 		public @S(10) Powershell_Keyword ELSE = new Powershell_Keyword("Else");

@@ -16,7 +16,7 @@ public class Rust_FunctionCall extends TokenSequence
 {
 	public @S(10) Java_Variable methodName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<Rust_Expression,PunctuationComma> argList;
+	public @S(30) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 }

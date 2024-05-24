@@ -8,5 +8,6 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_ContinueStatement extends TokenSequence
 {
-	public @S(10) @DOC("simple_stmts.html#the-continue-statement")  Python_Keyword CONTINUE = new Python_Keyword("continue");
+	public @S(10) @DOC("simple_stmts.html#the-continue-statement") Python_Keyword CONTINUE = new Python_Keyword(
+			"continue");
 }

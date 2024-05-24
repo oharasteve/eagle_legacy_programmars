@@ -5,7 +5,7 @@ package com.eagle.programmar.Julia.Symbols;
 
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Julia_Identifier_Definition  extends Julia_Identifier implements DefinitionInterface
+public abstract class Julia_Identifier_Definition extends Julia_Identifier implements DefinitionInterface
 {
 
 }

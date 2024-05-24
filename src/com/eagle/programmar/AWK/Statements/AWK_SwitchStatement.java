@@ -29,14 +29,14 @@ public class AWK_SwitchStatement extends TokenSequence
 	public @S(80) @OPT TokenList<AWK_SwitchClause> switchClause;
 	public @S(90) PunctuationRightBrace rightBrace;
 	public @S(100) @OPT AWK_EndOfLine eoln2;
-	
+
 	public static class AWK_SwitchClause extends TokenChooser
 	{
 		public @CHOICE AWK_Comment comment;
 		public @CHOICE AWK_CaseClause caseClause;
 		public @CHOICE AWK_DefaultClause defaultClause;
 	}
-	
+
 	public static class AWK_CaseClause extends TokenSequence
 	{
 		public @S(10) AWK_Keyword CASE = new AWK_Keyword("case");
@@ -45,7 +45,7 @@ public class AWK_SwitchStatement extends TokenSequence
 		public @S(40) @OPT AWK_EndOfLine eoln;
 		public @S(50) @OPT TokenList<AWK_StatementOrComment> statements;
 	}
-	
+
 	public static class AWK_DefaultClause extends TokenSequence
 	{
 		public @S(10) AWK_Keyword DEFAULT = new AWK_Keyword("default");

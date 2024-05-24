@@ -15,7 +15,7 @@ public class CMacro_Number extends TerminalNumberToken implements EagleRunnable
 	{
 		return genericNumber(lines, "Ee", "Lf", true);
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -22,18 +22,18 @@ public class AWK_MultiplicativeExpression extends PrecedenceOperator implements 
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			if (leftValue % rightValue == 0)
 			{
 				interpreter.pushInt(leftValue / rightValue);
 				return;
 			}
-			interpreter.pushDouble(leftValue / (double)rightValue);
+			interpreter.pushDouble(leftValue / (double) rightValue);
 			return;
-		case "%" :
+		case "%":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		default:

@@ -28,11 +28,11 @@ public class Perl_IfStatement extends TokenSequence
 	public @S(90) @OPT TokenList<Perl_IfElseIfClause> elseIfClauses;
 	public @S(100) @OPT TokenList<Perl_Comment> comments4;
 	public @S(110) @OPT Perl_IfElseClause elseClause;
-	
+
 	public static class Perl_IfWhat extends TokenChooser
 	{
 		public @LAST Perl_Expression condition;
-		
+
 		public @CHOICE static class Perl_IfExists extends TokenSequence
 		{
 			public @S(10) @OPT Perl_Keyword NOT = new Perl_Keyword("not");
@@ -41,7 +41,7 @@ public class Perl_IfStatement extends TokenSequence
 			public @S(40) Perl_Expression expr;
 		}
 	}
-	
+
 	public static class Perl_IfElseIfClause extends TokenSequence
 	{
 		public @S(10) Perl_KeywordChoice ELSEIF = new Perl_KeywordChoice("elseif", "elsif");
@@ -51,7 +51,7 @@ public class Perl_IfStatement extends TokenSequence
 		public @S(50) @OPT TokenList<Perl_Comment> comments;
 		public @S(60) Perl_Statement elseIfStatement;
 	}
-	
+
 	public static class Perl_IfElseClause extends TokenSequence
 	{
 		public @S(10) Perl_Keyword ELSE = new Perl_Keyword("else");

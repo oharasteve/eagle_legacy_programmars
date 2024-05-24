@@ -31,7 +31,7 @@ public class SQL_HexString extends TerminalLiteralToken
 
 		if (endChar >= recLen) return false;
 		if (rec.charAt(endChar) != '\'') return false;
-			
+
 		_txt = rec.substring(_currentChar, endChar);
 		foundIt(_currentLine, endChar);
 		return true;

@@ -16,7 +16,7 @@ import com.eagle.tokens.terminals.TerminalPunctuationToken;
 public class Delphi_Configuration extends EagleLanguage
 {
 	public static final String DELPHIConfig = "Delphi_Configuration";
-	
+
 	public static class Delphi_Config_Syntax extends EagleSyntax
 	{
 		@Override
@@ -24,7 +24,7 @@ public class Delphi_Configuration extends EagleLanguage
 		{
 			return "Delphi Config";
 		}
-		
+
 		public Delphi_Config_Syntax()
 		{
 			_isCaseSensitive = false;
@@ -33,7 +33,7 @@ public class Delphi_Configuration extends EagleLanguage
 			_autoAdvance = false;
 		}
 	}
-	
+
 	public static class Delphi_Config_EndOfLine extends TerminalEndOfLine
 	{
 	}
@@ -48,10 +48,10 @@ public class Delphi_Configuration extends EagleLanguage
 	{
 		return null;
 	}
-	
+
 	public @S(10) @OPT Delphi_Config_EndOfLine eoln;
 	public @S(20) TokenList<Delphi_Config_Block> blocks;
-	
+
 	public static class Delphi_Config_Block extends TokenSequence
 	{
 		public @S(10) Delphi_Config_Punctuation leftBracket = new Delphi_Config_Punctuation('[');
@@ -59,7 +59,7 @@ public class Delphi_Configuration extends EagleLanguage
 		public @S(30) Delphi_Config_Punctuation rightBracket = new Delphi_Config_Punctuation(']');
 		public @S(40) Delphi_Config_EndOfLine eoln;
 		public @S(50) TokenList<Delphi_Config_Line> lines;
-		
+
 		public static class Delphi_Config_Line extends TokenSequence
 		{
 			public @S(10) @OPT Delphi_Config_Value id = new Delphi_Config_Value("=]");
@@ -68,21 +68,21 @@ public class Delphi_Configuration extends EagleLanguage
 			public @S(40) Delphi_Config_EndOfLine eoln;
 		}
 	}
-	
+
 	public static class Delphi_Config_Value extends TerminalLiteralToken
 	{
 		String _stoppers;
-		
+
 		public Delphi_Config_Value()
 		{
 			this("");
 		}
-		
+
 		public Delphi_Config_Value(String stoppers)
 		{
 			_stoppers = stoppers;
 		}
-		
+
 		@Override
 		public boolean parse(EagleFileReader lines)
 		{
@@ -92,7 +92,7 @@ public class Delphi_Configuration extends EagleLanguage
 			if (_currentChar >= recLen) return false;
 			char ch = rec.charAt(_currentChar);
 			if (_stoppers.indexOf(ch) >= 0) return false;
-			
+
 			_endChar = _currentChar;
 			while (true)
 			{
@@ -101,13 +101,13 @@ public class Delphi_Configuration extends EagleLanguage
 				ch = rec.charAt(_endChar);
 				if (_stoppers.indexOf(ch) >= 0) break;
 			}
-			_txt = rec.substring(_currentChar, _endChar-1);
+			_txt = rec.substring(_currentChar, _endChar - 1);
 
-			foundIt(_currentLine, _endChar-1);
+			foundIt(_currentLine, _endChar - 1);
 			return true;
 		}
 	}
-	
+
 	public static class Delphi_Config_Punctuation extends TerminalPunctuationToken
 	{
 		// Need default constructor for reading from the XML file

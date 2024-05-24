@@ -12,7 +12,7 @@ public class Scala_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Scala_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

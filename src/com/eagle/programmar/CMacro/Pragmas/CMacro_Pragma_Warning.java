@@ -19,16 +19,16 @@ public class CMacro_Pragma_Warning extends TokenSequence
 {
 	public @S(10) CMacro_Keyword WARNING = new CMacro_Keyword("warning");
 	public @S(20) @OPT PunctuationLeftParen leftParen;
-	public @S(30) CMacro_KeywordChoice DISABLE =
-			new CMacro_KeywordChoice("disable", "restore", "push", "pop", "default");
+	public @S(30) CMacro_KeywordChoice DISABLE = new CMacro_KeywordChoice("disable", "restore", "push", "pop",
+			"default");
 	public @S(40) @OPT PunctuationColon colon;
 	public @S(50) @OPT TokenList<CMacro_PragmaCode> codes;
 	public @S(60) @OPT PunctuationRightParen rightParen;
-	
+
 	public static class CMacro_PragmaCode extends TokenChooser
 	{
 		public @CHOICE PunctuationComma comma;
-		public @CHOICE CMacro_Number number;	// 1718 1501 0612 3021 4702 etc etc
-		public @CHOICE CMacro_Identifier code;	// CS0618 and CS1718
+		public @CHOICE CMacro_Number number; // 1718 1501 0612 3021 4702 etc etc
+		public @CHOICE CMacro_Identifier code; // CS0618 and CS1718
 	}
 }

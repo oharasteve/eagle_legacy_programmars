@@ -30,22 +30,23 @@ public class Python_Variable extends TokenSequence implements AbstractVariable, 
 	public @S(40) @OPT @NOSPACE TokenList<Python_Subscript> subscript2;
 	public @S(50) @OPT @NOSPACE TokenList<Python_DotVariable> moreFields2;
 	// public @S(60) @OPT @NOSPACE Python_ColonType colonType;
-	
+
 	public static class Python_SelfOrVariable extends TokenChooser
 	{
 		public @CHOICE Python_Keyword SELF = new Python_Keyword("self");
 		public @CHOICE Python_Identifier_Reference id;
 		public @CHOICE Python_DotVariable dotVariable;
-		public @CHOICE Python_PunctuationChoice dotDot = new Python_PunctuationChoice("..", ".", "_1", "_2", "__", "_$", "_");
+		public @CHOICE Python_PunctuationChoice dotDot = new Python_PunctuationChoice("..", ".", "_1", "_2", "__", "_$",
+				"_");
 	}
-	
+
 	public static class Python_DotVariable extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationPeriod dot1;
 		public @S(20) @NOSPACE @OPT PunctuationPeriod dot2;
 		public @S(30) @NOSPACE Python_Identifier_Reference fld;
 	}
-	
+
 	public static class Python_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -55,7 +56,7 @@ public class Python_Variable extends TokenSequence implements AbstractVariable, 
 		public static class Python_Subscript_Body extends TokenSequence
 		{
 			public @S(10) @OPT Python_EndOfLine eoln;
-			public @S(20) SeparatedList<Python_Subscript_Dimension,PunctuationComma> dimensions;
+			public @S(20) SeparatedList<Python_Subscript_Dimension, PunctuationComma> dimensions;
 		}
 
 		public static class Python_Subscript_Dimension extends TokenSequence
@@ -72,7 +73,7 @@ public class Python_Variable extends TokenSequence implements AbstractVariable, 
 			}
 		}
 	}
-	
+
 	public static class Python_ColonType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;

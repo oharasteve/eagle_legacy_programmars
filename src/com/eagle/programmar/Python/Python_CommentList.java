@@ -10,5 +10,5 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_CommentList extends TokenSequence
 {
-	public @S(10) @NOSPACE SeparatedList<Python_Comment,Python_EndOfLine> comments;
+	public @S(10) @NOSPACE SeparatedList<Python_Comment, Python_EndOfLine> comments;
 }

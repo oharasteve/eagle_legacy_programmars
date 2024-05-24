@@ -20,15 +20,15 @@ public class Bash_EndOfLine extends TokenSequence
 
 	public static class Bash_Redirect extends TokenSequence
 	{
-		public @S(10) Bash_PunctuationChoice direction = new Bash_PunctuationChoice(
-				"<", ">", ">>", "&>", "&>>", "1>", "2>");
+		public @S(10) Bash_PunctuationChoice direction = new Bash_PunctuationChoice("<", ">", ">>", "&>", "&>>", "1>",
+				"2>");
 		public @S(20) Bash_RedirectTo where;
-		
+
 		public static class Bash_RedirectTo extends TokenChooser
 		{
 			public @CHOICE Bash_Literal literal;
 			public @CHOICE Bash_Filename fileName;
-			
+
 			public @CHOICE static class Bash_RedirectToNumber extends TokenSequence
 			{
 				public @S(10) @OPT PunctuationAmpersand ampersand;
@@ -36,15 +36,14 @@ public class Bash_EndOfLine extends TokenSequence
 			}
 		}
 	}
-	
+
 	public static class Bash_LineEnder extends TokenChooser
 	{
 		public @CHOICE Bash_RealEndOfLine eoln;
-		
+
 		public @CHOICE static class Bash_Piper extends TokenSequence
 		{
-			public @S(10) Bash_PunctuationChoice separator = new Bash_PunctuationChoice(
-				",", "|", ";", "||", "&&");
+			public @S(10) Bash_PunctuationChoice separator = new Bash_PunctuationChoice(",", "|", ";", "||", "&&");
 			public @S(20) @OPT Bash_RealEndOfLine eoln;
 		}
 	}

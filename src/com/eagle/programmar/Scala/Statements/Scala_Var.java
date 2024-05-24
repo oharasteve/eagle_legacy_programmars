@@ -15,7 +15,8 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Scala_Var extends TokenSequence implements EagleRunnable
 {
-	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAR = new Scala_Keyword("var");
+	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAR = new Scala_Keyword(
+			"var");
 	public @S(20) Scala_Variable_Definition id;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Scala_Expression value;
@@ -25,7 +26,6 @@ public class Scala_Var extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(value);
-		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(),
-				id.getStartChar(), id.toString(), val);
+		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(), val);
 	}
 }

@@ -13,7 +13,7 @@ public class CMacro_IdentifierExpression extends PrimaryOperator implements Eagl
 {
 	public @S(10) CMacro_Identifier_Reference identifier;
 	public @S(20) @OPT CMacroFunctionParens params;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

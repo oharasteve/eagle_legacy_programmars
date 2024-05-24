@@ -7,7 +7,7 @@ import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Delphi_DotDot_Expression extends PrecedenceOperator 
+public class Delphi_DotDot_Expression extends PrecedenceOperator
 {
 	public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Delphi_Punctuation dotDot = new Delphi_Punctuation("..");

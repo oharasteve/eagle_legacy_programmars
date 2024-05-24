@@ -25,36 +25,35 @@ public class COBOL_FileSelect extends TokenSequence
 	public @S(70) COBOL_AssignTo assignTo;
 	public @S(80) @OPT TokenList<COBOL_SelectClause> selectClauses;
 	public @S(90) PunctuationPeriod dot;
-	
+
 	public static class COBOL_AssignTo extends TokenChooser
 	{
 		public @CHOICE COBOL_Literal assignLiteral;
 		public @CHOICE COBOL_Keyword DISK = new COBOL_Keyword("DISK");
 		public @CHOICE COBOL_Identifier_Reference dataRef;
 	}
-	
+
 	public static class COBOL_SelectClause extends TokenChooser
 	{
 		public @CHOICE COBOL_Comment comment;
-		
+
 		public @CHOICE static class COBOL_SelectOrganization extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword ORGANIZATION = new COBOL_Keyword("ORGANIZATION");
 			public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(30) @OPT COBOL_Keyword LINE = new COBOL_Keyword("LINE");
-			public @S(40) COBOL_KeywordChoice organization = new COBOL_KeywordChoice(
-					"INDEXED", "SEQUENTIAL", "RELATIVE");
+			public @S(40) COBOL_KeywordChoice organization = new COBOL_KeywordChoice("INDEXED", "SEQUENTIAL",
+					"RELATIVE");
 		}
-		
+
 		public @CHOICE static class COBOL_SelectAccess extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword ACCESS = new COBOL_Keyword("ACCESS");
 			public @S(20) @OPT COBOL_Keyword MODE = new COBOL_Keyword("MODE");
 			public @S(30) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public @S(40) COBOL_KeywordChoice access = new COBOL_KeywordChoice(
-					"SEQUENTIAL", "DYNAMIC", "RANDOM");
+			public @S(40) COBOL_KeywordChoice access = new COBOL_KeywordChoice("SEQUENTIAL", "DYNAMIC", "RANDOM");
 		}
-		
+
 		public @CHOICE static class COBOL_SelectRecord extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
@@ -62,14 +61,14 @@ public class COBOL_FileSelect extends TokenSequence
 			public @S(30) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(40) COBOL_Identifier_Reference id;
 			public @S(50) @OPT COBOL_SelectRecordEquals selectEquals;
-			
+
 			public static class COBOL_SelectRecordEquals extends TokenSequence
 			{
 				public @S(10) PunctuationEquals equals;
 				public @S(20) TokenList<COBOL_Identifier_Reference> ids;
 			}
 		}
-		
+
 		public @CHOICE static class COBOL_SelectAlternate extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword ALTERNATE = new COBOL_Keyword("ALTERNATE");
@@ -80,14 +79,14 @@ public class COBOL_FileSelect extends TokenSequence
 			public @S(60) @OPT COBOL_SelectAlternates selectAlternates;
 			public @S(70) @OPT COBOL_Keyword WITH = new COBOL_Keyword("WITH");
 			public @S(80) @OPT COBOL_Keyword DUPLICATES = new COBOL_Keyword("DUPLICATES");
-			
+
 			public static class COBOL_SelectAlternates extends TokenSequence
 			{
 				public @S(10) PunctuationEquals equals;
 				public @S(20) TokenList<COBOL_Identifier_Reference> variables;
 			}
 		}
-		
+
 		public @CHOICE static class COBOL_SelectFile extends TokenSequence
 		{
 			public @S(10) @OPT COBOL_Keyword FILE = new COBOL_Keyword("FILE");
@@ -103,15 +102,15 @@ public class COBOL_FileSelect extends TokenSequence
 			public @S(30) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(40) COBOL_Identifier_Reference id;
 		}
-		
-		//LOCK MANUAL WITH LOCK ON MULTIPLE RECORDS
+
+		// LOCK MANUAL WITH LOCK ON MULTIPLE RECORDS
 		public @CHOICE static class COBOL_SelectLock extends TokenSequence
 		{
 			public @S(10) COBOL_KeywordChoice LOCK = new COBOL_KeywordChoice("LOCK", "LOCKING");
 			public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(30) COBOL_KeywordChoice EXCLUSIVE = new COBOL_KeywordChoice("EXCLUSIVE", "AUTOMATIC", "MANUAL");
 			public @S(40) @OPT COBOL_SelectLockWith lockWith;
-			
+
 			public static class COBOL_SelectLockWith extends TokenSequence
 			{
 				public @S(10) COBOL_Keyword WITH = new COBOL_Keyword("WITH");

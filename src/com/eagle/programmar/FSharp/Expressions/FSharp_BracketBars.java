@@ -15,7 +15,6 @@ public class FSharp_BracketBars extends PrimaryOperator
 {
 	public @S(10) FSharp_Punctuation leftBracketBar = new FSharp_Punctuation("[|");
 	public @S(20) @OPT FSharp_EndOfLine eoln;
-	public @S(30) @OPT @SYNTAX(FSharp_Multiline_Syntax.class)
-			SeparatedList<FSharp_Expression,PunctuationSemicolon> vals;
+	public @S(30) @OPT @SYNTAX(FSharp_Multiline_Syntax.class) SeparatedList<FSharp_Expression, PunctuationSemicolon> vals;
 	public @S(40) FSharp_Punctuation rightBarBracket = new FSharp_Punctuation("|]");
 }

@@ -17,11 +17,11 @@ public class VB_CallStatement extends TokenSequence
 	public @S(10) VB_Keyword CALL = new VB_Keyword("call");
 	public @S(20) VB_Identifier_Reference sub;
 	public @S(30) @OPT VB_CallParameters callParameters;
-	
+
 	public static class VB_CallParameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<VB_Expression,PunctuationComma> params;
+		public @S(20) @OPT SeparatedList<VB_Expression, PunctuationComma> params;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 }

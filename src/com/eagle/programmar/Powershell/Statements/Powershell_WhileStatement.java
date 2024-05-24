@@ -14,7 +14,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Powershell_WhileStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#841-the-while-statement") Powershell_Keyword WHILE = new Powershell_Keyword("While");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#841-the-while-statement") Powershell_Keyword WHILE = new Powershell_Keyword(
+			"While");
 	public @S(20) Powershell_Expression condition;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT Powershell_EndOfLine eoln;

@@ -13,15 +13,17 @@ public class SQL_Syntax extends EagleSyntax
 	{
 		return "SQL";
 	}
-	
+
 	public SQL_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new SQL_Comment();
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "=>", "||", "&&", "/*" };
-		
+		_punctuationExceptions = new String[] {
+				"!=", "<=", "==", ">=", "=>", "||", "&&", "/*"
+		};
+
 		addReservedWords(SQL_Reserved_Words.RESERVED_WORDS);
 	}
 }

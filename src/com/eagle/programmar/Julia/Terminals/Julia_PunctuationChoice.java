@@ -12,7 +12,7 @@ public class Julia_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Julia_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -12,7 +12,7 @@ public class Ada_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Ada_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -17,10 +17,10 @@ public class C_BuiltIn extends PrimaryOperator implements EagleRunnable
 	{
 		switch (builtinConstant.toString())
 		{
-		case "false" :
+		case "false":
 			interpreter.pushBool(false);
 			break;
-		case "true" :
+		case "true":
 			interpreter.pushBool(true);
 			break;
 		default:

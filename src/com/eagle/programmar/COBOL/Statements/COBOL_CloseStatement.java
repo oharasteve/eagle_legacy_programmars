@@ -16,7 +16,7 @@ public class COBOL_CloseStatement extends COBOL_AbstractStatement
 	public @S(10) @DOC("rlpsclos.htm") COBOL_Keyword CLOSE = new COBOL_Keyword("CLOSE");
 	public @S(20) @OPT COBOL_Keyword RECOVER = new COBOL_Keyword("RECOVER");
 	public @S(30) @OPT TokenList<COBOL_CloseFileList> fileList;
-	
+
 	public static class COBOL_CloseFileList extends TokenSequence
 	{
 		public @S(10) @OPT COBOL_Comment comment;

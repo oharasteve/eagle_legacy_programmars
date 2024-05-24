@@ -8,7 +8,5 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Fortran_BuiltIn extends PrimaryOperator
 {
-	public @S(10) Fortran_KeywordChoice builtinConstant = new Fortran_KeywordChoice(
-			".FALSE.",
-			".TRUE.");
+	public @S(10) Fortran_KeywordChoice builtinConstant = new Fortran_KeywordChoice(".FALSE.", ".TRUE.");
 }

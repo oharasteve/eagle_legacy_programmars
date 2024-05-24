@@ -24,23 +24,12 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 	public @S(10) COBOL_Keyword FUNCTION = new COBOL_Keyword("FUNCTION");
 	public @S(20) COBOL_FunctionName func;
 	public @S(30) @OPT COBOL_FunctionArgs args;
-	
+
 	public static class COBOL_FunctionName extends TokenChooser
 	{
-		public @FIRST COBOL_KeywordChoice builtins = new COBOL_KeywordChoice(
-				"CURRENT-DATE",
-				"INTEGER-OF-DATE",
-				"LENGTH",
-				"LOWER-CASE",
-				"ORD-MAX",
-				"ORD-MIN",
-				"RANDOM",
-				"REM",
-				"REVERSE",
-				"TRIM",
-				"UPPER-CASE"
-		);
-		
+		public @FIRST COBOL_KeywordChoice builtins = new COBOL_KeywordChoice("CURRENT-DATE", "INTEGER-OF-DATE",
+				"LENGTH", "LOWER-CASE", "ORD-MAX", "ORD-MIN", "RANDOM", "REM", "REVERSE", "TRIM", "UPPER-CASE");
+
 		public @CHOICE COBOL_Variable userFunc;
 	}
 
@@ -50,7 +39,7 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		public @S(20) @OPT COBOL_ExpressionFunctionRange range;
 		public @S(30) @OPT COBOL_KeywordChoice LEADING = new COBOL_KeywordChoice("LEADING", "TRAILING");
 		public @S(40) @OPT PunctuationComma comma;
-		
+
 		public static class COBOL_ExpressionFunctionRange extends TokenSequence
 		{
 			public @S(10) PunctuationColon colon;
@@ -64,12 +53,12 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		public @S(20) TokenList<COBOL_FunctionParameter> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AbstractToken which = func.getWhich();
-		if (! (which instanceof COBOL_KeywordChoice))
+		if (!(which instanceof COBOL_KeywordChoice))
 		{
 			throw new RuntimeException("UNable to evaluate function " + which);
 		}
@@ -102,10 +91,10 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 			throw new RuntimeException("UNable to evaluate function " + func);
 		}
 	}
-	
+
 	private String oneStringArg(EagleInterpreter interpreter, String funcName)
 	{
-		if (! args.isPresent())
+		if (!args.isPresent())
 		{
 			throw new RuntimeException("Argument required for function " + funcName);
 		}
@@ -118,4 +107,3 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		return value;
 	}
 }
-

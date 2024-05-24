@@ -10,13 +10,13 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 public class IBMASM_Spaces extends TerminalLiteralToken
 {
 	private String _spaces;
-	
+
 	// Need a default constructor for the parser
 	public IBMASM_Spaces()
 	{
 		this("");
 	}
-	
+
 	public IBMASM_Spaces(String spaces)
 	{
 		_spaces = spaces;
@@ -28,7 +28,7 @@ public class IBMASM_Spaces extends TerminalLiteralToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
 		_endChar = _currentChar;
-		while (_endChar+1 < recLen && rec.charAt(_endChar+1) == ' ') _endChar++;
+		while (_endChar + 1 < recLen && rec.charAt(_endChar + 1) == ' ') _endChar++;
 		_spaces = rec.substring(_currentChar, _endChar);
 		foundIt(_currentLine, _endChar);
 		return true;
@@ -39,14 +39,14 @@ public class IBMASM_Spaces extends TerminalLiteralToken
 	{
 		return _spaces;
 	}
-	
+
 	@Override
 	public void setValue(String val)
 	{
 		_spaces = val;
 		setPresent(true);
 	}
-	
+
 	@Override
 	public String showString()
 	{

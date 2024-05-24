@@ -22,12 +22,13 @@ public class Python_ClassDeclaration extends TokenSequence implements AbstractCl
 {
 	public @S(10) @OPT TokenList<Python_Decorators> decorators;
 	public @S(20) @OPT Python_EndOfLine eoln;
-	public @S(30) @DOC("compound_stmts.html#class-definitions") @NOSPACE Python_Keyword CLASS = new Python_Keyword("class");
+	public @S(30) @DOC("compound_stmts.html#class-definitions") @NOSPACE Python_Keyword CLASS = new Python_Keyword(
+			"class");
 	public @S(40) Python_Class_Definition name;
 	public @S(50) @OPT Python_ClassSuper superClass;
 	public @S(60) @NOSPACE PunctuationColon colon;
 	public @S(70) Python_SingleOrMultiLineStatement statements;
-	
+
 	public static class Python_ClassSuper extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -39,9 +40,9 @@ public class Python_ClassDeclaration extends TokenSequence implements AbstractCl
 		{
 			public @S(10) Python_Type type;
 			public @S(20) @OPT Python_ClassSuper superClass;
-			public @S(30) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes; 
+			public @S(30) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_MoreTypes> moreTypes;
 		}
-		
+
 		public static class Python_MoreTypes extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;

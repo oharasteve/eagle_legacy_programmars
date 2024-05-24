@@ -25,7 +25,7 @@ public class Perl_SwitchStatement extends TokenSequence
 	public @S(60) TokenList<Perl_CaseClause> caseClause;
 	public @S(70) @OPT Perl_DefaultClause elseClause;
 	public @S(80) PunctuationRightBrace rightBrace;
-	
+
 	public static class Perl_CaseClause extends TokenSequence
 	{
 		public @S(10) Perl_Keyword CASE = new Perl_Keyword("case");
@@ -33,7 +33,7 @@ public class Perl_SwitchStatement extends TokenSequence
 		public @S(30) @OPT PunctuationColon colon;
 		public @S(40) @OPT TokenList<Perl_StatementOrComment> statements;
 	}
-	
+
 	public static class Perl_DefaultClause extends TokenSequence
 	{
 		public @S(10) Perl_KeywordChoice DEFAULT = new Perl_KeywordChoice("default", "else");

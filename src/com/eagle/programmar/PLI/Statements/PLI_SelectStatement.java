@@ -27,16 +27,16 @@ public class PLI_SelectStatement extends TokenSequence
 	public @S(70) @OPT PLI_SelectOtherwise otherwise;
 	public @S(80) PLI_Keyword END = new PLI_Keyword("END");
 	public @S(90) PunctuationSemicolon semicolon2;
-	
+
 	public static class PLI_SelectWhenClause extends TokenSequence
 	{
 		public @S(10) PLI_Keyword WHEN = new PLI_Keyword("WHEN");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<PLI_Literal,PunctuationComma> literals;
+		public @S(30) SeparatedList<PLI_Literal, PunctuationComma> literals;
 		public @S(40) PunctuationRightParen rightParen;
 		public @S(50) PLI_Statement statement;
 	}
-	
+
 	public static class PLI_SelectOtherwise extends TokenSequence
 	{
 		public @S(10) PLI_Keyword OTHERWISE = new PLI_Keyword("OTHERWISE");

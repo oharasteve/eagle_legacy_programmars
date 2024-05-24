@@ -22,7 +22,7 @@ public class IBMASM_Directive extends TokenSequence
 	public @S(30) IBMASM_Direct directive;
 	public @S(40) @OPT IBMASM_Spaces spaces2;
 	public @S(50) @OPT IBMASM_Remark remark;
-	
+
 	public static class IBMASM_Direct extends TokenChooser
 	{
 		public @CHOICE IBMASM_CSECT_Directive CSECT_directive;

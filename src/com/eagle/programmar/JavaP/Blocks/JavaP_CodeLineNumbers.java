@@ -16,7 +16,7 @@ public class JavaP_CodeLineNumbers extends TokenSequence
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_EndOfLine eoln;
 	public @S(40) TokenList<JavaP_CodeLineEntry> entries;
-	
+
 	public static class JavaP_CodeLineEntry extends TokenSequence
 	{
 		public @S(10) JavaP_Keyword LINE = new JavaP_Keyword("line");

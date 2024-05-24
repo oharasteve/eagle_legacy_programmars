@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL.Symbols;
 
-
 public class COBOL_Index_Definition extends COBOL_Identifier_Definition
 {
 	@Override

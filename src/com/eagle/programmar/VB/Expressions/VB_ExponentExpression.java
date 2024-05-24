@@ -9,7 +9,7 @@ import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class VB_ExponentExpression  extends PrecedenceOperator implements EagleRunnable
+public class VB_ExponentExpression extends PrecedenceOperator implements EagleRunnable
 {
 	// Note: VB does these left-to-right. Most languages do right-to-left
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);

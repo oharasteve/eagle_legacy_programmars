@@ -20,13 +20,13 @@ public class JavaP_Classfile extends TokenSequence
 	public @S(30) JavaP_EndOfLine eoln;
 	public @S(40) @OPT JavaP_LastModified lastModified;
 	public @S(50) @OPT JavaP_MD5Checksum checksum;
-	
+
 	public static class JavaP_LastModified extends TokenSequence
 	{
 		public @S(10) JavaP_Keyword LAST = new JavaP_Keyword("Last");
 		public @S(20) JavaP_Keyword MODIFIED = new JavaP_Keyword("modified");
-		public @S(30) JavaP_KeywordChoice MONTH = new JavaP_KeywordChoice(
-				"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+		public @S(30) JavaP_KeywordChoice MONTH = new JavaP_KeywordChoice("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+				"Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 		public @S(40) JavaP_Number day;
 		public @S(50) PunctuationComma comma;
 		public @S(60) JavaP_Number year;
@@ -36,7 +36,7 @@ public class JavaP_Classfile extends TokenSequence
 		public @S(100) JavaP_Keyword BYTES = new JavaP_Keyword("bytes");
 		public @S(110) JavaP_EndOfLine eoln;
 	}
-	
+
 	public static class JavaP_MD5Checksum extends TokenSequence
 	{
 		public @S(10) JavaP_KeywordChoice MD5 = new JavaP_KeywordChoice("MD5", "SHA-256");

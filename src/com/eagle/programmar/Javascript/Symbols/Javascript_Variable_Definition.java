@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Javascript.Symbols;
 
-
 public class Javascript_Variable_Definition extends Javascript_Identifier_Definition
 {
 	@Override

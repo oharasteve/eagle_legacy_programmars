@@ -13,7 +13,7 @@ public class C_ExpressionStatement extends TokenSequence implements EagleRunnabl
 {
 	public @S(10) @DOC("#Expression-Statements") C_Expression expr;
 	public @S(20) PunctuationSemicolon semicolon;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

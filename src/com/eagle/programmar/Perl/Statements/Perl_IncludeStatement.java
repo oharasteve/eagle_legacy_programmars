@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 public class Perl_IncludeStatement extends TokenSequence
 {
 	public @S(10) @OPT Perl_Punctuation at = new Perl_Punctuation("@");
-	public @S(20) @DOC("function.include.php") Perl_KeywordChoice INCLUDE =
-			new Perl_KeywordChoice("include", "include_once");
+	public @S(20) @DOC("function.include.php") Perl_KeywordChoice INCLUDE = new Perl_KeywordChoice("include",
+			"include_once");
 	public @S(30) Perl_Expression filename;
 }

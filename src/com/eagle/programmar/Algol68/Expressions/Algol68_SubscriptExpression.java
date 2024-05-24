@@ -19,7 +19,7 @@ public class Algol68_SubscriptExpression extends PrecedenceOperator
 	public @S(40) @OPT PunctuationColon colon;
 	public @S(50) @OPT Algol68_SubscriptionEnd subscr2;
 	public @S(60) PunctuationRightBracket rightBracket;
-	
+
 	public static class Algol68_SubscriptionEnd extends TokenChooser
 	{
 		public @CHOICE Algol68_Keyword END = new Algol68_Keyword("end");

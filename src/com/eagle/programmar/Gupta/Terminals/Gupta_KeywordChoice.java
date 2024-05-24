@@ -12,7 +12,7 @@ public class Gupta_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Gupta_KeywordChoice(String... words)
 	{
 		super(words);

@@ -23,13 +23,14 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Javascript_ObjectLiteral extends PrimaryOperator
 {
-	// Don't use @INDENT here. Messes up 'return' statements that return an object literal.
+	// Don't use @INDENT here. Messes up 'return' statements that return an object
+	// literal.
 	public @S(10) PunctuationLeftBrace leftBrace;
-	public @S(20) SeparatedList<Javascript_ObjectLiteralItem,PunctuationComma> items;
+	public @S(20) SeparatedList<Javascript_ObjectLiteralItem, PunctuationComma> items;
 	public @S(30) @OPT PunctuationComma comma;
 	public @S(40) @OPT TokenList<Javascript_Comment> comments;
 	public @S(50) PunctuationRightBrace rightBrace;
-	
+
 	public static class Javascript_ObjectLiteralItem extends TokenChooser
 	{
 		public @CHOICE static class Javascript_ObjectFunction extends TokenSequence
@@ -39,19 +40,19 @@ public class Javascript_ObjectLiteral extends PrimaryOperator
 			public @S(30) @OPT Javascript_KeywordChoice prefix = new Javascript_KeywordChoice("get", "set");
 			public @S(40) Javascript_FunctionImplementation function;
 		}
-		
+
 		public @LAST static class Javascript_ObjecLiteraltData extends TokenSequence
 		{
 			public @S(10) Javascript_ObjectFieldName name;
 			public @S(20) @OPT Javascript_ObjectFieldValue value;
-			
+
 			public static class Javascript_ObjectFieldName extends TokenChooser
 			{
 				public @CHOICE Javascript_Number number;
 				public @CHOICE Javascript_Literal literal;
 				public @CHOICE Javascript_Field_Definition field;
 			}
-			
+
 			public static class Javascript_ObjectFieldValue extends TokenSequence
 			{
 				public @S(10) PunctuationColon colon;

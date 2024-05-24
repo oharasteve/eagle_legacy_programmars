@@ -26,20 +26,20 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class CSS_Program extends EagleLanguage
 {
 	public static final String CSS = "CSS";
-	
+
 	public CSS_Program()
 	{
 		super(CSS, new CSS_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.w3schools.com/css/";
 	}
-	
+
 	public @S(10) @OPT TokenList<CSS_Entry> entries;
-	
+
 	public static class CSS_Entry extends TokenChooser
 	{
 		public @CHOICE CSS_Comment comment;
@@ -61,7 +61,7 @@ public class CSS_Program extends EagleLanguage
 		public @S(90) @OPT CSS_Qualifier qualifier;
 		public @S(100) @OPT PunctuationComma comma;
 		public @S(110) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
-		
+
 		public static class CSS_StarPiece extends TokenSequence
 		{
 			public @S(10) PunctuationStar star;
@@ -70,19 +70,19 @@ public class CSS_Program extends EagleLanguage
 			public @S(40) @OPT CSS_Punctuation plus = new CSS_Punctuation('+');
 			public @S(50) CSS_Keyword HTML = new CSS_Keyword("html");
 		}
-		
+
 		public static class CSS_BackslashZero extends TokenSequence
 		{
 			public @S(10) CSS_Punctuation backslash = new CSS_Punctuation("\\");
 			public @S(20) CSS_Number zero;
 		}
 	}
-	
+
 	public static class CSS_Item extends TokenChooser
 	{
 		public @CHOICE CSS_Comment comment;
 		public @CHOICE CSS_Line line;
-		
+
 		public @CHOICE static class CSS_PercentItem extends TokenSequence
 		{
 			public @S(10) CSS_Number pct;
@@ -91,7 +91,7 @@ public class CSS_Program extends EagleLanguage
 			public @S(40) @OPT TokenList<CSS_Item> items;
 			public @S(50) PunctuationRightBrace rightBrace;
 		}
-		
+
 		public @CHOICE static class CSS_ToItem extends TokenSequence
 		{
 			public @S(10) CSS_KeywordChoice TO = new CSS_KeywordChoice("from", "to");
@@ -100,7 +100,7 @@ public class CSS_Program extends EagleLanguage
 			public @S(40) PunctuationRightBrace rightBrace;
 		}
 	}
-	
+
 	public static class CSS_Line extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationStar star;
@@ -110,21 +110,21 @@ public class CSS_Program extends EagleLanguage
 		public @S(50) @OPT CSS_Tab tab;
 		public @S(60) @OPT PunctuationSemicolon semicolon1;
 		public @S(70) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
-	
+
 		public static class CSS_Tab extends TokenSequence
 		{
 			public @S(10) CSS_Punctuation tab = new CSS_Punctuation("\\9");
 		}
-		
+
 		public static class CSS_Value_List extends TokenSequence
 		{
 			public @S(10) CSS_Value val;
 			public @S(20) @OPT TokenList<CSS_MoreValues> more;
-			
+
 			public static class CSS_MoreValues extends TokenChooser
 			{
 				public @CHOICE CSS_Value val;
-				
+
 				public @CHOICE static class CSS_MoreValuesComma extends TokenSequence
 				{
 					public @S(10) PunctuationComma comma;

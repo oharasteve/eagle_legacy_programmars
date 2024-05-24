@@ -19,13 +19,13 @@ public class C_Lambda extends TokenSequence
 	public @S(30) C_Punctuation arrow = new C_Punctuation("->");
 	public @S(40) C_Type type;
 	public @S(50) C_Statement statement;
-	
+
 	public static class C_LambdaBrackets extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) @OPT SeparatedList<C_LambdaParam, PunctuationComma> param;
 		public @S(30) PunctuationRightBracket rightBracket;
-		
+
 		public static class C_LambdaParam extends TokenSequence
 		{
 			public @S(10) @OPT PunctuationAmpersand ampersand;

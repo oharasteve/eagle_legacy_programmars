@@ -33,21 +33,22 @@ public class CMacro_Expression extends PrecedenceChooser
 
 	public CMacro_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public CMacro_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
 	// Terminals
-	
+
 	public @P(10) CMacro_HexNumber hex;
 	public @P(20) CMacro_Number number;
 	public @P(30) CMacro_Literal literal;

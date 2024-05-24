@@ -15,7 +15,7 @@ public class COBOL_ReportDataLineType extends TokenChooser
 		public @S(10) COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
 		public @S(20) COBOL_Keyword HEADING = new COBOL_Keyword("HEADING");
 	}
-	
+
 	public @CHOICE static class COBOL_ReportDataLineTypeReportFooting extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
@@ -27,7 +27,7 @@ public class COBOL_ReportDataLineType extends TokenChooser
 		public @S(10) COBOL_Keyword PAGE = new COBOL_Keyword("PAGE");
 		public @S(20) COBOL_Keyword HEADING = new COBOL_Keyword("HEADING");
 	}
-	
+
 	public @CHOICE static class COBOL_ReportDataLineTypeDetail extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword DETAIL = new COBOL_Keyword("DETAIL");

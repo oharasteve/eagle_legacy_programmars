@@ -14,7 +14,7 @@ public class Eaglish_ConditionalOrExpression extends PrecedenceOperator implemen
 	public @S(10) Eaglish_Expression left = new Eaglish_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Eaglish_KeywordChoice orOperator = new Eaglish_KeywordChoice("OR", "XOR");
 	public @S(30) Eaglish_Expression right = new Eaglish_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

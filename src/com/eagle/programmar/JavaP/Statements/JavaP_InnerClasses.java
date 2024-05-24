@@ -19,9 +19,9 @@ public class JavaP_InnerClasses extends TokenSequence
 	public @S(10) JavaP_KeywordChoice INNERCLASS = new JavaP_KeywordChoice("InnerClass", "InnerClasses");
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_EndOfLine eoln;
-	
+
 	public @S(40) TokenList<JavaP_InnerClassEntry> entries;
-	
+
 	public static class JavaP_InnerClassEntry extends TokenSequence
 	{
 		public @S(10) @OPT JavaP_KeywordChoice PUBLIC = new JavaP_KeywordChoice("private", "protected", "public");

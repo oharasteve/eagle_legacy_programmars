@@ -22,7 +22,7 @@ public class Javascript_TryStatement extends TokenSequence
 	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) @OPT Javascript_CatchBlock catchBlock;
 	public @S(60) @OPT Javascript_FinallyBlock finallyBlock;
-	
+
 	public static class Javascript_CatchBlock extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword CATCH = new Javascript_Keyword("catch");
@@ -31,7 +31,7 @@ public class Javascript_TryStatement extends TokenSequence
 		public @S(40) PunctuationRightParen rightParen;
 		public @S(50) Javascript_Statement catchStatement;
 	}
-	
+
 	public static class Javascript_FinallyBlock extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword FINALLY = new Javascript_Keyword("finally");

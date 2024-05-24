@@ -15,7 +15,7 @@ public class Gupta_Variable_Declaration extends TokenSequence
 	public @S(20) PunctuationColon colon;
 	public @S(30) Gupta_Data_Definition varName;
 	public @S(40) @OPT Gupta_InitialValue initValue;
-	
+
 	public static class Gupta_InitialValue extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;

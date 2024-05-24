@@ -68,16 +68,17 @@ public class Javascript_Expression extends PrecedenceChooser
 
 	public Javascript_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Javascript_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -125,7 +126,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	public @P(410) Javascript_TypeOfExpr typeOfExpr;
 	public @P(420) Javascript_VoidExpr voidExpr;
 	public @P(430) Javascript_EllipsisExpr ellipsisExpr;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

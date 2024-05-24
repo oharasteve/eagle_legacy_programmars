@@ -22,17 +22,17 @@ public class Bash_PythonProgram extends TokenChooser
 	public @CHOICE static class Bash_PythonScript extends TokenSequence
 	{
 		public @S(10) Bash_SheBang shebang;
-		public @S(20) @OPT SeparatedList<PunctuationSlash,Bash_Identifier_Reference> dir;
+		public @S(20) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;
 		public @S(30) @OPT PunctuationSlash slash;
 		public @S(40) Bash_KeywordChoice PYTHON = new Bash_KeywordChoice("python", "python3");
 		public @S(50) @OPT TokenList<Bash_PythonOption> options;
 		public @S(60) Bash_RealEndOfLine eoln;
 		public @S(70) @SYNTAX(Python_Syntax.class) Python3_Program pyProg;
 	}
-	
+
 	public @CHOICE static class Bash_PythonExec extends TokenSequence
 	{
-		public @S(10) @OPT SeparatedList<PunctuationSlash,Bash_Identifier_Reference> dir;
+		public @S(10) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;
 		public @S(20) @OPT PunctuationSlash slash;
 		public @S(30) Bash_KeywordChoice PYTHON = new Bash_KeywordChoice("python", "python3");
 		public @S(40) @OPT TokenList<Bash_PythonOption> options;

@@ -24,11 +24,11 @@ public class Ruby_Function extends TokenSequence
 	public @S(50) TokenList<Ruby_Statement> stmts;
 	public @S(60) Ruby_Keyword END = new Ruby_Keyword("end");
 	public @S(70) Ruby_EOLN eoln2;
-	
+
 	public static class Ruby_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Ruby_Variable,PunctuationComma> parameters;
+		public @S(20) @OPT SeparatedList<Ruby_Variable, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 }

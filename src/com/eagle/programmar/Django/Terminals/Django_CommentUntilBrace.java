@@ -14,12 +14,12 @@ public class Django_CommentUntilBrace extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Django_CommentUntilBrace(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

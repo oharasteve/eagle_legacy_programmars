@@ -12,7 +12,7 @@ public class Eaglish_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Eaglish_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

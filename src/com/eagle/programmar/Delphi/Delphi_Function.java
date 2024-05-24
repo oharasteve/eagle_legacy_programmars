@@ -7,22 +7,24 @@ import com.eagle.programmar.Delphi.Delphi_Program.Delphi_Header;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Delphi_Function extends TokenSequence
+public class Delphi_Function extends TokenSequence implements AbstractFunction
 {
 	public @S(10) Delphi_FunctionForward forward;
 	public @S(20) @OPT TokenList<Delphi_Header> headers;
 	public @S(30) Delphi_BeginEnd body;
 	public @S(40) @OPT TokenList<Delphi_Comment> comments;
 	public @S(50) PunctuationSemicolon semicolon2;
-	
+
 	public static class Delphi_FunctionForward extends TokenSequence
 	{
-		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword("Function");
+		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword(
+				"Function");
 		public @S(20) Delphi_Variable name;
 		public @S(30) @OPT Delphi_Arguments args;
 		public @S(40) PunctuationColon colon;

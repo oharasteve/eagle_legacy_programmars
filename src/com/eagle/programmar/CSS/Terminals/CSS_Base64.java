@@ -10,7 +10,7 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 public class CSS_Base64 extends TerminalLiteralToken
 {
 	private static final String LEGAL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -18,7 +18,7 @@ public class CSS_Base64 extends TerminalLiteralToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
 		if (_currentChar >= recLen) return false;
-		
+
 		// Accept anything that looks like a filename
 		int endChar = _currentChar;
 		while (endChar < recLen)

@@ -25,7 +25,7 @@ public class HTML_Text extends TerminalLiteralToken
 			char ch2 = rec.charAt(_currentChar + 1);
 			if (ch2 == '{' || ch2 == '%') return false;
 		}
-		
+
 		int endChar = _currentChar;
 		while (true)
 		{
@@ -39,7 +39,7 @@ public class HTML_Text extends TerminalLiteralToken
 				if (ch2 == '{' || ch2 == '%') break;
 			}
 		}
-		foundIt(_endLine, endChar-1);
+		foundIt(_endLine, endChar - 1);
 		_txt += rec.substring(_currentChar, endChar);
 		return true;
 	}

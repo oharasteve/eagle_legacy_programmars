@@ -16,7 +16,7 @@ public class IBMASM_Register extends TerminalIdentifierToken
 		int recLen = rec.length();
 		if (_currentChar >= recLen) return false;
 		char ch = rec.charAt(_currentChar);
-		if (("Rr"+DIGITS).indexOf(ch) >= 0)
+		if (("Rr" + DIGITS).indexOf(ch) >= 0)
 		{
 			int endChar = _currentChar;
 			while (true)
@@ -26,7 +26,7 @@ public class IBMASM_Register extends TerminalIdentifierToken
 				ch = rec.charAt(endChar);
 				if (DIGITS.indexOf(ch) < 0) break;
 			}
-			
+
 			_id = rec.substring(_currentChar, endChar);
 			foundIt(_currentLine, endChar - 1);
 			return true;

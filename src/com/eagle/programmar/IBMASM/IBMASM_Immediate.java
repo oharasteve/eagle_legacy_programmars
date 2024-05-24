@@ -13,7 +13,7 @@ public class IBMASM_Immediate extends TokenChooser
 {
 	public @CHOICE IBMASM_Number number;
 	public @CHOICE IBMASM_Address address;
-	
+
 	public @CHOICE static class IBMASM_Immediate_Data extends TokenSequence
 	{
 		public @S(10) IBMASM_KeywordChoice code = new IBMASM_KeywordChoice("C", "X");

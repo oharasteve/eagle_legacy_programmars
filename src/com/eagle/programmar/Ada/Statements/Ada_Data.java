@@ -18,18 +18,18 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Ada_Data extends TokenSequence implements EagleRunnable
 {
-	public @S(10) SeparatedList<Ada_Variable_Definition,PunctuationComma> ids;
+	public @S(10) SeparatedList<Ada_Variable_Definition, PunctuationComma> ids;
 	public @S(20) PunctuationColon colon;
 	public @S(30) Ada_Type type;
 	public @S(40) @OPT Ada_DataInitialValue init;
 	public @S(50) PunctuationSemicolon semicolon;
-	
+
 	public static class Ada_DataInitialValue extends TokenSequence
 	{
 		public @S(10) Ada_Punctuation colonEquals = new Ada_Punctuation(":=");
 		public @S(20) Ada_Expression value;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -38,8 +38,8 @@ public class Ada_Data extends TokenSequence implements EagleRunnable
 			int x = interpreter.getIntValue(init.value);
 			IntegerValue val = new IntegerValue(x);
 			Ada_Variable_Definition var = (Ada_Variable_Definition) ids.first();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-					var.getStartChar(), var.getValue(), val);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.getValue(), val);
 		}
 	}
 }

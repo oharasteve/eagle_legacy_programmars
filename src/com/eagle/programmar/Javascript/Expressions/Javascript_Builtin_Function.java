@@ -8,7 +8,5 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Javascript_Builtin_Function extends PrimaryOperator
 {
-	public @S(10) Javascript_KeywordChoice fn = new Javascript_KeywordChoice(
-			"eval"
-	);
+	public @S(10) Javascript_KeywordChoice fn = new Javascript_KeywordChoice("eval");
 }

@@ -38,7 +38,7 @@ public class JavaP_Classes extends TokenSequence
 	public @S(30) @OPT TokenList<JavaP_OneClass> oneClass;
 	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) JavaP_EndOfLine eoln2;
-	
+
 	public static class JavaP_OneClass extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<JavaP_Modifier> modifier;
@@ -56,7 +56,7 @@ public class JavaP_Classes extends TokenSequence
 				public @S(20) @OPT JavaP_OneClassGeneric generic;
 				public @S(30) @OPT TokenList<JavaP_NoSubscript> subscript;
 				public @S(40) JavaP_OneClassWhat what;
-				
+
 				public static class JavaP_NoSubscript extends TokenSequence
 				{
 					public @S(10) PunctuationLeftBracket leftBracket;
@@ -73,22 +73,14 @@ public class JavaP_Classes extends TokenSequence
 
 		public static class JavaP_Modifier extends TokenSequence
 		{
-			public @S(10) JavaP_KeywordChoice PUBLIC = new JavaP_KeywordChoice(
-					"abstract",
-					"final",
-					"private",
-					"protected",
-					"public",
-					"static",
-					"synchronized",
-					"volatile"
-			);
+			public @S(10) JavaP_KeywordChoice PUBLIC = new JavaP_KeywordChoice("abstract", "final", "private",
+					"protected", "public", "static", "synchronized", "volatile");
 		}
-		
+
 		public static class JavaP_OneClassWhat extends TokenChooser
 		{
 			public @LAST JavaP_QualifiedName data;
-			
+
 			public @CHOICE static class JavaP_OneClassMethod extends TokenSequence
 			{
 				public @S(10) @OPT JavaP_QualifiedName name;
@@ -96,15 +88,15 @@ public class JavaP_Classes extends TokenSequence
 				public @S(30) @OPT SeparatedList<JavaP_MethodArgument, PunctuationComma> params;
 				public @S(40) PunctuationRightParen rightParen;
 				public @S(50) @OPT JavaP_OneClassThrows classThrows;
-				
+
 				public static class JavaP_OneClassThrows extends TokenSequence
 				{
 					public @S(10) JavaP_Keyword THROWS = new JavaP_Keyword("throws");
-					public @S(20) SeparatedList<JavaP_QualifiedName,PunctuationComma> name;
+					public @S(20) SeparatedList<JavaP_QualifiedName, PunctuationComma> name;
 				}
 			}
 		}
-		
+
 		public static class JavaP_OneClassParameter extends TokenChooser
 		{
 			public @CHOICE JavaP_CodeBlock code;
@@ -116,7 +108,7 @@ public class JavaP_Classes extends TokenSequence
 
 			public @CHOICE JavaP_OneClassDescriptor descriptor;
 			public @CHOICE JavaP_OneClassFlags flags;
-			public @CHOICE JavaP_OneClassConstantValue constantValue; 
+			public @CHOICE JavaP_OneClassConstantValue constantValue;
 			public @CHOICE JavaP_OneClassExceptions exceptions;
 			public @CHOICE JavaP_OneClassMethodParameters methodParameters;
 			public @CHOICE JavaP_OneClassDeprecated deprecated;

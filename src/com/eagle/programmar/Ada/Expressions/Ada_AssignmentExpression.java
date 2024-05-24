@@ -10,10 +10,6 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Ada_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Ada_Expression var = new Ada_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Ada_PunctuationChoice equals = new Ada_PunctuationChoice(
-			":=",
-			"*=",
-			"+=",
-			"-=");
+	public @S(20) Ada_PunctuationChoice equals = new Ada_PunctuationChoice(":=", "*=", "+=", "-=");
 	public @S(30) Ada_Expression expr;
 }

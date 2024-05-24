@@ -15,7 +15,7 @@ public class Javascript_TypeOfExpr extends PrimaryOperator
 {
 	public @S(10) Javascript_Keyword TYPEOF = new Javascript_Keyword("typeof");
 	public @S(20) Javascript_TypeOfWhat what;
-	
+
 	public static class Javascript_TypeOfWhat extends TokenChooser
 	{
 		public @CHOICE Javascript_Variable var;

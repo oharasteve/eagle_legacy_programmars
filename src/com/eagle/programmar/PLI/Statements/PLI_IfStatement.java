@@ -22,7 +22,7 @@ public class PLI_IfStatement extends TokenSequence
 	public @S(70) @OPT TokenList<PLI_Comment> comment2;
 	public @S(80) @OPT PLI_Else elseClause;
 	public @S(90) @OPT PLI_Keyword ENDIF = new PLI_Keyword("END-IF");
-	
+
 	public static class PLI_Else extends TokenSequence
 	{
 		public @S(10) PLI_Keyword ELSE = new PLI_Keyword("ELSE");

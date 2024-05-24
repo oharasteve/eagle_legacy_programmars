@@ -26,14 +26,15 @@ public class JavaP_CodeStackInfo extends TokenSequence
 	public @S(10) SeparatedList<JavaP_CodeStackParam, PunctuationComma> params;
 	public @S(20) JavaP_EndOfLine eoln;
 	public @S(30) @OPT TokenList<JavaP_CodeStackEntry> entries;
-	
+
 	public static class JavaP_CodeStackParam extends TokenSequence
 	{
-		public @S(10) JavaP_KeywordChoice STACK = new JavaP_KeywordChoice("args_size", "locals", "stack", "Args_size", "Locals", "Stack");
+		public @S(10) JavaP_KeywordChoice STACK = new JavaP_KeywordChoice("args_size", "locals", "stack", "Args_size",
+				"Locals", "Stack");
 		public @S(20) PunctuationEquals equals;
 		public @S(30) JavaP_Number number;
 	}
-	
+
 	public static class JavaP_CodeStackEntry extends TokenSequence
 	{
 		public @S(10) JavaP_Number number;
@@ -41,16 +42,16 @@ public class JavaP_CodeStackInfo extends TokenSequence
 		public @S(30) JavaP_KeywordChoice command = new JavaP_KeywordChoice(JavaP_Syntax.COMMANDS);
 		public @S(40) JavaP_CodeStackValue value;
 		public @S(50) JavaP_EndOfLine eoln;
-		
+
 		public static class JavaP_CodeStackValue extends TokenChooser
 		{
 			public @CHOICE static class JavaP_CodeValueRegular extends TokenSequence
 			{
-				public @S(10) @OPT SeparatedList<JavaP_Value,PunctuationComma> values;
+				public @S(10) @OPT SeparatedList<JavaP_Value, PunctuationComma> values;
 				public @S(20) @OPT PunctuationSemicolon semicolon;
 				public @S(30) @OPT JavaP_Comment comment;
 			}
-			
+
 			public @CHOICE static class JavaP_CodeValueBraces extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBrace leftBrace;
@@ -58,7 +59,7 @@ public class JavaP_CodeStackInfo extends TokenSequence
 				public @S(30) JavaP_EndOfLine eoln;
 				public @S(40) TokenList<JavaP_CodeValueLine> lines;
 				public @S(50) PunctuationRightBrace rightBrace;
-				
+
 				public static class JavaP_CodeValueLine extends TokenSequence
 				{
 					public @S(10) JavaP_CodeValueCase value;
@@ -66,7 +67,7 @@ public class JavaP_CodeStackInfo extends TokenSequence
 					public @S(30) JavaP_Number number;
 					public @S(40) @OPT PunctuationSemicolon semicolon;
 					public @S(50) @OPT JavaP_EndOfLine eoln;
-					
+
 					public static class JavaP_CodeValueCase extends TokenChooser
 					{
 						public @CHOICE JavaP_Number number;

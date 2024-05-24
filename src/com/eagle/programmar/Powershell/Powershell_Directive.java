@@ -27,10 +27,11 @@ public class Powershell_Directive extends TokenSequence
 	public @S(40) @OPT Powershell_DirectiveRedirect redirect;
 	public @S(50) @OPT Powershell_Comment comment;
 	public @S(60) Powershell_RealEndOfLine eoln;
-	
+
 	public static class Powershell_WhichDirective extends TokenChooser
 	{
-		// [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseLiteralInitializerForHashtable", "")]
+		// [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseLiteralInitializerForHashtable",
+		// "")]
 		public @CHOICE static class Powershell_DiagnosticsDirective extends TokenSequence
 		{
 			public @S(10) Powershell_Keyword DIAGNOSTICS = new Powershell_Keyword("Diagnostics");
@@ -44,9 +45,11 @@ public class Powershell_Directive extends TokenSequence
 			public @S(90) Powershell_Literal literal2;
 			public @S(100) PunctuationRightParen rightParen;
 		}
-		
-	    // [Windows.Storage.StorageFile, Windows.Storage, ContentType=WindowsRuntime] | Out-Null
-	    // [Windows.Graphics.Imaging.BitmapDecoder, Windows.Graphics, ContentType=WindowsRuntime] | Out-Null
+
+		// [Windows.Storage.StorageFile, Windows.Storage, ContentType=WindowsRuntime] |
+		// Out-Null
+		// [Windows.Graphics.Imaging.BitmapDecoder, Windows.Graphics,
+		// ContentType=WindowsRuntime] | Out-Null
 		public @FIRST static class Powershell_WindowsDirective1 extends TokenSequence
 		{
 			public @S(10) Powershell_Keyword WINDOWS = new Powershell_Keyword("Windows");
@@ -88,7 +91,7 @@ public class Powershell_Directive extends TokenSequence
 			public @S(30) Powershell_Keyword RUNTIME = new Powershell_Keyword("WindowsRuntime");
 		}
 	}
-	
+
 	public static class Powershell_DirectiveRedirect extends TokenSequence
 	{
 		public @S(10) Powershell_Punctuation bar = new Powershell_Punctuation('|');

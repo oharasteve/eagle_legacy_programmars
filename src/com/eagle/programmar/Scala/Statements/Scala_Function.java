@@ -26,20 +26,20 @@ public class Scala_Function extends TokenSequence implements EagleRunnable
 	public @S(40) @OPT Scala_FunctionReturns returnType;
 	public @S(50) PunctuationEquals equals;
 	public @S(60) Scala_Statement stmt;
-	
+
 	public static class Scala_FunctionReturns extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) Scala_Type returnType;
 	}
-	
+
 	public static class Scala_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Scala_FunctionParamater,PunctuationComma> parameters;
+		public @S(20) @OPT SeparatedList<Scala_FunctionParamater, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class Scala_FunctionParamater extends TokenSequence
 	{
 		public @S(10) Scala_Variable_Definition var;

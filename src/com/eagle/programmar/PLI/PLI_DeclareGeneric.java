@@ -24,16 +24,16 @@ public class PLI_DeclareGeneric extends TokenSequence
 	public @S(60) @OPT TokenList<PLI_GenericMoreWhens> moreWhens;
 	public @S(70) PunctuationRightParen rightParen;
 	public @S(80) PunctuationSemicolon semicolon;
-	
+
 	public static class PLI_GenericWhen extends TokenSequence
 	{
 		public @S(10) PLI_Identifier_Reference id;
 		public @S(20) PLI_Keyword WHEN = new PLI_Keyword("WHEN");
 		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) @OPT SeparatedList<PLI_Type,PunctuationComma> types;
+		public @S(40) @OPT SeparatedList<PLI_Type, PunctuationComma> types;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class PLI_GenericMoreWhens extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

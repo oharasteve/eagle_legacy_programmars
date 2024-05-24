@@ -11,7 +11,7 @@ public abstract class Perl_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (genericIdentifierWithPrefix(lines, "$#", ALPHAS+"_", ALPHAS+DIGITS+"_")) return true;
-		return genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_", true, false);
+		if (genericIdentifierWithPrefix(lines, "$#", ALPHAS + "_", ALPHAS + DIGITS + "_")) return true;
+		return genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_", true, false);
 	}
 }

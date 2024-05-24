@@ -7,7 +7,7 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Python_Shift_Expression extends PrecedenceOperator 
+public class Python_Shift_Expression extends PrecedenceOperator
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("<<", ">>");

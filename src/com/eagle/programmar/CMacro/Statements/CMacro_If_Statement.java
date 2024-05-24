@@ -19,18 +19,18 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_If_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) CMacro_Punctuation pound1 = new CMacro_Punctuation('#'); 
+	public @S(10) CMacro_Punctuation pound1 = new CMacro_Punctuation('#');
 	public @S(20) @DOC("If.html") CMacro_Keyword IF = new CMacro_Keyword("if");
 	public @S(30) CMacro_Expression expr;
 	public @S(40) @OPT CMacro_Comment comment1;
 	public @S(50) CMacro_EndOfLine eoln1;
-	
+
 	public @S(60) @OPT TokenList<CMacro_Element> elements;
 	public @S(70) @OPT TokenList<CMacro_IfElif> ifElif;
 	public @S(80) @OPT CMacro_IfElse ifElse;
 	public @S(90) @OPT CMacro_EndOfLine eoln2;
-	
-	public @S(100) CMacro_Punctuation pound2 = new CMacro_Punctuation('#'); 
+
+	public @S(100) CMacro_Punctuation pound2 = new CMacro_Punctuation('#');
 	public @S(110) CMacro_Keyword ENDIF = new CMacro_Keyword("endif");
 	public @S(120) @OPT CMacro_Comment comment2;
 
@@ -43,7 +43,7 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		public @S(50) @OPT CMacro_EndOfLine eoln;
 		public @S(60) @OPT TokenList<CMacro_Element> elements;
 	}
-	
+
 	public static class CMacro_IfElse extends TokenSequence
 	{
 		public @S(10) CMacro_Punctuation pound1 = new CMacro_Punctuation('#');
@@ -52,22 +52,23 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 		public @S(40) @OPT CMacro_EndOfLine eoln;
 		public @S(50) @OPT TokenList<CMacro_Element> elements;
 	}
-	
+
 //	// Need this for switching languages from CMacro to C
 //	public static class CMacro_IfElement extends TokenSequence
 //	{
 //		public @S(10) @SYNTAX(C_Syntax.class) C_StatementOrComment element;
 //	}
-	
+
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
 		boolean isTrue = getBooleanValue(expr, preprocessor);
-		// System.out.println("$$$$$$$$$$$$$$$$$$ " + expr.showText() + " is " + isTrue);
+		// System.out.println("$$$$$$$$$$$$$$$$$$ " + expr.showText() + " is " +
+		// isTrue);
 		TokenList<CMacro_Element> whichElements = null;
 		if (isTrue)
 		{
-			whichElements = elements;	// Use the "then" clause
+			whichElements = elements; // Use the "then" clause
 		}
 		else
 		{
@@ -81,41 +82,41 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 				}
 			}
 		}
-		
+
 		// Well, maybe there is a #else clause
 		if (whichElements == null && ifElse.isPresent())
 		{
 			whichElements = ifElse.elements;
 		}
-		
+
 		// Dang, nothing matches, and no "else" clause
 		if (whichElements == null) return true;
-		
+
 		for (AbstractToken token : whichElements._elements)
 		{
-			// System.out.println("      $$$$$$$$$$$$$$$ " + token.showText());
+			// System.out.println(" $$$$$$$$$$$$$$$ " + token.showText());
 			if (token instanceof CMacro_Element)
 			{
 				CMacro_Element element = (CMacro_Element) token;
 				preprocessor.preprocessCMacroElement(preprocessor._parser, element);
 			}
-			else throw new RuntimeException("Didn't expect " + token + " here");
+			else
+				throw new RuntimeException("Didn't expect " + token + " here");
 		}
-		return true;	// Always change the file
+		return true; // Always change the file
 	}
-	
 
 	//////////////////////////////////////////////////////////////
 	// Evaluation routine, for macros
-	
+
 	private static boolean getBooleanValue(CMacro_Expression cond, CMacro_Preprocess preprocessor)
 	{
 		AbstractToken which = cond.getWhich();
-		if (! (which instanceof EagleRunnable))
+		if (!(which instanceof EagleRunnable))
 		{
 			throw new RuntimeException("Need to implement EagleRunnable for " + which);
 		}
-		
+
 		EagleRunnable runnable = (EagleRunnable) which;
 		CMacro_Interpreter interpreter = new CMacro_Interpreter(preprocessor._parser, preprocessor._symbolTable);
 		runnable.interpret(interpreter);

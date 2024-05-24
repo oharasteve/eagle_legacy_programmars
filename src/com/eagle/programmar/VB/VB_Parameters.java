@@ -15,16 +15,15 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class VB_Parameters extends TokenSequence
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) @OPT SeparatedList<VB_Parameter,PunctuationComma> params;
+	public @S(20) @OPT SeparatedList<VB_Parameter, PunctuationComma> params;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	public static class VB_Parameter extends TokenSequence
 	{
-		public @S(10) @OPT VB_KeywordChoice valRef = new VB_KeywordChoice(
-				"byval", "byref");
+		public @S(10) @OPT VB_KeywordChoice valRef = new VB_KeywordChoice("byval", "byref");
 		public @S(20) VB_Variable_Definition var;
 		public @S(30) @OPT VB_ParameterAs as;
-		
+
 		public static class VB_ParameterAs extends TokenSequence
 		{
 			public @S(10) VB_Keyword AS = new VB_Keyword("as");

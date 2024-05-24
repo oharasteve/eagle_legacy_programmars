@@ -25,16 +25,17 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 
 	public Template_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Template_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -46,14 +47,14 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
-	
+
 	public @P(100) Template_NegativeExpression negativeExpression;
 	public @P(110) Template_NotExpression notExpression;
 	public @P(120) Template_ParenExpression parenExpression;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
-	
+
 	public @P(500) Template_MultiplicativeExpression multiplicativeExpression;
 	public @P(510) Template_AdditiveExpression additiveExpression;
 	public @P(520) Template_RelationalExpression relationalExpression;

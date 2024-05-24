@@ -15,7 +15,7 @@ public class Bash_MkTempCommand extends TokenSequence
 	public @S(10) Bash_Keyword MKTEMP = new Bash_Keyword("mktemp");
 	public @S(20) @OPT TokenList<Bash_MkTempOption> options;
 	public @S(30) Bash_FilenameOrLiteral fname;
-	
+
 	public static class Bash_MkTempOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice DT = new Bash_KeywordChoice("-d", "-t");

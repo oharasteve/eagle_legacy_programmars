@@ -9,6 +9,5 @@ import com.eagle.tokens.interfaces.AbstractType;
 
 public class FSharp_Type extends TokenChooser implements AbstractType
 {
-	public @CHOICE FSharp_KeywordChoice TYPES = new FSharp_KeywordChoice(
-			"bool", "int", "string");
+	public @CHOICE FSharp_KeywordChoice TYPES = new FSharp_KeywordChoice("bool", "int", "string");
 }

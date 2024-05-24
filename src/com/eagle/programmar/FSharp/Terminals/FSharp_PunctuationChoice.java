@@ -12,7 +12,7 @@ public class FSharp_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public FSharp_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -13,12 +13,12 @@ import com.eagle.tokens.TokenSequence;
 public class Julia_Program extends EagleLanguage
 {
 	public static final String JULIA = "Julia";
-	
+
 	public Julia_Program()
 	{
 		super(JULIA, new Julia_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -26,13 +26,13 @@ public class Julia_Program extends EagleLanguage
 	}
 
 	public @S(10) TokenList<Julia_Element> elements;
-	
+
 	public static class Julia_Element extends TokenChooser
 	{
 		public @CHOICE Julia_CommentEoln comment;
 		public @CHOICE Julia_Statement stmt;
 	}
-	
+
 	public static class Julia_CommentEoln extends TokenSequence
 	{
 		public @S(10) Julia_Comment comment;

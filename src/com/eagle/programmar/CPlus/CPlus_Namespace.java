@@ -24,7 +24,7 @@ public class CPlus_Namespace extends TokenSequence
 	public @S(40) PunctuationLeftBrace leftBrace;
 	public @S(50) @OPT TokenList<CPlus_NamespaceElement> statements;
 	public @S(60) PunctuationRightBrace rightBrace;
-	
+
 	public static class CPlus_NamespaceElement extends TokenChooser
 	{
 		public @FIRST CPlus_Data data;
@@ -50,7 +50,7 @@ public class CPlus_Namespace extends TokenSequence
 			public @S(10) C_Punctuation colonColon = new C_Punctuation("::");
 			public @S(20) @OPT TokenList<CPlus_NamespaceColon> namespace;
 		}
-		
+
 		public @CHOICE static class CPlus_NamespaceListNoColons extends TokenSequence
 		{
 			public @S(10) TokenList<CPlus_NamespaceColon> namespace;

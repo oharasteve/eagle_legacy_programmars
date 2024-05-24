@@ -9,7 +9,7 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class JavaP_LClassName extends TerminalLiteralToken
 {
-	private static final String VALIDS = "/_$";	// Valid characters in the name
+	private static final String VALIDS = "/_$"; // Valid characters in the name
 	private static final String PRIMITIVES = "BIJZ";
 
 	@Override
@@ -28,23 +28,23 @@ public class JavaP_LClassName extends TerminalLiteralToken
 			endChar++;
 			ch = rec.charAt(endChar);
 		}
-		
+
 		if (ch != 'L') return false;
 		endChar++;
-		
+
 		while (endChar < recLen)
 		{
 			ch = rec.charAt(endChar);
 			if (!Character.isLetterOrDigit(ch) && VALIDS.indexOf(ch) < 0)
 			{
 				// Not a valid classname character
-				if (ch != ';' && ch != '<') return false;	// Must end with a semicolon eventually
-				endChar--;	// Don't include the ; or <
+				if (ch != ';' && ch != '<') return false; // Must end with a semicolon eventually
+				endChar--; // Don't include the ; or <
 				break;
 			}
 			endChar++;
 		}
-		if (_endChar == _currentChar) return false;	// Nothing there, just L; or L<
+		if (_endChar == _currentChar) return false; // Nothing there, just L; or L<
 
 		foundIt(_currentLine, endChar);
 		_txt = rec.substring(_currentChar, endChar);

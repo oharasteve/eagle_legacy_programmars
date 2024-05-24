@@ -18,7 +18,7 @@ public class Bash_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	public Bash_Punctuation(String punct)
 	{
 		super(punct);
@@ -27,7 +27,7 @@ public class Bash_Punctuation extends TerminalPunctuationToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! super.parse(lines)) return false;
+		if (!super.parse(lines)) return false;
 		return super.dontAllowLettersAfterHyphen(lines);
 	}
 }

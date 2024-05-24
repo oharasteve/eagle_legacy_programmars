@@ -11,6 +11,6 @@ public class IBMASM_Label extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS, ALPHAS+DIGITS+"@", true, true);
+		return genericIdentifier(lines, ALPHAS, ALPHAS + DIGITS + "@", true, true);
 	}
 }

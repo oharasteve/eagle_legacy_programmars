@@ -36,16 +36,17 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 
 	public Julia_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Julia_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -56,7 +57,7 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Julia_MethodInvocation methodInvocation;
 	public @P(110) Julia_PreIncrementExpression preIncrementExpression;
 	public @P(120) Julia_PostIncrementExpression postIncrementExpression;
@@ -67,7 +68,7 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(170) Julia_VariableExpression variableExpression;
 	public @P(180) Julia_BracketsExpression bracketsExpression;
 	public @P(190) Julia_ParenthesizedExpression parenthesizedExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

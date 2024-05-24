@@ -39,9 +39,9 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Java_Data jdata;
 	public @CHOICE Java_Class jclass;
 	public @CHOICE Java_Enum jenum;
-	
+
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon emptyStatement;
-	
+
 	public @CHOICE static class Java_AnnotationDefinition extends TokenSequence
 	{
 		public @S(10) @OPT Java_Annotation annotation;
@@ -53,7 +53,7 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 		public @S(70) @OPT TokenList<Java_Comment> comments;
 		public @S(80) @OPT Java_AnnotationParameter parameter;
 		public @S(90) PunctuationRightBrace rightBrace;
-		
+
 		public static class Java_AnnotationParameter extends TokenSequence
 		{
 			public @S(10) Java_Type type;
@@ -71,15 +71,15 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 		public @S(30) @OPT TokenList<Java_StatementOrComment> statements;
 		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
 		public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
-		
+
 		private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-		
+
 		@Override
 		public EagleScope getScope()
 		{
 			return _scope;
 		}
-		
+
 //		@Override
 //		public void setScope(EagleScope scope)
 //		{
@@ -103,6 +103,6 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 
 	// Do this one last, just because it is so slow
 	public @LAST Java_ExpressionStatement assignmentStatement;
-	
-	//public @LAST Java_UnparsedStatement unparsed;
+
+	// public @LAST Java_UnparsedStatement unparsed;
 }

@@ -22,13 +22,13 @@ public class Bash_MultiplicativeExpression extends PrecedenceOperator implements
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			interpreter.pushInt(leftValue / rightValue);
 			return;
-		case "%" :
+		case "%":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		default:

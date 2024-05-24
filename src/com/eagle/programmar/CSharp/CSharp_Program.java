@@ -24,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class CSharp_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String CSHARP = "CSharp";
-	
+
 	public CSharp_Program()
 	{
 		super(CSHARP, new CSharp_Syntax());
@@ -35,7 +35,7 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 	{
 		return "http://java.sun.com/docs/books/jls/third_edition/html/";
 	}
-	
+
 	public static final String[] MODIFIERS = new String[] {
 			"abstract",
 			"async",
@@ -61,7 +61,7 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comments1;
 	public @S(20) @OPT @BLANKLINE TokenList<CSharp_NamespaceOrClassEntry> myClasses;
-	
+
 	public static class CSharp_NamespaceOrClassEntry extends TokenChooser
 	{
 		public @CHOICE @NEWLINE CSharp_Using importList;
@@ -76,7 +76,7 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 	{
 		public @S(10) CSharp_Keyword USING = new CSharp_Keyword("using");
 		public @S(20) @OPT CSharp_Keyword STATIC = new CSharp_Keyword("static");
-		public @S(30) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
+		public @S(30) SeparatedList<CSharp_Identifier, PunctuationPeriod> id;
 		public @S(40) @OPT CSharp_UsingEquals alternateName;
 		public @S(50) PunctuationSemicolon semicolon;
 
@@ -84,8 +84,8 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 		{
 			public @S(10) PunctuationEquals equals;
 			public @S(20) @OPT CSharp_UsingGlobal global;
-			public @S(30) SeparatedList<CSharp_Identifier,PunctuationPeriod> id;
-			
+			public @S(30) SeparatedList<CSharp_Identifier, PunctuationPeriod> id;
+
 			public static class CSharp_UsingGlobal extends TokenSequence
 			{
 				public @S(10) CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
@@ -93,16 +93,16 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 			}
 		}
 	}
-	
+
 	public static class CSharp_Namespace extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
-		public @S(20) SeparatedList<CSharp_Identifier,PunctuationPeriod> ids;
+		public @S(20) SeparatedList<CSharp_Identifier, PunctuationPeriod> ids;
 		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) @OPT TokenList<CSharp_ProgramElems> elems; 
+		public @S(40) @OPT TokenList<CSharp_ProgramElems> elems;
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
-	
+
 	public static class CSharp_ProgramElems extends TokenChooser
 	{
 		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
@@ -113,7 +113,7 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE @NEWLINE CSharp_Method method;
 		public @CHOICE @NEWLINE CSharp_Directive directive;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

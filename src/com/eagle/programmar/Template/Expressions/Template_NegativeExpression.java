@@ -13,7 +13,7 @@ public class Template_NegativeExpression extends PrimaryOperator implements Eagl
 {
 	public @S(10) Template_Punctuation negative = new Template_Punctuation('-');
 	public @S(20) Template_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -20,7 +20,7 @@ public class Algol68_NegativeExpression extends PrimaryOperator implements Eagle
 		int val = interpreter.getIntValue(expr);
 		switch (operator.toString())
 		{
-		case "-" :
+		case "-":
 			interpreter.pushInt(-val);
 			break;
 		default:

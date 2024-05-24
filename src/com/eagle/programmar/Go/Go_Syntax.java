@@ -12,17 +12,16 @@ public class Go_Syntax extends EagleSyntax
 	{
 		return "Go";
 	}
-	
+
 	public Go_Syntax()
 	{
 		_isCaseSensitive = true;
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { ":=",
-				"==", "!=", "<=", ">=",
-				"++", "--", "+=", "-=",
-				"*=", "/-", "!~" };
-		
+		_punctuationExceptions = new String[] {
+				":=", "==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/-", "!~"
+		};
+
 		addReservedWords(reservedWords);
 	}
 
@@ -54,7 +53,7 @@ public class Go_Syntax extends EagleSyntax
 			"type",
 			"var",
 	};
-	
+
 	public static class Go_Multiline_Syntax extends Go_Syntax
 	{
 		@Override
@@ -62,7 +61,7 @@ public class Go_Syntax extends EagleSyntax
 		{
 			return "Go Multi";
 		}
-		
+
 		public Go_Multiline_Syntax()
 		{
 			_autoAdvance = true;

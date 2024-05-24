@@ -27,7 +27,7 @@ public class CSharp_ForEachStatement extends TokenSequence implements EagleScope
 	public @S(70) @NOSPACE PunctuationRightParen rightParen;
 	public @S(80) @OPT CSharp_Comment comment;
 	public @S(90) CSharp_Statement action;
-	
+
 	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
 
 	@Override
@@ -36,4 +36,3 @@ public class CSharp_ForEachStatement extends TokenSequence implements EagleScope
 		return _scope;
 	}
 }
-

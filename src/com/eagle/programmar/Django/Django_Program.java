@@ -9,12 +9,12 @@ import com.eagle.tokens.TokenList;
 public class Django_Program extends EagleLanguage
 {
 	public static final String DJANGO = "Django";
-	
+
 	public Django_Program()
 	{
 		super(DJANGO, new Django_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{

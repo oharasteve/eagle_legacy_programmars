@@ -11,10 +11,10 @@ import com.eagle.tokens.terminals.TerminalIdentifierToken;
 public abstract class Natural_Identifier extends TerminalIdentifierToken
 {
 	public static HashSet<String> Natural_keywords = new HashSet<String>();
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS+"#", ALPHAS+DIGITS+"-", true, false);
+		return genericIdentifier(lines, ALPHAS + "#", ALPHAS + DIGITS + "-", true, false);
 	}
 }

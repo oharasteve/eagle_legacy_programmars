@@ -12,7 +12,7 @@ public class Template_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Template_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_Lambda_Expression extends PrimaryOperator 
+public class Python_Lambda_Expression extends PrimaryOperator
 {
 	public @S(10) Python_Keyword LAMBDA = new Python_Keyword("lambda");
 	public @S(20) @OPT PunctuationLeftParen leftParen;
@@ -25,7 +25,7 @@ public class Python_Lambda_Expression extends PrimaryOperator
 	public @S(40) @OPT PunctuationRightParen rightParen;
 	public @S(50) PunctuationColon colon;
 	public @S(60) Python_Expression expr;
-	
+
 	public static class Python_Variable_List extends TokenSequence
 	{
 		public @S(10) @OPT Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
@@ -41,7 +41,7 @@ public class Python_Lambda_Expression extends PrimaryOperator
 			public @S(40) Python_Variable var;
 			public @S(50) @OPT Python_Variable_Default defaultValue;
 		}
-		
+
 		public static class Python_Variable_Default extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;

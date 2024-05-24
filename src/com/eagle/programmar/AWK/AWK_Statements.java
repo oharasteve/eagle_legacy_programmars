@@ -27,14 +27,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class AWK_Statements extends TokenSequence implements EagleRunnable
 {
-	public @S(10) SeparatedList<AWK_Statement,PunctuationSemicolon> statements;
+	public @S(10) SeparatedList<AWK_Statement, PunctuationSemicolon> statements;
 	public @S(20) @OPT PunctuationSemicolon semicolon;
 	public @S(30) @OPT TokenList<AWK_Comment> comments;
 	public @S(40) @OPT AWK_EndOfLine endOfLine;
-	
+
 	public static class AWK_Statement extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;	// Empty statement
+		public @CHOICE PunctuationSemicolon semicolon; // Empty statement
 		public @CHOICE AWK_Comment comment;
 
 		public @CHOICE AWK_BreakStatement breakStatement;
@@ -48,8 +48,8 @@ public class AWK_Statements extends TokenSequence implements EagleRunnable
 		public @CHOICE AWK_SubStatement subStatement;
 		public @CHOICE AWK_SwitchStatement switchStatement;
 		public @CHOICE AWK_WhileStatement whileStatement;
-		
-		public @LAST AWK_Assignment assignmentStatement; 
+
+		public @LAST AWK_Assignment assignmentStatement;
 	}
 
 	@Override

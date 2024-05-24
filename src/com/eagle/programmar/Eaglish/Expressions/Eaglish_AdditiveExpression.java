@@ -30,6 +30,6 @@ public class Eaglish_AdditiveExpression extends PrecedenceOperator implements Ea
 			interpreter.pushInt(leftValue - rightValue);
 			return;
 		}
-		throw new RuntimeException("Unable to handle " + oper + " in Eaglish_AdditiveExpression");	
+		throw new RuntimeException("Unable to handle " + oper + " in Eaglish_AdditiveExpression");
 	}
 }

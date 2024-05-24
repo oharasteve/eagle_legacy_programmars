@@ -15,7 +15,7 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 	{
 		super(name, syntax);
 	}
-	
+
 	@Override
 	public String booleanName(boolean flag)
 	{

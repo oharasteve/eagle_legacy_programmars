@@ -14,7 +14,7 @@ public class Eaglish_ConditionalAndExpression extends PrecedenceOperator impleme
 	public @S(10) Eaglish_Expression left = new Eaglish_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Eaglish_Keyword andOperator = new Eaglish_Keyword("AND");
 	public @S(30) Eaglish_Expression right = new Eaglish_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -23,7 +23,7 @@ public class Eaglish_ConditionalAndExpression extends PrecedenceOperator impleme
 		switch (oper)
 		{
 		case "AND":
-			if (! leftValue)
+			if (!leftValue)
 			{
 				// Short circuit operation. Don't bother with RHS
 				interpreter.pushBool(false);

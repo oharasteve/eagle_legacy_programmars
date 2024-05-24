@@ -12,7 +12,7 @@ public class Javascript_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Javascript_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

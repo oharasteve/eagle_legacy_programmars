@@ -9,17 +9,17 @@ import com.eagle.tokens.TokenList;
 public class JavaP_Program extends EagleLanguage
 {
 	public static final String JAVAP = "JavaP";
-	
+
 	public JavaP_Program()
 	{
 		super(JAVAP, new JavaP_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "TBD";
 	}
-	
+
 	public @S(10) TokenList<JavaP_Statement> statements;
 }

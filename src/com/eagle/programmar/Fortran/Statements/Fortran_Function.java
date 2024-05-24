@@ -23,12 +23,12 @@ public class Fortran_Function extends TokenSequence
 	public @S(20) @DOC("6j4m0vn9h/index.html") Fortran_Keyword FUNCTION1 = new Fortran_Keyword("FUNCTION");
 	public @S(30) Fortran_Function_Definition fnName1;
 	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) SeparatedList<Fortran_Variable_Reference,PunctuationComma> parameters;
+	public @S(50) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) Fortran_EOLN eoln1;
-	
+
 	public @S(80) TokenList<Fortran_Statement> statements;
-	
+
 	public @S(90) Fortran_Keyword END = new Fortran_Keyword("END");
 	public @S(100) Fortran_Keyword FUNCTION2 = new Fortran_Keyword("FUNCTION");
 	public @S(110) Fortran_Function_Reference fnName2;

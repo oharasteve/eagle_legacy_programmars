@@ -14,7 +14,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Scala_ForStatement extends TokenSequence
 {
-	public @S(10) @DOC("taste-control-structures.html#for-loops-and-expressions") Scala_Keyword FOR = new Scala_Keyword("for");
+	public @S(10) @DOC("taste-control-structures.html#for-loops-and-expressions") Scala_Keyword FOR = new Scala_Keyword(
+			"for");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Scala_Variable var;
 	public @S(40) Scala_Punctuation arrow = new Scala_Punctuation("<-");

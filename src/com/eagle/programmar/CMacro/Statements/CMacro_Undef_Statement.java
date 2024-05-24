@@ -12,15 +12,15 @@ import com.eagle.tokens.TokenSequence;
 
 public class CMacro_Undef_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
+	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#');
 	public @S(20) @DOC("Undefining-and-Redefining-Macros.html") CMacro_Keyword UNDEF = new CMacro_Keyword("undef");
 	public @S(30) CMacro_Identifier_Reference var;
-	
+
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
 		String id = var.getValue();
-		//System.out.println("#undef " + id + " ...");
+		// System.out.println("#undef " + id + " ...");
 		preprocessor._symbolTable.removeSymbols(id);
 		return true;
 	}

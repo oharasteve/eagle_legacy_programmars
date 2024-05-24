@@ -12,15 +12,16 @@ public class FSharp_Syntax extends EagleSyntax
 	{
 		return "FSharp";
 	}
-	
+
 	public FSharp_Syntax()
 	{
 		_isCaseSensitive = false;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"<-", "..", "[|", "|]", "||", ".[", "<>" };
-		
+				"<-", "..", "[|", "|]", "||", ".[", "<>"
+		};
+
 		addReservedWords(reservedWords);
 	}
 
@@ -118,7 +119,7 @@ public class FSharp_Syntax extends EagleSyntax
 			"with",
 			"yield",
 	};
-	
+
 	public static class FSharp_Multiline_Syntax extends FSharp_Syntax
 	{
 		@Override
@@ -126,7 +127,7 @@ public class FSharp_Syntax extends EagleSyntax
 		{
 			return "FSharp Multi";
 		}
-		
+
 		public FSharp_Multiline_Syntax()
 		{
 			_autoAdvance = true;

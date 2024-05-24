@@ -32,16 +32,17 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public Delphi_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Delphi_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -54,7 +55,7 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
-	
+
 	public @P(100) Delphi_Builtins builtins;
 	public @P(110) Delphi_Parens parens;
 	public @P(120) Delphi_Brackets brackets;
@@ -64,10 +65,10 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(160) Delphi_VariableExpression variableExpression;
 	public @P(170) Delphi_UnarySign unarySign;
 	public @P(180) Delphi_NotOp notOp;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
-	
+
 	public @P(500) Delphi_Dot_Expression dotExpression;
 	public @P(510) Delphi_Multiplicative_Expression multiplicativeExpression;
 	public @P(520) Delphi_Additive_Expression additiveExpression;

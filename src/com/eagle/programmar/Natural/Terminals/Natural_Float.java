@@ -16,9 +16,9 @@ public class Natural_Float extends TerminalNumberToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
 		char ch = rec.charAt(_currentChar);
-		if (Character.isDigit(ch) ||
-				(ch == '-' && _currentChar+1 < recLen && Character.isDigit(rec.charAt(_currentChar+1))) ||
-				(ch == '.' && _currentChar+1 < recLen && Character.isDigit(rec.charAt(_currentChar+1))))
+		if (Character.isDigit(ch)
+				|| (ch == '-' && _currentChar + 1 < recLen && Character.isDigit(rec.charAt(_currentChar + 1)))
+				|| (ch == '.' && _currentChar + 1 < recLen && Character.isDigit(rec.charAt(_currentChar + 1))))
 		{
 			boolean foundDot = (ch == '.');
 			int endChar = _currentChar;
@@ -41,7 +41,7 @@ public class Natural_Float extends TerminalNumberToken
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String showString()
 	{

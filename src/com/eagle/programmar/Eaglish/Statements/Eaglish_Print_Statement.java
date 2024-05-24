@@ -16,7 +16,7 @@ public class Eaglish_Print_Statement extends TokenSequence implements EagleRunna
 	public @S(10) Eaglish_Keyword PRINT = new Eaglish_Keyword("PRINT");
 	public @S(20) Eaglish_Expression expr;
 	public @S(30) Eaglish_EndOfLine eoln;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

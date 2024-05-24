@@ -35,7 +35,7 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @S(60) @NOSPACE PunctuationSemicolon semicolon1;
 		public @S(70) @OPT Java_Expression terminateCondition;
 		public @S(80) @NOSPACE PunctuationSemicolon semicolon2;
-		public @S(90) @OPT SeparatedList<Java_Expression,PunctuationComma> increments;
+		public @S(90) @OPT SeparatedList<Java_Expression, PunctuationComma> increments;
 		public @S(100) @NOSPACE PunctuationRightParen rightParen;
 		public @S(110) @OPT Java_Comment comment;
 		public @S(120) Java_Statement action;
@@ -43,12 +43,12 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public static class Java_ForInit extends TokenSequence
 		{
 			public @S(10) @OPT Java_Keyword FINAL = new Java_Keyword("final");
-			public @S(20) SeparatedList<Java_ForWhat,PunctuationComma> what;
-			
+			public @S(20) SeparatedList<Java_ForWhat, PunctuationComma> what;
+
 			public static class Java_ForWhat extends TokenChooser
 			{
 				public @CHOICE Java_Expression expr;
-				
+
 				public @FIRST static class Java_ForWithType extends TokenSequence
 				{
 					public @S(10) Java_Type varType;
@@ -57,7 +57,7 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 			}
 		}
 	}
-	
+
 	public @CHOICE static class Java_ForCollectionStatement extends TokenSequence
 	{
 		public @S(10) @OPT @NEWLINE Java_Label label;
@@ -73,15 +73,15 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @S(110) @OPT Java_Comment comment;
 		public @S(120) Java_Statement action;
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-	
+
 	@Override
 	public EagleScope getScope()
 	{
 		return _scope;
 	}
-	
+
 //	@Override
 //	public void setScope(EagleScope scope)
 //	{

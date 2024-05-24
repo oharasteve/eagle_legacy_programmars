@@ -31,8 +31,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class PLI_Statement extends TokenChooser
 {
-	public @CHOICE PunctuationSemicolon semicolon;	// Empty statement
-	
+	public @CHOICE PunctuationSemicolon semicolon; // Empty statement
+
 	public @LAST PLI_AssignmentStatement assignmentStatement;
 
 	public @CHOICE PLI_AllocateStatement allocateStatement;
@@ -57,6 +57,6 @@ public class PLI_Statement extends TokenChooser
 	public @CHOICE PLI_SignalStatement signalStatement;
 	public @CHOICE PLI_SelectStatement selectStatement;
 	public @CHOICE PLI_StopStatement stopStatement;
-	
+
 	public @CHOICE PLI_Procedure innerProcedure;
 }

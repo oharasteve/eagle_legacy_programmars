@@ -11,18 +11,18 @@ import com.eagle.tokens.TokenSequence;
 public class PPSM_Program extends EagleLanguage
 {
 	public static final String PPSM = "PPSM";
-	
+
 	public PPSM_Program()
 	{
 		super(PPSM, new PPSM_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "Not Applicable";
 	}
-	
+
 	public static class PPSM_Element extends TokenSequence
 	{
 		public @S(10) PPSM_KeywordChoice x = new PPSM_KeywordChoice("a", "b");

@@ -12,7 +12,7 @@ public class Lisp_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Lisp_PunctuationChoice(String... args)
 	{
 		super(args);

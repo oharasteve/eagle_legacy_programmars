@@ -3,7 +3,8 @@
 
 package com.eagle.programmar.Natural;
 
-public class Natural_Reserved_Words {
+public class Natural_Reserved_Words
+{
 	public static final String[] RESERVED_WORDS = new String[] {
 			"AND",
 			"BUT",
@@ -46,7 +47,7 @@ public class Natural_Reserved_Words {
 			"WHERE",
 			"WITH",
 	};
-			
+
 //	From https://documentation.softwareag.com/natural/nat838unx/pg/pg_keyw.htm
 //	Too much. NAME is in this list, but is also frequently used as variable
 //	public static final String[] RESERVED_WORDS = new String[] {

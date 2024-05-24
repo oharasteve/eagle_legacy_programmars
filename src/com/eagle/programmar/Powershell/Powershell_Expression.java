@@ -45,16 +45,17 @@ public class Powershell_Expression extends PrecedenceChooser
 
 	public Powershell_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Powershell_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -65,7 +66,7 @@ public class Powershell_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
-	
+
 	public @P(100) Powershell_PreIncrementExpression preIncrementExpression;
 	public @P(110) Powershell_PreDecrementExpression preDecrementExpression;
 	public @P(120) Powershell_PostIncrementExpression postIncrementExpression;
@@ -84,10 +85,10 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(250) Powershell_VariableExpression variableExpression;
 	public @P(260) Powershell_LibraryVariable libraryVariable;
 	public @P(270) Powershell_CallCommand callCommand;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
-	
+
 	public @P(500) Powershell_SubscriptExpression subscriptExpression;
 	public @P(510) Powershell_Subfield subfield;
 	public @P(520) Powershell_Multiplicative_Expression multiplicative_Expression;

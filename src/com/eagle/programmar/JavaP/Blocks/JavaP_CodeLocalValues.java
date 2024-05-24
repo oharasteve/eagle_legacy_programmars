@@ -19,10 +19,11 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class JavaP_CodeLocalValues extends TokenSequence
 {
-	public @S(10) JavaP_KeywordChoice LOCALVARIABLES = new JavaP_KeywordChoice("LocalVariableTable", "LocalVariableTypeTable");
+	public @S(10) JavaP_KeywordChoice LOCALVARIABLES = new JavaP_KeywordChoice("LocalVariableTable",
+			"LocalVariableTypeTable");
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_CodeLocalHeaderChoice header;
-	
+
 	public static class JavaP_CodeLocalHeaderChoice extends TokenChooser
 	{
 		public @CHOICE static class JavaP_CodeLocalHeader extends TokenSequence
@@ -34,9 +35,9 @@ public class JavaP_CodeLocalValues extends TokenSequence
 			public @S(50) JavaP_Keyword NAME = new JavaP_Keyword("Name");
 			public @S(60) JavaP_Keyword SIGNATURE = new JavaP_Keyword("Signature");
 			public @S(70) JavaP_EndOfLine eoln2;
-			
+
 			public @S(80) @OPT TokenList<JavaP_CodeLocalEntry> entries;
-			
+
 			public static class JavaP_CodeLocalEntry extends TokenSequence
 			{
 				public @S(10) JavaP_Number start;
@@ -47,14 +48,14 @@ public class JavaP_CodeLocalValues extends TokenSequence
 				public @S(60) JavaP_EndOfLine eoln;
 			}
 		}
-		
+
 		public @CHOICE static class JavaP_CodeLocalLength extends TokenSequence
 		{
 			public @S(10) JavaP_Keyword LENGTH = new JavaP_Keyword("length");
 			public @S(20) PunctuationEquals equals;
 			public @S(30) JavaP_HexNumber len;
 			public @S(40) TokenList<JavaP_CodeLocalHexes> hexes;
-			
+
 			public static class JavaP_CodeLocalHexes extends TokenChooser
 			{
 				public @CHOICE JavaP_HexNoPrefix hex;

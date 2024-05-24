@@ -14,7 +14,7 @@ public class Java_ArgumentList extends TokenSequence
 	public @S(20) @OPT TokenList<Java_Comment> comment;
 	public @S(30) @OPT TokenList<Java_MoreArguments> moreArgs;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	public static class Java_MoreArguments extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationComma comma;

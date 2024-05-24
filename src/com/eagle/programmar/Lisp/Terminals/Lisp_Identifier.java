@@ -13,7 +13,7 @@ public abstract class Lisp_Identifier extends TerminalIdentifierToken
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar + 1 < nc)
@@ -29,7 +29,7 @@ public abstract class Lisp_Identifier extends TerminalIdentifierToken
 				}
 			}
 		}
-		
-		return genericIdentifier(lines, ALPHAS+"+-*_", ALPHAS+DIGITS+"+-<>*=.!$_", false, false);
+
+		return genericIdentifier(lines, ALPHAS + "+-*_", ALPHAS + DIGITS + "+-<>*=.!$_", false, false);
 	}
 }

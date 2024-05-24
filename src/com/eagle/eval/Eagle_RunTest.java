@@ -19,8 +19,11 @@ import junit.framework.TestCase;
 
 public abstract class Eagle_RunTest extends TestCase
 {
-	public enum LANG { JAVA, CSHARP, PYTHON }
-	
+	public enum LANG
+	{
+		JAVA, CSHARP, PYTHON
+	}
+
 	protected static boolean _isDos = EagleEnvironment.isDos();
 
 	protected static Collection<Object[]> collectTestCases(EagleProject proj, LANG lang, String... exceptions)
@@ -31,24 +34,24 @@ public abstract class Eagle_RunTest extends TestCase
 		{
 			if (!(file instanceof ProgramEntry)) continue;
 			ProgramEntry entry = (ProgramEntry) file;
-			
+
 			String source;
 			switch (lang)
 			{
-			case JAVA :
+			case JAVA:
 				source = entry.javaFile;
 				break;
-			case CSHARP :
+			case CSHARP:
 				source = entry.csFile;
 				break;
 			case PYTHON:
 				source = entry.pyFile;
 				break;
 			default:
-				throw new RuntimeException("Unexpected Lang: " + lang.toString());	
+				throw new RuntimeException("Unexpected Lang: " + lang.toString());
 			}
-			
-			if (source == null) continue;	// Skip this one for now
+
+			if (source == null) continue; // Skip this one for now
 			boolean reject = false;
 			for (String exception : exceptions)
 			{
@@ -60,12 +63,14 @@ public abstract class Eagle_RunTest extends TestCase
 			File sourceFile = new File(sourceFileName);
 			if (sourceFile.exists())
 			{
-				tests.add(new Object[] { entry, sourceFile.getName() });
+				tests.add(new Object[] {
+						entry, sourceFile.getName()
+				});
 			}
 		}
 		return tests;
 	}
-	
+
 	protected void compile(ArrayList<String> args, String sourceName)
 	{
 		if (_isDos)
@@ -86,13 +91,13 @@ public abstract class Eagle_RunTest extends TestCase
 			// Grab it's output in case of compile problems
 			// Otherwise, it just blocks.
 			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line= br.readLine();
-            while (line != null)
-            {
-                System.out.println(line);
-                line = br.readLine();
-            }
-            
+			String line = br.readLine();
+			while (line != null)
+			{
+				System.out.println(line);
+				line = br.readLine();
+			}
+
 			int result = p.waitFor();
 
 			System.out.println("Compiled " + sourceName + " return status = " + result);
@@ -103,7 +108,7 @@ public abstract class Eagle_RunTest extends TestCase
 			throw new RuntimeException("Failed compiling " + sourceName, ex);
 		}
 	}
-	
+
 	protected void run(EagleProject proj, ProgramEntry entry, ArrayList<String> args, String sourceName)
 	{
 		try
@@ -111,7 +116,7 @@ public abstract class Eagle_RunTest extends TestCase
 			// Is there an input file?
 			String inputFileName = EaglePath.combinePaths(proj._testDirectory, entry.inputFile);
 			File inputFile = new File(inputFileName);
-			
+
 			String outputFileName = EaglePath.combinePaths(proj._artifactBase, entry.actualOutput);
 			// Make sure output directory exists
 			int lastSlash = outputFileName.lastIndexOf("/");
@@ -119,17 +124,17 @@ public abstract class Eagle_RunTest extends TestCase
 			if (EaglePath.createDir(outDir)) System.out.println("Created directory " + outDir);
 			String output = " > " + outputFileName + " 2>&1";
 			String now = "\"-now=12/30/10 2:03 am\""; // This is so the date/times will match
-	
+
 			if (_isDos)
 			{
 				args.add(0, "/C");
 				args.add(0, "CMD");
 			}
 			args.add(now);
-			
+
 			String cmd = "";
 			for (String arg : args) cmd += arg + " ";
-			
+
 			ProcessBuilder pb = new ProcessBuilder(args);
 			pb.redirectErrorStream(true);
 			String input = "";
@@ -147,13 +152,13 @@ public abstract class Eagle_RunTest extends TestCase
 			// Grab it's output in case of compile problems
 			// Otherwise, it just blocks.
 			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = br.readLine();
-            while (line != null)
-            {
-                System.out.println(line);
-                line = br.readLine();
-            }
-            
+			String line = br.readLine();
+			while (line != null)
+			{
+				System.out.println(line);
+				line = br.readLine();
+			}
+
 			int result = p.waitFor();
 			System.out.println("Ran " + sourceName + " return status = " + result);
 			assertEquals("Run status for " + sourceName, 0, result);
@@ -164,7 +169,6 @@ public abstract class Eagle_RunTest extends TestCase
 		}
 	}
 
-	
 	protected void diff(EagleProject proj, ProgramEntry entry, String sourceName)
 	{
 		try

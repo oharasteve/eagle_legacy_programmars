@@ -7,11 +7,12 @@ import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-
 public class Lisp_Character extends TerminalLiteralToken
 {
-	private static final String[] specials = { "space" };
-	
+	private static final String[] specials = {
+			"space"
+	};
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -22,7 +23,7 @@ public class Lisp_Character extends TerminalLiteralToken
 		if (_currentChar + 2 >= recLen) return false;
 		if (rec.charAt(_currentChar) != '#') return false;
 		if (rec.charAt(_currentChar + 1) != '\\') return false;
-		
+
 		// Look for #\space
 		for (String special : specials)
 		{

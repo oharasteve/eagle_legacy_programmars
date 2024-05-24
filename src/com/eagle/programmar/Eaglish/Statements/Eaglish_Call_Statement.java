@@ -24,19 +24,19 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 	public @S(20) Eaglish_Identifier_Reference name;
 	public @S(30) @OPT Eaglish_CallParameters callParams;
 	public @S(40) Eaglish_EndOfLine eoln;
-	
+
 	public static class Eaglish_CallParameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParenn;
 		public @S(20) SeparatedList<Eaglish_Expression, PunctuationComma> args;
 		public @S(30) PunctuationRightParen rightParenn;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (interpreter._TRACE) System.err.println("*** Calling " + name);
-		
+
 		// Have to search for the FUNCTION definition
 		Eaglish_Function_Block func = null;
 		for (AbstractFunction absFn : interpreter._functionList)
@@ -49,20 +49,21 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 				break;
 			}
 		}
-		
+
 		if (func == null)
 		{
 			throw new RuntimeException("Unable to find a FUNCTION named " + name);
 		}
-		
+
 		// Count the parameters
 		int expected = func.parameterStatements.size();
-		int actual = callParams.args.getPrimaryCount(); 
+		int actual = callParams.args.getPrimaryCount();
 		if (actual != expected)
 		{
-			throw new RuntimeException("Function " + name + ", expected args=" + expected + ", but actual args = " + actual);
+			throw new RuntimeException(
+					"Function " + name + ", expected args=" + expected + ", but actual args = " + actual);
 		}
-		
+
 		// Assign all the parameters
 		for (int i = 0; i < actual; i++)
 		{
@@ -70,10 +71,10 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 			Eaglish_Expression arg = callParams.args.getPrimaryElement(i);
 			interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(),
-					param.getStartChar(), param.param.getValue(), val);
+			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					param.param.getValue(), val);
 		}
-		
+
 		// Evaluate the function
 		long startTime = System.nanoTime();
 		for (Eaglish_Statement stmt : func.statements._elements)
@@ -82,7 +83,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		}
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
-		
+
 		// Remove all the parameters
 		for (int i = 0; i < actual; i++)
 		{

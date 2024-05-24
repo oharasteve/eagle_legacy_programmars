@@ -7,7 +7,7 @@ import com.eagle.programmar.Gupta.Gupta_Expression;
 import com.eagle.programmar.Gupta.Terminals.Gupta_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Gupta_StrCat_Expression  extends PrecedenceOperator 
+public class Gupta_StrCat_Expression extends PrecedenceOperator
 {
 	public @S(10) Gupta_Expression left = new Gupta_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Gupta_Punctuation strCat = new Gupta_Punctuation("||");

@@ -27,7 +27,7 @@ public class JavaP_BootstrapMethods extends TokenSequence
 	public @S(20) PunctuationColon colon;
 	public @S(30) JavaP_EndOfLine eoln;
 	public @S(40) TokenList<JavaP_Methods> methods;
-	
+
 	public static class JavaP_Methods extends TokenSequence
 	{
 		public @S(10) JavaP_Number number;
@@ -39,7 +39,7 @@ public class JavaP_BootstrapMethods extends TokenSequence
 		public @S(70) JavaP_Identifier methodName;
 		public @S(80) PunctuationColon colon2;
 		public @S(90) PunctuationLeftParen leftParen;
-		public @S(100) SeparatedList<JavaP_LClassName,PunctuationSemicolon> classes;
+		public @S(100) SeparatedList<JavaP_LClassName, PunctuationSemicolon> classes;
 		public @S(110) PunctuationSemicolon semicolon1;
 		public @S(120) PunctuationLeftBracket leftBracket;
 		public @S(130) JavaP_LClassName className1;
@@ -53,7 +53,7 @@ public class JavaP_BootstrapMethods extends TokenSequence
 		public @S(200) JavaP_Keyword ARGUMENTS = new JavaP_Keyword("arguments");
 		public @S(210) PunctuationColon colon;
 		public @S(220) JavaP_EndOfLine eoln2;
-		
+
 		public @S(230) JavaP_HashNumber arg_id;
 		public @S(240) JavaP_RestOfLine restOfLine;
 		public @S(250) JavaP_EndOfLine eoln3;

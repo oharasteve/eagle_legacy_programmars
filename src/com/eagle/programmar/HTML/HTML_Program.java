@@ -24,20 +24,20 @@ import com.eagle.tokens.TokenSequence;
 public class HTML_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String HTML = "HTML";
-	
+
 	public HTML_Program()
 	{
 		super(HTML, new HTML_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.w3schools.com/html/";
 	}
-	
+
 	public @S(10) TokenList<HTML_Element> elements;
-	
+
 	public static class HTML_Element extends TokenChooser
 	{
 		public @CHOICE HTML_DocType docType;
@@ -45,11 +45,11 @@ public class HTML_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE HTML_Tag tag;
 		public @CHOICE HTML_EndTag endTag;
 		public @CHOICE HTML_Comment comment;
-		
+
 		// Statements, sort of
 		public @CHOICE HTML_IfCondition ifCondition;
 		public @CHOICE HTML_EndIfCondition endIfCondition;
-		
+
 		// Custom tags that need to be processed separately
 		public @CHOICE HTML_Pre pre;
 		public @CHOICE HTML_Style style;
@@ -58,24 +58,25 @@ public class HTML_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE HTML_Table table;
 		public @CHOICE HTML_Caption caption;
 
-		// @FIRST for speed. Some Chromium HTML files have thousands of <span> tags all on one lien
+		// @FIRST for speed. Some Chromium HTML files have thousands of <span> tags all
+		// on one lien
 		public @FIRST HTML_Span span;
-		
+
 		// PHP
 		public @CHOICE @SYNTAX(PHP_Syntax.class) PHP_Section php_block;
-		
+
 		// Django
 		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Control dj_control;
 		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Insert dj_insert;
-		
+
 		public @LAST XML_Header xmlHeader;
-		
+
 		public @LAST static class HTML_BogusEndAnchor extends TokenSequence
 		{
 			// In a separate class just to enable @CURIOUS
 			public @S(10) @CURIOUS("Extra end anchor") HTML_ExtraEndAnchor endAnchor;
 		}
-		
+
 		public @LAST static class HTML_JustText extends TokenSequence
 		{
 			// In a separate class just to enable @NEWLINE

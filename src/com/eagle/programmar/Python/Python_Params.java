@@ -21,18 +21,18 @@ public class Python_Params extends TokenSequence
 	public @S(30) @OPT Python_InitValue initValue;
 	public @S(40) @OPT TokenList<Python_MoreParams> moreParams;
 	public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-	
+
 	public static class Python_ParamType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) Python_Type type;
 	}
-	
+
 	public static class Python_Param extends TokenChooser
 	{
 		public @CHOICE Python_Expression expr;
-		public @LAST PunctuationSlash slash;	// Means end of positional arguments
-		public @LAST PunctuationStar star;	    // Means end of positional or keyword arguments
+		public @LAST PunctuationSlash slash; // Means end of positional arguments
+		public @LAST PunctuationStar star; // Means end of positional or keyword arguments
 
 		public @CHOICE static class PythonParamStar extends TokenSequence
 		{

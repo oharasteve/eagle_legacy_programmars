@@ -27,14 +27,14 @@ public class CSharp_SwitchStatement extends TokenSequence implements EagleScopeI
 	public @S(50) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(60) TokenList<CSharp_SwitchCase> caseClause;
 	public @S(70) @OUTDENT PunctuationRightBrace rightBrace;
-	
+
 	public static class CSharp_SwitchCase extends TokenSequence
 	{
 		public @S(10) @NEWLINE CSharp_CaseType caseType;
 		public @S(20) PunctuationColon colon;
 		public @S(30) @OPT TokenList<CSharp_StatementOrComment> statements;
 	}
-	
+
 	public static class CSharp_CaseType extends TokenChooser
 	{
 		public @CHOICE CSharp_Keyword DEFAULT = new CSharp_Keyword("default");
@@ -45,7 +45,7 @@ public class CSharp_SwitchStatement extends TokenSequence implements EagleScopeI
 			public @S(20) CSharp_Expression expr;
 		}
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
 
 	@Override

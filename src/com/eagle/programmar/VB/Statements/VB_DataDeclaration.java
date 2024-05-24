@@ -19,8 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_DataDeclaration extends TokenSequence implements EagleRunnable
 {
-	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice(
-			"private", "public", "dim", "const");
+	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public", "dim", "const");
 	public @S(20) @OPT VB_Keyword CONST = new VB_Keyword("const");
 	public @S(30) VB_Variable_Definition var;
 	public @S(40) @OPT VB_Subscript subscript;
@@ -39,22 +38,22 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable
 		public @S(10) PunctuationEquals equals;
 		public @S(20) VB_Expression expr;
 	}
-	
+
 	public static class VB_MoreVariables extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) VB_Variable_Definition var;
 		public @S(30) @OPT VB_Subscript subscript;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (initializer.isPresent())
 		{
 			EagleValue value = interpreter.getEagleValue(initializer.expr);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-					var.getStartChar(), var.toString(), value);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.toString(), value);
 		}
 	}
 }

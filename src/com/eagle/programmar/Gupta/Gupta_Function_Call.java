@@ -17,7 +17,7 @@ public class Gupta_Function_Call extends TokenSequence
 	public @S(30) @OPT Gupta_Expression expr;
 	public @S(40) @OPT TokenList<Gupta_More_Arguments> moreArgs;
 	public @S(50) PunctuationRightParen rightParen;
-	
+
 	public static class Gupta_More_Arguments extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;

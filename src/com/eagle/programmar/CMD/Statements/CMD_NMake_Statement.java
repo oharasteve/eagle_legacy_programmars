@@ -14,7 +14,7 @@ public class CMD_NMake_Statement extends TokenSequence
 {
 	public @S(10) CMD_Keyword NMAKE = new CMD_Keyword("nmake");
 	public @S(20) TokenList<CMD_NMake_Parameter> params;
-	
+
 	public static class CMD_NMake_Parameter extends TokenChooser
 	{
 		public @CHOICE CMD_Argument target;
@@ -36,7 +36,6 @@ public class CMD_NMake_Statement extends TokenSequence
 			public @S(10) PunctuationSlash slash;
 			public @S(20) CMD_Keyword E = new CMD_Keyword("e");
 		}
-
 
 		public @CHOICE static class CMD_NMake_Option_F extends TokenSequence
 		{

@@ -18,7 +18,7 @@ public class Perl_InstanceOfExpression extends PrecedenceOperator
 	public @S(30) @OPT Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 	public @S(40) Perl_Identifier_Reference type;
 	public @S(50) @OPT TokenList<Perl_MoreInstanceOf> more;
-	
+
 	public static class Perl_MoreInstanceOf extends TokenSequence
 	{
 		public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');

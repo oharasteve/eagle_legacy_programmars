@@ -12,9 +12,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Go_Variable extends TokenSequence
 {
-	public @S(10) SeparatedList<Go_Identifier_Reference,PunctuationPeriod> vars;
+	public @S(10) SeparatedList<Go_Identifier_Reference, PunctuationPeriod> vars;
 	public @S(20) @OPT Go_Subscript subscript;
-	
+
 	public static class Go_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

@@ -15,8 +15,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_InterfaceCreationWithMethod extends PrimaryOperator
 {
 	public @S(10) CSharp_Keyword NEW = new CSharp_Keyword("new");
-	public @S(20) CSharp_KeywordChoice jinterface = new CSharp_KeywordChoice(
-			"Runnable", "ActionListener", "WindowAdapter");
+	public @S(20) CSharp_KeywordChoice jinterface = new CSharp_KeywordChoice("Runnable", "ActionListener",
+			"WindowAdapter");
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 	public @S(50) PunctuationLeftBrace leftBrace;

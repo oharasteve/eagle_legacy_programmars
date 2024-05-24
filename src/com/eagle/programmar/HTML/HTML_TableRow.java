@@ -16,12 +16,12 @@ public class HTML_TableRow extends TokenSequence
 	public @S(30) @OPT TokenList<HTML_TableData> cells;
 	public @S(40) @OPT TokenList<HTML_Comment> comments2;
 	public @S(50) @OPT @OUTDENT HTML_EndRow endRow;
-	
+
 	public static class HTML_StartRow extends TokenSequence
 	{
 		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<");
 		public @S(20) @NOSPACE HTML_Keyword TR = new HTML_Keyword("tr");
-		public @S(30) @OPT TokenList<HTML_Attribute> attributes; 
+		public @S(30) @OPT TokenList<HTML_Attribute> attributes;
 		public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	}
 

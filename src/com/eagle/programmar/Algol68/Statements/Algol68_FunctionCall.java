@@ -20,17 +20,17 @@ public class Algol68_FunctionCall extends TokenSequence
 	public @S(10) Algol68_Variable func;
 	public @S(20) @OPT Algol68_FunctionArguments args;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
-	
+
 	public static class Algol68_FunctionArguments extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Algol68_FunctionArg,PunctuationComma> arguments;
+		public @S(20) SeparatedList<Algol68_FunctionArg, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 
 		public static class Algol68_FunctionArg extends TokenChooser
 		{
 			public @CHOICE Algol68_Expression expr;
-			
+
 			public @CHOICE static class Algol68_FunctionSetArg extends TokenSequence
 			{
 				public @S(10) Algol68_Identifier_Reference id;

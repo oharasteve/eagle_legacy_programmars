@@ -15,7 +15,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Powershell_DoStatement extends TokenSequence
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#842-the-do-statement") Powershell_Keyword DO = new Powershell_Keyword("Do");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#842-the-do-statement") Powershell_Keyword DO = new Powershell_Keyword(
+			"Do");
 	public @S(20) PunctuationLeftBrace leftBrace;
 	public @S(30) @OPT Powershell_EndOfLine eoln1;
 	public @S(40) TokenList<Powershell_Statement> stmts;

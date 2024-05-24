@@ -32,16 +32,17 @@ public class SQL_Expression extends PrecedenceChooser
 
 	public SQL_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public SQL_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////

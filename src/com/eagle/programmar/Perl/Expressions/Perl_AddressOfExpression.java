@@ -12,4 +12,3 @@ public class Perl_AddressOfExpression extends PrimaryOperator
 	public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 	public @S(20) Perl_Expression expr;
 }
-

@@ -16,7 +16,7 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 	public @S(20) FSharp_Punctuation leftDotBracket = new FSharp_Punctuation(".[");
 	public @S(30) FSharp_RangeExpr subscr;
 	public @S(40) PunctuationRightBracket rightBracket;
-	
+
 	public static class FSharp_RangeExpr extends TokenChooser
 	{
 		public @FIRST static class FSharp_RangeExpr_low_high extends TokenSequence
@@ -25,13 +25,13 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 			public @S(20) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
 			public @S(30) @OPT FSharp_Expression high;
 		}
-		
+
 		public @CHOICE static class FSharp_RangeExpr_low extends TokenSequence
 		{
 			public @S(10) FSharp_Expression low;
 			public @S(20) @OPT FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
 		}
-		
+
 		public @CHOICE static class FSharp_RangeExpr_high extends TokenSequence
 		{
 			public @S(10) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");

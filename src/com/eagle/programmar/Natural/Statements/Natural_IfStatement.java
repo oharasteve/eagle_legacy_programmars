@@ -17,22 +17,21 @@ public class Natural_IfStatement extends TokenSequence
 	public @S(20) Natural_IfWhat ifWhat;
 	public @S(30) TokenList<Natural_Statement> statements;
 	public @S(40) @OPT Natural_ElseClause elseClause;
-	public @S(50) Natural_KeywordChoice endIf = new Natural_KeywordChoice(
-			"END-IF", "END-NOREC");
-	
+	public @S(50) Natural_KeywordChoice endIf = new Natural_KeywordChoice("END-IF", "END-NOREC");
+
 	public static class Natural_IfWhat extends TokenChooser
 	{
 		public @CHOICE Natural_NoRecordsFound noRecordsFound;
 		public @CHOICE Natural_Condition condition;
 	}
-	
+
 	public static class Natural_NoRecordsFound extends TokenSequence
 	{
 		public @S(10) Natural_Keyword NO = new Natural_Keyword("NO");
 		public @S(20) Natural_Keyword RECORDS = new Natural_Keyword("RECORDS");
 		public @S(30) Natural_Keyword FOUND = new Natural_Keyword("FOUND");
 	}
-	
+
 	public static class Natural_ElseClause extends TokenSequence
 	{
 		public @S(10) Natural_Keyword ELSE = new Natural_Keyword("ELSE");

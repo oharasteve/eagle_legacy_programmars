@@ -44,24 +44,24 @@ public class CMacro_RestOfLine extends TokenRestOfLine implements EagleRunnable
 					if (commentPos >= 0) ec = commentPos - 1;
 				}
 			}
-			
+
 			// Build the new result, one line at a time
 			String piece = rec.substring(sc, ec + 1);
 			// Chop off the trailing \, if any
-			if (piece.endsWith("\\")) piece = piece.substring(0, piece.length()-1);
+			if (piece.endsWith("\\")) piece = piece.substring(0, piece.length() - 1);
 			if (text.length() > 0) text.append('\n');
 			text.append(piece);
-			
+
 			// Not continued (any more)
-			if (! rec.endsWith("\\") || lastLine+1 >= linesSize) break;
-			
+			if (!rec.endsWith("\\") || lastLine + 1 >= linesSize) break;
+
 			// Must be continued on the next line
 			lastLine++;
 			rec = lines.get(lastLine).toString();
 			sc = 0;
 			ec = rec.length() - 1;
 		}
-		
+
 		_txt = text.toString();
 		foundIt(lastLine, ec);
 		return true;
@@ -76,20 +76,20 @@ public class CMacro_RestOfLine extends TokenRestOfLine implements EagleRunnable
 			interpreter.pushStr("");
 			return;
 		}
-		
+
 		// Have to parse it, in order to evaluate it
 		CMacro_Program lang = new CMacro_Program();
 		CMacro_Syntax syntax = new CMacro_Syntax();
 		EagleFileReader lines = new EagleFileReader();
 		lines.add(_txt, "none", 0);
-		
+
 		CMacro_Expression expr = new CMacro_Expression();
 		expr.setSyntax(syntax);
-		if (! interpreter._parser.parseLines(lines, lang, expr))
+		if (!interpreter._parser.parseLines(lines, lang, expr))
 		{
 			throw new RuntimeException("Unable to parse expression " + _txt);
 		}
-	
+
 		// Evaluate the newly parsed expression
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);

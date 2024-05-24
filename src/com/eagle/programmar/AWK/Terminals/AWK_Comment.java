@@ -14,22 +14,22 @@ public class AWK_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public AWK_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar >= nc) return false;
 		if (rec.charAt(_currentChar) != '#') return false;
-		
+
 		foundIt(_currentLine, nc);
 		_comment = rec.substring(_currentChar, nc);
 		return true;

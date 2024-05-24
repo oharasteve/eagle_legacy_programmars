@@ -13,7 +13,7 @@ public class Javascript_Syntax extends EagleSyntax
 	{
 		return "Javascript";
 	}
-	
+
 	public Javascript_Syntax()
 	{
 		_isCaseSensitive = true;
@@ -21,9 +21,9 @@ public class Javascript_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_commentInstance = new Javascript_Comment();
 		_punctuationExceptions = new String[] {
-				"/*", "!=", "<=", "==", ">=", "//", "&&", "||",
-				"===", "!==", "!===", "=>", "</", "**", "..." };
-		
+				"/*", "!=", "<=", "==", ">=", "//", "&&", "||", "===", "!==", "!===", "=>", "</", "**", "..."
+		};
+
 		addReservedWords(Javascript_Reserved_Words.RESERVED_WORDS);
 	}
 }

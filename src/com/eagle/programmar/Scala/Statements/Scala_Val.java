@@ -14,7 +14,8 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Scala_Val extends TokenSequence
 {
-	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAL = new Scala_Keyword("val");
+	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAL = new Scala_Keyword(
+			"val");
 	public @S(20) Scala_Variable_Definition id;
 	public @S(30) PunctuationColon colon;
 	public @S(40) Scala_Type type;

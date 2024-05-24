@@ -20,20 +20,15 @@ public class Rust_Type extends TokenChooser implements AbstractType
 	{
 		public @S(10) @OPT Rust_Punctuation ampersand = new Rust_Punctuation("&");
 		public @S(20) @OPT Rust_TypePrimitiveStatic typeStatic;
-		public @S(30) Rust_KeywordChoice PRIMITIVE = new Rust_KeywordChoice(
-				"bool",
-				"i32",
-				"str",
-				"String",
-				"usize");
-		
+		public @S(30) Rust_KeywordChoice PRIMITIVE = new Rust_KeywordChoice("bool", "i32", "str", "String", "usize");
+
 		public static class Rust_TypePrimitiveStatic extends TokenSequence
 		{
 			public @S(10) Rust_Punctuation quote = new Rust_Punctuation("'");
 			public @S(20) Rust_Keyword STATIC = new Rust_Keyword("static");
 		}
 	}
-	
+
 	public @CHOICE static class Rust_TypeArray extends TokenSequence
 	{
 		public @S(10) Rust_Punctuation ampersand = new Rust_Punctuation("&");

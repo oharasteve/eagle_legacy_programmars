@@ -14,13 +14,13 @@ public class Django_Variable extends TokenSequence
 	public @S(10) @OPT Django_Namespace namespace;
 	public @S(20) Django_Identifier_Reference variable;
 	public @S(30) @OPT TokenList<Django_DotVariable> more;
-	
+
 	public static class Django_Namespace extends TokenSequence
 	{
 		public @S(10) Django_Identifier_Reference name;
 		public @S(20) PunctuationColon colon;
 	}
-	
+
 	public static class Django_DotVariable extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;

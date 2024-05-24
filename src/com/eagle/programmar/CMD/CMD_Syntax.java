@@ -12,15 +12,19 @@ public class CMD_Syntax extends EagleSyntax
 	{
 		return "CMD";
 	}
-	
+
 	public CMD_Syntax()
 	{
 		_isCaseSensitive = false;
-		_continuationChar = "^";	// Perhaps a backslash (\) on some systems?
+		_continuationChar = "^"; // Perhaps a backslash (\) on some systems?
 		_extraCharacters = "";
 		_autoAdvance = false;
-		_punctuationExceptions = new String[] { "::", "==", "&&", ">>", "||" };
-		
-		addReservedWords(new String[] { "not" });
+		_punctuationExceptions = new String[] {
+				"::", "==", "&&", ">>", "||"
+		};
+
+		addReservedWords(new String[] {
+				"not"
+		});
 	}
 }

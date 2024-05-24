@@ -17,7 +17,7 @@ public class Django_BlockControl extends TokenSequence
 	public @S(20) Django_Variable_Definition variable;
 	public @S(30) @OPT PunctuationHyphen dash2;
 	public @S(40) HTML_Punctuation percentBrace1 = new HTML_Punctuation("%}");
-	
+
 	public @S(50) @OPT TokenList<Django_Element> html;
 
 	public @S(60) HTML_Punctuation bracePercent2 = new HTML_Punctuation("{%");

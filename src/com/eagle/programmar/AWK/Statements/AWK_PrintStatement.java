@@ -17,7 +17,7 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("#print") AWK_KeywordChoice PRINT = new AWK_KeywordChoice("print", "printf");
 	public @S(20) AWK_PrintParameters param;
-	
+
 	public static class AWK_PrintParameters extends TokenChooser
 	{
 		public @FIRST AWK_Print_WithParens withParens;
@@ -30,7 +30,7 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 		public @S(20) @OPT AWK_ArgumentList argList;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class AWK_Print_NoParens extends TokenSequence
 	{
 		public @S(10) @OPT AWK_ArgumentList argList;
@@ -48,8 +48,9 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 		{
 			args = ((AWK_Print_NoParens) param.getWhich()).argList;
 		}
-		else throw new RuntimeException("Unexpected print argument: " + param.toString());
-		
+		else
+			throw new RuntimeException("Unexpected print argument: " + param.toString());
+
 		String result = interpreter.getStrValue(args.expr);
 		System.out.print(result);
 		for (AWK_MoreArguments nxt : args.more._elements)

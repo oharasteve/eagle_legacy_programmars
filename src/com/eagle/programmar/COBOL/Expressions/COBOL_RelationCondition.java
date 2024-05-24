@@ -23,14 +23,14 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 	public @S(30) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
 	public @S(40) COBOL_RelationalOperator relationalOperator;
 	public @S(50) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		boolean not = NOT.isPresent();
-		
+
 		if (leftValue.isInteger() && rightValue.isInteger())
 		{
 			int leftInt = interpreter.getIntValue(left);
@@ -58,7 +58,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 					result = leftInt >= rightInt;
 					break;
 				default:
-					throw new RuntimeException("Unable to handle " + oper);	
+					throw new RuntimeException("Unable to handle " + oper);
 				}
 			}
 			else if (which instanceof COBOL_Greater)
@@ -89,9 +89,10 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 					result = leftInt < rightInt;
 				}
 			}
-			else throw new RuntimeException("Unable to handle " + which.getClass().getName());
-			
-			if (not) result = ! result;
+			else
+				throw new RuntimeException("Unable to handle " + which.getClass().getName());
+
+			if (not) result = !result;
 			interpreter.pushBool(result);
 		}
 	}

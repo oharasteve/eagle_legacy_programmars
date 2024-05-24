@@ -12,7 +12,7 @@ public class CSharp_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public CSharp_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

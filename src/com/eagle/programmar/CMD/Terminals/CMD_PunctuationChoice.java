@@ -12,7 +12,7 @@ public class CMD_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public CMD_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

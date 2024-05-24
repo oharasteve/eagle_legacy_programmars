@@ -19,7 +19,7 @@ public class SQL_CreateSynonymStatement extends TokenSequence
 	public @S(50) SQL_Keyword FOR = new SQL_Keyword("FOR");
 	public @S(60) @OPT SQL_CreateSynonymForWhom whom;
 	public @S(70) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_CreateSynonymForWhom extends TokenSequence
 	{
 		public @S(10) SQL_Punctuation ampersand = new SQL_Punctuation('&');

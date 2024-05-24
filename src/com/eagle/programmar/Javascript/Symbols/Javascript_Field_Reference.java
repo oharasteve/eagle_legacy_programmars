@@ -11,7 +11,7 @@ public class Javascript_Field_Reference extends Javascript_Identifier_Reference
 	public boolean parse(EagleFileReader lines)
 	{
 		// Allow reserved words following a period
-		if (! genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_-", false, true)) return false;
+		if (!genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_-", false, true)) return false;
 		return true;
 	}
 }

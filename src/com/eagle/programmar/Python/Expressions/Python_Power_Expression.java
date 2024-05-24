@@ -14,7 +14,7 @@ public class Python_Power_Expression extends PrecedenceOperator implements Eagle
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Python_Punctuation stars = new Python_Punctuation("**");
 	public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

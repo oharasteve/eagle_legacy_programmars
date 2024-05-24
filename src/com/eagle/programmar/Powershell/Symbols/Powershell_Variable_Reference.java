@@ -11,7 +11,7 @@ public class Powershell_Variable_Reference extends Powershell_Identifier_Referen
 	public boolean parse(EagleFileReader lines)
 	{
 		// Allow reserved words because the $ is required for variables
-		if (! genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_-", false, true)) return false;
+		if (!genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_-", false, true)) return false;
 		removeTrailingHyphens();
 		return true;
 	}

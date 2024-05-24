@@ -27,12 +27,12 @@ public class PLI_HexNumber extends TerminalHexNumberToken
 			endChar++;
 		}
 
-		if (endChar+1 >= recLen) return false;
+		if (endChar + 1 >= recLen) return false;
 		if (rec.charAt(endChar) != '\'') return false;
-		if (Character.toUpperCase(rec.charAt(endChar+1)) != 'X') return false;
-			
+		if (Character.toUpperCase(rec.charAt(endChar + 1)) != 'X') return false;
+
 		_numberAsText = rec.substring(_currentChar, endChar);
-		foundIt(_currentLine, endChar+1);
+		foundIt(_currentLine, endChar + 1);
 		return true;
 	}
 }

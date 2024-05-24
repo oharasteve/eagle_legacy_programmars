@@ -21,27 +21,28 @@ public class Bash_Condition extends PrecedenceChooser
 	private static OperatorList _operators = new OperatorList();
 
 	//
-	// Note: All operators should stay in @P(#) order. This determines operator precedence.
+	// Note: All operators should stay in @P(#) order. This determines operator
+	// precedence.
 	//
 
 	public Bash_Condition()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Bash_Condition(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public static @P(100) class Bash_ExpressionCondition extends PrimaryOperator
 	{
 		public @S(10) Bash_Expression expression;
 	}
-	
+
 	public static @P(110) class Bash_BracketCondition extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -55,11 +56,10 @@ public class Bash_Condition extends PrecedenceChooser
 		public @S(20) Bash_Condition condition;
 		public @S(30) Bash_Punctuation rightBrackets = new Bash_Punctuation("]]");
 	}
-	
+
 	public static @P(130) class Bash_ExistsCondition extends PrimaryOperator
 	{
-		public @S(10) Bash_KeywordChoice E = new Bash_KeywordChoice(
-				"-d", "-e", "-f", "-n", "-x", "-z");
+		public @S(10) Bash_KeywordChoice E = new Bash_KeywordChoice("-d", "-e", "-f", "-n", "-x", "-z");
 		public @S(20) Bash_FilenameOrLiteral filename;
 	}
 
@@ -68,17 +68,17 @@ public class Bash_Condition extends PrecedenceChooser
 		public @S(10) Bash_Punctuation NOT = new Bash_Punctuation("!");
 		public @S(20) Bash_Condition condition;
 	}
-	
+
 	public static @P(150) class Bash_Constants extends PrimaryOperator
 	{
 		public @S(10) Bash_KeywordChoice TRUE = new Bash_KeywordChoice("false", "true");
 	}
-	
+
 	public static @P(160) class Bash_GrepCondition extends PrimaryOperator
 	{
 		public @S(10) Bash_GrepCommand grepStatement;
 	}
-	
+
 	public static @P(170) class Bash_ReadCondition extends PrimaryOperator
 	{
 		public @S(10) Bash_ReadCommand readStatement;
@@ -94,7 +94,7 @@ public class Bash_Condition extends PrecedenceChooser
 		public @S(30) Bash_Keyword AND = new Bash_Keyword("and");
 		public @S(40) Bash_Condition right = new Bash_Condition(this, AllowedPrecedence.HIGHER);
 	}
-	
+
 	public static @P(510) class Bash_LogicalOr_Condition extends PrecedenceOperator
 	{
 		public @S(10) Bash_Condition left = new Bash_Condition(this, AllowedPrecedence.ATLEAST);

@@ -21,8 +21,9 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		int recLen = rec.length();
 		if (_currentChar >= recLen) return false;
 		char ch = rec.charAt(_currentChar);
-		if (ch == ':' || ch == '@' || ch == '-' || ch == '<' || ch == '>' || ch == '|' || ch == '&' || ch == ')') return false;
-		
+		if (ch == ':' || ch == '@' || ch == '-' || ch == '<' || ch == '>' || ch == '|' || ch == '&' || ch == ')')
+			return false;
+
 		int offset = 0;
 		char quote;
 		if (ch == '"' || ch == '\'')
@@ -43,10 +44,10 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		{
 			// Allow /%%x
 			if (_currentChar + 3 >= recLen) return false;
-			if (rec.charAt(_currentChar+1) != '%') return false;
-			if (rec.charAt(_currentChar+2) != '%') return false;
+			if (rec.charAt(_currentChar + 1) != '%') return false;
+			if (rec.charAt(_currentChar + 2) != '%') return false;
 			ch = rec.charAt(_currentChar + 3);
-			if (! Character.isLetter(ch)) return false;
+			if (!Character.isLetter(ch)) return false;
 			_endChar = _currentChar + 3;
 		}
 		else
@@ -59,19 +60,20 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 				if (_endChar >= recLen) break;
 				ch = rec.charAt(_endChar);
 				if (ch == ' ' || ch == '<' || ch == '>' || ch == '|' || ch == '&' || ch == '(' || ch == ')') break;
-				
+
 				// Don't allow == in the middle of an argument
 				if (ch == '=')
 				{
 					if (_endChar + 1 < recLen)
 					{
-						if (rec.charAt(_endChar+1) == '=') break;
+						if (rec.charAt(_endChar + 1) == '=') break;
 					}
 				}
 			}
 			_txt = rec.substring(_currentChar, _endChar);
 
-			// Make sure a generic argument is not a program name like SET or REM or whatever
+			// Make sure a generic argument is not a program name like SET or REM or
+			// whatever
 			String word = _txt.toUpperCase();
 			int dot = word.indexOf('.');
 			if (dot > 0)
@@ -95,7 +97,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		{
 			interpreter.pushStr(txt);
 		}
-		
+
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
 		int nc = txt.length();
@@ -106,28 +108,28 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 			if (first < 0)
 			{
 				sb.append(txt.substring(sc, nc));
-				break;	// Done -- no more % 
+				break; // Done -- no more %
 			}
 			if (first > sc)
 			{
 				sb.append(txt.substring(sc, first));
 			}
-			
+
 			// Extract a variable name (or expression) and value
 			int second = txt.indexOf('%', first + 1);
 			if (second < 0) throw new RuntimeException("Missing % in " + txt);
 			String var = txt.substring(first + 1, second);
 			Eaglish_Expression expr = new Eaglish_Expression();
-			if (! interpreter._parser.parseLine(var, interpreter._lang, expr))
+			if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + var);
 			}
 			String val = interpreter.getStrValue(expr);
 			sb.append(val);
-			
+
 			// Look for the next piece
 			sc = second + 1;
 		}
-		interpreter.pushStr(sb.toString());		
+		interpreter.pushStr(sb.toString());
 	}
 }

@@ -30,7 +30,7 @@ public class Python_ForStatement extends TokenSequence
 	public static class Python_ForWhat extends TokenChooser
 	{
 		public @CHOICE Python_VariableList varList;
-		
+
 		public @CHOICE static class Python_ForList extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
@@ -38,7 +38,7 @@ public class Python_ForStatement extends TokenSequence
 			public @S(30) PunctuationRightBracket rightBracket;
 		}
 	}
-	
+
 	public static class Python_ForElse extends TokenSequence
 	{
 		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();

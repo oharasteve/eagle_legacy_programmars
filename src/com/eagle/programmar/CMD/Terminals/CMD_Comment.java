@@ -14,17 +14,17 @@ public class CMD_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public CMD_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		if (_currentChar >= rec.length()) return false;
 		char ch = rec.charAt(_currentChar);

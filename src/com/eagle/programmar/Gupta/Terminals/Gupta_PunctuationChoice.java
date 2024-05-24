@@ -12,7 +12,7 @@ public class Gupta_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public Gupta_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

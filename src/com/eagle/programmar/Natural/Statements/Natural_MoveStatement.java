@@ -21,7 +21,7 @@ public class Natural_MoveStatement extends TokenSequence
 	public @S(40) Natural_Keyword TO = new Natural_Keyword("TO");
 	public @S(50) TokenList<Natural_Variable> variables;
 	public @S(60) @OPT Natural_MoveMask mask;
-	
+
 	public static class Natural_MoveMask extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

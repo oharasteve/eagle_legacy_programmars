@@ -17,7 +17,7 @@ public class AWK_Variable extends TokenSequence implements AbstractVariable, Eag
 {
 	public @S(10) AWK_Identifier_Reference id;
 	public @S(20) @OPT TokenList<AWK_VarSubscript> subscripts;
-	
+
 	public static class AWK_VarSubscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

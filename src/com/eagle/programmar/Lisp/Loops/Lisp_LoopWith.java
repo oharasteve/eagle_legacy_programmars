@@ -13,19 +13,19 @@ public class Lisp_LoopWith extends TokenSequence
 {
 	public @S(10) Lisp_LoopWithElement element;
 	public @S(20) @OPT TokenList<Lisp_LoopMoreWith> more;
-	
+
 	public static class Lisp_LoopMoreWith extends TokenSequence
 	{
 		public @S(10) Lisp_Keyword AND = new Lisp_Keyword("and");
 		public @S(20) Lisp_LoopWithElement element;
 	}
-	
+
 	public static class Lisp_LoopWithElement extends TokenSequence
 	{
 		public @S(10) Lisp_Keyword WITH = new Lisp_Keyword("with");
 		public @S(20) @OPT Lisp_SExpr typeSpec;
 		public @S(30) @OPT Lisp_LoopWithValue equalsValue;
-		
+
 		public static class Lisp_LoopWithValue extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;

@@ -36,16 +36,17 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 
 	public Scala_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Scala_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -56,7 +57,7 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Scala_MethodInvocation methodInvocation;
 	public @P(110) Scala_PreIncrementExpression preIncrementExpression;
 	public @P(120) Scala_PostIncrementExpression postIncrementExpression;

@@ -20,20 +20,17 @@ public class Powershell_Variable extends TokenSequence implements EagleRunnable
 	public @S(20) @OPT Powershell_VariableScope scope;
 	public @S(30) Powershell_Variable_Reference id;
 	public @S(40) @OPT Powershell_Subscript subscript;
-	
+
 	public static class Powershell_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) Powershell_Expression subscr;
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static class Powershell_VariableScope extends TokenSequence
 	{
-		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice(
-				"env",
-				"global",
-				"script",
+		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice("env", "global", "script",
 				"variable");
 		public @S(20) PunctuationColon colon;
 	}

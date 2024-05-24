@@ -19,11 +19,11 @@ public class Ruby_FunctionCall extends TokenSequence
 	public @S(20) @OPT Ruby_FunctionArguments args;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 	public @S(40) Ruby_EOLN eoln;
-	
+
 	public static class Ruby_FunctionArguments extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Ruby_Expression,PunctuationComma> arguments;
+		public @S(20) SeparatedList<Ruby_Expression, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 }

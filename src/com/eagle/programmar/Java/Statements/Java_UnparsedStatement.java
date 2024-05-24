@@ -22,16 +22,17 @@ public class Java_UnparsedStatement extends UnparsedElement
 	private static EagleSyntax SYNTAX = new Java_Syntax();
 	static String[] KEYWORDS = SYNTAX.allReservedWords();
 	static String[] PUNCTS = new String[] {
-			"+", "-", "*", "/", ".", ",", "?", ":", "<", "=", ">", "(", ")", "[", "]", "&", "|" };
+			"+", "-", "*", "/", ".", ",", "?", ":", "<", "=", ">", "(", ")", "[", "]", "&", "|"
+	};
 
 	@Override
 	public @SKIP TokenList<? extends AbstractToken> unparsedPieces()
 	{
 		return elements;
 	}
-	
+
 	public TokenList<Java_UnparsedElement> elements;
-	
+
 	public static class Java_UnparsedElement extends TokenChooser
 	{
 		public @CHOICE Java_Identifier_Reference id;

@@ -12,5 +12,5 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Perl_EchoStatement extends TokenSequence
 {
 	public @S(10) Perl_Keyword ECHO = new Perl_Keyword("echo");
-	public @S(20) SeparatedList<Perl_Expression,PunctuationComma> exprs;
+	public @S(20) SeparatedList<Perl_Expression, PunctuationComma> exprs;
 }

@@ -17,7 +17,7 @@ public class C_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
-	
+
 	public C_Punctuation(String punct)
 	{
 		super(punct);

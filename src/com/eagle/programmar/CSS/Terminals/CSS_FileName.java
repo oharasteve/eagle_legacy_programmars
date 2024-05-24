@@ -7,11 +7,10 @@ import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-
 public class CSS_FileName extends TerminalLiteralToken
 {
 	private static String ALLOWED = ":-/_.#?";
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -24,7 +23,7 @@ public class CSS_FileName extends TerminalLiteralToken
 		{
 			return genericLiteral(lines, "\"'", true, '\\', false, false);
 		}
-		
+
 		// Accept anything that looks like a filename
 		int endChar = _currentChar;
 		while (endChar < recLen)

@@ -11,16 +11,16 @@ import com.eagle.tokens.PrimaryOperator;
 public class Ada_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Ada_KeywordChoice builtinConstant = new Ada_KeywordChoice("false", "true");
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtinConstant.toString())
 		{
-		case "false" :
+		case "false":
 			interpreter.pushBool(false);
 			break;
-		case "true" :
+		case "true":
 			interpreter.pushBool(true);
 			break;
 		default:

@@ -12,7 +12,7 @@ public class Natural_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Natural_KeywordChoice(String... words)
 	{
 		super(words);

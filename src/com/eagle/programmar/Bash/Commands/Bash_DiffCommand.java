@@ -16,7 +16,7 @@ public class Bash_DiffCommand extends TokenSequence
 	public @S(20) @OPT TokenList<Bash_DiffOption> options;
 	public @S(30) Bash_FilenameOrLiteral fileName1;
 	public @S(40) Bash_FilenameOrLiteral fileName2;
-	
+
 	public static class Bash_DiffOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice SKIPCR = new Bash_KeywordChoice("--strip-trailing-cr");

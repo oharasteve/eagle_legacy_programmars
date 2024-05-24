@@ -33,4 +33,3 @@ public class SQL_LoadStatement extends TokenSequence
 	public @S(210) SQL_Keyword BY4 = new SQL_Keyword("BY");
 	public @S(220) SQL_Literal lineTerminator;
 }
-

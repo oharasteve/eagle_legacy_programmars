@@ -26,14 +26,14 @@ public class C_SwitchStatement extends TokenSequence
 	public @S(60) PunctuationLeftBrace leftBrace;
 	public @S(70) @OPT TokenList<C_SwitchClause> switchClause;
 	public @S(80) PunctuationRightBrace rightBrace;
-	
+
 	public static class C_SwitchClause extends TokenChooser
 	{
 		public @CHOICE C_Comment comment;
 		public @CHOICE C_CaseClause caseClause;
 		public @CHOICE C_DefaultClause defaultClause;
 	}
-	
+
 	public static class C_CaseClause extends TokenSequence
 	{
 		public @S(10) C_Keyword CASE = new C_Keyword("case");
@@ -41,7 +41,7 @@ public class C_SwitchStatement extends TokenSequence
 		public @S(30) PunctuationColon colon;
 		public @S(40) @OPT TokenList<C_StatementOrComment> statements;
 	}
-	
+
 	public static class C_DefaultClause extends TokenSequence
 	{
 		public @S(10) C_Keyword DEFAULT = new C_Keyword("default");

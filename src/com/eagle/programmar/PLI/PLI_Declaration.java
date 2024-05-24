@@ -24,10 +24,9 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class PLI_Declaration extends TokenSequence
 {
 	public @S(10) @OPT TokenList<PLI_Comment> commentList;
-	
-	public @S(20) PLI_KeywordChoice DECLARE = new PLI_KeywordChoice(
-			"DCL", "DECLARE");
-	public @S(30) SeparatedList<PLI_Declare_Item,PunctuationComma> items;
+
+	public @S(20) PLI_KeywordChoice DECLARE = new PLI_KeywordChoice("DCL", "DECLARE");
+	public @S(30) SeparatedList<PLI_Declare_Item, PunctuationComma> items;
 	public @S(40) PunctuationSemicolon semicolon;
 
 	public static class PLI_Declare_Item extends TokenSequence
@@ -36,19 +35,19 @@ public class PLI_Declaration extends TokenSequence
 		public @S(20) PLI_Declare_Variables declareVariables;
 		public @S(30) @OPT PLI_Declare_Size declareSize;
 		public @S(40) @OPT PLI_Type type1;
-		public @S(50) @OPT PLI_KeywordChoice options = new PLI_KeywordChoice(
-				"BUILTIN", "CONTROLLED", "EXTERNAL", "NONASSIGNABLE", "OPTIONAL");
+		public @S(50) @OPT PLI_KeywordChoice options = new PLI_KeywordChoice("BUILTIN", "CONTROLLED", "EXTERNAL",
+				"NONASSIGNABLE", "OPTIONAL");
 		public @S(60) @OPT PLI_Declare_Character character1;
 		public @S(70) @OPT PLI_Keyword STATIC = new PLI_Keyword("STATIC");
 		public @S(80) @OPT PLI_Type type2;
 		public @S(90) @OPT PLI_Declare_Initial initial;
 		public @S(100) @OPT PLI_Declare_Character character2;
 	}
-	
+
 	public static class PLI_Declare_Variables extends TokenChooser
 	{
 		public @CHOICE PLI_Variable_Definition varDecl;
-		
+
 		public @CHOICE static class PLI_Identifier_List extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
@@ -71,35 +70,35 @@ public class PLI_Declaration extends TokenSequence
 			}
 		}
 	}
-	
+
 	public static class PLI_Declare_Initial extends TokenSequence
 	{
 		public @S(10) PLI_KeywordChoice INITIAL = new PLI_KeywordChoice("INITIAL", "INIT");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<PLI_Expression,PunctuationComma> exprs;
+		public @S(30) SeparatedList<PLI_Expression, PunctuationComma> exprs;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static class PLI_Declare_Size extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<PLI_Declare_Size_OneDimension,PunctuationComma> dims;
+		public @S(20) SeparatedList<PLI_Declare_Size_OneDimension, PunctuationComma> dims;
 		public @S(30) PunctuationRightParen rightParen;
-		
+
 		public static class PLI_Declare_Size_OneDimension extends TokenChooser
 		{
 			public @CHOICE static class PLI_ParenStar extends TokenSequence
 			{
 				public @S(10) PunctuationStar star;
 			}
-	
+
 			public @CHOICE static class PLI_Declare_Array extends TokenSequence
 			{
 				public @S(10) PLI_Expression exprFrom;
 				public @S(20) PunctuationColon colon;
 				public @S(30) PLI_Expression exprTo;
 			}
-			
+
 			public @CHOICE static class PLI_Declare_Bounds_Array extends TokenSequence
 			{
 				public @S(10) PLI_Keyword LBOUND = new PLI_Keyword("LBOUND");
@@ -113,7 +112,7 @@ public class PLI_Declaration extends TokenSequence
 				public @S(90) PLI_Identifier_Reference var2;
 				public @S(100) @OPT PLI_Declare_Array_Dim dim2;
 				public @S(110) PunctuationRightParen rightParen2;
-				
+
 				public static class PLI_Declare_Array_Dim extends TokenSequence
 				{
 					public @S(10) PunctuationComma comma;
@@ -122,14 +121,15 @@ public class PLI_Declaration extends TokenSequence
 			}
 		}
 	}
-	
+
 	public static class PLI_Declare_Character extends TokenSequence
 	{
-		public @S(10) PLI_KeywordChoice CHARACTER = new PLI_KeywordChoice(new String[]
-				{ "CHAR", "CHARACTER" } );
+		public @S(10) PLI_KeywordChoice CHARACTER = new PLI_KeywordChoice(new String[] {
+				"CHAR", "CHARACTER"
+		});
 		public @S(20) @OPT PLI_Declare_Character_Size size;
 		public @S(30) @OPT PLI_Keyword VARYING = new PLI_Keyword("VARYING");
-		
+
 		public static class PLI_Declare_Character_Size extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;

@@ -16,7 +16,7 @@ public class Eaglish_Return_Statement extends TokenSequence implements EagleRunn
 	public @S(10) Eaglish_Keyword RETURN = new Eaglish_Keyword("RETURN");
 	public @S(20) Eaglish_Expression expr;
 	public @S(30) Eaglish_EndOfLine eoln;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

@@ -18,39 +18,39 @@ import com.eagle.tokens.TokenSequence;
 public class PHP_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String PHP = "PHP";
-	
+
 	public PHP_Program()
 	{
 		super(PHP, new PHP_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://www.php.net/manual/en/";
 	}
-	
+
 	public @S(10) @OPT @SYNTAX(HTML_Syntax.class) HTML_DocType docType;
 	public @S(20) TokenList<PHP_Entry> entries;
-	
+
 	public static class PHP_Entry extends TokenChooser
 	{
 		public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Program html;
 		public @CHOICE PHP_Section php;
 		public @LAST PHP_IfBlock ifBlock;
 	}
-	
+
 	public static class PHP_StartTag extends TokenSequence
 	{
 		public @S(10) HTML_Punctuation startTag = new HTML_Punctuation("<?");
 		public @S(20) @OPT HTML_Keyword php = new HTML_Keyword("php");
 	}
-	
+
 	public static class PHP_EndTag extends TokenSequence
 	{
 		public @S(10) HTML_Punctuation endTag = new HTML_Punctuation("?>");
 	}
-	
+
 	public static class PHP_Section extends TokenSequence
 	{
 		public @S(10) PHP_StartTag startTag;

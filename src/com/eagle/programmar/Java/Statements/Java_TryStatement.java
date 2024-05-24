@@ -35,7 +35,7 @@ public class Java_TryStatement extends TokenSequence implements EagleScopeInterf
 	public @S(70) @OPT TokenList<Java_Comment> comments;
 	public @S(80) @OPT TokenList<Java_CatchBlock> catchBlocks;
 	public @S(90) @OPT Java_FinallyBlock finallyBlock;
-	
+
 	public static class Java_CatchBlock extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword CATCH = new Java_Keyword("catch");
@@ -46,27 +46,27 @@ public class Java_TryStatement extends TokenSequence implements EagleScopeInterf
 		public @S(60) Java_Identifier id;
 		public @S(70) @NOSPACE PunctuationRightParen rightParen;
 		public @S(80) Java_Statement catchStatement;
-		
+
 		public static class Java_MoreExceptions extends TokenSequence
 		{
 			public @S(10) Java_Punctuation vertBar = new Java_Punctuation('|');
 			public @S(20) Java_Type jtype;
 		}
 	}
-	
+
 	public static class Java_FinallyBlock extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword FINALLY = new Java_Keyword("finally");
 		public @S(20) Java_Statement finallyStatement;
 	}
-	
+
 	public static class Java_TryResources extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Java_TryResource resource;
 		public @S(30) @OPT TokenList<Java_TryMoreResources> more;
 		public @S(40) PunctuationRightParen rightParen;
-		
+
 		public static class Java_TryResource extends TokenSequence
 		{
 			public @S(10) @OPT Java_Keyword FINAL = new Java_Keyword("final");
@@ -74,16 +74,16 @@ public class Java_TryStatement extends TokenSequence implements EagleScopeInterf
 			public @S(30) Java_Variable_Definition id;
 			public @S(40) Java_DataInitialValue initialValue;
 		}
-		
+
 		public static class Java_TryMoreResources extends TokenSequence
 		{
 			public @S(10) PunctuationSemicolon semicolon;
 			public @S(20) @OPT Java_TryResource resource;
 		}
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-	
+
 	@Override
 	public EagleScope getScope()
 	{

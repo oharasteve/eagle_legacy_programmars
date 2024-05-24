@@ -12,7 +12,7 @@ public class CMacro_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public CMacro_PunctuationChoice(String... puncts)
 	{
 		super(puncts);

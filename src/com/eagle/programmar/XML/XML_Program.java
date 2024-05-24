@@ -25,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 public class XML_Program extends EagleLanguage
 {
 	public static final String XML = "XML";
-	
+
 	public XML_Program()
 	{
 		super(XML, new XML_Syntax());
@@ -38,11 +38,11 @@ public class XML_Program extends EagleLanguage
 	}
 
 	public @S(10) TokenList<XML_Element> elements;
-		
+
 	public static class XML_Element extends TokenChooser
 	{
 		public @CHOICE XML_Header header;
-		
+
 		public @CHOICE HTML_Comment comment;
 		public @CHOICE HTML_Text text;
 		public @CHOICE HTML_DocType docType;
@@ -54,7 +54,7 @@ public class XML_Program extends EagleLanguage
 		public @LAST @SYNTAX(Django_Syntax.class) Django_AutoEscapeControl autoEscape;
 		public @LAST @SYNTAX(Django_Syntax.class) Django_Control dj_control;
 		public @LAST @SYNTAX(Django_Syntax.class) Django_Insert dj_insert;
-		
+
 		public @CHOICE static class XML_TagElement extends TokenSequence
 		{
 			public @S(10) XML_StartTag startTag;
@@ -62,7 +62,7 @@ public class XML_Program extends EagleLanguage
 			public @S(30) XML_EndTag endTag;
 		}
 	}
-	
+
 	public static class XML_CombinedTag extends TokenSequence
 	{
 		public @S(10) @NEWLINE HTML_Punctuation startTag = new HTML_Punctuation('<');
@@ -88,9 +88,9 @@ public class XML_Program extends EagleLanguage
 		public @S(30) @NOSPACE XML_Identifier tag;
 		public @S(40) @NOSPACE HTML_Punctuation endTag = new HTML_Punctuation('>');
 	}
-	
+
 	public static class XML_Identifier extends TokenSequence
 	{
-		public @S(10) SeparatedList<HTML_Identifier,PunctuationPeriod> tag;
+		public @S(10) SeparatedList<HTML_Identifier, PunctuationPeriod> tag;
 	}
 }

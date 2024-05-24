@@ -9,13 +9,13 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 public class Java_Syntax extends EagleSyntax
 {
 	public static boolean isCaseSensitive = true;
-	
+
 	@Override
 	public String syntaxId()
 	{
 		return "Java";
 	}
-	
+
 	public Java_Syntax()
 	{
 		_isCaseSensitive = isCaseSensitive;
@@ -23,11 +23,12 @@ public class Java_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_commentInstance = new Java_Comment();
 		_punctuationExceptions = new String[] {
-				"//", "/*", "!=", "<=", "==", ">=", "...", "++", "--", "||", "&&", "::", "->" };
-		
+				"//", "/*", "!=", "<=", "==", ">=", "...", "++", "--", "||", "&&", "::", "->"
+		};
+
 		addReservedWords(reservedWords);
 	}
-	
+
 	// From https://www.geeksforgeeks.org/list-of-all-java-keywords/
 	private static String[] reservedWords = new String[] {
 			"abstract",

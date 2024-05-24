@@ -14,17 +14,17 @@ public class PLI_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public PLI_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		if (rec.charAt(_currentChar) != '/') return false;
 		return super.possibleCommentPair2(lines, rec, "/*", "*/");

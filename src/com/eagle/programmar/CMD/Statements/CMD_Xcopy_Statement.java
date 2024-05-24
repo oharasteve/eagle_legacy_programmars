@@ -19,16 +19,15 @@ public class CMD_Xcopy_Statement extends TokenSequence
 	public @S(20) CMD_Literal source;
 	public @S(30) CMD_Literal target;
 	public @S(40) @OPT TokenList<CMD_XcopyOption> options;
-	
+
 	public static class CMD_XcopyOption extends TokenChooser
 	{
 		public @CHOICE static class Powershell_XcopyOptionLetter extends TokenSequence
 		{
 			public @S(10) PunctuationSlash slash;
-			public @S(20) CMD_KeywordChoice OPT = new CMD_KeywordChoice(
-					"D", "E", "F", "H", "I", "R", "V", "Y");
+			public @S(20) CMD_KeywordChoice OPT = new CMD_KeywordChoice("D", "E", "F", "H", "I", "R", "V", "Y");
 		}
-		
+
 		public @CHOICE static class CMD_XcopyOptionExclude extends TokenSequence
 		{
 			public @S(10) PunctuationSlash slash;

@@ -12,7 +12,7 @@ public class Javascript_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Javascript_KeywordChoice(String... words)
 	{
 		super(words);

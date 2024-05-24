@@ -31,73 +31,54 @@ public class Lisp_SExpr extends TokenChooser
 	public @CHOICE Lisp_Character character;
 	public @CHOICE Lisp_Comment comment;
 	public @CHOICE Lisp_Function function;
-	
-	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(
-			"+",
-			"++",
-			"+++",
-			"-",
-			"*",
-			"**",
-			"***",
-			"/",
-			"//",
-			"///",
-			"1+",
-			"1-",
-			".",
-			"?",
-			">",
-			">=",
-			"=",
-			"/=",
-			"<",
-			"<=");
-	
+
+	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice("+", "++", "+++", "-", "*", "**", "***",
+			"/", "//", "///", "1+", "1-", ".", "?", ">", ">=", "=", "/=", "<", "<=");
+
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation ampersand = new Lisp_Punctuation('&');
 		public @S(20) Lisp_SExpr expr;
 	}
-	
+
 	public @CHOICE static class Lisp_Colon extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) Lisp_SExpr expr;
 	}
-	
+
 	public @CHOICE static class Lisp_Comma extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT Lisp_Punctuation at = new Lisp_Punctuation('@');
 		public @S(30) Lisp_SExpr expr;
 	}
-	
+
 	public @CHOICE static class Lisp_Hash extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation hash = new Lisp_Punctuation('#');
 		public @S(20) Lisp_SExpr expr;
 	}
-	
+
 	public @CHOICE static class Lisp_Quote extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation quote = new Lisp_Punctuation('\'');
 		public @S(20) Lisp_SExpr expr;
 	}
-	
+
 	public @CHOICE static class Lisp_Tick extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation tick = new Lisp_Punctuation('`');
 		public @S(20) Lisp_SExpr expr;
 	}
-	
+
 	public @CHOICE static class Lisp_List extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT TokenList<Lisp_SExpr> exprs;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public @CHOICE static class Lisp_CharString extends TokenSequence
 	{
 		public @S(10) Lisp_KeywordChoice charString = new Lisp_KeywordChoice("char", "string");
@@ -106,7 +87,7 @@ public class Lisp_SExpr extends TokenChooser
 		public @S(40) @OPT Lisp_Punctuation greater = new Lisp_Punctuation('>');
 		public @S(50) @OPT PunctuationEquals equals;
 	}
-	
+
 	public @CHOICE static class Lisp_doLetProg extends TokenSequence
 	{
 		public @S(10) Lisp_KeywordChoice doLetProg = new Lisp_KeywordChoice("do", "let", "prog");

@@ -45,7 +45,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 			public @S(50) @OPT COBOL_ProgramId programId;
 		}
 	}
-	
+
 	public static class COBOL_ProgramId extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword PROGRAMID = new COBOL_Keyword("PROGRAM-ID");
@@ -54,7 +54,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 		public @S(40) @OPT COBOL_Program_Subname subId;
 		public @S(50) @OPT PunctuationPeriod dot2;
 	}
-	
+
 	public static class COBOL_IdentificationEntry extends TokenChooser
 	{
 		public @CHOICE COBOL_SpecialNames specialNames;
@@ -62,18 +62,18 @@ public class COBOL_IdentificationDivision extends TokenSequence
 
 		public @CHOICE static class COBOL_IdentificationSimple extends TokenSequence
 		{
-			public @S(10) COBOL_KeywordChoice entryWord = new COBOL_KeywordChoice(
-					"AUTHOR", "INSTALLATION", "DATE-WRITTEN", "DATE-COMPILED", "SECURITY");
+			public @S(10) COBOL_KeywordChoice entryWord = new COBOL_KeywordChoice("AUTHOR", "INSTALLATION",
+					"DATE-WRITTEN", "DATE-COMPILED", "SECURITY");
 			public @S(20) @OPT PunctuationPeriod dot;
 			public @S(30) TokenList<COBOL_CommentToEndOfLine> comments;
 		}
-		
+
 		public @CHOICE static class COBOL_IdentificationRepository extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword REPOSITORY = new COBOL_Keyword("REPOSITORY");
 			public @S(20) PunctuationPeriod dot;
 			public @S(30) TokenList<COBOL_RepositoryEntry> entries;
-			
+
 			public static class COBOL_RepositoryEntry extends TokenSequence
 			{
 				public @S(10) COBOL_KeywordChoice CLASS = new COBOL_KeywordChoice("CLASS", "ENUM");
@@ -83,13 +83,13 @@ public class COBOL_IdentificationDivision extends TokenSequence
 				public @S(50) @OPT PunctuationPeriod dot;
 			}
 		}
-		
+
 		public @CHOICE static class COBOL_IdentificationClassControl extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword CLASSCONTROL = new COBOL_Keyword("CLASS-CONTROL");
 			public @S(20) PunctuationPeriod dot;
 			public @S(30) TokenList<COBOL_IdentificationClassEntry> entries;
-			
+
 			public static class COBOL_IdentificationClassEntry extends TokenSequence
 			{
 				public @S(10) COBOL_Identifier_Reference id;
@@ -100,7 +100,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 			}
 		}
 	}
-	
+
 	public static class COBOL_Program_Subname extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;

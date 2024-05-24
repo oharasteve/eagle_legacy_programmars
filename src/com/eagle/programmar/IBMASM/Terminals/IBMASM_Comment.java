@@ -14,7 +14,7 @@ public class IBMASM_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public IBMASM_Comment(String comment)
 	{
 		super(comment);
@@ -26,7 +26,7 @@ public class IBMASM_Comment extends TerminalCommentToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (nc < 1) return false;
-		
+
 		/* Is it a comment? Star in column 1 means yes */
 		if (rec.charAt(0) == '*')
 		{

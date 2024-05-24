@@ -28,13 +28,13 @@ public class CSharp_TryStatement extends TokenSequence implements EagleScopeInte
 	public @S(50) @OPT TokenList<CSharp_Comment> comments;
 	public @S(60) @OPT TokenList<CSharp_CatchBlock> catchBlocks;
 	public @S(70) @OPT CSharp_FinallyBlock finallyBlock;
-	
+
 	public static class CSharp_CatchBlock extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword CATCH = new CSharp_Keyword("catch");
 		public @S(20) @OPT CSharp_CatchWhat catchWhat;
 		public @S(30) CSharp_Statement catchStatement;
-		
+
 		public static class CSharp_CatchWhat extends TokenSequence
 		{
 			public @S(10) @NOSPACE PunctuationLeftParen leftParen;
@@ -43,13 +43,13 @@ public class CSharp_TryStatement extends TokenSequence implements EagleScopeInte
 			public @S(40) @NOSPACE PunctuationRightParen rightParen;
 		}
 	}
-	
+
 	public static class CSharp_FinallyBlock extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword FINALLY = new CSharp_Keyword("finally");
 		public @S(20) CSharp_Statement finallyStatement;
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
 
 	@Override

@@ -23,16 +23,16 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	public @S(20) C_VariableIdentifier firstId;
 	public @S(30) @OPT TokenList<C_ExtendedIdentifier> moreIds;
 	public @S(40) @OPT TokenList<C_Subscript> subscript;
-	
+
 	public static class C_VariableStar extends TokenSequence
 	{
 		public @S(10) PunctuationStar star;
 	}
-	
+
 	public static class C_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE C_Identifier_Reference id;
-		
+
 		public @CHOICE static class C_CastedVariable extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen1;
@@ -65,13 +65,13 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 			public @S(10) PunctuationPeriod dot;
 			public @S(20) C_Identifier_Reference id;
 		}
-		
+
 		public @CHOICE static class C_ArrowIdentifier extends TokenSequence
 		{
 			public @S(10) C_Punctuation arrow = new C_Punctuation("->");
 			public @S(20) C_Identifier_Reference id;
 		}
-		
+
 		public @CHOICE static class C_ColonColonIdentifier extends TokenSequence
 		{
 			public @S(10) C_Punctuation colonColon = new C_Punctuation("::");

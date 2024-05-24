@@ -10,8 +10,8 @@ public class Powershell_VerbNoun extends Powershell_Identifier
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! super.parse(lines)) return false;
-		
+		if (!super.parse(lines)) return false;
+
 		// Must have exactly one hyphen and cannot be at either end
 		int nc = _id.length();
 		boolean foundHyphen = false;
@@ -20,8 +20,8 @@ public class Powershell_VerbNoun extends Powershell_Identifier
 			char ch = _id.charAt(i);
 			if (ch == '-')
 			{
-				if (i == 0 || i == nc-1) return false;	// Cannot be at the ends
-				if (foundHyphen) return false;			// Can only have one
+				if (i == 0 || i == nc - 1) return false; // Cannot be at the ends
+				if (foundHyphen) return false; // Can only have one
 				foundHyphen = true;
 			}
 		}

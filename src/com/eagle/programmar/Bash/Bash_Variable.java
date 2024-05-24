@@ -14,10 +14,10 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Bash_Variable extends TokenSequence implements EagleRunnable
 {
-	public @S(10) @OPT Bash_Punctuation dollar = new Bash_Punctuation("$"); 
+	public @S(10) @OPT Bash_Punctuation dollar = new Bash_Punctuation("$");
 	public @S(20) Bash_Identifier_Reference id;
 	public @S(30) @OPT Bash_Subscript subscript;
-	
+
 	public static class Bash_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;

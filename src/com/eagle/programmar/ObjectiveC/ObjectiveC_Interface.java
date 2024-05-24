@@ -32,20 +32,20 @@ public class ObjectiveC_Interface extends TokenSequence
 	public @S(60) @OPT TokenList<ObjectiveC_InterfaceElement> elements;
 	public @S(70) C_Punctuation at2 = new C_Punctuation("@");
 	public @S(80) C_Keyword END = new C_Keyword("end");
-	
+
 	public static class ObjectiveC_InterfaceParent extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) CPlus_Class_Reference parent;
 	}
-	
+
 	public static class ObjectiveC_InterfaceParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT CPlus_Class_Reference cls;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-		
+
 	public static class ObjectiveC_InterfaceElement extends TokenChooser
 	{
 		public @CHOICE static class ObjectiveC_InterfaceElementBraces extends TokenSequence
@@ -54,14 +54,14 @@ public class ObjectiveC_Interface extends TokenSequence
 			public @S(20) @OPT ObjectiveC_InterfacePackage pack;
 			public @S(30) @OPT TokenList<C_Data> data;
 			public @S(40) PunctuationRightBrace rightBrace;
-			
+
 			public static class ObjectiveC_InterfacePackage extends TokenSequence
 			{
 				public @S(10) C_Punctuation at = new C_Punctuation("@");
 				public @S(20) C_Keyword PACKAGE = new C_Keyword("package");
 			}
 		}
-		
+
 		public @CHOICE static class ObjectiveC_InterfaceElementPlusMinus extends TokenSequence
 		{
 			public @S(10) C_PunctuationChoice dash = new C_PunctuationChoice("-", "+");
@@ -71,7 +71,7 @@ public class ObjectiveC_Interface extends TokenSequence
 			public @S(50) C_Variable_Definition var;
 			public @S(60) @OPT ObjectiveC_InterfaceElementType elementType;
 			public @S(70) PunctuationSemicolon semiColon;
-			
+
 			public static class ObjectiveC_InterfaceElementType extends TokenSequence
 			{
 				public @S(10) PunctuationColon colon;

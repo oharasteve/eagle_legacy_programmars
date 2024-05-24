@@ -22,19 +22,19 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	public @S(10) CSharp_TypeName typeName;
 	public @S(20) @OPT CSharp_GenericType genericType;
 	public @S(30) @OPT TokenList<CSharp_ArrayType> arrayTypes;
-	public @S(40) @OPT CSharp_Punctuation questionMark = new CSharp_Punctuation("?");	// Nullable
-	
+	public @S(40) @OPT CSharp_Punctuation questionMark = new CSharp_Punctuation("?"); // Nullable
+
 	public static class CSharp_ArrayType extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationLeftBracket leftBracket;
 		public @S(20) @OPT @NOSPACE PunctuationComma comma;
 		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static class CSharp_GenericType extends TokenSequence
 	{
 		public @S(10) CSharp_Punctuation lessThan = new CSharp_Punctuation('<');
-		public @S(20) @OPT @NOSPACE SeparatedList<CSharp_Type,PunctuationComma> subType;
+		public @S(20) @OPT @NOSPACE SeparatedList<CSharp_Type, PunctuationComma> subType;
 		public @S(30) @NOSPACE CSharp_Punctuation greaterThan = new CSharp_Punctuation('>');
 	}
 
@@ -48,13 +48,13 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			public @S(30) @OPT CSharp_ExtendsType extendsType;
 
 			public @S(40) @OPT TokenList<CSharp_MoreIds> moreIds;
-			
+
 			public static class CSharp_MoreIds extends TokenSequence
 			{
 				public @S(10) @NOSPACE PunctuationPeriod dot;
 				public @S(20) @NOSPACE CSharp_TypeName nextId;
 			}
-			
+
 			public static class CSharp_NamespaceId extends TokenSequence
 			{
 				public @S(10) CSharp_Identifier_Reference namespace;
@@ -62,35 +62,17 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			}
 		}
 
-		public @CHOICE CSharp_KeywordChoice primitive = new CSharp_KeywordChoice(
-				"auto",
-				"bool",
-				"boolean",
-				"byte",
-				"char",
-				"class",
-				"decimal",
-				"double",
-				"float",
-				"int",
-				"long",
-				"object",
-				"sbyte",
-				"short",
-				"string",
-				"String",
-				"ulong",
-				"ushort",
-				"void"
-		);
-		
+		public @CHOICE CSharp_KeywordChoice primitive = new CSharp_KeywordChoice("auto", "bool", "boolean", "byte",
+				"char", "class", "decimal", "double", "float", "int", "long", "object", "sbyte", "short", "string",
+				"String", "ulong", "ushort", "void");
+
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{
 			public @S(10) CSharp_Punctuation question = new CSharp_Punctuation('?');
 			public @S(20) @OPT CSharp_ExtendsType extendsType;
 		}
 	}
-	
+
 	public static class CSharp_ExtendsType extends TokenSequence
 	{
 		public @S(10) CSharp_Keyword EXTENDS = new CSharp_Keyword("extends");

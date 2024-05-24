@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.SQL;
 
-public class SQL_Reserved_Words {
+public class SQL_Reserved_Words
+{
 	// https://www.ibm.com/docs/en/psfa/7.2.1?topic=keywords-sql-common-reserved-words
-	public static final String[] RESERVED_WORDS = new String[]
-	{
+	public static final String[] RESERVED_WORDS = new String[] {
 			"ABORT",
 			"ALL",
 			"ALLOCATE",
@@ -30,10 +30,10 @@ public class SQL_Reserved_Words {
 			"COLLATE",
 			"COLLATION",
 			"COLUMN",
-			"COMMIT",		// I added 
+			"COMMIT", // I added
 			"CONSTRAINT",
 			"COPY",
-			"CREATE",		// I added
+			"CREATE", // I added
 			"CROSS",
 			"CURRENT",
 			"CURRENT_CATALOG",
@@ -56,7 +56,7 @@ public class SQL_Reserved_Words {
 			"DISTRIBUTE",
 			"DO",
 			"ELSE",
-			//"END",		// Not really Reserved
+			// "END", // Not really Reserved
 			"EXCEPT",
 			"EXCLUDE",
 			"EXISTS",
@@ -88,7 +88,7 @@ public class SQL_Reserved_Words {
 			"INTERSECT",
 			"INTERVAL",
 			"INTO",
-			"JOIN",			// I added
+			"JOIN", // I added
 			"LEADING",
 			"LEFT",
 			"LIKE",
@@ -109,7 +109,7 @@ public class SQL_Reserved_Words {
 			"NVL",
 			"NVL2",
 			"OFF",
-			// "OFFSET",		// Used as a field name
+			// "OFFSET", // Used as a field name
 			"OLD",
 			"ON",
 			"ONLINE",
@@ -141,7 +141,7 @@ public class SQL_Reserved_Words {
 			"TABLE",
 			"THEN",
 			"TIES",
-			// "TIME",		// Used as a field name
+			// "TIME", // Used as a field name
 			"TIMESTAMP",
 			"TO",
 			"TRAILING",

@@ -16,7 +16,7 @@ public class Scala_Object extends TokenSequence implements EagleRunnable
 	public @S(20) Scala_Object_Definition obj;
 	public @S(30) @OPT Scala_ObjectExtends objExtends;
 	public @S(40) Scala_BlockStatement statement;
-	
+
 	public static class Scala_ObjectExtends extends TokenSequence
 	{
 		public @S(10) Scala_Keyword EXTENDS = new Scala_Keyword("extends");

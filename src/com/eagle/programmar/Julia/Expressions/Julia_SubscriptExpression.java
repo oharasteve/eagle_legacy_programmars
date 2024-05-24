@@ -19,7 +19,7 @@ public class Julia_SubscriptExpression extends PrecedenceOperator
 	public @S(40) @OPT PunctuationColon colon;
 	public @S(50) @OPT Julia_SubscriptionEnd subscr2;
 	public @S(60) PunctuationRightBracket rightBracket;
-	
+
 	public static class Julia_SubscriptionEnd extends TokenChooser
 	{
 		public @CHOICE Julia_Keyword END = new Julia_Keyword("end");

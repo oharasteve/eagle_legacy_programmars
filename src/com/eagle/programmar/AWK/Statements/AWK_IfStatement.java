@@ -23,14 +23,14 @@ public class AWK_IfStatement extends TokenSequence
 	public @S(60) AWK_IfBlock block;
 	public @S(70) @OPT AWK_EndOfLine endOfLine;
 	public @S(80) @OPT AWK_IfElse ifelse;
-	
+
 	public static class AWK_IfElse extends TokenSequence
 	{
 		public @S(10) AWK_Keyword ELSE = new AWK_Keyword("else");
 		public @S(20) @OPT AWK_EndOfLine eoln;
 		public @S(30) AWK_IfBlock block;
 	}
-	
+
 	public static class AWK_IfBlock extends TokenChooser
 	{
 		public @CHOICE AWK_Statement stmt;

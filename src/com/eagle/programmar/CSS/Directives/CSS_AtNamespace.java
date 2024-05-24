@@ -20,11 +20,11 @@ public class CSS_AtNamespace extends TokenSequence
 	public @S(20) CSS_Keyword NAMESPACE = new CSS_Keyword("namespace");
 	public @S(30) CSS_AtNameSpaceArg arg;
 	public @S(40) PunctuationSemicolon semicolon;
-	
+
 	public static class CSS_AtNameSpaceArg extends TokenChooser
 	{
 		public @CHOICE CSS_Literal literal;
-		
+
 		public @CHOICE static class CSS_AtNameSpaceURL extends TokenSequence
 		{
 			public @S(10) @OPT CSS_Identifier name;

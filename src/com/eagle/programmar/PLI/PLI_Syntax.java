@@ -12,7 +12,7 @@ public class PLI_Syntax extends EagleSyntax
 	{
 		return "PLI";
 	}
-	
+
 	public PLI_Syntax()
 	{
 		_isCaseSensitive = false;

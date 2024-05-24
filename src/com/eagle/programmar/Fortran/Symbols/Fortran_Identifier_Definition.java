@@ -5,7 +5,7 @@ package com.eagle.programmar.Fortran.Symbols;
 
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Fortran_Identifier_Definition  extends Fortran_Identifier implements DefinitionInterface
+public abstract class Fortran_Identifier_Definition extends Fortran_Identifier implements DefinitionInterface
 {
 
 }

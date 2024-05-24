@@ -31,7 +31,7 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT Javascript_Label label;
 	public @S(20) Javascript_RealStatement statement;
-	
+
 	public static class Javascript_Label extends TokenSequence
 	{
 		public @S(10) Javascript_Label_Definition label;
@@ -42,33 +42,33 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 	{
 		public @CHOICE Javascript_Data data;
 		public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
-		
+
 		public @FIRST static class Javascript_StatementBlock extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBrace leftBrace;
 			public @S(20) @OPT TokenList<Javascript_StatementOrComment> statements;
 			public @S(30) PunctuationRightBrace rightBrace;
 		}
-		
+
 		public @LAST static class Javascript_ExpressionStmt extends TokenSequence implements EagleRunnable
 		{
 			public @S(10) Javascript_Expression expression;
 			public @S(20) @OPT TokenList<Javascript_MoreStatements> moreStatements;
 			public @S(30) @OPT PunctuationSemicolon semicolon;
-				
+
 			public static class Javascript_MoreStatements extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;
 				public @S(20) Javascript_Statement statement;
 			}
-						
+
 			@Override
 			public void interpret(EagleInterpreter interpreter)
 			{
 				interpreter.tryToInterpret(expression);
 			}
 		}
-		
+
 		public @CHOICE Javascript_BreakStatement breakStatement;
 		public @CHOICE Javascript_ContinueStatement continueStatement;
 		public @CHOICE Javascript_DoStatement doStatement;
@@ -81,10 +81,10 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 		public @CHOICE Javascript_ThrowStatement throwStatement;
 		public @CHOICE Javascript_TryStatement tryStatement;
 		public @CHOICE Javascript_WhileStatement whileStatement;
-		
-		//public @LAST Javascript_UnparsedStatement unparsedStatement;
+
+		// public @LAST Javascript_UnparsedStatement unparsedStatement;
 	}
-	
+
 	public static class Javascript_StatementOrComment extends TokenChooser
 	{
 		public @CHOICE Javascript_Statement statement;

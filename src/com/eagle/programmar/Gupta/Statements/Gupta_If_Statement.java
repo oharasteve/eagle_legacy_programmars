@@ -15,7 +15,7 @@ public class Gupta_If_Statement extends TokenSequence
 	public @S(20) Gupta_Condition condition;
 	public @S(30) TokenList<Gupta_Statement> thenStatements;
 	public @S(40) @OPT Gupta_Else_Statement elseClause;
-	
+
 	public static class Gupta_Else_Statement extends TokenSequence
 	{
 		public @S(10) Gupta_Keyword Else = new Gupta_Keyword("Else");

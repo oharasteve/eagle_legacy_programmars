@@ -12,7 +12,7 @@ public class IntelASM_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public IntelASM_KeywordChoice(String... words)
 	{
 		super(words);

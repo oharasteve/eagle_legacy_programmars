@@ -15,9 +15,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Algol68_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) SeparatedList<Algol68_Expression,PunctuationComma> expressions;
+	public @S(20) SeparatedList<Algol68_Expression, PunctuationComma> expressions;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

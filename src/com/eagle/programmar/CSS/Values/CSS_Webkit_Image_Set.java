@@ -19,13 +19,13 @@ public class CSS_Webkit_Image_Set extends TokenSequence
 	public @S(30) CSS_Webkit_Value piece;
 	public @S(40) @OPT TokenList<CSS_More_WebkitPieces> morePieces;
 	public @S(50) PunctuationRightParen rightParen;
-	
+
 	public static class CSS_Webkit_Value extends TokenSequence
 	{
 		public @S(10) CSS_Value url;
 		public @S(20) CSS_KeywordChoice factor = new CSS_KeywordChoice("1x", "2x", "3x");
 	}
-	
+
 	public static class CSS_More_WebkitPieces extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

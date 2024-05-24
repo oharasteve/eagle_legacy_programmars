@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class JavaP_MethodArgument extends TokenChooser
 {
 	public @CHOICE JavaP_Punctuation question = new JavaP_Punctuation('?');
-	
+
 	public @CHOICE static class JavaP_MethodArg extends TokenSequence
 	{
 		public @S(10) @OPT JavaP_QuestionExtends question;
@@ -24,7 +24,7 @@ public class JavaP_MethodArgument extends TokenChooser
 		public @S(30) JavaP_QualifiedName name;
 		public @S(40) @OPT JavaP_OneClassGeneric generic;
 		public @S(50) @OPT JavaP_EmptySubscript subscript;
-		
+
 		public static class JavaP_QuestionExtends extends TokenSequence
 		{
 			public @S(10) JavaP_Punctuation question = new JavaP_Punctuation('?');

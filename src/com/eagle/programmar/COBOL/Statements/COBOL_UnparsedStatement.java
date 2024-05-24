@@ -19,18 +19,21 @@ import com.eagle.tokens.UnparsedElement;
 
 public class COBOL_UnparsedStatement extends UnparsedElement
 {
-	private static EagleSyntax SYNTAX = new COBOL_Fixed_Format_Syntax();	// Any COBOL syntax works, just need reserved words
+	private static EagleSyntax SYNTAX = new COBOL_Fixed_Format_Syntax(); // Any COBOL syntax works, just need reserved
+																			// words
 	static String[] KEYWORDS = SYNTAX.allReservedWords();
-	static String[] PUNCTS = new String[] { "+", "-", "*", "/", ",", "(", ")" };
+	static String[] PUNCTS = new String[] {
+			"+", "-", "*", "/", ",", "(", ")"
+	};
 
 	@Override
 	public @SKIP TokenList<? extends AbstractToken> unparsedPieces()
 	{
 		return elements;
 	}
-	
+
 	public TokenList<COBOL_UnparsedElement> elements;
-	
+
 	public static class COBOL_UnparsedElement extends TokenChooser
 	{
 		public @CHOICE COBOL_Identifier_Reference id;

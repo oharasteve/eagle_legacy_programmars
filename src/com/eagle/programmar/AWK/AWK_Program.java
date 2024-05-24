@@ -16,12 +16,12 @@ import com.eagle.tokens.TokenSequence;
 public class AWK_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String AWK = "AWK";
-	
+
 	public AWK_Program()
 	{
 		super(AWK, new AWK_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -29,20 +29,20 @@ public class AWK_Program extends EagleLanguage implements EagleRunnable
 	}
 
 	public @S(10) TokenList<AWK_Element> elements;
-	
+
 	public static class AWK_Element extends TokenChooser
 	{
 		public @CHOICE AWK_Command command;
 		public @FIRST AWK_CommentLine comment;
 		public @CHOICE AWK_Function function;
 	}
-	
+
 	public static class AWK_CommentLine extends TokenSequence
 	{
 		public @S(10) AWK_Comment comment;
 		public @S(20) AWK_EndOfLine eoln;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -56,7 +56,7 @@ public class AWK_Program extends EagleLanguage implements EagleRunnable
 				interpreter._functionList.add(fn);
 			}
 		}
-		
+
 		// Second pass, execute the program
 		for (AWK_Element element : elements._elements)
 		{

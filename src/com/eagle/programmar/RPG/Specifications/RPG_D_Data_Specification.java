@@ -28,7 +28,7 @@ public abstract class RPG_D_Data_Specification extends TokenSequence
 	{
 		// Not available in RPG III
 	}
-	
+
 	public static class RPG_D_Data_Specification_IV extends RPG_D_Data_Specification
 	{
 		public RPG_D_Data_Specification_IV()
@@ -36,12 +36,11 @@ public abstract class RPG_D_Data_Specification extends TokenSequence
 			name = new RPG_Literal(7, 21);
 			externalDescription = new RPG_Keyword(22, 22, "E");
 			entryType = new RPG_KeywordChoice(23, 23, "S", "U");
-			definitionType = new RPG_KeywordChoice(24, 25,
-					"C", "DS", "PI", "PR", "S");
+			definitionType = new RPG_KeywordChoice(24, 25, "C", "DS", "PI", "PR", "S");
 			fromPosition = new RPG_Number(26, 32);
 			toPositionOrLength = new RPG_Number(33, 39);
-			dataType = new RPG_KeywordChoice(40, 40,
-					"A", "B", "C", "D", "F", "G", "I", "N", "O", "P", "S", "T", "U", "Z");
+			dataType = new RPG_KeywordChoice(40, 40, "A", "B", "C", "D", "F", "G", "I", "N", "O", "P", "S", "T", "U",
+					"Z");
 			decimalPosition = new RPG_Number(41, 42);
 			blank = new RPG_Blanks(43, 43);
 			keywords = new RPG_Literal(44, 80);

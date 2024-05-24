@@ -10,22 +10,21 @@ import com.eagle.programmar.Bash.Commands.Bash_Function;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-
 public class Bash_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String BASH = "Bash";
-	
+
 	public Bash_Program()
 	{
 		super(BASH, new Bash_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html";
 	}
-	
+
 	public @S(10) TokenList<Bash_Statement> statements;
 
 	@Override
@@ -41,7 +40,7 @@ public class Bash_Program extends EagleLanguage implements EagleRunnable
 				interpreter._functionList.add(fn);
 			}
 		}
-		
+
 		// Second pass, execute the program
 		for (Bash_Statement stmt : statements._elements)
 		{

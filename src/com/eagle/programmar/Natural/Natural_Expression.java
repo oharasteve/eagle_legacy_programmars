@@ -22,17 +22,18 @@ public class Natural_Expression extends PrecedenceChooser
 
 	public Natural_Expression()
 	{
-	    super(_operators);
-	    setOperators(_operators);
+		super(_operators);
+		setOperators(_operators);
 	}
 
 	public Natural_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -42,7 +43,7 @@ public class Natural_Expression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Natural_LiteralExpression literalExpression;
 	public @P(110) Natural_System_Variable system_Variable;
 	public @P(120) Natural_NegativeExpression negativeExpression;

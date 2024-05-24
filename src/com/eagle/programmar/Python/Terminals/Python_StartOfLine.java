@@ -18,7 +18,7 @@ public class Python_StartOfLine extends TerminalStartOfLine
 {
 	private static final String TAB = "  ";
 	private static final int TABLEN = TAB.length();
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -35,7 +35,7 @@ public class Python_StartOfLine extends TerminalStartOfLine
 
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
 				AbstractToken firstToken = tokenList.first();
-				if (! (firstToken instanceof Python_IfElif))
+				if (!(firstToken instanceof Python_IfElif))
 				{
 					// Find first non-comment statement
 					for (AbstractToken token : tokenList._elements)
@@ -44,12 +44,12 @@ public class Python_StartOfLine extends TerminalStartOfLine
 //						{
 //							if (_currentLine == token._currentLine) return false;	// Cannot have two SOLN's on the same line
 //						}
-						
+
 						if (token instanceof Python_Comment || token instanceof Python_CommentList)
 						{
-							continue;	// Doesn't matter what columns comments are in
+							continue; // Doesn't matter what columns comments are in
 						}
-	
+
 						if (token instanceof Python_Statement)
 						{
 							Python_Statement firstStmt = (Python_Statement) token;
@@ -58,7 +58,8 @@ public class Python_StartOfLine extends TerminalStartOfLine
 							{
 								Python_Statement_List stmtList = (Python_Statement_List) child;
 								Python_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
-								//if (_currentLine == otherStmt._currentLine) return false;	// Cannot have two SOLN's on the same line
+								// if (_currentLine == otherStmt._currentLine) return false; // Cannot have two
+								// SOLN's on the same line
 								if (_currentChar != otherStmt.getStartChar()) return false; /////// The KEY Line ///////
 								break;
 							}
@@ -73,17 +74,17 @@ public class Python_StartOfLine extends TerminalStartOfLine
 			}
 			parent = parent.getParent();
 		}
-		
+
 //		// This is an error -- the python statement was not inside a TokenList
 //		if (parent == null)
 //		{
 //			throw new RuntimeException("Never found the parent TokenList, at line " + _currentLine);
 //		}
 
-		foundIt(_currentLine, _currentChar-1);
+		foundIt(_currentLine, _currentChar - 1);
 		return true;
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -98,7 +99,7 @@ public class Python_StartOfLine extends TerminalStartOfLine
 				TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
 
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				if (tokenList.size() > 0 && ! (tokenList.first() instanceof Python_IfElif))
+				if (tokenList.size() > 0 && !(tokenList.first() instanceof Python_IfElif))
 				{
 					depth++;
 				}

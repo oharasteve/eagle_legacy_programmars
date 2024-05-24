@@ -10,5 +10,5 @@ import com.eagle.tokens.TokenSequence;
 public class CMacro_Pragma_Unroll extends TokenSequence
 {
 	public @S(10) CMacro_Keyword UNROLL = new CMacro_Keyword("unroll");
-	public @S(20) CMacro_Number what;	// 1 perhaps
+	public @S(20) CMacro_Number what; // 1 perhaps
 }

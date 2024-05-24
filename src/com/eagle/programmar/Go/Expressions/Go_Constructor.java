@@ -19,9 +19,9 @@ public class Go_Constructor extends PrimaryOperator
 {
 	public @S(10) Go_Variable className;
 	public @S(20) PunctuationLeftBrace leftBrace;
-	public @S(30) @OPT  @SYNTAX(Go_Multiline_Syntax.class) SeparatedList<Go_ConstructField,PunctuationComma> fields;
+	public @S(30) @OPT @SYNTAX(Go_Multiline_Syntax.class) SeparatedList<Go_ConstructField, PunctuationComma> fields;
 	public @S(40) PunctuationRightBrace rightBrace;
-	
+
 	public static class Go_ConstructField extends TokenSequence
 	{
 		public @S(10) Go_Field_Definition fieldName;

@@ -16,12 +16,12 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable
 	public @S(10) @DOC("#index-echo") Bash_Keyword ECHO = new Bash_Keyword("echo");
 	public @S(20) @OPT TokenList<Bash_EchoOption> options;
 	public @S(30) @OPT Bash_EchoWhat what;
-	
+
 	public static class Bash_EchoOption extends TokenChooser
 	{
 		public @CHOICE Bash_Keyword N = new Bash_Keyword("-n");
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

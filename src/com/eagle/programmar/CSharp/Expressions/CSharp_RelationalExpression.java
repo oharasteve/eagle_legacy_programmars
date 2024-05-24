@@ -22,16 +22,16 @@ public class CSharp_RelationalExpression extends PrecedenceOperator implements E
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "<" :
+		case "<":
 			interpreter.pushBool(leftValue < rightValue);
 			return;
-		case "<=" :
+		case "<=":
 			interpreter.pushBool(leftValue <= rightValue);
 			return;
-		case ">" :
+		case ">":
 			interpreter.pushBool(leftValue > rightValue);
 			return;
-		case ">=" :
+		case ">=":
 			interpreter.pushBool(leftValue >= rightValue);
 			return;
 		}

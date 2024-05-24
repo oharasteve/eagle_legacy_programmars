@@ -20,11 +20,11 @@ public class CMacro_Pragma_Message extends TokenSequence
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) SeparatedList<CMacro_PragmaMsg, PunctuationComma> codes;
 	public @S(50) PunctuationRightParen rightParen;
-	
+
 	public static class CMacro_PragmaMsg extends TokenChooser
 	{
 		public @CHOICE CMacro_Literal literal;
-		public @CHOICE CMacro_KeywordChoice UNDERFLOW =
-				new CMacro_KeywordChoice("UNDERFLOW", "FLOATOVERFL", "nosimpint");
+		public @CHOICE CMacro_KeywordChoice UNDERFLOW = new CMacro_KeywordChoice("UNDERFLOW", "FLOATOVERFL",
+				"nosimpint");
 	}
 }

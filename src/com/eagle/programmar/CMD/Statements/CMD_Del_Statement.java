@@ -15,7 +15,7 @@ public class CMD_Del_Statement extends TokenSequence
 	public @S(10) @DOC("del.mspx") CMD_Keyword DEL = new CMD_Keyword("del");
 	public @S(20) @OPT TokenList<CMD_Del_Option> opts;
 	public @S(30) TokenList<CMD_Argument> file;
-	
+
 	public static class CMD_Del_Option extends TokenChooser
 	{
 		public @CHOICE static class CMD_Del_Option_F extends TokenSequence

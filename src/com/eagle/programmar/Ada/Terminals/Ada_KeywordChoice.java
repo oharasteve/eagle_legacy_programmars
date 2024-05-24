@@ -12,7 +12,7 @@ public class Ada_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Ada_KeywordChoice(String... words)
 	{
 		super(words);

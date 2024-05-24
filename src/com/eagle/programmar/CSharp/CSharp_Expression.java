@@ -62,21 +62,22 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public CSharp_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public CSharp_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
 	// Terminals
-	
+
 	public @P(10) CSharp_HexNumber hex;
 	public @P(20) CSharp_Number number;
 	public @P(30) CSharp_Literal literal;
@@ -84,7 +85,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) CSharp_DotClass dotClass;
 	public @P(110) CSharp_CastExpression castExpression;
 	public @P(120) CSharp_ExpressionList expressionList;
@@ -110,7 +111,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(320) CSharp_Delegation delegation;
 	public @P(330) CSharp_LambdaBlock lambdaBlock;
 	public @P(340) CSharp_LambdaParameters lambdaParameters;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

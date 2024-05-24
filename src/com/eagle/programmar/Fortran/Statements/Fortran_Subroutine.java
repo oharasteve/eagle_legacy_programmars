@@ -21,12 +21,12 @@ public class Fortran_Subroutine extends TokenSequence
 	public @S(10) @DOC("6j4m0vnbg/index.html") Fortran_Keyword SUBROUTINE1 = new Fortran_Keyword("SUBROUTINE");
 	public @S(20) Fortran_Function_Definition fnName1;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Fortran_Variable_Reference,PunctuationComma> parameters;
+	public @S(40) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) Fortran_EOLN eoln1;
-	
+
 	public @S(70) TokenList<Fortran_Statement> statements;
-	
+
 	public @S(80) Fortran_Keyword END = new Fortran_Keyword("END");
 	public @S(90) Fortran_Keyword SUBROUTINE2 = new Fortran_Keyword("SUBROUTINE");
 	public @S(100) Fortran_Function_Reference fnName2;

@@ -16,13 +16,11 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 	public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Bash_RelOp operator;
 	public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Bash_RelOp extends TokenChooser
 	{
-		public @CHOICE Bash_PunctuationChoice strOp = new Bash_PunctuationChoice(
-				"==", "!=", "<", ">", "<=", ">=");
-		public @CHOICE Bash_KeywordChoice numOp = new Bash_KeywordChoice(
-				"-eq", "-ne", "-lt", "-gt", "-le", "-ge");
+		public @CHOICE Bash_PunctuationChoice strOp = new Bash_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+		public @CHOICE Bash_KeywordChoice numOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 	}
 
 	@Override
@@ -51,7 +49,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 			interpreter.pushBool(leftInt >= rightInt);
 			return;
 		default:
-			throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with integers");	
+			throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with integers");
 		}
 	}
 }

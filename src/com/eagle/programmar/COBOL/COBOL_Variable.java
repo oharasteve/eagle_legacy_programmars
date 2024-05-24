@@ -13,16 +13,14 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_Variable extends TokenChooser
 {
-	public @CHOICE COBOL_KeywordChoice KW = new COBOL_KeywordChoice(
-			"RETURN-CODE"
-	);
-	
+	public @CHOICE COBOL_KeywordChoice KW = new COBOL_KeywordChoice("RETURN-CODE");
+
 	public @CHOICE static class COBOL_UserVariable extends TokenSequence
 	{
 		public @S(10) COBOL_Modifiable_Identifier id;
 		public @S(20) @OPT TokenList<COBOL_Subscript> subscript;
 		public @S(30) @OPT TokenList<COBOL_OfVariable> ofList;
-	
+
 		public static class COBOL_OfVariable extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword OF = new COBOL_Keyword("OF");

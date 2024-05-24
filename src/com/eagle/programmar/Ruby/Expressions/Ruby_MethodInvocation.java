@@ -17,6 +17,6 @@ public class Ruby_MethodInvocation extends PrimaryOperator
 	public @S(10) Ruby_Variable methodName;
 	public @S(20) @OPT Ruby_Punctuation question = new Ruby_Punctuation("?");
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) @OPT SeparatedList<Ruby_Expression,PunctuationComma> argList;
+	public @S(40) @OPT SeparatedList<Ruby_Expression, PunctuationComma> argList;
 	public @S(50) PunctuationRightParen rightParen;
 }

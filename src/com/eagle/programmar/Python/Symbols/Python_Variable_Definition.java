@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Symbols;
 
-
 public class Python_Variable_Definition extends Python_Identifier_Definition
 {
 	@Override

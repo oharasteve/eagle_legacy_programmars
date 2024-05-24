@@ -17,7 +17,7 @@ public class JavaP_CodeExceptions extends TokenSequence
 	public @S(20) JavaP_Keyword TABLE = new JavaP_Keyword("table");
 	public @S(30) PunctuationColon colon;
 	public @S(40) JavaP_EndOfLine eoln1;
-	
+
 	public @S(50) JavaP_Keyword FROM = new JavaP_Keyword("from");
 	public @S(60) JavaP_Keyword TO = new JavaP_Keyword("to");
 	public @S(70) JavaP_Keyword TARGET = new JavaP_Keyword("target");
@@ -25,7 +25,7 @@ public class JavaP_CodeExceptions extends TokenSequence
 	public @S(90) JavaP_EndOfLine eoln2;
 
 	public @S(100) @OPT TokenList<JavaP_CodeExceptionEntry> entries;
-	
+
 	public static class JavaP_CodeExceptionEntry extends TokenSequence
 	{
 		public @S(10) JavaP_Number from;

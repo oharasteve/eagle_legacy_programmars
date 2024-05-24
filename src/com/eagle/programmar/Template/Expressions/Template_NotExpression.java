@@ -13,11 +13,11 @@ public class Template_NotExpression extends PrimaryOperator implements EagleRunn
 {
 	public @S(10) Template_Keyword NOT = new Template_Keyword("not");
 	public @S(20) Template_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

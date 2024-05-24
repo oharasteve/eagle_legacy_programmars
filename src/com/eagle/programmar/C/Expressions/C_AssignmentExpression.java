@@ -12,8 +12,8 @@ import com.eagle.tokens.PrecedenceOperator;
 public class C_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) C_Expression var = new C_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) C_PunctuationChoice equals = new C_PunctuationChoice(
-			"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
-	public @S(30) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;	// What the ...
+	public @S(20) C_PunctuationChoice equals = new C_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=",
+			">>>=", "&=", "^=", "|=");
+	public @S(30) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro; // What the ...
 	public @S(40) C_Expression rightAsg = new C_Expression(this, AllowedPrecedence.ATLEAST);
 }

@@ -29,37 +29,38 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public FSharp_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public FSharp_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
 	// Terminals
-	
+
 	public @P(10) FSharp_Number number;
 	public @P(20) FSharp_Literal literal;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
-	
+
 	public @P(100) FSharp_BracketBars bracketBars;
 	public @P(110) FSharp_Parens parens;
 	public @P(120) FSharp_FunctionCall functionCall;
 	public @P(130) FSharp_UnarySign unarySign;
 	public @P(140) FSharp_BuiltIn builtIn;
 	public @P(150) FSharp_VariableExpression variableExpression;
-	
+
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
-	
+
 	public @P(500) FSharp_SubscriptExpression subscriptExpression;
 	public @P(510) FSharp_Subfield subfield;
 	public @P(520) FSharp_Multiplicative_Expression multiplicative_Expression;

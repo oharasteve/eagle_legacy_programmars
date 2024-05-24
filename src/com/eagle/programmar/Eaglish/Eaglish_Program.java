@@ -18,12 +18,12 @@ import com.eagle.tokens.TokenSequence;
 public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String EAGLISH = "Eaglish";
-	
+
 	public Eaglish_Program()
 	{
 		super(EAGLISH, new Eaglish_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -34,16 +34,16 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 	public @S(10) @OPT TokenList<Eaglish_CommentEoln> comments1;
 	public @S(20) Eaglish_Prog prog;
 	public @S(30) @OPT TokenList<Eaglish_CommentEoln> comments2;
-	
+
 	public static class Eaglish_Prog extends TokenSequence
 	{
 		public @S(10) Eaglish_Keyword PROGRAM = new Eaglish_Keyword("PROGRAM");
 		public @S(20) Eaglish_Program_Identifier id;
 		public @S(30) Eaglish_EndOfLine eoln1;
-		
+
 		public @S(40) @OPT TokenList<Eaglish_Statement> statements;
-		
-		public @S(50) Eaglish_Keyword END_PROGRAM = new Eaglish_Keyword("END_PROGRAM"); 
+
+		public @S(50) Eaglish_Keyword END_PROGRAM = new Eaglish_Keyword("END_PROGRAM");
 		public @S(60) Eaglish_EndOfLine eoln2;
 	}
 
@@ -60,7 +60,7 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 				interpreter._functionList.add(fn);
 			}
 		}
-		
+
 		// Second pass, execute the program
 		for (Eaglish_Statement stmt : prog.statements._elements)
 		{

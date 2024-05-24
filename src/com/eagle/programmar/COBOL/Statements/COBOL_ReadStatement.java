@@ -19,7 +19,7 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 	public @S(30) @OPT COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
 	public @S(40) @OPT TokenList<COBOL_ReadClause> entries;
 	public @S(50) @OPT COBOL_Keyword ENDREAD = new COBOL_Keyword("END-READ");
-	
+
 	public static class COBOL_ReadClause extends TokenChooser
 	{
 		public @CHOICE COBOL_ReadInto into;
@@ -35,13 +35,13 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 		public @S(10) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
 		public @S(20) COBOL_Identifier_Reference var;
 	}
-	
+
 	public static class COBOL_ReadNext extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword NEXT = new COBOL_Keyword("NEXT");
 		public @S(20) @OPT COBOL_Keyword RECORD = new COBOL_Keyword("RECORD");
 	}
-	
+
 	public static class COBOL_ReadKey extends TokenSequence
 	{
 		public @S(10) @OPT COBOL_Keyword WITH = new COBOL_Keyword("WITH");
@@ -64,7 +64,7 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 		public @S(20) COBOL_Keyword END = new COBOL_Keyword("END");
 		public @S(30) TokenList<COBOL_Statement> endAction;
 	}
-	
+
 	public static class COBOL_ReadIgnoreLock extends TokenSequence
 	{
 		public @S(10) @OPT COBOL_Keyword WITH = new COBOL_Keyword("WITH");

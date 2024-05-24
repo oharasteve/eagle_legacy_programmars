@@ -20,8 +20,8 @@ public class CSharp_Operator extends TokenSequence
 	public @S(40) @OPT TokenList<CSharp_Comment> comment2;
 	public @S(50) CSharp_Type returnType;
 	public @S(60) CSharp_Keyword OPERATOR = new CSharp_Keyword("operator");
-	public @S(70) CSharp_PunctuationChoice minus = new CSharp_PunctuationChoice(
-			"+", "-", "<", ">", "<=", ">=", "==", "!=");
+	public @S(70) CSharp_PunctuationChoice minus = new CSharp_PunctuationChoice("+", "-", "<", ">", "<=", ">=", "==",
+			"!=");
 	public @S(80) @OPT CSharp_MethodParameters parameters;
 	public @S(90) @NEWLINE CSharp_MethodBody body;
 }

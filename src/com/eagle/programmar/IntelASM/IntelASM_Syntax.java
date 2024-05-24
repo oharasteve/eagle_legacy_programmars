@@ -12,20 +12,18 @@ public class IntelASM_Syntax extends EagleSyntax
 	{
 		return "IntelASM";
 	}
-	
+
 	public IntelASM_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = "_";
 		_extraCharacters = "";
 		_autoAdvance = false;
-		
+
 		addReservedWords(keywords);
 	}
-	
+
 	private static String[] keywords = new String[] {
-			"BYTE",
-			"DWORD",
-			"PTR"
+			"BYTE", "DWORD", "PTR"
 	};
 }

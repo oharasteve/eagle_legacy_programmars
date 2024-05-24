@@ -13,14 +13,14 @@ public class Django_Syntax extends EagleSyntax
 	{
 		return "Django";
 	}
-	
+
 	public Django_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_punctuationExceptions = HTML_Syntax.PUNCT;
-		
+
 		addReservedWord("default");
 		addReservedWord("super");
 	}

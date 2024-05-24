@@ -23,23 +23,17 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 	public @S(30) CMD_IfWhat what;
 	public @S(40) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 	public @S(50) CMD_Statement stmt;
-	
+
 	public static class CMD_IfEqual extends TokenSequence
 	{
 		public @S(10) CMD_Argument expr1;
 		public @S(20) CMD_IfOperator operator;
 		public @S(30) CMD_Argument expr2;
-		
+
 		public static class CMD_IfOperator extends TokenChooser
 		{
-			public @CHOICE CMD_KeywordChoice operator = new CMD_KeywordChoice(
-					"equ",
-					"geq",
-					"gtr",
-					"leq",
-					"lss",
-					"neq");
-			
+			public @CHOICE CMD_KeywordChoice operator = new CMD_KeywordChoice("equ", "geq", "gtr", "leq", "lss", "neq");
+
 			public @CHOICE static class CMD_EqualsEquals extends TokenSequence
 			{
 				public @S(10) CMD_Punctuation equals = new CMD_Punctuation("==");
@@ -70,7 +64,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 			public @S(10) CMD_Keyword EXIST = new CMD_Keyword("exist");
 			public @S(20) CMD_Argument file;
 		}
-		
+
 		public @LAST static class CMD_IfCondition extends TokenSequence
 		{
 			public @S(10) CMD_Argument condition;
@@ -80,11 +74,11 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (! (what.getWhich() instanceof CMD_IfEqual))
+		if (!(what.getWhich() instanceof CMD_IfEqual))
 		{
 			throw new RuntimeException("Cannot handle 'if' condition: " + what.getWhich());
 		}
-		
+
 		CMD_IfEqual ifEqual = (CMD_IfEqual) what.getWhich();
 		int left = interpreter.getIntValue(ifEqual.expr1.arg);
 		int right = interpreter.getIntValue(ifEqual.expr2.arg);
@@ -112,8 +106,8 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 		default:
 			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.operator);
 		}
-		
-		if (NOT.isPresent()) passTest = ! passTest;
+
+		if (NOT.isPresent()) passTest = !passTest;
 		if (passTest)
 		{
 			interpreter.tryToInterpret(stmt.getWhich());

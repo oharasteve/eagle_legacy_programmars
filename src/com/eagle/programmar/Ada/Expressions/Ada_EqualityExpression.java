@@ -22,10 +22,10 @@ public class Ada_EqualityExpression extends PrecedenceOperator implements EagleR
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "=" :
+		case "=":
 			interpreter.pushBool(leftValue == rightValue);
 			return;
-		case "/=" :
+		case "/=":
 			interpreter.pushBool(leftValue != rightValue);
 			return;
 		}

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -10,7 +12,7 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class Delphi_Relational_Expression extends PrecedenceOperator 
+public class Delphi_Relational_Expression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Delphi_Relational_Operator relOp;
@@ -19,7 +21,37 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 
 	public static class Delphi_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Delphi_PunctuationChoice operator = new Delphi_PunctuationChoice("=", "<>", "<", ">", "<=", ">=");
+		public @CHOICE Delphi_PunctuationChoice operator = new Delphi_PunctuationChoice("=", "<>", "<", ">", "<=",
+				">=");
 		public @CHOICE Delphi_KeywordChoice IN = new Delphi_KeywordChoice("In", "Is");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (relOp.getWhich().toString())
+		{
+		case "=":
+			interpreter.pushBool(leftValue == rightValue);
+			return;
+		case "<>":
+			interpreter.pushBool(leftValue != rightValue);
+			return;
+		case "<":
+			interpreter.pushBool(leftValue < rightValue);
+			return;
+		case "<=":
+			interpreter.pushBool(leftValue <= rightValue);
+			return;
+		case ">":
+			interpreter.pushBool(leftValue > rightValue);
+			return;
+		case ">=":
+			interpreter.pushBool(leftValue >= rightValue);
+			return;
+		}
+		throw new RuntimeException("Unexpected relational operator: " + relOp.getWhich());
 	}
 }

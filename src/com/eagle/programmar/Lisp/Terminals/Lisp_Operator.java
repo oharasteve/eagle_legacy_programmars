@@ -10,7 +10,7 @@ import com.eagle.tokens.TerminalToken;
 public class Lisp_Operator extends TerminalToken
 {
 	private String _oper;
-	
+
 	// Need default constructor for reading from the XML file
 	public Lisp_Operator()
 	{
@@ -21,7 +21,7 @@ public class Lisp_Operator extends TerminalToken
 	{
 		_oper = oper;
 	}
-	
+
 	// Can only be exactly one character, followed by whitespace
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -32,7 +32,7 @@ public class Lisp_Operator extends TerminalToken
 		int recLen = rec.length();
 		int operLen = _oper.length();
 		if (_currentChar + operLen > recLen) return false;
-		
+
 		for (int i = 0; i < operLen; i++)
 		{
 			if (rec.charAt(_currentChar + i) != _oper.charAt(i))
@@ -47,7 +47,7 @@ public class Lisp_Operator extends TerminalToken
 			char ch2 = rec.charAt(_currentChar + operLen);
 			if (ch2 != ' ' && ch2 != '\t' && ch2 != ')') return false;
 		}
-		
+
 		foundIt(_currentLine, _currentChar + operLen - 1);
 		return true;
 	}
@@ -71,7 +71,7 @@ public class Lisp_Operator extends TerminalToken
 	}
 
 	@Override
-	public DisplayStyle getDisplayStyle() 
+	public DisplayStyle getDisplayStyle()
 	{
 		return DisplayStyle.PUNCTUATION;
 	}

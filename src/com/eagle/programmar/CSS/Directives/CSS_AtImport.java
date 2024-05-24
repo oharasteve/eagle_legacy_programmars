@@ -18,7 +18,7 @@ public class CSS_AtImport extends TokenSequence
 	public @S(20) CSS_Keyword IMPORT = new CSS_Keyword("import");
 	public @S(30) CSS_ImportWhat what;
 	public @S(40) PunctuationSemicolon semicolon;
-	
+
 	public static class CSS_ImportWhat extends TokenChooser
 	{
 		public @FIRST CSS_URL_Value urlValue;

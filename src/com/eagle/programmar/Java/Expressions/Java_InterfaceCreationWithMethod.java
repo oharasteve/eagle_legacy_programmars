@@ -15,8 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_InterfaceCreationWithMethod extends PrimaryOperator
 {
 	public @S(10) Java_Keyword NEW = new Java_Keyword("new");
-	public @S(20) Java_KeywordChoice jinterface = new Java_KeywordChoice( 
-			"Runnable", "ActionListener", "WindowAdapter");
+	public @S(20) Java_KeywordChoice jinterface = new Java_KeywordChoice("Runnable", "ActionListener", "WindowAdapter");
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) PunctuationLeftBrace leftBrace;

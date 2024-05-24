@@ -14,7 +14,7 @@ public class TCL_ConditionalAndExpression extends PrecedenceOperator
 	public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) TCL_AndOperator andOper;
 	public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class TCL_AndOperator extends TokenChooser
 	{
 		public @CHOICE TCL_Keyword AND = new TCL_Keyword("and");

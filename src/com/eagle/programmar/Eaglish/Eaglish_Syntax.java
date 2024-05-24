@@ -12,13 +12,15 @@ public class Eaglish_Syntax extends EagleSyntax
 	{
 		return "Eaglish";
 	}
-	
+
 	public Eaglish_Syntax()
 	{
 		_isCaseSensitive = false;
 		_autoAdvance = false;
 		_continuationChar = null;
 		_extraCharacters = "";
-		_punctuationExceptions = new String[] { "<=", ">=" };
+		_punctuationExceptions = new String[] {
+				"<=", ">="
+		};
 	}
 }

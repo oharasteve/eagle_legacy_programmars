@@ -20,20 +20,19 @@ public class COBOL_WriteStatement extends COBOL_AbstractStatement
 	public @S(40) @OPT COBOL_WriteAfter after;
 	public @S(50) @OPT COBOL_WriteKey key;
 	public @S(60) @OPT COBOL_Keyword ENDWRITE = new COBOL_Keyword("END-WRITE");
-	
+
 	public static class COBOL_WriteFrom extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword FROM = new COBOL_Keyword("FROM");
 		public @S(20) COBOL_Expression fromWhat;
 	}
-	
+
 	public static class COBOL_WriteAfter extends TokenSequence
 	{
 		public @S(10) COBOL_KeywordChoice after = new COBOL_KeywordChoice("BEFORE", "AFTER");
 		public @S(20) @OPT COBOL_Keyword ADVANCING = new COBOL_Keyword("ADVANCING");
 		public @S(30) @OPT COBOL_Expression lines;
-		public @S(40) @OPT COBOL_KeywordChoice what = new COBOL_KeywordChoice(
-				"PAGE", "LINE", "LINES");
+		public @S(40) @OPT COBOL_KeywordChoice what = new COBOL_KeywordChoice("PAGE", "LINE", "LINES");
 	}
 
 	public static class COBOL_WriteKey extends TokenSequence

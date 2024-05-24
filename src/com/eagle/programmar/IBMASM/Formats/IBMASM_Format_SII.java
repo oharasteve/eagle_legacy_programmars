@@ -12,10 +12,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IBMASM_Format_SII extends TokenSequence
 {
-	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice(
-		"SRP"
-	);
-	
+	public @S(10) IBMASM_KeywordChoice opcode = new IBMASM_KeywordChoice("SRP");
+
 	public @S(20) IBMASM_Spaces spaces;
 	public @S(30) IBMASM_Address address;
 	public @S(40) PunctuationComma comma1;

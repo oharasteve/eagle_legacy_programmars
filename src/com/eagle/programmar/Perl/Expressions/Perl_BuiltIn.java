@@ -10,28 +10,19 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Perl_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Perl_KeywordChoice builtIn = new Perl_KeywordChoice(
-			"FALSE", "False", "false",
-			"TRUE", "True", "true",
-			"NULL", "null",
-			"T_CLASS",
-			"T_FUNCTION",
-            "T_INCLUDE",
-            "T_INCLUDE_ONCE",
-            "T_REQUIRE",
-            "T_REQUIRE_ONCE",
-            "T_USE",
-            "namespace");
+	public @S(10) Perl_KeywordChoice builtIn = new Perl_KeywordChoice("FALSE", "False", "false", "TRUE", "True", "true",
+			"NULL", "null", "T_CLASS", "T_FUNCTION", "T_INCLUDE", "T_INCLUDE_ONCE", "T_REQUIRE", "T_REQUIRE_ONCE",
+			"T_USE", "namespace");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtIn.toString().toLowerCase())
 		{
-		case "false" :
+		case "false":
 			interpreter.pushBool(false);
 			return;
-		case "true" :
+		case "true":
 			interpreter.pushBool(true);
 			return;
 		}

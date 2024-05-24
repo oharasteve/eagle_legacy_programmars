@@ -15,22 +15,22 @@ public class CSharp_Comment extends TerminalCommentToken implements AbstractComm
 	{
 		this("");
 	}
-	
+
 	public CSharp_Comment(String comment, boolean hasEOLN)
 	{
 		super(comment, hasEOLN);
 	}
-	
+
 	public CSharp_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar + 1 >= nc) return false;
@@ -40,9 +40,9 @@ public class CSharp_Comment extends TerminalCommentToken implements AbstractComm
 			ch = rec.charAt(_currentChar + 1);
 			switch (ch)
 			{
-			case '/' :
+			case '/':
 				return super.possibleCommentToEndOfLine(rec, "//");
-			case '*' :
+			case '*':
 				return super.possibleCommentPair2(lines, rec, "/*", "*/");
 			}
 		}
@@ -55,7 +55,7 @@ public class CSharp_Comment extends TerminalCommentToken implements AbstractComm
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

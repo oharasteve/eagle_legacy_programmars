@@ -10,7 +10,7 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Javascript_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Javascript_Expression var = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(
-			"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
+	public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("=", "*=", "/=", "%=", "+=",
+			"-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 	public @S(30) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
 }

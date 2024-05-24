@@ -14,12 +14,12 @@ public class Django_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Django_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

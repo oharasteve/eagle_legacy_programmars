@@ -20,12 +20,12 @@ public class Template_DataStatement extends TokenSequence implements EagleRunnab
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Template_Expression expr;
 	public @S(50) PunctuationSemicolon semicolon;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-				var.getStartChar(), var.getValue(), value);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
+				value);
 	}
 }

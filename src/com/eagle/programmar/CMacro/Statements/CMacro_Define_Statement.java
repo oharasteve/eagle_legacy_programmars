@@ -21,37 +21,37 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CMacro_Define_Statement extends TokenSequence implements CMacro_Processable
 {
-	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#'); 
+	public @S(10) CMacro_Punctuation pound = new CMacro_Punctuation('#');
 	public @S(20) @DOC("Macros.html") CMacro_Keyword DEFINE = new CMacro_Keyword("define");
 	public @S(30) CMacro_Define_Definition var;
 	public @S(40) @OPT CMacro_Comment comment1;
 	public @S(50) @OPT CMacro_Parameters params;
-	public @S(60) @OPT CMacro_RestOfLine value;		// Just keep it as a String
+	public @S(60) @OPT CMacro_RestOfLine value; // Just keep it as a String
 	public @S(70) @OPT CMacro_Comment comment2;
 
 	public static class CMacro_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<CMacro_Param,PunctuationComma> params;
+		public @S(20) @OPT SeparatedList<CMacro_Param, PunctuationComma> params;
 		public @S(30) PunctuationRightParen rightParen;
-		
+
 		public static class CMacro_Param extends TokenChooser
 		{
 			public @CHOICE CMacro_Parameter_Definition var;
 			public @CHOICE CMacro_Punctuation dotDotDot = new CMacro_Punctuation("...");
 		}
 	}
-	
+
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
 		String macroName = var.getValue();
-		//System.out.println("#define " + macroName + " ...");
+		// System.out.println("#define " + macroName + " ...");
 		if (preprocessor._project == null || preprocessor._project.expandMacro(macroName))
 		{
-			preprocessor._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-					var.getStartChar(), macroName, new TokenValue(this));
+			preprocessor._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), macroName,
+					new TokenValue(this));
 		}
-		return true;	// No need to add these to the file
+		return true; // No need to add these to the file
 	}
 }

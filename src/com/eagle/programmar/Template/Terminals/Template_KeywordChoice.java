@@ -12,7 +12,7 @@ public class Template_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Template_KeywordChoice(String... words)
 	{
 		super(words);

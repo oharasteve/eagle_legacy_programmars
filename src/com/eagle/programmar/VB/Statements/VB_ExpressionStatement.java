@@ -13,7 +13,7 @@ public class VB_ExpressionStatement extends TokenSequence implements EagleRunnab
 {
 	public @S(10) @NOSPACE VB_Expression expression;
 	public @S(20) @OPT VB_Comment comment;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

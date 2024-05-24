@@ -22,7 +22,7 @@ public class CSharp_ForStatement extends TokenSequence implements EagleScopeInte
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<CSharp_ForWhat,PunctuationComma> what;
+	public @S(30) @OPT SeparatedList<CSharp_ForWhat, PunctuationComma> what;
 	public @S(40) @NOSPACE PunctuationSemicolon semicolon1;
 	public @S(50) CSharp_Expression terminateCondition;
 	public @S(60) @NOSPACE PunctuationSemicolon semicolon2;
@@ -33,14 +33,14 @@ public class CSharp_ForStatement extends TokenSequence implements EagleScopeInte
 	public static class CSharp_ForWhat extends TokenChooser
 	{
 		public @CHOICE CSharp_Expression expr;
-		
+
 		public @FIRST static class CSharp_ForWithType extends TokenSequence
 		{
 			public @S(10) @NOSPACE CSharp_Type varType;
 			public @S(20) CSharp_Expression expr;
 		}
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
 
 	@Override

@@ -32,12 +32,12 @@ public class CPlus_Constructor extends TokenChooser
 		public @S(60) @OPT C_Keyword OVERRIDE = new C_Keyword("override");
 		public @S(70) @OPT CPlus_ConstructorCallSupers callSupers;
 		public @S(80) CPlus_ConstructorValue value;
-		
+
 		public static class CPlus_ConstructorCallSupers extends TokenSequence
 		{
 			public @S(10) PunctuationColon colon;
-			public @S(20) SeparatedList<CPlus_ConstructorCallSuper,PunctuationComma> callSuper;
-			
+			public @S(20) SeparatedList<CPlus_ConstructorCallSuper, PunctuationComma> callSuper;
+
 			public static class CPlus_ConstructorCallSuper extends TokenSequence
 			{
 				public @S(10) CPlus_Class_Reference parent;
@@ -48,7 +48,7 @@ public class CPlus_Constructor extends TokenChooser
 			}
 		}
 	}
-	
+
 	public @CHOICE static class CPlus_ConstructorParameterLess extends TokenSequence
 	{
 		public @S(10) @OPT C_KeywordChoice CONST = new C_KeywordChoice("const", "constexpr");

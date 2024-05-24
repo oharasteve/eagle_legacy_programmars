@@ -28,15 +28,15 @@ public class CSS_Microsoft_Gradient extends TokenSequence
 	public @S(90) CSS_MS_GradientPiece piece;
 	public @S(100) @OPT TokenList<CSS_More_MS_GradientPieces> morePieces;
 	public @S(110) PunctuationRightParen rightParen;
-	
+
 	public static class CSS_MS_GradientPiece extends TokenSequence
 	{
-		public @S(10) CSS_KeywordChoice gradPiece = new CSS_KeywordChoice(
-				"startColorStr", "endColorStr", "GradientType", "enabled");
+		public @S(10) CSS_KeywordChoice gradPiece = new CSS_KeywordChoice("startColorStr", "endColorStr",
+				"GradientType", "enabled");
 		public @S(20) PunctuationEquals equals;
 		public @S(30) CSS_Value value;
 	}
-	
+
 	public static class CSS_More_MS_GradientPieces extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

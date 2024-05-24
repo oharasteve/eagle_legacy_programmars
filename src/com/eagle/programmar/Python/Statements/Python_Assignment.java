@@ -23,19 +23,19 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @NOSPACE Python_VariableList varList;
 	public @S(20) @OPT Python_ResultType resultType;
-	public @S(30) Python_PunctuationChoice operator = new Python_PunctuationChoice(
-			"=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=", "**=", "//=");
+	public @S(30) Python_PunctuationChoice operator = new Python_PunctuationChoice("=", "+=", "-=", "*=", "/=", "%=",
+			"&=", "|=", "^=", "<<=", ">>=", "**=", "//=");
 	public @S(40) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(50) Python_Expression expr;
 	public @S(60) @OPT TokenList<Python_MoreAsgExpressions> moreExpressions;
 	public @S(70) @OPT Python_Comment comment;
-	
+
 	public static class Python_MoreAsgExpressions extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT Python_Expression expr;
 	}
-	
+
 	public static class Python_ResultType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
@@ -48,7 +48,7 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable
 		EagleValue value = interpreter.getEagleValue(expr);
 		Python_Variable_or_List vl = (Python_Variable_or_List) varList.vars.first();
 		Python_Variable v = (Python_Variable) vl.getWhich();
-		interpreter._symbolTable.setSymbol(v.getFileName(), v.getStartLine(),
-				v.getStartChar(), v.var.getWhich().toString(), value);
+		interpreter._symbolTable.setSymbol(v.getFileName(), v.getStartLine(), v.getStartChar(),
+				v.var.getWhich().toString(), value);
 	}
 }

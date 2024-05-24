@@ -19,13 +19,13 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 		spec.externalRecordId = new RPG_O_Output_External_Record_Id_III();
 		spec.externalFieldDescr = new RPG_O_Output_External_Field_Descr_III();
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_III extends RPG_O_Output_Program_Record_Id
 	{
 		public RPG_O_Output_Program_Record_Id_III()
 		{
 			piece = new RPG_O_Output_Program_Record_Id_Piece_III();
-			
+
 			skipBefore = new RPG_Literal(19, 20);
 			skipAfter = new RPG_Literal(21, 22);
 			indicators = new RPG_Literal(23, 31);
@@ -33,7 +33,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			blank1 = new RPG_Blanks(38, 74);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece_III extends RPG_O_Output_Program_Record_Id_Piece
 	{
 		public RPG_O_Output_Program_Record_Id_Piece_III()
@@ -43,7 +43,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			piece3 = new RPG_O_Output_Program_Record_Id_Piece3_III();
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece1_III extends RPG_O_Output_Program_Record_Id_Piece1
 	{
 		public RPG_O_Output_Program_Record_Id_Piece1_III()
@@ -57,7 +57,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			skipAfter = new RPG_Literal(21, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece2_III extends RPG_O_Output_Program_Record_Id_Piece2
 	{
 		public RPG_O_Output_Program_Record_Id_Piece2_III()
@@ -67,7 +67,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(17, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_Program_Record_Id_Piece3_III extends RPG_O_Output_Program_Record_Id_Piece3
 	{
 		public RPG_O_Output_Program_Record_Id_Piece3_III()
@@ -93,7 +93,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(71, 74);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_III extends RPG_O_Output_External_Record_Id
 	{
 		public RPG_O_Output_External_Record_Id_III()
@@ -106,7 +106,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			blank1 = new RPG_Blanks(38, 74);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece_III extends RPG_O_Output_External_Record_Id_Piece
 	{
 		public RPG_O_Output_External_Record_Id_Piece_III()
@@ -116,7 +116,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			piece3 = new RPG_O_Output_External_Record_Id_Piece3_III();
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece1_III extends RPG_O_Output_External_Record_Id_Piece1
 	{
 		public RPG_O_Output_External_Record_Id_Piece1_III()
@@ -127,7 +127,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(17, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece2_III extends RPG_O_Output_External_Record_Id_Piece2
 	{
 		public RPG_O_Output_External_Record_Id_Piece2_III()
@@ -137,7 +137,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 			blank2 = new RPG_Blanks(17, 22);
 		}
 	}
-	
+
 	public static class RPG_O_Output_External_Record_Id_Piece3_III extends RPG_O_Output_External_Record_Id_Piece3
 	{
 		public RPG_O_Output_External_Record_Id_Piece3_III()

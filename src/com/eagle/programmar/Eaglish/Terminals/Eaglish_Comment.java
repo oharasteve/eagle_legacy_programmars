@@ -19,7 +19,7 @@ public class Eaglish_Comment extends TerminalCommentToken implements AbstractCom
 	{
 		super(comment, hasEOLN);
 	}
-	
+
 	public Eaglish_Comment(String comment)
 	{
 		super(comment);
@@ -29,12 +29,12 @@ public class Eaglish_Comment extends TerminalCommentToken implements AbstractCom
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
 		if (_currentChar >= nc) return false;
 		if (rec.charAt(_currentChar) != '#') return false;
-		
+
 		foundIt(_currentLine, nc);
 		_comment = rec.substring(_currentChar, nc);
 		return true;

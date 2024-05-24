@@ -17,7 +17,7 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 {
 	private static final String TAB = "  ";
 	private static final int TABLEN = TAB.length();
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -34,7 +34,7 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
 				AbstractToken firstToken = tokenList.first();
-				if (! (firstToken instanceof FSharp_IfElif))
+				if (!(firstToken instanceof FSharp_IfElif))
 				{
 					for (AbstractToken token : tokenList._elements)
 					{
@@ -42,12 +42,12 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 //						{
 //							if (_currentLine == token._currentLine) return false;	// Cannot have two SOLN's on the same line
 //						}
-						
+
 						if (token instanceof FSharp_Comment)
 						{
-							continue;	// Doesn't matter what columns comments are in
+							continue; // Doesn't matter what columns comments are in
 						}
-	
+
 						if (token instanceof FSharp_Statement)
 						{
 							FSharp_Statement firstStmt = (FSharp_Statement) token;
@@ -56,7 +56,8 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 							{
 								FSharp_Statement_List stmtList = (FSharp_Statement_List) child;
 								FSharp_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
-								//if (_currentLine == otherStmt._currentLine) return false;	// Cannot have two SOLN's on the same line
+								// if (_currentLine == otherStmt._currentLine) return false; // Cannot have two
+								// SOLN's on the same line
 								if (_currentChar != otherStmt.getStartChar()) return false;
 								break;
 							}
@@ -71,17 +72,17 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 			}
 			parent = parent.getParent();
 		}
-		
+
 //		// This is an error -- the python statement was not inside a TokenList
 //		if (parent == null)
 //		{
 //			throw new RuntimeException("Never found the parent TokenList, at line " + _currentLine);
 //		}
 
-		foundIt(_currentLine, _currentChar-1);
+		foundIt(_currentLine, _currentChar - 1);
 		return true;
 	}
-	
+
 	@Override
 	public String toString()
 	{
@@ -96,7 +97,7 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 				TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
 
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				if (tokenList.size() > 0 && ! (tokenList.first() instanceof FSharp_IfElif))
+				if (tokenList.size() > 0 && !(tokenList.first() instanceof FSharp_IfElif))
 				{
 					depth++;
 				}
@@ -108,7 +109,7 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 		for (int i = 1; i < depth; i++) sb.append(TAB);
 		return sb.toString();
 	}
-	
+
 	@Override
 	public String showString()
 	{
@@ -120,7 +121,7 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 	{
 		return "";
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -17,7 +17,7 @@ public class JavaP_Resolve_References extends Eagle_Resolve_References
 		JavaP_Program program = (JavaP_Program) language;
 		EagleScope scope = program.getScope();
 		EagleSyntax syntax = program.getSyntax();
-		
+
 		// Handle all the globally scoped references
 		connectReferences(syntax, scope, program, JavaP_Symbol_Definition.class, JavaP_Symbol_Reference.class);
 	}

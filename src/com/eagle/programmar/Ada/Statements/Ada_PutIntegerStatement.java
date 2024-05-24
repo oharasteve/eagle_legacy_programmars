@@ -30,7 +30,7 @@ public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunna
 	public @S(90) Ada_Expression width;
 	public @S(100) PunctuationRightParen rightParen;
 	public @S(110) PunctuationSemicolon semicolon;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

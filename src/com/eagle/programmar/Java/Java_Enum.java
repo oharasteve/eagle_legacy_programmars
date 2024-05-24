@@ -37,18 +37,18 @@ public class Java_Enum extends TokenSequence implements EagleScopeInterface
 	public @S(100) @OPT TokenList<Java_Comment> comment2;
 	public @S(110) @OPT Java_EnumDeclarations declarations;
 	public @S(120) @OPT TokenList<Java_Comment> comment3;
-	
+
 	public @S(130) @OPT PunctuationSemicolon semicolon1;
 	public @S(140) @OUTDENT PunctuationRightBrace rightBrace;
 	public @S(150) @OPT TokenList<Java_Comment> comment4;
 	public @S(160) @OPT @NOSPACE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
-	
+
 	public static class Java_EnumConstants extends TokenSequence
 	{
 		public @S(10) Java_EnumConstant constant;
 		public @S(20) @OPT TokenList<Java_MoreEnumConstants> more;
 		public @S(30) @OPT TokenList<Java_Comment> comments;
-		
+
 		public static class Java_MoreEnumConstants extends TokenSequence
 		{
 			public @S(10) @NOSPACE PunctuationComma comma;
@@ -56,14 +56,14 @@ public class Java_Enum extends TokenSequence implements EagleScopeInterface
 			public @S(30) Java_EnumConstant constant;
 		}
 	}
-	
+
 	public static class Java_EnumConstant extends TokenSequence
 	{
 		public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotations;
 		public @S(20) Java_Variable_Definition id;
 		public @S(30) @OPT Java_EnumInitializer initializer;
 		public @S(40) @OPT Java_EnumClassBody body;
-		
+
 		public static class Java_EnumClassBody extends TokenSequence
 		{
 			public @S(10) @INDENT PunctuationLeftBrace leftBrace;
@@ -71,7 +71,7 @@ public class Java_Enum extends TokenSequence implements EagleScopeInterface
 			public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 		}
 	}
-	
+
 	public static class Java_EnumClassBodyDeclaration extends TokenChooser
 	{
 		public @CHOICE Java_ClassElement element;
@@ -82,16 +82,16 @@ public class Java_Enum extends TokenSequence implements EagleScopeInterface
 		public @S(10) @NOSPACE PunctuationSemicolon semicolon;
 		public @S(20) TokenList<Java_EnumClassBodyDeclaration> body;
 	}
-	
+
 	public static class Java_EnumInitializer extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Java_Expression,PunctuationComma> exprs;
+		public @S(20) @OPT SeparatedList<Java_Expression, PunctuationComma> exprs;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-	
+
 	@Override
 	public EagleScope getScope()
 	{

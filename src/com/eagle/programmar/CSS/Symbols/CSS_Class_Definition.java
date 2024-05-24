@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CSS.Symbols;
 
-
 public class CSS_Class_Definition extends CSS_Identifier_Definition
 {
 	@Override

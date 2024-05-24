@@ -21,7 +21,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 	{
 		super(name, syntax);
 	}
-	
+
 	// Components of a complete COBOL Program
 	public @S(10) @OPT TokenList<COBOL_Comment> comments1;
 	public @S(20) @OPT TokenList<COBOL_Directive> directives;
@@ -32,11 +32,11 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 	public @S(70) @OPT TokenList<COBOL_Comment> comments3;
 	public @S(80) @OPT COBOL_DataDivision dataDiv;
 	public @S(90) COBOL_ProcedureDivision procedureDiv;
-	
+
 	public @S(100) @OPT TokenList<COBOL_Program_Free_Format> nestedPrograms;
 
 	public @S(110) @OPT COBOL_EndProgram endProgram;
-	
+
 	public static class COBOL_EndProgram extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword END = new COBOL_Keyword("END");
@@ -44,22 +44,22 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 		public @S(30) COBOL_Identifier_Reference programId;
 		public @S(40) PunctuationPeriod dot;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interp)
 	{
 		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
-		
+
 		// Pass 1 : Collect all the variables in Working Storage
 		collectDataVariables(interpreter);
-		
+
 		// Pass 2 : Collect all the paragraph names
 		collectParagraphNames(interpreter);
-		
+
 		// Pass 3 -- now run it
 		interpreter.tryToInterpret(procedureDiv);
 	}
-	
+
 	private void collectDataVariables(COBOL_Interpreter interpreter)
 	{
 		for (COBOL_DataSection section : dataDiv.sections._elements)
@@ -67,10 +67,10 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 			interpreter.tryToInterpret(section.getWhich());
 		}
 	}
-	
+
 	private void collectParagraphNames(COBOL_Interpreter interpreter)
 	{
-		interpreter._paragraphs = new HashMap<String,COBOL_Paragraph>();
+		interpreter._paragraphs = new HashMap<String, COBOL_Paragraph>();
 		for (COBOL_Section section : procedureDiv.sections._elements)
 		{
 			for (COBOL_Paragraph paragraph : section.paragraphs._elements)

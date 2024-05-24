@@ -10,12 +10,6 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Go_AssignmentExpression extends PrecedenceOperator
 {
 	public @S(10) Go_Expression var = new Go_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice(
-			":=",
-			"*=",
-			"/=",
-			"%=",
-			"+=",
-			"-=");
+	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice(":=", "*=", "/=", "%=", "+=", "-=");
 	public @S(30) Go_Expression expr;
 }

@@ -12,7 +12,7 @@ public class Fortran_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Fortran_KeywordChoice(String... words)
 	{
 		super(words);

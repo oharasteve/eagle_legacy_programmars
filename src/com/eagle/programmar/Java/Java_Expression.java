@@ -59,16 +59,17 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public Java_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Java_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -84,7 +85,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Java_ColonColonType colonColonType;
 	public @P(110) Java_DotClass dotClass;
 	public @P(120) Java_LambdaExpression lambdaExpression;

@@ -36,16 +36,17 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public Ruby_Expression()
 	{
-	    super(_operators);
+		super(_operators);
 	}
 
 	public Ruby_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
 	{
-	    super(_operators, allowed, token.getClass());
+		super(_operators, allowed, token.getClass());
 	}
-		
+
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator precedence.
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
 	//
 
 	///////////////////////////////////////////////
@@ -56,7 +57,7 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 
 	///////////////////////////////////////////////
 	// Primary expressions
-	
+
 	public @P(100) Ruby_MethodInvocation methodInvocation;
 	public @P(110) Ruby_PreIncrementExpression preIncrementExpression;
 	public @P(120) Ruby_PostIncrementExpression postIncrementExpression;
@@ -67,7 +68,7 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(170) Ruby_VariableExpression variableExpression;
 	public @P(180) Ruby_BracketsExpression bracketsExpression;
 	public @P(190) Ruby_ParenthesizedExpression parenthesizedExpression;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

@@ -15,17 +15,17 @@ public class COBOL_PunctuationChoice extends TerminalPunctuationChoice
 	{
 		super();
 	}
-	
+
 	public COBOL_PunctuationChoice(String... puncts)
 	{
 		super(puncts);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		// Make sure a '*' is not a comment
 		EagleLineReader rec = lines.get(_currentLine);
 		if (rec.charAt(_currentChar) == '*')

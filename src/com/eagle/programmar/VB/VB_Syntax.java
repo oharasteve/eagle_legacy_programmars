@@ -12,15 +12,17 @@ public class VB_Syntax extends EagleSyntax
 	{
 		return "VB";
 	}
-	
+
 	public VB_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = "_";
 		_autoAdvance = false;
 		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "/*" };
-		
+		_punctuationExceptions = new String[] {
+				"!=", "<=", "==", ">=", "/*"
+		};
+
 		addReservedWords(VB_Reserved_Words.RESERVED_WORDS);
 	}
 }

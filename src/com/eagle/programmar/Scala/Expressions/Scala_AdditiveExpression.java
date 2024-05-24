@@ -22,14 +22,13 @@ public class Scala_AdditiveExpression extends PrecedenceOperator implements Eagl
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "+" :
+		case "+":
 			interpreter.pushInt(leftValue + rightValue);
 			return;
-		case "-" :
+		case "-":
 			interpreter.pushInt(leftValue - rightValue);
 			return;
 		}
 		throw new RuntimeException("Unexpected additive operator: " + operator);
 	}
 }
-

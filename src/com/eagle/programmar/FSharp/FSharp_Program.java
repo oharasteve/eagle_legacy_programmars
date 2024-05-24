@@ -9,12 +9,12 @@ import com.eagle.tokens.TokenList;
 public class FSharp_Program extends EagleLanguage
 {
 	public static final String FSHARP = "FSharp";
-	
+
 	public FSharp_Program()
 	{
 		super(FSHARP, new FSharp_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{

@@ -14,13 +14,13 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_ClassCreationExpression  extends PrimaryOperator
+public class Perl_ClassCreationExpression extends PrimaryOperator
 {
 	public @S(10) Perl_Keyword NEW = new Perl_Keyword("new");
 	public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
 	public @S(30) @OPT TokenList<Perl_MoreNamespace> namespace;
 	public @S(40) @OPT Perl_ClassCreationParams params;
-	
+
 	public static class Perl_ClassCreationParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

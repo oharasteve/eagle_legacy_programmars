@@ -13,6 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 public class Go_BracesExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
-	public @S(20) SeparatedList<Go_Expression,PunctuationComma> expression;
+	public @S(20) SeparatedList<Go_Expression, PunctuationComma> expression;
 	public @S(30) PunctuationRightBrace rightBrace;
 }

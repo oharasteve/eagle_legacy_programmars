@@ -13,8 +13,8 @@ public class Java_Current_Class_Reference extends Java_Identifier_Reference
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (! super.parse(lines)) return false;
-		
+		if (!super.parse(lines)) return false;
+
 		// Find the containing Java_Class, the names must match exactly
 		AbstractToken parent = getParent();
 		while (parent != null)
@@ -35,6 +35,6 @@ public class Java_Current_Class_Reference extends Java_Identifier_Reference
 			}
 			parent = parent.getParent();
 		}
-		return false;	// Wrong name -- doesn't match the class name
+		return false; // Wrong name -- doesn't match the class name
 	}
 }

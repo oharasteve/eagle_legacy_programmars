@@ -12,4 +12,3 @@ public class Perl_PostDecrementExpression extends PrimaryOperator
 	public @S(10) Perl_Variable var;
 	public @S(20) Perl_Punctuation postDecrementOperator = new Perl_Punctuation("--");
 }
-

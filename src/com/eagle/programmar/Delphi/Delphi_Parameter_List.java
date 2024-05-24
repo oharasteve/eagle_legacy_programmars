@@ -14,6 +14,6 @@ public class Delphi_Parameter_List extends TokenSequence
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT Delphi_Keyword INHERITED = new Delphi_Keyword("Inherited");
-	public @S(30) @OPT SeparatedList<Delphi_Expression,PunctuationComma> exprs;
+	public @S(30) @OPT SeparatedList<Delphi_Expression, PunctuationComma> exprs;
 	public @S(40) PunctuationRightParen rightParen;
 }

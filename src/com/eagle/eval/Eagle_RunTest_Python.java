@@ -15,15 +15,16 @@ public abstract class Eagle_RunTest_Python extends Eagle_RunTest
 {
 	private EagleProject _proj;
 	private ProgramEntry _entry;
-	
+
 	public Eagle_RunTest_Python(EagleProject proj, ProgramEntry entry)
 	{
 		_proj = proj;
 		_entry = entry;
 	}
-	
+
 	@Override
-	@Test public void runTest()
+	@Test
+	public void runTest()
 	{
 		String pyFileName = EaglePath.combinePaths(_proj._artifactBase, _entry.pyFile);
 
@@ -38,7 +39,7 @@ public abstract class Eagle_RunTest_Python extends Eagle_RunTest
 		args.add(py_path);
 		args.add(pyFileName);
 		run(_proj, _entry, args, pyFileName);
-		
+
 		// Compare results in output file
 		diff(_proj, _entry, pyFileName);
 	}

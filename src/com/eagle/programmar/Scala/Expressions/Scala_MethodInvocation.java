@@ -15,6 +15,6 @@ public class Scala_MethodInvocation extends PrimaryOperator
 {
 	public @S(10) Scala_Variable methodName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<Scala_Expression,PunctuationComma> argList;
+	public @S(30) @OPT SeparatedList<Scala_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 }

@@ -14,9 +14,9 @@ public class Gupta_Application_Actions extends Gupta_Declaration
 {
 	public @S(10) Gupta_Keyword Application = new Gupta_Keyword("Application");
 	public @S(20) Gupta_Keyword Actions = new Gupta_Keyword("Actions");
-	
+
 	public @S(30) TokenList<Gupta_OnEvent> onEvents;
-	
+
 	public static class Gupta_OnEvent extends TokenSequence
 	{
 		public @S(10) Gupta_Keyword On = new Gupta_Keyword("On");

@@ -37,11 +37,11 @@ public class C_Function extends TokenSequence
 	public @S(80) @OPT TokenList<C_Comment> comments2;
 	public @S(90) @OPT C_Keyword CONST = new C_Keyword("const");
 	public @S(100) C_FunctionBody body;
-	
+
 	public static class C_FunctionTypeName extends TokenChooser
 	{
-		public @CHOICE C_Keyword MAIN = new C_Keyword("main");   // Strange syntax with no return type on 'main'
-		
+		public @CHOICE C_Keyword MAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
+
 		public @CHOICE static class C_Function_TypeAndName extends TokenSequence
 		{
 			public @S(10) C_Type ctype;
@@ -49,7 +49,7 @@ public class C_Function extends TokenSequence
 			public @S(30) C_Function_Definition functionName;
 		}
 	}
-	
+
 	public static class C_Function_ParameterDefs extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -63,13 +63,13 @@ public class C_Function extends TokenSequence
 	public static class C_FunctionParameter extends TokenChooser
 	{
 		public @FIRST C_FunctionPointer functionPointer;
-		
+
 		public @CHOICE static class C_FunctionParamAmpersand extends TokenSequence
 		{
 			public @S(10) PunctuationAmpersand ampersand;
 			public @S(20) C_Type type;
 		}
-		
+
 		public @CHOICE static class C_FunctionRegularParameter extends TokenSequence
 		{
 			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
@@ -79,34 +79,34 @@ public class C_Function extends TokenSequence
 			public @S(50) @OPT TokenList<C_Subscript> subscripts;
 			public @S(60) @OPT C_FunctionDefaultValue value;
 			public @S(70) @OPT C_Comment comment;
-			
+
 			public static class C_FunctionDefaultValue extends TokenSequence
 			{
 				public @S(10) PunctuationEquals equals;
 				public @S(20) C_Expression expr;
 			}
 		}
-		
+
 		public @CHOICE static class C_FunctionFunctionParameter extends TokenSequence
 		{
 			public @S(10) C_Type ctype;
 			public @S(20) C_Function_Definition id;
 			public @S(30) C_Function_ParameterDefs params;
 		}
-		
+
 		public @CHOICE static class C_FunctionDotDotDotParameter extends TokenSequence
 		{
 			public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");
 		}
 	}
-		
+
 	public static class C_MoreParameterDefs extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT C_Comment comment;
 		public @S(30) C_FunctionParameter param;
 	}
-	
+
 	public static class C_FunctionBody extends TokenChooser
 	{
 		public @CHOICE static class C_FunctionEqualsZero extends TokenSequence
@@ -114,19 +114,19 @@ public class C_Function extends TokenSequence
 			public @S(10) PunctuationEquals equals;
 			public @S(20) C_Number zero;
 		}
-		
+
 		public @CHOICE static class C_FunctionEqualsDefault extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
 			public @S(20) C_Keyword DEFAULT = new C_Keyword("default");
 		}
-		
+
 		public @CHOICE static class C_FunctionNoBody extends TokenSequence
 		{
 			public @S(10) @OPT C_FunctionAssembler assembler;
 			public @S(20) @OPT TokenList<C_FunctionAttributes> attributes;
 			public @S(30) PunctuationSemicolon semicolon;
-			
+
 			public static class C_FunctionAssembler extends TokenSequence
 			{
 				public @S(10) C_Keyword ASM = new C_Keyword("__asm__");
@@ -136,7 +136,7 @@ public class C_Function extends TokenSequence
 				public @S(50) PunctuationRightParen rightParen;
 			}
 		}
-		
+
 		public @CHOICE static class C_FunctionImplementation extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBrace leftBrace;

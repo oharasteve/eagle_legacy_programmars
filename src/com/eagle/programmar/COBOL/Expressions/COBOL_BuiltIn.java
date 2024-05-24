@@ -10,22 +10,10 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class COBOL_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) COBOL_KeywordChoice logicalConstant = new COBOL_KeywordChoice(
-			"ANY",
-			"FALSE",
-			"HIGH-VALUES",
-			"LINAGE-COUNTER",
-			"LOW-VALUES",
-			"QUOTE",
-			"RETURN-CODE",
-			"SPACE",
-			"SPACES",
-			"TRUE",
-			"ZERO",
-			"ZEROES",
-			"ZEROS"
-	);
-	
+	public @S(10) COBOL_KeywordChoice logicalConstant = new COBOL_KeywordChoice("ANY", "FALSE", "HIGH-VALUES",
+			"LINAGE-COUNTER", "LOW-VALUES", "QUOTE", "RETURN-CODE", "SPACE", "SPACES", "TRUE", "ZERO", "ZEROES",
+			"ZEROS");
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

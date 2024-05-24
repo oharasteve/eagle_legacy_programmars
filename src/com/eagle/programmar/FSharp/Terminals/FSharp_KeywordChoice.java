@@ -12,7 +12,7 @@ public class FSharp_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public FSharp_KeywordChoice(String... words)
 	{
 		super(words);

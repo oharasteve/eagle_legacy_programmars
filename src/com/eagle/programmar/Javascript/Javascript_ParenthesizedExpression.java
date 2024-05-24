@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Javascript_ParenthesizedExpression extends TokenSequence implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) @OPT SeparatedList<Javascript_Expression,PunctuationComma> expressions;
+	public @S(20) @OPT SeparatedList<Javascript_Expression, PunctuationComma> expressions;
 	public @S(30) @OPT PunctuationComma comma;
 	public @S(40) PunctuationRightParen rightParen;
 

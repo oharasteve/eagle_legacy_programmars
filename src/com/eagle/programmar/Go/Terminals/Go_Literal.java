@@ -15,7 +15,7 @@ public class Go_Literal extends TerminalLiteralToken
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
 		int nc = rec.length();
-		
+
 		if (_currentChar < nc)
 		{
 			if (rec.charAt(_currentChar) == '`')
@@ -24,7 +24,7 @@ public class Go_Literal extends TerminalLiteralToken
 				return genericLiteral(lines, "`", true, '\\', false, true);
 			}
 		}
-		
+
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 }

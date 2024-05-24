@@ -13,7 +13,7 @@ public class JavaP_HexNumber extends TerminalHexNumberToken
 	{
 		return genericHex(lines, "0x", "");
 	}
-	
+
 	public static class JavaP_HexNoPrefix extends TerminalHexNumberToken
 	{
 		@Override

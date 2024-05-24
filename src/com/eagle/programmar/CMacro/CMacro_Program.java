@@ -18,18 +18,18 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 public class CMacro_Program extends EagleLanguage
 {
 	public static final String CMACRO = "CMacro";
-	
+
 	public CMacro_Program()
 	{
 		super(CMACRO, new CMacro_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://gcc.gnu.org/onlinedocs/cpp/";
 	}
-	
+
 //	@Override
 //	public void findClassOverrides(EagleOverrideManager overrideManager)
 //	{
@@ -37,9 +37,9 @@ public class CMacro_Program extends EagleLanguage
 //		overrideManager.override(CMacro_IfElement.class, CMacro_Element.class);
 //		overrideManager.override(CMacro_IfDefElement.class, CMacro_Element.class);
 //	}
-	
+
 	public @S(10) TokenList<CMacro_Element> elements;
-	
+
 	public static class CMacro_Element extends TokenChooser
 	{
 		public @CHOICE CMacro_Pragma_Statement pragma;
@@ -48,13 +48,13 @@ public class CMacro_Program extends EagleLanguage
 		public @CHOICE CMacro_MultiLineText textLine;
 		public @LAST CMacro_EndOfLine endOfLine;
 	}
-	
+
 	public static class CMacro_CommentLine extends TokenSequence
 	{
 		public @S(10) CMacro_Comment comment;
 		public @S(20) CMacro_EndOfLine endOfLine;
 	}
-	
+
 	public static class CMacro_TextLine extends TerminalLiteralToken
 	{
 		@Override
@@ -67,7 +67,8 @@ public class CMacro_Program extends EagleLanguage
 			if (recLen < _currentChar) return false;
 			if (_currentChar < recLen && rec.charAt(_currentChar) == '#')
 			{
-				// Check to make sure we are at the start of a line. This check may be superfluous.
+				// Check to make sure we are at the start of a line. This check may be
+				// superfluous.
 				// Normally, _currentChar = 0 for a macro line that starts with #
 				// In that case, the loop doesn't even execute once so it fails as a text line.
 				boolean atStart = true;
@@ -82,7 +83,7 @@ public class CMacro_Program extends EagleLanguage
 				}
 				if (atStart) return false;
 			}
-			
+
 			foundIt(_currentLine, recLen);
 			_txt = rec.substring(_currentChar, recLen);
 			return true;

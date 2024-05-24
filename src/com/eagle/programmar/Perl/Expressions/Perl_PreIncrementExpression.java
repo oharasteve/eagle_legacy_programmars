@@ -12,4 +12,3 @@ public class Perl_PreIncrementExpression extends PrimaryOperator
 	public @S(10) Perl_Punctuation preIncrementOperator = new Perl_Punctuation("++");
 	public @S(20) Perl_Variable var;
 }
-

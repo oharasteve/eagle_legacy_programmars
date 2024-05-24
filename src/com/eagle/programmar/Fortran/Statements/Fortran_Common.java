@@ -18,6 +18,6 @@ public class Fortran_Common extends TokenSequence
 	public @S(20) PunctuationSlash slash1;
 	public @S(30) Fortran_Common_Reference common;
 	public @S(40) PunctuationSlash slash2;
-	public @S(50) SeparatedList<Fortran_Variable_Reference,PunctuationComma> variables;
+	public @S(50) SeparatedList<Fortran_Variable_Reference, PunctuationComma> variables;
 	public @S(60) Fortran_EOLN eoln;
 }

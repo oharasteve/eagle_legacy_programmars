@@ -12,19 +12,40 @@ public class Rust_Syntax extends EagleSyntax
 	{
 		return "Rust";
 	}
-	
+
 	public Rust_Syntax()
 	{
 		_isCaseSensitive = true;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
-				"!=","%=", "&=", "&&", "*=", "+=", "-=", "->", "..", "..=", "...", "/=",
-				"<<", "<<=", "<=", "==", "=>", ">>", ">>=", "^=", "|=", "||" };
-		
+				"!=",
+				"%=",
+				"&=",
+				"&&",
+				"*=",
+				"+=",
+				"-=",
+				"->",
+				"..",
+				"..=",
+				"...",
+				"/=",
+				"<<",
+				"<<=",
+				"<=",
+				"==",
+				"=>",
+				">>",
+				">>=",
+				"^=",
+				"|=",
+				"||"
+		};
+
 		addReservedWords(reservedWords);
 	}
-	
+
 	// From https://doc.rust-lang.org/reference/keywords.html
 	private static String[] reservedWords = new String[] {
 			"Self",

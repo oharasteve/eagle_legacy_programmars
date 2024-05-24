@@ -20,7 +20,7 @@ public class Eaglish_Main_Block extends TokenSequence implements EagleRunnable
 
 	public @S(40) Eaglish_Keyword END_MAIN = new Eaglish_Keyword("END_MAIN");
 	public @S(50) Eaglish_EndOfLine eoln2;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

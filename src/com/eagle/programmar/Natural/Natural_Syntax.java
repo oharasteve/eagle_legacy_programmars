@@ -13,19 +13,21 @@ public class Natural_Syntax extends EagleSyntax
 	{
 		return "Natural";
 	}
-	
+
 	public Natural_Syntax()
 	{
 		_isCaseSensitive = true;
 		_continuationChar = null;
 		_extraCharacters = "-";
-		_punctuationExceptions = new String[] { "/*" };
-		
+		_punctuationExceptions = new String[] {
+				"/*"
+		};
+
 		addReservedWords(Natural_Reserved_Words.RESERVED_WORDS);
-		
+
 		// Careful, some start with a Label and don't get picked up.
 		findFirstWords(Natural_Statement.class);
-		
+
 		// Pick up all the Option keywords used in DISPLAY and WRITE statements
 		for (Class<?> cls : Natural_OptionChoice.class.getDeclaredClasses())
 		{
@@ -33,7 +35,7 @@ public class Natural_Syntax extends EagleSyntax
 			// System.out.println("**** Adding Natural_Option Natural_Keyword: " + name);
 			addReservedWord(name);
 		}
-		
+
 		// Pick up the built-in functions
 		for (String name : Natural_Functions.builtinFunctions)
 		{

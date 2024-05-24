@@ -13,11 +13,11 @@ public class Python_YieldStatement extends TokenSequence
 {
 	public @S(10) @DOC("simple_stmts.html#the-yield-statement") Python_Keyword YIELD = new Python_Keyword("yield");
 	public @S(20) @OPT Python_YieldWhat yieldWhat;
-	
+
 	public static class Python_YieldWhat extends TokenChooser
 	{
 		public @CHOICE Python_ExpressionList expressionList;
-		
+
 		public @CHOICE static class Python_YieldFrom extends TokenSequence
 		{
 			public @S(10) Python_Keyword FROM = new Python_Keyword("from");

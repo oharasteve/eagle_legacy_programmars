@@ -18,21 +18,19 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 public class PLI_Type extends TokenChooser
 {
 	public @CHOICE PunctuationStar star;
-	
+
 	public @CHOICE static class PLI_BaseType extends TokenChooser
 	{
-		public @CHOICE PLI_KeywordChoice base = new PLI_KeywordChoice(
-				"COMPLEX", "FILE", "PRINT", "UNION", "VARYING");
+		public @CHOICE PLI_KeywordChoice base = new PLI_KeywordChoice("COMPLEX", "FILE", "PRINT", "UNION", "VARYING");
 
 		public @CHOICE static class PLI_TypeCharacter extends TokenSequence
 		{
 			public @S(10) @OPT PLI_TypeSize size1;
 			public @S(20) PLI_KeywordChoice CHARACTER = new PLI_KeywordChoice("CHAR", "CHARACTER", "WIDECHAR");
 			public @S(30) @OPT PLI_TypeSize size2;
-			public @S(40) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice(
-					"STATIC", "VARYING");
+			public @S(40) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice("STATIC", "VARYING");
 			public @S(50) @OPT PLI_CharInitial initialValue;
-			
+
 			public static class PLI_CharInitial extends TokenSequence
 			{
 				public @S(10) PLI_KeywordChoice INITIAL = new PLI_KeywordChoice("INITIAL", "INIT");
@@ -57,17 +55,16 @@ public class PLI_Type extends TokenChooser
 			public @S(30) @OPT PLI_TypeSize size;
 			public @S(40) @OPT PLI_Keyword COMPLEX = new PLI_Keyword("COMPLEX");
 		}
-		
+
 		public @CHOICE static class PLI_TypeBit extends TokenSequence
 		{
 			public @S(10) @OPT PLI_TypeSize size1;
 			public @S(20) PLI_Keyword BIT = new PLI_Keyword("BIT");
 			public @S(30) @OPT PLI_TypeSize size2;
-			public @S(40) @OPT PLI_KeywordChoice alignedOrStatic = new PLI_KeywordChoice(
-					"STATIC", "VARYING");
+			public @S(40) @OPT PLI_KeywordChoice alignedOrStatic = new PLI_KeywordChoice("STATIC", "VARYING");
 			public @S(50) @OPT PLI_Keyword ALIGNED = new PLI_Keyword("ALIGNED");
 			public @S(60) @OPT PLI_BitInitial initialValue;
-			
+
 			public static class PLI_BitInitial extends TokenSequence
 			{
 				public @S(10) PLI_Keyword INITIAL = new PLI_Keyword("INITIAL");
@@ -76,26 +73,25 @@ public class PLI_Type extends TokenChooser
 				public @S(40) PunctuationRightParen rightParen;
 			}
 		}
-		
+
 		public @CHOICE static class PLI_TypeGraphic extends TokenSequence
 		{
 			public @S(10) PLI_Keyword GRAPHIC = new PLI_Keyword("GRAPHIC");
 			public @S(20) @OPT PLI_TypeSize size;
-			public @S(30) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice(
-					"VARYING");
+			public @S(30) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice("VARYING");
 		}
 	}
 
 	public @CHOICE static class PLI_TypeSize extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<PLI_TypeSizeContents,PunctuationComma> typeSizeContents;
+		public @S(20) SeparatedList<PLI_TypeSizeContents, PunctuationComma> typeSizeContents;
 		public @S(30) PunctuationRightParen rightParen;
-		
+
 		public static class PLI_TypeSizeContents extends TokenChooser
 		{
 			public @CHOICE PunctuationStar star;
-			
+
 			public @CHOICE static class PLI_TypeSizeNormal extends TokenSequence
 			{
 				public @S(10) PLI_Expression size1;

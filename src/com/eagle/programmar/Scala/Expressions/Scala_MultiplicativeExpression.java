@@ -22,13 +22,13 @@ public class Scala_MultiplicativeExpression extends PrecedenceOperator implement
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "*" :
+		case "*":
 			interpreter.pushInt(leftValue * rightValue);
 			return;
-		case "/" :
+		case "/":
 			interpreter.pushInt(leftValue / rightValue);
 			return;
-		case "%" :
+		case "%":
 			interpreter.pushInt(leftValue % rightValue);
 			return;
 		}

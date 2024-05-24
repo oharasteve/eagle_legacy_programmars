@@ -10,18 +10,18 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class CSharp_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) CSharp_KeywordChoice builtinConstant = new CSharp_KeywordChoice(
-			"default", "false", "true", "null", "this", "super");
+	public @S(10) CSharp_KeywordChoice builtinConstant = new CSharp_KeywordChoice("default", "false", "true", "null",
+			"this", "super");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtinConstant.toString())
 		{
-		case "false" :
+		case "false":
 			interpreter.pushBool(false);
 			break;
-		case "true" :
+		case "true":
 			interpreter.pushBool(true);
 			break;
 		default:

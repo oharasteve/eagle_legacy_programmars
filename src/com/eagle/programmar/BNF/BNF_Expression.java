@@ -29,13 +29,13 @@ public class BNF_Expression extends TokenSequence
 	public static class BNF_ExpressionTerm extends TokenChooser
 	{
 		public @CHOICE BNF_Literal literal;
-	
+
 		public @CHOICE static class BNF_Rulename extends TokenSequence
 		{
 			public @S(10) BNF_Rule_Reference ref;
 			public @S(20) @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
 		}
-		
+
 		public @CHOICE static class BNF_Group extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
@@ -43,7 +43,7 @@ public class BNF_Expression extends TokenSequence
 			public @S(30) PunctuationRightParen rightParen;
 			public @S(40) @OPT BNF_PunctuationChoice starOrPlus = new BNF_PunctuationChoice("*", "+");
 		}
-		
+
 		public @CHOICE static class BNF_Optional extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;

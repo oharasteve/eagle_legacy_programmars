@@ -8,11 +8,11 @@ public class Perl_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"CORE",
 			"and",
-			"case",			// I added
+			"case", // I added
 			"cmp",
 			"continue",
-			"default",		// I added
-			"die",			// I added
+			"default", // I added
+			"die", // I added
 			"do",
 			"else",
 			"elsif",
@@ -20,11 +20,11 @@ public class Perl_Reserved_Words
 			"exp",
 			"for",
 			"foreach",
-			"function",		// I added
+			"function", // I added
 			"ge",
 			"gt",
 			"if",
-			"join",			// I added
+			"join", // I added
 			"le",
 			"lock",
 			"lt",
@@ -34,14 +34,15 @@ public class Perl_Reserved_Words
 			"or",
 			"package",
 			"print",
-			// "q",		// These are funny quotes for string literals
-			"qq",		// See https://blog.katastros.com/a?ID=00250-48fe9f7b-2996-4c75-ac9a-b54ab4ae0ef1
+			// "q", // These are funny quotes for string literals
+			"qq", // See
+					// https://blog.katastros.com/a?ID=00250-48fe9f7b-2996-4c75-ac9a-b54ab4ae0ef1
 			"qr",
 			"qw",
 			"qx",
 			// "s",
 			"sub",
-			"switch",		// I added
+			"switch", // I added
 			"tr",
 			"unless",
 			"until",

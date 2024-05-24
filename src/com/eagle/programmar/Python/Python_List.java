@@ -15,7 +15,7 @@ public class Python_List extends TokenSequence
 	public @S(30) @OPT TokenList<Python_MoreListItem> more;
 	public @S(40) @OPT PunctuationComma comma;
 	public @S(50) @OPT TokenList<Python_Comment> comment2;
-	
+
 	public static class Python_MoreListItem extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

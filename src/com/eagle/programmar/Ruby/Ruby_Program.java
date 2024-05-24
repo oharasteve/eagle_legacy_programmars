@@ -13,12 +13,12 @@ import com.eagle.tokens.TokenSequence;
 public class Ruby_Program extends EagleLanguage
 {
 	public static final String RUBY = "Ruby";
-	
+
 	public Ruby_Program()
 	{
 		super(RUBY, new Ruby_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
@@ -26,13 +26,13 @@ public class Ruby_Program extends EagleLanguage
 	}
 
 	public @S(10) TokenList<Ruby_Element> elements;
-	
+
 	public static class Ruby_Element extends TokenChooser
 	{
 		public @CHOICE Ruby_CommentEoln comment;
 		public @CHOICE Ruby_Statement stmt;
 	}
-	
+
 	public static class Ruby_CommentEoln extends TokenSequence
 	{
 		public @S(10) Ruby_Comment comment;

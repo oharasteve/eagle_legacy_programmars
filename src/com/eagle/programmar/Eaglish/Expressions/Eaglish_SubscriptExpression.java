@@ -19,7 +19,7 @@ public class Eaglish_SubscriptExpression extends PrecedenceOperator implements E
 	public @S(20) PunctuationLeftBracket leftBracket;
 	public @S(30) Eaglish_Expression subscr;
 	public @S(40) PunctuationRightBracket rightBracket;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -27,5 +27,5 @@ public class Eaglish_SubscriptExpression extends PrecedenceOperator implements E
 		int index = interpreter.getIntValue(subscr);
 		EagleValue val = array.get(index);
 		interpreter.pushEagleValue(val);
-	}	
+	}
 }

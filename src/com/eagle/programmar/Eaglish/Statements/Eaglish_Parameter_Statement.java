@@ -18,7 +18,7 @@ public class Eaglish_Parameter_Statement extends TokenSequence
 	public @S(40) Eaglish_Type type;
 	public @S(50) @OPT Eaglish_ParemeterDefaultValue defaultValue;
 	public @S(60) Eaglish_EndOfLine eoln;
-	
+
 	public static class Eaglish_ParemeterDefaultValue extends TokenSequence
 	{
 		public @S(10) Eaglish_Keyword DEFAULT = new Eaglish_Keyword("DEFAULT");

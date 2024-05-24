@@ -12,7 +12,7 @@ public class Julia_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Julia_KeywordChoice(String... words)
 	{
 		super(words);

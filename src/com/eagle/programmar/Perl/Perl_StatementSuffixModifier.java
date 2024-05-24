@@ -17,20 +17,20 @@ public class Perl_StatementSuffixModifier extends TokenChooser
 		public @S(10) Perl_KeywordChoice IfUnless = new Perl_KeywordChoice("if", "unless", "while");
 		public @S(20) @OPT Perl_MinusF minusF;
 		public @S(30) Perl_Expression condition;
-		
+
 		public static class Perl_MinusF extends TokenSequence
 		{
 			public @S(10) PunctuationHyphen minus;
 			public @S(20) Perl_KeywordChoice DF = new Perl_KeywordChoice("d", "f");
 		}
 	}
-	
+
 	public @CHOICE static class Perl_StatementOrSuffix extends TokenSequence
 	{
 		public @S(10) Perl_Keyword OR = new Perl_Keyword("or");
 		public @S(20) Perl_StatementList statement;
 	}
-	
+
 	public @CHOICE static class Perl_StatementBarSuffix extends TokenSequence
 	{
 		public @S(10) Perl_Punctuation barBar = new Perl_Punctuation("||");

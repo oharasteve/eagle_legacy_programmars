@@ -18,19 +18,19 @@ import com.eagle.tokens.TokenSequence;
 public class CMD_Argument extends TokenSequence
 {
 	public @S(10) CMD_RawArgument arg;
-	
+
 	public static class CMD_ArgumentPiece extends TokenChooser
 	{
 		public @CHOICE CMD_Punctuation quote = new CMD_Punctuation('"');
 		public @CHOICE CMD_RawArgument literal;
-		
+
 		public @CHOICE static class CMD_ArgumentVariable extends TokenSequence
 		{
 			public @S(10) CMD_Punctuation percent1 = new CMD_Punctuation('%');
 			public @S(20) CMD_Identifier_Reference var;
 			public @S(30) CMD_Punctuation percent2 = new CMD_Punctuation('%');
 		}
-		
+
 		public @CHOICE static class CMD_ArgumentParament extends TokenSequence
 		{
 			public @S(10) CMD_Punctuation percent = new CMD_Punctuation('%');

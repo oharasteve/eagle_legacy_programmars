@@ -13,7 +13,7 @@ public class PHP_Syntax extends EagleSyntax
 	{
 		return "PHP";
 	}
-	
+
 	public PHP_Syntax()
 	{
 		_isCaseSensitive = true;

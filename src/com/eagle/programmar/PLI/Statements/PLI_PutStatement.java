@@ -27,13 +27,12 @@ public class PLI_PutStatement extends TokenSequence
 	public @S(40) @OPT PLI_Keyword SKIP = new PLI_Keyword("SKIP");
 	public @S(50) @OPT PLI_PutFormat_Count count;
 	public @S(60) @OPT PLI_PutString string;
-	public @S(70) @OPT PLI_KeywordChoice dataOrEditOrList = new PLI_KeywordChoice(
-			"DATA", "EDIT", "LIST");
-	
+	public @S(70) @OPT PLI_KeywordChoice dataOrEditOrList = new PLI_KeywordChoice("DATA", "EDIT", "LIST");
+
 	public @S(80) @OPT PLI_PutValues values;
 
 	public @S(90) @OPT PLI_PutFormat putFormat;
-	
+
 	public @S(100) PunctuationSemicolon semicolon;
 
 	public static class PLI_PutFile extends TokenSequence
@@ -43,7 +42,7 @@ public class PLI_PutStatement extends TokenSequence
 		public @S(30) PLI_Identifier_Reference file;
 		public @S(40) PunctuationRightParen rightParen1;
 	}
-	
+
 	public static class PLI_PutString extends TokenSequence
 	{
 		public @S(10) PLI_Keyword STRING = new PLI_Keyword("STRING");
@@ -51,11 +50,11 @@ public class PLI_PutStatement extends TokenSequence
 		public @S(30) PLI_Identifier_Reference var;
 		public @S(40) PunctuationRightParen rightParen1;
 	}
-	
+
 	public static class PLI_PutValues extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen1;
-		public @S(20) SeparatedList<PLI_Expression,PunctuationComma> exprs;
+		public @S(20) SeparatedList<PLI_Expression, PunctuationComma> exprs;
 		public @S(30) PunctuationRightParen rightParen1;
 	}
 
@@ -65,18 +64,18 @@ public class PLI_PutStatement extends TokenSequence
 		public @S(20) PLI_PutEditFormat editFormat;
 		public @S(30) @OPT TokenList<PLI_PutMoreFormats> moreFmts;
 		public @S(40) PunctuationRightParen rightParen2;
-		
+
 		public static class PLI_PutEditFormat extends TokenChooser
 		{
 			public @CHOICE PLI_Keyword SKIP = new PLI_Keyword("SKIP");
 			public @CHOICE PLI_Literal literal;
-			
+
 			public @CHOICE static class PLI_PutMultipleFormats extends TokenSequence
 			{
 				public @S(10) PLI_Number number;
 				public @S(20) PLI_PutFormat format;
 			}
-			
+
 			public @CHOICE static class PLI_PutFormat_A extends TokenSequence
 			{
 				public @S(10) @OPT PLI_Number number;
@@ -113,21 +112,21 @@ public class PLI_PutStatement extends TokenSequence
 				public @S(30) PLI_PutFormat_Count formatCount;
 			}
 		}
-		
+
 		public static class PLI_PutMoreFormats extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) PLI_PutEditFormat editFormat;
 		}
 	}
-	
+
 	public static class PLI_PutFormat_Count extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) PLI_Expression expr;
 		public @S(30) @OPT PLI_PutFormat_SecondCount secondCount;
 		public @S(40) PunctuationRightParen rightParen;
-		
+
 		public static class PLI_PutFormat_SecondCount extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;

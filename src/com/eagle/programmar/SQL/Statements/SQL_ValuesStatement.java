@@ -13,6 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class SQL_ValuesStatement extends TokenSequence
 {
 	public @S(10) SQL_Keyword VALUES = new SQL_Keyword("VALUES");
-	public @S(20) SeparatedList<SQL_Expression,PunctuationComma> values;
+	public @S(20) SeparatedList<SQL_Expression, PunctuationComma> values;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 }

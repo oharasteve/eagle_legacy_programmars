@@ -37,7 +37,7 @@ public abstract class RPG_F_File_Specification extends TokenSequence
 	public @S(230) RPG_Blanks blank4;
 	public @S(240) @OPT RPG_Literal fileCondition;
 	public @S(250) RPG_Blanks blank5;
-	
+
 	public static class RPG_F_File_Specification_III extends RPG_F_File_Specification
 	{
 		public RPG_F_File_Specification_III()
@@ -57,8 +57,7 @@ public abstract class RPG_F_File_Specification extends TokenSequence
 			overflowIndicator = new RPG_Literal(33, 34);
 			keyStart = new RPG_Number(35, 38);
 			extensionCode = new RPG_KeywordChoice(39, 39, "E", "L");
-			device = new RPG_KeywordChoice(40, 46,
-					"PRINTER", "DISK", "WORKSTN", "SPECIAL", "SEQ");
+			device = new RPG_KeywordChoice(40, 46, "PRINTER", "DISK", "WORKSTN", "SPECIAL", "SEQ");
 			blank2 = new RPG_Blanks(47, 52);
 			continuationLines = new RPG_Keyword(53, 53, "K");
 			routine = new RPG_Literal(54, 59);
@@ -69,7 +68,7 @@ public abstract class RPG_F_File_Specification extends TokenSequence
 			blank5 = new RPG_Blanks(73, 74);
 		}
 	}
-	
+
 	public static class RPG_F_File_Specification_IV extends RPG_F_File_Specification
 	{
 		public RPG_F_File_Specification_IV()
@@ -80,25 +79,24 @@ public abstract class RPG_F_File_Specification extends TokenSequence
 			endOfFile = new RPG_Keyword(19, 19, "E");
 			sequence = new RPG_KeywordChoice(21, 21, "A", "D");
 			fileFormat = new RPG_KeywordChoice(22, 22, "F", "E");
-			blank1 = new RPG_Blanks(0, 0);		// Not Applicable
+			blank1 = new RPG_Blanks(0, 0); // Not Applicable
 			recordLength = new RPG_Number(23, 27);
 			limitsProcessing = new RPG_Keyword(28, 28, "L");
 			fieldLength = new RPG_Number(29, 33);
 			recordAddressType = new RPG_KeywordChoice(34, 34, "A", "P", "K");
 			fileOrganization = new RPG_KeywordChoice(35, 35, "I", "T");
-			overflowIndicator = new RPG_Literal(0, 0);	// ??
-			keyStart = new RPG_Number(0, 0);			// ??
+			overflowIndicator = new RPG_Literal(0, 0); // ??
+			keyStart = new RPG_Number(0, 0); // ??
 			extensionCode = new RPG_KeywordChoice(0, 0, "E", "L");
-			device = new RPG_KeywordChoice(36, 42,
-					"PRINTER", "DISK", "WORKSTN", "SPECIAL", "SEQ");
+			device = new RPG_KeywordChoice(36, 42, "PRINTER", "DISK", "WORKSTN", "SPECIAL", "SEQ");
 			blank2 = new RPG_Blanks(43, 43);
-			continuationLines = new RPG_Keyword(0, 0, "K");	// Not Applicable
-			routine = new RPG_Literal(0, 0);		// ??
-			blank3 = new RPG_Blanks(0, 0);		// Not Applicable
+			continuationLines = new RPG_Keyword(0, 0, "K"); // Not Applicable
+			routine = new RPG_Literal(0, 0); // ??
+			blank3 = new RPG_Blanks(0, 0); // Not Applicable
 			fileAddition = new RPG_Keyword(20, 20, "A");
-			blank4 = new RPG_Blanks(0, 0);	// ??
-			fileCondition = new RPG_Literal(0, 0);	// ??
-			blank5 = new RPG_Blanks(0, 0);	// ??
+			blank4 = new RPG_Blanks(0, 0); // ??
+			fileCondition = new RPG_Literal(0, 0); // ??
+			blank5 = new RPG_Blanks(0, 0); // ??
 		}
 	}
 }

@@ -28,13 +28,13 @@ public class Natural_Resolve_References extends Eagle_Resolve_References
 
 		ArrayList<AbstractToken> dataReferences = new ArrayList<AbstractToken>();
 		findAllInstances(dataReferences, program, Natural_Identifier_Reference.class);
-		
+
 		for (AbstractToken defToken : defineStatements)
 		{
 			Natural_Data_Definition def = (Natural_Data_Definition) defToken;
 			scope.addSymbol(def);
 		}
-		
+
 		// Match 'em up!
 		for (AbstractToken refToken : dataReferences)
 		{
@@ -47,14 +47,14 @@ public class Natural_Resolve_References extends Eagle_Resolve_References
 				if (ref.toString().equalsIgnoreCase(def.toString()))
 				{
 					if (foundAny == 1) System.err.println("**** Duplicate data definition for " + ref);
-					if (_trace) System.out.println("Data reference to " + ref + " at " +
-							(ref.getStartLine()+1) + "/" + (ref.getStartChar()+1));
+					if (_trace) System.out.println("Data reference to " + ref + " at " + (ref.getStartLine() + 1) + "/"
+							+ (ref.getStartChar() + 1));
 					ref.setDefinition(def);
 					def.addReference(ref);
 					foundAny++;
 				}
 			}
-			
+
 			if (foundAny == 0)
 			{
 				System.err.println("**** Unable to find a Data Definition for " + ref);

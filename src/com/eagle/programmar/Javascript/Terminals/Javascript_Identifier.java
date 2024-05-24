@@ -12,6 +12,6 @@ public abstract class Javascript_Identifier extends TerminalIdentifierToken
 	public boolean parse(EagleFileReader lines)
 	{
 		// Allow just _ or $ as variable names
-		return genericIdentifier(lines, ALPHAS+"_$", ALPHAS+DIGITS+"_$", false, false);
+		return genericIdentifier(lines, ALPHAS + "_$", ALPHAS + DIGITS + "_$", false, false);
 	}
 }

@@ -10,7 +10,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Python_ReturnStatement extends TokenSequence
 {
-	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN = new Python_Keyword("return");
+	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN = new Python_Keyword(
+			"return");
 	public @S(20) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(30) @OPT Python_ExpressionList expressionList;
 	public @S(40) @OPT Python_Comment comment;

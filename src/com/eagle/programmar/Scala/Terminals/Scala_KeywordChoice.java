@@ -12,7 +12,7 @@ public class Scala_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Scala_KeywordChoice(String... words)
 	{
 		super(words);

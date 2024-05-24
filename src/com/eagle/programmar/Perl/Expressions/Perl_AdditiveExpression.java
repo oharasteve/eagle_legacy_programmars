@@ -22,10 +22,10 @@ public class Perl_AdditiveExpression extends PrecedenceOperator implements Eagle
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "+" :
+		case "+":
 			interpreter.pushInt(leftValue + rightValue);
 			return;
-		case "-" :
+		case "-":
 			interpreter.pushInt(leftValue - rightValue);
 			return;
 		}

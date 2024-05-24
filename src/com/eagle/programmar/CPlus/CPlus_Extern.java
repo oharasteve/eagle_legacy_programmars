@@ -13,7 +13,7 @@ public class CPlus_Extern extends TokenSequence
 {
 	public @S(10) C_Extern_C externC;
 	public @S(20) CPlus_Extern_What what;
-	
+
 	public static class CPlus_Extern_What extends TokenChooser
 	{
 		public @CHOICE CPlus_Method method;

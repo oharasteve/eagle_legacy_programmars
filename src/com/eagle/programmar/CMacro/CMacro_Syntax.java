@@ -12,14 +12,16 @@ public class CMacro_Syntax extends EagleSyntax
 	{
 		return "CMacro";
 	}
-	
+
 	public CMacro_Syntax()
 	{
 		_isCaseSensitive = true;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
 		_autoAdvance = false;
-		//_commentInstance = new C_Comment();
-		_punctuationExceptions = new String[] { "!=", "<=", "==", ">=", "/*", "&&", "||", "##", "..." };
+		// _commentInstance = new C_Comment();
+		_punctuationExceptions = new String[] {
+				"!=", "<=", "==", ">=", "/*", "&&", "||", "##", "..."
+		};
 	}
 }

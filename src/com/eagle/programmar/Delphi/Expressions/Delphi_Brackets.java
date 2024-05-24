@@ -13,6 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Delphi_Brackets extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) SeparatedList<Delphi_Expression,PunctuationComma> exprs;
-	public @S(30) PunctuationRightBracket rightBracket;		
+	public @S(20) SeparatedList<Delphi_Expression, PunctuationComma> exprs;
+	public @S(30) PunctuationRightBracket rightBracket;
 }

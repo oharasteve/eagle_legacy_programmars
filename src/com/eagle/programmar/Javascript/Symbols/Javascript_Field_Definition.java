@@ -11,7 +11,7 @@ public class Javascript_Field_Definition extends Javascript_Identifier_Definitio
 	public boolean parse(EagleFileReader lines)
 	{
 		// Allow reserved words for a field name
-		if (! genericIdentifier(lines, ALPHAS+"_", ALPHAS+DIGITS+"_-", false, true)) return false;
+		if (!genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_-", false, true)) return false;
 		return true;
 	}
 

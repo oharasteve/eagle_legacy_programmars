@@ -25,7 +25,7 @@ public class Perl_TryStatement extends TokenSequence
 	public @S(50) @OPT TokenList<Perl_Comment> comments;
 	public @S(60) @OPT TokenList<Perl_CatchBlock> catchBlocks;
 	public @S(70) @OPT Perl_FinallyBlock finallyBlock;
-	
+
 	public static class Perl_CatchBlock extends TokenSequence
 	{
 		public @S(10) Perl_Keyword CATCH = new Perl_Keyword("catch");
@@ -37,7 +37,7 @@ public class Perl_TryStatement extends TokenSequence
 		public @S(70) PunctuationRightParen rightParen;
 		public @S(80) Perl_Statement catchStatement;
 	}
-	
+
 	public static class Perl_FinallyBlock extends TokenSequence
 	{
 		public @S(10) Perl_Keyword FINALLY = new Perl_Keyword("finally");

@@ -12,9 +12,10 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Template_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Template_Expression left = new Template_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Template_PunctuationChoice operator = new Template_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+	public @S(20) Template_PunctuationChoice operator = new Template_PunctuationChoice("==", "!=", "<", ">", "<=",
+			">=");
 	public @S(30) Template_Expression right = new Template_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

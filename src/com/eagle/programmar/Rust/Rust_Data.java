@@ -20,7 +20,7 @@ public class Rust_Data extends TokenSequence
 	public @S(50) Rust_Type type;
 	public @S(60) @OPT Rust_Data_Initial init;
 	public @S(70) PunctuationSemicolon semicolon;
-	
+
 	public static class Rust_Data_Initial extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;

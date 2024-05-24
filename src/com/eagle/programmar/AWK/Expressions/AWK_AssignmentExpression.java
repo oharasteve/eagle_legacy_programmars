@@ -15,11 +15,11 @@ public class AWK_AssignmentExpression extends PrecedenceOperator implements Eagl
 	public @S(10) AWK_Expression var = new AWK_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=", "-=", "*=", "/=");
 	public @S(30) AWK_Expression expr = new AWK_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (! (var.getWhich() instanceof AWK_VariableExpression))
+		if (!(var.getWhich() instanceof AWK_VariableExpression))
 		{
 			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
 		}
@@ -30,8 +30,8 @@ public class AWK_AssignmentExpression extends PrecedenceOperator implements Eagl
 		case "=":
 			int x = interpreter.getIntValue(expr);
 			IntegerValue val = new IntegerValue(x);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
-					var.getStartChar(), varExpr.variable.id.getValue(), val);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					varExpr.variable.id.getValue(), val);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

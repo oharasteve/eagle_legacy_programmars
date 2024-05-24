@@ -13,7 +13,7 @@ public class Perl_NextStatement extends TokenSequence
 	public @S(10) Perl_Keyword NEXT = new Perl_Keyword("next");
 	public @S(20) @OPT Perl_Label_Reference label;
 	public @S(30) @OPT Perl_NextUnless unless;
-	
+
 	public static class Perl_NextUnless extends TokenSequence
 	{
 		public @S(10) Perl_Keyword UNLESS = new Perl_Keyword("unless");

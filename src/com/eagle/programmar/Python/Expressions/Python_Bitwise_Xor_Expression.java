@@ -7,7 +7,7 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Python_Bitwise_Xor_Expression extends PrecedenceOperator 
+public class Python_Bitwise_Xor_Expression extends PrecedenceOperator
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Punctuation xor = new Python_Punctuation('^');

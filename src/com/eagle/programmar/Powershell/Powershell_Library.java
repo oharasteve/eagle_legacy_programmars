@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class Powershell_Library extends TokenSequence
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) SeparatedList<Powershell_Identifier_Reference,PunctuationPeriod> name;
+	public @S(20) SeparatedList<Powershell_Identifier_Reference, PunctuationPeriod> name;
 	public @S(30) @OPT Powershell_Keyword FTP = new Powershell_Keyword("+FTP");
 	public @S(40) PunctuationRightBracket rightBracket;
 	public @S(50) Powershell_Punctuation colons = new Powershell_Punctuation("::");

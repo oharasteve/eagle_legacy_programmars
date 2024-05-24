@@ -26,7 +26,7 @@ public class PLI_DoStatement extends TokenSequence
 	public @S(90) PLI_Keyword END = new PLI_Keyword("END");
 	public @S(100) @OPT PLI_Identifier_Reference label2;
 	public @S(110) PunctuationSemicolon semicolon2;
-	
+
 	public static class PLI_DoLoop extends TokenSequence
 	{
 		public @S(10) PLI_Identifier_Reference var;
@@ -35,20 +35,20 @@ public class PLI_DoStatement extends TokenSequence
 		public @S(40) PLI_Keyword TO = new PLI_Keyword("TO");
 		public @S(50) PLI_Expression toExpr;
 		public @S(60) @OPT PLI_DoBy by;
-		
+
 		public static class PLI_DoBy extends TokenSequence
 		{
 			public @S(10) PLI_Keyword BY = new PLI_Keyword("BY");
 			public @S(20) PLI_Expression byExpr;
 		}
 	}
-	
+
 	public static class PLI_DoUntil extends TokenSequence
 	{
 		public @S(10) PLI_Keyword UNTIL = new PLI_Keyword("UNTIL");
 		public @S(20) PLI_Expression condition;
 	}
-	
+
 	public static class PLI_DoWhile extends TokenSequence
 	{
 		public @S(10) PLI_Keyword WHILE = new PLI_Keyword("WHILE");

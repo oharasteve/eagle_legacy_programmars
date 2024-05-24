@@ -10,7 +10,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Delphi_While_Statement extends TokenSequence
 {
-	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#While_Statements") Delphi_Keyword WHILE = new Delphi_Keyword("While");
+	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#While_Statements") Delphi_Keyword WHILE = new Delphi_Keyword(
+			"While");
 	public @S(20) Delphi_Expression cond;
 	public @S(30) Delphi_Keyword DO = new Delphi_Keyword("Do");
 	public @S(40) Delphi_Statement stmt;

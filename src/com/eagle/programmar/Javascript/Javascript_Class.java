@@ -28,19 +28,19 @@ public class Javascript_Class extends TokenSequence
 	public @S(50) PunctuationLeftBrace leftBrace;
 	public @S(60) @OPT TokenList<Javascript_ClassElement> elements;
 	public @S(70) PunctuationRightBrace rightBrace;
-	
+
 	public static class Javascript_ClassExtends extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword EXTENDS = new Javascript_Keyword("extends");
-		public @S(20) SeparatedList<Javascript_Class_Reference,PunctuationPeriod> name;
+		public @S(20) SeparatedList<Javascript_Class_Reference, PunctuationPeriod> name;
 	}
-	
+
 	public static class Javascript_ClassElement extends TokenChooser
 	{
 		public @CHOICE Javascript_Method method;
 		public @CHOICE Javascript_Element element;
 	}
-	
+
 	public static class Javascript_Method extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword STATIC = new Javascript_Keyword("static");

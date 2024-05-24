@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenList;
 public class JSON_Program extends EagleLanguage
 {
 	public static final String JSON = "JSON";
-	
+
 	public JSON_Program()
 	{
 		super(JSON, new JSON_Syntax());
@@ -23,10 +23,10 @@ public class JSON_Program extends EagleLanguage
 	{
 		return "http://www.w3schools.com/json/";
 	}
-	
+
 	public @S(10) @OPT @CURIOUS("Strange file header") JSON_Punctuation header = new JSON_Punctuation(")]}'");
 	public @S(20) TokenList<JSON_ElementOrComment> elements;
-	
+
 	public static class JSON_ElementOrComment extends TokenChooser
 	{
 		public @CHOICE JSON_Comment comment;

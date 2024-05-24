@@ -9,28 +9,21 @@ import com.eagle.tokens.TokenList;
 public class Perl_Program extends EagleLanguage
 {
 	public static final String PERL = "Perl";
-	
+
 	public Perl_Program()
 	{
 		super(PERL, new Perl_Syntax());
 	}
-	
+
 	@Override
 	public String getDocRoot()
 	{
 		return "http://perldoc.perl.org/";
 	}
-	
+
 	public static final String[] MODIFIERS = new String[] {
-		"abstract",
-		"const",
-		"final",
-		"private",
-		"protected",
-		"public",
-		"static",
-		"var"
-	}; 
+			"abstract", "const", "final", "private", "protected", "public", "static", "var"
+	};
 
 	public @S(10) TokenList<Perl_StatementOrComment> statements;
 }

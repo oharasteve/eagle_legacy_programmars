@@ -19,6 +19,6 @@ public class CMacro_Pragma_RuntimeChecks extends TokenSequence
 	public @S(40) @OPT PunctuationComma comma1;
 	public @S(50) @OPT CMacro_Keyword OFF = new CMacro_Keyword("off");
 	public @S(60) @OPT PunctuationComma comma2;
-	public @S(70) @OPT CMacro_Number number;	// 1 perhaps
+	public @S(70) @OPT CMacro_Number number; // 1 perhaps
 	public @S(80) PunctuationRightParen rightParen;
 }

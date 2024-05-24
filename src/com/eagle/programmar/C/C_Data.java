@@ -35,7 +35,7 @@ public class C_Data extends TokenChooser
 		public @S(70) @OPT TokenList<C_MoreIdentifiers> moreIds;
 		public @S(80) PunctuationSemicolon semicolon;
 		public @S(90) @OPT TokenList<C_Comment> comments2;
-		
+
 		public static class C_MoreIdentifiers extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
@@ -44,17 +44,17 @@ public class C_Data extends TokenChooser
 			public @S(40) @OPT TokenList<C_Subscript> subscripts;
 			public @S(50) @OPT C_DataInitialValue initialValue;
 		}
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
 			EagleValue value = interpreter.getEagleValue(initialValue.expression);
-			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-					id.toString(), value);
+			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
+					value);
 			// System.out.println("************** Added " + id + " = " + value);
 		}
 	}
-	
+
 	public @CHOICE static class C_FunctionPointer extends TokenSequence
 	{
 		public @S(10) @OPT C_KeywordChoice scope = new C_KeywordChoice(C_Program.getModifiers());

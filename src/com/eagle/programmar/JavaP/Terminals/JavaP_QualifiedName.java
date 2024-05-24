@@ -9,8 +9,8 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class JavaP_QualifiedName extends TerminalLiteralToken
 {
-	private static final String VALIDS = "/-._$:";	// Valid characters in the name
-	
+	private static final String VALIDS = "/-._$:"; // Valid characters in the name
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -19,7 +19,7 @@ public class JavaP_QualifiedName extends TerminalLiteralToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
 		if (_currentChar >= recLen) return false;
-		
+
 		int endChar = _currentChar;
 		while (endChar < recLen)
 		{
@@ -32,8 +32,8 @@ public class JavaP_QualifiedName extends TerminalLiteralToken
 			endChar++;
 		}
 
-		if (endChar == _currentChar) return false;	// Zero length -> fail
-		foundIt(_currentLine, endChar-1);
+		if (endChar == _currentChar) return false; // Zero length -> fail
+		foundIt(_currentLine, endChar - 1);
 		_txt = rec.substring(_currentChar, endChar);
 		return true;
 	}

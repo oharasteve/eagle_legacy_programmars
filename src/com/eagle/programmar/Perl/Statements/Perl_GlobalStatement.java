@@ -14,9 +14,9 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 public class Perl_GlobalStatement extends TokenSequence
 {
 	public @S(10) Perl_KeywordChoice GLOBAL = new Perl_KeywordChoice("global", "local", "our");
-	public @S(20) SeparatedList<Perl_Variable,PunctuationComma> vars;
+	public @S(20) SeparatedList<Perl_Variable, PunctuationComma> vars;
 	public @S(30) @OPT Perl_Global_Init init;
-	
+
 	public static class Perl_Global_Init extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;

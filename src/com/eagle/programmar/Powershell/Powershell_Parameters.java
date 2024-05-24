@@ -30,18 +30,18 @@ public class Powershell_Parameters extends TokenSequence
 	public @S(40) @OPT TokenList<Powershell_Param> params;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) @OPT Powershell_EndOfLine eoln2;
-	
+
 	public static class Powershell_Param extends TokenChooser
 	{
 		public @CHOICE Powershell_CommentEoln comment;
-		
+
 		public @CHOICE static class Powershell_Parameter extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
 			public @S(20) Powershell_Keyword PARAMETER = new Powershell_Keyword("Parameter");
 			public @S(30) PunctuationLeftParen leftParen;
 			public @S(40) @OPT Powershell_EndOfLine eoln1;
-			public @S(50) SeparatedList<Powershell_ParameterOption,PunctuationComma> options;
+			public @S(50) SeparatedList<Powershell_ParameterOption, PunctuationComma> options;
 			public @S(60) PunctuationRightParen rightParen;
 			public @S(70) PunctuationRightBracket rightBracket;
 			public @S(80) @OPT Powershell_EndOfLine eoln2;
@@ -49,30 +49,30 @@ public class Powershell_Parameters extends TokenSequence
 			public @S(100) Powershell_Variable param;
 			public @S(110) @OPT PunctuationComma comma;
 			public @S(120) @OPT Powershell_EndOfLine eoln3;
-			
+
 			public static class Powershell_CastParam extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBracket leftBracket;
 				public @S(20) Powershell_Type type;
 				public @S(30) PunctuationRightBracket rightBracket;
 			}
-			
+
 			public static class Powershell_ParameterOption extends TokenChooser
 			{
 				public @CHOICE static class Powershell_ParameterMandatory extends TokenSequence
 				{
-					public  @S(10)Powershell_Keyword MANDATORY = new Powershell_Keyword("Mandatory");
-					public  @S(20)PunctuationEquals equals;
-					public  @S(30)Powershell_Expression value;
+					public @S(10) Powershell_Keyword MANDATORY = new Powershell_Keyword("Mandatory");
+					public @S(20) PunctuationEquals equals;
+					public @S(30) Powershell_Expression value;
 				}
-				
+
 				public @CHOICE static class Powershell_ParameterPosition extends TokenSequence
 				{
 					public @S(10) Powershell_Keyword POSITION = new Powershell_Keyword("Position");
 					public @S(20) PunctuationEquals equals;
 					public @S(30) Powershell_Expression value;
 				}
-				
+
 				public @CHOICE static class Powershell_ParameterHelpMessage extends TokenSequence
 				{
 					public @S(10) Powershell_Keyword HELP_MESSAGE = new Powershell_Keyword("HelpMessage");
@@ -81,7 +81,7 @@ public class Powershell_Parameters extends TokenSequence
 				}
 			}
 		}
-		
+
 		public @CHOICE static class Powershell_ParamSwitch extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;
@@ -92,14 +92,14 @@ public class Powershell_Parameters extends TokenSequence
 			public @S(60) @OPT Powershell_SwitchValue value;
 			public @S(70) @OPT PunctuationComma comma;
 			public @S(80) @OPT Powershell_EndOfLine eoln2;
-			
+
 			public static class Powershell_SwitchValue extends TokenSequence
 			{
 				public @S(10) PunctuationEquals equals;
 				public @S(20) Powershell_Expression expr;
 			}
 		}
-		
+
 		public @CHOICE static class Powershell_ParamAlias extends TokenSequence
 		{
 			public @S(10) PunctuationLeftBracket leftBracket;

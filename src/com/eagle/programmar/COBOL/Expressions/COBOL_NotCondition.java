@@ -13,10 +13,10 @@ public class COBOL_NotCondition extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) COBOL_Keyword NOT = new COBOL_Keyword("NOT");
 	public @S(20) COBOL_Expression cond;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.pushBool(! interpreter.getBoolValue(cond));
+		interpreter.pushBool(!interpreter.getBoolValue(cond));
 	}
 }

@@ -14,24 +14,24 @@ public class Bash_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Bash_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
-		if (! super.possibleCommentToEndOfLine(rec, "#")) return false;
-		
+		if (!super.possibleCommentToEndOfLine(rec, "#")) return false;
+
 		// Check for shebang (#!) on line 1, columns 1-2
 		if (_currentLine > 0) return true;
 		if (rec.length() < 2) return true;
 		if (rec.charAt(0) != '#' || rec.charAt(1) != '!') return true;
-		
+
 		// Dang, it is a she-bang (#!)
 		return false;
 	}

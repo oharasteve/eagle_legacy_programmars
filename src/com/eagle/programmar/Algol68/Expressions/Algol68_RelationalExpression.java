@@ -19,7 +19,8 @@ public class Algol68_RelationalExpression extends PrecedenceOperator implements 
 
 	public static class Algol68_RelOp extends TokenChooser
 	{
-		public @CHOICE Algol68_PunctuationChoice symbol = new Algol68_PunctuationChoice("<", ">", "<=", ">=", "=", "~=", "/=");
+		public @CHOICE Algol68_PunctuationChoice symbol = new Algol68_PunctuationChoice("<", ">", "<=", ">=", "=", "~=",
+				"/=");
 		public @CHOICE Algol68_KeywordChoice word = new Algol68_KeywordChoice("LT", "LE", "EQ", "NE", "GE", "GT");
 	}
 
@@ -30,25 +31,25 @@ public class Algol68_RelationalExpression extends PrecedenceOperator implements 
 		int rightValue = interpreter.getIntValue(right);
 		switch (relOp.getWhich().toString())
 		{
-		case "=", "EQ" :
+		case "=", "EQ":
 			interpreter.pushBool(leftValue == rightValue);
 			return;
-		case "~=", "/=", "NE" :
+		case "~=", "/=", "NE":
 			interpreter.pushBool(leftValue != rightValue);
 			return;
-		case "<", "LT" :
+		case "<", "LT":
 			interpreter.pushBool(leftValue < rightValue);
 			return;
-		case "<=", "LE" :
+		case "<=", "LE":
 			interpreter.pushBool(leftValue <= rightValue);
 			return;
-		case ">", "GT" :
+		case ">", "GT":
 			interpreter.pushBool(leftValue > rightValue);
 			return;
-		case ">=", "GE" :
+		case ">=", "GE":
 			interpreter.pushBool(leftValue >= rightValue);
 			return;
 		}
-		throw new RuntimeException("Unexpected relational operator: " + relOp);
+		throw new RuntimeException("Unexpected relational operator: " + relOp.getWhich());
 	}
 }

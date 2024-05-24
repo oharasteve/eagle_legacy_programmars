@@ -13,8 +13,6 @@ public class CSS_Attr extends TokenSequence
 {
 	public @S(10) CSS_Keyword ATTR = new CSS_Keyword("attr");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) CSS_KeywordChoice CODE = new CSS_KeywordChoice(
-			"href",
-			"title");
+	public @S(30) CSS_KeywordChoice CODE = new CSS_KeywordChoice("href", "title");
 	public @S(40) PunctuationRightParen rightParen;
 }

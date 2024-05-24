@@ -12,7 +12,7 @@ public class Java_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Java_KeywordChoice(String... words)
 	{
 		super(words);

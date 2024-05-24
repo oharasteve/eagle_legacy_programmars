@@ -36,14 +36,14 @@ public class Perl_Statement extends TokenChooser
 	public @CHOICE Perl_ClassStatement classStatement;
 	public @CHOICE Perl_Label label;
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon semicolon;
-	
+
 	public @LAST static class Perl_ExpressionStatement extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Perl_Expression expr;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
 		public @S(30) @OPT PunctuationSemicolon semicolon;
 		public @S(40) @OPT TokenList<Perl_Comment> comments;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
@@ -57,7 +57,7 @@ public class Perl_Statement extends TokenChooser
 		public @S(20) @OPT TokenList<Perl_StatementOrComment> statements;
 		public @S(30) PunctuationRightBrace rightBrace;
 	}
-	
+
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence
 	{
 		public @S(10) Perl_Keyword SUB = new Perl_Keyword("sub");
@@ -65,7 +65,7 @@ public class Perl_Statement extends TokenChooser
 		public @S(30) Perl_Function_Definition fnName;
 		public @S(40) @OPT Perl_Function_Parameters params;
 		public @S(50) Perl_StatementBlock block;
-		
+
 		public static class Perl_SubMain extends TokenSequence
 		{
 			public @S(10) Perl_Identifier_Reference id;
@@ -79,14 +79,14 @@ public class Perl_Statement extends TokenChooser
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
 		public @S(30) @OPT PunctuationSemicolon semicolon;
 		public @S(40) @OPT TokenList<Perl_Comment> comments;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
 			interpreter.tryToInterpret(statement.getWhich());
 		}
 	}
-	
+
 	public @CHOICE static class Perl_CompundStatement extends TokenChooser
 	{
 		public @CHOICE Perl_ForStatement forStatement;
@@ -97,5 +97,5 @@ public class Perl_Statement extends TokenChooser
 		public @CHOICE Perl_TryStatement tryStatement;
 		public @CHOICE Perl_WhileStatement whileStatement;
 	}
-	
+
 }

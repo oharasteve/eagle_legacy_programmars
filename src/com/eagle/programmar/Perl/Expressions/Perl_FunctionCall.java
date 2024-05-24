@@ -24,18 +24,19 @@ public class Perl_FunctionCall extends PrimaryOperator
 	public @S(60) @OPT Perl_Expression parameter;
 	public @S(70) @OPT TokenList<Perl_MoreParameters> moreExpr;
 	public @S(80) PunctuationRightParen rightParen;
-	
+
 	public static class Perl_MoreFunctionName extends TokenSequence
 	{
 		public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 		public @S(20) Perl_Identifier_Reference fnName;
 	}
+
 	public static class Perl_Method extends TokenSequence
 	{
 		public @S(10) Perl_Punctuation colonColon = new Perl_Punctuation("::");
 		public @S(20) Perl_Identifier_Reference fnName;
 	}
-	
+
 	public static class Perl_MoreParameters extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

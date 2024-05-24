@@ -15,7 +15,7 @@ public class Natural_DataType extends TerminalPictureToken
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
-		
+
 		// (D)
 		char ch1 = rec.charAt(_currentChar);
 		if (ch1 == 'D')
@@ -37,8 +37,8 @@ public class Natural_DataType extends TerminalPictureToken
 				char ch = rec.charAt(_endChar);
 				if (!Character.isDigit(ch) && ch != '.') break;
 			}
-			foundIt(_currentLine, _endChar-1);
-			_pic = rec.substring(_currentChar, _endChar-1);
+			foundIt(_currentLine, _endChar - 1);
+			_pic = rec.substring(_currentChar, _endChar - 1);
 			return true;
 		}
 
@@ -51,8 +51,8 @@ public class Natural_DataType extends TerminalPictureToken
 				char ch = rec.charAt(_endChar);
 				if (!Character.isDigit(ch) && ch != '/') break;
 			}
-			foundIt(_currentLine, _endChar-1);
-			_pic = rec.substring(_currentChar, _endChar-1);
+			foundIt(_currentLine, _endChar - 1);
+			_pic = rec.substring(_currentChar, _endChar - 1);
 			return true;
 		}
 

@@ -22,7 +22,7 @@ public class IBMASM_WTO_Macro extends TokenSequence
 	public @S(40) IBMASM_WTO_Value value;
 	public @S(50) IBMASM_Spaces spaces3;
 	public @S(60) @OPT IBMASM_Remark remark;
-	
+
 	public static class IBMASM_WTO_Value extends TokenChooser
 	{
 		public @CHOICE static class IBMASM_WTO_E extends TokenSequence

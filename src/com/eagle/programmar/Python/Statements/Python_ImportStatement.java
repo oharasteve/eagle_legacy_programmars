@@ -28,21 +28,21 @@ public class Python_ImportStatement extends TokenSequence
 	{
 		public @CHOICE Python_Variable importName;
 		public @CHOICE PunctuationStar star;
-		
+
 		public @CHOICE static class Python_ImportList extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) @SYNTAX(Python_Multiline_Syntax.class) Python_ImportListItem list;
 			public @S(30) @OPT Python_FromImportAs fromAs;
 			public @S(40) PunctuationRightParen rightParen;
-			
+
 			public static class Python_ImportListItem extends TokenSequence
 			{
 				public @S(10) @OPT Python_Expression expr;
 				public @S(20) @OPT Python_FromImportAs fromAs;
 				public @S(30) @OPT TokenList<Python_MoreImportListItem> nextItem;
 				public @S(40) @OPT PunctuationComma comma;
-				
+
 				public static class Python_MoreImportListItem extends TokenSequence
 				{
 					public @S(10) PunctuationComma comma;
@@ -59,7 +59,7 @@ public class Python_ImportStatement extends TokenSequence
 		public @S(20) Python_Variable importName;
 		public @S(30) @OPT Python_FromImportAs fromAs;
 	}
-	
+
 	public static class Python_FromImportAs extends TokenSequence
 	{
 		public @S(10) Python_Keyword AS = new Python_Keyword("as");

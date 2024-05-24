@@ -12,22 +12,20 @@ public class Template_Syntax extends EagleSyntax
 	{
 		return "Template";
 	}
-	
+
 	public Template_Syntax()
 	{
 		_isCaseSensitive = false;
 		_continuationChar = null;
 		_extraCharacters = "_";
-		_punctuationExceptions = new String[] { "<=", ">=", "==", "!=" };
-		
+		_punctuationExceptions = new String[] {
+				"<=", ">=", "==", "!="
+		};
+
 		addReservedWords(reservedWords);
 	}
-	
+
 	private static String[] reservedWords = new String[] {
-		"and",
-		"data",
-		"not",
-		"or",
-		"print",
+			"and", "data", "not", "or", "print",
 	};
 }

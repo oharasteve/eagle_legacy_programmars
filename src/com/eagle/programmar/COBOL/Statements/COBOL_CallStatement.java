@@ -28,38 +28,35 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 	public @S(60) @OPT COBOL_CallReturning returning;
 	public @S(70) @OPT TokenList<COBOL_CallException> exceptions;
 	public @S(80) @OPT COBOL_Keyword ENDCALL = new COBOL_Keyword("END-CALL");
-	
+
 	public static class COBOL_CallWhat extends TokenChooser
 	{
 		public @CHOICE COBOL_Literal callFunction;
 		public @CHOICE COBOL_HexNumber callHex;
 		public @CHOICE COBOL_Identifier_Reference callVariable;
 	}
-	
+
 	public static class COBOL_CallParameter extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
 		public @S(20) @OPT COBOL_Keyword BY = new COBOL_Keyword("BY");
-		public @S(30) @OPT COBOL_KeywordChoice byHow = new COBOL_KeywordChoice(
-				"CONTENT",
-				"REFERENCE",
-				"VALUE");
+		public @S(30) @OPT COBOL_KeywordChoice byHow = new COBOL_KeywordChoice("CONTENT", "REFERENCE", "VALUE");
 		public @S(40) COBOL_Expression expression;
 		public @S(50) @OPT COBOL_ValueSize size;
-		
+
 		public static class COBOL_ValueSize extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
 			public @S(20) COBOL_Number size;
 		}
 	}
-	
+
 	public static class COBOL_CallReturning extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword RETURNING = new COBOL_Keyword("RETURNING");
 		public @S(20) COBOL_Modifiable_Identifier variable;
 	}
-	
+
 	public static class COBOL_CallException extends TokenSequence
 	{
 		public @S(10) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");

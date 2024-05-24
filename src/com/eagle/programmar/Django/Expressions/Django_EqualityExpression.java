@@ -10,7 +10,6 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Django_EqualityExpression extends PrecedenceOperator
 {
 	public @S(10) Django_Expression left = new Django_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Django_PunctuationChoice operator = new Django_PunctuationChoice(
-			"==", "!=", "<=", ">=", "<", ">");
+	public @S(20) Django_PunctuationChoice operator = new Django_PunctuationChoice("==", "!=", "<=", ">=", "<", ">");
 	public @S(30) Django_Expression right = new Django_Expression(this, AllowedPrecedence.HIGHER);
 }

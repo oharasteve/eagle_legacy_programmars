@@ -24,7 +24,7 @@ public class Javascript_SwitchStatement extends TokenSequence
 	public @S(60) TokenList<Javascript_CaseClause> caseClause;
 	public @S(70) @OPT Javascript_DefaultClause elseClause;
 	public @S(80) PunctuationRightBrace rightBrace;
-	
+
 	public static class Javascript_CaseClause extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword CASE = new Javascript_Keyword("case");
@@ -32,7 +32,7 @@ public class Javascript_SwitchStatement extends TokenSequence
 		public @S(30) PunctuationColon colon;
 		public @S(40) @OPT TokenList<Javascript_StatementOrComment> statements;
 	}
-	
+
 	public static class Javascript_DefaultClause extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword DEFAULT = new Javascript_Keyword("default");

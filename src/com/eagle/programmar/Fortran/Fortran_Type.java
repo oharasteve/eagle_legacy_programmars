@@ -17,13 +17,11 @@ public class Fortran_Type extends TokenSequence
 {
 	public @S(10) Fortran_DataType dataType;
 	public @S(20) @OPT Fortran_Dimension dimension;
-	
+
 	public static class Fortran_DataType extends TokenChooser
 	{
-		public @CHOICE Fortran_KeywordChoice INTEGER = new Fortran_KeywordChoice(
-				"INTEGER",
-				"LOGICAL");
-		
+		public @CHOICE Fortran_KeywordChoice INTEGER = new Fortran_KeywordChoice("INTEGER", "LOGICAL");
+
 		public @CHOICE static class Fortran_CharacterType extends TokenSequence
 		{
 			public @S(10) @DOC("6j4m0vn7r/index.html") Fortran_Keyword CHARACTER = new Fortran_Keyword("CHARACTER");
@@ -34,7 +32,7 @@ public class Fortran_Type extends TokenSequence
 			public @S(60) PunctuationRightParen rightParen;
 		}
 	}
-	
+
 	public static class Fortran_Dimension extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

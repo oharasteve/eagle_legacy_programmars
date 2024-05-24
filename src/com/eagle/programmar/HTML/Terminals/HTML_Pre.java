@@ -14,21 +14,21 @@ public class HTML_Pre extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public HTML_Pre(String text)
 	{
 		super(text);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		String recLowerCase = rec.toLowerCase();
 		int nc = rec.length();
-		if (_currentChar + 3 >= nc) return false;	// Need room for a fourth character
+		if (_currentChar + 3 >= nc) return false; // Need room for a fourth character
 
 		if (rec.charAt(_currentChar) != '<') return false;
 		if (recLowerCase.charAt(_currentChar + 1) != 'p') return false;
@@ -44,7 +44,7 @@ public class HTML_Pre extends TerminalCommentToken
 			_comment = rec.substring(_currentChar + 3, ec).trim();
 			return true;
 		}
-		
+
 		// Oh dang ... multi-line comment
 		_comment = rec.substring(_currentChar + 4).trim() + "\n";
 		int lastLine = _currentLine + 1;
@@ -65,7 +65,7 @@ public class HTML_Pre extends TerminalCommentToken
 		}
 		throw new RuntimeException("End of HTML <pre>: missing </pre>");
 	}
-	
+
 	@Override
 	public String showString()
 	{

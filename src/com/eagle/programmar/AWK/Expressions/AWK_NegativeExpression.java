@@ -20,7 +20,7 @@ public class AWK_NegativeExpression extends PrimaryOperator implements EagleRunn
 		int val = interpreter.getIntValue(expr);
 		switch (operator.toString())
 		{
-		case "-" :
+		case "-":
 			interpreter.pushInt(-val);
 			break;
 		default:

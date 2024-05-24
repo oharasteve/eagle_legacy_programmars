@@ -12,7 +12,7 @@ public class Delphi_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Delphi_KeywordChoice(String... words)
 	{
 		super(words);

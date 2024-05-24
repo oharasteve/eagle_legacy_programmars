@@ -12,7 +12,7 @@ public class Python_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public Python_KeywordChoice(String... words)
 	{
 		super(words);

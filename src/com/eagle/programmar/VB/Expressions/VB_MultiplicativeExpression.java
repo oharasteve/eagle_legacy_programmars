@@ -36,20 +36,20 @@ public class VB_MultiplicativeExpression extends PrecedenceOperator implements E
 			int rightValue = interpreter.getIntValue(right);
 			switch (oper)
 			{
-			case "*" :
+			case "*":
 				interpreter.pushInt(leftValue * rightValue);
 				return;
-			case "/" :
-				interpreter.pushDouble((double)leftValue / rightValue);
+			case "/":
+				interpreter.pushDouble((double) leftValue / rightValue);
 				return;
-			case "mod" :
+			case "mod":
 				interpreter.pushInt(leftValue % rightValue);
 				return;
-			case "\\" :
+			case "\\":
 				interpreter.pushInt(leftValue / rightValue);
 				return;
 			}
 		}
-		throw new RuntimeException("Unable to handle " + operator + " in VB_MultiplicativeExpression");	
+		throw new RuntimeException("Unable to handle " + operator + " in VB_MultiplicativeExpression");
 	}
 }

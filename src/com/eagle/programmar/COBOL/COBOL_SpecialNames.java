@@ -44,8 +44,8 @@ public class COBOL_SpecialNames extends TokenSequence
 			public @S(10) COBOL_Keyword CLASS = new COBOL_Keyword("CLASS");
 			public @S(20) COBOL_Identifier_Reference name;
 			public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public @S(40) SeparatedList<COBOL_SpecialNameClassValue,PunctuationComma> values;
-			
+			public @S(40) SeparatedList<COBOL_SpecialNameClassValue, PunctuationComma> values;
+
 			public static class COBOL_SpecialNameClassValue extends TokenSequence
 			{
 				public @S(10) COBOL_Expression value1;
@@ -74,7 +74,8 @@ public class COBOL_SpecialNames extends TokenSequence
 			public @S(10) COBOL_Keyword CALL_CONVENTION = new COBOL_Keyword("CALL-CONVENTION");
 			public @S(20) COBOL_Number number;
 			public @S(30) COBOL_Keyword IS = new COBOL_Keyword("IS");
-			public @S(40) COBOL_KeywordChoice convention = new COBOL_KeywordChoice("STATICCOBOL", "STATICW32API", "WINAPI");
+			public @S(40) COBOL_KeywordChoice convention = new COBOL_KeywordChoice("STATICCOBOL", "STATICW32API",
+					"WINAPI");
 		}
 	}
 }

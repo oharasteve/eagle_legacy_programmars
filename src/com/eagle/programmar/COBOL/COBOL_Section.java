@@ -24,7 +24,7 @@ public class COBOL_Section extends TokenSequence implements EagleRunnable
 		public @S(30) @OPT COBOL_Number number;
 		public @S(40) PunctuationPeriod dot;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -24,7 +24,7 @@ public class COBOL_AcceptStatement extends COBOL_AbstractStatement
 	public @S(30) COBOL_Identifier_Reference var;
 	public @S(40) @OPT COBOL_Subscript subscript;
 	public @S(50) @OPT TokenList<COBOL_AcceptOption> options;
-	
+
 	public static class COBOL_AcceptPosition extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -33,18 +33,11 @@ public class COBOL_AcceptStatement extends COBOL_AbstractStatement
 		public @S(40) COBOL_Expression column;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class COBOL_AcceptOption extends TokenChooser
 	{
-		public @CHOICE COBOL_KeywordChoice option = new COBOL_KeywordChoice(
-				"AUTO",
-				"AUTO-SKIP",
-				"FULL",
-				"NO-ECHO",
-				"PROMPT",
-				"SECURE",
-				"UPDATE"
-				);
+		public @CHOICE COBOL_KeywordChoice option = new COBOL_KeywordChoice("AUTO", "AUTO-SKIP", "FULL", "NO-ECHO",
+				"PROMPT", "SECURE", "UPDATE");
 
 		public @CHOICE static class COBOL_AcceptFrom extends TokenSequence
 		{
@@ -65,23 +58,23 @@ public class COBOL_AcceptStatement extends COBOL_AbstractStatement
 			public @S(20) @OPT COBOL_Keyword LINE = new COBOL_Keyword("LINE");
 			public @S(30) COBOL_Expression location;
 		}
-			
+
 		public @CHOICE static class COBOL_AcceptColumn extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword COLUMN = new COBOL_Keyword("COLUMN");
 			public @S(20) COBOL_Expression column;
 		}
-		
+
 		public @CHOICE static class COBOL_AcceptWithColors extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword WITH = new COBOL_Keyword("WITH");
 			public @S(20) @OPT COBOL_Keyword UPDATE = new COBOL_Keyword("UPDATE");
 			public @S(30) TokenList<COBOL_AcceptColor> colors;
-			
+
 			public static class COBOL_AcceptColor extends TokenSequence
 			{
-				public @S(10) COBOL_KeywordChoice color = new COBOL_KeywordChoice(
-						"AUTO", "AUTO-SKIP", "FOREGROUND-COLOR", "BACKGROUND-COLOR", "HIGHLIGHT");
+				public @S(10) COBOL_KeywordChoice color = new COBOL_KeywordChoice("AUTO", "AUTO-SKIP",
+						"FOREGROUND-COLOR", "BACKGROUND-COLOR", "HIGHLIGHT");
 				public @S(20) @OPT COBOL_Number fg;
 			}
 		}

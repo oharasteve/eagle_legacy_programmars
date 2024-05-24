@@ -17,6 +17,6 @@ public class Julia_MethodInvocation extends PrimaryOperator
 	public @S(10) Julia_Variable methodName;
 	public @S(20) @OPT Julia_Punctuation question = new Julia_Punctuation("?");
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) @OPT SeparatedList<Julia_Expression,PunctuationComma> argList;
+	public @S(40) @OPT SeparatedList<Julia_Expression, PunctuationComma> argList;
 	public @S(50) PunctuationRightParen rightParen;
 }

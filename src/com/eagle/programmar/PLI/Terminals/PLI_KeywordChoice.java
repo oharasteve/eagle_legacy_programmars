@@ -12,7 +12,7 @@ public class PLI_KeywordChoice extends TerminalKeywordChoice
 	{
 		super();
 	}
-	
+
 	public PLI_KeywordChoice(String... words)
 	{
 		super(words);

@@ -14,17 +14,17 @@ public class Delphi_Include extends TerminalCommentToken
 	{
 		super("");
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
-		
+
 		EagleLineReader rec = lines.get(_currentLine);
 		char ch = rec.charAt(_currentChar);
 		if (ch == '{')
 		{
-			if (! super.possibleCommentPair1(lines, rec, '{', '}')) return false;
+			if (!super.possibleCommentPair1(lines, rec, '{', '}')) return false;
 			if (_comment.startsWith("{$I ")) return true;
 			return false;
 		}

@@ -20,7 +20,7 @@ public class Ada_IfStatement extends TokenSequence
 	public @S(60) Ada_Keyword END = new Ada_Keyword("end");
 	public @S(70) Ada_Keyword IF2 = new Ada_Keyword("if");
 	public @S(80) PunctuationSemicolon semicolon;
-	
+
 	public static class Ada_IfElseClause extends TokenSequence
 	{
 		public @S(10) Ada_Keyword ELSE = new Ada_Keyword("else");

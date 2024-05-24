@@ -6,7 +6,6 @@ package com.eagle.programmar.COBOL.Symbols;
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration;
 import com.eagle.tokens.AbstractToken;
 
-
 public class COBOL_Data_Definition extends COBOL_Identifier_Definition
 {
 	// Go all the way out to 01/05/etc level
@@ -21,9 +20,9 @@ public class COBOL_Data_Definition extends COBOL_Identifier_Definition
 			}
 			parent = parent.getParent();
 		}
-		return null;	// Couldn't find it?
+		return null; // Couldn't find it?
 	}
-	
+
 	@Override
 	public DefinitionType getType()
 	{

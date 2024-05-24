@@ -14,7 +14,7 @@ public class Python_Additive_Expression extends PrecedenceOperator implements Ea
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("+", "-");
 	public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -22,10 +22,10 @@ public class Python_Additive_Expression extends PrecedenceOperator implements Ea
 		int rightValue = interpreter.getIntValue(right);
 		switch (operator.toString())
 		{
-		case "+" :
+		case "+":
 			interpreter.pushInt(leftValue + rightValue);
 			break;
-		case "-" :
+		case "-":
 			interpreter.pushInt(leftValue - rightValue);
 			break;
 		default:

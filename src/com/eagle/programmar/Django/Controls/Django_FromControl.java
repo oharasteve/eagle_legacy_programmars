@@ -16,4 +16,3 @@ public class Django_FromControl extends TokenSequence
 	public @S(50) Django_Keyword WITH = new Django_Keyword("with");
 	public @S(60) Django_Keyword CONTEXT = new Django_Keyword("context");
 }
-

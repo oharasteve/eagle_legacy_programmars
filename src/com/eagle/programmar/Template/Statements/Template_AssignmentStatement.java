@@ -19,13 +19,13 @@ public class Template_AssignmentStatement extends TokenSequence implements Eagle
 	public @S(20) PunctuationEquals equals;
 	public @S(30) Template_Expression expr;
 	public @S(40) PunctuationSemicolon semicolon;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		Template_Identifier_Reference id = (Template_Identifier_Reference) var.getWhich();
-		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(),
-				id.getStartChar(), id.getValue(), value);
+		interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.getValue(),
+				value);
 	}
 }

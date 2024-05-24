@@ -10,4 +10,3 @@ public class Rust_BuiltIn extends PrimaryOperator
 {
 	public @S(10) Rust_KeywordChoice builtinConstant = new Rust_KeywordChoice("false", "true");
 }
-

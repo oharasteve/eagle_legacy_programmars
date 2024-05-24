@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT TokenList<COBOL_Comment> comments;
-	
+
 	public @S(20) COBOL_Keyword PROCEDURE = new COBOL_Keyword("PROCEDURE");
 	public @S(30) COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
 	public @S(40) @OPT COBOL_ProcedureUsing using;
@@ -27,7 +27,7 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 	public @S(80) @OPT COBOL_Declaratives declaratives;
 	public @S(90) TokenList<COBOL_Section> sections;
 	public @S(100) @OPT COBOL_ParagraphHeader extraPara;
-	
+
 	public static class COBOL_ProcedureUsing extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword USING = new COBOL_Keyword("USING");
@@ -63,7 +63,7 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 		public @S(50) COBOL_Keyword DECLARATIVES2 = new COBOL_Keyword("DECLARATIVES");
 		public @S(60) PunctuationPeriod dot2;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

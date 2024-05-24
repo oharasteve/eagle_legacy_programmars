@@ -18,13 +18,13 @@ public class Natural_Variable extends TokenChooser
 		public @S(10) @OPT PunctuationStar star;
 		public @S(20) Natural_KeywordChoice builtins = new Natural_KeywordChoice("PAGE-NUMBER");
 	}
-	
+
 	public @CHOICE static class Natural_UserVariable extends TokenSequence
 	{
 		public @S(10) Natural_Identifier_Reference id;
 		public @S(20) @OPT TokenList<Natural_Field> fields;
 		public @S(30) @OPT Natural_Subscript subscript;
-		
+
 		public static class Natural_Field extends TokenSequence
 		{
 			public @S(10) PunctuationPeriod dot;

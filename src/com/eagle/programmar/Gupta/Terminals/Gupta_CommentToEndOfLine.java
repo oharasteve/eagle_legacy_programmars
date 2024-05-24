@@ -13,12 +13,12 @@ public class Gupta_CommentToEndOfLine extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public Gupta_CommentToEndOfLine(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

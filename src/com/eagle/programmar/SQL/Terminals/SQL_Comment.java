@@ -13,12 +13,12 @@ public class SQL_Comment extends TerminalCommentToken
 	{
 		this("");
 	}
-	
+
 	public SQL_Comment(String comment)
 	{
 		super(comment);
 	}
-	
+
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -37,16 +37,15 @@ public class SQL_Comment extends TerminalCommentToken
 		{
 			return super.possibleCommentToEndOfLine(rec, "--");
 		}
-		
-		if (ch == '/' && _currentChar + 1 < nc && rec.charAt(_currentChar+1) == '*')
+
+		if (ch == '/' && _currentChar + 1 < nc && rec.charAt(_currentChar + 1) == '*')
 		{
 			return super.possibleCommentPair2(lines, rec, "/*", "*/");
 		}
 
-		if (_currentChar + 2 < nc &&
-				Character.toUpperCase(ch) == 'R' &&
-				Character.toUpperCase(rec.charAt(_currentChar+1)) == 'E' &&
-				Character.toUpperCase(rec.charAt(_currentChar+2)) == 'M')
+		if (_currentChar + 2 < nc && Character.toUpperCase(ch) == 'R'
+				&& Character.toUpperCase(rec.charAt(_currentChar + 1)) == 'E'
+				&& Character.toUpperCase(rec.charAt(_currentChar + 2)) == 'M')
 		{
 			foundIt(_currentLine, nc);
 			_comment = rec.substring(_currentChar, nc);

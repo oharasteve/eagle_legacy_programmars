@@ -19,42 +19,16 @@ public class SQL_Type extends TokenChooser
 	{
 		public @S(10) SQL_Keyword SET = new SQL_Keyword("SET");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<SQL_Expression,PunctuationComma> setValues;
+		public @S(30) SeparatedList<SQL_Expression, PunctuationComma> setValues;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public @CHOICE static class SQL_BaseType extends TokenSequence
 	{
-		public @S(10) SQL_KeywordChoice baseType = new SQL_KeywordChoice
-		(
-			"BIGINT",
-			"BLOB",
-			"BOOL",
-			"BOOLEAN",
-			"CHAR",
-			"DATE",
-			"DATETIME",
-			"DECIMAL",
-			"DOUBLE",
-			"FLOAT",
-			"INT",
-			"INTEGER",
-			"INTEGER_NOT_NULL",	// Huh?
-			"LONGVARCHAR",
-			"NCLOB",
-			"NUMBER",
-			"NUMERIC",
-			"NVARCHAR2",
-			"RAW",
-			"SMALLINT",
-			"TEXT",
-			"TIME",
-			"TIMESTAMP",
-			"TINYINT",
-			"UNSIGNED",
-			"VARCHAR",
-			"VARCHAR2"
-		);
+		public @S(10) SQL_KeywordChoice baseType = new SQL_KeywordChoice("BIGINT", "BLOB", "BOOL", "BOOLEAN", "CHAR",
+				"DATE", "DATETIME", "DECIMAL", "DOUBLE", "FLOAT", "INT", "INTEGER", "INTEGER_NOT_NULL", // Huh?
+				"LONGVARCHAR", "NCLOB", "NUMBER", "NUMERIC", "NVARCHAR2", "RAW", "SMALLINT", "TEXT", "TIME",
+				"TIMESTAMP", "TINYINT", "UNSIGNED", "VARCHAR", "VARCHAR2");
 		public @S(20) @OPT SQL_TypeSize size;
 	}
 
@@ -63,15 +37,15 @@ public class SQL_Type extends TokenChooser
 		public @S(10) SQL_KeywordChoice UNSIGNED = new SQL_KeywordChoice("UNSIGNED");
 		public @S(20) SQL_KeywordChoice LONG = new SQL_KeywordChoice("LONG");
 	}
-	
+
 	public @CHOICE static class SQL_TypeEnum extends TokenSequence
 	{
 		public @S(10) SQL_Keyword ENUM = new SQL_Keyword("ENUM");
 		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) SeparatedList<SQL_Expression,PunctuationComma> enumVal;
+		public @S(30) SeparatedList<SQL_Expression, PunctuationComma> enumVal;
 		public @S(40) PunctuationRightParen rightParen;
 	}
-	
+
 	public @CHOICE static class SQL_TypeSize extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

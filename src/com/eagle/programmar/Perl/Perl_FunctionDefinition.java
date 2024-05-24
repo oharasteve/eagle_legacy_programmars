@@ -25,7 +25,7 @@ public class Perl_FunctionDefinition extends TokenSequence
 	public @S(30) Perl_Function_Definition fnName;
 	public @S(40) Perl_Function_Parameters params;
 	public @S(50) Perl_FunctionBlock block;
-	
+
 	public static class Perl_FunctionPrefix extends TokenSequence
 	{
 		public @S(10) Perl_KeywordChoice modifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);
@@ -36,7 +36,7 @@ public class Perl_FunctionDefinition extends TokenSequence
 		public @CHOICE PunctuationSemicolon semicolon;
 		public @CHOICE Perl_StatementBlock block;
 	}
-	
+
 	public static class Perl_Function_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -47,7 +47,7 @@ public class Perl_FunctionDefinition extends TokenSequence
 		public static class Perl_FunctionVariableOrTypeVariable extends TokenChooser
 		{
 			public @LAST Perl_FunctionVariable var;
-			
+
 			public @CHOICE static class Perl_FunctionTypeAndVariable extends TokenSequence
 			{
 				public @S(10) Perl_Type type;
@@ -60,14 +60,14 @@ public class Perl_FunctionDefinition extends TokenSequence
 			public @S(10) @OPT Perl_Punctuation amp = new Perl_Punctuation('&');
 			public @S(20) Perl_Variable_Definition param;
 			public @S(30) @OPT Perl_Variable_Initializer init;
-			
+
 			public static class Perl_Variable_Initializer extends TokenSequence
 			{
 				public @S(10) PunctuationEquals equals;
 				public @S(20) Perl_Expression initVal;
 			}
 		}
-		
+
 		public static class Perl_MoreFuncParameters extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
