@@ -6,7 +6,6 @@ package com.eagle.programmar.Algol68;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
-import com.eagle.programmar.Algol68.Algol68_Program.Algol68_Element.Algol68_Main;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -41,18 +40,19 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 
 	public @S(10) TokenList<Algol68_Element> elements;
 
+	public static class Algol68_Main extends TokenSequence
+	{
+		public @S(10) Algol68_Keyword MAIN = new Algol68_Keyword("MAIN");
+		public @S(20) PunctuationColon colon;
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) TokenList<Algol68_Element> elements;
+		public @S(50) PunctuationRightParen rightParen;
+	}
+
 	public static class Algol68_Element extends TokenChooser
 	{
 		public @CHOICE Algol68_Statement statement;
-
-		public @CHOICE static class Algol68_Main extends TokenSequence
-		{
-			public @S(10) Algol68_Keyword MAIN = new Algol68_Keyword("MAIN");
-			public @S(20) PunctuationColon colon;
-			public @S(30) PunctuationLeftParen leftParen;
-			public @S(40) TokenList<Algol68_Element> elements;
-			public @S(50) PunctuationRightParen rightParen;
-		}
+		public @CHOICE Algol68_Main main;
 	}
 
 	@Override

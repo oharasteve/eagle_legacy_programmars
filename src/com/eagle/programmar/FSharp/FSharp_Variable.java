@@ -3,11 +3,15 @@
 
 package com.eagle.programmar.FSharp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.FSharp.FSharp_Syntax.FSharp_Multiline_Syntax;
 import com.eagle.programmar.FSharp.Symbols.FSharp_Identifier_Reference;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.programmar.FSharp.Terminals.FSharp_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -19,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class FSharp_Variable extends TokenSequence implements AbstractVariable
+public class FSharp_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) FSharp_SelfOrVariable var;
 	public @S(20) @OPT TokenList<FSharp_Subscript> subscript1;
@@ -75,5 +79,18 @@ public class FSharp_Variable extends TokenSequence implements AbstractVariable
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) FSharp_Type type;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		AbstractToken which = var.getWhich();
+		if (! (which instanceof FSharp_Identifier_Reference))
+		{
+			throw new RuntimeException("Unable to handle " + which.toString());
+		}
+		FSharp_Identifier_Reference id = (FSharp_Identifier_Reference) which;
+		EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+		interpreter.pushEagleValue(value);
 	}
 }

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.FSharp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.FSharp.Statements.FSharp_Assignment;
 import com.eagle.programmar.FSharp.Statements.FSharp_ForStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
@@ -43,12 +45,20 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 		}
 	}
 
-	public static class FSharp_Statement_List extends TokenSequence
+	public static class FSharp_Statement_List extends TokenSequence implements EagleRunnable
 	{
-		// This StartOfLine should be removed. But it breaks lots of FSharpg
-		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
 		public @S(20) SeparatedList<FSharp_Simple_Statement, FSharp_Statement_Separator> statements;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			for (int i = 0; i < statements.getPrimaryCount(); i++)
+			{
+				FSharp_Simple_Statement stmt = statements.getPrimaryElement(i);
+				interpreter.tryToInterpret(stmt.getWhich());
+			}
+		}
 	}
 
 	public static class FSharp_Statement_Separator extends TokenChooser

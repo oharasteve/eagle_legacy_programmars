@@ -6,7 +6,6 @@ package com.eagle.programmar.Algol68.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Algol68.Algol68_Expression;
-import com.eagle.programmar.Algol68.Statements.Algol68_PrintStatement.Algol68_PrintWhat.Algol68_PrintNewLine;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Punctuation;
 import com.eagle.tokens.AbstractToken;
@@ -24,15 +23,16 @@ public class Algol68_PrintStatement extends TokenSequence implements EagleRunnab
 	public @S(40) Algol68_Punctuation doubleRightParen = new Algol68_Punctuation("))");
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 
+	public static class Algol68_PrintNewLine extends TokenSequence
+	{
+		public @S(10) Algol68_Keyword NEW = new Algol68_Keyword("NEW");
+		public @S(20) Algol68_Keyword LINE = new Algol68_Keyword("LINE");
+	}
+
 	public static class Algol68_PrintWhat extends TokenChooser
 	{
 		public @CHOICE Algol68_Expression expr;
-
-		public @CHOICE static class Algol68_PrintNewLine extends TokenSequence
-		{
-			public @S(10) Algol68_Keyword NEW = new Algol68_Keyword("NEW");
-			public @S(20) Algol68_Keyword LINE = new Algol68_Keyword("LINE");
-		}
+		public @CHOICE Algol68_PrintNewLine newLine;
 	}
 
 	@Override

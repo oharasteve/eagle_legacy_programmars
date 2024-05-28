@@ -3,10 +3,12 @@
 
 package com.eagle.programmar.FSharp;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
-public class FSharp_Program extends EagleLanguage
+public class FSharp_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String FSHARP = "FSharp";
 
@@ -22,4 +24,13 @@ public class FSharp_Program extends EagleLanguage
 	}
 
 	public @S(10) TokenList<FSharp_Statement> elements;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (FSharp_Statement stmt : elements._elements)
+		{
+			interpreter.tryToInterpret(stmt.statementOrComment.getWhich());
+		}
+	}
 }

@@ -3,13 +3,28 @@
 
 package com.eagle.programmar.FSharp.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class FSharp_And_Expression extends PrecedenceOperator
+public class FSharp_And_Expression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) FSharp_Punctuation AND = new FSharp_Punctuation("&&");
 	public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		boolean leftValue = interpreter.getBoolValue(left);
+		if (leftValue)
+		{
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(rightValue);
+			return;
+		}
+		interpreter.pushBool(false);
+	}
 }
