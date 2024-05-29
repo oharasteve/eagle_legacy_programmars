@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Julia;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Julia.Statements.Julia_Function;
 import com.eagle.programmar.Julia.Terminals.Julia_Comment;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Julia_Program extends EagleLanguage
+public class Julia_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String JULIA = "Julia";
 
@@ -37,5 +41,36 @@ public class Julia_Program extends EagleLanguage
 	{
 		public @S(10) Julia_Comment comment;
 		public @S(20) Julia_EOLN eoln;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// First pass, just collect all the FUNCTION definitions
+		for (Julia_Element elt : elements._elements)
+		{
+			AbstractToken which = elt.getWhich();
+			if (which instanceof Julia_Statement)
+			{
+				Julia_Statement stmt = (Julia_Statement) which;
+				which = stmt.getWhich();
+				if (which instanceof Julia_Function)
+				{
+					Julia_Function fn = (Julia_Function) which;
+					interpreter._functionList.add(fn);
+				}
+			}
+		}
+
+		// Second pass, execute the program
+		for (Julia_Element elt : elements._elements)
+		{
+			AbstractToken which = elt.getWhich();
+			if (which instanceof Julia_Statement)
+			{
+				Julia_Statement stmt = (Julia_Statement) which;
+				interpreter.tryToInterpret(stmt.getWhich());
+			}
+		}
 	}
 }

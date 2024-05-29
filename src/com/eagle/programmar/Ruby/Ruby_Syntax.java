@@ -54,6 +54,7 @@ public class Ruby_Syntax extends EagleSyntax
 			"nil",
 			"not",
 			"or",
+			"puts",
 			"redo",
 			"rescue",
 			"retry",
