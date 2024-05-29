@@ -49,6 +49,7 @@ public class Julia_Syntax extends EagleSyntax
 			"local",
 			"macro",
 			"module",
+			"println",
 			"quote",
 			"return",
 			"struct",

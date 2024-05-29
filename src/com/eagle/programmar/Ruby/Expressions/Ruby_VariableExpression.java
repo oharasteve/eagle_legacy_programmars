@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Ruby.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Ruby.Ruby_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Ruby_VariableExpression extends PrimaryOperator
+public class Ruby_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Ruby_Variable variable;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(variable);
+	}
 }

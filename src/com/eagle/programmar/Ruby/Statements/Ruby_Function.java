@@ -8,6 +8,7 @@ import com.eagle.programmar.Ruby.Ruby_Variable;
 import com.eagle.programmar.Ruby.Symbols.Ruby_Function_Definition;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -15,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Ruby_Function extends TokenSequence
+public class Ruby_Function extends TokenSequence implements AbstractFunction
 {
 	public @S(10) Ruby_Keyword DEF = new Ruby_Keyword("def");
 	public @S(20) Ruby_Function_Definition id;
