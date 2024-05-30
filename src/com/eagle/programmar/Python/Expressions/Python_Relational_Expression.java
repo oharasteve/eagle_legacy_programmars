@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
@@ -10,7 +12,7 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
-public class Python_Relational_Expression extends PrecedenceOperator
+public class Python_Relational_Expression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Relational_Operator relOp;
@@ -31,6 +33,36 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		{
 			public @S(10) Python_Keyword IS = new Python_Keyword("is");
 			public @S(20) @OPT Python_Keyword NOT = new Python_Keyword("not");
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftInt = interpreter.getIntValue(left);
+		int rightInt = interpreter.getIntValue(right);
+		switch (relOp.getWhich().toString())
+		{
+		case "==":
+			interpreter.pushBool(leftInt == rightInt);
+			return;
+		case "!=", "<>":
+			interpreter.pushBool(leftInt != rightInt);
+			return;
+		case "<":
+			interpreter.pushBool(leftInt < rightInt);
+			return;
+		case "<=":
+			interpreter.pushBool(leftInt <= rightInt);
+			return;
+		case ">":
+			interpreter.pushBool(leftInt > rightInt);
+			return;
+		case ">=":
+			interpreter.pushBool(leftInt >= rightInt);
+			return;
+		default:
+			throw new RuntimeException("Unable to handle operator: " + relOp.getWhich());
 		}
 	}
 }

@@ -22,7 +22,7 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 		int rightInt = interpreter.getIntValue(right);
 		switch (operator.getValue())
 		{
-		case "=":
+		case "==":
 			interpreter.pushBool(leftInt == rightInt);
 			return;
 		case "!=":

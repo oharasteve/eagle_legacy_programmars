@@ -3,13 +3,41 @@
 
 package com.eagle.programmar.VB.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class VB_RelationalExpression extends PrecedenceOperator
+public class VB_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice("<=", ">=", "<>", "<", ">");
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (operator.toString())
+		{
+		case "<>":
+			interpreter.pushBool(leftValue != rightValue);
+			return;
+		case "<":
+			interpreter.pushBool(leftValue < rightValue);
+			return;
+		case "<=":
+			interpreter.pushBool(leftValue <= rightValue);
+			return;
+		case ">":
+			interpreter.pushBool(leftValue > rightValue);
+			return;
+		case ">=":
+			interpreter.pushBool(leftValue >= rightValue);
+			return;
+		}
+		throw new RuntimeException("Unexpected relational operator: " + operator);
+	}
 }

@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class CSharp_EqualityExpression extends PrecedenceOperator
+public class CSharp_EqualityExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CSharp_EqualityOperator equalityOperator;
@@ -19,5 +21,22 @@ public class CSharp_EqualityExpression extends PrecedenceOperator
 	{
 		public @CHOICE CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "??");
 		public @CHOICE CSharp_KeywordChoice asIs = new CSharp_KeywordChoice("as", "is");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (equalityOperator.getWhich().toString())
+		{
+		case "==":
+			interpreter.pushBool(leftValue == rightValue);
+			return;
+		case "!=":
+			interpreter.pushBool(leftValue != rightValue);
+			return;
+		}
+		throw new RuntimeException("Unexpected relational operator: " + equalityOperator.getWhich());
 	}
 }

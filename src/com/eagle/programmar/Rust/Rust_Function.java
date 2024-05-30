@@ -3,11 +3,14 @@
 
 package com.eagle.programmar.Rust;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Statement.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -15,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Rust_Function extends TokenSequence
+public class Rust_Function extends TokenSequence implements EagleRunnable, AbstractFunction
 {
 	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/functions.html") Rust_Keyword FN = new Rust_Keyword("fn");
@@ -37,5 +40,11 @@ public class Rust_Function extends TokenSequence
 		public @S(10) Rust_Variable_Definition var;
 		public @S(20) PunctuationColon colon;
 		public @S(30) Rust_Type type;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(stmt);
 	}
 }

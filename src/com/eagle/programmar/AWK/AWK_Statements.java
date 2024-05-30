@@ -37,6 +37,7 @@ public class AWK_Statements extends TokenSequence implements EagleRunnable
 		public @CHOICE PunctuationSemicolon semicolon; // Empty statement
 		public @CHOICE AWK_Comment comment;
 
+		public @CHOICE AWK_Assignment assignmentStatement;
 		public @CHOICE AWK_BreakStatement breakStatement;
 		public @CHOICE AWK_ContinueStatement continueStatement;
 		public @CHOICE AWK_ExitStatement exitStatement;
@@ -49,7 +50,7 @@ public class AWK_Statements extends TokenSequence implements EagleRunnable
 		public @CHOICE AWK_SwitchStatement switchStatement;
 		public @CHOICE AWK_WhileStatement whileStatement;
 
-		public @LAST AWK_Assignment assignmentStatement;
+		public @LAST AWK_Expression expressionStatement;
 	}
 
 	@Override

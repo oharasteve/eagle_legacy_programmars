@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Rust.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Rust_VariableExpression extends PrimaryOperator
+public class Rust_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Rust_Variable variable;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(variable);
+	}
 }

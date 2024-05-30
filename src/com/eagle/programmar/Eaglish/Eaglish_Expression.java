@@ -12,6 +12,7 @@ import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalOrExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_FunctionCall;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_MultiplicativeExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_NegativeExpression;
+import com.eagle.programmar.Eaglish.Expressions.Eaglish_NotExpresion;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ParenthesizedExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_RelationalExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_SubscriptExpression;
@@ -54,9 +55,10 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(100) Eaglish_BuiltinFunction builtinFunction;
 	public @P(110) Eaglish_FunctionCall funcCall;
 	public @P(120) Eaglish_NegativeExpression negativeExpr;
-	public @P(130) Eaglish_ParenthesizedExpression parenExpr;
-	public @P(140) Eaglish_BuiltInExpression builtinExpr;
-	public @P(150) Eaglish_VariableExpression varExpr;
+	public @P(130) Eaglish_NotExpresion notExpr;
+	public @P(140) Eaglish_ParenthesizedExpression parenExpr;
+	public @P(150) Eaglish_BuiltInExpression builtinExpr;
+	public @P(160) Eaglish_VariableExpression varExpr;
 
 	///////////////////////////////////////////////
 	// Binary expressions

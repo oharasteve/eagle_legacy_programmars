@@ -9,6 +9,7 @@ import com.eagle.programmar.FSharp.Expressions.FSharp_BracketBars;
 import com.eagle.programmar.FSharp.Expressions.FSharp_BuiltIn;
 import com.eagle.programmar.FSharp.Expressions.FSharp_FunctionCall;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Multiplicative_Expression;
+import com.eagle.programmar.FSharp.Expressions.FSharp_NotExpresion;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Or_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Parens;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Relational_Expression;
@@ -55,8 +56,9 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(110) FSharp_Parens parens;
 	public @P(120) FSharp_FunctionCall functionCall;
 	public @P(130) FSharp_UnarySign unarySign;
-	public @P(140) FSharp_BuiltIn builtIn;
-	public @P(150) FSharp_VariableExpression variableExpression;
+	public @P(140) FSharp_NotExpresion notOper;
+	public @P(150) FSharp_BuiltIn builtIn;
+	public @P(160) FSharp_VariableExpression variableExpression;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

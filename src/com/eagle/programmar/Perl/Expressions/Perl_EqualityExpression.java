@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class Perl_EqualityExpression extends PrecedenceOperator
+public class Perl_EqualityExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Perl_EqualityOperator equalityOperator;
@@ -19,5 +21,22 @@ public class Perl_EqualityExpression extends PrecedenceOperator
 	{
 		public @CHOICE Perl_KeywordChoice EQ = new Perl_KeywordChoice("eq", "ne");
 		public @CHOICE Perl_PunctuationChoice operator = new Perl_PunctuationChoice("===", "!==", "==", "!=");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (equalityOperator.getWhich().toString())
+		{
+		case "==", "===", "eq":
+			interpreter.pushBool(leftValue == rightValue);
+			return;
+		case "!=", "!==", "ne":
+			interpreter.pushBool(leftValue != rightValue);
+			return;
+		}
+		throw new RuntimeException("Unexpected relational operator: " + equalityOperator.getWhich());
 	}
 }

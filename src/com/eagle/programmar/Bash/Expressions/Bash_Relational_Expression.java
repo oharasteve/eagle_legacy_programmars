@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_PunctuationChoice;
@@ -26,30 +27,62 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftInt = interpreter.getIntValue(left);
-		int rightInt = interpreter.getIntValue(right);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+
+		if (leftValue.isInteger() && rightValue.isInteger())
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (operator.getWhich().toString())
+			{
+			case "-eq":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "-ne":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "-lt":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "-le":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case "-gt":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case "-ge":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			default:
+				throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with integers");
+			}
+		}
+
+		String leftStr = leftValue.forceStringValue();
+		String rightStr = rightValue.forceStringValue();
 		switch (operator.getWhich().toString())
 		{
-		case "==", "-eq":
-			interpreter.pushBool(leftInt == rightInt);
+		case "==":
+			interpreter.pushBool(leftStr.equals(rightStr));
 			return;
-		case "!=", "-ne":
-			interpreter.pushBool(leftInt != rightInt);
+		case "!=":
+			interpreter.pushBool(! leftStr.equals(rightStr));
 			return;
-		case "<", "-lt":
-			interpreter.pushBool(leftInt < rightInt);
+		case "<":
+			interpreter.pushBool(leftStr.compareTo(rightStr) < 0);
 			return;
-		case "<=", "-le":
-			interpreter.pushBool(leftInt <= rightInt);
+		case "<=":
+			interpreter.pushBool(leftStr.compareTo(rightStr) <= 0);
 			return;
-		case ">", "-gt":
-			interpreter.pushBool(leftInt > rightInt);
+		case ">":
+			interpreter.pushBool(leftStr.compareTo(rightStr) > 0);
 			return;
-		case ">=", "-ge":
-			interpreter.pushBool(leftInt >= rightInt);
+		case ">=":
+			interpreter.pushBool(leftStr.compareTo(rightStr) >= 0);
 			return;
 		default:
-			throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with integers");
+			throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with strings");
 		}
 	}
 }

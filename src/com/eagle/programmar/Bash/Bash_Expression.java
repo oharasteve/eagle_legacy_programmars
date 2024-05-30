@@ -12,6 +12,7 @@ import com.eagle.programmar.Bash.Expressions.Bash_DollarPound;
 import com.eagle.programmar.Bash.Expressions.Bash_DollarSubstring;
 import com.eagle.programmar.Bash.Expressions.Bash_Evaluate1;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalAnd_Expression;
+import com.eagle.programmar.Bash.Expressions.Bash_LogicalNotExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalOr_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_MultiplicativeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_NegativeExpression;
@@ -61,11 +62,12 @@ public class Bash_Expression extends PrecedenceChooser
 	public @P(140) Bash_SizeExpression sizeExpression;
 	public @P(150) Bash_ParenthesizedExpression parensExpression;
 	public @P(160) Bash_NegativeExpression negativeExpression;
-	public @P(170) Bash_VariableExpression variableExpression;
-	public @P(180) Bash_Array array;
-	public @P(190) Bash_Evaluate1 evaluate1;
-	public @P(200) Bash_Evaluate2 evaluate2;
-	public @P(210) Bash_Range range;
+	public @P(170) Bash_LogicalNotExpression notExpression;
+	public @P(180) Bash_VariableExpression variableExpression;
+	public @P(190) Bash_Array array;
+	public @P(200) Bash_Evaluate1 evaluate1;
+	public @P(210) Bash_Evaluate2 evaluate2;
+	public @P(220) Bash_Range range;
 
 	///////////////////////////////////////////////
 	// Binary expressions

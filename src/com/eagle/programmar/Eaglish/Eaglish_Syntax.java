@@ -22,5 +22,11 @@ public class Eaglish_Syntax extends EagleSyntax
 		_punctuationExceptions = new String[] {
 				"<=", ">="
 		};
+		addReservedWords(reservedWords);
 	}
+
+	// From https://en.wikibooks.org/wiki/Delphi_Programming/Reserved_keywords
+	private static String[] reservedWords = new String[] {
+			"NOT"
+	};
 }

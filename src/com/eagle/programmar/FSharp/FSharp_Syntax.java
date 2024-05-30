@@ -81,6 +81,7 @@ public class FSharp_Syntax extends EagleSyntax
 			"mutable",
 			"namespace",
 			"new",
+			"not",
 			"null",
 			"object",
 			"of",
