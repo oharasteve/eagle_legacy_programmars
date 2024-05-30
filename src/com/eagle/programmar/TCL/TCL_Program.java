@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.TCL;
 
+import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
+import com.eagle.core.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public class TCL_Program extends EagleLanguage
+public class TCL_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String TCL = "TCL";
 
@@ -16,10 +19,29 @@ public class TCL_Program extends EagleLanguage
 	}
 
 	@Override
+	public String booleanName(boolean flag)
+	{
+		if (flag) return "$true";
+		return "$false";
+	}
+
+	@Override
 	public String getDocRoot()
 	{
 		return "https://www.tcl.tk/man/tcl8.7/";
 	}
 
 	public @S(10) TokenList<TCL_Statement> statements;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (TCL_Statement elt : statements._elements)
+		{
+			for (AbstractToken stmt : elt.compoundStatement.statements._elements)
+			{
+				interpreter.tryToInterpret(stmt);
+			}
+		}
+	}
 }

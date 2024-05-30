@@ -10,7 +10,6 @@ import com.eagle.programmar.TCL.Expressions.TCL_ConditionalAndExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ConditionalOrExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ExprExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_MultiplicativeExpression;
-import com.eagle.programmar.TCL.Expressions.TCL_NotExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ParenthesizedExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_RelationalExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_SignedExpression;
@@ -51,11 +50,10 @@ public class TCL_Expression extends PrecedenceChooser
 
 	public @P(100) TCL_VariableExpression variableExpression;
 	public @P(110) TCL_SignedExpression signedExpression;
-	public @P(120) TCL_NotExpression notExpression;
-	public @P(130) TCL_BangExpression bangExpression;
-	public @P(140) TCL_ParenthesizedExpression parenthesizedExpression;
-	public @P(150) TCL_ArrayExpression arrayExpression;
-	public @P(160) TCL_ExprExpression exprExpression;
+	public @P(120) TCL_BangExpression bangExpression;
+	public @P(130) TCL_ParenthesizedExpression parenthesizedExpression;
+	public @P(140) TCL_ArrayExpression arrayExpression;
+	public @P(150) TCL_ExprExpression exprExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

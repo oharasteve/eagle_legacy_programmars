@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class TCL_ConditionalAndExpression extends PrecedenceOperator
+public class TCL_ConditionalAndExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) TCL_AndOperator andOper;
@@ -19,5 +21,21 @@ public class TCL_ConditionalAndExpression extends PrecedenceOperator
 	{
 		public @CHOICE TCL_Keyword AND = new TCL_Keyword("and");
 		public @CHOICE TCL_Punctuation and = new TCL_Punctuation("&&");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		boolean leftValue = interpreter.getBoolValue(left);
+		if (leftValue)
+		{
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(rightValue);
+		}
+		else
+		{
+			// Short circuit, don't btoerh with RHS
+			interpreter.pushBool(false);
+		}
 	}
 }

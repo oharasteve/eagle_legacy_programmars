@@ -3,12 +3,15 @@
 
 package com.eagle.programmar.TCL;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.TCL.Symbols.TCL_Identifier_Reference;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class TCL_Variable extends TokenSequence
+public class TCL_Variable extends TokenSequence implements EagleRunnable
 {
 	public @S(10) TCL_Identifier_Reference id;
 	public @S(20) @OPT TCL_Subscript subscript;
@@ -18,5 +21,12 @@ public class TCL_Variable extends TokenSequence
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) TCL_Expression expr;
 		public @S(30) PunctuationRightParen rightParen;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		interpreter.pushEagleValue(value);
 	}
 }

@@ -27,6 +27,6 @@ public class TCL_Syntax extends EagleSyntax
 	}
 
 	private String[] keywords = new String[] {
-			"and", "break", "not", "or", "set",
+			"and", "break", "not", "or", "puts", "set",
 	};
 }

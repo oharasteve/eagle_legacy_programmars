@@ -3,14 +3,22 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class TCL_ParenthesizedExpression extends PrimaryOperator
+public class TCL_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) TCL_Expression expression;
 	public @S(30) PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(expression);
+	}
 }

@@ -3,12 +3,20 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class TCL_VariableExpression extends PrimaryOperator
+public class TCL_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) @OPT TCL_Punctuation dollar = new TCL_Punctuation("$");
 	public @S(20) TCL_Variable variable;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(variable);
+	}
 }
