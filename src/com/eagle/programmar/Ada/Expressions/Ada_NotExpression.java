@@ -6,12 +6,12 @@ package com.eagle.programmar.Ada.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Ada.Ada_Expression;
-import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
+import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 
 public class Ada_NotExpression extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Ada_Punctuation notOperator = new Ada_Punctuation('!');
+	public @S(10) Ada_Keyword notOperator = new Ada_Keyword("not");
 	public @S(20) Ada_Expression expr;
 
 	@Override
