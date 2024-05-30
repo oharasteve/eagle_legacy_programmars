@@ -26,19 +26,16 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 
 	public static class CMD_IfEqual extends TokenSequence
 	{
-		public @S(10) CMD_Argument expr1;
-		public @S(20) CMD_IfOperator operator;
-		public @S(30) CMD_Argument expr2;
+		public @S(10) @OPT PunctuationHyphen minus1;
+		public @S(20) CMD_Argument expr1;
+		public @S(30) CMD_IfOperator operator;
+		public @S(40) @OPT PunctuationHyphen minus2;
+		public @S(50) CMD_Argument expr2;
 
 		public static class CMD_IfOperator extends TokenChooser
 		{
 			public @CHOICE CMD_KeywordChoice operator = new CMD_KeywordChoice("equ", "geq", "gtr", "leq", "lss", "neq");
-
-			public @CHOICE static class CMD_EqualsEquals extends TokenSequence
-			{
-				public @S(10) CMD_Punctuation equals = new CMD_Punctuation("==");
-				public @S(20) @OPT PunctuationHyphen minus;
-			}
+			public @CHOICE CMD_Punctuation equals = new CMD_Punctuation("==");
 		}
 	}
 
@@ -81,7 +78,9 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 
 		CMD_IfEqual ifEqual = (CMD_IfEqual) what.getWhich();
 		int left = interpreter.getIntValue(ifEqual.expr1.arg);
+		if (ifEqual.minus1.isPresent()) left = -left;
 		int right = interpreter.getIntValue(ifEqual.expr2.arg);
+		if (ifEqual.minus2.isPresent()) right = -right;
 		boolean passTest;
 		switch (ifEqual.operator.operator.getValue())
 		{
@@ -107,7 +106,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.operator);
 		}
 
-		if (NOT.isPresent()) passTest = !passTest;
+		if (NOT.isPresent()) passTest = ! passTest;
 		if (passTest)
 		{
 			interpreter.tryToInterpret(stmt.getWhich());

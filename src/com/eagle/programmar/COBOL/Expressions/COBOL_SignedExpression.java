@@ -1,18 +1,18 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Mar 31, 2024
+// Original author: Steven A. O'Hara, May 30, 2024
 
-package com.eagle.programmar.C.Expressions;
+package com.eagle.programmar.COBOL.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.programmar.C.C_Expression;
-import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
+import com.eagle.programmar.COBOL.COBOL_Expression;
+import com.eagle.programmar.COBOL.Terminals.COBOL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class C_SignedExpression extends PrimaryOperator implements EagleRunnable
+public class COBOL_SignedExpression extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) C_PunctuationChoice signedOperator = new C_PunctuationChoice("+", "-");
-	public @S(20) C_Expression expr;
+	public @S(10) COBOL_Punctuation signedOperator = new COBOL_Punctuation("-");
+	public @S(20) COBOL_Expression expr;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -20,9 +20,6 @@ public class C_SignedExpression extends PrimaryOperator implements EagleRunnable
 		int val = interpreter.getIntValue(expr);
 		switch (signedOperator.toString())
 		{
-		case "+":
-			interpreter.pushInt(val);
-			break;
 		case "-":
 			interpreter.pushInt(-val);
 			break;

@@ -19,6 +19,7 @@ import com.eagle.programmar.COBOL.Expressions.COBOL_NotCondition;
 import com.eagle.programmar.COBOL.Expressions.COBOL_OrCondition;
 import com.eagle.programmar.COBOL.Expressions.COBOL_ParenthesizedExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_RelationCondition;
+import com.eagle.programmar.COBOL.Expressions.COBOL_SignedExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_ThroughExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_VariableExpression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_HexNumber;
@@ -65,8 +66,9 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(140) COBOL_ParenthesizedExpression parenthesizedExpression;
 	public @P(150) COBOL_ExpressionFunction expressionFunction;
 	public @P(160) COBOL_ClassCondition classCondition;
-	public @P(170) COBOL_NotCondition notCondition;
-	public @P(180) COBOL_VariableExpression variableExpression;
+	public @P(170) COBOL_SignedExpression signedExpression;
+	public @P(180) COBOL_NotCondition notCondition;
+	public @P(190) COBOL_VariableExpression variableExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

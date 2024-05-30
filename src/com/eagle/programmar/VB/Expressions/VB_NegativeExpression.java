@@ -3,12 +3,31 @@
 
 package com.eagle.programmar.VB.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 
-public class VB_NegativeExpression extends PrimaryOperator
+public class VB_NegativeExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) VB_PunctuationChoice operator = new VB_PunctuationChoice("-", "+");
 	public @S(20) VB_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int val = interpreter.getIntValue(expr);
+		switch (operator.toString())
+		{
+		case "+":
+			interpreter.pushInt(val);
+			break;
+		case "-":
+			interpreter.pushInt(-val);
+			break;
+		default:
+			throw new RuntimeException("Unexpected negation operator: " + operator);
+		}
+	}
 }
