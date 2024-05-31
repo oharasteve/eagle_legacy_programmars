@@ -20,11 +20,13 @@ public class Lisp_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new Lisp_Comment();
-
+		_punctuationExceptions = new String[] {
+				"<=", ">=", "/=", "++", "+++", "**", "***"
+		};
 		addReservedWords(keywords);
 	}
 
 	private String[] keywords = new String[] {
-			"char", "defmacro", "defparameter", "defun", "if", "do", "let", "nil", "prog", "string"
+			"and", "char", "defmacro", "defparameter", "defun", "do", "if", "let", "nil", "or", "print", "prog", "string", "t"
 	};
 }

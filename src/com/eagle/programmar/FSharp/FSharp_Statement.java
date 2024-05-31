@@ -49,7 +49,7 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
 		public @S(20) SeparatedList<FSharp_Simple_Statement, FSharp_Statement_Separator> statements;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{

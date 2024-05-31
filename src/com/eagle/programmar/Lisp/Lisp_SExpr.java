@@ -3,37 +3,67 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.programmar.Lisp.Symbols.Lisp_Identifier_Reference;
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefmacroFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefparameterFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_IfFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_LetFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_LoopFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_PrintFunction;
+import com.eagle.programmar.Lisp.Operators.Lisp_AdditionOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_AndOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_Builtins;
+import com.eagle.programmar.Lisp.Operators.Lisp_IncrementOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_MultiplicationOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_NotOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_OrOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_RelationalOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_RemainderOperator;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Character;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Comment;
-import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Literal;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Number;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Punctuation;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Lisp_SExpr extends TokenChooser
+public class Lisp_SExpr extends TokenChooser implements EagleRunnable
 {
-	public @CHOICE Lisp_Keyword NIL = new Lisp_Keyword("nil");
-	public @CHOICE Lisp_Identifier_Reference id;
 	public @CHOICE Lisp_Number number;
 	public @CHOICE Lisp_Literal literal;
 	public @CHOICE Lisp_Character character;
 	public @CHOICE Lisp_Comment comment;
-	public @CHOICE Lisp_Function function;
+	
+	public @CHOICE Lisp_DefmacroFunction defMacro;
+	public @CHOICE Lisp_DefparameterFunction defParameter;
+	public @CHOICE Lisp_DefunFunction defFunction;
+	public @CHOICE Lisp_IfFunction ifFunction;
+	public @CHOICE Lisp_LetFunction letFunction;
+	public @CHOICE Lisp_LoopFunction loopFunction;
+	public @CHOICE Lisp_PrintFunction printFunction;
 
-	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice("+", "++", "+++", "-", "*", "**", "***",
-			"/", "//", "///", "1+", "1-", ".", "?", ">", ">=", "=", "/=", "<", "<=");
+	public @LAST Lisp_Variable var;
+	public @LAST Lisp_List list;
+
+	public @CHOICE Lisp_AdditionOperator additionOperator;
+	public @CHOICE Lisp_IncrementOperator incrementOperator;
+	public @CHOICE Lisp_MultiplicationOperator multiplicationOperator;
+	public @CHOICE Lisp_RemainderOperator modulusOperator;
+	public @CHOICE Lisp_RelationalOperator relationalOperator;
+	public @CHOICE Lisp_AndOperator andOperator;
+	public @CHOICE Lisp_OrOperator orOperator;
+	public @CHOICE Lisp_NotOperator notOperator;
+	public @CHOICE Lisp_Builtins builtins;
+	
+	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(".", "?");
 
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{
@@ -72,13 +102,6 @@ public class Lisp_SExpr extends TokenChooser
 		public @S(20) Lisp_SExpr expr;
 	}
 
-	public @CHOICE static class Lisp_List extends TokenSequence
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT TokenList<Lisp_SExpr> exprs;
-		public @S(30) PunctuationRightParen rightParen;
-	}
-
 	public @CHOICE static class Lisp_CharString extends TokenSequence
 	{
 		public @S(10) Lisp_KeywordChoice charString = new Lisp_KeywordChoice("char", "string");
@@ -92,5 +115,11 @@ public class Lisp_SExpr extends TokenChooser
 	{
 		public @S(10) Lisp_KeywordChoice doLetProg = new Lisp_KeywordChoice("do", "let", "prog");
 		public @S(20) @OPT PunctuationStar star;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(this.getWhich());
 	}
 }

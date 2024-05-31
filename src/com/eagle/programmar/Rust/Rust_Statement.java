@@ -41,6 +41,7 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) TokenList<Rust_Statement> statements;
 		public @S(30) PunctuationRightBrace rightBrace;
+
 		@Override
 
 		public void interpret(EagleInterpreter interpreter)

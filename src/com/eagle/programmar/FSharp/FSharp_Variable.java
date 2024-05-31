@@ -85,7 +85,7 @@ public class FSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AbstractToken which = var.getWhich();
-		if (! (which instanceof FSharp_Identifier_Reference))
+		if (!(which instanceof FSharp_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which.toString());
 		}
