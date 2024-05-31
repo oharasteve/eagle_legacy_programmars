@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.PLI.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Label;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
@@ -19,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_PutStatement extends TokenSequence
+public class PLI_PutStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) @DOC("7.45") PLI_Keyword PUT = new PLI_Keyword("PUT");
@@ -131,6 +133,20 @@ public class PLI_PutStatement extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) PLI_Expression expr;
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (values.isPresent())
+		{
+			for (int i = 0; i < values.exprs.getPrimaryCount(); i++)
+			{
+				PLI_Expression expr = values.exprs.getPrimaryElement(i);
+				String val = interpreter.getStrValue(expr);
+				System.out.println(val);
+			}
 		}
 	}
 }

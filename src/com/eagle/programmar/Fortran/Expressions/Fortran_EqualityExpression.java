@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.Fortran.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
 import com.eagle.programmar.Fortran.Terminals.Fortran_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class Fortran_EqualityExpression extends PrecedenceOperator
+public class Fortran_EqualityExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Fortran_EqOper oper;
@@ -19,5 +21,22 @@ public class Fortran_EqualityExpression extends PrecedenceOperator
 	{
 		public @CHOICE Fortran_KeywordChoice EQ = new Fortran_KeywordChoice(".EQ.", ".NE.");
 		public @CHOICE Fortran_PunctuationChoice oper = new Fortran_PunctuationChoice("=", "/=");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (oper.getWhich().toString())
+		{
+		case ".EQ.", "=":
+			interpreter.pushBool(leftValue == rightValue);
+			return;
+		case ".NE.", "/=":
+			interpreter.pushBool(leftValue != rightValue);
+			return;
+		}
+		throw new RuntimeException("Unexpected equality operator: " + oper.getWhich());
 	}
 }

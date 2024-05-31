@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.PLI.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
@@ -12,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class PLI_ParenthesizedExpression extends PrimaryOperator
+public class PLI_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) PLI_Expression expr;
@@ -27,5 +29,11 @@ public class PLI_ParenthesizedExpression extends PrimaryOperator
 		public @S(40) PLI_Expression start;
 		public @S(50) PLI_Keyword TO = new PLI_Keyword("TO");
 		public @S(60) PLI_Expression stop;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(expr);
 	}
 }

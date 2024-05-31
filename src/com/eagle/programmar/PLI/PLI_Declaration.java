@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.PLI;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
@@ -10,6 +13,7 @@ import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.programmar.PLI.Terminals.PLI_Level;
 import com.eagle.programmar.PLI.Terminals.PLI_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class PLI_Declaration extends TokenSequence
+public class PLI_Declaration extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT TokenList<PLI_Comment> commentList;
 
@@ -135,6 +139,25 @@ public class PLI_Declaration extends TokenSequence
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) PLI_Expression expr;
 			public @S(30) PunctuationRightParen rightParen;
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (int i = 0; i < items.getPrimaryCount(); i++)
+		{
+			PLI_Declare_Item item = items.getPrimaryElement(i);
+			if (item.initial.isPresent())
+			{
+				AbstractToken token = item.declareVariables.getWhich();
+				if (token instanceof PLI_Variable_Definition)
+				{
+					PLI_Variable_Definition id = (PLI_Variable_Definition) token;
+					EagleValue val = interpreter.getEagleValue(item.initial.exprs.first());
+					interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(), val);
+				}
+			}
 		}
 	}
 }

@@ -3,13 +3,31 @@
 
 package com.eagle.programmar.Fortran.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Fortran_ConditionalOrExpression extends PrecedenceOperator
+public class Fortran_ConditionalOrExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Fortran_Expression left = new Fortran_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Fortran_Keyword orOperator = new Fortran_Keyword(".OR.");
 	public @S(30) Fortran_Expression right = new Fortran_Expression(this, AllowedPrecedence.HIGHER);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		boolean leftValue = interpreter.getBoolValue(left);
+		if (leftValue)
+		{
+			// Short circuit, don't bother with RHS
+			interpreter.pushBool(true);
+		}
+		else
+		{
+			boolean rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(rightValue);
+		}
+	}
 }

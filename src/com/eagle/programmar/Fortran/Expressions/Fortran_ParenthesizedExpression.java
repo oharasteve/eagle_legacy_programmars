@@ -3,14 +3,22 @@
 
 package com.eagle.programmar.Fortran.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Fortran_ParenthesizedExpression extends PrimaryOperator
+public class Fortran_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Fortran_Expression expression;
 	public @S(30) PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(expression);
+	}
 }

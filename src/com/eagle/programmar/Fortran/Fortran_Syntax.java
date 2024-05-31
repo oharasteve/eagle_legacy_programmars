@@ -27,7 +27,7 @@ public class Fortran_Syntax extends EagleSyntax
 
 		// _commentInstance = new Fortran_Comment();
 		_punctuationExceptions = new String[] {
-				"/=", "::", "//"
+				"/=", "::", "//", "<=", ">="
 		};
 
 		addReservedWords(keywords);

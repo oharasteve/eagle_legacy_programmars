@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.PLI;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
@@ -20,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class PLI_Procedure extends TokenSequence
+public class PLI_Procedure extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT PLI_Signals signals;
 	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
@@ -77,5 +79,14 @@ public class PLI_Procedure extends TokenSequence
 		public @CHOICE PLI_Statement statement;
 		public @CHOICE PLI_Declaration declaration;
 		public @CHOICE PLI_Signals signals;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (PLI_StatementOrComment elt : statements._elements)
+		{
+			interpreter.tryToInterpret(elt.getWhich());
+		}
 	}
 }

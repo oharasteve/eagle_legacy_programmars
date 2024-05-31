@@ -22,7 +22,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// Assume System.out.println(expr.exp);
+		// Assume System.out.println(expr);
 		EagleValue result = interpreter.getEagleValue(argList.arg);
 		System.out.println(result.toString());
 	}
