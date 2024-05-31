@@ -27,7 +27,7 @@ public class Ruby_Assignment extends TokenSequence implements EagleRunnable
 		{
 		case "=":
 			EagleValue val = interpreter.getEagleValue(value);
-			Ruby_Identifier_Reference id = (Ruby_Identifier_Reference) var.vars.first();
+			Ruby_Identifier_Reference id = var.vars.first();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					id.getValue(), val);
 			break;

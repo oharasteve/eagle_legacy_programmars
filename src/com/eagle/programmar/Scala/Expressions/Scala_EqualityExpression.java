@@ -29,6 +29,6 @@ public class Scala_EqualityExpression extends PrecedenceOperator implements Eagl
 			interpreter.pushBool(leftValue != rightValue);
 			return;
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+		throw new RuntimeException("Unexpected equality operator: " + operator);
 	}
 }

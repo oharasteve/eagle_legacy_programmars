@@ -21,7 +21,7 @@ public class Algol68_ParenthesizedExpression extends PrimaryOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Algol68_Expression expr = (Algol68_Expression) expressions.first();
+		Algol68_Expression expr = expressions.first();
 		interpreter.tryToInterpret(expr);
 	}
 }

@@ -31,7 +31,7 @@ public class Ruby_Variable extends TokenSequence implements AbstractVariable, Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Ruby_Identifier_Reference which = (Ruby_Identifier_Reference) vars.first();
+		Ruby_Identifier_Reference which = vars.first();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}

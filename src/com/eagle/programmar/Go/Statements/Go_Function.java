@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Go.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Go_Type;
 import com.eagle.programmar.Go.Symbols.Go_Function_Definition;
@@ -16,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Go_Function extends TokenSequence
+public class Go_Function extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("#Function_declarations") Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;
@@ -43,5 +45,11 @@ public class Go_Function extends TokenSequence
 			public @S(20) SeparatedList<Go_Type, PunctuationComma> types;
 			public @S(30) PunctuationRightParen rightParen;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(stmt.getWhich());
 	}
 }

@@ -27,7 +27,7 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable
 	{
 		int x = interpreter.getIntValue(value);
 		IntegerValue val = new IntegerValue(x);
-		Algol68_Identifier_Reference id = (Algol68_Identifier_Reference) var.vars.first();
+		Algol68_Identifier_Reference id = var.vars.first();
 		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 				val);
 	}

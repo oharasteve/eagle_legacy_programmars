@@ -21,7 +21,7 @@ public class Delphi_Parens extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Delphi_Expression expr = (Delphi_Expression) exprList.first();
+		Delphi_Expression expr = exprList.first();
 		interpreter.tryToInterpret(expr);
 	}
 }

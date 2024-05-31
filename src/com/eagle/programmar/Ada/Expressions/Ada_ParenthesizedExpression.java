@@ -21,7 +21,7 @@ public class Ada_ParenthesizedExpression extends PrimaryOperator implements Eagl
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Ada_Expression expr = (Ada_Expression) expressions.first();
+		Ada_Expression expr = expressions.first();
 		interpreter.tryToInterpret(expr);
 	}
 }

@@ -448,7 +448,7 @@ public class CMacro_Preprocess extends EagleInclude
 		if (formalParams != null) paramCount = formalParams.getPrimaryCount();
 		if (paramCount > 0)
 		{
-			CMacro_Param first = (CMacro_Param) formalParams.first();
+			CMacro_Param first = formalParams.first();
 			if (first.getWhich() instanceof CMacro_Punctuation) // ellipsis (...) is special
 			{
 				paramCount = 0;

@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Go.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Go.Go_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Go_VariableExpression extends PrimaryOperator
+public class Go_VariableExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Go_Variable variable;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(variable);
+	}
 }

@@ -28,7 +28,7 @@ public class Scala_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Scala_Identifier_Reference first = (Scala_Identifier_Reference) vars.first();
+		Scala_Identifier_Reference first = vars.first();
 		EagleValue value = interpreter._symbolTable.findSymbol(first.toString());
 		interpreter.pushEagleValue(value);
 	}
