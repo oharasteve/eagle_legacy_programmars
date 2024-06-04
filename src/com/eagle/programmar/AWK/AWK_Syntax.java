@@ -47,6 +47,7 @@ public class AWK_Syntax extends EagleSyntax
 			"in",
 			"next",
 			"nextfile",
+			"return",
 			"switch",
 			"while",
 	};

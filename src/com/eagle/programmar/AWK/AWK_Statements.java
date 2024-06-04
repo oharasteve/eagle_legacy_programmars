@@ -4,7 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.AWK.Statements.AWK_Assignment;
 import com.eagle.programmar.AWK.Statements.AWK_BreakStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ContinueStatement;
@@ -13,6 +13,7 @@ import com.eagle.programmar.AWK.Statements.AWK_ForStatement;
 import com.eagle.programmar.AWK.Statements.AWK_IfStatement;
 import com.eagle.programmar.AWK.Statements.AWK_NextStatement;
 import com.eagle.programmar.AWK.Statements.AWK_PrintStatement;
+import com.eagle.programmar.AWK.Statements.AWK_ReturnStatement;
 import com.eagle.programmar.AWK.Statements.AWK_SplitStatement;
 import com.eagle.programmar.AWK.Statements.AWK_SubStatement;
 import com.eagle.programmar.AWK.Statements.AWK_SwitchStatement;
@@ -25,7 +26,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class AWK_Statements extends TokenSequence implements EagleRunnable
+public class AWK_Statements extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) SeparatedList<AWK_Statement, PunctuationSemicolon> statements;
 	public @S(20) @OPT PunctuationSemicolon semicolon;
@@ -45,6 +46,7 @@ public class AWK_Statements extends TokenSequence implements EagleRunnable
 		public @CHOICE AWK_IfStatement ifStatement;
 		public @CHOICE AWK_NextStatement nextStatement;
 		public @CHOICE AWK_PrintStatement printStatement;
+		public @CHOICE AWK_ReturnStatement returnStatement;
 		public @CHOICE AWK_SplitStatement splitStatement;
 		public @CHOICE AWK_SubStatement subStatement;
 		public @CHOICE AWK_SwitchStatement switchStatement;
@@ -54,11 +56,17 @@ public class AWK_Statements extends TokenSequence implements EagleRunnable
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (int i = 0; i < statements.getPrimaryCount(); i++)
 		{
-			interpreter.tryToInterpret(statements.getPrimaryElement(i).getWhich());
+			result = interpreter.tryToInterpret(statements.getPrimaryElement(i).getWhich());
+			if (result != Eagle_Statement_Result.NORMAL)
+			{
+				break;
+			}
 		}
+		return result;
 	}
 }

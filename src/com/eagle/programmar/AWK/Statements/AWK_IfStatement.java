@@ -50,7 +50,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 	{
 		AWK_Interpreter interpreter = (AWK_Interpreter) interp;
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		AWK_IfBlock todo = null;
+		AWK_IfBlock todo;
 
 		if (_metrics == null)
 		{
@@ -73,6 +73,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 		else
 		{
 			int seq = 1;
+			todo = null;
 
 			// Check for 'else'
 			if (ifelse.isPresent())

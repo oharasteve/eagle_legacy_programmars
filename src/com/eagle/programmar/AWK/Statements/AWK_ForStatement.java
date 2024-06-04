@@ -93,7 +93,7 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 				
 				interpreter.tryToInterpret(what.increment);
 			}
-	
+			
 			_metrics.competedLoop(metric);
 			return Eagle_Statement_Result.NORMAL;
 		}

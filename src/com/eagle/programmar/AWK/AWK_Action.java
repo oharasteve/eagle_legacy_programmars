@@ -4,7 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.TokenChooser;
@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class AWK_Action extends TokenSequence implements EagleRunnable
+public class AWK_Action extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT AWK_EndOfLine eoln1;
@@ -29,11 +29,18 @@ public class AWK_Action extends TokenSequence implements EagleRunnable
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (AWK_StatementOrComment stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			result = interpreter.tryToInterpret(stmt.getWhich());
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
+		if (result != Eagle_Statement_Result.NORMAL)
+		{
+			System.out.println("******************************** Action BROKE");
+		}
+		return result;
 	}
 }
