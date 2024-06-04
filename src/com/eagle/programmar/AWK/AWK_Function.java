@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.AWK;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
@@ -17,13 +20,15 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_Function extends TokenSequence implements AbstractFunction
+public class AWK_Function extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Identifier name;
 	public @S(30) AWK_Function_ParameterDefs parameters;
 	public @S(40) @OPT TokenList<AWK_Comment> comments;
 	public @S(50) AWK_FunctionBody body;
+
+	public @SKIP CallMetrics _metrics;
 
 	public static class AWK_Function_ParameterDefs extends TokenSequence
 	{
@@ -49,5 +54,15 @@ public class AWK_Function extends TokenSequence implements AbstractFunction
 		public @S(30) @OPT TokenList<AWK_StatementOrComment> elements;
 		public @S(40) PunctuationRightBrace rightBrace;
 		public @S(50) @OPT AWK_EndOfLine eoln2;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		_metrics = new CallMetrics(name.getValue(), getFileName(), getStartLine(), getStartChar());
+
+		// Don't do anything here.
+		// We searched for all the function in a preliminary pass
+		// And we only evaluate when it is called
 	}
 }

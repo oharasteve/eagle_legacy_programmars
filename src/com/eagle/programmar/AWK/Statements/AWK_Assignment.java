@@ -5,7 +5,7 @@ package com.eagle.programmar.AWK.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Variable;
 import com.eagle.programmar.AWK.Terminals.AWK_PunctuationChoice;
@@ -20,8 +20,7 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int x = interpreter.getIntValue(expr);
-		IntegerValue val = new IntegerValue(x);
+		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.id.getValue(), val);
 	}
