@@ -11,6 +11,7 @@ import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.AWK.AWK_Action;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.AWK_Expression;
+import com.eagle.programmar.AWK.AWK_Statements;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
@@ -27,7 +28,6 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT AWK_EndOfLine eoln;
 	public @S(60) AWK_IfBlock block;
-	public @S(70) @OPT AWK_EndOfLine endOfLine;
 	public @S(80) @OPT AWK_IfElse ifelse;
 
 	public static class AWK_IfElse extends TokenSequence
@@ -39,7 +39,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 
 	public static class AWK_IfBlock extends TokenChooser
 	{
-		public @CHOICE AWK_Statement stmt;
+		public @CHOICE AWK_Statements stmt;
 		public @CHOICE AWK_Action action;
 	}
 
@@ -84,9 +84,10 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 
 		if (todo != null)
 		{
-			if (todo.getWhich() instanceof AWK_Statement)
+			if (todo.getWhich() instanceof AWK_Statements)
 			{
-				AWK_Statement stmt = (AWK_Statement) todo.getWhich();
+				AWK_Statements stmts = (AWK_Statements) todo.getWhich();
+				AWK_Statement stmt = stmts.statements.first();
 				result = interpreter.tryToInterpret(stmt);
 			}
 			else

@@ -61,18 +61,18 @@ public class AWK_Expression extends PrecedenceChooser
 	// Primary expressions
 
 	public @P(100) AWK_GetLine getLine;
-	public @P(110) AWK_BuiltinFunctionCall builtinFunctionCall;
-	public @P(120) AWK_UserFunctionCall userFunctionCall;
-	public @P(130) AWK_PatternExpression patternExpression;
-	public @P(140) AWK_PreIncrementExpression preIncrementExpression;
-	public @P(150) AWK_PreDecrementExpression preDecrementExpression;
-	public @P(160) AWK_PostIncrementExpression postIncrementExpression;
-	public @P(170) AWK_PostDecrementExpression postDecrementExpression;
-	public @P(180) AWK_NegativeExpression negativeExpression;
+	public @P(110) AWK_UserFunctionCall userFunctionCall;
+	public @P(120) AWK_PatternExpression patternExpression;
+	public @P(130) AWK_PreIncrementExpression preIncrementExpression;
+	public @P(140) AWK_PreDecrementExpression preDecrementExpression;
+	public @P(150) AWK_PostIncrementExpression postIncrementExpression;
+	public @P(160) AWK_PostDecrementExpression postDecrementExpression;
+	public @P(170) AWK_NegativeExpression negativeExpression;
+	public @P(180) AWK_NotExpression notExpression;
 	public @P(190) AWK_ConcatenationExpression concateationExpression;	// Has to precede vars and strings
 	public @P(200) AWK_VariableExpression variableExpression;
 	public @P(210) AWK_String string;
-	public @P(220) AWK_NotExpression notExpression;
+	public @P(220) AWK_BuiltinFunctionCall builtinFunctionCall;
 	public @P(230) AWK_ParenthesizedExpression parenthesizedExpression;
 	public @P(240) AWK_DollarParensExpression dollarParensExpression;
 

@@ -45,9 +45,13 @@ public class AWK_Syntax extends EagleSyntax
 			"func",
 			"if",
 			"in",
+			"int",
+			"length",
 			"next",
 			"nextfile",
 			"return",
+			"strcat",
+			"substr",
 			"switch",
 			"while",
 	};
