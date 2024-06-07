@@ -11,6 +11,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
+import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
@@ -23,6 +24,7 @@ public class Powershell_Command extends TokenSequence
 	{
 		public @CHOICE PunctuationAmpersand ampersand;
 		public @CHOICE PunctuationPeriod dot;
+		public @CHOICE PunctuationColon colon;
 		public @CHOICE Powershell_VerbNoun verbNoun; // Like Get-Content for example
 		public @LAST Powershell_Function_Reference id;
 	}
