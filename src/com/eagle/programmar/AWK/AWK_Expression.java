@@ -7,6 +7,7 @@ import com.eagle.programmar.AWK.Expressions.AWK_AdditiveExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_AndExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_AssignmentExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_BuiltinFunctionCall;
+import com.eagle.programmar.AWK.Expressions.AWK_ConcatenationExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_DollarParensExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_GetLine;
 import com.eagle.programmar.AWK.Expressions.AWK_InExpression;
@@ -22,7 +23,7 @@ import com.eagle.programmar.AWK.Expressions.AWK_PreDecrementExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_PreIncrementExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_RegularExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_RelationalExpression;
-import com.eagle.programmar.AWK.Expressions.AWK_Strings;
+import com.eagle.programmar.AWK.Expressions.AWK_String;
 import com.eagle.programmar.AWK.Expressions.AWK_SubscriptExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_TrueFalseExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_UserFunctionCall;
@@ -68,11 +69,12 @@ public class AWK_Expression extends PrecedenceChooser
 	public @P(160) AWK_PostIncrementExpression postIncrementExpression;
 	public @P(170) AWK_PostDecrementExpression postDecrementExpression;
 	public @P(180) AWK_NegativeExpression negativeExpression;
-	public @P(190) AWK_VariableExpression variableExpression;
-	public @P(200) AWK_Strings strings;
-	public @P(210) AWK_NotExpression notExpression;
-	public @P(220) AWK_ParenthesizedExpression parenthesizedExpression;
-	public @P(230) AWK_DollarParensExpression dollarParensExpression;
+	public @P(190) AWK_ConcatenationExpression concateationExpression;	// Has to precede vars and strings
+	public @P(200) AWK_VariableExpression variableExpression;
+	public @P(210) AWK_String string;
+	public @P(220) AWK_NotExpression notExpression;
+	public @P(230) AWK_ParenthesizedExpression parenthesizedExpression;
+	public @P(240) AWK_DollarParensExpression dollarParensExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
