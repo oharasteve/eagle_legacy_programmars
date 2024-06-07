@@ -63,7 +63,8 @@ public class Lisp_SExpr extends TokenChooser implements EagleRunnable
 	public @CHOICE Lisp_NotOperator notOperator;
 	public @CHOICE Lisp_Builtins builtins;
 	
-	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(".", "?");
+	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(
+			".", "?", "<", "<=", "=", ">=", ">");
 
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{

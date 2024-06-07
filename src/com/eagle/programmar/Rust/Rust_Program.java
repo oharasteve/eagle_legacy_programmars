@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Rust;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -41,6 +44,7 @@ public class Rust_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Rust_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();

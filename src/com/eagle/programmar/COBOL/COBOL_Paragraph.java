@@ -9,12 +9,13 @@ import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
+import com.eagle.tokens.AbstractParagraph;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class COBOL_Paragraph extends TokenSequence implements EagleRunnable
+public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, AbstractParagraph
 {
 	public @S(10) @OPT TokenList<COBOL_ParagraphHeader> paragraphHeaders;
 	public @S(20) TokenList<COBOL_SentenceOrComment> sentences;

@@ -9,7 +9,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
-import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
@@ -49,9 +48,8 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 	}
 
 	@Override
-	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		TokenList<Eaglish_Statement> todo = null;
 
@@ -106,7 +104,12 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 
 		if (todo != null)
 		{
-			result = interpreter.interpretBlock(todo._elements);
+			result = Eagle_Statement_Result.NORMAL;
+			for (Eaglish_Statement stmt : todo._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
 		}
 
 		return result;

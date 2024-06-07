@@ -9,8 +9,8 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.AWK.AWK_Action;
+import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.AWK_Expression;
-import com.eagle.programmar.AWK.AWK_Interpreter;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
@@ -46,9 +46,8 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	@Override
-	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		AWK_Interpreter interpreter = (AWK_Interpreter) interp;
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		AWK_IfBlock todo;
 
@@ -93,7 +92,13 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 			else
 			{
 				AWK_Action action = (AWK_Action) todo.getWhich();
-				result = interpreter.interpretBlock(action);
+				
+				result = Eagle_Statement_Result.NORMAL;
+				for (AWK_StatementOrComment stmt : action.statements._elements)
+				{
+					result = interpreter.tryToInterpret(stmt);
+					if (result != Eagle_Statement_Result.NORMAL) break;
+				}
 			}
 		}
 

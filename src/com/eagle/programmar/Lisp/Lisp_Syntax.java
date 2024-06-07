@@ -27,6 +27,6 @@ public class Lisp_Syntax extends EagleSyntax
 	}
 
 	private String[] keywords = new String[] {
-			"and", "char", "defmacro", "defparameter", "defun", "do", "if", "let", "nil", "or", "print", "prog", "string", "t"
+			"char", "defmacro", "defparameter", "defun", "do", "if", "let", "nil", "print", "prog", "string", "t"
 	};
 }

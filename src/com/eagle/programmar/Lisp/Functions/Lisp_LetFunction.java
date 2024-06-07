@@ -8,11 +8,10 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
-import com.eagle.programmar.Lisp.Functions.Lisp_LetFunction.Lisp_LetVariables.Lisp_LetVar;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.EagleScope;
+import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -28,19 +27,19 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 	public @S(50) TokenList<Lisp_SExpr> values;
 	public @S(60) PunctuationRightParen rightParen;
 	
+	public static class Lisp_LetVar extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Lisp_Variable_Definition var;
+		public @S(30) Lisp_SExpr value;
+		public @S(40) PunctuationRightParen rightParen;
+	}
+
 	public static class Lisp_LetVariables extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT TokenList<Lisp_LetVar> valuePairs;
 		public @S(30) PunctuationRightParen rightParen;
-		
-		public static class Lisp_LetVar extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) Lisp_Variable_Definition var;
-			public @S(30) Lisp_SExpr value;
-			public @S(40) PunctuationRightParen rightParen;
-		}
 	}
 
 	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);

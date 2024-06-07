@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
-import com.eagle.programmar.COBOL.COBOL_Interpreter;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.TokenList;
@@ -29,19 +28,26 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 	}
 
 	@Override
-	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
 		boolean cond = interpreter.getBoolValue(condition);
 		if (cond)
 		{
-			result = interpreter.interpretBlock(thenActions._elements);
+			for (COBOL_StatementOrComment stmt : thenActions._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
 		}
 		else if (elseClause.isPresent())
 		{
-			result = interpreter.interpretBlock(elseClause.elseActions._elements);
+			for (COBOL_StatementOrComment stmt : elseClause.elseActions._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
 		}
 
 		return result;

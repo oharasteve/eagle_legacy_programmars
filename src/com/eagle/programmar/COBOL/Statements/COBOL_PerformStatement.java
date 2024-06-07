@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
-import com.eagle.programmar.COBOL.COBOL_Interpreter;
 import com.eagle.programmar.COBOL.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_SentenceOrComment;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
@@ -101,10 +100,8 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interp)
+	public void interpret(EagleInterpreter interpreter)
 	{
-		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
-
 		if (testWhen.isPresent()) throw new RuntimeException("Can't handle PERFORM TEST yet");
 		AbstractToken which = what.getWhich();
 		if (!(which instanceof COBOL_PerformParagraph))
@@ -125,7 +122,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		if (interpreter._paragraphs.containsKey(startPara))
 		{
 			// Found it!
-			paragraph = interpreter._paragraphs.get(startPara);
+			paragraph = (COBOL_Paragraph) interpreter._paragraphs.get(startPara);
 		}
 
 		if (paragraph == null)

@@ -11,6 +11,7 @@ import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_DataSection;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.tokens.AbstractParagraph;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -46,10 +47,8 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interp)
+	public void interpret(EagleInterpreter interpreter)
 	{
-		COBOL_Interpreter interpreter = (COBOL_Interpreter) interp;
-
 		// Pass 1 : Collect all the variables in Working Storage
 		collectDataVariables(interpreter);
 
@@ -60,7 +59,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 		interpreter.tryToInterpret(procedureDiv);
 	}
 
-	private void collectDataVariables(COBOL_Interpreter interpreter)
+	private void collectDataVariables(EagleInterpreter interpreter)
 	{
 		for (COBOL_DataSection section : dataDiv.sections._elements)
 		{
@@ -68,9 +67,9 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 		}
 	}
 
-	private void collectParagraphNames(COBOL_Interpreter interpreter)
+	private void collectParagraphNames(EagleInterpreter interpreter)
 	{
-		interpreter._paragraphs = new HashMap<String, COBOL_Paragraph>();
+		interpreter._paragraphs = new HashMap<String, AbstractParagraph>();
 		for (COBOL_Section section : procedureDiv.sections._elements)
 		{
 			for (COBOL_Paragraph paragraph : section.paragraphs._elements)

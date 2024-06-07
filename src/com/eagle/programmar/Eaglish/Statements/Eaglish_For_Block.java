@@ -9,7 +9,6 @@ import com.eagle.math.IntegerValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
-import com.eagle.programmar.Eaglish.Eaglish_Interpreter;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
@@ -37,9 +36,8 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
-	public Eagle_Statement_Result interpretStatement(EagleInterpreter interp)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		Eaglish_Interpreter interpreter = (Eaglish_Interpreter) interp;
 		int start = interpreter.getIntValue(startValue);
 		int stop = interpreter.getIntValue(stopValue);
 
@@ -59,7 +57,14 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				metric.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						var.toString(), new IntegerValue(i));
-				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
+				
+				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+				for (Eaglish_Statement stmt : statements._elements)
+				{
+					result = interpreter.tryToInterpret(stmt);
+					if (result != Eagle_Statement_Result.NORMAL) break;
+				}
+				
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
@@ -78,7 +83,14 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				metric.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						var.toString(), new IntegerValue(i));
-				Eagle_Statement_Result result = interpreter.interpretBlock(statements._elements);
+
+				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+				for (Eaglish_Statement stmt : statements._elements)
+				{
+					result = interpreter.tryToInterpret(stmt);
+					if (result != Eagle_Statement_Result.NORMAL) break;
+				}
+
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();

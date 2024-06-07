@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Eaglish;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -11,6 +13,7 @@ import com.eagle.programmar.Eaglish.Symbols.Eaglish_Program_Identifier;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_CommentEoln;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -51,6 +54,7 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Eaglish_Statement stmt : prog.statements._elements)
 		{
 			AbstractToken which = stmt.getWhich();
