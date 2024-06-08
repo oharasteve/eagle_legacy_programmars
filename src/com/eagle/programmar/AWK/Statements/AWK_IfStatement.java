@@ -28,7 +28,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT AWK_EndOfLine eoln;
 	public @S(60) AWK_IfBlock block;
-	public @S(80) @OPT AWK_IfElse ifelse;
+	public @S(70) @OPT AWK_IfElse ifelse;
 
 	public static class AWK_IfElse extends TokenSequence
 	{

@@ -45,16 +45,29 @@ public class Powershell_Parameters extends TokenSequence
 			public @S(60) PunctuationRightParen rightParen;
 			public @S(70) PunctuationRightBracket rightBracket;
 			public @S(80) @OPT Powershell_EndOfLine eoln2;
-			public @S(90) @OPT Powershell_CastParam cast;
-			public @S(100) Powershell_Variable param;
-			public @S(110) @OPT PunctuationComma comma;
-			public @S(120) @OPT Powershell_EndOfLine eoln3;
+			public @S(90) @OPT Powershell_AliasParam alias;
+			public @S(100) @OPT Powershell_CastParam cast;
+			public @S(110) @OPT Powershell_Variable param;
+			public @S(120) @OPT PunctuationComma comma;
+			public @S(130) @OPT Powershell_EndOfLine eoln3;
+
+			public static class Powershell_AliasParam extends TokenSequence
+			{
+				public @S(10) PunctuationLeftBracket leftBracket;
+				public @S(20) Powershell_Keyword ALIAS = new Powershell_Keyword("Alias");
+				public @S(30) PunctuationLeftParen leftParen;
+				public @S(40) Powershell_Literal literal;
+				public @S(50) PunctuationRightParen rightParen;
+				public @S(60) PunctuationRightBracket rightBracket;
+				public @S(70) @OPT Powershell_EndOfLine eoln;
+			}
 
 			public static class Powershell_CastParam extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBracket leftBracket;
 				public @S(20) Powershell_Type type;
 				public @S(30) PunctuationRightBracket rightBracket;
+				public @S(40) @OPT Powershell_EndOfLine eoln;
 			}
 
 			public static class Powershell_ParameterOption extends TokenChooser
@@ -98,17 +111,6 @@ public class Powershell_Parameters extends TokenSequence
 				public @S(10) PunctuationEquals equals;
 				public @S(20) Powershell_Expression expr;
 			}
-		}
-
-		public @CHOICE static class Powershell_ParamAlias extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) Powershell_Keyword ALIAS = new Powershell_Keyword("Alias");
-			public @S(30) PunctuationLeftParen leftParen;
-			public @S(40) Powershell_Literal aliasName;
-			public @S(50) PunctuationRightParen rightParen;
-			public @S(60) PunctuationRightBracket rightBracket;
-			public @S(70) @OPT Powershell_EndOfLine eoln;
 		}
 	}
 }
