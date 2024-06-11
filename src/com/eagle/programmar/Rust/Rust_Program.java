@@ -59,11 +59,7 @@ public class Rust_Program extends EagleLanguage implements EagleRunnable
 		for (Rust_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
-			if (which instanceof Rust_Function)
-			{
-				Rust_Function fn = (Rust_Function) which;
-				interpreter.tryToInterpret(fn);
-			}
+			interpreter.tryToInterpret(which);
 		}
 	}
 }

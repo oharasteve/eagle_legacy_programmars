@@ -28,7 +28,7 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 	public @S(40) @OPT TokenList<AWK_Comment> comments;
 	public @S(50) AWK_FunctionBody body;
 
-	public @SKIP CallMetrics _metrics;
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class AWK_Function_ParameterDefs extends TokenSequence
 	{
@@ -59,7 +59,10 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		_metrics = new CallMetrics(name.getValue(), getFileName(), getStartLine(), getStartChar());
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(name.getValue(), getFileName(), getStartLine(), getStartChar());
+		}
 
 		// Don't do anything here.
 		// We searched for all the function in a preliminary pass

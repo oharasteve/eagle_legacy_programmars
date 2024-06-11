@@ -27,12 +27,15 @@ public class Eaglish_Function_Block extends TokenSequence implements EagleRunnab
 	public @S(70) Eaglish_Keyword END_FUNCTION = new Eaglish_Keyword("END_FUNCTION");
 	public @S(80) Eaglish_EndOfLine eoln2;
 
-	public @SKIP CallMetrics _metrics;
+	public @SKIP CallMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		_metrics = new CallMetrics(var.getValue(), getFileName(), getStartLine(), getStartChar());
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(var.getValue(), getFileName(), getStartLine(), getStartChar());
+		}
 
 		// Don't do anything here.
 		// We searched for all the function in a preliminary pass

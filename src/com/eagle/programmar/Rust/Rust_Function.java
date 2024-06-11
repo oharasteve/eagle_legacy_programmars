@@ -5,6 +5,7 @@ package com.eagle.programmar.Rust;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Rust.Rust_Statement.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
@@ -42,9 +43,18 @@ public class Rust_Function extends TokenSequence implements EagleRunnable, Abstr
 		public @S(30) Rust_Type type;
 	}
 
+	public @SKIP CallMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(stmt);
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(id.getValue(), getFileName(), getStartLine(), getStartChar());
+		}
+
+		// Don't do anything here.
+		// We searched for all the functions in a preliminary pass
+		// And we only evaluate when it is called
 	}
 }

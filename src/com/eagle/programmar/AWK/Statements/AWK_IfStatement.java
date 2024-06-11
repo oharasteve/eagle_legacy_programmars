@@ -71,30 +71,32 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 		}
 		else
 		{
-			int seq = 1;
 			todo = null;
 
 			// Check for 'else'
 			if (ifelse.isPresent())
 			{
-				_metrics.get(seq).completedIf(true);
+				_metrics.get(1).completedIf(true);
 				todo = ifelse.block;
 			}
 		}
 
 		if (todo != null)
 		{
+			result = Eagle_Statement_Result.NORMAL;
 			if (todo.getWhich() instanceof AWK_Statements)
 			{
 				AWK_Statements stmts = (AWK_Statements) todo.getWhich();
-				AWK_Statement stmt = stmts.statements.first();
-				result = interpreter.tryToInterpret(stmt);
+				for (int i = 0; i < stmts.statements.getPrimaryCount(); i++)
+				{
+					AWK_Statement stmt = stmts.statements.getPrimaryElement(i);
+					result = interpreter.tryToInterpret(stmt);
+					if (result != Eagle_Statement_Result.NORMAL) break;
+				}
 			}
 			else
 			{
 				AWK_Action action = (AWK_Action) todo.getWhich();
-				
-				result = Eagle_Statement_Result.NORMAL;
 				for (AWK_StatementOrComment stmt : action.statements._elements)
 				{
 					result = interpreter.tryToInterpret(stmt);

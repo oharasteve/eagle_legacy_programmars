@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Rust;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.IntegerValue;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
@@ -11,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_Data extends TokenSequence
+public class Rust_Data extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/static-items.html") Rust_KeywordChoice STATIC = new Rust_KeywordChoice("const", "static");
@@ -25,5 +28,18 @@ public class Rust_Data extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) Rust_Expression expr;
+	}
+
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (init.isPresent())
+		{
+			int x = interpreter.getIntValue(init.expr);
+			IntegerValue val = new IntegerValue(x);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.getValue(), val);
+		}
 	}
 }

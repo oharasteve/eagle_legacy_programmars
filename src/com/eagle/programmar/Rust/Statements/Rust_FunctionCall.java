@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Rust.Statements;
 
-import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Rust_FunctionCall extends TokenSequence
 {
-	public @S(10) Java_Variable methodName;
+	public @S(10) Rust_Variable methodName;
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
