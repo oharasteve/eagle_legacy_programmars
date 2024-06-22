@@ -21,25 +21,38 @@ public class Rust_EqualityExpression extends PrecedenceOperator implements Eagle
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getValue();
 
 		if (leftValue.isInteger() && rightValue.isInteger())
 		{
 			int leftInt = interpreter.getIntValue(left);
 			int rightInt = interpreter.getIntValue(right);
-			String oper = operator.getValue();
-			boolean result;
 			switch (oper)
 			{
 			case "==":
-				result = leftInt == rightInt;
-				break;
+				interpreter.pushBool(leftInt == rightInt);
+				return;
 			case "!=":
-				result = leftInt != rightInt;
-				break;
-			default:
-				throw new RuntimeException("Unable to handle " + oper);
+				interpreter.pushBool(leftInt != rightInt);
+				return;
 			}
-			interpreter.pushBool(result);
 		}
+		
+		if (leftValue.isString() && rightValue.isString())
+		{
+			String leftStr = interpreter.getStrValue(left);
+			String rightStr = interpreter.getStrValue(right);
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
+		}
+		
+		throw new RuntimeException("Unable to handle " + oper);
 	}
 }

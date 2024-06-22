@@ -47,6 +47,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		String which = TO.getValue();
 		switch (which)
 		{
@@ -58,7 +59,6 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						var.toString(), new IntegerValue(i));
 				
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 				for (Eaglish_Statement stmt : statements._elements)
 				{
 					result = interpreter.tryToInterpret(stmt);
@@ -68,11 +68,17 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
+					result = Eagle_Statement_Result.NORMAL;
 					break;
 				}
 				else if (result == Eagle_Statement_Result.CONTINUE)
 				{
 					metric.continued();
+					result = Eagle_Statement_Result.NORMAL;
+				}
+				else if (result == Eagle_Statement_Result.RETURN)
+				{
+					break;
 				}
 			}
 			break;
@@ -84,7 +90,6 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						var.toString(), new IntegerValue(i));
 
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 				for (Eaglish_Statement stmt : statements._elements)
 				{
 					result = interpreter.tryToInterpret(stmt);
@@ -94,11 +99,17 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
+					result = Eagle_Statement_Result.NORMAL;
 					break;
 				}
 				else if (result == Eagle_Statement_Result.CONTINUE)
 				{
 					metric.continued();
+					result = Eagle_Statement_Result.NORMAL;
+				}
+				else if (result == Eagle_Statement_Result.RETURN)
+				{
+					break;
 				}
 			}
 			break;
@@ -107,6 +118,6 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		}
 
 		_metrics.competedLoop(metric);
-		return Eagle_Statement_Result.NORMAL;
+		return result;
 	}
 }

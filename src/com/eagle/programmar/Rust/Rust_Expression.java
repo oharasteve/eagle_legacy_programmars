@@ -5,6 +5,8 @@ package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
+import com.eagle.programmar.Rust.Expressions.Rust_BuiltinFunction;
+import com.eagle.programmar.Rust.Expressions.Rust_BuiltinMethod;
 import com.eagle.programmar.Rust.Expressions.Rust_ConditionalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ConditionalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_DotDotExpression;
@@ -68,20 +70,22 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(130) Rust_BuiltIn builtIn;
 	public @P(140) Rust_VariableExpression variableExpression;
 	public @P(150) Rust_RangeExpression rangeExpression;
-	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(170) Rust_ExpressionArray expressionArray;
+	public @P(160) Rust_BuiltinFunction builtinFunction;
+	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Rust_ExpressionArray expressionArray;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
 	public @P(500) Rust_SubscriptExpression subscriptExpression;
-	public @P(510) Rust_Subfield subfield;
-	public @P(520) Rust_MultiplicativeExpression multiplicativeExpression;
-	public @P(530) Rust_AdditiveExpression additiveExpression;
-	public @P(540) Rust_ShiftExpression shiftExpression;
-	public @P(550) Rust_RelationalExpression relationalExpression;
-	public @P(560) Rust_EqualityExpression equalityExpression;
-	public @P(570) Rust_ConditionalAndExpression conditionalAndExpression;
-	public @P(580) Rust_ConditionalOrExpression conditionalOrExpression;
-	public @P(590) Rust_DotDotExpression dotDotExpression;
+	public @P(510) Rust_BuiltinMethod builtinMethod;
+	public @P(520) Rust_Subfield subfield;
+	public @P(530) Rust_MultiplicativeExpression multiplicativeExpression;
+	public @P(540) Rust_AdditiveExpression additiveExpression;
+	public @P(550) Rust_ShiftExpression shiftExpression;
+	public @P(560) Rust_RelationalExpression relationalExpression;
+	public @P(570) Rust_EqualityExpression equalityExpression;
+	public @P(580) Rust_ConditionalAndExpression conditionalAndExpression;
+	public @P(590) Rust_ConditionalOrExpression conditionalOrExpression;
+	public @P(600) Rust_DotDotExpression dotDotExpression;
 }

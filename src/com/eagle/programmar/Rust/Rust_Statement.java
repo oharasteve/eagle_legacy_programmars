@@ -4,7 +4,7 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Rust.Statements.Rust_AssignmentStatement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ForStatement;
@@ -36,20 +36,25 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 	public @LAST Rust_AssignmentStatement assignmentStatement;
 	public @LAST Rust_FunctionCall functionCall;
 
-	public static @CHOICE class Rust_Block_Statement extends TokenSequence implements EagleRunnable
+	public static @CHOICE class Rust_Block_Statement extends TokenSequence implements EagleRunnableWithResult
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) TokenList<Rust_Statement> statements;
 		public @S(30) PunctuationRightBrace rightBrace;
 
 		@Override
-
-		public void interpret(EagleInterpreter interpreter)
+		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			for (Rust_Statement stmt : statements._elements)
 			{
-				interpreter.tryToInterpret(stmt);
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL)
+				{
+					break;
+				}
 			}
+			return result;
 		}
 	}
 }

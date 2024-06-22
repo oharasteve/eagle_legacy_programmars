@@ -22,6 +22,6 @@ public class Eaglish_Return_Statement extends TokenSequence implements EagleRunn
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
-		return Eagle_Statement_Result.BREAK;
+		return Eagle_Statement_Result.RETURN;
 	}
 }

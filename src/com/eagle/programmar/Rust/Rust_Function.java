@@ -56,5 +56,11 @@ public class Rust_Function extends TokenSequence implements EagleRunnable, Abstr
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
+		
+		// Except the function called 'main'
+		if (id.getValue().equals("main"))
+		{
+			interpreter.tryToInterpret(stmt);
+		}
 	}
 }

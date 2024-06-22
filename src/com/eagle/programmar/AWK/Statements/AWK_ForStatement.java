@@ -73,6 +73,7 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 			}
 			ForLoopMetric metric = new ForLoopMetric();
 	
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			while (true)
 			{
 				boolean keepGoing = interpreter.getBoolValue(what.test);
@@ -81,7 +82,6 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 				metric.iterate();
 				AWK_Action stmts = (AWK_Action) block.getWhich();
 				
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 				for (AWK_StatementOrComment stmt : stmts.statements._elements)
 				{
 					result = interpreter.tryToInterpret(stmt);
@@ -91,18 +91,24 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
+					result = Eagle_Statement_Result.NORMAL;
 					break;
 				}
 				else if (result == Eagle_Statement_Result.CONTINUE)
 				{
 					metric.continued();
+					result = Eagle_Statement_Result.NORMAL;
+				}
+				else if (result == Eagle_Statement_Result.RETURN)
+				{
+					break;
 				}
 				
 				interpreter.tryToInterpret(what.increment);
 			}
 			
 			_metrics.competedLoop(metric);
-			return Eagle_Statement_Result.NORMAL;
+			return result;
 		}
 		
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());

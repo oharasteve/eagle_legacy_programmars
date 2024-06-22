@@ -20,6 +20,6 @@ public class AWK_ReturnStatement extends TokenSequence implements EagleRunnableW
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
-		return Eagle_Statement_Result.BREAK;
+		return Eagle_Statement_Result.RETURN;
 	}
 }
