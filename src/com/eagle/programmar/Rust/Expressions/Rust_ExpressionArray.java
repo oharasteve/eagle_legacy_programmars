@@ -5,7 +5,7 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.ArrayValue;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.tokens.PrimaryOperator;
@@ -25,7 +25,7 @@ public class Rust_ExpressionArray extends PrimaryOperator implements EagleRunnab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		ArrayValue vals = new ArrayValue();
+		EagleArray vals = new EagleArray();
 		for (int i = 0; i < exprs.getPrimaryCount(); i++)
 		{
 			Rust_Expression expr = exprs.getPrimaryElement(i);

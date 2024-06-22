@@ -5,7 +5,7 @@ package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
@@ -32,7 +32,7 @@ public class Eaglish_Integer_Data extends TokenSequence implements EagleRunnable
 		if (init.isPresent())
 		{
 			int x = interpreter.getIntValue(init.value);
-			IntegerValue val = new IntegerValue(x);
+			EagleInteger val = new EagleInteger(x);
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.getValue(), val);
 		}

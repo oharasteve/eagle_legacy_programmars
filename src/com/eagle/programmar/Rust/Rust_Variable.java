@@ -5,7 +5,7 @@ package com.eagle.programmar.Rust;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.ArrayValue;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.tokens.TokenSequence;
@@ -30,10 +30,10 @@ public class Rust_Variable extends TokenSequence implements AbstractVariable, Ea
 	{
 		EagleValue value = interpreter._symbolTable.findSymbol(var.getValue());
 
-		if (subscript.isPresent() && value instanceof ArrayValue)
+		if (subscript.isPresent() && value instanceof EagleArray)
 		{
 			int subscr = interpreter.getIntValue(subscript.expr);
-			ArrayValue val = (ArrayValue) value;
+			EagleArray val = (EagleArray) value;
 			interpreter.pushEagleValue(val.getValue(subscr));
 		}
 		else

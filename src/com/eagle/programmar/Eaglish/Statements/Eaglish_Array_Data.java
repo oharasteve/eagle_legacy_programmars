@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.ArrayValue;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.math.StringValue;
+import com.eagle.math.EagleString;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
@@ -43,12 +43,12 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable
 			{
 				Eaglish_Expression expr = init.values.getPrimaryElement(i);
 				String val = interpreter.getStrValue(expr);
-				vals.add(new StringValue(val));
+				vals.add(new EagleString(val));
 				if (interpreter._TRACE) System.err.println("*** " + var.toString() + "[" + i + "] = " + val);
 			}
 		}
 
-		ArrayValue array = new ArrayValue();
+		EagleArray array = new EagleArray();
 		array.setValue(vals);
 		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.toString(),
 				array);

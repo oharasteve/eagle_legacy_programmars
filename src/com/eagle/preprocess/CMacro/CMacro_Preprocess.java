@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import com.eagle.core.EagleProject;
 import com.eagle.math.EagleSymbolTable;
-import com.eagle.math.TokenValue;
+import com.eagle.math.EagleToken;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.parsers.EagleTracer;
@@ -335,7 +335,7 @@ public class CMacro_Preprocess extends EagleInclude
 						if (_symbolTable.isDefined(word))
 						{
 							// Yes, found a macro!
-							TokenValue macroValue = (TokenValue) _symbolTable.findSymbol(word);
+							EagleToken macroValue = (EagleToken) _symbolTable.findSymbol(word);
 							AbstractToken macro = macroValue.getTokenValue();
 							if (macro instanceof CMacro_Define_Statement)
 							{

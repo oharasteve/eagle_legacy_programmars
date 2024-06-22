@@ -5,7 +5,7 @@ package com.eagle.programmar.Algol68.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Algol68_Variable;
@@ -26,7 +26,7 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int x = interpreter.getIntValue(value);
-		IntegerValue val = new IntegerValue(x);
+		EagleInteger val = new EagleInteger(x);
 		Algol68_Identifier_Reference id = var.vars.first();
 		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 				val);

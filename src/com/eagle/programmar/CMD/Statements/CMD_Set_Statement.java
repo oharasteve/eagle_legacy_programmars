@@ -6,7 +6,7 @@ package com.eagle.programmar.CMD.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Symbols.CMD_Variable_Definition;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
@@ -69,7 +69,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable
 		{
 			CMD_Set_Assigment cmd = (CMD_Set_Assigment) which;
 			int x = interpreter.getIntValue(cmd.expr);
-			IntegerValue val = new IntegerValue(x);
+			EagleInteger val = new EagleInteger(x);
 			interpreter._symbolTable.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(), cmd.var.getStartChar(),
 					cmd.var.getValue(), val);
 		}

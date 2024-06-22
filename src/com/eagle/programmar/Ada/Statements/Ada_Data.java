@@ -5,7 +5,7 @@ package com.eagle.programmar.Ada.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Type;
 import com.eagle.programmar.Ada.Symbols.Ada_Variable_Definition;
@@ -36,7 +36,7 @@ public class Ada_Data extends TokenSequence implements EagleRunnable
 		if (init.isPresent())
 		{
 			int x = interpreter.getIntValue(init.value);
-			IntegerValue val = new IntegerValue(x);
+			EagleInteger val = new EagleInteger(x);
 			Ada_Variable_Definition var = ids.first();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.getValue(), val);

@@ -5,7 +5,7 @@ package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
@@ -57,7 +57,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				// 100% identical to "DOWN_TO" below
 				metric.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						var.toString(), new IntegerValue(i));
+						var.toString(), new EagleInteger(i));
 				
 				for (Eaglish_Statement stmt : statements._elements)
 				{
@@ -88,7 +88,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 				// 100% identical to "TO" above
 				metric.iterate();
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						var.toString(), new IntegerValue(i));
+						var.toString(), new EagleInteger(i));
 
 				for (Eaglish_Statement stmt : statements._elements)
 				{

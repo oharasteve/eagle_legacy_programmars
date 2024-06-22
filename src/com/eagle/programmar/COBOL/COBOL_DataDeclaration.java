@@ -5,10 +5,10 @@ package com.eagle.programmar.COBOL;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.ArrayValue;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.math.IntegerValue;
-import com.eagle.math.StringValue;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleString;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Literal;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Number;
@@ -148,8 +148,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			String varName = dataDef.getValue();
 			String pic = null;
 			String redefines = null;
-			IntegerValue initInteger = new IntegerValue(0);
-			StringValue initString = new StringValue("");
+			EagleInteger initInteger = new EagleInteger(0);
+			EagleString initString = new EagleString("");
 			for (COBOL_DataClause clause : clauses._elements)
 			{
 				AbstractToken which = clause.getWhich();
@@ -170,12 +170,12 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
 					{
 						COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
-						initInteger = new IntegerValue(Integer.parseInt(num.number.getValue()));
+						initInteger = new EagleInteger(Integer.parseInt(num.number.getValue()));
 					}
 					else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
 					{
 						COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
-						initString = new StringValue(lit.literal.getValue());
+						initString = new EagleString(lit.literal.getValue());
 					}
 					break;
 				}
@@ -217,10 +217,10 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		}
 	}
 
-	private static ArrayValue collectArrayValues(COBOL_DataDeclaration dataDeclaration)
+	private static EagleArray collectArrayValues(COBOL_DataDeclaration dataDeclaration)
 	{
 		// Look at all the children
-		ArrayValue array = new ArrayValue();
+		EagleArray array = new EagleArray();
 		for (COBOL_CopyOrDataDeclaration child : dataDeclaration.children._elements)
 		{
 			AbstractToken which = child.getWhich();
@@ -237,7 +237,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
 						{
 							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
-							StringValue str = new StringValue(lit.literal.getValue());
+							EagleString str = new EagleString(lit.literal.getValue());
 							// System.err.println("************** Adding " + str.toString());
 							array.addValue(str);
 						}

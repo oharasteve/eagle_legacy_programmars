@@ -5,7 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Bash_Variable;
 import com.eagle.programmar.Bash.Terminals.Bash_Filename;
@@ -41,7 +41,7 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable
 		{
 		case "=":
 			int x = interpreter.getIntValue(expr);
-			IntegerValue val = new IntegerValue(x);
+			EagleInteger val = new EagleInteger(x);
 			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 					variable.id.getValue(), val);
 			break;

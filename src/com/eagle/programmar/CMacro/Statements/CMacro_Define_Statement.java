@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro.Statements;
 
-import com.eagle.math.TokenValue;
+import com.eagle.math.EagleToken;
 import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Define_Definition;
@@ -50,7 +50,7 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 		if (preprocessor._project == null || preprocessor._project.expandMacro(macroName))
 		{
 			preprocessor._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), macroName,
-					new TokenValue(this));
+					new EagleToken(this));
 		}
 		return true; // No need to add these to the file
 	}

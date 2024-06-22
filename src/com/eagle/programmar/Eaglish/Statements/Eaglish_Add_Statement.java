@@ -5,7 +5,7 @@ package com.eagle.programmar.Eaglish.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Variable;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Identifier_Reference;
@@ -27,7 +27,7 @@ public class Eaglish_Add_Statement extends TokenSequence implements EagleRunnabl
 	{
 		int x = interpreter.getIntValue(expr);
 		int prev = interpreter.getIntValue(var);
-		IntegerValue val = new IntegerValue(prev + x);
+		EagleInteger val = new EagleInteger(prev + x);
 
 		AbstractToken which = var.var.getWhich();
 		if (which instanceof Eaglish_Identifier_Reference)

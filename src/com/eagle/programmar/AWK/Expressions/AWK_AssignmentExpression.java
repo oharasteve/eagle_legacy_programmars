@@ -5,7 +5,7 @@ package com.eagle.programmar.AWK.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.Terminals.AWK_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -29,7 +29,7 @@ public class AWK_AssignmentExpression extends PrecedenceOperator implements Eagl
 		{
 		case "=":
 			int x = interpreter.getIntValue(expr);
-			IntegerValue val = new IntegerValue(x);
+			EagleInteger val = new EagleInteger(x);
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					varExpr.variable.id.getValue(), val);
 			break;

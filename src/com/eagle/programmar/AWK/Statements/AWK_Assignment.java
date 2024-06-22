@@ -6,8 +6,8 @@ package com.eagle.programmar.AWK.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.math.HashValue;
-import com.eagle.math.IntegerValue;
+import com.eagle.math.EagleHash;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Variable;
 import com.eagle.programmar.AWK.AWK_Variable.AWK_VarSubscript;
@@ -28,10 +28,10 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable
 		
 		if (variable.subscripts.size() == 1)
 		{
-			HashValue hash = (HashValue) var; 
+			EagleHash hash = (EagleHash) var; 
 			if (hash == null)
 			{
-				hash = new HashValue();
+				hash = new EagleHash();
 				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 						variable.id.getValue(), hash);
 			}
@@ -48,16 +48,16 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable
 				v = val;
 				break;
 			case "+=":
-				v = new IntegerValue(var.forceIntegerValue() + val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() + val.forceIntegerValue());
 				break;
 			case "-=":
-				v = new IntegerValue(var.forceIntegerValue() - val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() - val.forceIntegerValue());
 				break;
 			case "*=":
-				v = new IntegerValue(var.forceIntegerValue() * val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() * val.forceIntegerValue());
 				break;
 			case "/=":
-				v = new IntegerValue(var.forceIntegerValue() / val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() / val.forceIntegerValue());
 				break;
 			default:
 				throw new RuntimeException("Unable to handle " + equals.getValue());
