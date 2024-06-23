@@ -8,7 +8,7 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.programmar.Eaglish.Eaglish_Expression;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnable
@@ -119,7 +119,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 			int second = txt.indexOf('%', first + 1);
 			if (second < 0) throw new RuntimeException("Missing % in " + txt);
 			String var = txt.substring(first + 1, second);
-			Eaglish_Expression expr = new Eaglish_Expression();
+			CMD_Expression expr = new CMD_Expression();
 			if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + var);

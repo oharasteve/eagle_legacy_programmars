@@ -6,8 +6,8 @@ package com.eagle.programmar.Lisp.Functions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Syntax;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.EagleScope;
@@ -42,7 +42,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+	private EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
 	public EagleScope getScope()

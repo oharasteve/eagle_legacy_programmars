@@ -6,7 +6,6 @@ package com.eagle.programmar.Ruby;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
-import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.programmar.Ruby.Statements.Ruby_Function;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Comment;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
@@ -51,7 +50,7 @@ public class Ruby_Program extends EagleLanguage implements EagleRunnable
 		for (Ruby_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
-			if (which instanceof Julia_Statement)
+			if (which instanceof Ruby_Statement)
 			{
 				Ruby_Statement stmt = (Ruby_Statement) which;
 				which = stmt.getWhich();
