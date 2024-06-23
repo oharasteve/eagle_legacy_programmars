@@ -48,7 +48,7 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			for (Rust_Statement stmt : statements._elements)
 			{
-				result = interpreter.tryToInterpret(stmt);
+				result = interpreter.tryToInterpret(stmt.getWhich());
 				if (result != Eagle_Statement_Result.NORMAL)
 				{
 					break;

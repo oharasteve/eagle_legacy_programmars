@@ -4,6 +4,7 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltinFunction;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltinMethod;
@@ -73,6 +74,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(160) Rust_BuiltinFunction builtinFunction;
 	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
 	public @P(180) Rust_ExpressionArray expressionArray;
+	public @P(190) Rust_BorrowExpression borrowExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

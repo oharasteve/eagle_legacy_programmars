@@ -5,6 +5,7 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleRange;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -16,7 +17,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
-	public @S(30) Rust_KeywordChoice method = new Rust_KeywordChoice("len", "starts_with", "to_string");
+	public @S(30) Rust_KeywordChoice method = new Rust_KeywordChoice("as_str", "len", "rev", "starts_with", "to_string");
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT Rust_Expression arg;
 	public @S(60) PunctuationRightParen rightParen;
@@ -36,6 +37,15 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			String str = interpreter.getStrValue(left);
 			interpreter.pushInt(str.length());
 			break;
+		case "rev":
+			if (arg.isPresent())
+			{
+				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
+			}
+			
+			EagleRange range = interpreter.getRangeValue(left);
+			interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, -range._step));
+			break;
 		case "starts_with":
 			if (! arg.isPresent())
 			{
@@ -45,6 +55,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			String patt = interpreter.getStrValue(arg);
 			interpreter.pushBool(text.startsWith(patt));
 			break;
+		case "as_str":
 		case "to_string":
 			if (arg.isPresent())
 			{

@@ -19,11 +19,6 @@ public class Rust_Literal extends TerminalLiteralToken implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String txt = _txt;
-		if (_txt.startsWith("\""))
-		{
-			txt = _txt.substring(1, _txt.length()-1);	// Remove quotes
-		}
-		interpreter.pushStr(txt);
+		interpreter.pushStr(_txt);
 	}
 }

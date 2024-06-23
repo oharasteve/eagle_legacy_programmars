@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
 import com.eagle.programmar.COBOL.COBOL_Subscript.COBOL_RegularSubscript;
@@ -53,7 +54,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 		{
 			if (val.isArray())
 			{
-				ArrayList<EagleValue> avals = val.forceArrayValue();
+				ArrayList<EagleValue> avals = ((EagleArray)val).getArrayValue();
 				int subscript = variable.subscript.first().getSubscriptValue(interpreter);
 				interpreter.pushEagleValue(avals.get(subscript));
 				return;

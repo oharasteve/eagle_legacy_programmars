@@ -49,72 +49,42 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		String which = TO.getValue();
-		switch (which)
+		boolean backwards = which.equals("DOWN_TO");
+
+		int i = start;
+		while (true)
 		{
-		case "TO":
-			for (int i = start; i <= stop; i++)
+			if (! backwards && i <= stop) break;
+			if (backwards && i >= stop) break;
+			
+			metric.iterate();
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.toString(), new EagleInteger(i));
+			
+			for (Eaglish_Statement stmt : statements._elements)
 			{
-				// 100% identical to "DOWN_TO" below
-				metric.iterate();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						var.toString(), new EagleInteger(i));
-				
-				for (Eaglish_Statement stmt : statements._elements)
-				{
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
-				
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					result = Eagle_Statement_Result.NORMAL;
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-					result = Eagle_Statement_Result.NORMAL;
-				}
-				else if (result == Eagle_Statement_Result.RETURN)
-				{
-					break;
-				}
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			break;
-		case "DOWN_TO":
-			for (int i = start; i >= stop; i--)
+			
+			if (result == Eagle_Statement_Result.BREAK)
 			{
-				// 100% identical to "TO" above
-				metric.iterate();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						var.toString(), new EagleInteger(i));
-
-				for (Eaglish_Statement stmt : statements._elements)
-				{
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
-
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					result = Eagle_Statement_Result.NORMAL;
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-					result = Eagle_Statement_Result.NORMAL;
-				}
-				else if (result == Eagle_Statement_Result.RETURN)
-				{
-					break;
-				}
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
 			}
-			break;
-		default:
-			throw new RuntimeException("Unable to handle " + which);
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+			
+			if (backwards) i--;
+			else i++;
 		}
 
 		_metrics.competedLoop(metric);

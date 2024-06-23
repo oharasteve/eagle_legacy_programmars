@@ -6,6 +6,7 @@ package com.eagle.programmar.Rust.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleRange;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
@@ -27,8 +28,10 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		int start = 1; // interpreter.getIntValue(startValue);
-		int stop = 2; // interpreter.getIntValue(stopValue);
+		EagleRange range = interpreter.getRangeValue(expr);
+		int start = range._lowValue;
+		int stop = range._highValue;
+		int step = range._step;
 
 		if (_metrics == null)
 		{
@@ -37,11 +40,22 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 		ForLoopMetric metric = new ForLoopMetric();
 
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (int i = start; i <= stop; i++)
+		int i = start;
+		boolean backwards = false;
+		if (step < 0)
 		{
+			backwards = true;
+			i = stop - 1;
+		}
+		
+		while (true)
+		{
+			if (backwards && i < start) break;
+			if (! backwards && i >= stop) break;
+
 			metric.iterate();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.toString(), new EagleInteger(i));
+					var.var.toString(), new EagleInteger(i));
 			
 			result = interpreter.tryToInterpret(stmt);
 			
@@ -60,6 +74,8 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 			{
 				break;
 			}
+			
+			i += step;	// Might be negative
 		}
 
 		_metrics.competedLoop(metric);
