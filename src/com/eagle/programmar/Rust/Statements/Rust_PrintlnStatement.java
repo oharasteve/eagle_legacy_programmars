@@ -27,10 +27,28 @@ public class Rust_PrintlnStatement extends TokenSequence implements EagleRunnabl
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (int i = 0; i < items.getPrimaryCount(); i++)
+		String fmt = interpreter.getStrValue(items.getPrimaryElement(0));
+		int sc = fmt.indexOf("{}");
+		if (sc < 0)
 		{
-			String val = interpreter.getStrValue(items.getPrimaryElement(i));
-			System.out.println(val);
+			// Nothing to insert in the string
+			System.out.println(fmt);
+		}
+		else
+		{
+			StringBuffer result = new StringBuffer();
+			int prev = 0;
+			for (int i = 1; i < items.getPrimaryCount(); i++)
+			{
+				result.append(fmt.substring(prev, sc));
+				String piece = interpreter.getStrValue(items.getPrimaryElement(i));
+				result.append(piece);
+				prev = sc + 2;
+				sc = fmt.indexOf("{}", prev);
+				if (sc < 0) break;		// Ran out of {} insertion points
+			}
+			result.append(fmt.substring(prev));
+			System.out.println(result.toString());
 		}
 	}
 }
