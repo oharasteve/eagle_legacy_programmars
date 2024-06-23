@@ -63,7 +63,7 @@ public class CSharp_Resolve_References extends Eagle_Resolve_References
 		{
 			CSharp_Using jimport = (CSharp_Using) imp;
 
-			CSharp_Identifier firstId = jimport.id.getPrimaryElement(0);
+			CSharp_Identifier firstId = jimport.id;
 			String name = firstId.getValue();
 			// TokenList<CSharp_DotIdentifier> dotIds = jimport.dotId;
 			// for (CSharp_DotIdentifier dotId : dotIds)

@@ -31,7 +31,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass, EagleScopeInterface
 {
-	public @S(10) @OPT TokenList<CSharp_AnnotationOrComment> annotationOrComment;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_AnnotationOrComment> annotationOrComment;
 	public @S(20) @OPT TokenList<CSharp_ClassModifier> modifiers;
 	public @S(30) CSharp_KeywordChoice classOrInterface = new CSharp_KeywordChoice("class", "interface", "struct");
 	public @S(40) CSharp_Class_Definition className;

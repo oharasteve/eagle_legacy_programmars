@@ -92,9 +92,9 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 		public static class Java_DotIdentifierStar extends TokenSequence
 		{
 			public @S(10) @NOSPACE PunctuationPeriod dot;
-			public @S(20) @NOSPACE Java_IdentifierStar idStar;
+			public @S(20) @NOSPACE Java_IdentifierOrStar idStar;
 
-			public static class Java_IdentifierStar extends TokenChooser
+			public static class Java_IdentifierOrStar extends TokenChooser
 			{
 				public @CHOICE @NOSPACE Java_Identifier id;
 				public @CHOICE @NOSPACE PunctuationStar star;
