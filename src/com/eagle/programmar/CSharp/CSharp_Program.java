@@ -96,11 +96,18 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 
 	public static class CSharp_Namespace extends TokenSequence
 	{
-		public @S(10) CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
-		public @S(20) SeparatedList<CSharp_Identifier, PunctuationPeriod> ids;
-		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) @OPT TokenList<CSharp_ProgramElems> elems;
-		public @S(50) PunctuationRightBrace rightBrace;
+		public @S(10) @BLANKLINE CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
+		public @S(20) CSharp_Identifier id;
+		public @S(30) @OPT TokenList<CSharp_MoreNamespaceId> moreIds;
+		public @S(40) @INDENT PunctuationLeftBrace leftBrace;
+		public @S(50) @OPT TokenList<CSharp_ProgramElems> elems;
+		public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
+		
+		public static class CSharp_MoreNamespaceId extends TokenSequence
+		{
+			public @S(10) @NOSPACE PunctuationPeriod dot;
+			public @S(20) @NOSPACE CSharp_Identifier id;
+		}
 	}
 
 	public static class CSharp_ProgramElems extends TokenChooser
