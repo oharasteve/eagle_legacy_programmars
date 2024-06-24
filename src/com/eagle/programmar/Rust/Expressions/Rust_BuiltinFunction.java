@@ -6,6 +6,7 @@ package com.eagle.programmar.Rust.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Format;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
@@ -29,14 +30,8 @@ public class Rust_BuiltinFunction extends PrimaryOperator implements EagleRunnab
 		switch (fnName)
 		{
 		case "format":
-			StringBuffer sb = new StringBuffer();
-			// TODO: Cheat -- ignore the actual format for the moment
-			for (int i = 1; i < argList.getPrimaryCount(); i++)
-			{
-				Rust_Expression expr = argList.getPrimaryElement(i);
-				sb.append(interpreter.getStrValue(expr));
-			}
-			interpreter.pushStr(sb.toString());
+			String result = Rust_Format.format(interpreter, argList);
+			interpreter.pushStr(result);
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + fnName);

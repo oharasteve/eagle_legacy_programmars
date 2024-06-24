@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.C.C_Variable.C_VariableIdentifier.C_SubscriptedVariable;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.AbstractToken;
@@ -34,31 +33,34 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 
 	public static class C_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE C_Identifier_Reference id;
+		public @CHOICE C_CastedVariable castedVariable;
+		public @CHOICE C_IndirectVariable indirectVariable;
+		public @CHOICE C_SubscriptedVariable subscriptedVariable;
+		public @LAST C_Identifier_Reference id;
+	}
 
-		public @CHOICE static class C_CastedVariable extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen1;
-			public @S(20) PunctuationLeftParen leftParen2;
-			public @S(30) C_Type jtype;
-			public @S(40) PunctuationRightParen rightParen1;
-			public @S(50) C_Identifier_Reference id;
-			public @S(60) PunctuationRightParen rightParen2;
-		}
+	public static class C_CastedVariable extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen1;
+		public @S(20) PunctuationLeftParen leftParen2;
+		public @S(30) C_Type jtype;
+		public @S(40) PunctuationRightParen rightParen1;
+		public @S(50) C_Identifier_Reference id;
+		public @S(60) PunctuationRightParen rightParen2;
+	}
 
-		public @CHOICE static class C_IndirectVariable extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) TokenList<C_VariableStar> stars;
-			public @S(30) C_Identifier_Reference id;
-			public @S(40) PunctuationRightParen rightParen;
-		}
+	public static class C_IndirectVariable extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) TokenList<C_VariableStar> stars;
+		public @S(30) C_Identifier_Reference id;
+		public @S(40) PunctuationRightParen rightParen;
+	}
 
-		public @CHOICE static class C_SubscriptedVariable extends TokenSequence
-		{
-			public @S(10) C_Identifier_Reference id;
-			public @S(20) TokenList<C_Subscript> subscripts;
-		}
+	public static class C_SubscriptedVariable extends TokenSequence
+	{
+		public @S(10) C_Identifier_Reference id;
+		public @S(20) TokenList<C_Subscript> subscripts;
 	}
 
 	public static class C_ExtendedIdentifier extends TokenChooser

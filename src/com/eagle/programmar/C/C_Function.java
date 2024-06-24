@@ -7,8 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.C.C_Data.C_FunctionPointer;
-import com.eagle.programmar.C.C_Function.C_FunctionBody.C_FunctionImplementation;
-import com.eagle.programmar.C.C_Function.C_FunctionTypeName.C_Function_TypeAndName;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
@@ -50,13 +48,14 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	public static class C_FunctionTypeName extends TokenChooser
 	{
 		public @CHOICE C_Keyword MAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
+		public @CHOICE C_Function_TypeAndName typeAndName;
+	}
 
-		public @CHOICE static class C_Function_TypeAndName extends TokenSequence
-		{
-			public @S(10) C_Type ctype;
-			public @S(20) @OPT TokenList<C_Comment> comments1;
-			public @S(30) C_Function_Definition functionName;
-		}
+	public static class C_Function_TypeAndName extends TokenSequence
+	{
+		public @S(10) C_Type ctype;
+		public @S(20) @OPT TokenList<C_Comment> comments;
+		public @S(30) C_Function_Definition functionName;
 	}
 
 	public static class C_Function_ParameterDefs extends TokenSequence
@@ -72,41 +71,45 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	public static class C_FunctionParameter extends TokenChooser
 	{
 		public @FIRST C_FunctionPointer functionPointer;
+		public @CHOICE C_FunctionParamAmpersand paramAmpersand;
+		public @CHOICE C_FunctionRegularParameter paramRegular; 
+		public @CHOICE C_FunctionFunctionParameter functionParam;
+		public @CHOICE C_FunctionDotDotDotParameter dotDotParam; 
+	}
 
-		public @CHOICE static class C_FunctionParamAmpersand extends TokenSequence
+	public static class C_FunctionParamAmpersand extends TokenSequence
+	{
+		public @S(10) PunctuationAmpersand ampersand;
+		public @S(20) C_Type type;
+	}
+
+	public static class C_FunctionRegularParameter extends TokenSequence
+	{
+		public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(20) C_Type ctype;
+		public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
+		public @S(40) @OPT C_Variable_Definition id;
+		public @S(50) @OPT TokenList<C_Subscript> subscripts;
+		public @S(60) @OPT C_FunctionDefaultValue value;
+		public @S(70) @OPT C_Comment comment;
+
+		public static class C_FunctionDefaultValue extends TokenSequence
 		{
-			public @S(10) PunctuationAmpersand ampersand;
-			public @S(20) C_Type type;
+			public @S(10) PunctuationEquals equals;
+			public @S(20) C_Expression expr;
 		}
+	}
 
-		public @CHOICE static class C_FunctionRegularParameter extends TokenSequence
-		{
-			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
-			public @S(20) C_Type ctype;
-			public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
-			public @S(40) @OPT C_Variable_Definition id;
-			public @S(50) @OPT TokenList<C_Subscript> subscripts;
-			public @S(60) @OPT C_FunctionDefaultValue value;
-			public @S(70) @OPT C_Comment comment;
+	public static class C_FunctionFunctionParameter extends TokenSequence
+	{
+		public @S(10) C_Type ctype;
+		public @S(20) C_Function_Definition id;
+		public @S(30) C_Function_ParameterDefs params;
+	}
 
-			public static class C_FunctionDefaultValue extends TokenSequence
-			{
-				public @S(10) PunctuationEquals equals;
-				public @S(20) C_Expression expr;
-			}
-		}
-
-		public @CHOICE static class C_FunctionFunctionParameter extends TokenSequence
-		{
-			public @S(10) C_Type ctype;
-			public @S(20) C_Function_Definition id;
-			public @S(30) C_Function_ParameterDefs params;
-		}
-
-		public @CHOICE static class C_FunctionDotDotDotParameter extends TokenSequence
-		{
-			public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");
-		}
+	public static class C_FunctionDotDotDotParameter extends TokenSequence
+	{
+		public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");
 	}
 
 	public static class C_MoreParameterDefs extends TokenSequence
@@ -118,6 +121,8 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 
 	public static class C_FunctionBody extends TokenChooser
 	{
+		public @CHOICE C_FunctionImplementation implementation;
+
 		public @CHOICE static class C_FunctionEqualsZero extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
@@ -145,16 +150,16 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 				public @S(50) PunctuationRightParen rightParen;
 			}
 		}
-
-		public @CHOICE static class C_FunctionImplementation extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBrace leftBrace;
-			public @S(20) @OPT TokenList<C_StatementOrComment> elements;
-			public @S(30) PunctuationRightBrace rightBrace;
-			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
-		}
 	}
 	
+	public static class C_FunctionImplementation extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<C_StatementOrComment> elements;
+		public @S(30) PunctuationRightBrace rightBrace;
+		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
