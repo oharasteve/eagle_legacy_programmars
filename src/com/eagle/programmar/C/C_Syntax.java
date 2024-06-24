@@ -60,6 +60,8 @@ public class C_Syntax extends EagleSyntax
 			"strcmp",
 			"strcpy",
 			"strdup",
+			"strlen",
+			"strncmp",
 			"struct",
 			"switch",
 			"typedef",

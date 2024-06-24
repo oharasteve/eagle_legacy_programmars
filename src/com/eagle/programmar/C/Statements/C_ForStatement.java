@@ -3,13 +3,20 @@
 
 package com.eagle.programmar.C.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.C.C_Assignment;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.C_Variable;
+import com.eagle.programmar.C.Statements.C_ForStatement.C_ForLoopStatement.C_ForLoopVariable.C_ForLoopVariableNoType;
+import com.eagle.programmar.C.Statements.C_ForStatement.C_ForLoopStatement.C_ForLoopVariable.C_ForLoopVariableWithType;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -19,8 +26,10 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ForStatement extends TokenChooser
+public class C_ForStatement extends TokenChooser implements EagleRunnableWithResult
 {
+	private @SKIP ForLoopMetrics _metrics = null;
+
 	public @CHOICE static class C_ForLoopStatement extends TokenSequence
 	{
 		public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
@@ -70,5 +79,70 @@ public class C_ForStatement extends TokenChooser
 		public @S(70) C_Expression collection;
 		public @S(80) PunctuationRightParen rightParen;
 		public @S(90) C_Statement action;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		if (this.getWhich() instanceof C_ForLoopStatement)
+		{
+			C_ForLoopStatement what = (C_ForLoopStatement) this.getWhich();
+			
+			AbstractToken which = what.loopVar.getWhich();
+			C_Assignment asg;
+			if (which instanceof C_ForLoopVariableWithType)
+			{
+				C_ForLoopVariableWithType token = (C_ForLoopVariableWithType) which;
+				asg = token.assignment;
+			}
+			else if (which instanceof C_ForLoopVariableNoType)
+			{
+				C_ForLoopVariableNoType token = (C_ForLoopVariableNoType) which;
+				asg = token.assignment;
+			}
+			else throw new RuntimeException("Cannot handle " + which);
+				
+			interpreter.tryToInterpret(asg);
+	
+			if (_metrics == null)
+			{
+				_metrics = new ForLoopMetrics(getFileName(), getStartLine(), getStartChar());
+			}
+			ForLoopMetric metric = new ForLoopMetric();
+	
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			while (true)
+			{
+				boolean keepGoing = interpreter.getBoolValue(what.terminateCondition);
+				if (! keepGoing) break;
+				
+				metric.iterate();
+				
+				result = interpreter.tryToInterpret(what.action);
+				
+				if (result == Eagle_Statement_Result.BREAK)
+				{
+					metric.broke();
+					result = Eagle_Statement_Result.NORMAL;
+					break;
+				}
+				else if (result == Eagle_Statement_Result.CONTINUE)
+				{
+					metric.continued();
+					result = Eagle_Statement_Result.NORMAL;
+				}
+				else if (result == Eagle_Statement_Result.RETURN)
+				{
+					break;
+				}
+				
+				interpreter.tryToInterpret(what.increment);
+			}
+			
+			_metrics.competedLoop(metric);
+			return result;
+		}
+		
+		throw new RuntimeException("Unexpected for loop construct: " + this.getWhich());
 	}
 }

@@ -5,6 +5,7 @@ package com.eagle.programmar.C.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_ArgumentList;
 import com.eagle.programmar.C.C_Function;
@@ -115,7 +116,8 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			C_FunctionImplementation impl = (C_FunctionImplementation) func.body.getWhich();
 			for (C_StatementOrComment stmt : impl.elements._elements)
 			{
-				interpreter.tryToInterpret(stmt);
+				Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			long elapsedTime = System.nanoTime() - startTime;
 			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);

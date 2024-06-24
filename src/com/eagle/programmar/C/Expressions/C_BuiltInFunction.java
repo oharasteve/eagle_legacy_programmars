@@ -6,8 +6,8 @@ package com.eagle.programmar.C.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleString;
-import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_Expression;
+import com.eagle.programmar.C.C_Format;
 import com.eagle.programmar.C.C_Variable;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
@@ -20,8 +20,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) C_KeywordChoice builtinFunction = new C_KeywordChoice("printf",
-			"strcat", "strcmp", "strcpy", "strdup");
+	public @S(10) C_KeywordChoice builtinFunction = new C_KeywordChoice("exit", "printf",
+			"strcat", "strcmp", "strcpy", "strdup", "strlen", "strncmp");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<C_Expression, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
@@ -32,10 +32,8 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 		switch (builtinFunction.toString())
 		{
 		case "printf":
-			// AbstractToken fmt = args.first().getWhich();
-			AbstractToken arg = args.getPrimaryElement(1).getWhich();
-			String result = interpreter.getStrValue(arg);
-			System.out.println(result);
+			String formatted = C_Format.format(interpreter, args);
+			System.out.println(formatted);
 			return;
 		case "strcat":
 			AbstractToken first1 = args.first().getWhich();
@@ -76,6 +74,20 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 			AbstractToken first4 = args.first().getWhich();
 			String str = interpreter.getStrValue(first4);
 			interpreter.pushStr(str);
+			return;
+		case "strlen":
+			AbstractToken first5 = args.first().getWhich();
+			String string = interpreter.getStrValue(first5);
+			interpreter.pushInt(string.length());
+			return;
+		case "strncmp":
+			AbstractToken first6 = args.first().getWhich();
+			String left2 = interpreter.getStrValue(first6);
+			String right2 = interpreter.getStrValue(args.getPrimaryElement(1).getWhich());
+			int nc = interpreter.getIntValue(args.getPrimaryElement(2).getWhich());
+			if (left2.length() > nc) left2 = left2.substring(0, nc);
+			if (right2.length() > nc) right2 = right2.substring(0, nc);
+			interpreter.pushInt(left2.compareTo(right2));
 			return;
 		}
 		
