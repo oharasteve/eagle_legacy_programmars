@@ -3,14 +3,28 @@
 
 package com.eagle.programmar.C.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ReturnStatement extends TokenSequence
+public class C_ReturnStatement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) @DOC("#The-return-Statement") C_Keyword RETURN = new C_Keyword("return");
 	public @S(20) @OPT C_Expression expression;
 	public @S(30) PunctuationSemicolon semicolon;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		if (expression != null && expression.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(expression);
+			interpreter.pushEagleValue(val);
+		}
+		return Eagle_Statement_Result.RETURN;
+	}
 }

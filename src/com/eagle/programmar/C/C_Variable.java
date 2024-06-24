@@ -5,9 +5,12 @@ package com.eagle.programmar.C;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.C.C_Variable.C_VariableIdentifier.C_SubscriptedVariable;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -83,8 +86,20 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		C_Identifier_Reference which = (C_Identifier_Reference) firstId.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		AbstractToken which = firstId.getWhich();
+		if (which instanceof C_Identifier_Reference)
+		{
+			C_Identifier_Reference id = (C_Identifier_Reference) which;
+			EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+			interpreter.pushEagleValue(value);
+		}
+		else if (which instanceof C_SubscriptedVariable)
+		{
+			C_SubscriptedVariable id = (C_SubscriptedVariable) which;
+			EagleArray value = (EagleArray) interpreter._symbolTable.findSymbol(id.id.getValue());
+			C_Subscript subscr = id.subscripts._elements.get(0);
+			int sub = interpreter.getIntValue(subscr.expr);
+			interpreter.pushEagleValue(value.getValue(sub));
+		}
 	}
 }

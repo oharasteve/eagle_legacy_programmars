@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.CMacro;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_Error_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_IfDef_Statement;
@@ -19,7 +21,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class CMacro_StatementOrComment extends TokenSequence
+public class CMacro_StatementOrComment extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT CMacro_EndOfLine eoln1;
 	public @S(20) CMacro_StmtBody stmt;
@@ -39,5 +41,11 @@ public class CMacro_StatementOrComment extends TokenSequence
 		public @CHOICE CMacro_Pragma_Statement pragmaStatement;
 		public @CHOICE CMacro_Region_Statement regionStatement;
 		public @CHOICE CMacro_Undef_Statement undefStatement;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Don't do anything right now ... deal with it later
 	}
 }

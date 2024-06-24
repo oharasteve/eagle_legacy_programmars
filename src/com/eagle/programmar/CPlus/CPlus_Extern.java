@@ -4,8 +4,8 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Extern_C;
-import com.eagle.programmar.C.C_Statement.C_StatementBlock;
 import com.eagle.programmar.C.C_TypeDef;
+import com.eagle.programmar.C.Statements.C_StatementBlock;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 

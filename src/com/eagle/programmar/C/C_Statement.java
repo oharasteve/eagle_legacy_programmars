@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Statements.C_AutoLock;
 import com.eagle.programmar.C.Statements.C_BreakStatement;
 import com.eagle.programmar.C.Statements.C_ContinueStatement;
@@ -14,17 +13,14 @@ import com.eagle.programmar.C.Statements.C_ForStatement;
 import com.eagle.programmar.C.Statements.C_GotoStatement;
 import com.eagle.programmar.C.Statements.C_IfStatement;
 import com.eagle.programmar.C.Statements.C_ReturnStatement;
+import com.eagle.programmar.C.Statements.C_StatementBlock;
 import com.eagle.programmar.C.Statements.C_SwitchStatement;
 import com.eagle.programmar.C.Statements.C_WhileStatement;
 import com.eagle.programmar.C.Types.C_TypeStruct;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Statement extends TokenChooser implements AbstractStatement
@@ -35,12 +31,7 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 
 	public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
 
-	public @CHOICE static class C_StatementBlock extends TokenSequence
-	{
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT TokenList<C_StatementOrComment> statements;
-		public @S(30) PunctuationRightBrace rightBrace;
-	}
+	public @CHOICE C_StatementBlock statementBlock;
 
 	public @CHOICE C_Embed_Assembler assembler;
 

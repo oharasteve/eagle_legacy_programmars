@@ -3,7 +3,12 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.C.C_Data.C_FunctionPointer;
+import com.eagle.programmar.C.C_Function.C_FunctionBody.C_FunctionImplementation;
+import com.eagle.programmar.C.C_Function.C_FunctionTypeName.C_Function_TypeAndName;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
@@ -13,6 +18,8 @@ import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -25,7 +32,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_Function extends TokenSequence
+public class C_Function extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT C_Extern_C externC;
 	public @S(20) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
@@ -38,6 +45,8 @@ public class C_Function extends TokenSequence
 	public @S(90) @OPT C_Keyword CONST = new C_Keyword("const");
 	public @S(100) C_FunctionBody body;
 
+	public @SKIP CallMetrics _metrics = null;
+	
 	public static class C_FunctionTypeName extends TokenChooser
 	{
 		public @CHOICE C_Keyword MAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
@@ -143,6 +152,38 @@ public class C_Function extends TokenSequence
 			public @S(20) @OPT TokenList<C_StatementOrComment> elements;
 			public @S(30) PunctuationRightBrace rightBrace;
 			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			String fname = "main";
+			AbstractToken which = typeName.getWhich();
+			if (which instanceof C_Function_TypeAndName)
+			{
+				C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
+				fname = typeAndName.functionName.getValue();
+			}
+			_metrics = new CallMetrics(fname, getFileName(), getStartLine(), getStartChar());
+
+			// Don't do anything here, unless the function name is 'main'
+			// We searched for all the functions in a preliminary pass
+			// And we only evaluate them when they are called
+			if (fname.equals("main"))
+			{
+				AbstractToken token = body.getWhich();
+				if (token instanceof C_FunctionImplementation)
+				{
+					C_FunctionImplementation impl = (C_FunctionImplementation) token;
+					for (C_StatementOrComment stmt : impl.elements._elements)
+					{
+						interpreter.tryToInterpret(stmt.getWhich());
+					}
+				}
+			}
 		}
 	}
 }

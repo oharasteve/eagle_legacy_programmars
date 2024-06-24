@@ -19,7 +19,7 @@ public class C_ArgumentList extends TokenSequence
 {
 	public @S(10) @OPT TokenList<C_IgnoreItem> comment1;
 	public @S(20) C_ExpressionArg arg;
-	public @S(30) @OPT TokenList<C_MoreArguments> moreArgs;
+	public @S(30) @OPT TokenList<C_MoreArgument> moreArgs;
 	public @S(40) @OPT TokenList<C_IgnoreItem> comment2;
 	public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 
@@ -43,7 +43,7 @@ public class C_ArgumentList extends TokenSequence
 		}
 	}
 
-	public static class C_MoreArguments extends TokenSequence
+	public static class C_MoreArgument extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT TokenList<C_IgnoreItem> comment1;

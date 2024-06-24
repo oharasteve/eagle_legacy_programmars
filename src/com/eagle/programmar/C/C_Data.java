@@ -48,10 +48,13 @@ public class C_Data extends TokenChooser
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			EagleValue value = interpreter.getEagleValue(initialValue.expression);
-			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
-					value);
-			// System.out.println("************** Added " + id + " = " + value);
+			if (initialValue != null && initialValue.isPresent())
+			{
+				EagleValue value = interpreter.getEagleValue(initialValue.expression);
+				interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
+						value);
+				// System.out.println("************** Added " + id + " = " + value);
+			}
 		}
 	}
 

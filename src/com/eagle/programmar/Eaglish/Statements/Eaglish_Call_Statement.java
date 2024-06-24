@@ -61,7 +61,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		if (actual != expected)
 		{
 			throw new RuntimeException(
-					"Function " + name + ", expected args=" + expected + ", but actual args = " + actual);
+					"Function " + name + ", expected params = " + expected + ", but actual args = " + actual);
 		}
 
 		// Assign all the parameters
@@ -69,7 +69,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		{
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			Eaglish_Expression arg = callParams.args.getPrimaryElement(i);
-			interpreter.tryToInterpret(arg);
+			// interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.param.getValue(), val);
