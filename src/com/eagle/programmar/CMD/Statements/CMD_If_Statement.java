@@ -109,7 +109,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 		if (NOT.isPresent()) passTest = ! passTest;
 		if (passTest)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

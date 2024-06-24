@@ -17,6 +17,6 @@ public class VB_ExpressionStatement extends TokenSequence implements EagleRunnab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(expression.getWhich());
+		interpreter.tryToInterpret(expression);
 	}
 }

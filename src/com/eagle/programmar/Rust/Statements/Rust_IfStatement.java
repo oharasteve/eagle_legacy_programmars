@@ -59,7 +59,7 @@ public class Rust_IfStatement extends TokenSequence implements EagleRunnableWith
 
 		if (todo != null)
 		{
-			result = interpreter.tryToInterpret(todo.getWhich());
+			result = interpreter.tryToInterpret(todo);
 		}
 
 		return result;

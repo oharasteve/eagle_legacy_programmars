@@ -63,7 +63,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 		// Perform actions
 		for (Lisp_SExpr elt : values._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

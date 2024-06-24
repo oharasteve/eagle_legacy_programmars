@@ -86,7 +86,7 @@ public class PLI_Procedure extends TokenSequence implements EagleRunnable
 	{
 		for (PLI_StatementOrComment elt : statements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

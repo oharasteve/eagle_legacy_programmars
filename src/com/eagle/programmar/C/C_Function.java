@@ -180,7 +180,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 					C_FunctionImplementation impl = (C_FunctionImplementation) token;
 					for (C_StatementOrComment stmt : impl.elements._elements)
 					{
-						interpreter.tryToInterpret(stmt.getWhich());
+						interpreter.tryToInterpret(stmt);
 					}
 				}
 			}

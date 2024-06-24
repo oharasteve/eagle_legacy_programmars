@@ -25,7 +25,7 @@ public class Go_BlockStatement extends TokenSequence implements EagleRunnable
 	{
 		for (Go_Statement stmt : stmts._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

@@ -92,7 +92,7 @@ public class HTML_Program extends EagleLanguage implements EagleRunnable
 			if (element.getWhich() instanceof PHP_Section)
 			{
 				PHP_Section section = (PHP_Section) element.getWhich();
-				interpreter.tryToInterpret(section.body.getWhich());
+				interpreter.tryToInterpret(section.body);
 			}
 		}
 	}

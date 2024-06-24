@@ -68,7 +68,7 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 		// Second pass, execute the program
 		for (Eaglish_Statement stmt : prog.statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

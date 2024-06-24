@@ -29,7 +29,7 @@ public class PHP_Body extends TokenChooser
 		{
 			for (PHP_Element entry : elements._elements)
 			{
-				interpreter.tryToInterpret(entry.getWhich());
+				interpreter.tryToInterpret(entry);
 			}
 		}
 	}

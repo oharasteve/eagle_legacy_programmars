@@ -34,12 +34,8 @@ public class AWK_Action extends TokenSequence implements EagleRunnableWithResult
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (AWK_StatementOrComment stmt : statements._elements)
 		{
-			result = interpreter.tryToInterpret(stmt.getWhich());
+			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;
-		}
-		if (result != Eagle_Statement_Result.NORMAL)
-		{
-			System.out.println("******************************** Action BROKE");
 		}
 		return result;
 	}

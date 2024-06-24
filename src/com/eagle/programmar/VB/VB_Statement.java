@@ -78,6 +78,6 @@ public class VB_Statement extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(baseStatement.getWhich());
+		interpreter.tryToInterpret(baseStatement);
 	}
 }

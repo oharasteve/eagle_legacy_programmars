@@ -63,7 +63,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 	{
 		for (COBOL_DataSection section : dataDiv.sections._elements)
 		{
-			interpreter.tryToInterpret(section.getWhich());
+			interpreter.tryToInterpret(section);
 		}
 	}
 

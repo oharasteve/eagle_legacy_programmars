@@ -30,7 +30,7 @@ public class Fortran_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (Fortran_Statement elt : statements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

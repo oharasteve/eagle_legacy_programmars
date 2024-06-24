@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefmacroFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefparameterFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
@@ -35,7 +33,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Lisp_SExpr extends TokenChooser implements EagleRunnable
+public class Lisp_SExpr extends TokenChooser
 {
 	public @CHOICE Lisp_Number number;
 	public @CHOICE Lisp_Literal literal;
@@ -116,11 +114,5 @@ public class Lisp_SExpr extends TokenChooser implements EagleRunnable
 	{
 		public @S(10) Lisp_KeywordChoice doLetProg = new Lisp_KeywordChoice("do", "let", "prog");
 		public @S(20) @OPT PunctuationStar star;
-	}
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		interpreter.tryToInterpret(this.getWhich());
 	}
 }

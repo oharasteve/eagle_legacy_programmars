@@ -133,7 +133,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		// Evaluate the paragraph
 		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
 		{
-			interpreter.tryToInterpret(sentence.getWhich());
+			interpreter.tryToInterpret(sentence);
 		}
 	}
 }

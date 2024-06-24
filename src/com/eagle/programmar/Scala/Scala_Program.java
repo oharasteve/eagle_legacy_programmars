@@ -52,7 +52,7 @@ public class Scala_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (Scala_Element elt : elements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

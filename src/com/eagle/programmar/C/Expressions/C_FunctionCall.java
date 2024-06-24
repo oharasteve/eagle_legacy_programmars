@@ -115,7 +115,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			C_FunctionImplementation impl = (C_FunctionImplementation) func.body.getWhich();
 			for (C_StatementOrComment stmt : impl.elements._elements)
 			{
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 			long elapsedTime = System.nanoTime() - startTime;
 			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);

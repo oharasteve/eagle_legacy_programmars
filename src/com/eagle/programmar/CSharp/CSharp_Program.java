@@ -131,6 +131,6 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(myClasses.first().getWhich());
+		interpreter.tryToInterpret(myClasses.first());
 	}
 }

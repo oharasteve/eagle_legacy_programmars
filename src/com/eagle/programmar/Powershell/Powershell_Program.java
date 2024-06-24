@@ -42,7 +42,7 @@ public class Powershell_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (Powershell_Statement stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.element.getWhich());
+			interpreter.tryToInterpret(stmt.element);
 		}
 	}
 }

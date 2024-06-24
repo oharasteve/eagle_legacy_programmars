@@ -102,7 +102,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 			@Override
 			public void interpret(EagleInterpreter interpreter)
 			{
-				interpreter.tryToInterpret(statement.getWhich());
+				interpreter.tryToInterpret(statement);
 			}
 		}
 	}
@@ -112,7 +112,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 	{
 		for (Java_ClassElement element : elements._elements)
 		{
-			interpreter.tryToInterpret(element.getWhich());
+			interpreter.tryToInterpret(element);
 		}
 	}
 

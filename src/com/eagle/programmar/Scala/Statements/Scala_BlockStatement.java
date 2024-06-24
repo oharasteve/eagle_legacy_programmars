@@ -25,7 +25,7 @@ public class Scala_BlockStatement extends TokenSequence implements EagleRunnable
 	{
 		for (Scala_Statement stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

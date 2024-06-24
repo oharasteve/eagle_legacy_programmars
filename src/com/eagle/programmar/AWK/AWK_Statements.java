@@ -61,7 +61,7 @@ public class AWK_Statements extends TokenSequence implements EagleRunnableWithRe
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (int i = 0; i < statements.getPrimaryCount(); i++)
 		{
-			result = interpreter.tryToInterpret(statements.getPrimaryElement(i).getWhich());
+			result = interpreter.tryToInterpret(statements.getPrimaryElement(i));
 			if (result != Eagle_Statement_Result.NORMAL)
 			{
 				break;

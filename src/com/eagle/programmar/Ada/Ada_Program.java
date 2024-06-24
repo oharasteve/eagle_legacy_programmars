@@ -60,7 +60,7 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Ada_Statement)
 			{
 				Ada_Statement stmt = (Ada_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

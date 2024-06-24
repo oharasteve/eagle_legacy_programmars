@@ -94,6 +94,6 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(statement.getWhich());
+		interpreter.tryToInterpret(statement);
 	}
 }

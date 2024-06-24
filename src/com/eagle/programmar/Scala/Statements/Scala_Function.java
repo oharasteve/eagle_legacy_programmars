@@ -53,7 +53,7 @@ public class Scala_Function extends TokenSequence implements EagleRunnable
 		if (id.getValue().equals("main"))
 		{
 			// Run the main program
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 		else
 		{

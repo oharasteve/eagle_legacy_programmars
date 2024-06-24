@@ -79,7 +79,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		long startTime = System.nanoTime();
 		for (Eaglish_Statement stmt : func.statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);

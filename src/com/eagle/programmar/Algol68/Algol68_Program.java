@@ -82,13 +82,13 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 				Algol68_Main main = (Algol68_Main) which;
 				for (Algol68_Element elt : main.elements._elements)
 				{
-					interpreter.tryToInterpret(elt.getWhich());
+					interpreter.tryToInterpret(elt);
 				}
 			}
 			else if (which instanceof Algol68_Statement)
 			{
 				Algol68_Statement stmt = (Algol68_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

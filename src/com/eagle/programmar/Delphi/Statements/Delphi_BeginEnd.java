@@ -22,10 +22,10 @@ public class Delphi_BeginEnd extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(statements.stmt.getWhich());
+		interpreter.tryToInterpret(statements.stmt);
 		for (Delphi_MoreStatements more : statements.stmts._elements)
 		{
-			interpreter.tryToInterpret(more.stmt.getWhich());
+			interpreter.tryToInterpret(more.stmt);
 		}
 	}
 }

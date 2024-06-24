@@ -30,7 +30,7 @@ public class FSharp_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (FSharp_Statement stmt : elements._elements)
 		{
-			interpreter.tryToInterpret(stmt.statementOrComment.getWhich());
+			interpreter.tryToInterpret(stmt.statementOrComment);
 		}
 	}
 }

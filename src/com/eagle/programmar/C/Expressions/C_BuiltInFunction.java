@@ -29,17 +29,19 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		AbstractToken first = args.first().getWhich();
 		switch (builtinFunction.toString())
 		{
 		case "printf":
-			EagleValue result = interpreter.getEagleValue(first);
-			System.out.println(result.toString());
+			// AbstractToken fmt = args.first().getWhich();
+			AbstractToken arg = args.getPrimaryElement(1).getWhich();
+			String result = interpreter.getStrValue(arg);
+			System.out.println(result);
 			return;
 		case "strcat":
-			if (first instanceof C_VariableExpression)
+			AbstractToken first1 = args.first().getWhich();
+			if (first1 instanceof C_VariableExpression)
 			{
-				C_Variable var = ((C_VariableExpression)first).variable;
+				C_Variable var = ((C_VariableExpression)first1).variable;
 				C_Identifier_Reference id = (C_Identifier_Reference) var.firstId.getWhich();
 				String varName = id.getValue();
 				String str = interpreter.getStrValue(args.getPrimaryElement(1));
@@ -51,14 +53,16 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 			}
 			break;
 		case "strcmp":
-			String left = interpreter.getStrValue(first);
+			AbstractToken first2 = args.first().getWhich();
+			String left = interpreter.getStrValue(first2);
 			String right = interpreter.getStrValue(args.getPrimaryElement(1).getWhich());
 			interpreter.pushInt(left.compareTo(right));
 			return;
 		case "strcpy":
-			if (first instanceof C_VariableExpression)
+			AbstractToken first3 = args.first().getWhich();
+			if (first3 instanceof C_VariableExpression)
 			{
-				C_Variable var = ((C_VariableExpression)first).variable;
+				C_Variable var = ((C_VariableExpression)first3).variable;
 				C_Identifier_Reference id = (C_Identifier_Reference) var.firstId.getWhich();
 				String varName = id.getValue();
 				String str = interpreter.getStrValue(args.getPrimaryElement(1));
@@ -69,7 +73,8 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 			}
 			break;
 		case "strdup":
-			String str = interpreter.getStrValue(first);
+			AbstractToken first4 = args.first().getWhich();
+			String str = interpreter.getStrValue(first4);
 			interpreter.pushStr(str);
 			return;
 		}

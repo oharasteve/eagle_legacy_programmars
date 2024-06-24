@@ -37,7 +37,7 @@ public class Lisp_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (Lisp_SExpr elt : sexprs._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

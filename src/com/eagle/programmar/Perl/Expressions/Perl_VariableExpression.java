@@ -15,6 +15,6 @@ public class Perl_VariableExpression extends PrimaryOperator implements EagleRun
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(variable.getWhich());
+		interpreter.tryToInterpret(variable);
 	}
 }

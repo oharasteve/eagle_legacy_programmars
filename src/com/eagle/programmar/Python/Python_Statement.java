@@ -79,7 +79,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
 	}
 
-	public static class Python_Simple_Statement extends TokenChooser implements EagleRunnable
+	public static class Python_Simple_Statement extends TokenChooser
 	{
 		public @CHOICE Python_Assignment assignment;
 		public @CHOICE Python_AssertStatement assertStatement;
@@ -105,17 +105,11 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_YieldStatement yieldStatement;
 
 		public @LAST Python_ExpressionStatement expression; // Avoid conflict with 'for' statement
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(getWhich());
-		}
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(statementOrComment.getWhich());
+		interpreter.tryToInterpret(statementOrComment);
 	}
 }

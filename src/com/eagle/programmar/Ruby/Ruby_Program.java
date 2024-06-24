@@ -69,7 +69,7 @@ public class Ruby_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Ruby_Statement)
 			{
 				Ruby_Statement stmt = (Ruby_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

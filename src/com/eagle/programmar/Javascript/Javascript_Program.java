@@ -40,7 +40,7 @@ public class Javascript_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (Javascript_Element element : elements._elements)
 		{
-			interpreter.tryToInterpret(element.getWhich());
+			interpreter.tryToInterpret(element);
 		}
 	}
 }

@@ -118,7 +118,7 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 	{
 		for (CSharp_ClassElement element : elements._elements)
 		{
-			interpreter.tryToInterpret(element.getWhich());
+			interpreter.tryToInterpret(element);
 		}
 	}
 

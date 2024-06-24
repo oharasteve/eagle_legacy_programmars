@@ -56,7 +56,7 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 			for (int i = 0; i < statements.getPrimaryCount(); i++)
 			{
 				FSharp_Simple_Statement stmt = statements.getPrimaryElement(i);
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

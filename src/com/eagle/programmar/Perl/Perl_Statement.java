@@ -47,7 +47,7 @@ public class Perl_Statement extends TokenChooser
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			interpreter.tryToInterpret(expr.getWhich());
+			interpreter.tryToInterpret(expr);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class Perl_Statement extends TokenChooser
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			interpreter.tryToInterpret(statement.getWhich());
+			interpreter.tryToInterpret(statement);
 		}
 	}
 

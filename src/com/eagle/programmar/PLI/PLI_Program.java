@@ -43,7 +43,7 @@ public class PLI_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (PLI_Element elt : elements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

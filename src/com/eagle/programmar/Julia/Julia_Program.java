@@ -69,7 +69,7 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Julia_Statement)
 			{
 				Julia_Statement stmt = (Julia_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

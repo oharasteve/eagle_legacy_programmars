@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.PLI.Statements.PLI_AllocateStatement;
 import com.eagle.programmar.PLI.Statements.PLI_AnswerStatement;
 import com.eagle.programmar.PLI.Statements.PLI_AssignmentStatement;
@@ -31,7 +29,7 @@ import com.eagle.programmar.PLI.Statements.PLI_StopStatement;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_Statement extends TokenChooser implements EagleRunnable
+public class PLI_Statement extends TokenChooser
 {
 	public @CHOICE PunctuationSemicolon semicolon; // Empty statement
 
@@ -61,10 +59,4 @@ public class PLI_Statement extends TokenChooser implements EagleRunnable
 	public @CHOICE PLI_StopStatement stopStatement;
 
 	public @CHOICE PLI_Procedure innerProcedure;
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		interpreter.tryToInterpret(getWhich());
-	}
 }

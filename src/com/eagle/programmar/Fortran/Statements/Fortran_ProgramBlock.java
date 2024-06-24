@@ -31,7 +31,7 @@ public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable
 	{
 		for (Fortran_Statement stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

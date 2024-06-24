@@ -62,7 +62,7 @@ public class PHP_Program extends EagleLanguage implements EagleRunnable
 	{
 		for (PHP_Entry entry : entries._elements)
 		{
-			interpreter.tryToInterpret(entry.getWhich());
+			interpreter.tryToInterpret(entry);
 		}
 	}
 }

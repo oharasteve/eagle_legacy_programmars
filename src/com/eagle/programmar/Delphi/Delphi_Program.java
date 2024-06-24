@@ -117,6 +117,6 @@ public class Delphi_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(fullOrPartial.getWhich());
+		interpreter.tryToInterpret(fullOrPartial);
 	}
 }

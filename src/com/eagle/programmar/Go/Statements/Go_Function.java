@@ -50,6 +50,6 @@ public class Go_Function extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(stmt.getWhich());
+		interpreter.tryToInterpret(stmt);
 	}
 }

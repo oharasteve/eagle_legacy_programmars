@@ -62,7 +62,7 @@ public class COBOL_DataDivision extends TokenSequence
 		{
 			for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)
 			{
-				interpreter.tryToInterpret(decl.getWhich());
+				interpreter.tryToInterpret(decl);
 			}
 		}
 	}
