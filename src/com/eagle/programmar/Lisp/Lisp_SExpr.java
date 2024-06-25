@@ -20,7 +20,6 @@ import com.eagle.programmar.Lisp.Operators.Lisp_OrOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_RelationalOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_RemainderOperator;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Character;
-import com.eagle.programmar.Lisp.Terminals.Lisp_Comment;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Literal;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Number;
@@ -38,7 +37,6 @@ public class Lisp_SExpr extends TokenChooser
 	public @CHOICE Lisp_Number number;
 	public @CHOICE Lisp_Literal literal;
 	public @CHOICE Lisp_Character character;
-	public @CHOICE Lisp_Comment comment;
 	
 	public @CHOICE Lisp_DefmacroFunction defMacro;
 	public @CHOICE Lisp_DefparameterFunction defParameter;
@@ -89,7 +87,7 @@ public class Lisp_SExpr extends TokenChooser
 		public @S(20) Lisp_SExpr expr;
 	}
 
-	public @CHOICE static class Lisp_Quote extends TokenSequence
+	public @CHOICE static class Lisp_QuoteList extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation quote = new Lisp_Punctuation('\'');
 		public @S(20) Lisp_SExpr expr;

@@ -30,12 +30,12 @@ public class Lisp_Program extends EagleLanguage implements EagleRunnable
 		return "http://www.lispworks.com/documentation/HyperSpec/Body/";
 	}
 
-	public @S(10) TokenList<Lisp_SExpr> sexprs;
+	public @S(10) TokenList<Lisp_SExprOrComment> elements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (Lisp_SExpr elt : sexprs._elements)
+		for (Lisp_SExprOrComment elt : elements._elements)
 		{
 			interpreter.tryToInterpret(elt);
 		}

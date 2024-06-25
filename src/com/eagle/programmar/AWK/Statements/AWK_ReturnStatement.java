@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 public class AWK_ReturnStatement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) AWK_Keyword RETURN = new AWK_Keyword("RETURN");
-	public @S(20) AWK_Expression expr;
+	public @S(20) @OPT AWK_Expression expr;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
