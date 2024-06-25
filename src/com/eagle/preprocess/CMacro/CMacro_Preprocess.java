@@ -56,10 +56,13 @@ public class CMacro_Preprocess extends EagleInclude
 	{
 		_parser = parser;
 
-		StringBuffer sb = new StringBuffer("*** Pre-processing ");
-		for (int i = 0; i < _depth; i++) sb.append(". ");
-		sb.append(lines.getFileName()).append(" lines=").append(lines.numberLines());
-		System.out.println(sb);
+		if (VERBOSE)
+		{
+			StringBuffer sb = new StringBuffer("*** Pre-processing ");
+			for (int i = 0; i < _depth; i++) sb.append(". ");
+			sb.append(lines.getFileName()).append(" lines=").append(lines.numberLines());
+			System.out.println(sb);
+		}
 
 		if (_depth > 0)
 		{
@@ -170,11 +173,14 @@ public class CMacro_Preprocess extends EagleInclude
 			}
 		}
 
-		sb = new StringBuffer("***           done ");
-		for (int i = 0; i < _depth; i++) sb.append(". ");
-		sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
-		System.out.println(sb);
-
+		if (VERBOSE)
+		{
+			StringBuffer sb = new StringBuffer("***           done ");
+			for (int i = 0; i < _depth; i++) sb.append(". ");
+			sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
+			System.out.println(sb);
+		}
+		
 		return _newLines;
 	}
 

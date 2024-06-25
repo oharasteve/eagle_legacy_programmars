@@ -25,9 +25,9 @@ public class CSS_Color extends TokenChooser
 		public @S(10) CSS_Keyword RGB = new CSS_Keyword("rgb");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) CSS_Number red;
-		public @S(40) PunctuationComma comma1;
+		public @S(40) @OPT PunctuationComma comma1;
 		public @S(50) CSS_Number green;
-		public @S(60) PunctuationComma comma2;
+		public @S(60) @OPT PunctuationComma comma2;
 		public @S(70) CSS_Number blue;
 		public @S(80) PunctuationRightParen rightParen;
 	}

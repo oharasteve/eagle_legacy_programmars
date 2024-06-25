@@ -14,8 +14,10 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
@@ -65,40 +67,39 @@ public class CSS_TagList extends TokenSequence
 	public static class CSS_ColonOption extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
-		public @S(20) CSS_ColonWhat what;
-		public @S(30) @OPT PunctuationComma comma;
-
-		public static class CSS_ColonWhat extends TokenChooser
+		public @S(20) CSS_KeywordChoice option = new CSS_KeywordChoice("active", "after", "before", "checked",
+				"decrement", "default", "end", "first-child", "focus", "horizontal", "hover", "increment",
+				"last-child", "link", "-moz-any-link", "not", "nth-child", "-o-prefocus", "start", "vertical", "visited", "webkit-any");
+		public @S(30) @OPT CSS_ColonParens args;
+		public @S(40) @OPT PunctuationComma comma;
+		
+		public static class CSS_ColonParens extends TokenSequence
 		{
-			public @CHOICE CSS_KeywordChoice option = new CSS_KeywordChoice("active", "after", "before", "checked",
-					"decrement", "default", "end", "first-child", "focus", "horizontal", "hover", "increment",
-					"last-child", "link", "-moz-any-link", "-o-prefocus", "start", "vertical", "visited");
-
-			public @CHOICE static class CSS_Nth_Child extends TokenSequence
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) CSS_ColonArgument arg;
+			public @S(30) PunctuationRightParen rightParen;
+			
+			public static class CSS_ColonArgument extends TokenChooser
 			{
-				public @S(10) CSS_KeywordChoice NTH_CHILD = new CSS_KeywordChoice("nth-child", "nth-last-child");
-				public @S(20) PunctuationLeftParen leftParen;
-				public @S(30) CSS_Value value;
-				public @S(40) PunctuationRightParen rightParen;
-			}
-
-			public @CHOICE static class CSS_ColonNot extends TokenSequence
-			{
-				public @S(10) CSS_Keyword NOT = new CSS_Keyword("not");
-				public @S(20) PunctuationLeftParen leftParen;
-				public @S(30) CSS_ColonNotWhat what;
-				public @S(40) PunctuationRightParen rightParen;
-
-				public static class CSS_ColonNotWhat extends TokenChooser
+				public @CHOICE CSS_Identifier id;
+				
+				public @CHOICE static class CSS_ColonArgBrackets extends TokenSequence
 				{
-					public @CHOICE CSS_Qualifier qualifier;
-					public @CHOICE CSS_Keyword BODY = new CSS_Keyword("body");
+					public @S(10) PunctuationLeftBracket leftBracket;
+					public @S(20) CSS_Identifier id;
+					public @S(30) PunctuationRightBracket rightBracket;
+				}
 
-					public @CHOICE static class CSS_ColonNotClass extends TokenSequence
-					{
-						public @S(10) CSS_PunctuationChoice separator = new CSS_PunctuationChoice(".", ":");
-						public @S(20) CSS_Class_Definition classDefinition;
-					}
+				public @CHOICE static class CSS_ColonArgColon extends TokenSequence
+				{
+					public @S(10) PunctuationColon colon;
+					public @S(20) CSS_Identifier id;
+				}
+				
+				public @CHOICE static class CSS_ColonArgDot extends TokenSequence
+				{
+					public @S(10) PunctuationPeriod dot;
+					public @S(20) CSS_Identifier id;
 				}
 			}
 		}
