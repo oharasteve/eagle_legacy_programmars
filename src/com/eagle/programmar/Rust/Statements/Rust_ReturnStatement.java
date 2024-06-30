@@ -9,9 +9,10 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_ReturnStatement extends TokenSequence implements EagleRunnableWithResult
+public class Rust_ReturnStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("expressions/return-expr.html") Rust_Keyword RETURN = new Rust_Keyword("return");
 	public @S(20) Rust_Expression expr;

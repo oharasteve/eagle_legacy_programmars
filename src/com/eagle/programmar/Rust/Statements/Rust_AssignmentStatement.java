@@ -10,9 +10,10 @@ import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_AssignmentStatement extends TokenSequence implements EagleRunnable
+public class Rust_AssignmentStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Rust_Variable var;
 	public @S(20) Rust_PunctuationChoice equals = new Rust_PunctuationChoice("=", "+=", "-=");

@@ -14,11 +14,12 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnable
+public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword CALL = new Eaglish_Keyword("CALL");
 	public @S(20) Eaglish_Identifier_Reference name;

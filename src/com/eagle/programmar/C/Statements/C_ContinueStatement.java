@@ -5,9 +5,10 @@ package com.eagle.programmar.C.Statements;
 
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ContinueStatement extends TokenSequence
+public class C_ContinueStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#The-continue-Statement") C_Keyword CONTINUE = new C_Keyword("continue");
 	public @S(20) PunctuationSemicolon semicolon;

@@ -9,10 +9,11 @@ import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_WhileStatement extends TokenSequence
+public class AWK_WhileStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#index-while-statement-1") AWK_Keyword WHILE = new AWK_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;

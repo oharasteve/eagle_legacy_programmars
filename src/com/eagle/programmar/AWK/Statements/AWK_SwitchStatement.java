@@ -11,13 +11,14 @@ import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_SwitchStatement extends TokenSequence
+public class AWK_SwitchStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#index-switch-statement") AWK_Keyword SWITCH = new AWK_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;

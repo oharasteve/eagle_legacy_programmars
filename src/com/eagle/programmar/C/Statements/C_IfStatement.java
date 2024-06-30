@@ -14,6 +14,7 @@ import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -30,7 +31,7 @@ public class C_IfStatement extends TokenSequence implements EagleRunnableWithRes
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 	
-	public static class C_IfElseClause extends TokenSequence
+	public static class C_IfElseClause extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) @OPT TokenList<C_Comment> comment1;
 		public @S(20) C_Keyword ELSE = new C_Keyword("else");

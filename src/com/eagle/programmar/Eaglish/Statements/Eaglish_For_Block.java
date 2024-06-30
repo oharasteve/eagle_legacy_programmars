@@ -16,9 +16,10 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWithResult
+public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword FOR = new Eaglish_Keyword("FOR");
 	public @S(20) Eaglish_Variable_Definition var;

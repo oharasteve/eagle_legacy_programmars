@@ -52,6 +52,10 @@ public class Rust_Program extends EagleLanguage implements EagleRunnable
 			{
 				Rust_Function fn = (Rust_Function) which;
 				interpreter._functionList.add(fn);
+				if (interpreter._TRACE)
+				{
+					System.err.println("*** Found Rust function " + fn.id.getValue());
+				}
 			}
 		}
 

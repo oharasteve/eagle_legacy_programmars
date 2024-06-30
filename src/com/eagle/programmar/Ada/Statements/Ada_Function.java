@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Type;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
@@ -18,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Function extends TokenSequence implements AbstractFunction
+public class Ada_Function extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) Ada_Keyword FUNCTION = new Ada_Keyword("function");
 	public @S(20) Ada_Function_Definition id;
@@ -31,6 +34,8 @@ public class Ada_Function extends TokenSequence implements AbstractFunction
 	public @S(90) Ada_Keyword END = new Ada_Keyword("end");
 	public @S(100) @OPT Ada_Identifier_Reference id2;
 	public @S(110) PunctuationSemicolon semicolon;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class Ada_FunctionParams extends TokenSequence
 	{
@@ -50,5 +55,11 @@ public class Ada_Function extends TokenSequence implements AbstractFunction
 	{
 		public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
 		public @S(20) Ada_Type type;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here. Ignore the function definitions
 	}
 }

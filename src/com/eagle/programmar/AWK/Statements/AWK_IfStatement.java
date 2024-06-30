@@ -17,6 +17,7 @@ import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -30,7 +31,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 	public @S(60) AWK_IfBlock block;
 	public @S(70) @OPT AWK_IfElse ifelse;
 
-	public static class AWK_IfElse extends TokenSequence
+	public static class AWK_IfElse extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) AWK_Keyword ELSE = new AWK_Keyword("else");
 		public @S(20) @OPT AWK_EndOfLine eoln;

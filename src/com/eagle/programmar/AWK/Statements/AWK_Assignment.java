@@ -5,16 +5,17 @@ package com.eagle.programmar.AWK.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.math.EagleHash;
 import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Variable;
 import com.eagle.programmar.AWK.AWK_Variable.AWK_VarSubscript;
 import com.eagle.programmar.AWK.Terminals.AWK_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class AWK_Assignment extends TokenSequence implements EagleRunnable
+public class AWK_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) AWK_Variable variable;
 	public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=", "-=", "*=", "/=");

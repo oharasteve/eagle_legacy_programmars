@@ -7,8 +7,9 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class AWK_BreakStatement extends TokenSequence implements EagleRunnableWithResult
+public class AWK_BreakStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("#Break-Statement") AWK_Keyword BREAK = new AWK_Keyword("break");
 

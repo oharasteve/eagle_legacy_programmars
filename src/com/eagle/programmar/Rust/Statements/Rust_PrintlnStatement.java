@@ -10,12 +10,13 @@ import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_PrintlnStatement extends TokenSequence implements EagleRunnable
+public class Rust_PrintlnStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Rust_Keyword PRINTLN = new Rust_Keyword("println");
 	public @S(20) Rust_Punctuation bang = new Rust_Punctuation("!");

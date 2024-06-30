@@ -10,11 +10,12 @@ import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Procedure extends TokenSequence implements EagleRunnable
+public class Ada_Procedure extends TokenSequence implements EagleRunnable, AbstractFunction
 {
 	public @S(10) Ada_Keyword PROCEDURE = new Ada_Keyword("procedure");
 	public @S(20) Ada_Function_Definition id;

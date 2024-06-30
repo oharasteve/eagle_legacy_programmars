@@ -9,6 +9,7 @@ import com.eagle.programmar.AWK.Statements.AWK_Assignment;
 import com.eagle.programmar.AWK.Statements.AWK_BreakStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ContinueStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ExitStatement;
+import com.eagle.programmar.AWK.Statements.AWK_ExpressionStatement;
 import com.eagle.programmar.AWK.Statements.AWK_ForStatement;
 import com.eagle.programmar.AWK.Statements.AWK_IfStatement;
 import com.eagle.programmar.AWK.Statements.AWK_NextStatement;
@@ -52,7 +53,7 @@ public class AWK_Statements extends TokenSequence implements EagleRunnableWithRe
 		public @CHOICE AWK_SwitchStatement switchStatement;
 		public @CHOICE AWK_WhileStatement whileStatement;
 
-		public @LAST AWK_Expression expressionStatement;
+		public @LAST AWK_ExpressionStatement expressionStatement;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -31,7 +32,7 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
-	public static class AWK_ForIteration extends TokenSequence
+	public static class AWK_ForIteration extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) AWK_Expression initialize;
 		public @S(20) PunctuationSemicolon semicolon1;

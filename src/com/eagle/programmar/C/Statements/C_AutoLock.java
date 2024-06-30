@@ -10,11 +10,12 @@ import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_AutoLock extends TokenSequence
+public class C_AutoLock extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT TokenList<C_Comment> comments;
 	public @S(20) @OPT C_AutoLockMutex mutex;

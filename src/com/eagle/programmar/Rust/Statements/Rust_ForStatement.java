@@ -14,8 +14,9 @@ import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Rust_ForStatement extends TokenSequence implements EagleRunnableWithResult
+public class Rust_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("expressions/loop-expr.html#iterator-loops") Rust_Keyword FOR = new Rust_Keyword("for");
 	public @S(20) Rust_Variable var;

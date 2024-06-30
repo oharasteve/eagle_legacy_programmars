@@ -62,6 +62,10 @@ public class Eaglish_Program extends EagleLanguage implements EagleRunnable
 			{
 				Eaglish_Function_Block fn = (Eaglish_Function_Block) which;
 				interpreter._functionList.add(fn);
+				if (interpreter._TRACE)
+				{
+					System.err.println("*** Found Eaglish function " + fn.var.getValue());
+				}
 			}
 		}
 

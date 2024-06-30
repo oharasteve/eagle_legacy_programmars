@@ -8,9 +8,10 @@ import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_IfStatement extends TokenSequence
+public class Ada_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Ada_Keyword IF = new Ada_Keyword("if");
 	public @S(20) Ada_Expression condition;

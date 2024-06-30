@@ -8,11 +8,12 @@ import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Variable_Definition;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_Data extends TokenSequence
+public class Algol68_Data extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Algol68_Type type;
 	public @S(20) SeparatedList<Algol68_Variable_Definition, PunctuationComma> ids;

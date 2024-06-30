@@ -9,9 +9,10 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ReturnStatement extends TokenSequence implements EagleRunnableWithResult
+public class C_ReturnStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("#The-return-Statement") C_Keyword RETURN = new C_Keyword("return");
 	public @S(20) @OPT C_Expression expression;

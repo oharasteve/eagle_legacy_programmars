@@ -10,6 +10,7 @@ import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -18,7 +19,7 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 	public @S(10) @DOC("#print") AWK_KeywordChoice PRINT = new AWK_KeywordChoice("print", "printf");
 	public @S(20) AWK_PrintParameters param;
 
-	public static class AWK_PrintParameters extends TokenChooser
+	public static class AWK_PrintParameters extends TokenChooser implements AbstractStatement
 	{
 		public @FIRST AWK_Print_WithParens withParens;
 		public @CHOICE AWK_Print_NoParens noParens;

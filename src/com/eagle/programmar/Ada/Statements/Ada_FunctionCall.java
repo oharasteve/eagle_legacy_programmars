@@ -10,12 +10,13 @@ import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_FunctionCall extends TokenSequence
+public class Ada_FunctionCall extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Ada_Variable func;
 	public @S(20) @OPT Ada_FunctionArguments args;

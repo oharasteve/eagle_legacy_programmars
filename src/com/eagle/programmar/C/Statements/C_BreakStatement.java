@@ -7,9 +7,10 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_BreakStatement extends TokenSequence implements EagleRunnableWithResult
+public class C_BreakStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("#The-break-Statement") C_Keyword BREAK = new C_Keyword("break");
 	public @S(20) PunctuationSemicolon semicolon;

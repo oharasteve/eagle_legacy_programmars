@@ -10,9 +10,10 @@ import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.programmar.Algol68.Terminals.Algol68_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_ForStatement extends TokenSequence
+public class Algol68_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Algol68_Keyword FOR = new Algol68_Keyword("FOR");
 	public @S(20) Algol68_Variable var;

@@ -8,11 +8,12 @@ import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_DoStatement extends TokenSequence
+public class C_DoStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#The-do-Statement") C_Keyword DO = new C_Keyword("do");
 	public @S(20) @OPT C_Comment comment;

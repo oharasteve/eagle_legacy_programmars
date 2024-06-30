@@ -11,9 +11,10 @@ import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Eaglish_String_Data extends TokenSequence implements EagleRunnable
+public class Eaglish_String_Data extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword STRING = new Eaglish_Keyword("STRING");
 	public @S(20) Eaglish_Variable_Definition var;

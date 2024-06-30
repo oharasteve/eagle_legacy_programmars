@@ -12,6 +12,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
@@ -25,7 +26,7 @@ public class Algol68_PrintStatement extends TokenSequence implements EagleRunnab
 	public @S(60) Algol68_Punctuation rightParen2 = new Algol68_Punctuation(")");
 	public @S(70) @OPT PunctuationSemicolon semicolon;
 
-	public static class Algol68_PrintNewLine extends TokenSequence
+	public static class Algol68_PrintNewLine extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) Algol68_Keyword NEW = new Algol68_Keyword("NEW");
 		public @S(20) Algol68_Keyword LINE = new Algol68_Keyword("LINE");

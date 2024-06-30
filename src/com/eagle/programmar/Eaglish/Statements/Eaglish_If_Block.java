@@ -14,8 +14,9 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWithResult
+public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword IF = new Eaglish_Keyword("IF");
 	public @S(20) Eaglish_Expression condition;

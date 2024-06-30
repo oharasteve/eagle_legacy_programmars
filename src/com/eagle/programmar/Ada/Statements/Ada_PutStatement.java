@@ -10,10 +10,11 @@ import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_PutStatement extends TokenSequence implements EagleRunnable
+public class Ada_PutStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @OPT Ada_Put_Unbounded_IO io;
 	public @S(20) Ada_KeywordChoice PUT = new Ada_KeywordChoice("put", "put_line");

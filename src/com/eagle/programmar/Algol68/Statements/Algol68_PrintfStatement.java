@@ -8,10 +8,11 @@ import com.eagle.programmar.Algol68.Terminals.Algol68_Format;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_PrintfStatement extends TokenSequence
+public class Algol68_PrintfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Algol68_Keyword PRINTF = new Algol68_Keyword("PRINTF");
 	public @S(20) Algol68_Punctuation doubleLeftParen = new Algol68_Punctuation("((");

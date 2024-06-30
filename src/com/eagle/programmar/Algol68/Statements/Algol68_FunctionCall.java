@@ -10,12 +10,13 @@ import com.eagle.programmar.Algol68.Terminals.Algol68_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_FunctionCall extends TokenSequence
+public class Algol68_FunctionCall extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Algol68_Variable func;
 	public @S(20) @OPT Algol68_FunctionArguments args;

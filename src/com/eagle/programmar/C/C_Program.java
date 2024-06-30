@@ -9,6 +9,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
@@ -132,6 +133,15 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 			{
 				C_Function fn = (C_Function) which;
 				interpreter._functionList.add(fn);
+				if (interpreter._TRACE)
+				{
+					which = fn.typeName.getWhich();
+					if (which instanceof C_Function_TypeAndName)
+					{
+						C_Function_TypeAndName typeName = (C_Function_TypeAndName) which;
+						System.err.println("*** Found C function " + typeName.functionName.getValue());
+					}
+				}
 			}
 		}
 

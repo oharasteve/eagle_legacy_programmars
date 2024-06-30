@@ -5,18 +5,19 @@ package com.eagle.programmar.Ada.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Type;
 import com.eagle.programmar.Ada.Symbols.Ada_Variable_Definition;
 import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Data extends TokenSequence implements EagleRunnable
+public class Ada_Data extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) SeparatedList<Ada_Variable_Definition, PunctuationComma> ids;
 	public @S(20) PunctuationColon colon;
@@ -35,8 +36,7 @@ public class Ada_Data extends TokenSequence implements EagleRunnable
 	{
 		if (init.isPresent())
 		{
-			int x = interpreter.getIntValue(init.value);
-			EagleInteger val = new EagleInteger(x);
+			EagleValue val = interpreter.getEagleValue(init.value);
 			Ada_Variable_Definition var = ids.first();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.getValue(), val);

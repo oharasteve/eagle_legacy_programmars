@@ -11,13 +11,14 @@ import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunnable
+public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Ada_Keyword INTEGER_IO = new Ada_Keyword("Integer_IO");
 	public @S(20) PunctuationPeriod dot;

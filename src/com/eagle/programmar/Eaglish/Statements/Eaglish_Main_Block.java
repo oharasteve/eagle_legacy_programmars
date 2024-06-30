@@ -10,8 +10,9 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Eaglish_Main_Block extends TokenSequence implements EagleRunnable
+public class Eaglish_Main_Block extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword MAIN = new Eaglish_Keyword("MAIN");
 	public @S(20) Eaglish_EndOfLine eoln1;

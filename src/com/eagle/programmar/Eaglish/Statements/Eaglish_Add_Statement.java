@@ -13,8 +13,9 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Eaglish_Add_Statement extends TokenSequence implements EagleRunnable
+public class Eaglish_Add_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword ADD = new Eaglish_Keyword("ADD");
 	public @S(20) Eaglish_Expression expr;

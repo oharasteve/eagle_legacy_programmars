@@ -8,10 +8,11 @@ import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class C_StatementBlock extends TokenSequence implements EagleRunnableWithResult
+public class C_StatementBlock extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<C_StatementOrComment> statements;
