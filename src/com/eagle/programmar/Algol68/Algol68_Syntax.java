@@ -64,6 +64,7 @@ public class Algol68_Syntax extends EagleSyntax
 			"ISNT",
 			"LOC",
 			"LONG",
+			"LWB",
 			"MAIN",
 			"MODE",
 			"NEW",
@@ -89,6 +90,7 @@ public class Algol68_Syntax extends EagleSyntax
 			"TO",
 			"TRUE",
 			"UNION",
+			"UPB",
 			"VOID",
 			"WHILE",
 	};

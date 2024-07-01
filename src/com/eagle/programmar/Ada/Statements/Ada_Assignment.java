@@ -28,21 +28,6 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 		Ada_Identifier_Reference id = variable.vars.first();
 		EagleValue val = interpreter.getEagleValue(expr);
 
-//		if (variable.subscript != null)
-//		{
-//			EagleArray array = (EagleArray) var; 
-//			if (array == null)
-//			{
-//				array = new EagleArray();
-//				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-//						id.getValue(), array);
-//			}
-//			Ada_Subscript sub = variable.subscript;
-//			int index = interpreter.getIntValue(sub.expr);
-//			array.putValue(index, val);
-//		}
-//		else
-//		{
 		EagleValue v;
 		switch (equals.getValue())
 		{
@@ -71,6 +56,5 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 
 		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 				id.getValue(), v);
-//		}
 	}
 }

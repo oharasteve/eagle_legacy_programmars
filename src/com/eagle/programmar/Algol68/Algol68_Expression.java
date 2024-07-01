@@ -11,7 +11,7 @@ import com.eagle.programmar.Algol68.Expressions.Algol68_BuiltIn;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ConditionalAndExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ConditionalOrExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalNotExpression;
-import com.eagle.programmar.Algol68.Expressions.Algol68_MethodInvocation;
+import com.eagle.programmar.Algol68.Expressions.Algol68_ProcedureCall;
 import com.eagle.programmar.Algol68.Expressions.Algol68_MultiplicativeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_NegativeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ParenthesizedExpression;
@@ -59,7 +59,7 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	// Primary expressions
 
 	public @P(100) Algol68_ArrayInfo arrayInfo;
-	public @P(110) Algol68_MethodInvocation methodInvocation;
+	public @P(110) Algol68_ProcedureCall methodInvocation;
 	public @P(120) Algol68_PreIncrementExpression preIncrementExpression;
 	public @P(130) Algol68_PostIncrementExpression postIncrementExpression;
 	public @P(140) Algol68_NegativeExpression negativeExpression;

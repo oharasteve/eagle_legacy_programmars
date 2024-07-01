@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.Algol68.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
@@ -11,7 +16,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_IfStatement extends TokenSequence implements AbstractStatement
+public class Algol68_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Algol68_Keyword IF = new Algol68_Keyword("IF");
 	public @S(20) Algol68_Expression condition;
@@ -22,17 +27,88 @@ public class Algol68_IfStatement extends TokenSequence implements AbstractStatem
 	public @S(70) Algol68_Keyword END = new Algol68_Keyword("FI");
 	public @S(80) @OPT PunctuationSemicolon semicolon;
 
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
+
 	public static class Algol68_IfElifClause extends TokenSequence
 	{
 		public @S(10) Algol68_Keyword ELIF = new Algol68_Keyword("ELIF");
 		public @S(20) Algol68_Expression condition;
 		public @S(30) Algol68_Keyword THEN = new Algol68_Keyword("THEN");
-		public @S(40) TokenList<Algol68_Statement> elseStatements;
+		public @S(40) TokenList<Algol68_Statement> elifStatements;
 	}
 
 	public static class Algol68_IfElseClause extends TokenSequence
 	{
 		public @S(10) Algol68_Keyword ELSE = new Algol68_Keyword("ELSE");
 		public @S(20) TokenList<Algol68_Statement> elseStatements;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		TokenList<Algol68_Statement> todo = null;
+
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			for (Algol68_IfElifClause elif : elifClause._elements)
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
+						elif.getStartChar()));
+			}
+			if (elseClause.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
+			}
+		}
+
+		boolean cond1 = interpreter.getBoolValue(condition);
+		_metrics.get(0).completedIf(cond1);
+		if (cond1)
+		{
+			todo = thenStatements;
+		}
+		else
+		{
+			int seq = 1;
+			// Check for each 'else if'
+			for (Algol68_IfElifClause elif : elifClause._elements)
+			{
+				boolean cond2 = interpreter.getBoolValue(elif.condition);
+				_metrics.get(seq).completedIf(cond2);
+				seq++;
+				if (cond2)
+				{
+					todo = elif.elifStatements;
+					break;
+				}
+			}
+
+			// Check for 'else'
+			if (todo == null)
+			{
+				if (elseClause.isPresent())
+				{
+					_metrics.get(seq).completedIf(true);
+					todo = elseClause.elseStatements;
+				}
+			}
+		}
+
+		if (todo != null)
+		{
+			result = Eagle_Statement_Result.NORMAL;
+			for (Algol68_Statement stmt : todo._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+		}
+
+		return result;
 	}
 }

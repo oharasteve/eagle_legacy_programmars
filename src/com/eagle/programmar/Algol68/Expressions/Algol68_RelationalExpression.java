@@ -5,6 +5,7 @@ package com.eagle.programmar.Algol68.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_KeywordChoice;
 import com.eagle.programmar.Algol68.Terminals.Algol68_PunctuationChoice;
@@ -27,28 +28,47 @@ public class Algol68_RelationalExpression extends PrecedenceOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (relOp.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "=", "EQ":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case "~=", "/=", "NE":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
-		case "<", "LT":
-			interpreter.pushBool(leftValue < rightValue);
-			return;
-		case "<=", "LE":
-			interpreter.pushBool(leftValue <= rightValue);
-			return;
-		case ">", "GT":
-			interpreter.pushBool(leftValue > rightValue);
-			return;
-		case ">=", "GE":
-			interpreter.pushBool(leftValue >= rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "=", "EQ":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "~=", "/=", "NE":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "=", "EQ":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "~=", "/=", "NE":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<", "LT":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=", "LE":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">", "GT":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=", "GE":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			}
 		}
 		throw new RuntimeException("Unexpected relational operator: " + relOp.getWhich());
 	}

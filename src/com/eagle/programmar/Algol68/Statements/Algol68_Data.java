@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Algol68.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Variable_Definition;
@@ -13,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_Data extends TokenSequence implements AbstractStatement
+public class Algol68_Data extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Algol68_Type type;
 	public @S(20) SeparatedList<Algol68_Variable_Definition, PunctuationComma> ids;
@@ -24,5 +27,17 @@ public class Algol68_Data extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) Algol68_Expression value;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (init.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(init.value);
+			Algol68_Variable_Definition var = ids.first();
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.getValue(), val);
+		}
 	}
 }

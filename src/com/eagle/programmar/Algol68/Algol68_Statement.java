@@ -5,8 +5,8 @@ package com.eagle.programmar.Algol68;
 
 import com.eagle.programmar.Algol68.Statements.Algol68_Assignment;
 import com.eagle.programmar.Algol68.Statements.Algol68_Data;
+import com.eagle.programmar.Algol68.Statements.Algol68_ExpressionStatement;
 import com.eagle.programmar.Algol68.Statements.Algol68_ForStatement;
-import com.eagle.programmar.Algol68.Statements.Algol68_FunctionCall;
 import com.eagle.programmar.Algol68.Statements.Algol68_IfStatement;
 import com.eagle.programmar.Algol68.Statements.Algol68_PrintStatement;
 import com.eagle.programmar.Algol68.Statements.Algol68_PrintfStatement;
@@ -25,5 +25,5 @@ public class Algol68_Statement extends TokenChooser
 	public @CHOICE Algol68_Procedure procedure;
 
 	public @LAST Algol68_Assignment assignment;
-	public @LAST Algol68_FunctionCall functionCall;
+	public @LAST Algol68_ExpressionStatement expressionStatement;
 }
