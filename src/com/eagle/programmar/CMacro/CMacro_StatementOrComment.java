@@ -42,7 +42,7 @@ public class CMacro_StatementOrComment extends TokenSequence implements EagleRun
 		public @CHOICE CMacro_Region_Statement regionStatement;
 		public @CHOICE CMacro_Undef_Statement undefStatement;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

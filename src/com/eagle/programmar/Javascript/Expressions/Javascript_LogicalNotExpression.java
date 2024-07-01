@@ -18,6 +18,6 @@ public class Javascript_LogicalNotExpression extends PrimaryOperator implements 
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

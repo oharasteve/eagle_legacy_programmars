@@ -25,7 +25,7 @@ public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable
 	public @S(60) Fortran_Keyword PROGRAM2 = new Fortran_Keyword("PROGRAM");
 	public @S(70) Fortran_Function_Reference fnName2;
 	public @S(80) Fortran_EOLN eoln2;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

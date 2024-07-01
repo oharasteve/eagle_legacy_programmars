@@ -30,7 +30,7 @@ public class Rust_LetStatement extends TokenSequence implements EagleRunnable, A
 		public @S(10) Rust_Keyword AS = new Rust_Keyword("as");
 		public @S(20) Rust_Type type;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

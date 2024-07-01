@@ -17,7 +17,7 @@ public class Ada_ReturnStatement extends TokenSequence implements EagleRunnableW
 	public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
 	public @S(20) Ada_Expression expr;
 	public @S(30) PunctuationSemicolon semicolon;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

@@ -61,12 +61,13 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
 			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(), elif.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
+						elif.getStartChar()));
 			}
 			if (elseBlock.isPresent())
 			{
-				_metrics.add(
-						new IfCondMetrics(interpreter._metrics, elseBlock.getFileName(), elseBlock.getStartLine(), elseBlock.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock.getFileName(), elseBlock.getStartLine(),
+						elseBlock.getStartChar()));
 			}
 		}
 

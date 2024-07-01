@@ -59,8 +59,8 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
 			if (ifelse.isPresent())
 			{
-				_metrics.add(
-						new IfCondMetrics(interpreter._metrics, ifelse.getFileName(), ifelse.getStartLine(), ifelse.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, ifelse.getFileName(), ifelse.getStartLine(),
+						ifelse.getStartChar()));
 			}
 		}
 

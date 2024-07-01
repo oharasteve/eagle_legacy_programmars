@@ -13,7 +13,7 @@ public class Rust_Format
 	{
 		String fmt = interpreter.getStrValue(argList.first());
 		if (fmt.indexOf("{}") < 0) return fmt;
-		
+
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
 		int nc = fmt.length();

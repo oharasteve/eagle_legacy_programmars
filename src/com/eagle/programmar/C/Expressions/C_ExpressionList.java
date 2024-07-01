@@ -20,7 +20,7 @@ public class C_ExpressionList extends PrimaryOperator implements EagleRunnable
 	public @S(20) @OPT C_ArgumentList valueList;
 	public @S(30) @OPT C_Comment comment;
 	public @S(40) PunctuationRightBrace rightBrace;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

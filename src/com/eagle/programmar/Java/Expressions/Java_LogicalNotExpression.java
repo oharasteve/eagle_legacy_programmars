@@ -18,6 +18,6 @@ public class Java_LogicalNotExpression extends PrimaryOperator implements EagleR
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

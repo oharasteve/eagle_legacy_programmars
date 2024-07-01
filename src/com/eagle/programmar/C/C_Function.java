@@ -44,7 +44,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	public @S(100) C_FunctionBody body;
 
 	public @SKIP CallMetrics _metrics = null;
-	
+
 	public static class C_FunctionTypeName extends TokenChooser
 	{
 		public @CHOICE C_Keyword MAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
@@ -72,9 +72,9 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	{
 		public @FIRST C_FunctionPointer functionPointer;
 		public @CHOICE C_FunctionParamAmpersand paramAmpersand;
-		public @CHOICE C_FunctionRegularParameter paramRegular; 
+		public @CHOICE C_FunctionRegularParameter paramRegular;
 		public @CHOICE C_FunctionFunctionParameter functionParam;
-		public @CHOICE C_FunctionDotDotDotParameter dotDotParam; 
+		public @CHOICE C_FunctionDotDotDotParameter dotDotParam;
 	}
 
 	public static class C_FunctionParamAmpersand extends TokenSequence
@@ -151,7 +151,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 			}
 		}
 	}
-	
+
 	public static class C_FunctionImplementation extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;

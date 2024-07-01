@@ -27,7 +27,7 @@ public class Julia_MethodInvocation extends PrimaryOperator implements EagleRunn
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Julia_Identifier_Reference id = methodName.vars.first();
-		if (! id.getValue().equals("string"))
+		if (!id.getValue().equals("string"))
 		{
 			throw new RuntimeException("Unexpected method: " + id.getValue());
 		}

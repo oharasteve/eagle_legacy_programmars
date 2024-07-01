@@ -26,6 +26,6 @@ public class Perl_NotExpression extends PrimaryOperator implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

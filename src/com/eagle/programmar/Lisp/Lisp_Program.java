@@ -16,7 +16,7 @@ public class Lisp_Program extends EagleLanguage implements EagleRunnable
 	{
 		super(LISP, new Lisp_Syntax());
 	}
-	
+
 	@Override
 	public String booleanName(boolean flag)
 	{

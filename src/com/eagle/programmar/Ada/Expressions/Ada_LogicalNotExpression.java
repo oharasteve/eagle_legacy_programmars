@@ -18,6 +18,6 @@ public class Ada_LogicalNotExpression extends PrimaryOperator implements EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

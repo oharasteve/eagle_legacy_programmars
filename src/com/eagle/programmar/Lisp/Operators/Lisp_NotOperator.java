@@ -22,6 +22,6 @@ public class Lisp_NotOperator extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean flag = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! flag);
+		interpreter.pushBool(!flag);
 	}
 }

@@ -18,12 +18,12 @@ public class Lisp_RemainderOperator extends TokenSequence implements EagleRunnab
 	public @S(30) Lisp_SExpr leftExpr;
 	public @S(40) Lisp_SExpr rightExpr;
 	public @S(50) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int left = interpreter.getIntValue(leftExpr);
 		int right = interpreter.getIntValue(rightExpr);
-		interpreter.pushInt (left % right);
+		interpreter.pushInt(left % right);
 	}
 }

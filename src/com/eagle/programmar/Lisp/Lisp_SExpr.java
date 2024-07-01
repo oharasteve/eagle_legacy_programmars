@@ -37,7 +37,7 @@ public class Lisp_SExpr extends TokenChooser
 	public @CHOICE Lisp_Number number;
 	public @CHOICE Lisp_Literal literal;
 	public @CHOICE Lisp_Character character;
-	
+
 	public @CHOICE Lisp_DefmacroFunction defMacro;
 	public @CHOICE Lisp_DefparameterFunction defParameter;
 	public @CHOICE Lisp_DefunFunction defFunction;
@@ -58,9 +58,8 @@ public class Lisp_SExpr extends TokenChooser
 	public @CHOICE Lisp_OrOperator orOperator;
 	public @CHOICE Lisp_NotOperator notOperator;
 	public @CHOICE Lisp_Builtins builtins;
-	
-	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(
-			".", "?", "<", "<=", "=", ">=", ">");
+
+	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(".", "?", "<", "<=", "=", ">=", ">");
 
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{

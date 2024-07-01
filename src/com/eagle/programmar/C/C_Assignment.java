@@ -19,7 +19,7 @@ public class C_Assignment extends TokenSequence implements EagleRunnable
 		public @S(10) PunctuationComma comma;
 		public @S(20) C_Expression expr;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

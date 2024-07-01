@@ -55,19 +55,19 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 		int i = start;
 		while (true)
 		{
-			if (! backwards && i <= stop) break;
+			if (!backwards && i <= stop) break;
 			if (backwards && i >= stop) break;
-			
+
 			metric.iterate();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.toString(), new EagleInteger(i));
-			
+
 			for (Eaglish_Statement stmt : statements._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -83,9 +83,11 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 			{
 				break;
 			}
-			
-			if (backwards) i--;
-			else i++;
+
+			if (backwards)
+				i--;
+			else
+				i++;
 		}
 
 		_metrics.competedLoop(metric);

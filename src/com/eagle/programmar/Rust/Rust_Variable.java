@@ -35,7 +35,7 @@ public class Rust_Variable extends TokenSequence implements AbstractVariable, Ea
 //		}
 //		else
 //		{
-			interpreter.pushEagleValue(value);
+		interpreter.pushEagleValue(value);
 //		}
 	}
 }

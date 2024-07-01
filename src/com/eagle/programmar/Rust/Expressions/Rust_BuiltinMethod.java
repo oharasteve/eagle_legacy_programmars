@@ -17,7 +17,8 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
-	public @S(30) Rust_KeywordChoice method = new Rust_KeywordChoice("as_str", "len", "rev", "starts_with", "to_string");
+	public @S(30) Rust_KeywordChoice method = new Rust_KeywordChoice("as_str", "len", "rev", "starts_with",
+			"to_string");
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT Rust_Expression arg;
 	public @S(60) PunctuationRightParen rightParen;
@@ -33,7 +34,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
 			}
-			
+
 			String str = interpreter.getStrValue(left);
 			interpreter.pushInt(str.length());
 			break;
@@ -42,12 +43,12 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
 			}
-			
+
 			EagleRange range = interpreter.getRangeValue(left);
 			interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, -range._step));
 			break;
 		case "starts_with":
-			if (! arg.isPresent())
+			if (!arg.isPresent())
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires one argument");
 			}
@@ -61,7 +62,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
 			}
-			
+
 			String val = interpreter.getStrValue(left);
 			interpreter.pushStr(val);
 			break;

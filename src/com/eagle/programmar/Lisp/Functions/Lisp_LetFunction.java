@@ -26,7 +26,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 	public @S(40) Lisp_LetVariables variables;
 	public @S(50) TokenList<Lisp_SExpr> values;
 	public @S(60) PunctuationRightParen rightParen;
-	
+
 	public static class Lisp_LetVar extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -49,7 +49,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -57,7 +57,8 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 		for (Lisp_LetVar var : variables.valuePairs._elements)
 		{
 			EagleValue val = interpreter.getEagleValue(var.value);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.var.toString(), val);
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					var.var.toString(), val);
 		}
 
 		// Perform actions

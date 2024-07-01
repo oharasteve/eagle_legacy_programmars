@@ -24,7 +24,7 @@ public class Lisp_AndOperator extends TokenSequence implements EagleRunnable
 	{
 		for (Lisp_SExpr expr : exprs._elements)
 		{
-			if (! interpreter.getBoolValue(expr))
+			if (!interpreter.getBoolValue(expr))
 			{
 				interpreter.pushBool(false);
 				return;

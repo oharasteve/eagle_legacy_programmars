@@ -36,7 +36,7 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (! (values.getWhich() instanceof Ada_RangeExpression))
+		if (!(values.getWhich() instanceof Ada_RangeExpression))
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
@@ -57,19 +57,19 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 		if (backwards) i = stop;
 		while (true)
 		{
-			if (! backwards && i > stop) break;
+			if (!backwards && i > stop) break;
 			if (backwards && i < start) break;
-			
+
 			metric.iterate();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.vars.first().getValue(), new EagleInteger(i));
-			
+
 			for (Ada_Statement stmt : statements._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -85,9 +85,11 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 			{
 				break;
 			}
-			
-			if (backwards) i--;
-			else i++;
+
+			if (backwards)
+				i--;
+			else
+				i++;
 		}
 
 		_metrics.competedLoop(metric);

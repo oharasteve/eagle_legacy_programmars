@@ -28,7 +28,7 @@ public class Rust_IfStatement extends TokenSequence implements EagleRunnableWith
 		public @S(10) Rust_Keyword ELSE = new Rust_Keyword("else");
 		public @S(20) Rust_Statement stmt;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
@@ -42,7 +42,8 @@ public class Rust_IfStatement extends TokenSequence implements EagleRunnableWith
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
 			if (elseClause.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(), elseClause.getStartLine(), elseClause.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
 			}
 		}
 

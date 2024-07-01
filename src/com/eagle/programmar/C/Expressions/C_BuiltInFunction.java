@@ -20,8 +20,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) C_KeywordChoice builtinFunction = new C_KeywordChoice("exit", "printf",
-			"strcat", "strcmp", "strcpy", "strdup", "strlen", "strncmp");
+	public @S(10) C_KeywordChoice builtinFunction = new C_KeywordChoice("exit", "printf", "strcat", "strcmp", "strcpy",
+			"strdup", "strlen", "strncmp");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<C_Expression, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
@@ -39,14 +39,14 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 			AbstractToken first1 = args.first().getWhich();
 			if (first1 instanceof C_VariableExpression)
 			{
-				C_Variable var = ((C_VariableExpression)first1).variable;
+				C_Variable var = ((C_VariableExpression) first1).variable;
 				C_Identifier_Reference id = (C_Identifier_Reference) var.firstId.getWhich();
 				String varName = id.getValue();
 				String str = interpreter.getStrValue(args.getPrimaryElement(1));
 				String oldVal = interpreter._symbolTable.findSymbol(varName).forceStringValue();
 				EagleString val = new EagleString(oldVal + str);
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						varName, val);
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), varName,
+						val);
 				return;
 			}
 			break;
@@ -60,13 +60,13 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 			AbstractToken first3 = args.first().getWhich();
 			if (first3 instanceof C_VariableExpression)
 			{
-				C_Variable var = ((C_VariableExpression)first3).variable;
+				C_Variable var = ((C_VariableExpression) first3).variable;
 				C_Identifier_Reference id = (C_Identifier_Reference) var.firstId.getWhich();
 				String varName = id.getValue();
 				String str = interpreter.getStrValue(args.getPrimaryElement(1));
 				EagleString val = new EagleString(str);
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						varName, val);
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), varName,
+						val);
 				return;
 			}
 			break;
@@ -90,7 +90,7 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 			interpreter.pushInt(left2.compareTo(right2));
 			return;
 		}
-		
+
 		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinFunction);
 	}
 }

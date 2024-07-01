@@ -85,7 +85,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 			Rust_Parameter param = func.funcParamDefs.getPrimaryElement(i);
 			interpreter._symbolTable.removeSymbols(param._name);
 		}
-		
+
 		return result;
 	}
 }

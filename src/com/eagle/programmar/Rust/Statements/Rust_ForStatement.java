@@ -48,18 +48,18 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 			backwards = true;
 			i = stop - 1;
 		}
-		
+
 		while (true)
 		{
 			if (backwards && i < start) break;
-			if (! backwards && i >= stop) break;
+			if (!backwards && i >= stop) break;
 
 			metric.iterate();
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.var.toString(), new EagleInteger(i));
-			
+
 			result = interpreter.tryToInterpret(stmt);
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -75,8 +75,8 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 			{
 				break;
 			}
-			
-			i += step;	// Might be negative
+
+			i += step; // Might be negative
 		}
 
 		_metrics.competedLoop(metric);

@@ -68,21 +68,22 @@ public class CSS_TagList extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) CSS_KeywordChoice option = new CSS_KeywordChoice("active", "after", "before", "checked",
-				"decrement", "default", "end", "first-child", "focus", "horizontal", "hover", "increment",
-				"last-child", "link", "-moz-any-link", "not", "nth-child", "-o-prefocus", "start", "vertical", "visited", "webkit-any");
+				"decrement", "default", "end", "first-child", "focus", "horizontal", "hover", "increment", "last-child",
+				"link", "-moz-any-link", "not", "nth-child", "-o-prefocus", "start", "vertical", "visited",
+				"webkit-any");
 		public @S(30) @OPT CSS_ColonParens args;
 		public @S(40) @OPT PunctuationComma comma;
-		
+
 		public static class CSS_ColonParens extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) CSS_ColonArgument arg;
 			public @S(30) PunctuationRightParen rightParen;
-			
+
 			public static class CSS_ColonArgument extends TokenChooser
 			{
 				public @CHOICE CSS_Identifier id;
-				
+
 				public @CHOICE static class CSS_ColonArgBrackets extends TokenSequence
 				{
 					public @S(10) PunctuationLeftBracket leftBracket;
@@ -95,7 +96,7 @@ public class CSS_TagList extends TokenSequence
 					public @S(10) PunctuationColon colon;
 					public @S(20) CSS_Identifier id;
 				}
-				
+
 				public @CHOICE static class CSS_ColonArgDot extends TokenSequence
 				{
 					public @S(10) PunctuationPeriod dot;

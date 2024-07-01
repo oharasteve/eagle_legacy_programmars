@@ -29,7 +29,7 @@ public class FSharp_LetStatement extends TokenSequence implements EagleRunnable
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		AbstractToken which = var.var.getWhich();
-		if (! (which instanceof FSharp_Identifier_Reference))
+		if (!(which instanceof FSharp_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which.toString());
 		}

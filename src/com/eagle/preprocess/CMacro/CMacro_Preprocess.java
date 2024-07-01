@@ -180,7 +180,7 @@ public class CMacro_Preprocess extends EagleInclude
 			sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
 			System.out.println(sb);
 		}
-		
+
 		return _newLines;
 	}
 

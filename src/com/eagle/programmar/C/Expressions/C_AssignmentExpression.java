@@ -28,33 +28,33 @@ public class C_AssignmentExpression extends PrecedenceOperator implements EagleR
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(rightAsg);
-		if (! (var.getWhich() instanceof C_VariableExpression))
+		if (!(var.getWhich() instanceof C_VariableExpression))
 		{
 			throw new RuntimeException("Can only handle simple assignments, not  " + var.getWhich());
 		}
-		
+
 		C_Variable variable = ((C_VariableExpression) var.getWhich()).variable;
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof C_Identifier_Reference))
+		if (!(which instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which + " now");
 		}
 		C_Identifier_Reference id = (C_Identifier_Reference) which;
 
-		switch(equals.getValue())
+		switch (equals.getValue())
 		{
-			case "=":
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
-						val);
-				break;
-			case "+=":
-				EagleValue oldValue = interpreter._symbolTable.findSymbol(id.getValue());
-				int newValue = val.forceIntegerValue() + oldValue.forceIntegerValue();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
-						new EagleInteger(newValue));
-				break;
-			default:
-				throw new RuntimeException("Can only handle = and += right now");
+		case "=":
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+					val);
+			break;
+		case "+=":
+			EagleValue oldValue = interpreter._symbolTable.findSymbol(id.getValue());
+			int newValue = val.forceIntegerValue() + oldValue.forceIntegerValue();
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+					new EagleInteger(newValue));
+			break;
+		default:
+			throw new RuntimeException("Can only handle = and += right now");
 		}
 	}
 }

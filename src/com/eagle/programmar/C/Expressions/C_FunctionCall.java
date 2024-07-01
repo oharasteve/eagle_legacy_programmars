@@ -73,7 +73,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			{
 				C_FunctionRegularParameter param = (C_FunctionRegularParameter) params.param.getWhich();
 				String paramName = param.id.getValue();
-				if (paramName != null && ! paramName.equals("void"))
+				if (paramName != null && !paramName.equals("void"))
 				{
 					// 'f(void)' is special here meaning no arguments
 					expected++;
@@ -84,7 +84,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			int actual = 0;
 			if (argList.arg != null && argList.arg.isPresent()) actual++;
 			if (argList.moreArgs != null && argList.moreArgs.isPresent()) actual += argList.moreArgs.size();
-			
+
 			if (actual != expected)
 			{
 				throw new RuntimeException(
@@ -94,7 +94,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			{
 				System.out.println("** Calling " + fnName + " with #args=" + actual);
 			}
-			
+
 			// Assign all the parameters
 			AbstractToken arg = argList.arg.getWhich();
 			C_FunctionRegularParameter param = (C_FunctionRegularParameter) params.param.getWhich();
@@ -102,10 +102,10 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			{
 				if (i > 0)
 				{
-					arg = argList.moreArgs._elements.get(i-1).arg;
-					param = (C_FunctionRegularParameter) params.moreParams._elements.get(i-1).param.getWhich();
+					arg = argList.moreArgs._elements.get(i - 1).arg;
+					param = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
 				}
-				
+
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 						param.id.getValue(), val);
@@ -128,7 +128,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			{
 				if (i > 0)
 				{
-					param = (C_FunctionRegularParameter) params.moreParams._elements.get(i-1).param.getWhich();
+					param = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
 				}
 				interpreter._symbolTable.removeSymbols(param.id.getValue());
 			}

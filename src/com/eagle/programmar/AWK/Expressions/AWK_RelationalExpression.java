@@ -21,7 +21,7 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 	{
 		EagleValue leftVal = interpreter.getEagleValue(left);
 		EagleValue rightVal = interpreter.getEagleValue(right);
-		
+
 		if (leftVal.isInteger() && rightVal.isInteger())
 		{
 			int leftInt = leftVal.forceIntegerValue();
@@ -50,7 +50,7 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 				throw new RuntimeException("Unable to handle " + operator.getValue() + " with integers");
 			}
 		}
-		
+
 		if (leftVal.isString() && rightVal.isString())
 		{
 			String leftStr = leftVal.forceStringValue();
@@ -61,13 +61,13 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			default:
 				throw new RuntimeException("Unable to handle " + operator.getValue() + " with strings");
 			}
 		}
-		
+
 		throw new RuntimeException("Can only handle ints and strings");
 	}
 }

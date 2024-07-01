@@ -54,7 +54,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 			}
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -92,14 +92,14 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		TokenList<Ada_Statement> stmts1;
 		TokenList<Ada_Statement> stmts2;
 		CallMetrics metrics;
-		
+
 		if (func != null)
 		{
 			params = func.params;
 			metrics = func._metrics;
 			stmts1 = func.stmts1;
 			stmts2 = func.stmts2;
-			interpreter.tryToInterpret(func);   // Doesn't do much, just set metrics
+			interpreter.tryToInterpret(func); // Doesn't do much, just set metrics
 		}
 		else if (proc != null)
 		{
@@ -107,7 +107,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 			metrics = proc._metrics;
 			stmts1 = proc.stmts1;
 			stmts2 = proc.stmts2;
-			interpreter.tryToInterpret(proc);   // Doesn't do much, just set metrics
+			interpreter.tryToInterpret(proc); // Doesn't do much, just set metrics
 		}
 		else
 		{
@@ -115,7 +115,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 			if (val != null && val.isArray())
 			{
 				EagleArray array = (EagleArray) val;
-				Ada_FunctionArg arg = argList.arguments.getPrimaryElement(0); 
+				Ada_FunctionArg arg = argList.arguments.getPrimaryElement(0);
 				AbstractToken which = arg.getWhich();
 				if (which instanceof Ada_Expression)
 				{
@@ -140,7 +140,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 				throw new RuntimeException(
 						"Function " + id.getValue() + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
-	
+
 			// Now assign all the parameters
 			for (int i = 0; i < argCount; i++)
 			{

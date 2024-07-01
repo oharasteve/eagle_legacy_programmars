@@ -26,15 +26,15 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable, Abst
 	{
 		EagleValue var = interpreter._symbolTable.findSymbol(variable.id.toString());
 		EagleValue val = interpreter.getEagleValue(expr);
-		
+
 		if (variable.subscripts.size() == 1)
 		{
-			EagleHash hash = (EagleHash) var; 
+			EagleHash hash = (EagleHash) var;
 			if (hash == null)
 			{
 				hash = new EagleHash();
-				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-						variable.id.getValue(), hash);
+				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(),
+						variable.getStartChar(), variable.id.getValue(), hash);
 			}
 			AWK_VarSubscript sub = variable.subscripts.first();
 			String key = interpreter.getStrValue(sub.expr);
@@ -63,7 +63,7 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable, Abst
 			default:
 				throw new RuntimeException("Unable to handle " + equals.getValue());
 			}
-			
+
 			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 					variable.id.getValue(), v);
 		}

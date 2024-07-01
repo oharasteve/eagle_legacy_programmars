@@ -30,7 +30,7 @@ public class C_IfStatement extends TokenSequence implements EagleRunnableWithRes
 	public @S(80) @OPT C_IfElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
-	
+
 	public static class C_IfElseClause extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) @OPT TokenList<C_Comment> comment1;
@@ -51,8 +51,8 @@ public class C_IfStatement extends TokenSequence implements EagleRunnableWithRes
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
 			if (elseClause.isPresent())
 			{
-				_metrics.add(
-						new IfCondMetrics(interpreter._metrics, elseClause.getFileName(), elseClause.getStartLine(), elseClause.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
 			}
 		}
 

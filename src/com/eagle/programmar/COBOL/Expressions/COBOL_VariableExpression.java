@@ -54,7 +54,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 		{
 			if (val.isArray())
 			{
-				ArrayList<EagleValue> avals = ((EagleArray)val).getArrayValue();
+				ArrayList<EagleValue> avals = ((EagleArray) val).getArrayValue();
 				int subscript = variable.subscript.first().getSubscriptValue(interpreter);
 				interpreter.pushEagleValue(avals.get(subscript));
 				return;

@@ -44,7 +44,7 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 	public static class AWK_ForWhat extends TokenChooser
 	{
 		public @CHOICE AWK_ForIteration forIteration;
-		
+
 		public @CHOICE static class AWK_ForEach extends TokenSequence
 		{
 			public @S(10) AWK_Variable var;
@@ -65,30 +65,30 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 		if (forWhat.getWhich() instanceof AWK_ForIteration)
 		{
 			AWK_ForIteration what = (AWK_ForIteration) forWhat.getWhich();
-			
+
 			interpreter.tryToInterpret(what.initialize);
-	
+
 			if (_metrics == null)
 			{
 				_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
 			}
 			ForLoopMetric metric = new ForLoopMetric();
-	
+
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			while (true)
 			{
 				boolean keepGoing = interpreter.getBoolValue(what.test);
-				if (! keepGoing) break;
-				
+				if (!keepGoing) break;
+
 				metric.iterate();
 				AWK_Action stmts = (AWK_Action) block.getWhich();
-				
+
 				for (AWK_StatementOrComment stmt : stmts.statements._elements)
 				{
 					result = interpreter.tryToInterpret(stmt);
 					if (result != Eagle_Statement_Result.NORMAL) break;
 				}
-				
+
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
@@ -104,14 +104,14 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 				{
 					break;
 				}
-				
+
 				interpreter.tryToInterpret(what.increment);
 			}
-			
+
 			_metrics.competedLoop(metric);
 			return result;
 		}
-		
+
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
 }

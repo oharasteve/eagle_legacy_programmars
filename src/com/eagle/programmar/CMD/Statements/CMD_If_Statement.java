@@ -106,7 +106,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable
 			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.operator);
 		}
 
-		if (NOT.isPresent()) passTest = ! passTest;
+		if (NOT.isPresent()) passTest = !passTest;
 		if (passTest)
 		{
 			interpreter.tryToInterpret(stmt);

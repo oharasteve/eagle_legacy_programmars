@@ -18,6 +18,6 @@ public class CSharp_NotExpression extends PrimaryOperator implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

@@ -48,8 +48,8 @@ public class Ada_IfStatement extends TokenSequence implements EagleRunnableWithR
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
 			if (elseClause.isPresent())
 			{
-				_metrics.add(
-						new IfCondMetrics(interpreter._metrics, elseClause.getFileName(), elseClause.getStartLine(), elseClause.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
 			}
 		}
 

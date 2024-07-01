@@ -32,6 +32,6 @@ public class Ada_Statement extends TokenChooser
 	public @CHOICE Ada_Procedure procedure;
 	public @CHOICE Ada_ReturnStatement returnStatement;
 	public @CHOICE Ada_WithUseStatement withUseStatement;
-	
+
 	public @LAST Ada_ExpressionStatement expressionStatement;
 }

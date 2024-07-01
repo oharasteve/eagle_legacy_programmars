@@ -9,7 +9,7 @@ import com.eagle.programmar.Lisp.Terminals.Lisp_Comment;
 public class Lisp_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

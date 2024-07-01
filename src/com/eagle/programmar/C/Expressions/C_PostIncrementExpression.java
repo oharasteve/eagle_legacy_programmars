@@ -22,7 +22,7 @@ public class C_PostIncrementExpression extends PrimaryOperator implements EagleR
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AbstractToken which = var.firstId.getWhich();
-		if (! (which instanceof C_Identifier_Reference))
+		if (!(which instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which + " now");
 		}
@@ -31,8 +31,8 @@ public class C_PostIncrementExpression extends PrimaryOperator implements EagleR
 		EagleValue val = interpreter._symbolTable.findSymbol(id.getValue());
 		int prev = val.forceIntegerValue();
 		EagleValue curr = new EagleInteger(prev + 1);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-				id.getValue(), curr);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+				curr);
 		interpreter.pushInt(prev);
 	}
 }

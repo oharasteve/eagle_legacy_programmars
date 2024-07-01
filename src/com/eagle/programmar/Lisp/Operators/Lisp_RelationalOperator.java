@@ -58,8 +58,8 @@ public class Lisp_RelationalOperator extends TokenSequence implements EagleRunna
 				default:
 					throw new RuntimeException("Unable to handle operator: " + LESS.getValue());
 				}
-				
-				if (! test)
+
+				if (!test)
 				{
 					interpreter.pushBool(false);
 					return;

@@ -18,6 +18,6 @@ public class Scala_NotExpression extends PrimaryOperator implements EagleRunnabl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

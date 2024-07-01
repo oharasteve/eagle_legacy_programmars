@@ -18,6 +18,6 @@ public class Algol68_LogicalNotExpression extends PrimaryOperator implements Eag
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

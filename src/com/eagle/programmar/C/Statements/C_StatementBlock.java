@@ -17,7 +17,7 @@ public class C_StatementBlock extends TokenSequence implements EagleRunnableWith
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<C_StatementOrComment> statements;
 	public @S(30) PunctuationRightBrace rightBrace;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

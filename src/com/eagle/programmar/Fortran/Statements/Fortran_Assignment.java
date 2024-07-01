@@ -18,7 +18,7 @@ public class Fortran_Assignment extends TokenSequence implements EagleRunnable
 	public @S(20) PunctuationEquals equals;
 	public @S(30) Fortran_Expression expr;
 	public @S(40) Fortran_EOLN eoln;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

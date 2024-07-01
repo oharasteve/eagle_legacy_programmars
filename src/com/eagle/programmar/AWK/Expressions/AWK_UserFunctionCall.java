@@ -23,7 +23,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT AWK_ArgumentList argList;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -49,7 +49,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// Doesn't do much, just set metrics
 		interpreter.tryToInterpret(func);
-		
+
 		// Make sure the function args match up
 		int argCount = 0;
 		if (argList.isPresent())
@@ -63,7 +63,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 				throw new RuntimeException(
 						"Function " + functionName + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
-	
+
 			// Now assign all the parameters
 			AWK_Expression arg = argList.expr;
 			AWK_Identifier param = func.parameters.param;
@@ -71,8 +71,8 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 			{
 				if (i > 0)
 				{
-					arg = argList.more._elements.get(i-1).expr;
-					param = func.parameters.moreParams._elements.get(i-1).param;
+					arg = argList.more._elements.get(i - 1).expr;
+					param = func.parameters.moreParams._elements.get(i - 1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
@@ -101,7 +101,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 			interpreter._symbolTable.removeSymbols(param._name);
 			for (int i = 1; i < argCount; i++)
 			{
-				param = func.parameters.moreParams._elements.get(i-1).param;
+				param = func.parameters.moreParams._elements.get(i - 1).param;
 				interpreter._symbolTable.removeSymbols(param._name);
 			}
 		}

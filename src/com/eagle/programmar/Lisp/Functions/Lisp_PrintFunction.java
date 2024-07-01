@@ -17,7 +17,7 @@ public class Lisp_PrintFunction extends TokenSequence implements EagleRunnable
 	public @S(20) @DOC("s_print.htm") Lisp_KeywordChoice PRINT = new Lisp_KeywordChoice("print", "princ");
 	public @S(30) Lisp_SExpr expr;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

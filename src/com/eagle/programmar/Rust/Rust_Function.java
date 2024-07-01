@@ -50,13 +50,14 @@ public class Rust_Function extends TokenSequence implements EagleRunnable, Abstr
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(), getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
+					getStartChar());
 		}
 
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
-		
+
 		// Except the function called 'main'
 		if (id.getValue().equals("main"))
 		{

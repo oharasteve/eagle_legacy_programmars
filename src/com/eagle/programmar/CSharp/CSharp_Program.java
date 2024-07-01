@@ -80,13 +80,13 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 		public @S(40) @OPT TokenList<CSharp_MoreUsing> moreIds;
 		public @S(50) @OPT CSharp_UsingEquals alternateName;
 		public @S(60) @NOSPACE PunctuationSemicolon semicolon;
-		
+
 		public static class CSharp_MoreUsing extends TokenSequence
 		{
 			public @S(10) @NOSPACE PunctuationPeriod dot;
 			public @S(20) @NOSPACE CSharp_Identifier id;
 		}
-		
+
 		public static class CSharp_UsingEquals extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
@@ -109,7 +109,7 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 		public @S(40) @INDENT PunctuationLeftBrace leftBrace;
 		public @S(50) @OPT TokenList<CSharp_ProgramElems> elems;
 		public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
-		
+
 		public static class CSharp_MoreNamespaceId extends TokenSequence
 		{
 			public @S(10) @NOSPACE PunctuationPeriod dot;

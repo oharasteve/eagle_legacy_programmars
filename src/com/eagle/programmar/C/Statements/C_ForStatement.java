@@ -38,7 +38,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 		public @CHOICE C_ForLoopStatement loopStatement;
 		public @CHOICE C_ForCollectionStatement collectionStatement;
 	}
-	
+
 	public static class C_ForLoopStatement extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -95,7 +95,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 		if (body.getWhich() instanceof C_ForLoopStatement)
 		{
 			C_ForLoopStatement what = (C_ForLoopStatement) body.getWhich();
-			
+
 			AbstractToken which = what.loopVar.getWhich();
 			C_Assignment asg;
 			if (which instanceof C_ForLoopVariableWithType)
@@ -108,26 +108,27 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 				C_ForLoopVariableNoType token = (C_ForLoopVariableNoType) which;
 				asg = token.assignment;
 			}
-			else throw new RuntimeException("Cannot handle " + which);
-				
+			else
+				throw new RuntimeException("Cannot handle " + which);
+
 			interpreter.tryToInterpret(asg);
-	
+
 			if (_metrics == null)
 			{
 				_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
 			}
 			ForLoopMetric metric = new ForLoopMetric();
-	
+
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			while (true)
 			{
 				boolean keepGoing = interpreter.getBoolValue(what.terminateCondition);
-				if (! keepGoing) break;
-				
+				if (!keepGoing) break;
+
 				metric.iterate();
-				
+
 				result = interpreter.tryToInterpret(action);
-				
+
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
@@ -143,14 +144,14 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 				{
 					break;
 				}
-				
+
 				interpreter.tryToInterpret(what.increment);
 			}
-			
+
 			_metrics.competedLoop(metric);
 			return result;
 		}
-		
+
 		throw new RuntimeException("Unexpected for loop construct: " + body.getWhich());
 	}
 }

@@ -67,7 +67,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 			interpreter.pushBool(leftStr.equals(rightStr));
 			return;
 		case "!=":
-			interpreter.pushBool(! leftStr.equals(rightStr));
+			interpreter.pushBool(!leftStr.equals(rightStr));
 			return;
 		case "<":
 			interpreter.pushBool(leftStr.compareTo(rightStr) < 0);

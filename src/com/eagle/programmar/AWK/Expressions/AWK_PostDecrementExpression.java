@@ -22,8 +22,8 @@ public class AWK_PostDecrementExpression extends PrimaryOperator implements Eagl
 		EagleValue val = interpreter._symbolTable.findSymbol(var.id.getValue());
 		int prev = val.forceIntegerValue();
 		EagleValue curr = new EagleInteger(prev - 1);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-				var.id.getValue(), curr);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.id.getValue(),
+				curr);
 		interpreter.pushInt(prev);
 	}
 }

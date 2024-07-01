@@ -49,7 +49,7 @@ public class AWK_BuiltinFunctionCall extends PrimaryOperator implements EagleRun
 			int nc = interpreter.getIntValue(argList.more._elements.get(1).expr);
 			if (sc > strArg.length()) throw new RuntimeException("Error on substr for " + strArg);
 			if (sc + nc > strArg.length()) nc = strArg.length() - sc;
-			interpreter.pushStr(strArg.substring(sc, sc + nc));	// AWK substr() starts with 1, not 0
+			interpreter.pushStr(strArg.substring(sc, sc + nc)); // AWK substr() starts with 1, not 0
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + fnName);

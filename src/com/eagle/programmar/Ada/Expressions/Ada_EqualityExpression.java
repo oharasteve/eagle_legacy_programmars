@@ -31,7 +31,7 @@ public class Ada_EqualityExpression extends PrecedenceOperator implements EagleR
 				interpreter.pushBool(leftString.equals(rightString));
 				return;
 			case "/=":
-				interpreter.pushBool(! leftString.equals(rightString));
+				interpreter.pushBool(!leftString.equals(rightString));
 				return;
 			}
 		}

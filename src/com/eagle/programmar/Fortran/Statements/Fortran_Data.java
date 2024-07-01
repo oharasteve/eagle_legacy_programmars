@@ -19,7 +19,7 @@ public class Fortran_Data extends TokenSequence implements EagleRunnable
 	public @S(20) Fortran_Punctuation colobColon = new Fortran_Punctuation("::");
 	public @S(30) SeparatedList<Fortran_Variable_Definition, PunctuationComma> variables;
 	public @S(40) Fortran_EOLN eoln;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

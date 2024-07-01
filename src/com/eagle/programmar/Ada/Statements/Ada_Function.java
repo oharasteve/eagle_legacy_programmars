@@ -62,7 +62,8 @@ public class Ada_Function extends TokenSequence implements AbstractFunction, Eag
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(), getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
+					getStartChar());
 		}
 
 		// Nothing to do here. Ignore the function definitions

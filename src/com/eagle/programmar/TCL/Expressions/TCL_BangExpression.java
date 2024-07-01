@@ -18,6 +18,6 @@ public class TCL_BangExpression extends PrimaryOperator implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean val = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! val);
+		interpreter.pushBool(!val);
 	}
 }

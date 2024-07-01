@@ -37,7 +37,7 @@ public class Rust_EqualityExpression extends PrecedenceOperator implements Eagle
 				return;
 			}
 		}
-		
+
 		if (leftValue.isString() && rightValue.isString())
 		{
 			String leftStr = interpreter.getStrValue(left);
@@ -48,11 +48,11 @@ public class Rust_EqualityExpression extends PrecedenceOperator implements Eagle
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
 		}
-		
+
 		throw new RuntimeException("Unable to handle " + oper);
 	}
 }

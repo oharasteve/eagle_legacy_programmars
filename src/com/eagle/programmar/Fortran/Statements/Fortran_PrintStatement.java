@@ -28,7 +28,7 @@ public class Fortran_PrintStatement extends TokenSequence implements EagleRunnab
 		public @CHOICE PunctuationStar star;
 		public @CHOICE Fortran_Literal fmt;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

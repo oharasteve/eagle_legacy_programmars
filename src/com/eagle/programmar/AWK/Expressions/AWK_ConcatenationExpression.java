@@ -14,13 +14,13 @@ public class AWK_ConcatenationExpression extends PrimaryOperator implements Eagl
 	public @S(10) AWK_ConcatPiece piece1;
 	public @S(20) AWK_ConcatPiece piece2;
 	public @S(30) @OPT TokenList<AWK_ConcatPiece> pieces;
-	
+
 	public static class AWK_ConcatPiece extends TokenChooser
 	{
 		public @CHOICE AWK_String string;
 		public @CHOICE AWK_VariableExpression variable;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

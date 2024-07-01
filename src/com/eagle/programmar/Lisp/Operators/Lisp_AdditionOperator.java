@@ -38,7 +38,7 @@ public class Lisp_AdditionOperator extends TokenSequence implements EagleRunnabl
 			if (exprs._elements.size() == 1)
 			{
 				// Special case, (- 5) is -5, not 5
-				diff = - interpreter.getIntValue(exprs.first());
+				diff = -interpreter.getIntValue(exprs.first());
 			}
 			else
 			{
@@ -55,7 +55,7 @@ public class Lisp_AdditionOperator extends TokenSequence implements EagleRunnabl
 					}
 				}
 			}
-			
+
 			interpreter.pushInt(diff);
 			return;
 		default:

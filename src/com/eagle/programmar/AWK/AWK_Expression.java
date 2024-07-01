@@ -69,7 +69,7 @@ public class AWK_Expression extends PrecedenceChooser
 	public @P(160) AWK_PostDecrementExpression postDecrementExpression;
 	public @P(170) AWK_NegativeExpression negativeExpression;
 	public @P(180) AWK_NotExpression notExpression;
-	public @P(190) AWK_ConcatenationExpression concateationExpression;	// Has to precede vars and strings
+	public @P(190) AWK_ConcatenationExpression concateationExpression; // Has to precede vars and strings
 	public @P(200) AWK_VariableExpression variableExpression;
 	public @P(210) AWK_String string;
 	public @P(220) AWK_BuiltinFunctionCall builtinFunctionCall;

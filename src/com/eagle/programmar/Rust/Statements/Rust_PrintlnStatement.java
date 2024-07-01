@@ -46,7 +46,7 @@ public class Rust_PrintlnStatement extends TokenSequence implements EagleRunnabl
 				result.append(piece);
 				prev = sc + 2;
 				sc = fmt.indexOf("{}", prev);
-				if (sc < 0) break;		// Ran out of {} insertion points
+				if (sc < 0) break; // Ran out of {} insertion points
 			}
 			result.append(fmt.substring(prev));
 			System.out.println(result.toString());

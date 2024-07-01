@@ -15,7 +15,7 @@ public class C_Format
 		String fmt = interpreter.getStrValue(args.first());
 		fmt = fmt.replaceAll("\\\\n", "");
 		if (fmt.indexOf('%') < 0) return fmt;
-		
+
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
 		int nc = fmt.length();

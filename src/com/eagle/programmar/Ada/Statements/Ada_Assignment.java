@@ -27,7 +27,7 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 	{
 		Ada_Identifier_Reference id = variable.vars.first();
 		EagleValue val = interpreter.getEagleValue(expr);
-		
+
 //		if (variable.subscript != null)
 //		{
 //			EagleArray array = (EagleArray) var; 
@@ -43,34 +43,34 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 //		}
 //		else
 //		{
-			EagleValue v;
-			switch (equals.getValue())
-			{
-			case "=", ":=":
-				v = val;
-				break;
-			case "+=":
-				EagleValue var1 = interpreter._symbolTable.findSymbol(id.toString());
-				v = new EagleInteger(var1.forceIntegerValue() + val.forceIntegerValue());
-				break;
-			case "-=":
-				EagleValue var2 = interpreter._symbolTable.findSymbol(id.toString());
-				v = new EagleInteger(var2.forceIntegerValue() - val.forceIntegerValue());
-				break;
-			case "*=":
-				EagleValue var3 = interpreter._symbolTable.findSymbol(id.toString());
-				v = new EagleInteger(var3.forceIntegerValue() * val.forceIntegerValue());
-				break;
-			case "/=":
-				EagleValue var4 = interpreter._symbolTable.findSymbol(id.toString());
-				v = new EagleInteger(var4.forceIntegerValue() / val.forceIntegerValue());
-				break;
-			default:
-				throw new RuntimeException("Unable to handle " + equals.getValue());
-			}
-			
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					id.getValue(), v);
+		EagleValue v;
+		switch (equals.getValue())
+		{
+		case "=", ":=":
+			v = val;
+			break;
+		case "+=":
+			EagleValue var1 = interpreter._symbolTable.findSymbol(id.toString());
+			v = new EagleInteger(var1.forceIntegerValue() + val.forceIntegerValue());
+			break;
+		case "-=":
+			EagleValue var2 = interpreter._symbolTable.findSymbol(id.toString());
+			v = new EagleInteger(var2.forceIntegerValue() - val.forceIntegerValue());
+			break;
+		case "*=":
+			EagleValue var3 = interpreter._symbolTable.findSymbol(id.toString());
+			v = new EagleInteger(var3.forceIntegerValue() * val.forceIntegerValue());
+			break;
+		case "/=":
+			EagleValue var4 = interpreter._symbolTable.findSymbol(id.toString());
+			v = new EagleInteger(var4.forceIntegerValue() / val.forceIntegerValue());
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + equals.getValue());
+		}
+
+		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+				id.getValue(), v);
 //		}
 	}
 }
