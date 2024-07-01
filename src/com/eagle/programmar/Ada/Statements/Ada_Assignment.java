@@ -5,12 +5,10 @@ package com.eagle.programmar.Ada.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleHash;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Variable;
-import com.eagle.programmar.Ada.Ada_Variable.Ada_Subscript;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
@@ -28,24 +26,23 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ada_Identifier_Reference id = variable.vars.first();
-		EagleValue var = interpreter._symbolTable.findSymbol(id.toString());
 		EagleValue val = interpreter.getEagleValue(expr);
 		
-		if (variable.subscript != null)
-		{
-			EagleHash hash = (EagleHash) var; 
-			if (hash == null)
-			{
-				hash = new EagleHash();
-				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-						id.getValue(), hash);
-			}
-			Ada_Subscript sub = variable.subscript;
-			String key = interpreter.getStrValue(sub.expr);
-			hash.putValue(key, val);
-		}
-		else
-		{
+//		if (variable.subscript != null)
+//		{
+//			EagleArray array = (EagleArray) var; 
+//			if (array == null)
+//			{
+//				array = new EagleArray();
+//				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+//						id.getValue(), array);
+//			}
+//			Ada_Subscript sub = variable.subscript;
+//			int index = interpreter.getIntValue(sub.expr);
+//			array.putValue(index, val);
+//		}
+//		else
+//		{
 			EagleValue v;
 			switch (equals.getValue())
 			{
@@ -53,16 +50,20 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 				v = val;
 				break;
 			case "+=":
-				v = new EagleInteger(var.forceIntegerValue() + val.forceIntegerValue());
+				EagleValue var1 = interpreter._symbolTable.findSymbol(id.toString());
+				v = new EagleInteger(var1.forceIntegerValue() + val.forceIntegerValue());
 				break;
 			case "-=":
-				v = new EagleInteger(var.forceIntegerValue() - val.forceIntegerValue());
+				EagleValue var2 = interpreter._symbolTable.findSymbol(id.toString());
+				v = new EagleInteger(var2.forceIntegerValue() - val.forceIntegerValue());
 				break;
 			case "*=":
-				v = new EagleInteger(var.forceIntegerValue() * val.forceIntegerValue());
+				EagleValue var3 = interpreter._symbolTable.findSymbol(id.toString());
+				v = new EagleInteger(var3.forceIntegerValue() * val.forceIntegerValue());
 				break;
 			case "/=":
-				v = new EagleInteger(var.forceIntegerValue() / val.forceIntegerValue());
+				EagleValue var4 = interpreter._symbolTable.findSymbol(id.toString());
+				v = new EagleInteger(var4.forceIntegerValue() / val.forceIntegerValue());
 				break;
 			default:
 				throw new RuntimeException("Unable to handle " + equals.getValue());
@@ -70,6 +71,6 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 			
 			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 					id.getValue(), v);
-		}
+//		}
 	}
 }

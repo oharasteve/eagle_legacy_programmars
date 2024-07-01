@@ -6,9 +6,9 @@ package com.eagle.programmar.Ada;
 import com.eagle.programmar.Ada.Statements.Ada_Assignment;
 import com.eagle.programmar.Ada.Statements.Ada_Data;
 import com.eagle.programmar.Ada.Statements.Ada_ExitStatement;
+import com.eagle.programmar.Ada.Statements.Ada_ExpressionStatement;
 import com.eagle.programmar.Ada.Statements.Ada_ForStatement;
 import com.eagle.programmar.Ada.Statements.Ada_Function;
-import com.eagle.programmar.Ada.Statements.Ada_FunctionCall;
 import com.eagle.programmar.Ada.Statements.Ada_IfStatement;
 import com.eagle.programmar.Ada.Statements.Ada_Procedure;
 import com.eagle.programmar.Ada.Statements.Ada_PutIntegerStatement;
@@ -26,11 +26,12 @@ public class Ada_Statement extends TokenChooser
 	public @CHOICE Ada_Data data;
 	public @CHOICE Ada_ForStatement forStatement;
 	public @CHOICE Ada_Function function;
-	public @CHOICE Ada_FunctionCall functionCall;
 	public @CHOICE Ada_IfStatement ifStatement;
 	public @CHOICE Ada_PutStatement putStatement;
 	public @CHOICE Ada_PutIntegerStatement putIntegerStatement;
 	public @CHOICE Ada_Procedure procedure;
 	public @CHOICE Ada_ReturnStatement returnStatement;
 	public @CHOICE Ada_WithUseStatement withUseStatement;
+	
+	public @LAST Ada_ExpressionStatement expressionStatement;
 }

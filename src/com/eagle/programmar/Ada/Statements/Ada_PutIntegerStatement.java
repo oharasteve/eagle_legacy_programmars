@@ -36,6 +36,6 @@ public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunna
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue result = interpreter.getEagleValue(expr);
-		System.out.println(result.toString());
+		System.out.print(result.toString());
 	}
 }

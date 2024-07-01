@@ -5,6 +5,7 @@ package com.eagle.programmar.Ada.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
@@ -29,19 +30,27 @@ public class Ada_Procedure extends TokenSequence implements EagleRunnable, Abstr
 	public @S(100) @OPT Ada_Identifier_Reference name;
 	public @S(110) PunctuationSemicolon semicolon;
 
+	public @SKIP CallMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// Process data
-		for (Ada_Statement stmt : stmts1._elements)
+		if (_metrics == null)
 		{
-			interpreter.tryToInterpret(stmt);
+			_metrics = new CallMetrics(id.getValue(), getFileName(), getStartLine(), getStartChar());
 		}
 
-		// Process actions
-		for (Ada_Statement stmt : stmts2._elements)
+		// Only deal with main procedure
+		if (id.getValue().equals("test"))
 		{
-			interpreter.tryToInterpret(stmt);
+			for (Ada_Statement stmt : stmts1._elements)
+			{
+				interpreter.tryToInterpret(stmt);
+			}
+			for (Ada_Statement stmt : stmts2._elements)
+			{
+				interpreter.tryToInterpret(stmt);
+			}
 		}
 	}
 }

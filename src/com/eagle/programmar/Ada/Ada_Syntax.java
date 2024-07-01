@@ -16,7 +16,7 @@ public class Ada_Syntax extends EagleSyntax
 	public Ada_Syntax()
 	{
 		_isCaseSensitive = false;
-		_extraCharacters = "";
+		_extraCharacters = "_";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {
 				":=", "/=", "..", "=>", "<=", ">="
@@ -78,6 +78,7 @@ public class Ada_Syntax extends EagleSyntax
 			"procedure",
 			"protected",
 			"put",
+			"put_line",
 			"raise",
 			"range",
 			"record",

@@ -31,6 +31,15 @@ public class Ada_PutStatement extends TokenSequence implements EagleRunnable, Ab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue result = interpreter.getEagleValue(expr);
-		System.out.println(result.toString());
+		switch (PUT.getValue())
+		{
+		case "put":
+			System.out.print(result.toString());
+			return;
+		case "put_line":
+			System.out.println(result.toString());
+			return;
+		}
+		throw new RuntimeException("Unexpected PUT command: " + PUT.getValue());
 	}
 }

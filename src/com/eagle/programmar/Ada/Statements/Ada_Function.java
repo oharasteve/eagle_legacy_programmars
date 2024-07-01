@@ -60,6 +60,11 @@ public class Ada_Function extends TokenSequence implements AbstractFunction, Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(id.getValue(), getFileName(), getStartLine(), getStartChar());
+		}
+
 		// Nothing to do here. Ignore the function definitions
 	}
 }

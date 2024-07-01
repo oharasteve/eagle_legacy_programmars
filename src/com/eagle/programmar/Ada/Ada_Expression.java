@@ -7,12 +7,12 @@ import com.eagle.programmar.Ada.Expressions.Ada_AdditiveExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_AssignmentExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_BracketsExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_BuiltIn;
-import com.eagle.programmar.Ada.Expressions.Ada_BuiltinFunction;
+import com.eagle.programmar.Ada.Expressions.Ada_BuiltinFunctionCall;
 import com.eagle.programmar.Ada.Expressions.Ada_ConditionalAndExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_ConditionalOrExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_EqualityExpression;
+import com.eagle.programmar.Ada.Expressions.Ada_FunctionCall;
 import com.eagle.programmar.Ada.Expressions.Ada_LogicalNotExpression;
-import com.eagle.programmar.Ada.Expressions.Ada_MethodInvocation;
 import com.eagle.programmar.Ada.Expressions.Ada_MultiplicativeExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_NegativeExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_NotExpression;
@@ -22,7 +22,6 @@ import com.eagle.programmar.Ada.Expressions.Ada_PreIncrementExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_RangeExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_RelationalExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_Subfield;
-import com.eagle.programmar.Ada.Expressions.Ada_SubscriptExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_VariableExpression;
 import com.eagle.programmar.Ada.Terminals.Ada_Literal;
 import com.eagle.programmar.Ada.Terminals.Ada_Number;
@@ -59,8 +58,8 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Ada_BuiltinFunction builtinFunction;
-	public @P(110) Ada_MethodInvocation methodInvocation;
+	public @P(100) Ada_BuiltinFunctionCall builtinFunction;
+	public @P(110) Ada_FunctionCall functionCall;
 	public @P(120) Ada_PreIncrementExpression preIncrementExpression;
 	public @P(130) Ada_PostIncrementExpression postIncrementExpression;
 	public @P(140) Ada_NegativeExpression negativeExpression;
@@ -74,14 +73,13 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Ada_SubscriptExpression subscriptExpression;
-	public @P(510) Ada_Subfield subfield;
-	public @P(520) Ada_MultiplicativeExpression multiplicativeExpression;
-	public @P(530) Ada_AdditiveExpression additiveExpression;
-	public @P(540) Ada_RelationalExpression relationalExpression;
-	public @P(550) Ada_EqualityExpression equalityExpression;
-	public @P(560) Ada_ConditionalAndExpression conditionalAndExpression;
-	public @P(570) Ada_ConditionalOrExpression conditionalOrExpression;
-	public @P(580) Ada_AssignmentExpression assignmentExpression;
-	public @P(590) Ada_RangeExpression rangeExpression;
+	public @P(500) Ada_Subfield subfield;
+	public @P(510) Ada_MultiplicativeExpression multiplicativeExpression;
+	public @P(520) Ada_AdditiveExpression additiveExpression;
+	public @P(530) Ada_RelationalExpression relationalExpression;
+	public @P(540) Ada_EqualityExpression equalityExpression;
+	public @P(550) Ada_ConditionalAndExpression conditionalAndExpression;
+	public @P(560) Ada_ConditionalOrExpression conditionalOrExpression;
+	public @P(570) Ada_AssignmentExpression assignmentExpression;
+	public @P(580) Ada_RangeExpression rangeExpression;
 }

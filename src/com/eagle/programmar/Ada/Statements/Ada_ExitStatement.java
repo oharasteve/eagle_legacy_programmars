@@ -3,13 +3,21 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_ExitStatement extends TokenSequence implements AbstractStatement
+public class Ada_ExitStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Ada_Keyword EXIT = new Ada_Keyword("exit");
 	public @S(20) PunctuationSemicolon semicolon;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		return Eagle_Statement_Result.BREAK;
+	}
 }
