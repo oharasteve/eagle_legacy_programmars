@@ -11,9 +11,10 @@ import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Perl_VarStatement extends TokenSequence
+public class Perl_VarStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) TokenList<Perl_VarPrefix> prefix;
 	public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');

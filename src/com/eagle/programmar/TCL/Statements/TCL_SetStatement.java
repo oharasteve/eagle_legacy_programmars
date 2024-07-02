@@ -10,8 +10,9 @@ import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class TCL_SetStatement extends TokenSequence implements EagleRunnable
+public class TCL_SetStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("TclCmd/set.html") TCL_Keyword SET = new TCL_Keyword("set");
 	public @S(20) TCL_Variable var;

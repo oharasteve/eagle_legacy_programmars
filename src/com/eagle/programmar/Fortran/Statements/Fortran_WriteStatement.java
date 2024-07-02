@@ -11,11 +11,12 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Literal;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Fortran_WriteStatement extends TokenSequence
+public class Fortran_WriteStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("6j4m0vnbs/index.html") Fortran_Keyword WRITE = new Fortran_Keyword("WRITE");
 	public @S(20) PunctuationLeftParen leftParen;

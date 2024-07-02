@@ -14,9 +14,10 @@ import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
 
-public class CMD_If_Statement extends TokenSequence implements EagleRunnable
+public class CMD_If_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("if.mspx") CMD_Keyword IF = new CMD_Keyword("if");
 	public @S(20) @OPT CMD_Keyword NOT = new CMD_Keyword("not");

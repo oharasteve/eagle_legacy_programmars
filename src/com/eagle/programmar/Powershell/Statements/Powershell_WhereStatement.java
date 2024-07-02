@@ -10,10 +10,11 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Powershell_WhereStatement extends TokenSequence
+public class Powershell_WhereStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Powershell_Where where;
 	public @S(20) PunctuationLeftBrace leftBrace;

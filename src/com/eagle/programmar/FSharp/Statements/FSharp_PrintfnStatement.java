@@ -11,8 +11,9 @@ import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class FSharp_PrintfnStatement extends TokenSequence implements EagleRunnable
+public class FSharp_PrintfnStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("plaintext-formatting") FSharp_Keyword PRINTFN = new FSharp_Keyword("printfn");
 	public @S(20) TokenList<FSharp_Expression> exprs;

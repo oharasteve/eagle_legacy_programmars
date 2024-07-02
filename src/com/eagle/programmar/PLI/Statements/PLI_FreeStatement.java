@@ -7,10 +7,11 @@ import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_FreeStatement extends TokenSequence
+public class PLI_FreeStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.23") PLI_Keyword FREE = new PLI_Keyword("FREE");
 	public @S(20) SeparatedList<PLI_Identifier_Reference, PunctuationComma> ids;

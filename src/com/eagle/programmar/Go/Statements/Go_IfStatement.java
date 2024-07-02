@@ -7,8 +7,9 @@ import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Go_IfStatement extends TokenSequence
+public class Go_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#If_statements") Go_Keyword IF = new Go_Keyword("if");
 	public @S(20) Go_Expression condition;

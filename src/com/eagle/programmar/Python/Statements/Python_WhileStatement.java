@@ -8,9 +8,10 @@ import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_WhileStatement extends TokenSequence
+public class Python_WhileStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");

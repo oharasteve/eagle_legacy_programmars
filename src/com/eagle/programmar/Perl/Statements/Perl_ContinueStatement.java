@@ -5,8 +5,9 @@ package com.eagle.programmar.Perl.Statements;
 
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Perl_ContinueStatement extends TokenSequence
+public class Perl_ContinueStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control-structures.continue.php") Perl_Keyword CONTINUE = new Perl_Keyword("continue");
 }

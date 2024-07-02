@@ -9,8 +9,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_RmCommand extends TokenSequence
+public class Bash_RmCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword RM = new Bash_Keyword("rm");
 	public @S(20) TokenList<Bash_RmOption> options;

@@ -11,12 +11,13 @@ import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_SelectStatement extends TokenSequence
+public class PLI_SelectStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.51") PLI_Keyword SELECT = new PLI_Keyword("SELECT");
 	public @S(20) PunctuationLeftParen leftParen;

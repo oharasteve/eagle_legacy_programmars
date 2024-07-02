@@ -10,10 +10,11 @@ import com.eagle.programmar.Template.Template_Expression;
 import com.eagle.programmar.Template.Symbols.Template_Identifier_Definition;
 import com.eagle.programmar.Template.Terminals.Template_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Template_DataStatement extends TokenSequence implements EagleRunnable
+public class Template_DataStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Template_Keyword DATA = new Template_Keyword("data");
 	public @S(20) Template_Identifier_Definition var;

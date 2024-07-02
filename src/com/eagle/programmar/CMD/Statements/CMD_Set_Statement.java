@@ -5,8 +5,8 @@ package com.eagle.programmar.CMD.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Symbols.CMD_Variable_Definition;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
@@ -14,10 +14,11 @@ import com.eagle.programmar.CMD.Terminals.CMD_RestOfLine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class CMD_Set_Statement extends TokenSequence implements EagleRunnable
+public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("set.mspx") CMD_Keyword SET = new CMD_Keyword("set");
 	public @S(20) CMD_Set_What setWhat;

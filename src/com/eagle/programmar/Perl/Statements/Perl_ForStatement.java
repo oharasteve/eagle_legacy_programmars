@@ -9,11 +9,12 @@ import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Perl_ForStatement extends TokenChooser
+public class Perl_ForStatement extends TokenChooser implements AbstractStatement
 {
 	public @CHOICE static class Perl_ForVarInSet extends TokenSequence
 	{

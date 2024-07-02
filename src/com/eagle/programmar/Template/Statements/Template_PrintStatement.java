@@ -9,9 +9,10 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Template.Template_Expression;
 import com.eagle.programmar.Template.Terminals.Template_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Template_PrintStatement extends TokenSequence implements EagleRunnable
+public class Template_PrintStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Template_Keyword PRINT = new Template_Keyword("print");
 	public @S(20) Template_Expression expr;

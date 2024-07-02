@@ -8,12 +8,13 @@ import com.eagle.programmar.PLI.PLI_Signals;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_SignalStatement extends TokenSequence
+public class PLI_SignalStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT PLI_Signal_Label label;
 	public @S(20) @DOC("7.52") PLI_Keyword SIGNAL = new PLI_Keyword("SIGNAL");

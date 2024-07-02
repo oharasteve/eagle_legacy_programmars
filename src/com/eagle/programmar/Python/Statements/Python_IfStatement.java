@@ -10,9 +10,10 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_IfStatement extends TokenSequence
+public class Python_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;

@@ -6,8 +6,9 @@ package com.eagle.programmar.CMD.Statements;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class CMD_SetLocal_Statement extends TokenSequence
+public class CMD_SetLocal_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("setlocal.mspx") CMD_Keyword SETLOCAL = new CMD_Keyword("setlocal");
 	public @S(20) @OPT CMD_KeywordChoice setWhat = new CMD_KeywordChoice("ENABLEEXTENSIONS", "ENABLEDELAYEDEXPANSION");

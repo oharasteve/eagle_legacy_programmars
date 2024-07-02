@@ -8,8 +8,9 @@ import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_OnStatement extends TokenSequence
+public class VB_OnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword ON = new VB_Keyword("on");
 	public @S(20) VB_Keyword ERROR = new VB_Keyword("error");

@@ -10,8 +10,9 @@ import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Ruby_ForStatement extends TokenSequence
+public class Ruby_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control_expressions_rdoc.html#label-for+Loop") Ruby_Keyword FOR = new Ruby_Keyword("for");
 	public @S(20) Ruby_Variable var;

@@ -9,10 +9,11 @@ import com.eagle.programmar.Powershell.Powershell_Statement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Powershell_WhileStatement extends TokenSequence
+public class Powershell_WhileStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#841-the-while-statement") Powershell_Keyword WHILE = new Powershell_Keyword(
 			"While");

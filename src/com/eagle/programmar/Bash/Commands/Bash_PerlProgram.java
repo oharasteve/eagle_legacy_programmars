@@ -13,9 +13,10 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class Bash_PerlProgram extends TokenSequence
+public class Bash_PerlProgram extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_SheBang shebang;
 	public @S(20) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;

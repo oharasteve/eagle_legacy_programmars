@@ -9,10 +9,11 @@ import com.eagle.programmar.Scala.Symbols.Scala_Variable_Definition;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Scala_Val extends TokenSequence
+public class Scala_Val extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAL = new Scala_Keyword(
 			"val");

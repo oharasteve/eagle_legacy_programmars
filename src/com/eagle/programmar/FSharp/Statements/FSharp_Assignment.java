@@ -7,8 +7,9 @@ import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Variable;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class FSharp_Assignment extends TokenSequence
+public class FSharp_Assignment extends TokenSequence implements AbstractStatement
 {
 	public @S(10) FSharp_Variable var;
 	public @S(20) FSharp_Punctuation operator = new FSharp_Punctuation("<-");

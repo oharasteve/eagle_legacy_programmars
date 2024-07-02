@@ -10,8 +10,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_ReadCommand extends TokenSequence
+public class Bash_ReadCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword READ = new Bash_Keyword("read");
 	public @S(20) @OPT TokenList<Bash_ReadOption> options;

@@ -6,8 +6,9 @@ package com.eagle.programmar.Perl.Statements;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Perl_ShiftStatement extends TokenSequence
+public class Perl_ShiftStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Perl_Keyword SHIFT = new Perl_Keyword("shift");
 	public @S(20) Perl_Variable var;

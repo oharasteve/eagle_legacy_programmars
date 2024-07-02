@@ -10,12 +10,13 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_VerbNoun;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class Powershell_Command extends TokenSequence
+public class Powershell_Command extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Powershell_WhichCommand which; // Like Get-Content or javac
 	public @S(20) @OPT TokenList<Powershell_CommandArg> arg;

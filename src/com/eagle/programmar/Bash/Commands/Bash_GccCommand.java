@@ -9,8 +9,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_GccCommand extends TokenSequence
+public class Bash_GccCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_KeywordChoice GCC = new Bash_KeywordChoice("gcc", "gfortran");
 	public @S(20) @OPT TokenList<Bash_GccOption> options1;

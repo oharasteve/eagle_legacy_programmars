@@ -7,10 +7,11 @@ import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Statement;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_WhileStatement extends TokenSequence
+public class Javascript_WhileStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("js_loop_while.asp") Javascript_Keyword WHILE = new Javascript_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;

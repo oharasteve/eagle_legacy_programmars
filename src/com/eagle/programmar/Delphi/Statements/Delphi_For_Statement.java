@@ -12,8 +12,9 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_For_Statement extends TokenSequence
+public class Delphi_For_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#For_Statements") Delphi_Keyword FOR = new Delphi_Keyword(
 			"For");

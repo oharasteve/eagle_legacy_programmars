@@ -10,11 +10,12 @@ import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_IfStatement extends TokenSequence
+public class Javascript_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("js_if_else.asp") Javascript_Keyword IF = new Javascript_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;

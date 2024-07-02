@@ -8,9 +8,10 @@ import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
 
-public class CMD_Awk_Statement extends TokenSequence
+public class CMD_Awk_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) CMD_Keyword AWK = new CMD_Keyword("awk");
 	public @S(20) @OPT TokenList<CMD_Awk_Option> opts;

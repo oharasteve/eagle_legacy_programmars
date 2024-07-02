@@ -8,9 +8,10 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_ExpressionStatement extends TokenSequence implements EagleRunnable
+public class CSharp_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @NEWLINE CSharp_Expression expr;
 	public @S(20) @NOSPACE PunctuationSemicolon semicolon;

@@ -12,10 +12,11 @@ import com.eagle.programmar.Bash.Terminals.Bash_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-public class Bash_ChmodCommand extends TokenSequence
+public class Bash_ChmodCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword CHMOD = new Bash_Keyword("chmod");
 	public @S(20) @OPT TokenList<Bash_ChmodOption> options;

@@ -7,9 +7,10 @@ import com.eagle.programmar.CMD.Symbols.CMD_Identifier_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class CMD_Goto_Statement extends TokenSequence
+public class CMD_Goto_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("goto.mspx") CMD_Keyword GOTO = new CMD_Keyword("goto");
 	public @S(20) @OPT PunctuationColon colon;

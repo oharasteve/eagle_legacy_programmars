@@ -10,10 +10,11 @@ import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_OnStatement extends TokenSequence
+public class PLI_OnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) @DOC("7.36") PLI_Keyword ON = new PLI_Keyword("ON");

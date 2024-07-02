@@ -7,8 +7,9 @@ import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Delphi_Statement;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_While_Statement extends TokenSequence
+public class Delphi_While_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#While_Statements") Delphi_Keyword WHILE = new Delphi_Keyword(
 			"While");

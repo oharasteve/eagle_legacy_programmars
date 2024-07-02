@@ -7,10 +7,11 @@ import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Go_ConstBlock extends TokenSequence
+public class Go_ConstBlock extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#Constant_declarations") Go_Keyword CONST = new Go_Keyword("const");
 	public @S(20) PunctuationLeftParen leftParen;

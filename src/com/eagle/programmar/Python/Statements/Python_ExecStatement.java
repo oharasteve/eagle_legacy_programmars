@@ -7,9 +7,10 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Python_ExecStatement extends TokenSequence
+public class Python_ExecStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Python_Keyword EXEC = new Python_Keyword("exec");
 	public @S(20) SeparatedList<Python_Expression, PunctuationComma> exprs;

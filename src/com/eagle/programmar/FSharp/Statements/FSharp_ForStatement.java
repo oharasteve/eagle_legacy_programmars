@@ -9,9 +9,10 @@ import com.eagle.programmar.FSharp.FSharp_Variable;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.programmar.FSharp.Terminals.FSharp_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class FSharp_ForStatement extends TokenSequence
+public class FSharp_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("loops-for-to-expression") FSharp_Keyword FOR = new FSharp_Keyword("for");
 	public @S(20) FSharp_Variable var;

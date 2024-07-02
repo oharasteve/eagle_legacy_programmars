@@ -8,11 +8,12 @@ import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class CMD_Call_Statement extends TokenSequence
+public class CMD_Call_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("call.mspx") CMD_Keyword CALL = new CMD_Keyword("call");
 	public @S(20) @OPT PunctuationColon colon;

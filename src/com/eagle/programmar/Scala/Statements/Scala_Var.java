@@ -11,9 +11,10 @@ import com.eagle.programmar.Scala.Symbols.Scala_Variable_Definition;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Scala_Var extends TokenSequence implements EagleRunnable
+public class Scala_Var extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAR = new Scala_Keyword(
 			"var");

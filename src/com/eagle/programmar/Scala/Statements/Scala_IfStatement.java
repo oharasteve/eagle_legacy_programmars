@@ -8,10 +8,11 @@ import com.eagle.programmar.Scala.Scala_Statement;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Scala_IfStatement extends TokenSequence
+public class Scala_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("taste-control-structures.html#ifelse") Scala_Keyword IF = new Scala_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;

@@ -12,8 +12,9 @@ import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_IfStatement extends TokenSequence
+public class VB_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("752y8abs.aspx") VB_Keyword IF1 = new VB_Keyword("if");
 	public @S(20) VB_Expression condition;

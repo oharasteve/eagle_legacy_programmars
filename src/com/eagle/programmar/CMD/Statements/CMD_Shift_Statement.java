@@ -6,8 +6,9 @@ package com.eagle.programmar.CMD.Statements;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class CMD_Shift_Statement extends TokenSequence
+public class CMD_Shift_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) CMD_Keyword SHIFT = new CMD_Keyword("shift");
 	public @S(20) @OPT CMD_Number shiftAmount;

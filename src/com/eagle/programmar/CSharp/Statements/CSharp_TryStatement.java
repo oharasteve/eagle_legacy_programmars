@@ -14,12 +14,13 @@ import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_TryStatement extends TokenSequence implements EagleScopeInterface
+public class CSharp_TryStatement extends TokenSequence implements EagleScopeInterface, AbstractStatement
 {
 	public @S(10) @DOC("statements.html#14.20") CSharp_Keyword TRY = new CSharp_Keyword("try");
 	public @S(20) @INDENT PunctuationLeftBrace leftBrace;

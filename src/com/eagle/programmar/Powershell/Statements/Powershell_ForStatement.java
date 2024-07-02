@@ -10,6 +10,7 @@ import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -17,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Powershell_ForStatement extends TokenSequence
+public class Powershell_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#843-the-for-statement") Powershell_Keyword FOR = new Powershell_Keyword(
 			"For");

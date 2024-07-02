@@ -12,10 +12,11 @@ import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Python_TryStatement extends TokenSequence
+public class Python_TryStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Python_StartOfLine soln;
 	public @S(20) @DOC("compound_stmts.html#the-try-statement") Python_Keyword TRY = new Python_Keyword("try");

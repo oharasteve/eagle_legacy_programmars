@@ -9,10 +9,11 @@ import com.eagle.programmar.Scala.Scala_Variable;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.programmar.Scala.Terminals.Scala_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Scala_ForStatement extends TokenSequence
+public class Scala_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("taste-control-structures.html#for-loops-and-expressions") Scala_Keyword FOR = new Scala_Keyword(
 			"for");

@@ -7,8 +7,9 @@ import com.eagle.programmar.Python.Python_ExpressionList;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Python_ReturnStatement extends TokenSequence
+public class Python_ReturnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN = new Python_Keyword(
 			"return");

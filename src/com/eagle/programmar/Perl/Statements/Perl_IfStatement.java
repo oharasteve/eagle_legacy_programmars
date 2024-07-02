@@ -11,11 +11,12 @@ import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_IfStatement extends TokenSequence
+public class Perl_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control-structures.if.php") Perl_Keyword IF = new Perl_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;

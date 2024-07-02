@@ -7,10 +7,11 @@ import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Julia_BlockStatement extends TokenSequence
+public class Julia_BlockStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control-flow/#man-compound-expressions") PunctuationLeftBrace leftBrace;
 	public @S(20) Julia_EOLN eoln1;

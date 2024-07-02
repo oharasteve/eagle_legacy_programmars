@@ -9,11 +9,12 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Fortran_CallStatement extends TokenSequence
+public class Fortran_CallStatement extends TokenSequence implements AbstractStatement
 {
 	public @DOC("6j4m0vn7p/index.html") @S(10) Fortran_Keyword CALL = new Fortran_Keyword("CALL");
 	public @S(20) Fortran_Function_Reference subroutine;

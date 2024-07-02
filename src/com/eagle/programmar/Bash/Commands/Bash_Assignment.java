@@ -13,8 +13,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_Assignment extends TokenSequence implements EagleRunnable
+public class Bash_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @OPT Bash_Keyword LOCAL = new Bash_Keyword("local");
 	public @S(20) @DOC("#Shell-Arithmetic") @OPT Bash_Keyword LET = new Bash_Keyword("let");

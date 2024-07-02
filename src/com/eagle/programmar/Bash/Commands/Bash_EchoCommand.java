@@ -10,8 +10,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_EchoCommand extends TokenSequence implements EagleRunnable
+public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("#index-echo") Bash_Keyword ECHO = new Bash_Keyword("echo");
 	public @S(20) @OPT TokenList<Bash_EchoOption> options;

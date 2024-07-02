@@ -14,11 +14,12 @@ import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, EagleScopeInterface
+public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, EagleScopeInterface, AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_let.htm") Lisp_KeywordChoice LET = new Lisp_KeywordChoice("let", "prog");

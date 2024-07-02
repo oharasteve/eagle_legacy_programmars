@@ -11,8 +11,9 @@ import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_Assignment extends TokenSequence implements EagleRunnable
+public class Delphi_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Delphi_Variable var;
 	public @S(20) Delphi_Punctuation colonEquals = new Delphi_Punctuation(":=");

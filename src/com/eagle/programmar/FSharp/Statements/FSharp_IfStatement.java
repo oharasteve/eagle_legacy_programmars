@@ -9,8 +9,9 @@ import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.programmar.FSharp.Terminals.FSharp_StartOfLine;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class FSharp_IfStatement extends TokenSequence
+public class FSharp_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("conditional-expressions-if-then-else") FSharp_Keyword IF = new FSharp_Keyword("if");
 	public @S(20) FSharp_Expression condition;

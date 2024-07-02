@@ -6,8 +6,9 @@ package com.eagle.programmar.VB.Statements;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_GotoStatement extends TokenSequence
+public class VB_GotoStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword GOTO = new VB_Keyword("goto");
 	public @S(20) VB_Identifier_Reference lbl;

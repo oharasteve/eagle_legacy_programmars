@@ -6,8 +6,9 @@ package com.eagle.programmar.TCL.Statements;
 import com.eagle.programmar.TCL.Symbols.TCL_Variable_Definition;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class TCL_VariableStatement extends TokenSequence
+public class TCL_VariableStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("TclCmd/variable.html") TCL_Keyword VARIABLE = new TCL_Keyword("variable");
 	public @S(20) TCL_Variable_Definition variable;

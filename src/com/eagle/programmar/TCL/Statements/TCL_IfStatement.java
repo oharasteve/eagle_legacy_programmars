@@ -8,8 +8,9 @@ import com.eagle.programmar.TCL.TCL_Statement;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class TCL_IfStatement extends TokenSequence
+public class TCL_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("TclCmd/if.html") TCL_Keyword IF = new TCL_Keyword("if");
 	public @S(20) TCL_PunctuationChoice left = new TCL_PunctuationChoice("{", "(");

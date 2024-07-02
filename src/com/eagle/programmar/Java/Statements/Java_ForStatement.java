@@ -17,13 +17,14 @@ import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ForStatement extends TokenChooser implements EagleScopeInterface
+public class Java_ForStatement extends TokenChooser implements EagleScopeInterface, AbstractStatement
 {
 	public @CHOICE static class Java_ForLoopStatement extends TokenSequence
 	{

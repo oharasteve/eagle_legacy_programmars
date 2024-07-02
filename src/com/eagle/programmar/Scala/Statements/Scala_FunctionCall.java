@@ -11,12 +11,13 @@ import com.eagle.programmar.Scala.Scala_Variable;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Scala_FunctionCall extends TokenSequence implements EagleRunnable
+public class Scala_FunctionCall extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Scala_Variable func;
 	public @S(20) @OPT Scala_FunctionArguments args;

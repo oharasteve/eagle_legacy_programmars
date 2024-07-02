@@ -6,10 +6,11 @@ package com.eagle.programmar.Java.Statements;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_AssertStatement extends TokenSequence
+public class Java_AssertStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @NEWLINE Java_Keyword ASSERT = new Java_Keyword("assert");
 	public @S(20) Java_Expression condition;

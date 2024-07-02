@@ -6,8 +6,9 @@ package com.eagle.programmar.CSharp.Statements;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class CSharp_CheckedStatement extends TokenSequence
+public class CSharp_CheckedStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) CSharp_Keyword CHECKED = new CSharp_Keyword("checked");
 	public @S(20) CSharp_Statement statement;

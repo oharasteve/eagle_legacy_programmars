@@ -8,8 +8,9 @@ import com.eagle.programmar.Scala.Scala_Variable;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Scala_Assignment extends TokenSequence
+public class Scala_Assignment extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Scala_Variable var;
 	public @S(20) Scala_PunctuationChoice equals = new Scala_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");

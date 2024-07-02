@@ -6,8 +6,9 @@ package com.eagle.programmar.Powershell.Statements;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Powershell_ExitStatement extends TokenSequence
+public class Powershell_ExitStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#851-the-exit-statement") Powershell_Keyword EXIT = new Powershell_Keyword(
 			"Exit");

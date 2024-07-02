@@ -8,9 +8,10 @@ import com.eagle.programmar.PLI.PLI_Signal;
 import com.eagle.programmar.PLI.Statements.PLI_SignalStatement.PLI_Signal_Label;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_RevertStatement extends TokenSequence
+public class PLI_RevertStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT PLI_Label label1;
 	public @S(20) @OPT PLI_Signal_Label label2;

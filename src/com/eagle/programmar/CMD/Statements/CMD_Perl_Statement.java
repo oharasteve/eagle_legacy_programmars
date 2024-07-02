@@ -13,8 +13,9 @@ import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class CMD_Perl_Statement extends TokenSequence
+public class CMD_Perl_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) CMD_Keyword PERL = new CMD_Keyword("perl");
 	public @S(20) @OPT TokenList<CMD_Perl_Option> opts;

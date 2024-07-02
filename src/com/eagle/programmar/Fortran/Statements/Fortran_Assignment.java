@@ -10,9 +10,10 @@ import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Variable;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Fortran_Assignment extends TokenSequence implements EagleRunnable
+public class Fortran_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Fortran_Variable variable;
 	public @S(20) PunctuationEquals equals;

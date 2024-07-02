@@ -7,8 +7,9 @@ import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Go_ReturnStatement extends TokenSequence
+public class Go_ReturnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#Return_statements") Go_Keyword RETURN = new Go_Keyword("return");
 	public @S(20) Go_Expression expr;

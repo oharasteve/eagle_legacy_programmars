@@ -10,10 +10,11 @@ import com.eagle.programmar.Template.Template_Expression;
 import com.eagle.programmar.Template.Template_Variable;
 import com.eagle.programmar.Template.Symbols.Template_Identifier_Reference;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Template_AssignmentStatement extends TokenSequence implements EagleRunnable
+public class Template_AssignmentStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Template_Variable var;
 	public @S(20) PunctuationEquals equals;

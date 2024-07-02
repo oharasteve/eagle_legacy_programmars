@@ -10,12 +10,13 @@ import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_GetStatement extends TokenSequence
+public class PLI_GetStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.24") PLI_Keyword GET = new PLI_Keyword("GET");
 	public @S(20) @OPT PLI_Keyword SKIP = new PLI_Keyword("SKIP");

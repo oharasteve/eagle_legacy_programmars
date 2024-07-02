@@ -9,8 +9,9 @@ import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Ruby_IfStatement extends TokenSequence
+public class Ruby_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control_expressions_rdoc.html#label-if+Expression") Ruby_Keyword IF = new Ruby_Keyword("if");
 	public @S(20) Ruby_Expression condition;

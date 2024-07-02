@@ -7,8 +7,9 @@ import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Scala_ReturnStatement extends TokenSequence
+public class Scala_ReturnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Scala_Keyword RETURN = new Scala_Keyword("return");
 	public @S(20) Scala_Expression expr;

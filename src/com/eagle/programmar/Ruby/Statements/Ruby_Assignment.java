@@ -12,8 +12,9 @@ import com.eagle.programmar.Ruby.Symbols.Ruby_Identifier_Reference;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Ruby_Assignment extends TokenSequence implements EagleRunnable
+public class Ruby_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Ruby_Variable var;
 	public @S(20) Ruby_PunctuationChoice equals = new Ruby_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");

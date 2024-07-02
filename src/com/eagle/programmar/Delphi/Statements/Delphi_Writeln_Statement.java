@@ -9,12 +9,13 @@ import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Delphi_Writeln_Statement extends TokenSequence implements EagleRunnable
+public class Delphi_Writeln_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("System.Writeln") Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
 	public @S(20) @OPT Delphi_WriteLn_Something something;

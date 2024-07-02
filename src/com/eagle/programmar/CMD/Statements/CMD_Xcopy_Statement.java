@@ -10,10 +10,11 @@ import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class CMD_Xcopy_Statement extends TokenSequence
+public class CMD_Xcopy_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) CMD_Keyword XCOPY = new CMD_Keyword("XCOPY");
 	public @S(20) CMD_Literal source;

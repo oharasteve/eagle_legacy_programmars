@@ -9,11 +9,12 @@ import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_OpenStatement extends TokenSequence
+public class Perl_OpenStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Perl_Keyword OPEN = new Perl_Keyword("open");
 	public @S(20) Perl_OpenWhat what;

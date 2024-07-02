@@ -9,8 +9,9 @@ import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_IfStatement extends TokenSequence
+public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#Conditional-Constructs") Bash_Keyword IF = new Bash_Keyword("if");
 	public @S(20) Bash_Condition condition;

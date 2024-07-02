@@ -13,10 +13,11 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_ForEachStatement extends TokenSequence implements EagleScopeInterface
+public class CSharp_ForEachStatement extends TokenSequence implements EagleScopeInterface, AbstractStatement
 {
 	public @S(10) @NEWLINE CSharp_Keyword FOREACH = new CSharp_Keyword("foreach");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;

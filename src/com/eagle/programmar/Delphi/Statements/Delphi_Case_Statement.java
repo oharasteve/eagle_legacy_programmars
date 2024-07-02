@@ -8,10 +8,11 @@ import com.eagle.programmar.Delphi.Delphi_Statement;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Delphi_Case_Statement extends TokenSequence
+public class Delphi_Case_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#Case_Statements") Delphi_Keyword CASE = new Delphi_Keyword(
 			"Case");

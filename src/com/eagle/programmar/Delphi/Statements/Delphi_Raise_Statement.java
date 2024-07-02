@@ -6,8 +6,9 @@ package com.eagle.programmar.Delphi.Statements;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_Raise_Statement extends TokenSequence
+public class Delphi_Raise_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("Exceptions_(Delphi)#Raising_and_Handling_Exceptions") Delphi_Keyword RAISE = new Delphi_Keyword(
 			"Raise");

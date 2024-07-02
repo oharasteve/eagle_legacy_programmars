@@ -11,8 +11,9 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Powershell_WriteStatement extends TokenSequence implements EagleRunnable
+public class Powershell_WriteStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Powershell_KeywordChoice WRITE = new Powershell_KeywordChoice("Write-Host", "Write-Output");
 	public @S(20) @OPT TokenList<Powershell_WriteOption> options1;

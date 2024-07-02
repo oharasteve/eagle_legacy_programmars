@@ -10,8 +10,9 @@ import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_ForStatement extends TokenSequence
+public class Bash_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#Looping-Constructs") Bash_Keyword FOR = new Bash_Keyword("for");
 	public @S(20) Bash_Identifier_Reference id;

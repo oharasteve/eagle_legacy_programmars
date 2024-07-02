@@ -8,8 +8,9 @@ import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Perl_ThrowStatement extends TokenSequence
+public class Perl_ThrowStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Perl_Keyword THROW = new Perl_Keyword("throw");
 	public @S(20) @OPT Perl_Keyword NEW = new Perl_Keyword("new");

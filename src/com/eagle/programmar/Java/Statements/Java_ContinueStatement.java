@@ -6,9 +6,10 @@ package com.eagle.programmar.Java.Statements;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ContinueStatement extends TokenSequence
+public class Java_ContinueStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("statements.html#14.16") Java_Keyword CONTINUE = new Java_Keyword("continue");
 	public @S(20) @OPT Java_Identifier_Reference label;

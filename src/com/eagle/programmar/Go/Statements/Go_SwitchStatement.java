@@ -10,11 +10,12 @@ import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Go_SwitchStatement extends TokenSequence
+public class Go_SwitchStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Go_Keyword SWITCH = new Go_Keyword("switch");
 	public @S(20) Go_Variable variable;

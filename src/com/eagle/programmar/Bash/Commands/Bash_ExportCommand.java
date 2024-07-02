@@ -10,9 +10,10 @@ import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Bash_ExportCommand extends TokenSequence
+public class Bash_ExportCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#index-export") Bash_Keyword EXPORT = new Bash_Keyword("export");
 	public @S(20) @OPT TokenList<Bash_ExportOption> options;

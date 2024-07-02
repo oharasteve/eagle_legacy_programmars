@@ -9,8 +9,9 @@ import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_WhileStatement extends TokenSequence
+public class Bash_WhileStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("#Looping-Constructs") Bash_Keyword WHILE = new Bash_Keyword("while");
 	public @S(20) Bash_Condition condition;

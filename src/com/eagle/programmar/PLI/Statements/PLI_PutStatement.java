@@ -16,12 +16,13 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_PutStatement extends TokenSequence implements EagleRunnable
+public class PLI_PutStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) @DOC("7.45") PLI_Keyword PUT = new PLI_Keyword("PUT");

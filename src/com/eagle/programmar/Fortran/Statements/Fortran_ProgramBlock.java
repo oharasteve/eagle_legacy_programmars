@@ -12,8 +12,9 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable
+public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("6j4m0vnar/index.html") Fortran_Keyword PROGRAM1 = new Fortran_Keyword("PROGRAM");
 	public @S(20) Fortran_Function_Definition fnName1;

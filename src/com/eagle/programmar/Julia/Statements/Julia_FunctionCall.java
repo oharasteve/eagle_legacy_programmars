@@ -8,12 +8,13 @@ import com.eagle.programmar.Julia.Julia_Variable;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Julia_FunctionCall extends TokenSequence
+public class Julia_FunctionCall extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Julia_Variable func;
 	public @S(20) @OPT Julia_FunctionArguments args;

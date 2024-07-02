@@ -7,10 +7,11 @@ import com.eagle.programmar.Ruby.Ruby_Statement;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Ruby_BlockStatement extends TokenSequence
+public class Ruby_BlockStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Ruby_EOLN eoln1;

@@ -8,9 +8,10 @@ import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class CMD_Del_Statement extends TokenSequence
+public class CMD_Del_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("del.mspx") CMD_Keyword DEL = new CMD_Keyword("del");
 	public @S(20) @OPT TokenList<CMD_Del_Option> opts;

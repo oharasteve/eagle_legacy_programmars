@@ -9,8 +9,9 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Fortran_IfStatement extends TokenSequence
+public class Fortran_IfStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("6j4m0vn9r/index.html") Fortran_Keyword IF1 = new Fortran_Keyword("IF");
 	public @S(20) Fortran_Expression condition;

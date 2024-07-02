@@ -9,10 +9,11 @@ import com.eagle.programmar.PLI.PLI_Subscript;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_AssignmentStatement extends TokenSequence
+public class PLI_AssignmentStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) PLI_Identifier_Reference var;

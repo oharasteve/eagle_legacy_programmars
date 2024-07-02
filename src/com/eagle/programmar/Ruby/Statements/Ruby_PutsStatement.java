@@ -9,8 +9,9 @@ import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Ruby_PutsStatement extends TokenSequence implements EagleRunnable
+public class Ruby_PutsStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Ruby_Keyword PUTS = new Ruby_Keyword("puts");
 	public @S(20) Ruby_Expression expr;

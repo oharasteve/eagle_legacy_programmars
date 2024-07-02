@@ -5,9 +5,10 @@ package com.eagle.programmar.CSharp.Statements;
 
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_BreakStatement extends TokenSequence
+public class CSharp_BreakStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
 	public @S(20) @DOC("statements.html#14.15") CSharp_Keyword BREAK = new CSharp_Keyword("break");

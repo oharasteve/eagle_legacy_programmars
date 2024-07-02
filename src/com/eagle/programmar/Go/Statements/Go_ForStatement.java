@@ -11,12 +11,13 @@ import com.eagle.programmar.Go.Terminals.Go_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Go_ForStatement extends TokenChooser
 {
-	public @CHOICE static class Go_ForLoop extends TokenSequence
+	public @CHOICE static class Go_ForLoop extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) @DOC("#For_statements") Go_Keyword FOR = new Go_Keyword("for");
 		public @S(20) SeparatedList<Go_Variable, PunctuationComma> vars;

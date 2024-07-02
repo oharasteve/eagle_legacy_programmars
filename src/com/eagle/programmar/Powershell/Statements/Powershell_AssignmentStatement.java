@@ -7,8 +7,9 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Powershell_AssignmentStatement extends TokenSequence implements EagleRunnable
+public class Powershell_AssignmentStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Powershell_Expression expr;
 

@@ -7,9 +7,10 @@ import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_CallStatement extends TokenSequence
+public class PLI_CallStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.6") PLI_Keyword CALL = new PLI_Keyword("CALL");
 	public @S(20) PLI_Expression params;

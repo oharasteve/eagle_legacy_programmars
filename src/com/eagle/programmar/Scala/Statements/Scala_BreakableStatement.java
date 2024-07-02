@@ -5,8 +5,9 @@ package com.eagle.programmar.Scala.Statements;
 
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Scala_BreakableStatement extends TokenSequence
+public class Scala_BreakableStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Scala_Keyword BREAKABLE = new Scala_Keyword("breakable");
 	public @S(20) Scala_BlockStatement block;

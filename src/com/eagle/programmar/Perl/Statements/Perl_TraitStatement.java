@@ -8,10 +8,11 @@ import com.eagle.programmar.Perl.Symbols.Perl_Class_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Perl_TraitStatement extends TokenSequence
+public class Perl_TraitStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Perl_Keyword TRAIT = new Perl_Keyword("trait");
 	public @S(20) Perl_Class_Definition trait;

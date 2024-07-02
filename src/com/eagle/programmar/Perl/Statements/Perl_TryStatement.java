@@ -11,12 +11,13 @@ import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_TryStatement extends TokenSequence
+public class Perl_TryStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Perl_Keyword TRY = new Perl_Keyword("try");
 	public @S(20) PunctuationLeftBrace leftBrace;

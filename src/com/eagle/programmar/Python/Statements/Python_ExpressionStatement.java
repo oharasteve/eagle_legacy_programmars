@@ -9,9 +9,10 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_ExpressionStatement extends TokenSequence implements EagleRunnable
+public class Python_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @NOSPACE Python_Expression expression;
 	public @S(20) @OPT Python_ExpressionType type;

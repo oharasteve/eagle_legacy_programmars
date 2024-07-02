@@ -9,9 +9,10 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class VB_WscriptEcho extends TokenSequence implements EagleRunnable
+public class VB_WscriptEcho extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) VB_Keyword WSCRIPT = new VB_Keyword("wscript");
 	public @S(20) PunctuationPeriod dot;

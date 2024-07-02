@@ -8,11 +8,12 @@ import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class VB_CallStatement extends TokenSequence
+public class VB_CallStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword CALL = new VB_Keyword("call");
 	public @S(20) VB_Identifier_Reference sub;

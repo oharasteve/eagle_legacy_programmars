@@ -13,9 +13,10 @@ import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_PunctuationChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Go_Assignment extends TokenSequence implements EagleRunnable
+public class Go_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) SeparatedList<Go_Variable, PunctuationComma> vars;
 	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");

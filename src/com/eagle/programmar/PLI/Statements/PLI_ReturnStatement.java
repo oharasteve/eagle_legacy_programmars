@@ -6,9 +6,10 @@ package com.eagle.programmar.PLI.Statements;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_ReturnStatement extends TokenSequence
+public class PLI_ReturnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.48") PLI_Keyword RETURN = new PLI_Keyword("RETURN");
 	public @S(20) @OPT PLI_Expression expr;

@@ -9,8 +9,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_MkTempCommand extends TokenSequence
+public class Bash_MkTempCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword MKTEMP = new Bash_Keyword("mktemp");
 	public @S(20) @OPT TokenList<Bash_MkTempOption> options;

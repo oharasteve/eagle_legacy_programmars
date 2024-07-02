@@ -10,10 +10,11 @@ import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_DoStatement extends TokenSequence
+public class PLI_DoStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT PLI_Label label1;
 	public @S(20) @DOC("7.15") PLI_Keyword DO = new PLI_Keyword("DO");

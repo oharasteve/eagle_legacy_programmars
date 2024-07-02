@@ -6,9 +6,10 @@ package com.eagle.programmar.PLI.Statements;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_GoStatement extends TokenSequence
+public class PLI_GoStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.25") PLI_Keyword GO = new PLI_Keyword("GO");
 	public @S(20) PLI_Keyword TO = new PLI_Keyword("TO");

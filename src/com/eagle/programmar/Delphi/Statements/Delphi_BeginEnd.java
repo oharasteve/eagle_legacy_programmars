@@ -11,8 +11,9 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_BeginEnd extends TokenSequence implements EagleRunnable
+public class Delphi_BeginEnd extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("Programs_and_Units_(Delphi)#The_Block") Delphi_Keyword BEGIN = new Delphi_Keyword("Begin");
 	public @S(20) @OPT TokenList<Delphi_Comment> comments;

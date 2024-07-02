@@ -6,8 +6,9 @@ package com.eagle.programmar.CMD.Statements;
 import com.eagle.programmar.CMD.CMD_Argument;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class CMD_Mkdir_Statement extends TokenSequence
+public class CMD_Mkdir_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("mkdir.mspx") CMD_Keyword MKDIR = new CMD_Keyword("mkdir");
 	public @S(20) CMD_Argument dir;

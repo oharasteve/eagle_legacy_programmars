@@ -7,8 +7,9 @@ import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Ruby_ReturnStatement extends TokenSequence
+public class Ruby_ReturnStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Ruby_Keyword RETURN = new Ruby_Keyword("return");
 	public @S(20) Ruby_Expression expr;

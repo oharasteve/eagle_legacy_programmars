@@ -7,9 +7,10 @@ import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class VB_AttributeStatement extends TokenSequence
+public class VB_AttributeStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword ATTRIBUTE = new VB_Keyword("attribute");
 	public @S(20) VB_Identifier_Reference name;

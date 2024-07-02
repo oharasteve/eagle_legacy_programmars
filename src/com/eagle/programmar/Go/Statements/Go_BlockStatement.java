@@ -9,10 +9,11 @@ import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Go_BlockStatement extends TokenSequence implements EagleRunnable
+public class Go_BlockStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Go_EOLN eoln1;

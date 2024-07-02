@@ -10,9 +10,10 @@ import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Perl_PrintStatement extends TokenSequence implements EagleRunnable
+public class Perl_PrintStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Perl_KeywordChoice PRINT = new Perl_KeywordChoice("print", "printf");
 	public @S(20) SeparatedList<Perl_Expression, PunctuationComma> strings;
