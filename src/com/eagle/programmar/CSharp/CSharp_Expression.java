@@ -7,6 +7,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AndExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
+import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltInMethod;
 import com.eagle.programmar.CSharp.Expressions.CSharp_CastAsExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_CastExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
@@ -103,6 +104,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(240) CSharp_NotExpression notExpression;
 	public @P(250) CSharp_DefaultGeneric defaultGeneric;
 	public @P(260) CSharp_BuiltIn builtIn;
+	//public @P(265) CSharp_BuiltInMethod builtInMethod;
 	public @P(270) CSharp_VariableExpression variableExpression;
 	public @P(280) CSharp_TypeExpression typeExpression;
 	public @P(290) CSharp_ParenthesizedExpression parenthesizedExpression;

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.programmar.CSharp.CSharp_Statement.CSharp_StatementBlock;
+import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;

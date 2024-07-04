@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
@@ -13,7 +18,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_IfStatement extends TokenSequence implements AbstractStatement
+public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.9") CSharp_Keyword IF = new CSharp_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -23,11 +28,55 @@ public class CSharp_IfStatement extends TokenSequence implements AbstractStateme
 	public @S(60) CSharp_Statement thenStatement;
 	public @S(70) @OPT CSharp_IfElseClause elseClause;
 
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
+
 	public static class CSharp_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<CSharp_Comment> comments2;
 		public @S(20) @NEWLINE CSharp_Keyword ELSE = new CSharp_Keyword("else");
 		public @S(30) @OPT TokenList<CSharp_Comment> comments3;
 		public @S(40) CSharp_Statement elseStatement;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		CSharp_Statement todo = null;
+
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			if (elseClause.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
+			}
+		}
+
+		boolean cond = interpreter.getBoolValue(condition);
+		_metrics.get(0).completedIf(cond);
+		if (cond)
+		{
+			todo = thenStatement;
+		}
+		else
+		{
+			// Check for 'else'
+			if (elseClause.isPresent())
+			{
+				_metrics.get(1).completedIf(true);
+				todo = elseClause.elseStatement;
+			}
+		}
+
+		if (todo != null)
+		{
+			result = interpreter.tryToInterpret(todo);
+		}
+
+		return result;
 	}
 }

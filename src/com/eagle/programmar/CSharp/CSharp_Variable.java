@@ -5,6 +5,7 @@ package com.eagle.programmar.CSharp;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
@@ -19,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) CSharp_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
+	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> moreIds;
 	public @S(30) @OPT TokenList<CSharp_Subscript> subscript;
 
 	public static class CSharp_MoreVariableIdentifiers extends TokenSequence
@@ -49,6 +50,16 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	{
 		CSharp_Identifier_Reference which = (CSharp_Identifier_Reference) firstId.getWhich();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		if (subscript.size() > 0)
+		{
+			EagleArray array = (EagleArray) value;
+			int sub = interpreter.getIntValue(subscript.first().expr);
+			EagleValue val = array.getValue(sub);
+			interpreter.pushEagleValue(val);
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

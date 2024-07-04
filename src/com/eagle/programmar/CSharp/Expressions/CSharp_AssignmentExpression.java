@@ -3,14 +3,46 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class CSharp_AssignmentExpression extends PrecedenceOperator
+public class CSharp_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=",
 			"<<=", ">>=", ">>>=", "&=", "^=", "|=");
 	public @S(30) CSharp_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (!(var.getWhich() instanceof CSharp_VariableExpression))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
+		}
+
+		CSharp_VariableExpression varExpr = (CSharp_VariableExpression) var.getWhich();
+		switch (operator.getValue())
+		{
+		case "=":
+			int x = interpreter.getIntValue(expr);
+			EagleInteger val = new EagleInteger(x);
+			AbstractToken token = varExpr.variable.firstId.getWhich();
+			if (token instanceof CSharp_Identifier_Reference)
+			{
+				CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) token;
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+						id.getValue(), val);
+			}
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+	}
 }

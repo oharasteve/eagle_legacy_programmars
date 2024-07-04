@@ -5,6 +5,7 @@ package com.eagle.programmar.CSharp.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
@@ -26,17 +27,36 @@ public class CSharp_EqualityExpression extends PrecedenceOperator implements Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (equalityOperator.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "==":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case "!=":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (equalityOperator.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + equalityOperator.getWhich());
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (equalityOperator.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			}
+		}
+		throw new RuntimeException("Unexpected equality operator: " + equalityOperator.getWhich());
 	}
 }

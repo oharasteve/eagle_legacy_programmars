@@ -3,11 +3,15 @@
 
 package com.eagle.programmar.CSharp;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -57,25 +61,44 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE @NEWLINE CSharp_Using importList;
 		public @CHOICE @NEWLINE CSharp_Comment comment;
 		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
-		public @CHOICE @NEWLINE CSharp_Class elems;
+		public @CHOICE @NEWLINE CSharp_Class clss;
 		public @CHOICE @NEWLINE CSharp_Annotation annotation;
-		public @CHOICE @NEWLINE CSharp_Directive directive;
-	}
-
-	public static class CSharp_ProgramElems extends TokenChooser
-	{
-		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
-		public @CHOICE @NEWLINE CSharp_Using using;
-		public @CHOICE @NEWLINE CSharp_Comment comment;
-		public @CHOICE @NEWLINE CSharp_Class myClass;
-		public @CHOICE @NEWLINE CSharp_Enum enumeration;
-		public @CHOICE @NEWLINE CSharp_Method method;
 		public @CHOICE @NEWLINE CSharp_Directive directive;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(myClasses.first());
+		// First pass, just collect all the method definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
+		for (CSharp_NamespaceOrClassEntry nsClass : myClasses._elements)
+		{
+			if (nsClass.getWhich() instanceof CSharp_Class)
+			{
+				CSharp_Class cls = (CSharp_Class) nsClass.getWhich();
+				for (CSharp_ClassElement element : cls.elements._elements)
+				{
+					if (element.getWhich() instanceof CSharp_Method)
+					{
+						CSharp_Method meth = (CSharp_Method) element.getWhich();
+						interpreter._functionList.add(meth);
+						if (interpreter._TRACE)
+						{
+							System.err.println("*** Found CSharp method " + meth.methodName.getValue());
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost class
+		for (CSharp_NamespaceOrClassEntry nsClass : myClasses._elements)
+		{
+			if (nsClass.getWhich() instanceof CSharp_Class)
+			{
+				CSharp_Class cls = (CSharp_Class) nsClass.getWhich();
+				interpreter.tryToInterpret(cls);
+			}
+		}
 	}
 }

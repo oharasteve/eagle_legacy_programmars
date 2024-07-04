@@ -17,20 +17,15 @@ import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_LockStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ReturnStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_SetProperty;
+import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Statements.CSharp_SwitchStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_SynchronizedStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ThrowStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_TryStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_UsingStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Statement extends TokenChooser implements AbstractStatement
@@ -41,22 +36,8 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE CSharp_Class myclass;
 	public @CHOICE CSharp_Enum enumeration;
 	public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
-
-	public @CHOICE static class CSharp_StatementBlock extends TokenSequence implements EagleScopeInterface
-	{
-		public @S(10) @INDENT PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT TokenList<CSharp_StatementOrComment> statements;
-		public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
-
-		private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-
-		@Override
-		public EagleScope getScope()
-		{
-			return _scope;
-		}
-	}
-
+	public @CHOICE CSharp_StatementBlock statementBlock;
+	
 	public @CHOICE CSharp_BreakStatement breakStatement;
 	public @CHOICE CSharp_ContinueStatement continueStatement;
 	public @CHOICE CSharp_CheckedStatement checkedStatement;

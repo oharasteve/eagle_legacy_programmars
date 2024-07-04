@@ -7,11 +7,8 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
-import com.eagle.programmar.Lisp.Lisp_Syntax;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -19,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, EagleScopeInterface, AbstractStatement
+public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_let.htm") Lisp_KeywordChoice LET = new Lisp_KeywordChoice("let", "prog");
@@ -43,13 +40,13 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	private EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
+//	private EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -15,8 +15,6 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -29,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass, EagleScopeInterface
+public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_AnnotationOrComment> annotationOrComment;
 	public @S(20) @OPT TokenList<CSharp_ClassModifier> modifiers;
@@ -122,11 +120,11 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		}
 	}
 
-	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
+//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 }

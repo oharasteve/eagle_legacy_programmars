@@ -3,9 +3,11 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.programmar.CSharp.CSharp_Program.CSharp_ProgramElems;
+import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -20,6 +22,17 @@ public class CSharp_Namespace extends TokenSequence
 	public @S(40) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(50) @OPT TokenList<CSharp_ProgramElems> elems;
 	public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
+
+	public static class CSharp_ProgramElems extends TokenChooser
+	{
+		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
+		public @CHOICE @NEWLINE CSharp_Using using;
+		public @CHOICE @NEWLINE CSharp_Comment comment;
+		public @CHOICE @NEWLINE CSharp_Class myClass;
+		public @CHOICE @NEWLINE CSharp_Enum enumeration;
+		public @CHOICE @NEWLINE CSharp_Method method;
+		public @CHOICE @NEWLINE CSharp_Directive directive;
+	}
 
 	public static class CSharp_MoreNamespaceId extends TokenSequence
 	{

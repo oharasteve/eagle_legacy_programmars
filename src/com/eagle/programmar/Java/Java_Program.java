@@ -9,7 +9,6 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -17,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Java_Program extends EagleLanguage implements EagleRunnable, EagleScopeInterface
+public class Java_Program extends EagleLanguage implements EagleRunnable
 {
 	public static final String JAVA = "Java";
 

@@ -64,7 +64,7 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 		}
 	}
 
-	public @CHOICE static class Java_StatementBlock extends TokenSequence implements EagleScopeInterface
+	public @CHOICE static class Java_StatementBlock extends TokenSequence // implements EagleScopeInterface
 	{
 		public @S(10) @OPT Java_Label label;
 		public @S(20) @INDENT PunctuationLeftBrace leftBrace;
@@ -72,13 +72,13 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
 		public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
 
-		private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-
-		@Override
-		public EagleScope getScope()
-		{
-			return _scope;
-		}
+//		private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//
+//		@Override
+//		public EagleScope getScope()
+//		{
+//			return _scope;
+//		}
 
 //		@Override
 //		public void setScope(EagleScope scope)

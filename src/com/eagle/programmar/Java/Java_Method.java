@@ -10,8 +10,6 @@ import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -22,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Method extends TokenSequence implements EagleScopeInterface, AbstractMethod
+public class Java_Method extends TokenSequence implements AbstractMethod
 {
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT Java_Annotation annotation;
@@ -108,13 +106,13 @@ public class Java_Method extends TokenSequence implements EagleScopeInterface, A
 		public @S(70) Java_MethodBody body;
 	}
 
-	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
+//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 
 //	@Override
 //	public void setScope(EagleScope scope)

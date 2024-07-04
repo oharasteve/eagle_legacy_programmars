@@ -22,7 +22,7 @@ public class CSharp_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
-				"!=", "<=", "==", ">=", "=>", "//", "...", "::"
+				"!=", "<=", "==", ">=", "=>", "//", "...", "::", "||", "&&"
 		};
 		_commentInstance = new CSharp_Comment();
 
@@ -69,6 +69,7 @@ public class CSharp_Syntax extends EagleSyntax
 			"interface",
 			"internal",
 			"is",
+			// "Length",
 			"lock",
 			"long",
 			"namespace",
@@ -90,9 +91,11 @@ public class CSharp_Syntax extends EagleSyntax
 			"short",
 			"sizeof",
 			"stackalloc",
+			// "StartsWith",
 			"static",
 			"string",
 			"struct",
+			// "Substring",
 			"switch",
 			"this",
 			"throw",

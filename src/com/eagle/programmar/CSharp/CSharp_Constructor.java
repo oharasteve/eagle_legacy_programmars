@@ -11,15 +11,13 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Current_Class_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_Constructor extends TokenSequence implements EagleScopeInterface
+public class CSharp_Constructor extends TokenSequence
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
@@ -42,11 +40,11 @@ public class CSharp_Constructor extends TokenSequence implements EagleScopeInter
 		public @S(50) PunctuationRightParen rightParen;
 	}
 
-	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
+//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 }

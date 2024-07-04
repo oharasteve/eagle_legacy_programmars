@@ -7,13 +7,10 @@ import com.eagle.programmar.Java.Java_Annotation;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
-import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -24,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ForStatement extends TokenChooser implements EagleScopeInterface, AbstractStatement
+public class Java_ForStatement extends TokenChooser implements AbstractStatement
 {
 	public @CHOICE static class Java_ForLoopStatement extends TokenSequence
 	{
@@ -75,13 +72,13 @@ public class Java_ForStatement extends TokenChooser implements EagleScopeInterfa
 		public @S(120) Java_Statement action;
 	}
 
-	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
+//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 
 //	@Override
 //	public void setScope(EagleScope scope)

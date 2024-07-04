@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Type_Definition;
@@ -11,8 +14,8 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -24,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Method extends TokenSequence implements AbstractMethod, EagleScopeInterface
+public class CSharp_Method extends TokenSequence implements AbstractMethod, AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
@@ -39,6 +42,8 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 	public @S(110) @OPT TokenList<CSharp_MethodWhere> where;
 	public @S(120) @NEWLINE CSharp_MethodBody body;
 	public @S(130) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class CSharp_MethodParameters extends TokenSequence
 	{
@@ -97,11 +102,36 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 		}
 	}
 
-	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-
 	@Override
-	public EagleScope getScope()
+	public void interpret(EagleInterpreter interpreter)
 	{
-		return _scope;
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), getFileName(), getStartLine(),
+					getStartChar());
+		}
+
+		// Nothing to do here. Only run methods when they are called / invoked.
+		// Exception is 'Main'
+		if (methodName.getValue().equals("Main"))
+		{
+			AbstractToken which = body.getWhich();
+			if (which instanceof CSharp_MethodImplementation)
+			{
+				CSharp_MethodImplementation impl = (CSharp_MethodImplementation) which;
+				for (CSharp_StatementOrComment stmt : impl.block.statements._elements)
+				{
+					interpreter.tryToInterpret(stmt);
+				}
+			}
+		}
 	}
+
+//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 }

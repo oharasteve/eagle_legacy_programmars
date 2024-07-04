@@ -13,8 +13,6 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -26,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Class extends TokenSequence implements EagleRunnable, EagleScopeInterface, AbstractClass
+public class Java_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
 	public @S(10) @OPT @BLANKLINE Java_ClassModifierList modifierList;
 	public @S(20) @OPT @CURIOUS("Extra at sign") Java_Punctuation atSign = new Java_Punctuation('@');
@@ -116,13 +114,13 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 		}
 	}
 
-	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
+//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 
 //	@Override
 //	public void setScope(EagleScope scope)
