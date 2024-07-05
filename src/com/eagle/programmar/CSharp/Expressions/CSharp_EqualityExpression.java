@@ -35,7 +35,7 @@ public class CSharp_EqualityExpression extends PrecedenceOperator implements Eag
 			String rightStr = rightValue.forceStringValue();
 			switch (equalityOperator.getWhich().toString())
 			{
-			case "=":
+			case "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":
@@ -49,7 +49,7 @@ public class CSharp_EqualityExpression extends PrecedenceOperator implements Eag
 			int rightInt = rightValue.forceIntegerValue();
 			switch (equalityOperator.getWhich().toString())
 			{
-			case "=":
+			case "==":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
 			case "!=":
