@@ -64,7 +64,7 @@ public class CSharp_BuiltInMethod extends PrimaryOperator implements EagleRunnab
 				case "Substring":
 					int sc = interpreter.getIntValue(oneArg.param);
 					interpreter.pushStr(leftStr.substring(sc));
-					continue;
+					return;
 				}
 			}
 			else if (builtin.getWhich() instanceof CSharp_BuiltinNoArgs)

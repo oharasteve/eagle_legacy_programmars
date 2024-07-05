@@ -104,15 +104,15 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(240) CSharp_NotExpression notExpression;
 	public @P(250) CSharp_DefaultGeneric defaultGeneric;
 	public @P(260) CSharp_BuiltIn builtIn;
-	//public @P(265) CSharp_BuiltInMethod builtInMethod;
-	public @P(270) CSharp_VariableExpression variableExpression;
-	public @P(280) CSharp_TypeExpression typeExpression;
-	public @P(290) CSharp_ParenthesizedExpression parenthesizedExpression;
-	public @P(300) CSharp_CommentExpression commentExpression;
-	public @P(310) CSharp_TypeOf typeOf;
-	public @P(320) CSharp_Delegation delegation;
-	public @P(330) CSharp_LambdaBlock lambdaBlock;
-	public @P(340) CSharp_LambdaParameters lambdaParameters;
+	public @P(270) CSharp_BuiltInMethod builtInMethod;
+	public @P(280) CSharp_VariableExpression variableExpression;
+	public @P(290) CSharp_TypeExpression typeExpression;
+	public @P(300) CSharp_ParenthesizedExpression parenthesizedExpression;
+	public @P(310) CSharp_CommentExpression commentExpression;
+	public @P(320) CSharp_TypeOf typeOf;
+	public @P(330) CSharp_Delegation delegation;
+	public @P(340) CSharp_LambdaBlock lambdaBlock;
+	public @P(350) CSharp_LambdaParameters lambdaParameters;
 
 	///////////////////////////////////////////////
 	// Binary expressions

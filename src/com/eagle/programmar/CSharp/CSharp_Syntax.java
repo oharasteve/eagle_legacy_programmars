@@ -43,6 +43,7 @@ public class CSharp_Syntax extends EagleSyntax
 			"char",
 			// "checked",
 			"class",
+			"Console",
 			"const",
 			"continue",
 			"decimal",

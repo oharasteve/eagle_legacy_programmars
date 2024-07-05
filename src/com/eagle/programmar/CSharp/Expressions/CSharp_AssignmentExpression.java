@@ -6,6 +6,7 @@ package com.eagle.programmar.CSharp.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
@@ -28,21 +29,27 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 		}
 
 		CSharp_VariableExpression varExpr = (CSharp_VariableExpression) var.getWhich();
-		switch (operator.getValue())
+		int x = interpreter.getIntValue(expr);
+		AbstractToken token = varExpr.variable.firstId.getWhich();
+		if (token instanceof CSharp_Identifier_Reference)
 		{
-		case "=":
-			int x = interpreter.getIntValue(expr);
-			EagleInteger val = new EagleInteger(x);
-			AbstractToken token = varExpr.variable.firstId.getWhich();
-			if (token instanceof CSharp_Identifier_Reference)
+			CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) token;
+			switch (operator.getValue())
 			{
-				CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) token;
+			case "=":
+				EagleInteger val = new EagleInteger(x);
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						id.getValue(), val);
+				break;
+			case "+=":
+				EagleValue oldVar = interpreter._symbolTable.findSymbol(id.toString());
+				EagleInteger newVal = new EagleInteger(x + oldVar.forceIntegerValue());
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+						id.getValue(), newVal);
+				break;
+			default:
+				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 			}
-			break;
-		default:
-			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 	}
 }
