@@ -42,13 +42,13 @@ public class Ada_Function extends TokenSequence implements AbstractFunction, Eag
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<Ada_Parameter, PunctuationSemicolon> parameters;
 		public @S(30) PunctuationRightParen rightParen;
+	}
 
-		public static class Ada_Parameter extends TokenSequence
-		{
-			public @S(10) Ada_Variable_Definition param;
-			public @S(20) PunctuationColon colon;
-			public @S(30) Ada_Type type;
-		}
+	public static class Ada_Parameter extends TokenSequence
+	{
+		public @S(10) Ada_Variable_Definition param;
+		public @S(20) PunctuationColon colon;
+		public @S(30) Ada_Type type;
 	}
 
 	public static class Ada_FunctionReturns extends TokenSequence

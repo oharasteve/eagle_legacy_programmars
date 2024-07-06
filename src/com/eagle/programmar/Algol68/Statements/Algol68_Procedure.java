@@ -43,12 +43,12 @@ public class Algol68_Procedure extends TokenSequence implements EagleRunnable, A
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<Algol68_Parameter, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
+	}
 
-		public static class Algol68_Parameter extends TokenSequence
-		{
-			public @S(10) Algol68_Type type;
-			public @S(20) Algol68_Variable_Definition param;
-		}
+	public static class Algol68_Parameter extends TokenSequence
+	{
+		public @S(10) Algol68_Type type;
+		public @S(20) Algol68_Variable_Definition param;
 	}
 
 	public static class Algol68_ProcedureReturns extends TokenSequence

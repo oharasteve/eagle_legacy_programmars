@@ -26,7 +26,7 @@ public class CSharp_SubfieldExpression extends PrecedenceOperator implements Eag
 		if (right.getWhich() instanceof CSharp_MethodInvocation)
 		{
 			CSharp_MethodInvocation meth = (CSharp_MethodInvocation) right.getWhich();
-			AbstractToken token = meth.methodName.getWhich();
+			AbstractToken token = meth.methodName.firstId.getWhich();
 			if (token instanceof CSharp_Identifier_Reference)
 			{
 				CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) token;

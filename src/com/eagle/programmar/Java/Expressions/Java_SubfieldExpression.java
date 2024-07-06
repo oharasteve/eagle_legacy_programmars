@@ -8,7 +8,7 @@ import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class Java_Subfield extends PrecedenceOperator
+public class Java_SubfieldExpression extends PrecedenceOperator
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;

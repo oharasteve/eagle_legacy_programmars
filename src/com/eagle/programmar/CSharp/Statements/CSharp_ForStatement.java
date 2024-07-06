@@ -10,7 +10,6 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.CSharp_Type;
-import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement.CSharp_ForWhat.CSharp_ForWithType;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -37,13 +36,14 @@ public class CSharp_ForStatement extends TokenSequence implements EagleRunnableW
 
 	public static class CSharp_ForWhat extends TokenChooser
 	{
+		public @FIRST CSharp_ForWithType withType;
 		public @CHOICE CSharp_Expression expr;
+	}
 
-		public @FIRST static class CSharp_ForWithType extends TokenSequence
-		{
-			public @S(10) @NOSPACE CSharp_Type varType;
-			public @S(20) CSharp_Expression expr;
-		}
+	public static class CSharp_ForWithType extends TokenSequence
+	{
+		public @S(10) @NOSPACE CSharp_Type varType;
+		public @S(20) CSharp_Expression expr;
 	}
 
 	@Override

@@ -10,9 +10,8 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Algol68_Variable;
-import com.eagle.programmar.Algol68.Expressions.Algol68_ProcedureCall.Algol68_FunctionArguments.Algol68_FunctionArg;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
-import com.eagle.programmar.Algol68.Statements.Algol68_Procedure.Algol68_ProcedureParams.Algol68_Parameter;
+import com.eagle.programmar.Algol68.Statements.Algol68_Procedure.Algol68_Parameter;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Identifier_Reference;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Punctuation;
 import com.eagle.tokens.AbstractFunction;
@@ -37,16 +36,17 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		public @S(20) SeparatedList<Algol68_FunctionArg, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 
-		public static class Algol68_FunctionArg extends TokenChooser
-		{
-			public @CHOICE Algol68_Expression expr;
+	}
 
-			public @CHOICE static class Algol68_FunctionSetArg extends TokenSequence
-			{
-				public @S(10) Algol68_Identifier_Reference id;
-				public @S(20) Algol68_Punctuation arrow = new Algol68_Punctuation("=>");
-				public @S(30) Algol68_Expression expr;
-			}
+	public static class Algol68_FunctionArg extends TokenChooser
+	{
+		public @CHOICE Algol68_Expression expr;
+
+		public @CHOICE static class Algol68_FunctionSetArg extends TokenSequence
+		{
+			public @S(10) Algol68_Identifier_Reference id;
+			public @S(20) Algol68_Punctuation arrow = new Algol68_Punctuation("=>");
+			public @S(30) Algol68_Expression expr;
 		}
 	}
 

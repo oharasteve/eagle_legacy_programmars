@@ -12,10 +12,9 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Variable;
-import com.eagle.programmar.Ada.Expressions.Ada_FunctionCall.Ada_FunctionArguments.Ada_FunctionArg;
 import com.eagle.programmar.Ada.Statements.Ada_Function;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
-import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams.Ada_Parameter;
+import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_Parameter;
 import com.eagle.programmar.Ada.Statements.Ada_Procedure;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
@@ -41,17 +40,17 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) SeparatedList<Ada_FunctionArg, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
+	}
 
-		public static class Ada_FunctionArg extends TokenChooser
+	public static class Ada_FunctionArg extends TokenChooser
+	{
+		public @CHOICE Ada_Expression expr;
+
+		public @CHOICE static class Ada_FunctionSetArg extends TokenSequence
 		{
-			public @CHOICE Ada_Expression expr;
-
-			public @CHOICE static class Ada_FunctionSetArg extends TokenSequence
-			{
-				public @S(10) Ada_Identifier_Reference id;
-				public @S(20) Ada_Punctuation arrow = new Ada_Punctuation("=>");
-				public @S(30) Ada_Expression expr;
-			}
+			public @S(10) Ada_Identifier_Reference id;
+			public @S(20) Ada_Punctuation arrow = new Ada_Punctuation("=>");
+			public @S(30) Ada_Expression expr;
 		}
 	}
 

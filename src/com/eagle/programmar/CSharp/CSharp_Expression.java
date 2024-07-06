@@ -16,6 +16,8 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationWithSubscript
 import com.eagle.programmar.CSharp.Expressions.CSharp_CommentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ConditionalAndExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ConditionalOrExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ConsoleOut;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ConsoleRead;
 import com.eagle.programmar.CSharp.Expressions.CSharp_DefaultGeneric;
 import com.eagle.programmar.CSharp.Expressions.CSharp_Delegation;
 import com.eagle.programmar.CSharp.Expressions.CSharp_DotClass;
@@ -104,15 +106,17 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(240) CSharp_NotExpression notExpression;
 	public @P(250) CSharp_DefaultGeneric defaultGeneric;
 	public @P(260) CSharp_BuiltIn builtIn;
-	public @P(270) CSharp_BuiltInMethod builtInMethod;
-	public @P(280) CSharp_VariableExpression variableExpression;
-	public @P(290) CSharp_TypeExpression typeExpression;
-	public @P(300) CSharp_ParenthesizedExpression parenthesizedExpression;
-	public @P(310) CSharp_CommentExpression commentExpression;
-	public @P(320) CSharp_TypeOf typeOf;
-	public @P(330) CSharp_Delegation delegation;
-	public @P(340) CSharp_LambdaBlock lambdaBlock;
-	public @P(350) CSharp_LambdaParameters lambdaParameters;
+	public @P(270) CSharp_ConsoleOut consoleOut;
+	public @P(280) CSharp_ConsoleRead consoleRead;
+	public @P(290) CSharp_BuiltInMethod builtInMethod;
+	public @P(300) CSharp_VariableExpression variableExpression;
+	public @P(310) CSharp_TypeExpression typeExpression;
+	public @P(320) CSharp_ParenthesizedExpression parenthesizedExpression;
+	public @P(330) CSharp_CommentExpression commentExpression;
+	public @P(340) CSharp_TypeOf typeOf;
+	public @P(350) CSharp_Delegation delegation;
+	public @P(360) CSharp_LambdaBlock lambdaBlock;
+	public @P(370) CSharp_LambdaParameters lambdaParameters;
 
 	///////////////////////////////////////////////
 	// Binary expressions

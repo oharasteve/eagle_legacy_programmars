@@ -7,8 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltInMethod.CSharp_BuiltinMethods.CSharp_BuiltinNoArgs;
-import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltInMethod.CSharp_BuiltinMethods.CSharp_BuiltinOneArg;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
@@ -27,22 +25,24 @@ public class CSharp_BuiltInMethod extends PrimaryOperator implements EagleRunnab
 	
 	public static class CSharp_BuiltinMethods extends TokenChooser
 	{
-		public @CHOICE static class CSharp_BuiltinNoArgs extends TokenSequence
-		{
-			public @S(10) PunctuationPeriod dot;
-			public @S(20) CSharp_Keyword builtin = new CSharp_Keyword("Length");
-		}
-		
-		public @CHOICE static class CSharp_BuiltinOneArg extends TokenSequence
-		{
-			public @S(10) PunctuationPeriod dot;
-			public @S(20) CSharp_KeywordChoice builtins = new CSharp_KeywordChoice("StartsWith", "Substring");
-			public @S(30) PunctuationLeftParen leftParen;
-			public @S(40) CSharp_Expression param;
-			public @S(50) PunctuationRightParen rightParen;
-		}
+		public @CHOICE CSharp_BuiltinNoArgs noArgs;
+		public @CHOICE CSharp_BuiltinOneArg oneArg;
 	}
 	
+	public static class CSharp_BuiltinNoArgs extends TokenSequence
+	{
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) CSharp_Keyword builtin = new CSharp_Keyword("Length");
+	}
+	
+	public static class CSharp_BuiltinOneArg extends TokenSequence
+	{
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) CSharp_KeywordChoice builtins = new CSharp_KeywordChoice("StartsWith", "Substring");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) CSharp_Expression param;
+		public @S(50) PunctuationRightParen rightParen;
+	}
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

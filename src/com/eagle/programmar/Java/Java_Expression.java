@@ -38,7 +38,7 @@ import com.eagle.programmar.Java.Expressions.Java_PreDecrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_ShiftExpression;
-import com.eagle.programmar.Java.Expressions.Java_Subfield;
+import com.eagle.programmar.Java.Expressions.Java_SubfieldExpression;
 import com.eagle.programmar.Java.Expressions.Java_SubscriptExpression;
 import com.eagle.programmar.Java.Expressions.Java_TrueFalseExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
@@ -113,7 +113,7 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	// Binary expressions
 
 	public @P(500) Java_SubscriptExpression subscriptExpression;
-	public @P(510) Java_Subfield subfield;
+	public @P(510) Java_SubfieldExpression subfield;
 	public @P(520) Java_ColonColon colonColon;
 	public @P(530) Java_ColonColonNew colonColonNew;
 	public @P(540) Java_MultiplicativeExpression multiplicativeExpression;

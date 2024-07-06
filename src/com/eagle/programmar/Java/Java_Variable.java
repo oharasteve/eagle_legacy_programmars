@@ -18,19 +18,19 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
-	public @S(10) Java_VariableIdentifier var;
+	public @S(10) Java_VariableIdentifier firstId;
 	public @S(20) @OPT TokenList<Java_DotVariable> moreIds;
 	public @S(30) @OPT TokenList<Java_Subscript> subscript;
 
 	public static class Java_DotVariable extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationPeriod dot;
-		public @S(20) @NOSPACE Java_VariableIdentifier id;
+		public @S(20) @NOSPACE Java_VariableIdentifier nextId;
 	}
 
 	public static class Java_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice THIS = new Java_KeywordChoice("this", "class", "super");
+		public @CHOICE Java_KeywordChoice builtIn = new Java_KeywordChoice("this", "class", "super");
 		public @CHOICE Java_Identifier_Reference id;
 
 		public @CHOICE static class Java_CastedVariable extends TokenSequence
@@ -47,7 +47,7 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Java_Identifier_Reference which = (Java_Identifier_Reference) var.getWhich();
+		Java_Identifier_Reference which = (Java_Identifier_Reference) firstId.getWhich();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}

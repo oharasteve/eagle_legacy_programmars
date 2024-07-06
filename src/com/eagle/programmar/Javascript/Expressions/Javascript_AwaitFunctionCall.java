@@ -11,6 +11,7 @@ import com.eagle.tokens.PrimaryOperator;
 public class Javascript_AwaitFunctionCall extends PrimaryOperator
 {
 	public @S(10) Javascript_Keyword AWAIT = new Javascript_Keyword("await");
-	public @S(20) Javascript_Variable functionName;
-	public @S(30) @OPT Javascript_ParenthesizedExpression arguments;
+	public @S(20) @OPT Javascript_Keyword NEW = new Javascript_Keyword("new");
+	public @S(30) Javascript_Variable functionName;
+	public @S(40) @OPT Javascript_ParenthesizedExpression arguments;
 }

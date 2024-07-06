@@ -98,6 +98,7 @@ public class CSharp_Syntax extends EagleSyntax
 			"struct",
 			// "Substring",
 			"switch",
+			// "System",
 			"this",
 			"throw",
 			"true",
