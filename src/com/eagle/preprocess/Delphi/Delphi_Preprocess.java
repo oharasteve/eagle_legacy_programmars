@@ -19,7 +19,7 @@ import com.eagle.tokens.terminals.TerminalEndOfLine;
 public class Delphi_Preprocess extends EagleInclude
 {
 	private FindIncludeFile _findInclude;
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private static final String StartInclude = "{$I ";
 	private static final String EndInclude = "}";
