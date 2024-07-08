@@ -6,11 +6,11 @@ package com.eagle.programmar.CSharp.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -25,19 +25,30 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 	{
 		public @CHOICE CSharp_BuiltinNoArgs noArgs;
 		public @CHOICE CSharp_BuiltinOneArg oneArg;
+		public @CHOICE CSharp_BuiltinTwoArgs twoArgs;
 	}
 	
 	public static class CSharp_BuiltinNoArgs extends TokenSequence
 	{
-		public @S(10) CSharp_Keyword builtin = new CSharp_Keyword("Length");
+		public @S(10) CSharp_KeywordChoice builtin = new CSharp_KeywordChoice("Length");
 	}
 	
 	public static class CSharp_BuiltinOneArg extends TokenSequence
 	{
-		public @S(10) CSharp_KeywordChoice builtins = new CSharp_KeywordChoice("StartsWith", "Substring");
+		public @S(10) CSharp_KeywordChoice builtin = new CSharp_KeywordChoice("StartsWith", "Substring");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) CSharp_Expression param;
 		public @S(40) PunctuationRightParen rightParen;
+	}
+	
+	public static class CSharp_BuiltinTwoArgs extends TokenSequence
+	{
+		public @S(10) CSharp_KeywordChoice builtin = new CSharp_KeywordChoice("Substring");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CSharp_Expression param1;
+		public @S(40) PunctuationComma comma;
+		public @S(50) CSharp_Expression param2;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 	
 	@Override
@@ -45,10 +56,23 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 	{
 		String leftStr = interpreter.getStrValue(left);
 		String name = "";
-		if (right.getWhich() instanceof CSharp_BuiltinOneArg)
+		if (right.getWhich() instanceof CSharp_BuiltinTwoArgs)
+		{
+			CSharp_BuiltinTwoArgs twoArgs = (CSharp_BuiltinTwoArgs) right.getWhich();
+			name = twoArgs.builtin.getValue();
+			switch (name)
+			{
+			case "Substring":
+				int sc = interpreter.getIntValue(twoArgs.param1);
+				int nc = interpreter.getIntValue(twoArgs.param2);
+				interpreter.pushStr(leftStr.substring(sc, sc+nc));
+				return;
+			}
+		}
+		else if (right.getWhich() instanceof CSharp_BuiltinOneArg)
 		{
 			CSharp_BuiltinOneArg oneArg = (CSharp_BuiltinOneArg) right.getWhich();
-			name = oneArg.builtins.getValue();
+			name = oneArg.builtin.getValue();
 			switch (name)
 			{
 			case "StartsWith":
