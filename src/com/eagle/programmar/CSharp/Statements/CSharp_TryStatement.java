@@ -19,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_TryStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @DOC("statements.html#14.20") CSharp_Keyword TRY = new CSharp_Keyword("try");
+	public @S(10) @NEWLINE @DOC("statements.html#14.20") CSharp_Keyword TRY = new CSharp_Keyword("try");
 	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(30) TokenList<CSharp_StatementOrComment> statements;
 	public @S(40) @OUTDENT PunctuationRightBrace rightBrace;
@@ -29,7 +29,7 @@ public class CSharp_TryStatement extends TokenSequence implements AbstractStatem
 
 	public static class CSharp_CatchBlock extends TokenSequence
 	{
-		public @S(10) CSharp_Keyword CATCH = new CSharp_Keyword("catch");
+		public @S(10) @NEWLINE CSharp_Keyword CATCH = new CSharp_Keyword("catch");
 		public @S(20) @OPT CSharp_CatchWhat catchWhat;
 		public @S(30) CSharp_Statement catchStatement;
 
