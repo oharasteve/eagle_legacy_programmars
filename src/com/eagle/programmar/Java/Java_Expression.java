@@ -8,6 +8,7 @@ import com.eagle.programmar.Java.Expressions.Java_AndExpression;
 import com.eagle.programmar.Java.Expressions.Java_AnnotationInvocation;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
+import com.eagle.programmar.Java.Expressions.Java_BuiltInMethod;
 import com.eagle.programmar.Java.Expressions.Java_CastExpression;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationWithInitializers;
@@ -113,20 +114,21 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	// Binary expressions
 
 	public @P(500) Java_SubscriptExpression subscriptExpression;
-	public @P(510) Java_SubfieldExpression subfield;
-	public @P(520) Java_ColonColon colonColon;
-	public @P(530) Java_ColonColonNew colonColonNew;
-	public @P(540) Java_MultiplicativeExpression multiplicativeExpression;
-	public @P(550) Java_AdditiveExpression additiveExpression;
-	public @P(560) Java_ShiftExpression shiftExpression;
-	public @P(570) Java_RelationalExpression relationalExpression;
-	public @P(580) Java_InstanceOfExpression instanceOfExpression;
-	public @P(590) Java_EqualityExpression equalityExpression;
-	public @P(600) Java_AndExpression andExpression;
-	public @P(610) Java_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(620) Java_InclusiveOrExpression inclusiveOrExpression;
-	public @P(630) Java_ConditionalAndExpression conditionalAndExpression;
-	public @P(640) Java_ConditionalOrExpression conditionalOrExpression;
-	public @P(650) Java_AssignmentExpression assignmentExpression;
-	public @P(660) Java_TrueFalseExpression trueFalseExpression;
+	public @P(510) Java_BuiltInMethod builtInMethod;
+	public @P(520) Java_SubfieldExpression subfield;
+	public @P(530) Java_ColonColon colonColon;
+	public @P(540) Java_ColonColonNew colonColonNew;
+	public @P(550) Java_MultiplicativeExpression multiplicativeExpression;
+	public @P(560) Java_AdditiveExpression additiveExpression;
+	public @P(570) Java_ShiftExpression shiftExpression;
+	public @P(580) Java_RelationalExpression relationalExpression;
+	public @P(590) Java_InstanceOfExpression instanceOfExpression;
+	public @P(600) Java_EqualityExpression equalityExpression;
+	public @P(610) Java_AndExpression andExpression;
+	public @P(620) Java_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(630) Java_InclusiveOrExpression inclusiveOrExpression;
+	public @P(640) Java_ConditionalAndExpression conditionalAndExpression;
+	public @P(650) Java_ConditionalOrExpression conditionalOrExpression;
+	public @P(660) Java_AssignmentExpression assignmentExpression;
+	public @P(670) Java_TrueFalseExpression trueFalseExpression;
 }

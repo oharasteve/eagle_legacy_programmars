@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.Java.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
@@ -14,7 +19,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Java_IfStatement extends TokenSequence implements AbstractStatement
+public class Java_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
@@ -26,11 +31,55 @@ public class Java_IfStatement extends TokenSequence implements AbstractStatement
 	public @S(80) Java_Statement thenStatement;
 	public @S(90) @OPT Java_IfElseClause elseClause;
 
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
+
 	public static class Java_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<Java_Comment> comment3;
 		public @S(20) @NEWLINE Java_Keyword ELSE = new Java_Keyword("else");
 		public @S(30) @OPT Java_Comment comment;
 		public @S(40) Java_Statement elseStatement;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		Java_Statement todo = null;
+
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			if (elseClause.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
+			}
+		}
+
+		boolean cond = interpreter.getBoolValue(condition);
+		_metrics.get(0).completedIf(cond);
+		if (cond)
+		{
+			todo = thenStatement;
+		}
+		else
+		{
+			// Check for 'else'
+			if (elseClause.isPresent())
+			{
+				_metrics.get(1).completedIf(true);
+				todo = elseClause.elseStatement;
+			}
+		}
+
+		if (todo != null)
+		{
+			result = interpreter.tryToInterpret(todo);
+		}
+
+		return result;
 	}
 }

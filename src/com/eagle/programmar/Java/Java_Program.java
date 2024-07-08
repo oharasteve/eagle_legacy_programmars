@@ -3,12 +3,19 @@
 
 package com.eagle.programmar.Java;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
+import com.eagle.programmar.Java.Java_Method.Java_MethodTypeAndName.Java_MethodType;
+import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -104,6 +111,41 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(classOrEnumList.first());
+		// First pass, just collect all the method definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
+		for (Java_ClassOrEnum classOrEnum : classOrEnumList._elements)
+		{
+			if (classOrEnum.getWhich() instanceof Java_Class)
+			{
+				Java_Class cls = (Java_Class) classOrEnum.getWhich();
+				for (Java_ClassElement element : cls.elements._elements)
+				{
+					if (element.getWhich() instanceof Java_Method)
+					{
+						Java_Method meth = (Java_Method) element.getWhich();
+						interpreter._functionList.add(meth);
+						if (interpreter._TRACE)
+						{
+							AbstractToken which = meth.typeAndName.getWhich();
+							if (which instanceof Java_MethodType)
+							{
+								Java_Method_Definition methodName = ((Java_MethodType) which).methodName;
+								System.err.println("*** Found Java method " + methodName.getValue());
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost class
+		for (Java_ClassOrEnum classOrEnum : classOrEnumList._elements)
+		{
+			if (classOrEnum.getWhich() instanceof Java_Class)
+			{
+				Java_Class cls = (Java_Class) classOrEnum.getWhich();
+				interpreter.tryToInterpret(cls);
+			}
+		}
 	}
 }

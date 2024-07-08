@@ -50,7 +50,7 @@ public class AWK_Syntax extends EagleSyntax
 			"next",
 			"nextfile",
 			"return",
-			"strcat",
+			"sprintf",
 			"substr",
 			"switch",
 			"while",

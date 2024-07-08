@@ -3,13 +3,20 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock;
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.Java.Java_Method.Java_MethodBody.Java_MethodImplementation;
+import com.eagle.programmar.Java.Java_Method.Java_MethodTypeAndName.Java_MethodType;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
+import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Symbols.Java_Current_Class_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -20,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Method extends TokenSequence implements AbstractMethod
+public class Java_Method extends TokenSequence implements AbstractMethod, AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT Java_Annotation annotation;
@@ -31,6 +38,8 @@ public class Java_Method extends TokenSequence implements AbstractMethod
 	public @S(70) @OPT Java_MethodThrows jthrows;
 	public @S(80) @OPT Java_Comment comment;
 	public @S(90) Java_MethodBody body;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{
@@ -104,6 +113,37 @@ public class Java_Method extends TokenSequence implements AbstractMethod
 		public @S(50) @OPT Java_MethodThrows jthrows;
 		public @S(60) @OPT Java_Comment comment;
 		public @S(70) Java_MethodBody body;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		AbstractToken which = typeAndName.getWhich();
+		if (which instanceof Java_MethodType)
+		{
+			Java_Method_Definition methodName = ((Java_MethodType) which).methodName;
+		
+			if (_metrics == null)
+			{
+				_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), getFileName(), getStartLine(),
+						getStartChar());
+			}
+	
+			// Nothing to do here. Only run methods when they are called / invoked.
+			// Exception is 'main'
+			if (methodName.getValue().equals("main"))
+			{
+				which = body.getWhich();
+				if (which instanceof Java_MethodImplementation)
+				{
+					Java_MethodImplementation impl = (Java_MethodImplementation) which;
+					for (Java_StatementOrComment stmt : impl.block.statements._elements)
+					{
+						interpreter.tryToInterpret(stmt);
+					}
+				}
+			}
+		}
 	}
 
 //	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);

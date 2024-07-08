@@ -5,6 +5,7 @@ package com.eagle.programmar.Java;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -49,6 +50,16 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 	{
 		Java_Identifier_Reference which = (Java_Identifier_Reference) firstId.getWhich();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		if (subscript.size() > 0)
+		{
+			EagleArray array = (EagleArray) value;
+			int sub = interpreter.getIntValue(subscript.first().expr);
+			EagleValue val = array.getValue(sub);
+			interpreter.pushEagleValue(val);
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

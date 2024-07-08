@@ -13,7 +13,7 @@ import com.eagle.programmar.Java.Java_Method;
 import com.eagle.programmar.Java.Java_Program;
 import com.eagle.programmar.Java.Java_Program.Java_Import;
 import com.eagle.programmar.Java.Java_Program.Java_Import.Java_DotIdentifierStar;
-import com.eagle.programmar.Java.Java_Statement.Java_StatementBlock;
+import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Symbols.Java_Class_Definition;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;

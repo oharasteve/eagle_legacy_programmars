@@ -9,9 +9,12 @@ import com.eagle.programmar.Java.Statements.Java_BreakStatement;
 import com.eagle.programmar.Java.Statements.Java_ContinueStatement;
 import com.eagle.programmar.Java.Statements.Java_DoStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
+import com.eagle.programmar.Java.Statements.Java_ForEachStatement;
 import com.eagle.programmar.Java.Statements.Java_ForStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
+import com.eagle.programmar.Java.Statements.Java_PrintStatement;
 import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
+import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Statements.Java_SuperStatement;
 import com.eagle.programmar.Java.Statements.Java_SwitchStatement;
 import com.eagle.programmar.Java.Statements.Java_SynchronizedStatement;
@@ -62,36 +65,16 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 		}
 	}
 
-	public @CHOICE static class Java_StatementBlock extends TokenSequence // implements EagleScopeInterface
-	{
-		public @S(10) @OPT Java_Label label;
-		public @S(20) @INDENT PunctuationLeftBrace leftBrace;
-		public @S(30) @OPT TokenList<Java_StatementOrComment> statements;
-		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
-		public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
-
-//		private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-//
-//		@Override
-//		public EagleScope getScope()
-//		{
-//			return _scope;
-//		}
-
-//		@Override
-//		public void setScope(EagleScope scope)
-//		{
-//			_scope = scope;
-//		}
-	}
-
 	public @CHOICE Java_AssertStatement assertStatement;
 	public @CHOICE Java_BreakStatement breakStatement;
 	public @CHOICE Java_ContinueStatement continueStatement;
 	public @CHOICE Java_DoStatement doStatement;
 	public @CHOICE Java_ForStatement forStatement;
+	public @CHOICE Java_ForEachStatement forEachStatement;
 	public @CHOICE Java_IfStatement ifStatement;
+	public @CHOICE Java_PrintStatement printStatement;
 	public @CHOICE Java_ReturnStatement returnStatement;
+	public @CHOICE Java_StatementBlock statementBlock;
 	public @CHOICE Java_SuperStatement superStatement;
 	public @CHOICE Java_SwitchStatement switchStatement;
 	public @CHOICE Java_SynchronizedStatement synchronizedStatement;

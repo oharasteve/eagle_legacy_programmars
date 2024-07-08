@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class AWK_BuiltinFunctionCall extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) AWK_KeywordChoice function = new AWK_KeywordChoice("index", "int", "length", "match", "sprintf",
-			"strcat", "strftime", "substr");
+			"strftime", "substr");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT AWK_ArgumentList argList;
 	public @S(40) PunctuationRightParen rightParen;
@@ -34,9 +34,9 @@ public class AWK_BuiltinFunctionCall extends PrimaryOperator implements EagleRun
 			String lenArg = interpreter.getStrValue(argList.expr);
 			interpreter.pushInt(lenArg.length());
 			break;
-		case "strcat":
+		case "sprintf":
 			StringBuffer sb = new StringBuffer();
-			sb.append(interpreter.getStrValue(argList.expr));
+			// sb.append(interpreter.getStrValue(argList.expr)); // Skip the format for now
 			for (AWK_MoreArguments arg : argList.more._elements)
 			{
 				sb.append(interpreter.getStrValue(arg.expr));
