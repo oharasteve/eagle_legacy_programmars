@@ -38,7 +38,8 @@ public class Delphi_Preprocess extends EagleInclude
 		{
 			System.out.println("===================================================");
 			System.out.println(
-					"================ Pre-processing " + lines.getFileName() + " lines=" + lines.numberLines());
+					"================ Pre-processing " + lines.getFileName() +
+					" lines=" + lines.numberLines());
 			System.out.println();
 		}
 
