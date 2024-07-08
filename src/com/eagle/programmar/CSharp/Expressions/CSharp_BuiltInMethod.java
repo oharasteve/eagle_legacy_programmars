@@ -5,25 +5,23 @@ package com.eagle.programmar.CSharp.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
-import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_BuiltInMethod extends PrimaryOperator implements EagleRunnable
+public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRunnable
 {
-	public @S(10) CSharp_Identifier_Reference id;
-	public @S(20) TokenList<CSharp_BuiltinMethods> builtIns;
+	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(20) PunctuationPeriod dot;
+	public @S(30) CSharp_BuiltinMethod right;
 	
-	public static class CSharp_BuiltinMethods extends TokenChooser
+	public static class CSharp_BuiltinMethod extends TokenChooser
 	{
 		public @CHOICE CSharp_BuiltinNoArgs noArgs;
 		public @CHOICE CSharp_BuiltinOneArg oneArg;
@@ -31,52 +29,47 @@ public class CSharp_BuiltInMethod extends PrimaryOperator implements EagleRunnab
 	
 	public static class CSharp_BuiltinNoArgs extends TokenSequence
 	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) CSharp_Keyword builtin = new CSharp_Keyword("Length");
+		public @S(10) CSharp_Keyword builtin = new CSharp_Keyword("Length");
 	}
 	
 	public static class CSharp_BuiltinOneArg extends TokenSequence
 	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) CSharp_KeywordChoice builtins = new CSharp_KeywordChoice("StartsWith", "Substring");
-		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) CSharp_Expression param;
-		public @S(50) PunctuationRightParen rightParen;
+		public @S(10) CSharp_KeywordChoice builtins = new CSharp_KeywordChoice("StartsWith", "Substring");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CSharp_Expression param;
+		public @S(40) PunctuationRightParen rightParen;
 	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue leftVal = interpreter._symbolTable.findSymbol(id.getValue());
-		String leftStr = leftVal.forceStringValue();
+		String leftStr = interpreter.getStrValue(left);
 		String name = "";
-		for (CSharp_BuiltinMethods builtin : builtIns._elements)
+		if (right.getWhich() instanceof CSharp_BuiltinOneArg)
 		{
-			if (builtin.getWhich() instanceof CSharp_BuiltinOneArg)
+			CSharp_BuiltinOneArg oneArg = (CSharp_BuiltinOneArg) right.getWhich();
+			name = oneArg.builtins.getValue();
+			switch (name)
 			{
-				CSharp_BuiltinOneArg oneArg = (CSharp_BuiltinOneArg) builtin.getWhich();
-				name = oneArg.builtins.getValue();
-				switch (name)
-				{
-				case "StartsWith":
-					String patt = interpreter.getStrValue(oneArg.param);
-					interpreter.pushBool(leftStr.startsWith(patt));
-					return;
-				case "Substring":
-					int sc = interpreter.getIntValue(oneArg.param);
-					interpreter.pushStr(leftStr.substring(sc));
-					return;
-				}
+			case "StartsWith":
+				String patt = interpreter.getStrValue(oneArg.param);
+				interpreter.pushBool(leftStr.startsWith(patt));
+				return;
+			case "Substring":
+				int sc = interpreter.getIntValue(oneArg.param);
+				interpreter.pushStr(leftStr.substring(sc));
+				return;
 			}
-			else if (builtin.getWhich() instanceof CSharp_BuiltinNoArgs)
+		}
+		else if (right.getWhich() instanceof CSharp_BuiltinNoArgs)
+		{
+			CSharp_BuiltinNoArgs noArgs = (CSharp_BuiltinNoArgs) right.getWhich();
+			name = noArgs.builtin.getValue();
+			switch (name)
 			{
-				CSharp_BuiltinNoArgs noArgs = (CSharp_BuiltinNoArgs) builtin.getWhich();
-				name = noArgs.builtin.getValue();
-				switch (name)
-				{
-				case "Length":
-					interpreter.pushInt(leftStr.length());
-					return;
-				}
+			case "Length":
+				interpreter.pushInt(leftStr.length());
+				return;
 			}
 		}
 		

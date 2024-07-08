@@ -29,7 +29,6 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 		}
 
 		CSharp_VariableExpression varExpr = (CSharp_VariableExpression) var.getWhich();
-		int x = interpreter.getIntValue(expr);
 		AbstractToken token = varExpr.variable.firstId.getWhich();
 		if (token instanceof CSharp_Identifier_Reference)
 		{
@@ -37,15 +36,16 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 			switch (operator.getValue())
 			{
 			case "=":
-				EagleInteger val = new EagleInteger(x);
+				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						id.getValue(), val);
 				break;
 			case "+=":
+				int newVal = interpreter.getIntValue(expr);
 				EagleValue oldVar = interpreter._symbolTable.findSymbol(id.toString());
-				EagleInteger newVal = new EagleInteger(x + oldVar.forceIntegerValue());
+				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
 				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						id.getValue(), newVal);
+						id.getValue(), newValue);
 				break;
 			default:
 				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());

@@ -108,36 +108,36 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(260) CSharp_BuiltIn builtIn;
 	public @P(270) CSharp_ConsoleOut consoleOut;
 	public @P(280) CSharp_ConsoleRead consoleRead;
-	public @P(290) CSharp_BuiltInMethod builtInMethod;
-	public @P(300) CSharp_VariableExpression variableExpression;
-	public @P(310) CSharp_TypeExpression typeExpression;
-	public @P(320) CSharp_ParenthesizedExpression parenthesizedExpression;
-	public @P(330) CSharp_CommentExpression commentExpression;
-	public @P(340) CSharp_TypeOf typeOf;
-	public @P(350) CSharp_Delegation delegation;
-	public @P(360) CSharp_LambdaBlock lambdaBlock;
-	public @P(370) CSharp_LambdaParameters lambdaParameters;
+	public @P(290) CSharp_VariableExpression variableExpression;
+	public @P(300) CSharp_TypeExpression typeExpression;
+	public @P(310) CSharp_ParenthesizedExpression parenthesizedExpression;
+	public @P(320) CSharp_CommentExpression commentExpression;
+	public @P(330) CSharp_TypeOf typeOf;
+	public @P(340) CSharp_Delegation delegation;
+	public @P(350) CSharp_LambdaBlock lambdaBlock;
+	public @P(360) CSharp_LambdaParameters lambdaParameters;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
 	public @P(500) CSharp_SubscriptExpression subscriptExpression;
 	public @P(510) CSharp_NamespaceExpression namespaceExpression;
-	public @P(520) CSharp_SubfieldExpression subfieldExpression;
-	public @P(530) CSharp_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) CSharp_AdditiveExpression additiveExpression;
-	public @P(550) CSharp_ShiftExpression shiftExpression;
-	public @P(560) CSharp_RelationalExpression relationalExpression;
-	public @P(570) CSharp_InstanceOfExpression instanceOfExpression;
-	public @P(580) CSharp_CastAsExpression castAsExpression;
-	public @P(590) CSharp_EqualityExpression equalityExpression;
-	public @P(600) CSharp_AndExpression andExpression;
-	public @P(610) CSharp_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(620) CSharp_InclusiveOrExpression inclusiveOrExpression;
-	public @P(630) CSharp_ConditionalAndExpression conditionalAndExpression;
-	public @P(640) CSharp_ConditionalOrExpression conditionalOrExpression;
-	public @P(650) CSharp_TrueFalseExpression trueFalseExpression;
-	public @P(660) CSharp_AssignmentExpression assignmentExpression;
-	public @P(670) CSharp_LambdaFunction lambdaFunction;
-	public @P(680) CSharp_LambdaExpression lambdaExpression;
+	public @P(520) CSharp_BuiltInMethod builtInMethod;
+	public @P(530) CSharp_SubfieldExpression subfieldExpression;
+	public @P(540) CSharp_MultiplicativeExpression multiplicativeExpression;
+	public @P(550) CSharp_AdditiveExpression additiveExpression;
+	public @P(560) CSharp_ShiftExpression shiftExpression;
+	public @P(570) CSharp_RelationalExpression relationalExpression;
+	public @P(580) CSharp_InstanceOfExpression instanceOfExpression;
+	public @P(590) CSharp_CastAsExpression castAsExpression;
+	public @P(600) CSharp_EqualityExpression equalityExpression;
+	public @P(610) CSharp_AndExpression andExpression;
+	public @P(620) CSharp_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(630) CSharp_InclusiveOrExpression inclusiveOrExpression;
+	public @P(640) CSharp_ConditionalAndExpression conditionalAndExpression;
+	public @P(650) CSharp_ConditionalOrExpression conditionalOrExpression;
+	public @P(660) CSharp_TrueFalseExpression trueFalseExpression;
+	public @P(670) CSharp_AssignmentExpression assignmentExpression;
+	public @P(680) CSharp_LambdaFunction lambdaFunction;
+	public @P(690) CSharp_LambdaExpression lambdaExpression;
 }
