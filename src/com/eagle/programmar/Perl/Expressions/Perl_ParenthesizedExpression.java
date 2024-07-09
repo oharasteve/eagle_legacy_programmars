@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Perl_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) Perl_ArgumentList valueList;
+	public @S(20) @OPT Perl_ArgumentList valueList;
 	public @S(30) PunctuationRightParen rightParen;
 
 	@Override
