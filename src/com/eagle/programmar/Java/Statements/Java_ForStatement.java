@@ -12,8 +12,6 @@ import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_Type;
-import com.eagle.programmar.Java.Statements.Java_ForStatement.Java_ForInit.Java_ForWhat;
-import com.eagle.programmar.Java.Statements.Java_ForStatement.Java_ForInit.Java_ForWhat.Java_ForWithType;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.SeparatedList;
@@ -46,17 +44,18 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 	{
 		public @S(10) @OPT Java_Keyword FINAL = new Java_Keyword("final");
 		public @S(20) SeparatedList<Java_ForWhat, PunctuationComma> what;
+	}
 
-		public static class Java_ForWhat extends TokenChooser
-		{
-			public @CHOICE Java_Expression expr;
+	public static class Java_ForWhat extends TokenChooser
+	{
+		public @CHOICE Java_Expression expr;
+		public @FIRST Java_ForWithType forWithType;
+	}
 
-			public @FIRST static class Java_ForWithType extends TokenSequence
-			{
-				public @S(10) Java_Type varType;
-				public @S(20) Java_Expression expr;
-			}
-		}
+	public static class Java_ForWithType extends TokenSequence
+	{
+		public @S(10) Java_Type varType;
+		public @S(20) Java_Expression expr;
 	}
 
 	@Override

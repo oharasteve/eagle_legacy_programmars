@@ -19,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) Java_VariableIdentifier firstId;
-//	public @S(20) @OPT TokenList<Java_DotVariable> moreIds;
+//	public S() @OPT TokenList<Java_DotVariable> moreIds;
 	public @S(20) @OPT TokenList<Java_Subscript> subscript;
 
 //	public static class Java_DotVariable extends TokenSequence

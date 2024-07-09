@@ -9,7 +9,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
-import com.eagle.programmar.Java.Java_Method.Java_MethodTypeAndName.Java_MethodType;
+import com.eagle.programmar.Java.Java_Method.Java_MethodType;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;

@@ -6,8 +6,6 @@ package com.eagle.programmar.Java;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Java.Java_Method.Java_MethodBody.Java_MethodImplementation;
-import com.eagle.programmar.Java.Java_Method.Java_MethodTypeAndName.Java_MethodType;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Symbols.Java_Current_Class_Reference;
@@ -43,27 +41,31 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{
-		public @CHOICE static class Java_MethodType extends TokenSequence
-		{
-			public @S(10) Java_Type jtype;
-			public @S(20) Java_Method_Definition methodName;
-			public @S(30) Java_ParameterList parameters;
-		}
+		public @CHOICE Java_MethodType methodType;
+		public @CHOICE Java_MethodGeneric methodGeneric;
+		public @CHOICE Java_MethodTwoTypes methodTwoTypes;
+	}
 
-		public @CHOICE static class Java_MethodGeneric extends TokenSequence
-		{
-			public @S(10) Java_GenericType genericType;
-			public @S(20) Java_Method_Definition methodName;
-			public @S(30) Java_ParameterList parameters;
-		}
+	public static class Java_MethodType extends TokenSequence
+	{
+		public @S(10) Java_Type jtype;
+		public @S(20) Java_Method_Definition methodName;
+		public @S(30) Java_ParameterList parameters;
+	}
 
-		public @CHOICE static class Java_MethodTwoTypes extends TokenSequence
-		{
-			public @S(10) Java_GenericType genericType;
-			public @S(20) Java_Type jtype;
-			public @S(30) Java_Method_Definition methodName;
-			public @S(40) Java_ParameterList parameters;
-		}
+	public static class Java_MethodGeneric extends TokenSequence
+	{
+		public @S(10) Java_GenericType genericType;
+		public @S(20) Java_Method_Definition methodName;
+		public @S(30) Java_ParameterList parameters;
+	}
+
+	public static class Java_MethodTwoTypes extends TokenSequence
+	{
+		public @S(10) Java_GenericType genericType;
+		public @S(20) Java_Type jtype;
+		public @S(30) Java_Method_Definition methodName;
+		public @S(40) Java_ParameterList parameters;
 	}
 
 	public static class Java_EmptyBrackets extends TokenSequence
@@ -88,20 +90,21 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 	public static class Java_MethodThrows extends TokenSequence
 	{
 		public @S(10) Java_Keyword jthrows = new Java_Keyword("throws");
-		public @S(20) SeparatedList<Java_Variable, PunctuationComma> jclass;
+		public @S(20) SeparatedList<Java_Expression, PunctuationComma> jclass;
 	}
 
 	public static class Java_MethodBody extends TokenChooser
 	{
 		public @CHOICE PunctuationSemicolon semicolon;
-
-		public @CHOICE static class Java_MethodImplementation extends TokenSequence
-		{
-			public @S(10) @OPT @NEWLINE TokenList<Java_Comment> comment1;
-			public @S(20) Java_StatementBlock block;
-			public @S(30) @OPT TokenList<Java_Comment> comment2;
-			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
-		}
+		public @CHOICE Java_MethodImplementation methodImplementation;
+	}
+	
+	public static class Java_MethodImplementation extends TokenSequence
+	{
+		public @S(10) @OPT @NEWLINE TokenList<Java_Comment> comment1;
+		public @S(20) Java_StatementBlock block;
+		public @S(30) @OPT TokenList<Java_Comment> comment2;
+		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon2;
 	}
 
 	public static class Java_Constructor extends TokenSequence
