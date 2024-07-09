@@ -20,7 +20,7 @@ public class Java_BuiltInMethod extends PrecedenceOperator implements EagleRunna
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) Java_KeywordChoice builtin = new Java_KeywordChoice("equals", "length", "startsWith");
-	public @S(40) Java_BuiltinParams paramList;
+	public @S(40) @OPT Java_BuiltinParams paramList;
 	
 	public static class Java_BuiltinParams extends TokenSequence
 	{

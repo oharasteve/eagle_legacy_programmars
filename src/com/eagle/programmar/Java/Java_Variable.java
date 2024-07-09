@@ -14,20 +14,19 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) Java_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<Java_DotVariable> moreIds;
-	public @S(30) @OPT TokenList<Java_Subscript> subscript;
+//	public @S(20) @OPT TokenList<Java_DotVariable> moreIds;
+	public @S(20) @OPT TokenList<Java_Subscript> subscript;
 
-	public static class Java_DotVariable extends TokenSequence
-	{
-		public @S(10) @NOSPACE PunctuationPeriod dot;
-		public @S(20) @NOSPACE Java_VariableIdentifier nextId;
-	}
+//	public static class Java_DotVariable extends TokenSequence
+//	{
+//		public @S(10) @NOSPACE PunctuationPeriod dot;
+//		public @S(20) @NOSPACE Java_VariableIdentifier nextId;
+//	}
 
 	public static class Java_VariableIdentifier extends TokenChooser
 	{

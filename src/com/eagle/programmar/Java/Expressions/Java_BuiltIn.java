@@ -10,7 +10,7 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Java_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice("false", "true", "null", "this", "super");
+	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice("false", "true", "null", "this", "String", "super");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
