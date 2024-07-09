@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Scala;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Scala.Statements.Scala_Function;
 import com.eagle.programmar.Scala.Statements.Scala_Import;
 import com.eagle.programmar.Scala.Statements.Scala_Object;
 import com.eagle.programmar.Scala.Statements.Scala_Package;
 import com.eagle.programmar.Scala.Terminals.Scala_Comment;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -50,9 +54,39 @@ public class Scala_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the method definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Scala_Element elt : elements._elements)
 		{
-			interpreter.tryToInterpret(elt);
+			if (elt.getWhich() instanceof Scala_Object)
+			{
+				Scala_Object obj = (Scala_Object) elt.getWhich();
+				for (Scala_Statement stmt : obj.statement.statements._elements)
+				{
+					if (stmt.getWhich() instanceof Scala_Function)
+					{
+						Scala_Function func = (Scala_Function) stmt.getWhich();
+						interpreter._functionList.add(func);
+						if (interpreter._TRACE)
+						{
+							System.err.println("*** Found Scala function " + func.id.getValue());
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost 'object'
+		for (Scala_Element elt : elements._elements)
+		{
+			if (elt.getWhich() instanceof Scala_Object)
+			{
+				Scala_Object obj = (Scala_Object) elt.getWhich();
+				for (Scala_Statement stmt : obj.statement.statements._elements)
+				{
+					interpreter.tryToInterpret(stmt);
+				}
+			}
 		}
 	}
 }
