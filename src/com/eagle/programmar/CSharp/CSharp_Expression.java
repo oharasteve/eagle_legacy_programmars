@@ -48,7 +48,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_SubfieldExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_SubscriptExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_TrueFalseExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_TypeExpression;
-import com.eagle.programmar.CSharp.Expressions.CSharp_TypeOf;
+import com.eagle.programmar.CSharp.Expressions.CSharp_SizeOf;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
@@ -112,7 +112,7 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(300) CSharp_TypeExpression typeExpression;
 	public @P(310) CSharp_ParenthesizedExpression parenthesizedExpression;
 	public @P(320) CSharp_CommentExpression commentExpression;
-	public @P(330) CSharp_TypeOf typeOf;
+	public @P(330) CSharp_SizeOf typeOf;
 	public @P(340) CSharp_Delegation delegation;
 	public @P(350) CSharp_LambdaBlock lambdaBlock;
 	public @P(360) CSharp_LambdaParameters lambdaParameters;

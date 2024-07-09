@@ -19,7 +19,7 @@ public class CSharp_ConsoleRead extends PrimaryOperator
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
 	public @S(30) @NOSPACE CSharp_Keyword CONSOLE = new CSharp_Keyword("Console");
 	public @S(40) @NOSPACE PunctuationPeriod dot2;
-	public @S(50) @NOSPACE CSharp_KeywordChoice READ = new CSharp_KeywordChoice("ReadLine");
+	public @S(50) @NOSPACE CSharp_KeywordChoice READ = new CSharp_KeywordChoice("OpenStandardInput", "OpenStandardOutput", "ReadKey", "ReadLine");
 	public @S(60) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(70) @NOSPACE @OPT SeparatedList<CSharp_Expression,PunctuationComma> exprs;
 	public @S(80) @NOSPACE PunctuationRightParen rightParen;
