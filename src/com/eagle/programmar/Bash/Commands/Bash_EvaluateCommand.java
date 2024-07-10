@@ -7,7 +7,7 @@ import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.TokenSequence;
 
-public class Bash_EvaludateCommand extends TokenSequence
+public class Bash_EvaluateCommand extends TokenSequence
 {
 	public @S(10) Bash_Punctuation leftParenParen = new Bash_Punctuation("((");
 	public @S(20) Bash_Expression expr;

@@ -3,10 +3,11 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
-import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
+import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
 import com.eagle.programmar.Powershell.Terminals.Powershell_VerbNoun;
+import com.eagle.programmar.Powershell.Terminals.Powershell_Word;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -38,7 +39,8 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 		public static class Powershell_CommandOneArg extends TokenChooser
 		{
 			public @FIRST Powershell_Filename filename; // Tricky
-			public @CHOICE Powershell_Expression expression;
+			public @CHOICE Powershell_Literal literal;
+			public @LAST Powershell_Word word;
 		}
 	}
 }
