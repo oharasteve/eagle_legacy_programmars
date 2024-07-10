@@ -52,9 +52,8 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	public static class C_IndirectVariable extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) TokenList<C_VariableStar> stars;
-		public @S(30) C_Identifier_Reference id;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(20) C_Variable var;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	public static class C_SubscriptedVariable extends TokenSequence

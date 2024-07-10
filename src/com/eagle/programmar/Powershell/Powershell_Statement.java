@@ -19,6 +19,8 @@ import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_IfStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ProcessBlock;
 import com.eagle.programmar.Powershell.Statements.Powershell_ReturnStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_StartJob;
+import com.eagle.programmar.Powershell.Statements.Powershell_SwitchStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ThrowStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_TryStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_WhereStatement;
@@ -49,6 +51,8 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_FunctionStatement functionDefinition;
 		public @CHOICE Powershell_ProcessBlock processBlock;
 		public @CHOICE Powershell_ReturnStatement returnStatement;
+		public @CHOICE Powershell_StartJob startJob;
+		public @CHOICE Powershell_SwitchStatement switchStatement;
 		public @CHOICE Powershell_ThrowStatement throwStatement;
 		public @CHOICE Powershell_TryStatement tryStatement;
 		public @CHOICE Powershell_WhereStatement whereObjectStatement;
