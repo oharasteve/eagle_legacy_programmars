@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Powershell_MethodInvocation extends PrimaryOperator
 {
 	public @S(10) Powershell_Variable methodName;
-	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(40) @OPT @NOSPACE Powershell_ExpressionList argList;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @OPT @NOSPACE Powershell_ExpressionList argList;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 }

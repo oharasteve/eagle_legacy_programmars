@@ -18,7 +18,7 @@ public class Powershell_ExpressionList extends TokenSequence
 
 	public static class Powershell_MoreExpressions extends TokenSequence
 	{
-		public @S(10) @OPT PunctuationComma comma;
+		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT Powershell_Comment comment;
 		public @S(30) @OPT Powershell_EndOfLine eoln;
 		public @S(40) Powershell_Expression expr;
