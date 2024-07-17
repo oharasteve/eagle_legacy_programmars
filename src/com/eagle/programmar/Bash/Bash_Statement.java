@@ -7,8 +7,10 @@ import com.eagle.programmar.Bash.Commands.Bash_Assignment;
 import com.eagle.programmar.Bash.Commands.Bash_AwkCommand;
 import com.eagle.programmar.Bash.Commands.Bash_BashProgram;
 import com.eagle.programmar.Bash.Commands.Bash_BreakStatement;
+import com.eagle.programmar.Bash.Commands.Bash_CaseCommand;
 import com.eagle.programmar.Bash.Commands.Bash_CatCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ChmodCommand;
+import com.eagle.programmar.Bash.Commands.Bash_CpCommand;
 import com.eagle.programmar.Bash.Commands.Bash_DiffCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EchoCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EvaluateCommand;
@@ -29,6 +31,7 @@ import com.eagle.programmar.Bash.Commands.Bash_RmCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SetCommand;
 import com.eagle.programmar.Bash.Commands.Bash_TeeCommand;
+import com.eagle.programmar.Bash.Commands.Bash_WcCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WhileStatement;
 import com.eagle.programmar.Bash.Terminals.Bash_Comment;
 import com.eagle.tokens.TokenChooser;
@@ -43,9 +46,11 @@ public class Bash_Statement extends TokenSequence
 	{
 		public @CHOICE Bash_AwkCommand awkCommand;
 		public @CHOICE Bash_BreakStatement breakStatement;
+		public @CHOICE Bash_CaseCommand caseCommand;
 		public @CHOICE Bash_CatCommand catCommand;
 		public @CHOICE Bash_ChmodCommand chmodCommand;
 		public @CHOICE Bash_Comment comment;
+		public @CHOICE Bash_CpCommand cpCommand;
 		public @CHOICE Bash_DiffCommand diffCommand;
 		public @CHOICE Bash_EchoCommand echoCommand;
 		public @CHOICE Bash_EvaluateCommand evaluateCommand;
@@ -63,6 +68,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_SedCommand sedCommand;
 		public @CHOICE Bash_SetCommand setCommand;
 		public @CHOICE Bash_TeeCommand teeCommand;
+		public @CHOICE Bash_WcCommand wcCommand;
 		public @CHOICE Bash_WhileStatement whileStatement;
 
 		public @CHOICE Bash_BashProgram bashProgram;

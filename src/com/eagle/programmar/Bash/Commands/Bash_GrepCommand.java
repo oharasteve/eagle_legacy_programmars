@@ -20,6 +20,6 @@ public class Bash_GrepCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_GrepOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice I = new Bash_KeywordChoice("-i", "-v", "-E", "-q", "-qE");
+		public @CHOICE Bash_KeywordChoice I = new Bash_KeywordChoice("-i", "-v", "-E", "-q", "-qE", "-o");
 	}
 }

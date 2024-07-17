@@ -20,6 +20,6 @@ public class Bash_DiffCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_DiffOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice SKIPCR = new Bash_KeywordChoice("--strip-trailing-cr");
+		public @CHOICE Bash_KeywordChoice R = new Bash_KeywordChoice("-r", "--strip-trailing-cr");
 	}
 }

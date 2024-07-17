@@ -8,8 +8,10 @@ public class Bash_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"awk",
 			"break",
+			"case",
 			"cat",
 			"chmod",
+			"cp",
 			"do",
 			"done",
 			"echo",
@@ -26,6 +28,7 @@ public class Bash_Reserved_Words
 			"read",
 			"sed",
 			"then",
+			"wc",
 			"while",
 	};
 }
