@@ -7,11 +7,12 @@ import com.eagle.programmar.Scala.Expressions.Scala_AdditiveExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_AssignmentExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_BracesExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_BuiltIn;
+import com.eagle.programmar.Scala.Expressions.Scala_BuiltInFunction;
 import com.eagle.programmar.Scala.Expressions.Scala_ConditionalAndExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_ConditionalOrExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_EqualityExpression;
+import com.eagle.programmar.Scala.Expressions.Scala_FunctionCall;
 import com.eagle.programmar.Scala.Expressions.Scala_LogicalNotExpression;
-import com.eagle.programmar.Scala.Expressions.Scala_MethodInvocation;
 import com.eagle.programmar.Scala.Expressions.Scala_MultiplicativeExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_NegativeExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_NotExpression;
@@ -21,7 +22,6 @@ import com.eagle.programmar.Scala.Expressions.Scala_PreIncrementExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_RangeExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_RelationalExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_Subfield;
-import com.eagle.programmar.Scala.Expressions.Scala_SubscriptExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_VariableExpression;
 import com.eagle.programmar.Scala.Terminals.Scala_Literal;
 import com.eagle.programmar.Scala.Terminals.Scala_Number;
@@ -58,28 +58,28 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Scala_MethodInvocation methodInvocation;
+	public @P(100) Scala_FunctionCall functionCall;
 	public @P(110) Scala_PreIncrementExpression preIncrementExpression;
 	public @P(120) Scala_PostIncrementExpression postIncrementExpression;
 	public @P(130) Scala_NegativeExpression negativeExpression;
 	public @P(140) Scala_LogicalNotExpression logicalNotExpression;
 	public @P(150) Scala_NotExpression notExpression;
 	public @P(160) Scala_BuiltIn builtIn;
-	public @P(170) Scala_VariableExpression variableExpression;
-	public @P(180) Scala_BracesExpression bracesExpression;
-	public @P(190) Scala_ParenthesizedExpression parenthesizedExpression;
+	public @P(170) Scala_BuiltInFunction builtInFunction;
+	public @P(180) Scala_VariableExpression variableExpression;
+	public @P(190) Scala_BracesExpression bracesExpression;
+	public @P(200) Scala_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Scala_SubscriptExpression subscriptExpression;
-	public @P(510) Scala_Subfield subfield;
-	public @P(520) Scala_MultiplicativeExpression multiplicativeExpression;
-	public @P(530) Scala_AdditiveExpression additiveExpression;
-	public @P(540) Scala_RelationalExpression relationalExpression;
-	public @P(550) Scala_EqualityExpression equalityExpression;
-	public @P(560) Scala_ConditionalAndExpression conditionalAndExpression;
-	public @P(570) Scala_ConditionalOrExpression conditionalOrExpression;
-	public @P(580) Scala_AssignmentExpression assignmentExpression;
-	public @P(590) Scala_RangeExpression rangeExpression;
+	public @P(500) Scala_Subfield subfield;
+	public @P(510) Scala_MultiplicativeExpression multiplicativeExpression;
+	public @P(520) Scala_AdditiveExpression additiveExpression;
+	public @P(530) Scala_RelationalExpression relationalExpression;
+	public @P(540) Scala_EqualityExpression equalityExpression;
+	public @P(550) Scala_ConditionalAndExpression conditionalAndExpression;
+	public @P(560) Scala_ConditionalOrExpression conditionalOrExpression;
+	public @P(570) Scala_AssignmentExpression assignmentExpression;
+	public @P(580) Scala_RangeExpression rangeExpression;
 }

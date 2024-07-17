@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Scala.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Scala_Type;
 import com.eagle.programmar.Scala.Symbols.Scala_Variable_Definition;
@@ -13,7 +16,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Scala_Val extends TokenSequence implements AbstractStatement
+public class Scala_Val extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAL = new Scala_Keyword(
 			"val");
@@ -23,4 +26,15 @@ public class Scala_Val extends TokenSequence implements AbstractStatement
 	public @S(50) PunctuationEquals equals;
 	public @S(60) Scala_Expression initValue;
 	public @S(70) Scala_EOLN eoln;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (initValue.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(initValue);
+			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
+					id.getValue(), val);
+		}
+	}
 }

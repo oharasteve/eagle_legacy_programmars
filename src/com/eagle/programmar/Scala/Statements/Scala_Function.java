@@ -5,6 +5,7 @@ package com.eagle.programmar.Scala.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Scala.Scala_Statement;
 import com.eagle.programmar.Scala.Scala_Type;
 import com.eagle.programmar.Scala.Symbols.Scala_Function_Definition;
@@ -28,6 +29,8 @@ public class Scala_Function extends TokenSequence implements EagleRunnable, Abst
 	public @S(50) PunctuationEquals equals;
 	public @S(60) Scala_Statement stmt;
 
+	public @SKIP CallMetrics _metrics = null;
+	
 	public static class Scala_FunctionReturns extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
@@ -37,11 +40,11 @@ public class Scala_Function extends TokenSequence implements EagleRunnable, Abst
 	public static class Scala_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Scala_FunctionParamater, PunctuationComma> parameters;
+		public @S(20) @OPT SeparatedList<Scala_FunctionParameter, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	public static class Scala_FunctionParamater extends TokenSequence
+	public static class Scala_FunctionParameter extends TokenSequence
 	{
 		public @S(10) Scala_Variable_Definition var;
 		public @S(20) PunctuationColon colon;
@@ -51,14 +54,16 @@ public class Scala_Function extends TokenSequence implements EagleRunnable, Abst
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
+					getStartChar());
+		}
+
 		if (id.getValue().equals("main"))
 		{
 			// Run the main program
 			interpreter.tryToInterpret(stmt);
-		}
-		else
-		{
-			throw new RuntimeException("Cannot run " + id.getValue() + " diectly.");
 		}
 	}
 }

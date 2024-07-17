@@ -5,6 +5,7 @@ package com.eagle.programmar.Scala.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,17 +19,34 @@ public class Scala_AdditiveExpression extends PrecedenceOperator implements Eagl
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushStr(leftStr + rightStr);
+				return;
+			default:
+				throw new RuntimeException("Unexpected concatenation operator: " + operator);
+			}
+		}
+
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
 		switch (operator.toString())
 		{
 		case "+":
-			interpreter.pushInt(leftValue + rightValue);
+			interpreter.pushInt(leftInt + rightInt);
 			return;
 		case "-":
-			interpreter.pushInt(leftValue - rightValue);
+			interpreter.pushInt(leftInt - rightInt);
 			return;
 		}
+
 		throw new RuntimeException("Unexpected additive operator: " + operator);
 	}
 }
