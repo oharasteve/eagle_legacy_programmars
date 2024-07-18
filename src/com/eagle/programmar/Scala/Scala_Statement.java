@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Scala;
 
-import com.eagle.programmar.Scala.Scala_Program.Scala_CommentEoln;
 import com.eagle.programmar.Scala.Statements.Scala_Assignment;
 import com.eagle.programmar.Scala.Statements.Scala_BlockStatement;
 import com.eagle.programmar.Scala.Statements.Scala_BreakStatement;

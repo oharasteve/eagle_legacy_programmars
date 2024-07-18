@@ -14,6 +14,7 @@ import com.eagle.programmar.Scala.Scala_Variable;
 import com.eagle.programmar.Scala.Expressions.Scala_ParenthesizedExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_RangeExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_Subfield;
+import com.eagle.programmar.Scala.Expressions.Scala_VariableExpression;
 import com.eagle.programmar.Scala.Symbols.Scala_Identifier_Reference;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.programmar.Scala.Terminals.Scala_Punctuation;
@@ -57,9 +58,10 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 					Scala_ParenthesizedExpression paren = (Scala_ParenthesizedExpression) sub.left.getWhich();
 					if (paren.expression.getWhich() instanceof Scala_RangeExpression)
 					{
-						if (sub.right.getWhich() instanceof Scala_Identifier_Reference)
+						if (sub.right.getWhich() instanceof Scala_VariableExpression)
 						{
-							Scala_Identifier_Reference id = (Scala_Identifier_Reference) sub.right.getWhich();
+							Scala_VariableExpression variable = (Scala_VariableExpression) sub.right.getWhich();
+							Scala_Identifier_Reference id = variable.variable.vars.first();
 							if (id.getValue().equals("reverse"))
 							{
 								range = (Scala_RangeExpression) paren.expression.getWhich();
