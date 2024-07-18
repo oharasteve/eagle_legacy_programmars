@@ -34,7 +34,9 @@ public class Java_BuiltInMethod extends PrecedenceOperator implements EagleRunna
 	{
 		String leftStr = interpreter.getStrValue(left);
 		String name = builtin.getValue();
-		int numArgs = paramList.params.getPrimaryCount();
+		int numArgs = 0;
+		if (paramList.params != null) numArgs = paramList.params.getPrimaryCount();
+		
 		switch (name)
 		{
 		case "equals":

@@ -32,14 +32,14 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 	{
 		Algol68_Identifier_Reference which = vars.first();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		if (subscript.isPresent() && value.isArray())
+		if (subscript != null && subscript.isPresent() && value.isArray())
 		{
 			EagleArray array = (EagleArray) value;
 			int sub = interpreter.getIntValue(subscript.expr);
 			EagleValue val = array.getValue(sub - 1);
 			interpreter.pushEagleValue(val);
 		}
-		else if (subscript.isPresent() && value.isString())
+		else if (subscript != null && subscript.isPresent() && value.isString())
 		{
 			String str = value.forceStringValue();
 			int sub = interpreter.getIntValue(subscript.expr);

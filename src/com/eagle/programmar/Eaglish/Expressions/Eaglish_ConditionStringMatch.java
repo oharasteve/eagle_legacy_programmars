@@ -32,7 +32,7 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 		String oper = matchOperator.getValue();
 
 		int sc = 0;
-		if (atClause.isPresent())
+		if (atClause != null && atClause.isPresent())
 		{
 			sc = interpreter.getIntValue(atClause.position);
 		}

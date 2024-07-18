@@ -63,11 +63,14 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 			// Make sure the function args match up
 			int argCount = 0;
 			if (argList.arg.isPresent()) argCount = 1;
-			if (argList.moreArgs.isPresent()) argCount = 1 + argList.moreArgs.size();
+			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount = 1 + argList.moreArgs.size();
 
 			int paramCount = 0;
 			if (parameters.param.isPresent()) paramCount = 1;
-			if (parameters.moreParams.isPresent()) paramCount = 1 + parameters.moreParams.size();
+			if (parameters.moreParams != null && parameters.moreParams.isPresent())
+			{
+				paramCount = 1 + parameters.moreParams.size();
+			}
 			
 			if (argCount != paramCount)
 			{

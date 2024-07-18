@@ -59,12 +59,17 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
-			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
+			
+			if (elseifBlocks != null)
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-						elif.getStartChar()));
+				for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
+							elif.getStartChar()));
+				}
 			}
-			if (elseBlock.isPresent())
+			
+			if (elseBlock != null && elseBlock.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock.getFileName(), elseBlock.getStartLine(),
 						elseBlock.getStartChar()));
@@ -81,22 +86,25 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 		{
 			int seq = 1;
 			// Check for each 'else if'
-			for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
+			if (elseifBlocks != null)
 			{
-				boolean cond2 = interpreter.getBoolValue(elif.condition);
-				_metrics.get(seq).completedIf(cond2);
-				seq++;
-				if (cond2)
+				for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
 				{
-					todo = elif.statements;
-					break;
+					boolean cond2 = interpreter.getBoolValue(elif.condition);
+					_metrics.get(seq).completedIf(cond2);
+					seq++;
+					if (cond2)
+					{
+						todo = elif.statements;
+						break;
+					}
 				}
 			}
 
 			// Check for 'else'
 			if (todo == null)
 			{
-				if (elseBlock.isPresent())
+				if (elseBlock != null && elseBlock.isPresent())
 				{
 					_metrics.get(seq).completedIf(true);
 					todo = elseBlock.statements;

@@ -32,7 +32,7 @@ public class Algol68_Data extends TokenSequence implements EagleRunnable, Abstra
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (init.isPresent())
+		if (init != null && init.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(init.value);
 			Algol68_Variable_Definition var = ids.first();

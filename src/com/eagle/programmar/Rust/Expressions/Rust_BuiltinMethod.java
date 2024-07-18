@@ -30,7 +30,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 		switch (fnName)
 		{
 		case "len":
-			if (arg.isPresent())
+			if (arg != null && arg.isPresent())
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
 			}
@@ -39,7 +39,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			interpreter.pushInt(str.length());
 			break;
 		case "rev":
-			if (arg.isPresent())
+			if (arg != null && arg.isPresent())
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
 			}
@@ -48,7 +48,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, -range._step));
 			break;
 		case "starts_with":
-			if (!arg.isPresent())
+			if (arg == null || !arg.isPresent())
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires one argument");
 			}
@@ -58,7 +58,7 @@ public class Rust_BuiltinMethod extends PrecedenceOperator implements EagleRunna
 			break;
 		case "as_str":
 		case "to_string":
-			if (arg.isPresent())
+			if (arg != null && arg.isPresent())
 			{
 				throw new RuntimeException("The '" + fnName + "' method requires zero arguments");
 			}

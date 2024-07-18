@@ -49,7 +49,7 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 	{
 		Java_Identifier_Reference which = (Java_Identifier_Reference) firstId.getWhich();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		if (subscript.size() > 0)
+		if (subscript != null && subscript.size() > 0)
 		{
 			EagleArray array = (EagleArray) value;
 			int sub = interpreter.getIntValue(subscript.first().expr);

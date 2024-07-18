@@ -34,7 +34,7 @@ public class Ada_Data extends TokenSequence implements EagleRunnable, AbstractSt
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (init.isPresent())
+		if (init != null && init.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(init.value);
 			Ada_Variable_Definition var = ids.first();

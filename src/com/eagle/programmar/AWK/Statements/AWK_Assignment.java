@@ -27,7 +27,7 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable, Abst
 		EagleValue var = interpreter._symbolTable.findSymbol(variable.id.toString());
 		EagleValue val = interpreter.getEagleValue(expr);
 
-		if (variable.subscripts.size() == 1)
+		if (variable.subscripts != null && variable.subscripts.size() == 1)
 		{
 			EagleHash hash = (EagleHash) var;
 			if (hash == null)

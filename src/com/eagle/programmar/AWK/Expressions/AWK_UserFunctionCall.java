@@ -52,7 +52,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// Make sure the function args match up
 		int argCount = 0;
-		if (argList.isPresent())
+		if (argList != null && argList.isPresent())
 		{
 			argCount = 1;
 			if (argList.more != null) argCount += argList.more.size();
@@ -94,7 +94,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 
-		if (argList.isPresent())
+		if (argList != null && argList.isPresent())
 		{
 			// Now remove all those parameters
 			AWK_Identifier param = func.parameters.param;

@@ -29,10 +29,13 @@ public class AWK_ConcatenationExpression extends PrimaryOperator implements Eagl
 		sb.append(val1);
 		String val2 = interpreter.getStrValue(piece2.getWhich());
 		sb.append(val2);
-		for (AWK_ConcatPiece piece : pieces._elements)
+		if (pieces != null)
 		{
-			String val = interpreter.getStrValue(piece.getWhich());
-			sb.append(val);
+			for (AWK_ConcatPiece piece : pieces._elements)
+			{
+				String val = interpreter.getStrValue(piece.getWhich());
+				sb.append(val);
+			}
 		}
 		interpreter.pushStr(sb.toString());
 	}

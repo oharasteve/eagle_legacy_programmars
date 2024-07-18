@@ -54,10 +54,13 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 
 		String result = interpreter.getStrValue(args.expr);
 		System.out.print(result);
-		for (AWK_MoreArguments nxt : args.more._elements)
+		if (args.more != null)
 		{
-			result = interpreter.getStrValue(nxt.expr);
-			System.out.print(result);
+			for (AWK_MoreArguments nxt : args.more._elements)
+			{
+				result = interpreter.getStrValue(nxt.expr);
+				System.out.print(result);
+			}
 		}
 		System.out.println();
 	}

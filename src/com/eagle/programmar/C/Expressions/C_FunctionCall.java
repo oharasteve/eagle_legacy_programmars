@@ -72,18 +72,24 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			if (params.param != null && params.param.isPresent())
 			{
 				C_FunctionRegularParameter param = (C_FunctionRegularParameter) params.param.getWhich();
-				String paramName = param.id.getValue();
-				if (paramName != null && !paramName.equals("void"))
+				if (param.id != null)
 				{
-					// 'f(void)' is special here meaning no arguments
-					expected++;
+					String paramName = param.id.getValue();
+					if (paramName != null && !paramName.equals("void"))
+					{
+						// 'f(void)' is special here meaning no arguments
+						expected++;
+					}
 				}
 			}
 			if (params.moreParams != null && params.moreParams.isPresent()) expected += params.moreParams.size();
 
 			int actual = 0;
-			if (argList.arg != null && argList.arg.isPresent()) actual++;
-			if (argList.moreArgs != null && argList.moreArgs.isPresent()) actual += argList.moreArgs.size();
+			if (argList != null)
+			{
+				if (argList.arg != null && argList.arg.isPresent()) actual++;
+				if (argList.moreArgs != null && argList.moreArgs.isPresent()) actual += argList.moreArgs.size();
+			}
 
 			if (actual != expected)
 			{
@@ -96,19 +102,22 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			}
 
 			// Assign all the parameters
-			AbstractToken arg = argList.arg.getWhich();
-			C_FunctionRegularParameter param = (C_FunctionRegularParameter) params.param.getWhich();
-			for (int i = 0; i < actual; i++)
+			if (argList != null)
 			{
-				if (i > 0)
+				AbstractToken arg = argList.arg.getWhich();
+				C_FunctionRegularParameter param = (C_FunctionRegularParameter) params.param.getWhich();
+				for (int i = 0; i < actual; i++)
 				{
-					arg = argList.moreArgs._elements.get(i - 1).arg;
-					param = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
+					if (i > 0)
+					{
+						arg = argList.moreArgs._elements.get(i - 1).arg;
+						param = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
+					}
+	
+					EagleValue val = interpreter.getEagleValue(arg);
+					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+							param.id.getValue(), val);
 				}
-
-				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						param.id.getValue(), val);
 			}
 
 			// Evaluate the function
@@ -123,14 +132,14 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 
 			// Remove all the parameters
-			param = (C_FunctionRegularParameter) params.param.getWhich();
+			C_FunctionRegularParameter parameter = (C_FunctionRegularParameter) params.param.getWhich();
 			for (int i = 0; i < actual; i++)
 			{
 				if (i > 0)
 				{
-					param = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
+					parameter = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
 				}
-				interpreter._symbolTable.removeSymbols(param.id.getValue());
+				interpreter._symbolTable.removeSymbols(parameter.id.getValue());
 			}
 		}
 	}

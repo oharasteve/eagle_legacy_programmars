@@ -54,12 +54,17 @@ public class Algol68_IfStatement extends TokenSequence implements EagleRunnableW
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
-			for (Algol68_IfElifClause elif : elifClause._elements)
+			
+			if (elifClause != null)
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-						elif.getStartChar()));
+				for (Algol68_IfElifClause elif : elifClause._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
+							elif.getStartChar()));
+				}
 			}
-			if (elseClause.isPresent())
+
+			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
 						elseClause.getStartLine(), elseClause.getStartChar()));
@@ -76,22 +81,25 @@ public class Algol68_IfStatement extends TokenSequence implements EagleRunnableW
 		{
 			int seq = 1;
 			// Check for each 'else if'
-			for (Algol68_IfElifClause elif : elifClause._elements)
+			if (elifClause != null)
 			{
-				boolean cond2 = interpreter.getBoolValue(elif.condition);
-				_metrics.get(seq).completedIf(cond2);
-				seq++;
-				if (cond2)
+				for (Algol68_IfElifClause elif : elifClause._elements)
 				{
-					todo = elif.elifStatements;
-					break;
+					boolean cond2 = interpreter.getBoolValue(elif.condition);
+					_metrics.get(seq).completedIf(cond2);
+					seq++;
+					if (cond2)
+					{
+						todo = elif.elifStatements;
+						break;
+					}
 				}
 			}
 
 			// Check for 'else'
 			if (todo == null)
 			{
-				if (elseClause.isPresent())
+				if (elseClause != null && elseClause.isPresent())
 				{
 					_metrics.get(seq).completedIf(true);
 					todo = elseClause.elseStatements;
