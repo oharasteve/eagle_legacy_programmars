@@ -46,7 +46,7 @@ public class Scala_IfStatement extends TokenSequence implements AbstractStatemen
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
-			if (elseClause.isPresent())
+			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
 						elseClause.getStartLine(), elseClause.getStartChar()));
@@ -62,7 +62,7 @@ public class Scala_IfStatement extends TokenSequence implements AbstractStatemen
 		else
 		{
 			// Check for 'else'
-			if (elseClause.isPresent())
+			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.get(1).completedIf(true);
 				todo = elseClause.elseStatement;

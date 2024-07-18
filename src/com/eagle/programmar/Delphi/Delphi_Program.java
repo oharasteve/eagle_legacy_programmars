@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Delphi;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -12,6 +14,7 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Include;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -61,6 +64,7 @@ public class Delphi_Program extends EagleLanguage implements EagleRunnable
 			@Override
 			public void interpret(EagleInterpreter interpreter)
 			{
+				interpreter._functionList = new ArrayList<AbstractFunction>();
 				// First pass, just collect all the FUNCTION definitions
 				for (Delphi_Header element : headers._elements)
 				{
