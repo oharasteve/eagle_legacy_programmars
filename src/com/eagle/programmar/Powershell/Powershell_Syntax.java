@@ -20,7 +20,7 @@ public class Powershell_Syntax extends EagleSyntax
 		_extraCharacters = "_-";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"<=", ">=", "==", "!=", "::", "++", "--", "*>", ">>", "$?", "$_", "<#", "#>"
+				"<=", ">=", "==", "!=", "::", "++", "--", "*>", ">>", "$?", "$_", "<#", "#>", ".."
 		};
 
 		// Breaks everything - problem is the EOLN, not the comment itself.

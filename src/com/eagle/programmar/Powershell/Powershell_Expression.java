@@ -29,6 +29,7 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_PostDecrementExpre
 import com.eagle.programmar.Powershell.Expressions.Powershell_PostIncrementExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_PreDecrementExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_PreIncrementExpression;
+import com.eagle.programmar.Powershell.Expressions.Powershell_RangeExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Relational_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Subfield;
 import com.eagle.programmar.Powershell.Expressions.Powershell_SubscriptExpression;
@@ -100,6 +101,6 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(570) Powershell_Match_Expression match_Expression;
 	public @P(580) Powershell_IsExpression isExpression;
 	public @P(590) Powershell_AssignmentExpression assignmentExpression;
-	// public @P(600) Powershell_CommaExpression commaExpression;
-	public @P(610) Powershell_PipeExpression pipeExpression;
+	public @P(600) Powershell_PipeExpression pipeExpression;
+	public @P(610) Powershell_RangeExpression rangeExpression;
 }

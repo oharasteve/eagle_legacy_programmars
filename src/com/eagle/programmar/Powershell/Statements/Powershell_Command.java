@@ -3,9 +3,10 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
+import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.programmar.Powershell.Terminals.Powershell_VerbNoun;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Word;
 import com.eagle.tokens.TokenChooser;
@@ -26,6 +27,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 	{
 		public @CHOICE PunctuationAmpersand ampersand;
 		public @CHOICE PunctuationPeriod dot;
+		public @CHOICE Powershell_Punctuation dotDot = new Powershell_Punctuation("..");
 		public @CHOICE PunctuationColon colon;
 		public @CHOICE Powershell_VerbNoun verbNoun; // Like Get-Content for example
 		public @LAST Powershell_Function_Reference id;
@@ -38,8 +40,8 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 		public static class Powershell_CommandOneArg extends TokenChooser
 		{
-			public @FIRST Powershell_Filename filename; // Tricky
-			public @CHOICE Powershell_Literal literal;
+			public @FIRST Powershell_Filename filename; // Tricky because the dot is already taken
+			public @CHOICE Powershell_Expression expr;
 			public @LAST Powershell_Word word;
 		}
 	}
