@@ -5,9 +5,11 @@ package com.eagle.programmar.Javascript;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
@@ -44,12 +46,39 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) PunctuationPeriod dot;
 		public @S(20) Javascript_Field_Reference id;
+		public @S(30) @OPT Javascript_Comment comment;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter._symbolTable.findSymbol(firstId.getWhich().toString());
-		interpreter.pushEagleValue(value);
+		
+		if (moreIds != null && moreIds.isPresent())
+		{
+			if (moreIds.size() == 1)
+			{
+				// This is terrible.
+				Javascript_DotField fld = moreIds._elements.get(0);
+				if (fld.id.getValue().equals("length"))
+				{
+					String str = value.forceStringValue();
+					interpreter.pushInt(str.length());
+					return;
+				}
+			}
+		}
+		
+		if (subscript != null && subscript.size() > 0)
+		{
+			EagleArray array = (EagleArray) value;
+			int sub = interpreter.getIntValue(subscript.first().expr);
+			EagleValue val = array.getValue(sub);
+			interpreter.pushEagleValue(val);
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

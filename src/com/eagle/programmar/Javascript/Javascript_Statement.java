@@ -5,6 +5,7 @@ package com.eagle.programmar.Javascript;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Javascript.Statements.Javascript_BreakStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;
@@ -12,6 +13,7 @@ import com.eagle.programmar.Javascript.Statements.Javascript_ForStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_IfStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ImportStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ReturnStatement;
+import com.eagle.programmar.Javascript.Statements.Javascript_StatementBlock;
 import com.eagle.programmar.Javascript.Statements.Javascript_SwitchStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ThrowStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_TryStatement;
@@ -23,11 +25,9 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Javascript_Statement extends TokenSequence implements EagleRunnable
+public class Javascript_Statement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) @OPT Javascript_Label label;
 	public @S(20) Javascript_RealStatement statement;
@@ -40,15 +40,9 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 
 	public static class Javascript_RealStatement extends TokenChooser
 	{
+		public @FIRST Javascript_StatementBlock block;
 		public @CHOICE Javascript_Data data;
 		public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
-
-		public @FIRST static class Javascript_StatementBlock extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBrace leftBrace;
-			public @S(20) @OPT TokenList<Javascript_StatementOrComment> statements;
-			public @S(30) PunctuationRightBrace rightBrace;
-		}
 
 		public @LAST static class Javascript_ExpressionStmt extends TokenSequence implements EagleRunnable
 		{
@@ -92,8 +86,8 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(statement);
+		return interpreter.tryToInterpret(statement);
 	}
 }

@@ -37,8 +37,8 @@ public class CSharp_Comment extends TerminalCommentToken implements AbstractComm
 		char ch = rec.charAt(_currentChar);
 		if (ch == '/')
 		{
-			ch = rec.charAt(_currentChar + 1);
-			switch (ch)
+			char ch2 = rec.charAt(_currentChar + 1);
+			switch (ch2)
 			{
 			case '/':
 				return super.possibleCommentToEndOfLine(rec, "//");

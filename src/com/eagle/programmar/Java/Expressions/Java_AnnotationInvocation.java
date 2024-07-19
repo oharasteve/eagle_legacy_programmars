@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_AnnotationInvocation extends PrimaryOperator
 {
 	public @S(10) Java_Punctuation at = new Java_Punctuation("@");
-	public @S(20) Java_Variable methodName;
+	public @S(20) Java_Variable name;
 	public @S(30) @OPT TokenList<Java_AnnotationDotName> dotNames;
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE @OPT Java_ArgumentList argList;

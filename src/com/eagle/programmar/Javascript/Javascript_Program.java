@@ -3,10 +3,14 @@
 
 package com.eagle.programmar.Javascript;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -38,6 +42,26 @@ public class Javascript_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the method definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
+		for (Javascript_Element element : elements._elements)
+		{
+			if (element.getWhich() instanceof Javascript_Function)
+			{
+				Javascript_Function func = (Javascript_Function) element.getWhich();
+				Javascript_Function_Definition functionName = func.implementation.functionName;
+				if (functionName != null && functionName.isPresent())
+				{
+					interpreter._functionList.add(func);
+					if (interpreter._TRACE)
+					{
+						System.err.println("*** Found Javascript function " + functionName.getValue());
+					}
+				}
+			}
+		}
+
+		// Second pass, run everything
 		for (Javascript_Element element : elements._elements)
 		{
 			interpreter.tryToInterpret(element);

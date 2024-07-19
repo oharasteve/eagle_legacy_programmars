@@ -47,7 +47,6 @@ public class Java_Syntax extends EagleSyntax
 			"double",
 			"else",
 			"enum",
-			// "equals",
 			"extends",
 			"false",
 			"final",
@@ -61,7 +60,6 @@ public class Java_Syntax extends EagleSyntax
 			"instanceof",
 			"int",
 			"interface",
-			// "length",
 			"long",
 			"native",
 			"new",
@@ -72,10 +70,8 @@ public class Java_Syntax extends EagleSyntax
 			"public",
 			"return",
 			"short",
-			// "startsWith",
 			"static",
 			"strictfp",
-			"String",
 			"super",
 			"switch",
 			"synchronized",
@@ -87,6 +83,6 @@ public class Java_Syntax extends EagleSyntax
 			"try",
 			"void",
 			"volatile",
-			"while",
+			"while"
 	};
 }

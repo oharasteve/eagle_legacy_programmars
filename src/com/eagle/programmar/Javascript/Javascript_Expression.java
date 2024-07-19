@@ -8,7 +8,7 @@ import com.eagle.programmar.Javascript.Expressions.Javascript_AndExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_AssignmentExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_AwaitFunctionCall;
 import com.eagle.programmar.Javascript.Expressions.Javascript_BuiltInVar;
-import com.eagle.programmar.Javascript.Expressions.Javascript_Builtin_Function;
+import com.eagle.programmar.Javascript.Expressions.Javascript_BuiltinFunction;
 import com.eagle.programmar.Javascript.Expressions.Javascript_CastExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationWithInitializers;
@@ -92,7 +92,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Javascript_Builtin_Function builtin_Function;
+	public @P(100) Javascript_BuiltinFunction builtin_Function;
 	public @P(110) Javascript_DotClass dotClass;
 	public @P(120) Javascript_CastExpression castExpression;
 	public @P(130) Javascript_ExpressionList expressionList;

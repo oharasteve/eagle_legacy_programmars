@@ -36,8 +36,8 @@ public class Java_Comment extends TerminalCommentToken implements AbstractCommen
 		if (_currentChar + 1 >= nc) return false;
 		if (rec.charAt(_currentChar) != '/') return false;
 
-		char ch = rec.charAt(_currentChar + 1);
-		switch (ch)
+		char ch2 = rec.charAt(_currentChar + 1);
+		switch (ch2)
 		{
 		case '/':
 			return super.possibleCommentToEndOfLine(rec, "//");
