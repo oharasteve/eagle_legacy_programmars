@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Literal;
@@ -13,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Delphi_Uses extends TokenSequence
+public class Delphi_Uses extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Delphi_Keyword USES = new Delphi_Keyword("Uses");
 	public @S(20) SeparatedList<Delphi_UseItem, PunctuationComma> uses;
@@ -37,5 +39,11 @@ public class Delphi_Uses extends TokenSequence
 				public @S(30) PunctuationRightBrace rightBrace;
 			}
 		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here
 	}
 }

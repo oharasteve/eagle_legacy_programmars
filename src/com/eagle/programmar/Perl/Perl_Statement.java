@@ -7,6 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Statements.Perl_ClassStatement;
+import com.eagle.programmar.Perl.Statements.Perl_ExpressionStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForEachStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForStatement;
 import com.eagle.programmar.Perl.Statements.Perl_IfStatement;
@@ -36,20 +37,7 @@ public class Perl_Statement extends TokenChooser
 	public @CHOICE Perl_ClassStatement classStatement;
 	public @CHOICE Perl_Label label;
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon semicolon;
-
-	public @LAST static class Perl_ExpressionStatement extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) Perl_Expression expr;
-		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
-		public @S(30) @OPT PunctuationSemicolon semicolon;
-		public @S(40) @OPT TokenList<Perl_Comment> comments;
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(expr);
-		}
-	}
+	public @LAST Perl_ExpressionStatement expressionStatement; 
 
 	public @CHOICE static class Perl_StatementBlock extends TokenSequence
 	{

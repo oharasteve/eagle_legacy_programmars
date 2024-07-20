@@ -14,5 +14,5 @@ public class CSharp_ConsoleOut extends PrimaryOperator
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
 	public @S(30) @NOSPACE CSharp_Keyword CONSOLE = new CSharp_Keyword("Console");
 	public @S(40) @NOSPACE PunctuationPeriod dot2;
-	public @S(50) @NOSPACE CSharp_KeywordChoice OUT = new CSharp_KeywordChoice("Error", "in", "Out");
+	public @S(50) @NOSPACE CSharp_KeywordChoice OUT = new CSharp_KeywordChoice("Error", "In", "Out");
 }

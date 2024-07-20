@@ -42,6 +42,7 @@ import com.eagle.programmar.C.Expressions.C_SizeOfType;
 import com.eagle.programmar.C.Expressions.C_StarExpression;
 import com.eagle.programmar.C.Expressions.C_SubscriptExpression;
 import com.eagle.programmar.C.Expressions.C_TrueFalseExpression;
+import com.eagle.programmar.C.Expressions.C_VaArgExpr;
 import com.eagle.programmar.C.Expressions.C_VariableExpression;
 import com.eagle.programmar.C.Terminals.C_Character_Literal;
 import com.eagle.programmar.C.Terminals.C_HexNumber;
@@ -100,10 +101,11 @@ public class C_Expression extends PrecedenceChooser
 	public @P(280) C_AddressOfVariable addressOfVariable;
 	public @P(290) C_SizeOfType sizeOfType;
 	public @P(300) C_SizeOfExpr sizeOfExpr;
-	public @P(310) C_Parenthesized_Expression parenthesized_Expression;
-	public @P(320) C_StarExpression starExpression;
-	public @P(330) C_CommentExpression commentExpression;
-	public @P(340) CPlus_NewExpression newExpression;
+	public @P(310) C_VaArgExpr vaArgExpr;
+	public @P(320) C_Parenthesized_Expression parenthesized_Expression;
+	public @P(330) C_StarExpression starExpression;
+	public @P(340) C_CommentExpression commentExpression;
+	public @P(350) CPlus_NewExpression newExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

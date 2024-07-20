@@ -72,9 +72,9 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	{
 		public @FIRST C_FunctionPointer functionPointer;
 		public @CHOICE C_FunctionParamAmpersand paramAmpersand;
-		public @CHOICE C_FunctionRegularParameter paramRegular;
 		public @CHOICE C_FunctionFunctionParameter functionParam;
 		public @CHOICE C_FunctionDotDotDotParameter dotDotParam;
+		public @LAST C_FunctionRegularParameter paramRegular; // Otherwise it misses C_FunctionFunctionParameter
 	}
 
 	public static class C_FunctionParamAmpersand extends TokenSequence

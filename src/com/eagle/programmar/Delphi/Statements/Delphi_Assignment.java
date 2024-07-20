@@ -5,7 +5,7 @@ package com.eagle.programmar.Delphi.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
@@ -23,8 +23,7 @@ public class Delphi_Assignment extends TokenSequence implements EagleRunnable, A
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int x = interpreter.getIntValue(expr);
-		EagleInteger val = new EagleInteger(x);
+		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.var.getValue(), val);
 	}

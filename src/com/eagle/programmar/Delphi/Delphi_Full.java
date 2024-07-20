@@ -55,10 +55,7 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 		// Second pass, execute the program
 		for (Delphi_Header header : headers._elements)
 		{
-			if (header.getWhich() instanceof Delphi_Consts)
-			{
-				interpreter.tryToInterpret(header.getWhich());
-			}
+			interpreter.tryToInterpret(header.getWhich());
 		}
 		if (beginEnd.isPresent())
 		{

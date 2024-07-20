@@ -67,6 +67,7 @@ public class C_Syntax extends EagleSyntax
 			"typedef",
 			"union",
 			"unsigned",
+			"va_arg",
 			"void",
 			"volatile",
 			"while",
