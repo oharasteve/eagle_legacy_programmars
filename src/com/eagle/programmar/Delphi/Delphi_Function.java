@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.programmar.Delphi.Delphi_Program.Delphi_Header;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
@@ -21,12 +21,14 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction
 	public @S(40) @OPT TokenList<Delphi_Comment> comments;
 	public @S(50) PunctuationSemicolon semicolon2;
 
+	public @SKIP CallMetrics _metrics = null;
+
 	public static class Delphi_FunctionForward extends TokenSequence
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword(
 				"Function");
 		public @S(20) Delphi_Variable name;
-		public @S(30) @OPT Delphi_Arguments args;
+		public @S(30) @OPT Delphi_Parameter_List args;
 		public @S(40) PunctuationColon colon;
 		public @S(50) Delphi_Type type;
 		public @S(60) PunctuationSemicolon semicolon1;

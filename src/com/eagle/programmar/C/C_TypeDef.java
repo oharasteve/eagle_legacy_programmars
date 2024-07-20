@@ -34,7 +34,7 @@ public class C_TypeDef extends TokenSequence
 		public @CHOICE static class C_TypeDef_Data extends TokenSequence
 		{
 			public @S(10) C_Type type;
-			public @S(20) @OPT PunctuationStar star;
+			public @S(20) @OPT TokenList<PunctuationStar> stars;
 			public @S(30) C_Type_Definition typeName;
 			public @S(40) @OPT C_Subscript subscript;
 			public @S(50) @OPT TokenList<C_TypeDefMore> more;
@@ -42,7 +42,7 @@ public class C_TypeDef extends TokenSequence
 			public static class C_TypeDefMore extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;
-				public @S(20) @OPT PunctuationStar star;
+				public @S(20) @OPT TokenList<PunctuationStar> stars;
 				public @S(30) C_Type_Definition typeName;
 				public @S(40) @OPT C_Subscript subscript;
 			}
@@ -52,7 +52,7 @@ public class C_TypeDef extends TokenSequence
 		{
 			public @S(10) C_Type returnType;
 			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) @OPT PunctuationStar star;
+			public @S(30) @OPT TokenList<PunctuationStar> stars;
 			public @S(40) C_Function_Definition funcName;
 			public @S(50) PunctuationRightParen rightParen;
 			public @S(60) C_Function_ParameterDefs params;

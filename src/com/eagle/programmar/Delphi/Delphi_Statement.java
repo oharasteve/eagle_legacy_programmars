@@ -8,11 +8,11 @@ import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Statements.Delphi_Break_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Case_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Close_Statement;
+import com.eagle.programmar.Delphi.Statements.Delphi_ExpressionStatement;
 import com.eagle.programmar.Delphi.Statements.Delphi_For_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Halt_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_If_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Inherited_Statement;
-import com.eagle.programmar.Delphi.Statements.Delphi_Procedure_Call;
 import com.eagle.programmar.Delphi.Statements.Delphi_Raise_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Readln_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Repeat_Statement;
@@ -48,5 +48,5 @@ public class Delphi_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Delphi_Writeln_Statement writelnStatement;
 
 	// This guy has to be last
-	public @LAST Delphi_Procedure_Call procedureCall;
+	public @LAST Delphi_ExpressionStatement expressionStatement;
 }
