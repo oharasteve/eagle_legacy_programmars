@@ -5,6 +5,7 @@ package com.eagle.programmar.Go;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Go.Symbols.Go_Identifier_Reference;
 import com.eagle.tokens.SeparatedList;
@@ -30,6 +31,17 @@ public class Go_Variable extends TokenSequence implements EagleRunnable
 	{
 		Go_Identifier_Reference first = vars.first();
 		EagleValue value = interpreter._symbolTable.findSymbol(first.toString());
+
+		if (value.isArray())
+		{
+			EagleArray array = (EagleArray) value;
+			int subscr = interpreter.getIntValue(subscript.expr);
+			EagleValue val = array.getValue(subscr);
+			interpreter.pushEagleValue(val);
+			return;
+		}
+
 		interpreter.pushEagleValue(value);
+		
 	}
 }

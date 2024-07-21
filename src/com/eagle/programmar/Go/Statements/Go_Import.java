@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Go.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Go.Symbols.Go_Variable_Definition;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
@@ -13,7 +15,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Go_Import extends TokenSequence
+public class Go_Import extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("#Import_declarations") Go_Keyword IMPORT = new Go_Keyword("import");
 	public @S(20) Go_ImportWhat what;
@@ -37,5 +39,11 @@ public class Go_Import extends TokenSequence
 				public @S(30) Go_EOLN eoln;
 			}
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here
 	}
 }

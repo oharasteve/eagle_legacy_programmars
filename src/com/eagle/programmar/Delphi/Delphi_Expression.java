@@ -12,11 +12,11 @@ import com.eagle.programmar.Delphi.Expressions.Delphi_DotDot_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Dot_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Function_Call;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Multiplicative_Expression;
-import com.eagle.programmar.Delphi.Expressions.Delphi_NotOp;
-import com.eagle.programmar.Delphi.Expressions.Delphi_Parens;
+import com.eagle.programmar.Delphi.Expressions.Delphi_Not_Operator;
+import com.eagle.programmar.Delphi.Expressions.Delphi_Parentheses;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Relational_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_UnarySign;
-import com.eagle.programmar.Delphi.Expressions.Delphi_VariableExpression;
+import com.eagle.programmar.Delphi.Expressions.Delphi_Variable_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Character;
 import com.eagle.programmar.Delphi.Terminals.Delphi_HexNumber;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Literal;
@@ -57,14 +57,14 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	// Primary Expressions
 
 	public @P(100) Delphi_Builtins builtins;
-	public @P(110) Delphi_Parens parens;
+	public @P(110) Delphi_Parentheses parens;
 	public @P(120) Delphi_Brackets brackets;
 	public @P(130) Delphi_Builtin_Function_Call builtinFunctionCall;
 	public @P(140) Delphi_Function_Call functionCall;
 	public @P(150) Delphi_Cast cast;
-	public @P(160) Delphi_VariableExpression variableExpression;
+	public @P(160) Delphi_Variable_Expression variableExpression;
 	public @P(170) Delphi_UnarySign unarySign;
-	public @P(180) Delphi_NotOp notOp;
+	public @P(180) Delphi_Not_Operator notOp;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

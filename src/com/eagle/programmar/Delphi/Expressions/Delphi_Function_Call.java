@@ -64,7 +64,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		}
 		if (proc == null && func == null)
 		{
-			throw new RuntimeException("Unable to find a method named " + name);
+			throw new RuntimeException("Unable to find a function named " + name);
 		}
 
 		// Make sure the function args match up
@@ -80,7 +80,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
-					"Method " + name + " expects #args = " + paramCount + ", but was given " + argCount);
+					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
 		// Now assign all the parameters
@@ -108,14 +108,28 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		result = interpreter.tryToInterpret(body.statements.stmt);
 		if (result == Eagle_Statement_Result.NORMAL)
 		{
-			for (Delphi_MoreStatements stmt : body.statements.stmts._elements)
+			if (body.statements.stmts != null)
 			{
-				result = interpreter.tryToInterpret(stmt.stmt);
-				if (result != Eagle_Statement_Result.NORMAL) break;
+				for (Delphi_MoreStatements stmt : body.statements.stmts._elements)
+				{
+					result = interpreter.tryToInterpret(stmt.stmt);
+					if (result != Eagle_Statement_Result.NORMAL) break;
+				}
 			}
 		}
 
-		// The result was already put on the runtime stack
+		// Need to put the result on the runtime stack
+		if (func != null)
+		{
+			// Delphi uses the function name for the return value
+			// Sort-of like this: function sqrt(x) { sqrt = x*x }
+			EagleValue val = interpreter._symbolTable.findSymbol(fnName);
+			if (val != null)
+			{
+				interpreter.pushEagleValue(val);
+			}
+		}
+		
 		long elapsedTime = System.nanoTime() - startTime;
 		metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 

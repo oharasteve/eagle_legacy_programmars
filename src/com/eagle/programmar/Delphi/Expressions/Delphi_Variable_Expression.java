@@ -8,7 +8,7 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Delphi_VariableExpression extends PrimaryOperator implements EagleRunnable
+public class Delphi_Variable_Expression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Delphi_Variable variable;
 

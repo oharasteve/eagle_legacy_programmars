@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Delphi.Delphi_Variable.Delphi_Extended_Variable.Delphi_Subscript;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -26,18 +25,21 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 
 	public static class Delphi_Extended_Variable extends TokenChooser
 	{
-		public @CHOICE static class Delphi_DotName extends TokenSequence
-		{
-			public @S(10) PunctuationPeriod dot;
-			public @S(20) Delphi_Identifier_Reference var;
-		}
+		public @CHOICE Delphi_DotName dotName;
+		public @CHOICE Delphi_Subscript subscript;
+	}
 
-		public @CHOICE static class Delphi_Subscript extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) SeparatedList<Delphi_Expression, PunctuationComma> exprs;
-			public @S(30) PunctuationRightBracket rightBracket;
-		}
+	public static class Delphi_DotName extends TokenSequence
+	{
+		public @S(10) PunctuationPeriod dot;
+		public @S(20) Delphi_Identifier_Reference var;
+	}
+
+	public static class Delphi_Subscript extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) SeparatedList<Delphi_Expression, PunctuationComma> exprs;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
 	@Override
@@ -45,16 +47,19 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 	{
 		EagleValue value = interpreter._symbolTable.findSymbol(var.getValue());
 		
-		for (Delphi_Extended_Variable ext : extensions._elements)
+		if (extensions != null)
 		{
-			if (ext.getWhich() instanceof Delphi_Subscript)
+			for (Delphi_Extended_Variable ext : extensions._elements)
 			{
-				EagleArray array = (EagleArray) value;
-				Delphi_Subscript subscript = (Delphi_Subscript) ext.getWhich();
-				int subscr = interpreter.getIntValue(subscript.exprs.first());
-				EagleValue val = array.getValue(subscr);
-				interpreter.pushEagleValue(val);
-				return;
+				if (ext.getWhich() instanceof Delphi_Subscript)
+				{
+					EagleArray array = (EagleArray) value;
+					Delphi_Subscript subscript = (Delphi_Subscript) ext.getWhich();
+					int subscr = interpreter.getIntValue(subscript.exprs.first());
+					EagleValue val = array.getValue(subscr);
+					interpreter.pushEagleValue(val);
+					return;
+				}
 			}
 		}
 

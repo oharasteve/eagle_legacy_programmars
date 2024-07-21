@@ -9,7 +9,7 @@ import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Delphi_NotOp extends PrimaryOperator implements EagleRunnable
+public class Delphi_Not_Operator extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Delphi_Keyword NOT = new Delphi_Keyword("Not");
 	public @S(20) Delphi_Expression expr;

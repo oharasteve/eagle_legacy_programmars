@@ -4,7 +4,7 @@
 package com.eagle.programmar.Go.Statements;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.tokens.TokenList;
@@ -13,7 +13,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Go_BlockStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Go_BlockStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Go_EOLN eoln1;
@@ -22,11 +22,14 @@ public class Go_BlockStatement extends TokenSequence implements EagleRunnable, A
 	public @S(50) @OPT Go_EOLN eoln2;
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (Go_Statement stmt : stmts._elements)
 		{
-			interpreter.tryToInterpret(stmt);
+			result = interpreter.tryToInterpret(stmt);
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
+		return result;
 	}
 }

@@ -3,14 +3,22 @@
 
 package com.eagle.programmar.Go.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Go.Symbols.Go_Identifier;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
 
-public class Go_Package extends TokenSequence
+public class Go_Package extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("#Package_clause") Go_Keyword PACKAGE = new Go_Keyword("package");
 	public @S(20) Go_Identifier id;
 	public @S(30) Go_EOLN eoln;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here
+	}
 }

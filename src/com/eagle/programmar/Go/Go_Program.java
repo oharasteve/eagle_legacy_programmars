@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Go;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -10,11 +12,10 @@ import com.eagle.programmar.Go.Statements.Go_Data;
 import com.eagle.programmar.Go.Statements.Go_Function;
 import com.eagle.programmar.Go.Statements.Go_Import;
 import com.eagle.programmar.Go.Statements.Go_Package;
-import com.eagle.programmar.Go.Terminals.Go_Comment;
-import com.eagle.programmar.Go.Terminals.Go_EOLN;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 
 public class Go_Program extends EagleLanguage implements EagleRunnable
 {
@@ -43,18 +44,29 @@ public class Go_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE Go_Statement stmt;
 	}
 
-	public static class Go_CommentEoln extends TokenSequence
-	{
-		public @S(10) Go_Comment comment;
-		public @S(20) Go_EOLN eoln;
-	}
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (Go_Element elt : elements._elements)
+		// First pass, just collect all the FUNCTION definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
+		for (Go_Element element : elements._elements)
 		{
-			interpreter.tryToInterpret(elt);
+			AbstractToken which = element.getWhich();
+			if (which instanceof Go_Function)
+			{
+				Go_Function fn = (Go_Function) which;
+				interpreter._functionList.add(fn);
+				if (interpreter._TRACE)
+				{
+					System.err.println("*** Found Go function " + fn.id.getValue());
+				}
+			}
+		}
+
+		// Second pass, execute the program
+		for (Go_Element element : elements._elements)
+		{
+			interpreter.tryToInterpret(element);
 		}
 	}
 }
