@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.JavaP.Blocks;
 
-import com.eagle.programmar.JavaP.JavaP_Syntax;
+import com.eagle.programmar.JavaP.JavaP_Commands;
 import com.eagle.programmar.JavaP.JavaP_Value;
 import com.eagle.programmar.JavaP.Terminals.JavaP_Comment;
 import com.eagle.programmar.JavaP.Terminals.JavaP_EndOfLine;
@@ -39,7 +39,7 @@ public class JavaP_CodeStackInfo extends TokenSequence
 	{
 		public @S(10) JavaP_Number number;
 		public @S(20) PunctuationColon colon;
-		public @S(30) JavaP_KeywordChoice command = new JavaP_KeywordChoice(JavaP_Syntax.COMMANDS);
+		public @S(30) JavaP_KeywordChoice command = new JavaP_KeywordChoice(JavaP_Commands.COMMANDS);
 		public @S(40) JavaP_CodeStackValue value;
 		public @S(50) JavaP_EndOfLine eoln;
 

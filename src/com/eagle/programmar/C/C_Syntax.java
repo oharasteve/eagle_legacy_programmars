@@ -24,52 +24,6 @@ public class C_Syntax extends EagleSyntax
 				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::", "+=", "-=", "...", ">>", "<<"
 		};
 
-		addReservedWords(C_reservedWords);
+		addReservedWords(C_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From
-	// https://www.ibm.com/docs/en/developer-for-zos/14.2.0?topic=programs-c-reserved-keywords
-	// Left off _Packed which looks IBM-specific
-	protected static String[] C_reservedWords = new String[] {
-			"auto",
-			"break",
-			"case",
-			"char",
-			"const",
-			"continue",
-			"default",
-			"do",
-			"double",
-			"else",
-			"enum",
-			"extern",
-			"float",
-			"for",
-			"goto",
-			"if",
-			"int",
-			"long",
-			"printf",
-			"register",
-			"return",
-			"short",
-			"signed",
-			"sizeof",
-			"static",
-			"strcat",
-			"strcmp",
-			"strcpy",
-			"strdup",
-			"strlen",
-			"strncmp",
-			"struct",
-			"switch",
-			"typedef",
-			"union",
-			"unsigned",
-			"va_arg",
-			"void",
-			"volatile",
-			"while",
-	};
 }

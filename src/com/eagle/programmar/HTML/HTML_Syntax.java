@@ -24,10 +24,10 @@ public class HTML_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_punctuationExceptions = PUNCT;
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"a", "caption", "pre", "script", "span", "style", "table", "td", "tr"
 	};
 }

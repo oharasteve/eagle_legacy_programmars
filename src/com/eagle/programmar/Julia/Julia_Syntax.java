@@ -22,40 +22,6 @@ public class Julia_Syntax extends EagleSyntax
 				"==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/="
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Julia_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.geeksforgeeks.org/julia-keywords/
-	private static String[] reservedWords = new String[] {
-			"baremodule",
-			"begin",
-			"break",
-			"catch",
-			"const",
-			"continue",
-			"do",
-			"else",
-			"elseif",
-			"end",
-			"export",
-			"false",
-			"finally",
-			"for",
-			"function",
-			"global",
-			"if",
-			"import",
-			"let",
-			"local",
-			"macro",
-			"module",
-			"println",
-			"quote",
-			"return",
-			"struct",
-			"true",
-			"try",
-			"using",
-			"while",
-	};
 }

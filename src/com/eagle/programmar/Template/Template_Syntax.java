@@ -22,10 +22,10 @@ public class Template_Syntax extends EagleSyntax
 				"<=", ">=", "==", "!="
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private static String[] reservedWords = new String[] {
+	private static String[] RESERVED_WORDS = new String[] {
 			"and", "data", "not", "or", "print",
 	};
 }

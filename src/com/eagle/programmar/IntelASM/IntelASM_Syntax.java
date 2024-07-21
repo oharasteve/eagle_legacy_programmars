@@ -20,10 +20,10 @@ public class IntelASM_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private static String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"BYTE", "DWORD", "PTR"
 	};
 }

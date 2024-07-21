@@ -22,37 +22,6 @@ public class AWK_Syntax extends EagleSyntax
 				"==", "!=", "<=", ">=", "++", "--", "+=", "!~"
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(AWK_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.gnu.org/software/gawk/manual/html_node/Glossary.html under
-	// "Keyword"
-	private static String[] reservedWords = new String[] {
-			"BEGIN",
-			"BEGINFILE",
-			"END",
-			"ENDFILE",
-			"break",
-			"case",
-			"continue",
-			"default",
-			"delete",
-			"do",
-			"else",
-			"exit",
-			"for",
-			"function",
-			"func",
-			"if",
-			"in",
-			"int",
-			"length",
-			"next",
-			"nextfile",
-			"return",
-			"sprintf",
-			"substr",
-			"switch",
-			"while",
-	};
 }

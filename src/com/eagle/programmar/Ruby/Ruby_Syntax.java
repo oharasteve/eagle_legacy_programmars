@@ -22,52 +22,6 @@ public class Ruby_Syntax extends EagleSyntax
 				"==", "!=", "<=", ">=", "++", "--", "+=", ".."
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Ruby_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.geeksforgeeks.org/ruby-keywords/
-	private static String[] reservedWords = new String[] {
-			"__ENCODING__",
-			"__LINE__",
-			"__FILE__",
-			"BEGIN",
-			"END",
-			"alias",
-			"and",
-			"begin",
-			"break",
-			"case",
-			"class",
-			"def",
-			"defined?",
-			"do",
-			"else",
-			"elsif",
-			"end",
-			"ensure",
-			"false",
-			"for",
-			"if",
-			"in",
-			"module",
-			"next",
-			"nil",
-			"not",
-			"or",
-			"puts",
-			"redo",
-			"rescue",
-			"retry",
-			"return",
-			"self",
-			"super",
-			"then",
-			"true",
-			"undef",
-			"unless",
-			"until",
-			"when",
-			"while",
-			"yield",
-	};
 }

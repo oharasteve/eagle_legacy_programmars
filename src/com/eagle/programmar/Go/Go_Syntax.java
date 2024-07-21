@@ -22,37 +22,8 @@ public class Go_Syntax extends EagleSyntax
 				":=", "==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/-", "!~"
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Go_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.tutorialandexample.com/keywords-in-golang
-	private static String[] reservedWords = new String[] {
-			"break",
-			"case",
-			"chan",
-			"const",
-			"continue",
-			"default",
-			"defer",
-			"else",
-			"fallthrough",
-			"for",
-			"func",
-			"go",
-			"goto",
-			"if",
-			"import",
-			"interface",
-			"map",
-			"package",
-			"range",
-			"return",
-			"select",
-			"struct",
-			"switch",
-			"type",
-			"var",
-	};
 
 	public static class Go_Multiline_Syntax extends Go_Syntax
 	{

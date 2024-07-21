@@ -24,10 +24,10 @@ public class CSS_Syntax extends EagleSyntax
 		};
 		_commentInstance = new CSS_Comment();
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"media", "-moz-document", "namespace", "not", "rgb", "rgba", "rotate", "url-prefix"
 	};
 }

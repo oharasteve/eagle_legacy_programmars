@@ -23,10 +23,10 @@ public class TCL_Syntax extends EagleSyntax
 				"--", "&&", "||", "<=", ">=", "<>", "!=", "=="
 		};
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"and", "break", "not", "or", "puts", "set",
 	};
 }

@@ -25,10 +25,11 @@ public class Lisp_Syntax extends EagleSyntax
 		_punctuationExceptions = new String[] {
 				"<=", ">=", "/=", "++", "+++", "**", "***"
 		};
-		addReservedWords(keywords);
+		
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"char", "defmacro", "defparameter", "defun", "do", "if", "let", "nil", "print", "prog", "string", "t"
 	};
 }
