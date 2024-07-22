@@ -8,9 +8,9 @@ import com.eagle.programmar.Ruby.Statements.Ruby_Assignment;
 import com.eagle.programmar.Ruby.Statements.Ruby_BlockStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_BreakStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_Data;
+import com.eagle.programmar.Ruby.Statements.Ruby_ExpressionStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_ForStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_Function;
-import com.eagle.programmar.Ruby.Statements.Ruby_FunctionCall;
 import com.eagle.programmar.Ruby.Statements.Ruby_IfStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_PutsStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_ReturnStatement;
@@ -25,8 +25,9 @@ public class Ruby_Statement extends TokenChooser
 	public @CHOICE Ruby_Data data;
 	public @CHOICE Ruby_ForStatement forStatement;
 	public @CHOICE Ruby_Function function;
-	public @CHOICE Ruby_FunctionCall functionCall;
 	public @CHOICE Ruby_IfStatement ifStatement;
 	public @CHOICE Ruby_PutsStatement putsStatement;
 	public @CHOICE Ruby_ReturnStatement returnStatement;
+	
+	public @LAST Ruby_ExpressionStatement expressionStatement;
 }

@@ -5,6 +5,7 @@ package com.eagle.programmar.Ruby.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,15 +19,31 @@ public class Ruby_AdditiveExpression extends PrecedenceOperator implements Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushStr(leftStr + rightStr);
+				return;
+			default:
+				throw new RuntimeException("Unexpected concatenation operator: " + operator);
+			}
+		}
+
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
 		switch (operator.toString())
 		{
 		case "+":
-			interpreter.pushInt(leftValue + rightValue);
+			interpreter.pushInt(leftInt + rightInt);
 			return;
 		case "-":
-			interpreter.pushInt(leftValue - rightValue);
+			interpreter.pushInt(leftInt - rightInt);
 			return;
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);

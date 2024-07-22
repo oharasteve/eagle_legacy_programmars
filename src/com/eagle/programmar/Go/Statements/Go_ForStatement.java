@@ -11,7 +11,6 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Go_Variable;
-import com.eagle.programmar.Go.Statements.Go_ForStatement.Go_ForWhat.Go_ForLoop;
 import com.eagle.programmar.Go.Symbols.Go_Identifier_Reference;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.programmar.Go.Terminals.Go_Punctuation;
@@ -31,22 +30,25 @@ public class Go_ForStatement extends TokenSequence implements EagleRunnableWithR
 
 	public static class Go_ForWhat extends TokenChooser
 	{
-		public @CHOICE static class Go_ForLoop extends TokenSequence
-		{
-			public @S(10) Go_Expression initValue;
-			public @S(20) PunctuationSemicolon semiColon1;
-			public @S(30) Go_Expression condition;
-			public @S(40) PunctuationSemicolon semiColon2;
-			public @S(50) Go_Expression increment;
-			public @S(60) Go_Statement statement;
-		}
-	
-		public @CHOICE static class Go_ForRange extends TokenSequence
-		{
-			public @S(10) Go_Keyword RANGE = new Go_Keyword("range");
-			public @S(20) Go_Variable variable;
-			public @S(30) Go_Statement statement;
-		}
+		public @CHOICE Go_ForLoop forLoop;
+		public @CHOICE Go_ForRange forRange;
+	}
+
+	public static class Go_ForLoop extends TokenSequence
+	{
+		public @S(10) Go_Expression initValue;
+		public @S(20) PunctuationSemicolon semiColon1;
+		public @S(30) Go_Expression condition;
+		public @S(40) PunctuationSemicolon semiColon2;
+		public @S(50) Go_Expression increment;
+		public @S(60) Go_Statement statement;
+	}
+
+	public static class Go_ForRange extends TokenSequence
+	{
+		public @S(10) Go_Keyword RANGE = new Go_Keyword("range");
+		public @S(20) Go_Variable variable;
+		public @S(30) Go_Statement statement;
 	}
 	
 	@Override

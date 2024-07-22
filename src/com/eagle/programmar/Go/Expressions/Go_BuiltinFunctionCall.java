@@ -7,7 +7,6 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Format;
-import com.eagle.programmar.Go.Expressions.Go_BuiltinFunctionCall.Go_BuiltinFunc.Go_BuiltinTwoNames;
 import com.eagle.programmar.Go.Terminals.Go_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -21,22 +20,23 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Go_BuiltinFunctionCall extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Go_BuiltinFunc funcName;
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) SeparatedList<Go_Expression, PunctuationComma> arguments;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) SeparatedList<Go_Expression, PunctuationComma> arguments;
+	public @S(40) PunctuationRightParen rightParen;
 
 	public static class Go_BuiltinFunc extends TokenChooser
 	{
 		public @CHOICE Go_KeywordChoice LEN = new Go_KeywordChoice("len");
-		
-		public @CHOICE static class Go_BuiltinTwoNames extends TokenSequence
-		{
-			public @S(10) Go_KeywordChoice name1 = new Go_KeywordChoice("fmt");
-			public @S(20) PunctuationPeriod dot;
-			public @S(30) Go_KeywordChoice name2 = new Go_KeywordChoice("Printf");
-		}
+		public @CHOICE Go_BuiltinTwoNames twoNames;
 	}
 	
+	public static class Go_BuiltinTwoNames extends TokenSequence
+	{
+		public @S(10) Go_KeywordChoice name1 = new Go_KeywordChoice("fmt");
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) Go_KeywordChoice name2 = new Go_KeywordChoice("Printf");
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

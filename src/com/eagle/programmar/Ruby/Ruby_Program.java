@@ -3,12 +3,15 @@
 
 package com.eagle.programmar.Ruby;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Ruby.Statements.Ruby_Function;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Comment;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -37,16 +40,23 @@ public class Ruby_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE Ruby_Statement stmt;
 	}
 
-	public static class Ruby_CommentEoln extends TokenSequence
+	public static class Ruby_CommentEoln extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Ruby_Comment comment;
 		public @S(20) Ruby_EOLN eoln;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			// Nothing to do here
+		}
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Ruby_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();

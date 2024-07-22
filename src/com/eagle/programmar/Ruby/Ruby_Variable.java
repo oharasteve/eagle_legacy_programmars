@@ -5,6 +5,7 @@ package com.eagle.programmar.Ruby;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ruby.Symbols.Ruby_Identifier_Reference;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Punctuation;
@@ -32,7 +33,17 @@ public class Ruby_Variable extends TokenSequence implements AbstractVariable, Ea
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ruby_Identifier_Reference which = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		EagleValue value = interpreter._symbolTable.findSymbol(which.getValue());
+
+		if (subscript != null && subscript.isPresent() && value instanceof EagleArray)
+		{
+			int subscr = interpreter.getIntValue(subscript.expr);
+			EagleArray val = (EagleArray) value;
+			interpreter.pushEagleValue(val.getValue(subscr));
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

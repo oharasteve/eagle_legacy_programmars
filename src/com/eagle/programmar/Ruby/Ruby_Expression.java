@@ -10,6 +10,7 @@ import com.eagle.programmar.Ruby.Expressions.Ruby_BuiltIn;
 import com.eagle.programmar.Ruby.Expressions.Ruby_ConditionalAndExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_ConditionalOrExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_EqualityExpression;
+import com.eagle.programmar.Ruby.Expressions.Ruby_FunctionCall;
 import com.eagle.programmar.Ruby.Expressions.Ruby_LogicalNotExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_MethodInvocation;
 import com.eagle.programmar.Ruby.Expressions.Ruby_MultiplicativeExpression;
@@ -58,7 +59,8 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Ruby_MethodInvocation methodInvocation;
+	public @P(100) Ruby_FunctionCall functionCall;
+	public @P(105) Ruby_MethodInvocation methodInvocation;
 	public @P(110) Ruby_PreIncrementExpression preIncrementExpression;
 	public @P(120) Ruby_PostIncrementExpression postIncrementExpression;
 	public @P(130) Ruby_NegativeExpression negativeExpression;
