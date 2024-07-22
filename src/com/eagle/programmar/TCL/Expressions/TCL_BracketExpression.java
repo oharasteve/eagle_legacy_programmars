@@ -10,7 +10,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class TCL_ExprExpression extends PrimaryOperator
+public class TCL_BracketExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
 	public @S(20) TCL_Function_Reference function;

@@ -60,16 +60,16 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	// Primary expressions
 
 	public @P(100) Ruby_FunctionCall functionCall;
-	public @P(105) Ruby_MethodInvocation methodInvocation;
-	public @P(110) Ruby_PreIncrementExpression preIncrementExpression;
-	public @P(120) Ruby_PostIncrementExpression postIncrementExpression;
-	public @P(130) Ruby_NegativeExpression negativeExpression;
-	public @P(140) Ruby_LogicalNotExpression logicalNotExpression;
-	public @P(150) Ruby_NotExpression notExpression;
-	public @P(160) Ruby_BuiltIn builtIn;
-	public @P(170) Ruby_VariableExpression variableExpression;
-	public @P(180) Ruby_BracketsExpression bracketsExpression;
-	public @P(190) Ruby_ParenthesizedExpression parenthesizedExpression;
+	public @P(110) Ruby_MethodInvocation methodInvocation;
+	public @P(120) Ruby_PreIncrementExpression preIncrementExpression;
+	public @P(130) Ruby_PostIncrementExpression postIncrementExpression;
+	public @P(140) Ruby_NegativeExpression negativeExpression;
+	public @P(150) Ruby_LogicalNotExpression logicalNotExpression;
+	public @P(160) Ruby_NotExpression notExpression;
+	public @P(170) Ruby_BuiltIn builtIn;
+	public @P(180) Ruby_VariableExpression variableExpression;
+	public @P(190) Ruby_BracketsExpression bracketsExpression;
+	public @P(200) Ruby_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

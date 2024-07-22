@@ -54,7 +54,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
-					"Method " + name + " expects #args = " + paramCount + ", but was given " + argCount);
+					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
 		// Now assign all the parameters

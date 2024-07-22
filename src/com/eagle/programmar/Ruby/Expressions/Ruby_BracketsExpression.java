@@ -29,7 +29,6 @@ public class Ruby_BracketsExpression extends PrimaryOperator implements EagleRun
 			Ruby_Expression expr = exprs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			vals.addValue(val);
-			if (interpreter._TRACE) System.err.println("*** array[" + i + "] = " + val.toString());
 		}
 
 		interpreter.pushEagleValue(vals);

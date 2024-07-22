@@ -19,9 +19,9 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
-	public @S(30) CSharp_BuiltinMethod right;
+	public @S(30) CSharp_BuiltinMethodArgs right;
 	
-	public static class CSharp_BuiltinMethod extends TokenChooser
+	public static class CSharp_BuiltinMethodArgs extends TokenChooser
 	{
 		public @CHOICE CSharp_BuiltinNoArgs noArgs;
 		public @CHOICE CSharp_BuiltinOneArg oneArg;
