@@ -3,12 +3,16 @@
 
 package com.eagle.programmar.Perl;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Perl.Perl_Statement.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
 import com.eagle.programmar.Perl.Symbols.Perl_Variable_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -18,13 +22,15 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Perl_FunctionDefinition extends TokenSequence
+public class Perl_FunctionDefinition extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT TokenList<Perl_FunctionPrefix> modifiers;
 	public @S(20) Perl_Keyword FUNCTION = new Perl_Keyword("function");
 	public @S(30) Perl_Function_Definition fnName;
 	public @S(40) Perl_Function_Parameters params;
 	public @S(50) Perl_FunctionBlock block;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class Perl_FunctionPrefix extends TokenSequence
 	{
@@ -40,7 +46,7 @@ public class Perl_FunctionDefinition extends TokenSequence
 	public static class Perl_Function_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT Perl_FunctionVariableOrTypeVariable var;
+		public @S(20) @OPT Perl_FunctionVariableOrTypeVariable param;
 		public @S(30) @OPT TokenList<Perl_MoreFuncParameters> moreParams;
 		public @S(40) PunctuationRightParen rightParen;
 
@@ -73,5 +79,19 @@ public class Perl_FunctionDefinition extends TokenSequence
 			public @S(10) PunctuationComma comma;
 			public @S(20) Perl_FunctionVariableOrTypeVariable var;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), getFileName(), getStartLine(),
+					getStartChar());
+		}
+
+		// Don't do anything here.
+		// We searched for all the functions in a preliminary pass
+		// And we only evaluate when it is called
 	}
 }

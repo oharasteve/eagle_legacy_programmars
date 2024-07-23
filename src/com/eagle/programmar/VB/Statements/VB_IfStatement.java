@@ -11,8 +11,6 @@ import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.VB_Statement.VB_BaseStatement;
-import com.eagle.programmar.VB.Statements.VB_IfStatement.VB_IfType.VB_IfMultiLiner;
-import com.eagle.programmar.VB.Statements.VB_IfStatement.VB_IfType.VB_IfOneLiner;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -32,20 +30,23 @@ public class VB_IfStatement extends TokenSequence implements AbstractStatement, 
 
 	public static class VB_IfType extends TokenChooser
 	{
-		public @CHOICE static class VB_IfOneLiner extends TokenSequence
-		{
-			public @S(10) VB_BaseStatement thenStatement;
-		}
+		public @CHOICE VB_IfOneLiner oneLiner;
+		public @CHOICE VB_IfMultiLiner multiLiner;
+	}
 
-		public @CHOICE static class VB_IfMultiLiner extends TokenSequence
-		{
-			public @S(10) VB_EndOfLine eoln;
-			public @S(20) TokenList<VB_Statement> thenStatement;
-			public @S(30) @OPT TokenList<VB_IfElseIfClause> elseIfClause;
-			public @S(40) @OPT VB_IfElseClause elseClause;
-			public @S(50) VB_Keyword END = new VB_Keyword("end");
-			public @S(60) VB_Keyword IF2 = new VB_Keyword("if");
-		}
+	public static class VB_IfOneLiner extends TokenSequence
+	{
+		public @S(10) VB_BaseStatement thenStatement;
+	}
+
+	public static class VB_IfMultiLiner extends TokenSequence
+	{
+		public @S(10) VB_EndOfLine eoln;
+		public @S(20) TokenList<VB_Statement> thenStatement;
+		public @S(30) @OPT TokenList<VB_IfElseIfClause> elseIfClause;
+		public @S(40) @OPT VB_IfElseClause elseClause;
+		public @S(50) VB_Keyword END = new VB_Keyword("end");
+		public @S(60) VB_Keyword IF2 = new VB_Keyword("if");
 	}
 
 	public static class VB_IfElseIfClause extends TokenSequence
