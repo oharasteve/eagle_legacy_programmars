@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.math.EagleInteger;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
@@ -13,7 +18,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class VB_ForStatement extends TokenSequence implements AbstractStatement
+public class VB_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("5z06z1kb.aspx") VB_Keyword FOR = new VB_Keyword("for");
 	public @S(20) VB_Identifier_Reference var;
@@ -23,7 +28,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement
 	public @S(60) VB_Expression to;
 	public @S(70) @OPT VB_ForStep step;
 	public @S(80) VB_EndOfLine eoln;
-	public @S(90) TokenList<VB_Statement> action;
+	public @S(90) TokenList<VB_Statement> actions;
 	public @S(100) VB_Keyword NEXT = new VB_Keyword("next");
 	public @S(110) @OPT VB_Identifier_Reference var2;
 
@@ -31,5 +36,69 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) VB_Keyword STEP = new VB_Keyword("step");
 		public @S(20) VB_Expression step;
+	}
+	
+	private @SKIP ForLoopMetrics _metrics = null;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+
+		int current = interpreter.getIntValue(from);
+		int stop = interpreter.getIntValue(to);
+		int by = 1;
+		
+		if (step != null && step.isPresent())
+		{
+			by = interpreter.getIntValue(step.step);
+		}
+		
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			metric.iterate();
+			interpreter._symbolTable.setSymbol(_fileName, _currentLine, _currentChar,
+					var.getValue(), new EagleInteger(current));
+
+			for (VB_Statement stmt : actions._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			
+			if (result == Eagle_Statement_Result.BREAK)
+			{
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
+			}
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+
+			current += by;
+			if (by < 0)
+			{
+				if (current < stop) break;
+			}
+			else
+			{
+				if (current > stop) break;
+			}
+		}
+
+		_metrics.competedLoop(metric);
+		return result;
 	}
 }

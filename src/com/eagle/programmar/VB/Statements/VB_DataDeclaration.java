@@ -50,7 +50,7 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (initializer.isPresent())
+		if (initializer != null && initializer.isPresent())
 		{
 			EagleValue value = interpreter.getEagleValue(initializer.expr);
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),

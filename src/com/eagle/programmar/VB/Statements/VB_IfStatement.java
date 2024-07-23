@@ -3,9 +3,16 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.VB_Statement.VB_BaseStatement;
+import com.eagle.programmar.VB.Statements.VB_IfStatement.VB_IfType.VB_IfMultiLiner;
+import com.eagle.programmar.VB.Statements.VB_IfStatement.VB_IfType.VB_IfOneLiner;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -14,12 +21,14 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_IfStatement extends TokenSequence implements AbstractStatement
+public class VB_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("752y8abs.aspx") VB_Keyword IF1 = new VB_Keyword("if");
 	public @S(20) VB_Expression condition;
 	public @S(30) VB_Keyword THEN = new VB_Keyword("then");
 	public @S(40) VB_IfType ifType;
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	public static class VB_IfType extends TokenChooser
 	{
@@ -55,5 +64,99 @@ public class VB_IfStatement extends TokenSequence implements AbstractStatement
 		public @S(20) VB_Keyword ELSE = new VB_Keyword("else");
 		public @S(30) VB_EndOfLine eoln;
 		public @S(40) TokenList<VB_Statement> elseStatement;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		TokenList<VB_Statement> todo = null;
+
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			
+			if (ifType.getWhich() instanceof VB_IfMultiLiner)
+			{
+				VB_IfMultiLiner multi = (VB_IfMultiLiner) ifType.getWhich();
+				if (multi.elseIfClause != null)
+				{
+					for (VB_IfElseIfClause elif : multi.elseIfClause._elements)
+					{
+						_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
+								elif.getStartChar()));
+					}
+				}
+	
+				if (multi.elseClause != null && multi.elseClause.isPresent())
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, multi.elseClause.getFileName(),
+							multi.elseClause.getStartLine(), multi.elseClause.getStartChar()));
+				}
+			}
+		}
+	
+		boolean cond1 = interpreter.getBoolValue(condition);
+		_metrics.get(0).completedIf(cond1);
+
+		if (ifType.getWhich() instanceof VB_IfOneLiner)
+		{
+			VB_IfOneLiner oneLiner = (VB_IfOneLiner) ifType.getWhich();
+			if (cond1)
+			{
+				result = interpreter.tryToInterpret(oneLiner.thenStatement);
+			}
+		}
+		else
+		{
+			VB_IfMultiLiner multi = (VB_IfMultiLiner) ifType.getWhich();
+			if (cond1)
+			{
+				todo = multi.thenStatement;
+			}
+			else
+			{
+				int seq = 1;
+				// Check for each 'else if'
+				if (multi.elseIfClause != null)
+				{
+					for (VB_IfElseIfClause elif : multi.elseIfClause._elements)
+					{
+						boolean cond2 = interpreter.getBoolValue(elif.condition);
+						_metrics.get(seq).completedIf(cond2);
+						seq++;
+						if (cond2)
+						{
+							todo = elif.elseIfStatement;
+							break;
+						}
+					}
+				}
+	
+				// Check for 'else'
+				if (todo == null)
+				{
+					if (multi.elseClause != null && multi.elseClause.isPresent())
+					{
+						_metrics.get(seq).completedIf(true);
+						todo = multi.elseClause.elseStatement;
+					}
+				}
+			}
+	
+			if (todo != null)
+			{
+				result = Eagle_Statement_Result.NORMAL;
+				for (VB_Statement stmt : todo._elements)
+				{
+					result = interpreter.tryToInterpret(stmt);
+					if (result != Eagle_Statement_Result.NORMAL) break;
+				}
+			}
+		}
+
+		return result;
 	}
 }

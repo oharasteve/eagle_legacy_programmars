@@ -5,6 +5,7 @@ package com.eagle.programmar.VB;
 
 import com.eagle.programmar.VB.Expressions.VB_AdditiveExpression;
 import com.eagle.programmar.VB.Expressions.VB_AndExpression;
+import com.eagle.programmar.VB.Expressions.VB_ArrayExpression;
 import com.eagle.programmar.VB.Expressions.VB_BuiltIn;
 import com.eagle.programmar.VB.Expressions.VB_CommentExpression;
 import com.eagle.programmar.VB.Expressions.VB_ConcatExpression;
@@ -59,13 +60,14 @@ public class VB_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) VB_BuiltIn builtIn;
-	public @P(110) VB_FunctionCall functionCall;
-	public @P(120) VB_NegativeExpression negativeExpression;
-	public @P(130) VB_NotExpression notExpression;
-	public @P(140) VB_VariableExpression variableExpression;
-	public @P(150) VB_ParenthesizedExpression parenthesizedExpression;
-	public @P(160) VB_CommentExpression commentExpression;
+	public @P(100) VB_ArrayExpression arrayExpression;
+	public @P(110) VB_BuiltIn builtIn;
+	public @P(120) VB_FunctionCall functionCall;
+	public @P(130) VB_NegativeExpression negativeExpression;
+	public @P(140) VB_NotExpression notExpression;
+	public @P(150) VB_VariableExpression variableExpression;
+	public @P(160) VB_ParenthesizedExpression parenthesizedExpression;
+	public @P(170) VB_CommentExpression commentExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

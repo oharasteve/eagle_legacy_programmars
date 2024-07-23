@@ -23,7 +23,7 @@ public class TCL_ArrayExpression extends PrimaryOperator implements EagleRunnabl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleArray vals = new EagleArray();
-		for(TCL_Expression expr : exprs._elements)
+		for (TCL_Expression expr : exprs._elements)
 		{
 			EagleValue val = interpreter.getEagleValue(expr);
 			vals.addValue(val);

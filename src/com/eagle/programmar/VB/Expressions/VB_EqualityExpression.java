@@ -5,6 +5,7 @@ package com.eagle.programmar.VB.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.programmar.VB.Terminals.VB_PunctuationChoice;
@@ -26,14 +27,31 @@ public class VB_EqualityExpression extends PrecedenceOperator implements EagleRu
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (equalityOperator.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "=":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (equalityOperator.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + equalityOperator.getWhich());
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (equalityOperator.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			}
+		}
+		
+		throw new RuntimeException("Unexpected equality operator: " + equalityOperator.getWhich());
 	}
 }
