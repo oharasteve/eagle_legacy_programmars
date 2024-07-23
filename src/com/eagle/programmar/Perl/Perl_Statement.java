@@ -12,6 +12,7 @@ import com.eagle.programmar.Perl.Statements.Perl_ForEachStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForStatement;
 import com.eagle.programmar.Perl.Statements.Perl_IfStatement;
 import com.eagle.programmar.Perl.Statements.Perl_NamespaceStatement;
+import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Statements.Perl_SwitchStatement;
 import com.eagle.programmar.Perl.Statements.Perl_TraitStatement;
 import com.eagle.programmar.Perl.Statements.Perl_TryStatement;
@@ -24,8 +25,6 @@ import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_Statement extends TokenChooser
@@ -38,13 +37,7 @@ public class Perl_Statement extends TokenChooser
 	public @CHOICE Perl_Label label;
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon semicolon;
 	public @LAST Perl_ExpressionStatement expressionStatement; 
-
-	public @CHOICE static class Perl_StatementBlock extends TokenSequence
-	{
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT TokenList<Perl_StatementOrComment> statements;
-		public @S(30) PunctuationRightBrace rightBrace;
-	}
+	public @CHOICE Perl_StatementBlock statementBlock;
 
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence
 	{

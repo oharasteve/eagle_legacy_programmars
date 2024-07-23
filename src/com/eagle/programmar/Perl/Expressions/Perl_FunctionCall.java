@@ -72,6 +72,22 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 			interpreter.pushEagleValue(array);
 			return;
 		}
+		if (name.equals("strlen"))
+		{
+			String str = interpreter.getStrValue(argument);
+			interpreter.pushInt(str.length());
+			return;
+		}
+		if (name.equals("substr"))
+		{
+			String str = interpreter.getStrValue(argument);
+			int sc = interpreter.getIntValue(moreArgs._elements.get(0).argument);
+			int nc = interpreter.getIntValue(moreArgs._elements.get(1).argument);
+			int len = str.length();
+			if (sc + nc > len) nc = len - sc;	// Don't go past the end of the string
+			interpreter.pushStr(str.substring(sc, sc + nc));
+			return;
+		}
 		
 		// Look up the function
 		Perl_FunctionDefinition func = null;

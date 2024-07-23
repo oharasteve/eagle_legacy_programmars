@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.Perl.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_Statement;
 import com.eagle.programmar.Perl.Terminals.Perl_Comment;
@@ -16,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_IfStatement extends TokenSequence implements AbstractStatement
+public class Perl_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("control-structures.if.php") Perl_Keyword IF = new Perl_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -29,6 +34,8 @@ public class Perl_IfStatement extends TokenSequence implements AbstractStatement
 	public @S(90) @OPT TokenList<Perl_IfElseIfClause> elseIfClauses;
 	public @S(100) @OPT TokenList<Perl_Comment> comments4;
 	public @S(110) @OPT Perl_IfElseClause elseClause;
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	public static class Perl_IfWhat extends TokenChooser
 	{
@@ -58,5 +65,78 @@ public class Perl_IfStatement extends TokenSequence implements AbstractStatement
 		public @S(10) Perl_Keyword ELSE = new Perl_Keyword("else");
 		public @S(20) @OPT TokenList<Perl_Comment> comments;
 		public @S(30) Perl_Statement elseStatement;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		Perl_Statement todo = null;
+
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			
+			if (elseIfClauses != null)
+			{
+				for (Perl_IfElseIfClause elif : elseIfClauses._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
+							elif.getStartChar()));
+				}
+			}
+
+			if (elseClause != null && elseClause.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
+			}
+		}
+	
+		boolean cond1 = interpreter.getBoolValue(condition);
+		_metrics.get(0).completedIf(cond1);
+
+		if (cond1)
+		{
+			todo = thenStatement;
+		}
+		else
+		{
+			int seq = 1;
+			// Check for each 'else if'
+			if (elseIfClauses != null)
+			{
+				for (Perl_IfElseIfClause elif : elseIfClauses._elements)
+				{
+					boolean cond2 = interpreter.getBoolValue(elif.condition);
+					_metrics.get(seq).completedIf(cond2);
+					seq++;
+					if (cond2)
+					{
+						todo = elif.elseIfStatement;
+						break;
+					}
+				}
+			}
+
+			// Check for 'else'
+			if (todo == null)
+			{
+				if (elseClause != null && elseClause.isPresent())
+				{
+					_metrics.get(seq).completedIf(true);
+					todo = elseClause.elseStatement;
+				}
+			}
+		}
+
+		if (todo != null)
+		{
+			result = interpreter.tryToInterpret(todo);
+		}
+
+		return result;
 	}
 }

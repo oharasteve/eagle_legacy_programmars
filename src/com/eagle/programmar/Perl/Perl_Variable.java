@@ -5,6 +5,7 @@ package com.eagle.programmar.Perl;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Comment;
@@ -52,8 +53,18 @@ public class Perl_Variable extends TokenChooser
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
-			interpreter.pushEagleValue(value);
+			EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+			if (subscript != null && subscript.size() > 0)
+			{
+				EagleArray array = (EagleArray) value;
+				int sub = interpreter.getIntValue(subscript.first().expr);
+				EagleValue val = array.getValue(sub);
+				interpreter.pushEagleValue(val);
+			}
+			else
+			{
+				interpreter.pushEagleValue(value);
+			}
 		}
 	}
 

@@ -5,6 +5,7 @@ package com.eagle.programmar.Perl.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
@@ -26,17 +27,37 @@ public class Perl_EqualityExpression extends PrecedenceOperator implements Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (equalityOperator.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "==", "===", "eq":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case "!=", "!==", "ne":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (equalityOperator.getWhich().toString())
+			{
+			case "==", "===", "eq":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=", "!==", "ne":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
 		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (equalityOperator.getWhich().toString())
+			{
+			case "==", "===", "eq":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=", "!==", "ne":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			}
+		}
+		
 		throw new RuntimeException("Unexpected relational operator: " + equalityOperator.getWhich());
 	}
 }

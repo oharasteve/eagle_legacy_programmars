@@ -25,7 +25,7 @@ public class Perl_PrintStatement extends TokenSequence implements EagleRunnable,
 		for (AbstractToken expr : strings._elements)
 		{
 			String item = interpreter.getStrValue(expr);
-			System.out.println(item);
+			System.out.print(item.replace("\\n", "\n"));
 		}
 	}
 }
