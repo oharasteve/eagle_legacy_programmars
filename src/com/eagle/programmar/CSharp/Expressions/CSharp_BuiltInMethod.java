@@ -56,7 +56,7 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 	{
 		String leftStr = interpreter.getStrValue(left);
 		String name = "";
-		if (right.getWhich() instanceof CSharp_BuiltinTwoArgs)
+		if (right != null && right.getWhich() instanceof CSharp_BuiltinTwoArgs)
 		{
 			CSharp_BuiltinTwoArgs twoArgs = (CSharp_BuiltinTwoArgs) right.getWhich();
 			name = twoArgs.builtin.getValue();
@@ -69,7 +69,7 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 				return;
 			}
 		}
-		else if (right.getWhich() instanceof CSharp_BuiltinOneArg)
+		else if (right != null && right.getWhich() instanceof CSharp_BuiltinOneArg)
 		{
 			CSharp_BuiltinOneArg oneArg = (CSharp_BuiltinOneArg) right.getWhich();
 			name = oneArg.builtin.getValue();
@@ -85,7 +85,7 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 				return;
 			}
 		}
-		else if (right.getWhich() instanceof CSharp_BuiltinNoArgs)
+		else if (right != null && right.getWhich() instanceof CSharp_BuiltinNoArgs)
 		{
 			CSharp_BuiltinNoArgs noArgs = (CSharp_BuiltinNoArgs) right.getWhich();
 			name = noArgs.builtin.getValue();
