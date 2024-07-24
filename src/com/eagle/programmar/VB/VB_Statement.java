@@ -4,7 +4,7 @@
 package com.eagle.programmar.VB;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.VB.Statements.VB_AssignmentStatement;
 import com.eagle.programmar.VB.Statements.VB_AttributeStatement;
 import com.eagle.programmar.VB.Statements.VB_BeginStatement;
@@ -34,7 +34,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class VB_Statement extends TokenSequence implements EagleRunnable
+public class VB_Statement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) VB_BaseStatement baseStatement;
 	public @S(20) @OPT VB_Comment comment;
@@ -74,10 +74,10 @@ public class VB_Statement extends TokenSequence implements EagleRunnable
 			public @S(20) PunctuationColon colon;
 		}
 	}
-
+	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(baseStatement);
+		return interpreter.tryToInterpret(baseStatement);
 	}
 }

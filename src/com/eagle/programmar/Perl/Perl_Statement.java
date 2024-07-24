@@ -4,7 +4,7 @@
 package com.eagle.programmar.Perl;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Statements.Perl_ClassStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ExpressionStatement;
@@ -54,7 +54,7 @@ public class Perl_Statement extends TokenChooser
 		}
 	}
 
-	public @CHOICE static class Perl_SimpleStatement extends TokenSequence implements EagleRunnable
+	public @CHOICE static class Perl_SimpleStatement extends TokenSequence implements EagleRunnableWithResult
 	{
 		public @S(10) Perl_StatementList statement;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
@@ -62,9 +62,9 @@ public class Perl_Statement extends TokenChooser
 		public @S(40) @OPT TokenList<Perl_Comment> comments;
 
 		@Override
-		public void interpret(EagleInterpreter interpreter)
+		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
-			interpreter.tryToInterpret(statement);
+			return interpreter.tryToInterpret(statement);
 		}
 	}
 
