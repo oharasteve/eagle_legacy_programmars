@@ -8,10 +8,8 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Variable;
-import com.eagle.programmar.FSharp.Symbols.FSharp_Identifier_Reference;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -29,13 +27,7 @@ public class FSharp_LetStatement extends TokenSequence implements EagleRunnable,
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		AbstractToken which = var.var.getWhich();
-		if (!(which instanceof FSharp_Identifier_Reference))
-		{
-			throw new RuntimeException("Unable to handle " + which.toString());
-		}
-		FSharp_Identifier_Reference id = (FSharp_Identifier_Reference) which;
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
-				value);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+				var.id.getValue(), value);
 	}
 }

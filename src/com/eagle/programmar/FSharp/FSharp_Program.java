@@ -3,9 +3,15 @@
 
 package com.eagle.programmar.FSharp;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Simple_Statement;
+import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
+import com.eagle.programmar.FSharp.Statements.FSharp_Function;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 
 public class FSharp_Program extends EagleLanguage implements EagleRunnable
@@ -28,9 +34,33 @@ public class FSharp_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (FSharp_Statement stmt : elements._elements)
+		// First pass, just collect all the method definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
+		for (FSharp_Statement element : elements._elements)
 		{
-			interpreter.tryToInterpret(stmt.statementOrComment);
+			if (element.statementOrComment.getWhich() instanceof FSharp_Statement_List)
+			{
+				FSharp_Statement_List statements = (FSharp_Statement_List) element.statementOrComment.getWhich();
+				for (int i = 0; i < statements.statements.getPrimaryCount(); i++)
+				{
+					FSharp_Simple_Statement stmt = statements.statements.getPrimaryElement(i);
+					if (stmt.getWhich() instanceof FSharp_Function)
+					{
+						FSharp_Function func = (FSharp_Function) stmt.getWhich();
+						interpreter._functionList.add(func);
+						if (interpreter._TRACE)
+						{
+							System.err.println("*** Found FSharp method " + func.id.getValue());
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost class
+		for (FSharp_Statement element : elements._elements)
+		{
+			interpreter.tryToInterpret(element.statementOrComment.getWhich());
 		}
 	}
 }

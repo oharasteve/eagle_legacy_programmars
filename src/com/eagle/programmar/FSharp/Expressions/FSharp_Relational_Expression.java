@@ -5,6 +5,7 @@ package com.eagle.programmar.FSharp.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,30 +19,49 @@ public class FSharp_Relational_Expression extends PrecedenceOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftInt = interpreter.getIntValue(left);
-		int rightInt = interpreter.getIntValue(right);
-		switch (operator.getValue())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "=":
-			interpreter.pushBool(leftInt == rightInt);
-			return;
-		case "<>":
-			interpreter.pushBool(leftInt != rightInt);
-			return;
-		case "<":
-			interpreter.pushBool(leftInt < rightInt);
-			return;
-		case "<=":
-			interpreter.pushBool(leftInt <= rightInt);
-			return;
-		case ">":
-			interpreter.pushBool(leftInt > rightInt);
-			return;
-		case ">=":
-			interpreter.pushBool(leftInt >= rightInt);
-			return;
-		default:
-			throw new RuntimeException("Unable to handle operator: " + operator);
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "=":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "<>":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (operator.getValue())
+			{
+			case "=":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "<>":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			default:
+				throw new RuntimeException("Unable to handle operator: " + operator);
+			}
 		}
 	}
 }

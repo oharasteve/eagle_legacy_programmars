@@ -15,12 +15,11 @@ import com.eagle.programmar.Julia.Symbols.Julia_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Julia_FunctionCall extends PrimaryOperator implements AbstractStatement, EagleRunnable
+public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Julia_Variable variable;
 	public @S(20) PunctuationLeftParen leftParen;

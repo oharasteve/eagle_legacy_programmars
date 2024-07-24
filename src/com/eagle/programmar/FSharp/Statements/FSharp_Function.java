@@ -3,12 +3,16 @@
 
 package com.eagle.programmar.FSharp.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.FSharp.FSharp_Statement;
 import com.eagle.programmar.FSharp.FSharp_Type;
 import com.eagle.programmar.FSharp.Symbols.FSharp_Function_Definition;
 import com.eagle.programmar.FSharp.Symbols.FSharp_Variable_Definition;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -18,10 +22,10 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class FSharp_Function extends TokenSequence
+public class FSharp_Function extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @DOC("functions/") FSharp_Keyword LET = new FSharp_Keyword("let");
-	public @S(20) FSharp_Function_Definition func;
+	public @S(20) FSharp_Function_Definition id;
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) SeparatedList<FSharp_FunctionParam, PunctuationComma> params;
 	public @S(50) PunctuationRightParen rightParen;
@@ -29,10 +33,26 @@ public class FSharp_Function extends TokenSequence
 	public @S(70) FSharp_EndOfLine eoln;
 	public @S(80) TokenList<FSharp_Statement> statements;
 
+	public @SKIP CallMetrics _metrics = null;
+
 	public static class FSharp_FunctionParam extends TokenSequence
 	{
 		public @S(10) FSharp_Variable_Definition var;
 		public @S(20) PunctuationColon colon;
 		public @S(30) FSharp_Type type;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
+					getStartChar());
+		}
+
+		// Don't do anything here.
+		// We searched for all the functions in a preliminary pass
+		// And we only evaluate when it is called
 	}
 }
