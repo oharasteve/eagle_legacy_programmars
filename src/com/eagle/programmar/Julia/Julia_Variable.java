@@ -5,6 +5,7 @@ package com.eagle.programmar.Julia;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Julia.Symbols.Julia_Identifier_Reference;
 import com.eagle.programmar.Julia.Terminals.Julia_Punctuation;
@@ -33,6 +34,16 @@ public class Julia_Variable extends TokenSequence implements AbstractVariable, E
 	{
 		Julia_Identifier_Reference which = vars.first();
 		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		
+		if (subscript != null && subscript.isPresent() && value instanceof EagleArray)
+		{
+			int subscr = interpreter.getIntValue(subscript.expr);
+			EagleArray val = (EagleArray) value;
+			interpreter.pushEagleValue(val.getValue(subscr - 1));
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

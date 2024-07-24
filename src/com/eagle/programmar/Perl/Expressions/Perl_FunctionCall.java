@@ -9,8 +9,8 @@ import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters.Perl_FunctionVariable;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters.Perl_FunctionVariableOrTypeVariable;
+import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariable;
+import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -30,7 +30,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT Perl_Punctuation at = new Perl_Punctuation('@');
 	public @S(60) @OPT Perl_Expression argument;
-	public @S(70) @OPT TokenList<Perl_MoreArguments> moreArgs;
+	public @S(70) @OPT TokenList<Perl_MoreFnArguments> moreArgs;
 	public @S(80) PunctuationRightParen rightParen;
 
 	public static class Perl_MoreFunctionName extends TokenSequence
@@ -45,7 +45,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 		public @S(20) Perl_Identifier_Reference fnName;
 	}
 
-	public static class Perl_MoreArguments extends TokenSequence
+	public static class Perl_MoreFnArguments extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT Perl_Comment comment;
@@ -64,7 +64,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 			EagleArray array = new EagleArray();
 			EagleValue arg = interpreter.getEagleValue(argument);
 			array.addValue(arg);
-			for (Perl_MoreArguments more : moreArgs._elements)
+			for (Perl_MoreFnArguments more : moreArgs._elements)
 			{
 				arg = interpreter.getEagleValue(more.argument);
 				array.addValue(arg);

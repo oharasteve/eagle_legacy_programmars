@@ -6,15 +6,15 @@ package com.eagle.programmar.Julia.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Expression;
+import com.eagle.programmar.Julia.Terminals.Julia_Comment;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
-import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Julia_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @NOSPACE Julia_Expression expression;
-	public @S(20) @OPT VB_Comment comment;
+	public @S(20) @OPT Julia_Comment comment;
 	public @S(30) Julia_EOLN eoln;
 
 	@Override

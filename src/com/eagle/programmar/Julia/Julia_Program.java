@@ -40,10 +40,16 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE Julia_Statement stmt;
 	}
 
-	public static class Julia_CommentEoln extends TokenSequence
+	public static class Julia_CommentEoln extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Julia_Comment comment;
 		public @S(20) Julia_EOLN eoln;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			// Nothing to do here
+		}
 	}
 
 	@Override
@@ -62,6 +68,7 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 				{
 					Julia_Function fn = (Julia_Function) which;
 					interpreter._functionList.add(fn);
+					if (interpreter._TRACE) System.err.println("*** Found function " + fn.id.getValue());
 				}
 			}
 		}

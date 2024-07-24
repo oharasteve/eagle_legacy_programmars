@@ -5,6 +5,7 @@ package com.eagle.programmar.Julia.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Julia_Variable;
@@ -18,19 +19,26 @@ public class Julia_Assignment extends TokenSequence implements EagleRunnable, Ab
 {
 	public @S(10) Julia_Variable var;
 	public @S(20) Julia_PunctuationChoice equals = new Julia_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
-	public @S(30) Julia_Expression value;
+	public @S(30) Julia_Expression expr;
 	public @S(40) Julia_EOLN eoln;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		Julia_Identifier_Reference id = var.vars.first();
 		switch (equals.getValue())
 		{
 		case "=":
-			EagleValue val = interpreter.getEagleValue(value);
-			Julia_Identifier_Reference id = var.vars.first();
+			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 					val);
+			break;
+		case "+=":
+			int newVal = interpreter.getIntValue(expr);
+			EagleValue oldVar = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
+			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+					id.getValue(), newValue);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

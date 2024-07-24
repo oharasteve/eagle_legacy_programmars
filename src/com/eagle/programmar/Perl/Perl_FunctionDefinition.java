@@ -50,34 +50,34 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 		public @S(30) @OPT TokenList<Perl_MoreFuncParameters> moreParams;
 		public @S(40) PunctuationRightParen rightParen;
 
-		public static class Perl_FunctionVariableOrTypeVariable extends TokenChooser
-		{
-			public @LAST Perl_FunctionVariable var;
-
-			public @CHOICE static class Perl_FunctionTypeAndVariable extends TokenSequence
-			{
-				public @S(10) Perl_Type type;
-				public @S(20) Perl_FunctionVariable var;
-			}
-		}
-
-		public static class Perl_FunctionVariable extends TokenSequence
-		{
-			public @S(10) @OPT Perl_Punctuation amp = new Perl_Punctuation('&');
-			public @S(20) Perl_Variable_Definition param;
-			public @S(30) @OPT Perl_Variable_Initializer init;
-
-			public static class Perl_Variable_Initializer extends TokenSequence
-			{
-				public @S(10) PunctuationEquals equals;
-				public @S(20) Perl_Expression initVal;
-			}
-		}
-
 		public static class Perl_MoreFuncParameters extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) Perl_FunctionVariableOrTypeVariable var;
+		}
+	}
+
+	public static class Perl_FunctionVariableOrTypeVariable extends TokenChooser
+	{
+		public @LAST Perl_FunctionVariable var;
+
+		public @CHOICE static class Perl_FunctionTypeAndVariable extends TokenSequence
+		{
+			public @S(10) Perl_Type type;
+			public @S(20) Perl_FunctionVariable var;
+		}
+	}
+
+	public static class Perl_FunctionVariable extends TokenSequence
+	{
+		public @S(10) @OPT Perl_Punctuation amp = new Perl_Punctuation('&');
+		public @S(20) Perl_Variable_Definition param;
+		public @S(30) @OPT Perl_Variable_Initializer init;
+
+		public static class Perl_Variable_Initializer extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) Perl_Expression initVal;
 		}
 	}
 
