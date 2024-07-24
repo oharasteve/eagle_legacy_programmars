@@ -10,6 +10,7 @@ import com.eagle.programmar.Julia.Expressions.Julia_BuiltIn;
 import com.eagle.programmar.Julia.Expressions.Julia_ConditionalAndExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_ConditionalOrExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_EqualityExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_FunctionCall;
 import com.eagle.programmar.Julia.Expressions.Julia_LogicalNotExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_MethodInvocation;
 import com.eagle.programmar.Julia.Expressions.Julia_MultiplicativeExpression;
@@ -58,16 +59,17 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Julia_MethodInvocation methodInvocation;
-	public @P(110) Julia_PreIncrementExpression preIncrementExpression;
-	public @P(120) Julia_PostIncrementExpression postIncrementExpression;
-	public @P(130) Julia_NegativeExpression negativeExpression;
-	public @P(140) Julia_LogicalNotExpression logicalNotExpression;
-	public @P(150) Julia_NotExpression notExpression;
-	public @P(160) Julia_BuiltIn builtIn;
-	public @P(170) Julia_VariableExpression variableExpression;
-	public @P(180) Julia_BracketsExpression bracketsExpression;
-	public @P(190) Julia_ParenthesizedExpression parenthesizedExpression;
+	public @P(100) Julia_FunctionCall functionCall;
+	public @P(110) Julia_MethodInvocation methodInvocation;
+	public @P(120) Julia_PreIncrementExpression preIncrementExpression;
+	public @P(130) Julia_PostIncrementExpression postIncrementExpression;
+	public @P(140) Julia_NegativeExpression negativeExpression;
+	public @P(150) Julia_LogicalNotExpression logicalNotExpression;
+	public @P(160) Julia_NotExpression notExpression;
+	public @P(170) Julia_BuiltIn builtIn;
+	public @P(180) Julia_VariableExpression variableExpression;
+	public @P(190) Julia_BracketsExpression bracketsExpression;
+	public @P(200) Julia_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

@@ -27,18 +27,28 @@ public class Julia_MethodInvocation extends PrimaryOperator implements EagleRunn
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Julia_Identifier_Reference id = methodName.vars.first();
-		if (!id.getValue().equals("string"))
+		if (id.getValue().equals("div"))
 		{
-			throw new RuntimeException("Unexpected method: " + id.getValue());
+			Julia_Expression numerExpr = argList.getPrimaryElement(0);
+			Julia_Expression denomExpr = argList.getPrimaryElement(1);
+			int numer = interpreter.getIntValue(numerExpr);
+			int denom = interpreter.getIntValue(denomExpr);
+			interpreter.pushInt(numer / denom);
+			return;
+		}
+		if (id.getValue().equals("string"))
+		{
+			StringBuffer buff = new StringBuffer();
+			for (int i = 0; i < argList.getPrimaryCount(); i++)
+			{
+				Julia_Expression expr = argList.getPrimaryElement(i);
+				String val = interpreter.getStrValue(expr);
+				buff.append(val);
+			}
+			interpreter.pushStr(buff.toString());
+			return;
 		}
 
-		StringBuffer buff = new StringBuffer();
-		for (int i = 0; i < argList.getPrimaryCount(); i++)
-		{
-			Julia_Expression expr = argList.getPrimaryElement(i);
-			String val = interpreter.getStrValue(expr);
-			buff.append(val);
-		}
-		interpreter.pushStr(buff.toString());
+		throw new RuntimeException("Unexpected method: " + id.getValue());
 	}
 }

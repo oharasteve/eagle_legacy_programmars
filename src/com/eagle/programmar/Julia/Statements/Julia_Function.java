@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Julia.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.programmar.Julia.Julia_Variable;
 import com.eagle.programmar.Julia.Symbols.Julia_Function_Definition;
@@ -16,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Julia_Function extends TokenSequence implements AbstractFunction
+public class Julia_Function extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @DOC("manual/functions/") Julia_Keyword FUNCTION = new Julia_Keyword("function");
 	public @S(20) Julia_Function_Definition id;
@@ -26,10 +29,26 @@ public class Julia_Function extends TokenSequence implements AbstractFunction
 	public @S(60) Julia_Keyword END = new Julia_Keyword("end");
 	public @S(70) Julia_EOLN eoln2;
 
+	public @SKIP CallMetrics _metrics = null;
+
 	public static class Julia_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<Julia_Variable, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
+					getStartChar());
+		}
+
+		// Don't do anything here.
+		// We searched for all the functions in a preliminary pass
+		// And we only evaluate when it is called
 	}
 }

@@ -3,12 +3,15 @@
 
 package com.eagle.programmar.Julia;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Julia.Statements.Julia_Function;
 import com.eagle.programmar.Julia.Terminals.Julia_Comment;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -47,6 +50,7 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
+		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Julia_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
