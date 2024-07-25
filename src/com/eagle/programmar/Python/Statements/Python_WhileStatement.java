@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
-import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenSequence;
@@ -17,7 +17,7 @@ public class Python_WhileStatement extends TokenSequence implements AbstractStat
 			"while");
 	public @S(20) Python_Expression condition;
 	public @S(30) @NOSPACE PunctuationColon colon;
-	public @S(40) Python_SingleOrMultiLineStatement statements;
+	public @S(40) Python_StatementBlock statements;
 	public @S(50) @OPT Python_WhileElse whileElse;
 
 	public static class Python_WhileElse extends TokenSequence
@@ -25,6 +25,6 @@ public class Python_WhileStatement extends TokenSequence implements AbstractStat
 		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
 		public @S(20) Python_Keyword ELSE = new Python_Keyword("else");
 		public @S(30) PunctuationColon colon;
-		public @S(40) Python_SingleOrMultiLineStatement doWhat;
+		public @S(40) Python_StatementBlock doWhat;
 	}
 }

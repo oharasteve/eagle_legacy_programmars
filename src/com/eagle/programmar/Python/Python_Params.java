@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Python_Params extends TokenSequence
 {
-	public @S(10) Python_Param param;
+	public @S(10) Python_Parameter param;
 	public @S(20) @OPT Python_ParamType type;
 	public @S(30) @OPT Python_InitValue initValue;
 	public @S(40) @OPT TokenList<Python_MoreParams> moreParams;
@@ -28,16 +28,16 @@ public class Python_Params extends TokenSequence
 		public @S(20) Python_Type type;
 	}
 
-	public static class Python_Param extends TokenChooser
+	public static class Python_Parameter extends TokenChooser
 	{
-		public @CHOICE Python_Expression expr;
+		public @CHOICE Python_Variable var;
 		public @LAST PunctuationSlash slash; // Means end of positional arguments
 		public @LAST PunctuationStar star; // Means end of positional or keyword arguments
 
 		public @CHOICE static class PythonParamStar extends TokenSequence
 		{
 			public @S(10) Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-			public @S(20) Python_Expression expr;
+			public @S(20) Python_Variable var;
 		}
 	}
 
@@ -45,7 +45,7 @@ public class Python_Params extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationComma comma;
 		public @S(20) @OPT Python_Comment comment;
-		public @S(30) Python_Param param;
+		public @S(30) Python_Parameter param;
 		public @S(40) @OPT Python_ParamType type;
 		public @S(50) @OPT Python_InitValue initValue;
 	}

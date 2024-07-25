@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Decorators;
-import com.eagle.programmar.Python.Python_SingleOrMultiLineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Symbols.Python_Class_Definition;
@@ -27,7 +27,7 @@ public class Python_ClassDeclaration extends TokenSequence implements AbstractCl
 	public @S(40) Python_Class_Definition name;
 	public @S(50) @OPT Python_ClassSuper superClass;
 	public @S(60) @NOSPACE PunctuationColon colon;
-	public @S(70) Python_SingleOrMultiLineStatement statements;
+	public @S(70) Python_StatementBlock statements;
 
 	public static class Python_ClassSuper extends TokenSequence
 	{

@@ -26,6 +26,7 @@ import com.eagle.programmar.Python.Expressions.Python_Not_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Or_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Parens;
 import com.eagle.programmar.Python.Expressions.Python_Power_Expression;
+import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_StarStar_Expression;
@@ -74,22 +75,23 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 
-	public @P(100) Python_FunnyConstructor funnyConstructor;
-	public @P(110) Python_Parens parens;
-	public @P(120) Python_BracesColons bracesColons;
-	public @P(130) Python_BracesNoColons bracesNoColons;
-	public @P(140) Python_Brackets brackets;
-	public @P(150) Python_UnarySign unarySign;
-	public @P(160) Python_Not_Expression notExpression;
-	public @P(170) Python_Literals literals;
-	public @P(180) Python_BackQuotes backQuotes;
-	public @P(190) Python_Function_Call functionCall;
-	public @P(200) Python_BuiltIn builtIn;
-	public @P(210) Python_VariableExpression variableExpression;
-	public @P(220) Python_Star_Expression starExpression;
-	public @P(230) Python_StarStar_Expression starStarExpression;
-	public @P(240) Python_Lambda_Expression lambdaExpression;
-	public @P(250) Python_Yield yield;
+	public @P(100) Python_RangeExpression rangeExpression;
+	public @P(110) Python_FunnyConstructor funnyConstructor;
+	public @P(120) Python_Parens parens;
+	public @P(130) Python_BracesColons bracesColons;
+	public @P(140) Python_BracesNoColons bracesNoColons;
+	public @P(150) Python_Brackets brackets;
+	public @P(160) Python_UnarySign unarySign;
+	public @P(170) Python_Not_Expression notExpression;
+	public @P(180) Python_Literals literals;
+	public @P(190) Python_BackQuotes backQuotes;
+	public @P(200) Python_Function_Call functionCall;
+	public @P(210) Python_BuiltIn builtIn;
+	public @P(220) Python_VariableExpression variableExpression;
+	public @P(230) Python_Star_Expression starExpression;
+	public @P(240) Python_StarStar_Expression starStarExpression;
+	public @P(250) Python_Lambda_Expression lambdaExpression;
+	public @P(260) Python_Yield yield;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

@@ -5,8 +5,11 @@ package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_CommentEoln;
 import com.eagle.programmar.Python.Python_List;
+import com.eagle.programmar.Python.Python_List.Python_MoreListItem;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
@@ -23,6 +26,24 @@ public class Python_Parens extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(list.expr);
+		if (list.moreItems != null && list.moreItems.isPresent() && list.moreItems._elements.size() > 0)
+		{
+			// It is an array declaration
+			EagleArray values = new EagleArray();
+			EagleValue val = interpreter.getEagleValue(list.expr);
+			values.addValue(val);
+			for (Python_MoreListItem item : list.moreItems._elements)
+			{
+				val = interpreter.getEagleValue(item.expr);
+				values.addValue(val);
+			}
+
+			interpreter.pushEagleValue(values);
+		}
+		else
+		{
+			// Just plain parens, like (1+2)
+			interpreter.tryToInterpret(list.expr);
+		}
 	}
 }

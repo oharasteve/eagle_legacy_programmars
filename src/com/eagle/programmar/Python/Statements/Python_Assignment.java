@@ -5,12 +5,14 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Python_VariableList.Python_Variable_or_List;
+import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
@@ -46,10 +48,33 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(expr);
-		Python_Variable_or_List vl = varList.vars.first();
-		Python_Variable v = (Python_Variable) vl.getWhich();
-		interpreter._symbolTable.setSymbol(v.getFileName(), v.getStartLine(), v.getStartChar(),
-				v.var.getWhich().toString(), value);
+		Python_Variable_or_List vars = varList.vars.first();
+		if (!(vars.getWhich() instanceof Python_Variable))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + vars.getWhich());
+		}
+		Python_Variable var = (Python_Variable) vars.getWhich();
+
+		if (var.var.getWhich() instanceof Python_Identifier_Reference)
+		{
+			Python_Identifier_Reference id = (Python_Identifier_Reference) var.var.getWhich();
+			switch (operator.getValue())
+			{
+			case "=":
+				EagleValue val = interpreter.getEagleValue(expr);
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+						id.getValue(), val);
+				break;
+			case "+=":
+				int newVal = interpreter.getIntValue(expr);
+				EagleValue oldVar = interpreter._symbolTable.findSymbol(id.toString());
+				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
+				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+						id.getValue(), newValue);
+				break;
+			default:
+				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+			}
+		}
 	}
 }

@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
@@ -20,8 +21,8 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 
 	public static class Python_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Python_PunctuationChoice operator = new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=",
-				"<", ">");
+		public @CHOICE Python_PunctuationChoice operatorSymbol =
+				new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=", "<", ">");
 
 		public @CHOICE static class Python_IN_Operator extends TokenSequence
 		{
@@ -39,30 +40,49 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftInt = interpreter.getIntValue(left);
-		int rightInt = interpreter.getIntValue(right);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
 		switch (relOp.getWhich().toString())
 		{
-		case "==":
-			interpreter.pushBool(leftInt == rightInt);
-			return;
-		case "!=", "<>":
-			interpreter.pushBool(leftInt != rightInt);
-			return;
-		case "<":
-			interpreter.pushBool(leftInt < rightInt);
-			return;
-		case "<=":
-			interpreter.pushBool(leftInt <= rightInt);
-			return;
-		case ">":
-			interpreter.pushBool(leftInt > rightInt);
-			return;
-		case ">=":
-			interpreter.pushBool(leftInt >= rightInt);
-			return;
-		default:
-			throw new RuntimeException("Unable to handle operator: " + relOp.getWhich());
+			case "==":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=", "<>":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			default:
+				throw new RuntimeException("Unable to handle operator: " + relOp.getWhich());
+			}
 		}
 	}
 }

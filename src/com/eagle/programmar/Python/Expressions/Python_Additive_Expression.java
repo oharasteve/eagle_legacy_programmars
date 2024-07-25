@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,18 +19,36 @@ public class Python_Additive_Expression extends PrecedenceOperator implements Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "+":
-			interpreter.pushInt(leftValue + rightValue);
-			break;
-		case "-":
-			interpreter.pushInt(leftValue - rightValue);
-			break;
-		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushStr(leftStr + rightStr);
+				break;
+			default:
+				throw new RuntimeException("Unexpected concatenation operator: " + operator);
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushInt(leftInt + rightInt);
+				break;
+			case "-":
+				interpreter.pushInt(leftInt - rightInt);
+				break;
+			default:
+				throw new RuntimeException("Unexpected additive operator: " + operator);
+			}
 		}
 	}
 }

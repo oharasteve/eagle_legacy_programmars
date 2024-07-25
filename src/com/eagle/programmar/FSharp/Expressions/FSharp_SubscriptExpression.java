@@ -8,10 +8,6 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.FSharp.FSharp_Expression;
-import com.eagle.programmar.FSharp.Expressions.FSharp_SubscriptExpression.FSharp_RangeExpr.FSharp_RangeExpr_high;
-import com.eagle.programmar.FSharp.Expressions.FSharp_SubscriptExpression.FSharp_RangeExpr.FSharp_RangeExpr_low;
-import com.eagle.programmar.FSharp.Expressions.FSharp_SubscriptExpression.FSharp_RangeExpr.FSharp_RangeExpr_low_high;
-import com.eagle.programmar.FSharp.Expressions.FSharp_SubscriptExpression.FSharp_RangeExpr.FSharp_RangeJustOne;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
@@ -30,31 +26,36 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator implements Ea
 
 	public static class FSharp_RangeExpr extends TokenChooser
 	{
-		public @FIRST static class FSharp_RangeExpr_low_high extends TokenSequence
-		{
-			public @S(10) FSharp_Expression low;
-			public @S(20) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
-			public @S(30) FSharp_Expression high;
-		}
-
-		public @CHOICE static class FSharp_RangeExpr_low extends TokenSequence
-		{
-			public @S(10) FSharp_Expression low;
-			public @S(20) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
-		}
-
-		public @CHOICE static class FSharp_RangeExpr_high extends TokenSequence
-		{
-			public @S(10) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
-			public @S(20) FSharp_Expression high;
-		}
-
-		public @LAST static class FSharp_RangeJustOne extends TokenSequence
-		{
-			public @S(10) FSharp_Expression subscr;
-		}
+		public @FIRST FSharp_RangeExpr_low_high lowHigh;
+		public @CHOICE FSharp_RangeExpr_low justLow;
+		public @CHOICE FSharp_RangeExpr_high justHigh;
+		public @LAST FSharp_RangeJustOne justOne;
 	}
 	
+	public static class FSharp_RangeExpr_low_high extends TokenSequence
+	{
+		public @S(10) FSharp_Expression low;
+		public @S(20) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
+		public @S(30) FSharp_Expression high;
+	}
+
+	public static class FSharp_RangeExpr_low extends TokenSequence
+	{
+		public @S(10) FSharp_Expression low;
+		public @S(20) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
+	}
+
+	public static class FSharp_RangeExpr_high extends TokenSequence
+	{
+		public @S(10) FSharp_Punctuation dotDot = new FSharp_Punctuation("..");
+		public @S(20) FSharp_Expression high;
+	}
+
+	public static class FSharp_RangeJustOne extends TokenSequence
+	{
+		public @S(10) FSharp_Expression subscr;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
