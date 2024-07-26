@@ -11,8 +11,9 @@ import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
+import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
-import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -32,20 +33,23 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 
 	public static class Python_IfElif extends TokenSequence
 	{
-		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
-		public @S(30) Python_Expression condition;
-		public @S(40) @NOSPACE PunctuationColon colon;
-		public @S(50) Python_StatementBlock elifStatements;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) @NEWLINE Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
+		public @S(40) Python_Expression condition;
+		public @S(50) @NOSPACE PunctuationColon colon;
+		public @S(60) Python_StatementBlock elifStatements;
 	}
 
 	public static class Python_IfElse extends TokenSequence
 	{
-		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
-		public @S(30) @NOSPACE PunctuationColon colon;
-		public @S(40) Python_StatementBlock ifElseStatements;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) @NEWLINE Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(40) @NOSPACE PunctuationColon colon;
+		public @S(50) Python_StatementBlock ifElseStatements;
 	}
+	
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

@@ -4,10 +4,10 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.programmar.Python.Python_CommentList;
 import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_Statement_List;
 import com.eagle.programmar.Python.Statements.Python_IfStatement.Python_IfElif;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
@@ -18,34 +18,36 @@ public class Python_StartOfLine extends TerminalStartOfLine
 {
 	private static final String TAB = "  ";
 	private static final int TABLEN = TAB.length();
+	
+	protected static final boolean DEBUG = false;
 
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
+		
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
+			if (DEBUG) System.out.println("**** Parent is " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
 			// Find the enclosing TokenList of statements
-			if (parent instanceof TokenList && !(parent instanceof SeparatedList))
+			if (parent instanceof Python_MultilineStatement) ////// TokenList && !(parent instanceof SeparatedList))
 			{
-				@SuppressWarnings("unchecked")
-				TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
+				Python_MultilineStatement multi = (Python_MultilineStatement) parent;
+				if (DEBUG) System.out.println("**** Parent is a Python_MultilineStatement");
+				TokenList<? extends AbstractToken> tokenList = multi.statements; /////////(TokenList<? extends AbstractToken>) parent;
 				if (tokenList.size() == 0) break; // First entry always matches
-
+				if (DEBUG) System.out.println("**** size is not zero");
+				
 				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				AbstractToken firstToken = tokenList.first();
+				AbstractToken firstToken = tokenList._elements.get(0);
 				if (!(firstToken instanceof Python_IfElif))
 				{
 					// Find first non-comment statement
 					for (AbstractToken token : tokenList._elements)
 					{
-//						if (token instanceof Python_StartOfLine)
-//						{
-//							if (_currentLine == token._currentLine) return false;	// Cannot have two SOLN's on the same line
-//						}
-
-						if (token instanceof Python_Comment || token instanceof Python_CommentList)
+						if (DEBUG) System.out.println("**** Token is " + (token.getStartLine()+1) + "/" + (token.getStartChar()+1));
+						if (token instanceof Python_Comment)
 						{
 							continue; // Doesn't matter what columns comments are in
 						}
@@ -54,14 +56,19 @@ public class Python_StartOfLine extends TerminalStartOfLine
 						{
 							Python_Statement firstStmt = (Python_Statement) token;
 							AbstractToken child = firstStmt.statementOrComment.getWhich();
-							if (child instanceof Python_Statement_List)
+							if (DEBUG) System.out.println("**** Comparing with " + (child.getStartLine()+1) + "/" + (child.getStartChar()+1));
+							if (child instanceof Python_SameLineStatement)
 							{
-								Python_Statement_List stmtList = (Python_Statement_List) child;
+								Python_SameLineStatement stmtList = (Python_SameLineStatement) child;
 								Python_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
-								// if (_currentLine == otherStmt._currentLine) return false; // Cannot have two
-								// SOLN's on the same line
-								if (_currentChar != otherStmt.getStartChar()) return false; /////// The KEY Line ///////
-								break;
+								/////// The KEY Line /////// Who doesn't like Key Lime pie?
+								if (_currentChar != otherStmt.getStartChar())
+								{
+									if (DEBUG) System.out.println("******* FAIL: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (otherStmt.getStartLine()+1) + "/" + (otherStmt.getStartChar()+1));
+									return false;
+								}
+								if (DEBUG) System.out.println("******* MATCH: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (otherStmt.getStartLine()+1) + "/" + (otherStmt.getStartChar()+1));
+								break; // Does another break below, and drops into foundIt()
 							}
 						}
 						else
@@ -74,12 +81,6 @@ public class Python_StartOfLine extends TerminalStartOfLine
 			}
 			parent = parent.getParent();
 		}
-
-//		// This is an error -- the python statement was not inside a TokenList
-//		if (parent == null)
-//		{
-//			throw new RuntimeException("Never found the parent TokenList, at line " + _currentLine);
-//		}
 
 		foundIt(_currentLine, _currentChar - 1);
 		return true;

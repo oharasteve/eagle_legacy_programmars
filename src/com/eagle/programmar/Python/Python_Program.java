@@ -10,7 +10,7 @@ import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_Statement_List;
+import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.tokens.AbstractFunction;
@@ -47,9 +47,9 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 		for (Python_Statement stmt : entries._elements)
 		{
 			AbstractToken which = stmt.statementOrComment.getWhich();
-			if (which instanceof Python_Statement_List)
+			if (which instanceof Python_SameLineStatement)
 			{
-				Python_Statement_List stmts = (Python_Statement_List) which;
+				Python_SameLineStatement stmts = (Python_SameLineStatement) which;
 				for (int i = 0; i < stmts.statements.getPrimaryCount(); i++)
 				{
 					Python_Simple_Statement simple = stmts.statements.getPrimaryElement(i);

@@ -7,6 +7,8 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
+import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.SeparatedList;
@@ -29,10 +31,12 @@ public class Python_TryStatement extends TokenSequence implements AbstractStatem
 
 	public static class Python_TryExcept extends TokenSequence
 	{
-		public @S(10) Python_Keyword EXCEPT = new Python_Keyword("except");
-		public @S(20) @OPT SeparatedList<Python_TryExceptClause, PunctuationComma> tryExceptClauses;
-		public @S(30) PunctuationColon colon;
-		public @S(40) Python_StatementBlock exceptWhat;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) Python_Keyword EXCEPT = new Python_Keyword("except");
+		public @S(40) @OPT SeparatedList<Python_TryExceptClause, PunctuationComma> tryExceptClauses;
+		public @S(50) PunctuationColon colon;
+		public @S(60) Python_StatementBlock exceptWhat;
 
 		public static class Python_TryExceptClause extends TokenSequence
 		{
@@ -49,17 +53,19 @@ public class Python_TryStatement extends TokenSequence implements AbstractStatem
 
 	public static class Python_TryElse extends TokenSequence
 	{
-		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) Python_Keyword ELSE = new Python_Keyword("else");
-		public @S(30) PunctuationColon colon;
-		public @S(40) Python_StatementBlock elseWhat;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(40) PunctuationColon colon;
+		public @S(50) Python_StatementBlock elseWhat;
 	}
 
 	public static class Python_TryFinally extends TokenSequence
 	{
-		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) Python_Keyword FINALLY = new Python_Keyword("finally");
-		public @S(30) PunctuationColon colon;
-		public @S(40) Python_StatementBlock finallyWhat;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) Python_Keyword FINALLY = new Python_Keyword("finally");
+		public @S(40) PunctuationColon colon;
+		public @S(50) Python_StatementBlock finallyWhat;
 	}
 }

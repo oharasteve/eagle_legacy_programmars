@@ -5,8 +5,9 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
+import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
-import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -22,9 +23,10 @@ public class Python_WhileStatement extends TokenSequence implements AbstractStat
 
 	public static class Python_WhileElse extends TokenSequence
 	{
-		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) Python_Keyword ELSE = new Python_Keyword("else");
-		public @S(30) PunctuationColon colon;
-		public @S(40) Python_StatementBlock doWhat;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(40) PunctuationColon colon;
+		public @S(50) Python_StatementBlock doWhat;
 	}
 }

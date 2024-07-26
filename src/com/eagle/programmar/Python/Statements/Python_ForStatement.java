@@ -17,8 +17,9 @@ import com.eagle.programmar.Python.Python_VariableList.Python_Variable_or_List;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
+import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
-import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -54,10 +55,11 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 
 	public static class Python_ForElse extends TokenSequence
 	{
-		public @S(10) Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) Python_Keyword ELSE = new Python_Keyword("else");
-		public @S(30) PunctuationColon colon;
-		public @S(40) Python_StatementBlock doWhat;
+		public @S(10) @OPT Python_EndOfLine eoln;
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(30) Python_Keyword ELSE = new Python_Keyword("else");
+		public @S(40) PunctuationColon colon;
+		public @S(50) Python_StatementBlock doWhat;
 	}
 
 	@Override
@@ -97,8 +99,8 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 		int i = start;
 		while (true)
 		{
-			if (incr > 0 && i > stop) break;
-			if (incr < 0 && i < stop) break;
+			if (incr > 0 && i >= stop) break;
+			if (incr < 0 && i <= stop) break;
 
 			Python_Variable var = null;
 			String varName = "unknown";

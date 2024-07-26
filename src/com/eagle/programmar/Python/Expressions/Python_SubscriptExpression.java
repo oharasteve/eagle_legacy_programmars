@@ -8,39 +8,19 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
-import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
-import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.programmar.Python.Python_Subscript;
+import com.eagle.programmar.Python.Python_Subscript.Python_SubscrExpr;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Python_SubscriptExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Python_Expression expr = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationLeftBracket leftBracket;
-	public @S(30) @OPT Python_EndOfLine eoln;
-	public @S(40) @SYNTAX(Python_Multiline_Syntax.class) Python_SubscrExpr body;
-	public @S(50) PunctuationRightBracket rightBracket;
-
-	public static class Python_SubscrExpr extends TokenSequence
-	{
-		public @S(10) @OPT Python_Expression subscr;
-		public @S(20) @OPT Python_ColonSubscript subscriptStop;
-		public @S(30) @OPT Python_ColonSubscript subscriptStep;
-	}
-
-	public static class Python_ColonSubscript extends TokenSequence
-	{
-		public @S(10) PunctuationColon colon;
-		public @S(20) @OPT Python_EndOfLine eoln;
-		public @S(30) @OPT Python_Expression expr;
-	}
+	public @S(20) Python_Subscript subscr;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		Python_SubscrExpr body = subscr.body;
 		if (body.subscriptStep != null && body.subscriptStep.isPresent())
 		{
 			throw new RuntimeException("Cannot handle range increments yet");

@@ -5,7 +5,6 @@ package com.eagle.programmar.Python;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
 import com.eagle.programmar.Python.Statements.Python_AwaitStatement;
@@ -43,88 +42,69 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Python_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) @OPT @NEWLINE Python_StartOfLine soln;
+	public @S(10) @NEWLINE Python_StartOfLine soln;
 	public @S(20) Python_StatementOrComment statementOrComment;
 	public @S(30) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @S(50) @OPT Python_Comment comment;
 	public @S(60) @OPT Python_EndOfLine eoln;
-
+ 
 	public static class Python_StatementOrComment extends TokenChooser
 	{
 		// Only needed for Transformation. Look at createStatementBlock in
 		// Generate_Python_Statement
 		public @SKIP Python_MultilineStatement multiStatement;
 
-		public @FIRST Python_CommentList comments;
-		public @CHOICE Python_Statement_List statements;
-		public @CHOICE Python_EndOfLine eoln;
+		public @FIRST Python_Comment comment;
+		public @CHOICE Python_SameLineStatement statements;
+		public @CHOICE Python_EndOfLine eoln;	// Blank line
 	}
 
 	public static class Python_StatementBlock extends TokenChooser
 	{
 		public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
-
-		public @CHOICE static class Python_SingleLineStatement extends TokenSequence implements EagleRunnableWithResult
-		{
-			public @S(10) SeparatedList<Python_Simple_Statement, PunctuationSemicolon> statements;
-			public @S(20) @OPT Python_Comment comment;
-			public @S(30) @OPT Python_EndOfLine eoln;
-
-			@Override
-			public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
-			{
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-				for (int i = 0; i < statements.getPrimaryCount(); i++)
-				{
-					Python_Simple_Statement stmt = statements.getPrimaryElement(i);
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
-				return result;
-			}
-		}
-
-		public @CHOICE static class Python_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
-		{
-			public @S(10) @OPT Python_Comment comment;
-			public @S(20) Python_EndOfLine eoln;
-			public @S(30) TokenList<Python_Statement> statements;
-
-			@Override
-			public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
-			{
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-				for (Python_Statement stmt : statements._elements)
-				{
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
-				return result;
-			}
-		}
+		public @CHOICE Python_SameLineStatement singleLine;
+		public @CHOICE Python_MultilineStatement multiLine;
 	}
-	
-	public static class Python_Statement_List extends TokenSequence implements EagleRunnableWithResult
+
+	public static class Python_SameLineStatement extends TokenSequence implements EagleRunnableWithResult
 	{
-		// This StartOfLine should be removed. But it breaks lots of Python
-		// Such as $GitDir/Eagle/eagle_legacy_browser/pages/viewer.py
-		public @S(10) @NEWLINE Python_StartOfLine soln = new Python_StartOfLine();
-		public @S(20) SeparatedList<Python_Simple_Statement, Python_Statement_Separator> statements;
+		public @S(10) SeparatedList<Python_Simple_Statement, PunctuationSemicolon> statements;
+		public @S(20) @OPT Python_Comment comment;
 
 		@Override
 		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
-			return interpreter.tryToInterpret(statements.first());
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			for (int i = 0; i < statements.getPrimaryCount(); i++)
+			{
+				Python_Simple_Statement stmt = statements.getPrimaryElement(i);
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
 		}
 	}
 
-	public static class Python_Statement_Separator extends TokenChooser
+	public static class Python_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
-	}
+		public @S(10) @OPT Python_Comment comment;
+		public @S(20) Python_EndOfLine eoln;
+		public @S(30) TokenList<Python_Statement> statements;
 
+		@Override
+		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+		{
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			for (Python_Statement stmt : statements._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
+		}
+	}
+	
 	public static class Python_Simple_Statement extends TokenChooser
 	{
 		public @CHOICE Python_Assignment assignment;
