@@ -7,7 +7,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class RPG_O_Output_Program_Record_Id_Piece extends TokenChooser
 {
-	public @CHOICE RPG_O_Output_Program_Record_Id_Piece1 piece1;
-	public @CHOICE RPG_O_Output_Program_Record_Id_Piece2 piece2;
-	public @CHOICE RPG_O_Output_Program_Record_Id_Piece3 piece3;
+	public @CHOICE RPG_O_Output_Program_Record_Id_Piece1 XXpiece1;
+	public @CHOICE RPG_O_Output_Program_Record_Id_Piece2 XXpiece2;
+	public @CHOICE RPG_O_Output_Program_Record_Id_Piece3 XXpiece3;
 }
