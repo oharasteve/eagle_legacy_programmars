@@ -21,8 +21,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_Type extends TokenChooser implements AbstractType
 {
-	public @LAST Python_Literal typeName;
-	public @CHOICE Python_Punctuation ellipsis = new Python_Punctuation("...");
+	public @LAST Python_Literal XXtypeName;
+	public @CHOICE Python_Punctuation XXellipsis = new Python_Punctuation("...");
 
 	public @CHOICE static class Python_TypeParens extends TokenSequence
 	{
@@ -38,8 +38,8 @@ public class Python_Type extends TokenChooser implements AbstractType
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
-	public @CHOICE Python_KeywordChoice PRIMITIVES = new Python_KeywordChoice("Any", "None", "bool", "bytes", "float",
-			"int", "object", "str", "Text");
+	public @CHOICE Python_KeywordChoice XXPRIMITIVES = new Python_KeywordChoice(
+			"Any", "None", "bool", "bytes", "float", "int", "object", "str", "Text");
 
 	public @FIRST static class Python_MetaClass extends TokenSequence
 	{
@@ -71,8 +71,8 @@ public class Python_Type extends TokenChooser implements AbstractType
 
 		public static class Python_TypeName extends TokenChooser
 		{
-			public @CHOICE Python_Keyword SELF = new Python_Keyword("self");
-			public @CHOICE Python_Identifier_Reference id;
+			public @CHOICE Python_Keyword XXSELF = new Python_Keyword("self");
+			public @CHOICE Python_Identifier_Reference XXid;
 		}
 	}
 }

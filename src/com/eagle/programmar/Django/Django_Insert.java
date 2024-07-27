@@ -53,8 +53,8 @@ public class Django_Insert extends TokenSequence
 
 		public static class Django_InsertDotWhat extends TokenChooser
 		{
-			public @CHOICE Django_Number number;
-			public @CHOICE Django_Variable variable;
+			public @CHOICE Django_Number XXnumber;
+			public @CHOICE Django_Variable XXvariable;
 		}
 	}
 

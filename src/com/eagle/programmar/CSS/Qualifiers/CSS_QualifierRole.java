@@ -18,7 +18,7 @@ public class CSS_QualifierRole extends TokenSequence
 
 	public static class CSS_QualifierWhichRole extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice value = new CSS_KeywordChoice("button", "number", "text");
-		public @CHOICE CSS_Literal literal;
+		public @CHOICE CSS_KeywordChoice XXvalue = new CSS_KeywordChoice("button", "number", "text");
+		public @CHOICE CSS_Literal XXliteral;
 	}
 }

@@ -19,7 +19,7 @@ public class CMD_Grep_Statement extends TokenSequence implements AbstractStateme
 
 	public static class CMD_Grep_Parameter extends TokenChooser
 	{
-		public @CHOICE CMD_Argument srcFile;
+		public @CHOICE CMD_Argument XXsrcFile;
 
 		public @CHOICE static class CMD_Grep_Option_e extends TokenSequence
 		{

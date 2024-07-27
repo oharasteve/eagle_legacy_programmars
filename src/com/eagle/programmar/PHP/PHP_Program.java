@@ -43,9 +43,9 @@ public class PHP_Program extends EagleLanguage implements EagleRunnable
 
 	public static class PHP_Entry extends TokenChooser
 	{
-		public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Program html;
-		public @CHOICE PHP_Section php;
-		public @LAST PHP_IfBlock ifBlock;
+		public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Program XXhtml;
+		public @CHOICE PHP_Section XXphp;
+		public @LAST PHP_IfBlock XXifBlock;
 	}
 
 	public static class PHP_StartTag extends TokenSequence

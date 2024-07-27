@@ -39,8 +39,8 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 
 	public static class Python_FunctionName extends TokenChooser
 	{
-		public @CHOICE Python_Function_Definition name;
-		public @CHOICE Python_Keyword INIT = new Python_Keyword("__init__");
+		public @CHOICE Python_Function_Definition XXname;
+		public @CHOICE Python_Keyword XXINIT = new Python_Keyword("__init__");
 	}
 
 	public static class Python_ReturnType extends TokenSequence

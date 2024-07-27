@@ -25,7 +25,7 @@ public class PLI_AnswerStatement extends TokenSequence implements AbstractStatem
 
 	public static class PLI_AnswerClause extends TokenChooser
 	{
-		public @CHOICE PLI_KeywordChoice SKIP = new PLI_KeywordChoice("SKIP", "NOSCAN");
+		public @CHOICE PLI_KeywordChoice XXSKIP = new PLI_KeywordChoice("SKIP", "NOSCAN");
 
 		public @CHOICE static class PLI_AnswerCol extends TokenSequence
 		{

@@ -18,9 +18,9 @@ public class COBOL_FileControl extends TokenSequence
 
 	public static class COBOL_Copy_or_FileSelect extends TokenChooser
 	{
-		public @CHOICE COBOL_Copy_Directive copyDirective;
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_Directive directive;
-		public @CHOICE COBOL_FileSelect fileSelect;
+		public @CHOICE COBOL_Copy_Directive XXcopyDirective;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_Directive XXdirective;
+		public @CHOICE COBOL_FileSelect XXfileSelect;
 	}
 }

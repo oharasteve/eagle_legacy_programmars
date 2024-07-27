@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_Variable extends TokenChooser implements EagleRunnable
 {
-	public @CHOICE Lisp_Identifier_Reference var;
+	public @CHOICE Lisp_Identifier_Reference XXvar;
 
 	public @CHOICE static class Lisp_VariableWithDot extends TokenSequence
 	{

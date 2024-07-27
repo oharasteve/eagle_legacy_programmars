@@ -19,6 +19,6 @@ public class Bash_MkTempCommand extends TokenSequence implements AbstractStateme
 
 	public static class Bash_MkTempOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice DT = new Bash_KeywordChoice("-d", "-t");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-d", "-t");
 	}
 }

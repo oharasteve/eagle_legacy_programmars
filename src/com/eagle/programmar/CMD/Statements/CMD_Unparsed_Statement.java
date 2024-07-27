@@ -31,10 +31,10 @@ public class CMD_Unparsed_Statement extends UnparsedElement
 
 	public static class CMD_UnparsedElement extends TokenChooser
 	{
-		public @CHOICE CMD_Identifier_Reference id;
-		public @CHOICE CMD_PunctuationChoice punct = new CMD_PunctuationChoice(PUNCTS);
-		public @CHOICE CMD_Literal literal;
-		public @CHOICE CMD_Number number;
-		public @CHOICE CMD_Comment comment;
+		public @CHOICE CMD_Identifier_Reference XXid;
+		public @CHOICE CMD_PunctuationChoice XXpunct = new CMD_PunctuationChoice(PUNCTS);
+		public @CHOICE CMD_Literal XXliteral;
+		public @CHOICE CMD_Number XXnumber;
+		public @CHOICE CMD_Comment XXcomment;
 	}
 }

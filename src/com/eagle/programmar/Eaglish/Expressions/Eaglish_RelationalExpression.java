@@ -22,8 +22,8 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 
 	public static class Eaglish_RelationalOperator extends TokenChooser
 	{
-		public @CHOICE Eaglish_PunctuationChoice operSymbol = new Eaglish_PunctuationChoice("=", "<", ">", "<=", ">=");
-		public @CHOICE Eaglish_KeywordChoice operWord = new Eaglish_KeywordChoice("EQUALS", "NOT_EQUALS");
+		public @CHOICE Eaglish_PunctuationChoice XXoperSymbol = new Eaglish_PunctuationChoice("=", "<", ">", "<=", ">=");
+		public @CHOICE Eaglish_KeywordChoice XXoperWord = new Eaglish_KeywordChoice("EQUALS", "NOT_EQUALS");
 	}
 
 	@Override

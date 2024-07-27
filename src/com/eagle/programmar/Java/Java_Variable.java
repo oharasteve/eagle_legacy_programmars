@@ -30,8 +30,8 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 
 	public static class Java_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice builtIn = new Java_KeywordChoice("this", "class", "super");
-		public @CHOICE Java_Identifier_Reference id;
+		public @CHOICE Java_KeywordChoice XXbuiltIn = new Java_KeywordChoice("this", "class", "super");
+		public @CHOICE Java_Identifier_Reference XXid;
 
 		public @CHOICE static class Java_CastedVariable extends TokenSequence
 		{

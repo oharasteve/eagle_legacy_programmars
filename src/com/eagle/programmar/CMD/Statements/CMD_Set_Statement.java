@@ -50,9 +50,9 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 
 	public static class CMD_Set_What extends TokenChooser
 	{
-		public @CHOICE CMD_Set_Regular setRegular;
-		public @CHOICE CMD_Set_Assigment setAssignment;
-		public @CHOICE CMD_Set_Prompt setPrompt;
+		public @CHOICE CMD_Set_Regular XXsetRegular;
+		public @CHOICE CMD_Set_Assigment XXsetAssignment;
+		public @CHOICE CMD_Set_Prompt XXsetPrompt;
 	}
 
 	@Override

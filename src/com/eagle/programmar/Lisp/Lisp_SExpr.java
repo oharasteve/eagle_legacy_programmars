@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Lisp;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefmacroFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefparameterFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
@@ -10,6 +12,7 @@ import com.eagle.programmar.Lisp.Functions.Lisp_IfFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_LetFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_LoopFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_PrintFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_SetfFunction;
 import com.eagle.programmar.Lisp.Operators.Lisp_AdditionOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_AndOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_Builtins;
@@ -34,32 +37,34 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Lisp_SExpr extends TokenChooser
 {
-	public @CHOICE Lisp_Number number;
-	public @CHOICE Lisp_Literal literal;
-	public @CHOICE Lisp_Character character;
+	public @CHOICE Lisp_Number XXnumber;
+	public @CHOICE Lisp_Literal XXliteral;
+	public @CHOICE Lisp_Character XXcharacter;
 
-	public @CHOICE Lisp_DefmacroFunction defMacro;
-	public @CHOICE Lisp_DefparameterFunction defParameter;
-	public @CHOICE Lisp_DefunFunction defFunction;
-	public @CHOICE Lisp_IfFunction ifFunction;
-	public @CHOICE Lisp_LetFunction letFunction;
-	public @CHOICE Lisp_LoopFunction loopFunction;
-	public @CHOICE Lisp_PrintFunction printFunction;
+	public @CHOICE Lisp_DefmacroFunction XXdefMacro;
+	public @CHOICE Lisp_DefparameterFunction XXdefParameter;
+	public @CHOICE Lisp_DefunFunction XXdefFunction;
+	public @CHOICE Lisp_IfFunction XXifFunction;
+	public @CHOICE Lisp_LetFunction XXletFunction;
+	public @CHOICE Lisp_LoopFunction XXloopFunction;
+	public @CHOICE Lisp_PrintFunction XXprintFunction;
+	public @CHOICE Lisp_SetfFunction XXsetfFunction;
 
-	public @LAST Lisp_Variable var;
-	public @LAST Lisp_List list;
+	public @LAST Lisp_Variable XXvar;
+	public @LAST Lisp_List XXlist;
 
-	public @CHOICE Lisp_AdditionOperator additionOperator;
-	public @CHOICE Lisp_IncrementOperator incrementOperator;
-	public @CHOICE Lisp_MultiplicationOperator multiplicationOperator;
-	public @CHOICE Lisp_RemainderOperator modulusOperator;
-	public @CHOICE Lisp_RelationalOperator relationalOperator;
-	public @CHOICE Lisp_AndOperator andOperator;
-	public @CHOICE Lisp_OrOperator orOperator;
-	public @CHOICE Lisp_NotOperator notOperator;
-	public @CHOICE Lisp_Builtins builtins;
+	public @CHOICE Lisp_AdditionOperator XXadditionOperator;
+	public @CHOICE Lisp_IncrementOperator XXincrementOperator;
+	public @CHOICE Lisp_MultiplicationOperator XXmultiplicationOperator;
+	public @CHOICE Lisp_RemainderOperator XXmodulusOperator;
+	public @CHOICE Lisp_RelationalOperator XXrelationalOperator;
+	public @CHOICE Lisp_AndOperator XXandOperator;
+	public @CHOICE Lisp_OrOperator XXorOperator;
+	public @CHOICE Lisp_NotOperator XXnotOperator;
+	public @CHOICE Lisp_Builtins XXbuiltins;
 
-	public @CHOICE Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(".", "?", "<", "<=", "=", ">=", ">");
+	public @CHOICE Lisp_PunctuationChoice XXoperator = new Lisp_PunctuationChoice(
+			".", "?", "<", "<=", "=", ">=", ">");
 
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{
@@ -86,10 +91,16 @@ public class Lisp_SExpr extends TokenChooser
 		public @S(20) Lisp_SExpr expr;
 	}
 
-	public @CHOICE static class Lisp_QuoteList extends TokenSequence
+	public @CHOICE static class Lisp_QuoteList extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Lisp_Punctuation quote = new Lisp_Punctuation('\'');
 		public @S(20) Lisp_SExpr expr;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			
+		}
 	}
 
 	public @CHOICE static class Lisp_Tick extends TokenSequence

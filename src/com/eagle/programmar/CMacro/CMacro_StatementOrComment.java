@@ -30,17 +30,17 @@ public class CMacro_StatementOrComment extends TokenSequence implements EagleRun
 
 	public static class CMacro_StmtBody extends TokenChooser
 	{
-		public @FIRST CMacro_IfDefCPlusPlus ifdefCPlusPlus;
+		public @FIRST CMacro_IfDefCPlusPlus XXifdefCPlusPlus;
 
-		public @CHOICE CMacro_Define_Statement defineStatement;
-		public @CHOICE CMacro_Error_Statement errorStatement;
-		public @CHOICE CMacro_If_Statement ifStatement;
-		public @CHOICE CMacro_IfDef_Statement ifdefStatement;
-		public @CHOICE CMacro_Include_Statement includeStatement;
-		public @CHOICE CMacro_LineNumber_Statement lineNumberStatement;
-		public @CHOICE CMacro_Pragma_Statement pragmaStatement;
-		public @CHOICE CMacro_Region_Statement regionStatement;
-		public @CHOICE CMacro_Undef_Statement undefStatement;
+		public @CHOICE CMacro_Define_Statement XXdefineStatement;
+		public @CHOICE CMacro_Error_Statement XXerrorStatement;
+		public @CHOICE CMacro_If_Statement XXifStatement;
+		public @CHOICE CMacro_IfDef_Statement XXifdefStatement;
+		public @CHOICE CMacro_Include_Statement XXincludeStatement;
+		public @CHOICE CMacro_LineNumber_Statement XXlineNumberStatement;
+		public @CHOICE CMacro_Pragma_Statement XXpragmaStatement;
+		public @CHOICE CMacro_Region_Statement XXregionStatement;
+		public @CHOICE CMacro_Undef_Statement XXundefStatement;
 	}
 
 	@Override

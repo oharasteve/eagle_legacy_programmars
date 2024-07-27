@@ -22,7 +22,7 @@ public class Bash_SedCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_SedOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice E = new Bash_KeywordChoice("-E", "-e", "-i", "-r");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-E", "-e", "-i", "-r");
 
 		public @CHOICE static class Bash_SedOptionF extends TokenSequence
 		{

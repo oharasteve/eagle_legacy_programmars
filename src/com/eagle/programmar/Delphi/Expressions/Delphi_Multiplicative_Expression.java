@@ -19,8 +19,8 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator impleme
 
 	public static class Delphi_Multiplicative_Operator extends TokenChooser
 	{
-		public @CHOICE Delphi_PunctuationChoice operator = new Delphi_PunctuationChoice("*", "/");
-		public @CHOICE Delphi_KeywordChoice word = new Delphi_KeywordChoice("Div", "Mod", "And", "Shl", "Shr", "As");
+		public @CHOICE Delphi_PunctuationChoice XXoperator = new Delphi_PunctuationChoice("*", "/");
+		public @CHOICE Delphi_KeywordChoice XXword = new Delphi_KeywordChoice("Div", "Mod", "And", "Shl", "Shr", "As");
 	}
 
 	@Override

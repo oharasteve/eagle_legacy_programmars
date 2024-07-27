@@ -36,7 +36,7 @@ public class Delphi_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Delphi_Full_or_Partial extends TokenChooser
 	{
-		public @FIRST Delphi_Full full;
+		public @FIRST Delphi_Full XXfull;
 		
 		public @CHOICE static class Delphi_Partial extends TokenSequence
 		{

@@ -27,8 +27,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 
 	public static class COBOL_AddType extends TokenChooser
 	{
-		public @FIRST COBOL_AddWithGiving addWithGiving;
-		public @CHOICE COBOL_AddNoGiving addNoGiving;
+		public @FIRST COBOL_AddWithGiving XXaddWithGiving;
+		public @CHOICE COBOL_AddNoGiving XXaddNoGiving;
 	}
 
 	public static class COBOL_AddWithGiving extends TokenSequence

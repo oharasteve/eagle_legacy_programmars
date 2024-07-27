@@ -34,8 +34,8 @@ public class Algol68_PrintStatement extends TokenSequence implements EagleRunnab
 
 	public static class Algol68_PrintWhat extends TokenChooser
 	{
-		public @CHOICE Algol68_Expression expr;
-		public @CHOICE Algol68_PrintNewLine newLine;
+		public @CHOICE Algol68_Expression XXexpr;
+		public @CHOICE Algol68_PrintNewLine XXnewLine;
 	}
 
 	@Override

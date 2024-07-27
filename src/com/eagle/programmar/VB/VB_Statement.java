@@ -42,31 +42,31 @@ public class VB_Statement extends TokenSequence implements EagleRunnableWithResu
 
 	public static class VB_BaseStatement extends TokenChooser
 	{
-		public @CHOICE VB_Comment comment;
+		public @CHOICE VB_Comment XXcomment;
 
-		public @CHOICE VB_AssignmentStatement assignmentStatement;
-		public @CHOICE VB_AttributeStatement attributeStatement;
-		public @CHOICE VB_BeginStatement beginStatement;
-		public @CHOICE VB_CallStatement callStatement;
-		public @CHOICE VB_CloseStatement closeStatement;
-		public @CHOICE VB_DataDeclaration dataDeclaration;
-		public @CHOICE VB_ExitStatement exitStatement;
-		public @CHOICE VB_ForStatement forStatement;
-		public @CHOICE VB_ForEachStatement forEachStatement;
-		public @CHOICE VB_FunctionDeclaration functionDefinition;
-		public @CHOICE VB_GotoStatement gotoStatement;
-		public @CHOICE VB_IfStatement ifStatement;
-		public @CHOICE VB_MessageBoxStatment messageBoxStatment;
-		public @CHOICE VB_OnStatement onStatement;
-		public @CHOICE VB_OpenStatement openStatement;
-		public @CHOICE VB_OptionStatement optionStatement;
-		public @CHOICE VB_PrintStatement printStatement;
-		public @CHOICE VB_SetStatement setStatement;
-		public @CHOICE VB_SubDeclaration subDefinition;
-		public @CHOICE VB_VersionStatement versionStatement;
-		public @CHOICE VB_WscriptEcho wscriptEcho;
+		public @CHOICE VB_AssignmentStatement XXassignmentStatement;
+		public @CHOICE VB_AttributeStatement XXattributeStatement;
+		public @CHOICE VB_BeginStatement XXbeginStatement;
+		public @CHOICE VB_CallStatement XXcallStatement;
+		public @CHOICE VB_CloseStatement XXcloseStatement;
+		public @CHOICE VB_DataDeclaration XXdataDeclaration;
+		public @CHOICE VB_ExitStatement XXexitStatement;
+		public @CHOICE VB_ForStatement XXforStatement;
+		public @CHOICE VB_ForEachStatement XXforEachStatement;
+		public @CHOICE VB_FunctionDeclaration XXfunctionDefinition;
+		public @CHOICE VB_GotoStatement XXgotoStatement;
+		public @CHOICE VB_IfStatement XXifStatement;
+		public @CHOICE VB_MessageBoxStatment XXmessageBoxStatment;
+		public @CHOICE VB_OnStatement XXonStatement;
+		public @CHOICE VB_OpenStatement XXopenStatement;
+		public @CHOICE VB_OptionStatement XXoptionStatement;
+		public @CHOICE VB_PrintStatement XXprintStatement;
+		public @CHOICE VB_SetStatement XXsetStatement;
+		public @CHOICE VB_SubDeclaration XXsubDefinition;
+		public @CHOICE VB_VersionStatement XXversionStatement;
+		public @CHOICE VB_WscriptEcho XXwscriptEcho;
 
-		public @LAST VB_ExpressionStatement expressionStatement;
+		public @LAST VB_ExpressionStatement XXexpressionStatement;
 
 		public @CHOICE static class VB_Label extends TokenSequence
 		{

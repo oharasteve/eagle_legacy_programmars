@@ -24,7 +24,7 @@ public class CSS_AtNamespace extends TokenSequence
 
 	public static class CSS_AtNameSpaceArg extends TokenChooser
 	{
-		public @CHOICE CSS_Literal literal;
+		public @CHOICE CSS_Literal XXliteral;
 
 		public @CHOICE static class CSS_AtNameSpaceURL extends TokenSequence
 		{

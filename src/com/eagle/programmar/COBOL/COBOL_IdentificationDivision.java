@@ -34,7 +34,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 
 	public static class COBOL_IdentificationHeader extends TokenChooser
 	{
-		public @CHOICE COBOL_ProgramId programId;
+		public @CHOICE COBOL_ProgramId XXprogramId;
 
 		public @CHOICE static class COBOL_IdentificationPresent extends TokenSequence
 		{
@@ -57,8 +57,8 @@ public class COBOL_IdentificationDivision extends TokenSequence
 
 	public static class COBOL_IdentificationEntry extends TokenChooser
 	{
-		public @CHOICE COBOL_SpecialNames specialNames;
-		public @CHOICE COBOL_Comment comment;
+		public @CHOICE COBOL_SpecialNames XXspecialNames;
+		public @CHOICE COBOL_Comment XXcomment;
 
 		public @CHOICE static class COBOL_IdentificationSimple extends TokenSequence
 		{

@@ -19,8 +19,8 @@ public class TCL_ConditionalOrExpression extends PrecedenceOperator implements E
 
 	public static class TCL_OrOperator extends TokenChooser
 	{
-		public @CHOICE TCL_Keyword OR = new TCL_Keyword("or");
-		public @CHOICE TCL_Punctuation orOper = new TCL_Punctuation("||");
+		public @CHOICE TCL_Keyword XXOR = new TCL_Keyword("or");
+		public @CHOICE TCL_Punctuation XXorOper = new TCL_Punctuation("||");
 	}
 
 	@Override

@@ -19,8 +19,8 @@ public class TCL_ConditionalAndExpression extends PrecedenceOperator implements 
 
 	public static class TCL_AndOperator extends TokenChooser
 	{
-		public @CHOICE TCL_Keyword AND = new TCL_Keyword("and");
-		public @CHOICE TCL_Punctuation and = new TCL_Punctuation("&&");
+		public @CHOICE TCL_Keyword XXAND = new TCL_Keyword("and");
+		public @CHOICE TCL_Punctuation XXand = new TCL_Punctuation("&&");
 	}
 
 	@Override

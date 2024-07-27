@@ -40,7 +40,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 
 	public static class Algol68_FunctionArg extends TokenChooser
 	{
-		public @CHOICE Algol68_Expression expr;
+		public @CHOICE Algol68_Expression XXexpr;
 
 		public @CHOICE static class Algol68_FunctionSetArg extends TokenSequence
 		{

@@ -41,9 +41,9 @@ public class CSS_TagList extends TokenSequence
 
 	public static class CSS_Tag extends TokenChooser
 	{
-		public @CHOICE CSS_Identifier id;
-		public @CHOICE CSS_DotClass dotClass;
-		public @CHOICE PunctuationStar star;
+		public @CHOICE CSS_Identifier XXid;
+		public @CHOICE CSS_DotClass XXdotClass;
+		public @CHOICE PunctuationStar XXstar;
 
 		public @CHOICE static class CSS_Id_DotClass extends TokenSequence
 		{
@@ -59,8 +59,8 @@ public class CSS_TagList extends TokenSequence
 
 		public static class CSS_DotWhat extends TokenChooser
 		{
-			public @CHOICE CSS_Keyword MEDIA = new CSS_Keyword("media");
-			public @CHOICE CSS_Class_Definition classDefinition;
+			public @CHOICE CSS_Keyword XXMEDIA = new CSS_Keyword("media");
+			public @CHOICE CSS_Class_Definition XXclassDefinition;
 		}
 	}
 
@@ -82,7 +82,7 @@ public class CSS_TagList extends TokenSequence
 
 			public static class CSS_ColonArgument extends TokenChooser
 			{
-				public @CHOICE CSS_Identifier id;
+				public @CHOICE CSS_Identifier XXid;
 
 				public @CHOICE static class CSS_ColonArgBrackets extends TokenSequence
 				{

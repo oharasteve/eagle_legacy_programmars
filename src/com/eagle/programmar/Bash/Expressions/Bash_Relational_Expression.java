@@ -20,8 +20,8 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 
 	public static class Bash_RelOp extends TokenChooser
 	{
-		public @CHOICE Bash_PunctuationChoice strOp = new Bash_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
-		public @CHOICE Bash_KeywordChoice numOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
+		public @CHOICE Bash_PunctuationChoice XXstrOp = new Bash_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+		public @CHOICE Bash_KeywordChoice XXnumOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 	}
 
 	@Override

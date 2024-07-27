@@ -46,41 +46,41 @@ public class Bash_Statement extends TokenSequence
 
 	public static class Bash_Element extends TokenChooser
 	{
-		public @CHOICE Bash_AwkCommand awkCommand;
-		public @CHOICE Bash_BreakStatement breakStatement;
-		public @CHOICE Bash_CaseCommand caseCommand;
-		public @CHOICE Bash_CatCommand catCommand;
-		public @CHOICE Bash_ChmodCommand chmodCommand;
-		public @CHOICE Bash_Comment comment;
-		public @CHOICE Bash_CpCommand cpCommand;
-		public @CHOICE Bash_DiffCommand diffCommand;
-		public @CHOICE Bash_EchoCommand echoCommand;
-		public @CHOICE Bash_EvaluateCommand evaluateCommand;
-		public @CHOICE Bash_ExportCommand exportCommand;
-		public @CHOICE Bash_ForStatement forStatement;
-		public @CHOICE Bash_Function function;
-		public @CHOICE Bash_GccCommand gccCommand;
-		public @CHOICE Bash_GitCommand gitCommand;
-		public @CHOICE Bash_GrepCommand grepCommand;
-		public @CHOICE Bash_IfStatement ifStatement;
-		public @CHOICE Bash_LispCommand lispCommand;
-		public @CHOICE Bash_MkTempCommand mktempCommand;
-		public @CHOICE Bash_PwdCommand pwdCommand;
-		public @CHOICE Bash_ReadCommand readCommand;
-		public @CHOICE Bash_RmCommand rmCommand;
-		public @CHOICE Bash_SedCommand sedCommand;
-		public @CHOICE Bash_SetCommand setCommand;
-		public @CHOICE Bash_SortCommand sortCommand;
-		public @CHOICE Bash_TeeCommand teeCommand;
-		public @CHOICE Bash_WcCommand wcCommand;
-		public @CHOICE Bash_WhileStatement whileStatement;
+		public @CHOICE Bash_AwkCommand XXawkCommand;
+		public @CHOICE Bash_BreakStatement XXbreakStatement;
+		public @CHOICE Bash_CaseCommand XXcaseCommand;
+		public @CHOICE Bash_CatCommand XXcatCommand;
+		public @CHOICE Bash_ChmodCommand XXchmodCommand;
+		public @CHOICE Bash_Comment XXcomment;
+		public @CHOICE Bash_CpCommand XXcpCommand;
+		public @CHOICE Bash_DiffCommand XXdiffCommand;
+		public @CHOICE Bash_EchoCommand XXechoCommand;
+		public @CHOICE Bash_EvaluateCommand XXevaluateCommand;
+		public @CHOICE Bash_ExportCommand XXexportCommand;
+		public @CHOICE Bash_ForStatement XXforStatement;
+		public @CHOICE Bash_Function XXfunction;
+		public @CHOICE Bash_GccCommand XXgccCommand;
+		public @CHOICE Bash_GitCommand XXgitCommand;
+		public @CHOICE Bash_GrepCommand XXgrepCommand;
+		public @CHOICE Bash_IfStatement XXifStatement;
+		public @CHOICE Bash_LispCommand XXlispCommand;
+		public @CHOICE Bash_MkTempCommand XXmktempCommand;
+		public @CHOICE Bash_PwdCommand XXpwdCommand;
+		public @CHOICE Bash_ReadCommand XXreadCommand;
+		public @CHOICE Bash_RmCommand XXrmCommand;
+		public @CHOICE Bash_SedCommand XXsedCommand;
+		public @CHOICE Bash_SetCommand XXsetCommand;
+		public @CHOICE Bash_SortCommand XXsortCommand;
+		public @CHOICE Bash_TeeCommand XXteeCommand;
+		public @CHOICE Bash_WcCommand XXwcCommand;
+		public @CHOICE Bash_WhileStatement XXwhileStatement;
 
-		public @CHOICE Bash_BashProgram bashProgram;
-		public @CHOICE Bash_PerlProgram perlProgram;
-		public @CHOICE Bash_PythonProgram pythonProgram;
+		public @CHOICE Bash_BashProgram XXbashProgram;
+		public @CHOICE Bash_PerlProgram XXperlProgram;
+		public @CHOICE Bash_PythonProgram XXpythonProgram;
 
-		public @LAST Bash_Assignment assignment;
-		public @LAST Bash_FunctionCall functionCall;
-		public @LAST Bash_Condition condition;
+		public @LAST Bash_Assignment XXassignment;
+		public @LAST Bash_FunctionCall XXfunctionCall;
+		public @LAST Bash_Condition XXcondition;
 	}
 }

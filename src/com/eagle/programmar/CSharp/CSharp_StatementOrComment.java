@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class CSharp_StatementOrComment extends TokenChooser
 {
-	public @CHOICE @NEWLINE CSharp_Statement statement;
-	public @CHOICE @NEWLINE CSharp_Comment comment;
+	public @CHOICE @NEWLINE CSharp_Statement XXstatement;
+	public @CHOICE @NEWLINE CSharp_Comment XXcomment;
 }

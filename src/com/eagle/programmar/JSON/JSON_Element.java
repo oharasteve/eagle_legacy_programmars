@@ -10,9 +10,9 @@ import com.eagle.tokens.TokenChooser;
 
 public class JSON_Element extends TokenChooser
 {
-	public @CHOICE JSON_Literal literal;
-	public @CHOICE JSON_Number number;
-	public @CHOICE JSON_Object object;
-	public @CHOICE JSON_Dictionary dictionary;
-	public @CHOICE JSON_KeywordChoice builtIn = new JSON_KeywordChoice("null", "true", "false");
+	public @CHOICE JSON_Literal XXliteral;
+	public @CHOICE JSON_Number XXnumber;
+	public @CHOICE JSON_Object XXobject;
+	public @CHOICE JSON_Dictionary XXdictionary;
+	public @CHOICE JSON_KeywordChoice XXbuiltIn = new JSON_KeywordChoice("null", "true", "false");
 }

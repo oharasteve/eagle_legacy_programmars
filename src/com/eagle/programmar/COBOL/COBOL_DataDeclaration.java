@@ -52,22 +52,22 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 	public static class COBOL_DataClause extends TokenChooser
 	{
-		public @CHOICE COBOL_Type primitive;
+		public @CHOICE COBOL_Type XXprimitive;
 
-		public @CHOICE COBOL_BlankWhenZero blankWhenZero;
-		public @CHOICE COBOL_Justified justified;
-		public @CHOICE COBOL_ObjectReference objectReference;
-		public @CHOICE COBOL_OccursClause occurs;
-		public @CHOICE COBOL_PictureClause pictureClause;
-		public @CHOICE COBOL_RedefinesClause redefinesClause;
-		public @CHOICE COBOL_RenamesClause renamesClause;
-		public @CHOICE COBOL_Sign sign;
-		public @CHOICE COBOL_ThruClause thruClause;
-		public @CHOICE COBOL_TypeLiteral type;
-		public @CHOICE COBOL_Typedef typedef;
-		public @CHOICE COBOL_Usage usage;
-		public @CHOICE COBOL_ValueClause valueClause;
-		public @CHOICE COBOL_ValueIsGlobal isGlobal;
+		public @CHOICE COBOL_BlankWhenZero XXblankWhenZero;
+		public @CHOICE COBOL_Justified XXjustified;
+		public @CHOICE COBOL_ObjectReference XXobjectReference;
+		public @CHOICE COBOL_OccursClause XXoccurs;
+		public @CHOICE COBOL_PictureClause XXpictureClause;
+		public @CHOICE COBOL_RedefinesClause XXredefinesClause;
+		public @CHOICE COBOL_RenamesClause XXrenamesClause;
+		public @CHOICE COBOL_Sign XXsign;
+		public @CHOICE COBOL_ThruClause XXthruClause;
+		public @CHOICE COBOL_TypeLiteral XXtype;
+		public @CHOICE COBOL_Typedef XXtypedef;
+		public @CHOICE COBOL_Usage XXusage;
+		public @CHOICE COBOL_ValueClause XXvalueClause;
+		public @CHOICE COBOL_ValueIsGlobal XXisGlobal;
 	}
 
 	public static class COBOL_Justified extends TokenSequence
@@ -78,14 +78,14 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 	public static class COBOL_DataFieldName extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword FILLER = new COBOL_Keyword("FILLER");
-		public @CHOICE COBOL_Data_Definition id;
+		public @CHOICE COBOL_Keyword XXFILLER = new COBOL_Keyword("FILLER");
+		public @CHOICE COBOL_Data_Definition XXid;
 	}
 
 	public static class COBOL_TypeLiteral extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword TYPE = new COBOL_Keyword("TYPE");
-		public @CHOICE COBOL_Literal type;
+		public @CHOICE COBOL_Keyword XXTYPE = new COBOL_Keyword("TYPE");
+		public @CHOICE COBOL_Literal XXtype;
 	}
 
 	public static class COBOL_OccursClause extends TokenSequence

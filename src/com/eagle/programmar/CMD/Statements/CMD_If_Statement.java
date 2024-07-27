@@ -35,15 +35,15 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable, Ab
 
 		public static class CMD_IfOperator extends TokenChooser
 		{
-			public @CHOICE CMD_KeywordChoice operator = new CMD_KeywordChoice("equ", "geq", "gtr", "leq", "lss", "neq");
-			public @CHOICE CMD_Punctuation equals = new CMD_Punctuation("==");
+			public @CHOICE CMD_KeywordChoice XXoperator = new CMD_KeywordChoice("equ", "geq", "gtr", "leq", "lss", "neq");
+			public @CHOICE CMD_Punctuation XXequals = new CMD_Punctuation("==");
 		}
 	}
 
 	public static class CMD_IfWhat extends TokenChooser
 	{
-		public @LAST CMD_Literal literal;
-		public @CHOICE CMD_IfEqual ifEqual;
+		public @LAST CMD_Literal XXliteral;
+		public @CHOICE CMD_IfEqual XXifEqual;
 
 		public @CHOICE static class CMD_IfDefined extends TokenSequence
 		{
@@ -83,9 +83,9 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable, Ab
 		int right = interpreter.getIntValue(ifEqual.expr2.arg);
 		if (ifEqual.minus2.isPresent()) right = -right;
 		boolean passTest;
-		switch (ifEqual.operator.operator.getValue())
+		switch (ifEqual.operator.getWhich().toString())
 		{
-		case "equ":
+		case "equ", "==":
 			passTest = left == right;
 			break;
 		case "geq":
@@ -104,7 +104,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable, Ab
 			passTest = left != right;
 			break;
 		default:
-			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.operator);
+			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.getWhich());
 		}
 
 		if (NOT.isPresent()) passTest = !passTest;

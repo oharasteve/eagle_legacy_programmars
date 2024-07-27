@@ -22,8 +22,8 @@ public class C_Generic extends TokenSequence
 
 	public static class C_GenericType extends TokenChooser
 	{
-		public @LAST C_Number number;
-		public @LAST C_Literal literal;
+		public @LAST C_Number XXnumber;
+		public @LAST C_Literal XXliteral;
 
 		public @CHOICE static class C_Plus_GenericType extends TokenSequence
 		{

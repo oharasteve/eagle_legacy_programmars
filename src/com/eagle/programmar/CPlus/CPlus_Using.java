@@ -24,10 +24,10 @@ public class CPlus_Using extends TokenSequence
 
 	public static class CPlus_UsingWhat extends TokenChooser
 	{
-		public @FIRST CPlus_UsingType1 type1;
-		public @FIRST CPlus_UsingType2 type2;
-		public @CHOICE C_Expression expr;
-		public @CHOICE CPlus_UsingColons colons;
+		public @FIRST CPlus_UsingType1 XXtype1;
+		public @FIRST CPlus_UsingType2 XXtype2;
+		public @CHOICE C_Expression XXexpr;
+		public @CHOICE CPlus_UsingColons XXcolons;
 	}
 
 	public static class CPlus_UsingType1 extends TokenSequence

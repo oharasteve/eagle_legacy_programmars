@@ -36,21 +36,21 @@ public class TCL_Statement extends TokenSequence implements EagleRunnableWithRes
 
 	public static class TCL_BaseStatement extends TokenChooser
 	{
-		public @CHOICE TCL_Comment comment;
-		public @CHOICE TCL_BlockStatement blockStatement;
-		public @CHOICE TCL_Procedure procedure;
+		public @CHOICE TCL_Comment XXcomment;
+		public @CHOICE TCL_BlockStatement XXblockStatement;
+		public @CHOICE TCL_Procedure XXprocedure;
 
-		public @CHOICE TCL_BreakStatement breakStatement;
-		public @CHOICE TCL_ForStatement forStatement;
-		public @CHOICE TCL_IfStatement ifStatement;
-		public @CHOICE TCL_IncrStatement incrStatement;
-		public @CHOICE TCL_NamespaceStatement namespaceStatement;
-		public @CHOICE TCL_PutsStatement putsStatement;
-		public @CHOICE TCL_ReturnStatement returnStatement;
-		public @CHOICE TCL_SetStatement setStatement;
-		public @CHOICE TCL_VariableStatement variableStatement;
+		public @CHOICE TCL_BreakStatement XXbreakStatement;
+		public @CHOICE TCL_ForStatement XXforStatement;
+		public @CHOICE TCL_IfStatement XXifStatement;
+		public @CHOICE TCL_IncrStatement XXincrStatement;
+		public @CHOICE TCL_NamespaceStatement XXnamespaceStatement;
+		public @CHOICE TCL_PutsStatement XXputsStatement;
+		public @CHOICE TCL_ReturnStatement XXreturnStatement;
+		public @CHOICE TCL_SetStatement XXsetStatement;
+		public @CHOICE TCL_VariableStatement XXvariableStatement;
 
-		public @LAST TCL_ExpressionStatement expressionStatement;
+		public @LAST TCL_ExpressionStatement XXexpressionStatement;
 	}
 
 	@Override

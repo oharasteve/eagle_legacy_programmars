@@ -43,7 +43,7 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 
 	public static class AWK_ForWhat extends TokenChooser
 	{
-		public @CHOICE AWK_ForIteration forIteration;
+		public @CHOICE AWK_ForIteration XXforIteration;
 
 		public @CHOICE static class AWK_ForEach extends TokenSequence
 		{
@@ -55,8 +55,8 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 
 	public static class AWK_ForBlock extends TokenChooser
 	{
-		public @CHOICE AWK_Statement stmt;
-		public @CHOICE AWK_Action actions;
+		public @CHOICE AWK_Statement XXstmt;
+		public @CHOICE AWK_Action XXactions;
 	}
 
 	@Override

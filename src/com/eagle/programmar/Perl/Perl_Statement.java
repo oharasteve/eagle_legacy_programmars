@@ -29,15 +29,15 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_Statement extends TokenChooser
 {
-	public @FIRST Perl_Comment comment;
-	public @CHOICE Perl_Include include;
-	public @CHOICE Perl_FunctionDefinition function;
-	public @CHOICE Perl_NamespaceStatement namespaceStatement;
-	public @CHOICE Perl_ClassStatement classStatement;
-	public @CHOICE Perl_Label label;
-	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon semicolon;
-	public @LAST Perl_ExpressionStatement expressionStatement; 
-	public @CHOICE Perl_StatementBlock statementBlock;
+	public @FIRST Perl_Comment XXcomment;
+	public @CHOICE Perl_Include XXinclude;
+	public @CHOICE Perl_FunctionDefinition XXfunction;
+	public @CHOICE Perl_NamespaceStatement XXnamespaceStatement;
+	public @CHOICE Perl_ClassStatement XXclassStatement;
+	public @CHOICE Perl_Label XXlabel;
+	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon XXsemicolon;
+	public @LAST Perl_ExpressionStatement XXexpressionStatement; 
+	public @CHOICE Perl_StatementBlock XXstatementBlock;
 
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence
 	{
@@ -70,13 +70,13 @@ public class Perl_Statement extends TokenChooser
 
 	public @CHOICE static class Perl_CompundStatement extends TokenChooser
 	{
-		public @CHOICE Perl_ForStatement forStatement;
-		public @CHOICE Perl_ForEachStatement forEachStatement;
-		public @CHOICE Perl_IfStatement ifStatement;
-		public @CHOICE Perl_SwitchStatement switchStatement;
-		public @CHOICE Perl_TraitStatement traitStatement;
-		public @CHOICE Perl_TryStatement tryStatement;
-		public @CHOICE Perl_WhileStatement whileStatement;
+		public @CHOICE Perl_ForStatement XXforStatement;
+		public @CHOICE Perl_ForEachStatement XXforEachStatement;
+		public @CHOICE Perl_IfStatement XXifStatement;
+		public @CHOICE Perl_SwitchStatement XXswitchStatement;
+		public @CHOICE Perl_TraitStatement XXtraitStatement;
+		public @CHOICE Perl_TryStatement XXtryStatement;
+		public @CHOICE Perl_WhileStatement XXwhileStatement;
 	}
 
 }

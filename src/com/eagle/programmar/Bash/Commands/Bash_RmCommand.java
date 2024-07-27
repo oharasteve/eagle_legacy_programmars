@@ -21,7 +21,7 @@ public class Bash_RmCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_RmOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice RF = new Bash_KeywordChoice("-r", "-f", "-rf");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-r", "-f", "-rf");
 	}
 	
 	public static class Bash_RmBin extends TokenSequence

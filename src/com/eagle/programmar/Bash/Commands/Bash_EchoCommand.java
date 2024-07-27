@@ -20,7 +20,7 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 
 	public static class Bash_EchoOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword N = new Bash_Keyword("-n");
+		public @CHOICE Bash_Keyword XXopt = new Bash_Keyword("-n");
 	}
 
 	@Override

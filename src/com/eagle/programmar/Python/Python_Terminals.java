@@ -49,13 +49,14 @@ public class Python_Terminals extends EagleLanguage
 
 	public static class Python_Terminal extends TokenChooser
 	{
-		public @CHOICE Python_Comment comment;
-		public @CHOICE Python_HexNumber hex;
-		public @CHOICE Python_Number number;
-		public @CHOICE Python_Literal literal;
-		public @CHOICE Python_KeywordChoice keywords = new Python_KeywordChoice(getSyntax().allReservedWords());
-		public @CHOICE Python_Identifier id;
-		public @CHOICE Python_PunctuationChoice puncts = new Python_PunctuationChoice("+", "-", "*", "/", "%", ",", ".",
-				"=", "<", ">", ":", ";", "_", "!", "@", "(", ")", "[", "]", "{", "}");
+		public @CHOICE Python_Comment XXcomment;
+		public @CHOICE Python_HexNumber XXhex;
+		public @CHOICE Python_Number XXnumber;
+		public @CHOICE Python_Literal XXliteral;
+		public @CHOICE Python_KeywordChoice XXkeywords = new Python_KeywordChoice(getSyntax().allReservedWords());
+		public @CHOICE Python_Identifier XXid;
+		public @CHOICE Python_PunctuationChoice XXpuncts = new Python_PunctuationChoice(
+				"+", "-", "*", "/", "%", ",", ".", "=", "<", ">", ":", ";",
+				"_", "!", "@", "(", ")", "[", "]", "{", "}");
 	}
 }

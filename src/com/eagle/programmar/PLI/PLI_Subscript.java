@@ -19,7 +19,7 @@ public class PLI_Subscript extends TokenSequence
 
 	public static class PLI_ExpressionOrStar extends TokenChooser
 	{
-		public @CHOICE PLI_Expression expr;
-		public @CHOICE PunctuationStar star;
+		public @CHOICE PLI_Expression XXexpr;
+		public @CHOICE PunctuationStar XXstar;
 	}
 }

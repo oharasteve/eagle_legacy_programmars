@@ -23,7 +23,7 @@ public class Perl_VarStatement extends TokenSequence implements AbstractStatemen
 
 	public static class Perl_VarPrefix extends TokenChooser
 	{
-		public @CHOICE Perl_KeywordChoice modifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);
+		public @CHOICE Perl_KeywordChoice XXmodifier = new Perl_KeywordChoice(Perl_Program.MODIFIERS);
 	}
 
 	public static class Perl_Variable_Init extends TokenSequence

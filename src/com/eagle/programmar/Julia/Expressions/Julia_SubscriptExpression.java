@@ -24,8 +24,8 @@ public class Julia_SubscriptExpression extends PrecedenceOperator implements Eag
 
 	public static class Julia_SubscriptionEnd extends TokenChooser
 	{
-		public @CHOICE Julia_Keyword END = new Julia_Keyword("end");
-		public @CHOICE Julia_Expression subscr2;
+		public @CHOICE Julia_Keyword XXEND = new Julia_Keyword("end");
+		public @CHOICE Julia_Expression XXsubscr;
 	}
 	
 	@Override

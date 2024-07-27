@@ -50,7 +50,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 
 	public static class COBOL_PerformWhat extends TokenChooser
 	{
-		public @CHOICE COBOL_PerformParagraph performParagraph;
+		public @CHOICE COBOL_PerformParagraph XXperformParagraph;
 
 		public @CHOICE static class COBOL_PerformNothing extends TokenSequence
 		{

@@ -48,9 +48,9 @@ public class Javascript_ObjectLiteral extends PrimaryOperator
 
 			public static class Javascript_ObjectFieldName extends TokenChooser
 			{
-				public @CHOICE Javascript_Number number;
-				public @CHOICE Javascript_Literal literal;
-				public @CHOICE Javascript_Field_Definition field;
+				public @CHOICE Javascript_Number XXnumber;
+				public @CHOICE Javascript_Literal XXliteral;
+				public @CHOICE Javascript_Field_Definition XXfield;
 			}
 
 			public static class Javascript_ObjectFieldValue extends TokenSequence

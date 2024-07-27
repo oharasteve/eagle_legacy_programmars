@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class C_DataModifiers extends TokenChooser
 {
-	public @CHOICE C_KeywordChoice scope = new C_KeywordChoice(C_Program.getModifiers());
-	public @CHOICE C_Declaration declaration;
+	public @CHOICE C_KeywordChoice XXscope = new C_KeywordChoice(C_Program.getModifiers());
+	public @CHOICE C_Declaration XXdeclaration;
 }

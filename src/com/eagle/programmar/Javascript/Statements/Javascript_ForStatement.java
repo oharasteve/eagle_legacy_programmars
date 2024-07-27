@@ -43,8 +43,8 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 
 	public static class  Javascript_ForWhat extends TokenChooser
 	{
-		public @CHOICE Javascript_ForLoopStatement forLoop;
-		public @CHOICE Javascript_ForCollectionStatement forCollection;
+		public @CHOICE Javascript_ForLoopStatement XXforLoop;
+		public @CHOICE Javascript_ForCollectionStatement XXforCollection;
 	}
 	
 	public static class Javascript_ForLoopStatement extends TokenSequence
@@ -65,8 +65,8 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 		
 		public static class Javascript_ForLoopVariable extends TokenChooser
 		{
-			public @FIRST Javascript_ForLoopVariableWithType withType;
-			public @CHOICE Javascript_ForLoopVariableNoType noType;
+			public @FIRST Javascript_ForLoopVariableWithType XXwithType;
+			public @CHOICE Javascript_ForLoopVariableNoType XXnoType;
 		}
 	}
 
@@ -101,8 +101,8 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 
 		public static class Javascript_InOrColon extends TokenChooser
 		{
-			public @CHOICE PunctuationColon colon;
-			public @CHOICE Javascript_KeywordChoice IN = new Javascript_KeywordChoice("in", "of");
+			public @CHOICE PunctuationColon XXcolon;
+			public @CHOICE Javascript_KeywordChoice XXIN = new Javascript_KeywordChoice("in", "of");
 		}
 	}
 	

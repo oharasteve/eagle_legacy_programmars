@@ -44,7 +44,7 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 
 	public static class Python_ForWhat extends TokenChooser
 	{
-		public @CHOICE Python_VariableList varList;
+		public @CHOICE Python_VariableList XXvarList;
 
 		public @CHOICE static class Python_ForList extends TokenSequence
 		{

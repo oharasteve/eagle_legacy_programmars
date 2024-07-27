@@ -17,7 +17,7 @@ public class Python_YieldStatement extends TokenSequence implements AbstractStat
 
 	public static class Python_YieldWhat extends TokenChooser
 	{
-		public @CHOICE Python_ExpressionList expressionList;
+		public @CHOICE Python_ExpressionList XXexpressionList;
 
 		public @CHOICE static class Python_YieldFrom extends TokenSequence
 		{

@@ -12,8 +12,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class Perl_Type extends TokenChooser
 {
-	public @CHOICE Perl_KeywordChoice base = new Perl_KeywordChoice("array", "int", "string");
-	public @CHOICE Perl_Variable_Definition type;
+	public @CHOICE Perl_KeywordChoice XXbase = new Perl_KeywordChoice("array", "int", "string");
+	public @CHOICE Perl_Variable_Definition XXtype;
 
 	public @CHOICE static class Perl_CompoundType extends TokenSequence
 	{

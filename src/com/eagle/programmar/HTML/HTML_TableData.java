@@ -28,9 +28,9 @@ public class HTML_TableData extends TokenSequence
 		{
 			// Not really a PunctuationChoice here, BUT the EagleWriteXML module insists on
 			// difference class names
-			public @CHOICE @CURIOUS("Bogus slash in element") HTML_PunctuationChoice slash = new HTML_PunctuationChoice(
-					"/>");
-			public @CHOICE HTML_Punctuation endTag = new HTML_Punctuation(">");
+			public @CHOICE @CURIOUS("Bogus slash in element") HTML_PunctuationChoice XXslash =
+					new HTML_PunctuationChoice("/>");
+			public @CHOICE HTML_Punctuation XXendTag = new HTML_Punctuation(">");
 		}
 	}
 

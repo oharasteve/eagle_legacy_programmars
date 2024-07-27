@@ -29,8 +29,8 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{
-		public @CHOICE CMacro_Literal filename;
-		public @CHOICE CMacro_IncludeSys sys;
+		public @CHOICE CMacro_Literal XXfilename;
+		public @CHOICE CMacro_IncludeSys XXsys;
 	}
 
 	@Override

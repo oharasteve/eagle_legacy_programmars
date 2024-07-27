@@ -23,7 +23,7 @@ public class CPlus_NewExpression extends PrimaryOperator
 
 	public static class CPlus_NewWhat extends TokenChooser
 	{
-		public @CHOICE C_Subscript size;
+		public @CHOICE C_Subscript XXsize;
 
 		public @CHOICE static class CPlus_Parentheses extends TokenSequence
 		{

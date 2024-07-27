@@ -55,9 +55,9 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 
 		public static class COBOL_DisplayOptions extends TokenChooser
 		{
-			public @CHOICE COBOL_DisplayLine line;
-			public @CHOICE COBOL_DisplayColumn column;
-			public @CHOICE PunctuationComma comma;
+			public @CHOICE COBOL_DisplayLine XXline;
+			public @CHOICE COBOL_DisplayColumn XXcolumn;
+			public @CHOICE PunctuationComma XXcomma;
 
 			public @CHOICE static class COBOL_DisplayUpon extends TokenSequence
 			{

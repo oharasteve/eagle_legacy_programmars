@@ -18,7 +18,7 @@ public class IBMASM_EQU_Directive extends TokenSequence
 
 	public static class IBMASM_EQU_What extends TokenChooser
 	{
-		public @CHOICE PunctuationStar star;
-		public @CHOICE IBMASM_Immediate immediage;
+		public @CHOICE PunctuationStar XXstar;
+		public @CHOICE IBMASM_Immediate XXimmediage;
 	}
 }

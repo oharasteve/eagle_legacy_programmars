@@ -26,8 +26,8 @@ public class Fortran_PrintStatement extends TokenSequence implements EagleRunnab
 
 	public static class Fortran_PrintFormat extends TokenChooser
 	{
-		public @CHOICE PunctuationStar star;
-		public @CHOICE Fortran_Literal fmt;
+		public @CHOICE PunctuationStar XXstar;
+		public @CHOICE Fortran_Literal XXfmt;
 	}
 
 	@Override

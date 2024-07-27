@@ -35,11 +35,11 @@ public class Scala_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Scala_Element extends TokenChooser
 	{
-		public @CHOICE Scala_CommentEoln comment;
-		public @CHOICE Scala_Import imprt;
-		public @CHOICE Scala_Object object;
-		public @CHOICE Scala_Package pkg;
-		public @CHOICE Scala_Statement stmt;
+		public @CHOICE Scala_CommentEoln XXcomment;
+		public @CHOICE Scala_Import XXimport;
+		public @CHOICE Scala_Object XXobject;
+		public @CHOICE Scala_Package XXpkg;
+		public @CHOICE Scala_Statement XXstmt;
 	}
 
 	@Override

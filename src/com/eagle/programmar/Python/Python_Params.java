@@ -30,9 +30,9 @@ public class Python_Params extends TokenSequence
 
 	public static class Python_Parameter extends TokenChooser
 	{
-		public @CHOICE Python_Variable var;
-		public @LAST PunctuationSlash slash; // Means end of positional arguments
-		public @LAST PunctuationStar star; // Means end of positional or keyword arguments
+		public @CHOICE Python_Variable XXvar;
+		public @LAST PunctuationSlash XXslash; // Means end of positional arguments
+		public @LAST PunctuationStar XXstar; // Means end of positional or keyword arguments
 
 		public @CHOICE static class PythonParamStar extends TokenSequence
 		{

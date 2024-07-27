@@ -24,7 +24,7 @@ public class Powershell_WhereStatement extends TokenSequence implements Abstract
 
 	public static class Powershell_Where extends TokenChooser
 	{
-		public @CHOICE Powershell_Punctuation percent = new Powershell_Punctuation("?");
-		public @CHOICE Powershell_KeywordChoice WHERE = new Powershell_KeywordChoice("Where", "Where-Object");
+		public @CHOICE Powershell_Punctuation XXpercent = new Powershell_Punctuation("?");
+		public @CHOICE Powershell_KeywordChoice XXWHERE = new Powershell_KeywordChoice("Where", "Where-Object");
 	}
 }

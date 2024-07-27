@@ -37,8 +37,8 @@ public class Javascript_Class extends TokenSequence
 
 	public static class Javascript_ClassElement extends TokenChooser
 	{
-		public @CHOICE Javascript_Method method;
-		public @CHOICE Javascript_Element element;
+		public @CHOICE Javascript_Method XXmethod;
+		public @CHOICE Javascript_Element XXelement;
 	}
 
 	public static class Javascript_Method extends TokenSequence

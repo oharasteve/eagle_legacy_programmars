@@ -19,6 +19,6 @@ public class Bash_WcCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_WcOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice L = new Bash_KeywordChoice("-l");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-l");
 	}
 }

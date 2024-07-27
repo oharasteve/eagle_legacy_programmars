@@ -41,7 +41,7 @@ public class Go_Function extends TokenSequence implements AbstractFunction, Eagl
 
 	public static class Go_FuncReturnType extends TokenChooser
 	{
-		public @CHOICE Go_Type type;
+		public @CHOICE Go_Type XXtype;
 
 		public @CHOICE static class Go_FuncReturnMulti extends TokenSequence
 		{

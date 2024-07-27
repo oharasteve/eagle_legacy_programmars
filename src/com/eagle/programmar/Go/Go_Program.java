@@ -36,12 +36,12 @@ public class Go_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Go_Element extends TokenChooser
 	{
-		public @CHOICE Go_CommentEoln comment;
-		public @CHOICE Go_Package pkg;
-		public @CHOICE Go_Import imprt;
-		public @CHOICE Go_Data data;
-		public @CHOICE Go_Function function;
-		public @CHOICE Go_Statement stmt;
+		public @CHOICE Go_CommentEoln XXcomment;
+		public @CHOICE Go_Package XXpkg;
+		public @CHOICE Go_Import XXimport;
+		public @CHOICE Go_Data XXdata;
+		public @CHOICE Go_Function XXfunction;
+		public @CHOICE Go_Statement XXstmt;
 	}
 
 	@Override

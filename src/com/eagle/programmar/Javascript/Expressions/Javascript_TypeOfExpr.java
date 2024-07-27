@@ -18,7 +18,7 @@ public class Javascript_TypeOfExpr extends PrimaryOperator
 
 	public static class Javascript_TypeOfWhat extends TokenChooser
 	{
-		public @CHOICE Javascript_Variable var;
+		public @CHOICE Javascript_Variable XXvar;
 
 		public @CHOICE static class Javascript_TypeOfParens extends TokenSequence
 		{

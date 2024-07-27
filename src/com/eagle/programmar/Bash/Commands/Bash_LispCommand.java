@@ -19,7 +19,7 @@ public class Bash_LispCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_LispOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword Q = new Bash_Keyword("-q");
+		public @CHOICE Bash_Keyword XXopt = new Bash_Keyword("-q");
 
 		public @CHOICE static class Bash_LispOptionX extends TokenSequence
 		{

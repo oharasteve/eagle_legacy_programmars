@@ -21,7 +21,7 @@ public class Django_BarExpression extends PrecedenceOperator
 
 	public static class Django_BarWhat extends TokenChooser
 	{
-		public @CHOICE Django_KeywordChoice LENGTH = new Django_KeywordChoice("int", "length");
+		public @CHOICE Django_KeywordChoice XXLENGTH = new Django_KeywordChoice("int", "length");
 
 		public @CHOICE static class Django_BarDefault extends TokenSequence
 		{

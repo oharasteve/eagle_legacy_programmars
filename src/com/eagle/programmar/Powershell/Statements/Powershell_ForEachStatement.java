@@ -31,8 +31,8 @@ public class Powershell_ForEachStatement extends TokenSequence implements Abstra
 
 	public static class Powershell_ForEach extends TokenChooser
 	{
-		public @CHOICE Powershell_Punctuation percent = new Powershell_Punctuation("%");
-		public @CHOICE Powershell_KeywordChoice FOREACH = new Powershell_KeywordChoice("ForEach", "ForEach-Object");
+		public @CHOICE Powershell_Punctuation XXpercent = new Powershell_Punctuation("%");
+		public @CHOICE Powershell_KeywordChoice XXFOREACH = new Powershell_KeywordChoice("ForEach", "ForEach-Object");
 	}
 
 	public static class Powershell_ForEachParams extends TokenSequence

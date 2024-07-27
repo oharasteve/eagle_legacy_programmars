@@ -20,8 +20,8 @@ public class Perl_NamespaceStatement extends TokenSequence
 
 	public static class Perl_NamespaceBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE Perl_StatementBlock block;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE Perl_StatementBlock XXblock;
 	}
 
 	public static class Perl_MoreSpace extends TokenSequence

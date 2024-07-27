@@ -20,7 +20,7 @@ public class IntelASM_IncludeDirective extends TokenSequence
 
 	public static class IntelASM_Filename extends TokenChooser
 	{
-		public @CHOICE IntelASM_Literal literal;
+		public @CHOICE IntelASM_Literal XXliteral;
 
 		public @CHOICE static class IntelASM_BareFilename extends TokenSequence
 		{

@@ -19,8 +19,8 @@ public class Fortran_EqualityExpression extends PrecedenceOperator implements Ea
 
 	public static class Fortran_EqOper extends TokenChooser
 	{
-		public @CHOICE Fortran_KeywordChoice EQ = new Fortran_KeywordChoice(".EQ.", ".NE.");
-		public @CHOICE Fortran_PunctuationChoice oper = new Fortran_PunctuationChoice("=", "/=");
+		public @CHOICE Fortran_KeywordChoice XXEQ = new Fortran_KeywordChoice(".EQ.", ".NE.");
+		public @CHOICE Fortran_PunctuationChoice XXoper = new Fortran_PunctuationChoice("=", "/=");
 	}
 
 	@Override

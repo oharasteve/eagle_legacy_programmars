@@ -26,8 +26,8 @@ public class Go_BuiltinFunctionCall extends PrimaryOperator implements EagleRunn
 
 	public static class Go_BuiltinFunc extends TokenChooser
 	{
-		public @CHOICE Go_KeywordChoice LEN = new Go_KeywordChoice("len");
-		public @CHOICE Go_BuiltinTwoNames twoNames;
+		public @CHOICE Go_KeywordChoice XXLEN = new Go_KeywordChoice("len");
+		public @CHOICE Go_BuiltinTwoNames XXtwoNames;
 	}
 	
 	public static class Go_BuiltinTwoNames extends TokenSequence

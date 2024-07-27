@@ -25,12 +25,12 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 	public static class Powershell_WhichCommand extends TokenChooser
 	{
-		public @CHOICE PunctuationAmpersand ampersand;
-		public @CHOICE PunctuationPeriod dot;
-		public @CHOICE Powershell_Punctuation dotDot = new Powershell_Punctuation("..");
-		public @CHOICE PunctuationColon colon;
-		public @CHOICE Powershell_VerbNoun verbNoun; // Like Get-Content for example
-		public @LAST Powershell_Function_Reference id;
+		public @CHOICE PunctuationAmpersand XXampersand;
+		public @CHOICE PunctuationPeriod XXdot;
+		public @CHOICE Powershell_Punctuation XXdotDot = new Powershell_Punctuation("..");
+		public @CHOICE PunctuationColon XXcolon;
+		public @CHOICE Powershell_VerbNoun XXverbNoun; // Like Get-Content for example
+		public @LAST Powershell_Function_Reference XXid;
 	}
 
 	public static class Powershell_CommandArg extends TokenSequence
@@ -40,9 +40,9 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 		public static class Powershell_CommandOneArg extends TokenChooser
 		{
-			public @FIRST Powershell_Filename filename; // Tricky because the dot is already taken
-			public @CHOICE Powershell_Expression expr;
-			public @LAST Powershell_Word word;
+			public @FIRST Powershell_Filename XXfilename; // Tricky because the dot is already taken
+			public @CHOICE Powershell_Expression XXexpr;
+			public @LAST Powershell_Word XXword;
 		}
 	}
 }

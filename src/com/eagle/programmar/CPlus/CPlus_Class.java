@@ -43,7 +43,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 
 	public static class CPlus_ClassBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
 
 		public @CHOICE static class CPlus_ClassBlockBody extends TokenSequence
 		{
@@ -55,15 +55,15 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 
 	public static class CPlus_ClassElement extends TokenChooser
 	{
-		public @FIRST CPlus_Constructor constructor;
-		public @FIRST CPlus_Operator operator;
-		public @FIRST CPlus_Data data;
-		public @CHOICE CPlus_Method method;
-		public @CHOICE CPlus_Extern externC;
-		public @CHOICE CPlus_Class innerClass;
-		public @CHOICE CPlus_Using using;
-		public @CHOICE CPlus_Template template;
-		public @LAST C_StatementOrComment c_stmt;
+		public @FIRST CPlus_Constructor XXconstructor;
+		public @FIRST CPlus_Operator XXoperator;
+		public @FIRST CPlus_Data XXdata;
+		public @CHOICE CPlus_Method XXmethod;
+		public @CHOICE CPlus_Extern XXexternC;
+		public @CHOICE CPlus_Class XXinnerClass;
+		public @CHOICE CPlus_Using XXusing;
+		public @CHOICE CPlus_Template XXtemplate;
+		public @LAST C_StatementOrComment XXc_stmt;
 
 		public @CHOICE static class CPlus_ClassPublicPrivate extends TokenSequence
 		{

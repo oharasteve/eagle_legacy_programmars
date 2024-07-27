@@ -106,7 +106,7 @@ public class SQL_SelectStatement extends TokenSequence
 
 		public static class SQL_SelectWhat extends TokenChooser
 		{
-			public @LAST SQL_Expression expr;
+			public @LAST SQL_Expression XXexpr;
 
 			public @CHOICE static class SQL_SelectExpression extends TokenSequence
 			{

@@ -50,7 +50,7 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 
 	public static class PLI_Declare_Variables extends TokenChooser
 	{
-		public @CHOICE PLI_Variable_Definition varDecl;
+		public @CHOICE PLI_Variable_Definition XXvarDecl;
 
 		public @CHOICE static class PLI_Identifier_List extends TokenSequence
 		{

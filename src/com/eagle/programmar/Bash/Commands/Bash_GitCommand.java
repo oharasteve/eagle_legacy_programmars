@@ -17,7 +17,7 @@ public class Bash_GitCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_GitOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice HEAD = new Bash_KeywordChoice(
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
 				"ls-tree", "-r", "-t", "-l", "--full-name", "HEAD");
 	}
 }

@@ -19,6 +19,6 @@ public class Bash_CpCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_CpOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice R = new Bash_KeywordChoice("-r", "-R");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-r", "-R");
 	}
 }

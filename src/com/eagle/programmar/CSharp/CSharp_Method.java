@@ -91,8 +91,8 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Abst
 
 	public static class CSharp_MethodBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE CSharp_MethodImplementation implementation;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE CSharp_MethodImplementation XXimplementation;
 
 		public @CHOICE static class CSharp_MethodLambda extends TokenSequence
 		{

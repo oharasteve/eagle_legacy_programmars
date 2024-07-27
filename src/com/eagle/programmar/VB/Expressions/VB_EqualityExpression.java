@@ -20,8 +20,8 @@ public class VB_EqualityExpression extends PrecedenceOperator implements EagleRu
 
 	public static class VB_EqualityOperator extends TokenChooser
 	{
-		public @CHOICE VB_PunctuationChoice equals = new VB_PunctuationChoice("=");
-		public @CHOICE VB_KeywordChoice IS = new VB_KeywordChoice("is", "like", "isnot");
+		public @CHOICE VB_PunctuationChoice XXequals = new VB_PunctuationChoice("=");
+		public @CHOICE VB_KeywordChoice XXIS = new VB_KeywordChoice("is", "like", "isnot");
 	}
 
 	@Override

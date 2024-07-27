@@ -33,10 +33,10 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 
 	public static class C_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE C_CastedVariable castedVariable;
-		public @CHOICE C_IndirectVariable indirectVariable;
-		public @CHOICE C_SubscriptedVariable subscriptedVariable;
-		public @LAST C_Identifier_Reference id;
+		public @CHOICE C_CastedVariable XXcastedVariable;
+		public @CHOICE C_IndirectVariable XXindirectVariable;
+		public @CHOICE C_SubscriptedVariable XXsubscriptedVariable;
+		public @LAST C_Identifier_Reference XXid;
 	}
 
 	public static class C_CastedVariable extends TokenSequence

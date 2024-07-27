@@ -54,8 +54,8 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Algol68_Element extends TokenChooser
 	{
-		public @CHOICE Algol68_Statement statement;
-		public @CHOICE Algol68_Main main;
+		public @CHOICE Algol68_Statement XXstatement;
+		public @CHOICE Algol68_Main XXmain;
 	}
 
 	@Override

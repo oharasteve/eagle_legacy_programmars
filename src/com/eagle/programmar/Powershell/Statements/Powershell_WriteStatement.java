@@ -24,7 +24,7 @@ public class Powershell_WriteStatement extends TokenSequence implements EagleRun
 
 	public static class Powershell_WriteOption extends TokenChooser
 	{
-		public @CHOICE Powershell_KeywordChoice NONEWLINE = new Powershell_KeywordChoice("-NoNewLine");
+		public @CHOICE Powershell_KeywordChoice XXNONEWLINE = new Powershell_KeywordChoice("-NoNewLine");
 
 		public @CHOICE static class Powershell_WriteOptionColor extends TokenSequence
 		{

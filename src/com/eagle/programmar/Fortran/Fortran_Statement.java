@@ -23,19 +23,19 @@ import com.eagle.tokens.TokenSequence;
 
 public class Fortran_Statement extends TokenChooser
 {
-	public @CHOICE Fortran_Assignment assignment;
-	public @CHOICE Fortran_CallStatement callStatement;
-	public @CHOICE Fortran_Common common;
-	public @CHOICE Fortran_Data data;
-	public @CHOICE Fortran_DoStatement doStatement;
-	public @CHOICE Fortran_ExitStatement exitStatement;
-	public @CHOICE Fortran_Function function;
-	public @CHOICE Fortran_IfStatement ifStatement;
-	public @CHOICE Fortran_Implicit implicit;
-	public @CHOICE Fortran_PrintStatement printStatement;
-	public @CHOICE Fortran_ProgramBlock programBlock;
-	public @CHOICE Fortran_Subroutine subroutine;
-	public @CHOICE Fortran_WriteStatement writeStatement;
+	public @CHOICE Fortran_Assignment XXassignment;
+	public @CHOICE Fortran_CallStatement XXcallStatement;
+	public @CHOICE Fortran_Common XXcommon;
+	public @CHOICE Fortran_Data XXdata;
+	public @CHOICE Fortran_DoStatement XXdoStatement;
+	public @CHOICE Fortran_ExitStatement XXexitStatement;
+	public @CHOICE Fortran_Function XXfunction;
+	public @CHOICE Fortran_IfStatement XXifStatement;
+	public @CHOICE Fortran_Implicit XXimplicit;
+	public @CHOICE Fortran_PrintStatement XXprintStatement;
+	public @CHOICE Fortran_ProgramBlock XXprogramBlock;
+	public @CHOICE Fortran_Subroutine XXsubroutine;
+	public @CHOICE Fortran_WriteStatement XXwriteStatement;
 
 	public @CHOICE static class Fortran_CommentEOLN extends TokenSequence
 	{

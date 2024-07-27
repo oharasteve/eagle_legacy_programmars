@@ -19,54 +19,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (exprs._elements.isEmpty())
-		{
-			interpreter.pushBool(false); // () and NIL are identical in Lisp
-		}
-
-		Lisp_SExpr first = exprs._elements.get(0);
-		switch (first.getWhich().toString().toUpperCase())
-		{
-		case "+":
-			int sum = 0;
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				sum += interpreter.getIntValue(exprs._elements.get(i));
-			}
-			interpreter.pushInt(sum);
-			return;
-		case "*":
-			int product = 0;
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				product *= interpreter.getIntValue(exprs._elements.get(i));
-			}
-			interpreter.pushInt(product);
-			return;
-		case "OR":
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				if (interpreter.getBoolValue(exprs._elements.get(i)))
-				{
-					interpreter.pushBool(true);
-					return;
-				}
-			}
-			interpreter.pushBool(false);
-			return;
-		case "AND":
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				if (!interpreter.getBoolValue(exprs._elements.get(i)))
-				{
-					interpreter.pushBool(false);
-					return;
-				}
-			}
-			interpreter.pushBool(true);
-			return;
-		default:
-			throw new RuntimeException("Unable to handle function: " + first.getWhich());
-		}
+		Lisp_SExpr first = exprs.first();
+		throw new RuntimeException("Please implement " + first.showText());
 	}
 }

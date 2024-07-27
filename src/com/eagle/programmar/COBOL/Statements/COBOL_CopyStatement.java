@@ -43,8 +43,8 @@ public class COBOL_CopyStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_FileNameOrLiteral extends TokenChooser
 	{
-		public @CHOICE COBOL_FileName fileNmae;
-		public @CHOICE COBOL_Literal literal;
+		public @CHOICE COBOL_FileName XXfileNmae;
+		public @CHOICE COBOL_Literal XXliteral;
 	}
 
 	public static class COBOL_FileName extends TerminalToken

@@ -27,10 +27,10 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 
 	public static class COBOL_FunctionName extends TokenChooser
 	{
-		public @FIRST COBOL_KeywordChoice builtins = new COBOL_KeywordChoice("CURRENT-DATE", "INTEGER-OF-DATE",
+		public @FIRST COBOL_KeywordChoice XXbuiltins = new COBOL_KeywordChoice("CURRENT-DATE", "INTEGER-OF-DATE",
 				"LENGTH", "LOWER-CASE", "ORD-MAX", "ORD-MIN", "RANDOM", "REM", "REVERSE", "TRIM", "UPPER-CASE");
 
-		public @CHOICE COBOL_Variable userFunc;
+		public @CHOICE COBOL_Variable XXuserFunc;
 	}
 
 	public static class COBOL_FunctionParameter extends TokenSequence

@@ -18,10 +18,10 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class JavaP_Value extends TokenChooser
 {
-	public @FIRST JavaP_Type type;
-	public @CHOICE JavaP_Symbol_Reference symbol;
-	public @LAST JavaP_QualifiedName name;
-	public @CHOICE JavaP_Literal literal;
+	public @FIRST JavaP_Type XXtype;
+	public @CHOICE JavaP_Symbol_Reference XXsymbol;
+	public @LAST JavaP_QualifiedName XXname;
+	public @CHOICE JavaP_Literal XXliteral;
 
 	public @CHOICE static class JavaP_ValueLClass extends TokenSequence
 	{

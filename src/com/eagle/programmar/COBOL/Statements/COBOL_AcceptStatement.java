@@ -36,7 +36,7 @@ public class COBOL_AcceptStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_AcceptOption extends TokenChooser
 	{
-		public @CHOICE COBOL_KeywordChoice option = new COBOL_KeywordChoice("AUTO", "AUTO-SKIP", "FULL", "NO-ECHO",
+		public @CHOICE COBOL_KeywordChoice XXoption = new COBOL_KeywordChoice("AUTO", "AUTO-SKIP", "FULL", "NO-ECHO",
 				"PROMPT", "SECURE", "UPDATE");
 
 		public @CHOICE static class COBOL_AcceptFrom extends TokenSequence

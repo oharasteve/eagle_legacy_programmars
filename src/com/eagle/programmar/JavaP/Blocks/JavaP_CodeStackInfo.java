@@ -70,8 +70,8 @@ public class JavaP_CodeStackInfo extends TokenSequence
 
 					public static class JavaP_CodeValueCase extends TokenChooser
 					{
-						public @CHOICE JavaP_Number number;
-						public @CHOICE JavaP_Keyword DEFAULT = new JavaP_Keyword("default");
+						public @CHOICE JavaP_Number XXnumber;
+						public @CHOICE JavaP_Keyword XXDEFAULT = new JavaP_Keyword("default");
 					}
 				}
 			}

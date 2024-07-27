@@ -44,8 +44,8 @@ public class COBOL_InspectStatement extends COBOL_AbstractStatement
 
 			public static class COBOL_InspectConvert extends TokenChooser
 			{
-				public @CHOICE COBOL_Literal literal;
-				public @CHOICE COBOL_KeywordChoice cases = new COBOL_KeywordChoice("LOWER-CASE", "LowerCase",
+				public @CHOICE COBOL_Literal XXliteral;
+				public @CHOICE COBOL_KeywordChoice XXcases = new COBOL_KeywordChoice("LOWER-CASE", "LowerCase",
 						"UPPER-CASE", "UpperCase");
 			}
 		}

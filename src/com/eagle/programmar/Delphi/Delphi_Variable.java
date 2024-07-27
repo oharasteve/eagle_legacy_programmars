@@ -25,8 +25,8 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 
 	public static class Delphi_Extended_Variable extends TokenChooser
 	{
-		public @CHOICE Delphi_DotName dotName;
-		public @CHOICE Delphi_Subscript subscript;
+		public @CHOICE Delphi_DotName XXdotName;
+		public @CHOICE Delphi_Subscript XXsubscript;
 	}
 
 	public static class Delphi_DotName extends TokenSequence

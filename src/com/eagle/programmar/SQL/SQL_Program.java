@@ -27,7 +27,7 @@ public class SQL_Program extends EagleLanguage
 
 	public static class SQL_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE SQL_Statement statement;
-		public @CHOICE SQL_Comment comment;
+		public @CHOICE SQL_Statement XXstatement;
+		public @CHOICE SQL_Comment XXcomment;
 	}
 }

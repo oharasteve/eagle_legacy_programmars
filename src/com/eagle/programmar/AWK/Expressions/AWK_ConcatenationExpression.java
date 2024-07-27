@@ -17,8 +17,8 @@ public class AWK_ConcatenationExpression extends PrimaryOperator implements Eagl
 
 	public static class AWK_ConcatPiece extends TokenChooser
 	{
-		public @CHOICE AWK_String string;
-		public @CHOICE AWK_VariableExpression variable;
+		public @CHOICE AWK_String XXstring;
+		public @CHOICE AWK_VariableExpression XXvariable;
 	}
 
 	@Override

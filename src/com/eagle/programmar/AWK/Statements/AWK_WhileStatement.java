@@ -23,7 +23,7 @@ public class AWK_WhileStatement extends TokenSequence implements AbstractStateme
 
 	public static class AWK_WhileBlock extends TokenChooser
 	{
-		public @CHOICE AWK_Statement stmt;
-		public @CHOICE AWK_Action actions;
+		public @CHOICE AWK_Statement XXstmt;
+		public @CHOICE AWK_Action XXactions;
 	}
 }

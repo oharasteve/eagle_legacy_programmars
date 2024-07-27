@@ -17,7 +17,7 @@ public class Eaglish_Variable extends TokenSequence implements EagleRunnable, Ab
 
 	public static class Eaglish_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE Eaglish_Identifier_Reference id;
+		public @CHOICE Eaglish_Identifier_Reference XXid;
 	}
 
 	@Override

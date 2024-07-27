@@ -48,8 +48,8 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 
 	public static class Java_ForWhat extends TokenChooser
 	{
-		public @CHOICE Java_Expression expr;
-		public @FIRST Java_ForWithType forWithType;
+		public @CHOICE Java_Expression XXexpr;
+		public @FIRST Java_ForWithType XXforWithType;
 	}
 
 	public static class Java_ForWithType extends TokenSequence

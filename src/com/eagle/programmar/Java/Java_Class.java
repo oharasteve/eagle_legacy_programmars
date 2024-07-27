@@ -47,9 +47,9 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 
 	public static class Java_ClassModifier extends TokenChooser
 	{
-		public @FIRST @NEWLINE Java_Comment comment;
-		public @CHOICE Java_Annotation annotation;
-		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @FIRST @NEWLINE Java_Comment XXcomment;
+		public @CHOICE Java_Annotation XXannotation;
+		public @CHOICE Java_KeywordChoice XXmodifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 	}
 
 	public static class Java_ClassExtends extends TokenSequence
@@ -85,10 +85,10 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 
 	public static class Java_ClassElement extends TokenChooser
 	{
-		public @FIRST @NEWLINE Java_Comment comment;
-		public @CHOICE @NEWLINE Java_Method jmethod;
-		public @FIRST @NEWLINE Java_Constructor constructor;
-		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon;
+		public @FIRST @NEWLINE Java_Comment XXcomment;
+		public @CHOICE @NEWLINE Java_Method XXmethod;
+		public @FIRST @NEWLINE Java_Constructor XXconstructor;
+		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon XXsemicolon;
 
 		public @CHOICE static class Java_StaticStatement extends TokenSequence implements EagleRunnable
 		{

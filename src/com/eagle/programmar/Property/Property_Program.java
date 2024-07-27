@@ -34,9 +34,9 @@ public class Property_Program extends EagleLanguage
 
 	public static class Property_Element extends TokenChooser
 	{
-		public @CHOICE Property_Comment comment;
-		public @CHOICE Property_Value pair;
-		public @CHOICE Property_EndOfLine eoln;
+		public @CHOICE Property_Comment XXcomment;
+		public @CHOICE Property_Value XXpair;
+		public @CHOICE Property_EndOfLine XXeoln;
 	}
 
 	public static class Property_Value extends TokenSequence

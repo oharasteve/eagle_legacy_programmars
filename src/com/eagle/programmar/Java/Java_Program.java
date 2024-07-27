@@ -62,8 +62,8 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Java_ClassOrEnum extends TokenChooser
 	{
-		public @CHOICE Java_Class jclass;
-		public @CHOICE Java_Enum jenum;
+		public @CHOICE Java_Class XXclass;
+		public @CHOICE Java_Enum XXenum;
 	}
 
 	public static class Java_Package extends TokenSequence
@@ -82,9 +82,9 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Java_ImportOrComment extends TokenChooser
 	{
-		public @CHOICE @NEWLINE Java_Comment comment;
-		public @CHOICE @NEWLINE Java_Import jimport;
-		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon semicolon;
+		public @CHOICE @NEWLINE Java_Comment XXcomment;
+		public @CHOICE @NEWLINE Java_Import XXimport;
+		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon XXsemicolon;
 	}
 
 	public static class Java_Import extends TokenSequence
@@ -102,8 +102,8 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 
 			public static class Java_IdentifierOrStar extends TokenChooser
 			{
-				public @CHOICE @NOSPACE Java_Identifier id;
-				public @CHOICE @NOSPACE PunctuationStar star;
+				public @CHOICE @NOSPACE Java_Identifier XXid;
+				public @CHOICE @NOSPACE PunctuationStar XXstar;
 			}
 		}
 	}

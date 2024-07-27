@@ -40,15 +40,15 @@ public class CPlus_Template extends TokenSequence
 
 	public static class CPlus_TemplateClass extends TokenChooser
 	{
-		public @CHOICE CPlus_Class_Definition cls;
-		public @CHOICE C_Punctuation ellipsis = new C_Punctuation("...");
-		public @FIRST C_Type type;
+		public @CHOICE CPlus_Class_Definition XXcls;
+		public @CHOICE C_Punctuation XXellipsis = new C_Punctuation("...");
+		public @FIRST C_Type XXtype;
 	}
 
 	public static class CPlus_TemplateWhat extends TokenChooser
 	{
-		public @CHOICE C_Function func;
-		public @CHOICE CPlus_Operator operator;
-		public @CHOICE CPlus_Class cls;
+		public @CHOICE C_Function XXfunc;
+		public @CHOICE CPlus_Operator XXoperator;
+		public @CHOICE CPlus_Class XXcls;
 	}
 }

@@ -36,8 +36,8 @@ public class Ruby_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Ruby_Element extends TokenChooser
 	{
-		public @CHOICE Ruby_CommentEoln comment;
-		public @CHOICE Ruby_Statement stmt;
+		public @CHOICE Ruby_CommentEoln XXcomment;
+		public @CHOICE Ruby_Statement XXstmt;
 	}
 
 	public static class Ruby_CommentEoln extends TokenSequence implements EagleRunnable

@@ -27,6 +27,6 @@ public class Rexx_Program extends EagleLanguage
 
 	public static class Rust_Element extends TokenChooser
 	{
-		public @CHOICE Rexx_Comment comment;
+		public @CHOICE Rexx_Comment XXcomment;
 	}
 }

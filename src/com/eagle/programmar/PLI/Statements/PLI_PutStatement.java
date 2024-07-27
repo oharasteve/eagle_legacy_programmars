@@ -70,8 +70,8 @@ public class PLI_PutStatement extends TokenSequence implements EagleRunnable, Ab
 
 		public static class PLI_PutEditFormat extends TokenChooser
 		{
-			public @CHOICE PLI_Keyword SKIP = new PLI_Keyword("SKIP");
-			public @CHOICE PLI_Literal literal;
+			public @CHOICE PLI_Keyword XXSKIP = new PLI_Keyword("SKIP");
+			public @CHOICE PLI_Literal XXliteral;
 
 			public @CHOICE static class PLI_PutMultipleFormats extends TokenSequence
 			{

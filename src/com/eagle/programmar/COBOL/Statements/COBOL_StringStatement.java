@@ -40,10 +40,10 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 
 			public static class COBOL_StringDelimitByWhat extends TokenChooser
 			{
-				public @CHOICE COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
-				public @CHOICE COBOL_HexNumber hex;
-				public @CHOICE COBOL_Literal literal;
-				public @CHOICE COBOL_StringDelimitSpaces stringDelimitSpaces;
+				public @CHOICE COBOL_Keyword XXSIZE = new COBOL_Keyword("SIZE");
+				public @CHOICE COBOL_HexNumber XXhex;
+				public @CHOICE COBOL_Literal XXliteral;
+				public @CHOICE COBOL_StringDelimitSpaces XXstringDelimitSpaces;
 			}
 		}
 	}

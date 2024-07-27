@@ -19,8 +19,8 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator impleme
 
 	public static class Algol68_MultOper extends TokenChooser
 	{
-		public @CHOICE Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("*", "/", "%");
-		public @CHOICE Algol68_KeywordChoice MOD = new Algol68_KeywordChoice("mod", "over");
+		public @CHOICE Algol68_PunctuationChoice XXoperator = new Algol68_PunctuationChoice("*", "/", "%");
+		public @CHOICE Algol68_KeywordChoice XXMOD = new Algol68_KeywordChoice("mod", "over");
 	}
 
 	@Override

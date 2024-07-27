@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class COBOL_Picture_Value extends TokenChooser
 {
-	public @LAST COBOL_Expression expression;
+	public @LAST COBOL_Expression XXexpression;
 
 	public @CHOICE static class COBOL_Picture_Value_Keyword extends TokenSequence
 	{

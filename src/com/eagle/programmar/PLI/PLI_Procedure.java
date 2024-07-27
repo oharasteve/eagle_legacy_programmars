@@ -74,11 +74,11 @@ public class PLI_Procedure extends TokenSequence implements EagleRunnable
 
 	public static class PLI_StatementOrComment extends TokenChooser
 	{
-		public @FIRST PLI_Entry entry;
-		public @CHOICE PLI_Comment comment;
-		public @CHOICE PLI_Statement statement;
-		public @CHOICE PLI_Declaration declaration;
-		public @CHOICE PLI_Signals signals;
+		public @FIRST PLI_Entry XXentry;
+		public @CHOICE PLI_Comment XXcomment;
+		public @CHOICE PLI_Statement XXstatement;
+		public @CHOICE PLI_Declaration XXdeclaration;
+		public @CHOICE PLI_Signals XXsignals;
 	}
 
 	@Override

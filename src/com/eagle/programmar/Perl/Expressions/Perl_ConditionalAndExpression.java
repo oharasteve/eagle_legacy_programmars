@@ -19,8 +19,8 @@ public class Perl_ConditionalAndExpression extends PrecedenceOperator implements
 
 	public static class Perl_AndOperator extends TokenChooser
 	{
-		public @CHOICE Perl_Punctuation andOperator = new Perl_Punctuation("&&");
-		public @CHOICE Perl_Keyword AND = new Perl_Keyword("and");
+		public @CHOICE Perl_Punctuation XXandOperator = new Perl_Punctuation("&&");
+		public @CHOICE Perl_Keyword XXAND = new Perl_Keyword("and");
 	}
 
 	@Override

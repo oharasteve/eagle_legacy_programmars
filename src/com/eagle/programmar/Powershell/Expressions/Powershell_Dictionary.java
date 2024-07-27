@@ -37,8 +37,8 @@ public class Powershell_Dictionary extends PrimaryOperator
 
 		public static class Powershell_Field extends TokenChooser
 		{
-			public @CHOICE Powershell_Field_Reference field;
-			public @CHOICE Powershell_Literal literal;
+			public @CHOICE Powershell_Field_Reference XXfield;
+			public @CHOICE Powershell_Literal XXliteral;
 		}
 
 		public static class Powershell_MoreDictExpressions extends TokenSequence

@@ -29,7 +29,7 @@ public class C_TypeDef extends TokenSequence
 
 	public static class C_TypeDef_What extends TokenChooser
 	{
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 
 		public @CHOICE static class C_TypeDef_Data extends TokenSequence
 		{

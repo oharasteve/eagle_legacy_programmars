@@ -29,6 +29,6 @@ public class Bash_PerlProgram extends TokenSequence implements AbstractStatement
 
 	public static class Bash_PerlOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword W = new Bash_Keyword("-w");
+		public @CHOICE Bash_Keyword XXopt = new Bash_Keyword("-w");
 	}
 }

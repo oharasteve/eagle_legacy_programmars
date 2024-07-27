@@ -22,12 +22,12 @@ public class COBOL_ReadStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_ReadClause extends TokenChooser
 	{
-		public @CHOICE COBOL_ReadInto into;
-		public @CHOICE COBOL_ReadNext next;
-		public @CHOICE COBOL_ReadAtEndAction atEnd;
-		public @CHOICE COBOL_ReadIgnoreLock ignoreLock;
-		public @CHOICE COBOL_ReadKey key;
-		public @CHOICE COBOL_ReadInvalidKey invalid;
+		public @CHOICE COBOL_ReadInto XXinto;
+		public @CHOICE COBOL_ReadNext XXnext;
+		public @CHOICE COBOL_ReadAtEndAction XXatEnd;
+		public @CHOICE COBOL_ReadIgnoreLock XXignoreLock;
+		public @CHOICE COBOL_ReadKey XXkey;
+		public @CHOICE COBOL_ReadInvalidKey XXinvalid;
 	}
 
 	public static class COBOL_ReadInto extends TokenSequence

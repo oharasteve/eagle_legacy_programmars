@@ -38,31 +38,31 @@ public class Powershell_Statement extends TokenSequence
 
 	public static class Powershell_Element extends TokenChooser
 	{
-		public @CHOICE Powershell_BeginBlock beginBlock;
-		public @CHOICE Powershell_BreakStatement breakStatement;
-		public @CHOICE Powershell_Comment comment;
-		public @CHOICE Powershell_ContinueStatement continueStatement;
-		public @CHOICE Powershell_Directive directive;
-		public @CHOICE Powershell_DoStatement doStatement;
-		public @CHOICE Powershell_ExitStatement exitStatement;
-		public @CHOICE Powershell_IfStatement ifStatement;
-		public @CHOICE Powershell_ForEachStatement foreachStatement;
-		public @CHOICE Powershell_ForStatement forStatement;
-		public @CHOICE Powershell_FunctionStatement functionDefinition;
-		public @CHOICE Powershell_ProcessBlock processBlock;
-		public @CHOICE Powershell_ReturnStatement returnStatement;
-		public @CHOICE Powershell_StartJob startJob;
-		public @CHOICE Powershell_SwitchStatement switchStatement;
-		public @CHOICE Powershell_ThrowStatement throwStatement;
-		public @CHOICE Powershell_TryStatement tryStatement;
-		public @CHOICE Powershell_WhereStatement whereObjectStatement;
-		public @CHOICE Powershell_WriteStatement writeStatement;
-		public @CHOICE Powershell_WhileStatement whileStatement;
+		public @CHOICE Powershell_BeginBlock XXbeginBlock;
+		public @CHOICE Powershell_BreakStatement XXbreakStatement;
+		public @CHOICE Powershell_Comment XXcomment;
+		public @CHOICE Powershell_ContinueStatement XXcontinueStatement;
+		public @CHOICE Powershell_Directive XXdirective;
+		public @CHOICE Powershell_DoStatement XXdoStatement;
+		public @CHOICE Powershell_ExitStatement XXexitStatement;
+		public @CHOICE Powershell_IfStatement XXifStatement;
+		public @CHOICE Powershell_ForEachStatement XXforeachStatement;
+		public @CHOICE Powershell_ForStatement XXforStatement;
+		public @CHOICE Powershell_FunctionStatement XXfunctionDefinition;
+		public @CHOICE Powershell_ProcessBlock XXprocessBlock;
+		public @CHOICE Powershell_ReturnStatement XXreturnStatement;
+		public @CHOICE Powershell_StartJob XXstartJob;
+		public @CHOICE Powershell_SwitchStatement XXswitchStatement;
+		public @CHOICE Powershell_ThrowStatement XXthrowStatement;
+		public @CHOICE Powershell_TryStatement XXtryStatement;
+		public @CHOICE Powershell_WhereStatement XXwhereObjectStatement;
+		public @CHOICE Powershell_WriteStatement XXwriteStatement;
+		public @CHOICE Powershell_WhileStatement XXwhileStatement;
 
-		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_Xcopy_Statement xcopyStatement;
-		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement findstrStatement;
+		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_Xcopy_Statement XXxcopyStatement;
+		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement XXfindstrStatement;
 
-		public @LAST Powershell_Command command;
-		public @LAST Powershell_AssignmentStatement assignmentStatement;
+		public @LAST Powershell_Command XXcommand;
+		public @LAST Powershell_AssignmentStatement XXassignmentStatement;
 	}
 }

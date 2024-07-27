@@ -26,7 +26,7 @@ public class Bash_ChmodCommand extends TokenSequence implements AbstractStatemen
 
 	public static class Bash_ChmodOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice Re = new Bash_KeywordChoice("-R", "-e");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-R", "-e");
 	}
 
 	public static class Bash_ChmodMoreCodes extends TokenSequence
@@ -37,8 +37,8 @@ public class Bash_ChmodCommand extends TokenSequence implements AbstractStatemen
 
 	public static class Bash_ChmodCode extends TokenChooser
 	{
-		public @CHOICE Bash_Number number;
-		public @CHOICE Bash_ChmodLetters letters;
+		public @CHOICE Bash_Number XXnumber;
+		public @CHOICE Bash_ChmodLetters XXletters;
 	}
 
 	public static class Bash_ChmodLetters extends TerminalLiteralToken

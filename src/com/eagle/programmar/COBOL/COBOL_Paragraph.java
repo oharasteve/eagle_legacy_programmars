@@ -22,9 +22,9 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 
 	public static class COBOL_SentenceOrComment extends TokenChooser
 	{
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_Sentence sentence;
-		public @LAST COBOL_ScreenDeclaration screen;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_Sentence XXsentence;
+		public @LAST COBOL_ScreenDeclaration XXscreen;
 
 		public @LAST static class COBOL_DataInParagraph extends TokenSequence
 		{

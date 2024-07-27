@@ -21,8 +21,8 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 
 	public static class AWK_PrintParameters extends TokenChooser implements AbstractStatement
 	{
-		public @FIRST AWK_Print_WithParens withParens;
-		public @CHOICE AWK_Print_NoParens noParens;
+		public @FIRST AWK_Print_WithParens XXwithParens;
+		public @CHOICE AWK_Print_NoParens XXnoParens;
 	}
 
 	public static class AWK_Print_WithParens extends TokenSequence

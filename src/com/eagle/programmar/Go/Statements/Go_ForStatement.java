@@ -30,8 +30,8 @@ public class Go_ForStatement extends TokenSequence implements EagleRunnableWithR
 
 	public static class Go_ForWhat extends TokenChooser
 	{
-		public @CHOICE Go_ForLoop forLoop;
-		public @CHOICE Go_ForRange forRange;
+		public @CHOICE Go_ForLoop XXforLoop;
+		public @CHOICE Go_ForRange XXforRange;
 	}
 
 	public static class Go_ForLoop extends TokenSequence

@@ -26,7 +26,7 @@ public class C_FunctionAttributes extends TokenSequence
 
 	public static class C_FunctionAttribute extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice ATTR = new C_KeywordChoice("__const__", "__deprecated__", "__leaf__",
+		public @CHOICE C_KeywordChoice XXATTR = new C_KeywordChoice("__const__", "__deprecated__", "__leaf__",
 				"__malloc__", "__noreturn__", "__nothrow__", "__pure__", "__warn_unused_result__");
 
 		public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence

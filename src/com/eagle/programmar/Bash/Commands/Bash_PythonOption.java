@@ -12,7 +12,7 @@ public class Bash_PythonOption extends TokenChooser
 {
 	public @CHOICE static class Bash_PythonOptionM extends TokenSequence
 	{
-		public @S(10) Bash_Keyword M = new Bash_Keyword("-m");
-		public @S(20) Bash_Identifier_Reference moduleName;
+		public @S(10) Bash_Keyword XXopt = new Bash_Keyword("-m");
+		public @S(20) Bash_Identifier_Reference XXmoduleName;
 	}
 }

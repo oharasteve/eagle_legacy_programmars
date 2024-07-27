@@ -28,8 +28,8 @@ public class Perl_ForStatement extends TokenSequence implements AbstractStatemen
 
 	public static class Perl_ForWhat extends TokenChooser
 	{
-		public @CHOICE Perl_ForVarInSet varInSet;
-		public @CHOICE Perl_ForLikeC likeC;
+		public @CHOICE Perl_ForVarInSet XXvarInSet;
+		public @CHOICE Perl_ForLikeC XXlikeC;
 	}
 	
 	public static class Perl_ForVarInSet extends TokenSequence

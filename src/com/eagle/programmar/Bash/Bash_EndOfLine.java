@@ -26,8 +26,8 @@ public class Bash_EndOfLine extends TokenSequence
 
 		public static class Bash_RedirectTo extends TokenChooser
 		{
-			public @CHOICE Bash_Literal literal;
-			public @CHOICE Bash_Filename fileName;
+			public @CHOICE Bash_Literal XXliteral;
+			public @CHOICE Bash_Filename XXfileName;
 
 			public @CHOICE static class Bash_RedirectToNumber extends TokenSequence
 			{
@@ -39,7 +39,7 @@ public class Bash_EndOfLine extends TokenSequence
 
 	public static class Bash_LineEnder extends TokenChooser
 	{
-		public @CHOICE Bash_RealEndOfLine eoln;
+		public @CHOICE Bash_RealEndOfLine XXeoln;
 
 		public @CHOICE static class Bash_Piper extends TokenSequence
 		{

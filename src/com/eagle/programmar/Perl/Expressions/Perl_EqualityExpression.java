@@ -20,8 +20,8 @@ public class Perl_EqualityExpression extends PrecedenceOperator implements Eagle
 
 	public static class Perl_EqualityOperator extends TokenChooser
 	{
-		public @CHOICE Perl_KeywordChoice EQ = new Perl_KeywordChoice("eq", "ne");
-		public @CHOICE Perl_PunctuationChoice operator = new Perl_PunctuationChoice("===", "!==", "==", "!=");
+		public @CHOICE Perl_KeywordChoice XXEQ = new Perl_KeywordChoice("eq", "ne");
+		public @CHOICE Perl_PunctuationChoice XXoperator = new Perl_PunctuationChoice("===", "!==", "==", "!=");
 	}
 
 	@Override

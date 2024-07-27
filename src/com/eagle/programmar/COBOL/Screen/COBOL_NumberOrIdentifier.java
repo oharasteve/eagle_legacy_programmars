@@ -9,6 +9,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class COBOL_NumberOrIdentifier extends TokenChooser
 {
-	public @CHOICE COBOL_Number color;
-	public @CHOICE COBOL_Identifier_Reference dataRef;
+	public @CHOICE COBOL_Number XXcolor;
+	public @CHOICE COBOL_Identifier_Reference XXdataRef;
 }

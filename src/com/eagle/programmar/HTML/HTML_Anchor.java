@@ -38,7 +38,7 @@ public class HTML_Anchor extends TokenChooser
 	}
 
 	// Tried all sorts of things to get this to work. No dice.
-	// Test case 1: /www/rrcc\lh_tr_2006\7B.htm (times out if above catches the
+	// Test case 1: /www/rrcc/lh_tr_2006\7B.htm (times out if above catches the
 	// name. No bogus entries)
 	// Test case 2:
 	// /wwwa/Dox/Supplier_Portal/SupplierSearch/SupplierSearch/help.html (has bogus

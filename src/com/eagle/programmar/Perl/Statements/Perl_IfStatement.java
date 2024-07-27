@@ -39,7 +39,7 @@ public class Perl_IfStatement extends TokenSequence implements AbstractStatement
 
 	public static class Perl_IfWhat extends TokenChooser
 	{
-		public @LAST Perl_Expression condition;
+		public @LAST Perl_Expression XXcondition;
 
 		public @CHOICE static class Perl_IfExists extends TokenSequence
 		{

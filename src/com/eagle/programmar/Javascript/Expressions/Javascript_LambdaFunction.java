@@ -25,7 +25,7 @@ public class Javascript_LambdaFunction extends PrimaryOperator
 
 	public static class Javascript_LambdaParams extends TokenChooser
 	{
-		public @CHOICE Javascript_Variable_Definition param;
+		public @CHOICE Javascript_Variable_Definition XXparam;
 
 		public @CHOICE static class Javascript_LambdaManyParams extends TokenSequence
 		{
@@ -37,7 +37,7 @@ public class Javascript_LambdaFunction extends PrimaryOperator
 
 	public static class Javascript_LambdaBody extends TokenChooser
 	{
-		public @CHOICE Javascript_FunctionBody block;
-		public @CHOICE Javascript_Statement stmt;
+		public @CHOICE Javascript_FunctionBody XXblock;
+		public @CHOICE Javascript_Statement XXstmt;
 	}
 }

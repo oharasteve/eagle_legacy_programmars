@@ -42,21 +42,21 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 
 	public static class CMacro_Pragma_Type extends TokenChooser
 	{
-		public @CHOICE CMacro_Keyword ONCE = new CMacro_Keyword("once");
+		public @CHOICE CMacro_Keyword XXONCE = new CMacro_Keyword("once");
 
-		public @CHOICE CMacro_Pragma_CLang clang;
-		public @CHOICE CMacro_Pragma_Comment comment;
-		public @CHOICE CMacro_Pragma_Export exprt;
-		public @CHOICE CMacro_Pragma_Intrinsic intrinsic;
-		public @CHOICE CMacro_Pragma_Mark mark;
-		public @CHOICE CMacro_Pragma_Message message;
-		public @CHOICE CMacro_Pragma_Pack pack;
-		public @CHOICE CMacro_Pragma_Region region;
-		public @CHOICE CMacro_Pragma_RuntimeChecks runtimeChecks;
-		public @CHOICE CMacro_Pragma_STDC stdc;
-		public @CHOICE CMacro_Pragma_Unroll unroll;
-		public @CHOICE CMacro_Pragma_Warn warn;
-		public @CHOICE CMacro_Pragma_Warning warning;
+		public @CHOICE CMacro_Pragma_CLang XXclang;
+		public @CHOICE CMacro_Pragma_Comment XXcomment;
+		public @CHOICE CMacro_Pragma_Export XXexprt;
+		public @CHOICE CMacro_Pragma_Intrinsic XXintrinsic;
+		public @CHOICE CMacro_Pragma_Mark XXmark;
+		public @CHOICE CMacro_Pragma_Message XXmessage;
+		public @CHOICE CMacro_Pragma_Pack XXpack;
+		public @CHOICE CMacro_Pragma_Region XXregion;
+		public @CHOICE CMacro_Pragma_RuntimeChecks XXruntimeChecks;
+		public @CHOICE CMacro_Pragma_STDC XXstdc;
+		public @CHOICE CMacro_Pragma_Unroll XXunroll;
+		public @CHOICE CMacro_Pragma_Warn XXwarn;
+		public @CHOICE CMacro_Pragma_Warning XXwarning;
 	}
 
 	@Override

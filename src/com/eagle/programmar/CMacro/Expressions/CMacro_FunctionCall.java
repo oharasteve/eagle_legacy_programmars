@@ -40,7 +40,7 @@ public class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnabl
 
 	public static class CMacro_FunctionType extends TokenChooser
 	{
-		public @CHOICE CMacro_Identifier_Reference variable;
-		public @CHOICE CMacroFunctionParens params;
+		public @CHOICE CMacro_Identifier_Reference XXvariable;
+		public @CHOICE CMacroFunctionParens XXparams;
 	}
 }

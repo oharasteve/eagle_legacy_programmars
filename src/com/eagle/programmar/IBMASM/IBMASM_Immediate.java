@@ -11,8 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class IBMASM_Immediate extends TokenChooser
 {
-	public @CHOICE IBMASM_Number number;
-	public @CHOICE IBMASM_Address address;
+	public @CHOICE IBMASM_Number XXnumber;
+	public @CHOICE IBMASM_Address XXaddress;
 
 	public @CHOICE static class IBMASM_Immediate_Data extends TokenSequence
 	{

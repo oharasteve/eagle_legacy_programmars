@@ -22,7 +22,7 @@ public class Bash_ReadCommand extends TokenSequence implements AbstractStatement
 	{
 		public @CHOICE static class Bash_ReadPrompt extends TokenSequence
 		{
-			public @S(10) Bash_KeywordChoice P = new Bash_KeywordChoice("-p");
+			public @S(10) Bash_KeywordChoice opt = new Bash_KeywordChoice("-p");
 			public @S(20) Bash_Literal prompt;
 		}
 	}

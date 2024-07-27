@@ -24,8 +24,8 @@ public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_EvaluateWhat extends TokenChooser
 	{
-		public @CHOICE COBOL_Identifier_Reference id;
-		public @FIRST COBOL_Keyword OTHER = new COBOL_Keyword("OTHER");
+		public @CHOICE COBOL_Identifier_Reference XXid;
+		public @FIRST COBOL_Keyword XXOTHER = new COBOL_Keyword("OTHER");
 
 		// Careful -- Condition has to precede Expression here.
 		public @CHOICE static class COBOL_EvaluateCondition extends TokenSequence

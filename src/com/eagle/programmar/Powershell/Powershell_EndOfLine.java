@@ -28,9 +28,9 @@ public class Powershell_EndOfLine extends TokenSequence
 
 		public static class Powershell_RedirectTo extends TokenChooser
 		{
-			public @CHOICE Powershell_Literal literal;
-			public @CHOICE Powershell_Filename fileName;
-			public @CHOICE Powershell_Variable variable;
+			public @CHOICE Powershell_Literal XXliteral;
+			public @CHOICE Powershell_Filename XXfileName;
+			public @CHOICE Powershell_Variable XXvariable;
 
 			public @CHOICE static class Powershell_RedirectToNumber extends TokenSequence
 			{
@@ -44,8 +44,8 @@ public class Powershell_EndOfLine extends TokenSequence
 	{
 		public @CHOICE static class Powershell_PipeAction extends TokenSequence
 		{
-			public @S(10) Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice("|", ";", "||",
-					"&&");
+			public @S(10) Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice(
+					"|", ";", "||", "&&");
 			public @S(20) @OPT Powershell_RealEndOfLine eoln;
 			public @S(30) Powershell_Statement statement;
 		}

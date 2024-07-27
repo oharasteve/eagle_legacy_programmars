@@ -23,9 +23,9 @@ public class AWK_Action extends TokenSequence implements EagleRunnableWithResult
 
 	public static class AWK_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE AWK_Statements statements;
-		public @CHOICE AWK_Comment comment;
-		public @CHOICE AWK_Action action;
+		public @CHOICE AWK_Statements XXstatements;
+		public @CHOICE AWK_Comment XXcomment;
+		public @CHOICE AWK_Action XXaction;
 	}
 
 	@Override

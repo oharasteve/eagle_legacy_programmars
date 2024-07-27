@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CPlus_ConstructorValue extends TokenChooser
 {
-	public @CHOICE C_StatementBlock block;
+	public @CHOICE C_StatementBlock XXblock;
 
 	public @CHOICE static class CPlus_ConstructorNoBraces extends TokenSequence
 	{

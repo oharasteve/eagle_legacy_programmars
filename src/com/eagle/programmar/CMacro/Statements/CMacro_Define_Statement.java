@@ -37,8 +37,8 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 
 		public static class CMacro_Param extends TokenChooser
 		{
-			public @CHOICE CMacro_Parameter_Definition var;
-			public @CHOICE CMacro_Punctuation dotDotDot = new CMacro_Punctuation("...");
+			public @CHOICE CMacro_Parameter_Definition XXvar;
+			public @CHOICE CMacro_Punctuation XXdotDotDot = new CMacro_Punctuation("...");
 		}
 	}
 

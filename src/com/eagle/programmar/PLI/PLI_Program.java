@@ -31,11 +31,11 @@ public class PLI_Program extends EagleLanguage implements EagleRunnable
 
 	public static class PLI_Element extends TokenChooser
 	{
-		public @CHOICE PLI_Comment comment;
-		public @CHOICE PLI_DeclareGeneric declareGeneric;
-		public @CHOICE PLI_Procedure procedure;
-		public @CHOICE PLI_Declaration declaration;
-		public @CHOICE PLI_PercentStatement percentStmt;
+		public @CHOICE PLI_Comment XXcomment;
+		public @CHOICE PLI_DeclareGeneric XXdeclareGeneric;
+		public @CHOICE PLI_Procedure XXprocedure;
+		public @CHOICE PLI_Declaration XXdeclaration;
+		public @CHOICE PLI_PercentStatement XXpercentStmt;
 	}
 
 	@Override

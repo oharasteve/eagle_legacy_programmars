@@ -58,12 +58,12 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 
 	public static class CSharp_NamespaceOrClassEntry extends TokenChooser
 	{
-		public @CHOICE @NEWLINE CSharp_Using importList;
-		public @CHOICE @NEWLINE CSharp_Comment comment;
-		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
-		public @CHOICE @NEWLINE CSharp_Class clss;
-		public @CHOICE @NEWLINE CSharp_Annotation annotation;
-		public @CHOICE @NEWLINE CSharp_Directive directive;
+		public @CHOICE @NEWLINE CSharp_Using XXimportList;
+		public @CHOICE @NEWLINE CSharp_Comment XXcomment;
+		public @CHOICE @NEWLINE CSharp_Namespace XXmyNamespace;
+		public @CHOICE @NEWLINE CSharp_Class XXclass;
+		public @CHOICE @NEWLINE CSharp_Annotation XXannotation;
+		public @CHOICE @NEWLINE CSharp_Directive XXdirective;
 	}
 
 	@Override

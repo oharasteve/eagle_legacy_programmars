@@ -40,9 +40,9 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 
 	public static class Javascript_RealStatement extends TokenChooser
 	{
-		public @FIRST Javascript_StatementBlock block;
-		public @CHOICE Javascript_Data data;
-		public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+		public @FIRST Javascript_StatementBlock XXblock;
+		public @CHOICE Javascript_Data XXdata;
+		public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon XXsemicolon;
 
 		public @LAST static class Javascript_ExpressionStmt extends TokenSequence implements EagleRunnable
 		{
@@ -63,26 +63,26 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 			}
 		}
 
-		public @CHOICE Javascript_BreakStatement breakStatement;
-		public @CHOICE Javascript_ContinueStatement continueStatement;
-		public @CHOICE Javascript_DoStatement doStatement;
-		public @CHOICE Javascript_ForStatement forStatement;
-		public @CHOICE Javascript_Function function;
-		public @CHOICE Javascript_IfStatement ifStatement;
-		public @CHOICE Javascript_ImportStatement importStatement;
-		public @CHOICE Javascript_ReturnStatement returnStatement;
-		public @CHOICE Javascript_SwitchStatement switchStatement;
-		public @CHOICE Javascript_ThrowStatement throwStatement;
-		public @CHOICE Javascript_TryStatement tryStatement;
-		public @CHOICE Javascript_WhileStatement whileStatement;
+		public @CHOICE Javascript_BreakStatement XXbreakStatement;
+		public @CHOICE Javascript_ContinueStatement XXcontinueStatement;
+		public @CHOICE Javascript_DoStatement XXdoStatement;
+		public @CHOICE Javascript_ForStatement XXforStatement;
+		public @CHOICE Javascript_Function XXfunction;
+		public @CHOICE Javascript_IfStatement XXifStatement;
+		public @CHOICE Javascript_ImportStatement XXimportStatement;
+		public @CHOICE Javascript_ReturnStatement XXreturnStatement;
+		public @CHOICE Javascript_SwitchStatement XXswitchStatement;
+		public @CHOICE Javascript_ThrowStatement XXthrowStatement;
+		public @CHOICE Javascript_TryStatement XXtryStatement;
+		public @CHOICE Javascript_WhileStatement XXwhileStatement;
 
-		// public @LAST Javascript_UnparsedStatement unparsedStatement;
+		// public @LAST Javascript_UnparsedStatement XXunparsedStatement;
 	}
 
 	public static class Javascript_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE Javascript_Statement statement;
-		public @CHOICE Javascript_Comment comment;
+		public @CHOICE Javascript_Statement XXstatement;
+		public @CHOICE Javascript_Comment XXcomment;
 	}
 
 	@Override

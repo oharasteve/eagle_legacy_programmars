@@ -43,8 +43,8 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 
 	public static class CSharp_AnnotationOrComment extends TokenChooser
 	{
-		public @CHOICE CSharp_Annotation annotation;
-		public @CHOICE CSharp_Comment comment;
+		public @CHOICE CSharp_Annotation XXannotation;
+		public @CHOICE CSharp_Comment XXcomment;
 	}
 
 	public static class CSharp_ClassModifier extends TokenSequence
@@ -92,17 +92,17 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 
 	public static class CSharp_ClassElement extends TokenChooser
 	{
-		public @CHOICE @NEWLINE CSharp_Comment comment;
+		public @CHOICE @NEWLINE CSharp_Comment XXcomment;
 
-		public @CHOICE @NEWLINE CSharp_Property property;
-		public @CHOICE @NEWLINE CSharp_Constructor constructor;
-		public @FIRST @NEWLINE CSharp_Method method;
-		public @LAST @NEWLINE CSharp_Statement statement;
-		public @CHOICE @NEWLINE CSharp_SubscriptOperator subscriptOperator;
-		public @CHOICE @NEWLINE CSharp_Operator operator;
+		public @CHOICE @NEWLINE CSharp_Property XXproperty;
+		public @CHOICE @NEWLINE CSharp_Constructor XXconstructor;
+		public @FIRST @NEWLINE CSharp_Method XXmethod;
+		public @LAST @NEWLINE CSharp_Statement XXstatement;
+		public @CHOICE @NEWLINE CSharp_SubscriptOperator XXsubscriptOperator;
+		public @CHOICE @NEWLINE CSharp_Operator XXoperator;
 
-		public @CHOICE @NEWLINE CSharp_RegionDirective regionDirective;
-		public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
+		public @CHOICE @NEWLINE CSharp_RegionDirective XXregionDirective;
+		public @CHOICE @NEWLINE CSharp_PragmaDirective XXpragmaDirective;
 
 		public @CHOICE static class CSharp_StaticStatement extends TokenSequence
 		{

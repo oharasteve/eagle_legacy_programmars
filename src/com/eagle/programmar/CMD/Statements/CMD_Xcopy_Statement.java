@@ -25,8 +25,8 @@ public class CMD_Xcopy_Statement extends TokenSequence implements AbstractStatem
 	{
 		public @CHOICE static class Powershell_XcopyOptionLetter extends TokenSequence
 		{
-			public @S(10) PunctuationSlash slash;
-			public @S(20) CMD_KeywordChoice OPT = new CMD_KeywordChoice("D", "E", "F", "H", "I", "R", "V", "Y");
+			public @S(10) PunctuationSlash XXslash;
+			public @S(20) CMD_KeywordChoice XXopt = new CMD_KeywordChoice("D", "E", "F", "H", "I", "R", "V", "Y");
 		}
 
 		public @CHOICE static class CMD_XcopyOptionExclude extends TokenSequence

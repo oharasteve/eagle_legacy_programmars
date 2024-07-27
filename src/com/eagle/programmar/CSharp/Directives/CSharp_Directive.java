@@ -7,6 +7,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class CSharp_Directive extends TokenChooser
 {
-	public @CHOICE CSharp_PragmaDirective pragmaDirective;
-	public @CHOICE CSharp_RegionDirective regionDirective;
+	public @CHOICE CSharp_PragmaDirective XXpragmaDirective;
+	public @CHOICE CSharp_RegionDirective XXregionDirective;
 }

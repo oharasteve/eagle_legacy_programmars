@@ -62,9 +62,10 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			}
 		}
 
-		public @CHOICE CSharp_KeywordChoice primitive = new CSharp_KeywordChoice("auto", "bool", "boolean", "byte",
-				"char", "class", "decimal", "double", "float", "int", "long", "object", "sbyte", "short", "string",
-				"String", "ulong", "ushort", "void");
+		public @CHOICE CSharp_KeywordChoice XXprimitive = new CSharp_KeywordChoice(
+				"auto", "bool", "boolean", "byte", "char", "class", "decimal", "double",
+				"float", "int", "long", "object", "sbyte", "short", "string", "String",
+				"ulong", "ushort", "void");
 
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{

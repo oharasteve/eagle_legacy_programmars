@@ -38,15 +38,15 @@ public class Natural_DisplayStatement extends TokenSequence
 
 	public static class Natural_DisplayElement extends TokenChooser
 	{
-		public @CHOICE Natural_Option displayOption;
-		public @CHOICE PunctuationSlash slash;
-		public @CHOICE Natural_Tab tab;
-		public @CHOICE Natural_Variable var;
-		public @CHOICE Natural_Comment comment;
-		public @CHOICE Natural_SystemVariable sysVar;
-		public @CHOICE Natural_KeywordChoice option = new Natural_KeywordChoice("HORIZ", "UNDERLINED", "TRAILER");
-		public @CHOICE Natural_FunctionCall fnCall;
-		public @CHOICE Natural_DisplayParameter parameter;
+		public @CHOICE Natural_Option XXdisplayOption;
+		public @CHOICE PunctuationSlash XXslash;
+		public @CHOICE Natural_Tab XXtab;
+		public @CHOICE Natural_Variable XXvar;
+		public @CHOICE Natural_Comment XXcomment;
+		public @CHOICE Natural_SystemVariable XXsysVar;
+		public @CHOICE Natural_KeywordChoice XXoption = new Natural_KeywordChoice("HORIZ", "UNDERLINED", "TRAILER");
+		public @CHOICE Natural_FunctionCall XXfnCall;
+		public @CHOICE Natural_DisplayParameter XXparameter;
 
 		public @CHOICE static class Natural_Justified extends TokenSequence
 		{

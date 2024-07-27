@@ -1,0 +1,32 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Jul 26, 2024
+
+package com.eagle.programmar.Lisp.Functions;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
+import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+public class Lisp_SetfFunction extends TokenSequence implements EagleRunnable, AbstractStatement
+{
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) Lisp_KeywordChoice SETF = new Lisp_KeywordChoice("setf");
+	public @S(40) Lisp_Variable_Definition variable;
+	public @S(50) Lisp_SExpr value;
+	public @S(60) PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue val = interpreter.getEagleValue(value);
+		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+				variable.getValue(), val);
+	}
+}

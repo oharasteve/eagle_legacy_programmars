@@ -26,10 +26,10 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator implements Ea
 
 	public static class FSharp_RangeExpr extends TokenChooser
 	{
-		public @FIRST FSharp_RangeExpr_low_high lowHigh;
-		public @CHOICE FSharp_RangeExpr_low justLow;
-		public @CHOICE FSharp_RangeExpr_high justHigh;
-		public @LAST FSharp_RangeJustOne justOne;
+		public @FIRST FSharp_RangeExpr_low_high XXlowHigh;
+		public @CHOICE FSharp_RangeExpr_low XXjustLow;
+		public @CHOICE FSharp_RangeExpr_high XXjustHigh;
+		public @LAST FSharp_RangeJustOne XXjustOne;
 	}
 	
 	public static class FSharp_RangeExpr_low_high extends TokenSequence

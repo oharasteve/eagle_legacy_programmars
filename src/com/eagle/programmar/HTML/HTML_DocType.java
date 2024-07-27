@@ -30,9 +30,9 @@ public class HTML_DocType extends TokenSequence
 
 	public static class HTML_DocValue extends TokenChooser
 	{
-		public @CHOICE HTML_Value value;
-		public @CHOICE HTML_DocType docType;
-		public @CHOICE HTML_Comment comment;
+		public @CHOICE HTML_Value XXvalue;
+		public @CHOICE HTML_DocType XXdocType;
+		public @CHOICE HTML_Comment XXcomment;
 
 		public @CHOICE static class HTML_DocBrackets extends TokenSequence
 		{

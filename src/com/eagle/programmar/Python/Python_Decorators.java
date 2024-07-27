@@ -16,8 +16,8 @@ public class Python_Decorators extends TokenSequence
 
 	public static class Python_MoreDecorators extends TokenChooser
 	{
-		public @CHOICE Python_Decorator decorator;
-		public @CHOICE Python_CommentEoln comment;
+		public @CHOICE Python_Decorator XXdecorator;
+		public @CHOICE Python_CommentEoln XXcomment;
 	}
 
 	public static class Python_Decorator extends TokenSequence

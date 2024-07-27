@@ -3,10 +3,9 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
+import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_Assignment extends TokenSequence
@@ -18,17 +17,7 @@ public class Javascript_Assignment extends TokenSequence
 
 	public static class Javascript_AssignmentOperator extends TokenChooser
 	{
-		public @CHOICE PunctuationEquals equals;
-		public @CHOICE Javascript_Punctuation timesEquals = new Javascript_Punctuation("*=");
-		public @CHOICE Javascript_Punctuation divideEquals = new Javascript_Punctuation("/=");
-		public @CHOICE Javascript_Punctuation modulusEquals = new Javascript_Punctuation("%=");
-		public @CHOICE Javascript_Punctuation plusEquals = new Javascript_Punctuation("+=");
-		public @CHOICE Javascript_Punctuation minusEquals = new Javascript_Punctuation("-=");
-		public @CHOICE Javascript_Punctuation shiftLeftEquals = new Javascript_Punctuation("<<=");
-		public @CHOICE Javascript_Punctuation shiftRightEquals = new Javascript_Punctuation(">>=");
-		public @CHOICE Javascript_Punctuation logicalShiftRightEquals = new Javascript_Punctuation(">>>=");
-		public @CHOICE Javascript_Punctuation bitwiseAndEquals = new Javascript_Punctuation("&=");
-		public @CHOICE Javascript_Punctuation bitwiseXOrEquals = new Javascript_Punctuation("^=");
-		public @CHOICE Javascript_Punctuation bitwiseOrEquals = new Javascript_Punctuation("|=");
+		public @CHOICE Javascript_PunctuationChoice XXoper = new Javascript_PunctuationChoice(
+				"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 	}
 }

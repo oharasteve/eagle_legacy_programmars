@@ -23,11 +23,11 @@ public class TCL_BracketExpression extends PrimaryOperator implements EagleRunna
 	
 	public static class TCL_BracketWhat extends TokenChooser
 	{
-		public @CHOICE TCL_BracketLindex lindex;
-		public @CHOICE TCL_BracketStringLength stringLength;
-		public @CHOICE TCL_BracketStringFirst stringFirst;
-		public @CHOICE TCL_BracketExpr expr;
-		public @LAST TCL_FunctionCall functionCall;
+		public @CHOICE TCL_BracketLindex XXlindex;
+		public @CHOICE TCL_BracketStringLength XXstringLength;
+		public @CHOICE TCL_BracketStringFirst XXstringFirst;
+		public @CHOICE TCL_BracketExpr XXexpr;
+		public @LAST TCL_FunctionCall XXfunctionCall;
 	}
 	
 	public static class TCL_BracketLindex extends TokenSequence implements EagleRunnable

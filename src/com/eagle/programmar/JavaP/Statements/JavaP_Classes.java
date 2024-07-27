@@ -79,7 +79,7 @@ public class JavaP_Classes extends TokenSequence
 
 		public static class JavaP_OneClassWhat extends TokenChooser
 		{
-			public @LAST JavaP_QualifiedName data;
+			public @LAST JavaP_QualifiedName XXdata;
 
 			public @CHOICE static class JavaP_OneClassMethod extends TokenSequence
 			{
@@ -99,19 +99,19 @@ public class JavaP_Classes extends TokenSequence
 
 		public static class JavaP_OneClassParameter extends TokenChooser
 		{
-			public @CHOICE JavaP_CodeBlock code;
-			public @CHOICE JavaP_Signature signature;
-			public @CHOICE JavaP_RuntimeVisibleAnnotations runtimeAnnotation;
-			public @CHOICE JavaP_RuntimeVisibleTypeAnnotations runtimeTypeAnnotation;
-			public @CHOICE JavaP_CodeLineNumbers lineNumbers;
-			public @CHOICE JavaP_CodeLocalValues localValues;
+			public @CHOICE JavaP_CodeBlock XXcode;
+			public @CHOICE JavaP_Signature XXsignature;
+			public @CHOICE JavaP_RuntimeVisibleAnnotations XXruntimeAnnotation;
+			public @CHOICE JavaP_RuntimeVisibleTypeAnnotations XXruntimeTypeAnnotation;
+			public @CHOICE JavaP_CodeLineNumbers XXlineNumbers;
+			public @CHOICE JavaP_CodeLocalValues XXlocalValues;
 
-			public @CHOICE JavaP_OneClassDescriptor descriptor;
-			public @CHOICE JavaP_OneClassFlags flags;
-			public @CHOICE JavaP_OneClassConstantValue constantValue;
-			public @CHOICE JavaP_OneClassExceptions exceptions;
-			public @CHOICE JavaP_OneClassMethodParameters methodParameters;
-			public @CHOICE JavaP_OneClassDeprecated deprecated;
+			public @CHOICE JavaP_OneClassDescriptor XXdescriptor;
+			public @CHOICE JavaP_OneClassFlags XXflags;
+			public @CHOICE JavaP_OneClassConstantValue XXconstantValue;
+			public @CHOICE JavaP_OneClassExceptions XXexceptions;
+			public @CHOICE JavaP_OneClassMethodParameters XXmethodParameters;
+			public @CHOICE JavaP_OneClassDeprecated XXdeprecated;
 		}
 	}
 }

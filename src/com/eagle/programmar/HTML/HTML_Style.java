@@ -21,8 +21,8 @@ public class HTML_Style extends TokenSequence
 
 	public static class HTML_StyleBody extends TokenChooser
 	{
-		public @LAST @SYNTAX(CSS_Syntax.class) CSS_Program css;
-		public @CHOICE HTML_CData cdata;
+		public @LAST @SYNTAX(CSS_Syntax.class) CSS_Program XXcss;
+		public @CHOICE HTML_CData XXcdata;
 
 		public @CHOICE static class HTML_StyleInclude extends TokenSequence
 		{

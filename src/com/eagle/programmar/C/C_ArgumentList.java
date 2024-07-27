@@ -25,16 +25,16 @@ public class C_ArgumentList extends TokenSequence
 
 	public static class C_IgnoreItem extends TokenChooser
 	{
-		public @CHOICE C_Comment comment;
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @CHOICE C_Comment XXcomment;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 	}
 
 	public static class C_ExpressionArg extends TokenChooser
 	{
-		public @FIRST C_Expression expr;
-		public @CHOICE C_Keyword CONST = new C_Keyword("const");
-		public @CHOICE C_TypePrimitive primitiveType;
-		public @LAST C_Lambda lambda;
+		public @FIRST C_Expression XXexpr;
+		public @CHOICE C_Keyword XXCONST = new C_Keyword("const");
+		public @CHOICE C_TypePrimitive XXprimitiveType;
+		public @LAST C_Lambda XXlambda;
 
 		public @CHOICE static class C_ExpressionArgType extends TokenSequence
 		{

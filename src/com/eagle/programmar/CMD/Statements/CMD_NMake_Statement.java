@@ -18,7 +18,7 @@ public class CMD_NMake_Statement extends TokenSequence implements AbstractStatem
 
 	public static class CMD_NMake_Parameter extends TokenChooser
 	{
-		public @CHOICE CMD_Argument target;
+		public @CHOICE CMD_Argument XXtarget;
 
 		public @CHOICE static class CMD_NMake_Option_I extends TokenSequence
 		{

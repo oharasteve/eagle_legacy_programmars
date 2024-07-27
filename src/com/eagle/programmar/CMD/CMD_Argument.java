@@ -21,8 +21,8 @@ public class CMD_Argument extends TokenSequence
 
 	public static class CMD_ArgumentPiece extends TokenChooser
 	{
-		public @CHOICE CMD_Punctuation quote = new CMD_Punctuation('"');
-		public @CHOICE CMD_RawArgument literal;
+		public @CHOICE CMD_Punctuation XXquote = new CMD_Punctuation('"');
+		public @CHOICE CMD_RawArgument XXliteral;
 
 		public @CHOICE static class CMD_ArgumentVariable extends TokenSequence
 		{

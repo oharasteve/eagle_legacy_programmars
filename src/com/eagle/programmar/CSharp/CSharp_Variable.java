@@ -31,8 +31,8 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 
 	public static class CSharp_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE CSharp_KeywordChoice builtIn = new CSharp_KeywordChoice("this", "base", "class");
-		public @CHOICE CSharp_Identifier_Reference id;
+		public @CHOICE CSharp_KeywordChoice XXbuiltIn = new CSharp_KeywordChoice("this", "base", "class");
+		public @CHOICE CSharp_Identifier_Reference XXid;
 
 		public @CHOICE static class CSharp_CastedVariable extends TokenSequence
 		{

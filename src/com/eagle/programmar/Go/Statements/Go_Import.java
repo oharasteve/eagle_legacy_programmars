@@ -23,7 +23,7 @@ public class Go_Import extends TokenSequence implements EagleRunnable
 
 	public static class Go_ImportWhat extends TokenChooser
 	{
-		public @CHOICE Go_Literal literal;
+		public @CHOICE Go_Literal XXliteral;
 
 		public @CHOICE static class Go_ImportList extends TokenSequence
 		{

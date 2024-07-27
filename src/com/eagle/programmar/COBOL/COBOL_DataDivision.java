@@ -26,13 +26,13 @@ public class COBOL_DataDivision extends TokenSequence
 
 	public static class COBOL_DataSection extends TokenChooser
 	{
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_FileSection fileSection;
-		public @CHOICE COBOL_WorkingStorageSection workingStorageSection;
-		public @CHOICE COBOL_LocalStorageSection localStorageSection;
-		public @CHOICE COBOL_ScreenSection screenSection;
-		public @CHOICE COBOL_LinkageSection linkageSection;
-		public @CHOICE COBOL_ReportSection reportSection;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_FileSection XXfileSection;
+		public @CHOICE COBOL_WorkingStorageSection XXworkingStorageSection;
+		public @CHOICE COBOL_LocalStorageSection XXlocalStorageSection;
+		public @CHOICE COBOL_ScreenSection XXscreenSection;
+		public @CHOICE COBOL_LinkageSection XXlinkageSection;
+		public @CHOICE COBOL_ReportSection XXreportSection;
 	}
 
 	public static class COBOL_FileSection extends TokenSequence
@@ -45,9 +45,9 @@ public class COBOL_DataDivision extends TokenSequence
 
 	public static class COBOL_Copy_or_FileDescriptor extends TokenChooser
 	{
-		public @CHOICE COBOL_Copy_Directive copyDirective;
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_FileDescriptor fileDescriptor;
+		public @CHOICE COBOL_Copy_Directive XXcopyDirective;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_FileDescriptor XXfileDescriptor;
 	}
 
 	public static class COBOL_WorkingStorageSection extends TokenSequence implements EagleRunnable
@@ -93,7 +93,7 @@ public class COBOL_DataDivision extends TokenSequence
 
 	public static class COBOL_CopyOrDataDeclaration extends TokenChooser
 	{
-		public @CHOICE COBOL_Copy_Directive copyBook;
-		public @CHOICE COBOL_DataDeclaration declaration;
+		public @CHOICE COBOL_Copy_Directive XXcopyBook;
+		public @CHOICE COBOL_DataDeclaration XXdeclaration;
 	}
 }

@@ -18,7 +18,7 @@ public class CSS_QualifierHighlight extends TokenSequence
 
 	public static class CSS_QualifierWhichHighlight extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice STRONG = new CSS_KeywordChoice("strong");
-		public @CHOICE CSS_Literal literal;
+		public @CHOICE CSS_KeywordChoice XXSTRONG = new CSS_KeywordChoice("strong");
+		public @CHOICE CSS_Literal XXliteral;
 	}
 }

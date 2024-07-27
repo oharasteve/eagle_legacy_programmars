@@ -21,7 +21,7 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 
 	public static class Python_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Python_PunctuationChoice operatorSymbol =
+		public @CHOICE Python_PunctuationChoice XXoperatorSymbol =
 				new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=", "<", ">");
 
 		public @CHOICE static class Python_IN_Operator extends TokenSequence

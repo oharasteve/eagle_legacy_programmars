@@ -25,13 +25,13 @@ public class CSharp_Namespace extends TokenSequence
 
 	public static class CSharp_ProgramElems extends TokenChooser
 	{
-		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
-		public @CHOICE @NEWLINE CSharp_Using using;
-		public @CHOICE @NEWLINE CSharp_Comment comment;
-		public @CHOICE @NEWLINE CSharp_Class myClass;
-		public @CHOICE @NEWLINE CSharp_Enum enumeration;
-		public @CHOICE @NEWLINE CSharp_Method method;
-		public @CHOICE @NEWLINE CSharp_Directive directive;
+		public @CHOICE @NEWLINE CSharp_Namespace XXmyNamespace;
+		public @CHOICE @NEWLINE CSharp_Using XXusing;
+		public @CHOICE @NEWLINE CSharp_Comment XXcomment;
+		public @CHOICE @NEWLINE CSharp_Class XXmyClass;
+		public @CHOICE @NEWLINE CSharp_Enum XXenumeration;
+		public @CHOICE @NEWLINE CSharp_Method XXmethod;
+		public @CHOICE @NEWLINE CSharp_Directive XXdirective;
 	}
 
 	public static class CSharp_MoreNamespaceId extends TokenSequence

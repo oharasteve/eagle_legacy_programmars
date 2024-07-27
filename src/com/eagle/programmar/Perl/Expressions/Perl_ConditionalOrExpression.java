@@ -19,8 +19,8 @@ public class Perl_ConditionalOrExpression extends PrecedenceOperator implements 
 
 	public static class Perl_OrOperator extends TokenChooser
 	{
-		public @CHOICE Perl_Punctuation orOperator = new Perl_Punctuation("||");
-		public @CHOICE Perl_Keyword OR = new Perl_Keyword("or");
+		public @CHOICE Perl_Punctuation XXorOperator = new Perl_Punctuation("||");
+		public @CHOICE Perl_Keyword XXOR = new Perl_Keyword("or");
 	}
 
 	@Override

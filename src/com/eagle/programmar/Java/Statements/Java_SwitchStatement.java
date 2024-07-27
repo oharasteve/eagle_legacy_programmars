@@ -31,7 +31,7 @@ public class Java_SwitchStatement extends TokenSequence implements AbstractState
 
 	public static class Java_SwitchClause extends TokenChooser
 	{
-		public @CHOICE Java_Comment comment;
+		public @CHOICE Java_Comment XXcomment;
 
 		public @CHOICE static class Java_CaseClause extends TokenSequence
 		{

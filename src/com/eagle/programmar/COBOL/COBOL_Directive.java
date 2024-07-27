@@ -22,7 +22,7 @@ public class COBOL_Directive extends TokenSequence
 
 	public static class COBOL_WhichDirective extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword END = new COBOL_Keyword("END");
+		public @CHOICE COBOL_Keyword XXEND = new COBOL_Keyword("END");
 
 		public @CHOICE static class COBOL_IfDefinedDirective extends TokenSequence
 		{
@@ -45,9 +45,9 @@ public class COBOL_Directive extends TokenSequence
 
 			public static class COBOL_SetWhat extends TokenChooser
 			{
-				public @CHOICE COBOL_SetString setString;
-				public @CHOICE COBOL_SetParensPlus setParensPlus;
-				public @CHOICE COBOL_SetParensNumber setParensNumber;
+				public @CHOICE COBOL_SetString XXsetString;
+				public @CHOICE COBOL_SetParensPlus XXsetParensPlus;
+				public @CHOICE COBOL_SetParensNumber XXsetParensNumber;
 			}
 
 			public static class COBOL_SetString extends TokenSequence

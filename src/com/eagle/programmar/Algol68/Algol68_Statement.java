@@ -16,14 +16,14 @@ import com.eagle.tokens.TokenChooser;
 
 public class Algol68_Statement extends TokenChooser
 {
-	public @CHOICE Algol68_Comment comment;
-	public @CHOICE Algol68_Data data;
-	public @CHOICE Algol68_ForStatement forStatement;
-	public @CHOICE Algol68_IfStatement ifStatement;
-	public @CHOICE Algol68_PrintStatement printStatement;
-	public @CHOICE Algol68_PrintfStatement printfStatement;
-	public @CHOICE Algol68_Procedure procedure;
+	public @CHOICE Algol68_Comment XXcomment;
+	public @CHOICE Algol68_Data XXdata;
+	public @CHOICE Algol68_ForStatement XXforStatement;
+	public @CHOICE Algol68_IfStatement XXifStatement;
+	public @CHOICE Algol68_PrintStatement XXprintStatement;
+	public @CHOICE Algol68_PrintfStatement XXprintfStatement;
+	public @CHOICE Algol68_Procedure XXprocedure;
 
-	public @LAST Algol68_Assignment assignment;
-	public @LAST Algol68_ExpressionStatement expressionStatement;
+	public @LAST Algol68_Assignment XXassignment;
+	public @LAST Algol68_ExpressionStatement XXexpressionStatement;
 }

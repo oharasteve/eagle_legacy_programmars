@@ -21,7 +21,8 @@ public class Go_Type extends TokenSequence
 
 	public static class Go_TypeWhat extends TokenChooser
 	{
-		public @CHOICE Go_KeywordChoice primitive = new Go_KeywordChoice("bool", "int", "string");
+		public @CHOICE Go_KeywordChoice XXprimitive = new Go_KeywordChoice(
+				"bool", "int", "string");
 
 		public @LAST static class Go_UserType extends TokenSequence
 		{

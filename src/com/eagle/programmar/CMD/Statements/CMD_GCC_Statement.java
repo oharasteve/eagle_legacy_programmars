@@ -18,7 +18,7 @@ public class CMD_GCC_Statement extends TokenSequence implements AbstractStatemen
 
 	public static class CMD_GCC_Parameter extends TokenChooser
 	{
-		public @CHOICE CMD_Argument srcFile;
+		public @CHOICE CMD_Argument XXsrcFile;
 
 		public @CHOICE static class CMD_GCC_Option_O extends TokenSequence
 		{

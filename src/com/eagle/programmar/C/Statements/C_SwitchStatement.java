@@ -30,9 +30,9 @@ public class C_SwitchStatement extends TokenSequence implements AbstractStatemen
 
 	public static class C_SwitchClause extends TokenChooser
 	{
-		public @CHOICE C_Comment comment;
-		public @CHOICE C_CaseClause caseClause;
-		public @CHOICE C_DefaultClause defaultClause;
+		public @CHOICE C_Comment XXcomment;
+		public @CHOICE C_CaseClause XXcaseClause;
+		public @CHOICE C_DefaultClause XXdefaultClause;
 	}
 
 	public static class C_CaseClause extends TokenSequence

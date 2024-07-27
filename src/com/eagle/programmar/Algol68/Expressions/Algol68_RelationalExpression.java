@@ -20,9 +20,10 @@ public class Algol68_RelationalExpression extends PrecedenceOperator implements 
 
 	public static class Algol68_RelOp extends TokenChooser
 	{
-		public @CHOICE Algol68_PunctuationChoice symbol = new Algol68_PunctuationChoice("<", ">", "<=", ">=", "=", "~=",
-				"/=");
-		public @CHOICE Algol68_KeywordChoice word = new Algol68_KeywordChoice("LT", "LE", "EQ", "NE", "GE", "GT");
+		public @CHOICE Algol68_PunctuationChoice XXsymbol = new Algol68_PunctuationChoice(
+				"<", ">", "<=", ">=", "=", "~=", "/=");
+		public @CHOICE Algol68_KeywordChoice XXword = new Algol68_KeywordChoice(
+				"LT", "LE", "EQ", "NE", "GE", "GT");
 	}
 
 	@Override

@@ -41,9 +41,9 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{
-		public @CHOICE Java_MethodType methodType;
-		public @CHOICE Java_MethodGeneric methodGeneric;
-		public @CHOICE Java_MethodTwoTypes methodTwoTypes;
+		public @CHOICE Java_MethodType XXmethodType;
+		public @CHOICE Java_MethodGeneric XXmethodGeneric;
+		public @CHOICE Java_MethodTwoTypes XXmethodTwoTypes;
 	}
 
 	public static class Java_MethodType extends TokenSequence
@@ -82,9 +82,9 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 
 	public static class Java_MethodModifier extends TokenChooser
 	{
-		public @FIRST @NEWLINE Java_Comment comment;
-		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
-		public @CHOICE Java_Annotation annotation;
+		public @FIRST @NEWLINE Java_Comment XXcomment;
+		public @CHOICE Java_KeywordChoice XXmodifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @CHOICE Java_Annotation XXannotation;
 	}
 
 	public static class Java_MethodThrows extends TokenSequence
@@ -95,8 +95,8 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 
 	public static class Java_MethodBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE Java_MethodImplementation methodImplementation;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE Java_MethodImplementation XXmethodImplementation;
 	}
 	
 	public static class Java_MethodImplementation extends TokenSequence

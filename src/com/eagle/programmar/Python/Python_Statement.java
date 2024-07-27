@@ -53,17 +53,17 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	{
 		// Only needed for Transformation. Look at createStatementBlock in
 		// Generate_Python_Statement
-		public @SKIP Python_MultilineStatement multiStatement;
+		public @SKIP Python_MultilineStatement XXmultiStatement;
 
-		public @FIRST Python_Comment comment;
-		public @CHOICE Python_SameLineStatement statements;
+		public @FIRST Python_Comment XXcomment;
+		public @CHOICE Python_SameLineStatement XXstatements;
 	}
 
 	public static class Python_StatementBlock extends TokenChooser
 	{
-		public @CHOICE Python_Punctuation dots = new Python_Punctuation("...");
-		public @CHOICE Python_SameLineStatement singleLine;
-		public @CHOICE Python_MultilineStatement multiLine;
+		public @CHOICE Python_Punctuation XXdots = new Python_Punctuation("...");
+		public @CHOICE Python_SameLineStatement XXsingleLine;
+		public @CHOICE Python_MultilineStatement XXmultiLine;
 	}
 
 	public static class Python_SameLineStatement extends TokenSequence implements EagleRunnableWithResult
@@ -106,30 +106,30 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	
 	public static class Python_Simple_Statement extends TokenChooser
 	{
-		public @CHOICE Python_Assignment assignment;
-		public @CHOICE Python_AssertStatement assertStatement;
-		public @CHOICE Python_AwaitStatement awaitStatement;
-		public @CHOICE Python_BreakStatement breakStatement;
-		public @CHOICE Python_ClassDeclaration classDeclaration;
-		public @CHOICE Python_ContinueStatement continueStatement;
-		public @CHOICE Python_DeleteStatement delStatement;
-		public @CHOICE Python_ExecStatement execStatement;
-		public @CHOICE Python_ForStatement forStatement;
-		public @CHOICE Python_FromStatement fromStatement;
-		public @CHOICE Python_FunctionDefinition functionDefinition;
-		public @CHOICE Python_GlobalStatement globalStatement;
-		public @CHOICE Python_IfStatement ifStatement;
-		public @CHOICE Python_ImportStatement importStatement;
-		public @CHOICE Python_PassStatement passStatement;
-		public @CHOICE Python_RaiseStatement raiseStatement;
-		public @CHOICE Python_ReturnStatement returnStatement;
-		public @CHOICE Python_TryStatement tryStatement;
-		public @CHOICE Python_TypeDeclaration typeDeclaration;
-		public @CHOICE Python_WhileStatement whileStatement;
-		public @CHOICE Python_WithStatement withStatement;
-		public @CHOICE Python_YieldStatement yieldStatement;
+		public @CHOICE Python_Assignment XXassignment;
+		public @CHOICE Python_AssertStatement XXassertStatement;
+		public @CHOICE Python_AwaitStatement XXawaitStatement;
+		public @CHOICE Python_BreakStatement XXbreakStatement;
+		public @CHOICE Python_ClassDeclaration XXclassDeclaration;
+		public @CHOICE Python_ContinueStatement XXcontinueStatement;
+		public @CHOICE Python_DeleteStatement XXdelStatement;
+		public @CHOICE Python_ExecStatement XXexecStatement;
+		public @CHOICE Python_ForStatement XXforStatement;
+		public @CHOICE Python_FromStatement XXfromStatement;
+		public @CHOICE Python_FunctionDefinition XXfunctionDefinition;
+		public @CHOICE Python_GlobalStatement XXglobalStatement;
+		public @CHOICE Python_IfStatement XXifStatement;
+		public @CHOICE Python_ImportStatement XXimportStatement;
+		public @CHOICE Python_PassStatement XXpassStatement;
+		public @CHOICE Python_RaiseStatement XXraiseStatement;
+		public @CHOICE Python_ReturnStatement XXreturnStatement;
+		public @CHOICE Python_TryStatement XXtryStatement;
+		public @CHOICE Python_TypeDeclaration XXtypeDeclaration;
+		public @CHOICE Python_WhileStatement XXwhileStatement;
+		public @CHOICE Python_WithStatement XXwithStatement;
+		public @CHOICE Python_YieldStatement XXyieldStatement;
 
-		public @LAST Python_ExpressionStatement expression; // Avoid conflict with 'for' statement
+		public @LAST Python_ExpressionStatement XXexpression; // Avoid conflict with 'for' statement
 	}
 
 	@Override

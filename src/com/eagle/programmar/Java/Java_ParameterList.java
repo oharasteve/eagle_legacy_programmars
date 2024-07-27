@@ -35,8 +35,8 @@ public class Java_ParameterList extends TokenSequence
 
 		public static class Java_MethodParameterPrefix extends TokenChooser
 		{
-			public @CHOICE Java_KeywordChoice FINAL = new Java_KeywordChoice("final", "static");
-			public @CHOICE Java_Annotation annotation;
+			public @CHOICE Java_KeywordChoice XXFINAL = new Java_KeywordChoice("final", "static");
+			public @CHOICE Java_Annotation XXannotation;
 		}
 	}
 

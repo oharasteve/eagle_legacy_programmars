@@ -17,15 +17,15 @@ import com.eagle.tokens.TokenChooser;
 
 public class Go_Statement extends TokenChooser
 {
-	public @CHOICE Go_BlockStatement blockStatement;
-	public @CHOICE Go_BreakStatement breakStatement;
-	public @CHOICE Go_CommentEoln comment;
-	public @CHOICE Go_ConstBlock constBlock;
-	public @CHOICE Go_ExpressionStatement expressionStatement;
-	public @CHOICE Go_ForStatement forStatement;
-	public @CHOICE Go_IfStatement ifStatement;
-	public @CHOICE Go_ReturnStatement returnStatement;
-	public @CHOICE Go_SwitchStatement switchStatement;
-	public @CHOICE Go_TypeDefinition typeDefinition;
-	public @CHOICE Go_VarStatement varStatement;
+	public @CHOICE Go_BlockStatement XXblockStatement;
+	public @CHOICE Go_BreakStatement XXbreakStatement;
+	public @CHOICE Go_CommentEoln XXcomment;
+	public @CHOICE Go_ConstBlock XXconstBlock;
+	public @CHOICE Go_ExpressionStatement XXexpressionStatement;
+	public @CHOICE Go_ForStatement XXforStatement;
+	public @CHOICE Go_IfStatement XXifStatement;
+	public @CHOICE Go_ReturnStatement XXreturnStatement;
+	public @CHOICE Go_SwitchStatement XXswitchStatement;
+	public @CHOICE Go_TypeDefinition XXtypeDefinition;
+	public @CHOICE Go_VarStatement XXvarStatement;
 }

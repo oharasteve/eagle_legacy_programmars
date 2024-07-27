@@ -19,7 +19,7 @@ public class Natural_Subscript extends TokenSequence
 
 	public static class Natural_Subscript_Contents extends TokenChooser
 	{
-		public @CHOICE PunctuationStar star;
+		public @CHOICE PunctuationStar XXstar;
 
 		public @CHOICE static class Natural_Subscript_Contents_Label extends TokenSequence
 		{

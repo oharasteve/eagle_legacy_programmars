@@ -29,7 +29,7 @@ public class JSON_Program extends EagleLanguage
 
 	public static class JSON_ElementOrComment extends TokenChooser
 	{
-		public @CHOICE JSON_Comment comment;
-		public @CHOICE JSON_Element element;
+		public @CHOICE JSON_Comment XXcomment;
+		public @CHOICE JSON_Element XXelement;
 	}
 }

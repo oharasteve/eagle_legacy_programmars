@@ -31,9 +31,9 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_CallWhat extends TokenChooser
 	{
-		public @CHOICE COBOL_Literal callFunction;
-		public @CHOICE COBOL_HexNumber callHex;
-		public @CHOICE COBOL_Identifier_Reference callVariable;
+		public @CHOICE COBOL_Literal XXcallFunction;
+		public @CHOICE COBOL_HexNumber XXcallHex;
+		public @CHOICE COBOL_Identifier_Reference XXcallVariable;
 	}
 
 	public static class COBOL_CallParameter extends TokenSequence

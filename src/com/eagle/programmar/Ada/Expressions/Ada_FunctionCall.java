@@ -44,7 +44,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 	public static class Ada_FunctionArg extends TokenChooser
 	{
-		public @CHOICE Ada_Expression expr;
+		public @CHOICE Ada_Expression XXexpr;
 
 		public @CHOICE static class Ada_FunctionSetArg extends TokenSequence
 		{

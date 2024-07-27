@@ -22,8 +22,8 @@ public class Lisp_LoopForAsClause extends TokenSequence
 	{
 		public @CHOICE static class Lisp_ForArithmetic extends TokenSequence
 		{
-			public @S(10) Lisp_KeywordChoice direction = new Lisp_KeywordChoice("across", "below", "from", "in", "on",
-					"to");
+			public @S(10) Lisp_KeywordChoice direction = new Lisp_KeywordChoice(
+					"across", "below", "from", "in", "on", "to");
 			public @S(20) Lisp_SExpr expr;
 		}
 

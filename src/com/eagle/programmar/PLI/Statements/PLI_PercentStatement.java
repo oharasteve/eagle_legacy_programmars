@@ -49,8 +49,8 @@ public class PLI_PercentStatement extends TokenSequence
 
 			public static class PLI_ProcessIncludeWhat extends TokenChooser
 			{
-				public @CHOICE PLI_Literal literal;
-				public @CHOICE PLI_Identifier_Reference var;
+				public @CHOICE PLI_Literal XXliteral;
+				public @CHOICE PLI_Identifier_Reference XXvar;
 			}
 		}
 

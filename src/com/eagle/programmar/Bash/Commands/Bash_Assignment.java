@@ -25,8 +25,8 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable, Abs
 
 	public static class Bash_AssignWhat extends TokenChooser
 	{
-		public @CHOICE Bash_Expression value;
-		public @LAST Bash_Filename fname;
+		public @CHOICE Bash_Expression XXvalue;
+		public @LAST Bash_Filename XXfname;
 	}
 
 	@Override

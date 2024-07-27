@@ -18,8 +18,8 @@ public class Perl_NotExpression extends PrimaryOperator implements EagleRunnable
 
 	public static class Perl_NotOperator extends TokenChooser
 	{
-		public @CHOICE Perl_Punctuation notOperator = new Perl_Punctuation('!');
-		public @CHOICE Perl_Keyword NOT = new Perl_Keyword("not");
+		public @CHOICE Perl_Punctuation XXnotOperator = new Perl_Punctuation('!');
+		public @CHOICE Perl_Keyword XXNOT = new Perl_Keyword("not");
 	}
 
 	@Override

@@ -39,8 +39,8 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 
 	public static class Perl_FunctionBlock extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE Perl_StatementBlock block;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE Perl_StatementBlock XXblock;
 	}
 
 	public static class Perl_Function_Parameters extends TokenSequence
@@ -59,7 +59,7 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 
 	public static class Perl_FunctionVariableOrTypeVariable extends TokenChooser
 	{
-		public @LAST Perl_FunctionVariable var;
+		public @LAST Perl_FunctionVariable XXvar;
 
 		public @CHOICE static class Perl_FunctionTypeAndVariable extends TokenSequence
 		{

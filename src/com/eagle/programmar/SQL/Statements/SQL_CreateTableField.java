@@ -28,7 +28,7 @@ public class SQL_CreateTableField extends TokenSequence
 
 	public static class SQL_FieldOption extends TokenChooser
 	{
-		public @CHOICE SQL_KeywordChoice option = new SQL_KeywordChoice("UNIQUE", "AUTOINCREMENT");
+		public @CHOICE SQL_KeywordChoice XXoption = new SQL_KeywordChoice("UNIQUE", "AUTOINCREMENT");
 
 		public @CHOICE static class SQL_FieldNotNull extends TokenSequence
 		{

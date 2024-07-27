@@ -33,10 +33,10 @@ public class Javascript_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Javascript_Element extends TokenChooser
 	{
-		public @CHOICE Javascript_Comment comment;
-		public @CHOICE Javascript_Function function;
-		public @CHOICE Javascript_Statement statement;
-		public @CHOICE Javascript_Class clss;
+		public @CHOICE Javascript_Comment XXcomment;
+		public @CHOICE Javascript_Function XXfunction;
+		public @CHOICE Javascript_Statement XXstatement;
+		public @CHOICE Javascript_Class XXclass;
 	}
 
 	@Override

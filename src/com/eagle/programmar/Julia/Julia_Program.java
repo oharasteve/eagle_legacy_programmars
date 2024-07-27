@@ -36,8 +36,8 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Julia_Element extends TokenChooser
 	{
-		public @CHOICE Julia_CommentEoln comment;
-		public @CHOICE Julia_Statement stmt;
+		public @CHOICE Julia_CommentEoln XXcomment;
+		public @CHOICE Julia_Statement XXstmt;
 	}
 
 	public static class Julia_CommentEoln extends TokenSequence implements EagleRunnable

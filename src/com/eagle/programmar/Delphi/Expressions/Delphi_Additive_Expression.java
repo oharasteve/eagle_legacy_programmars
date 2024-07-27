@@ -20,8 +20,8 @@ public class Delphi_Additive_Expression extends PrecedenceOperator implements Ea
 
 	public static class Delphi_Additive_Operator extends TokenChooser
 	{
-		public @CHOICE Delphi_PunctuationChoice operator = new Delphi_PunctuationChoice("+", "-");
-		public @CHOICE Delphi_KeywordChoice OR = new Delphi_KeywordChoice("Or", "Xor");
+		public @CHOICE Delphi_PunctuationChoice XXoperator = new Delphi_PunctuationChoice("+", "-");
+		public @CHOICE Delphi_KeywordChoice XXOR = new Delphi_KeywordChoice("Or", "Xor");
 	}
 
 	@Override

@@ -36,8 +36,8 @@ public class CSharp_ForStatement extends TokenSequence implements EagleRunnableW
 
 	public static class CSharp_ForWhat extends TokenChooser
 	{
-		public @FIRST CSharp_ForWithType withType;
-		public @CHOICE CSharp_Expression expr;
+		public @FIRST CSharp_ForWithType XXwithType;
+		public @CHOICE CSharp_Expression XXexpr;
 	}
 
 	public static class CSharp_ForWithType extends TokenSequence

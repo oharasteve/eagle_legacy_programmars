@@ -35,8 +35,8 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 
 	public static class C_ForLoopBody extends TokenChooser
 	{
-		public @CHOICE C_ForLoopStatement loopStatement;
-		public @CHOICE C_ForCollectionStatement collectionStatement;
+		public @CHOICE C_ForLoopStatement XXloopStatement;
+		public @CHOICE C_ForCollectionStatement XXcollectionStatement;
 	}
 
 	public static class C_ForLoopStatement extends TokenSequence
@@ -56,8 +56,8 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 
 		public static class C_ForLoopVariable extends TokenChooser
 		{
-			public @FIRST C_ForLoopVariableWithType withType;
-			public @CHOICE C_ForLoopVariableNoType noType;
+			public @FIRST C_ForLoopVariableWithType XXwithType;
+			public @CHOICE C_ForLoopVariableNoType XXnoType;
 		}
 
 		public static class C_MoreLoopIncrements extends TokenSequence

@@ -16,8 +16,8 @@ public class CPlus_Extern extends TokenSequence
 
 	public static class CPlus_Extern_What extends TokenChooser
 	{
-		public @CHOICE CPlus_Method method;
-		public @CHOICE C_StatementBlock block;
-		public @CHOICE C_TypeDef typedef;
+		public @CHOICE CPlus_Method XXmethod;
+		public @CHOICE C_StatementBlock XXblock;
+		public @CHOICE C_TypeDef XXtypedef;
 	}
 }

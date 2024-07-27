@@ -19,8 +19,8 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator implements 
 
 	public static class Ada_MultOper extends TokenChooser
 	{
-		public @CHOICE Ada_PunctuationChoice operator = new Ada_PunctuationChoice("*", "/");
-		public @CHOICE Ada_Keyword MOD = new Ada_Keyword("mod");
+		public @CHOICE Ada_PunctuationChoice XXoperator = new Ada_PunctuationChoice("*", "/");
+		public @CHOICE Ada_Keyword XXMOD = new Ada_Keyword("mod");
 	}
 
 	@Override

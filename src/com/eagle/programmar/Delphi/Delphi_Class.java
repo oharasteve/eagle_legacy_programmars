@@ -38,10 +38,10 @@ public class Delphi_Class extends TokenSequence implements AbstractClass
 
 	public static class Delphi_Class_Entry extends TokenChooser
 	{
-		public @CHOICE Delphi_Comment comment;
-		public @CHOICE Delphi_ProcedureForward procedure;
-		public @CHOICE Delphi_FunctionForward function;
-		public @CHOICE Delphi_Property property;
+		public @CHOICE Delphi_Comment XXcomment;
+		public @CHOICE Delphi_ProcedureForward XXprocedure;
+		public @CHOICE Delphi_FunctionForward XXfunction;
+		public @CHOICE Delphi_Property XXproperty;
 
 		public @CHOICE static class Delphi_Field extends TokenSequence
 		{

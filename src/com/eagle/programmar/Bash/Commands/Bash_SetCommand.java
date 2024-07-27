@@ -25,7 +25,7 @@ public class Bash_SetCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_SetOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice EUX = new Bash_KeywordChoice("-e", "-eu", "-ex", "-eE", "-eux", "-u", "-x");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-e", "-eu", "-ex", "-eE", "-eux", "-u", "-x");
 
 		public @CHOICE static class Bash_SetPlus extends TokenSequence
 		{
@@ -47,8 +47,8 @@ public class Bash_SetCommand extends TokenSequence implements AbstractStatement
 
 			public static class Bash_SetValue extends TokenChooser
 			{
-				public @CHOICE Bash_Filename filename;
-				public @CHOICE Bash_Expression expr;
+				public @CHOICE Bash_Filename XXfilename;
+				public @CHOICE Bash_Expression XXexpr;
 			}
 		}
 	}

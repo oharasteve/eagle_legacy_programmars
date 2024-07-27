@@ -22,7 +22,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 	public static class CMD_Call_Parameter extends TokenChooser
 	{
-		public @CHOICE CMD_Argument arg;
+		public @CHOICE CMD_Argument XXarg;
 
 		public @CHOICE static class CMD_Call_Minus_Option extends TokenSequence
 		{

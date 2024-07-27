@@ -33,9 +33,9 @@ public class AWK_SwitchStatement extends TokenSequence implements AbstractStatem
 
 	public static class AWK_SwitchClause extends TokenChooser
 	{
-		public @CHOICE AWK_Comment comment;
-		public @CHOICE AWK_CaseClause caseClause;
-		public @CHOICE AWK_DefaultClause defaultClause;
+		public @CHOICE AWK_Comment XXcomment;
+		public @CHOICE AWK_CaseClause XXcaseClause;
+		public @CHOICE AWK_DefaultClause XXdefaultClause;
 	}
 
 	public static class AWK_CaseClause extends TokenSequence

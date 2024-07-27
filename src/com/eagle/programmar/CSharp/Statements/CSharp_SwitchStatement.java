@@ -35,12 +35,12 @@ public class CSharp_SwitchStatement extends TokenSequence implements AbstractSta
 
 	public static class CSharp_CaseType extends TokenChooser
 	{
-		public @CHOICE CSharp_Keyword DEFAULT = new CSharp_Keyword("default");
+		public @CHOICE CSharp_Keyword XXDEFAULT = new CSharp_Keyword("default");
 
 		public @CHOICE static class CSharp_CaseClause extends TokenSequence
 		{
-			public @S(10) @BLANKLINE CSharp_Keyword CASE = new CSharp_Keyword("case");
-			public @S(20) CSharp_Expression expr;
+			public @S(10) @BLANKLINE CSharp_Keyword XXCASE = new CSharp_Keyword("case");
+			public @S(20) CSharp_Expression XXexpr;
 		}
 	}
 

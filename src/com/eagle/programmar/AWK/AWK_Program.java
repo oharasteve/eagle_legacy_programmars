@@ -35,9 +35,9 @@ public class AWK_Program extends EagleLanguage implements EagleRunnable
 
 	public static class AWK_Element extends TokenChooser
 	{
-		public @CHOICE AWK_Command command;
-		public @FIRST AWK_CommentLine comment;
-		public @CHOICE AWK_Function function;
+		public @CHOICE AWK_Command XXcommand;
+		public @FIRST AWK_CommentLine XXcomment;
+		public @CHOICE AWK_Function XXfunction;
 	}
 
 	public static class AWK_CommentLine extends TokenSequence

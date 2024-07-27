@@ -22,9 +22,9 @@ public class Delphi_Relational_Expression extends PrecedenceOperator implements 
 
 	public static class Delphi_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Delphi_PunctuationChoice operator = new Delphi_PunctuationChoice("=", "<>", "<", ">", "<=",
-				">=");
-		public @CHOICE Delphi_KeywordChoice IN = new Delphi_KeywordChoice("In", "Is");
+		public @CHOICE Delphi_PunctuationChoice XXoperator = new Delphi_PunctuationChoice(
+				"=", "<>", "<", ">", "<=", ">=");
+		public @CHOICE Delphi_KeywordChoice XXIN = new Delphi_KeywordChoice("In", "Is");
 	}
 
 	@Override

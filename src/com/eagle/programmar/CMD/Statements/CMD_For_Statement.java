@@ -69,8 +69,8 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 
 			public static class CMD_For_R extends TokenChooser
 			{
-				public @CHOICE CMD_Literal dir;
-				public @CHOICE CMD_Identifier dirName;
+				public @CHOICE CMD_Literal XXdir;
+				public @CHOICE CMD_Identifier XXdirName;
 
 				public @CHOICE static class CMD_For_R_pct extends TokenSequence
 				{

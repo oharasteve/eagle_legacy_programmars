@@ -18,8 +18,8 @@ public class Python_Variable extends TokenSequence implements AbstractVariable, 
 
 	public static class Python_SelfOrVariable extends TokenChooser
 	{
-		public @CHOICE Python_Keyword SELF = new Python_Keyword("self");
-		public @CHOICE Python_Identifier_Reference id;
+		public @CHOICE Python_Keyword XXSELF = new Python_Keyword("self");
+		public @CHOICE Python_Identifier_Reference XXid;
 	}
 
 	@Override

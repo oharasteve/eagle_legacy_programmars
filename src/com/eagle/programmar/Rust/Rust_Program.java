@@ -33,11 +33,11 @@ public class Rust_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Rust_Element extends TokenChooser
 	{
-		public @CHOICE Rust_Comment comment;
-		public @CHOICE Rust_Function function;
-		public @CHOICE Rust_Module module;
-		public @CHOICE Rust_Data data;
-		public @CHOICE Rust_Use use;
+		public @CHOICE Rust_Comment XXcomment;
+		public @CHOICE Rust_Function XXfunction;
+		public @CHOICE Rust_Module XXmodule;
+		public @CHOICE Rust_Data XXdata;
+		public @CHOICE Rust_Use XXuse;
 	}
 
 	@Override

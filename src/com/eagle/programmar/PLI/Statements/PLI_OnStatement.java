@@ -24,7 +24,7 @@ public class PLI_OnStatement extends TokenSequence implements AbstractStatement
 
 	public static class PLI_OnAction extends TokenChooser
 	{
-		public @CHOICE PLI_Statement stmt;
+		public @CHOICE PLI_Statement XXstmt;
 
 		public @CHOICE static class PLI_On_Action_System extends TokenSequence
 		{

@@ -27,7 +27,7 @@ public class SQL_Function extends TokenSequence
 
 	public static class SQL_FunctionParam extends TokenChooser
 	{
-		public @CHOICE SQL_Expression arg;
+		public @CHOICE SQL_Expression XXarg;
 
 		public @CHOICE static class SQL_FunctionColonParam extends TokenSequence
 		{
@@ -45,10 +45,11 @@ public class SQL_Function extends TokenSequence
 
 	public static class SQL_FunctionName extends TokenChooser
 	{
-		public @LAST SQL_Variable var;
+		public @LAST SQL_Variable XXvar;
 
-		public @FIRST SQL_KeywordChoice fnName = new SQL_KeywordChoice("COALESCE", "CONCAT", "COUNT",
-				"CURRENT_TIMESTAMP", "LENGTH", "MIN", "RUN_METRIC", "SUBSTRING", "SYS_EXTRACT_UTC", "SYS_GUID");
+		public @FIRST SQL_KeywordChoice XXfnName = new SQL_KeywordChoice(
+				"COALESCE", "CONCAT", "COUNT", "CURRENT_TIMESTAMP", "LENGTH", "MIN",
+				"RUN_METRIC", "SUBSTRING", "SYS_EXTRACT_UTC", "SYS_GUID");
 
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence
 		{

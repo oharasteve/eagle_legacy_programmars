@@ -36,24 +36,24 @@ public class AWK_Statements extends TokenSequence implements EagleRunnableWithRe
 
 	public static class AWK_Statement extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon; // Empty statement
-		public @CHOICE AWK_Comment comment;
+		public @CHOICE PunctuationSemicolon XXsemicolon; // Empty statement
+		public @CHOICE AWK_Comment XXcomment;
 
-		public @CHOICE AWK_Assignment assignmentStatement;
-		public @CHOICE AWK_BreakStatement breakStatement;
-		public @CHOICE AWK_ContinueStatement continueStatement;
-		public @CHOICE AWK_ExitStatement exitStatement;
-		public @CHOICE AWK_ForStatement forStatement;
-		public @CHOICE AWK_IfStatement ifStatement;
-		public @CHOICE AWK_NextStatement nextStatement;
-		public @CHOICE AWK_PrintStatement printStatement;
-		public @CHOICE AWK_ReturnStatement returnStatement;
-		public @CHOICE AWK_SplitStatement splitStatement;
-		public @CHOICE AWK_SubStatement subStatement;
-		public @CHOICE AWK_SwitchStatement switchStatement;
-		public @CHOICE AWK_WhileStatement whileStatement;
+		public @CHOICE AWK_Assignment XXassignmentStatement;
+		public @CHOICE AWK_BreakStatement XXbreakStatement;
+		public @CHOICE AWK_ContinueStatement XXcontinueStatement;
+		public @CHOICE AWK_ExitStatement XXexitStatement;
+		public @CHOICE AWK_ForStatement XXforStatement;
+		public @CHOICE AWK_IfStatement XXifStatement;
+		public @CHOICE AWK_NextStatement XXnextStatement;
+		public @CHOICE AWK_PrintStatement XXprintStatement;
+		public @CHOICE AWK_ReturnStatement XXreturnStatement;
+		public @CHOICE AWK_SplitStatement XXsplitStatement;
+		public @CHOICE AWK_SubStatement XXsubStatement;
+		public @CHOICE AWK_SwitchStatement XXswitchStatement;
+		public @CHOICE AWK_WhileStatement XXwhileStatement;
 
-		public @LAST AWK_ExpressionStatement expressionStatement;
+		public @LAST AWK_ExpressionStatement XXexpressionStatement;
 	}
 
 	@Override

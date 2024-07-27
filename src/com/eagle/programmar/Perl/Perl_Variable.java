@@ -25,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Perl_Variable extends TokenChooser
 {
-	public @CHOICE Perl_Identifier_Reference variable;
+	public @CHOICE Perl_Identifier_Reference XXvariable;
 
 	public @CHOICE static class Perl_UserVariable extends TokenSequence implements EagleRunnable
 	{

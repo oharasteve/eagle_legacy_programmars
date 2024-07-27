@@ -47,8 +47,8 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 
 	public static class C_FunctionTypeName extends TokenChooser
 	{
-		public @CHOICE C_Keyword MAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
-		public @CHOICE C_Function_TypeAndName typeAndName;
+		public @CHOICE C_Keyword XXMAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
+		public @CHOICE C_Function_TypeAndName XXtypeAndName;
 	}
 
 	public static class C_Function_TypeAndName extends TokenSequence
@@ -70,11 +70,11 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 
 	public static class C_FunctionParameter extends TokenChooser
 	{
-		public @FIRST C_FunctionPointer functionPointer;
-		public @CHOICE C_FunctionParamAmpersand paramAmpersand;
-		public @CHOICE C_FunctionFunctionParameter functionParam;
-		public @CHOICE C_FunctionDotDotDotParameter dotDotParam;
-		public @LAST C_FunctionRegularParameter paramRegular; // Otherwise it misses C_FunctionFunctionParameter
+		public @FIRST C_FunctionPointer XXfunctionPointer;
+		public @CHOICE C_FunctionParamAmpersand XXparamAmpersand;
+		public @CHOICE C_FunctionFunctionParameter XXfunctionParam;
+		public @CHOICE C_FunctionDotDotDotParameter XXdotDotParam;
+		public @LAST C_FunctionRegularParameter XXparamRegular; // Otherwise it misses C_FunctionFunctionParameter
 	}
 
 	public static class C_FunctionParamAmpersand extends TokenSequence
@@ -121,7 +121,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 
 	public static class C_FunctionBody extends TokenChooser
 	{
-		public @CHOICE C_FunctionImplementation implementation;
+		public @CHOICE C_FunctionImplementation XXimplementation;
 
 		public @CHOICE static class C_FunctionEqualsZero extends TokenSequence
 		{

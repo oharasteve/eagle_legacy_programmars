@@ -35,10 +35,10 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 
 	public static class FSharp_StatementOrComment extends TokenChooser
 	{
-		public @SKIP FSharp_MultilineStatement multiStatement; // Only needed for Transformation
+		public @SKIP FSharp_MultilineStatement XXmultiStatement; // Only needed for Transformation
 
-		public @CHOICE FSharp_Statement_List statements;
-		public @CHOICE FSharp_EndOfLine eoln;
+		public @CHOICE FSharp_Statement_List XXstatements;
+		public @CHOICE FSharp_EndOfLine XXeoln;
 
 		public @FIRST static class FSharp_CommentList extends TokenSequence implements EagleRunnable
 		{
@@ -70,20 +70,20 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 
 	public static class FSharp_Statement_Separator extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma XXcomma;
 	}
 
 	public static class FSharp_Simple_Statement extends TokenChooser
 	{
-		public @CHOICE FSharp_Assignment assignment;
-		public @CHOICE FSharp_ForStatement forStatement;
-		public @CHOICE FSharp_Function function;
-		public @CHOICE FSharp_IfStatement ifStatement;
-		public @CHOICE FSharp_LetStatement letStatement;
-		public @CHOICE FSharp_PrintfnStatement printfnStatement;
+		public @CHOICE FSharp_Assignment XXassignment;
+		public @CHOICE FSharp_ForStatement XXforStatement;
+		public @CHOICE FSharp_Function XXfunction;
+		public @CHOICE FSharp_IfStatement XXifStatement;
+		public @CHOICE FSharp_LetStatement XXletStatement;
+		public @CHOICE FSharp_PrintfnStatement XXprintfnStatement;
 
-		public @LAST FSharp_Expression returnValue;
+		public @LAST FSharp_Expression XXreturnValue;
 	}
 
 	public static class FSharp_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
@@ -126,8 +126,8 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 
 	public static class FSharp_SingleOrMultiLineStatement extends TokenChooser
 	{
-		public @CHOICE FSharp_Punctuation dots = new FSharp_Punctuation("...");
-		public @CHOICE FSharp_MultilineStatement multiLineStatement;
-		public @CHOICE FSharp_SingleLineStatement singleLineStatement;
+		public @CHOICE FSharp_Punctuation XXdots = new FSharp_Punctuation("...");
+		public @CHOICE FSharp_MultilineStatement XXmultiLineStatement;
+		public @CHOICE FSharp_SingleLineStatement XXsingleLineStatement;
 	}
 }

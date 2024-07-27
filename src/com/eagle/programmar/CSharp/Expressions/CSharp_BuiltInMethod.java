@@ -23,9 +23,9 @@ public class CSharp_BuiltInMethod extends PrecedenceOperator implements EagleRun
 	
 	public static class CSharp_BuiltinMethodArgs extends TokenChooser
 	{
-		public @CHOICE CSharp_BuiltinNoArgs noArgs;
-		public @CHOICE CSharp_BuiltinOneArg oneArg;
-		public @CHOICE CSharp_BuiltinTwoArgs twoArgs;
+		public @CHOICE CSharp_BuiltinNoArgs XXnoArgs;
+		public @CHOICE CSharp_BuiltinOneArg XXoneArg;
+		public @CHOICE CSharp_BuiltinTwoArgs XXtwoArgs;
 	}
 	
 	public static class CSharp_BuiltinNoArgs extends TokenSequence

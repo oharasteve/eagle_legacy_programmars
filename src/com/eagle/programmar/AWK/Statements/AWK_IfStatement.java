@@ -40,8 +40,8 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 
 	public static class AWK_IfBlock extends TokenChooser
 	{
-		public @CHOICE AWK_Statements stmt;
-		public @CHOICE AWK_Action action;
+		public @CHOICE AWK_Statements XXstmt;
+		public @CHOICE AWK_Action XXaction;
 	}
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;

@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class Perl_StatementOrComment extends TokenChooser
 {
-	public @CHOICE Perl_Statement statement;
-	public @CHOICE Perl_Comment comment;
+	public @CHOICE Perl_Statement XXstatement;
+	public @CHOICE Perl_Comment XXcomment;
 }

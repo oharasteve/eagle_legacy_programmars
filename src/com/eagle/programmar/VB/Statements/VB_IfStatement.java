@@ -30,8 +30,8 @@ public class VB_IfStatement extends TokenSequence implements AbstractStatement, 
 
 	public static class VB_IfType extends TokenChooser
 	{
-		public @CHOICE VB_IfOneLiner oneLiner;
-		public @CHOICE VB_IfMultiLiner multiLiner;
+		public @CHOICE VB_IfOneLiner XXoneLiner;
+		public @CHOICE VB_IfMultiLiner XXmultiLiner;
 	}
 
 	public static class VB_IfOneLiner extends TokenSequence

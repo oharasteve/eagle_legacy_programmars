@@ -18,13 +18,13 @@ public class CSS_AtEntry extends TokenChooser
 {
 	public static final String LAST_EDIT = "2022-09-08 06:57:00 CDT";
 
-	public @CHOICE CSS_AtApply atApply;
-	public @CHOICE CSS_AtCharset atCharset;
-	public @CHOICE CSS_AtImport atImport;
-	public @CHOICE CSS_AtMedia atMedia;
-	public @CHOICE CSS_AtMozDocument atMozDocument;
-	public @CHOICE CSS_AtNamespace atNamespace;
-	public @CHOICE CSS_AtProvide atProvide;
-	public @CHOICE CSS_AtRequire atRequire;
-	public @CHOICE CSS_AtSupports atSupports;
+	public @CHOICE CSS_AtApply XXatApply;
+	public @CHOICE CSS_AtCharset XXatCharset;
+	public @CHOICE CSS_AtImport XXatImport;
+	public @CHOICE CSS_AtMedia XXatMedia;
+	public @CHOICE CSS_AtMozDocument XXatMozDocument;
+	public @CHOICE CSS_AtNamespace XXatNamespace;
+	public @CHOICE CSS_AtProvide XXatProvide;
+	public @CHOICE CSS_AtRequire XXatRequire;
+	public @CHOICE CSS_AtSupports XXatSupports;
 }

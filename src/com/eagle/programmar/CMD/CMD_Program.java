@@ -34,9 +34,9 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 
 	public @SKIP static class CMD_CommandOrLabelOrUnparsed extends TokenChooser
 	{
-		public @CHOICE CMD_Command command;
-		public @CHOICE CMD_Label label;
-		public @LAST CMD_Unparsed_Statement unparsed;
+		public @CHOICE CMD_Command XXcommand;
+		public @CHOICE CMD_Label XXlabel;
+		public @LAST CMD_Unparsed_Statement XXunparsed;
 	}
 
 	public @SKIP static class CMD_Label extends TokenSequence

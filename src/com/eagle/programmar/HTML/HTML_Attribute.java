@@ -31,8 +31,8 @@ public class HTML_Attribute extends TokenSequence
 
 	public static class HTML_IdentifierOrKeyword extends TokenChooser
 	{
-		public @CHOICE HTML_Identifier attribute;
-		public @CHOICE HTML_Keyword style = new HTML_Keyword("style");
+		public @CHOICE HTML_Identifier XXattribute;
+		public @CHOICE HTML_Keyword XXstyle = new HTML_Keyword("style");
 
 		public @CHOICE static class HTML_Namespace extends TokenSequence
 		{
@@ -44,9 +44,9 @@ public class HTML_Attribute extends TokenSequence
 
 	public static class HTML_Value extends TokenChooser
 	{
-		public @FIRST HTML_HexNumber hex;
-		public @FIRST HTML_Number number;
-		public @FIRST HTML_Literal literal;
+		public @FIRST HTML_HexNumber XXhex;
+		public @FIRST HTML_Number XXnumber;
+		public @FIRST HTML_Literal XXliteral;
 
 		public @CHOICE static class HTML_Id_Value extends TokenSequence
 		{

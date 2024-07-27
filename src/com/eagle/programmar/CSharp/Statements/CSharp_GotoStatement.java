@@ -16,7 +16,7 @@ public class CSharp_GotoStatement extends TokenSequence implements AbstractState
 	
 	public static class CSharp_GoWhere extends TokenChooser
 	{
-		public @CHOICE CSharp_Keyword DEFAULT = new CSharp_Keyword("default");	// Weird -- inside a switch / case
-		public @CHOICE CSharp_Label_Reference label;
+		public @CHOICE CSharp_Keyword XXDEFAULT = new CSharp_Keyword("default");	// Weird -- inside a switch / case
+		public @CHOICE CSharp_Label_Reference XXlabel;
 	}
 }

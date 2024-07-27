@@ -109,13 +109,13 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 
 	public static class C_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE C_Comment comment;
-		public @CHOICE C_TypeDef typeDef;
-		public @LAST C_Data data;
-		public @CHOICE C_Function function;
-		public @LAST C_Statement statement;
-		public @CHOICE C_Enum cenum;
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @CHOICE C_Comment XXcomment;
+		public @CHOICE C_TypeDef XXtypeDef;
+		public @LAST C_Data XXdata;
+		public @CHOICE C_Function XXfunction;
+		public @LAST C_Statement XXstatement;
+		public @CHOICE C_Enum XXcenum;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 
 		// NOTE: C++ adds the 'extern' statement here. See the constructor in
 		// CPlus_Program.java

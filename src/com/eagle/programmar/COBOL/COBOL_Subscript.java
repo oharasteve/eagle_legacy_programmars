@@ -20,8 +20,8 @@ public class COBOL_Subscript extends TokenSequence
 
 	public static class COBOL_SubscriptType extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-		public @CHOICE COBOL_RegularSubscript regularSubscript;
+		public @CHOICE COBOL_Keyword XXALL = new COBOL_Keyword("ALL");
+		public @CHOICE COBOL_RegularSubscript XXregularSubscript;
 	}
 
 	public static class COBOL_RegularSubscript extends TokenSequence

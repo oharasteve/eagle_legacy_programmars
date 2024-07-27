@@ -18,16 +18,16 @@ import com.eagle.tokens.TokenChooser;
 
 public class Julia_Statement extends TokenChooser
 {
-	public @CHOICE Julia_Assignment assignment;
-	public @CHOICE Julia_BlockStatement blockStatement;
-	public @CHOICE Julia_BreakStatement breakStatement;
-	public @CHOICE Julia_CommentEoln comment;
-	public @CHOICE Julia_Data data;
-	public @CHOICE Julia_ForStatement forStatement;
-	public @CHOICE Julia_Function function;
-	public @CHOICE Julia_IfStatement ifStatement;
-	public @CHOICE Julia_PrintlnStatement putsStatement;
-	public @CHOICE Julia_ReturnStatement returnStatement;
+	public @CHOICE Julia_Assignment XXassignment;
+	public @CHOICE Julia_BlockStatement XXblockStatement;
+	public @CHOICE Julia_BreakStatement XXbreakStatement;
+	public @CHOICE Julia_CommentEoln XXcomment;
+	public @CHOICE Julia_Data XXdata;
+	public @CHOICE Julia_ForStatement XXforStatement;
+	public @CHOICE Julia_Function XXfunction;
+	public @CHOICE Julia_IfStatement XXifStatement;
+	public @CHOICE Julia_PrintlnStatement XXputsStatement;
+	public @CHOICE Julia_ReturnStatement XXreturnStatement;
 	
-	public @LAST Julia_ExpressionStatement expressionStatement;
+	public @LAST Julia_ExpressionStatement XXexpressionStatement;
 }

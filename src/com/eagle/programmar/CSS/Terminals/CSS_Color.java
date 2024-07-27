@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSS_Color extends TokenChooser
 {
-	public @CHOICE CSS_KeywordChoice color = new CSS_KeywordChoice("black", "blue", "green", "red", "white");
+	public @CHOICE CSS_KeywordChoice XXcolor = new CSS_KeywordChoice("black", "blue", "green", "red", "white");
 
 	public @CHOICE static class CSS_QualifiedColor extends TokenSequence
 	{

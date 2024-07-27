@@ -20,9 +20,10 @@ public class TCL_RelationalExpression extends PrecedenceOperator implements Eagl
 
 	public static class TCL_RelOperator extends TokenChooser
 	{
-		public @CHOICE TCL_KeywordChoice EQ = new TCL_KeywordChoice("lt", "le", "eq", "ne", "gt", "ge");
-		public @CHOICE TCL_PunctuationChoice operator = new TCL_PunctuationChoice("<", ">", "<=", ">=", "==", "<>",
-				"!=");
+		public @CHOICE TCL_KeywordChoice XXEQ = new TCL_KeywordChoice(
+				"lt", "le", "eq", "ne", "gt", "ge");
+		public @CHOICE TCL_PunctuationChoice XXoperator = new TCL_PunctuationChoice(
+				"<", ">", "<=", ">=", "==", "<>", "!=");
 	}
 
 	@Override

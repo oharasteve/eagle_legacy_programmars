@@ -48,7 +48,8 @@ public class Java_Type extends TokenSequence implements AbstractType
 	// Delay finding this one until after looking for [] and <>
 	public static class Java_TypeName extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice primitive = new Java_KeywordChoice("void", "boolean", "byte", "short", "int",
+		public @CHOICE Java_KeywordChoice XXprimitive = new Java_KeywordChoice(
+				"void", "boolean", "byte", "short", "int",
 				"long", "char", "float", "double", "String", "class");
 
 		public @CHOICE static class Java_IdList extends TokenSequence

@@ -35,8 +35,8 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Ada_Element extends TokenChooser
 	{
-		public @CHOICE Ada_Comment comment;
-		public @CHOICE Ada_Statement stmt;
+		public @CHOICE Ada_Comment XXcomment;
+		public @CHOICE Ada_Statement XXstmt;
 	}
 
 	@Override

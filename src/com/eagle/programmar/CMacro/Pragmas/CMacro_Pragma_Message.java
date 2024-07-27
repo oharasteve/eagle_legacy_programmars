@@ -23,8 +23,8 @@ public class CMacro_Pragma_Message extends TokenSequence
 
 	public static class CMacro_PragmaMsg extends TokenChooser
 	{
-		public @CHOICE CMacro_Literal literal;
-		public @CHOICE CMacro_KeywordChoice UNDERFLOW = new CMacro_KeywordChoice("UNDERFLOW", "FLOATOVERFL",
-				"nosimpint");
+		public @CHOICE CMacro_Literal XXliteral;
+		public @CHOICE CMacro_KeywordChoice XXUNDERFLOW = new CMacro_KeywordChoice(
+				"UNDERFLOW", "FLOATOVERFL", "nosimpint");
 	}
 }

@@ -20,18 +20,18 @@ import com.eagle.tokens.TokenChooser;
 
 public class Ada_Statement extends TokenChooser
 {
-	public @CHOICE Ada_Assignment assignment;
-	public @CHOICE Ada_ExitStatement breakStatement;
-	public @CHOICE Ada_Comment comment;
-	public @CHOICE Ada_Data data;
-	public @CHOICE Ada_ForStatement forStatement;
-	public @CHOICE Ada_Function function;
-	public @CHOICE Ada_IfStatement ifStatement;
-	public @CHOICE Ada_PutStatement putStatement;
-	public @CHOICE Ada_PutIntegerStatement putIntegerStatement;
-	public @CHOICE Ada_Procedure procedure;
-	public @CHOICE Ada_ReturnStatement returnStatement;
-	public @CHOICE Ada_WithUseStatement withUseStatement;
+	public @CHOICE Ada_Assignment XXassignment;
+	public @CHOICE Ada_ExitStatement XXbreakStatement;
+	public @CHOICE Ada_Comment XXcomment;
+	public @CHOICE Ada_Data XXdata;
+	public @CHOICE Ada_ForStatement XXforStatement;
+	public @CHOICE Ada_Function XXfunction;
+	public @CHOICE Ada_IfStatement XXifStatement;
+	public @CHOICE Ada_PutStatement XXputStatement;
+	public @CHOICE Ada_PutIntegerStatement XXputIntegerStatement;
+	public @CHOICE Ada_Procedure XXprocedure;
+	public @CHOICE Ada_ReturnStatement XXreturnStatement;
+	public @CHOICE Ada_WithUseStatement XXwithUseStatement;
 
-	public @LAST Ada_ExpressionStatement expressionStatement;
+	public @LAST Ada_ExpressionStatement XXexpressionStatement;
 }

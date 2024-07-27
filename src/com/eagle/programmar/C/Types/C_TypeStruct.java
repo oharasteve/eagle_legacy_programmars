@@ -45,10 +45,10 @@ public class C_TypeStruct extends TokenSequence
 
 	public static class C_FieldOrComment extends TokenChooser
 	{
-		public @CHOICE C_Comment comment;
-		public @CHOICE C_FunctionPointer functionPtr;
-		public @LAST C_TypeUnion union;
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @CHOICE C_Comment XXcomment;
+		public @CHOICE C_FunctionPointer XXfunctionPtr;
+		public @LAST C_TypeUnion XXunion;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 
 		public @CHOICE static class C_Field extends TokenSequence
 		{

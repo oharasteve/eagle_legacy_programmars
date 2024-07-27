@@ -50,7 +50,8 @@ public class MSSolution_GlobalSection extends TokenSequence
 
 		public static class MSSolution_GlobalSectionEntryBarWhat extends TokenChooser
 		{
-			public @CHOICE MSSolution_KeywordChoice acpu = new MSSolution_KeywordChoice(".NET", "Win32", "x64", "x86");
+			public @CHOICE MSSolution_KeywordChoice XXcpu = new MSSolution_KeywordChoice(
+					".NET", "Win32", "x64", "x86");
 
 			public @CHOICE static class MSSolution_GlobalSectionEntryBarAnyCPU extends TokenSequence
 			{
@@ -88,9 +89,9 @@ public class MSSolution_GlobalSection extends TokenSequence
 
 			public static class MSSolution_GlobalSectionEntryLeft extends TokenChooser
 			{
-				public @CHOICE MSSolution_GlobalSectionEntryDebug debug;
+				public @CHOICE MSSolution_GlobalSectionEntryDebug XXdebug;
 
-				public @CHOICE MSSolution_KeywordChoice HIDE = new MSSolution_KeywordChoice("HideSolutionNode",
+				public @CHOICE MSSolution_KeywordChoice XXHIDE = new MSSolution_KeywordChoice("HideSolutionNode",
 						"SccProjectEnlistmentChoice1", "SccEnterpriseProvider", "SccNumberOfProjects", "SccWebProject1",
 						"SolutionGuid", "XCSharpProjectsDisabled");
 
@@ -111,10 +112,10 @@ public class MSSolution_GlobalSection extends TokenSequence
 
 			public static class MSSolution_GlobalSectionEntryRight extends TokenChooser
 			{
-				public @CHOICE MSSolution_Number number;
-				public @CHOICE MSSolution_GlobalSectionEntryDebug debug;
+				public @CHOICE MSSolution_Number XXnumber;
+				public @CHOICE MSSolution_GlobalSectionEntryDebug XXdebug;
 
-				public @CHOICE MSSolution_KeywordChoice CONST = new MSSolution_KeywordChoice("FALSE", "true");
+				public @CHOICE MSSolution_KeywordChoice XXCONST = new MSSolution_KeywordChoice("FALSE", "true");
 
 				public @CHOICE static class MSSolution_GlobalSectionEntryNet extends TokenSequence
 				{

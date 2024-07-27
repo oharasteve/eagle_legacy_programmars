@@ -29,7 +29,7 @@ public class ObjectiveC_Program extends C_Program
 
 	public static class ObjectiveC_Element extends TokenChooser
 	{
-		public @CHOICE @SYNTAX(C_Syntax.class) C_Comment comment;
-		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
+		public @CHOICE @SYNTAX(C_Syntax.class) C_Comment XXcomment;
+		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment XXstatementOrComment;
 	}
 }

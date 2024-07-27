@@ -19,8 +19,8 @@ public class Python_VariableList extends TokenSequence
 
 	public static class Python_VariableOrList extends TokenChooser
 	{
-		public @CHOICE Python_Just_Var justVar;
-		public @CHOICE Python_Var_List varList;
+		public @CHOICE Python_Just_Var XXjustVar;
+		public @CHOICE Python_Var_List XXvarList;
 	}
 
 	public static class Python_Just_Var extends TokenSequence

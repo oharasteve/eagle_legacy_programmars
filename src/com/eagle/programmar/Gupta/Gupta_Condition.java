@@ -34,9 +34,9 @@ public class Gupta_Condition extends TokenSequence
 
 			public static class Gupta_Relational_Operator extends TokenChooser
 			{
-				public @CHOICE Gupta_PunctuationChoice operator = new Gupta_PunctuationChoice(">=", "<=", "<", ">",
-						"=");
-				public @CHOICE Gupta_KeywordChoice GT = new Gupta_KeywordChoice("GT", "LT", "NE");
+				public @CHOICE Gupta_PunctuationChoice XXoperator = new Gupta_PunctuationChoice(
+						">=", "<=", "<", ">", "=");
+				public @CHOICE Gupta_KeywordChoice XXGT = new Gupta_KeywordChoice("GT", "LT", "NE");
 
 				public @CHOICE static class Gupta_Not_Equals extends TokenSequence
 				{

@@ -23,6 +23,6 @@ public class Bash_ExportCommand extends TokenSequence implements AbstractStateme
 
 	public static class Bash_ExportOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice N = new Bash_KeywordChoice("-n");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-n");
 	}
 }

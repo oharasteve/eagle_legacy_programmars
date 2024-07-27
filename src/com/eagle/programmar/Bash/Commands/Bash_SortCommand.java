@@ -20,7 +20,7 @@ public class Bash_SortCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_SortOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice RN = new Bash_KeywordChoice("-r", "-n");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-r", "-n");
 
 		public @CHOICE static class Bash_SortOptionK extends TokenSequence
 		{

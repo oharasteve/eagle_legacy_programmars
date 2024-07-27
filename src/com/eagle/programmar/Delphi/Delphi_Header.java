@@ -12,17 +12,17 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Header extends TokenChooser
 {
-	public @CHOICE Delphi_KeywordChoice INTERFACE = new Delphi_KeywordChoice("Interface", "Implementation");
+	public @CHOICE Delphi_KeywordChoice XXINTERFACE = new Delphi_KeywordChoice("Interface", "Implementation");
 
-	public @CHOICE Delphi_Comment comment;
+	public @CHOICE Delphi_Comment XXcomment;
 
-	public @CHOICE Delphi_Uses uses;
-	public @CHOICE Delphi_Types types;
-	public @CHOICE Delphi_Consts consts;
-	public @CHOICE Delphi_Vars vars;
-	public @CHOICE Delphi_Procedure proc;
-	public @CHOICE Delphi_Function func;
-	public @CHOICE Delphi_Include include;
+	public @CHOICE Delphi_Uses XXuses;
+	public @CHOICE Delphi_Types XXtypes;
+	public @CHOICE Delphi_Consts XXconsts;
+	public @CHOICE Delphi_Vars XXvars;
+	public @CHOICE Delphi_Procedure XXproc;
+	public @CHOICE Delphi_Function XXfunc;
+	public @CHOICE Delphi_Include XXinclude;
 
 	public @CHOICE static class Delphi_Initialization extends TokenSequence
 	{

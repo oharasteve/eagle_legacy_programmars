@@ -42,11 +42,11 @@ public class CMacro_Program extends EagleLanguage
 
 	public static class CMacro_Element extends TokenChooser
 	{
-		public @CHOICE CMacro_Pragma_Statement pragma;
-		public @CHOICE CMacro_CommentLine comment;
-		public @CHOICE CMacro_StatementOrComment stmt;
-		public @CHOICE CMacro_MultiLineText textLine;
-		public @LAST CMacro_EndOfLine endOfLine;
+		public @CHOICE CMacro_Pragma_Statement XXpragma;
+		public @CHOICE CMacro_CommentLine XXcomment;
+		public @CHOICE CMacro_StatementOrComment XXstmt;
+		public @CHOICE CMacro_MultiLineText XXtextLine;
+		public @LAST CMacro_EndOfLine XXendOfLine;
 	}
 
 	public static class CMacro_CommentLine extends TokenSequence

@@ -17,7 +17,7 @@ public class Ada_Type extends TokenSequence
 
 	public static class Ada_WhichType extends TokenChooser
 	{
-		public @CHOICE Ada_KeywordChoice primitives = new Ada_KeywordChoice("Boolean", "Integer", "Unbounded_String");
+		public @CHOICE Ada_KeywordChoice XXprimitives = new Ada_KeywordChoice("Boolean", "Integer", "Unbounded_String");
 
 		public @CHOICE static class Ada_ArrayType extends TokenSequence
 		{

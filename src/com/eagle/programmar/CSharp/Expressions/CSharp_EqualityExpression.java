@@ -20,8 +20,8 @@ public class CSharp_EqualityExpression extends PrecedenceOperator implements Eag
 
 	public static class CSharp_EqualityOperator extends TokenChooser
 	{
-		public @CHOICE CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "??");
-		public @CHOICE CSharp_KeywordChoice asIs = new CSharp_KeywordChoice("as", "is");
+		public @CHOICE CSharp_PunctuationChoice XXoperator = new CSharp_PunctuationChoice("==", "!=", "??");
+		public @CHOICE CSharp_KeywordChoice XXasIs = new CSharp_KeywordChoice("as", "is");
 	}
 
 	@Override

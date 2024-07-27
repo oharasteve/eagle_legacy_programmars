@@ -28,14 +28,14 @@ public class COBOL_FileSelect extends TokenSequence
 
 	public static class COBOL_AssignTo extends TokenChooser
 	{
-		public @CHOICE COBOL_Literal assignLiteral;
-		public @CHOICE COBOL_Keyword DISK = new COBOL_Keyword("DISK");
-		public @CHOICE COBOL_Identifier_Reference dataRef;
+		public @CHOICE COBOL_Literal XXassignLiteral;
+		public @CHOICE COBOL_Keyword XXDISK = new COBOL_Keyword("DISK");
+		public @CHOICE COBOL_Identifier_Reference XXdataRef;
 	}
 
 	public static class COBOL_SelectClause extends TokenChooser
 	{
-		public @CHOICE COBOL_Comment comment;
+		public @CHOICE COBOL_Comment XXcomment;
 
 		public @CHOICE static class COBOL_SelectOrganization extends TokenSequence
 		{

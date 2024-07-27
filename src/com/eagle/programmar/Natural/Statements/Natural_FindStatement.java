@@ -49,12 +49,12 @@ public class Natural_FindStatement extends TokenSequence
 
 	public static class Natural_Find_Clause extends TokenChooser
 	{
-		public @CHOICE Natural_Find_By_Condition findByCond;
-		public @CHOICE Natural_Find_By_ISN findByISN;
-		public @CHOICE Natural_Find_From findFrom;
-		public @CHOICE Natural_Find_Coupled coupled;
-		public @CHOICE Natural_Find_Sorted_By sortedBy;
-		public @CHOICE Natural_Find_Where findWhere;
+		public @CHOICE Natural_Find_By_Condition XXfindByCond;
+		public @CHOICE Natural_Find_By_ISN XXfindByISN;
+		public @CHOICE Natural_Find_From XXfindFrom;
+		public @CHOICE Natural_Find_Coupled XXcoupled;
+		public @CHOICE Natural_Find_Sorted_By XXsortedBy;
+		public @CHOICE Natural_Find_Where XXfindWhere;
 	}
 
 	public static class Natural_Find_Number_Records extends TokenSequence
@@ -89,8 +89,8 @@ public class Natural_FindStatement extends TokenSequence
 
 			public static class Natural_Find_Via_Equals extends TokenChooser
 			{
-				public @CHOICE PunctuationEquals equals;
-				public @CHOICE Natural_KeywordChoice EQUALS = new Natural_KeywordChoice("EQ", "EQUAL");
+				public @CHOICE PunctuationEquals XXequals;
+				public @CHOICE Natural_KeywordChoice XXEQUALS = new Natural_KeywordChoice("EQ", "EQUAL");
 			}
 		}
 	}

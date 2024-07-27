@@ -41,7 +41,7 @@ public class Powershell_SwitchStatement extends TokenSequence implements Abstrac
 
 	public static class Powershell_SwitchCondition extends TokenChooser
 	{
-		public @FIRST Powershell_Keyword DEFAULT = new Powershell_Keyword("Default");
-		public @CHOICE Powershell_Expression expr;
+		public @FIRST Powershell_Keyword XXDEFAULT = new Powershell_Keyword("Default");
+		public @CHOICE Powershell_Expression XXexpr;
 	}
 }

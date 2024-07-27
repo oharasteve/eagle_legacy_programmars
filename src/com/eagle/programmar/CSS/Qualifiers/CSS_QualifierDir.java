@@ -18,7 +18,7 @@ public class CSS_QualifierDir extends TokenSequence
 
 	public static class CSS_QualifierWhichDir extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice RTL = new CSS_KeywordChoice("rtl");
-		public @CHOICE CSS_Literal literal;
+		public @CHOICE CSS_KeywordChoice XXRTL = new CSS_KeywordChoice("rtl");
+		public @CHOICE CSS_Literal XXliteral;
 	}
 }

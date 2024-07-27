@@ -52,18 +52,18 @@ public class CMD_Command extends TokenSequence
 
 	public static class CMD_Redirect extends TokenChooser
 	{
-		public @CHOICE CMD_Redirect_Input redirectInput;
-		public @CHOICE CMD_Redirect_Output redirectOutput;
-		public @CHOICE CMD_Redirect_Append redirectAppend;
-		public @CHOICE CMD_Redirect_Error_One redirectErrorOne;
-		public @CHOICE CMD_Redirect_Error_File redirectErrorFile;
+		public @CHOICE CMD_Redirect_Input XXredirectInput;
+		public @CHOICE CMD_Redirect_Output XXredirectOutput;
+		public @CHOICE CMD_Redirect_Append XXredirectAppend;
+		public @CHOICE CMD_Redirect_Error_One XXredirectErrorOne;
+		public @CHOICE CMD_Redirect_Error_File XXredirectErrorFile;
 	}
 
 	// Some need a wrapper because they have CMD_Statement's inside of themselves
 
 	public static class CMD_Statement extends TokenChooser
 	{
-		public @CHOICE CMD_Comment comment;
+		public @CHOICE CMD_Comment XXcomment;
 
 		public @CHOICE static class CMD_BlockStatement extends TokenSequence
 		{
@@ -75,8 +75,8 @@ public class CMD_Command extends TokenSequence
 
 			public static class CMD_CommandOrLabel extends TokenChooser
 			{
-				public @CHOICE CMD_Command command;
-				public @CHOICE CMD_Label label;
+				public @CHOICE CMD_Command XXcommand;
+				public @CHOICE CMD_Label XXlabel;
 			}
 
 			public static class CMD_IfElse extends TokenSequence
@@ -94,36 +94,36 @@ public class CMD_Command extends TokenSequence
 
 			public static class CMD_GenericArgument extends TokenChooser
 			{
-				public @CHOICE CMD_Argument arg;
-				public @CHOICE CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
+				public @CHOICE CMD_Argument XXarg;
+				public @CHOICE CMD_PunctuationChoice XXminus = new CMD_PunctuationChoice("-", "/");
 			}
 		}
 
-		public @CHOICE CMD_Awk_Statement awkCommand;
-		public @CHOICE CMD_Call_Statement callCommand;
-		public @CHOICE CMD_CD_Statement cdCommand;
-		public @CHOICE CMD_Copy_Statement copyCommand;
-		public @CHOICE CMD_Del_Statement delCommand;
-		public @CHOICE CMD_Dir_Statement dirCommand;
-		public @CHOICE CMD_Echo_Statement echoCommand;
-		public @CHOICE CMD_Exit_Statement exitCommand;
-		public @CHOICE CMD_FindStr_Statement findstrCommand;
-		public @CHOICE CMD_For_Statement forCommand;
-		public @CHOICE CMD_GCC_Statement gccCommand;
-		public @CHOICE CMD_Goto_Statement gotoCommand;
-		public @CHOICE CMD_Grep_Statement grepCommand;
-		public @CHOICE CMD_If_Statement ifCommand;
-		public @CHOICE CMD_Mkdir_Statement mkdirCommand;
-		public @CHOICE CMD_NMake_Statement nmakeCommand;
-		public @CHOICE CMD_Perl_Statement perlCommand;
-		public @CHOICE CMD_Popd_Statement popdCommand;
-		public @CHOICE CMD_Pushd_Statement pushdCommand;
-		public @CHOICE CMD_Rem_Statement remCommand;
-		public @CHOICE CMD_Rmdir_Statement rmdirCommand;
-		public @CHOICE CMD_Set_Statement setCommand;
-		public @CHOICE CMD_SetLocal_Statement setLocalCommand;
-		public @CHOICE CMD_Shift_Statement shiftCommand;
-		public @CHOICE CMD_Xcopy_Statement xcopyCommand;
+		public @CHOICE CMD_Awk_Statement XXawkCommand;
+		public @CHOICE CMD_Call_Statement XXcallCommand;
+		public @CHOICE CMD_CD_Statement XXcdCommand;
+		public @CHOICE CMD_Copy_Statement XXcopyCommand;
+		public @CHOICE CMD_Del_Statement XXdelCommand;
+		public @CHOICE CMD_Dir_Statement XXdirCommand;
+		public @CHOICE CMD_Echo_Statement XXechoCommand;
+		public @CHOICE CMD_Exit_Statement XXexitCommand;
+		public @CHOICE CMD_FindStr_Statement XXfindstrCommand;
+		public @CHOICE CMD_For_Statement XXforCommand;
+		public @CHOICE CMD_GCC_Statement XXgccCommand;
+		public @CHOICE CMD_Goto_Statement XXgotoCommand;
+		public @CHOICE CMD_Grep_Statement XXgrepCommand;
+		public @CHOICE CMD_If_Statement XXifCommand;
+		public @CHOICE CMD_Mkdir_Statement XXmkdirCommand;
+		public @CHOICE CMD_NMake_Statement XXnmakeCommand;
+		public @CHOICE CMD_Perl_Statement XXperlCommand;
+		public @CHOICE CMD_Popd_Statement XXpopdCommand;
+		public @CHOICE CMD_Pushd_Statement XXpushdCommand;
+		public @CHOICE CMD_Rem_Statement XXremCommand;
+		public @CHOICE CMD_Rmdir_Statement XXrmdirCommand;
+		public @CHOICE CMD_Set_Statement XXsetCommand;
+		public @CHOICE CMD_SetLocal_Statement XXsetLocalCommand;
+		public @CHOICE CMD_Shift_Statement XXshiftCommand;
+		public @CHOICE CMD_Xcopy_Statement XXxcopyCommand;
 	}
 
 	public static class CMD_Redirect_Input extends TokenSequence
@@ -167,7 +167,7 @@ public class CMD_Command extends TokenSequence
 
 		public static class CMD_Statement_Separator extends TokenChooser
 		{
-			public @CHOICE CMD_PunctuationChoice separator = new CMD_PunctuationChoice("||", "|", "&&");
+			public @CHOICE CMD_PunctuationChoice XXseparator = new CMD_PunctuationChoice("||", "|", "&&");
 		}
 	}
 }

@@ -21,8 +21,8 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator impleme
 
 	public static class Eaglish_MultiplicationOperator extends TokenChooser
 	{
-		public @CHOICE Eaglish_PunctuationChoice operSymbol = new Eaglish_PunctuationChoice("*");
-		public @CHOICE Eaglish_KeywordChoice operWord = new Eaglish_KeywordChoice("DIVIDE_TRUNCATE", "REMAINDER");
+		public @CHOICE Eaglish_PunctuationChoice XXoperSymbol = new Eaglish_PunctuationChoice("*");
+		public @CHOICE Eaglish_KeywordChoice XXoperWord = new Eaglish_KeywordChoice("DIVIDE_TRUNCATE", "REMAINDER");
 	}
 
 	@Override

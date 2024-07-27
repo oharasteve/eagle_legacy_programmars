@@ -29,8 +29,8 @@ public class Python_ImportStatement extends TokenSequence
 
 	public static class Python_ImportWhat extends TokenChooser
 	{
-		public @CHOICE Python_ImportFile importName;
-		public @CHOICE PunctuationStar star;
+		public @CHOICE Python_ImportFile XXimportName;
+		public @CHOICE PunctuationStar XXstar;
 
 		public @CHOICE static class Python_ImportList extends TokenSequence
 		{

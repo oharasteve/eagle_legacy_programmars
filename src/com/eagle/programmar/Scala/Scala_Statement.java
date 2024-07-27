@@ -18,17 +18,17 @@ import com.eagle.tokens.TokenChooser;
 
 public class Scala_Statement extends TokenChooser
 {
-	public @CHOICE Scala_Assignment assignment;
-	public @CHOICE Scala_BlockStatement blockStatement;
-	public @CHOICE Scala_BreakStatement breakStatement;
-	public @CHOICE Scala_BreakableStatement breakableStatement;
-	public @CHOICE Scala_CommentEoln comment;
-	public @CHOICE Scala_Var var;
-	public @CHOICE Scala_Val val;
-	public @CHOICE Scala_ForStatement forStatement;
-	public @CHOICE Scala_Function function;
-	public @CHOICE Scala_IfStatement ifStatement;
-	public @CHOICE Scala_ReturnStatement returnStatement;
+	public @CHOICE Scala_Assignment XXassignment;
+	public @CHOICE Scala_BlockStatement XXblockStatement;
+	public @CHOICE Scala_BreakStatement XXbreakStatement;
+	public @CHOICE Scala_BreakableStatement XXbreakableStatement;
+	public @CHOICE Scala_CommentEoln XXcomment;
+	public @CHOICE Scala_Var XXvar;
+	public @CHOICE Scala_Val XXval;
+	public @CHOICE Scala_ForStatement XXforStatement;
+	public @CHOICE Scala_Function XXfunction;
+	public @CHOICE Scala_IfStatement XXifStatement;
+	public @CHOICE Scala_ReturnStatement XXreturnStatement;
 	
-	public @LAST Scala_ExpressionStatement expressionStatement;
+	public @LAST Scala_ExpressionStatement XXexpressionStatement;
 }

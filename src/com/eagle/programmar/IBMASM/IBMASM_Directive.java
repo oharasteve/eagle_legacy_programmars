@@ -25,11 +25,11 @@ public class IBMASM_Directive extends TokenSequence
 
 	public static class IBMASM_Direct extends TokenChooser
 	{
-		public @CHOICE IBMASM_CSECT_Directive CSECT_directive;
-		public @CHOICE IBMASM_EJECT_Directive EJECT_directive;
-		public @CHOICE IBMASM_END_Directive END_Directive;
-		public @CHOICE IBMASM_EQU_Directive EQU_Directive;
-		public @CHOICE IBMASM_LTORG_Directive LTORG_directive;
-		public @CHOICE IBMASM_USING_Directive USING_Directive;
+		public @CHOICE IBMASM_CSECT_Directive XXCSECT_directive;
+		public @CHOICE IBMASM_EJECT_Directive XXEJECT_directive;
+		public @CHOICE IBMASM_END_Directive XXEND_Directive;
+		public @CHOICE IBMASM_EQU_Directive XXEQU_Directive;
+		public @CHOICE IBMASM_LTORG_Directive XXLTORG_directive;
+		public @CHOICE IBMASM_USING_Directive XXUSING_Directive;
 	}
 }

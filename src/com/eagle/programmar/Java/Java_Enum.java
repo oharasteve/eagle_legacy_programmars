@@ -72,7 +72,7 @@ public class Java_Enum extends TokenSequence
 
 	public static class Java_EnumClassBodyDeclaration extends TokenChooser
 	{
-		public @CHOICE Java_ClassElement element;
+		public @CHOICE Java_ClassElement XXelement;
 	}
 
 	public static class Java_EnumDeclarations extends TokenSequence

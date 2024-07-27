@@ -23,20 +23,20 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class Rust_Statement extends TokenChooser implements AbstractStatement
 {
-	public @CHOICE Rust_Comment comment;
+	public @CHOICE Rust_Comment XXcomment;
 
-	public @CHOICE Rust_BreakStatement breakStatement;
-	public @CHOICE Rust_IfStatement ifStatement;
-	public @CHOICE Rust_ForStatement forStatement;
-	public @CHOICE Rust_LetStatement letStatement;
-	public @CHOICE Rust_PrintlnStatement printlnStatement;
-	public @CHOICE Rust_ReturnStatement returnStatement;
-	public @CHOICE Rust_Use useStatement;
+	public @CHOICE Rust_BreakStatement XXbreakStatement;
+	public @CHOICE Rust_IfStatement XXifStatement;
+	public @CHOICE Rust_ForStatement XXforStatement;
+	public @CHOICE Rust_LetStatement XXletStatement;
+	public @CHOICE Rust_PrintlnStatement XXprintlnStatement;
+	public @CHOICE Rust_ReturnStatement XXreturnStatement;
+	public @CHOICE Rust_Use XXuseStatement;
 
-	public @LAST Rust_AssignmentStatement assignmentStatement;
-	public @LAST Rust_FunctionCall functionCall;
+	public @LAST Rust_AssignmentStatement XXassignmentStatement;
+	public @LAST Rust_FunctionCall XXfunctionCall;
 
-	public static @CHOICE class Rust_Block_Statement extends TokenSequence implements EagleRunnableWithResult
+	public @CHOICE static class Rust_Block_Statement extends TokenSequence implements EagleRunnableWithResult
 	{
 		public @S(10) PunctuationLeftBrace leftBrace;
 		public @S(20) TokenList<Rust_Statement> statements;
