@@ -94,7 +94,7 @@ public abstract class RPG_Program extends EagleLanguage
 																									// RPG III
 			overrider.override(RPG_F_File_Specification.class, RPG_F_File_Specification_III.class);
 			overrider.override(RPG_H_Header_Specification.class, RPG_H_Header_Specification_III.class);
-			overrider.override(RPG_O_Output_Spec.class, RPG_O_Output_Specification_III.class);
+			overrider.override(RPG_O_Output_Specification.class, RPG_O_Output_Specification_III.class);
 		}
 	}
 
@@ -114,7 +114,7 @@ public abstract class RPG_Program extends EagleLanguage
 			overrider.override(RPG_D_Data_Specification.class, RPG_D_Data_Specification_IV.class);
 			overrider.override(RPG_F_File_Specification.class, RPG_F_File_Specification_IV.class);
 			overrider.override(RPG_H_Header_Specification.class, RPG_H_Header_Specification_IV.class);
-			overrider.override(RPG_O_Output_Spec.class, RPG_O_Output_Specification_IV.class);
+			overrider.override(RPG_O_Output_Specification.class, RPG_O_Output_Specification_IV.class);
 		}
 	}
 }
