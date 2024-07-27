@@ -113,6 +113,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Property_Program.PROPERTY, Property_Program.class, ".properties");
 		add(Python2_Program.PYTHON2, Python2_Program.class);
 		add(Python3_Program.PYTHON3, Python3_Program.class, ".py");
+		// add(Rexx_Program.REXX, Rexx_Program.class, ".rexx");
 		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
 		add(Ruby_Program.RUBY, Ruby_Program.class, ".ruby");
