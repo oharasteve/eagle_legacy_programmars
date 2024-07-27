@@ -13,7 +13,8 @@ import com.eagle.programmar.Python.Python_ExpressionList;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
-import com.eagle.programmar.Python.Python_VariableList.Python_Variable_or_List;
+import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
+import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
@@ -107,10 +108,11 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 			if (what.getWhich() instanceof Python_VariableList)
 			{
 				Python_VariableList varList = (Python_VariableList) what.getWhich();
-				Python_Variable_or_List varOrList = varList.vars.first();
-				if (varOrList.getWhich() instanceof Python_Variable)
+				Python_VariableOrList varOrList = varList.vars.first();
+				if (varOrList.getWhich() instanceof Python_Just_Var)
 				{
-					var = (Python_Variable) varOrList.getWhich();
+					Python_Just_Var justVar = (Python_Just_Var) varOrList.getWhich();
+					var = justVar.variable.first();
 					if (var.var.getWhich() instanceof Python_Identifier_Reference)
 					{
 						Python_Identifier_Reference id = (Python_Identifier_Reference) var.var.getWhich();

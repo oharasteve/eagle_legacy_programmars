@@ -16,22 +16,30 @@ public class Python_ElseStartOfLine extends Python_StartOfLine
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 
-		AbstractToken ifStmt = this;
-		while (ifStmt.getParent() != null)
+		if (DBG) System.out.println("******* ElseStartOfLine: Checking " + (_currentLine+1) + "/" + (_currentChar+1));
+		AbstractToken parent = this;
+		while (parent != null)
 		{
-			ifStmt = ifStmt.getParent();
-			if (DBG) System.out.println("****** Parent is " + ifStmt.getClass().getName());
-			if (ifStmt instanceof AbstractStatement) break;
+			if (DBG) System.out.println("******* Parent is " + parent.getClass().getName());
+			if (parent instanceof AbstractStatement) break;
+			parent = parent.getParent();
 		}
 		
-		if (_currentChar != ifStmt.getStartChar())
+		/////// The KEY Line ///////
+		if (_currentChar != parent.getStartChar())
 		{
-			if (DBG) System.out.println("******* IF FAIL: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (ifStmt.getStartLine()+1) + "/" + (ifStmt.getStartChar()+1));
+			if (DBG) System.out.println("******* IF FAIL: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
 			return false;
 		}
 
-		if (DBG) System.out.println("******* IF MATCH: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (ifStmt.getStartLine()+1) + "/" + (ifStmt.getStartChar()+1));
+		if (DBG) System.out.println("******* IF MATCH: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
 		foundIt(_currentLine, _currentChar - 1);
 		return true;
 	}
+	
+//	@Override
+//	public String toString()
+//	{
+//		return super.toString();
+//	}
 }

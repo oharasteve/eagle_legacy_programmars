@@ -12,6 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 public class Python_FromStatement extends TokenSequence
 {
 	public @S(10) @DOC("simple_stmts.html#the-import-statement") Python_Keyword FROM = new Python_Keyword("from");
-	public @S(20) SeparatedList<Python_Variable,PunctuationPeriod> fromName;
-	public @S(30) Python_ImportStatement importStatement;
+	public @S(20) @OPT PunctuationPeriod dot;
+	public @S(30) @OPT SeparatedList<Python_Variable,PunctuationPeriod> fromName;
+	public @S(40) Python_ImportStatement importStatement;
 }

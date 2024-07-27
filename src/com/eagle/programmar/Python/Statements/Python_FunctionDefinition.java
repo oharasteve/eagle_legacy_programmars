@@ -12,7 +12,6 @@ import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
-import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.AbstractFunction;
@@ -26,16 +25,15 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 public class Python_FunctionDefinition extends TokenSequence implements AbstractMethod, AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT Python_Decorators decorators;
-	public @S(20) @OPT Python_EndOfLine eoln;
-	public @S(30) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
-	public @S(40) @NOSPACE @DOC("compound_stmts.html#function-definitions") Python_Keyword DEF = new Python_Keyword(
-			"def");
-	public @S(50) Python_FunctionName fnName;
-	public @S(60) Python_Parameter_List params;
-	public @S(70) @OPT Python_ReturnType returnType;
-	public @S(80) @NOSPACE PunctuationColon colon;
-	public @S(90) @OPT TokenList<Python_Comment> comment;
-	public @S(100) Python_StatementBlock defBody;
+	public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
+	public @S(30) @NOSPACE @DOC("compound_stmts.html#function-definitions")
+						Python_Keyword DEF = new Python_Keyword("def");
+	public @S(40) Python_FunctionName fnName;
+	public @S(50) Python_Parameter_List params;
+	public @S(60) @OPT Python_ReturnType returnType;
+	public @S(70) @NOSPACE PunctuationColon colon;
+	public @S(80) @OPT TokenList<Python_Comment> comment;
+	public @S(90) Python_StatementBlock defBody;
 
 	public @SKIP CallMetrics _metrics = null;
 

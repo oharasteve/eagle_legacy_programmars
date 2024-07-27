@@ -47,7 +47,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 	public @S(30) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @S(50) @OPT Python_Comment comment;
-	public @S(60) @OPT Python_EndOfLine eoln;
+	public @S(60) @OPT TokenList<Python_EndOfLine> eoln;
  
 	public static class Python_StatementOrComment extends TokenChooser
 	{
@@ -57,7 +57,6 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 
 		public @FIRST Python_Comment comment;
 		public @CHOICE Python_SameLineStatement statements;
-		public @CHOICE Python_EndOfLine eoln;	// Blank line
 	}
 
 	public static class Python_StatementBlock extends TokenChooser

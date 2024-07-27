@@ -10,7 +10,6 @@ import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
-import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -20,14 +19,13 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_TryStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) Python_StartOfLine soln;
-	public @S(20) @DOC("compound_stmts.html#the-try-statement") Python_Keyword TRY = new Python_Keyword("try");
-	public @S(30) PunctuationColon colon;
-	public @S(40) @OPT Python_Comment comment;
-	public @S(50) Python_StatementBlock tryBlock;
-	public @S(60) @OPT TokenList<Python_TryExcept> tryExcept;
-	public @S(70) @OPT Python_TryElse tryElse;
-	public @S(80) @OPT Python_TryFinally tryFinally;
+	public @S(10) @DOC("compound_stmts.html#the-try-statement") Python_Keyword TRY = new Python_Keyword("try");
+	public @S(20) PunctuationColon colon;
+	public @S(30) @OPT Python_Comment comment;
+	public @S(40) Python_StatementBlock tryBlock;
+	public @S(50) @OPT TokenList<Python_TryExcept> tryExcept;
+	public @S(60) @OPT Python_TryElse tryElse;
+	public @S(70) @OPT Python_TryFinally tryFinally;
 
 	public static class Python_TryExcept extends TokenSequence
 	{

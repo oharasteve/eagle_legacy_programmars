@@ -12,7 +12,8 @@ import com.eagle.programmar.Python.Python_Subscript;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
-import com.eagle.programmar.Python.Python_VariableList.Python_Variable_or_List;
+import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
+import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
@@ -50,12 +51,13 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Python_Variable_or_List vars = varList.vars.first();
-		if (!(vars.getWhich() instanceof Python_Variable))
+		Python_VariableOrList vars = varList.vars.first();
+		if (!(vars.getWhich() instanceof Python_Just_Var))
 		{
 			throw new RuntimeException("Unexpected assignment variable: " + vars.getWhich());
 		}
-		Python_Variable var = (Python_Variable) vars.getWhich();
+		Python_Just_Var justVar = (Python_Just_Var) vars.getWhich();
+		Python_Variable var = justVar.variable.first();
 
 		if (var.var.getWhich() instanceof Python_Identifier_Reference)
 		{

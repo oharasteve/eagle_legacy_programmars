@@ -34,7 +34,7 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 	public static class Python_IfElif extends TokenSequence
 	{
 		public @S(10) @OPT Python_EndOfLine eoln;
-		public @S(20) @NEWLINE Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
 		public @S(30) @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
 		public @S(40) Python_Expression condition;
 		public @S(50) @NOSPACE PunctuationColon colon;
@@ -44,7 +44,7 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 	public static class Python_IfElse extends TokenSequence
 	{
 		public @S(10) @OPT Python_EndOfLine eoln;
-		public @S(20) @NEWLINE Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
+		public @S(20) Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
 		public @S(30) @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
 		public @S(40) @NOSPACE PunctuationColon colon;
 		public @S(50) Python_StatementBlock ifElseStatements;
