@@ -8,7 +8,7 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
-import com.eagle.programmar.Lisp.Symbols.Lisp_Parameter_Definition;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction.Lisp_ParamDef;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -50,10 +50,10 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 					for (int i = 0; i < argCount; i++)
 					{
 						Lisp_SExpr expr = exprs._elements.get(i + 1);
-						Lisp_Parameter_Definition param = func.parameters._elements.get(i);
+						Lisp_ParamDef param = func.parameters._elements.get(i);
 						EagleValue val = interpreter.getEagleValue(expr);
 						interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-								param.getValue(), val);
+								param.parameter.getValue(), val);
 					}
 				}
 
@@ -77,8 +77,8 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 				{
 					for (int i = 0; i < argCount; i++)
 					{
-						Lisp_Parameter_Definition param = func.parameters._elements.get(i);
-						interpreter._symbolTable.removeSymbols(param.getValue());
+						Lisp_ParamDef param = func.parameters._elements.get(i);
+						interpreter._symbolTable.removeSymbols(param.parameter.getValue());
 					}
 				}
 

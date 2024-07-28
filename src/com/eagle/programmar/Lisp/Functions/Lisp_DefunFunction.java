@@ -24,13 +24,19 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 	public @S(30) @OPT PunctuationComma comma;
 	public @S(40) Lisp_Function_Definition name;
 	public @S(50) PunctuationLeftParen leftParen2;
-	public @S(60) TokenList<Lisp_Parameter_Definition> parameters;
+	public @S(60) @OPT TokenList<Lisp_ParamDef> parameters;
 	public @S(70) PunctuationRightParen rightParen2;
 	public @S(80) TokenList<Lisp_SExpr> body;
 	public @S(90) PunctuationRightParen rightParen;
 
 	public @SKIP CallMetrics _metrics = null;
 
+	public static class Lisp_ParamDef extends TokenSequence
+	{
+		public @S(10) @OPT Lisp_Keyword REST = new Lisp_Keyword("&REST");
+		public @S(20) Lisp_Parameter_Definition parameter;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

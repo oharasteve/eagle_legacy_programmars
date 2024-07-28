@@ -26,11 +26,6 @@ public class Lisp_Syntax extends EagleSyntax
 				"<=", ">=", "/=", "++", "+++", "**", "***"
 		};
 		
-		addReservedWords(RESERVED_WORDS);
+		// addReservedWords(RESERVED_WORDS); // None needed!
 	}
-
-	private static final String[] RESERVED_WORDS = new String[] {
-			"char", "cond", "defmacro", "defparameter", "defun", "do",
-			"if", "let", "nil", "print", "prog", "return", "string", "t"
-	};
 }

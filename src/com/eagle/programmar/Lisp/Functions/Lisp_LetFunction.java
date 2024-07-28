@@ -13,6 +13,7 @@ import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
@@ -29,9 +30,10 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 	public static class Lisp_LetVar extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Lisp_Variable_Definition var;
-		public @S(30) Lisp_SExpr value;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(20) @OPT PunctuationComma comma;
+		public @S(30) Lisp_Variable_Definition var;
+		public @S(40) Lisp_SExpr value;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 
 	public static class Lisp_LetVariables extends TokenSequence
