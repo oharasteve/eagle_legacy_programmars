@@ -18,9 +18,9 @@ public class Lisp_SetfFunction extends TokenSequence implements EagleRunnable, A
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_KeywordChoice SETF = new Lisp_KeywordChoice("setf");
-	public @S(40) Lisp_Variable_Definition variable;
-	public @S(50) Lisp_SExpr value;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(30) Lisp_Variable_Definition variable;
+	public @S(40) Lisp_SExpr value;
+	public @S(50) PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
