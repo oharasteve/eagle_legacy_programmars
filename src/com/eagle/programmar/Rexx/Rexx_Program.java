@@ -23,9 +23,9 @@ public class Rexx_Program extends EagleLanguage
 		return "https://www.ibm.com/docs/en/cics-ts/6.x?topic=applications-writing-running-rexx-application";
 	}
 
-	public @S(10) TokenList<Rust_Element> elements;
+	public @S(10) TokenList<Rexx_Element> elements;
 
-	public static class Rust_Element extends TokenChooser
+	public static class Rexx_Element extends TokenChooser
 	{
 		public @CHOICE Rexx_Comment XXcomment;
 	}

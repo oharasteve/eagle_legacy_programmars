@@ -10,9 +10,9 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Subscript;
 import com.eagle.programmar.Python.Python_Type;
-import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
+import com.eagle.programmar.Python.Python_VariableList.Python_VariableAndSubscript;
 import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
@@ -57,11 +57,11 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 			throw new RuntimeException("Unexpected assignment variable: " + vars.getWhich());
 		}
 		Python_Just_Var justVar = (Python_Just_Var) vars.getWhich();
-		Python_Variable var = justVar.variable.first();
+		Python_VariableAndSubscript var = justVar.variable.first();
 
-		if (var.var.getWhich() instanceof Python_Identifier_Reference)
+		if (var.variable.var.getWhich() instanceof Python_Identifier_Reference)
 		{
-			Python_Identifier_Reference id = (Python_Identifier_Reference) var.var.getWhich();
+			Python_Identifier_Reference id = (Python_Identifier_Reference) var.variable.var.getWhich();
 			switch (operator.getValue())
 			{
 			case "=":

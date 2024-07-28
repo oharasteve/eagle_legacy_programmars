@@ -25,7 +25,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 	public @S(10) Python_Variable fnName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE @OPT @SYNTAX(Python_Multiline_Syntax.class) SeparatedList<Python_Expression, PunctuationComma> argList;
-	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(40) @OPT PunctuationComma extraComma;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -112,7 +112,7 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 				if (varOrList.getWhich() instanceof Python_Just_Var)
 				{
 					Python_Just_Var justVar = (Python_Just_Var) varOrList.getWhich();
-					var = justVar.variable.first();
+					var = justVar.variable.first().variable;
 					if (var.var.getWhich() instanceof Python_Identifier_Reference)
 					{
 						Python_Identifier_Reference id = (Python_Identifier_Reference) var.var.getWhich();

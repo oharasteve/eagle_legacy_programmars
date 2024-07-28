@@ -9,10 +9,11 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
@@ -37,7 +38,9 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 		return "https://docs.python.org/3.10/reference/";
 	}
 
-	public @S(10) @OPT TokenList<Python_Statement> entries;
+	public @S(10) @OPT TokenList<Python_CommentEoln> comments;
+	public @S(20) @OPT TokenList<Python_EndOfLine> blankLines;
+	public @S(30) @OPT TokenList<Python_Statement> entries;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

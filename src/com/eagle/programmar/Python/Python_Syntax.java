@@ -21,7 +21,7 @@ public class Python_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				">>", "|=", "+=", "-=", "*=", "/=", "__", "_$", "**", ":=", "->", "..."
+				">>", "|=", "+=", "-=", "*=", "/=", "__", "_$", "**", ":=", "->", "..", "..."
 		};
 
 		_commentInstance = new Python_Comment();
