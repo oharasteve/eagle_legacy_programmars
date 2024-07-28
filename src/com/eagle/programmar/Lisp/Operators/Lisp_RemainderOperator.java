@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Lisp_RemainderOperator extends TokenSequence implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) Lisp_KeywordChoice REM = new Lisp_KeywordChoice("REM");
+	public @S(20) Lisp_KeywordChoice REM = new Lisp_KeywordChoice("MOD", "REM");
 	public @S(30) Lisp_SExpr leftExpr;
 	public @S(40) Lisp_SExpr rightExpr;
 	public @S(50) PunctuationRightParen rightParen;

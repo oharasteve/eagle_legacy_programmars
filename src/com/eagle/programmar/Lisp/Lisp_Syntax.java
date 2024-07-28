@@ -30,6 +30,7 @@ public class Lisp_Syntax extends EagleSyntax
 	}
 
 	private static final String[] RESERVED_WORDS = new String[] {
-			"char", "defmacro", "defparameter", "defun", "do", "if", "let", "nil", "print", "prog", "string", "t"
+			"char", "cond", "defmacro", "defparameter", "defun", "do",
+			"if", "let", "nil", "print", "prog", "return", "string", "t"
 	};
 }

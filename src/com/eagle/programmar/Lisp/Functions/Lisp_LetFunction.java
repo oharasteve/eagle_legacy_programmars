@@ -5,6 +5,7 @@ package com.eagle.programmar.Lisp.Functions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
@@ -60,9 +61,11 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 		}
 
 		// Perform actions
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (Lisp_SExpr elt : values._elements)
 		{
-			interpreter.tryToInterpret(elt);
+			result = interpreter.tryToInterpret(elt);
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
 	}
 }
