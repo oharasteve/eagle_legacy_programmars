@@ -6,6 +6,8 @@ package com.eagle.programmar.Lisp.Functions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
@@ -32,9 +34,17 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 	public @S(130) TokenList<Lisp_SExpr> actions;
 	public @S(140) PunctuationRightParen rightParen1;
 
+	private @SKIP ForLoopMetrics _metrics = null;
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+
 		EagleValue val = interpreter.getEagleValue(initialValue);
 		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.getValue(), val);
@@ -45,9 +55,17 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 			boolean done = interpreter.getBoolValue(terminateCondition);
 			if (done) break;
 			
+			metric.iterate();
+
 			for (Lisp_SExpr action : actions._elements)
 			{
 				result = interpreter.tryToInterpret(action);
+				
+				if (result == Eagle_Statement_Result.RETURN)
+				{
+					metric.broke();
+				}
+
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			if (result != Eagle_Statement_Result.NORMAL) break;
@@ -56,6 +74,8 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 					var.getValue(), val);
 		}
 		
+		_metrics.competedLoop(metric);
+
 		interpreter._symbolTable.removeSymbols(var.getValue());
 		return Eagle_Statement_Result.NORMAL;
 	}

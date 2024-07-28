@@ -3,8 +3,11 @@
 
 package com.eagle.programmar.Lisp.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.TokenList;
@@ -17,8 +20,10 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_cond.htm") Lisp_KeywordChoice COND = new Lisp_KeywordChoice("cond");
-	public @S(50) TokenList<Lisp_CondPair> pairs;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(30) TokenList<Lisp_CondPair> pairs;
+	public @S(40) PunctuationRightParen rightParen;
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	public static class Lisp_CondPair extends TokenSequence
 	{
@@ -31,11 +36,26 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			
+			for (int i = 0; i < pairs.size(); i++)
+			{
+				Lisp_CondPair pair = pairs._elements.get(i);
+				_metrics.add(new IfCondMetrics(interpreter._metrics, pair.getFileName(), pair.getStartLine(),
+						pair.getStartChar()));
+			}
+		}
+
 		// Perform action
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		int seq = 0;
 		for (Lisp_CondPair condPair : pairs._elements)
 		{
 			boolean cond = interpreter.getBoolValue(condPair.condition);
+			_metrics.get(seq).completedIf(cond);
 			if (cond)
 			{
 				// Rarely will there be more than one value per pair
@@ -46,6 +66,7 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 				}
 				break;
 			}
+			seq++;
 		}
 		return result;
 	}
