@@ -8,7 +8,6 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_AssignmentExpressi
 import com.eagle.programmar.Powershell.Expressions.Powershell_BangOp;
 import com.eagle.programmar.Powershell.Expressions.Powershell_BuiltIn;
 import com.eagle.programmar.Powershell.Expressions.Powershell_BuiltinVariable;
-import com.eagle.programmar.Powershell.Expressions.Powershell_CallCommand;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Cast;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Dictionary;
 import com.eagle.programmar.Powershell.Expressions.Powershell_EvaluateExpression;
@@ -19,7 +18,6 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_Lists;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalAnd_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalOr_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Match_Expression;
-import com.eagle.programmar.Powershell.Expressions.Powershell_MethodInvocation;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Multiplicative_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Negative;
 import com.eagle.programmar.Powershell.Expressions.Powershell_NotOp;
@@ -79,14 +77,12 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(180) Powershell_Lists lists;
 	public @P(190) Powershell_Dictionary dictionary;
 	public @P(200) Powershell_FunctionCall functionCall;
-	public @P(210) Powershell_MethodInvocation methodInvocation;
-	public @P(220) Powershell_Cast cast;
-	public @P(230) Powershell_EvaluateExpression evaluateExpression;
-	public @P(240) Powershell_BuiltIn builtIn;
-	public @P(250) Powershell_BuiltinVariable builtinVariable;
-	public @P(260) Powershell_VariableExpression variableExpression;
-	public @P(270) Powershell_LibraryVariable libraryVariable;
-	public @P(280) Powershell_CallCommand callCommand;
+	public @P(210) Powershell_Cast cast;
+	public @P(220) Powershell_EvaluateExpression evaluateExpression;
+	public @P(230) Powershell_BuiltIn builtIn;
+	public @P(240) Powershell_BuiltinVariable builtinVariable;
+	public @P(250) Powershell_VariableExpression variableExpression;
+	public @P(260) Powershell_LibraryVariable libraryVariable;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

@@ -5,6 +5,7 @@ package com.eagle.programmar.Powershell.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_RealEndOfLine;
@@ -20,17 +21,34 @@ public class Powershell_Additive_Expression extends PrecedenceOperator implement
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushStr(leftStr + rightStr);
+				return;
+			default:
+				throw new RuntimeException("Unexpected concatenation operator: " + operator);
+			}
+		}
+
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
 		switch (operator.toString())
 		{
 		case "+":
-			interpreter.pushInt(leftValue + rightValue);
+			interpreter.pushInt(leftInt + rightInt);
 			return;
 		case "-":
-			interpreter.pushInt(leftValue - rightValue);
+			interpreter.pushInt(leftInt - rightInt);
 			return;
+		default:
+			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
-		throw new RuntimeException("Unexpected additive operator: " + operator);
 	}
 }
