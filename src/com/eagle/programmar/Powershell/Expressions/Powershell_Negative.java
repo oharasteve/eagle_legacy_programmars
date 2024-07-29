@@ -6,12 +6,12 @@ package com.eagle.programmar.Powershell.Expressions;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.punctuation.PunctuationHyphen;
 
 public class Powershell_Negative extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Powershell_Punctuation negative = new Powershell_Punctuation('-');
+	public @S(10) PunctuationHyphen negative;
 	public @S(20) Powershell_Expression expr;
 
 	@Override
