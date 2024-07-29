@@ -58,7 +58,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_EvaluateCommand XXevaluateCommand;
 		public @CHOICE Bash_ExportCommand XXexportCommand;
 		public @CHOICE Bash_ForStatement XXforStatement;
-		public @CHOICE Bash_Function XXfunction;
+		public @LAST Bash_Function XXfunction;
 		public @CHOICE Bash_GccCommand XXgccCommand;
 		public @CHOICE Bash_GitCommand XXgitCommand;
 		public @CHOICE Bash_GrepCommand XXgrepCommand;

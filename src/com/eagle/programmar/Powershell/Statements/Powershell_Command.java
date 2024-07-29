@@ -24,7 +24,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationHyphen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Powershell_Command extends TokenSequence implements AbstractStatement, EagleRunnable

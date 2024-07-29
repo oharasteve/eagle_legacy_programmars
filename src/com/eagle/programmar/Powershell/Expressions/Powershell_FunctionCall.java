@@ -19,6 +19,7 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
@@ -27,7 +28,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 	public @S(10) @OPT Powershell_DiscardResult discardResult;
 	public @S(20) @OPT Powershell_Library library;
 	public @S(30) Powershell_Function_Reference funcRef;
-	public @S(40) @OPT TokenList<Powershell_Expression> arguments;
+	public @S(40) @OPT TokenList<Powershell_FunctionArg> arguments;
 
 	public @SKIP CallMetrics _metrics = null;
 
@@ -38,6 +39,12 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
+	public static class Powershell_FunctionArg extends TokenSequence
+	{
+		public @S(10) Powershell_Expression expr;
+		public @S(20) @OPT PunctuationComma comma;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -48,7 +55,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 			{
 				if (funcRef.getValue().equalsIgnoreCase("Floor"))
 				{
-					int val = interpreter.getIntValue(arguments._elements.get(0));
+					int val = interpreter.getIntValue(arguments._elements.get(0).expr);
 					interpreter.pushInt(val);
 					return;
 				}
@@ -82,7 +89,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 				// Now assign all the parameters
 				for (int i = 0; i < argCount; i++)
 				{
-					Powershell_Expression expr = arguments._elements.get(i);
+					Powershell_Expression expr = arguments._elements.get(i).expr;
 					Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
 
 					EagleValue val = interpreter.getEagleValue(expr);

@@ -7,7 +7,7 @@ import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Powershell_BangOp extends PrimaryOperator
+public class Powershell_BangOperator extends PrimaryOperator
 {
 	public @S(10) Powershell_Punctuation BANG = new Powershell_Punctuation("!");
 	public @S(20) Powershell_Expression expr;

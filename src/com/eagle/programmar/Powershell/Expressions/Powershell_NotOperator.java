@@ -9,9 +9,9 @@ import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Powershell_NotOp extends PrimaryOperator implements EagleRunnable
+public class Powershell_NotOperator extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Powershell_Keyword NOT = new Powershell_Keyword("-Not");
+	public @S(10) Powershell_Keyword NOT = new Powershell_Keyword("-not");
 	public @S(20) Powershell_Expression expr;
 
 	@Override

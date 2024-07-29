@@ -57,7 +57,7 @@ public class Powershell_Statement extends TokenSequence
 		public @CHOICE Powershell_WhereStatement XXwhereObjectStatement;
 		public @CHOICE Powershell_WriteStatement XXwriteStatement;
 		public @CHOICE Powershell_WhileStatement XXwhileStatement;
-
+		
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_Xcopy_Statement XXxcopyStatement;
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement XXfindstrStatement;
 

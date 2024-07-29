@@ -14,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Powershell_Subfield extends PrecedenceOperator implements EagleRunnable
+public class Powershell_SubfieldExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;

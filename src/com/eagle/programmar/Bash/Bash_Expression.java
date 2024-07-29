@@ -11,6 +11,7 @@ import com.eagle.programmar.Bash.Expressions.Bash_DollarNumber;
 import com.eagle.programmar.Bash.Expressions.Bash_DollarPound;
 import com.eagle.programmar.Bash.Expressions.Bash_DollarSubstring;
 import com.eagle.programmar.Bash.Expressions.Bash_Evaluate1;
+import com.eagle.programmar.Bash.Expressions.Bash_Evaluate2;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalAnd_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalNotExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalOr_Expression;

@@ -1,8 +1,9 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Mar 31, 2024
 
-package com.eagle.programmar.Bash;
+package com.eagle.programmar.Bash.Expressions;
 
+import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 

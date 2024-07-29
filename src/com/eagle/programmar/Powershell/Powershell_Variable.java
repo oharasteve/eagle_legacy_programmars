@@ -20,7 +20,7 @@ public class Powershell_Variable extends TokenSequence implements EagleRunnable
 	public @S(10) Powershell_Punctuation DOLLAR = new Powershell_Punctuation("$");
 	public @S(20) @OPT Powershell_VariableScope scope;
 	public @S(30) Powershell_Variable_Reference id;
-	public @S(50) @OPT Powershell_Subscript subscript;
+	public @S(40) @OPT Powershell_Subscript subscript;
 
 	public static class Powershell_Subscript extends TokenSequence
 	{
