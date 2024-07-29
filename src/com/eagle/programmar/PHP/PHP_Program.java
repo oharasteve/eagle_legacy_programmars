@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.PHP;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -18,7 +16,6 @@ import com.eagle.programmar.PHP.PHP_Body.PHP_NormalBlock;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition;
 import com.eagle.programmar.Perl.Perl_Statement;
 import com.eagle.programmar.Perl.Perl_StatementOrComment;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -69,7 +66,6 @@ public class PHP_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the function definitions, buried deep inside the PHP
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (PHP_Entry entry : entries._elements)
 		{
 			if (entry.getWhich() instanceof HTML_Program)

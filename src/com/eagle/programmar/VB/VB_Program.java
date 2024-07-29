@@ -3,14 +3,11 @@
 
 package com.eagle.programmar.VB;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
@@ -35,7 +32,6 @@ public class VB_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (VB_Statement stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();

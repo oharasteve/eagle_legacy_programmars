@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Java;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -14,7 +12,6 @@ import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -112,7 +109,6 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Java_ClassOrEnum classOrEnum : classOrEnumList._elements)
 		{
 			if (classOrEnum.getWhich() instanceof Java_Class)

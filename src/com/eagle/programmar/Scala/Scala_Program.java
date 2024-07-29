@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Scala;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -12,7 +10,6 @@ import com.eagle.programmar.Scala.Statements.Scala_Function;
 import com.eagle.programmar.Scala.Statements.Scala_Import;
 import com.eagle.programmar.Scala.Statements.Scala_Object;
 import com.eagle.programmar.Scala.Statements.Scala_Package;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -46,7 +43,6 @@ public class Scala_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Scala_Element elt : elements._elements)
 		{
 			if (elt.getWhich() instanceof Scala_Object)

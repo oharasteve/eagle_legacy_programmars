@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Go;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -12,7 +10,6 @@ import com.eagle.programmar.Go.Statements.Go_Data;
 import com.eagle.programmar.Go.Statements.Go_Function;
 import com.eagle.programmar.Go.Statements.Go_Import;
 import com.eagle.programmar.Go.Statements.Go_Package;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -48,7 +45,6 @@ public class Go_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Go_Element element : elements._elements)
 		{
 			AbstractToken which = element.getWhich();

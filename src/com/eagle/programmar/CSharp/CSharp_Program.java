@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.CSharp;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
@@ -70,7 +67,6 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (CSharp_NamespaceOrClassEntry nsClass : myClasses._elements)
 		{
 			if (nsClass.getWhich() instanceof CSharp_Class)

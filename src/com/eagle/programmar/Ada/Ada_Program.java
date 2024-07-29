@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.Ada;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Ada.Statements.Ada_Function;
 import com.eagle.programmar.Ada.Statements.Ada_Procedure;
 import com.eagle.programmar.Ada.Terminals.Ada_Comment;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -43,7 +40,6 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Ada_Element element : elements._elements)
 		{
 			AbstractToken which = element.getWhich();

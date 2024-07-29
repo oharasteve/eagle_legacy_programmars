@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.FSharp;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Simple_Statement;
 import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 
 public class FSharp_Program extends EagleLanguage implements EagleRunnable
@@ -35,7 +32,6 @@ public class FSharp_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (FSharp_Statement element : elements._elements)
 		{
 			if (element.statementOrComment.getWhich() instanceof FSharp_Statement_List)

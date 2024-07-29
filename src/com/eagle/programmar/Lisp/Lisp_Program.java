@@ -3,12 +3,9 @@
 
 package com.eagle.programmar.Lisp;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 
 public class Lisp_Program extends EagleLanguage implements EagleRunnable
@@ -39,8 +36,6 @@ public class Lisp_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Don't need two passes for Lisp. Functions cannot be called before defined.
-		interpreter._functionList = new ArrayList<AbstractFunction>();
-
 		for (Lisp_SExprOrComment elt : elements._elements)
 		{
 			interpreter.tryToInterpret(elt);

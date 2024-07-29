@@ -3,13 +3,10 @@
 
 package com.eagle.programmar.TCL;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Statement.TCL_BaseStatement;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 
 public class TCL_Program extends EagleLanguage implements EagleRunnable
@@ -40,7 +37,6 @@ public class TCL_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (TCL_Statement stmt : statements._elements)
 		{
 			for (int i = 0; i < stmt.compoundStatement.statements.getPrimaryCount(); i++)

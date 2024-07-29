@@ -3,13 +3,10 @@
 
 package com.eagle.programmar.Powershell;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 
 public class Powershell_Program extends EagleLanguage implements EagleRunnable
@@ -45,7 +42,6 @@ public class Powershell_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Powershell_Statement stmt : statements._elements)
 		{
 			if (stmt.element.getWhich() instanceof Powershell_FunctionStatement)

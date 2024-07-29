@@ -3,14 +3,11 @@
 
 package com.eagle.programmar.Algol68;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -62,7 +59,6 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Algol68_Element element : elements._elements)
 		{
 			AbstractToken which = element.getWhich();

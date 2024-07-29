@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.C;
 
-import java.util.ArrayList;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
@@ -13,7 +11,6 @@ import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -125,7 +122,6 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the functions definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (C_StatementOrComment elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
