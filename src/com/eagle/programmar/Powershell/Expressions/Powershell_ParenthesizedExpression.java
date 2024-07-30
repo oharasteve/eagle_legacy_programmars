@@ -8,7 +8,6 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Statement;
-import com.eagle.programmar.Powershell.Expressions.Powershell_ParenthesizedExpression.Powershell_ParenWhat.Powershell_ParenExpression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -22,18 +21,22 @@ public class Powershell_ParenthesizedExpression extends PrimaryOperator implemen
 
 	public static class Powershell_ParenWhat extends TokenChooser
 	{
+		public @CHOICE Powershell_ParenExpression XXexpr;
+		public @LAST Powershell_ParenStatement XXstmt;
+	}
+
+	public static class Powershell_ParenStatement extends TokenSequence
+	{
 		// Don't share right paren because expression might stop early, causing a failure
-		public @CHOICE static class Powershell_ParenExpression extends TokenSequence
-		{
-			public @S(10) Powershell_Expression expression;
-			public @S(20) PunctuationRightParen rightParen;
-		}
-		
-		public @LAST static class Powershell_ParenStatement extends TokenSequence
-		{
-			public @S(10) Powershell_Statement statement;
-			public @S(20) PunctuationRightParen rightParen;
-		}
+		public @S(10) Powershell_Statement statement;
+		public @S(20) PunctuationRightParen rightParen;
+	}
+
+	public static class Powershell_ParenExpression extends TokenSequence
+	{
+		// Don't share right paren because expression might stop early, causing a failure
+		public @S(10) Powershell_Expression expression;
+		public @S(20) PunctuationRightParen rightParen;
 	}
 
 	@Override
