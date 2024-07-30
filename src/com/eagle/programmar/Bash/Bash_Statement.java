@@ -28,6 +28,7 @@ import com.eagle.programmar.Bash.Commands.Bash_PerlProgram;
 import com.eagle.programmar.Bash.Commands.Bash_PwdCommand;
 import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
 import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
+import com.eagle.programmar.Bash.Commands.Bash_ReturnCommand;
 import com.eagle.programmar.Bash.Commands.Bash_RmCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SetCommand;
@@ -67,6 +68,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_MkTempCommand XXmktempCommand;
 		public @CHOICE Bash_PwdCommand XXpwdCommand;
 		public @CHOICE Bash_ReadCommand XXreadCommand;
+		public @CHOICE Bash_ReturnCommand XXreturnCommand;
 		public @CHOICE Bash_RmCommand XXrmCommand;
 		public @CHOICE Bash_SedCommand XXsedCommand;
 		public @CHOICE Bash_SetCommand XXsetCommand;

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Bash_Variable;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
@@ -13,7 +16,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Bash_ExportCommand extends TokenSequence implements AbstractStatement
+public class Bash_ExportCommand extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) @DOC("#index-export") Bash_Keyword EXPORT = new Bash_Keyword("export");
 	public @S(20) @OPT TokenList<Bash_ExportOption> options;
@@ -24,5 +27,13 @@ public class Bash_ExportCommand extends TokenSequence implements AbstractStateme
 	public static class Bash_ExportOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-n");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(),
+				var.getStartChar(), var.id.getValue(), val);
 	}
 }

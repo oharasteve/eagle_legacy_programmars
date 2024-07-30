@@ -36,22 +36,22 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 			int rightInt = rightValue.forceIntegerValue();
 			switch (operator.getWhich().toString())
 			{
-			case "-eq":
+			case "-eq", "==":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
-			case "-ne":
+			case "-ne", "!=":
 				interpreter.pushBool(leftInt != rightInt);
 				return;
-			case "-lt":
+			case "-lt", "<":
 				interpreter.pushBool(leftInt < rightInt);
 				return;
-			case "-le":
+			case "-le", "<=":
 				interpreter.pushBool(leftInt <= rightInt);
 				return;
-			case "-gt":
+			case "-gt", ">":
 				interpreter.pushBool(leftInt > rightInt);
 				return;
-			case "-ge":
+			case "-ge", ">=":
 				interpreter.pushBool(leftInt >= rightInt);
 				return;
 			default:

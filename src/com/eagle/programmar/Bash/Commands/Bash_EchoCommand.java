@@ -5,6 +5,8 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Bash.Bash_Format;
+import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
 import com.eagle.programmar.Bash.Terminals.Bash_EchoWhat;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenChooser;
@@ -26,7 +28,25 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String result = interpreter.getStrValue(what);
-		System.out.println(result);
+		String line = interpreter.getStrValue(what);
+		String formatted = Bash_Format.format(interpreter, line);
+		
+		// if we are in a Function, it goes into a string and does not get printed
+		Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter._currentFunction;
+		if (func == null)
+		{
+			System.out.println(formatted);
+		}
+		else
+		{
+			if (func._echoOutputs == null)
+			{
+				func._echoOutputs = formatted;
+			}
+			else
+			{
+				func._echoOutputs += "\n" + formatted;
+			}
+		}
 	}
 }

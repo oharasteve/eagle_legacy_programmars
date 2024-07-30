@@ -7,6 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Bash.Commands.Bash_Function;
+import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
@@ -37,15 +38,18 @@ public class Bash_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Bash_Function)
 			{
 				Bash_Function fn = (Bash_Function) which;
-				interpreter._functionList.add(fn);
+				if (fn.getWhich() instanceof Bash_Function_Explicit)
+				{
+					Bash_Function_Explicit func = (Bash_Function_Explicit) fn.getWhich();
+					interpreter._functionList.add(func);
+				}
 			}
 		}
 
 		// Second pass, execute the program
 		for (Bash_Statement stmt : statements._elements)
 		{
-			AbstractToken cmd = stmt.element.getWhich();
-			interpreter.tryToInterpret(cmd);
+			interpreter.tryToInterpret(stmt.element);
 		}
 	}
 }

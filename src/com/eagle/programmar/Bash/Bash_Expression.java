@@ -18,7 +18,7 @@ import com.eagle.programmar.Bash.Expressions.Bash_LogicalOr_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_MultiplicativeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_NegativeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_ParenthesizedExpression;
-import com.eagle.programmar.Bash.Expressions.Bash_Range;
+import com.eagle.programmar.Bash.Expressions.Bash_RangeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_Relational_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_SizeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_VariableExpression;
@@ -68,7 +68,7 @@ public class Bash_Expression extends PrecedenceChooser
 	public @P(190) Bash_Array array;
 	public @P(200) Bash_Evaluate1 evaluate1;
 	public @P(210) Bash_Evaluate2 evaluate2;
-	public @P(220) Bash_Range range;
+	public @P(220) Bash_RangeExpression range;
 
 	///////////////////////////////////////////////
 	// Binary expressions

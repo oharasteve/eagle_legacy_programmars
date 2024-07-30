@@ -3,16 +3,24 @@
 
 package com.eagle.programmar.Bash.Expressions;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Bash_Evaluate1 extends PrimaryOperator
+public class Bash_Evaluate1 extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Bash_Statement stmt;
 	public @S(40) PunctuationRightParen rightParen;
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(stmt.element);
+	}
 }

@@ -26,6 +26,7 @@ public class Bash_Reserved_Words
 			"python",
 			"python3",
 			"read",
+			"return",
 			"sed",
 			"then",
 			"wc",

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
@@ -16,9 +19,9 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Bash_Function extends TokenChooser implements AbstractFunction
+public class Bash_Function extends TokenChooser
 {
-	public @CHOICE static class Bash_Function_Explicit extends TokenSequence implements AbstractFunction
+	public @CHOICE static class Bash_Function_Explicit extends TokenSequence implements AbstractFunction, EagleRunnable
 	{
 		public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
 		public @S(20) Bash_Function_Definition fnName;
@@ -29,10 +32,26 @@ public class Bash_Function extends TokenChooser implements AbstractFunction
 		public @S(70) TokenList<Bash_Statement> statements;
 		public @S(80) PunctuationRightBrace rightBrace;
 
+		public @SKIP CallMetrics _metrics = null;
+		
+		// Bash has a strange way of returning values
+		public @SKIP int _exitStatus = 0;
+		public @SKIP String _echoOutputs = null;
+
 		public static class Bash_FunctionParams extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) PunctuationRightParen rightParen;
+		}
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			if (_metrics == null)
+			{
+				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(),
+						getFileName(), getStartLine(), getStartChar());
+			}
 		}
 	}
 

@@ -9,7 +9,7 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Bash_Range extends PrimaryOperator
+public class Bash_RangeExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Bash_Number start;

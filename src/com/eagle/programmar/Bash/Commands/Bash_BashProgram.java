@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
@@ -14,7 +16,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class Bash_BashProgram extends TokenSequence implements AbstractStatement
+public class Bash_BashProgram extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) Bash_SheBang shebang;
 	public @S(20) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;
@@ -26,5 +28,11 @@ public class Bash_BashProgram extends TokenSequence implements AbstractStatement
 	public static class Bash_BashOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-x", "-xe");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here
 	}
 }
