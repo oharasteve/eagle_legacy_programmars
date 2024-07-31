@@ -21,6 +21,9 @@ public class CMD_Echo_Statement extends TokenSequence implements EagleRunnable, 
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String result = interpreter.getStrValue(line);
-		System.out.println(result);
+		if (!result.equalsIgnoreCase("OFF"))
+		{
+			System.out.println(result);
+		}
 	}
 }
