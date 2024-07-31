@@ -16,12 +16,16 @@ public class Bash_RmCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT Bash_RmBin rmBin;
 	public @S(20) Bash_Keyword RM = new Bash_Keyword("rm");
-	public @S(30) TokenList<Bash_RmOption> options;
+	public @S(30) TokenList<Bash_RmOption> options1;
 	public @S(40) TokenList<Bash_FilenameOrLiteral> files;
+	public @S(50) TokenList<Bash_RmOption> options2;
 
 	public static class Bash_RmOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-r", "-f", "-rf");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
+				"-f",
+				"-r",
+				"-rf");
 	}
 	
 	public static class Bash_RmBin extends TokenSequence

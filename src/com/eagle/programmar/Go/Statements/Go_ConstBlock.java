@@ -25,7 +25,7 @@ public class Go_ConstBlock extends TokenSequence implements AbstractStatement
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) Go_EOLN eoln2;
 	
-	public class Go_ConstAssignment extends TokenSequence implements AbstractStatement
+	public static class Go_ConstAssignment extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) SeparatedList<Go_Variable, PunctuationComma> vars;
 		public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");

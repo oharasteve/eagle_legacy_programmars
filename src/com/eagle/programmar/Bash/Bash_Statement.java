@@ -12,6 +12,7 @@ import com.eagle.programmar.Bash.Commands.Bash_CatCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ChmodCommand;
 import com.eagle.programmar.Bash.Commands.Bash_CpCommand;
 import com.eagle.programmar.Bash.Commands.Bash_DiffCommand;
+import com.eagle.programmar.Bash.Commands.Bash_DirnameCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EchoCommand;
 import com.eagle.programmar.Bash.Commands.Bash_EvaluateCommand;
 import com.eagle.programmar.Bash.Commands.Bash_ExportCommand;
@@ -34,6 +35,7 @@ import com.eagle.programmar.Bash.Commands.Bash_SedCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SetCommand;
 import com.eagle.programmar.Bash.Commands.Bash_SortCommand;
 import com.eagle.programmar.Bash.Commands.Bash_TeeCommand;
+import com.eagle.programmar.Bash.Commands.Bash_UniqCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WcCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WhileStatement;
 import com.eagle.programmar.Bash.Terminals.Bash_Comment;
@@ -55,6 +57,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_Comment XXcomment;
 		public @CHOICE Bash_CpCommand XXcpCommand;
 		public @CHOICE Bash_DiffCommand XXdiffCommand;
+		public @CHOICE Bash_DirnameCommand XXdirnameCommand;
 		public @CHOICE Bash_EchoCommand XXechoCommand;
 		public @CHOICE Bash_EvaluateCommand XXevaluateCommand;
 		public @CHOICE Bash_ExportCommand XXexportCommand;
@@ -74,6 +77,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_SetCommand XXsetCommand;
 		public @CHOICE Bash_SortCommand XXsortCommand;
 		public @CHOICE Bash_TeeCommand XXteeCommand;
+		public @CHOICE Bash_UniqCommand XXuniqCommand;
 		public @CHOICE Bash_WcCommand XXwcCommand;
 		public @CHOICE Bash_WhileStatement XXwhileStatement;
 

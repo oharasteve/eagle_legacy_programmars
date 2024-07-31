@@ -27,7 +27,15 @@ public class Bash_BashProgram extends TokenSequence implements AbstractStatement
 
 	public static class Bash_BashOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-x", "-xe");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
+				"-e",
+				"-eu",
+				"-ex",
+				"-p",
+				"-v",
+				"-x",
+				"-xe"
+				);
 	}
 
 	@Override

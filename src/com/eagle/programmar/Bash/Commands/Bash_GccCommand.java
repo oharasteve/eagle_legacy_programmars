@@ -20,7 +20,7 @@ public class Bash_GccCommand extends TokenSequence implements AbstractStatement
 
 	public static class Bash_GccOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-c", "-g", "-Wall");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-c", "-g", "-lm", "-Wall");
 
 		public @CHOICE static class Bash_GccOptionO extends TokenSequence
 		{
