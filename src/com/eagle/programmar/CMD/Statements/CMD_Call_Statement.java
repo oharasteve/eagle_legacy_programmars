@@ -3,37 +3,115 @@
 
 package com.eagle.programmar.CMD.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Label;
+import com.eagle.programmar.CMD.CMD_Program;
+import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
+import com.eagle.programmar.CMD.Statements.CMD_Call_Statement.CMD_Call_Argument.CMD_ArgumentComma;
+import com.eagle.programmar.CMD.Symbols.CMD_Label_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
+import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationHyphen;
-import com.eagle.tokens.punctuation.PunctuationSlash;
+import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class CMD_Call_Statement extends TokenSequence implements AbstractStatement
+public class CMD_Call_Statement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) @DOC("call.mspx") CMD_Keyword CALL = new CMD_Keyword("call");
 	public @S(20) @OPT PunctuationColon colon;
-	public @S(30) CMD_Argument what;
-	public @S(40) @OPT TokenList<CMD_Call_Parameter> args;
+	public @S(30) CMD_Label_Reference label;
+	public @S(40) @OPT TokenList<CMD_Call_Argument> args;
 
-	public static class CMD_Call_Parameter extends TokenChooser
+	public static class CMD_Call_Argument extends TokenChooser
 	{
-		public @CHOICE CMD_Argument XXarg;
-
-		public @CHOICE static class CMD_Call_Minus_Option extends TokenSequence
+		public @CHOICE static class CMD_ArgumentComma extends TokenSequence
 		{
-			public @S(10) PunctuationHyphen minus;
-			public @S(20) CMD_Argument option;
+			public @S(10) CMD_Argument arg;
+			public @S(20) @OPT PunctuationComma comma;
 		}
 
-		public @CHOICE static class CMD_Call_Slash_Option extends TokenSequence
+		public @CHOICE static class CMD_Call_Option extends TokenSequence
 		{
-			public @S(10) PunctuationSlash slash;
+			public @S(10) CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
 			public @S(20) CMD_Argument option;
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Look it up
+		String name = label.getValue();
+		CMD_Label func = null;
+		for (AbstractFunction fn : interpreter._functionList)
+		{
+			CMD_Label lblDef = (CMD_Label) fn;
+			if (lblDef.label.getValue().equals(name))
+			{
+				func = lblDef;
+				break;
+			}
+		}
+		if (func == null)
+		{
+			throw new RuntimeException("Unable to find a label named " + name);
+		}
+
+		// Now assign all the parameters (%1 %2 etc)
+		int argCount = 0;
+		for (CMD_Call_Argument arg : args._elements)
+		{
+			if (arg.getWhich() instanceof CMD_ArgumentComma)
+			{
+				CMD_ArgumentComma argComma = (CMD_ArgumentComma) arg.getWhich();
+				argCount++;
+				EagleValue val = interpreter.getEagleValue(argComma.arg);
+				interpreter._symbolTable.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),
+						"%~" + argCount, val);
+			}
+		}
+
+		// Prepare to evaluate the label
+		long startTime = System.nanoTime();
+
+		// And transfer control to the label
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		CMD_Program pgm = (CMD_Program) interpreter._lang;
+		boolean foundLabel = false;
+		for (CMD_CommandOrLabelOrUnparsed cmdOr : pgm.commands._elements)
+		{
+			if (foundLabel)
+			{
+				result = interpreter.tryToInterpret(cmdOr);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			else   // Have to search for our label (aka function)
+			{
+				if (cmdOr.getWhich() instanceof CMD_Label)
+				{
+					CMD_Label lbl = (CMD_Label) cmdOr.getWhich();
+					if (lbl == func)    // Careful, comparing Objects here
+					{
+						foundLabel = true;
+					}
+				}
+			}
+		}
+		if (!foundLabel)
+		{
+			throw new RuntimeException("Unable to re-find label " + name);
+		}
+
+		// The result was already put on the runtime stack
+		long elapsedTime = System.nanoTime() - startTime;
+		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 	}
 }

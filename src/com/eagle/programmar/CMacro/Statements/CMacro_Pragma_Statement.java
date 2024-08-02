@@ -6,6 +6,7 @@ package com.eagle.programmar.CMacro.Statements;
 import com.eagle.preprocess.CMacro.CMacro_Preprocess;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_CLang;
+import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_CodeSeg;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Comment;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Export;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Intrinsic;
@@ -45,6 +46,7 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		public @CHOICE CMacro_Keyword XXONCE = new CMacro_Keyword("once");
 
 		public @CHOICE CMacro_Pragma_CLang XXclang;
+		public @CHOICE CMacro_Pragma_CodeSeg XXcodeSeg;
 		public @CHOICE CMacro_Pragma_Comment XXcomment;
 		public @CHOICE CMacro_Pragma_Export XXexprt;
 		public @CHOICE CMacro_Pragma_Intrinsic XXintrinsic;

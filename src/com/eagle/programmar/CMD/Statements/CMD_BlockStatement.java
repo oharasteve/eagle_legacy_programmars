@@ -1,0 +1,56 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 31, 2024
+
+package com.eagle.programmar.CMD.Statements;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.programmar.CMD.CMD_Command;
+import com.eagle.programmar.CMD.CMD_Label;
+import com.eagle.programmar.CMD.CMD_Statement;
+import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
+import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
+import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+public class CMD_BlockStatement extends TokenSequence implements EagleRunnableWithResult
+{
+	public @S(10) PunctuationLeftParen leftParen;
+	public @S(20) CMD_EndOfLine eoln;
+	public @S(30) TokenList<CMD_CommandOrLabel> commands;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) @OPT CMD_IfElse ifElse;
+
+	public static class CMD_CommandOrLabel extends TokenChooser
+	{
+		public @CHOICE CMD_Command XXcommand;
+		public @CHOICE CMD_Label XXlabel;
+	}
+
+	public static class CMD_IfElse extends TokenSequence
+	{
+		public @S(10) CMD_Keyword ELSE = new CMD_Keyword("else");
+		public @S(20) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+		public @S(30) CMD_Statement stmt;
+	}
+	
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		for (CMD_CommandOrLabel cmdOrLabel : commands._elements)
+		{
+			if (cmdOrLabel.getWhich() instanceof CMD_Command)
+			{
+				CMD_Command cmd = (CMD_Command) cmdOrLabel.getWhich();
+				result = interpreter.tryToInterpret(cmd.command.getWhich());
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+		}
+		return result;
+	}
+}

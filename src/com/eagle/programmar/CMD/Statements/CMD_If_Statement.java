@@ -3,10 +3,14 @@
 
 package com.eagle.programmar.CMD.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.CMD.CMD_Argument;
-import com.eagle.programmar.CMD.CMD_Command.CMD_Statement;
+import com.eagle.programmar.CMD.CMD_Statement;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
@@ -24,6 +28,8 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable, Ab
 	public @S(30) CMD_IfWhat what;
 	public @S(40) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 	public @S(50) CMD_Statement stmt;
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	public static class CMD_IfEqual extends TokenSequence
 	{
@@ -77,37 +83,68 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnable, Ab
 			throw new RuntimeException("Cannot handle 'if' condition: " + what.getWhich());
 		}
 
-		CMD_IfEqual ifEqual = (CMD_IfEqual) what.getWhich();
-		int left = interpreter.getIntValue(ifEqual.expr1.arg);
-		if (ifEqual.minus1.isPresent()) left = -left;
-		int right = interpreter.getIntValue(ifEqual.expr2.arg);
-		if (ifEqual.minus2.isPresent()) right = -right;
-		boolean passTest;
-		switch (ifEqual.operator.getWhich().toString())
+		if (_metrics == null)
 		{
-		case "equ", "==":
-			passTest = left == right;
-			break;
-		case "geq":
-			passTest = left >= right;
-			break;
-		case "gtr":
-			passTest = left > right;
-			break;
-		case "leq":
-			passTest = left <= right;
-			break;
-		case "lss":
-			passTest = left < right;
-			break;
-		case "neq":
-			passTest = left != right;
-			break;
-		default:
-			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.getWhich());
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+		}
+		
+		CMD_IfEqual ifEqual = (CMD_IfEqual) what.getWhich();
+		boolean passTest = false;	// Initial value is not used
+		boolean doIntegerCompare = true;
+		EagleValue leftVal = interpreter.getEagleValue(ifEqual.expr1.arg);
+		EagleValue rightVal = interpreter.getEagleValue(ifEqual.expr2.arg);
+		if (leftVal.isString() && rightVal.isString())
+		{
+			String leftStr = leftVal.forceStringValue();
+			String rightStr = rightVal.forceStringValue();
+			switch (ifEqual.operator.getWhich().toString())
+			{
+			case "equ", "==":
+				passTest = leftStr.equalsIgnoreCase(rightStr);
+				doIntegerCompare = false;
+				break;
+			case "neq":
+				passTest = leftStr != rightStr;
+				doIntegerCompare = false;
+				break;
+			}
+		}
+
+		if (doIntegerCompare)
+		{
+			int leftInt = leftVal.forceIntegerValue();
+			if (ifEqual.minus1.isPresent()) leftInt = -leftInt;
+			int rightInt = rightVal.forceIntegerValue();
+			if (ifEqual.minus2.isPresent()) rightInt = -rightInt;
+			switch (ifEqual.operator.getWhich().toString())
+			{
+			case "equ", "==":
+				passTest = leftInt == rightInt;
+				break;
+			case "geq":
+				passTest = leftInt >= rightInt;
+				break;
+			case "gtr":
+				passTest = leftInt > rightInt;
+				break;
+			case "leq":
+				passTest = leftInt <= rightInt;
+				break;
+			case "lss":
+				passTest = leftInt < rightInt;
+				break;
+			case "neq":
+				passTest = leftInt != rightInt;
+				break;
+			default:
+				throw new RuntimeException("Cannot handle numeric relational operator: " + ifEqual.operator.getWhich());
+			}
 		}
 
 		if (NOT.isPresent()) passTest = !passTest;
+		_metrics.get(0).completedIf(passTest);
 		if (passTest)
 		{
 			interpreter.tryToInterpret(stmt);

@@ -6,14 +6,11 @@ package com.eagle.programmar.CMD;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.CMD.Statements.CMD_Unparsed_Statement;
-import com.eagle.programmar.CMD.Symbols.CMD_Label_Definition;
-import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class CMD_Program extends EagleLanguage implements EagleRunnable
 {
@@ -39,13 +36,6 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 		public @LAST CMD_Unparsed_Statement XXunparsed;
 	}
 
-	public @SKIP static class CMD_Label extends TokenSequence
-	{
-		public @S(10) PunctuationColon colon;
-		public @S(20) CMD_Label_Definition label;
-		public @S(30) CMD_EndOfLine eoln;
-	}
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -53,23 +43,22 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
 		{
 			AbstractToken which = stmt.getWhich();
-			if (which instanceof CMD_Label_Definition)
+			if (which instanceof CMD_Label)
 			{
-				CMD_Label_Definition fn = (CMD_Label_Definition) which;
-				interpreter._functionList.add(fn);
+				CMD_Label lbl = (CMD_Label) which;
+				interpreter._functionList.add(lbl);
+				if (lbl._metrics == null)
+				{
+					lbl._metrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(),
+							lbl.getFileName(), lbl.getStartLine(), lbl.getStartChar());
+				}
 			}
 		}
 
 		// Second pass, execute the program
 		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
 		{
-			AbstractToken which = stmt.getWhich();
-			if (which instanceof CMD_Command)
-			{
-				CMD_Command cmd = (CMD_Command) which;
-				AbstractToken command = cmd.command.getWhich();
-				interpreter.tryToInterpret(command);
-			}
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

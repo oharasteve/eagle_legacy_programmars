@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.CMD;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.CMD.Symbols.CMD_Identifier_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
@@ -15,7 +17,7 @@ import com.eagle.tokens.TokenSequence;
 // But on Post Processing, it splits it apart into an array of CMD_ArgumentPiece's
 //
 
-public class CMD_Argument extends TokenSequence
+public class CMD_Argument extends TokenSequence implements EagleRunnable
 {
 	public @S(10) CMD_RawArgument arg;
 
@@ -31,10 +33,17 @@ public class CMD_Argument extends TokenSequence
 			public @S(30) CMD_Punctuation percent2 = new CMD_Punctuation('%');
 		}
 
-		public @CHOICE static class CMD_ArgumentParament extends TokenSequence
+		public @CHOICE static class CMD_ArgumentParameter extends TokenSequence
 		{
 			public @S(10) CMD_Punctuation percent = new CMD_Punctuation('%');
-			public @S(20) CMD_Number num;
+			public @S(20) @OPT CMD_Punctuation tilde = new CMD_Punctuation('~');
+			public @S(30) CMD_Number num;
 		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(arg);
 	}
 }
