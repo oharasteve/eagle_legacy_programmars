@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CMD_BlockStatement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) CMD_EndOfLine eoln;
+	public @S(20) @OPT CMD_EndOfLine eoln;
 	public @S(30) TokenList<CMD_CommandOrLabel> commands;
 	public @S(40) PunctuationRightParen rightParen;
 

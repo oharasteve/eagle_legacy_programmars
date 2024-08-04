@@ -6,6 +6,7 @@ package com.eagle.programmar.CMD;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.CMD.Statements.CMD_Unparsed_Statement;
 import com.eagle.tokens.AbstractToken;
@@ -56,11 +57,13 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 		}
 
 		// Second pass, execute the program
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
 		{
 			if (stmt.getWhich() instanceof CMD_Command)
 			{
-				interpreter.tryToInterpret(stmt.getWhich());
+				result = interpreter.tryToInterpret(stmt.getWhich());
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 		}
 	}

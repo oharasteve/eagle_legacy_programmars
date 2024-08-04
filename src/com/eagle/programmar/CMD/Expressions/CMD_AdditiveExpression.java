@@ -24,10 +24,10 @@ public class CMD_AdditiveExpression extends PrecedenceOperator implements EagleR
 		{
 		case "+":
 			interpreter.pushInt(leftValue + rightValue);
-			break;
+			return;
 		case "-":
 			interpreter.pushInt(leftValue - rightValue);
-			break;
+			return;
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}

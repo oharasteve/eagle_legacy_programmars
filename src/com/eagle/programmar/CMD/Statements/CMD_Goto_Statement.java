@@ -4,8 +4,7 @@
 package com.eagle.programmar.CMD.Statements;
 
 import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
@@ -17,7 +16,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class CMD_Goto_Statement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class CMD_Goto_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("goto.mspx") CMD_Keyword GOTO = new CMD_Keyword("goto");
 	public @S(20) @OPT PunctuationColon colon;
@@ -30,7 +29,7 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		if (!(gotoWhat.getWhich() instanceof CMD_Identifier_Reference))
 		{
@@ -63,6 +62,7 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 		{
 			if (foundLabel)
 			{
+				// Run the next statement in the program
 				result = interpreter.tryToInterpret(cmdOr);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
@@ -82,5 +82,6 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 		{
 			throw new RuntimeException("Unable to re-find label " + name);
 		}
+		return result;
 	}
 }

@@ -28,7 +28,13 @@ public class CMD_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		String name = id.getValue();
+		if (subscript != null && subscript.isPresent())
+		{
+			int sub = interpreter.getIntValue(subscript.expr);
+			name += "[" + sub + "]";
+		}
+		EagleValue value = interpreter._symbolTable.findSymbol(name);
 		interpreter.pushEagleValue(value);
 	}
 }

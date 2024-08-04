@@ -5,10 +5,12 @@ package com.eagle.programmar.CMD;
 
 import com.eagle.programmar.CMD.Expressions.CMD_AdditiveExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_BangExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_EqualityExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_MultiplicativeExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_NegativeExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_ParenthesizedExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_PercentExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_RelationalExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_VariableExpression;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
@@ -58,4 +60,6 @@ public class CMD_Expression extends PrecedenceChooser
 
 	public @P(500) CMD_MultiplicativeExpression multiplicativeExpression;
 	public @P(510) CMD_AdditiveExpression additiveExpression;
+	public @P(520) CMD_RelationalExpression relationalExpression;
+	public @P(530) CMD_EqualityExpression equalityExpression;
 }
