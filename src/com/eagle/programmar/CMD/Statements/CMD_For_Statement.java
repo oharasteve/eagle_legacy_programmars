@@ -11,8 +11,6 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Statement;
-import com.eagle.programmar.CMD.Statements.CMD_For_Statement.CMD_For_Type.CMD_For_L;
-import com.eagle.programmar.CMD.Statements.CMD_For_Statement.CMD_For_Type.CMD_Simple_For;
 import com.eagle.programmar.CMD.Terminals.CMD_Filename;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
@@ -44,54 +42,57 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 
 	public static class CMD_For_Type extends TokenChooser
 	{
-		public @CHOICE static class CMD_Simple_For extends TokenSequence
-		{
-			public @S(10) @OPT CMD_Simple_For_Option option;
-			public @S(20) CMD_PctPctVariable var;
-			public @S(30) CMD_Keyword IN = new CMD_Keyword("in");
-			public @S(40) PunctuationLeftParen leftParen;
-			public @S(50) CMD_RawArgument arg;
-			public @S(60) @OPT TokenList<CMD_For_More_Args> moreArgs;
-			public @S(70) PunctuationRightParen rightParen;
-			
-			public static class CMD_Simple_For_Option extends TokenChooser
-			{
-				public @CHOICE static class CMD_For_D extends TokenSequence
-				{
-					public @S(10) PunctuationSlash slash;
-					public @S(20) CMD_Keyword D = new CMD_Keyword("d");
-				}
+		public @CHOICE CMD_Simple_For XXsimpleFor;
+		public @CHOICE CMD_For_L XXforL;
+	}
 
-				public @CHOICE static class CMD_For_F extends TokenSequence
-				{
-					public @S(10) PunctuationSlash slash;
-					public @S(20) CMD_Keyword F = new CMD_Keyword("f");
-					public @S(30) @OPT CMD_Literal options;
-				}
-	
-				public @CHOICE static class CMD_For_R extends TokenSequence
-				{
-					public @S(10) PunctuationSlash slash;
-					public @S(20) CMD_Keyword R = new CMD_Keyword("r");
-					public @S(30) @OPT CMD_Filename fileName;
-				}
+	public static class CMD_Simple_For extends TokenSequence
+	{
+		public @S(10) @OPT CMD_Simple_For_Option option;
+		public @S(20) CMD_PctPctVariable var;
+		public @S(30) CMD_Keyword IN = new CMD_Keyword("in");
+		public @S(40) PunctuationLeftParen leftParen;
+		public @S(50) CMD_RawArgument arg;
+		public @S(60) @OPT TokenList<CMD_For_More_Args> moreArgs;
+		public @S(70) PunctuationRightParen rightParen;
+		
+		public static class CMD_Simple_For_Option extends TokenChooser
+		{
+			public @CHOICE static class CMD_For_D extends TokenSequence
+			{
+				public @S(10) PunctuationSlash slash;
+				public @S(20) CMD_Keyword D = new CMD_Keyword("d");
+			}
+
+			public @CHOICE static class CMD_For_F extends TokenSequence
+			{
+				public @S(10) PunctuationSlash slash;
+				public @S(20) CMD_Keyword F = new CMD_Keyword("f");
+				public @S(30) @OPT CMD_Literal options;
+			}
+
+			public @CHOICE static class CMD_For_R extends TokenSequence
+			{
+				public @S(10) PunctuationSlash slash;
+				public @S(20) CMD_Keyword R = new CMD_Keyword("r");
+				public @S(30) @OPT CMD_Filename fileName;
 			}
 		}
+	}
 
-		public @CHOICE static class CMD_For_L extends TokenSequence
-		{
-			public @S(10) PunctuationSlash slash;
-			public @S(20) CMD_Keyword L = new CMD_Keyword("l");
-			public @S(30) CMD_PctPctVariable var;
-			public @S(40) CMD_Keyword IN = new CMD_Keyword("in");
-			public @S(50) PunctuationLeftParen leftParen;
-			public @S(60) CMD_Expression start;
-			public @S(70) PunctuationComma comma1;
-			public @S(80) CMD_Expression incr;
-			public @S(90) PunctuationComma comma2;
-			public @S(100) CMD_Expression stop;
-			public @S(110) PunctuationRightParen rightParen;
-		}
+	public static class CMD_For_L extends TokenSequence
+	{
+		public @S(10) PunctuationSlash slash;
+		public @S(20) CMD_Keyword L = new CMD_Keyword("l");
+		public @S(30) CMD_PctPctVariable var;
+		public @S(40) CMD_Keyword IN = new CMD_Keyword("in");
+		public @S(50) PunctuationLeftParen leftParen;
+		public @S(60) CMD_Expression start;
+		public @S(70) PunctuationComma comma1;
+		public @S(80) CMD_Expression incr;
+		public @S(90) PunctuationComma comma2;
+		public @S(100) CMD_Expression stop;
+		public @S(110) PunctuationRightParen rightParen;
 	}
 
 	private @SKIP ForLoopMetrics _metrics = null;

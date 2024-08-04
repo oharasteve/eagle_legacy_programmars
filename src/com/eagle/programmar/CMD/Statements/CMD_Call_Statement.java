@@ -11,7 +11,6 @@ import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
-import com.eagle.programmar.CMD.Statements.CMD_Call_Statement.CMD_Call_Argument.CMD_ExpressionComma;
 import com.eagle.programmar.CMD.Symbols.CMD_Label_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
@@ -32,19 +31,22 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 	public static class CMD_Call_Argument extends TokenChooser
 	{
-		public @CHOICE static class CMD_ExpressionComma extends TokenSequence
-		{
-			public @S(10) CMD_BasicExpression arg;
-			public @S(20) @OPT PunctuationComma comma;
-		}
-
-		public @CHOICE static class CMD_Call_Option extends TokenSequence
-		{
-			public @S(10) CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
-			public @S(20) CMD_BasicExpression option;
-		}
+		public @CHOICE CMD_ExpressionComma XXexpressionComma;
+		public @CHOICE CMD_Call_Option XXcallOption;
 	}
 
+	public static class CMD_ExpressionComma extends TokenSequence
+	{
+		public @S(10) CMD_BasicExpression arg;
+		public @S(20) @OPT PunctuationComma comma;
+	}
+
+	public static class CMD_Call_Option extends TokenSequence
+	{
+		public @S(10) CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
+		public @S(20) CMD_BasicExpression option;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

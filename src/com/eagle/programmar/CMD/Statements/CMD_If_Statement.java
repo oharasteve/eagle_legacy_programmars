@@ -13,8 +13,6 @@ import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Statement;
 import com.eagle.programmar.CMD.CMD_Variable;
-import com.eagle.programmar.CMD.Statements.CMD_If_Statement.CMD_IfWhat.CMD_IfDefined;
-import com.eagle.programmar.CMD.Statements.CMD_If_Statement.CMD_IfWhat.CMD_IfErrorLevel;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
@@ -43,24 +41,27 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 	public static class CMD_IfWhat extends TokenChooser
 	{
 		public @LAST CMD_Expression XXexpr;
+		public @CHOICE CMD_IfDefined XXifDefined;
+		public @CHOICE CMD_IfErrorLevel XXerrorLevel;
+		public @CHOICE CMD_IfExist XXifExist;
+	}
 
-		public @CHOICE static class CMD_IfDefined extends TokenSequence
-		{
-			public @S(10) CMD_Keyword DEFINED = new CMD_Keyword("defined");
-			public @S(20) CMD_Variable var;
-		}
+	public static class CMD_IfDefined extends TokenSequence
+	{
+		public @S(10) CMD_Keyword DEFINED = new CMD_Keyword("defined");
+		public @S(20) CMD_Variable var;
+	}
 
-		public @CHOICE static class CMD_IfErrorLevel extends TokenSequence
-		{
-			public @S(10) CMD_Keyword ERRORLEVEL = new CMD_Keyword("errorlevel");
-			public @S(20) CMD_Number level;
-		}
+	public static class CMD_IfErrorLevel extends TokenSequence
+	{
+		public @S(10) CMD_Keyword ERRORLEVEL = new CMD_Keyword("errorlevel");
+		public @S(20) CMD_Number level;
+	}
 
-		public @CHOICE static class CMD_IfExist extends TokenSequence
-		{
-			public @S(10) CMD_Keyword EXIST = new CMD_Keyword("exist");
-			public @S(20) CMD_Expression file;
-		}
+	public static class CMD_IfExist extends TokenSequence
+	{
+		public @S(10) CMD_Keyword EXIST = new CMD_Keyword("exist");
+		public @S(20) CMD_Expression file;
 	}
 
 	@Override

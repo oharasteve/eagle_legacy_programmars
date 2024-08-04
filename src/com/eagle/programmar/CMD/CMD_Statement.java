@@ -15,6 +15,7 @@ import com.eagle.programmar.CMD.Statements.CMD_Exit_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_FindStr_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_For_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_GCC_Statement;
+import com.eagle.programmar.CMD.Statements.CMD_GenericStatement;
 import com.eagle.programmar.CMD.Statements.CMD_Goto_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Grep_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_If_Statement;
@@ -30,28 +31,13 @@ import com.eagle.programmar.CMD.Statements.CMD_Set_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Shift_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Xcopy_Statement;
 import com.eagle.programmar.CMD.Terminals.CMD_Comment;
-import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 
 public class CMD_Statement extends TokenChooser
 {
 	public @CHOICE CMD_Comment XXcomment;
 
 	public @CHOICE CMD_BlockStatement XXblockStatement; 
-
-	public @LAST static class CMD_GenericStatement extends TokenSequence
-	{
-		public @S(10) CMD_Expression programName;
-		public @S(20) @OPT TokenList<CMD_GenericArgument> args;
-
-		public static class CMD_GenericArgument extends TokenChooser
-		{
-			public @CHOICE CMD_Expression XXarg;
-			public @CHOICE CMD_PunctuationChoice XXminus = new CMD_PunctuationChoice("-", "/");
-		}
-	}
 
 	public @CHOICE CMD_Awk_Statement XXawkCommand;
 	public @CHOICE CMD_Call_Statement XXcallCommand;
@@ -78,4 +64,6 @@ public class CMD_Statement extends TokenChooser
 	public @CHOICE CMD_SetLocal_Statement XXsetLocalCommand;
 	public @CHOICE CMD_Shift_Statement XXshiftCommand;
 	public @CHOICE CMD_Xcopy_Statement XXxcopyCommand;
+
+	public @LAST CMD_GenericStatement XXgenericStatement;
 }

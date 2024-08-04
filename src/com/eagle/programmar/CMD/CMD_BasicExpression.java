@@ -8,6 +8,7 @@ import com.eagle.programmar.CMD.Expressions.CMD_NegativeExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_ParenthesizedExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_PercentExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_VariableExpression;
+import com.eagle.programmar.CMD.Terminals.CMD_Filename;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_PctPctVariable;
@@ -40,6 +41,7 @@ public class CMD_BasicExpression extends PrecedenceChooser
 	public @P(10) CMD_Number number;
 	public @P(20) CMD_Literal literal;
 	public @P(30) CMD_PctPctVariable pctVariable;
+	public @P(40) CMD_Filename filename;
 
 	///////////////////////////////////////////////
 	// Primary expressions -- Identical to CMD_Expression
