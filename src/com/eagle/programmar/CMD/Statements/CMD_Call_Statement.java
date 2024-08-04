@@ -7,11 +7,11 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
-import com.eagle.programmar.CMD.Statements.CMD_Call_Statement.CMD_Call_Argument.CMD_ArgumentComma;
+import com.eagle.programmar.CMD.Statements.CMD_Call_Statement.CMD_Call_Argument.CMD_ExpressionComma;
 import com.eagle.programmar.CMD.Symbols.CMD_Label_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
@@ -32,16 +32,16 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 	public static class CMD_Call_Argument extends TokenChooser
 	{
-		public @CHOICE static class CMD_ArgumentComma extends TokenSequence
+		public @CHOICE static class CMD_ExpressionComma extends TokenSequence
 		{
-			public @S(10) CMD_Argument arg;
+			public @S(10) CMD_Expression arg;
 			public @S(20) @OPT PunctuationComma comma;
 		}
 
 		public @CHOICE static class CMD_Call_Option extends TokenSequence
 		{
 			public @S(10) CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
-			public @S(20) CMD_Argument option;
+			public @S(20) CMD_Expression option;
 		}
 	}
 
@@ -64,14 +64,15 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		{
 			throw new RuntimeException("Unable to find a label named " + name);
 		}
+		interpreter._currentFunction = func;
 
 		// Now assign all the parameters (%1 %2 etc)
 		int argCount = 0;
 		for (CMD_Call_Argument arg : args._elements)
 		{
-			if (arg.getWhich() instanceof CMD_ArgumentComma)
+			if (arg.getWhich() instanceof CMD_ExpressionComma)
 			{
-				CMD_ArgumentComma argComma = (CMD_ArgumentComma) arg.getWhich();
+				CMD_ExpressionComma argComma = (CMD_ExpressionComma) arg.getWhich();
 				argCount++;
 				EagleValue val = interpreter.getEagleValue(argComma.arg);
 				interpreter._symbolTable.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),

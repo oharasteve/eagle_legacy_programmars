@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -11,5 +11,5 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class CMD_Pushd_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("pushd.mspx") CMD_Keyword PUSHD = new CMD_Keyword("pushd");
-	public @S(20) CMD_Argument dir;
+	public @S(20) CMD_Expression dir;
 }

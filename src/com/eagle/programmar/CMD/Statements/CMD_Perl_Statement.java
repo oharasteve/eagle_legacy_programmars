@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
@@ -19,7 +19,7 @@ public class CMD_Perl_Statement extends TokenSequence implements AbstractStateme
 {
 	public @S(10) CMD_Keyword PERL = new CMD_Keyword("perl");
 	public @S(20) @OPT TokenList<CMD_Perl_Option> opts;
-	public @S(30) TokenList<CMD_Argument> args;
+	public @S(30) TokenList<CMD_Expression> args;
 	public @S(40) CMD_EndOfLine eoln1;
 	public @S(50) CMD_Goto_Statement gotoStatement;
 	public @S(60) CMD_EndOfLine eoln2;

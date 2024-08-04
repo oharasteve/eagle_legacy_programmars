@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
@@ -17,7 +17,7 @@ public class CMD_Dir_Statement extends TokenSequence implements AbstractStatemen
 {
 	public @S(10) @DOC("dir.mspx") CMD_Keyword DIR = new CMD_Keyword("dir");
 	public @S(20) @OPT TokenList<CMD_Dir_Option> opts;
-	public @S(30) @OPT TokenList<CMD_Argument> file;
+	public @S(30) @OPT TokenList<CMD_Expression> file;
 
 	public static class CMD_Dir_Option extends TokenChooser
 	{

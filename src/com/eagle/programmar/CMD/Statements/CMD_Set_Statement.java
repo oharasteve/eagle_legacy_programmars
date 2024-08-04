@@ -6,8 +6,10 @@ package com.eagle.programmar.CMD.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMD.CMD_Expression;
+import com.eagle.programmar.CMD.CMD_Format;
 import com.eagle.programmar.CMD.CMD_Variable;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
@@ -55,6 +57,17 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 		public @CHOICE CMD_Set_Assigment XXsetAssignment;
 		public @CHOICE CMD_Set_Prompt XXsetPrompt;
 	}
+	
+	private static String getName(EagleInterpreter interpreter, CMD_Variable var)
+	{
+		String name = var.id.getValue();
+		if (var.subscript != null && var.subscript.isPresent())
+		{
+			int sub = interpreter.getIntValue(var.subscript.expr);
+			name += "[" + sub + "]";
+		}
+		return name;
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -63,26 +76,28 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 		if (which instanceof CMD_Set_Regular)
 		{
 			CMD_Set_Regular cmd = (CMD_Set_Regular) which;
-			EagleValue val = interpreter.getEagleValue(cmd.value);
+			String name = getName(interpreter, cmd.var);
+			String formatted = CMD_Format.format(interpreter, cmd.value.getValue());
 			interpreter._symbolTable.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(), cmd.var.getStartChar(),
-					cmd.var.id.getValue(), val);
+					name, new EagleString(formatted));
 		}
 		else if (which instanceof CMD_Set_Assigment)
 		{
 			CMD_Set_Assigment setA = (CMD_Set_Assigment) which;
+			String name = getName(interpreter, setA.var);
 			switch (setA.operator.getValue())
 			{
 			case "=":
 				EagleValue newVal = interpreter.getEagleValue(setA.expr);
 				interpreter._symbolTable.setSymbol(setA.var.getFileName(), setA.var.getStartLine(), setA.var.getStartChar(),
-						setA.var.id.getValue(), newVal);
+						name, newVal);
 				break;
 			case "+=":
 				int intVal = interpreter.getIntValue(setA.expr);
 				EagleValue oldVar = interpreter._symbolTable.findSymbol(setA.var.id.getValue());
 				EagleInteger newValue = new EagleInteger(intVal + oldVar.forceIntegerValue());
 				interpreter._symbolTable.setSymbol(setA.var.getFileName(), setA.var.getStartLine(), setA.var.getStartChar(),
-						setA.var.id.getValue(), newValue);
+						name, newValue);
 				break;
 			default:
 				throw new RuntimeException("Unable to handle operator " + setA.operator.getValue());

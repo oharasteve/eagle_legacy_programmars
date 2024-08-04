@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -18,7 +18,7 @@ public class CMD_NMake_Statement extends TokenSequence implements AbstractStatem
 
 	public static class CMD_NMake_Parameter extends TokenChooser
 	{
-		public @CHOICE CMD_Argument XXtarget;
+		public @CHOICE CMD_Expression XXtarget;
 
 		public @CHOICE static class CMD_NMake_Option_I extends TokenSequence
 		{
@@ -42,7 +42,7 @@ public class CMD_NMake_Statement extends TokenSequence implements AbstractStatem
 		{
 			public @S(10) PunctuationSlash slash;
 			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
-			public @S(30) CMD_Argument makefile;
+			public @S(30) CMD_Expression makefile;
 		}
 	}
 }

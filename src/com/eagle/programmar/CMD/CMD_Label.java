@@ -17,4 +17,6 @@ public class CMD_Label extends TokenSequence implements AbstractFunction
 	public @S(30) CMD_EndOfLine eoln;
 
 	public @SKIP CallMetrics _metrics = null;
+	
+	public @SKIP int _exitStatus = 0;	// Needed for the EXIT /B statement
 }

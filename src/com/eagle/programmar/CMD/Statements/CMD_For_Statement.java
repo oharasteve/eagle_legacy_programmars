@@ -9,7 +9,6 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.CMD.CMD_Argument;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_For_Statement.CMD_For_Type.CMD_For_L;
@@ -19,6 +18,7 @@ import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.programmar.CMD.Terminals.CMD_PctPctVariable;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
+import com.eagle.programmar.CMD.Terminals.CMD_RawArgument;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -39,7 +39,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	public static class CMD_For_More_Args extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
-		public @S(20) CMD_Argument arg;
+		public @S(20) CMD_RawArgument arg;
 	}
 
 	public static class CMD_For_Type extends TokenChooser
@@ -50,7 +50,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 			public @S(20) CMD_PctPctVariable var;
 			public @S(30) CMD_Keyword IN = new CMD_Keyword("in");
 			public @S(40) PunctuationLeftParen leftParen;
-			public @S(50) CMD_Argument arg;
+			public @S(50) CMD_RawArgument arg;
 			public @S(60) @OPT TokenList<CMD_For_More_Args> moreArgs;
 			public @S(70) PunctuationRightParen rightParen;
 			
@@ -123,7 +123,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 			
 			for (int i = 0; i < numArgs; i++)
 			{
-				CMD_Argument nextArg;
+				CMD_RawArgument nextArg;
 				if (i == 0) 
 				{
 					nextArg = simpleFor.arg;

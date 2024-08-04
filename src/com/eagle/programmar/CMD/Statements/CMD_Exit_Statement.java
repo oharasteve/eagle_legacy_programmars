@@ -5,8 +5,8 @@ package com.eagle.programmar.CMD.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
-import com.eagle.math.EagleValue;
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
+import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -18,7 +18,7 @@ public class CMD_Exit_Statement extends TokenSequence implements AbstractStateme
 {
 	public @S(10) @DOC("exit.mspx") CMD_Keyword EXIT = new CMD_Keyword("exit");
 	public @S(20) @OPT TokenList<CMD_Exit_Option> opts;
-	public @S(30) @OPT CMD_Argument exitValue;
+	public @S(30) @OPT CMD_Expression exitValue;
 
 	public static class CMD_Exit_Option extends TokenChooser
 	{
@@ -32,8 +32,9 @@ public class CMD_Exit_Statement extends TokenSequence implements AbstractStateme
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(exitValue);
-		interpreter.pushEagleValue(val);
+		int status = interpreter.getIntValue(exitValue);
+		CMD_Label func = (CMD_Label) interpreter._currentFunction;
+		func._exitStatus = status;
 		return Eagle_Statement_Result.RETURN;
 	}
 }

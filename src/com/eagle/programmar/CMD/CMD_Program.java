@@ -58,7 +58,10 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 		// Second pass, execute the program
 		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
 		{
-			interpreter.tryToInterpret(stmt);
+			if (stmt.getWhich() instanceof CMD_Command)
+			{
+				interpreter.tryToInterpret(stmt.getWhich());
+			}
 		}
 	}
 }

@@ -43,12 +43,12 @@ public class CMD_Statement extends TokenChooser
 
 	public @LAST static class CMD_GenericStatement extends TokenSequence
 	{
-		public @S(10) CMD_Argument programName;
+		public @S(10) CMD_Expression programName;
 		public @S(20) @OPT TokenList<CMD_GenericArgument> args;
 
 		public static class CMD_GenericArgument extends TokenChooser
 		{
-			public @CHOICE CMD_Argument XXarg;
+			public @CHOICE CMD_Expression XXarg;
 			public @CHOICE CMD_PunctuationChoice XXminus = new CMD_PunctuationChoice("-", "/");
 		}
 	}

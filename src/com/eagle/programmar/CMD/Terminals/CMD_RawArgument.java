@@ -22,11 +22,17 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		if (_currentChar >= recLen) return false;
 		char ch = rec.charAt(_currentChar);
 		if (":@<>|&),".indexOf(ch) >= 0)
+		{
 			return false;
+		}
 
 		int offset = 0;
 		char quote;
-		if (ch == '"' || ch == '\'')
+		if (ch == '!' || ch == '$')
+		{
+			return false;
+		}
+		else if (ch == '"' || ch == '\'')
 		{
 			quote = ch;
 

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -15,7 +15,7 @@ public class CMD_Awk_Statement extends TokenSequence implements AbstractStatemen
 {
 	public @S(10) CMD_Keyword AWK = new CMD_Keyword("awk");
 	public @S(20) @OPT TokenList<CMD_Awk_Option> opts;
-	public @S(30) @OPT TokenList<CMD_Argument> arg;
+	public @S(30) @OPT TokenList<CMD_Expression> arg;
 
 	public static class CMD_Awk_Option extends TokenChooser
 	{
@@ -23,14 +23,14 @@ public class CMD_Awk_Statement extends TokenSequence implements AbstractStatemen
 		{
 			public @S(10) PunctuationHyphen minus;
 			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
-			public @S(30) CMD_Argument arg;
+			public @S(30) CMD_Expression arg;
 		}
 
 		public @CHOICE static class CMD_Awk_Option_V extends TokenSequence
 		{
 			public @S(10) PunctuationHyphen minus;
 			public @S(20) CMD_Keyword V = new CMD_Keyword("v");
-			public @S(30) CMD_Argument variableDefinitions;
+			public @S(30) CMD_Expression variableDefinitions;
 		}
 	}
 }

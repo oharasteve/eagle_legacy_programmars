@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.TokenChooser;
@@ -19,13 +19,13 @@ public class CMD_Grep_Statement extends TokenSequence implements AbstractStateme
 
 	public static class CMD_Grep_Parameter extends TokenChooser
 	{
-		public @CHOICE CMD_Argument XXsrcFile;
+		public @CHOICE CMD_Expression XXsrcFile;
 
 		public @CHOICE static class CMD_Grep_Option_e extends TokenSequence
 		{
 			public @S(10) CMD_Punctuation hyphen = new CMD_Punctuation('-');
 			public @S(20) CMD_Keyword E = new CMD_Keyword("e");
-			public @S(30) CMD_Argument pattern;
+			public @S(30) CMD_Expression pattern;
 		}
 
 		public @CHOICE static class CMD_Grep_Option_H extends TokenSequence

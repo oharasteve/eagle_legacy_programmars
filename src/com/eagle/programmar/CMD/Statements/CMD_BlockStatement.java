@@ -7,10 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.CMD.CMD_Command;
 import com.eagle.programmar.CMD.CMD_Label;
-import com.eagle.programmar.CMD.CMD_Statement;
 import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
-import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
-import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -23,7 +20,6 @@ public class CMD_BlockStatement extends TokenSequence implements EagleRunnableWi
 	public @S(20) CMD_EndOfLine eoln;
 	public @S(30) TokenList<CMD_CommandOrLabel> commands;
 	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) @OPT CMD_IfElse ifElse;
 
 	public static class CMD_CommandOrLabel extends TokenChooser
 	{
@@ -31,13 +27,6 @@ public class CMD_BlockStatement extends TokenSequence implements EagleRunnableWi
 		public @CHOICE CMD_Label XXlabel;
 	}
 
-	public static class CMD_IfElse extends TokenSequence
-	{
-		public @S(10) CMD_Keyword ELSE = new CMD_Keyword("else");
-		public @S(20) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-		public @S(30) CMD_Statement stmt;
-	}
-	
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

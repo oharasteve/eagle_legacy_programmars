@@ -36,19 +36,19 @@ public class CMD_Command extends TokenSequence implements EagleRunnableWithResul
 	public static class CMD_Redirect_Input extends TokenSequence
 	{
 		public @S(10) CMD_Punctuation less = new CMD_Punctuation('<');
-		public @S(20) CMD_Argument inFile;
+		public @S(20) CMD_Expression inFile;
 	}
 
 	public static class CMD_Redirect_Output extends TokenSequence
 	{
 		public @S(10) CMD_Punctuation greater = new CMD_Punctuation('>');
-		public @S(20) CMD_Argument outFile;
+		public @S(20) CMD_Expression outFile;
 	}
 
 	public static class CMD_Redirect_Append extends TokenSequence
 	{
 		public @S(10) CMD_Punctuation greaterGreater = new CMD_Punctuation(">>");
-		public @S(20) CMD_Argument appFile;
+		public @S(20) CMD_Expression appFile;
 	}
 
 	public static class CMD_Redirect_Error_One extends TokenSequence
@@ -63,7 +63,7 @@ public class CMD_Command extends TokenSequence implements EagleRunnableWithResul
 	{
 		public @S(10) CMD_Number two;
 		public @S(20) CMD_Punctuation greater = new CMD_Punctuation(">");
-		public @S(30) CMD_Argument file;
+		public @S(30) CMD_Expression file;
 	}
 
 	public static class CMD_More_Statements extends TokenSequence
