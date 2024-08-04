@@ -7,7 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.CMD.CMD_Expression;
+import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
@@ -34,14 +34,14 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 	{
 		public @CHOICE static class CMD_ExpressionComma extends TokenSequence
 		{
-			public @S(10) CMD_Expression arg;
+			public @S(10) CMD_BasicExpression arg;
 			public @S(20) @OPT PunctuationComma comma;
 		}
 
 		public @CHOICE static class CMD_Call_Option extends TokenSequence
 		{
 			public @S(10) CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
-			public @S(20) CMD_Expression option;
+			public @S(20) CMD_BasicExpression option;
 		}
 	}
 

@@ -86,7 +86,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 			CMD_Label func = (CMD_Label) interpreter._currentFunction;
 			int actual = func._exitStatus;
 			int goal = Integer.parseInt(errLevel.level.getValue());
-			passTest = actual < goal;
+			passTest = actual >= goal;
 		}
 		else if (what.getWhich() instanceof CMD_IfDefined)
 		{

@@ -31,9 +31,12 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (!(gotoWhat.getWhich() instanceof CMD_Identifier_Reference))
+		if (gotoWhat.getWhich() instanceof CMD_Keyword)
 		{
-			throw new RuntimeException("Unable to handle goto :eof");
+			// GOTO :EOF
+			CMD_Label func = (CMD_Label) interpreter._currentFunction;
+			func._exitStatus = 0;	// Meaning Success
+			return Eagle_Statement_Result.RETURN;
 		}
 		
 		CMD_Identifier_Reference label = (CMD_Identifier_Reference) gotoWhat.getWhich();

@@ -24,7 +24,7 @@ public class CMD_Syntax extends EagleSyntax
 		};
 
 		addReservedWords(new String[] {
-				"else", "for", "not", "set"
+				"else", "eof", "for", "not", "set"
 		});
 	}
 }

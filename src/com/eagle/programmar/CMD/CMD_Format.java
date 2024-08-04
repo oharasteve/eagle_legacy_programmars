@@ -102,9 +102,40 @@ public class CMD_Format
 				// Extract a variable name (or expression) and value, like !abc!
 				int secondBang = txt.indexOf('!', firstBang + 1);
 				if (secondBang < 0) throw new RuntimeException("Missing ! in " + txt);
-				String var = txt.substring(firstBang + 1, secondBang);
-				EagleValue val = interpreter._symbolTable.findSymbol(var);
-				sb.append(val.forceStringValue());
+				String name = txt.substring(firstBang + 1, secondBang);
+				
+				int colon = name.indexOf(":~");
+				int comma = name.indexOf(',');
+				int subSC = 0;
+				int subNC = 0;
+				if (colon > 0 && comma > colon)
+				{
+					subSC = Integer.parseInt(name.substring(colon + 2, comma));
+					subNC = Integer.parseInt(name.substring(comma + 1));
+					name = name.substring(0, colon);
+				}
+				
+				EagleValue val = interpreter._symbolTable.findSymbol(name);
+				String piece = val.forceStringValue();
+
+				if (colon > 0)
+				{
+					// CMD allows access beyond the end.
+					// Java does not. We have to validate sc and ec
+					int pieceNC = piece.length();
+					if (subSC >= pieceNC)
+					{
+						piece = "";
+					}
+					else
+					{
+						int subEC = subSC + subNC;
+						if (subEC > pieceNC) subEC = pieceNC;
+						piece = piece.substring(subSC, subEC);
+					}
+				}
+				
+				sb.append(piece);
 	
 				// Look for the next piece
 				sc = secondBang + 1;

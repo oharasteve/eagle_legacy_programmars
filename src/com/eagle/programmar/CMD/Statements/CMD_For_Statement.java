@@ -150,8 +150,8 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 			int stop = interpreter.getIntValue(forL.stop);
 			while (true)
 			{
-				if (incr < 0 && i <= stop) break;
-				if (incr > 0 && i >= stop) break;
+				if (incr < 0 && i < stop) break;
+				if (incr > 0 && i > stop) break;
 				
 				metric.iterate();
 				interpreter._symbolTable.setSymbol(forL.var.getFileName(), forL.var.getStartLine(),
