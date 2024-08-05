@@ -12,7 +12,6 @@ import com.eagle.programmar.C.C_Function;
 import com.eagle.programmar.C.C_Function.C_FunctionImplementation;
 import com.eagle.programmar.C.C_Function.C_FunctionRegularParameter;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
-import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
 import com.eagle.programmar.C.C_Generic;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.C_Variable;
@@ -43,28 +42,12 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			String fnName = id.getValue();
 
 			// Look through our list of functions
-			C_Function func = null;
-			for (AbstractFunction absFn : interpreter._functionList)
-			{
-				C_Function fn = (C_Function) absFn;
-				AbstractToken which = fn.typeName.getWhich();
-				if (which instanceof C_Function_TypeAndName)
-				{
-					C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
-					String thisName = typeAndName.functionName.getValue();
-					if (thisName.equals(fnName))
-					{
-						// Found it!
-						func = fn;
-						break;
-					}
-				}
-			}
-
-			if (func == null)
+			AbstractFunction fn = interpreter._functionList.get(fnName);
+			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a function named " + fnName);
 			}
+			C_Function func = (C_Function) fn;
 
 			// Count the parameters
 			C_Function_ParameterDefs params = func.parameters;

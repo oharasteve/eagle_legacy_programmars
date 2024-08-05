@@ -32,23 +32,12 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 		String name = methodName.var.getValue();
 		if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 
-		// Have to search for the FUNCTION definition
-		Rust_Function func = null;
-		for (AbstractFunction absFn : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
-			Rust_Function fn = (Rust_Function) absFn;
-			if (fn.id.getValue().equalsIgnoreCase(name))
-			{
-				// Found it!
-				func = fn;
-				break;
-			}
+			throw new RuntimeException("Unable to find a function named " + name);
 		}
-
-		if (func == null)
-		{
-			throw new RuntimeException("Unable to find a FUNCTION named " + name);
-		}
+		Rust_Function func = (Rust_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = argList.getPrimaryCount();

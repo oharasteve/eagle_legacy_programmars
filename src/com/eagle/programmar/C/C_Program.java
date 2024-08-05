@@ -128,14 +128,16 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof C_Function)
 			{
 				C_Function fn = (C_Function) which;
-				interpreter._functionList.add(fn);
-				if (interpreter._TRACE)
 				{
 					which = fn.typeName.getWhich();
 					if (which instanceof C_Function_TypeAndName)
 					{
 						C_Function_TypeAndName typeName = (C_Function_TypeAndName) which;
-						System.err.println("*** Found C function " + typeName.functionName.getValue());
+						interpreter._functionList.put(typeName.functionName.getValue(), fn);
+						if (interpreter._TRACE)
+						{
+							System.err.println("*** Found C function " + typeName.functionName.getValue());
+						}
 					}
 				}
 			}

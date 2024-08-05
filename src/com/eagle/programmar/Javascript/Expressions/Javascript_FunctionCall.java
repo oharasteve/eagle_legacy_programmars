@@ -85,20 +85,12 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 			}
 		}
 
-		Javascript_Function func = null;
-		for (AbstractFunction absFn : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
-			Javascript_Function fn = (Javascript_Function) absFn;
-			if (fn.implementation.functionName.getValue().equals(name))
-			{
-				func = fn;
-				break;
-			}
+			throw new RuntimeException("Unable to find a function named " + name);
 		}
-		if (func == null)
-		{
-			throw new RuntimeException("Unable to find a method named " + name);
-		}
+		Javascript_Function func = (Javascript_Function) fn;
 
 		Javascript_FunctionParameters parameters = func.implementation.params;
 		int paramCount = 0;

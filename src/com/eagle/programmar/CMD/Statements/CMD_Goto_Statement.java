@@ -42,20 +42,12 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 		CMD_Identifier_Reference label = (CMD_Identifier_Reference) gotoWhat.getWhich();
 		// Look it up
 		String name = label.getValue();
-		CMD_Label func = null;
-		for (AbstractFunction fn : interpreter._functionList)
-		{
-			CMD_Label lblDef = (CMD_Label) fn;
-			if (lblDef.label.getValue().equals(name))
-			{
-				func = lblDef;
-				break;
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a label named " + name);
 		}
+		CMD_Label func = (CMD_Label) fn;
 
 		// Transfer control to the label
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;

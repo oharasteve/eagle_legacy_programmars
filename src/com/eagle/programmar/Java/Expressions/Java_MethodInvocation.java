@@ -38,26 +38,18 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 		{
 			// Look it up
 			String name = ((Java_Identifier_Reference) token).getValue();
-			Java_Method proc = null;
-			Java_ParameterList parameters = null;
-			for (AbstractFunction fn : interpreter._functionList)
-			{
-				Java_Method meth = (Java_Method) fn;
-				AbstractToken which = meth.typeAndName.getWhich();
-				if (which instanceof Java_MethodType)
-				{
-					Java_MethodType methodType = (Java_MethodType) which;
-					if (methodType.methodName.getValue().equals(name))
-					{
-						proc = meth;
-						parameters = methodType.parameters;
-						break;
-					}
-				}
-			}
-			if (proc == null)
+			AbstractFunction fn = interpreter._functionList.get(name);
+			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a method named " + name);
+			}
+			Java_Method meth = (Java_Method) fn;
+			Java_ParameterList parameters = null;
+			AbstractToken which = meth.typeAndName.getWhich();
+			if (which instanceof Java_MethodType)
+			{
+				Java_MethodType methodType = (Java_MethodType) which;
+				parameters = methodType.parameters;
 			}
 
 			// Make sure the function args match up
@@ -102,7 +94,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 			// And transfer control to the method
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			// EagleValue returnValue = null;
-			AbstractToken body = proc.body.getWhich();
+			AbstractToken body = meth.body.getWhich();
 			if (body instanceof Java_MethodImplementation)
 			{
 				Java_MethodImplementation impl = (Java_MethodImplementation) body;
@@ -115,7 +107,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			proc._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			meth._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 
 			// Now remove all those parameters
 			if (argCount > 0)

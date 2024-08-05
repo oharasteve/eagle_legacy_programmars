@@ -29,24 +29,13 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String fnName = funcName.vars.first().getValue();
-		Go_Function func = null;
 		
-		for (AbstractFunction fn : interpreter._functionList)
-		{
-			if (fn instanceof Go_Function)
-			{
-				Go_Function f = (Go_Function) fn;
-				if (f.id.getValue().equals(fnName))
-				{
-					func = f;
-					break;
-				}
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(fnName);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + fnName);
 		}
+		Go_Function func = (Go_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = arguments.getPrimaryCount();

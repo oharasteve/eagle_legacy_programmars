@@ -59,7 +59,7 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 						if (stmt.getWhich() instanceof Ada_Function)
 						{
 							Ada_Function fn = (Ada_Function) stmt.getWhich();
-							interpreter._functionList.add(fn);
+							interpreter._functionList.put(fn.id.getValue(), fn);
 							if (interpreter._TRACE)
 							{
 								System.err.println("*** Found Ada function " + fn.id.getValue());
@@ -67,11 +67,11 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 						}
 						if (stmt.getWhich() instanceof Ada_Procedure)
 						{
-							Ada_Procedure fn = (Ada_Procedure) stmt.getWhich();
-							interpreter._functionList.add(fn);
+							Ada_Procedure pr = (Ada_Procedure) stmt.getWhich();
+							interpreter._functionList.put(pr.id.getValue(), pr);
 							if (interpreter._TRACE)
 							{
-								System.err.println("*** Found Ada procedure " + fn.id.getValue());
+								System.err.println("*** Found Ada procedure " + pr.id.getValue());
 							}
 						}
 					}

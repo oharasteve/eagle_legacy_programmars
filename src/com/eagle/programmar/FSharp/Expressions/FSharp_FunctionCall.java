@@ -31,20 +31,12 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 	{
 		// Look up the function in our function list
 		String name = functionName.id.getValue();
-		FSharp_Function func = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			FSharp_Function fn = (FSharp_Function) token;
-			if (fn.id.getValue().equals(name))
-			{
-				func = fn;
-				break;
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
+		FSharp_Function func = (FSharp_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = argList.getPrimaryCount();

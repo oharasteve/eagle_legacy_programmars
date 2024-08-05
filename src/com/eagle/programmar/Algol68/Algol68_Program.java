@@ -68,7 +68,7 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 				if (stmt.getWhich() instanceof Algol68_Procedure)
 				{
 					Algol68_Procedure fn = (Algol68_Procedure) stmt.getWhich();
-					interpreter._functionList.add(fn);
+					interpreter._functionList.put(fn.id.getValue(), fn);
 					if (interpreter._TRACE)
 					{
 						System.err.println("*** Found Algol68 function " + fn.id.getValue());

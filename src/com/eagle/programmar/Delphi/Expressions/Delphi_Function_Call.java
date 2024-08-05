@@ -35,36 +35,24 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		CallMetrics metrics = null;
 		Delphi_BeginEnd body = null;
 		
-		for (AbstractFunction fn : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(fnName);
+		if (fn == null)
 		{
-			if (fn instanceof Delphi_Procedure)
-			{
-				Delphi_Procedure p = (Delphi_Procedure) fn;
-				if (p.forward.name.var.getValue().equals(fnName))
-				{
-					proc = p;
-					paramList = p.forward.args;
-					metrics = p._metrics;
-					body = p.body;
-					break;
-				}
-			}
-			else if (fn instanceof Delphi_Function)
-			{
-				Delphi_Function f = (Delphi_Function) fn;
-				if (f.forward.name.var.getValue().equals(fnName))
-				{
-					func = f;
-					paramList = f.forward.args;
-					metrics = f._metrics;
-					body = f.body;
-					break;
-				}
-			}
+			throw new RuntimeException("Unable to find a function or procedure named " + fnName);
 		}
-		if (proc == null && func == null)
+		if (fn instanceof Delphi_Procedure)
 		{
-			throw new RuntimeException("Unable to find a function named " + name);
+			proc = (Delphi_Procedure) fn;
+			paramList = proc.forward.args;
+			metrics = proc._metrics;
+			body = proc.body;
+		}
+		else if (fn instanceof Delphi_Function)
+		{
+			func = (Delphi_Function) fn;
+			paramList = func.forward.args;
+			metrics = func._metrics;
+			body = func.body;
 		}
 
 		// Make sure the function args match up

@@ -61,47 +61,27 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (interpreter._TRACE) System.err.println("*** Calling " + id + "()");
 
 		// Have to search for the FUNCTION definition
-		Ada_Function func = null;
-		Ada_Procedure proc = null;
-		for (AbstractFunction absFn : interpreter._functionList)
-		{
-			if (absFn instanceof Ada_Function)
-			{
-				Ada_Function fn = (Ada_Function) absFn;
-				if (fn.id.getValue().equalsIgnoreCase(id.getValue()))
-				{
-					// Found it!
-					func = fn;
-					break;
-				}
-			}
-			else if (absFn instanceof Ada_Procedure)
-			{
-				Ada_Procedure fn = (Ada_Procedure) absFn;
-				if (fn.id.getValue().equalsIgnoreCase(id.getValue()))
-				{
-					// Found it!
-					proc = fn;
-					break;
-				}
-			}
-		}
+		AbstractFunction fn = interpreter._functionList.get(id.getValue());
 
 		Ada_FunctionParams params;
 		TokenList<Ada_Statement> stmts1;
 		TokenList<Ada_Statement> stmts2;
 		CallMetrics metrics;
 
-		if (func != null)
+		Ada_Function func = null;
+		Ada_Procedure proc = null;
+		if (fn instanceof Ada_Function)
 		{
+			func = (Ada_Function) fn;
 			params = func.params;
 			metrics = func._metrics;
 			stmts1 = func.stmts1;
 			stmts2 = func.stmts2;
 			interpreter.tryToInterpret(func); // Doesn't do much, just set metrics
 		}
-		else if (proc != null)
+		else if (fn instanceof Ada_Procedure)
 		{
+			proc = (Ada_Procedure) fn;
 			params = proc.params;
 			metrics = proc._metrics;
 			stmts1 = proc.stmts1;

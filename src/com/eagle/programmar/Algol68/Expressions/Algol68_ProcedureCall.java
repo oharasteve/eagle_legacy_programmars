@@ -57,25 +57,12 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		if (interpreter._TRACE) System.err.println("*** Calling " + id + "()");
 
 		// Have to search for the PROC definition
-		Algol68_Procedure proc = null;
-		for (AbstractFunction absFn : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(id.getValue());
+		if (fn == null)
 		{
-			if (absFn instanceof Algol68_Procedure)
-			{
-				Algol68_Procedure fn = (Algol68_Procedure) absFn;
-				if (fn.id.getValue().equalsIgnoreCase(id.getValue()))
-				{
-					// Found it!
-					proc = fn;
-					break;
-				}
-			}
+			throw new RuntimeException("Unable to find a procedure named " + id.getValue());
 		}
-
-		if (proc == null)
-		{
-			throw new RuntimeException("Unable to find a Procedure named " + id.getValue());
-		}
+		Algol68_Procedure proc = (Algol68_Procedure) fn;
 
 		// Make sure the function args match up
 		int argCount = args.arguments.getPrimaryCount();

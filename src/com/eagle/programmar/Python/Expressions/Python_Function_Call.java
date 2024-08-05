@@ -11,7 +11,6 @@ import com.eagle.programmar.Python.Python_Params.Python_Parameter;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
-import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
@@ -58,24 +57,12 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		}
 
 		// Look up the function in our function list
-		Python_FunctionDefinition func = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			Python_FunctionDefinition fn = (Python_FunctionDefinition) token;
-			if (fn.fnName.getWhich() instanceof Python_Function_Definition)
-			{
-				Python_Function_Definition def = (Python_Function_Definition) fn.fnName.getWhich();
-				if (def.getValue().equals(name))
-				{
-					func = fn;
-					break;
-				}
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
+		Python_FunctionDefinition func = (Python_FunctionDefinition) fn;
 
 		// Make sure the function args match up
 		int argCount = argList.getPrimaryCount();

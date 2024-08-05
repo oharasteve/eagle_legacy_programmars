@@ -90,20 +90,12 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		
 		// Look up the function
-		Perl_FunctionDefinition func = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			Perl_FunctionDefinition fn = (Perl_FunctionDefinition) token;
-			if (fn.fnName.getValue().equals(name))
-			{
-				func = fn;
-				break;
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
+		Perl_FunctionDefinition func = (Perl_FunctionDefinition) fn;
 	
 		// Make sure the function args match up
 		int argCount = 0;

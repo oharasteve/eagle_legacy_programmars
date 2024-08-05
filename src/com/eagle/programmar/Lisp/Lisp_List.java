@@ -28,64 +28,60 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		String name = first.showText();
 		
 		// See if it is one of the user defun's
-		for (AbstractFunction function : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
-			Lisp_DefunFunction func = (Lisp_DefunFunction) function;
-			if (func.name.getValue().equals(name))
+			throw new RuntimeException("Please implement " + name);
+		}
+		Lisp_DefunFunction func = (Lisp_DefunFunction) fn;
+
+		if (interpreter._TRACE) System.err.println("**** Calling function " + name);
+
+		int argCount = exprs.size() - 1;	// Minus 1 for the function name
+		int paramCount = func.parameters.size();
+		
+		if (argCount != paramCount)
+		{
+			throw new RuntimeException(
+					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
+		}
+
+		// Now assign all the parameters
+		if (argCount > 0)
+		{
+			for (int i = 0; i < argCount; i++)
 			{
-				if (interpreter._TRACE) System.err.println("**** Calling function " + name);
-
-				int argCount = exprs.size() - 1;	// Minus 1 for the function name
-				int paramCount = func.parameters.size();
-				
-				if (argCount != paramCount)
-				{
-					throw new RuntimeException(
-							"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
-				}
-
-				// Now assign all the parameters
-				if (argCount > 0)
-				{
-					for (int i = 0; i < argCount; i++)
-					{
-						Lisp_SExpr expr = exprs._elements.get(i + 1);
-						Lisp_ParamDef param = func.parameters._elements.get(i);
-						EagleValue val = interpreter.getEagleValue(expr);
-						interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-								param.parameter.getValue(), val);
-					}
-				}
-
-				// Prepare to evaluate the method
-				long startTime = System.nanoTime();
-
-				// And transfer control to the method
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-				for (Lisp_SExpr stmt : func.body._elements)
-				{
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
-
-				// The result was already put on the runtime stack
-				long elapsedTime = System.nanoTime() - startTime;
-				func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
-
-				// Now remove all those parameters
-				if (argCount > 0)
-				{
-					for (int i = 0; i < argCount; i++)
-					{
-						Lisp_ParamDef param = func.parameters._elements.get(i);
-						interpreter._symbolTable.removeSymbols(param.parameter.getValue());
-					}
-				}
-
-				return;
+				Lisp_SExpr expr = exprs._elements.get(i + 1);
+				Lisp_ParamDef param = func.parameters._elements.get(i);
+				EagleValue val = interpreter.getEagleValue(expr);
+				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+						param.parameter.getValue(), val);
 			}
 		}
-		
-		throw new RuntimeException("Please implement function: " + name);
+
+		// Prepare to evaluate the method
+		long startTime = System.nanoTime();
+
+		// And transfer control to the method
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		for (Lisp_SExpr stmt : func.body._elements)
+		{
+			result = interpreter.tryToInterpret(stmt);
+			if (result != Eagle_Statement_Result.NORMAL) break;
+		}
+
+		// The result was already put on the runtime stack
+		long elapsedTime = System.nanoTime() - startTime;
+		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+
+		// Now remove all those parameters
+		if (argCount > 0)
+		{
+			for (int i = 0; i < argCount; i++)
+			{
+				Lisp_ParamDef param = func.parameters._elements.get(i);
+				interpreter._symbolTable.removeSymbols(param.parameter.getValue());
+			}
+		}
 	}
 }

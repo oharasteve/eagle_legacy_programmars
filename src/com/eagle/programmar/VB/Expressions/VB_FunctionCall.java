@@ -67,23 +67,12 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		
 		// Look up the function
-		VB_FunctionDeclaration func = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			if (token instanceof VB_FunctionDeclaration)
-			{
-				VB_FunctionDeclaration fn = (VB_FunctionDeclaration) token;
-				if (fn.name.getValue().equals(name))
-				{
-					func = fn;
-					break;
-				}
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null || !(fn instanceof VB_FunctionDeclaration))
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
+		VB_FunctionDeclaration func = (VB_FunctionDeclaration) fn;
 
 		// Make sure the function args match up
 		int argCount = callArguments.args.getPrimaryCount();

@@ -72,20 +72,12 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 
 		// Look up the function in our function list
-		Julia_Function func = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			Julia_Function fn = (Julia_Function) token;
-			if (fn.id.getValue().equals(name))
-			{
-				func = fn;
-				break;
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
+		Julia_Function func = (Julia_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = argList.getPrimaryCount();

@@ -63,7 +63,7 @@ public class Ruby_Program extends EagleLanguage implements EagleRunnable
 				if (which instanceof Ruby_Function)
 				{
 					Ruby_Function fn = (Ruby_Function) which;
-					interpreter._functionList.add(fn);
+					interpreter._functionList.put(fn.id.getValue(), fn);
 				}
 			}
 		}

@@ -52,20 +52,13 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 	{
 		// Look it up
 		String name = label.getValue();
-		CMD_Label func = null;
-		for (AbstractFunction fn : interpreter._functionList)
-		{
-			CMD_Label lblDef = (CMD_Label) fn;
-			if (lblDef.label.getValue().equals(name))
-			{
-				func = lblDef;
-				break;
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a label named " + name);
 		}
+		CMD_Label func = (CMD_Label) fn;
+		// AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
 		interpreter._currentFunction = func;
 
 		// Now assign all the parameters (%1 %2 etc)
@@ -119,5 +112,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+
+		// interpreter._currentFunction = saveFunc;	// Restore previous value
 	}
 }

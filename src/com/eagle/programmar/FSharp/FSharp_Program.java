@@ -43,7 +43,7 @@ public class FSharp_Program extends EagleLanguage implements EagleRunnable
 					if (stmt.getWhich() instanceof FSharp_Function)
 					{
 						FSharp_Function func = (FSharp_Function) stmt.getWhich();
-						interpreter._functionList.add(func);
+						interpreter._functionList.put(func.id.getValue(), func);
 						if (interpreter._TRACE)
 						{
 							System.err.println("*** Found FSharp method " + func.id.getValue());

@@ -48,7 +48,7 @@ public class Javascript_Program extends EagleLanguage implements EagleRunnable
 				Javascript_Function_Definition functionName = func.implementation.functionName;
 				if (functionName != null && functionName.isPresent())
 				{
-					interpreter._functionList.add(func);
+					interpreter._functionList.put(functionName.getValue(), func);
 					if (interpreter._TRACE)
 					{
 						System.err.println("*** Found Javascript function " + functionName.getValue());

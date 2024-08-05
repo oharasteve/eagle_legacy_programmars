@@ -48,22 +48,12 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 			if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 	
 			// Have to search for the FUNCTION definition
-			Bash_Function_Explicit func = null;
-			for (AbstractFunction absFn : interpreter._functionList)
+			AbstractFunction fn = interpreter._functionList.get(name);
+			if (fn == null)
 			{
-				Bash_Function_Explicit fn = (Bash_Function_Explicit) absFn;
-				if (fn.fnName.getValue().equalsIgnoreCase(name))
-				{
-					// Found it!
-					func = fn;
-					break;
-				}
+				throw new RuntimeException("Unable to find a function named " + name);
 			}
-	
-			if (func == null)
-			{
-				throw new RuntimeException("Unable to find a Function named " + name);
-			}
+			Bash_Function_Explicit func = (Bash_Function_Explicit) fn;
 			AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
 			interpreter._currentFunction = func;	// Place to save exist code and string outputs
 			func._exitStatus = 0;

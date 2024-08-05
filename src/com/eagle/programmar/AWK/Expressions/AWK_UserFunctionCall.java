@@ -30,22 +30,12 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 		if (interpreter._TRACE) System.err.println("*** Calling " + functionName + "()");
 
 		// Have to search for the FUNCTION definition
-		AWK_Function func = null;
-		for (AbstractFunction absFn : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(functionName.getValue());
+		if (fn == null)
 		{
-			AWK_Function fn = (AWK_Function) absFn;
-			if (fn.name.getValue().equalsIgnoreCase(functionName.getValue()))
-			{
-				// Found it!
-				func = fn;
-				break;
-			}
+			throw new RuntimeException("Unable to find a function named " + functionName.getValue());
 		}
-
-		if (func == null)
-		{
-			throw new RuntimeException("Unable to find a Function named " + functionName);
-		}
+		AWK_Function func = (AWK_Function) fn;
 
 		// Doesn't do much, just set metrics
 		interpreter.tryToInterpret(func);

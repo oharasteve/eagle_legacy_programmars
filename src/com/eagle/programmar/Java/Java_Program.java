@@ -119,13 +119,13 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 					if (element.getWhich() instanceof Java_Method)
 					{
 						Java_Method meth = (Java_Method) element.getWhich();
-						interpreter._functionList.add(meth);
-						if (interpreter._TRACE)
+						AbstractToken which = meth.typeAndName.getWhich();
+						if (which instanceof Java_MethodType)
 						{
-							AbstractToken which = meth.typeAndName.getWhich();
-							if (which instanceof Java_MethodType)
+							Java_Method_Definition methodName = ((Java_MethodType) which).methodName;
+							interpreter._functionList.put(methodName.getValue(), meth);
+							if (interpreter._TRACE)
 							{
-								Java_Method_Definition methodName = ((Java_MethodType) which).methodName;
 								System.err.println("*** Found Java method " + methodName.getValue());
 							}
 						}

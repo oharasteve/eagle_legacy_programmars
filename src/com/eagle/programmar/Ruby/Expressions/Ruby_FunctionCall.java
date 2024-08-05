@@ -33,20 +33,12 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 		String name = id.getValue();
 		
 		// Look up the function
-		Ruby_Function func = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			Ruby_Function fn = (Ruby_Function) token;
-			if (fn.id.getValue().equals(name))
-			{
-				func = fn;
-				break;
-			}
-		}
-		if (func == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
+		Ruby_Function func = (Ruby_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = arguments.getPrimaryCount();

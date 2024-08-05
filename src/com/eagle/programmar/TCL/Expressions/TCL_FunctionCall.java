@@ -25,20 +25,12 @@ public class TCL_FunctionCall extends PrimaryOperator implements EagleRunnable
 		String name = function.getValue();
 		
 		// Look up the function
-		TCL_Procedure proc = null;
-		for (AbstractFunction token : interpreter._functionList)
-		{
-			TCL_Procedure pr = (TCL_Procedure) token;
-			if (pr.name.getValue().equals(name))
-			{
-				proc = pr;
-				break;
-			}
-		}
-		if (proc == null)
+		AbstractFunction fn = interpreter._functionList.get(name);
+		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a procedure named " + name);
 		}
+		TCL_Procedure proc = (TCL_Procedure) fn;
 
 		// Make sure the function args match up
 		int argCount = values.size();

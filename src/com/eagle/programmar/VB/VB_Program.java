@@ -38,7 +38,7 @@ public class VB_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof VB_FunctionDeclaration)
 			{
 				VB_FunctionDeclaration func = (VB_FunctionDeclaration) which;
-				interpreter._functionList.add(func);
+				interpreter._functionList.put(func.name.getValue(), func);
 				if (interpreter._TRACE)
 				{
 					System.err.println("*** Found VB function " + func.name.getValue());
@@ -47,7 +47,7 @@ public class VB_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof VB_SubDeclaration)
 			{
 				VB_SubDeclaration sub = (VB_SubDeclaration) which;
-				interpreter._functionList.add(sub);
+				interpreter._functionList.put(sub.name.getValue(), sub);
 				if (interpreter._TRACE)
 				{
 					System.err.println("*** Found VB sub " + sub.name.getValue());

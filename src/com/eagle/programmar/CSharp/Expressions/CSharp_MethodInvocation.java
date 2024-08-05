@@ -40,20 +40,12 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 		{
 			// Look it up
 			String name = ((CSharp_Identifier_Reference) token).getValue();
-			CSharp_Method proc = null;
-			for (AbstractFunction fn : interpreter._functionList)
-			{
-				CSharp_Method meth = (CSharp_Method) fn;
-				if (meth.methodName.getValue().equals(name))
-				{
-					proc = meth;
-					break;
-				}
-			}
-			if (proc == null)
+			AbstractFunction fn = interpreter._functionList.get(name);
+			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a method named " + name);
 			}
+			CSharp_Method meth = (CSharp_Method) fn;
 
 			// Make sure the function args match up
 			int argCount = 0;
@@ -61,10 +53,10 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount = 1 + argList.moreArgs.size();
 
 			int paramCount = 0;
-			if (proc.parameters.param.isPresent()) paramCount = 1;
-			if (proc.parameters.moreParams != null && proc.parameters.moreParams.isPresent())
+			if (meth.parameters.param.isPresent()) paramCount = 1;
+			if (meth.parameters.moreParams != null && meth.parameters.moreParams.isPresent())
 			{
-				paramCount = 1 + proc.parameters.moreParams.size();
+				paramCount = 1 + meth.parameters.moreParams.size();
 			}
 			
 			if (argCount != paramCount)
@@ -77,13 +69,13 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			if (argCount > 0)
 			{
 				CSharp_Argument arg = argList.arg;
-				CSharp_MethodParameter param = proc.parameters.param;
+				CSharp_MethodParameter param = meth.parameters.param;
 				for (int i = 0; i < argCount; i++)
 				{
 					if (i > 0)
 					{
 						arg = argList.moreArgs._elements.get(i-1).arg;
-						param = proc.parameters.moreParams._elements.get(i-1).param;
+						param = meth.parameters.moreParams._elements.get(i-1).param;
 					}
 					AbstractToken which = arg.getWhich();
 					if (which instanceof CSharp_ArgumentOut)
@@ -102,7 +94,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			// And transfer control to the method
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			// EagleValue returnValue = null;
-			AbstractToken body = proc.body.getWhich();
+			AbstractToken body = meth.body.getWhich();
 			if (body instanceof CSharp_MethodImplementation)
 			{
 				CSharp_MethodImplementation impl = (CSharp_MethodImplementation) body;
@@ -115,16 +107,16 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			proc._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			meth._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
 
 			// Now remove all those parameters
 			if (argCount > 0)
 			{
-				CSharp_MethodParameter param = proc.parameters.param;
+				CSharp_MethodParameter param = meth.parameters.param;
 				interpreter._symbolTable.removeSymbols(param.id.getValue());
 				for (int i = 1; i < argCount; i++)
 				{
-					param = proc.parameters.moreParams._elements.get(i-1).param;
+					param = meth.parameters.moreParams._elements.get(i-1).param;
 					interpreter._symbolTable.removeSymbols(param.id.getValue());
 				}
 			}

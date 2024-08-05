@@ -5,6 +5,7 @@ package com.eagle.programmar.COBOL.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
@@ -100,9 +101,16 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 			}
 
 			String piece = interpreter.getStrValue(what.expr);
-			result.append(piece);
+			result.append(piece.trim());
 		}
 
-		interpreter.pushStr(result.toString());
+		if (interpreter._TRACE)
+		{
+			System.err.println("****** STRING(pieces) is '" + result.toString() +"'");
+		}
+		
+		COBOL_StringPiece piece = pieces._elements.get(0);
+		interpreter._symbolTable.setSymbol(piece.getFileName(), piece.getStartLine(), piece.getStartChar(),
+				piece.intoVar.getValue(), new EagleString(result.toString()));
 	}
 }

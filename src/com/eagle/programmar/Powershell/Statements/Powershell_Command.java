@@ -64,70 +64,67 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			Powershell_Function_Reference fnName = (Powershell_Function_Reference) which.getWhich();
 			
 			// Is it one of the defined Functions?
-			for (AbstractFunction absFn : interpreter._functionList)
+			AbstractFunction fn = interpreter._functionList.get(fnName.getValue());
+			if (fn == null)
 			{
-				Powershell_FunctionStatement func = (Powershell_FunctionStatement) absFn;
-				if (func.name.getValue().equals(fnName.getValue()))
-				{
-					if (_metrics == null)
-					{
-						_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), getFileName(), getStartLine(),
-								getStartChar());
-					}
-					
-					// Call the function
-					if (interpreter._TRACE) System.err.println("**** Calling " + func.name.getValue());
+				throw new RuntimeException("Unable to find a function named " + fnName.getValue());
+			}
+			Powershell_FunctionStatement func = (Powershell_FunctionStatement) fn;
 
-					// Make sure the function args match up
-					int argCount = argList.size();
-					int paramCount = func.params.params.getPrimaryCount();
-					if (argCount != paramCount)
-					{
-						throw new RuntimeException(
-								"Function " + func.name + " expects #args = " + paramCount + ", but was given " + argCount);
-					}
-
-					// Now assign all the parameters
-					for (int i = 0; i < argCount; i++)
-					{
-						Powershell_CommandArg arg = argList._elements.get(i);
-						Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
-
-						if (arg.arg.getWhich() instanceof Powershell_Expression)
-						{
-							Powershell_Expression expr = (Powershell_Expression) arg.arg.getWhich();
-							EagleValue val = interpreter.getEagleValue(expr);
-							interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-									param.var.id.getValue(), val);
-						}
-					}
-
-					// Prepare to evaluate the method
-					long startTime = System.nanoTime();
-
-					// And transfer control to the method
-					Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-					for (Powershell_Statement stmt : func.stmts._elements)
-					{
-						result = interpreter.tryToInterpret(stmt.element);
-						if (result != Eagle_Statement_Result.NORMAL) break;
-					}
-
-					// The result was already put on the runtime stack
-					long elapsedTime = System.nanoTime() - startTime;
-					func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
-
-					// Now remove all those parameters
-					for (int i = 0; i < argCount; i++)
-					{
-						Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
-						interpreter._symbolTable.removeSymbols(param.var.id.getValue());
-					}
-					return;
-				}
+			if (_metrics == null)
+			{
+				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), getFileName(), getStartLine(),
+						getStartChar());
 			}
 			
-			throw new RuntimeException("Unable to find a Function named " + fnName.getValue());
+			// Call the function
+			if (interpreter._TRACE) System.err.println("**** Calling " + func.name.getValue());
+
+			// Make sure the function args match up
+			int argCount = argList.size();
+			int paramCount = func.params.params.getPrimaryCount();
+			if (argCount != paramCount)
+			{
+				throw new RuntimeException(
+						"Function " + func.name + " expects #args = " + paramCount + ", but was given " + argCount);
+			}
+
+			// Now assign all the parameters
+			for (int i = 0; i < argCount; i++)
+			{
+				Powershell_CommandArg arg = argList._elements.get(i);
+				Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
+
+				if (arg.arg.getWhich() instanceof Powershell_Expression)
+				{
+					Powershell_Expression expr = (Powershell_Expression) arg.arg.getWhich();
+					EagleValue val = interpreter.getEagleValue(expr);
+					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+							param.var.id.getValue(), val);
+				}
+			}
+
+			// Prepare to evaluate the method
+			long startTime = System.nanoTime();
+
+			// And transfer control to the method
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			for (Powershell_Statement stmt : func.stmts._elements)
+			{
+				result = interpreter.tryToInterpret(stmt.element);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+
+			// The result was already put on the runtime stack
+			long elapsedTime = System.nanoTime() - startTime;
+			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+
+			// Now remove all those parameters
+			for (int i = 0; i < argCount; i++)
+			{
+				Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
+				interpreter._symbolTable.removeSymbols(param.var.id.getValue());
+			}
 		}
 	}
 }

@@ -39,22 +39,12 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		if (interpreter._TRACE) System.err.println("*** Calling " + name);
 
 		// Have to search for the FUNCTION definition
-		Eaglish_Function_Block func = null;
-		for (AbstractFunction absFn : interpreter._functionList)
+		AbstractFunction fn = interpreter._functionList.get(name.getValue());
+		if (fn == null)
 		{
-			Eaglish_Function_Block fn = (Eaglish_Function_Block) absFn;
-			if (fn.var.getValue().equalsIgnoreCase(name.getValue()))
-			{
-				// Found it!
-				func = fn;
-				break;
-			}
+			throw new RuntimeException("Unable to find a function named " + name.getValue());
 		}
-
-		if (func == null)
-		{
-			throw new RuntimeException("Unable to find a FUNCTION named " + name);
-		}
+		Eaglish_Function_Block func = (Eaglish_Function_Block) fn;
 
 		// Count the parameters
 		int expected = func.parameterStatements.size();
