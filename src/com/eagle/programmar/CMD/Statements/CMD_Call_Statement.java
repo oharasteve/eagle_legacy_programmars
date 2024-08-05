@@ -10,7 +10,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
-import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
+import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabel;
 import com.eagle.programmar.CMD.Symbols.CMD_Label_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
@@ -70,15 +70,18 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 		// Now assign all the parameters (%1 %2 etc)
 		int argCount = 0;
-		for (CMD_Call_Argument arg : args._elements)
+		if (args != null && args.isPresent())
 		{
-			if (arg.getWhich() instanceof CMD_ExpressionComma)
+			for (CMD_Call_Argument arg : args._elements)
 			{
-				CMD_ExpressionComma argComma = (CMD_ExpressionComma) arg.getWhich();
-				argCount++;
-				EagleValue val = interpreter.getEagleValue(argComma.arg);
-				interpreter._symbolTable.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),
-						"%~" + argCount, val);
+				if (arg.getWhich() instanceof CMD_ExpressionComma)
+				{
+					CMD_ExpressionComma argComma = (CMD_ExpressionComma) arg.getWhich();
+					argCount++;
+					EagleValue val = interpreter.getEagleValue(argComma.arg);
+					interpreter._symbolTable.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),
+							"%~" + argCount, val);
+				}
 			}
 		}
 
@@ -89,7 +92,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		CMD_Program pgm = (CMD_Program) interpreter._lang;
 		boolean foundLabel = false;
-		for (CMD_CommandOrLabelOrUnparsed cmdOr : pgm.commands._elements)
+		for (CMD_CommandOrLabel cmdOr : pgm.commands._elements)
 		{
 			if (foundLabel)
 			{

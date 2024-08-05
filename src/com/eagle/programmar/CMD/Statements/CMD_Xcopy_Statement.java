@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.Terminals.CMD_Filename;
+import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
@@ -17,16 +17,18 @@ import com.eagle.tokens.punctuation.PunctuationSlash;
 public class CMD_Xcopy_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) CMD_Keyword XCOPY = new CMD_Keyword("XCOPY");
-	public @S(20) CMD_Literal source;
-	public @S(30) CMD_Literal target;
-	public @S(40) @OPT TokenList<CMD_XcopyOption> options;
+	public @S(20) @OPT TokenList<CMD_XcopyOption> options1;
+	public @S(30) CMD_Literal source;
+	public @S(40) CMD_Literal target;
+	public @S(50) @OPT TokenList<CMD_XcopyOption> options2;
 
 	public static class CMD_XcopyOption extends TokenChooser
 	{
 		public @CHOICE static class Powershell_XcopyOptionLetter extends TokenSequence
 		{
 			public @S(10) PunctuationSlash XXslash;
-			public @S(20) CMD_KeywordChoice XXopt = new CMD_KeywordChoice("D", "E", "F", "H", "I", "R", "V", "Y");
+			public @S(20) CMD_KeywordChoice XXopt = new CMD_KeywordChoice(
+					"D", "E", "F", "H", "I", "Q", "R", "S", "V", "Y");
 		}
 
 		public @CHOICE static class CMD_XcopyOptionExclude extends TokenSequence
@@ -34,7 +36,7 @@ public class CMD_Xcopy_Statement extends TokenSequence implements AbstractStatem
 			public @S(10) PunctuationSlash slash;
 			public @S(20) CMD_Keyword EXCLUDE = new CMD_Keyword("EXCLUDE");
 			public @S(30) PunctuationColon colon;
-			public @S(40) CMD_Filename filename;
+			public @S(40) CMD_BasicExpression filename;
 		}
 	}
 }

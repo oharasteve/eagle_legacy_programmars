@@ -18,19 +18,27 @@ public class CMD_PctPctVariable extends TerminalIdentifierToken implements Eagle
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
-		int endChar = _currentChar + 2;
+		int endChar = _currentChar + 1;
 		if (endChar >= recLen) return false;
 		if (rec.charAt(_currentChar) != '%') return false;
-		if (rec.charAt(_currentChar + 1) == '%')
+		char nextCh = rec.charAt(_currentChar + 1);
+		if (nextCh == '%')
 		{
 			// More stuff goes here, starting with ~
-			if (!Character.isLetter(rec.charAt(_currentChar + 2))) return false;
+			endChar = _currentChar + 2;
+			if (endChar >= recLen) return false;
+			if (!Character.isLetter(rec.charAt(endChar))) return false;
 		}
-		else if (rec.charAt(_currentChar + 1) == '~')
+		else if (nextCh == '~')
 		{
-			if (!Character.isDigit(rec.charAt(_currentChar + 2))) return false;
+			endChar = _currentChar + 2;
+			if (endChar >= recLen) return false;
+			if (!Character.isDigit(rec.charAt(endChar))) return false;
 		}
-		else return false;
+		else if (!Character.isDigit(nextCh))
+		{
+			return false;
+		}
 		
 		_id = rec.substring(_currentChar, endChar + 1);
 		foundIt(_currentLine, endChar);

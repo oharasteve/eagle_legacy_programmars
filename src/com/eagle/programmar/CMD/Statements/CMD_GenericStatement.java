@@ -18,7 +18,7 @@ public class CMD_GenericStatement extends TokenSequence
 
 	public static class CMD_GenericArgument extends TokenChooser
 	{
-		public @CHOICE CMD_PunctuationChoice XXpunct = new CMD_PunctuationChoice("-", "/", "%*");
+		public @CHOICE CMD_PunctuationChoice XXpunct = new CMD_PunctuationChoice(",", "-", "/", "%*");
 		public @CHOICE CMD_Filename XXfileName;
 		public @LAST CMD_Expression XXexpr;
 		public @LAST CMD_RawArgument XXrawArg;

@@ -9,9 +9,9 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Statement;
-import com.eagle.programmar.CMD.Terminals.CMD_Filename;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.programmar.CMD.Terminals.CMD_PctPctVariable;
@@ -34,6 +34,8 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	public @S(40) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 	public @S(50) CMD_Statement stmt;
 
+	private @SKIP ForLoopMetrics _metrics = null;
+
 	public static class CMD_For_More_Args extends TokenSequence
 	{
 		public @S(10) @OPT PunctuationComma comma;
@@ -48,36 +50,67 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 
 	public static class CMD_Simple_For extends TokenSequence
 	{
-		public @S(10) @OPT CMD_Simple_For_Option option;
+		public @S(10) CMD_Simple_For_Type type;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) CMD_RawArgument arg;
+		public @S(40) @OPT TokenList<CMD_For_More_Args> moreArgs;
+		public @S(50) PunctuationRightParen rightParen;
+	}
+	
+	public static class CMD_Simple_For_Type extends TokenChooser
+	{
+		public @CHOICE CMD_For_No_Options noOptions;
+		public @LAST CMD_For_D forD;
+		public @CHOICE CMD_For_F forF;
+		public @CHOICE CMD_For_R_Filename forR_filename;
+		public @CHOICE CMD_For_R_no_Filename forR_noFilename;
+	}
+	
+	public static class CMD_For_No_Options extends TokenSequence
+	{
+		public @S(10) CMD_PctPctVariable var;
+		public @S(20) CMD_Keyword IN = new CMD_Keyword("in");
+	}
+	
+	public static class CMD_For_D extends TokenSequence
+	{
+		public @S(10) CMD_Option_D optD;
 		public @S(20) CMD_PctPctVariable var;
 		public @S(30) CMD_Keyword IN = new CMD_Keyword("in");
-		public @S(40) PunctuationLeftParen leftParen;
-		public @S(50) CMD_RawArgument arg;
-		public @S(60) @OPT TokenList<CMD_For_More_Args> moreArgs;
-		public @S(70) PunctuationRightParen rightParen;
-		
-		public static class CMD_Simple_For_Option extends TokenChooser
-		{
-			public @CHOICE static class CMD_For_D extends TokenSequence
-			{
-				public @S(10) PunctuationSlash slash;
-				public @S(20) CMD_Keyword D = new CMD_Keyword("d");
-			}
+	}
 
-			public @CHOICE static class CMD_For_F extends TokenSequence
-			{
-				public @S(10) PunctuationSlash slash;
-				public @S(20) CMD_Keyword F = new CMD_Keyword("f");
-				public @S(30) @OPT CMD_Literal options;
-			}
+	public static class CMD_For_F extends TokenSequence
+	{
+		public @S(10) PunctuationSlash slash;
+		public @S(20) CMD_Keyword F = new CMD_Keyword("f");
+		public @S(30) @OPT CMD_Literal options;
+		public @S(40) CMD_PctPctVariable var;
+		public @S(50) CMD_Keyword IN = new CMD_Keyword("in");
+	}
 
-			public @CHOICE static class CMD_For_R extends TokenSequence
-			{
-				public @S(10) PunctuationSlash slash;
-				public @S(20) CMD_Keyword R = new CMD_Keyword("r");
-				public @S(30) @OPT CMD_Filename fileName;
-			}
-		}
+	public static class CMD_For_R_Filename extends TokenSequence
+	{
+		public @S(10) @OPT CMD_Option_D forD; 
+		public @S(20) PunctuationSlash slash;
+		public @S(30) CMD_Keyword R = new CMD_Keyword("r");
+		public @S(40) CMD_BasicExpression fileName;
+		public @S(50) CMD_PctPctVariable var;
+		public @S(60) CMD_Keyword IN = new CMD_Keyword("in");
+	}
+
+	public static class CMD_For_R_no_Filename extends TokenSequence
+	{
+		public @S(10) @OPT CMD_Option_D optD; 
+		public @S(20) PunctuationSlash slash;
+		public @S(30) CMD_Keyword R = new CMD_Keyword("r");
+		public @S(40) CMD_PctPctVariable var;
+		public @S(50) CMD_Keyword IN = new CMD_Keyword("in");
+	}
+	
+	public static class CMD_Option_D extends TokenSequence
+	{
+		public @S(10) PunctuationSlash slash;
+		public @S(20) CMD_Keyword D = new CMD_Keyword("d");
 	}
 
 	public static class CMD_For_L extends TokenSequence
@@ -95,8 +128,6 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 		public @S(110) PunctuationRightParen rightParen;
 	}
 
-	private @SKIP ForLoopMetrics _metrics = null;
-
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
@@ -111,11 +142,12 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 		if (whichFor.getWhich() instanceof CMD_Simple_For)
 		{
 			CMD_Simple_For simpleFor = (CMD_Simple_For) whichFor.getWhich();
-			if (simpleFor.option != null && simpleFor.option.isPresent())
+			if (!(simpleFor.type.getWhich() instanceof CMD_For_No_Options))
 			{
 				throw new RuntimeException("FOR statement cannot have options");
 			}
-	
+			CMD_For_No_Options simple = (CMD_For_No_Options) simpleFor.type.getWhich();
+			
 			int numArgs = 1;
 			if (simpleFor.moreArgs != null && simpleFor.moreArgs.isPresent())
 			{
@@ -136,8 +168,8 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	
 				metric.iterate();
 				String val = interpreter.getStrValue(nextArg);
-				interpreter._symbolTable.setSymbol(simpleFor.var.getFileName(), simpleFor.var.getStartLine(),
-						simpleFor.var.getStartChar(), simpleFor.var.getValue(), new EagleString(val));
+				interpreter._symbolTable.setSymbol(simple.var.getFileName(), simple.var.getStartLine(),
+						simple.var.getStartChar(), simple.var.getValue(), new EagleString(val));
 	
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break; 

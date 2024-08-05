@@ -69,12 +69,12 @@ public class CMD_Command extends TokenSequence implements EagleRunnableWithResul
 	public static class CMD_More_Statements extends TokenSequence
 	{
 		public @S(10) CMD_Statement_Separator separator;
-		public @S(20) CMD_Statement command;
+		public @S(20) @OPT CMD_Statement command;
 		public @S(30) @OPT TokenList<CMD_Redirect> redirects;
 
 		public static class CMD_Statement_Separator extends TokenChooser
 		{
-			public @CHOICE CMD_PunctuationChoice XXseparator = new CMD_PunctuationChoice("||", "|", "&&");
+			public @CHOICE CMD_PunctuationChoice XXseparator = new CMD_PunctuationChoice(";", "||", "|", "&&");
 		}
 	}
 

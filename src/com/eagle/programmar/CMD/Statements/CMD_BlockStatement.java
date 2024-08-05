@@ -18,10 +18,10 @@ public class CMD_BlockStatement extends TokenSequence implements EagleRunnableWi
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT CMD_EndOfLine eoln;
-	public @S(30) TokenList<CMD_CommandOrLabel> commands;
+	public @S(30) TokenList<CMD_LabelOrCommand> commands;
 	public @S(40) PunctuationRightParen rightParen;
 
-	public static class CMD_CommandOrLabel extends TokenChooser
+	public static class CMD_LabelOrCommand extends TokenChooser
 	{
 		public @CHOICE CMD_Command XXcommand;
 		public @CHOICE CMD_Label XXlabel;
@@ -31,11 +31,11 @@ public class CMD_BlockStatement extends TokenSequence implements EagleRunnableWi
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (CMD_CommandOrLabel cmdOrLabel : commands._elements)
+		for (CMD_LabelOrCommand labelOrCmd : commands._elements)
 		{
-			if (cmdOrLabel.getWhich() instanceof CMD_Command)
+			if (labelOrCmd.getWhich() instanceof CMD_Command)
 			{
-				CMD_Command cmd = (CMD_Command) cmdOrLabel.getWhich();
+				CMD_Command cmd = (CMD_Command) labelOrCmd.getWhich();
 				result = interpreter.tryToInterpret(cmd.command.getWhich());
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}

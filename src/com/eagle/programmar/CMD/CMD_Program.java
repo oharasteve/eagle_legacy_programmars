@@ -8,7 +8,6 @@ import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.CMD.Statements.CMD_Unparsed_Statement;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -28,20 +27,19 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 		return "http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/";
 	}
 
-	public @S(10) @OPT TokenList<CMD_CommandOrLabelOrUnparsed> commands;
+	public @S(10) @OPT TokenList<CMD_CommandOrLabel> commands;
 
-	public @SKIP static class CMD_CommandOrLabelOrUnparsed extends TokenChooser
+	public @SKIP static class CMD_CommandOrLabel extends TokenChooser
 	{
 		public @CHOICE CMD_Command XXcommand;
 		public @CHOICE CMD_Label XXlabel;
-		public @LAST CMD_Unparsed_Statement XXunparsed;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
+		for (CMD_CommandOrLabel stmt : commands._elements)
 		{
 			AbstractToken which = stmt.getWhich();
 			if (which instanceof CMD_Label)
@@ -58,7 +56,7 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 
 		// Second pass, execute the program
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
+		for (CMD_CommandOrLabel stmt : commands._elements)
 		{
 			if (stmt.getWhich() instanceof CMD_Command)
 			{

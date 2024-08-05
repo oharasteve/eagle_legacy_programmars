@@ -7,7 +7,7 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
-import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabelOrUnparsed;
+import com.eagle.programmar.CMD.CMD_Program.CMD_CommandOrLabel;
 import com.eagle.programmar.CMD.Symbols.CMD_Identifier_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.AbstractFunction;
@@ -61,7 +61,7 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		CMD_Program pgm = (CMD_Program) interpreter._lang;
 		boolean foundLabel = false;
-		for (CMD_CommandOrLabelOrUnparsed cmdOr : pgm.commands._elements)
+		for (CMD_CommandOrLabel cmdOr : pgm.commands._elements)
 		{
 			if (foundLabel)
 			{
