@@ -3,8 +3,11 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
@@ -21,6 +24,8 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 	public @S(50) @OPT COBOL_Else elseClause;
 	public @S(60) @OPT COBOL_Keyword ENDIF = new COBOL_Keyword("END-IF");
 
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
+
 	public static class COBOL_Else extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword ELSE = new COBOL_Keyword("ELSE");
@@ -30,9 +35,22 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			if (elseClause != null && elseClause.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
+						elseClause.getStartLine(), elseClause.getStartChar()));
+			}
+		}
+		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
 		boolean cond = interpreter.getBoolValue(condition);
+		_metrics.get(0).completedIf(cond);
 		if (cond)
 		{
 			for (COBOL_StatementOrComment stmt : thenActions._elements)
@@ -41,8 +59,9 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 		}
-		else if (elseClause.isPresent())
+		else if (elseClause != null && elseClause.isPresent())
 		{
+			_metrics.get(1).completedIf(true);
 			for (COBOL_StatementOrComment stmt : elseClause.elseActions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);

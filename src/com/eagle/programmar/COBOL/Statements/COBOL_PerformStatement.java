@@ -15,7 +15,7 @@ import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
-import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -40,12 +40,38 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		public @S(20) COBOL_Identifier_Reference performEndParagraph;
 	}
 
-	public static class COBOL_PerformParagraph extends TokenSequence
+	public static class COBOL_PerformParagraph extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) COBOL_Identifier_Reference performStartParagraph;
 		public @S(20) @OPT COBOL_Paragraph_or_Section_Thru performThrough;
 		public @S(30) @OPT COBOL_PerformTestWhen testWhen;
 		public @S(40) @OPT TokenList<COBOL_PerformClause> clauseList;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			if (performThrough.isPresent() || testWhen.isPresent())
+			{
+				throw new RuntimeException("Can only PERFORM one paragraph right now");
+			}
+
+			String startPara = performStartParagraph.getValue();
+			if (interpreter._TRACE) System.err.println("*** Calling " + startPara);
+
+			// Have to search for the PARAGRAPH definition
+			AbstractFunction fn = interpreter._functionList.get(startPara);
+			if (fn == null)
+			{
+				throw new RuntimeException("Unable to find a Paragraph named " + startPara);
+			}
+			COBOL_Paragraph paragraph = (COBOL_Paragraph) fn;
+
+			// Evaluate the paragraph
+			for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
+			{
+				interpreter.tryToInterpret(sentence);
+			}
+		}
 	}
 
 	public static class COBOL_PerformWhat extends TokenChooser
@@ -103,37 +129,15 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (testWhen.isPresent()) throw new RuntimeException("Can't handle PERFORM TEST yet");
-		AbstractToken which = what.getWhich();
-		if (!(which instanceof COBOL_PerformParagraph))
+
+		if (what.getWhich() instanceof COBOL_PerformParagraph)
+		{
+			COBOL_PerformParagraph para = (COBOL_PerformParagraph) what.getWhich();
+			para.interpret(interpreter);
+		}
+		else
 		{
 			throw new RuntimeException("Can only handle simple PERFORMs right now");
-		}
-		COBOL_PerformParagraph para = (COBOL_PerformParagraph) which;
-		if (para.performThrough.isPresent() || para.testWhen.isPresent())
-		{
-			throw new RuntimeException("Can only PERFORM one paragraph right now");
-		}
-
-		String startPara = para.performStartParagraph.getValue();
-		if (interpreter._TRACE) System.err.println("*** Calling " + startPara);
-
-		// Have to search for the PARAGRAPH definition
-		COBOL_Paragraph paragraph = null;
-		if (interpreter._paragraphs.containsKey(startPara))
-		{
-			// Found it!
-			paragraph = (COBOL_Paragraph) interpreter._paragraphs.get(startPara);
-		}
-
-		if (paragraph == null)
-		{
-			throw new RuntimeException("Unable to find a Paragraph named " + startPara);
-		}
-
-		// Evaluate the paragraph
-		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
-		{
-			interpreter.tryToInterpret(sentence);
 		}
 	}
 }

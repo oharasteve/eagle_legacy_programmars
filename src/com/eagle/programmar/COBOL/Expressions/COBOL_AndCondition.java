@@ -20,6 +20,10 @@ public class COBOL_AndCondition extends PrecedenceOperator implements EagleRunna
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (relationalOperator != null && relationalOperator.isPresent())
+		{
+			throw new RuntimeException("Can't handle AND with relational operators yet");
+		}
 		boolean leftValue = interpreter.getBoolValue(left);
 		boolean rightValue = interpreter.getBoolValue(right);
 		interpreter.pushBool(leftValue && rightValue);

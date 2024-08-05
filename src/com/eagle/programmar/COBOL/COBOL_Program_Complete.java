@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.COBOL;
 
-import java.util.HashMap;
-
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_DataSection;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
-import com.eagle.tokens.AbstractParagraph;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -69,7 +66,6 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 
 	private void collectParagraphNames(EagleInterpreter interpreter)
 	{
-		interpreter._paragraphs = new HashMap<String, AbstractParagraph>();
 		for (COBOL_Section section : procedureDiv.sections._elements)
 		{
 			for (COBOL_Paragraph paragraph : section.paragraphs._elements)
@@ -77,7 +73,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 				if (paragraph.paragraphHeaders._elements.size() > 0)
 				{
 					String paragraphName = paragraph.paragraphHeaders._elements.get(0).paragraphName.getValue();
-					interpreter._paragraphs.put(paragraphName, paragraph);
+					interpreter._functionList.put(paragraphName, paragraph);
 					if (interpreter._TRACE) System.err.println("*** Found paragraph " + paragraphName);
 				}
 			}

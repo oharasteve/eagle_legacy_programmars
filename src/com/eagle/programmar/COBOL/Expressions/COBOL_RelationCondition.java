@@ -8,12 +8,7 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_RelationalOperator;
-import com.eagle.programmar.COBOL.COBOL_RelationalOperator.COBOL_Equal;
-import com.eagle.programmar.COBOL.COBOL_RelationalOperator.COBOL_Greater;
-import com.eagle.programmar.COBOL.COBOL_RelationalOperator.COBOL_Less;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
-import com.eagle.programmar.COBOL.Terminals.COBOL_PunctuationChoice;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 
 public class COBOL_RelationCondition extends PrecedenceOperator implements EagleRunnable
@@ -29,71 +24,50 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = relationalOperator.canonicalForm(); // Returns "<", "=", etc.
 		boolean not = NOT.isPresent();
+		boolean result;
 
-		if (leftValue.isInteger() && rightValue.isInteger())
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = interpreter.getStrValue(left);
+			String rightStr = interpreter.getStrValue(right);
+			switch (oper)
+			{
+			case "=":
+				result = leftStr.equals(rightStr);
+				break;
+			default:
+				throw new RuntimeException("Unable to handle " + oper + " for strings");
+			}
+		}
+		else
 		{
 			int leftInt = interpreter.getIntValue(left);
 			int rightInt = interpreter.getIntValue(right);
-			AbstractToken which = relationalOperator.getWhich();
-			boolean result;
-			if (which instanceof COBOL_PunctuationChoice)
+			switch (oper)
 			{
-				String oper = ((COBOL_PunctuationChoice) which).getValue();
-				switch (oper)
-				{
-				case "=":
-					result = leftInt == rightInt;
-					break;
-				case "<":
-					result = leftInt < rightInt;
-					break;
-				case "<=":
-					result = leftInt <= rightInt;
-					break;
-				case ">":
-					result = leftInt > rightInt;
-					break;
-				case ">=":
-					result = leftInt >= rightInt;
-					break;
-				default:
-					throw new RuntimeException("Unable to handle " + oper);
-				}
-			}
-			else if (which instanceof COBOL_Greater)
-			{
-				COBOL_Greater greater = (COBOL_Greater) which;
-				if (greater.orEqual.isPresent())
-				{
-					result = leftInt >= rightInt;
-				}
-				else
-				{
-					result = leftInt > rightInt;
-				}
-			}
-			else if (which instanceof COBOL_Equal)
-			{
+			case "=":
 				result = leftInt == rightInt;
+				break;
+			case "<":
+				result = leftInt < rightInt;
+				break;
+			case "<=":
+				result = leftInt <= rightInt;
+				break;
+			case ">":
+				result = leftInt > rightInt;
+				break;
+			case ">=":
+				result = leftInt >= rightInt;
+				break;
+			default:
+				throw new RuntimeException("Unable to handle " + oper + " for integers");
 			}
-			else if (which instanceof COBOL_Less)
-			{
-				COBOL_Less less = (COBOL_Less) which;
-				if (less.orEqual.isPresent())
-				{
-					result = leftInt <= rightInt;
-				}
-				else
-				{
-					result = leftInt < rightInt;
-				}
-			}
-			else
-				throw new RuntimeException("Unable to handle " + which.getClass().getName());
-
-			if (not) result = !result;
-			interpreter.pushBool(result);
 		}
+
+		if (not) result = !result;
+		interpreter.pushBool(result);
 	}
 }

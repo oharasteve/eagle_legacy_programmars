@@ -69,6 +69,10 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		case "LENGTH":
 			String str1 = oneStringArg(interpreter, funcName);
 			interpreter.pushInt(str1.length());
+			if (interpreter._TRACE)
+			{
+				System.err.println("****** LENGTH('" + str1 + "') is " + str1.length());
+			}
 			break;
 		case "TRIM":
 			String str2 = oneStringArg(interpreter, funcName);
@@ -78,17 +82,23 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 			{
 				if (arg.LEADING.getValue().equals("TRAILING")) leading = false;
 			}
+			String str3;
 			if (leading)
 			{
-				interpreter.pushStr(str2.stripLeading());
+				str3 = str2.stripLeading();
 			}
 			else
 			{
-				interpreter.pushStr(str2.stripTrailing());
+				str3 = str2.stripTrailing();
 			}
+			if (interpreter._TRACE)
+			{
+				System.err.println("****** TRIM('" + str2 + "') is '" + str3 +"'");
+			}
+			interpreter.pushStr(str3);
 			break;
 		default:
-			throw new RuntimeException("UNable to evaluate function " + func);
+			throw new RuntimeException("Unable to evaluate function " + func);
 		}
 	}
 

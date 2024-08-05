@@ -5,12 +5,14 @@ package com.eagle.programmar.COBOL.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
+import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement.COBOL_AddNoGiving.COBOL_AddTo.COBOL_AddMoreVars;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -92,12 +94,28 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 		}
 
 		AbstractToken which2 = noGiving.addTo.var.getWhich();
+		EagleValue val = interpreter.getEagleValue(noGiving.expr);
+		int newVal = val.forceIntegerValue();
 		if (which2 instanceof COBOL_UserVariable)
 		{
 			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
-			EagleValue val = interpreter.getEagleValue(noGiving.expr);
+			EagleValue oldValue = interpreter._symbolTable.findSymbol(variable.id.getValue());
 			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					variable.id.getValue(), val);
+					variable.id.getValue(), new EagleInteger(newVal + oldValue.forceIntegerValue()));
+		}
+		if (noGiving.addTo.moreVars != null && noGiving.addTo.moreVars.isPresent())
+		{
+			for (COBOL_AddMoreVars more : noGiving.addTo.moreVars._elements)
+			{
+				AbstractToken which3 = more.var.getWhich();
+				if (which3 instanceof COBOL_UserVariable)
+				{
+					COBOL_UserVariable variable = (COBOL_UserVariable) which3;
+					EagleValue oldValue = interpreter._symbolTable.findSymbol(variable.id.getValue());
+					interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+							variable.id.getValue(), new EagleInteger(newVal + oldValue.forceIntegerValue()));
+				}
+			}
 		}
 	}
 }
