@@ -3,16 +3,23 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Variable;
+import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
+import com.eagle.programmar.COBOL.Statements.COBOL_SubtractStatement.COBOL_SubtractType.COBOL_SubtractNoGiving;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class COBOL_SubtractStatement extends COBOL_AbstractStatement
+public class COBOL_SubtractStatement extends COBOL_AbstractStatement implements EagleRunnable
 {
 	public @S(10) @DOC("rlpssubt.htm") COBOL_Keyword SUBTRACT = new COBOL_Keyword("SUBTRACT");
 	public @S(20) COBOL_Expression expr;
@@ -47,6 +54,32 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 				public @S(10) @OPT PunctuationComma comma;
 				public @S(20) COBOL_Expression expr;
 			}
+		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		AbstractToken which = type.getWhich();
+		if (!(which instanceof COBOL_SubtractNoGiving))
+		{
+			throw new RuntimeException("Cannot handle " + which + " yet");
+		}
+		COBOL_SubtractNoGiving noGiving = (COBOL_SubtractNoGiving) which;
+		if (noGiving.moreVars != null && noGiving.moreVars.isPresent() && noGiving.moreVars.size() > 0)
+		{
+			throw new RuntimeException("Cannot handle multiple expressions yet");
+		}
+
+		AbstractToken which2 = noGiving.var.getWhich();
+		EagleValue val = interpreter.getEagleValue(expr);
+		int newVal = val.forceIntegerValue();
+		if (which2 instanceof COBOL_UserVariable)
+		{
+			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
+			EagleValue oldValue = interpreter._symbolTable.findSymbol(variable.id.getValue());
+			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+					variable.id.getValue(), new EagleInteger(oldValue.forceIntegerValue() - newVal));
 		}
 	}
 }

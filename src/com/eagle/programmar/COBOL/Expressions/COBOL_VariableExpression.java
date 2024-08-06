@@ -79,8 +79,11 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 					COBOL_RegularSubscript subscript = (COBOL_RegularSubscript) which;
 					if (subscript.range.isPresent())
 					{
+						int len = str.length();
 						int sc = interpreter.getIntValue(subscript.expr);
-						int ec = interpreter.getIntValue(subscript.range.expr);
+						int nc = interpreter.getIntValue(subscript.range.expr);
+						int ec = sc + nc - 1;
+						if (ec > len) ec = len;
 						String piece = str.substring(sc - 1, ec);
 						interpreter.pushStr(piece);
 						return;

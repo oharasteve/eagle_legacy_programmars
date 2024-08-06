@@ -5,6 +5,7 @@ package com.eagle.programmar.COBOL;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
@@ -19,6 +20,8 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 {
 	public @S(10) @OPT TokenList<COBOL_ParagraphHeader> paragraphHeaders;
 	public @S(20) TokenList<COBOL_SentenceOrComment> sentences;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class COBOL_SentenceOrComment extends TokenChooser
 	{
