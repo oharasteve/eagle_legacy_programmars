@@ -11,7 +11,6 @@ import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
-import com.eagle.programmar.COBOL.Statements.COBOL_SubtractStatement.COBOL_SubtractType.COBOL_SubtractNoGiving;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -35,25 +34,28 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement implements 
 
 	public static class COBOL_SubtractType extends TokenChooser
 	{
-		public @CHOICE static class COBOL_SubtractNoGiving extends TokenSequence
-		{
-			public @S(10) COBOL_Variable var;
-			public @S(20) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
-		}
+		public @FIRST COBOL_SubtractWithGiving XXwithGiving;
+		public @CHOICE COBOL_SubtractNoGiving XXnoGiving;
+	}
 
-		public @FIRST static class COBOL_SubtractWithGiving extends TokenSequence
-		{
-			public @S(10) COBOL_Expression expr;
-			public @S(20) @OPT TokenList<COBOL_SubtractMoreExprs> moreExprs;
-			public @S(30) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
-			public @S(40) COBOL_Variable result;
-			public @S(50) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
+	public static class COBOL_SubtractNoGiving extends TokenSequence
+	{
+		public @S(10) COBOL_Variable var;
+		public @S(20) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
+	}
 
-			public static class COBOL_SubtractMoreExprs extends TokenSequence
-			{
-				public @S(10) @OPT PunctuationComma comma;
-				public @S(20) COBOL_Expression expr;
-			}
+	public static class COBOL_SubtractWithGiving extends TokenSequence
+	{
+		public @S(10) COBOL_Expression expr;
+		public @S(20) @OPT TokenList<COBOL_SubtractMoreExprs> moreExprs;
+		public @S(30) COBOL_Keyword GIVING = new COBOL_Keyword("GIVING");
+		public @S(40) COBOL_Variable result;
+		public @S(50) @OPT TokenList<COBOL_SubtractMoreVars> moreVars;
+
+		public static class COBOL_SubtractMoreExprs extends TokenSequence
+		{
+			public @S(10) @OPT PunctuationComma comma;
+			public @S(20) COBOL_Expression expr;
 		}
 	}
 	

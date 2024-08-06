@@ -22,12 +22,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Scala_Function extends TokenSequence implements EagleRunnable, AbstractFunction
 {
-	public @S(10) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
-	public @S(20) Scala_Function_Definition id;
-	public @S(30) @OPT Scala_FunctionParams params;
-	public @S(40) @OPT Scala_FunctionReturns returnType;
-	public @S(50) PunctuationEquals equals;
-	public @S(60) Scala_Statement stmt;
+	public @S(10) @OPT Scala_Keyword OVERRIDE = new Scala_Keyword("override");
+	public @S(20) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
+	public @S(30) Scala_Function_Definition id;
+	public @S(40) @OPT Scala_FunctionParams params;
+	public @S(50) @OPT Scala_FunctionReturns returnType;
+	public @S(60) PunctuationEquals equals;
+	public @S(70) Scala_Statement stmt;
 
 	public @SKIP CallMetrics _metrics = null;
 	

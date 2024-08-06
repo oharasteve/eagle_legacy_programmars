@@ -52,9 +52,11 @@ public class Ruby_MethodInvocation extends PrimaryOperator implements EagleRunna
 		{
 			Ruby_RangeExpression range = (Ruby_RangeExpression) methodName.subscript.expr.getWhich();
 			str = value.forceStringValue();
+			int len = str.length();
 			int sc = interpreter.getIntValue(range.left);
-			int ec = interpreter.getIntValue(range.right);
-			str = str.substring(sc, ec + 1);
+			int ec = interpreter.getIntValue(range.right) + 1;
+			if (ec > len) ec = len;
+			str = str.substring(sc, ec);
 		}
 		else
 		{
