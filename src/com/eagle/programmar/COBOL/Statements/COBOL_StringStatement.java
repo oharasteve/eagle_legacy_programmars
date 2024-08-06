@@ -83,7 +83,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		{
 			throw new RuntimeException("Can only handle one STRING result");
 		}
-		if (with.isPresent())
+		if (with != null && with.isPresent())
 		{
 			throw new RuntimeException("Cannot handle POINTER yet");
 		}

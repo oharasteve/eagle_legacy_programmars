@@ -40,7 +40,10 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (ALL.isPresent()) throw new RuntimeException("Can't handle MOVE ALL yet");
-		if (more.isPresent() && more.size() > 0) throw new RuntimeException("Can't handle multiple MOVEs yet");
+		if (more != null && more.isPresent() && more.size() > 0) 
+		{
+			throw new RuntimeException("Can't handle multiple MOVEs yet");
+		}
 
 		EagleValue val = interpreter.getEagleValue(expr);
 		AbstractToken which = var.getWhich();

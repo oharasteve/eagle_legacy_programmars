@@ -150,36 +150,39 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			String redefines = null;
 			EagleInteger initInteger = new EagleInteger(0);
 			EagleString initString = new EagleString("");
-			for (COBOL_DataClause clause : clauses._elements)
+			if (clauses != null)
 			{
-				AbstractToken which = clause.getWhich();
-				if (which instanceof COBOL_PictureClause)
+				for (COBOL_DataClause clause : clauses._elements)
 				{
-					COBOL_PictureClause picClause = (COBOL_PictureClause) which;
-					pic = picClause.picture.getValue().toUpperCase();
-				}
-				if (which instanceof COBOL_RedefinesClause)
-				{
-					COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
-					redefines = redefinesClause.id.getValue();
-				}
-				if (which instanceof COBOL_ValueClause)
-				{
-					COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
-					COBOL_Picture_Value picValue = valueClause.values.first();
-					if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
+					AbstractToken which = clause.getWhich();
+					if (which instanceof COBOL_PictureClause)
 					{
-						COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
-						initInteger = new EagleInteger(Integer.parseInt(num.number.getValue()));
+						COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+						pic = picClause.picture.getValue().toUpperCase();
 					}
-					else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+					if (which instanceof COBOL_RedefinesClause)
 					{
-						COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
-						initString = new EagleString(lit.literal.getValue());
+						COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
+						redefines = redefinesClause.id.getValue();
 					}
-					break;
+					if (which instanceof COBOL_ValueClause)
+					{
+						COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
+						COBOL_Picture_Value picValue = valueClause.values.first();
+						if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
+						{
+							COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
+							initInteger = new EagleInteger(Integer.parseInt(num.number.getValue()));
+						}
+						else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+						{
+							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
+							initString = new EagleString(lit.literal.getValue());
+						}
+						break;
+					}
+	
 				}
-
 			}
 
 			// Check for REDEFINES first

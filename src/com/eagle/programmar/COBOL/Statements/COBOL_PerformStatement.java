@@ -65,7 +65,10 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (testWhen.isPresent()) throw new RuntimeException("Can't handle PERFORM TEST yet");
+		if (testWhen != null && testWhen.isPresent()) 
+		{
+			throw new RuntimeException("Can't handle PERFORM TEST yet");
+		}
 
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		if (what.getWhich() instanceof COBOL_PerformParagraph)

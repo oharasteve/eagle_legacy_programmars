@@ -87,7 +87,7 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 			throw new RuntimeException("Cannot handle " + which + " yet");
 		}
 		COBOL_AddNoGiving noGiving = (COBOL_AddNoGiving) which;
-		if (noGiving.moreExprs.isPresent() && noGiving.moreExprs.size() > 0)
+		if (noGiving.moreExprs != null && noGiving.moreExprs.isPresent() && noGiving.moreExprs.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle multiple expressions yet");
 		}

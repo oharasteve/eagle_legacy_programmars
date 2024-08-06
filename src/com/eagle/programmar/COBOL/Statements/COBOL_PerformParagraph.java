@@ -25,7 +25,8 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (performThrough.isPresent() || testWhen.isPresent())
+		if ((performThrough != null && performThrough.isPresent()) ||
+				(testWhen != null && testWhen.isPresent()))
 		{
 			throw new RuntimeException("Can only PERFORM one paragraph right now");
 		}

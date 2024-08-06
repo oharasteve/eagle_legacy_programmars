@@ -45,7 +45,7 @@ public class COBOL_Subscript extends TokenSequence
 		}
 
 		COBOL_RegularSubscript subscr = (COBOL_RegularSubscript) which;
-		if (subscr.range.isPresent())
+		if (subscr.range != null && subscr.range.isPresent())
 		{
 			throw new RuntimeException("Cannot handle subscript ranges yet");
 		}

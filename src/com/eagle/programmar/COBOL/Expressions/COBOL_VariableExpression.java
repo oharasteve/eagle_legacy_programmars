@@ -38,7 +38,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (variable.ofList.isPresent() && variable.ofList.size() > 0)
+		if (variable.ofList != null && variable.ofList.isPresent() && variable.ofList.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle field references");
 		}
@@ -50,7 +50,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 			throw new RuntimeException("Unable to find a variable named " + varName);
 		}
 
-		if (variable.subscript.isPresent() && variable.subscript.size() == 1)
+		if (variable.subscript != null && variable.subscript.isPresent() && variable.subscript.size() == 1)
 		{
 			if (val.isArray())
 			{
