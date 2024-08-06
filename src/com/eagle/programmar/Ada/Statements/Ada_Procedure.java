@@ -42,7 +42,7 @@ public class Ada_Procedure extends TokenSequence implements EagleRunnable, Abstr
 		}
 
 		// Only deal with main procedure
-		if (id.getValue().equals("test"))
+		if (id.getValue().equals("main"))
 		{
 			for (Ada_Statement stmt : stmts1._elements)
 			{

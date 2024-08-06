@@ -5,6 +5,8 @@ package com.eagle.programmar.Delphi.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -21,7 +23,20 @@ public class Delphi_Parentheses extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Delphi_Expression expr = exprList.first();
-		interpreter.tryToInterpret(expr);
+		if (exprList.getPrimaryCount() == 1)
+		{
+			Delphi_Expression expr = exprList.first();
+			interpreter.tryToInterpret(expr);
+		}
+		else
+		{
+			EagleArray array = new EagleArray();
+			for (int i = 0; i < exprList.getPrimaryCount(); i++)
+			{
+				EagleValue val = interpreter.getEagleValue(exprList.getPrimaryElement(i));
+				array.addValue(val);
+			}
+			interpreter.pushEagleValue(array);
+		}
 	}
 }

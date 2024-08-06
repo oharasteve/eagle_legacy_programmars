@@ -16,7 +16,7 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Go_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Go_Expression varExpr = new Go_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice(":=", "*=", "/=", "%=", "+=", "-=");
+	public @S(20) Go_PunctuationChoice equals = new Go_PunctuationChoice("=", ":=", "*=", "/=", "%=", "+=", "-=");
 	public @S(30) Go_Expression expr = new Go_Expression(this, AllowedPrecedence.ATLEAST);
 
 	@Override
@@ -32,7 +32,7 @@ public class Go_AssignmentExpression extends PrecedenceOperator implements Eagle
 		Go_Identifier_Reference id = variable.vars.first();
 		switch (equals.getValue())
 		{
-		case ":=":
+		case "=", ":=":
 			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(), val);
 			return;
 		case "+=":

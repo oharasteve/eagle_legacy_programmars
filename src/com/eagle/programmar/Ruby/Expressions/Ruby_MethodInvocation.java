@@ -54,7 +54,7 @@ public class Ruby_MethodInvocation extends PrimaryOperator implements EagleRunna
 			str = value.forceStringValue();
 			int sc = interpreter.getIntValue(range.left);
 			int ec = interpreter.getIntValue(range.right);
-			str = str.substring(sc, ec);
+			str = str.substring(sc, ec + 1);
 		}
 		else
 		{
