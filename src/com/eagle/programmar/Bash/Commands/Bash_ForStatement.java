@@ -58,7 +58,7 @@ public class Bash_ForStatement extends TokenSequence implements AbstractStatemen
 			if (start > stop && i < stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
+			interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
 					id.getValue(), new EagleInteger(i));
 
 			for (Bash_Statement stmt : statements._elements)

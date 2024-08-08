@@ -31,7 +31,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 	{
 		// Look up the function in our function list
 		String name = functionName.id.getValue();
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -54,7 +54,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 			FSharp_FunctionParam param = func.params.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.var.getValue(), val);
 		}
 
@@ -77,7 +77,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 		for (int i = 0; i < argCount; i++)
 		{
 			FSharp_FunctionParam param = func.params.getPrimaryElement(i);
-			interpreter._symbolTable.removeSymbols(param.var.getValue());
+			interpreter.removeSymbols(param.var.getValue());
 		}
 	}
 }

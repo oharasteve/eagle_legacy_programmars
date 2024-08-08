@@ -58,7 +58,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 		for (Lisp_LetVar var : variables.valuePairs._elements)
 		{
 			EagleValue val = interpreter.getEagleValue(var.value);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.var.toString(), val);
 		}
 

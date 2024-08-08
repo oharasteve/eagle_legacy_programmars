@@ -46,7 +46,7 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 		ForLoopMetric metric = new ForLoopMetric();
 
 		EagleValue val = interpreter.getEagleValue(initialValue);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.getValue(), val);
 		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
@@ -70,13 +70,13 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 			}
 			if (result != Eagle_Statement_Result.NORMAL) break;
 			val = interpreter.getEagleValue(increment);
-			interpreter._symbolTable.setSymbol(increment.getFileName(), increment.getStartLine(), increment.getStartChar(),
+			interpreter.setSymbol(increment.getFileName(), increment.getStartLine(), increment.getStartChar(),
 					var.getValue(), val);
 		}
 		
 		_metrics.competedLoop(metric);
 
-		interpreter._symbolTable.removeSymbols(var.getValue());
+		interpreter.removeSymbols(var.getValue());
 		return Eagle_Statement_Result.NORMAL;
 	}
 }

@@ -33,7 +33,7 @@ public class CMD_Exit_Statement extends TokenSequence implements AbstractStateme
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		int status = interpreter.getIntValue(exitValue);
-		CMD_Label func = (CMD_Label) interpreter._currentFunction;
+		CMD_Label func = (CMD_Label) interpreter.getCurrentFunction();
 		func._exitStatus = status;
 		return Eagle_Statement_Result.RETURN;
 	}

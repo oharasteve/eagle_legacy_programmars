@@ -41,7 +41,7 @@ public class CMD_Format
 						if (Character.isLetter(txt.charAt(firstPct + 2)))
 						{
 							String var = txt.substring(firstPct, firstPct + 3);
-							EagleValue val = interpreter._symbolTable.findSymbol(var);
+							EagleValue val = interpreter.findSymbol(var);
 							sb.append(val.forceStringValue());
 							sc = firstPct + 3;
 							continue;
@@ -57,7 +57,7 @@ public class CMD_Format
 						if (Character.isDigit(txt.charAt(firstPct + 2)))
 						{
 							String var = txt.substring(firstPct, firstPct + 3);
-							EagleValue val = interpreter._symbolTable.findSymbol(var);
+							EagleValue val = interpreter.findSymbol(var);
 							sb.append(val.forceStringValue());
 							sc = firstPct + 3;
 							continue;
@@ -69,7 +69,7 @@ public class CMD_Format
 				int secondPct = txt.indexOf('%', firstPct + 1);
 				if (secondPct < 0) throw new RuntimeException("Missing % in " + txt);
 				String var = txt.substring(firstPct + 1, secondPct);
-				EagleValue val = interpreter._symbolTable.findSymbol(var);
+				EagleValue val = interpreter.findSymbol(var);
 				sb.append(val.forceStringValue());
 	
 				// Look for the next piece
@@ -115,7 +115,7 @@ public class CMD_Format
 					name = name.substring(0, colon);
 				}
 				
-				EagleValue val = interpreter._symbolTable.findSymbol(name);
+				EagleValue val = interpreter.findSymbol(name);
 				String piece = val.forceStringValue();
 
 				if (colon > 0)

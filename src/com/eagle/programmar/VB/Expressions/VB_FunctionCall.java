@@ -39,7 +39,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		String name = fnName.getValue();
 		
 		// See if it is a subscripted variable first
-		EagleValue value = interpreter._symbolTable.findSymbol(name);
+		EagleValue value = interpreter.findSymbol(name);
 		if (value != null && value.isArray())
 		{
 			EagleArray array = (EagleArray) value;
@@ -67,7 +67,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		
 		// Look up the function
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null || !(fn instanceof VB_FunctionDeclaration))
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -90,7 +90,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 			VB_Variable_Definition param = func.params.params.getPrimaryElement(i).var;
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.getValue(), val);
 		}
 
@@ -108,7 +108,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		// Need to put the result on the runtime stack
 		// VB uses the function name for the return value
 		// Sort-of like this: function sqrt(x) { sqrt = x*x }
-		EagleValue val = interpreter._symbolTable.findSymbol(name);
+		EagleValue val = interpreter.findSymbol(name);
 		if (val != null)
 		{
 			interpreter.pushEagleValue(val);
@@ -122,7 +122,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		for (int i = 0; i < argCount; i++)
 		{
 			VB_Variable_Definition param = func.params.params.getPrimaryElement(i).var;
-			interpreter._symbolTable.removeSymbols(param.getValue());
+			interpreter.removeSymbols(param.getValue());
 		}
 	}
 }

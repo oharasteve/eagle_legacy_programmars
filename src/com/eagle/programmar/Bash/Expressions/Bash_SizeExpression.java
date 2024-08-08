@@ -18,7 +18,7 @@ public class Bash_SizeExpression extends PrimaryOperator implements EagleRunnabl
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter._symbolTable.findSymbol(var.id.getValue());
+		EagleValue val = interpreter.findSymbol(var.id.getValue());
 		if (val.isString())
 		{
 			String str = val.forceStringValue();

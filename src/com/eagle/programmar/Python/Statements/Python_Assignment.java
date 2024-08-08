@@ -66,14 +66,14 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 			{
 			case "=":
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						id.getValue(), val);
 				break;
 			case "+=":
 				int newVal = interpreter.getIntValue(expr);
-				EagleValue oldVar = interpreter._symbolTable.findSymbol(id.toString());
+				EagleValue oldVar = interpreter.findSymbol(id.toString());
 				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						id.getValue(), newValue);
 				break;
 			default:

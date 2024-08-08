@@ -40,7 +40,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 		{
 			// Look it up
 			String name = ((CSharp_Identifier_Reference) token).getValue();
-			AbstractFunction fn = interpreter._functionList.get(name);
+			AbstractFunction fn = interpreter.findFunction(name);
 			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a method named " + name);
@@ -82,7 +82,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 					{
 						CSharp_Expression expr = ((CSharp_ArgumentOut) which).arg;
 						EagleValue val = interpreter.getEagleValue(expr);
-						interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+						interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 								param.id.getValue(), val);
 					}
 				}
@@ -113,11 +113,11 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			if (argCount > 0)
 			{
 				CSharp_MethodParameter param = meth.parameters.param;
-				interpreter._symbolTable.removeSymbols(param.id.getValue());
+				interpreter.removeSymbols(param.id.getValue());
 				for (int i = 1; i < argCount; i++)
 				{
 					param = meth.parameters.moreParams._elements.get(i-1).param;
-					interpreter._symbolTable.removeSymbols(param.id.getValue());
+					interpreter.removeSymbols(param.id.getValue());
 				}
 			}
 		}

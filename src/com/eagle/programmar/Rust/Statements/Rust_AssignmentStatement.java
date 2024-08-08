@@ -24,7 +24,7 @@ public class Rust_AssignmentStatement extends TokenSequence implements EagleRunn
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.var.getValue(), val);
 	}
 }

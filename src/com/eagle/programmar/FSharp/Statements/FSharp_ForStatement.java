@@ -53,7 +53,7 @@ public class FSharp_ForStatement extends TokenSequence implements AbstractStatem
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.id.getValue(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(forActions);

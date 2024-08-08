@@ -49,7 +49,7 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	public void interpret(EagleInterpreter interpreter)
 	{
 		CSharp_Identifier_Reference which = (CSharp_Identifier_Reference) firstId.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		EagleValue value = interpreter.findSymbol(which.toString());
 		if (subscript != null && subscript.size() > 0)
 		{
 			EagleArray array = (EagleArray) value;

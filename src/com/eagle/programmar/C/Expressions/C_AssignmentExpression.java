@@ -44,13 +44,13 @@ public class C_AssignmentExpression extends PrecedenceOperator implements EagleR
 		switch (equals.getValue())
 		{
 		case "=":
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 					val);
 			break;
 		case "+=":
-			EagleValue oldValue = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue oldValue = interpreter.findSymbol(id.getValue());
 			int newValue = val.forceIntegerValue() + oldValue.forceIntegerValue();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 					new EagleInteger(newValue));
 			break;
 		default:

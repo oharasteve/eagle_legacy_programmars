@@ -39,7 +39,7 @@ public class Powershell_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		EagleValue value = interpreter.findSymbol(id.toString());
 		if (subscript != null && subscript.isPresent() && value.isArray())
 		{
 			int sub = interpreter.getIntValue(subscript.subscr);

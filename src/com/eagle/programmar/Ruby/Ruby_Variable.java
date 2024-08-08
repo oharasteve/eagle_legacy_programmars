@@ -35,7 +35,7 @@ public class Ruby_Variable extends TokenSequence implements AbstractVariable, Ea
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ruby_Identifier_Reference which = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.getValue());
+		EagleValue value = interpreter.findSymbol(which.getValue());
 
 		if (subscript != null && subscript.isPresent())
 		{

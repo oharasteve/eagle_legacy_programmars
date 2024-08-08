@@ -98,8 +98,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 		if (which2 instanceof COBOL_UserVariable)
 		{
 			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
-			EagleValue oldValue = interpreter._symbolTable.findSymbol(variable.id.getValue());
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+			EagleValue oldValue = interpreter.findSymbol(variable.id.getValue());
+			interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 					variable.id.getValue(), new EagleInteger(newVal + oldValue.forceIntegerValue()));
 		}
 		if (noGiving.addTo.moreVars != null && noGiving.addTo.moreVars.isPresent())
@@ -110,8 +110,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 				if (which3 instanceof COBOL_UserVariable)
 				{
 					COBOL_UserVariable variable = (COBOL_UserVariable) which3;
-					EagleValue oldValue = interpreter._symbolTable.findSymbol(variable.id.getValue());
-					interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+					EagleValue oldValue = interpreter.findSymbol(variable.id.getValue());
+					interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 							variable.id.getValue(), new EagleInteger(oldValue.forceIntegerValue() + newVal));
 				}
 			}

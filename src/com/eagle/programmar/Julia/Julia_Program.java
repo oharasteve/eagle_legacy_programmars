@@ -63,7 +63,7 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 				if (which instanceof Julia_Function)
 				{
 					Julia_Function fn = (Julia_Function) which;
-					interpreter._functionList.put(fn.id.getValue(), fn);
+					interpreter.addFunction(fn.id.getValue(), fn);
 					if (interpreter._TRACE) System.err.println("*** Found function " + fn.id.getValue());
 				}
 			}

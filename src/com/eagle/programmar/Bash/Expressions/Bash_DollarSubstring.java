@@ -28,7 +28,7 @@ public class Bash_DollarSubstring extends PrimaryOperator implements EagleRunnab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter._symbolTable.findSymbol(variable.id.getValue());
+		EagleValue val = interpreter.findSymbol(variable.id.getValue());
 		String str = val.forceStringValue();
 		int nc = str.length();
 		int sc = interpreter.getIntValue(start);

@@ -76,7 +76,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		}
 		
 		// Check for subscripts second
-		EagleValue var = interpreter._symbolTable.findSymbol(fnName);
+		EagleValue var = interpreter.findSymbol(fnName);
 		if (var != null && var.isArray() && argCount == 1)
 		{
 			EagleArray array = (EagleArray) var;
@@ -87,7 +87,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		}
 		
 		// Check for user functions third
-		AbstractFunction fn = interpreter._functionList.get(fnName);
+		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null || !(fn instanceof Fortran_Function))
 		{
 			throw new RuntimeException("Unable to find a function named " + fnName);
@@ -108,7 +108,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 			Fortran_Expression expr = args.getPrimaryElement(i);
 			Fortran_Variable_Reference param = func.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.getValue(), val);
 		}
 
@@ -126,7 +126,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		// Need to put the result on the runtime stack
 		// Fortran uses the function name for the return value
 		// Sort-of like this: function sqrt(x) { sqrt = x*x }
-		EagleValue val = interpreter._symbolTable.findSymbol(fnName);
+		EagleValue val = interpreter.findSymbol(fnName);
 		if (val != null)
 		{
 			interpreter.pushEagleValue(val);
@@ -144,7 +144,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		for (int i = 0; i < argCount; i++)
 		{
 			Fortran_Variable_Reference param = func.parameters.getPrimaryElement(i);
-			interpreter._symbolTable.removeSymbols(param.getValue());
+			interpreter.removeSymbols(param.getValue());
 		}
 	}
 }

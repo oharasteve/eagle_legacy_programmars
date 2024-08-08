@@ -155,7 +155,7 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 				{
 					PLI_Variable_Definition id = (PLI_Variable_Definition) token;
 					EagleValue val = interpreter.getEagleValue(item.initial.exprs.first());
-					interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
+					interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
 							id.toString(), val);
 				}
 			}

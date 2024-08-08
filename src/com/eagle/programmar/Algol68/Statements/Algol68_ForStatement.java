@@ -85,7 +85,7 @@ public class Algol68_ForStatement extends TokenSequence implements EagleRunnable
 			if (by < 0 && i < stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.vars.first().getValue(), new EagleInteger(i));
 
 			for (Algol68_Statement stmt : statements._elements)

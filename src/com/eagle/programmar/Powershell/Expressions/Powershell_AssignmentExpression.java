@@ -28,14 +28,14 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 			{
 			case "=":
 				EagleValue value = interpreter.getEagleValue(expr);
-				interpreter._symbolTable.setSymbol(pVar.getFileName(), pVar.getStartLine(), pVar.getStartChar(),
+				interpreter.setSymbol(pVar.getFileName(), pVar.getStartLine(), pVar.getStartChar(),
 						pVar.variable.id.getValue(), value);
 				break;
 			case "+=":
 				int newVal = interpreter.getIntValue(expr);
-				EagleValue oldVar = interpreter._symbolTable.findSymbol(pVar.variable.id.toString());
+				EagleValue oldVar = interpreter.findSymbol(pVar.variable.id.toString());
 				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 						pVar.variable.id.getValue(), newValue);
 				break;
 			default:

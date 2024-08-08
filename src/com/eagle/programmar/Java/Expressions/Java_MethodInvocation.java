@@ -38,7 +38,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 		{
 			// Look it up
 			String name = ((Java_Identifier_Reference) token).getValue();
-			AbstractFunction fn = interpreter._functionList.get(name);
+			AbstractFunction fn = interpreter.findFunction(name);
 			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a method named " + name);
@@ -83,7 +83,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 						param = parameters.moreParams._elements.get(i-1).param;
 					}
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 							param.id.getValue(), val);
 				}
 			}
@@ -113,11 +113,11 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 			if (argCount > 0)
 			{
 				Java_MethodParameter param = parameters.param;
-				interpreter._symbolTable.removeSymbols(param.id.getValue());
+				interpreter.removeSymbols(param.id.getValue());
 				for (int i = 1; i < argCount; i++)
 				{
 					param = parameters.moreParams._elements.get(i-1).param;
-					interpreter._symbolTable.removeSymbols(param.id.getValue());
+					interpreter.removeSymbols(param.id.getValue());
 				}
 			}
 		}

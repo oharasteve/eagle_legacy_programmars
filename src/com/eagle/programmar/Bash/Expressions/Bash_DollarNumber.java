@@ -19,7 +19,7 @@ public class Bash_DollarNumber extends PrimaryOperator implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = dollar.getValue() + number.toString();
-		EagleValue value = interpreter._symbolTable.findSymbol(name);
+		EagleValue value = interpreter.findSymbol(name);
 		interpreter.pushEagleValue(value);
 	}
 }

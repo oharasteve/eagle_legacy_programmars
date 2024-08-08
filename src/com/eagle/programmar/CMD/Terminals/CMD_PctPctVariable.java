@@ -60,7 +60,7 @@ public class CMD_PctPctVariable extends TerminalIdentifierToken implements Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(this.getValue());
+		EagleValue value = interpreter.findSymbol(this.getValue());
 		interpreter.pushEagleValue(value);
 	}
 }

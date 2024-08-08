@@ -42,7 +42,7 @@ public class Lisp_NthOperator extends TokenSequence implements EagleRunnable
 			if (var.getWhich() instanceof Lisp_Identifier_Reference)
 			{
 				Lisp_Identifier_Reference id = (Lisp_Identifier_Reference) var.getWhich();
-				EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+				EagleValue value = interpreter.findSymbol(id.getValue());
 				if (value.isArray())
 				{
 					EagleArray array = (EagleArray) value;

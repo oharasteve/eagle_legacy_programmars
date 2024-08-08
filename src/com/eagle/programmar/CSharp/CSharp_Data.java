@@ -39,7 +39,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		public void interpret(EagleInterpreter interpreter)
 		{
 			EagleValue value = interpreter.getEagleValue(initialValue.expression);
-			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
+			interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
 					value);
 		}
 	}

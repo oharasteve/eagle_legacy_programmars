@@ -34,7 +34,7 @@ public class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnabl
 		{
 			throw new RuntimeException("Unexpected token: " + which.toString());
 		}
-		boolean val = interpreter._symbolTable.isDefined(name);
+		boolean val = interpreter.isSymbolDefined(name);
 		interpreter.pushBool(val);
 	}
 

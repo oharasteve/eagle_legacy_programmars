@@ -33,7 +33,7 @@ public class Javascript_BuiltinFunction extends PrimaryOperator
 	public static void endsWith1(EagleInterpreter interpreter, String name,
 			Javascript_Expression patternExpr)
 	{
-		EagleValue val = interpreter._symbolTable.findSymbol(name);
+		EagleValue val = interpreter.findSymbol(name);
 		String str = val.forceStringValue();
 		String patt = interpreter.getStrValue(patternExpr);
 		interpreter.pushBool(str.startsWith(patt));
@@ -42,7 +42,7 @@ public class Javascript_BuiltinFunction extends PrimaryOperator
 	public static void endsWith2(EagleInterpreter interpreter, String name,
 			Javascript_Expression patternExpr, Javascript_Expression scExpr)
 	{
-		EagleValue val = interpreter._symbolTable.findSymbol(name);
+		EagleValue val = interpreter.findSymbol(name);
 		String str = val.forceStringValue();
 		String patt = interpreter.getStrValue(patternExpr);
 		int sc = interpreter.getIntValue(scExpr);

@@ -41,7 +41,7 @@ public class Bash_Program extends EagleLanguage implements EagleRunnable
 				if (fn.getWhich() instanceof Bash_Function_Explicit)
 				{
 					Bash_Function_Explicit func = (Bash_Function_Explicit) fn.getWhich();
-					interpreter._functionList.put(func.fnName.getValue(), func);
+					interpreter.addFunction(func.fnName.getValue(), func);
 				}
 			}
 		}

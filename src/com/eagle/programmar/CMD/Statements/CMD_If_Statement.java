@@ -84,7 +84,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 		if (what.getWhich() instanceof CMD_IfErrorLevel)
 		{
 			CMD_IfErrorLevel errLevel = (CMD_IfErrorLevel) what.getWhich();
-			CMD_Label func = (CMD_Label) interpreter._currentFunction;
+			CMD_Label func = (CMD_Label) interpreter.getCurrentFunction();
 			int actual = func._exitStatus;
 			int goal = Integer.parseInt(errLevel.level.getValue());
 			passTest = actual >= goal;
@@ -92,7 +92,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 		else if (what.getWhich() instanceof CMD_IfDefined)
 		{
 			CMD_IfDefined defined = (CMD_IfDefined) what.getWhich();
-			EagleValue val = interpreter._symbolTable.findSymbol(defined.var.id.getValue());
+			EagleValue val = interpreter.findSymbol(defined.var.id.getValue());
 			passTest = val != null;
 		}
 		else if (what.getWhich() instanceof CMD_Expression)

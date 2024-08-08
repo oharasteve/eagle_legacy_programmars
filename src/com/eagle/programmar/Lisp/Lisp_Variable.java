@@ -32,7 +32,7 @@ public class Lisp_Variable extends TokenChooser implements EagleRunnable
 		if (this.getWhich() instanceof Lisp_Identifier_Reference)
 		{
 			Lisp_Identifier_Reference id = (Lisp_Identifier_Reference) this.getWhich();
-			EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue value = interpreter.findSymbol(id.getValue());
 			interpreter.pushEagleValue(value);
 		}
 	}

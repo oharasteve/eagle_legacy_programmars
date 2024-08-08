@@ -35,26 +35,26 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 			v = val;
 			break;
 		case "+=":
-			EagleValue var1 = interpreter._symbolTable.findSymbol(id.toString());
+			EagleValue var1 = interpreter.findSymbol(id.toString());
 			v = new EagleInteger(var1.forceIntegerValue() + val.forceIntegerValue());
 			break;
 		case "-=":
-			EagleValue var2 = interpreter._symbolTable.findSymbol(id.toString());
+			EagleValue var2 = interpreter.findSymbol(id.toString());
 			v = new EagleInteger(var2.forceIntegerValue() - val.forceIntegerValue());
 			break;
 		case "*=":
-			EagleValue var3 = interpreter._symbolTable.findSymbol(id.toString());
+			EagleValue var3 = interpreter.findSymbol(id.toString());
 			v = new EagleInteger(var3.forceIntegerValue() * val.forceIntegerValue());
 			break;
 		case "/=":
-			EagleValue var4 = interpreter._symbolTable.findSymbol(id.toString());
+			EagleValue var4 = interpreter.findSymbol(id.toString());
 			v = new EagleInteger(var4.forceIntegerValue() / val.forceIntegerValue());
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + equals.getValue());
 		}
 
-		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+		interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 				id.getValue(), v);
 	}
 }

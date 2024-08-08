@@ -94,7 +94,7 @@ public class Ruby_ForStatement extends TokenSequence implements AbstractStatemen
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.vars.first().getValue(), new EagleInteger(i));
 
 			for (Ruby_Statement statement : statements._elements)

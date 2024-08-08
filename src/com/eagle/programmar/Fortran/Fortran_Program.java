@@ -38,20 +38,12 @@ public class Fortran_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Fortran_Function)
 			{
 				Fortran_Function fn = (Fortran_Function) which;
-				interpreter._functionList.put(fn.fnName.getValue().toUpperCase(), fn);
-				if (interpreter._TRACE)
-				{
-					System.err.println("*** Found Fortran function " + fn.fnName.getValue().toUpperCase());
-				}
+				interpreter.addFunction(fn.fnName.getValue(), fn);
 			}
 			else if (which instanceof Fortran_Subroutine)
 			{
 				Fortran_Subroutine sub = (Fortran_Subroutine) which;
-				interpreter._functionList.put(sub.subName.getValue().toUpperCase(), sub);
-				if (interpreter._TRACE)
-				{
-					System.err.println("*** Found Fortran subroutine " + sub.subName.getValue().toUpperCase());
-				}
+				interpreter.addFunction(sub.subName.getValue(), sub);
 			}
 		}
 

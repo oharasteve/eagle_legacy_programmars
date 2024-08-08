@@ -39,7 +39,7 @@ public class Ruby_MethodInvocation extends PrimaryOperator implements EagleRunna
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ruby_Identifier_Reference strVar = methodName.vars.getPrimaryElement(0);
-		EagleValue value = interpreter._symbolTable.findSymbol(strVar.getValue());
+		EagleValue value = interpreter.findSymbol(strVar.getValue());
 		String str;
 		if (value.isArray())
 		{

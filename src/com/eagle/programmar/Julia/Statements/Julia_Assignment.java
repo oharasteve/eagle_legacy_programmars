@@ -30,14 +30,14 @@ public class Julia_Assignment extends TokenSequence implements EagleRunnable, Ab
 		{
 		case "=":
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 					val);
 			break;
 		case "+=":
 			int newVal = interpreter.getIntValue(expr);
-			EagleValue oldVar = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue oldVar = interpreter.findSymbol(id.getValue());
 			EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					id.getValue(), newValue);
 			break;
 		default:

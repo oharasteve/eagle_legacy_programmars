@@ -14,7 +14,7 @@ public class Template_Identifier_Reference extends Template_Identifier implement
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(_id.toString());
+		EagleValue value = interpreter.findSymbol(_id.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

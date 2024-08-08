@@ -110,7 +110,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		}
 		
 		COBOL_StringPiece piece = pieces._elements.get(0);
-		interpreter._symbolTable.setSymbol(piece.getFileName(), piece.getStartLine(), piece.getStartChar(),
+		interpreter.setSymbol(piece.getFileName(), piece.getStartLine(), piece.getStartChar(),
 				piece.intoVar.getValue(), new EagleString(result.toString()));
 	}
 }

@@ -32,7 +32,7 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 		String formatted = Bash_Format.format(interpreter, line);
 		
 		// if we are in a Function, it goes into a string and does not get printed
-		Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter._currentFunction;
+		Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter.getCurrentFunction();
 		if (func == null)
 		{
 			System.out.println(formatted);

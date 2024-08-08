@@ -26,7 +26,7 @@ public class Template_DataStatement extends TokenSequence implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
 				value);
 	}
 }

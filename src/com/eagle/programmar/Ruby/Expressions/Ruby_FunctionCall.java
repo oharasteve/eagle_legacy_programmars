@@ -33,7 +33,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 		String name = id.getValue();
 		
 		// Look up the function
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -56,7 +56,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 			Ruby_Variable param = func.params.parameters.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.vars.first().getValue(), val);
 		}
 
@@ -79,7 +79,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 		for (int i = 0; i < argCount; i++)
 		{
 			Ruby_Variable param = func.params.parameters.getPrimaryElement(i);
-			interpreter._symbolTable.removeSymbols(param.vars.first().getValue());
+			interpreter.removeSymbols(param.vars.first().getValue());
 		}
 	}
 }

@@ -29,7 +29,7 @@ public class AWK_Variable extends TokenSequence implements AbstractVariable, Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter._symbolTable.findSymbol(id.toString());
+		EagleValue val = interpreter.findSymbol(id.toString());
 		if (subscripts != null && subscripts.isPresent() && subscripts.size() == 1)
 		{
 			EagleHash hash = (EagleHash) val;

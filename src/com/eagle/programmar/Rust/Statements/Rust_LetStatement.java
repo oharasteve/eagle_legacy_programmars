@@ -35,7 +35,7 @@ public class Rust_LetStatement extends TokenSequence implements EagleRunnable, A
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.var.getValue(), val);
 	}
 }

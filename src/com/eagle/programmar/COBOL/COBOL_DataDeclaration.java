@@ -189,11 +189,11 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			EagleValue value = null;
 			if (redefines != null)
 			{
-				value = interpreter._symbolTable.findSymbol(redefines);
+				value = interpreter.findSymbol(redefines);
 				if (value != null)
 				{
 					// Change the name of the symbol
-					interpreter._symbolTable.removeSymbols(redefines);
+					interpreter.removeSymbols(redefines);
 				}
 			}
 
@@ -214,7 +214,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				System.err.println("*** data " + level + " " + varName + " " + pic);
 			}
-			interpreter._symbolTable.setSymbol(dataDef.getFileName(), dataDef.getStartLine(), dataDef.getStartChar(),
+			interpreter.setSymbol(dataDef.getFileName(), dataDef.getStartLine(), dataDef.getStartChar(),
 					varName, value);
 
 		}

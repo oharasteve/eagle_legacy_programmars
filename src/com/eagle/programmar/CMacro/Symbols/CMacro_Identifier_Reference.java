@@ -15,7 +15,7 @@ public class CMacro_Identifier_Reference extends CMacro_Identifier implements Re
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(_id.toString());
+		EagleValue value = interpreter.findSymbol(_id.toString());
 		if (value == null) value = new EagleString(""); // Treat undefined symbols as blank
 		interpreter.pushEagleValue(value);
 	}

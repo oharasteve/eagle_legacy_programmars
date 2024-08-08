@@ -90,11 +90,7 @@ public class PHP_Program extends EagleLanguage implements EagleRunnable
 										if (stmt.getWhich() instanceof Perl_FunctionDefinition)
 										{
 											Perl_FunctionDefinition func = (Perl_FunctionDefinition) stmt.getWhich();
-											interpreter._functionList.put(func.fnName.getValue(), func);
-											if (interpreter._TRACE)
-											{
-												System.err.println("*** Found PHP function " + func.fnName.getValue());
-											}
+											interpreter.addFunction(func.fnName.getValue(), func);
 										}
 									}
 								}

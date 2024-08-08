@@ -32,7 +32,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 
 		// Have to search for the FUNCTION definition
-		AbstractFunction fn = interpreter._functionList.get(name.getValue());
+		AbstractFunction fn = interpreter.findFunction(name.getValue());
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name.getValue());
@@ -58,7 +58,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 			Eaglish_Expression arg = args.getPrimaryElement(i);
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.param.getValue(), val);
 		}
 
@@ -80,7 +80,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		for (int i = 0; i < argCount; i++)
 		{
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
-			interpreter._symbolTable.removeSymbols(param._name);
+			interpreter.removeSymbols(param._name);
 		}
 	}
 }

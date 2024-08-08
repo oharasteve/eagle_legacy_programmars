@@ -30,7 +30,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 		if (interpreter._TRACE) System.err.println("*** Calling " + functionName + "()");
 
 		// Have to search for the FUNCTION definition
-		AbstractFunction fn = interpreter._functionList.get(functionName.getValue());
+		AbstractFunction fn = interpreter.findFunction(functionName.getValue());
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + functionName.getValue());
@@ -65,7 +65,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 					param = func.parameters.moreParams._elements.get(i - 1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 						param.getValue(), val);
 			}
 		}
@@ -88,11 +88,11 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 		{
 			// Now remove all those parameters
 			AWK_Identifier param = func.parameters.param;
-			interpreter._symbolTable.removeSymbols(param._name);
+			interpreter.removeSymbols(param._name);
 			for (int i = 1; i < argCount; i++)
 			{
 				param = func.parameters.moreParams._elements.get(i - 1).param;
-				interpreter._symbolTable.removeSymbols(param._name);
+				interpreter.removeSymbols(param._name);
 			}
 		}
 	}

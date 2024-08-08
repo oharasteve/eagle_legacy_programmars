@@ -45,7 +45,7 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(var.getValue());
+		EagleValue value = interpreter.findSymbol(var.getValue());
 		
 		if (extensions != null)
 		{

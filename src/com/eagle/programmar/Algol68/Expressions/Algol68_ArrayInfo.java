@@ -21,7 +21,7 @@ public class Algol68_ArrayInfo extends PrimaryOperator implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Algol68_Identifier_Reference id = arrayName.vars.first();
-		EagleValue val = interpreter._symbolTable.findSymbol(id.getValue());
+		EagleValue val = interpreter.findSymbol(id.getValue());
 
 		if (val instanceof EagleString)
 		{

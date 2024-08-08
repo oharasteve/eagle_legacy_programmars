@@ -33,7 +33,7 @@ public class Julia_Variable extends TokenSequence implements AbstractVariable, E
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Julia_Identifier_Reference which = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		EagleValue value = interpreter.findSymbol(which.toString());
 		
 		if (subscript != null && subscript.isPresent() && value instanceof EagleArray)
 		{

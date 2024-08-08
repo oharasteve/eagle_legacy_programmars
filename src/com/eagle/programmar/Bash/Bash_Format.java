@@ -68,7 +68,7 @@ public class Bash_Format
 				else
 				{
 					String varName = txt.substring(first + 1, second);
-					EagleValue value = interpreter._symbolTable.findSymbol(varName);
+					EagleValue value = interpreter.findSymbol(varName);
 					if (value == null)
 					{
 						throw new RuntimeException("Unable to find variable " + varName);

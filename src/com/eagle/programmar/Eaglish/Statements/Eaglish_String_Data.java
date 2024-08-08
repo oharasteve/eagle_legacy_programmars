@@ -34,7 +34,7 @@ public class Eaglish_String_Data extends TokenSequence implements EagleRunnable,
 		{
 			String str = interpreter.getStrValue(init.value);
 			EagleString val = new EagleString(str);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.getValue(), val);
 		}
 	}

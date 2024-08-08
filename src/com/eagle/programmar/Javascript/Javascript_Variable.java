@@ -52,7 +52,7 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(firstId.getWhich().toString());
+		EagleValue value = interpreter.findSymbol(firstId.getWhich().toString());
 		
 		if (moreIds != null && moreIds.isPresent())
 		{

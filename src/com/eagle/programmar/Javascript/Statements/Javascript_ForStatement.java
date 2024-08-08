@@ -129,7 +129,7 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 			{
 				Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) forVar.firstId.getWhich();
 				EagleValue init = interpreter.getEagleValue(forLoop.initialize);
-				interpreter._symbolTable.setSymbol(this.getFileName(), this.getStartLine(), this.getStartChar(), id.getValue(), init);
+				interpreter.setSymbol(this.getFileName(), this.getStartLine(), this.getStartChar(), id.getValue(), init);
 			}
 
 			if (_metrics == null)

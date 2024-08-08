@@ -34,9 +34,9 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String fnName = variable.getValue().toUpperCase();
+		String fnName = variable.getValue();
 		
-		AbstractFunction fn = interpreter._functionList.get(fnName);
+		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null || !(fn instanceof Fortran_Subroutine))
 		{
 			throw new RuntimeException("Unable to find a subroutine named " + fnName);
@@ -58,7 +58,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 			Fortran_Expression expr = args.getPrimaryElement(i);
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.getValue(), val);
 		}
 
@@ -85,7 +85,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		for (int i = 0; i < argCount; i++)
 		{
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
-			interpreter._symbolTable.removeSymbols(param.getValue());
+			interpreter.removeSymbols(param.getValue());
 		}
 	}
 }

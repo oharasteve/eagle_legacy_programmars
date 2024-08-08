@@ -58,8 +58,7 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 						if (fn.fnName.getWhich() instanceof Python_Function_Definition)
 						{
 							Python_Function_Definition name = (Python_Function_Definition) fn.fnName.getWhich();
-							interpreter._functionList.put(name.getValue(), fn);
-							if (interpreter._TRACE) System.err.println("*** Found function " + name.getValue());
+							interpreter.addFunction(name.getValue(), fn);
 						}
 					}
 				}

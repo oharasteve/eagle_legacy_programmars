@@ -28,7 +28,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		String name = first.showText();
 		
 		// See if it is one of the user defun's
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Please implement " + name);
@@ -54,7 +54,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 				Lisp_SExpr expr = exprs._elements.get(i + 1);
 				Lisp_ParamDef param = func.parameters._elements.get(i);
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 						param.parameter.getValue(), val);
 			}
 		}
@@ -80,7 +80,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 			for (int i = 0; i < argCount; i++)
 			{
 				Lisp_ParamDef param = func.parameters._elements.get(i);
-				interpreter._symbolTable.removeSymbols(param.parameter.getValue());
+				interpreter.removeSymbols(param.parameter.getValue());
 			}
 		}
 	}

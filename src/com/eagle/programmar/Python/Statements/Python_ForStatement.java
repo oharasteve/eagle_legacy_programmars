@@ -122,7 +122,7 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 			}
 			
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					varName, new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(forBlock);

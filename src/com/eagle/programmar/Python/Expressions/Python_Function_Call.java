@@ -57,7 +57,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		}
 
 		// Look up the function in our function list
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -93,7 +93,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 				{
 					Python_Identifier_Reference ref = (Python_Identifier_Reference) var.var.getWhich();
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 							ref.getValue(), val);
 				}
 			}
@@ -123,7 +123,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 				if (var.var.getWhich() instanceof Python_Identifier_Reference)
 				{
 					Python_Identifier_Reference ref = (Python_Identifier_Reference) var.var.getWhich();
-					interpreter._symbolTable.removeSymbols(ref.getValue());
+					interpreter.removeSymbols(ref.getValue());
 				}
 			}
 		}

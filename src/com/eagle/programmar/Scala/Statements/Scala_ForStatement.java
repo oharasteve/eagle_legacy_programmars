@@ -97,7 +97,7 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 			if (backwards && i < start) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.vars.first().getValue(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(statement);

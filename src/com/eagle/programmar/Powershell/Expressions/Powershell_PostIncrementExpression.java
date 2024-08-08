@@ -19,10 +19,10 @@ public class Powershell_PostIncrementExpression extends PrimaryOperator implemen
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter._symbolTable.findSymbol(var.id.getValue());
+		EagleValue val = interpreter.findSymbol(var.id.getValue());
 		int prev = val.forceIntegerValue();
 		EagleValue curr = new EagleInteger(prev + 1);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.id.getValue(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.id.getValue(),
 				curr);
 		interpreter.pushInt(prev);
 	}

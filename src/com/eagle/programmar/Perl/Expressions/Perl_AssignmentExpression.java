@@ -37,14 +37,14 @@ public class Perl_AssignmentExpression extends PrecedenceOperator implements Eag
 		{
 		case "=":
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					userVar.id.getValue(), val);
 			break;
 		case "+=":
 			int newVal = interpreter.getIntValue(expr);
-			EagleValue oldVar = interpreter._symbolTable.findSymbol(userVar.id.toString());
+			EagleValue oldVar = interpreter.findSymbol(userVar.id.toString());
 			EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					userVar.id.getValue(), newValue);
 			break;
 		default:

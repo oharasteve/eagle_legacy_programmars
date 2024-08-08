@@ -91,13 +91,13 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 		if (which instanceof C_Identifier_Reference)
 		{
 			C_Identifier_Reference id = (C_Identifier_Reference) which;
-			EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue value = interpreter.findSymbol(id.getValue());
 			interpreter.pushEagleValue(value);
 		}
 		else if (which instanceof C_SubscriptedVariable)
 		{
 			C_SubscriptedVariable id = (C_SubscriptedVariable) which;
-			EagleArray value = (EagleArray) interpreter._symbolTable.findSymbol(id.id.getValue());
+			EagleArray value = (EagleArray) interpreter.findSymbol(id.id.getValue());
 			C_Subscript subscr = id.subscripts._elements.get(0);
 			int sub = interpreter.getIntValue(subscr.expr);
 			interpreter.pushEagleValue(value.getValue(sub));

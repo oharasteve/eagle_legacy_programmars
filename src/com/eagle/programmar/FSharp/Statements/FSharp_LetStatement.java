@@ -27,7 +27,7 @@ public class FSharp_LetStatement extends TokenSequence implements EagleRunnable,
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.id.getValue(), value);
 	}
 }

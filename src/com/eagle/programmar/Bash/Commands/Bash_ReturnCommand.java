@@ -19,10 +19,10 @@ public class Bash_ReturnCommand extends TokenSequence implements EagleRunnableWi
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (interpreter._currentFunction != null)
+		Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter.getCurrentFunction();
+		if (func != null)
 		{
 			int code = interpreter.getIntValue(expr);
-			Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter._currentFunction;
 			func._exitStatus = code;
 		}
 		return Eagle_Statement_Result.RETURN;

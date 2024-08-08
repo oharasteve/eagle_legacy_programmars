@@ -53,7 +53,7 @@ public class Perl_Variable extends TokenChooser
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue value = interpreter.findSymbol(id.getValue());
 			if (subscript != null && subscript.size() > 0)
 			{
 				EagleArray array = (EagleArray) value;

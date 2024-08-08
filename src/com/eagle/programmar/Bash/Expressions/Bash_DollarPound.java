@@ -19,7 +19,7 @@ public class Bash_DollarPound extends PrimaryOperator implements EagleRunnable
 		switch (dollarPound.getValue())
 		{
 		case "$?":
-			EagleValue val = interpreter._symbolTable.findSymbol("$?");
+			EagleValue val = interpreter.findSymbol("$?");
 			int code = val.forceIntegerValue();
 			interpreter.pushInt(code);
 			break;

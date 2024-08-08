@@ -45,7 +45,7 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof CMD_Label)
 			{
 				CMD_Label lbl = (CMD_Label) which;
-				interpreter._functionList.put(lbl.label.getValue(), lbl);
+				interpreter.addFunction(lbl.label.getValue(), lbl);
 				if (lbl._metrics == null)
 				{
 					lbl._metrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(),

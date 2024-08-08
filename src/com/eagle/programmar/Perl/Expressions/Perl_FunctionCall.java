@@ -90,7 +90,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		
 		// Look up the function
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -125,7 +125,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 			{
 				Perl_FunctionVariable fnVar = (Perl_FunctionVariable) param.getWhich();
 				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 						fnVar.param.getValue(), val);
 			}
 		}
@@ -151,7 +151,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 			if (param.getWhich() instanceof Perl_FunctionVariable)
 			{
 				Perl_FunctionVariable fnVar = (Perl_FunctionVariable) param.getWhich();
-				interpreter._symbolTable.removeSymbols(fnVar.param.getValue());
+				interpreter.removeSymbols(fnVar.param.getValue());
 			}
 		}
 	}

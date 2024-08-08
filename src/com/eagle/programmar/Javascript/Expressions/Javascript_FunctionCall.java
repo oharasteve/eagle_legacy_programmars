@@ -85,7 +85,7 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 			}
 		}
 
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -122,7 +122,7 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 				if (which instanceof Javascript_Variable_Definition)
 				{
 					Javascript_Variable_Definition id = (Javascript_Variable_Definition) which;
-					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 							id.getValue(), val);
 				}
 			}
@@ -153,11 +153,11 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 			if (which instanceof Javascript_Variable_Definition)
 			{
 				Javascript_Variable_Definition id = (Javascript_Variable_Definition) which;
-				interpreter._symbolTable.removeSymbols(id.getValue());
+				interpreter.removeSymbols(id.getValue());
 				for (int i = 1; i < argCount; i++)
 				{
 					param = parameters.moreParams._elements.get(i-1).param;
-					interpreter._symbolTable.removeSymbols(id.getValue());
+					interpreter.removeSymbols(id.getValue());
 				}
 			}
 		}

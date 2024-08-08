@@ -51,7 +51,7 @@ public class Delphi_For_Statement extends TokenSequence implements EagleRunnable
 		while (true)
 		{
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(_fileName, _currentLine, _currentChar,
+			interpreter.setSymbol(_fileName, _currentLine, _currentChar,
 					var.getValue(), new EagleInteger(current));
 
 			result = interpreter.tryToInterpret(stmt);

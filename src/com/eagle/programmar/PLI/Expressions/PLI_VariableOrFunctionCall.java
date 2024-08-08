@@ -18,7 +18,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		EagleValue value = interpreter.findSymbol(id.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

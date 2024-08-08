@@ -30,7 +30,7 @@ public class Go_Variable extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Go_Identifier_Reference first = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(first.toString());
+		EagleValue value = interpreter.findSymbol(first.toString());
 
 		if (value.isArray())
 		{

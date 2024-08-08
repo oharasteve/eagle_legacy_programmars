@@ -68,7 +68,7 @@ public class Fortran_DoStatement extends TokenSequence implements AbstractStatem
 			if (incr < 0 && i < stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.toString(), new EagleInteger(i));
 
 			for (Fortran_Statement stmt : statements._elements)

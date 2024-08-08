@@ -16,7 +16,7 @@ public class TCL_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		EagleValue value = interpreter.findSymbol(id.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

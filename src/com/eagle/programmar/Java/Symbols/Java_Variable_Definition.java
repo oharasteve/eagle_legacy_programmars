@@ -17,7 +17,7 @@ public class Java_Variable_Definition extends Java_Identifier_Definition impleme
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int val = interpreter._symbolTable.findSymbol(this.toString()).forceIntegerValue();
+		int val = interpreter.findSymbol(this.toString()).forceIntegerValue();
 		interpreter.pushInt(val);
 	}
 }

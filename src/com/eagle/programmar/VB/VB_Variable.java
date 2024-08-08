@@ -27,7 +27,7 @@ public class VB_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(var.toString());
+		EagleValue value = interpreter.findSymbol(var.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

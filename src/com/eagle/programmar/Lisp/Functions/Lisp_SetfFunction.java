@@ -26,7 +26,7 @@ public class Lisp_SetfFunction extends TokenSequence implements EagleRunnable, A
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(value);
-		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+		interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 				variable.getValue(), val);
 	}
 }

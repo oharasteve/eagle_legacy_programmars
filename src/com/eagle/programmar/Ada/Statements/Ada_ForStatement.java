@@ -61,7 +61,7 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 			if (backwards && i < start) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.vars.first().getValue(), new EagleInteger(i));
 
 			for (Ada_Statement stmt : statements._elements)

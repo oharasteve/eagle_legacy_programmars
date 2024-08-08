@@ -51,11 +51,7 @@ public class Go_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Go_Function)
 			{
 				Go_Function fn = (Go_Function) which;
-				interpreter._functionList.put(fn.id.getValue(), fn);
-				if (interpreter._TRACE)
-				{
-					System.err.println("*** Found Go function " + fn.id.getValue());
-				}
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
 

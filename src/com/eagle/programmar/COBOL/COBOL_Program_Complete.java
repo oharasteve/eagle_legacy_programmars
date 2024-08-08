@@ -73,8 +73,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 				if (paragraph.paragraphHeaders._elements.size() > 0)
 				{
 					String paragraphName = paragraph.paragraphHeaders._elements.get(0).paragraphName.getValue();
-					interpreter._functionList.put(paragraphName, paragraph);
-					if (interpreter._TRACE) System.err.println("*** Found paragraph " + paragraphName);
+					interpreter.addFunction(paragraphName, paragraph);
 				}
 			}
 		}

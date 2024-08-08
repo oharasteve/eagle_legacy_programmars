@@ -55,7 +55,7 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 			if (!backwards && i >= stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.var.toString(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(stmt);

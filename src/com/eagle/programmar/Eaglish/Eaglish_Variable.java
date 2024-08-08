@@ -24,7 +24,7 @@ public class Eaglish_Variable extends TokenSequence implements EagleRunnable, Ab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Eaglish_Identifier_Reference which = (Eaglish_Identifier_Reference) var.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		EagleValue value = interpreter.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

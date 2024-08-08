@@ -32,7 +32,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 		String name = methodName.var.getValue();
 		if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
@@ -54,7 +54,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 			Rust_Expression arg = argList.getPrimaryElement(i);
 			Rust_Parameter param = func.funcParamDefs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.var.getValue(), val);
 		}
 
@@ -72,7 +72,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 		for (int i = 0; i < argCount; i++)
 		{
 			Rust_Parameter param = func.funcParamDefs.getPrimaryElement(i);
-			interpreter._symbolTable.removeSymbols(param._name);
+			interpreter.removeSymbols(param._name);
 		}
 
 		return result;

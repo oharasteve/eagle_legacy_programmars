@@ -26,7 +26,7 @@ public class COBOL_ComputeStatement extends COBOL_AbstractStatement implements E
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
 				val);
 	}
 }

@@ -64,7 +64,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			Powershell_Function_Reference fnName = (Powershell_Function_Reference) which.getWhich();
 			
 			// Is it one of the defined Functions?
-			AbstractFunction fn = interpreter._functionList.get(fnName.getValue());
+			AbstractFunction fn = interpreter.findFunction(fnName.getValue());
 			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a function named " + fnName.getValue());
@@ -99,7 +99,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 				{
 					Powershell_Expression expr = (Powershell_Expression) arg.arg.getWhich();
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 							param.var.id.getValue(), val);
 				}
 			}
@@ -123,7 +123,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			for (int i = 0; i < argCount; i++)
 			{
 				Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
-				interpreter._symbolTable.removeSymbols(param.var.id.getValue());
+				interpreter.removeSymbols(param.var.id.getValue());
 			}
 		}
 	}

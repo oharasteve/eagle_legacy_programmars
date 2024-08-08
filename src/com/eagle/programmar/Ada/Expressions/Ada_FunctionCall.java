@@ -61,7 +61,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (interpreter._TRACE) System.err.println("*** Calling " + id + "()");
 
 		// Have to search for the FUNCTION definition
-		AbstractFunction fn = interpreter._functionList.get(id.getValue());
+		AbstractFunction fn = interpreter.findFunction(id.getValue());
 
 		Ada_FunctionParams params;
 		TokenList<Ada_Statement> stmts1;
@@ -90,7 +90,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		else
 		{
-			EagleValue val = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue val = interpreter.findSymbol(id.getValue());
 			if (val != null && val.isArray())
 			{
 				EagleArray array = (EagleArray) val;
@@ -130,7 +130,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 				{
 					Ada_Expression expr = (Ada_Expression) which;
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 							param.param.getValue(), val);
 				}
 			}
@@ -165,7 +165,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 			for (int i = 0; i < argCount; i++)
 			{
 				Ada_Parameter param = params.parameters.getPrimaryElement(i);
-				interpreter._symbolTable.removeSymbols(param.param.getValue());
+				interpreter.removeSymbols(param.param.getValue());
 			}
 		}
 	}

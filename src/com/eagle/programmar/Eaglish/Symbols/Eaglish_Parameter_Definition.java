@@ -17,7 +17,7 @@ public class Eaglish_Parameter_Definition extends Eaglish_Identifier_Definition 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int val = interpreter._symbolTable.findSymbol(this.toString()).forceIntegerValue();
+		int val = interpreter.findSymbol(this.toString()).forceIntegerValue();
 		interpreter.pushInt(val);
 	}
 }

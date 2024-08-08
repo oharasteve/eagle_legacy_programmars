@@ -67,7 +67,7 @@ public class Go_ForStatement extends TokenSequence implements EagleRunnableWithR
 			int current = interpreter.getIntValue(forLoop.initValue);
 			
 			String loopVar = var.getValue();
-			interpreter._symbolTable.setSymbol(_fileName, _currentLine, _currentChar,
+			interpreter.setSymbol(_fileName, _currentLine, _currentChar,
 					loopVar, new EagleInteger(current));
 
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;

@@ -22,10 +22,10 @@ public class Go_PostIncrementExpression extends PrimaryOperator implements Eagle
 	{
 		Go_Identifier_Reference id = var.vars.first();
 
-		EagleValue val = interpreter._symbolTable.findSymbol(id.getValue());
+		EagleValue val = interpreter.findSymbol(id.getValue());
 		int prev = val.forceIntegerValue();
 		EagleValue curr = new EagleInteger(prev + 1);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 				curr);
 		interpreter.pushInt(prev);
 	}

@@ -39,7 +39,7 @@ public class Fortran_WriteStatement extends TokenSequence implements AbstractSta
 		// puts the number 'numb' into the string 'numStr' with format I5
 		String formatted = Fortran_Format.format(interpreter, format.getValue(), parameters);
 		EagleString val = new EagleString(formatted);
-		interpreter._symbolTable.setSymbol(this.getFileName(), this.getStartLine(), this.getStartChar(),
+		interpreter.setSymbol(this.getFileName(), this.getStartLine(), this.getStartChar(),
 				var.var.getValue(), val);
 	}
 }

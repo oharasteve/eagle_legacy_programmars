@@ -17,7 +17,7 @@ public class FSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+		EagleValue value = interpreter.findSymbol(id.getValue());
 		interpreter.pushEagleValue(value);
 	}
 }

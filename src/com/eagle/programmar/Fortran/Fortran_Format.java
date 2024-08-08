@@ -18,7 +18,7 @@ public class Fortran_Format
 		if (fmt.equals("'(I5)'"))
 		{
 			Fortran_Variable_Reference var = parameters.first();
-			EagleValue val = interpreter._symbolTable.findSymbol(var.getValue());
+			EagleValue val = interpreter.findSymbol(var.getValue());
 			int num = val.forceIntegerValue();
 			sb.append(String.format("%5d", Integer.valueOf(num)));	// Boxing stinks in Java
 		}

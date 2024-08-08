@@ -63,7 +63,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		}
 		
 		// Is it one of the defined Functions?
-		AbstractFunction fn = interpreter._functionList.get(funcRef.getValue());
+		AbstractFunction fn = interpreter.findFunction(funcRef.getValue());
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + funcRef.getValue());
@@ -95,7 +95,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 			Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.var.id.getValue(), val);
 		}
 
@@ -118,7 +118,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		for (int i = 0; i < argCount; i++)
 		{
 			Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
-			interpreter._symbolTable.removeSymbols(param.var.id.getValue());
+			interpreter.removeSymbols(param.var.id.getValue());
 		}
 	}
 }

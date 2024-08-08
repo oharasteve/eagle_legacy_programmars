@@ -37,14 +37,14 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable, 
 			v = val;
 			break;
 		case "+=", "+:=":
-			EagleValue var1 = interpreter._symbolTable.findSymbol(id.toString());
+			EagleValue var1 = interpreter.findSymbol(id.toString());
 			v = new EagleInteger(var1.forceIntegerValue() + val.forceIntegerValue());
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + equals.getValue());
 		}
 
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 				v);
 	}
 }

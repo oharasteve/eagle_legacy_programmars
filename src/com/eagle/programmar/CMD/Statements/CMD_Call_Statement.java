@@ -52,14 +52,14 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 	{
 		// Look it up
 		String name = label.getValue();
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a label named " + name);
 		}
 		CMD_Label func = (CMD_Label) fn;
 		// AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
-		interpreter._currentFunction = func;
+		interpreter.setCurrentFunction(func);
 
 		// Now assign all the parameters (%1 %2 etc)
 		int argCount = 0;
@@ -72,7 +72,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 					CMD_ExpressionComma argComma = (CMD_ExpressionComma) arg.getWhich();
 					argCount++;
 					EagleValue val = interpreter.getEagleValue(argComma.arg);
-					interpreter._symbolTable.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),
+					interpreter.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),
 							"%~" + argCount, val);
 				}
 			}

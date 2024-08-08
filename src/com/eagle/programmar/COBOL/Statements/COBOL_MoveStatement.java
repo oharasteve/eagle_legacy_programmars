@@ -52,7 +52,7 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		COBOL_UserVariable variable = (COBOL_UserVariable) which;
-		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+		interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 				variable.id.getValue(), val);
 	}
 }

@@ -29,7 +29,7 @@ public class TCL_IncrStatement extends TokenSequence implements AbstractStatemen
 		int prev = interpreter.getIntValue(var);
 		EagleInteger val = new EagleInteger(prev + x);
 
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.id.getValue(), val);
 	}
 }

@@ -44,7 +44,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 		}
 
 		String varName = variable.id.getValue();
-		EagleValue val = interpreter._symbolTable.findSymbol(varName);
+		EagleValue val = interpreter.findSymbol(varName);
 		if (val == null)
 		{
 			throw new RuntimeException("Unable to find a variable named " + varName);

@@ -36,7 +36,7 @@ public class Rust_Data extends TokenSequence implements EagleRunnable
 		if (init.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(init.expr);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.getValue(), val);
 		}
 	}

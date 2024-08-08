@@ -39,7 +39,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		String name = subName.getValue();
 		
 		// Look up the subroutine
-		AbstractFunction func = interpreter._functionList.get(name);
+		AbstractFunction func = interpreter.findFunction(name);
 		if (func == null || !(func instanceof VB_SubDeclaration))
 		{
 			throw new RuntimeException("Unable to find a subroutine named " + name);
@@ -62,7 +62,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 			VB_Variable_Definition param = subr.params.params.getPrimaryElement(i).var;
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.getValue(), val);
 		}
 
@@ -85,7 +85,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		for (int i = 0; i < argCount; i++)
 		{
 			VB_Variable_Definition param = subr.params.params.getPrimaryElement(i).var;
-			interpreter._symbolTable.removeSymbols(param.getValue());
+			interpreter.removeSymbols(param.getValue());
 		}
 	}
 }

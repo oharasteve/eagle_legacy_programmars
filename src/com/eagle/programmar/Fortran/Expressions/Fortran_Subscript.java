@@ -24,7 +24,7 @@ public class Fortran_Subscript extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(variable.toString());
+		EagleValue value = interpreter.findSymbol(variable.toString());
 		if (value.isString() && args.getPrimaryCount() == 2)
 		{
 			String str = value.forceStringValue();

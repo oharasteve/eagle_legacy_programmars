@@ -30,7 +30,7 @@ public class AWK_AssignmentExpression extends PrecedenceOperator implements Eagl
 		case "=":
 			int x = interpreter.getIntValue(expr);
 			EagleInteger val = new EagleInteger(x);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					varExpr.variable.id.getValue(), val);
 			break;
 		default:

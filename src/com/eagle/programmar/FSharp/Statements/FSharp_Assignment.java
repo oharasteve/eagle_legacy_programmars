@@ -22,7 +22,7 @@ public class FSharp_Assignment extends TokenSequence implements AbstractStatemen
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 				var.id.getValue(), val);
 	}
 }

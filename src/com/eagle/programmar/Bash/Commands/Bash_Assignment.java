@@ -42,7 +42,7 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable, Abs
 		{
 		case "=":
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
+			interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
 					variable.id.getValue(), val);
 			break;
 		default:

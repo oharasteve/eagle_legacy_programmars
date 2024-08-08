@@ -40,8 +40,7 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter._functionList.put(name.getValue(), this);
-		if (interpreter._TRACE) System.err.println("*** Found defun " + name.getValue());
+		interpreter.addFunction(name.getValue(), this);
 		
 		if (_metrics == null)
 		{

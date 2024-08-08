@@ -35,7 +35,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		CallMetrics metrics = null;
 		Delphi_BeginEnd body = null;
 		
-		AbstractFunction fn = interpreter._functionList.get(fnName);
+		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function or procedure named " + fnName);
@@ -83,7 +83,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 					param = paramList.moreParams._elements.get(i-1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 						param.names.first().var.getValue(), val);
 			}
 		}
@@ -111,7 +111,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		{
 			// Delphi uses the function name for the return value
 			// Sort-of like this: function sqrt(x) { sqrt = x*x }
-			EagleValue val = interpreter._symbolTable.findSymbol(fnName);
+			EagleValue val = interpreter.findSymbol(fnName);
 			if (val != null)
 			{
 				interpreter.pushEagleValue(val);
@@ -125,11 +125,11 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		if (argCount > 0)
 		{
 			Delphi_Parameter param = paramList.firstParam;
-			interpreter._symbolTable.removeSymbols(param.names.first().var.getValue());
+			interpreter.removeSymbols(param.names.first().var.getValue());
 			for (int i = 1; i < argCount; i++)
 			{
 				param = paramList.moreParams._elements.get(i-1).param;
-				interpreter._symbolTable.removeSymbols(param.names.first().var.getValue());
+				interpreter.removeSymbols(param.names.first().var.getValue());
 			}
 		}
 	}

@@ -23,10 +23,10 @@ public class Perl_PostDecrementExpression extends PrimaryOperator implements Eag
 		if (var.getWhich() instanceof Perl_UserVariable)
 		{
 			Perl_UserVariable variable = (Perl_UserVariable) var.getWhich();
-			EagleValue val = interpreter._symbolTable.findSymbol(variable.id.getValue());
+			EagleValue val = interpreter.findSymbol(variable.id.getValue());
 			int prev = val.forceIntegerValue();
 			EagleValue curr = new EagleInteger(prev - 1);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), variable.id.getValue(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), variable.id.getValue(),
 					curr);
 			interpreter.pushInt(prev);
 		}

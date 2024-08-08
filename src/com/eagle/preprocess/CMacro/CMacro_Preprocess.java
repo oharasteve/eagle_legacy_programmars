@@ -338,7 +338,7 @@ public class CMacro_Preprocess extends EagleInclude
 						String word = oldLine.substring(sc, ec);
 						// System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it
 						// is a macro");
-						if (_symbolTable.isDefined(word))
+						if (_symbolTable.isSymbolDefined(word))
 						{
 							// Yes, found a macro!
 							EagleToken macroValue = (EagleToken) _symbolTable.findSymbol(word);

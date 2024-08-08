@@ -32,7 +32,7 @@ public class Ada_Variable extends TokenSequence implements EagleRunnable, Abstra
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ada_Identifier_Reference which = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		EagleValue value = interpreter.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

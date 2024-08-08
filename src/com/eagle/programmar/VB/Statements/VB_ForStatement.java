@@ -62,7 +62,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 		while (true)
 		{
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(_fileName, _currentLine, _currentChar,
+			interpreter.setSymbol(_fileName, _currentLine, _currentChar,
 					var.getValue(), new EagleInteger(current));
 
 			for (VB_Statement stmt : actions._elements)

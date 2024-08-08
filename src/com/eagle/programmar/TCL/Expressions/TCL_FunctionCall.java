@@ -25,7 +25,7 @@ public class TCL_FunctionCall extends PrimaryOperator implements EagleRunnable
 		String name = function.getValue();
 		
 		// Look up the function
-		AbstractFunction fn = interpreter._functionList.get(name);
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a procedure named " + name);
@@ -48,7 +48,7 @@ public class TCL_FunctionCall extends PrimaryOperator implements EagleRunnable
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 					param.getValue(), val);
 		}
 
@@ -66,7 +66,7 @@ public class TCL_FunctionCall extends PrimaryOperator implements EagleRunnable
 		for (int i = 0; i < argCount; i++)
 		{
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
-			interpreter._symbolTable.removeSymbols(param.getValue());
+			interpreter.removeSymbols(param.getValue());
 		}
 	}
 }

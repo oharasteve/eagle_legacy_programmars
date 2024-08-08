@@ -42,7 +42,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			String fnName = id.getValue();
 
 			// Look through our list of functions
-			AbstractFunction fn = interpreter._functionList.get(fnName);
+			AbstractFunction fn = interpreter.findFunction(fnName);
 			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a function named " + fnName);
@@ -98,7 +98,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 					}
 	
 					EagleValue val = interpreter.getEagleValue(arg);
-					interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 							param.id.getValue(), val);
 				}
 			}
@@ -122,7 +122,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 				{
 					parameter = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
 				}
-				interpreter._symbolTable.removeSymbols(parameter.id.getValue());
+				interpreter.removeSymbols(parameter.id.getValue());
 			}
 		}
 	}

@@ -30,7 +30,7 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 	{
 		String fnName = funcName.vars.first().getValue();
 		
-		AbstractFunction fn = interpreter._functionList.get(fnName);
+		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + fnName);
@@ -60,7 +60,7 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 				Go_Expression expr = arguments.getPrimaryElement(i);
 				Go_FunctionParamater param = func.parameters.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
 						param.var.getValue(), val);
 			}
 		}
@@ -80,7 +80,7 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 			for (int i = 0; i < argCount; i++)
 			{
 				Go_FunctionParamater param = func.parameters.getPrimaryElement(i);
-				interpreter._symbolTable.removeSymbols(param.var.getValue());
+				interpreter.removeSymbols(param.var.getValue());
 			}
 		}
 	}

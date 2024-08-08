@@ -168,7 +168,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	
 				metric.iterate();
 				String val = interpreter.getStrValue(nextArg);
-				interpreter._symbolTable.setSymbol(simple.var.getFileName(), simple.var.getStartLine(),
+				interpreter.setSymbol(simple.var.getFileName(), simple.var.getStartLine(),
 						simple.var.getStartChar(), simple.var.getValue(), new EagleString(val));
 	
 				result = interpreter.tryToInterpret(stmt);
@@ -187,7 +187,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 				if (incr > 0 && i > stop) break;
 				
 				metric.iterate();
-				interpreter._symbolTable.setSymbol(forL.var.getFileName(), forL.var.getStartLine(),
+				interpreter.setSymbol(forL.var.getFileName(), forL.var.getStartLine(),
 						forL.var.getStartChar(), forL.var.getValue(), new EagleInteger(i));
 	
 				result = interpreter.tryToInterpret(stmt);

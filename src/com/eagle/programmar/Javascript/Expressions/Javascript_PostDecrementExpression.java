@@ -23,10 +23,10 @@ public class Javascript_PostDecrementExpression extends PrimaryOperator implemen
 		if (var.firstId.getWhich() instanceof Javascript_Identifier_Reference)
 		{
 			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) var.firstId.getWhich();
-			EagleValue val = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue val = interpreter.findSymbol(id.getValue());
 			int prev = val.forceIntegerValue();
 			EagleValue curr = new EagleInteger(prev - 1);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
 					curr);
 			interpreter.pushInt(prev);
 		}

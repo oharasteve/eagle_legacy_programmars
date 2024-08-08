@@ -48,14 +48,14 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 			if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 	
 			// Have to search for the FUNCTION definition
-			AbstractFunction fn = interpreter._functionList.get(name);
+			AbstractFunction fn = interpreter.findFunction(name);
 			if (fn == null)
 			{
 				throw new RuntimeException("Unable to find a function named " + name);
 			}
 			Bash_Function_Explicit func = (Bash_Function_Explicit) fn;
-			AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
-			interpreter._currentFunction = func;	// Place to save exist code and string outputs
+			AbstractFunction saveFunc = interpreter.getCurrentFunction();	// Often null
+			interpreter.setCurrentFunction(func);	// Place to save exist code and string outputs
 			func._exitStatus = 0;
 			func._echoOutputs = null;
 	
@@ -67,7 +67,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 				Bash_FunctionArg arg = args._elements.get(i);
 				String paramName = "$" + (i+1);
 				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter._symbolTable.setSymbol(getFileName(), getStartLine(), getStartChar(),
+				interpreter.setSymbol(getFileName(), getStartLine(), getStartChar(),
 						paramName, val);
 			}
 	
@@ -89,13 +89,13 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 			for (int i = 0; i < argCount; i++)
 			{
 				String paramName = "$" + (i+1);
-				interpreter._symbolTable.removeSymbols(paramName);
+				interpreter.removeSymbols(paramName);
 			}
 
 			EagleInteger code = new EagleInteger(func._exitStatus);
-			interpreter._symbolTable.setSymbol(getFileName(), getStartLine(), getStartChar(), "$?", code);
+			interpreter.setSymbol(getFileName(), getStartLine(), getStartChar(), "$?", code);
 			
-			interpreter._currentFunction = saveFunc;	// Restore previous value
+			interpreter.setCurrentFunction(saveFunc);	// Restore previous value
 			if (func._echoOutputs != null)
 			{
 				interpreter.pushStr(func._echoOutputs);  // so caller can see the 'echo' command outputs

@@ -25,7 +25,7 @@ public class Rust_Variable extends TokenSequence implements AbstractVariable, Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(var.getValue());
+		EagleValue value = interpreter.findSymbol(var.getValue());
 
 //		if (subscript.isPresent() && value instanceof EagleArray)
 //		{

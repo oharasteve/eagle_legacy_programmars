@@ -42,7 +42,7 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 		int incr = interpreter.getIntValue(clause.by);
 		while (true)
 		{
-			interpreter._symbolTable.setSymbol(clause.getFileName(), clause.getStartLine(),
+			interpreter.setSymbol(clause.getFileName(), clause.getStartLine(),
 					clause.getStartChar(), clause.id.getValue(), new EagleInteger(i));
 
 			boolean stop = interpreter.getBoolValue(clause.until.condition);

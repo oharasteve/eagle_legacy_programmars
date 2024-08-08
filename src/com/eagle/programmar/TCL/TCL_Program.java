@@ -45,11 +45,7 @@ public class TCL_Program extends EagleLanguage implements EagleRunnable
 				if (base.getWhich() instanceof TCL_Procedure)
 				{
 					TCL_Procedure proc = (TCL_Procedure) base.getWhich();
-					interpreter._functionList.put(proc.name.getValue(), proc);
-					if (interpreter._TRACE)
-					{
-						System.err.println("*** Found TCL procedure " + proc.name.getValue());
-					}
+					interpreter.addFunction(proc.name.getValue(), proc);
 				}
 			}
 		}

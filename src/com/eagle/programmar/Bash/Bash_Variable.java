@@ -29,7 +29,7 @@ public class Bash_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+		EagleValue value = interpreter.findSymbol(id.getValue());
 		if (subscript != null && subscript.isPresent())
 		{
 			EagleArray array = (EagleArray) value;

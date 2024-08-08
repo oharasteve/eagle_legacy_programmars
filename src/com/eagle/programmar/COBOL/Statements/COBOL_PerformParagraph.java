@@ -35,7 +35,7 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		if (interpreter._TRACE) System.err.println("*** Calling " + startPara);
 
 		// Have to search for the PARAGRAPH definition
-		AbstractFunction fn = interpreter._functionList.get(startPara);
+		AbstractFunction fn = interpreter.findFunction(startPara);
 		if (fn == null)
 		{
 			throw new RuntimeException("Unable to find a Paragraph named " + startPara);

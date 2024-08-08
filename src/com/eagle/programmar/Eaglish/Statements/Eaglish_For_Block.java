@@ -59,7 +59,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
+			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
 					var.toString(), new EagleInteger(i));
 
 			for (Eaglish_Statement stmt : statements._elements)

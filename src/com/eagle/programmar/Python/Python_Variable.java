@@ -26,7 +26,7 @@ public class Python_Variable extends TokenSequence implements AbstractVariable, 
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Python_Identifier_Reference which = (Python_Identifier_Reference) var.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		EagleValue value = interpreter.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}
 }
