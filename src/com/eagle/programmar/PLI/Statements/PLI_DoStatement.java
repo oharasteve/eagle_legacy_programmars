@@ -5,6 +5,7 @@ package com.eagle.programmar.PLI.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.PLI.PLI_Expression;
@@ -66,10 +67,40 @@ public class PLI_DoStatement extends TokenSequence implements AbstractStatement,
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		boolean simpleDo = true;
-		if (doLoop != null && doLoop.isPresent()) simpleDo = false;
-		if (doWhile != null && doWhile.isPresent()) simpleDo = false;
-		if (doUntil != null && doUntil.isPresent()) simpleDo = false;
-		if (FOREVER != null && FOREVER.isPresent()) simpleDo = false;
+		PLI_Expression whileCond = null;
+		PLI_Expression untilCond = null;
+		PLI_Identifier_Reference loopVar = null;
+		int start = 0;
+		int stop = 0;
+		int step = 1;
+		boolean hasLoop = false;
+		
+		if (doLoop != null && doLoop.isPresent())
+		{
+			hasLoop = true;
+			loopVar = doLoop.var;
+			start = interpreter.getIntValue(doLoop.fromExpr);
+			stop = interpreter.getIntValue(doLoop.toExpr);
+			if (doLoop.by != null && doLoop.by.isPresent())
+			{
+				step = interpreter.getIntValue(doLoop.by.byExpr);
+			}
+			simpleDo = false;
+		}
+		if (doWhile != null && doWhile.isPresent())
+		{
+			whileCond = doWhile.condition;
+			simpleDo = false;
+		}
+		if (doUntil != null && doUntil.isPresent())
+		{
+			untilCond = doUntil.condition;
+			simpleDo = false;
+		}
+		if (FOREVER != null && FOREVER.isPresent())
+		{
+			simpleDo = false;
+		}
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		
 		if (simpleDo)
@@ -89,7 +120,46 @@ public class PLI_DoStatement extends TokenSequence implements AbstractStatement,
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 		
-		
+		int i = start;
+		while (true)
+		{
+			if (whileCond != null)
+			{
+				boolean cond = interpreter.getBoolValue(whileCond);
+				if (!cond) break;
+			}
+			if (hasLoop)
+			{
+				if (step > 0 && i > stop) break;
+				if (step < 0 && i < stop) break;
+				interpreter.setSymbol(loopVar, loopVar.getValue(), new EagleInteger(i));
+			}
+
+			metric.iterate();
+
+			for (PLI_StatementOrComment stmt : statements._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+
+			if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+
+			if (hasLoop)
+			{
+				i += step;
+			}
+			if (untilCond != null)
+			{
+				boolean cond = interpreter.getBoolValue(untilCond);
+				if (cond) break;
+			}
+		}
+
+		_metrics.competedLoop(metric);
 		
 		return result;
 	}

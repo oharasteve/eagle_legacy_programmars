@@ -5,6 +5,7 @@ package com.eagle.programmar.PLI.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.CallMetrics;
@@ -33,6 +34,14 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 			// First: look through built-in functions
 			switch (name.toUpperCase())
 			{
+			case "LENGTH":
+				if (argCount != 1)
+				{
+					throw new RuntimeException("LENGTH function requires 1 argument");
+				}
+				String str1 = interpreter.getStrValue(subscript.args.getPrimaryElement(0));
+				interpreter.pushInt(str1.length());
+				return;
 			case "MOD":
 				if (argCount != 2)
 				{
@@ -41,6 +50,24 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 				int numer = interpreter.getIntValue(subscript.args.getPrimaryElement(0));
 				int denom = interpreter.getIntValue(subscript.args.getPrimaryElement(1));
 				interpreter.pushInt(numer % denom);
+				return;
+			case "SUBSTR":
+				if (argCount != 3)
+				{
+					throw new RuntimeException("SUBSTR function requires 3 arguments");
+				}
+				String str2 = interpreter.getStrValue(subscript.args.getPrimaryElement(0));
+				int sc = interpreter.getIntValue(subscript.args.getPrimaryElement(1)) - 1;
+				int nc = interpreter.getIntValue(subscript.args.getPrimaryElement(2));
+				interpreter.pushStr(str2.substring(sc, sc + nc));
+				return;
+			case "TRIM":
+				if (argCount != 1)
+				{
+					throw new RuntimeException("TRIM function requires 1 argument");
+				}
+				String str3 = interpreter.getStrValue(subscript.args.getPrimaryElement(0));
+				interpreter.pushStr(str3.trim());
 				return;
 			case "TRUNC":
 				if (argCount != 1)
@@ -92,10 +119,13 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 
 			// Evaluate the function
 			long startTime = System.nanoTime();
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			for (PLI_StatementOrComment stmt : proc.statements._elements)
 			{
-				interpreter.tryToInterpret(stmt);
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
+			
 			long elapsedTime = System.nanoTime() - startTime;
 			if (proc._metrics == null)
 			{

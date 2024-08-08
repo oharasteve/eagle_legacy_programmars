@@ -142,12 +142,14 @@ public class PLI_PutStatement extends TokenSequence implements EagleRunnable, Ab
 	{
 		if (values.isPresent())
 		{
+			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < values.exprs.getPrimaryCount(); i++)
 			{
 				PLI_Expression expr = values.exprs.getPrimaryElement(i);
 				String val = interpreter.getStrValue(expr);
-				System.out.println(val);
+				sb.append(val);
 			}
+			System.out.println(sb);
 		}
 	}
 }
