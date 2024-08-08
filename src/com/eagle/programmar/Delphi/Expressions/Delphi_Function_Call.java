@@ -83,8 +83,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 					param = paramList.moreParams._elements.get(i-1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						param.names.first().var.getValue(), val);
+				interpreter.setSymbol(param, param.names.first().var.getValue(), val);
 			}
 		}
 
@@ -119,7 +118,7 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 		}
 		
 		long elapsedTime = System.nanoTime() - startTime;
-		metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		if (argCount > 0)

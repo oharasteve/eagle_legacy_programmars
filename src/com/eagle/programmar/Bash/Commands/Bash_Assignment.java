@@ -42,8 +42,7 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable, Abs
 		{
 		case "=":
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					variable.id.getValue(), val);
+			interpreter.setSymbol(variable, variable.id.getValue(), val);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

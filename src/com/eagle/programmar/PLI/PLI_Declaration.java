@@ -5,6 +5,7 @@ package com.eagle.programmar.PLI;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
@@ -154,9 +155,21 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 				if (token instanceof PLI_Variable_Definition)
 				{
 					PLI_Variable_Definition id = (PLI_Variable_Definition) token;
-					EagleValue val = interpreter.getEagleValue(item.initial.exprs.first());
-					interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-							id.toString(), val);
+					if (item.initial.exprs.getPrimaryCount() > 1)
+					{
+						EagleArray array =  new EagleArray();
+						for (int j = 0; j < item.initial.exprs.getPrimaryCount(); j++)
+						{
+							EagleValue val = interpreter.getEagleValue(item.initial.exprs.getPrimaryElement(j));
+							array.addValue(val);
+						}
+						interpreter.setSymbol(id, id.toString(), array);
+					}
+					else
+					{
+						EagleValue val = interpreter.getEagleValue(item.initial.exprs.first());
+						interpreter.setSymbol(id, id.toString(), val);
+					}
 				}
 			}
 		}

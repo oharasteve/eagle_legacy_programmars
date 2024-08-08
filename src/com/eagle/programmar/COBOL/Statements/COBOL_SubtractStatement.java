@@ -80,8 +80,8 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement implements 
 		{
 			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
 			EagleValue oldValue = interpreter.findSymbol(variable.id.getValue());
-			interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					variable.id.getValue(), new EagleInteger(oldValue.forceIntegerValue() - newVal));
+			interpreter.setSymbol(variable, variable.id.getValue(),
+					new EagleInteger(oldValue.forceIntegerValue() - newVal));
 		}
 	}
 }

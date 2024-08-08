@@ -45,7 +45,7 @@ public class Bash_ForStatement extends TokenSequence implements AbstractStatemen
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -58,8 +58,7 @@ public class Bash_ForStatement extends TokenSequence implements AbstractStatemen
 			if (start > stop && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-					id.getValue(), new EagleInteger(i));
+			interpreter.setSymbol(id, id.getValue(), new EagleInteger(i));
 
 			for (Bash_Statement stmt : statements._elements)
 			{

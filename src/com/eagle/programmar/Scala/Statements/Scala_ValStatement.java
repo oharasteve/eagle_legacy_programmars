@@ -33,8 +33,7 @@ public class Scala_ValStatement extends TokenSequence implements AbstractStateme
 		if (initValue.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(initValue);
-			interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-					id.getValue(), val);
+			interpreter.setSymbol(id, id.getValue(), val);
 		}
 	}
 }

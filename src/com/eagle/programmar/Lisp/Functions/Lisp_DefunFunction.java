@@ -44,8 +44,7 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 		
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
 		}
 	}
 }

@@ -30,8 +30,7 @@ public class AWK_AssignmentExpression extends PrecedenceOperator implements Eagl
 		case "=":
 			int x = interpreter.getIntValue(expr);
 			EagleInteger val = new EagleInteger(x);
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					varExpr.variable.id.getValue(), val);
+			interpreter.setSymbol(var, varExpr.variable.id.getValue(), val);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

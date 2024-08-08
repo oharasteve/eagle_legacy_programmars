@@ -51,7 +51,7 @@ public class Julia_ForStatement extends TokenSequence implements AbstractStateme
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -64,8 +64,7 @@ public class Julia_ForStatement extends TokenSequence implements AbstractStateme
 			if (incr < 0 && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.vars.first().getValue(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.vars.first().getValue(), new EagleInteger(i));
 
 			for (Julia_Statement stmt : statements._elements)
 			{

@@ -44,7 +44,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -59,8 +59,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.toString(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.toString(), new EagleInteger(i));
 
 			for (Eaglish_Statement stmt : statements._elements)
 			{

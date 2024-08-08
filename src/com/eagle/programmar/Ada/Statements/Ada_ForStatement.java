@@ -46,7 +46,7 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -61,8 +61,7 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 			if (backwards && i < start) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.vars.first().getValue(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.vars.first().getValue(), new EagleInteger(i));
 
 			for (Ada_Statement stmt : statements._elements)
 			{

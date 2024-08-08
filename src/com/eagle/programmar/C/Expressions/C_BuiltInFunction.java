@@ -45,8 +45,7 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 				String str = interpreter.getStrValue(args.getPrimaryElement(1));
 				String oldVal = interpreter.findSymbol(varName).forceStringValue();
 				EagleString val = new EagleString(oldVal + str);
-				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), varName,
-						val);
+				interpreter.setSymbol(var, varName, val);
 				return;
 			}
 			break;
@@ -65,8 +64,7 @@ public class C_BuiltInFunction extends PrimaryOperator implements EagleRunnable
 				String varName = id.getValue();
 				String str = interpreter.getStrValue(args.getPrimaryElement(1));
 				EagleString val = new EagleString(str);
-				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), varName,
-						val);
+				interpreter.setSymbol(var, varName, val);
 				return;
 			}
 			break;

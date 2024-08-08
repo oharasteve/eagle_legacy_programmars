@@ -172,7 +172,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 				C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
 				fname = typeAndName.functionName.getValue();
 			}
-			_metrics = new CallMetrics(interpreter._metrics, fname, getFileName(), getStartLine(), getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, fname, this);
 
 			// Don't do anything here, unless the function name is 'main'
 			// We searched for all the functions in a preliminary pass

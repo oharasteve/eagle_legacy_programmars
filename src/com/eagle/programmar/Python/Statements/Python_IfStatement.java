@@ -60,21 +60,19 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			
 			if (ifElif != null)
 			{
 				for (Python_IfElif elif : ifElif._elements)
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-							elif.getStartChar()));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
 				}
 			}
 			
 			if (ifElse != null && ifElse.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse.getFileName(), ifElse.getStartLine(),
-						ifElse.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse));
 			}
 		}
 

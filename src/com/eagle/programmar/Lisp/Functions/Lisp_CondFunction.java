@@ -44,8 +44,7 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 			for (int i = 0; i < pairs.size(); i++)
 			{
 				Lisp_CondPair pair = pairs._elements.get(i);
-				_metrics.add(new IfCondMetrics(interpreter._metrics, pair.getFileName(), pair.getStartLine(),
-						pair.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, pair));
 			}
 		}
 

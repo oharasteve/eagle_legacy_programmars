@@ -57,8 +57,7 @@ public class Go_Function extends TokenSequence implements AbstractFunction, Eagl
 		// Don't run it here. Wait until it is called.
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), this);
 		}
 		
 		// Unless the name is 'main'

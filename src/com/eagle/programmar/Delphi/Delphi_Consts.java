@@ -43,8 +43,7 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 		for (Delphi_Const con : constants._elements)
 		{
 			EagleValue val = interpreter.getEagleValue(con.expr);
-			interpreter.setSymbol(con.getFileName(), con.getStartLine(), con.getStartChar(),
-					con.constant.getValue(), val);
+			interpreter.setSymbol(con, con.constant.getValue(), val);
 		}
 	}
 }

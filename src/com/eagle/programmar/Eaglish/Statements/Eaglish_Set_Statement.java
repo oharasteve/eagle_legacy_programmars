@@ -26,7 +26,6 @@ public class Eaglish_Set_Statement extends TokenSequence implements EagleRunnabl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(value);
-		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
-				val);
+		interpreter.setSymbol(var, var.getValue(), val);
 	}
 }

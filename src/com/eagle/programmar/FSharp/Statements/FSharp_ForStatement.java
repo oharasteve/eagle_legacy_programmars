@@ -38,7 +38,7 @@ public class FSharp_ForStatement extends TokenSequence implements AbstractStatem
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -53,8 +53,7 @@ public class FSharp_ForStatement extends TokenSequence implements AbstractStatem
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.id.getValue(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.id.getValue(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(forActions);
 

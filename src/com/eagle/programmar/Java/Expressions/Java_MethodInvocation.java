@@ -83,8 +83,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 						param = parameters.moreParams._elements.get(i-1).param;
 					}
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-							param.id.getValue(), val);
+					interpreter.setSymbol(param, param.id.getValue(), val);
 				}
 			}
 
@@ -107,7 +106,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			meth._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			meth._metrics.addCallFrom(this, elapsedTime);
 
 			// Now remove all those parameters
 			if (argCount > 0)

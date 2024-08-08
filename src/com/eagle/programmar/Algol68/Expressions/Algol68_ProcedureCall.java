@@ -83,8 +83,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 			{
 				Algol68_Expression expr = (Algol68_Expression) which;
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						param.param.getValue(), val);
+				interpreter.setSymbol(param, param.param.getValue(), val);
 			}
 		}
 
@@ -103,7 +102,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		proc._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		proc._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

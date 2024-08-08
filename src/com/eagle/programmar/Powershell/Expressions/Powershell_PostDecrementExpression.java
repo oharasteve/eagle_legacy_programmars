@@ -22,8 +22,7 @@ public class Powershell_PostDecrementExpression extends PrimaryOperator implemen
 		EagleValue val = interpreter.findSymbol(var.id.getValue());
 		int prev = val.forceIntegerValue();
 		EagleValue curr = new EagleInteger(prev - 1);
-		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.id.getValue(),
-				curr);
+		interpreter.setSymbol(var, var.id.getValue(), curr);
 		interpreter.pushInt(prev);
 	}
 }

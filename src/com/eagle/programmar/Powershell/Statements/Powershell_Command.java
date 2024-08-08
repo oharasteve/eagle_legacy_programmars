@@ -73,8 +73,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 			if (_metrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), getFileName(), getStartLine(),
-						getStartChar());
+				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), this);
 			}
 			
 			// Call the function
@@ -99,8 +98,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 				{
 					Powershell_Expression expr = (Powershell_Expression) arg.arg.getWhich();
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-							param.var.id.getValue(), val);
+					interpreter.setSymbol(param, param.var.id.getValue(), val);
 				}
 			}
 
@@ -117,7 +115,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			func._metrics.addCallFrom(this, elapsedTime);
 
 			// Now remove all those parameters
 			for (int i = 0; i < argCount; i++)

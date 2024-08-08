@@ -78,8 +78,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 			CMD_Set_Regular cmd = (CMD_Set_Regular) which;
 			String name = getName(interpreter, cmd.var);
 			String formatted = CMD_Format.format(interpreter, cmd.value.getValue());
-			interpreter.setSymbol(cmd.var.getFileName(), cmd.var.getStartLine(), cmd.var.getStartChar(),
-					name, new EagleString(formatted));
+			interpreter.setSymbol(cmd.var, name, new EagleString(formatted));
 		}
 		else if (which instanceof CMD_Set_Assigment)
 		{
@@ -89,15 +88,13 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 			{
 			case "=":
 				EagleValue newVal = interpreter.getEagleValue(setA.expr);
-				interpreter.setSymbol(setA.var.getFileName(), setA.var.getStartLine(), setA.var.getStartChar(),
-						name, newVal);
+				interpreter.setSymbol(setA.var, name, newVal);
 				break;
 			case "+=":
 				int intVal = interpreter.getIntValue(setA.expr);
 				EagleValue oldVar = interpreter.findSymbol(setA.var.id.getValue());
 				EagleInteger newValue = new EagleInteger(intVal + oldVar.forceIntegerValue());
-				interpreter.setSymbol(setA.var.getFileName(), setA.var.getStartLine(), setA.var.getStartChar(),
-						name, newValue);
+				interpreter.setSymbol(setA.var, name, newValue);
 				break;
 			default:
 				throw new RuntimeException("Unable to handle operator " + setA.operator.getValue());

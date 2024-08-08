@@ -57,21 +57,19 @@ public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			
 			if (elseIfBlock != null)
 			{
 				for (Bash_If_Elif elif : elseIfBlock._elements)
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-							elif.getStartChar()));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
 				}
 			}
 			
 			if (elseBlock != null && elseBlock.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock.getFileName(), elseBlock.getStartLine(),
-						elseBlock.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock));
 			}
 		}
 

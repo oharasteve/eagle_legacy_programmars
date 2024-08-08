@@ -72,8 +72,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 					CMD_ExpressionComma argComma = (CMD_ExpressionComma) arg.getWhich();
 					argCount++;
 					EagleValue val = interpreter.getEagleValue(argComma.arg);
-					interpreter.setSymbol(arg.getFileName(), arg.getStartLine(), arg.getStartChar(),
-							"%~" + argCount, val);
+					interpreter.setSymbol(arg, "%~" + argCount, val);
 				}
 			}
 		}
@@ -111,7 +110,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// interpreter._currentFunction = saveFunc;	// Restore previous value
 	}

@@ -54,8 +54,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 			Rust_Expression arg = argList.getPrimaryElement(i);
 			Rust_Parameter param = func.funcParamDefs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.var.getValue(), val);
+			interpreter.setSymbol(param, param.var.getValue(), val);
 		}
 
 		// Prepare to evaluate the function
@@ -66,7 +65,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

@@ -52,9 +52,7 @@ public class C_Data extends TokenChooser
 			if (initialValue != null && initialValue.isPresent())
 			{
 				EagleValue value = interpreter.getEagleValue(initialValue.expression);
-				interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-						id.toString(), value);
-				// System.out.println("************** Added " + id + " = " + value);
+				interpreter.setSymbol(id, id.toString(), value);
 			}
 		}
 	}

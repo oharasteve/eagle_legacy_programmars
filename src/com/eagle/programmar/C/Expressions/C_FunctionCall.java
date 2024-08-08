@@ -98,8 +98,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 					}
 	
 					EagleValue val = interpreter.getEagleValue(arg);
-					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-							param.id.getValue(), val);
+					interpreter.setSymbol(param, param.id.getValue(), val);
 				}
 			}
 
@@ -112,7 +111,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			func._metrics.addCallFrom(this, elapsedTime);
 
 			// Remove all the parameters
 			C_FunctionRegularParameter parameter = (C_FunctionRegularParameter) params.param.getWhich();

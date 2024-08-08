@@ -33,13 +33,12 @@ public class Go_AssignmentExpression extends PrecedenceOperator implements Eagle
 		switch (equals.getValue())
 		{
 		case "=", ":=":
-			interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(), val);
+			interpreter.setSymbol(id, id.toString(), val);
 			return;
 		case "+=":
 			EagleValue oldValue = interpreter.findSymbol(id.getValue());
 			int newVal = val.forceIntegerValue() + oldValue.forceIntegerValue();
-			interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
-					new EagleInteger(newVal));
+			interpreter.setSymbol(id, id.toString(), new EagleInteger(newVal));
 			return;
 		}
 		throw new RuntimeException("Unable to handle equality operator: " + equals.getValue());

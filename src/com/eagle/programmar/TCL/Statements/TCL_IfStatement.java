@@ -42,11 +42,10 @@ public class TCL_IfStatement extends TokenSequence implements AbstractStatement,
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			if (elseClause != null && elseClause.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.getFileName(),
-						elseClause.getStartLine(), elseClause.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause));
 			}
 		}
 

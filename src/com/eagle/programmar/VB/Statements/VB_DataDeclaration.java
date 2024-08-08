@@ -53,8 +53,7 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 		if (initializer != null && initializer.isPresent())
 		{
 			EagleValue value = interpreter.getEagleValue(initializer.expr);
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.toString(), value);
+			interpreter.setSymbol(var, var.toString(), value);
 		}
 	}
 }

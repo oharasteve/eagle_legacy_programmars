@@ -39,8 +39,7 @@ public class Ada_BuiltinFunctionCall extends PrimaryOperator implements EagleRun
 			EagleValue var = interpreter.findSymbol(id.toString());
 			String val = interpreter.getStrValue(expr);
 			EagleString v = new EagleString(var.forceStringValue() + val);
-			interpreter.setSymbol(varExpr.getFileName(), varExpr.getStartLine(), varExpr.getStartChar(),
-					id.getValue(), v);
+			interpreter.setSymbol(varExpr, id.getValue(), v);
 			break;
 		case "Length":
 			if (args.getPrimaryCount() != 1)

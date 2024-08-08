@@ -55,7 +55,7 @@ public class Fortran_DoStatement extends TokenSequence implements AbstractStatem
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -68,8 +68,7 @@ public class Fortran_DoStatement extends TokenSequence implements AbstractStatem
 			if (incr < 0 && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.toString(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.toString(), new EagleInteger(i));
 
 			for (Fortran_Statement stmt : statements._elements)
 			{

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.PLI.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Label;
 import com.eagle.programmar.PLI.PLI_Subscript;
@@ -13,7 +16,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_AssignmentStatement extends TokenSequence implements AbstractStatement
+public class PLI_AssignmentStatement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) PLI_Identifier_Reference var;
@@ -22,4 +25,17 @@ public class PLI_AssignmentStatement extends TokenSequence implements AbstractSt
 	public @S(50) PLI_Expression expr;
 	public @S(60) @OPT PLI_Comment comment;
 	public @S(70) PunctuationSemicolon semicolon;
+	
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (params != null && params.isPresent())
+		{
+			throw new RuntimeException("Can't handle subscripts yet");
+		}
+		
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter.setSymbol(var, var.getValue(), val);
+	}
 }

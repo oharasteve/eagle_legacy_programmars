@@ -26,8 +26,7 @@ public class Java_PostDecrementExpression extends PrimaryOperator implements Eag
 			EagleValue val = interpreter.findSymbol(id.getValue());
 			int prev = val.forceIntegerValue();
 			EagleValue curr = new EagleInteger(prev - 1);
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
-					curr);
+			interpreter.setSymbol(var, id.getValue(), curr);
 			interpreter.pushInt(prev);
 		}
 	}

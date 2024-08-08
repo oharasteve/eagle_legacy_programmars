@@ -24,7 +24,6 @@ public class Fortran_Assignment extends TokenSequence implements EagleRunnable, 
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-				variable.var.toString(), val);
+		interpreter.setSymbol(variable, variable.var.toString(), val);
 	}
 }

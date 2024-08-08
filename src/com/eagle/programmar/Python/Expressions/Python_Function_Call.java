@@ -93,8 +93,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 				{
 					Python_Identifier_Reference ref = (Python_Identifier_Reference) var.var.getWhich();
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-							ref.getValue(), val);
+					interpreter.setSymbol(param, ref.getValue(), val);
 				}
 			}
 		}
@@ -107,7 +106,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		Python_Parameter param2 = func.params.params.param;

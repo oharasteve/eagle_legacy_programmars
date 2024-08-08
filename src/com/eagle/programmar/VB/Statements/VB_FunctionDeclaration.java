@@ -37,8 +37,7 @@ public class VB_FunctionDeclaration extends TokenSequence implements AbstractFun
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
 		}
 
 		// Don't do anything here.

@@ -65,8 +65,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 					param = func.parameters.moreParams._elements.get(i - 1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						param.getValue(), val);
+				interpreter.setSymbol(param, param.getValue(), val);
 			}
 		}
 
@@ -82,7 +81,7 @@ public class AWK_UserFunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		if (argList != null && argList.isPresent())
 		{

@@ -45,7 +45,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -62,8 +62,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 		while (true)
 		{
 			metric.iterate();
-			interpreter.setSymbol(_fileName, _currentLine, _currentChar,
-					var.getValue(), new EagleInteger(current));
+			interpreter.setSymbol(this, var.getValue(), new EagleInteger(current));
 
 			for (VB_Statement stmt : actions._elements)
 			{

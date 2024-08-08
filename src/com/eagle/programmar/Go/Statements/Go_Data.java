@@ -28,7 +28,6 @@ public class Go_Data extends TokenSequence implements AbstractStatement, EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(initValue);
-		interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-				id.getValue(), val);
+		interpreter.setSymbol(id, id.getValue(), val);
 	}
 }

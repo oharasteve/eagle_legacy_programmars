@@ -83,7 +83,7 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -97,8 +97,7 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 			if (backwards && i < start) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.vars.first().getValue(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.vars.first().getValue(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(statement);
 

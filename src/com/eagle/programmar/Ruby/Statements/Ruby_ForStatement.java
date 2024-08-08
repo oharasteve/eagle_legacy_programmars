@@ -81,7 +81,7 @@ public class Ruby_ForStatement extends TokenSequence implements AbstractStatemen
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -94,8 +94,7 @@ public class Ruby_ForStatement extends TokenSequence implements AbstractStatemen
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.vars.first().getValue(), new EagleInteger(i));
+			interpreter.setSymbol(var, var.vars.first().getValue(), new EagleInteger(i));
 
 			for (Ruby_Statement statement : statements._elements)
 			{

@@ -22,7 +22,6 @@ public class TCL_SetStatement extends TokenSequence implements EagleRunnable, Ab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.id.getValue(),
-				val);
+		interpreter.setSymbol(var, var.id.getValue(), val);
 	}
 }

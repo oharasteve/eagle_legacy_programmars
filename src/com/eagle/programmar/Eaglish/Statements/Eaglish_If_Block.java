@@ -54,21 +54,19 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			
 			if (elseifBlocks != null)
 			{
 				for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-							elif.getStartChar()));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
 				}
 			}
 			
 			if (elseBlock != null && elseBlock.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock.getFileName(), elseBlock.getStartLine(),
-						elseBlock.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock));
 			}
 		}
 

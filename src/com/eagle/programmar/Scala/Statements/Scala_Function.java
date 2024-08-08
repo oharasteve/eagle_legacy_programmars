@@ -57,8 +57,7 @@ public class Scala_Function extends TokenSequence implements EagleRunnable, Abst
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), this);
 		}
 
 		if (id.getValue().equals("main"))

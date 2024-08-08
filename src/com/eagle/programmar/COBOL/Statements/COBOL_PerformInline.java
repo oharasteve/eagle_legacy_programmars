@@ -31,8 +31,7 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -42,8 +41,7 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 		int incr = interpreter.getIntValue(clause.by);
 		while (true)
 		{
-			interpreter.setSymbol(clause.getFileName(), clause.getStartLine(),
-					clause.getStartChar(), clause.id.getValue(), new EagleInteger(i));
+			interpreter.setSymbol(clause, clause.id.getValue(), new EagleInteger(i));
 
 			boolean stop = interpreter.getBoolValue(clause.until.condition);
 			if (stop) break;

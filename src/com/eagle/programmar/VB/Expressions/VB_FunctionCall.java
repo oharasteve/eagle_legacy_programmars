@@ -90,8 +90,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 			VB_Variable_Definition param = func.params.params.getPrimaryElement(i).var;
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.getValue(), val);
+			interpreter.setSymbol(param, param.getValue(), val);
 		}
 
 		// Prepare to evaluate the method
@@ -116,7 +115,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

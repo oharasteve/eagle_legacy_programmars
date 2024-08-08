@@ -28,15 +28,13 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 			{
 			case "=":
 				EagleValue value = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(pVar.getFileName(), pVar.getStartLine(), pVar.getStartChar(),
-						pVar.variable.id.getValue(), value);
+				interpreter.setSymbol(pVar, pVar.variable.id.getValue(), value);
 				break;
 			case "+=":
 				int newVal = interpreter.getIntValue(expr);
 				EagleValue oldVar = interpreter.findSymbol(pVar.variable.id.toString());
 				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						pVar.variable.id.getValue(), newValue);
+				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
 				break;
 			default:
 				throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

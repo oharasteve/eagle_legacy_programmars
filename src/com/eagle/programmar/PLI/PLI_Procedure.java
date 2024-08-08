@@ -5,12 +5,14 @@ package com.eagle.programmar.PLI;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -22,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class PLI_Procedure extends TokenSequence implements EagleRunnable
+public class PLI_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT PLI_Signals signals;
 	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
@@ -31,20 +33,25 @@ public class PLI_Procedure extends TokenSequence implements EagleRunnable
 
 	public @S(50) PLI_KeywordChoice PROCEDURE = new PLI_KeywordChoice("PROCEDURE", "PROC");
 	public @S(60) @OPT PLI_Procedure_Parameters params;
+	public @S(70) @OPT TokenList<PLI_ProcedureOption> options;
+	public @S(80) PunctuationSemicolon semicolon1;
 
-	public @S(70) @OPT PLI_ProcedureOptions options1;
-	public @S(80) @OPT PLI_Keyword RECURSIVE = new PLI_Keyword("RECURSIVE");
-	public @S(90) @OPT PLI_ProcedureReturns returns;
-	public @S(100) @OPT PLI_ProcedureOptions options2;
-	public @S(110) PunctuationSemicolon semicolon1;
+	public @S(90) TokenList<PLI_StatementOrComment> statements;
 
-	public @S(120) TokenList<PLI_StatementOrComment> statements;
+	public @S(100) @OPT PLI_Punctuation percent2 = new PLI_Punctuation('%');
+	public @S(110) PLI_Keyword END = new PLI_Keyword("END");
+	public @S(120) PLI_Identifier_Reference id2;
+	public @S(130) PunctuationSemicolon semicolon2;
 
-	public @S(130) @OPT PLI_Punctuation percent2 = new PLI_Punctuation('%');
-	public @S(140) PLI_Keyword END = new PLI_Keyword("END");
-	public @S(150) PLI_Identifier_Reference id2;
-	public @S(160) PunctuationSemicolon semicolon2;
+	public @SKIP CallMetrics _metrics = null;
 
+	public static class PLI_ProcedureOption extends TokenChooser
+	{
+		public @CHOICE PLI_ProcedureOptionsMain XXoptionsMain;
+		public @CHOICE PLI_Keyword XXRECURSIVE = new PLI_Keyword("RECURSIVE");
+		public @CHOICE PLI_ProcedureReturns XXreturns;
+	}
+	
 	public static class PLI_Procedure_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -53,7 +60,7 @@ public class PLI_Procedure extends TokenSequence implements EagleRunnable
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
-	public static class PLI_ProcedureOptions extends TokenSequence
+	public static class PLI_ProcedureOptionsMain extends TokenSequence
 	{
 		public @S(10) PLI_Keyword OPTIONS = new PLI_Keyword("OPTIONS");
 		public @S(20) PunctuationLeftParen leftParen;
@@ -84,9 +91,23 @@ public class PLI_Procedure extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (PLI_StatementOrComment elt : statements._elements)
+		// Only run the Procedure if it has OPTIONS(MAIN)
+		if (options != null && options.isPresent())
 		{
-			interpreter.tryToInterpret(elt);
+			for (PLI_ProcedureOption opt : options._elements)
+			{
+				if (opt.getWhich() instanceof PLI_ProcedureOptionsMain)
+				{
+					PLI_ProcedureOptionsMain main = (PLI_ProcedureOptionsMain) opt.getWhich();
+					if (main.MAIN != null && main.MAIN.isPresent())
+					{
+						for (PLI_StatementOrComment elt : statements._elements)
+						{
+							interpreter.tryToInterpret(elt);
+						}
+					}
+				}
+			}
 		}
 	}
 }

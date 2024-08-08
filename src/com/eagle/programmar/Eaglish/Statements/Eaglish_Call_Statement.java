@@ -62,8 +62,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 			Eaglish_Expression arg = callParams.args.getPrimaryElement(i);
 			// interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.param.getValue(), val);
+			interpreter.setSymbol(param, param.param.getValue(), val);
 		}
 
 		// Evaluate the function
@@ -73,7 +72,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 			interpreter.tryToInterpret(stmt);
 		}
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Remove all the parameters
 		for (int i = 0; i < actual; i++)

@@ -42,8 +42,7 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 		// Don't run it here. Wait until it is called.
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, forward.name.var.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, forward.name.var.getValue(), this);
 		}
 	}
 }

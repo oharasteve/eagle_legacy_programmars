@@ -130,8 +130,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 				{
 					Ada_Expression expr = (Ada_Expression) which;
 					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-							param.param.getValue(), val);
+					interpreter.setSymbol(param, param.param.getValue(), val);
 				}
 			}
 		}
@@ -157,7 +156,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		metrics.addCallFrom(this, elapsedTime);
 
 		if (argList.isPresent())
 		{

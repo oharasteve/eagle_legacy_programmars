@@ -58,8 +58,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 			Fortran_Expression expr = args.getPrimaryElement(i);
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.getValue(), val);
+			interpreter.setSymbol(param, param.getValue(), val);
 		}
 
 		// Prepare to evaluate the procedure or function
@@ -76,10 +75,9 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		long elapsedTime = System.nanoTime() - startTime;
 		if (sub._metrics == null)
 		{
-			sub._metrics = new CallMetrics(interpreter._metrics, fnName, sub.getFileName(), sub.getStartLine(),
-					sub.getStartChar());
+			sub._metrics = new CallMetrics(interpreter._metrics, fnName, sub);
 		}
-		sub._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		sub._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

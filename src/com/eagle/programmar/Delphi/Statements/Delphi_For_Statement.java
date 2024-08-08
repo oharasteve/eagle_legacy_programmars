@@ -39,7 +39,7 @@ public class Delphi_For_Statement extends TokenSequence implements EagleRunnable
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -51,8 +51,7 @@ public class Delphi_For_Statement extends TokenSequence implements EagleRunnable
 		while (true)
 		{
 			metric.iterate();
-			interpreter.setSymbol(_fileName, _currentLine, _currentChar,
-					var.getValue(), new EagleInteger(current));
+			interpreter.setSymbol(this, var.getValue(), new EagleInteger(current));
 
 			result = interpreter.tryToInterpret(stmt);
 			if (result == Eagle_Statement_Result.BREAK)

@@ -46,11 +46,10 @@ public class Delphi_If_Statement extends TokenSequence implements AbstractStatem
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			if (ifElse != null && ifElse.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse.getFileName(),
-						ifElse.getStartLine(), ifElse.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse));
 			}
 		}
 

@@ -34,8 +34,7 @@ public class Eaglish_Integer_Data extends TokenSequence implements EagleRunnable
 		{
 			int x = interpreter.getIntValue(init.value);
 			EagleInteger val = new EagleInteger(x);
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.getValue(), val);
+			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
 }

@@ -64,8 +64,7 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
 		}
 
 		// Don't do anything here.

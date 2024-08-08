@@ -38,8 +38,7 @@ public class Ada_Data extends TokenSequence implements EagleRunnable, AbstractSt
 		{
 			EagleValue val = interpreter.getEagleValue(init.value);
 			Ada_Variable_Definition var = ids.first();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.getValue(), val);
+			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
 }

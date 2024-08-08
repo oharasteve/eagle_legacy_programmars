@@ -59,11 +59,11 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	
 	public static class CMD_Simple_For_Type extends TokenChooser
 	{
-		public @CHOICE CMD_For_No_Options noOptions;
-		public @LAST CMD_For_D forD;
-		public @CHOICE CMD_For_F forF;
-		public @CHOICE CMD_For_R_Filename forR_filename;
-		public @CHOICE CMD_For_R_no_Filename forR_noFilename;
+		public @CHOICE CMD_For_No_Options XXnoOptions;
+		public @LAST CMD_For_D XXforD;
+		public @CHOICE CMD_For_F XXforF;
+		public @CHOICE CMD_For_R_Filename XXforR_filename;
+		public @CHOICE CMD_For_R_no_Filename XXforR_noFilename;
 	}
 	
 	public static class CMD_For_No_Options extends TokenSequence
@@ -133,7 +133,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -168,8 +168,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 	
 				metric.iterate();
 				String val = interpreter.getStrValue(nextArg);
-				interpreter.setSymbol(simple.var.getFileName(), simple.var.getStartLine(),
-						simple.var.getStartChar(), simple.var.getValue(), new EagleString(val));
+				interpreter.setSymbol(simple.var, simple.var.getValue(), new EagleString(val));
 	
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break; 
@@ -187,8 +186,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 				if (incr > 0 && i > stop) break;
 				
 				metric.iterate();
-				interpreter.setSymbol(forL.var.getFileName(), forL.var.getStartLine(),
-						forL.var.getStartChar(), forL.var.getValue(), new EagleInteger(i));
+				interpreter.setSymbol(forL.var, forL.var.getValue(), new EagleInteger(i));
 	
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;				

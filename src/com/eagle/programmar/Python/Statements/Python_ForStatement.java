@@ -91,7 +91,7 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
@@ -122,8 +122,7 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 			}
 			
 			metric.iterate();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					varName, new EagleInteger(i));
+			interpreter.setSymbol(var, varName, new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(forBlock);
 

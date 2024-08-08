@@ -49,8 +49,7 @@ public class Bash_Function extends TokenChooser
 		{
 			if (_metrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(),
-						getFileName(), getStartLine(), getStartChar());
+				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), this);
 			}
 		}
 	}

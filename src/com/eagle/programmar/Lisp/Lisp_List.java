@@ -54,8 +54,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 				Lisp_SExpr expr = exprs._elements.get(i + 1);
 				Lisp_ParamDef param = func.parameters._elements.get(i);
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						param.parameter.getValue(), val);
+				interpreter.setSymbol(param, param.parameter.getValue(), val);
 			}
 		}
 
@@ -72,7 +71,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		if (argCount > 0)

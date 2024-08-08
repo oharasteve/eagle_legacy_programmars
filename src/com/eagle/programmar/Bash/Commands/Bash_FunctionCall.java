@@ -67,8 +67,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 				Bash_FunctionArg arg = args._elements.get(i);
 				String paramName = "$" + (i+1);
 				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter.setSymbol(getFileName(), getStartLine(), getStartChar(),
-						paramName, val);
+				interpreter.setSymbol(this, paramName, val);
 			}
 	
 			// Prepare to evaluate the function
@@ -83,7 +82,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 	
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			func._metrics.addCallFrom(this, elapsedTime);
 	
 			// Now remove all those parameters
 			for (int i = 0; i < argCount; i++)
@@ -93,7 +92,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 			}
 
 			EagleInteger code = new EagleInteger(func._exitStatus);
-			interpreter.setSymbol(getFileName(), getStartLine(), getStartChar(), "$?", code);
+			interpreter.setSymbol(this, "$?", code);
 			
 			interpreter.setCurrentFunction(saveFunc);	// Restore previous value
 			if (func._echoOutputs != null)

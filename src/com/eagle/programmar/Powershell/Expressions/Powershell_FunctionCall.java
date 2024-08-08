@@ -72,8 +72,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, funcRef.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, funcRef.getValue(), this);
 		}
 		
 		// Call the function
@@ -95,8 +94,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 			Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.var.id.getValue(), val);
+			interpreter.setSymbol(param, param.var.id.getValue(), val);
 		}
 
 		// Prepare to evaluate the method
@@ -112,7 +110,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

@@ -49,8 +49,7 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 		// System.out.println("#define " + macroName + " ...");
 		if (preprocessor._project == null || preprocessor._project.expandMacro(macroName))
 		{
-			preprocessor._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), macroName,
-					new EagleToken(this));
+			preprocessor._symbolTable.setSymbol(var, macroName, new EagleToken(this));
 		}
 		return true; // No need to add these to the file
 	}

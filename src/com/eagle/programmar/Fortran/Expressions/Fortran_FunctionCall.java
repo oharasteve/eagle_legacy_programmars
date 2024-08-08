@@ -108,8 +108,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 			Fortran_Expression expr = args.getPrimaryElement(i);
 			Fortran_Variable_Reference param = func.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.getValue(), val);
+			interpreter.setSymbol(param, param.getValue(), val);
 		}
 
 		// Prepare to evaluate the procedure or function
@@ -135,10 +134,9 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		long elapsedTime = System.nanoTime() - startTime;
 		if (func._metrics == null)
 		{
-			func._metrics = new CallMetrics(interpreter._metrics, fnName, func.getFileName(), func.getStartLine(),
-					func.getStartChar());
+			func._metrics = new CallMetrics(interpreter._metrics, fnName, func);
 		}
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

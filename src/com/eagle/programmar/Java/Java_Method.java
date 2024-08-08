@@ -128,8 +128,7 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 		
 			if (_metrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), getFileName(), getStartLine(),
-						getStartChar());
+				_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), this);
 			}
 	
 			// Nothing to do here. Only run methods when they are called / invoked.

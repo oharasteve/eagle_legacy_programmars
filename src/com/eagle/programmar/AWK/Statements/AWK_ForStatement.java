@@ -70,7 +70,7 @@ public class AWK_ForStatement extends TokenSequence implements EagleRunnableWith
 
 			if (_metrics == null)
 			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+				_metrics = new ForLoopMetrics(interpreter._metrics, this);
 			}
 			ForLoopMetric metric = new ForLoopMetric();
 

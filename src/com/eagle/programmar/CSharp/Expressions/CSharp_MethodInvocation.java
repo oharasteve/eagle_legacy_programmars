@@ -82,8 +82,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 					{
 						CSharp_Expression expr = ((CSharp_ArgumentOut) which).arg;
 						EagleValue val = interpreter.getEagleValue(expr);
-						interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-								param.id.getValue(), val);
+						interpreter.setSymbol(param, param.id.getValue(), val);
 					}
 				}
 			}
@@ -107,7 +106,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			meth._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+			meth._metrics.addCallFrom(this, elapsedTime);
 
 			// Now remove all those parameters
 			if (argCount > 0)

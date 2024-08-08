@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.PLI.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Label;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
@@ -14,13 +18,13 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_DoStatement extends TokenSequence implements AbstractStatement
+public class PLI_DoStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @OPT PLI_Label label1;
 	public @S(20) @DOC("7.15") PLI_Keyword DO = new PLI_Keyword("DO");
-	public @S(30) @OPT PLI_DoLoop loop;
-	public @S(40) @OPT PLI_DoUntil until;
-	public @S(50) @OPT PLI_DoWhile dowhile;
+	public @S(30) @OPT PLI_DoLoop doLoop;
+	public @S(40) @OPT PLI_DoUntil doUntil;
+	public @S(50) @OPT PLI_DoWhile doWhile;
 	public @S(60) @OPT PLI_Keyword FOREVER = new PLI_Keyword("FOREVER");
 	public @S(70) PunctuationSemicolon semicolon1;
 	public @S(80) @OPT TokenList<PLI_StatementOrComment> statements;
@@ -54,5 +58,39 @@ public class PLI_DoStatement extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) PLI_Keyword WHILE = new PLI_Keyword("WHILE");
 		public @S(20) PLI_Expression condition;
+	}
+	
+	private @SKIP ForLoopMetrics _metrics = null;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		boolean simpleDo = true;
+		if (doLoop != null && doLoop.isPresent()) simpleDo = false;
+		if (doWhile != null && doWhile.isPresent()) simpleDo = false;
+		if (doUntil != null && doUntil.isPresent()) simpleDo = false;
+		if (FOREVER != null && FOREVER.isPresent()) simpleDo = false;
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		
+		if (simpleDo)
+		{
+			// No iteration, no metrics, no logic, just a groups of statements
+			for (PLI_StatementOrComment stmt : statements._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
+		}
+		
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+		
+		
+		
+		return result;
 	}
 }

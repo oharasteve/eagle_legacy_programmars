@@ -27,6 +27,6 @@ public class Scala_VarStatement extends TokenSequence implements EagleRunnable, 
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(value);
-		interpreter.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(), val);
+		interpreter.setSymbol(id, id.toString(), val);
 	}
 }

@@ -95,8 +95,7 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 			Julia_Variable param = func.params.parameters.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.vars.first().getValue(), val);
+			interpreter.setSymbol(param, param.vars.first().getValue(), val);
 		}
 
 		// Prepare to evaluate the method
@@ -112,7 +111,7 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

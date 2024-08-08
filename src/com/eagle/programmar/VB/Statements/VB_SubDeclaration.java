@@ -34,8 +34,7 @@ public class VB_SubDeclaration extends TokenSequence implements AbstractFunction
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
 		}
 
 		// Don't do anything here.

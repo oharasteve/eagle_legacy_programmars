@@ -54,8 +54,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 			FSharp_FunctionParam param = func.params.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.var.getValue(), val);
+			interpreter.setSymbol(param, param.var.getValue(), val);
 		}
 
 		// Prepare to evaluate the method
@@ -71,7 +70,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

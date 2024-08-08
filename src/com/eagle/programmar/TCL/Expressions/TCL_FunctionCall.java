@@ -48,8 +48,7 @@ public class TCL_FunctionCall extends PrimaryOperator implements EagleRunnable
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.getValue(), val);
+			interpreter.setSymbol(param, param.getValue(), val);
 		}
 
 		// Prepare to evaluate the method
@@ -60,7 +59,7 @@ public class TCL_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		proc._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		proc._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

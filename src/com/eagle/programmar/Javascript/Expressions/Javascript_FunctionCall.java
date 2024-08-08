@@ -122,8 +122,7 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 				if (which instanceof Javascript_Variable_Definition)
 				{
 					Javascript_Variable_Definition id = (Javascript_Variable_Definition) which;
-					interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-							id.getValue(), val);
+					interpreter.setSymbol(param, id.getValue(), val);
 				}
 			}
 		}
@@ -143,7 +142,7 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		if (argCount > 0)

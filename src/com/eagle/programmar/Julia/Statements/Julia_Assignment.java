@@ -30,15 +30,13 @@ public class Julia_Assignment extends TokenSequence implements EagleRunnable, Ab
 		{
 		case "=":
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
-					val);
+			interpreter.setSymbol(var, id.getValue(), val);
 			break;
 		case "+=":
 			int newVal = interpreter.getIntValue(expr);
 			EagleValue oldVar = interpreter.findSymbol(id.getValue());
 			EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					id.getValue(), newValue);
+			interpreter.setSymbol(var, id.getValue(), newValue);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

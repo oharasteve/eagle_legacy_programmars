@@ -48,12 +48,11 @@ public class Powershell_ForStatement extends TokenSequence implements AbstractSt
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		int start = interpreter.getIntValue(init);
-		interpreter.setSymbol(this.getFileName(), this.getStartLine(), this.getStartChar(),
-				var.id.getValue(), new EagleInteger(start));
+		interpreter.setSymbol(this, var.id.getValue(), new EagleInteger(start));
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

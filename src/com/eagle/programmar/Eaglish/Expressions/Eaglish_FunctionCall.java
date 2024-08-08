@@ -58,8 +58,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 			Eaglish_Expression arg = args.getPrimaryElement(i);
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.param.getValue(), val);
+			interpreter.setSymbol(param, param.param.getValue(), val);
 		}
 
 		// Prepare to evaluate the function
@@ -74,7 +73,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

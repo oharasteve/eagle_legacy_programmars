@@ -36,8 +36,7 @@ public class Algol68_Data extends TokenSequence implements EagleRunnable, Abstra
 		{
 			EagleValue val = interpreter.getEagleValue(init.value);
 			Algol68_Variable_Definition var = ids.first();
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.getValue(), val);
+			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
 }

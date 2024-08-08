@@ -62,8 +62,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 			VB_Variable_Definition param = subr.params.params.getPrimaryElement(i).var;
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.getValue(), val);
+			interpreter.setSymbol(param, param.getValue(), val);
 		}
 
 		// Prepare to evaluate the method
@@ -79,7 +78,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		subr._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		subr._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

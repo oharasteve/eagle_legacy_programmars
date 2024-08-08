@@ -70,21 +70,19 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			
 			if (elseIfStmts != null)
 			{
 				for (Powershell_IfElseIfStatement elif : elseIfStmts._elements)
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-							elif.getStartChar()));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
 				}
 			}
 			
 			if (elseStmt != null && elseStmt.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseStmt.getFileName(), elseStmt.getStartLine(),
-						elseStmt.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseStmt));
 			}
 		}
 

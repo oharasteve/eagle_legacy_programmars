@@ -48,8 +48,7 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 				interpreter.addFunction(lbl.label.getValue(), lbl);
 				if (lbl._metrics == null)
 				{
-					lbl._metrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(),
-							lbl.getFileName(), lbl.getStartLine(), lbl.getStartChar());
+					lbl._metrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(), lbl);
 				}
 			}
 		}

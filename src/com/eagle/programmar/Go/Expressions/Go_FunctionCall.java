@@ -60,8 +60,7 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 				Go_Expression expr = arguments.getPrimaryElement(i);
 				Go_FunctionParamater param = func.parameters.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						param.var.getValue(), val);
+				interpreter.setSymbol(param, param.var.getValue(), val);
 			}
 		}
 
@@ -72,7 +71,7 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 		interpreter.tryToInterpret(func.stmt);
 
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
 		if (argCount > 0)

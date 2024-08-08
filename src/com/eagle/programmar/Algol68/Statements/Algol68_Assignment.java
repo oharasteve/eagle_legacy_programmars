@@ -44,7 +44,6 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable, 
 			throw new RuntimeException("Unable to handle " + equals.getValue());
 		}
 
-		interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), id.getValue(),
-				v);
+		interpreter.setSymbol(var, id.getValue(), v);
 	}
 }

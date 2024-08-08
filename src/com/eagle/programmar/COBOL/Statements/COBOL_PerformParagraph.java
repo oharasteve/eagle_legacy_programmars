@@ -43,8 +43,7 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		COBOL_Paragraph paragraph = (COBOL_Paragraph) fn;
 		if (paragraph._metrics == null)
 		{
-			paragraph._metrics = new CallMetrics(interpreter._metrics, startPara, getFileName(), getStartLine(),
-					getStartChar());
+			paragraph._metrics = new CallMetrics(interpreter._metrics, startPara, this);
 		}
 
 		// Prepare to evaluate the function
@@ -59,7 +58,7 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		}
 		
 		long elapsedTime = System.nanoTime() - startTime;
-		paragraph._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		paragraph._metrics.addCallFrom(this, elapsedTime);
 		
 		return result;
 	}

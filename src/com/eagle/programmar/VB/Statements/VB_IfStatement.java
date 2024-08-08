@@ -77,7 +77,7 @@ public class VB_IfStatement extends TokenSequence implements AbstractStatement, 
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar()));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
 			
 			if (ifType.getWhich() instanceof VB_IfMultiLiner)
 			{
@@ -86,15 +86,13 @@ public class VB_IfStatement extends TokenSequence implements AbstractStatement, 
 				{
 					for (VB_IfElseIfClause elif : multi.elseIfClause._elements)
 					{
-						_metrics.add(new IfCondMetrics(interpreter._metrics, elif.getFileName(), elif.getStartLine(),
-								elif.getStartChar()));
+						_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
 					}
 				}
 	
 				if (multi.elseClause != null && multi.elseClause.isPresent())
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, multi.elseClause.getFileName(),
-							multi.elseClause.getStartLine(), multi.elseClause.getStartChar()));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, multi.elseClause));
 				}
 			}
 		}

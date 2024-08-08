@@ -63,7 +63,7 @@ public class Perl_ForStatement extends TokenSequence implements AbstractStatemen
 
 			if (_metrics == null)
 			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+				_metrics = new ForLoopMetrics(interpreter._metrics, this);
 			}
 			ForLoopMetric metric = new ForLoopMetric();
 

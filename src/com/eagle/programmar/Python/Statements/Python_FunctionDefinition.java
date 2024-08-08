@@ -55,8 +55,7 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 		if (_metrics == null)
 		{
 			Python_Function_Definition def = (Python_Function_Definition) fnName.getWhich();
-			_metrics = new CallMetrics(interpreter._metrics, def.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, def.getValue(), this);
 		}
 
 		// Don't do anything here.

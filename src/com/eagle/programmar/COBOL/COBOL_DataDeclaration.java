@@ -214,8 +214,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				System.err.println("*** data " + level + " " + varName + " " + pic);
 			}
-			interpreter.setSymbol(dataDef.getFileName(), dataDef.getStartLine(), dataDef.getStartChar(),
-					varName, value);
+			interpreter.setSymbol(dataDef, varName, value);
 
 		}
 	}

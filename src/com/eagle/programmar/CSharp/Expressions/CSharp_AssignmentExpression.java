@@ -37,15 +37,13 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 			{
 			case "=":
 				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						id.getValue(), val);
+				interpreter.setSymbol(var, id.getValue(), val);
 				break;
 			case "+=":
 				int newVal = interpreter.getIntValue(expr);
 				EagleValue oldVar = interpreter.findSymbol(id.toString());
 				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-				interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						id.getValue(), newValue);
+				interpreter.setSymbol(var, id.getValue(), newValue);
 				break;
 			default:
 				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());

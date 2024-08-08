@@ -26,8 +26,7 @@ public class Perl_PostIncrementExpression extends PrimaryOperator implements Eag
 			EagleValue val = interpreter.findSymbol(variable.id.getValue());
 			int prev = val.forceIntegerValue();
 			EagleValue curr = new EagleInteger(prev + 1);
-			interpreter.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), variable.id.getValue(),
-					curr);
+			interpreter.setSymbol(var, variable.id.getValue(), curr);
 			interpreter.pushInt(prev);
 		}
 	}

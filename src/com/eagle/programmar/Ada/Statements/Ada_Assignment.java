@@ -54,7 +54,6 @@ public class Ada_Assignment extends TokenSequence implements EagleRunnable, Abst
 			throw new RuntimeException("Unable to handle " + equals.getValue());
 		}
 
-		interpreter.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-				id.getValue(), v);
+		interpreter.setSymbol(variable, id.getValue(), v);
 	}
 }

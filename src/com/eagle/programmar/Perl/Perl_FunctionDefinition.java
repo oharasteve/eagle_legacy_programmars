@@ -86,8 +86,7 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), getFileName(), getStartLine(),
-					getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), this);
 		}
 
 		// Don't do anything here.

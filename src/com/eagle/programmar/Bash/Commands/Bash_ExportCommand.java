@@ -33,7 +33,6 @@ public class Bash_ExportCommand extends TokenSequence implements AbstractStateme
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var.getFileName(), var.getStartLine(),
-				var.getStartChar(), var.id.getValue(), val);
+		interpreter.setSymbol(var, var.id.getValue(), val);
 	}
 }

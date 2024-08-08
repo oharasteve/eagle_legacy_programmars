@@ -115,7 +115,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 
 			if (_metrics == null)
 			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, getFileName(), getStartLine(), getStartChar());
+				_metrics = new ForLoopMetrics(interpreter._metrics, this);
 			}
 			ForLoopMetric metric = new ForLoopMetric();
 

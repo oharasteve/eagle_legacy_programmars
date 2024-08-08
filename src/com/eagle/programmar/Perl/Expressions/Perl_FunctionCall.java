@@ -125,8 +125,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 			{
 				Perl_FunctionVariable fnVar = (Perl_FunctionVariable) param.getWhich();
 				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-						fnVar.param.getValue(), val);
+				interpreter.setSymbol(param, fnVar.param.getValue(), val);
 			}
 		}
 	
@@ -138,7 +137,7 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 	
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 	
 		// Now remove all those parameters
 		param = func.params.param;
