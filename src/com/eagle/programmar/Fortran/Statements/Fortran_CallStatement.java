@@ -3,10 +3,18 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Expression;
+import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Reference;
+import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -14,12 +22,70 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Fortran_CallStatement extends TokenSequence implements AbstractStatement
+public class Fortran_CallStatement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @DOC("6j4m0vn7p/index.html") @S(10) Fortran_Keyword CALL = new Fortran_Keyword("CALL");
-	public @S(20) Fortran_Function_Reference subroutine;
+	public @S(20) Fortran_Function_Reference variable;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Fortran_Expression, PunctuationComma> arguments;
+	public @S(40) SeparatedList<Fortran_Expression, PunctuationComma> args;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) Fortran_EOLN eoln;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String fnName = variable.getValue().toUpperCase();
+		
+		AbstractFunction fn = interpreter._functionList.get(fnName);
+		if (fn == null || !(fn instanceof Fortran_Subroutine))
+		{
+			throw new RuntimeException("Unable to find a subroutine named " + fnName);
+		}
+		Fortran_Subroutine sub = (Fortran_Subroutine) fn;
+
+		// Make sure the function args match up
+		int argCount = args.getPrimaryCount();
+		int paramCount = sub.parameters.getPrimaryCount();
+		if (argCount != paramCount)
+		{
+			throw new RuntimeException(
+					"Subroutine " + fnName + " expects #args = " + paramCount + ", but was given " + argCount);
+		}
+
+		// Now assign all the parameters
+		for (int i = 0; i < argCount; i++)
+		{
+			Fortran_Expression expr = args.getPrimaryElement(i);
+			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
+					param.getValue(), val);
+		}
+
+		// Prepare to evaluate the procedure or function
+		long startTime = System.nanoTime();
+
+		// And transfer control to the procedure or function
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		for (Fortran_Statement stmt : sub.statements._elements)
+		{
+			result = interpreter.tryToInterpret(stmt);
+			if (result != Eagle_Statement_Result.NORMAL) break;
+		}
+
+		long elapsedTime = System.nanoTime() - startTime;
+		if (sub._metrics == null)
+		{
+			sub._metrics = new CallMetrics(interpreter._metrics, fnName, sub.getFileName(), sub.getStartLine(),
+					sub.getStartChar());
+		}
+		sub._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+
+		// Now remove all those parameters
+		for (int i = 0; i < argCount; i++)
+		{
+			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
+			interpreter._symbolTable.removeSymbols(param.getValue());
+		}
+	}
 }

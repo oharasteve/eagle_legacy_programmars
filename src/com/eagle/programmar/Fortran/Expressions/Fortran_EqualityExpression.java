@@ -5,6 +5,7 @@ package com.eagle.programmar.Fortran.Expressions;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
 import com.eagle.programmar.Fortran.Terminals.Fortran_PunctuationChoice;
@@ -26,16 +27,35 @@ public class Fortran_EqualityExpression extends PrecedenceOperator implements Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (oper.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case ".EQ.", "=":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case ".NE.", "/=":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (oper.getWhich().toString())
+			{
+			case ".EQ.", "=":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case ".NE.", "/=":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (oper.getWhich().toString())
+			{
+			case ".EQ.", "=":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case ".NE.", "/=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			}
 		}
 		throw new RuntimeException("Unexpected equality operator: " + oper.getWhich());
 	}

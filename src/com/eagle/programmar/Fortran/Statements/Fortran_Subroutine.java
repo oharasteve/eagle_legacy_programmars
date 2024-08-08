@@ -3,12 +3,16 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Definition;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Reference;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -16,10 +20,10 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Fortran_Subroutine extends TokenSequence
+public class Fortran_Subroutine extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @DOC("6j4m0vnbg/index.html") Fortran_Keyword SUBROUTINE1 = new Fortran_Keyword("SUBROUTINE");
-	public @S(20) Fortran_Function_Definition fnName1;
+	public @S(20) Fortran_Function_Definition subName;
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(50) PunctuationRightParen rightParen;
@@ -29,6 +33,14 @@ public class Fortran_Subroutine extends TokenSequence
 
 	public @S(80) Fortran_Keyword END = new Fortran_Keyword("END");
 	public @S(90) Fortran_Keyword SUBROUTINE2 = new Fortran_Keyword("SUBROUTINE");
-	public @S(100) Fortran_Function_Reference fnName2;
+	public @S(100) Fortran_Function_Reference subName2;
 	public @S(110) Fortran_EOLN eoln2;
+
+	public @SKIP CallMetrics _metrics = null;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here -- only act when it is called
+	}
 }

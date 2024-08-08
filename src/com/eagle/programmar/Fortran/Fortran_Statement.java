@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Fortran;
 
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Fortran.Statements.Fortran_Assignment;
 import com.eagle.programmar.Fortran.Statements.Fortran_CallStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_Common;
@@ -37,9 +39,15 @@ public class Fortran_Statement extends TokenChooser
 	public @CHOICE Fortran_Subroutine XXsubroutine;
 	public @CHOICE Fortran_WriteStatement XXwriteStatement;
 
-	public @CHOICE static class Fortran_CommentEOLN extends TokenSequence
+	public @CHOICE static class Fortran_CommentEOLN extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Fortran_Comment comment;
 		public @S(20) Fortran_EOLN eoln;
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			// Nothing to do here
+		}
 	}
 }
