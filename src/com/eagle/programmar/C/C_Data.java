@@ -19,7 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Data extends TokenChooser
 {
-	public @CHOICE C_FunctionPointer functionPointer;
+	public @CHOICE C_FunctionPointer XXfunctionPointer;
 
 	public @CHOICE static class C_RegularData extends TokenSequence implements EagleRunnable, AbstractStatement
 	{

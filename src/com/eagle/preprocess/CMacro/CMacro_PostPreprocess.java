@@ -34,6 +34,8 @@ public class CMacro_PostPreprocess extends EagleInclude
 	{
 		for (EagleLineReader line : lines.lines())
 		{
+			// Looks like # 28 "/usr/include/stdio.h" 2 3 4
+			// Could probably extract both the file name and the line number
 			if (! line.startsWith("#"))
 			{
 				_newLines.addLine(line);

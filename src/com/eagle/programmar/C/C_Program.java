@@ -8,6 +8,7 @@ import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
+import com.eagle.programmar.C.Statements.C_AsmVolatile;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
@@ -112,6 +113,7 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE C_Function XXfunction;
 		public @LAST C_Statement XXstatement;
 		public @CHOICE C_Enum XXcenum;
+		public @CHOICE C_AsmVolatile XXasmVolatile;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 
 		// NOTE: C++ adds the 'extern' statement here. See the constructor in
