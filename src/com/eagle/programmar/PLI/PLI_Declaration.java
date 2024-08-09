@@ -149,7 +149,7 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 		for (int i = 0; i < items.getPrimaryCount(); i++)
 		{
 			PLI_Declare_Item item = items.getPrimaryElement(i);
-			if (item.initial.isPresent())
+			if (item.initial != null && item.initial.isPresent())
 			{
 				AbstractToken token = item.declareVariables.getWhich();
 				if (token instanceof PLI_Variable_Definition)
