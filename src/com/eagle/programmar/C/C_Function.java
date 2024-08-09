@@ -6,7 +6,6 @@ package com.eagle.programmar.C;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.C.C_Data.C_FunctionPointer;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
@@ -16,6 +15,7 @@ import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.programmar.C.Types.C_FunctionPointer;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -34,6 +34,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 {
 	public @S(10) @OPT C_Extern_C externC;
 	public @S(20) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
+	public @S(25) @OPT C_FunctionAttributes attributes;
 	public @S(30) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
 	public @S(40) @OPT C_Comment comment1;
 	public @S(50) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
@@ -87,7 +88,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	{
 		public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
 		public @S(20) C_Type ctype;
-		public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
+		public @S(30) @OPT C_KeywordChoice RESTRICT = new C_KeywordChoice("__restrict", "restrict");
 		public @S(40) @OPT C_Variable_Definition id;
 		public @S(50) @OPT TokenList<C_Subscript> subscripts;
 		public @S(60) @OPT C_FunctionDefaultValue value;

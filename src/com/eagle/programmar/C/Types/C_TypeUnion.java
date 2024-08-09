@@ -14,10 +14,11 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_TypeUnion extends TokenSequence
 {
-	public @S(10) C_Keyword UNION = new C_Keyword("union");
-	public @S(20) @OPT C_Type_Definition def;
-	public @S(30) PunctuationLeftBrace leftBrace;
-	public @S(40) @OPT TokenList<C_FieldOrComment> fields;
-	public @S(50) PunctuationRightBrace rightBrace;
-	public @S(60) @OPT PunctuationSemicolon semicolon;
+	public @S(10) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
+	public @S(20) C_Keyword UNION = new C_Keyword("union");
+	public @S(30) @OPT C_Type_Definition def;
+	public @S(40) PunctuationLeftBrace leftBrace;
+	public @S(50) @OPT TokenList<C_FieldOrComment> fields;
+	public @S(60) PunctuationRightBrace rightBrace;
+	public @S(70) @OPT PunctuationSemicolon semicolon;
 }

@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.C.Types;
 
-import com.eagle.programmar.C.C_Data.C_FunctionPointer;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Subscript;
 import com.eagle.programmar.C.C_Type;
@@ -54,12 +53,13 @@ public class C_TypeStruct extends TokenSequence
 		{
 			public @S(10) C_Type jtype;
 			public @S(20) C_Field_Definition id;
-			public @S(30) @OPT C_TypeNumberOfBits bits;
-			public @S(40) @OPT TokenList<C_Subscript> subscripts;
-			public @S(50) @OPT C_FieldInitialValue initialValue;
-			public @S(60) @OPT TokenList<C_MoreFields> more;
-			public @S(70) PunctuationSemicolon semicolon;
-			public @S(80) @OPT TokenList<C_Comment> comments;
+			public @S(30) @OPT TokenList<C_TypeAttributes> attributes;
+			public @S(40) @OPT C_TypeNumberOfBits bits;
+			public @S(50) @OPT TokenList<C_Subscript> subscripts;
+			public @S(60) @OPT C_FieldInitialValue initialValue;
+			public @S(70) @OPT TokenList<C_MoreFields> more;
+			public @S(80) PunctuationSemicolon semicolon;
+			public @S(90) @OPT TokenList<C_Comment> comments;
 
 			public static class C_TypeNumberOfBits extends TokenSequence
 			{

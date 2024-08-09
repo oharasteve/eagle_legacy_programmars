@@ -42,5 +42,6 @@ public class C_Reserved_Words
 			"void",
 			"volatile",
 			"while",
+			"__attribute__",
 	};
 }

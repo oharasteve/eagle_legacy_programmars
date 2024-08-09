@@ -17,6 +17,7 @@ import com.eagle.programmar.C.Statements.C_StatementBlock;
 import com.eagle.programmar.C.Statements.C_SwitchStatement;
 import com.eagle.programmar.C.Statements.C_WhileStatement;
 import com.eagle.programmar.C.Types.C_TypeStruct;
+import com.eagle.programmar.C.Types.C_TypeUnion;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.TokenChooser;
@@ -48,6 +49,7 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 
 	public @CHOICE C_Declaration XXdeclaration; // Like [[fallthrough]]
 	public @LAST C_TypeStruct XXstructDefinition; // Like struct bob_t;
+	public @LAST C_TypeUnion XXunionDefinition;
 
 	// Do this one last, just because it is so slow
 	public @CHOICE C_ExpressionStatement XXassignmentStatement;
