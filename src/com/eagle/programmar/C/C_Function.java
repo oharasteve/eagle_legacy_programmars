@@ -19,7 +19,6 @@ import com.eagle.programmar.C.Types.C_FunctionPointer;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenChooser.CHOICE;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
@@ -163,7 +162,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	}
 	
-	public @CHOICE static class C_FunctionDeclspec extends TokenSequence
+	public static class C_FunctionDeclspec extends TokenSequence
 	{
 		public @S(10) C_KeywordChoice DECLSPEC = new C_KeywordChoice("_declspec", "__declspec");
 		public @S(20) PunctuationLeftParen leftParen;
