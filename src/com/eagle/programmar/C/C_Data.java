@@ -23,15 +23,16 @@ public class C_Data extends TokenChooser
 
 	public @CHOICE static class C_RegularData extends TokenSequence implements EagleRunnable, AbstractStatement
 	{
-		public @S(10) @OPT TokenList<C_DataModifiers> modifiers;
+		public @S(10) @OPT TokenList<C_DataModifiers> modifiers1;
 		public @S(20) C_Type ctype;
-		public @S(30) @OPT TokenList<C_Comment> comments1;
-		public @S(40) C_Variable_Definition id;
-		public @S(50) @OPT TokenList<C_Subscript> subscripts;
-		public @S(60) @OPT C_DataInitialValue initialValue;
-		public @S(70) @OPT TokenList<C_MoreIdentifiers> moreIds;
-		public @S(80) PunctuationSemicolon semicolon;
-		public @S(90) @OPT TokenList<C_Comment> comments2;
+		public @S(30) @OPT TokenList<C_DataModifiers> modifiers2;
+		public @S(40) @OPT TokenList<C_Comment> comments1;
+		public @S(50) C_Variable_Definition id;
+		public @S(60) @OPT TokenList<C_Subscript> subscripts;
+		public @S(70) @OPT C_DataInitialValue initialValue;
+		public @S(80) @OPT TokenList<C_MoreIdentifiers> moreIds;
+		public @S(90) PunctuationSemicolon semicolon;
+		public @S(100) @OPT TokenList<C_Comment> comments2;
 
 		public static class C_MoreIdentifiers extends TokenSequence
 		{

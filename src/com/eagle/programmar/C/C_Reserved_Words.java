@@ -9,12 +9,14 @@ public class C_Reserved_Words
 	// https://www.ibm.com/docs/en/developer-for-zos/14.2.0?topic=programs-c-reserved-keywords
 	// Left off _Packed which looks IBM-specific
 	public static final String[] RESERVED_WORDS = new String[] {
+			"__attribute__",
 			"auto",
 			"break",
 			"case",
 			"char",
 			"const",
 			"continue",
+			"_declspec",
 			"default",
 			"do",
 			"double",
@@ -42,6 +44,5 @@ public class C_Reserved_Words
 			"void",
 			"volatile",
 			"while",
-			"__attribute__",
 	};
 }

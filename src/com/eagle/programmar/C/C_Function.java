@@ -19,6 +19,7 @@ import com.eagle.programmar.C.Types.C_FunctionPointer;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenChooser.CHOICE;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
@@ -33,16 +34,17 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class C_Function extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT C_Extern_C externC;
-	public @S(20) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
-	public @S(30) @OPT C_FunctionAttributes attributes;
-	public @S(40) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
-	public @S(50) @OPT C_Comment comment1;
-	public @S(60) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
-	public @S(70) C_FunctionTypeName typeName;
-	public @S(80) C_Function_ParameterDefs parameters;
-	public @S(90) @OPT TokenList<C_Comment> comments2;
-	public @S(100) @OPT C_Keyword CONST = new C_Keyword("const");
-	public @S(110) C_FunctionBody body;
+	public @S(20) @OPT C_FunctionDeclspec declspec;
+	public @S(30) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
+	public @S(40) @OPT C_FunctionAttributes attributes;
+	public @S(50) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(60) @OPT C_Comment comment1;
+	public @S(70) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(80) C_FunctionTypeName typeName;
+	public @S(90) C_Function_ParameterDefs parameters;
+	public @S(100) @OPT TokenList<C_Comment> comments2;
+	public @S(110) @OPT C_Keyword CONST = new C_Keyword("const");
+	public @S(120) C_FunctionBody body;
 
 	public @SKIP CallMetrics _metrics = null;
 
@@ -160,7 +162,15 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 		public @S(30) PunctuationRightBrace rightBrace;
 		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	}
-
+	
+	public @CHOICE static class C_FunctionDeclspec extends TokenSequence
+	{
+		public @S(10) C_KeywordChoice DECLSPEC = new C_KeywordChoice("_declspec", "__declspec");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) C_Keyword DLLEXPORT = new C_Keyword("dllexport");
+		public @S(40) PunctuationRightParen rightParen;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
