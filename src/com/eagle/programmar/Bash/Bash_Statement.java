@@ -25,6 +25,7 @@ import com.eagle.programmar.Bash.Commands.Bash_GrepCommand;
 import com.eagle.programmar.Bash.Commands.Bash_IfStatement;
 import com.eagle.programmar.Bash.Commands.Bash_LispCommand;
 import com.eagle.programmar.Bash.Commands.Bash_MkTempCommand;
+import com.eagle.programmar.Bash.Commands.Bash_MkdirCommand;
 import com.eagle.programmar.Bash.Commands.Bash_PerlProgram;
 import com.eagle.programmar.Bash.Commands.Bash_PwdCommand;
 import com.eagle.programmar.Bash.Commands.Bash_PythonProgram;
@@ -38,6 +39,7 @@ import com.eagle.programmar.Bash.Commands.Bash_TeeCommand;
 import com.eagle.programmar.Bash.Commands.Bash_UniqCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WcCommand;
 import com.eagle.programmar.Bash.Commands.Bash_WhileStatement;
+import com.eagle.programmar.Bash.Commands.Bash_ZipCommand;
 import com.eagle.programmar.Bash.Terminals.Bash_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -62,12 +64,12 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_EvaluateCommand XXevaluateCommand;
 		public @CHOICE Bash_ExportCommand XXexportCommand;
 		public @CHOICE Bash_ForStatement XXforStatement;
-		public @LAST Bash_Function XXfunction;
 		public @CHOICE Bash_GccCommand XXgccCommand;
 		public @CHOICE Bash_GitCommand XXgitCommand;
 		public @CHOICE Bash_GrepCommand XXgrepCommand;
 		public @CHOICE Bash_IfStatement XXifStatement;
 		public @CHOICE Bash_LispCommand XXlispCommand;
+		public @CHOICE Bash_MkdirCommand XXmkdirCommand;
 		public @CHOICE Bash_MkTempCommand XXmktempCommand;
 		public @CHOICE Bash_PwdCommand XXpwdCommand;
 		public @CHOICE Bash_ReadCommand XXreadCommand;
@@ -80,6 +82,7 @@ public class Bash_Statement extends TokenSequence
 		public @CHOICE Bash_UniqCommand XXuniqCommand;
 		public @CHOICE Bash_WcCommand XXwcCommand;
 		public @CHOICE Bash_WhileStatement XXwhileStatement;
+		public @CHOICE Bash_ZipCommand XXzipCommand;
 
 		public @CHOICE Bash_BashProgram XXbashProgram;
 		public @CHOICE Bash_PerlProgram XXperlProgram;
@@ -88,5 +91,6 @@ public class Bash_Statement extends TokenSequence
 		public @LAST Bash_Assignment XXassignment;
 		public @LAST Bash_FunctionCall XXfunctionCall;
 		public @LAST Bash_Condition XXcondition;
+		public @LAST Bash_Function XXfunction;
 	}
 }

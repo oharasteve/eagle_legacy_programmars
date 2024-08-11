@@ -24,6 +24,7 @@ public class Bash_RmCommand extends TokenSequence implements AbstractStatement
 	{
 		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
 				"-f",
+				"-fr",
 				"-r",
 				"-rf");
 	}

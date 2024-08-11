@@ -30,12 +30,12 @@ public class Bash_SetCommand extends TokenSequence implements AbstractStatement
 		public @CHOICE static class Bash_SetPlus extends TokenSequence
 		{
 			public @S(10) Bash_Punctuation PLUS = new Bash_Punctuation("+");
-			public @S(20) Bash_KeywordChoice EX = new Bash_KeywordChoice("e", "ex");
+			public @S(20) Bash_KeywordChoice EX = new Bash_KeywordChoice("e", "ex", "x");
 		}
 
 		public @CHOICE static class Bash_SetOptionO extends TokenSequence
 		{
-			public @S(10) Bash_KeywordChoice O = new Bash_KeywordChoice("-eo", "-euox", "-o");
+			public @S(10) Bash_KeywordChoice O = new Bash_KeywordChoice("-eo", "-euox", "-euxo", "-o");
 			public @S(20) Bash_Identifier_Reference id;
 		}
 
