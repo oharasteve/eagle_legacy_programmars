@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.DefinitionInterface;
-import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.ReferenceInterface;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenChooser;

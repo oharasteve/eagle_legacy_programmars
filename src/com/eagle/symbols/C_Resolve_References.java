@@ -16,8 +16,8 @@ import com.eagle.programmar.C.Symbols.C_Type_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Define_Definition;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.EagleScope;
 
 public class C_Resolve_References extends Eagle_Resolve_References
 {

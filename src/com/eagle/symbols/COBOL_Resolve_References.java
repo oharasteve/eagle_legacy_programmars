@@ -20,8 +20,8 @@ import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
 import com.eagle.programmar.COBOL.Symbols.COBOL_ReportLine_Definition;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Report_Definition;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Section_Definition;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.EagleScope;
 
 //
 // Be careful in here ... a program can contain other nested programs ...

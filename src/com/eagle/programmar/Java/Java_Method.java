@@ -135,6 +135,10 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 			// Exception is 'main'
 			if (methodName.getValue().equals("main"))
 			{
+				if (interpreter._TRACE)
+				{
+					System.err.println("*** Calling main");
+				}
 				which = body.getWhich();
 				if (which instanceof Java_MethodImplementation)
 				{

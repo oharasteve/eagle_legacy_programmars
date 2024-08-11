@@ -19,8 +19,8 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.EagleScope;
 import com.eagle.tokens.TokenList;
 
 public class Java_Resolve_References extends Eagle_Resolve_References

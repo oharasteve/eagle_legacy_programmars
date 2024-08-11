@@ -10,8 +10,8 @@ import com.eagle.core.EagleSymbolException;
 import com.eagle.programmar.Perl.Perl_Program;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.EagleScope;
 
 public class Perl_Resolve_References extends Eagle_Resolve_References
 {

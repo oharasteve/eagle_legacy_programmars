@@ -11,9 +11,9 @@ import com.eagle.programmar.Javascript.Javascript_Program;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.DefinitionInterface;
-import com.eagle.tokens.EagleScope;
 
 public class Javascript_Resolve_References extends Eagle_Resolve_References
 {

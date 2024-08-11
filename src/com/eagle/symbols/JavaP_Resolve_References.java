@@ -8,7 +8,7 @@ import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.JavaP.JavaP_Program;
 import com.eagle.programmar.JavaP.Symbols.JavaP_Symbol_Definition;
 import com.eagle.programmar.JavaP.Symbols.JavaP_Symbol_Reference;
-import com.eagle.tokens.EagleScope;
+import com.eagle.scope.EagleScope;
 
 public class JavaP_Resolve_References extends Eagle_Resolve_References
 {

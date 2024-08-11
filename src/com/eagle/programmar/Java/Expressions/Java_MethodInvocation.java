@@ -43,6 +43,11 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 			{
 				throw new RuntimeException("Unable to find a method named " + name);
 			}
+			if (interpreter._TRACE)
+			{
+				System.err.println("*** Calling method " + name);
+			}
+			
 			Java_Method meth = (Java_Method) fn;
 			Java_ParameterList parameters = null;
 			AbstractToken which = meth.typeAndName.getWhich();
@@ -54,14 +59,14 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 
 			// Make sure the function args match up
 			int argCount = 0;
-			if (argList.arg.isPresent()) argCount = 1;
-			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount = 1 + argList.moreArgs.size();
+			if (argList.arg != null && argList.arg.isPresent()) argCount = 1;
+			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount += argList.moreArgs.size();
 
 			int paramCount = 0;
-			if (parameters.param.isPresent()) paramCount = 1;
+			if (parameters.param != null && parameters.param.isPresent()) paramCount = 1;
 			if (parameters.moreParams != null && parameters.moreParams.isPresent())
 			{
-				paramCount = 1 + parameters.moreParams.size();
+				paramCount += parameters.moreParams.size();
 			}
 			
 			if (argCount != paramCount)

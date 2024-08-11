@@ -18,8 +18,8 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.EagleScope;
 
 public class CSharp_Resolve_References extends Eagle_Resolve_References
 {
