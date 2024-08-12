@@ -24,20 +24,28 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 		if (var.getWhich() instanceof Powershell_VariableExpression)
 		{
 			Powershell_VariableExpression pVar = (Powershell_VariableExpression) var.getWhich();
+			EagleValue newValue;
 			switch (equals.getValue())
 			{
 			case "=":
-				EagleValue value = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(pVar, pVar.variable.id.getValue(), value);
+				newValue = interpreter.getEagleValue(expr);
 				break;
 			case "+=":
 				int newVal = interpreter.getIntValue(expr);
 				EagleValue oldVar = interpreter.findSymbol(pVar.variable.id.toString());
-				EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
+				newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
 				break;
 			default:
 				throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());
+			}
+
+			if (pVar.variable.scope != null && pVar.variable.scope.isPresent())
+			{
+				interpreter.setGlobalSymbol(var, pVar.variable.id.getValue(), newValue);
+			}
+			else
+			{
+				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
 			}
 		}
 	}

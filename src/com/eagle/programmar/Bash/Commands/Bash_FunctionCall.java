@@ -45,7 +45,6 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 		{
 			Bash_Variable var = (Bash_Variable) what.getWhich();
 			String name = var.id.getValue();
-			if (interpreter._TRACE) System.err.println("*** Calling " + name + "()");
 	
 			// Have to search for the FUNCTION definition
 			AbstractFunction fn = interpreter.findFunction(name);
@@ -74,6 +73,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 			long startTime = System.nanoTime();
 	
 			// And transfer control to the function
+			interpreter.callingFunction(name, func);
 			for (Bash_Statement stmt : func.statements._elements)
 			{
 				Eagle_Statement_Result result = interpreter.tryToInterpret(stmt.element);
@@ -85,11 +85,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 			func._metrics.addCallFrom(this, elapsedTime);
 	
 			// Now remove all those parameters
-			for (int i = 0; i < argCount; i++)
-			{
-				String paramName = "$" + (i+1);
-				interpreter.removeSymbols(paramName);
-			}
+			interpreter.completedFunction(name, func);
 
 			EagleInteger code = new EagleInteger(func._exitStatus);
 			interpreter.setSymbol(this, "$?", code);

@@ -20,7 +20,12 @@ import com.eagle.programmar.PLI.Expressions.PLI_RepeatedBitLiteral;
 import com.eagle.programmar.PLI.Expressions.PLI_RepeatedHexLiteral;
 import com.eagle.programmar.PLI.Expressions.PLI_RepeatedLiteral;
 import com.eagle.programmar.PLI.Expressions.PLI_StrCatExpression;
-import com.eagle.programmar.PLI.Expressions.PLI_VariableOrFunctionCall;
+import com.eagle.programmar.PLI.Functions.PLI_LengthFunction;
+import com.eagle.programmar.PLI.Functions.PLI_ModFunction;
+import com.eagle.programmar.PLI.Functions.PLI_SubstrFunction;
+import com.eagle.programmar.PLI.Functions.PLI_TrimFunction;
+import com.eagle.programmar.PLI.Functions.PLI_TruncFunction;
+import com.eagle.programmar.PLI.Functions.PLI_VariableOrFunctionCall;
 import com.eagle.programmar.PLI.Terminals.PLI_BitLiteral;
 import com.eagle.programmar.PLI.Terminals.PLI_HexNumber;
 import com.eagle.programmar.PLI.Terminals.PLI_Literal;
@@ -65,9 +70,14 @@ public class PLI_Expression extends PrecedenceChooser
 	public @P(130) PLI_NegativeExpression negativeExpression;
 	public @P(140) PLI_NotExpression notExpression;
 	public @P(150) PLI_FieldReference fieldReference;
-	public @P(160) PLI_VariableOrFunctionCall variableOrFunctionCall;
-	public @P(170) PLI_ParenthesizedExpression parenthesizedExpression;
-	public @P(180) PLI_CommentExpression commentExpression;
+	public @P(160) PLI_LengthFunction lengthFunction;
+	public @P(170) PLI_ModFunction modFunction;
+	public @P(180) PLI_SubstrFunction substrFunction;
+	public @P(190) PLI_TrimFunction trimFunction;
+	public @P(200) PLI_TruncFunction truncFunction;
+	public @P(210) PLI_VariableOrFunctionCall variableOrFunctionCall;
+	public @P(220) PLI_ParenthesizedExpression parenthesizedExpression;
+	public @P(230) PLI_CommentExpression commentExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

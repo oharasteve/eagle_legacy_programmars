@@ -193,7 +193,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				if (value != null)
 				{
 					// Change the name of the symbol
-					interpreter.removeSymbols(redefines);
+					interpreter.removeSymbol(redefines);
 				}
 			}
 

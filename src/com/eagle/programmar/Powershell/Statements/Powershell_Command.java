@@ -70,22 +70,21 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 				throw new RuntimeException("Unable to find a function named " + fnName.getValue());
 			}
 			Powershell_FunctionStatement func = (Powershell_FunctionStatement) fn;
+			String name = func.name.getValue();
 
 			if (_metrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), this);
+				_metrics = new CallMetrics(interpreter._metrics, name, this);
 			}
 			
 			// Call the function
-			if (interpreter._TRACE) System.err.println("**** Calling " + func.name.getValue());
-
 			// Make sure the function args match up
 			int argCount = argList.size();
 			int paramCount = func.params.params.getPrimaryCount();
 			if (argCount != paramCount)
 			{
 				throw new RuntimeException(
-						"Function " + func.name + " expects #args = " + paramCount + ", but was given " + argCount);
+						"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
 
 			// Now assign all the parameters
@@ -106,6 +105,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			long startTime = System.nanoTime();
 
 			// And transfer control to the method
+			interpreter.callingFunction(name, func);
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			for (Powershell_Statement stmt : func.stmts._elements)
 			{
@@ -118,11 +118,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			func._metrics.addCallFrom(this, elapsedTime);
 
 			// Now remove all those parameters
-			for (int i = 0; i < argCount; i++)
-			{
-				Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
-				interpreter.removeSymbols(param.var.id.getValue());
-			}
+			interpreter.completedFunction(name, func);
 		}
 	}
 }

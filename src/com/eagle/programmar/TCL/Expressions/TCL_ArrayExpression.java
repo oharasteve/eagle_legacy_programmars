@@ -27,7 +27,6 @@ public class TCL_ArrayExpression extends PrimaryOperator implements EagleRunnabl
 		{
 			EagleValue val = interpreter.getEagleValue(expr);
 			vals.addValue(val);
-			if (interpreter._TRACE) System.err.println("*** array += " + val.toString());
 		}
 
 		interpreter.pushEagleValue(vals);

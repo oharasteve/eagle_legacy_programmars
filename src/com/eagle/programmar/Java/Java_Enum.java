@@ -88,7 +88,7 @@ public class Java_Enum extends TokenSequence
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 //
 //	@Override
 //	public EagleScope getScope()

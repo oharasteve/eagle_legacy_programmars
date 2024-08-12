@@ -1,0 +1,34 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, May 16, 2024
+
+package com.eagle.programmar.Ada.Functions;
+
+import com.eagle.core.EagleInterpreter;
+import com.eagle.core.EagleRunnable;
+import com.eagle.programmar.Ada.Ada_Expression;
+import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+public class Ada_SliceFunction extends PrimaryOperator implements EagleRunnable
+{
+	public @S(10) Ada_Keyword SLICE = new Ada_Keyword("Slice");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) Ada_Expression arg;
+	public @S(40) PunctuationComma comma1;
+	public @S(50) Ada_Expression scExpr;
+	public @S(60) PunctuationComma comma2;
+	public @S(70) Ada_Expression ecExpr;
+	public @S(80) PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String str = interpreter.getStrValue(arg);
+		int sc = interpreter.getIntValue(scExpr) - 1;
+		int ec = interpreter.getIntValue(ecExpr);
+		interpreter.pushStr(str.substring(sc, ec));
+	}
+}

@@ -11,6 +11,8 @@ import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
@@ -19,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Rust_Function extends TokenSequence implements EagleRunnable, AbstractFunction
+public class Rust_Function extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
 	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/functions.html") Rust_Keyword FN = new Rust_Keyword("fn");
@@ -43,6 +45,14 @@ public class Rust_Function extends TokenSequence implements EagleRunnable, Abstr
 		public @S(30) Rust_Type type;
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Rust_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	public @SKIP CallMetrics _metrics = null;
 
 	@Override
@@ -60,7 +70,9 @@ public class Rust_Function extends TokenSequence implements EagleRunnable, Abstr
 		// Except the function called 'main'
 		if (id.getValue().equals("main"))
 		{
+			interpreter.callingFunction("main", this);
 			interpreter.tryToInterpret(stmt);
+			interpreter.completedFunction("main", this);
 		}
 	}
 }

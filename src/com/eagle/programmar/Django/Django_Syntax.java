@@ -8,6 +8,8 @@ import com.eagle.programmar.HTML.HTML_Syntax;
 
 public class Django_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class Django_Syntax extends EagleSyntax
 
 	public Django_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_punctuationExceptions = HTML_Syntax.PUNCT;

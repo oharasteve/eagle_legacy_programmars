@@ -32,7 +32,6 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		}
 
 		String startPara = performStartParagraph.getValue();
-		if (interpreter._TRACE) System.err.println("*** Calling " + startPara);
 
 		// Have to search for the PARAGRAPH definition
 		AbstractFunction fn = interpreter.findFunction(startPara);
@@ -50,6 +49,7 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		long startTime = System.nanoTime();
 		
 		// Evaluate the paragraph
+		interpreter.callingFunction(startPara, null);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
 		{
@@ -60,6 +60,9 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		long elapsedTime = System.nanoTime() - startTime;
 		paragraph._metrics.addCallFrom(this, elapsedTime);
 		
+		// Remove parameter values (none really)
+		interpreter.completedFunction(startPara, null);
+
 		return result;
 	}
 }

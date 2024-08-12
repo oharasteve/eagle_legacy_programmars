@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Fortran_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class Fortran_Syntax extends EagleSyntax
 	public Fortran_Syntax()
 	{
 		_autoAdvance = false;
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_fixedStartColumn = 6;

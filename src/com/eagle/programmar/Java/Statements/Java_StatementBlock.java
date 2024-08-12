@@ -7,13 +7,16 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_StatementOrComment;
+import com.eagle.programmar.Java.Java_Syntax;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_StatementBlock extends TokenSequence implements EagleRunnableWithResult //  EagleScopeInterface
+public class Java_StatementBlock extends TokenSequence implements EagleRunnableWithResult, EagleScopeInterface
 {
 	public @S(10) @OPT Java_Label label;
 	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
@@ -36,17 +39,11 @@ public class Java_StatementBlock extends TokenSequence implements EagleRunnableW
 		return result;
 	}
 	
-//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
+	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
 
-//	@Override
-//	public void setScope(EagleScope scope)
-//	{
-//		_scope = scope;
-//	}
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 }

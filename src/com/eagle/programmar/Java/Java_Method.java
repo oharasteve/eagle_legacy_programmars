@@ -13,6 +13,8 @@ import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
@@ -25,7 +27,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Method extends TokenSequence implements AbstractMethod, AbstractFunction, EagleRunnable
+public class Java_Method extends TokenSequence
+		implements AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT Java_Annotation annotation;
@@ -118,6 +121,14 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 		public @S(70) Java_MethodBody body;
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -135,10 +146,7 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 			// Exception is 'main'
 			if (methodName.getValue().equals("main"))
 			{
-				if (interpreter._TRACE)
-				{
-					System.err.println("*** Calling main");
-				}
+				interpreter.callingFunction("main", this);
 				which = body.getWhich();
 				if (which instanceof Java_MethodImplementation)
 				{
@@ -148,21 +156,8 @@ public class Java_Method extends TokenSequence implements AbstractMethod, Abstra
 						interpreter.tryToInterpret(stmt);
 					}
 				}
+				interpreter.completedFunction("main", this);
 			}
 		}
 	}
-
-//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
-
-//	@Override
-//	public void setScope(EagleScope scope)
-//	{
-//		_scope = scope;
-//	}
 }

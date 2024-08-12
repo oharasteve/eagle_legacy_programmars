@@ -91,6 +91,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			long startTime = System.nanoTime();
 
 			// And transfer control to the method
+			interpreter.callingFunction(name, meth);
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			// EagleValue returnValue = null;
 			AbstractToken body = meth.body.getWhich();
@@ -109,16 +110,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			meth._metrics.addCallFrom(this, elapsedTime);
 
 			// Now remove all those parameters
-			if (argCount > 0)
-			{
-				CSharp_MethodParameter param = meth.parameters.param;
-				interpreter.removeSymbols(param.id.getValue());
-				for (int i = 1; i < argCount; i++)
-				{
-					param = meth.parameters.moreParams._elements.get(i-1).param;
-					interpreter.removeSymbols(param.id.getValue());
-				}
-			}
+			interpreter.completedFunction(name, meth);
 		}
 		else
 		{

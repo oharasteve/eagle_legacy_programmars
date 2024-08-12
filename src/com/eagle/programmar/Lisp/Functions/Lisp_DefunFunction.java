@@ -7,9 +7,12 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Syntax;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Function_Definition;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Parameter_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -17,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, AbstractFunction
+public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");
@@ -29,12 +32,20 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 	public @S(80) TokenList<Lisp_SExpr> body;
 	public @S(90) PunctuationRightParen rightParen;
 
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class Lisp_ParamDef extends TokenSequence
 	{
 		public @S(10) @OPT Lisp_Keyword REST = new Lisp_Keyword("&REST");
 		public @S(20) Lisp_Parameter_Definition parameter;
+	}
+
+	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 	
 	@Override

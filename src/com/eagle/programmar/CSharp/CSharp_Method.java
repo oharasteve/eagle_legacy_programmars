@@ -14,6 +14,8 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -27,7 +29,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Method extends TokenSequence implements AbstractMethod, AbstractFunction, EagleRunnable
+public class CSharp_Method extends TokenSequence implements
+			AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
@@ -102,6 +105,14 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Abst
 		}
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -114,6 +125,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Abst
 		// Exception is 'Main'
 		if (methodName.getValue().equals("Main"))
 		{
+			interpreter.callingFunction("main", this);
 			AbstractToken which = body.getWhich();
 			if (which instanceof CSharp_MethodImplementation)
 			{
@@ -123,14 +135,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Abst
 					interpreter.tryToInterpret(stmt);
 				}
 			}
+			interpreter.completedFunction("main", this);
 		}
 	}
-
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

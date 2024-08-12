@@ -10,21 +10,21 @@ import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Javascript_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT Javascript_KeywordChoice STATIC = new Javascript_KeywordChoice("static", "async");
 	public @S(20) @OPT Javascript_Keyword EXPORT = new Javascript_Keyword("export");
 	public @S(30) @OPT Javascript_Keyword DEFAULT = new Javascript_Keyword("default");
 	public @S(40) @OPT Javascript_Keyword FUNCTION = new Javascript_Keyword("function");
 	public @S(50) Javascript_FunctionImplementation implementation;
-
-	public @SKIP CallMetrics _metrics = null;
 
 	public static class Javascript_FunctionImplementation extends TokenSequence
 	{
@@ -37,6 +37,16 @@ public class Javascript_Function extends TokenSequence implements AbstractFuncti
 		public @S(70) Javascript_FunctionBody body;
 	}
 	
+	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Javascript_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

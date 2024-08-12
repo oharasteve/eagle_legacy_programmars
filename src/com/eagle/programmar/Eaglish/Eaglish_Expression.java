@@ -5,11 +5,9 @@ package com.eagle.programmar.Eaglish;
 
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_AdditiveExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_BuiltInExpression;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_BuiltinFunction;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionStringMatch;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalAndExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalOrExpression;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_FunctionCall;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_MultiplicativeExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_NegativeExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_NotExpresion;
@@ -17,6 +15,8 @@ import com.eagle.programmar.Eaglish.Expressions.Eaglish_ParenthesizedExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_RelationalExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_SubscriptExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_VariableExpression;
+import com.eagle.programmar.Eaglish.Functions.Eaglish_FunctionCall;
+import com.eagle.programmar.Eaglish.Functions.Eaglish_LengthFunction;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Literal;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -52,7 +52,7 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Eaglish_BuiltinFunction builtinFunction;
+	public @P(100) Eaglish_LengthFunction lengthFunction;
 	public @P(110) Eaglish_FunctionCall funcCall;
 	public @P(120) Eaglish_NegativeExpression negativeExpr;
 	public @P(130) Eaglish_NotExpresion notExpr;

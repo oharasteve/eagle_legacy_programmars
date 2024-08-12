@@ -19,6 +19,8 @@ public class Delphi_Configuration extends EagleLanguage
 
 	public static class Delphi_Config_Syntax extends EagleSyntax
 	{
+		public static final boolean IS_CASE_SENSITIVE = false;
+		
 		@Override
 		public String syntaxId()
 		{
@@ -27,7 +29,7 @@ public class Delphi_Configuration extends EagleLanguage
 
 		public Delphi_Config_Syntax()
 		{
-			_isCaseSensitive = false;
+			_isCaseSensitive = IS_CASE_SENSITIVE;
 			_continuationChar = "\\";
 			_extraCharacters = "";
 			_autoAdvance = false;

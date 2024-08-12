@@ -119,12 +119,4 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 			interpreter.tryToInterpret(element);
 		}
 	}
-
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

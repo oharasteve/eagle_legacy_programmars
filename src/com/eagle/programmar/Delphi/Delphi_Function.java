@@ -9,13 +9,15 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Delphi_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Delphi_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) Delphi_FunctionForward forward;
 	public @S(20) @OPT TokenList<Delphi_Header> headers;
@@ -36,10 +38,19 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 		public @S(60) PunctuationSemicolon semicolon1;
 	}
 	
+	private @SKIP EagleScope _scope = new EagleScope(this, Delphi_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Don't run it here. Wait until it is called.
+		
 		if (_metrics == null)
 		{
 			_metrics = new CallMetrics(interpreter._metrics, forward.name.var.getValue(), this);

@@ -10,13 +10,15 @@ import com.eagle.programmar.TCL.Statements.TCL_BlockStatement;
 import com.eagle.programmar.TCL.Symbols.TCL_Function_Definition;
 import com.eagle.programmar.TCL.Symbols.TCL_Variable_Definition;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class TCL_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable
+public class TCL_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("TclCmd/proc.html") TCL_Keyword PROC = new TCL_Keyword("proc");
 	public @S(20) TCL_Function_Definition name;
@@ -26,6 +28,14 @@ public class TCL_Procedure extends TokenSequence implements AbstractFunction, Ea
 	public @S(60) TCL_BlockStatement block;
 	
 	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, TCL_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -15,7 +15,6 @@ import com.eagle.programmar.Python.Expressions.Python_BracesNoColons;
 import com.eagle.programmar.Python.Expressions.Python_Brackets;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
 import com.eagle.programmar.Python.Expressions.Python_For_In_Expression;
-import com.eagle.programmar.Python.Expressions.Python_Function_Call;
 import com.eagle.programmar.Python.Expressions.Python_FunnyConstructor;
 import com.eagle.programmar.Python.Expressions.Python_If_Else_Expression;
 import com.eagle.programmar.Python.Expressions.Python_If_Expression;
@@ -36,6 +35,10 @@ import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_UnarySign;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Expressions.Python_Yield;
+import com.eagle.programmar.Python.Functions.Python_Function_Call;
+import com.eagle.programmar.Python.Functions.Python_Len_Function;
+import com.eagle.programmar.Python.Functions.Python_Print_Function;
+import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Terminals.Python_BinaryNumber;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
 import com.eagle.programmar.Python.Terminals.Python_Number;
@@ -85,13 +88,16 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(170) Python_Not_Expression notExpression;
 	public @P(180) Python_Literals literals;
 	public @P(190) Python_BackQuotes backQuotes;
-	public @P(200) Python_Function_Call functionCall;
-	public @P(210) Python_BuiltIn builtIn;
-	public @P(220) Python_VariableExpression variableExpression;
-	public @P(230) Python_Star_Expression starExpression;
-	public @P(240) Python_StarStar_Expression starStarExpression;
-	public @P(250) Python_Lambda_Expression lambdaExpression;
-	public @P(260) Python_Yield yield;
+	public @P(200) Python_Len_Function lenFunction;
+	public @P(210) Python_Str_Function strFunction;
+	public @P(220) Python_Print_Function printFunction;
+	public @P(230) Python_Function_Call functionCall;
+	public @P(240) Python_BuiltIn builtIn;
+	public @P(250) Python_VariableExpression variableExpression;
+	public @P(260) Python_Star_Expression starExpression;
+	public @P(270) Python_StarStar_Expression starStarExpression;
+	public @P(280) Python_Lambda_Expression lambdaExpression;
+	public @P(290) Python_Yield yield;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

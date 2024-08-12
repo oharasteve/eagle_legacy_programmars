@@ -83,7 +83,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		for (int i = 0; i < argCount; i++)
 		{
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
-			interpreter.removeSymbols(param.getValue());
+			interpreter.removeSymbol(param.getValue());
 		}
 	}
 }

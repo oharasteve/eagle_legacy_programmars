@@ -78,10 +78,6 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 					{
 						CSharp_Method meth = (CSharp_Method) element.getWhich();
 						interpreter.addFunction(meth.methodName.getValue(), meth);
-						if (interpreter._TRACE)
-						{
-							System.err.println("*** Found CSharp method " + meth.methodName.getValue());
-						}
 					}
 				}
 			}

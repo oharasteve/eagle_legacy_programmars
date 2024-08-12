@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class IBMASM_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class IBMASM_Syntax extends EagleSyntax
 
 	public IBMASM_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "_";
 		_extraCharacters = "";
 		_allowDigitsInKeywords = false; // So XL4 comes back as XL then 4 as two separate tokens

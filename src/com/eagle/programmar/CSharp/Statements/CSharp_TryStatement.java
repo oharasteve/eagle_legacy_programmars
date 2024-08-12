@@ -47,12 +47,4 @@ public class CSharp_TryStatement extends TokenSequence implements AbstractStatem
 		public @S(10) CSharp_Keyword FINALLY = new CSharp_Keyword("finally");
 		public @S(20) CSharp_Statement finallyStatement;
 	}
-
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

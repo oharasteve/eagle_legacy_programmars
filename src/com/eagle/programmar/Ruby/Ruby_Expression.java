@@ -10,9 +10,7 @@ import com.eagle.programmar.Ruby.Expressions.Ruby_BuiltIn;
 import com.eagle.programmar.Ruby.Expressions.Ruby_ConditionalAndExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_ConditionalOrExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_EqualityExpression;
-import com.eagle.programmar.Ruby.Expressions.Ruby_FunctionCall;
 import com.eagle.programmar.Ruby.Expressions.Ruby_LogicalNotExpression;
-import com.eagle.programmar.Ruby.Expressions.Ruby_MethodInvocation;
 import com.eagle.programmar.Ruby.Expressions.Ruby_MultiplicativeExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_NegativeExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_NotExpression;
@@ -23,7 +21,11 @@ import com.eagle.programmar.Ruby.Expressions.Ruby_RangeExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_RelationalExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_Subfield;
 import com.eagle.programmar.Ruby.Expressions.Ruby_SubscriptExpression;
+import com.eagle.programmar.Ruby.Expressions.Ruby_SubstringExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_VariableExpression;
+import com.eagle.programmar.Ruby.Functions.Ruby_FunctionCall;
+import com.eagle.programmar.Ruby.Functions.Ruby_LengthMethod;
+import com.eagle.programmar.Ruby.Functions.Ruby_StartWithMethod;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Literal;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -60,28 +62,30 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	// Primary expressions
 
 	public @P(100) Ruby_FunctionCall functionCall;
-	public @P(110) Ruby_MethodInvocation methodInvocation;
-	public @P(120) Ruby_PreIncrementExpression preIncrementExpression;
-	public @P(130) Ruby_PostIncrementExpression postIncrementExpression;
-	public @P(140) Ruby_NegativeExpression negativeExpression;
-	public @P(150) Ruby_LogicalNotExpression logicalNotExpression;
-	public @P(160) Ruby_NotExpression notExpression;
-	public @P(170) Ruby_BuiltIn builtIn;
-	public @P(180) Ruby_VariableExpression variableExpression;
-	public @P(190) Ruby_BracketsExpression bracketsExpression;
-	public @P(200) Ruby_ParenthesizedExpression parenthesizedExpression;
+	public @P(110) Ruby_PreIncrementExpression preIncrementExpression;
+	public @P(120) Ruby_PostIncrementExpression postIncrementExpression;
+	public @P(130) Ruby_NegativeExpression negativeExpression;
+	public @P(140) Ruby_LogicalNotExpression logicalNotExpression;
+	public @P(150) Ruby_NotExpression notExpression;
+	public @P(160) Ruby_BuiltIn builtIn;
+	public @P(170) Ruby_VariableExpression variableExpression;
+	public @P(180) Ruby_BracketsExpression bracketsExpression;
+	public @P(190) Ruby_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
 	public @P(500) Ruby_SubscriptExpression subscriptExpression;
-	public @P(510) Ruby_Subfield subfield;
-	public @P(520) Ruby_MultiplicativeExpression multiplicativeExpression;
-	public @P(530) Ruby_AdditiveExpression additiveExpression;
-	public @P(540) Ruby_RelationalExpression relationalExpression;
-	public @P(550) Ruby_EqualityExpression equalityExpression;
-	public @P(560) Ruby_ConditionalAndExpression conditionalAndExpression;
-	public @P(570) Ruby_ConditionalOrExpression conditionalOrExpression;
-	public @P(580) Ruby_AssignmentExpression assignmentExpression;
-	public @P(590) Ruby_RangeExpression rangeExpression;
+	public @P(510) Ruby_SubstringExpression substringExpression;
+	public @P(520) Ruby_StartWithMethod startwithMethod;
+	public @P(530) Ruby_LengthMethod lengthMethod;
+	public @P(540) Ruby_Subfield subfield;
+	public @P(550) Ruby_MultiplicativeExpression multiplicativeExpression;
+	public @P(560) Ruby_AdditiveExpression additiveExpression;
+	public @P(570) Ruby_RelationalExpression relationalExpression;
+	public @P(580) Ruby_EqualityExpression equalityExpression;
+	public @P(590) Ruby_ConditionalAndExpression conditionalAndExpression;
+	public @P(600) Ruby_ConditionalOrExpression conditionalOrExpression;
+	public @P(610) Ruby_AssignmentExpression assignmentExpression;
+	public @P(620) Ruby_RangeExpression rangeExpression;
 }

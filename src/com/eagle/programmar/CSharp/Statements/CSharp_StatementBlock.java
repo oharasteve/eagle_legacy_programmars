@@ -6,12 +6,15 @@ package com.eagle.programmar.CSharp.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
 import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
+import com.eagle.programmar.CSharp.CSharp_Syntax;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class CSharp_StatementBlock extends TokenSequence implements EagleRunnableWithResult //, EagleScopeInterface
+public class CSharp_StatementBlock extends TokenSequence implements EagleRunnableWithResult, EagleScopeInterface
 {
 	public @S(10) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<CSharp_StatementOrComment> statements;
@@ -32,11 +35,11 @@ public class CSharp_StatementBlock extends TokenSequence implements EagleRunnabl
 		return result;
 	}
 	
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
+	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 }

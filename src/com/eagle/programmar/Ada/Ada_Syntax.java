@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Ada_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class Ada_Syntax extends EagleSyntax
 
 	public Ada_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "_";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {

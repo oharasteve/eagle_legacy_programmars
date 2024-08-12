@@ -104,11 +104,6 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 			result.append(piece.trim());
 		}
 
-		if (interpreter._TRACE)
-		{
-			System.err.println("****** STRING(pieces) is '" + result.toString() +"'");
-		}
-		
 		COBOL_StringPiece piece = pieces._elements.get(0);
 		interpreter.setSymbol(piece, piece.intoVar.getValue(), new EagleString(result.toString()));
 	}

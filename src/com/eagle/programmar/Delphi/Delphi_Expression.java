@@ -5,18 +5,21 @@ package com.eagle.programmar.Delphi;
 
 import com.eagle.programmar.Delphi.Expressions.Delphi_Additive_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Brackets;
-import com.eagle.programmar.Delphi.Expressions.Delphi_Builtin_Function_Call;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Builtins;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Cast;
 import com.eagle.programmar.Delphi.Expressions.Delphi_DotDot_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Dot_Expression;
-import com.eagle.programmar.Delphi.Expressions.Delphi_Function_Call;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Multiplicative_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Not_Operator;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Parentheses;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Relational_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_UnarySign;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Variable_Expression;
+import com.eagle.programmar.Delphi.Functions.Delphi_Builtin_Function;
+import com.eagle.programmar.Delphi.Functions.Delphi_Copy_Function;
+import com.eagle.programmar.Delphi.Functions.Delphi_Format_Function;
+import com.eagle.programmar.Delphi.Functions.Delphi_Function_Call;
+import com.eagle.programmar.Delphi.Functions.Delphi_Length_Function;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Character;
 import com.eagle.programmar.Delphi.Terminals.Delphi_HexNumber;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Literal;
@@ -59,12 +62,15 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(100) Delphi_Builtins builtins;
 	public @P(110) Delphi_Parentheses parens;
 	public @P(120) Delphi_Brackets brackets;
-	public @P(130) Delphi_Builtin_Function_Call builtinFunctionCall;
-	public @P(140) Delphi_Function_Call functionCall;
-	public @P(150) Delphi_Cast cast;
-	public @P(160) Delphi_Variable_Expression variableExpression;
-	public @P(170) Delphi_UnarySign unarySign;
-	public @P(180) Delphi_Not_Operator notOp;
+	public @P(130) Delphi_Copy_Function copyFunction;
+	public @P(140) Delphi_Format_Function formatFunction;
+	public @P(150) Delphi_Length_Function lengthFunction;
+	public @P(160) Delphi_Builtin_Function builtinFunction;
+	public @P(170) Delphi_Function_Call functionCall;
+	public @P(180) Delphi_Cast cast;
+	public @P(190) Delphi_Variable_Expression variableExpression;
+	public @P(200) Delphi_UnarySign unarySign;
+	public @P(210) Delphi_Not_Operator notOp;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

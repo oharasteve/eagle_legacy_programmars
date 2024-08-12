@@ -12,6 +12,8 @@ import com.eagle.programmar.Perl.Symbols.Perl_Variable_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -22,13 +24,21 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Perl_FunctionDefinition extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Perl_FunctionDefinition extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT TokenList<Perl_FunctionPrefix> modifiers;
 	public @S(20) Perl_Keyword FUNCTION = new Perl_Keyword("function");
 	public @S(30) Perl_Function_Definition fnName;
 	public @S(40) Perl_Function_Parameters params;
 	public @S(50) Perl_FunctionBlock block;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Perl_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 
 	public @SKIP CallMetrics _metrics = null;
 

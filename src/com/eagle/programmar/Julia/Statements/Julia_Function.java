@@ -7,10 +7,13 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Julia.Julia_Statement;
+import com.eagle.programmar.Julia.Julia_Syntax;
 import com.eagle.programmar.Julia.Julia_Variable;
 import com.eagle.programmar.Julia.Symbols.Julia_Function_Definition;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -19,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Julia_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Julia_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("manual/functions/") Julia_Keyword FUNCTION = new Julia_Keyword("function");
 	public @S(20) Julia_Function_Definition id;
@@ -38,6 +41,14 @@ public class Julia_Function extends TokenSequence implements AbstractFunction, E
 		public @S(30) PunctuationRightParen rightParen;
 	}
 	
+	private @SKIP EagleScope _scope = new EagleScope(this, Julia_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

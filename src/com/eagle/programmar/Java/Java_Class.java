@@ -114,17 +114,11 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		}
 	}
 
-//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
 //
 //	@Override
 //	public EagleScope getScope()
 //	{
 //		return _scope;
-//	}
-
-//	@Override
-//	public void setScope(EagleScope scope)
-//	{
-//		_scope = scope;
 //	}
 }

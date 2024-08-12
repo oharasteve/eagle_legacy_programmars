@@ -29,7 +29,6 @@ public class Fortran_BracketExpression extends PrimaryOperator implements EagleR
 			Fortran_Expression expr = expressions.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			array.addValue(val);
-			if (interpreter._TRACE) System.err.println("*** array[" + i + "] = " + val);
 		}
 		interpreter.pushEagleValue(array);
 	}

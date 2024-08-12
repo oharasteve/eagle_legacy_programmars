@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Algol68_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE= false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class Algol68_Syntax extends EagleSyntax
 
 	public Algol68_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {

@@ -16,6 +16,8 @@ import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.programmar.C.Types.C_FunctionPointer;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -30,7 +32,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class C_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT C_Extern_C externC;
 	public @S(20) @OPT C_FunctionDeclspec declspec;
@@ -170,6 +172,14 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
+	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -189,6 +199,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 			// And we only evaluate them when they are called
 			if (fname.equals("main"))
 			{
+				interpreter.callingFunction("main", this);
 				AbstractToken token = body.getWhich();
 				if (token instanceof C_FunctionImplementation)
 				{
@@ -198,6 +209,8 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 						interpreter.tryToInterpret(stmt);
 					}
 				}
+				interpreter.completedFunction("main", this);
+				
 			}
 		}
 	}

@@ -53,7 +53,9 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 		collectParagraphNames(interpreter);
 
 		// Pass 3 -- now run it
+		interpreter.callingFunction("main", this);
 		interpreter.tryToInterpret(procedureDiv);
+		interpreter.completedFunction("main", this);
 	}
 
 	private void collectDataVariables(EagleInterpreter interpreter)

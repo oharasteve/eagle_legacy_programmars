@@ -7,17 +7,20 @@ import com.eagle.programmar.Java.Java_Annotation;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
+import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Java_ForEachStatement extends TokenSequence implements AbstractStatement
+public class Java_ForEachStatement extends TokenSequence implements AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) Java_Keyword FOR = new Java_Keyword("for");
@@ -31,4 +34,12 @@ public class Java_ForEachStatement extends TokenSequence implements AbstractStat
 	public @S(100) PunctuationRightParen rightParen;
 	public @S(110) @OPT Java_Comment comment;
 	public @S(120) Java_Statement action;
+	
+	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 }

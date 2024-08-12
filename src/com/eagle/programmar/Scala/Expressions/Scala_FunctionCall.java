@@ -78,6 +78,7 @@ public class Scala_FunctionCall extends PrimaryOperator implements EagleRunnable
 			long startTime = System.nanoTime();
 	
 			// And transfer control to the method
+			interpreter.callingFunction(name, func);
 			interpreter.tryToInterpret(func.stmt);
 	
 			// The result was already put on the runtime stack
@@ -85,11 +86,7 @@ public class Scala_FunctionCall extends PrimaryOperator implements EagleRunnable
 			func._metrics.addCallFrom(this, elapsedTime);
 	
 			// Now remove all those parameters
-			for (int i = 0; i < argCount; i++)
-			{
-				Scala_FunctionParameter param = func.params.parameters.getPrimaryElement(i);
-				interpreter.removeSymbols(param.var.getValue());
-			}
+			interpreter.completedFunction(name, func);
 		}
 	}
 }

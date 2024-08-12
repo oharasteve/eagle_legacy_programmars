@@ -7,23 +7,19 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
-import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Javascript_Variable extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Javascript_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<Javascript_DotField> moreIds;
-	public @S(30) @OPT TokenList<Javascript_Subscript> subscript;
+	public @S(20) @OPT TokenList<Javascript_Subscript> subscript;
 
 	public static class Javascript_VariableIdentifier extends TokenChooser
 	{
@@ -42,32 +38,10 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 		}
 	}
 
-	public static class Javascript_DotField extends TokenSequence
-	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) Javascript_Field_Reference id;
-		public @S(30) @OPT Javascript_Comment comment;
-	}
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.findSymbol(firstId.getWhich().toString());
-		
-		if (moreIds != null && moreIds.isPresent())
-		{
-			if (moreIds.size() == 1)
-			{
-				// This is terrible.
-				Javascript_DotField fld = moreIds._elements.get(0);
-				if (fld.id.getValue().equals("length"))
-				{
-					String str = value.forceStringValue();
-					interpreter.pushInt(str.length());
-					return;
-				}
-			}
-		}
 		
 		if (subscript != null && subscript.size() > 0)
 		{

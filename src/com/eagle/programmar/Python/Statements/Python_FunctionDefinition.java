@@ -9,11 +9,14 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Python.Python_Decorators;
 import com.eagle.programmar.Python.Python_Parameter_List;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
+import com.eagle.programmar.Python.Python_Syntax;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -22,7 +25,8 @@ import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
 // Why does this implement AbstractMethod ?? Transformation needs / uses it, but why ??
-public class Python_FunctionDefinition extends TokenSequence implements AbstractMethod, AbstractFunction, EagleRunnable
+public class Python_FunctionDefinition extends TokenSequence
+			implements AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT Python_Decorators decorators;
 	public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
@@ -34,8 +38,6 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 	public @S(70) @NOSPACE PunctuationColon colon;
 	public @S(80) @OPT TokenList<Python_Comment> comment;
 	public @S(90) Python_StatementBlock defBody;
-
-	public @SKIP CallMetrics _metrics = null;
 
 	public static class Python_FunctionName extends TokenChooser
 	{
@@ -49,6 +51,16 @@ public class Python_FunctionDefinition extends TokenSequence implements Abstract
 		public @S(20) Python_Type type;
 	}
 	
+	private @SKIP EagleScope _scope = new EagleScope(this, Python_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
+	public @SKIP CallMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

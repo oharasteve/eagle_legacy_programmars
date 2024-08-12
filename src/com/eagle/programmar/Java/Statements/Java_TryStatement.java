@@ -7,12 +7,15 @@ import com.eagle.programmar.Java.Java_Data.Java_DataInitialValue;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
+import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -22,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_TryStatement extends TokenSequence implements AbstractStatement
+public class Java_TryStatement extends TokenSequence implements AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.20") Java_Keyword TRY = new Java_Keyword("try");
@@ -80,11 +83,11 @@ public class Java_TryStatement extends TokenSequence implements AbstractStatemen
 		}
 	}
 
-//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
+	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 }

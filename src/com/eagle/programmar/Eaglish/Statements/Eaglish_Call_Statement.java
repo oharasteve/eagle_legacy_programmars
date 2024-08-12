@@ -36,8 +36,6 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (interpreter._TRACE) System.err.println("*** Calling " + name);
-
 		// Have to search for the FUNCTION definition
 		AbstractFunction fn = interpreter.findFunction(name.getValue());
 		if (fn == null)
@@ -67,6 +65,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 
 		// Evaluate the function
 		long startTime = System.nanoTime();
+		interpreter.callingFunction(name.getValue(), func);
 		for (Eaglish_Statement stmt : func.statements._elements)
 		{
 			interpreter.tryToInterpret(stmt);
@@ -75,10 +74,6 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Remove all the parameters
-		for (int i = 0; i < actual; i++)
-		{
-			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
-			interpreter.removeSymbols(param.param.getValue());
-		}
+		interpreter.completedFunction(name.getValue(), func);
 	}
 }

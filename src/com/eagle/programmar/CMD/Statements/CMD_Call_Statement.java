@@ -112,6 +112,6 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this, elapsedTime);
 
-		// interpreter._currentFunction = saveFunc;	// Restore previous value
+		// Remove all the parameter values
 	}
 }

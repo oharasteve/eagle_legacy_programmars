@@ -12,6 +12,8 @@ import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -24,7 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class PLI_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable
+public class PLI_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT PLI_Signals signals;
 	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
@@ -88,6 +90,14 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @CHOICE PLI_Signals XXsignals;
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, PLI_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -101,10 +111,12 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 					PLI_ProcedureOptionsMain main = (PLI_ProcedureOptionsMain) opt.getWhich();
 					if (main.MAIN != null && main.MAIN.isPresent())
 					{
+						interpreter.callingFunction("main", this);
 						for (PLI_StatementOrComment elt : statements._elements)
 						{
 							interpreter.tryToInterpret(elt);
 						}
+						interpreter.completedFunction("main", this);
 					}
 				}
 			}

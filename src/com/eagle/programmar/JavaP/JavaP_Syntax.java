@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class JavaP_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class JavaP_Syntax extends EagleSyntax
 
 	public JavaP_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_autoAdvance = false;
 		_extraCharacters = "_";

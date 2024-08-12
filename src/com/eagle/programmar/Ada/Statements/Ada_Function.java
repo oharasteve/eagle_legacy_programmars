@@ -7,11 +7,14 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
+import com.eagle.programmar.Ada.Ada_Syntax;
 import com.eagle.programmar.Ada.Ada_Type;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Symbols.Ada_Variable_Definition;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -21,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Ada_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) Ada_Keyword FUNCTION = new Ada_Keyword("function");
 	public @S(20) Ada_Function_Definition id;
@@ -57,6 +60,14 @@ public class Ada_Function extends TokenSequence implements AbstractFunction, Eag
 		public @S(20) Ada_Type type;
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Ada_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

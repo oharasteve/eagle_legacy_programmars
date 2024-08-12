@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class BNF_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class BNF_Syntax extends EagleSyntax
 
 	public BNF_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_punctuationExceptions = new String[] {
 				"::="

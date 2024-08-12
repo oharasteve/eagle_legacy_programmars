@@ -11,9 +11,12 @@ import com.eagle.programmar.Java.Java_Annotation;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
+import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -23,7 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Java_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
@@ -56,6 +59,14 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 	{
 		public @S(10) Java_Type varType;
 		public @S(20) Java_Expression expr;
+	}
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 
 	@Override
@@ -107,18 +118,4 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
-	
-//	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
-
-//	@Override
-//	public void setScope(EagleScope scope)
-//	{
-//		_scope = scope;
-//	}
 }

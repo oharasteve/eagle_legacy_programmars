@@ -31,7 +31,6 @@ public class Rust_ExpressionArray extends PrimaryOperator implements EagleRunnab
 			Rust_Expression expr = exprs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			vals.addValue(val);
-			if (interpreter._TRACE) System.err.println("*** array[" + i + "] = " + val.toString());
 		}
 
 		interpreter.pushEagleValue(vals);

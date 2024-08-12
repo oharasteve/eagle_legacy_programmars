@@ -15,7 +15,6 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_BuiltinVariable;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Cast;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Dictionary;
 import com.eagle.programmar.Powershell.Expressions.Powershell_EvaluateExpression;
-import com.eagle.programmar.Powershell.Expressions.Powershell_FunctionCall;
 import com.eagle.programmar.Powershell.Expressions.Powershell_IsExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LibraryVariable;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Lists;
@@ -36,6 +35,8 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_Relational_Express
 import com.eagle.programmar.Powershell.Expressions.Powershell_SubfieldExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_SubscriptExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_VariableExpression;
+import com.eagle.programmar.Powershell.Functions.Powershell_FloorFunction;
+import com.eagle.programmar.Powershell.Functions.Powershell_FunctionCall;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -87,13 +88,14 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(210) Powershell_ParenthesizedExpression parenthesizedExpression;
 	public @P(220) Powershell_Lists lists;
 	public @P(230) Powershell_Dictionary dictionary;
-	public @P(240) Powershell_FunctionCall functionCall;
-	public @P(250) Powershell_Cast cast;
-	public @P(260) Powershell_EvaluateExpression evaluateExpression;
-	public @P(270) Powershell_BuiltIn builtIn;
-	public @P(280) Powershell_BuiltinVariable builtinVariable;
-	public @P(290) Powershell_VariableExpression variableExpression;
-	public @P(300) Powershell_LibraryVariable libraryVariable;
+	public @P(240) Powershell_FloorFunction floorFunction;
+	public @P(250) Powershell_FunctionCall functionCall;
+	public @P(260) Powershell_Cast cast;
+	public @P(270) Powershell_EvaluateExpression evaluateExpression;
+	public @P(280) Powershell_BuiltIn builtIn;
+	public @P(290) Powershell_BuiltinVariable builtinVariable;
+	public @P(300) Powershell_VariableExpression variableExpression;
+	public @P(310) Powershell_LibraryVariable libraryVariable;
 
 	
 	///////////////////////////////////////////////////////////////////////////

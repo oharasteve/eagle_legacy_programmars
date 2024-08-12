@@ -8,7 +8,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 
 public class CSharp_Syntax extends EagleSyntax
 {
-	public static boolean isCaseSensitive = true;
+	public static final boolean IS_CASE_SENSITIVE = true;
 
 	@Override
 	public String syntaxId()
@@ -18,7 +18,7 @@ public class CSharp_Syntax extends EagleSyntax
 
 	public CSharp_Syntax()
 	{
-		_isCaseSensitive = isCaseSensitive;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {

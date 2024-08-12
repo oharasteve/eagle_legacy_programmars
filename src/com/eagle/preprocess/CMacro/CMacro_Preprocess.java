@@ -14,8 +14,6 @@ import com.eagle.parsers.EagleTracer;
 import com.eagle.parsers.ParserManager;
 import com.eagle.preprocess.EagleInclude;
 import com.eagle.preprocess.FindIncludeFile;
-import com.eagle.programmar.C.C_Program.C_StatementOrComment;
-import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.CMacro_Program;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_CommentLine;
@@ -216,25 +214,6 @@ public class CMacro_Preprocess extends EagleInclude
 
 		// The macro didn't write anything on its own
 		copyElement(whichStatement);
-		return true;
-	}
-
-	// Returns true always, even if nothing was changed in the file (not including
-	// the symbol table)
-	public boolean preprocessCStatement(C_StatementOrComment element)
-	{
-		AbstractToken whichStatement = element.getWhich();
-		if (whichStatement instanceof C_Statement)
-		{
-			C_Statement cStatement = (C_Statement) whichStatement;
-			if (letMacroHandleIt(cStatement.getWhich()))
-			{
-				return true;
-			}
-		}
-
-		// The macro didn't write anything on its own
-		copyElement(element);
 		return true;
 	}
 

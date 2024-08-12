@@ -50,12 +50,4 @@ public class CSharp_Enum extends TokenSequence
 		public @S(10) PunctuationEquals equals;
 		public @S(20) CSharp_Expression expr;
 	}
-
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

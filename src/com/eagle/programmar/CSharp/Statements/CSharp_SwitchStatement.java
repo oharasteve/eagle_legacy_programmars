@@ -43,12 +43,4 @@ public class CSharp_SwitchStatement extends TokenSequence implements AbstractSta
 			public @S(20) CSharp_Expression XXexpr;
 		}
 	}
-
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

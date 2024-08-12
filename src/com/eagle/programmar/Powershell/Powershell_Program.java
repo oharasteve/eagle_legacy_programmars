@@ -47,7 +47,6 @@ public class Powershell_Program extends EagleLanguage implements EagleRunnable
 			if (stmt.element.getWhich() instanceof Powershell_FunctionStatement)
 			{
 				Powershell_FunctionStatement fn = (Powershell_FunctionStatement) stmt.element.getWhich();
-				if (interpreter._TRACE) System.err.println("**** Found function " + fn.name.getValue());
 				interpreter.addFunction(fn.name.getValue(), fn);
 			}
 		}

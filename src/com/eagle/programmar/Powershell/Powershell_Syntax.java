@@ -7,6 +7,7 @@ import com.eagle.core.EagleSyntax;
 
 public class Powershell_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +16,7 @@ public class Powershell_Syntax extends EagleSyntax
 
 	public Powershell_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "`";
 		_extraCharacters = "_-";
 		_autoAdvance = false;

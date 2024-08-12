@@ -7,14 +7,17 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
+import com.eagle.programmar.Eaglish.Eaglish_Syntax;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Function_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_Function_Block extends TokenSequence implements EagleRunnable, AbstractFunction
+public class Eaglish_Function_Block extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
 	public @S(10) Eaglish_Keyword FUNCTION = new Eaglish_Keyword("FUNCTION");
 	public @S(20) Eaglish_Function_Definition var;
@@ -29,6 +32,14 @@ public class Eaglish_Function_Block extends TokenSequence implements EagleRunnab
 
 	public @SKIP CallMetrics _metrics = null;
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Eaglish_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class RPG_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class RPG_Syntax extends EagleSyntax
 
 	public RPG_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "?";
 		_extraCharacters = "";
 		_autoAdvance = false;

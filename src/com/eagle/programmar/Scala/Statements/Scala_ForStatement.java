@@ -13,9 +13,7 @@ import com.eagle.programmar.Scala.Scala_Statement;
 import com.eagle.programmar.Scala.Scala_Variable;
 import com.eagle.programmar.Scala.Expressions.Scala_ParenthesizedExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_RangeExpression;
-import com.eagle.programmar.Scala.Expressions.Scala_Subfield;
-import com.eagle.programmar.Scala.Expressions.Scala_VariableExpression;
-import com.eagle.programmar.Scala.Symbols.Scala_Identifier_Reference;
+import com.eagle.programmar.Scala.Functions.Scala_ReverseMethod;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.programmar.Scala.Terminals.Scala_Punctuation;
 import com.eagle.tokens.AbstractToken;
@@ -43,43 +41,33 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 		AbstractToken which = values.getWhich();
 		Scala_RangeExpression range = null;
 		boolean backwards = false;
+		int start = 0;
+		int stop = 0;
 		if (which instanceof Scala_RangeExpression)
 		{
 			range = (Scala_RangeExpression) which;
+			start = interpreter.getIntValue(range.left);
+			stop = interpreter.getIntValue(range.right);
 		}
-		else
+		if (which instanceof Scala_ReverseMethod)
 		{
-			// Could also look like this: (a to b).reverse
-			if (which instanceof Scala_Subfield)
+			Scala_ReverseMethod reversed = (Scala_ReverseMethod) which;
+			if (reversed.leftExpr.getWhich() instanceof Scala_ParenthesizedExpression)
 			{
-				Scala_Subfield sub = (Scala_Subfield) which;
-				if (sub.left.getWhich() instanceof Scala_ParenthesizedExpression)
+				Scala_ParenthesizedExpression parens = (Scala_ParenthesizedExpression) reversed.leftExpr.getWhich();
+				if (parens.expression.getWhich() instanceof Scala_RangeExpression)
 				{
-					Scala_ParenthesizedExpression paren = (Scala_ParenthesizedExpression) sub.left.getWhich();
-					if (paren.expression.getWhich() instanceof Scala_RangeExpression)
-					{
-						if (sub.right.getWhich() instanceof Scala_VariableExpression)
-						{
-							Scala_VariableExpression variable = (Scala_VariableExpression) sub.right.getWhich();
-							Scala_Identifier_Reference id = variable.variable.vars.first();
-							if (id.getValue().equals("reverse"))
-							{
-								range = (Scala_RangeExpression) paren.expression.getWhich();
-								backwards = true;
-							}
-						}
-					}
+					range = (Scala_RangeExpression) parens.expression.getWhich();
+					backwards = true;
+					start = interpreter.getIntValue(range.right);
+					stop = interpreter.getIntValue(range.left);
 				}
 			}
 		}
-		
 		if (range == null)
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
-
-		int start = interpreter.getIntValue(range.left);
-		int stop = interpreter.getIntValue(range.right);
 
 		if (_metrics == null)
 		{
@@ -90,11 +78,10 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
 		int i = start;
-		if (backwards) i = stop;
 		while (true)
 		{
 			if (!backwards && i > stop) break;
-			if (backwards && i < start) break;
+			if (backwards && i < stop) break;
 
 			metric.iterate();
 			interpreter.setSymbol(var, var.vars.first().getValue(), new EagleInteger(i));

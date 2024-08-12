@@ -39,12 +39,4 @@ public class CSharp_Constructor extends TokenSequence
 		public @S(40) @OPT CSharp_ArgumentList argList;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

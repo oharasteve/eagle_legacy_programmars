@@ -35,8 +35,6 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		}
 		Lisp_DefunFunction func = (Lisp_DefunFunction) fn;
 
-		if (interpreter._TRACE) System.err.println("**** Calling function " + name);
-
 		int argCount = exprs.size() - 1;	// Minus 1 for the function name
 		int paramCount = func.parameters.size();
 		
@@ -62,6 +60,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		long startTime = System.nanoTime();
 
 		// And transfer control to the method
+		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (Lisp_SExpr stmt : func.body._elements)
 		{
@@ -74,13 +73,6 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
-		if (argCount > 0)
-		{
-			for (int i = 0; i < argCount; i++)
-			{
-				Lisp_ParamDef param = func.parameters._elements.get(i);
-				interpreter.removeSymbols(param.parameter.getValue());
-			}
-		}
+		interpreter.completedFunction(name, func);
 	}
 }

@@ -8,6 +8,8 @@ import com.eagle.programmar.JSON.Terminals.JSON_Comment;
 
 public class JSON_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class JSON_Syntax extends EagleSyntax
 
 	public JSON_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_commentInstance = new JSON_Comment();

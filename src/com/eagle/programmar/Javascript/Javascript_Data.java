@@ -39,7 +39,10 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(init.expr);
-		interpreter.setSymbol(var, var.toString(), value);
+		if (init != null && init.isPresent())
+		{
+			EagleValue value = interpreter.getEagleValue(init.expr);
+			interpreter.setSymbol(var, var.toString(), value);
+		}
 	}
 }

@@ -74,7 +74,7 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 		
 		_metrics.competedLoop(metric);
 
-		interpreter.removeSymbols(var.getValue());
+		interpreter.removeSymbol(var.getValue());
 		return Eagle_Statement_Result.NORMAL;
 	}
 }

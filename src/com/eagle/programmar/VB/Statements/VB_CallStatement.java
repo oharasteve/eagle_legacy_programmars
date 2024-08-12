@@ -69,6 +69,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		long startTime = System.nanoTime();
 
 		// And transfer control to the method
+		interpreter.callingFunction(name, subr);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (VB_Statement stmt : subr.stmts._elements)
 		{
@@ -81,10 +82,6 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		subr._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
-		for (int i = 0; i < argCount; i++)
-		{
-			VB_Variable_Definition param = subr.params.params.getPrimaryElement(i).var;
-			interpreter.removeSymbols(param.getValue());
-		}
+		interpreter.completedFunction(name, subr);
 	}
 }

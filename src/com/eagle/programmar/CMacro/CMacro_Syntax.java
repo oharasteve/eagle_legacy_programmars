@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class CMacro_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class CMacro_Syntax extends EagleSyntax
 
 	public CMacro_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
 		_autoAdvance = false;

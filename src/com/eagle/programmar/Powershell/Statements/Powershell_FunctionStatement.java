@@ -8,10 +8,13 @@ import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Syntax;
 import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Definition;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -25,7 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Powershell_FunctionStatement extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Powershell_FunctionStatement extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword(
 			"Function");
@@ -57,6 +60,14 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 			public @S(20) Powershell_Type type;
 			public @S(30) PunctuationRightBracket rightBracket;
 		}
+	}
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Powershell_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 
 	@Override

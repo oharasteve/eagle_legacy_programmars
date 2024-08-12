@@ -70,6 +70,10 @@ public class CMD_Format
 				if (secondPct < 0) throw new RuntimeException("Missing % in " + txt);
 				String var = txt.substring(firstPct + 1, secondPct);
 				EagleValue val = interpreter.findSymbol(var);
+				if (val == null)
+				{
+					throw new RuntimeException("Unable to find variable '" + var + "'");
+				}
 				sb.append(val.forceStringValue());
 	
 				// Look for the next piece

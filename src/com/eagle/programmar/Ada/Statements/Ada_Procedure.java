@@ -7,16 +7,19 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
+import com.eagle.programmar.Ada.Ada_Syntax;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Procedure extends TokenSequence implements EagleRunnable, AbstractFunction
+public class Ada_Procedure extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
 	public @S(10) Ada_Keyword PROCEDURE = new Ada_Keyword("procedure");
 	public @S(20) Ada_Function_Definition id;
@@ -31,6 +34,14 @@ public class Ada_Procedure extends TokenSequence implements EagleRunnable, Abstr
 	public @S(110) PunctuationSemicolon semicolon;
 
 	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Ada_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

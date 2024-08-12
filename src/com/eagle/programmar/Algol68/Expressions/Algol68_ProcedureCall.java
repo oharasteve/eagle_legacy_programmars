@@ -54,13 +54,13 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Algol68_Identifier_Reference id = procName.vars.first();
-		if (interpreter._TRACE) System.err.println("*** Calling " + id + "()");
+		String name = id.getValue();
 
 		// Have to search for the PROC definition
-		AbstractFunction fn = interpreter.findFunction(id.getValue());
+		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
 		{
-			throw new RuntimeException("Unable to find a procedure named " + id.getValue());
+			throw new RuntimeException("Unable to find a procedure named " + name);
 		}
 		Algol68_Procedure proc = (Algol68_Procedure) fn;
 
@@ -70,7 +70,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
-					"Proc " + id.getValue() + " expects #args = " + paramCount + ", but was given " + argCount);
+					"Proc " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
 		// Now assign all the parameters
@@ -91,13 +91,12 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		long startTime = System.nanoTime();
 
 		// And transfer control to the function / procedure
+		interpreter.callingFunction(name, proc);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		// EagleValue returnValue = null;
 		for (Algol68_Statement stmt : proc.statements._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;
-			// returnValue = interpreter.getStackTop();		// Really weird. No "return" statement
 		}
 
 		// The result was already put on the runtime stack
@@ -105,11 +104,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		proc._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
-		for (int i = 0; i < argCount; i++)
-		{
-			Algol68_Parameter param = proc.params.parameters.getPrimaryElement(i);
-			interpreter.removeSymbols(param.param.getValue());
-		}
+		interpreter.completedFunction(name, proc);
 	}
 }
 

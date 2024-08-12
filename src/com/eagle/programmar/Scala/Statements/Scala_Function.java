@@ -7,10 +7,13 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Scala.Scala_Statement;
+import com.eagle.programmar.Scala.Scala_Syntax;
 import com.eagle.programmar.Scala.Scala_Type;
 import com.eagle.programmar.Scala.Symbols.Scala_Function_Definition;
 import com.eagle.programmar.Scala.Symbols.Scala_Variable_Definition;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
@@ -20,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Scala_Function extends TokenSequence implements EagleRunnable, AbstractFunction
+public class Scala_Function extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
 	public @S(10) @OPT Scala_Keyword OVERRIDE = new Scala_Keyword("override");
 	public @S(20) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
@@ -52,6 +55,14 @@ public class Scala_Function extends TokenSequence implements EagleRunnable, Abst
 		public @S(30) Scala_Type type;
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Scala_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -63,7 +74,9 @@ public class Scala_Function extends TokenSequence implements EagleRunnable, Abst
 		if (id.getValue().equals("main"))
 		{
 			// Run the main program
+			interpreter.callingFunction("main", this);
 			interpreter.tryToInterpret(stmt);
+			interpreter.completedFunction("main", this);
 		}
 	}
 }

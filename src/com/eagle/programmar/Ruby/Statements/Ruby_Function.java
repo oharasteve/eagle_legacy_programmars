@@ -7,10 +7,13 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ruby.Ruby_Statement;
+import com.eagle.programmar.Ruby.Ruby_Syntax;
 import com.eagle.programmar.Ruby.Ruby_Variable;
 import com.eagle.programmar.Ruby.Symbols.Ruby_Function_Definition;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -19,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Ruby_Function extends TokenSequence implements EagleRunnable, AbstractFunction
+public class Ruby_Function extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
 	public @S(10) Ruby_Keyword DEF = new Ruby_Keyword("def");
 	public @S(20) Ruby_Function_Definition id;
@@ -29,8 +32,6 @@ public class Ruby_Function extends TokenSequence implements EagleRunnable, Abstr
 	public @S(60) Ruby_Keyword END = new Ruby_Keyword("end");
 	public @S(70) Ruby_EOLN eoln2;
 
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class Ruby_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -38,6 +39,16 @@ public class Ruby_Function extends TokenSequence implements EagleRunnable, Abstr
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
+	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Ruby_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

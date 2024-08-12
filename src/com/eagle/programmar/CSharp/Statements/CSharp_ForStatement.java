@@ -9,8 +9,11 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
+import com.eagle.programmar.CSharp.CSharp_Syntax;
 import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -20,7 +23,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class CSharp_ForStatement extends TokenSequence
+			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -44,6 +48,14 @@ public class CSharp_ForStatement extends TokenSequence implements EagleRunnableW
 	{
 		public @S(10) @NOSPACE CSharp_Type varType;
 		public @S(20) CSharp_Expression expr;
+	}
+	
+	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 
 	@Override
@@ -95,12 +107,4 @@ public class CSharp_ForStatement extends TokenSequence implements EagleRunnableW
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
-	
-//	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
 }

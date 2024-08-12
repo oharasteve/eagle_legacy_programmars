@@ -43,7 +43,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-//	private EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
+//	private @SKIP EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
 //
 //	@Override
 //	public EagleScope getScope()

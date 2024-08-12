@@ -7,10 +7,13 @@ import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Go.Go_Statement;
+import com.eagle.programmar.Go.Go_Syntax;
 import com.eagle.programmar.Go.Go_Type;
 import com.eagle.programmar.Go.Symbols.Go_Function_Definition;
 import com.eagle.programmar.Go.Symbols.Go_Variable_Definition;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
@@ -20,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Go_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Go_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("#Function_declarations") Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;
@@ -51,6 +54,14 @@ public class Go_Function extends TokenSequence implements AbstractFunction, Eagl
 		}
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Go_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -63,7 +74,9 @@ public class Go_Function extends TokenSequence implements AbstractFunction, Eagl
 		// Unless the name is 'main'
 		if (id.getValue().equals("main"))
 		{
+			interpreter.callingFunction("main", this);
 			interpreter.tryToInterpret(stmt);
+			interpreter.completedFunction("main", this);
 		}
 	}
 }

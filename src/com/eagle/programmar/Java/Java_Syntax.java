@@ -8,7 +8,7 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 
 public class Java_Syntax extends EagleSyntax
 {
-	public static boolean isCaseSensitive = true;
+	public static final boolean IS_CASE_SENSITIVE = true;
 
 	@Override
 	public String syntaxId()
@@ -18,7 +18,7 @@ public class Java_Syntax extends EagleSyntax
 
 	public Java_Syntax()
 	{
-		_isCaseSensitive = isCaseSensitive;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new Java_Comment();

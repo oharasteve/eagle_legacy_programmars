@@ -31,7 +31,6 @@ public class FSharp_BracketBars extends PrimaryOperator implements EagleRunnable
 			FSharp_Expression expr = exprs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			values.addValue(val);
-			if (interpreter._TRACE) System.err.println("*** array[" + i + "] = " + val.toString());
 		}
 
 		interpreter.pushEagleValue(values);

@@ -1,0 +1,14 @@
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Apr 1, 2024
+
+package com.eagle.programmar.Javascript.Functions;
+
+import com.eagle.programmar.Javascript.Javascript_Function;
+import com.eagle.programmar.Javascript.Javascript_ParenthesizedExpression;
+import com.eagle.tokens.PrimaryOperator;
+
+public class Javascript_FunctionExpr extends PrimaryOperator
+{
+	public @S(10) Javascript_Function function;
+	public @S(20) @OPT Javascript_ParenthesizedExpression args;
+}

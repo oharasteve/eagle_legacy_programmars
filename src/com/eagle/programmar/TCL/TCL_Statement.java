@@ -9,6 +9,7 @@ import com.eagle.programmar.TCL.Expressions.TCL_ExpressionStatement;
 import com.eagle.programmar.TCL.Statements.TCL_BlockStatement;
 import com.eagle.programmar.TCL.Statements.TCL_BreakStatement;
 import com.eagle.programmar.TCL.Statements.TCL_ForStatement;
+import com.eagle.programmar.TCL.Statements.TCL_FunctionCall;
 import com.eagle.programmar.TCL.Statements.TCL_IfStatement;
 import com.eagle.programmar.TCL.Statements.TCL_IncrStatement;
 import com.eagle.programmar.TCL.Statements.TCL_NamespaceStatement;
@@ -50,6 +51,7 @@ public class TCL_Statement extends TokenSequence implements EagleRunnableWithRes
 		public @CHOICE TCL_SetStatement XXsetStatement;
 		public @CHOICE TCL_VariableStatement XXvariableStatement;
 
+		public @LAST TCL_FunctionCall XXfunctionCall;
 		public @LAST TCL_ExpressionStatement XXexpressionStatement;
 	}
 
