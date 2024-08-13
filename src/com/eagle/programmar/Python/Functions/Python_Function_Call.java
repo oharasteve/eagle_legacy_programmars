@@ -48,9 +48,9 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		// Make sure the function args match up
 		int argCount = argList.getPrimaryCount();
 		int paramCount = 1;
-		if (func.params.params.moreParams != null && func.params.params.moreParams.isPresent())
+		if (func.header.params.params.moreParams != null && func.header.params.params.moreParams.isPresent())
 		{
-			paramCount += func.params.params.moreParams.size();
+			paramCount += func.header.params.params.moreParams.size();
 		}
 		if (argCount != paramCount)
 		{
@@ -59,13 +59,13 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		}
 
 		// Now assign all the parameters
-		Python_Parameter param = func.params.params.param;
+		Python_Parameter param = func.header.params.params.param;
 		for (int i = 0; i < argCount; i++)
 		{
 			Python_Expression expr = argList.getPrimaryElement(i);
 			if (i > 0)
 			{
-				param = func.params.params.moreParams._elements.get(i-1).param;
+				param = func.header.params.params.moreParams._elements.get(i-1).param;
 			}
 			if (param.getWhich() instanceof Python_Variable)
 			{
@@ -83,14 +83,14 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		long startTime = System.nanoTime();
 
 		// And transfer control to the function
-		interpreter.callingFunction(name, func);
-		interpreter.tryToInterpret(func.defBody);
+		interpreter.callingFunction(name, func.header);
+		interpreter.tryToInterpret(func.header.defBody);
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Now remove all those parameters
-		interpreter.completedFunction(name, func);
+		interpreter.completedFunction(name, func.header);
 	}
 }

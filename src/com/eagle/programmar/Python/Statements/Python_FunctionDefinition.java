@@ -26,18 +26,31 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 // Why does this implement AbstractMethod ?? Transformation needs / uses it, but why ??
 public class Python_FunctionDefinition extends TokenSequence
-			implements AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
+			implements AbstractMethod, AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT Python_Decorators decorators;
 	public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(30) @NOSPACE @DOC("compound_stmts.html#function-definitions")
 						Python_Keyword DEF = new Python_Keyword("def");
 	public @S(40) Python_FunctionName fnName;
-	public @S(50) Python_Parameter_List params;
-	public @S(60) @OPT Python_ReturnType returnType;
-	public @S(70) @NOSPACE PunctuationColon colon;
-	public @S(80) @OPT TokenList<Python_Comment> comment;
-	public @S(90) Python_StatementBlock defBody;
+	public @S(50) Python_FunctionHeader header;
+	
+	public static class Python_FunctionHeader extends TokenSequence implements EagleScopeInterface
+	{
+		public @S(10) Python_Parameter_List params;
+		public @S(20) @OPT Python_ReturnType returnType;
+		public @S(30) @NOSPACE PunctuationColon colon;
+		public @S(40) @OPT TokenList<Python_Comment> comment;
+		public @S(50) Python_StatementBlock defBody;
+
+		private @SKIP EagleScope _scope = new EagleScope(this, Python_Syntax.IS_CASE_SENSITIVE);
+
+		@Override
+		public EagleScope getScope()
+		{
+			return _scope;
+		}
+	}
 
 	public static class Python_FunctionName extends TokenChooser
 	{
@@ -51,14 +64,6 @@ public class Python_FunctionDefinition extends TokenSequence
 		public @S(20) Python_Type type;
 	}
 	
-	private @SKIP EagleScope _scope = new EagleScope(this, Python_Syntax.IS_CASE_SENSITIVE);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
-
 	public @SKIP CallMetrics _metrics = null;
 
 	@Override
