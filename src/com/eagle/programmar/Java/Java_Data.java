@@ -11,13 +11,14 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Data extends TokenSequence implements EagleRunnable
+public class Java_Data extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotation1;
 	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;

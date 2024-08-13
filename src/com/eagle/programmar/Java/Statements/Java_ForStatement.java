@@ -5,6 +5,7 @@ package com.eagle.programmar.Java.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Java.Java_Annotation;
@@ -13,6 +14,7 @@ import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
+import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.scope.EagleScope;
@@ -22,6 +24,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -58,7 +61,14 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 	public static class Java_ForWithType extends TokenSequence
 	{
 		public @S(10) Java_Type varType;
-		public @S(20) Java_Expression expr;
+		public @S(20) Java_Variable_Definition variable;
+		public @S(30) @OPT JavaForTypeInit equalsInit;
+		
+		public static class JavaForTypeInit extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) Java_Expression initialExpr;
+		}
 	}
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
@@ -77,7 +87,8 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 		{
 			Java_ForWithType whatforWith = (Java_ForWithType) forWhat.getWhich();
 
-			interpreter.tryToInterpret(whatforWith.expr);
+			EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
+			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
 
 			if (_metrics == null)
 			{
