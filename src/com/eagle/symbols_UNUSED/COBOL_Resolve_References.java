@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Dec 13, 2010
 
-package com.eagle.symbols;
+package com.eagle.symbols_UNUSED;
 
 import java.util.ArrayList;
 

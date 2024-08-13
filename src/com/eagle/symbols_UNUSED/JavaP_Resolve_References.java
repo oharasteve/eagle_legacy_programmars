@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Dec 26, 2020
 
-package com.eagle.symbols;
+package com.eagle.symbols_UNUSED;
 
 import com.eagle.core.EagleLanguage;
 import com.eagle.core.EagleSyntax;
