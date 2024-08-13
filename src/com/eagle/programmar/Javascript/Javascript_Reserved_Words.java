@@ -9,7 +9,7 @@ public class Javascript_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"abstract",
 			// "arguments", // I removed
-			"async", // I added
+			// "async", // I added
 			"await", // I added
 			"boolean",
 			"break",
@@ -40,18 +40,19 @@ public class Javascript_Reserved_Words
 			"instanceof",
 			"int",
 			"interface",
+			"length",
 			"long",
 			"native",
 			"new",
 			"null",
-			"of", // I
-					// added
+			"of", // I added
 			"package",
 			"private",
 			"protected",
 			"public",
 			"return",
 			"short",
+			"startsWith",
 			"static",
 			"switch",
 			"synchronized",
