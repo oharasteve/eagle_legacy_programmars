@@ -18,7 +18,6 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class Java_Program extends EagleLanguage implements EagleRunnable
 {
@@ -82,27 +81,6 @@ public class Java_Program extends EagleLanguage implements EagleRunnable
 		public @CHOICE @NEWLINE Java_Comment XXcomment;
 		public @CHOICE @NEWLINE Java_Import XXimport;
 		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon XXsemicolon;
-	}
-
-	public static class Java_Import extends TokenSequence
-	{
-		public @S(10) @NEWLINE Java_Keyword IMPORT = new Java_Keyword("import");
-		public @S(20) @OPT Java_Keyword STATIC = new Java_Keyword("static");
-		public @S(30) Java_Identifier id;
-		public @S(40) @OPT TokenList<Java_DotIdentifierStar> dotId;
-		public @S(50) @NOSPACE PunctuationSemicolon semicolon;
-
-		public static class Java_DotIdentifierStar extends TokenSequence
-		{
-			public @S(10) @NOSPACE PunctuationPeriod dot;
-			public @S(20) @NOSPACE Java_IdentifierOrStar idStar;
-
-			public static class Java_IdentifierOrStar extends TokenChooser
-			{
-				public @CHOICE @NOSPACE Java_Identifier XXid;
-				public @CHOICE @NOSPACE PunctuationStar XXstar;
-			}
-		}
 	}
 
 	@Override
