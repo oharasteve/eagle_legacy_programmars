@@ -65,6 +65,8 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 						"Method " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
 
+			interpreter.callingFunction(name, meth);
+
 			// Now assign all the parameters
 			if (argCount > 0)
 			{
@@ -82,7 +84,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 					{
 						CSharp_Expression expr = ((CSharp_ArgumentOut) which).arg;
 						EagleValue val = interpreter.getEagleValue(expr);
-						interpreter.setSymbol(param, param.id.getValue(), val);
+						interpreter.setSymbol(param.id, param.id.getValue(), val);
 					}
 				}
 			}
@@ -91,9 +93,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			long startTime = System.nanoTime();
 
 			// And transfer control to the method
-			interpreter.callingFunction(name, meth);
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			// EagleValue returnValue = null;
 			AbstractToken body = meth.body.getWhich();
 			if (body instanceof CSharp_MethodImplementation)
 			{

@@ -46,8 +46,6 @@ public class CSharp_Method extends TokenSequence implements
 	public @S(120) @NEWLINE CSharp_MethodBody body;
 	public @S(130) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class CSharp_MethodParameters extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
@@ -104,6 +102,8 @@ public class CSharp_Method extends TokenSequence implements
 			public @S(30) CSharp_Expression returnValue;
 		}
 	}
+
+	public @SKIP CallMetrics _metrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
 

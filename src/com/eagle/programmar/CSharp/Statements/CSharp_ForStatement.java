@@ -5,12 +5,14 @@ package com.eagle.programmar.CSharp.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.CSharp_Syntax;
 import com.eagle.programmar.CSharp.CSharp_Type;
+import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
@@ -19,6 +21,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -46,8 +49,15 @@ public class CSharp_ForStatement extends TokenSequence
 
 	public static class CSharp_ForWithType extends TokenSequence
 	{
-		public @S(10) @NOSPACE CSharp_Type varType;
-		public @S(20) CSharp_Expression expr;
+		public @S(10) CSharp_Type varType;
+		public @S(20) CSharp_Variable_Definition variable;
+		public @S(30) @OPT CSharpForTypeInit equalsInit;
+		
+		public static class CSharpForTypeInit extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) CSharp_Expression initialExpr;
+		}
 	}
 	
 	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
@@ -66,7 +76,8 @@ public class CSharp_ForStatement extends TokenSequence
 		{
 			CSharp_ForWithType whatforWith = (CSharp_ForWithType) forWhat.getWhich();
 
-			interpreter.tryToInterpret(whatforWith.expr);
+			EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
+			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
 
 			if (_metrics == null)
 			{
