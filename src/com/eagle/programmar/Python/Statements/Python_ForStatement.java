@@ -40,8 +40,6 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 	public @S(80) Python_StatementBlock forBlock;
 	public @S(90) @OPT Python_ForElse forElseStatement;
 
-	private @SKIP ForLoopMetrics _metrics = null;
-
 	public static class Python_ForWhat extends TokenChooser
 	{
 		public @CHOICE Python_VariableList XXvarList;
@@ -62,6 +60,8 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 		public @S(40) PunctuationColon colon;
 		public @S(50) Python_StatementBlock doWhat;
 	}
+
+	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

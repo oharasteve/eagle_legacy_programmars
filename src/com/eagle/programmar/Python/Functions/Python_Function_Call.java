@@ -12,6 +12,7 @@ import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
+import com.eagle.programmar.Python.Symbols.Python_Variable_Definition;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -47,7 +48,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		// Make sure the function args match up
 		int argCount = argList.getPrimaryCount();
-		int paramCount = 1;
+		int paramCount = 0;
+		if (func.header.params.params != null && func.header.params.params.isPresent()) paramCount++;
 		if (func.header.params.params.moreParams != null && func.header.params.params.moreParams.isPresent())
 		{
 			paramCount += func.header.params.params.moreParams.size();
@@ -58,6 +60,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		interpreter.callingFunction(name, func.header);
+
 		// Now assign all the parameters
 		Python_Parameter param = func.header.params.params.param;
 		for (int i = 0; i < argCount; i++)
@@ -67,15 +71,11 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 			{
 				param = func.header.params.params.moreParams._elements.get(i-1).param;
 			}
-			if (param.getWhich() instanceof Python_Variable)
+			if (param.getWhich() instanceof Python_Variable_Definition)
 			{
-				Python_Variable var = (Python_Variable) param.getWhich();
-				if (var.var.getWhich() instanceof Python_Identifier_Reference)
-				{
-					Python_Identifier_Reference ref = (Python_Identifier_Reference) var.var.getWhich();
-					EagleValue val = interpreter.getEagleValue(expr);
-					interpreter.setSymbol(param, ref.getValue(), val);
-				}
+				Python_Variable_Definition def = (Python_Variable_Definition) param.getWhich();
+				EagleValue val = interpreter.getEagleValue(expr);
+				interpreter.setSymbol(def, def.getValue(), val);
 			}
 		}
 
@@ -83,7 +83,6 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		long startTime = System.nanoTime();
 
 		// And transfer control to the function
-		interpreter.callingFunction(name, func.header);
 		interpreter.tryToInterpret(func.header.defBody);
 
 		// The result was already put on the runtime stack

@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python;
 
 import com.eagle.programmar.Python.Python_Parameter_List.Python_InitValue;
+import com.eagle.programmar.Python.Symbols.Python_Variable_Definition;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
@@ -30,14 +31,14 @@ public class Python_Params extends TokenSequence
 
 	public static class Python_Parameter extends TokenChooser
 	{
-		public @CHOICE Python_Variable XXvar;
+		public @CHOICE Python_Variable_Definition XXvar;
 		public @LAST PunctuationSlash XXslash; // Means end of positional arguments
 		public @LAST PunctuationStar XXstar; // Means end of positional or keyword arguments
 
 		public @CHOICE static class PythonParamStar extends TokenSequence
 		{
 			public @S(10) Python_PunctuationChoice star = new Python_PunctuationChoice("*", "**");
-			public @S(20) Python_Variable var;
+			public @S(20) Python_Variable_Definition var;
 		}
 	}
 

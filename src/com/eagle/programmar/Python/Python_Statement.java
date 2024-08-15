@@ -78,7 +78,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 			for (int i = 0; i < statements.getPrimaryCount(); i++)
 			{
 				Python_Simple_Statement stmt = statements.getPrimaryElement(i);
-				result = interpreter.tryToInterpret(stmt);
+				result = interpreter.tryToInterpret(stmt.getWhich());
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			return result;
