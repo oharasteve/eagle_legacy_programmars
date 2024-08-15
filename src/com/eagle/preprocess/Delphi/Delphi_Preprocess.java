@@ -80,7 +80,7 @@ public class Delphi_Preprocess extends EagleInclude
 						try
 						{
 							String includeFile = trimmedLine.substring(StartInclude.length(), ec);
-							EagleFileReader incFile = _findInclude.findFile(null, includeFile);
+							EagleFileReader incFile = _findInclude.findIncludeFile(null, includeFile);
 							incFile.setFileName(includeFile);
 							preprocessFile(parser, incFile);
 						}
