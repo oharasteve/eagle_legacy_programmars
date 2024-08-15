@@ -18,7 +18,8 @@ public class CSharp_ToUpperMethod extends PrecedenceOperator implements EagleRun
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) CSharp_KeywordChoice TOUPPER = new CSharp_KeywordChoice("ToLower", "ToUpper");
 	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(50) @OPT CSharp_Expression expr;	// str.ToUpper() and Char.ToUpper(ch) are both ok
+	public @S(60) PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

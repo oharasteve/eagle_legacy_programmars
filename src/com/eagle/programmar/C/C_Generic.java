@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class C_Generic extends TokenSequence
 {
 	public @S(10) C_Punctuation lessThan = new C_Punctuation('<');
-	public @S(20) SeparatedList<C_GenericType, PunctuationComma> types;
+	public @S(20) @OPT SeparatedList<C_GenericType, PunctuationComma> types;
 	public @S(30) C_Punctuation greaterThan = new C_Punctuation('>');
 
 	public static class C_GenericType extends TokenChooser

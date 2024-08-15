@@ -32,8 +32,9 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public @S(40) @OPT CPlus_NamespaceList namespaces;
 	public @S(50) CPlus_Class_Definition className;
 	public @S(60) @OPT C_Generic generic;
-	public @S(70) @OPT CPlus_ClassExtendList extendsClasses;
-	public @S(80) CPlus_ClassBody body;
+	public @S(70) @OPT C_Keyword FINAL = new C_Keyword("final");
+	public @S(80) @OPT CPlus_ClassExtendList extendsClasses;
+	public @S(90) CPlus_ClassBody body;
 
 	public static class CPlus_ClassModifier extends TokenSequence
 	{

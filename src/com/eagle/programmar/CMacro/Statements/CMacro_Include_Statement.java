@@ -47,7 +47,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 				int len = fileName.length();
 				fileName = fileName.substring(1, len - 1);
 			}
-			macro = preprocessor._findInclude.findFile("", fileName);
+			macro = preprocessor._findInclude.findIncludeFile("", fileName);
 		}
 		catch (IOException ex)
 		{
