@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_RealEndOfLine;
 import com.eagle.programmar.Bash.Terminals.Bash_SheBang;
 import com.eagle.programmar.Perl.Perl_Program;
@@ -29,6 +30,7 @@ public class Bash_PerlProgram extends TokenSequence implements AbstractStatement
 
 	public static class Bash_PerlOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword XXopt = new Bash_Keyword("-w");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
+				"-e", "-i", "-lne", "-pi", "-w");
 	}
 }

@@ -22,12 +22,18 @@ public class Bash_GrepCommand extends TokenSequence implements AbstractStatement
 	public static class Bash_GrepOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
+				"-c",
 				"-E",
 				"-i",
 				"-o",
 				"-q",
 				"-qE",
 				"-r",
-				"-v");
+				"-v",
+				"--extended-regex",
+				"--line-regex",
+				"--silent",
+				"--text"
+				);
 	}
 }
