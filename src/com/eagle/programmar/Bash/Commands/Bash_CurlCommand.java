@@ -14,10 +14,10 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class Bash_CurlCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword CURL = new Bash_Keyword("curl");
-	public @S(20) @OPT TokenList<Bash_CpOption> options;
+	public @S(20) @OPT TokenList<Bash_CurlOption> options;
 	public @S(30) TokenList<Bash_FilenameOrLiteral> files;
 
-	public static class Bash_CpOption extends TokenChooser
+	public static class Bash_CurlOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-L");
 	}
