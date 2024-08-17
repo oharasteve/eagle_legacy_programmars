@@ -6,7 +6,6 @@ package com.eagle.programmar.Perl.Statements;
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
-import com.eagle.programmar.Perl.Statements.Perl_PrintStatement.Perl_PrintWhat.Perl_PrintNormal;
 import com.eagle.programmar.Perl.Symbols.Perl_Variable_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Literal;
@@ -24,17 +23,20 @@ public class Perl_PrintStatement extends TokenSequence implements EagleRunnable,
 	
 	public static class Perl_PrintWhat extends TokenChooser
 	{
-		public @FIRST static class Perl_PrintRedirectInput extends TokenSequence
-		{
-			public @S(10) Perl_Variable_Definition id;
-			public @S(20) Perl_Literal multiline;   // With << or <<< to redirect stdin
-		}
+		public @FIRST Perl_PrintRedirectInput redirectInput;
+		public @CHOICE Perl_PrintNormal printNormal;
+	}
 
-		public @CHOICE static class Perl_PrintNormal extends TokenSequence
-		{
-			public @S(10) SeparatedList<Perl_Expression, PunctuationComma> strings;
-			public @S(20) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
-		}
+	public static class Perl_PrintRedirectInput extends TokenSequence
+	{
+		public @S(10) Perl_Variable_Definition id;
+		public @S(20) Perl_Literal multiline;   // With << or <<< to redirect stdin
+	}
+
+	public static class Perl_PrintNormal extends TokenSequence
+	{
+		public @S(10) SeparatedList<Perl_Expression, PunctuationComma> strings;
+		public @S(20) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	}
 	
 	@Override
