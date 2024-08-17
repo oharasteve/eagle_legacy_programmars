@@ -14,10 +14,10 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class Bash_LnCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword LN = new Bash_Keyword("ln");
-	public @S(20) @OPT TokenList<Bash_CpOption> options;
+	public @S(20) @OPT TokenList<Bash_LnOption> options;
 	public @S(30) TokenList<Bash_FilenameOrLiteral> files;
 
-	public static class Bash_CpOption extends TokenChooser
+	public static class Bash_LnOption extends TokenChooser
 	{
 		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-f", "-fs", "-s", "-sf");
 	}
