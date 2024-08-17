@@ -78,5 +78,4 @@ public class Perl_Statement extends TokenChooser
 		public @CHOICE Perl_TryStatement XXtryStatement;
 		public @CHOICE Perl_WhileStatement XXwhileStatement;
 	}
-
 }
