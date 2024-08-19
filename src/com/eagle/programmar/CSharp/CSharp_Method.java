@@ -34,7 +34,7 @@ public class CSharp_Method extends TokenSequence implements
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
-	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifier> modifiers;
 	public @S(40) @OPT TokenList<CSharp_Comment> comment2;
 	public @S(50) CSharp_Type returnType;
 	public @S(60) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
@@ -55,7 +55,7 @@ public class CSharp_Method extends TokenSequence implements
 		public @S(50) @OPT CSharp_Comment comment3;
 	}
 
-	public static class CSharp_MethodModifiers extends TokenSequence
+	public static class CSharp_MethodModifier extends TokenSequence
 	{
 		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodModifiers;
+import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodModifier;
 import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodParameter;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
@@ -16,7 +16,7 @@ public class CSharp_SubscriptOperator extends TokenSequence
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
-	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifier> modifiers;
 	public @S(40) CSharp_Type returnType;
 	public @S(50) CSharp_Keyword THIS = new CSharp_Keyword("this");
 	public @S(60) PunctuationLeftBracket leftBracket;
