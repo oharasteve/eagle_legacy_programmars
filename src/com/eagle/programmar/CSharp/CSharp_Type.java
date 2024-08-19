@@ -41,6 +41,11 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	// Delay finding this one until after looking for [] and <>
 	public static class CSharp_TypeName extends TokenChooser
 	{
+		public @FIRST CSharp_KeywordChoice XXprimitive = new CSharp_KeywordChoice(
+				"auto", "bool", "boolean", "byte", "char", "class", "decimal", "double",
+				"float", "int", "long", "object", "sbyte", "short", "string", "String",
+				"ulong", "ushort", "void");
+
 		public @CHOICE static class CSharp_IdList extends TokenSequence
 		{
 			public @S(10) @OPT CSharp_NamespaceId namespaceId;
@@ -61,11 +66,6 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 				public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
 			}
 		}
-
-		public @CHOICE CSharp_KeywordChoice XXprimitive = new CSharp_KeywordChoice(
-				"auto", "bool", "boolean", "byte", "char", "class", "decimal", "double",
-				"float", "int", "long", "object", "sbyte", "short", "string", "String",
-				"ulong", "ushort", "void");
 
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{
