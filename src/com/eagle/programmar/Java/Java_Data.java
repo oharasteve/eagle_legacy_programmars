@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -37,9 +38,9 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 		public @S(20) PunctuationRightBracket rightBracket;
 	}
 
-	public static class Java_DataModifier extends TokenSequence
+	public static class Java_DataModifier extends TokenChooser
 	{
-		public @S(10) Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 	}
 
 	public static class Java_DataInitialValue extends TokenSequence implements EagleRunnable

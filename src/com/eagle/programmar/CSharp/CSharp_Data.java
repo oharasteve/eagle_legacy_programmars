@@ -28,7 +28,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		public @S(10) @OPT TokenList<CSharp_Annotation> annotation1;
 		public @S(20) @OPT TokenList<CSharp_DataModifier> modifiers;
 		public @S(30) @OPT TokenList<CSharp_Annotation> annotation2;
-		public @S(40) CSharp_Type jtype;
+		public @S(40) CSharp_Type type;
 		public @S(50) CSharp_Variable_Definition id;
 		public @S(60) @OPT PunctuationLeftBracket leftBracket;
 		public @S(70) @OPT PunctuationRightBracket rightBracket;
