@@ -23,8 +23,8 @@ public class Perl_PrintStatement extends TokenSequence implements EagleRunnable,
 	
 	public static class Perl_PrintWhat extends TokenChooser
 	{
-		public @FIRST Perl_PrintRedirectInput redirectInput;
-		public @CHOICE Perl_PrintNormal printNormal;
+		public @FIRST Perl_PrintRedirectInput XXredirectInput;
+		public @CHOICE Perl_PrintNormal XXprintNormal;
 	}
 
 	public static class Perl_PrintRedirectInput extends TokenSequence

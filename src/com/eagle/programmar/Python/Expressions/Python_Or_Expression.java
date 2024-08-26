@@ -22,8 +22,8 @@ public class Python_Or_Expression extends PrecedenceOperator implements EagleRun
 	
 	public static class Python_Or_Operation extends TokenChooser
 	{
-		public @CHOICE Python_Keyword OR = new Python_Keyword("or");
-		public @CHOICE Python_Punctuation caret = new Python_Punctuation("^");
+		public @CHOICE Python_Keyword XXOR = new Python_Keyword("or");
+		public @CHOICE Python_Punctuation XXcaret = new Python_Punctuation("^");
 	}
 
 	@Override

@@ -40,7 +40,7 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 
 	public static class Java_DataModifier extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @CHOICE Java_KeywordChoice XXmodifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 	}
 
 	public static class Java_DataInitialValue extends TokenSequence implements EagleRunnable
