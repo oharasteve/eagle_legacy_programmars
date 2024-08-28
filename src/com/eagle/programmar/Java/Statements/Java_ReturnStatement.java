@@ -21,9 +21,11 @@ public class Java_ReturnStatement extends TokenSequence implements EagleRunnable
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(expression);
-		interpreter.pushEagleValue(val);
-		
+		if (expression != null && expression.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(expression);
+			interpreter.pushEagleValue(val);
+		}
 		return Eagle_Statement_Result.RETURN;
 	}
 }

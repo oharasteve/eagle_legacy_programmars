@@ -44,8 +44,6 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 	public @S(110) @OPT Java_Comment comment;
 	public @S(120) Java_Statement action;
 
-	private @SKIP ForLoopMetrics _metrics = null;
-
 	public static class Java_ForInit extends TokenSequence
 	{
 		public @S(10) @OPT Java_Keyword FINAL = new Java_Keyword("final");
@@ -62,14 +60,16 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 	{
 		public @S(10) Java_Type varType;
 		public @S(20) Java_Variable_Definition variable;
-		public @S(30) @OPT JavaForTypeInit equalsInit;
+		public @S(30) @OPT Java_ForTypeInit equalsInit;
 		
-		public static class JavaForTypeInit extends TokenSequence
+		public static class Java_ForTypeInit extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
 			public @S(20) Java_Expression initialExpr;
 		}
 	}
+
+	private @SKIP ForLoopMetrics _metrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
 

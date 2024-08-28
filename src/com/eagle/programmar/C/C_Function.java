@@ -47,8 +47,6 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	public @S(110) @OPT C_Keyword CONST = new C_Keyword("const");
 	public @S(120) C_FunctionBody body;
 
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class C_FunctionTypeName extends TokenChooser
 	{
 		public @CHOICE C_Keyword XXMAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
@@ -172,6 +170,8 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
+	public @SKIP CallMetrics _metrics = null;
+
 	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -210,7 +210,6 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 					}
 				}
 				interpreter.completedFunction("main", this);
-				
 			}
 		}
 	}

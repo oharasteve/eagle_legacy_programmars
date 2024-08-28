@@ -80,6 +80,8 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 						"Function " + fnName + ", expected params = " + expected + ", but actual args = " + actual);
 			}
 
+			interpreter.callingFunction(fnName, func);
+
 			// Assign all the parameters
 			if (argList != null)
 			{
@@ -94,14 +96,13 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 					}
 	
 					EagleValue val = interpreter.getEagleValue(arg);
-					interpreter.setSymbol(param, param.id.getValue(), val);
+					interpreter.setSymbol(param.id, param.id.getValue(), val);
 				}
 			}
 
 			// Evaluate the function
 			long startTime = System.nanoTime();
 			
-			interpreter.callingFunction(fnName, func);
 			C_FunctionImplementation impl = (C_FunctionImplementation) func.body.getWhich();
 			for (C_StatementOrComment stmt : impl.elements._elements)
 			{

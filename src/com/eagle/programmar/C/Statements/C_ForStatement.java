@@ -5,15 +5,20 @@ package com.eagle.programmar.C.Statements;
 
 import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.C.C_Assignment;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Statement;
+import com.eagle.programmar.C.C_Syntax;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.C_Variable;
+import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -21,17 +26,16 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class C_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
 	public @S(20) C_ForLoopBody body;
 	public @S(30) C_Statement action;
-
-	private @SKIP ForLoopMetrics _metrics = null;
 
 	public static class C_ForLoopBody extends TokenChooser
 	{
@@ -56,8 +60,8 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 
 		public static class C_ForLoopVariable extends TokenChooser
 		{
-			public @FIRST C_ForLoopVariableWithType XXwithType;
-			public @CHOICE C_ForLoopVariableNoType XXnoType;
+			public @CHOICE C_Expression XXexpr;
+			public @FIRST C_ForWithType XXforWithType;
 		}
 
 		public static class C_MoreLoopIncrements extends TokenSequence
@@ -78,15 +82,32 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 		public @S(70) PunctuationRightParen rightParen;
 	}
 
-	public static class C_ForLoopVariableWithType extends TokenSequence
+	public static class C_ForWithType extends TokenSequence
 	{
 		public @S(10) C_Type varType;
-		public @S(20) C_Assignment assignment;
+		public @S(20) C_Variable_Definition variable;
+		public @S(30) @OPT C_ForTypeInit equalsInit;
+		
+		public static class C_ForTypeInit extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) C_Expression initialExpr;
+		}
 	}
 
 	public static class C_ForLoopVariableNoType extends TokenSequence
 	{
 		public @S(10) C_Assignment assignment;
+	}
+
+	private @SKIP ForLoopMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 
 	@Override
@@ -98,20 +119,22 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 
 			AbstractToken which = what.loopVar.getWhich();
 			C_Assignment asg;
-			if (which instanceof C_ForLoopVariableWithType)
+			if (which instanceof C_ForWithType)
 			{
-				C_ForLoopVariableWithType token = (C_ForLoopVariableWithType) which;
-				asg = token.assignment;
+				C_ForWithType whatforWith = (C_ForWithType) which;
+				EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
+				interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
 			}
 			else if (which instanceof C_ForLoopVariableNoType)
 			{
 				C_ForLoopVariableNoType token = (C_ForLoopVariableNoType) which;
 				asg = token.assignment;
+				interpreter.tryToInterpret(asg);
 			}
 			else
+			{
 				throw new RuntimeException("Cannot handle " + which);
-
-			interpreter.tryToInterpret(asg);
+			}
 
 			if (_metrics == null)
 			{
