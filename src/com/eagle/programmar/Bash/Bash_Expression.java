@@ -73,10 +73,10 @@ public class Bash_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Bash_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) Bash_AdditiveExpression additiveExpression;
-	public @P(520) Bash_Relational_Expression relational_Expression;
-	public @P(530) Bash_LogicalAnd_Expression logicalAnd_Expression;
-	public @P(540) Bash_LogicalOr_Expression logicalOr_Expression;
-	public @P(550) Bash_Assignment_Expression assignment_Expression;
+	public @P(1000) Bash_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) Bash_AdditiveExpression additiveExpression;
+	public @P(1020) Bash_Relational_Expression relational_Expression;
+	public @P(1030) Bash_LogicalAnd_Expression logicalAnd_Expression;
+	public @P(1040) Bash_LogicalOr_Expression logicalOr_Expression;
+	public @P(1050) Bash_Assignment_Expression assignment_Expression;
 }

@@ -77,13 +77,13 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) COBOL_ThroughExpression throughExpression;
-	public @P(510) COBOL_ConcatenateExpression concatenateExpression;
-	public @P(520) COBOL_ExponentExpression exponentExpression;
-	public @P(530) COBOL_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) COBOL_AdditiveExpression additiveExpression;
-	public @P(550) COBOL_RelationCondition relationCondition;
-	public @P(560) COBOL_AndCondition andCondition;
-	public @P(570) COBOL_OrCondition orCondition;
-	public @P(580) COBOL_IsType isType;
+	public @P(1000) COBOL_ThroughExpression throughExpression;
+	public @P(1010) COBOL_ConcatenateExpression concatenateExpression;
+	public @P(1020) COBOL_ExponentExpression exponentExpression;
+	public @P(1030) COBOL_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) COBOL_AdditiveExpression additiveExpression;
+	public @P(1050) COBOL_RelationCondition relationCondition;
+	public @P(1060) COBOL_AndCondition andCondition;
+	public @P(1070) COBOL_OrCondition orCondition;
+	public @P(1080) COBOL_IsType isType;
 }

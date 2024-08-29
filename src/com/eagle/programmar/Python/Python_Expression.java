@@ -105,21 +105,21 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) Python_SubscriptExpression subscriptExpression;
-	public @P(510) Python_Upper_Method upperMethod;
-	public @P(520) Python_Subfield subfield;
-	public @P(530) Python_Power_Expression powerExpression;
-	public @P(540) Python_Multiplicative_Expression multiplicativeExpression;
-	public @P(550) Python_Additive_Expression additiveExpression;
-	public @P(560) Python_Shift_Expression shiftExpression;
-	public @P(570) Python_Bitwise_And_Expression bitwiseAndExpression;
-	public @P(580) Python_Bitwise_Xor_Expression bitwiseXorExpression;
-	public @P(590) Python_Bitwise_Or_Expression bitwiseOrExpression;
-	public @P(600) Python_Relational_Expression relationalExpression;
-	public @P(610) Python_And_Expression andExpression;
-	public @P(620) Python_Or_Expression orExpression;
-	public @P(630) Python_For_In_Expression forInExpression;
-	public @P(640) Python_If_Else_Expression ifElseExpression;
-	public @P(650) Python_If_Expression ifExpression;
-	public @P(660) Python_Assignment_Expression assignmentExpression;
+	public @P(1000) Python_SubscriptExpression subscriptExpression;
+	public @P(1010) Python_Upper_Method upperMethod;
+	public @P(1020) Python_Subfield subfield;
+	public @P(1030) Python_Power_Expression powerExpression;
+	public @P(1040) Python_Multiplicative_Expression multiplicativeExpression;
+	public @P(1050) Python_Additive_Expression additiveExpression;
+	public @P(1060) Python_Shift_Expression shiftExpression;
+	public @P(1070) Python_Bitwise_And_Expression bitwiseAndExpression;
+	public @P(1080) Python_Bitwise_Xor_Expression bitwiseXorExpression;
+	public @P(1090) Python_Bitwise_Or_Expression bitwiseOrExpression;
+	public @P(1100) Python_Relational_Expression relationalExpression;
+	public @P(1110) Python_And_Expression andExpression;
+	public @P(1120) Python_Or_Expression orExpression;
+	public @P(1130) Python_For_In_Expression forInExpression;
+	public @P(1140) Python_If_Else_Expression ifElseExpression;
+	public @P(1150) Python_If_Expression ifExpression;
+	public @P(1160) Python_Assignment_Expression assignmentExpression;
 }

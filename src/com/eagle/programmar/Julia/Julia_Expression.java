@@ -80,14 +80,14 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Julia_SubscriptExpression subscriptExpression;
-	public @P(510) Julia_Subfield subfield;
-	public @P(520) Julia_MultiplicativeExpression multiplicativeExpression;
-	public @P(530) Julia_AdditiveExpression additiveExpression;
-	public @P(540) Julia_RelationalExpression relationalExpression;
-	public @P(550) Julia_EqualityExpression equalityExpression;
-	public @P(560) Julia_ConditionalAndExpression conditionalAndExpression;
-	public @P(570) Julia_ConditionalOrExpression conditionalOrExpression;
-	public @P(580) Julia_AssignmentExpression assignmentExpression;
-	public @P(590) Julia_RangeExpression rangeExpression;
+	public @P(1000) Julia_SubscriptExpression subscriptExpression;
+	public @P(1010) Julia_Subfield subfield;
+	public @P(1020) Julia_MultiplicativeExpression multiplicativeExpression;
+	public @P(1030) Julia_AdditiveExpression additiveExpression;
+	public @P(1040) Julia_RelationalExpression relationalExpression;
+	public @P(1050) Julia_EqualityExpression equalityExpression;
+	public @P(1060) Julia_ConditionalAndExpression conditionalAndExpression;
+	public @P(1070) Julia_ConditionalOrExpression conditionalOrExpression;
+	public @P(1080) Julia_AssignmentExpression assignmentExpression;
+	public @P(1090) Julia_RangeExpression rangeExpression;
 }

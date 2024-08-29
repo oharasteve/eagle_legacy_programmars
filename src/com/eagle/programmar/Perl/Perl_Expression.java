@@ -133,24 +133,24 @@ public class Perl_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Perl_SubscriptExpression subscriptExpression;
-	public @P(510) Perl_DotExpression dotExpression;
-	public @P(520) Perl_ColonColonExpression colonColonExpression;
-	public @P(530) Perl_ArrowExpression arrowExpression;
-	public @P(540) Perl_MapExpression mapExpression;
-	public @P(550) Perl_PowerExpression powerExpression;
-	public @P(560) Perl_MultiplicativeExpression multiplicativeExpression;
-	public @P(570) Perl_AdditiveExpression additiveExpression;
-	public @P(580) Perl_ShiftExpression shiftExpression;
-	public @P(590) Perl_RelationalExpression relationalExpression;
-	public @P(600) Perl_RegExTest regExTest;
-	public @P(610) Perl_InstanceOfExpression instanceOfExpression;
-	public @P(620) Perl_EqualityExpression equalityExpression;
-	public @P(630) Perl_AndExpression andExpression;
-	public @P(640) Perl_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(650) Perl_InclusiveOrExpression inclusiveOrExpression;
-	public @P(660) Perl_ConditionalAndExpression conditionalAndExpression;
-	public @P(670) Perl_ConditionalOrExpression conditionalOrExpression;
-	public @P(680) Perl_TrueFalseExpression trueFalseExpression;
-	public @P(690) Perl_AssignmentExpression assignmentExpression;
+	public @P(1000) Perl_SubscriptExpression subscriptExpression;
+	public @P(1010) Perl_DotExpression dotExpression;
+	public @P(1020) Perl_ColonColonExpression colonColonExpression;
+	public @P(1030) Perl_ArrowExpression arrowExpression;
+	public @P(1040) Perl_MapExpression mapExpression;
+	public @P(1050) Perl_PowerExpression powerExpression;
+	public @P(1060) Perl_MultiplicativeExpression multiplicativeExpression;
+	public @P(1070) Perl_AdditiveExpression additiveExpression;
+	public @P(1080) Perl_ShiftExpression shiftExpression;
+	public @P(1090) Perl_RelationalExpression relationalExpression;
+	public @P(1100) Perl_RegExTest regExTest;
+	public @P(1110) Perl_InstanceOfExpression instanceOfExpression;
+	public @P(1120) Perl_EqualityExpression equalityExpression;
+	public @P(1130) Perl_AndExpression andExpression;
+	public @P(1140) Perl_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(1150) Perl_InclusiveOrExpression inclusiveOrExpression;
+	public @P(1160) Perl_ConditionalAndExpression conditionalAndExpression;
+	public @P(1170) Perl_ConditionalOrExpression conditionalOrExpression;
+	public @P(1180) Perl_TrueFalseExpression trueFalseExpression;
+	public @P(1190) Perl_AssignmentExpression assignmentExpression;
 }

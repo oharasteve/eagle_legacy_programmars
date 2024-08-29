@@ -24,7 +24,7 @@ public class IntelASM_Expression extends PrecedenceChooser
 	public @P(20) IntelASM_Number number;
 	public @P(30) IntelASM_Literal literal;
 	public @P(40) IntelASM_Register register;
-	public @P(50) IntelASM_Identifier_Reference var;
+	public @P(100) IntelASM_Identifier_Reference var;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator
@@ -70,14 +70,14 @@ public class IntelASM_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class IntelASM_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(1000) class IntelASM_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) IntelASM_Expression left = new IntelASM_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) IntelASM_PunctuationChoice operator = new IntelASM_PunctuationChoice("*");
 		public @S(30) IntelASM_Expression right = new IntelASM_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(510) class IntelASM_AdditiveExpression extends PrecedenceOperator
+	public static @P(1010) class IntelASM_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) IntelASM_Expression left = new IntelASM_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) IntelASM_PunctuationChoice operator = new IntelASM_PunctuationChoice("+", "-");

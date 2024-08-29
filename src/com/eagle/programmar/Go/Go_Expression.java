@@ -86,12 +86,12 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Go_SubscriptExpression subscriptExpression;
-	public @P(510) Go_MultiplicativeExpression multiplicativeExpression;
-	public @P(520) Go_AdditiveExpression additiveExpression;
-	public @P(530) Go_RelationalExpression relationalExpression;
-	public @P(540) Go_EqualityExpression equalityExpression;
-	public @P(550) Go_ConditionalAndExpression conditionalAndExpression;
-	public @P(560) Go_ConditionalOrExpression conditionalOrExpression;
-	public @P(570) Go_AssignmentExpression assignmentExpression;
+	public @P(1000) Go_SubscriptExpression subscriptExpression;
+	public @P(1010) Go_MultiplicativeExpression multiplicativeExpression;
+	public @P(1020) Go_AdditiveExpression additiveExpression;
+	public @P(1030) Go_RelationalExpression relationalExpression;
+	public @P(1040) Go_EqualityExpression equalityExpression;
+	public @P(1050) Go_ConditionalAndExpression conditionalAndExpression;
+	public @P(1060) Go_ConditionalOrExpression conditionalOrExpression;
+	public @P(1070) Go_AssignmentExpression assignmentExpression;
 }

@@ -126,21 +126,21 @@ public class C_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) C_SubscriptExpression subscriptExpression;
-	public @P(510) C_DotSubfield dotSubfield;
-	public @P(520) C_ArrowSubfield arrowSubfield;
-	public @P(530) C_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) C_AdditiveExpression additiveExpression;
-	public @P(550) C_ShiftExpression shiftExpression;
-	public @P(560) C_RelationalExpression relationalExpression;
-	public @P(570) C_EqualityExpression equalityExpression;
-	public @P(580) C_BitwiseAndExpression bitwiseAndExpression;
-	public @P(590) C_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(600) C_BitwiseOrExpression bitwiseOrExpression;
-	public @P(610) C_ConditionalAndExpression conditionalAndExpression;
-	public @P(620) C_ConditionalOrExpression conditionalOrExpression;
-	public @P(630) C_TrueFalseExpression trueFalseExpression;
-	public @P(640) C_AssignmentExpression assignmentExpression;
+	public @P(1000) C_SubscriptExpression subscriptExpression;
+	public @P(1010) C_DotSubfield dotSubfield;
+	public @P(1020) C_ArrowSubfield arrowSubfield;
+	public @P(1030) C_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) C_AdditiveExpression additiveExpression;
+	public @P(1050) C_ShiftExpression shiftExpression;
+	public @P(1060) C_RelationalExpression relationalExpression;
+	public @P(1070) C_EqualityExpression equalityExpression;
+	public @P(1080) C_BitwiseAndExpression bitwiseAndExpression;
+	public @P(1090) C_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(1100) C_BitwiseOrExpression bitwiseOrExpression;
+	public @P(1110) C_ConditionalAndExpression conditionalAndExpression;
+	public @P(1120) C_ConditionalOrExpression conditionalOrExpression;
+	public @P(1130) C_TrueFalseExpression trueFalseExpression;
+	public @P(1140) C_AssignmentExpression assignmentExpression;
 
 	//
 	// Not easy to have CPlus_Expression extend C_Expression.

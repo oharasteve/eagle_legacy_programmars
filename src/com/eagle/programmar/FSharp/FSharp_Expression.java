@@ -65,13 +65,13 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) FSharp_SubscriptExpression subscriptExpression;
-	public @P(510) FSharp_StartsWithFunction startswithFunction;
-	public @P(520) FSharp_LengthFunction lengthFunction;
-	public @P(530) FSharp_Subfield subfield;
-	public @P(540) FSharp_Multiplicative_Expression multiplicative_Expression;
-	public @P(550) FSharp_Additive_Expression additive_Expression;
-	public @P(560) FSharp_Relational_Expression relational_Expression;
-	public @P(570) FSharp_And_Expression and_Expression;
-	public @P(580) FSharp_Or_Expression or_Expression;
+	public @P(1000) FSharp_SubscriptExpression subscriptExpression;
+	public @P(1010) FSharp_StartsWithFunction startswithFunction;
+	public @P(1020) FSharp_LengthFunction lengthFunction;
+	public @P(1030) FSharp_Subfield subfield;
+	public @P(1040) FSharp_Multiplicative_Expression multiplicative_Expression;
+	public @P(1050) FSharp_Additive_Expression additive_Expression;
+	public @P(1060) FSharp_Relational_Expression relational_Expression;
+	public @P(1070) FSharp_And_Expression and_Expression;
+	public @P(1080) FSharp_Or_Expression or_Expression;
 }

@@ -51,6 +51,6 @@ public class Bash_Condition extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Bash_LogicalAndCondition logicalAndCondition;
-	public @P(510) Bash_LogicalOrCondition logicalOrCondition;
+	public @P(1000) Bash_LogicalAndCondition logicalAndCondition;
+	public @P(1010) Bash_LogicalOrCondition logicalOrCondition;
 }

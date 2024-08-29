@@ -62,11 +62,11 @@ public class Django_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Django_SubscriptExpression subscriptExpression;
-	public @P(510) Django_BarExpression barExpression;
-	public @P(520) Django_EqualityExpression equalityExpression;
-	public @P(530) Django_FormatExpression formatExpression;
-	public @P(540) Django_InExpression inExpression;
-	public @P(550) Django_AndExpression andExpression;
-	public @P(560) Django_OrExpression orExpression;
+	public @P(1000) Django_SubscriptExpression subscriptExpression;
+	public @P(1010) Django_BarExpression barExpression;
+	public @P(1020) Django_EqualityExpression equalityExpression;
+	public @P(1030) Django_FormatExpression formatExpression;
+	public @P(1040) Django_InExpression inExpression;
+	public @P(1050) Django_AndExpression andExpression;
+	public @P(1060) Django_OrExpression orExpression;
 }

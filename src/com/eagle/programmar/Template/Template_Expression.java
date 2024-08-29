@@ -55,9 +55,9 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) Template_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) Template_AdditiveExpression additiveExpression;
-	public @P(520) Template_RelationalExpression relationalExpression;
-	public @P(530) Template_AndExpression andExpression;
-	public @P(540) Template_OrExpression orExpression;
+	public @P(1000) Template_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) Template_AdditiveExpression additiveExpression;
+	public @P(1020) Template_RelationalExpression relationalExpression;
+	public @P(1030) Template_AndExpression andExpression;
+	public @P(1040) Template_OrExpression orExpression;
 }

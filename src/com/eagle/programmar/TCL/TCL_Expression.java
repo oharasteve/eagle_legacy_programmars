@@ -66,9 +66,9 @@ public class TCL_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) TCL_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) TCL_AdditiveExpression additiveExpression;
-	public @P(520) TCL_RelationalExpression relationalExpression;
-	public @P(530) TCL_ConditionalAndExpression conditionalAndExpression;
-	public @P(540) TCL_ConditionalOrExpression conditionalOrExpression;
+	public @P(1000) TCL_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) TCL_AdditiveExpression additiveExpression;
+	public @P(1020) TCL_RelationalExpression relationalExpression;
+	public @P(1030) TCL_ConditionalAndExpression conditionalAndExpression;
+	public @P(1040) TCL_ConditionalOrExpression conditionalOrExpression;
 }

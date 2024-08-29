@@ -138,21 +138,21 @@ public class Javascript_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Javascript_SubscriptExpression subscriptExpression;
-	public @P(510) Javascript_Subfield subfield;
-	public @P(520) Javascript_Power_Expression power_Expression;
-	public @P(530) Javascript_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) Javascript_AdditiveExpression additiveExpression;
-	public @P(550) Javascript_ShiftExpression shiftExpression;
-	public @P(560) Javascript_RelationalExpression relationalExpression;
-	public @P(570) Javascript_InstanceOfExpression instanceOfExpression;
-	public @P(580) Javascript_InExpression inExpression;
-	public @P(590) Javascript_EqualityExpression equalityExpression;
-	public @P(600) Javascript_AndExpression andExpression;
-	public @P(610) Javascript_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(620) Javascript_InclusiveOrExpression inclusiveOrExpression;
-	public @P(630) Javascript_ConditionalAndExpression conditionalAndExpression;
-	public @P(640) Javascript_ConditionalOrExpression conditionalOrExpression;
-	public @P(650) Javascript_TrueFalseExpression trueFalseExpression;
-	public @P(660) Javascript_AssignmentExpression assignmentExpression;
+	public @P(1000) Javascript_SubscriptExpression subscriptExpression;
+	public @P(1010) Javascript_Subfield subfield;
+	public @P(1020) Javascript_Power_Expression power_Expression;
+	public @P(1030) Javascript_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) Javascript_AdditiveExpression additiveExpression;
+	public @P(1050) Javascript_ShiftExpression shiftExpression;
+	public @P(1060) Javascript_RelationalExpression relationalExpression;
+	public @P(1070) Javascript_InstanceOfExpression instanceOfExpression;
+	public @P(1080) Javascript_InExpression inExpression;
+	public @P(1090) Javascript_EqualityExpression equalityExpression;
+	public @P(1100) Javascript_AndExpression andExpression;
+	public @P(1110) Javascript_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(1120) Javascript_InclusiveOrExpression inclusiveOrExpression;
+	public @P(1130) Javascript_ConditionalAndExpression conditionalAndExpression;
+	public @P(1140) Javascript_ConditionalOrExpression conditionalOrExpression;
+	public @P(1150) Javascript_TrueFalseExpression trueFalseExpression;
+	public @P(1160) Javascript_AssignmentExpression assignmentExpression;
 }

@@ -54,6 +54,6 @@ public class Natural_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Natural_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) Natural_AdditiveExpression additiveExpression;
+	public @P(1000) Natural_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) Natural_AdditiveExpression additiveExpression;
 }

@@ -79,13 +79,13 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Ada_Subfield subfield;
-	public @P(510) Ada_MultiplicativeExpression multiplicativeExpression;
-	public @P(520) Ada_AdditiveExpression additiveExpression;
-	public @P(530) Ada_RelationalExpression relationalExpression;
-	public @P(540) Ada_EqualityExpression equalityExpression;
-	public @P(550) Ada_ConditionalAndExpression conditionalAndExpression;
-	public @P(560) Ada_ConditionalOrExpression conditionalOrExpression;
-	public @P(570) Ada_AssignmentExpression assignmentExpression;
-	public @P(580) Ada_RangeExpression rangeExpression;
+	public @P(1000) Ada_Subfield subfield;
+	public @P(1010) Ada_MultiplicativeExpression multiplicativeExpression;
+	public @P(1020) Ada_AdditiveExpression additiveExpression;
+	public @P(1030) Ada_RelationalExpression relationalExpression;
+	public @P(1040) Ada_EqualityExpression equalityExpression;
+	public @P(1050) Ada_ConditionalAndExpression conditionalAndExpression;
+	public @P(1060) Ada_ConditionalOrExpression conditionalOrExpression;
+	public @P(1070) Ada_AssignmentExpression assignmentExpression;
+	public @P(1080) Ada_RangeExpression rangeExpression;
 }

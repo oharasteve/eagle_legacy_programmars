@@ -101,16 +101,16 @@ public class Powershell_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) Powershell_SubfieldExpression subfieldExpression;
-	public @P(510) Powershell_SubscriptExpression subscriptExpression;
-	public @P(520) Powershell_Multiplicative_Expression multiplicative_Expression;
-	public @P(530) Powershell_Additive_Expression additive_Expression;
-	public @P(540) Powershell_Relational_Expression relational_Expression;
-	public @P(550) Powershell_LogicalAnd_Expression logicalAnd_Expression;
-	public @P(560) Powershell_LogicalOr_Expression logicalOr_Expression;
-	public @P(570) Powershell_Match_Expression match_Expression;
-	public @P(580) Powershell_IsExpression isExpression;
-	public @P(590) Powershell_AssignmentExpression assignmentExpression;
-	public @P(600) Powershell_PipeExpression pipeExpression;
-	public @P(610) Powershell_RangeExpression rangeExpression;
+	public @P(1000) Powershell_SubfieldExpression subfieldExpression;
+	public @P(1010) Powershell_SubscriptExpression subscriptExpression;
+	public @P(1020) Powershell_Multiplicative_Expression multiplicative_Expression;
+	public @P(1030) Powershell_Additive_Expression additive_Expression;
+	public @P(1040) Powershell_Relational_Expression relational_Expression;
+	public @P(1050) Powershell_LogicalAnd_Expression logicalAnd_Expression;
+	public @P(1060) Powershell_LogicalOr_Expression logicalOr_Expression;
+	public @P(1070) Powershell_Match_Expression match_Expression;
+	public @P(1080) Powershell_IsExpression isExpression;
+	public @P(1090) Powershell_AssignmentExpression assignmentExpression;
+	public @P(1100) Powershell_PipeExpression pipeExpression;
+	public @P(1110) Powershell_RangeExpression rangeExpression;
 }

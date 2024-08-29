@@ -60,7 +60,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(20) Rust_HexNumber hex;
 	public @P(30) Rust_Number number;
 	public @P(40) Rust_Literal literal;
-	public @P(50) Rust_Character_Literal characters;
+	public @P(100) Rust_Character_Literal characters;
 
 	///////////////////////////////////////////////
 	// Primary expressions
@@ -79,15 +79,15 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Rust_SubscriptExpression subscriptExpression;
-	public @P(510) Rust_BuiltinMethod builtinMethod;
-	public @P(520) Rust_Subfield subfield;
-	public @P(530) Rust_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) Rust_AdditiveExpression additiveExpression;
-	public @P(550) Rust_ShiftExpression shiftExpression;
-	public @P(560) Rust_RelationalExpression relationalExpression;
-	public @P(570) Rust_EqualityExpression equalityExpression;
-	public @P(580) Rust_ConditionalAndExpression conditionalAndExpression;
-	public @P(590) Rust_ConditionalOrExpression conditionalOrExpression;
-	public @P(600) Rust_DotDotExpression dotDotExpression;
+	public @P(1000) Rust_SubscriptExpression subscriptExpression;
+	public @P(1010) Rust_BuiltinMethod builtinMethod;
+	public @P(1020) Rust_Subfield subfield;
+	public @P(1030) Rust_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) Rust_AdditiveExpression additiveExpression;
+	public @P(1050) Rust_ShiftExpression shiftExpression;
+	public @P(1060) Rust_RelationalExpression relationalExpression;
+	public @P(1070) Rust_EqualityExpression equalityExpression;
+	public @P(1080) Rust_ConditionalAndExpression conditionalAndExpression;
+	public @P(1090) Rust_ConditionalOrExpression conditionalOrExpression;
+	public @P(1100) Rust_DotDotExpression dotDotExpression;
 }

@@ -63,11 +63,11 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Eaglish_SubscriptExpression subscrExpr;
-	public @P(510) Eaglish_MultiplicativeExpression multExpr;
-	public @P(520) Eaglish_AdditiveExpression addExpr;
-	public @P(530) Eaglish_RelationalExpression relExpr;
-	public @P(540) Eaglish_ConditionStringMatch matchExpr;
-	public @P(550) Eaglish_ConditionalAndExpression andExpr;
-	public @P(560) Eaglish_ConditionalOrExpression orExpr;
+	public @P(1000) Eaglish_SubscriptExpression subscrExpr;
+	public @P(1010) Eaglish_MultiplicativeExpression multExpr;
+	public @P(1020) Eaglish_AdditiveExpression addExpr;
+	public @P(1030) Eaglish_RelationalExpression relExpr;
+	public @P(1040) Eaglish_ConditionStringMatch matchExpr;
+	public @P(1050) Eaglish_ConditionalAndExpression andExpr;
+	public @P(1060) Eaglish_ConditionalOrExpression orExpr;
 }

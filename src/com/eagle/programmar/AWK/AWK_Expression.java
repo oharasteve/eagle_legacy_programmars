@@ -87,14 +87,14 @@ public class AWK_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) AWK_SubscriptExpression subscriptExpression;
-	public @P(510) AWK_MultiplicativeExpression multiplicativeExpression;
-	public @P(520) AWK_AdditiveExpression additiveExpression;
-	public @P(530) AWK_RelationalExpression relationalExpression;
-	public @P(540) AWK_RegularExpression regularExpression;
-	public @P(550) AWK_InExpression inExpression;
-	public @P(560) AWK_AndExpression andExpression;
-	public @P(570) AWK_OrExpression orExpression;
-	public @P(580) AWK_TrueFalseExpression trueFalseExpression;
-	public @P(590) AWK_AssignmentExpression assignmentExpression;
+	public @P(1000) AWK_SubscriptExpression subscriptExpression;
+	public @P(1010) AWK_MultiplicativeExpression multiplicativeExpression;
+	public @P(1020) AWK_AdditiveExpression additiveExpression;
+	public @P(1030) AWK_RelationalExpression relationalExpression;
+	public @P(1040) AWK_RegularExpression regularExpression;
+	public @P(1050) AWK_InExpression inExpression;
+	public @P(1060) AWK_AndExpression andExpression;
+	public @P(1070) AWK_OrExpression orExpression;
+	public @P(1080) AWK_TrueFalseExpression trueFalseExpression;
+	public @P(1090) AWK_AssignmentExpression assignmentExpression;
 }

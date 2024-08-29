@@ -79,15 +79,15 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Scala_EqualsMethod equalsMethod;
-	public @P(510) Scala_LengthMethod lengthMethod;
-	public @P(520) Scala_StartsWithMethod startswithMethod;
-	public @P(530) Scala_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) Scala_AdditiveExpression additiveExpression;
-	public @P(550) Scala_RelationalExpression relationalExpression;
-	public @P(560) Scala_EqualityExpression equalityExpression;
-	public @P(570) Scala_ConditionalAndExpression conditionalAndExpression;
-	public @P(580) Scala_ConditionalOrExpression conditionalOrExpression;
-	public @P(590) Scala_AssignmentExpression assignmentExpression;
-	public @P(600) Scala_RangeExpression rangeExpression;
+	public @P(1000) Scala_EqualsMethod equalsMethod;
+	public @P(1010) Scala_LengthMethod lengthMethod;
+	public @P(1020) Scala_StartsWithMethod startswithMethod;
+	public @P(1030) Scala_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) Scala_AdditiveExpression additiveExpression;
+	public @P(1050) Scala_RelationalExpression relationalExpression;
+	public @P(1060) Scala_EqualityExpression equalityExpression;
+	public @P(1070) Scala_ConditionalAndExpression conditionalAndExpression;
+	public @P(1080) Scala_ConditionalOrExpression conditionalOrExpression;
+	public @P(1090) Scala_AssignmentExpression assignmentExpression;
+	public @P(1100) Scala_RangeExpression rangeExpression;
 }

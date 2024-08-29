@@ -79,9 +79,9 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) Delphi_Dot_Expression dotExpression;
-	public @P(510) Delphi_Multiplicative_Expression multiplicativeExpression;
-	public @P(520) Delphi_Additive_Expression additiveExpression;
-	public @P(530) Delphi_Relational_Expression relationalExpression;
-	public @P(540) Delphi_DotDot_Expression dotDotExpression;
+	public @P(1000) Delphi_Dot_Expression dotExpression;
+	public @P(1010) Delphi_Multiplicative_Expression multiplicativeExpression;
+	public @P(1020) Delphi_Additive_Expression additiveExpression;
+	public @P(1030) Delphi_Relational_Expression relationalExpression;
+	public @P(1040) Delphi_DotDot_Expression dotDotExpression;
 }

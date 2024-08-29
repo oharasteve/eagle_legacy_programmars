@@ -82,13 +82,13 @@ public class PLI_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) PLI_ExponentExpression exponentExpression;
-	public @P(510) PLI_MultiplicativeExpression multiplicativeExpression;
-	public @P(520) PLI_AdditiveExpression additiveExpression;
-	public @P(530) PLI_StrCatExpression strCatExpression;
-	public @P(540) PLI_RelationalExpression relationalExpression;
-	public @P(550) PLI_AndExpression andExpression;
-	public @P(560) PLI_OrExpression orExpression;
-	public @P(570) PLI_AndThenExpression andThenExpression;
-	public @P(580) PLI_OrElseExpression orElseExpression;
+	public @P(1000) PLI_ExponentExpression exponentExpression;
+	public @P(1010) PLI_MultiplicativeExpression multiplicativeExpression;
+	public @P(1020) PLI_AdditiveExpression additiveExpression;
+	public @P(1030) PLI_StrCatExpression strCatExpression;
+	public @P(1040) PLI_RelationalExpression relationalExpression;
+	public @P(1050) PLI_AndExpression andExpression;
+	public @P(1060) PLI_OrExpression orExpression;
+	public @P(1070) PLI_AndThenExpression andThenExpression;
+	public @P(1080) PLI_OrElseExpression orElseExpression;
 }

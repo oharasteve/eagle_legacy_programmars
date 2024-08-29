@@ -59,8 +59,8 @@ public class CMD_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions -- Missing in CMD_BasicExpression
 
-	public @P(500) CMD_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) CMD_AdditiveExpression additiveExpression;
-	public @P(520) CMD_RelationalExpression relationalExpression;
-	public @P(530) CMD_EqualityExpression equalityExpression;
+	public @P(1000) CMD_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) CMD_AdditiveExpression additiveExpression;
+	public @P(1020) CMD_RelationalExpression relationalExpression;
+	public @P(1030) CMD_EqualityExpression equalityExpression;
 }

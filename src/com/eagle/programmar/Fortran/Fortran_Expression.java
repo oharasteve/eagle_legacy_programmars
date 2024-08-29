@@ -71,11 +71,11 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Fortran_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) Fortran_AdditiveExpression additiveExpression;
-	public @P(520) Fortran_StringConcatenation stringConcatenation;
-	public @P(530) Fortran_RelationalExpression relationalExpression;
-	public @P(540) Fortran_EqualityExpression equalityExpression;
-	public @P(550) Fortran_ConditionalAndExpression conditionalAndExpression;
-	public @P(560) Fortran_ConditionalOrExpression conditionalOrExpression;
+	public @P(1000) Fortran_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) Fortran_AdditiveExpression additiveExpression;
+	public @P(1020) Fortran_StringConcatenation stringConcatenation;
+	public @P(1030) Fortran_RelationalExpression relationalExpression;
+	public @P(1040) Fortran_EqualityExpression equalityExpression;
+	public @P(1050) Fortran_ConditionalAndExpression conditionalAndExpression;
+	public @P(1060) Fortran_ConditionalOrExpression conditionalOrExpression;
 }

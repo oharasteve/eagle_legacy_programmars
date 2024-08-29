@@ -78,19 +78,19 @@ public class VB_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) VB_SubscriptExpression subscriptExpression;
-	public @P(510) VB_Subfield subfield;
-	public @P(520) VB_ExponentExpression exponentExpression;
-	public @P(530) VB_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) VB_AdditiveExpression additiveExpression;
-	public @P(550) VB_ConcatExpression concatExpression;
-	public @P(560) VB_ShiftExpression shiftExpression;
-	public @P(570) VB_RelationalExpression relationalExpression;
-	public @P(580) VB_InstanceOfExpression instanceOfExpression;
-	public @P(590) VB_EqualityExpression equalityExpression;
-	public @P(600) VB_AndExpression andExpression;
-	public @P(610) VB_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(620) VB_InclusiveOrExpression inclusiveOrExpression;
-	public @P(630) VB_ConditionalAndExpression conditionalAndExpression;
-	public @P(640) VB_ConditionalOrExpression conditionalOrExpression;
+	public @P(1000) VB_SubscriptExpression subscriptExpression;
+	public @P(1010) VB_Subfield subfield;
+	public @P(1020) VB_ExponentExpression exponentExpression;
+	public @P(1030) VB_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) VB_AdditiveExpression additiveExpression;
+	public @P(1050) VB_ConcatExpression concatExpression;
+	public @P(1060) VB_ShiftExpression shiftExpression;
+	public @P(1070) VB_RelationalExpression relationalExpression;
+	public @P(1080) VB_InstanceOfExpression instanceOfExpression;
+	public @P(1090) VB_EqualityExpression equalityExpression;
+	public @P(1100) VB_AndExpression andExpression;
+	public @P(1110) VB_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(1120) VB_InclusiveOrExpression inclusiveOrExpression;
+	public @P(1130) VB_ConditionalAndExpression conditionalAndExpression;
+	public @P(1140) VB_ConditionalOrExpression conditionalOrExpression;
 }

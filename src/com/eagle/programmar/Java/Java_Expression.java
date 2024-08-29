@@ -83,9 +83,9 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(20) Java_HexNumber hex;
 	public @P(30) Java_BinaryNumber binary;
 	public @P(40) Java_Number number;
-	public @P(50) Java_Literal literal;
-	public @P(60) Java_Character_Literal characters;
-	public @P(70) Java_Annotation annotation;
+	public @P(100) Java_Literal literal;
+	public @P(110) Java_Character_Literal characters;
+	public @P(120) Java_Annotation annotation;
 
 	///////////////////////////////////////////////
 	// Primary expressions
@@ -116,25 +116,25 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Java_SubscriptExpression subscriptExpression;
-	public @P(510) Java_EqualsMethod equalsMethod;
-	public @P(520) Java_ToUpperCaseMethod toUpperCaseMethod;
-	public @P(530) Java_LengthMethod lengthMethod;
-	public @P(540) Java_StartsWithMethod startsWithMethod;
-	public @P(550) Java_SubfieldExpression subfield;
-	public @P(560) Java_ColonColon colonColon;
-	public @P(570) Java_ColonColonNew colonColonNew;
-	public @P(580) Java_MultiplicativeExpression multiplicativeExpression;
-	public @P(590) Java_AdditiveExpression additiveExpression;
-	public @P(600) Java_ShiftExpression shiftExpression;
-	public @P(610) Java_RelationalExpression relationalExpression;
-	public @P(620) Java_InstanceOfExpression instanceOfExpression;
-	public @P(630) Java_EqualityExpression equalityExpression;
-	public @P(640) Java_AndExpression andExpression;
-	public @P(650) Java_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(660) Java_InclusiveOrExpression inclusiveOrExpression;
-	public @P(670) Java_ConditionalAndExpression conditionalAndExpression;
-	public @P(680) Java_ConditionalOrExpression conditionalOrExpression;
-	public @P(690) Java_AssignmentExpression assignmentExpression;
-	public @P(700) Java_TrueFalseExpression trueFalseExpression;
+	public @P(1000) Java_SubscriptExpression subscriptExpression;
+	public @P(1010) Java_EqualsMethod equalsMethod;
+	public @P(1020) Java_ToUpperCaseMethod toUpperCaseMethod;
+	public @P(1030) Java_LengthMethod lengthMethod;
+	public @P(1040) Java_StartsWithMethod startsWithMethod;
+	public @P(1050) Java_SubfieldExpression subfield;
+	public @P(1060) Java_ColonColon colonColon;
+	public @P(1070) Java_ColonColonNew colonColonNew;
+	public @P(1080) Java_MultiplicativeExpression multiplicativeExpression;
+	public @P(1090) Java_AdditiveExpression additiveExpression;
+	public @P(1100) Java_ShiftExpression shiftExpression;
+	public @P(1110) Java_RelationalExpression relationalExpression;
+	public @P(1120) Java_InstanceOfExpression instanceOfExpression;
+	public @P(1130) Java_EqualityExpression equalityExpression;
+	public @P(1140) Java_AndExpression andExpression;
+	public @P(1150) Java_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(1160) Java_InclusiveOrExpression inclusiveOrExpression;
+	public @P(1170) Java_ConditionalAndExpression conditionalAndExpression;
+	public @P(1180) Java_ConditionalOrExpression conditionalOrExpression;
+	public @P(1190) Java_AssignmentExpression assignmentExpression;
+	public @P(1200) Java_TrueFalseExpression trueFalseExpression;
 }
