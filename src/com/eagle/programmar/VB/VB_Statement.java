@@ -27,6 +27,7 @@ import com.eagle.programmar.VB.Statements.VB_PrintStatement;
 import com.eagle.programmar.VB.Statements.VB_SetStatement;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
 import com.eagle.programmar.VB.Statements.VB_VersionStatement;
+import com.eagle.programmar.VB.Statements.VB_WhileStatement;
 import com.eagle.programmar.VB.Statements.VB_WscriptEcho;
 import com.eagle.programmar.VB.Symbols.VB_Label_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
@@ -66,6 +67,7 @@ public class VB_Statement extends TokenSequence implements EagleRunnableWithResu
 		public @CHOICE VB_SetStatement XXsetStatement;
 		public @CHOICE VB_SubDeclaration XXsubDefinition;
 		public @CHOICE VB_VersionStatement XXversionStatement;
+		public @CHOICE VB_WhileStatement XXwhileStatement;
 		public @CHOICE VB_WscriptEcho XXwscriptEcho;
 
 		public @LAST VB_ExpressionStatement XXexpressionStatement;
