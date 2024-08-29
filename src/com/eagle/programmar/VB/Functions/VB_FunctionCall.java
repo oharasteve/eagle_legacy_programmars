@@ -65,6 +65,8 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		interpreter.callingFunction(name, func);
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -79,7 +81,6 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		long startTime = System.nanoTime();
 
 		// And transfer control to the method
-		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (VB_Statement stmt : func.stmts._elements)
 		{
@@ -89,7 +90,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		
 		// Need to put the result on the runtime stack
 		// VB uses the function name for the return value
-		// Sort-of like this: function sqrt(x) { sqrt = x*x }
+		// Sort-of like this: Function sqrt(x) ; sqrt = x*x ; End Function
 		EagleValue val = interpreter.findSymbol(name);
 		if (val != null)
 		{

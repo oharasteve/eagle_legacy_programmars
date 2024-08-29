@@ -11,6 +11,7 @@ import com.eagle.programmar.VB.Statements.VB_BeginStatement;
 import com.eagle.programmar.VB.Statements.VB_CallStatement;
 import com.eagle.programmar.VB.Statements.VB_CloseStatement;
 import com.eagle.programmar.VB.Statements.VB_DataDeclaration;
+import com.eagle.programmar.VB.Statements.VB_DoStatement;
 import com.eagle.programmar.VB.Statements.VB_ExitStatement;
 import com.eagle.programmar.VB.Statements.VB_ExpressionStatement;
 import com.eagle.programmar.VB.Statements.VB_ForEachStatement;
@@ -51,6 +52,7 @@ public class VB_Statement extends TokenSequence implements EagleRunnableWithResu
 		public @CHOICE VB_CloseStatement XXcloseStatement;
 		public @CHOICE VB_DataDeclaration XXdataDeclaration;
 		public @CHOICE VB_ExitStatement XXexitStatement;
+		public @CHOICE VB_DoStatement XXdoStatement;
 		public @CHOICE VB_ForStatement XXforStatement;
 		public @CHOICE VB_ForEachStatement XXforEachStatement;
 		public @CHOICE VB_FunctionDeclaration XXfunctionDefinition;

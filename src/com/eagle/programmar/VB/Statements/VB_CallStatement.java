@@ -47,13 +47,19 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		VB_SubDeclaration subr = (VB_SubDeclaration) func;
 
 		// Make sure the function args match up
-		int argCount = callArguments.args.getPrimaryCount();
+		int argCount = 0;
+		if (callArguments.args != null)
+		{
+			argCount = callArguments.args.getPrimaryCount();
+		}
 		int paramCount = subr.params.params.getPrimaryCount();
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
 					"Sub " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
+
+		interpreter.callingFunction(name, subr);
 
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
@@ -69,7 +75,6 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		long startTime = System.nanoTime();
 
 		// And transfer control to the method
-		interpreter.callingFunction(name, subr);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (VB_Statement stmt : subr.stmts._elements)
 		{

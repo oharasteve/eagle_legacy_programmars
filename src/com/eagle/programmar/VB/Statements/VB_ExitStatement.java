@@ -20,6 +20,7 @@ public class VB_ExitStatement extends TokenSequence implements AbstractStatement
 	{
 		switch (FOR.toString())
 		{
+		case "do":
 		case "for":
 			return Eagle_Statement_Result.BREAK;
 		case "function":
