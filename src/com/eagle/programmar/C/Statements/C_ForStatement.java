@@ -20,6 +20,7 @@ import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -46,7 +47,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 	public static class C_ForLoopStatement extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT C_ForLoopVariable loopVar;
+		public @S(20) @OPT SeparatedList<C_ForLoopVariable,PunctuationComma> loopVar;
 		public @S(30) @OPT C_Comment comment1;
 		public @S(40) PunctuationSemicolon semicolon1;
 		public @S(50) @OPT C_Expression terminateCondition;
@@ -117,7 +118,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 		{
 			C_ForLoopStatement what = (C_ForLoopStatement) body.getWhich();
 
-			AbstractToken which = what.loopVar.getWhich();
+			AbstractToken which = what.loopVar.first().getWhich();
 			C_Assignment asg;
 			if (which instanceof C_ForWithType)
 			{
