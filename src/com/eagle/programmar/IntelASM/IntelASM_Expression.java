@@ -24,7 +24,7 @@ public class IntelASM_Expression extends PrecedenceChooser
 	public @P(20) IntelASM_Number number;
 	public @P(30) IntelASM_Literal literal;
 	public @P(40) IntelASM_Register register;
-	public @P(100) IntelASM_Identifier_Reference var;
+	public @P(50) IntelASM_Identifier_Reference var;
 
 	//
 	// Note: All operators should stay in @P(#) order. This determines operator

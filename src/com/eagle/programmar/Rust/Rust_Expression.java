@@ -60,7 +60,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(20) Rust_HexNumber hex;
 	public @P(30) Rust_Number number;
 	public @P(40) Rust_Literal literal;
-	public @P(100) Rust_Character_Literal characters;
+	public @P(50) Rust_Character_Literal characters;
 
 	///////////////////////////////////////////////
 	// Primary expressions

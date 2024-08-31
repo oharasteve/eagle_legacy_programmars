@@ -24,6 +24,6 @@ public class Java_BuiltIn extends PrimaryOperator implements EagleRunnable
 			interpreter.pushBool(true);
 			return;
 		}
-		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
+		throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
 	}
 }

@@ -83,9 +83,9 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(20) Java_HexNumber hex;
 	public @P(30) Java_BinaryNumber binary;
 	public @P(40) Java_Number number;
-	public @P(100) Java_Literal literal;
-	public @P(110) Java_Character_Literal characters;
-	public @P(120) Java_Annotation annotation;
+	public @P(50) Java_Literal literal;
+	public @P(60) Java_Character_Literal characters;
+	public @P(70) Java_Annotation annotation;
 
 	///////////////////////////////////////////////
 	// Primary expressions
