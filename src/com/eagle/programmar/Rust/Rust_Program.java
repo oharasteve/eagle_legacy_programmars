@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;

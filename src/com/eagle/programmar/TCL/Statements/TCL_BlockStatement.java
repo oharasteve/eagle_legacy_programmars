@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.TCL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.TCL.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_EndOfLine;

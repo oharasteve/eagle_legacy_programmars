@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.TCL;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 
 public class TCL_Format
 {

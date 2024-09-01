@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.TCL;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.TCL.Statements.TCL_BlockStatement;
 import com.eagle.programmar.TCL.Symbols.TCL_Function_Definition;

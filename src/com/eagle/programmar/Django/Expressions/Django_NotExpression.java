@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Django.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Django.Django_Expression;
 import com.eagle.programmar.Django.Terminals.Django_Keyword;
 import com.eagle.tokens.PrimaryOperator;

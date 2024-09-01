@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Lisp.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;

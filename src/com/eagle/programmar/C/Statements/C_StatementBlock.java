@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.C.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.C_Syntax;
 import com.eagle.scope.EagleScope;

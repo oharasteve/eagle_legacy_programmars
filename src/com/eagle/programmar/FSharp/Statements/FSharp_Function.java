@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.FSharp.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.FSharp.FSharp_Statement;
 import com.eagle.programmar.FSharp.FSharp_Syntax;

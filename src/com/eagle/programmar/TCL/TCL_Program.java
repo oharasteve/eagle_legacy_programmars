@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.TCL;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Statement.TCL_BaseStatement;
 import com.eagle.tokens.TokenList;
 

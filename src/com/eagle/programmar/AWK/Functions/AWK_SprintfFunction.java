@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.AWK.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;

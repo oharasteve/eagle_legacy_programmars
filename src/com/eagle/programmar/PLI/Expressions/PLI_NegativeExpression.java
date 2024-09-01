@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.PLI.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;

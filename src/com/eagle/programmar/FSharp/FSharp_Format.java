@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.TokenList;
 
 public class FSharp_Format

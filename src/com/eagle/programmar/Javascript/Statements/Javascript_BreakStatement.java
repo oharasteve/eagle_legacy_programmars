@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Javascript.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.TokenSequence;

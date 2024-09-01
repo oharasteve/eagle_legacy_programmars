@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Rust.Rust_Statement.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;

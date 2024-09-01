@@ -3,15 +3,15 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Java_NotExpression extends PrimaryOperator implements EagleRunnable
+public class Java_BitwiseNotExpression extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Java_Punctuation notOperator = new Java_Punctuation('!');
+	public @S(10) Java_Punctuation logicalNotOperator = new Java_Punctuation('~');
 	public @S(20) Java_Expression expr;
 
 	@Override

@@ -5,8 +5,8 @@ package com.eagle.programmar.Delphi.Functions;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Delphi.Delphi_Argument_List;
 import com.eagle.programmar.Delphi.Delphi_Expression;

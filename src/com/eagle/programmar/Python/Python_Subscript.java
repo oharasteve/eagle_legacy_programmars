@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;

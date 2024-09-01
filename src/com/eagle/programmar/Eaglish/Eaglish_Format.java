@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Eaglish;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 
 public class Eaglish_Format
 {

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
 
 public class CMD_Format

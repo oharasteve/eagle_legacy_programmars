@@ -5,8 +5,8 @@ package com.eagle.programmar.Eaglish.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;

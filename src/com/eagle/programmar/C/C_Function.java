@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;

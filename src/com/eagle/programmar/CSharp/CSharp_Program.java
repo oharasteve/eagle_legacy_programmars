@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;

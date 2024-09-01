@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Type;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Definition;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;

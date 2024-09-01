@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.TCL.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Procedure;

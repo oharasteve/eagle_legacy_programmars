@@ -3,14 +3,20 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGeneratableExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_AdditiveExpression extends PrecedenceOperator implements EagleRunnable
+public class Java_AdditiveExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("+", "-");
@@ -50,5 +56,30 @@ public class Java_AdditiveExpression extends PrecedenceOperator implements Eagle
 				throw new RuntimeException("Unexpected additive operator: " + operator);
 			}
 		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		switch (operator.toString())
+		{
+		case "+":
+			return generator.newPlusExpression(leftExpr, rightExpr);
+		case "-":
+			return generator.newMinusExpression(leftExpr, rightExpr);
+		default:
+			throw new RuntimeException("Unexpected additive operator: " + operator);
+		}
+	}
+	
+	public static Java_AdditiveExpression generateExpression(AbstractExpression leftExpr, String oper, AbstractExpression rightExpr)
+	{
+		Java_AdditiveExpression expr = new Java_AdditiveExpression();
+		expr.left = (Java_Expression) leftExpr;
+		expr.right = (Java_Expression) rightExpr;
+		expr.operator.setValue(oper);
+		return expr;
 	}
 }

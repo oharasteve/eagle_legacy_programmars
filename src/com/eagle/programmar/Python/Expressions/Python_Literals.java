@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;

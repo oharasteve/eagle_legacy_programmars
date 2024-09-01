@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Rust.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;

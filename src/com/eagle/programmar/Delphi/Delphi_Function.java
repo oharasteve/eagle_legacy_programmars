@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;

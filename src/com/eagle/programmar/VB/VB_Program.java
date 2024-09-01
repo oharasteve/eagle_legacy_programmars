@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.VB;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
 import com.eagle.tokens.AbstractToken;

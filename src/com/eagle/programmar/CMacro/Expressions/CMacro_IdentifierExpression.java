@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CMacro.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CMacro.CMacroFunctionParens;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
 import com.eagle.tokens.PrimaryOperator;

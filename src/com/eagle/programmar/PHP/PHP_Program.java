@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.PHP;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.HTML.HTML_DocType;
 import com.eagle.programmar.HTML.HTML_Program;
 import com.eagle.programmar.HTML.HTML_Program.HTML_Element;

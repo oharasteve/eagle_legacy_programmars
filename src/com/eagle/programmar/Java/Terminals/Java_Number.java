@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Java.Terminals;
 
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 

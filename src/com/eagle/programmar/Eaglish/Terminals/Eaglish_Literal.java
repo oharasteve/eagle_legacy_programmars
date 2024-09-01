@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Terminals;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Eaglish.Eaglish_Format;
 import com.eagle.tokens.terminals.TerminalLiteralToken;

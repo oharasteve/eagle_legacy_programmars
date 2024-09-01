@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Directives.CSharp_PragmaDirective;
 import com.eagle.programmar.CSharp.Directives.CSharp_RegionDirective;

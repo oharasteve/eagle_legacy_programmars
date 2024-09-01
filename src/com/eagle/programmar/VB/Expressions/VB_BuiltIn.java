@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.VB.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 

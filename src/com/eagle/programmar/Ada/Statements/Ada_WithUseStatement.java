@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Ada.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.SeparatedList;

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;

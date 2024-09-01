@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CMacro;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CMacro.Statements.CMacro_Define_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_Error_Statement;
 import com.eagle.programmar.CMacro.Statements.CMacro_IfDef_Statement;

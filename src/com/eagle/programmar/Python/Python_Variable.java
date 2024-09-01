@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;

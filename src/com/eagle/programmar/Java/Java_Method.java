@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.TCL;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.TCL.Symbols.TCL_Identifier_Reference;
 import com.eagle.tokens.TokenSequence;

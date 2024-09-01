@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Scala.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Scala.Scala_Statement;
 import com.eagle.programmar.Scala.Scala_Syntax;

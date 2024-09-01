@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Rust.Statements.Rust_AssignmentStatement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ForStatement;

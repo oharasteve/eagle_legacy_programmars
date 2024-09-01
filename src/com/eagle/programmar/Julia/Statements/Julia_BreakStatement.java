@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Julia.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.tokens.TokenSequence;

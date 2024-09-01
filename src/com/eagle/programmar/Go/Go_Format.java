@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Go;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
 

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.VB.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenSequence;

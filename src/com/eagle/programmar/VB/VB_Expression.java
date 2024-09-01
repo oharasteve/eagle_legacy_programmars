@@ -4,21 +4,20 @@
 package com.eagle.programmar.VB;
 
 import com.eagle.programmar.VB.Expressions.VB_AdditiveExpression;
-import com.eagle.programmar.VB.Expressions.VB_AndExpression;
 import com.eagle.programmar.VB.Expressions.VB_ArrayExpression;
+import com.eagle.programmar.VB.Expressions.VB_BitwiseAndExpression;
 import com.eagle.programmar.VB.Expressions.VB_BuiltIn;
 import com.eagle.programmar.VB.Expressions.VB_CommentExpression;
 import com.eagle.programmar.VB.Expressions.VB_ConcatExpression;
-import com.eagle.programmar.VB.Expressions.VB_ConditionalAndExpression;
-import com.eagle.programmar.VB.Expressions.VB_ConditionalOrExpression;
 import com.eagle.programmar.VB.Expressions.VB_EqualityExpression;
-import com.eagle.programmar.VB.Expressions.VB_ExclusiveOrExpression;
 import com.eagle.programmar.VB.Expressions.VB_ExponentExpression;
-import com.eagle.programmar.VB.Expressions.VB_InclusiveOrExpression;
 import com.eagle.programmar.VB.Expressions.VB_InstanceOfExpression;
+import com.eagle.programmar.VB.Expressions.VB_LogicalAndExpression;
+import com.eagle.programmar.VB.Expressions.VB_LogicalNotExpression;
+import com.eagle.programmar.VB.Expressions.VB_LogicalOrExpression;
+import com.eagle.programmar.VB.Expressions.VB_LogicalXorExpression;
 import com.eagle.programmar.VB.Expressions.VB_MultiplicativeExpression;
 import com.eagle.programmar.VB.Expressions.VB_NegativeExpression;
-import com.eagle.programmar.VB.Expressions.VB_NotExpression;
 import com.eagle.programmar.VB.Expressions.VB_ParenthesizedExpression;
 import com.eagle.programmar.VB.Expressions.VB_RelationalExpression;
 import com.eagle.programmar.VB.Expressions.VB_ShiftExpression;
@@ -34,8 +33,9 @@ import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 
-public class VB_Expression extends PrecedenceChooser
+public class VB_Expression extends PrecedenceChooser implements AbstractExpression
 {
 	private static OperatorList _operators = new OperatorList();
 
@@ -70,7 +70,7 @@ public class VB_Expression extends PrecedenceChooser
 	public @P(140) VB_UcaseFunction ucaseFunction;
 	public @P(150) VB_FunctionCall functionCall;
 	public @P(160) VB_NegativeExpression negativeExpression;
-	public @P(170) VB_NotExpression notExpression;
+	public @P(170) VB_LogicalNotExpression notExpression;
 	public @P(180) VB_VariableExpression variableExpression;
 	public @P(190) VB_ParenthesizedExpression parenthesizedExpression;
 	public @P(200) VB_CommentExpression commentExpression;
@@ -88,9 +88,8 @@ public class VB_Expression extends PrecedenceChooser
 	public @P(1070) VB_RelationalExpression relationalExpression;
 	public @P(1080) VB_InstanceOfExpression instanceOfExpression;
 	public @P(1090) VB_EqualityExpression equalityExpression;
-	public @P(1100) VB_AndExpression andExpression;
-	public @P(1110) VB_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(1120) VB_InclusiveOrExpression inclusiveOrExpression;
-	public @P(1130) VB_ConditionalAndExpression conditionalAndExpression;
-	public @P(1140) VB_ConditionalOrExpression conditionalOrExpression;
+	public @P(1100) VB_BitwiseAndExpression andExpression;
+	public @P(1110) VB_LogicalXorExpression inclusiveOrExpression;
+	public @P(1120) VB_LogicalAndExpression conditionalAndExpression;
+	public @P(1130) VB_LogicalOrExpression conditionalOrExpression;
 }

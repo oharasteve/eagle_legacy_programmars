@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Javascript.Statements.Javascript_BreakStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;

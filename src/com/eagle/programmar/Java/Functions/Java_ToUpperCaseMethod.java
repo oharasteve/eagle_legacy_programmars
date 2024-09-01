@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Java.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;

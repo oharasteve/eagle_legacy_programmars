@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.programmar.Java.Java_ArgumentList;
 import com.eagle.programmar.Java.Java_ArgumentList.Java_MoreArguments;

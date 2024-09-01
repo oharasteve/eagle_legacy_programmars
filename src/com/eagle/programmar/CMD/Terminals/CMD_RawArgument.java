@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.CMD.Terminals;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.CMD.CMD_Expression;

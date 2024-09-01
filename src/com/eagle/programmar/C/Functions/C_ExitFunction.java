@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.C.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.PrimaryOperator;

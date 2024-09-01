@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
 
 public class Bash_Format

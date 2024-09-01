@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
 import com.eagle.programmar.C.Statements.C_AsmVolatile;
 import com.eagle.programmar.C.Terminals.C_Comment;

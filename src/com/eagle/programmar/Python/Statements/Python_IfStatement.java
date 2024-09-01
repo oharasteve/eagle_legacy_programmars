@@ -5,8 +5,8 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;

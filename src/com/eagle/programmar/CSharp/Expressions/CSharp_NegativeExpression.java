@@ -3,13 +3,19 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGeneratableExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_NegativeExpression extends PrimaryOperator implements EagleRunnable
+public class CSharp_NegativeExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
 {
 	public @S(10) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("-", "+");
 	public @S(20) CSharp_Expression expr;
@@ -29,5 +35,26 @@ public class CSharp_NegativeExpression extends PrimaryOperator implements EagleR
 		default:
 			throw new RuntimeException("Unexpected negation operator: " + operator);
 		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		switch (operator.toString())
+		{
+		case "-":
+			return generator.newNegativeExpression(theExpr);
+		default:
+			throw new RuntimeException("Unexpected negative operator: " + operator);
+		}
+	}
+	
+	public static CSharp_NegativeExpression generateExpression(String oper, AbstractExpression theExpr)
+	{
+		CSharp_NegativeExpression expr = new CSharp_NegativeExpression();
+		expr.expr = (CSharp_Expression) theExpr;
+		expr.operator.setValue(oper);
+		return expr;
 	}
 }

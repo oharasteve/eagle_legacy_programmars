@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Template;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
 public class Template_Program extends EagleLanguage implements EagleRunnable

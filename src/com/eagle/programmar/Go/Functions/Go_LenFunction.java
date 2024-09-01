@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Go.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.PrimaryOperator;

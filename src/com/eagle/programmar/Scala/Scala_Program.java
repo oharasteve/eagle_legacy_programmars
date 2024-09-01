@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Scala;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Scala.Statements.Scala_Function;
 import com.eagle.programmar.Scala.Statements.Scala_Import;
 import com.eagle.programmar.Scala.Statements.Scala_Object;

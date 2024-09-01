@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;

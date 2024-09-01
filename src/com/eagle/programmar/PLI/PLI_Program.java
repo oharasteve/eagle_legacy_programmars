@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
 import com.eagle.programmar.PLI.Statements.PLI_PercentStatement;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;

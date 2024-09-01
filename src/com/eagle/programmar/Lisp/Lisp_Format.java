@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.TokenList;
 
 public class Lisp_Format

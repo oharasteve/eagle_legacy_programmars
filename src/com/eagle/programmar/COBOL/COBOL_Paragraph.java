@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;

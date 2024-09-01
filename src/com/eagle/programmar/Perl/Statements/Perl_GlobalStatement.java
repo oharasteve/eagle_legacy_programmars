@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;

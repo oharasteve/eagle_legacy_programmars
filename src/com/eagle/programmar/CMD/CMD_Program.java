@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
-import com.eagle.core.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;

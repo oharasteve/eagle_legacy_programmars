@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Symbols;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 
 public class Eaglish_Parameter_Definition extends Eaglish_Identifier_Definition implements EagleRunnable
 {

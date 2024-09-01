@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Python.Statements.Python_AssertStatement;
 import com.eagle.programmar.Python.Statements.Python_Assignment;
 import com.eagle.programmar.Python.Statements.Python_AwaitStatement;

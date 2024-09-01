@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Algol68;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.AbstractToken;

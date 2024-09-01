@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Statements.Perl_ClassStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ExpressionStatement;

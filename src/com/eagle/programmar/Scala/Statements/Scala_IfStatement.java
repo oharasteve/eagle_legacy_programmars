@@ -5,8 +5,8 @@ package com.eagle.programmar.Scala.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Scala_Statement;

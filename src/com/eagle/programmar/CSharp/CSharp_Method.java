@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;

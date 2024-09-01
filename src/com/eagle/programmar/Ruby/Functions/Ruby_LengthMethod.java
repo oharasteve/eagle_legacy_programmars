@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Ruby.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.PrecedenceOperator;

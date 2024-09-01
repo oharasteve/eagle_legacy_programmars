@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Fortran.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Terminals.Fortran_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;

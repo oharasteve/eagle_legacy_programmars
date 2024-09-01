@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python;
 
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
-import com.eagle.programmar.Python.Expressions.Python_And_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Logical_And_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_BackQuotes;
 import com.eagle.programmar.Python.Expressions.Python_Bitwise_And_Expression;
@@ -21,9 +21,9 @@ import com.eagle.programmar.Python.Expressions.Python_If_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Lambda_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.programmar.Python.Expressions.Python_Multiplicative_Expression;
-import com.eagle.programmar.Python.Expressions.Python_Not_Expression;
-import com.eagle.programmar.Python.Expressions.Python_Or_Expression;
-import com.eagle.programmar.Python.Expressions.Python_Parens;
+import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Logical_Or_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Power_Expression;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
@@ -32,7 +32,7 @@ import com.eagle.programmar.Python.Expressions.Python_StarStar_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Star_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Subfield;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
-import com.eagle.programmar.Python.Expressions.Python_UnarySign;
+import com.eagle.programmar.Python.Expressions.Python_Negative_Expression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Expressions.Python_Yield;
 import com.eagle.programmar.Python.Functions.Python_Function_Call;
@@ -82,12 +82,12 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public @P(100) Python_RangeExpression rangeExpression;
 	public @P(110) Python_FunnyConstructor funnyConstructor;
-	public @P(120) Python_Parens parens;
+	public @P(120) Python_Parenthesized_Expression parens;
 	public @P(130) Python_BracesColons bracesColons;
 	public @P(140) Python_BracesNoColons bracesNoColons;
 	public @P(150) Python_Brackets brackets;
-	public @P(160) Python_UnarySign unarySign;
-	public @P(170) Python_Not_Expression notExpression;
+	public @P(160) Python_Negative_Expression unarySign;
+	public @P(170) Python_Logical_Not_Expression notExpression;
 	public @P(180) Python_Literals literals;
 	public @P(190) Python_BackQuotes backQuotes;
 	public @P(200) Python_Len_Function lenFunction;
@@ -116,8 +116,8 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(1080) Python_Bitwise_Xor_Expression bitwiseXorExpression;
 	public @P(1090) Python_Bitwise_Or_Expression bitwiseOrExpression;
 	public @P(1100) Python_Relational_Expression relationalExpression;
-	public @P(1110) Python_And_Expression andExpression;
-	public @P(1120) Python_Or_Expression orExpression;
+	public @P(1110) Python_Logical_And_Expression andExpression;
+	public @P(1120) Python_Logical_Or_Expression orExpression;
 	public @P(1130) Python_For_In_Expression forInExpression;
 	public @P(1140) Python_If_Else_Expression ifElseExpression;
 	public @P(1150) Python_If_Expression ifExpression;

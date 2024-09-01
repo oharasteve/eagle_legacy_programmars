@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Simple_Statement;
 import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Ruby;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 
 public class Ruby_Format
 {

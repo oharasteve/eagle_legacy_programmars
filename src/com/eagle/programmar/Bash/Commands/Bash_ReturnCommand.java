@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Bash.Commands;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;

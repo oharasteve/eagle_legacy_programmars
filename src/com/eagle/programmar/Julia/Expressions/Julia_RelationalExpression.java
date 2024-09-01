@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Julia.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Terminals.Julia_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;

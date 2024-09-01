@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Java.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;

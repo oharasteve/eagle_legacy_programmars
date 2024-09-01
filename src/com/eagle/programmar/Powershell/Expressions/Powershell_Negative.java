@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Powershell.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationHyphen;

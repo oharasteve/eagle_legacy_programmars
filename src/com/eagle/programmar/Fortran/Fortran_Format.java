@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Fortran;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.tokens.SeparatedList;

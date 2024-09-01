@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Scala.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Scala.Scala_Statement;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.tokens.TokenList;

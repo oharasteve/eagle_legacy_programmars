@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.VB;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.VB.Statements.VB_AssignmentStatement;
 import com.eagle.programmar.VB.Statements.VB_AttributeStatement;
 import com.eagle.programmar.VB.Statements.VB_BeginStatement;

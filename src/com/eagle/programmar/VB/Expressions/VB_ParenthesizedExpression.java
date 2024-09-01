@@ -3,15 +3,19 @@
 
 package com.eagle.programmar.VB.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class VB_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) VB_Expression expression;
@@ -22,5 +26,12 @@ public class VB_ParenthesizedExpression extends PrimaryOperator implements Eagle
 	{
 		EagleValue value = interpreter.getEagleValue(expression);
 		interpreter.pushEagleValue(value);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		return generator.newParenthesizedExpression(theExpr);
 	}
 }

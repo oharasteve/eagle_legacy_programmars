@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleInterpreter;
 import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
