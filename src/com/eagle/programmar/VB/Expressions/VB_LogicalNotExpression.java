@@ -29,6 +29,6 @@ public class VB_LogicalNotExpression extends PrimaryOperator implements EagleRun
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr);
+		return generator.newNotExpression(theExpr, this);
 	}
 }

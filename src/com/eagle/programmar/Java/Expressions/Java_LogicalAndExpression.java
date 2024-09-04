@@ -7,15 +7,15 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_LogicalAndExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_Punctuation andOperator = new Java_Punctuation("&&");
@@ -42,14 +42,15 @@ public class Java_LogicalAndExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newAndExpression(leftExpr, rightExpr);
+		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 	
-	public static Java_LogicalAndExpression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr)
+	public static Java_LogicalAndExpression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr, AbstractToken source)
 	{
 		Java_LogicalAndExpression expr = new Java_LogicalAndExpression();
 		expr.left = (Java_Expression) leftExpr;
 		expr.right = (Java_Expression) rightExpr;
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

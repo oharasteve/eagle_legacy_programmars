@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
@@ -13,7 +13,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class PLI_Program extends EagleLanguage implements EagleRunnable
+public class PLI_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String PLI = "PL/I";
 

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.AWK;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class AWK_Program extends EagleLanguage implements EagleRunnable
+public class AWK_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String AWK = "AWK";
 

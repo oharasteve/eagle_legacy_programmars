@@ -7,15 +7,15 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Negative_Expression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_PunctuationChoice sign = new Python_PunctuationChoice("*", "-", "+", "~");
 	public @S(20) Python_Expression expr;
@@ -44,17 +44,18 @@ public class Python_Negative_Expression extends PrimaryOperator
 		switch (sign.toString())
 		{
 		case "-":
-			return generator.newNegativeExpression(theExpr);
+			return generator.newNegativeExpression(theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negative operator: " + sign);
 		}
 	}
 	
-	public static Python_Negative_Expression generateExpression(String oper, AbstractExpression theExpr)
+	public static Python_Negative_Expression generateExpression(AbstractExpression theExpr, AbstractToken source)
 	{
 		Python_Negative_Expression expr = new Python_Negative_Expression();
 		expr.expr = (Python_Expression) theExpr;
-		expr.sign.setValue(oper);
+		expr.sign.setValue("-");
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

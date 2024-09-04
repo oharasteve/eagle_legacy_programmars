@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.RPG;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.parsers.EagleOverrideManager;
 import com.eagle.programmar.RPG.Directives.RPG_Copy_Directive;
 import com.eagle.programmar.RPG.Directives.RPG_Eject_Directive;
@@ -34,7 +34,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public abstract class RPG_Program extends EagleLanguage
+public abstract class RPG_Program extends AbstractLanguage
 {
 	public RPG_Program(String name)
 	{

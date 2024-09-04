@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Macro;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 
-public class Macro_Program extends EagleLanguage
+public class Macro_Program extends AbstractLanguage
 {
 	public static final String MACRO = "Macro";
 

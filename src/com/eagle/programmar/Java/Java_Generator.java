@@ -1,80 +1,180 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Sep 1, 2024
+
 package com.eagle.programmar.Java;
 
+import java.util.ArrayList;
+
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
+import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
+import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
 import com.eagle.programmar.Java.Expressions.Java_LogicalAndExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalNotExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalOrExpression;
 import com.eagle.programmar.Java.Expressions.Java_MultiplicativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_NegativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
+import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
+import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Functions.Java_MathPowFunction;
+import com.eagle.programmar.Java.Statements.Java_ExitStatement;
+import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
+import com.eagle.programmar.Java.Statements.Java_IfStatement;
+import com.eagle.programmar.Java.Statements.Java_PrintStatement;
+import com.eagle.programmar.Java.Terminals.Java_Literal;
+import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator extends EagleGenerator
 {
-	private static Java_Expression wrap(AbstractToken token)
+	@Override
+	public String getName()
+	{
+		return "Java";
+	}
+	
+	@Override
+	public String getSuffix()
+	{
+		return ".java";
+	}
+	
+	private static Java_Expression wrapExpression(AbstractToken token)
 	{
 		Java_Expression wrapper = new Java_Expression();
 		wrapper.setWhich(token);
 		return wrapper;
 	}
 	
-	@Override
-	public AbstractExpression newParenthesizedExpression(AbstractExpression expr)
+	public static Java_Statement wrapStatement(AbstractToken token)
 	{
-		return wrap(Java_ParenthesizedExpression.generateExpression(expr));
+		Java_Statement wrapper = new Java_Statement();
+		wrapper.setWhich(token);
+		return wrapper;
 	}
-
-	// Logical and, or, not
+	
+	// ================ Statements ================
 
 	@Override
-	public AbstractExpression newAndExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
-		return wrap(Java_LogicalAndExpression.generateExpression(left, right));
+		return wrapStatement(Java_ExitStatement.newExitStatement(code, source));
 	}
 	
 	@Override
-	public AbstractExpression newOrExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
-		return wrap(Java_LogicalOrExpression.generateExpression(left, right));
+		return wrapStatement(Java_ExpressionStatement.newExpressionStatement(expr, source));
 	}
 	
 	@Override
-	public AbstractExpression newNotExpression(AbstractExpression expr)
+	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
+			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
 	{
-		return wrap(Java_LogicalNotExpression.generateExpression(expr));
+		return wrapStatement(Java_IfStatement.newIfStatement(condition, ifTrue, ifFalse, source));
+	}
+	
+	@Override
+	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	{
+		return wrapStatement(Java_PrintStatement.newPrintStatement(line, source));
 	}
 
-	// Arithmetic plus, minus, times, divide, negative
-
+	// ================ Expressions ================
+	
 	@Override
-	public AbstractExpression newPlusExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrap(Java_AdditiveExpression.generateExpression(left, "+", right));
-	}
-
-	@Override
-	public AbstractExpression newMinusExpression(AbstractExpression left, AbstractExpression right)
-	{
-		return wrap(Java_AdditiveExpression.generateExpression(left, "-", right));
-	}
-
-	@Override
-	public AbstractExpression newTimesExpression(AbstractExpression left, AbstractExpression right)
-	{
-		return wrap(Java_MultiplicativeExpression.generateExpression(left, "*", right));
+		return wrapExpression(Java_AdditiveExpression.generateExpression(left, oper, right, source));
 	}
 
 	@Override
-	public AbstractExpression newDivideExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrap(Java_MultiplicativeExpression.generateExpression(left, "/", right));
+		return wrapExpression(Java_AdditiveExpression.generateExpression(left, AdditiveEnum.PLUS, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
+			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	{
+		Java_Expression varExpr = wrapExpression(Java_VariableExpression.newVariableExpression(name, subscript, source));
+		return wrapExpression(Java_AssignmentExpression.newAssignmentStatement(varExpr, oper, expression, comment, source));
+	}
+	
+	@Override
+	public AbstractExpression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
+	{
+		return wrapExpression(Java_BuiltIn.generateExpression(builtin, source));
+	}
+	
+	@Override
+	public AbstractExpression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(Java_MathPowFunction.generateExpression(left, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
+	{
+		return wrapExpression(Java_Literal.generateExpression(literal, source));
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(AbstractExpression expr)
+	public AbstractExpression newLogicalAndExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrap(Java_NegativeExpression.generateExpression("-", expr));
+		return wrapExpression(Java_LogicalAndExpression.generateExpression(left, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newLogicalOrExpression(AbstractExpression left, LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(Java_LogicalOrExpression.generateExpression(left, oper, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(Java_MultiplicativeExpression.generateExpression(left, oper, right, source));
+	}
+
+	@Override
+	public AbstractExpression newNegativeExpression(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Java_NegativeExpression.generateExpression(expr, source));
+	}
+	
+	@Override
+	public AbstractExpression newNotExpression(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Java_LogicalNotExpression.generateExpression(expr, source));
+	}
+
+	@Override
+	public AbstractExpression newNumberExpression(String number, AbstractToken source)
+	{
+		return wrapExpression(Java_Number.generateExpression(number, source));
+	}
+
+	@Override
+	public AbstractExpression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Java_ParenthesizedExpression.generateExpression(expr, source));
+	}
+
+	@Override
+	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
+			AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(Java_RelationalExpression.generateExpression(left, relOp, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	{
+		return wrapExpression(Java_VariableExpression.newVariableExpression(name, subscript, source));
 	}
 }

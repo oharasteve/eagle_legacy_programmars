@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IBMASM;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.IBMASM.Data.IBMASM_DC_Instruction;
 import com.eagle.programmar.IBMASM.Data.IBMASM_DS_Instruction;
 import com.eagle.programmar.IBMASM.Terminals.IBMASM_Comment;
@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class IBMASM_Program extends EagleLanguage
+public class IBMASM_Program extends AbstractLanguage
 {
 	public static final String IBMASM = "IBMASM";
 

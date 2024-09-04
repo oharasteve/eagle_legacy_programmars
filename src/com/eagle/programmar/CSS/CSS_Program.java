@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSS;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.CSS.CSS_TagList.CSS_ColonOption;
 import com.eagle.programmar.CSS.Directives.CSS_If_Directive;
 import com.eagle.programmar.CSS.Terminals.CSS_Comment;
@@ -23,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class CSS_Program extends EagleLanguage
+public class CSS_Program extends AbstractLanguage
 {
 	public static final String CSS = "CSS";
 

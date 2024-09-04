@@ -50,6 +50,6 @@ public class VB_LogicalAndExpression extends PrecedenceOperator implements Eagle
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newAndExpression(leftExpr, rightExpr);
+		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 }

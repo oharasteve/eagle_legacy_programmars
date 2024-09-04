@@ -3,13 +3,13 @@
 
 package com.eagle.programmar.Powershell;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
 import com.eagle.tokens.TokenList;
 
-public class Powershell_Program extends EagleLanguage implements EagleRunnable
+public class Powershell_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String POWERHSELL = "Powershell";
 

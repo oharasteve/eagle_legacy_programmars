@@ -12,6 +12,8 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class CSharp_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
 {
@@ -49,5 +51,31 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 			}
 		}
+	}
+	
+	public static CSharp_AssignmentExpression newAssignmentStatement(AbstractExpression varExpr,
+			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	{
+		CSharp_AssignmentExpression expr = new CSharp_AssignmentExpression();
+		expr.var = (CSharp_Expression) varExpr;
+		String punct;
+		switch (oper)
+		{
+		case EQUALS:
+			punct = "=";
+			break;
+		case PLUS_EQUALS:
+			punct = "+=";
+			break;
+		case MINUS_EQUALS:
+			punct = "-=";
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + oper);
+		}
+		expr.operator = new CSharp_PunctuationChoice(punct);
+		expr.expr = (CSharp_Expression) expression;
+		expr.setTransformationSource(source);
+		return expr;
 	}
 }

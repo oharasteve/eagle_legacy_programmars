@@ -34,9 +34,10 @@ import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class VB_Statement extends TokenSequence implements EagleRunnableWithResult
+public class VB_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) VB_BaseStatement baseStatement;
 	public @S(20) @OPT VB_Comment comment;

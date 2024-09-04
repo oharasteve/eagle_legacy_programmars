@@ -42,7 +42,7 @@ public class VB_NegativeExpression extends PrimaryOperator implements EagleRunna
 		switch (operator.toString())
 		{
 		case "-":
-			return generator.newNegativeExpression(theExpr);
+			return generator.newNegativeExpression(theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negative operator: " + operator);
 		}

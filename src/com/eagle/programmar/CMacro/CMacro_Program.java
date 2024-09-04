@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMacro;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.CMacro.Statements.CMacro_Pragma_Statement;
@@ -15,7 +15,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-public class CMacro_Program extends EagleLanguage
+public class CMacro_Program extends AbstractLanguage
 {
 	public static final String CMACRO = "CMacro";
 

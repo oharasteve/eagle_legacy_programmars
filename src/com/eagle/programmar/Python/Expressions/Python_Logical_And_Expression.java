@@ -8,16 +8,16 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Logical_And_Expression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Keyword AND = new Python_Keyword("and");
@@ -45,14 +45,15 @@ public class Python_Logical_And_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newAndExpression(leftExpr, rightExpr);
+		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 	
-	public static Python_Logical_And_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr)
+	public static Python_Logical_And_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr, AbstractToken source)
 	{
 		Python_Logical_And_Expression expr = new Python_Logical_And_Expression();
 		expr.left = (Python_Expression) leftExpr;
 		expr.right = (Python_Expression) rightExpr;
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

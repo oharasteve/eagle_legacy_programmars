@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Fortran;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Statements.Fortran_Function;
@@ -11,7 +11,7 @@ import com.eagle.programmar.Fortran.Statements.Fortran_Subroutine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public class Fortran_Program extends EagleLanguage implements EagleRunnable
+public class Fortran_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String FORTRAN = "Fortran";
 

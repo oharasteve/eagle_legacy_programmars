@@ -5,7 +5,7 @@ package com.eagle.symbols_UNUSED;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSymbolException;
 import com.eagle.programmar.Perl.Perl_Program;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
@@ -15,7 +15,7 @@ import com.eagle.tokens.AbstractToken;
 
 public class Perl_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveReferences(EagleLanguage language)
+	public void resolveReferences(AbstractLanguage language)
 	{
 		Perl_Program program = (Perl_Program) language;
 		resolveFunctionReferences(program);

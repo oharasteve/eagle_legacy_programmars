@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Eaglish;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Function_Block;
@@ -15,7 +15,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Eaglish_Program extends EagleLanguage implements EagleRunnable
+public class Eaglish_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String EAGLISH = "Eaglish";
 

@@ -5,7 +5,7 @@ package com.eagle.symbols_UNUSED;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Natural.Natural_Program;
 import com.eagle.programmar.Natural.Symbols.Natural_Data_Definition;
 import com.eagle.programmar.Natural.Symbols.Natural_Identifier_Reference;
@@ -14,7 +14,7 @@ import com.eagle.tokens.AbstractToken;
 
 public class Natural_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveReferences(EagleLanguage language)
+	public void resolveReferences(AbstractLanguage language)
 	{
 		Natural_Program program = (Natural_Program) language;
 		resolveDataReferences(program);

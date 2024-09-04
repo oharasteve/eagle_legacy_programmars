@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
@@ -12,7 +12,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class CSharp_Program extends EagleLanguage implements EagleRunnable
+public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String CSHARP = "CSharp";
 

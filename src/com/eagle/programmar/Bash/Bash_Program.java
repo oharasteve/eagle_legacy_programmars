@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Bash;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Bash.Commands.Bash_Function;
@@ -11,7 +11,7 @@ import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public class Bash_Program extends EagleLanguage implements EagleRunnable
+public class Bash_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String BASH = "Bash";
 

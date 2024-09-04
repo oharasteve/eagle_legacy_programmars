@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Algol68;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Algol68_Program extends EagleLanguage implements EagleRunnable
+public class Algol68_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String ALGOL68 = "Algol68";
 

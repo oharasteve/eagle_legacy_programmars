@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
@@ -16,7 +16,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Python_Terminals extends EagleLanguage
+public class Python_Terminals extends AbstractLanguage
 {
 	public Python_Terminals()
 	{

@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.Gupta;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Gupta.Declarations.Gupta_Application;
 
-public class Gupta_Program extends EagleLanguage
+public class Gupta_Program extends AbstractLanguage
 {
 	public static final String GUPTA = "Gupta";
 

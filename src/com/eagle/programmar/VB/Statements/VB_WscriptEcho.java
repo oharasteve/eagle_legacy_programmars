@@ -10,10 +10,15 @@ import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_WscriptEcho extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class VB_WscriptEcho extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) VB_Keyword WSCRIPT = new VB_Keyword("wscript");
 	public @S(20) PunctuationPeriod dot;
@@ -32,6 +37,21 @@ public class VB_WscriptEcho extends TokenSequence implements EagleRunnableWithRe
 		case "quit":
 			interpreter._exitCode = result.forceIntegerValue();
 			return Eagle_Statement_Result.BREAK;
+		}
+		throw new RuntimeException("Unable to handle " + ECHO.toString());
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		switch (ECHO.toString())
+		{
+		case "echo":
+			AbstractExpression line = transformer.transformExpression(generator, expr);
+			return generator.newPrintStatement(line, this);
+		case "quit":
+			AbstractExpression code = transformer.transformExpression(generator, expr);
+			return generator.newExitStatement(code, this);
 		}
 		throw new RuntimeException("Unable to handle " + ECHO.toString());
 	}

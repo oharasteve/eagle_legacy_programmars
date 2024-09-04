@@ -65,4 +65,14 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 			interpreter.pushEagleValue(value);
 		}
 	}
+	
+	public static Java_Variable newVariable(String name)
+	{
+		Java_Variable var = new Java_Variable();
+		var.firstId = new Java_VariableIdentifier();
+		Java_Identifier_Reference id = new Java_Identifier_Reference();
+		id.setValue(name);
+		var.firstId.setWhich(id);
+		return var;
+	}
 }

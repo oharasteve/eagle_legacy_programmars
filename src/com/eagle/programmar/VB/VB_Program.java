@@ -3,15 +3,20 @@
 
 package com.eagle.programmar.VB;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_Program extends EagleLanguage implements EagleRunnable
+public class VB_Program extends AbstractLanguage implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String VB = "VB";
 
@@ -31,7 +36,7 @@ public class VB_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// First pass, just collect all the method definitions
+		// First pass, just collect all the Function and Sub definitions
 		for (VB_Statement stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
@@ -52,5 +57,37 @@ public class VB_Program extends EagleLanguage implements EagleRunnable
 		{
 			interpreter.tryToInterpret(stmt.baseStatement);
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Create a shell main program
+		
+		// First pass, transform all the Function and Sub definitions
+		for (VB_Statement stmt : statements._elements)
+		{
+			AbstractToken which = stmt.baseStatement.getWhich();
+			if (which instanceof EagleTransformableFunction)
+			{
+				EagleTransformableFunction transformable = (EagleTransformableFunction) which;
+				transformable.transformFunction(transformer, generator);
+			}
+		}
+		
+		// Second pass, transform all the data and logic
+		for (VB_Statement stmt : statements._elements)
+		{
+			AbstractToken which = stmt.baseStatement.getWhich();
+			if (which instanceof EagleTransformableStatement)
+			{
+				EagleTransformableStatement transformable = (EagleTransformableStatement) which;
+				transformable.transformStatement(transformer, generator);
+			}
+		}
+		
+		// Tie up loose ends
+		
+		return generator._currentLanguage;
 	}
 }

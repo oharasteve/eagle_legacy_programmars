@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
@@ -13,7 +13,7 @@ import com.eagle.tokens.terminals.TerminalEndOfLine;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
-public class Delphi_Configuration extends EagleLanguage
+public class Delphi_Configuration extends AbstractLanguage
 {
 	public static final String DELPHIConfig = "Delphi_Configuration";
 

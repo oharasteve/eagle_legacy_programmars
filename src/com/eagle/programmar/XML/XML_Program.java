@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.XML;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
@@ -22,7 +22,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class XML_Program extends EagleLanguage
+public class XML_Program extends AbstractLanguage
 {
 	public static final String XML = "XML";
 

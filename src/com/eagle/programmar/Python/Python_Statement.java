@@ -13,6 +13,7 @@ import com.eagle.programmar.Python.Statements.Python_ClassDeclaration;
 import com.eagle.programmar.Python.Statements.Python_ContinueStatement;
 import com.eagle.programmar.Python.Statements.Python_DeleteStatement;
 import com.eagle.programmar.Python.Statements.Python_ExecStatement;
+import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_FromStatement;
@@ -121,6 +122,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_IfStatement XXifStatement;
 		public @CHOICE Python_ImportStatement XXimportStatement;
 		public @CHOICE Python_PassStatement XXpassStatement;
+		public @CHOICE Python_QuitStatement XXquiitStatement;
 		public @CHOICE Python_RaiseStatement XXraiseStatement;
 		public @CHOICE Python_ReturnStatement XXreturnStatement;
 		public @CHOICE Python_TryStatement XXtryStatement;

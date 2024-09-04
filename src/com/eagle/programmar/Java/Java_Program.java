@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
@@ -19,7 +19,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_Program extends EagleLanguage implements EagleRunnable
+public class Java_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String JAVA = "Java";
 

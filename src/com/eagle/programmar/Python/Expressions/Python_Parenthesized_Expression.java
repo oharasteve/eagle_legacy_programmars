@@ -12,18 +12,18 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_List;
 import com.eagle.programmar.Python.Python_List.Python_MoreListItem;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Parenthesized_Expression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_CommentEoln> comments;
@@ -58,13 +58,14 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, list.expr);
-		return generator.newParenthesizedExpression(theExpr);
+		return generator.newParenthesizedExpression(theExpr, this);
 	}
 	
-	public static Python_Parenthesized_Expression generateExpression(AbstractExpression theExpr)
+	public static Python_Parenthesized_Expression generateExpression(AbstractExpression theExpr, AbstractToken source)
 	{
 		Python_Parenthesized_Expression expr = new Python_Parenthesized_Expression();
 		expr.list.expr = (Python_Expression) theExpr;
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

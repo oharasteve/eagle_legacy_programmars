@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Julia;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Statements.Julia_Function;
@@ -14,7 +14,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Julia_Program extends EagleLanguage implements EagleRunnable
+public class Julia_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String JULIA = "Julia";
 

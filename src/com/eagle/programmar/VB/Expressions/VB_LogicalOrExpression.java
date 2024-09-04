@@ -10,6 +10,7 @@ import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -50,6 +51,6 @@ public class VB_LogicalOrExpression extends PrecedenceOperator implements EagleR
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newOrExpression(leftExpr, rightExpr);
+		return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
 	}
 }

@@ -3,7 +3,7 @@
 
 package com.eagle;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.LanguageLookup;
 import com.eagle.programmar.AWK.AWK_Program;
 import com.eagle.programmar.Ada.Ada_Program;
@@ -59,7 +59,7 @@ import com.eagle.programmar.XML.XML_Program;
 
 public class EagleLanguageLookup extends LanguageLookup
 {
-	public void add(String name, Class<? extends EagleLanguage> lang, String... suffixes)
+	public void add(String name, Class<? extends AbstractLanguage> lang, String... suffixes)
 	{
 		addLanguage(name, lang);
 		for (String suffix : suffixes)

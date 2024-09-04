@@ -3,14 +3,14 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Delphi_Program extends EagleLanguage implements EagleRunnable
+public class Delphi_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String DELPHI = "Delphi";
 

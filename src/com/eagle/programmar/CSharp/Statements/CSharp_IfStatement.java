@@ -10,10 +10,14 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
+import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -77,5 +81,56 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 		}
 
 		return result;
+	}
+	
+	public static CSharp_IfStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> thenStatements,
+			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+	{
+		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
+		ifStmt.leftParen = new PunctuationLeftParen();
+		ifStmt.rightParen = new PunctuationRightParen();
+
+		CSharp_Expression cond = (CSharp_Expression) condition;
+		AbstractToken which = cond.getWhich();
+		if (which instanceof CSharp_ParenthesizedExpression)
+		{
+			CSharp_ParenthesizedExpression parensExpr = (CSharp_ParenthesizedExpression) which;
+			// Remove redundant parens
+			ifStmt.condition = parensExpr.expression;
+		}
+		else
+		{
+			ifStmt.condition = cond;
+		}
+
+		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
+		thenBlock.statements = new TokenList<CSharp_StatementOrComment>();
+		ifStmt.thenStatement = new CSharp_Statement();
+		ifStmt.thenStatement.setWhich(thenBlock);
+		for (AbstractStatement stmt : thenStatements)
+		{
+			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
+			stmtOrComment.setWhich((CSharp_Statement) stmt);
+			thenBlock.statements.addToken(stmtOrComment);
+		}
+				
+		if (elseStatements != null && elseStatements.size() > 0)
+		{
+			ifStmt.elseClause = new CSharp_IfElseClause();
+			ifStmt.elseClause.setPresent(true);
+			CSharp_StatementBlock elseBlock = new CSharp_StatementBlock();
+			elseBlock.statements = new TokenList<CSharp_StatementOrComment>();
+			ifStmt.elseClause.elseStatement = new CSharp_Statement();
+			ifStmt.elseClause.elseStatement.setWhich(elseBlock);
+			for (AbstractStatement stmt : elseStatements)
+			{
+				CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
+				stmtOrComment.setWhich((CSharp_Statement) stmt);
+				elseBlock.statements.addToken(stmtOrComment);
+			}
+		}
+
+		ifStmt.setTransformationSource(source);
+		return ifStmt;
 	}
 }

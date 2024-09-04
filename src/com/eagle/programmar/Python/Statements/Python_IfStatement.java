@@ -9,13 +9,17 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
@@ -118,5 +122,40 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 		}
 
 		return result;
+	}
+	
+	public static Python_IfStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> thenStatements,
+			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+	{
+		Python_IfStatement ifStmt = new Python_IfStatement();
+		ifStmt.condition = (Python_Expression) condition;
+
+		Python_StatementBlock thenBlock = new Python_StatementBlock();
+		Python_MultilineStatement thenMulti = new Python_MultilineStatement();
+		thenBlock.setWhich(thenMulti);
+		thenMulti.statements = new TokenList<Python_Statement>();
+		ifStmt.ifThenStatements.setWhich(thenBlock);
+		for (AbstractStatement stmt : thenStatements)
+		{
+			thenMulti.statements.addToken((Python_Statement) stmt);
+		}
+				
+		if (elseStatements != null && elseStatements.size() > 0)
+		{
+			ifStmt.ifElse = new Python_IfElse();
+			ifStmt.ifElse.setPresent(true);
+			Python_StatementBlock elseBlock = new Python_StatementBlock();
+			Python_MultilineStatement elseMulti = new Python_MultilineStatement();
+			elseBlock.setWhich(elseMulti);
+			elseMulti.statements = new TokenList<Python_Statement>();
+			ifStmt.ifElse.ifElseStatements.setWhich(elseBlock);
+			for (AbstractStatement stmt : elseStatements)
+			{
+				elseMulti.statements.addToken((Python_Statement) stmt);
+			}
+		}
+
+		ifStmt.setTransformationSource(source);
+		return ifStmt;
 	}
 }

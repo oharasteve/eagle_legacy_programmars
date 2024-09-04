@@ -10,7 +10,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -46,5 +48,15 @@ public class Java_PrintStatement extends TokenSequence implements AbstractStatem
 		}
 		
 		throw new RuntimeException("Unexpected keyword: " + PRINT.getValue());
+	}
+
+	public static Java_PrintStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	{
+		Java_PrintStatement stmt = new Java_PrintStatement();
+		stmt.OUT = new Java_KeywordChoice("out");
+		stmt.PRINT = new Java_KeywordChoice("println");
+		stmt.expr = (Java_Expression) line;
+		stmt.setTransformationSource(source);
+		return stmt;
 	}
 }

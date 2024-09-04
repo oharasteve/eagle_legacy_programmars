@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Rexx;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Rexx_Program extends EagleLanguage
+public class Rexx_Program extends AbstractLanguage
 {
 	public static final String REXX = "Rexx";
 

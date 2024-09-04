@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -12,7 +12,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class CMD_Program extends EagleLanguage implements EagleRunnable
+public class CMD_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String CMD = "CMD";
 

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
@@ -11,7 +11,7 @@ import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Javascript_Program extends EagleLanguage implements EagleRunnable
+public class Javascript_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String JAVASCRIPT = "Javascript";
 

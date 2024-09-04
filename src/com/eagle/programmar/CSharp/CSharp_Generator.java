@@ -1,81 +1,180 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Sep 1, 2024
+
 package com.eagle.programmar.CSharp;
 
+import java.util.ArrayList;
+
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalAndExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalNotExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalOrExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_MultiplicativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_NegativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
+import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunction;
+import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
 {
-	private static CSharp_Expression wrap(AbstractToken token)
+	@Override
+	public String getName()
+	{
+		return "C#";
+	}
+	
+	@Override
+	public String getSuffix()
+	{
+		return ".cs";
+	}
+	
+	public static CSharp_Expression wrapExpression(AbstractToken token)
 	{
 		CSharp_Expression wrapper = new CSharp_Expression();
 		wrapper.setWhich(token);
 		return wrapper;
 	}
 	
-	@Override
-	public AbstractExpression newParenthesizedExpression(AbstractExpression expr)
+	public static CSharp_Statement wrapStatement(AbstractToken token)
 	{
-		return wrap(CSharp_ParenthesizedExpression.generateExpression(expr));
+		CSharp_Statement wrapper = new CSharp_Statement();
+		wrapper.setWhich(token);
+		return wrapper;
 	}
-
-	// Logical and, or, not
-
+	
+	// ================ Statements ================
+	
 	@Override
-	public AbstractExpression newAndExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
-		return wrap(CSharp_LogicalAndExpression.generateExpression(left, right));
+		return wrapStatement(CSharp_ExpressionStatement.newExpressionStatement(expr, source));
 	}
 	
 	@Override
-	public AbstractExpression newOrExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
-		return wrap(CSharp_LogicalOrExpression.generateExpression(left, right));
+		return wrapStatement(CSharp_ExitStatement.newExitStatement(code, source));
+	}
+
+	@Override
+	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
+			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
+	{
+		return wrapStatement(CSharp_IfStatement.newIfStatement(condition, ifTrue, ifFalse, source));
 	}
 	
 	@Override
-	public AbstractExpression newNotExpression(AbstractExpression expr)
+	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
-		return wrap(CSharp_LogicalNotExpression.generateExpression(expr));
+		return wrapStatement(CSharp_PrintStatement.newPrintStatement(line, source));
+	}
+
+	// ================ Expressions ================
+	
+	@Override
+	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(CSharp_AdditiveExpression.generateExpression(left, oper, right, source));
 	}
 	
-	// Arithmetic plus, minus, times, divide, negative
-
-
 	@Override
-	public AbstractExpression newPlusExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrap(CSharp_AdditiveExpression.generateExpression(left, "+", right));
+		return wrapExpression(CSharp_AdditiveExpression.generateExpression(left, AdditiveEnum.PLUS, right, source));
 	}
 
 	@Override
-	public AbstractExpression newMinusExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
+			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
 	{
-		return wrap(CSharp_AdditiveExpression.generateExpression(left, "-", right));
+		CSharp_Expression varExpr = wrapExpression(CSharp_VariableExpression.newVariableExpression(name, subscript, source));
+		return wrapExpression(CSharp_AssignmentExpression.newAssignmentStatement(varExpr, oper, expression, comment, source));
+	}
+	
+	@Override
+	public AbstractExpression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
+	{
+		return wrapExpression(CSharp_BuiltIn.generateExpression(builtin, source));
+	}
+	
+	@Override
+	public AbstractExpression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(CSharp_MathPowFunction.generateExpression(left, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
+	{
+		return wrapExpression(CSharp_Literal.generateExpression(literal, source));
 	}
 
 	@Override
-	public AbstractExpression newTimesExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractExpression newLogicalAndExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrap(CSharp_MultiplicativeExpression.generateExpression(left, "*", right));
+		return wrapExpression(CSharp_LogicalAndExpression.generateExpression(left, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newLogicalOrExpression(AbstractExpression left, LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(CSharp_LogicalOrExpression.generateExpression(left, oper, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	{
+		return wrapExpression(CSharp_MultiplicativeExpression.generateExpression(left, oper, right, source));
 	}
 
 	@Override
-	public AbstractExpression newDivideExpression(AbstractExpression left, AbstractExpression right)
+	public AbstractExpression newNegativeExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrap(CSharp_MultiplicativeExpression.generateExpression(left, "/", right));
+		return wrapExpression(CSharp_NegativeExpression.generateExpression(expr, source));
+	}
+	
+	@Override
+	public AbstractExpression newNotExpression(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(CSharp_LogicalNotExpression.generateExpression(expr, source));
+	}
+	
+	@Override
+	public AbstractExpression newNumberExpression(String number, AbstractToken source)
+	{
+		return wrapExpression(CSharp_Number.generateExpression(number, source));
+	}
+	
+	@Override
+	public AbstractExpression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(CSharp_ParenthesizedExpression.generateExpression(expr, source));
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(AbstractExpression expr)
+	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
+			AbstractExpression right, AbstractToken source)
 	{
-		return wrap(CSharp_NegativeExpression.generateExpression("-", expr));
+		return wrapExpression(CSharp_RelationalExpression.generateExpression(left, relOp, right, source));
+	}
+	
+	@Override
+	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	{
+		return wrapExpression(CSharp_VariableExpression.newVariableExpression(name, subscript, source));
 	}
 }

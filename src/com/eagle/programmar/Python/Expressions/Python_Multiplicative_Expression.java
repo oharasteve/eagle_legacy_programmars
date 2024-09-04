@@ -7,15 +7,16 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Multiplicative_Expression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("//", "*", "/", "%");
@@ -30,6 +31,9 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		{
 		case "*":
 			interpreter.pushInt(leftValue * rightValue);
+			break;
+		case "/":
+			interpreter.pushDouble((double)leftValue / rightValue);
 			break;
 		case "//":
 			interpreter.pushInt(leftValue / rightValue);
@@ -50,20 +54,41 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		switch (operator.toString())
 		{
 		case "*":
-			return generator.newTimesExpression(leftExpr, rightExpr);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
+		case "/":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
 		case "//":
-			return generator.newDivideExpression(leftExpr, rightExpr);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
+		case "%":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
 	
-	public static Python_Multiplicative_Expression generateExpression(AbstractExpression leftExpr, String oper, AbstractExpression rightExpr)
+	public static Python_Multiplicative_Expression generateExpression(AbstractExpression leftExpr, MultiplicativeEnum oper, AbstractExpression rightExpr, AbstractToken source)
 	{
 		Python_Multiplicative_Expression expr = new Python_Multiplicative_Expression();
 		expr.left = (Python_Expression) leftExpr;
 		expr.right = (Python_Expression) rightExpr;
-		expr.operator.setValue(oper);
+		switch (oper)
+		{
+		case TIMES:
+			expr.operator.setValue("*");
+			break;
+		case DIVIDE_TRUNCATE:
+			expr.operator.setValue("//");
+			break;
+		case DIVIDE_NO_TRUNCATE:
+			expr.operator.setValue("/");
+			break;
+		case MODULUS:
+			expr.operator.setValue("%");
+			break;
+		default:
+			throw new RuntimeException("Unable to handle: " + oper);
+		}
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

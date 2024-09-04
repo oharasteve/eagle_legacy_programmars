@@ -8,7 +8,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
@@ -28,5 +30,13 @@ public class Python_ExpressionStatement extends TokenSequence implements EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expression);
+	}
+
+	public static Python_ExpressionStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
+	{
+		Python_ExpressionStatement stmt = new Python_ExpressionStatement();
+		stmt.expression = (Python_Expression) expr;
+		stmt.setTransformationSource(source);
+		return stmt;
 	}
 }

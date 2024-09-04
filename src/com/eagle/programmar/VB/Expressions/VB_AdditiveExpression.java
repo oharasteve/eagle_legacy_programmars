@@ -10,6 +10,7 @@ import com.eagle.programmar.VB.Terminals.VB_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -45,9 +46,9 @@ public class VB_AdditiveExpression extends PrecedenceOperator implements EagleRu
 		switch (operator.toString())
 		{
 		case "+":
-			return generator.newPlusExpression(leftExpr, rightExpr);
+			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
 		case "-":
-			return generator.newMinusExpression(leftExpr, rightExpr);
+			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}

@@ -3,7 +3,7 @@
 
 package com.eagle.symbols_UNUSED;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.programmar.JavaP.JavaP_Program;
 import com.eagle.programmar.JavaP.Symbols.JavaP_Symbol_Definition;
@@ -12,7 +12,7 @@ import com.eagle.scope.EagleScope;
 
 public class JavaP_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveReferences(EagleLanguage language)
+	public void resolveReferences(AbstractLanguage language)
 	{
 		JavaP_Program program = (JavaP_Program) language;
 		EagleScope scope = program.getScope();

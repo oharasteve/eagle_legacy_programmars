@@ -12,7 +12,15 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_CastExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) CSharp_Type jtype;
+	public @S(20) CSharp_Type type;
 	public @S(30) PunctuationRightParen rightParen;
 	public @S(40) CSharp_Expression expr;
+
+	public static CSharp_CastExpression newCastExpression(CSharp_Type type, CSharp_Expression expr)
+	{
+		CSharp_CastExpression cast = new CSharp_CastExpression();
+		cast.type = type;
+		cast.expr = expr;
+		return cast;
+	}
 }

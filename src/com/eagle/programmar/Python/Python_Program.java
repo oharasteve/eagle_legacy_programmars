@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -15,7 +15,7 @@ import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public abstract class Python_Program extends EagleLanguage implements EagleRunnable
+public abstract class Python_Program extends AbstractLanguage implements EagleRunnable
 {
 	public Python_Program(String name, EagleSyntax syntax)
 	{

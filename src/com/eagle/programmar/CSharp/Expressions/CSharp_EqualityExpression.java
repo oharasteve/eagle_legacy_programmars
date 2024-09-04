@@ -3,60 +3,13 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.interpret.EagleInterpreter;
-import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
-import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TokenChooser;
 
-public class CSharp_EqualityExpression extends PrecedenceOperator implements EagleRunnable
+public class CSharp_EqualityExpression extends PrecedenceOperator
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) CSharp_EqualityOperator equalityOperator;
+	public @S(20) CSharp_KeywordChoice operator = new CSharp_KeywordChoice("as", "is");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
-
-	public static class CSharp_EqualityOperator extends TokenChooser
-	{
-		public @CHOICE CSharp_PunctuationChoice XXoperator = new CSharp_PunctuationChoice("==", "!=", "??");
-		public @CHOICE CSharp_KeywordChoice XXasIs = new CSharp_KeywordChoice("as", "is");
-	}
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		EagleValue leftValue = interpreter.getEagleValue(left);
-		EagleValue rightValue = interpreter.getEagleValue(right);
-		if (leftValue.isString() || rightValue.isString())
-		{
-			String leftStr = leftValue.forceStringValue();
-			String rightStr = rightValue.forceStringValue();
-			switch (equalityOperator.getWhich().toString())
-			{
-			case "==":
-				interpreter.pushBool(leftStr.equals(rightStr));
-				return;
-			case "!=":
-				interpreter.pushBool(! leftStr.equals(rightStr));
-				return;
-			}
-		}
-		else
-		{
-			int leftInt = leftValue.forceIntegerValue();
-			int rightInt = rightValue.forceIntegerValue();
-			switch (equalityOperator.getWhich().toString())
-			{
-			case "==":
-				interpreter.pushBool(leftInt == rightInt);
-				return;
-			case "!=":
-				interpreter.pushBool(leftInt != rightInt);
-				return;
-			}
-		}
-		throw new RuntimeException("Unexpected equality operator: " + equalityOperator.getWhich());
-	}
 }

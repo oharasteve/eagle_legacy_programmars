@@ -14,12 +14,18 @@ import com.eagle.programmar.VB.VB_Statement.VB_BaseStatement;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class VB_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("752y8abs.aspx") VB_Keyword IF1 = new VB_Keyword("if");
 	public @S(20) VB_Expression condition;
@@ -157,5 +163,46 @@ public class VB_IfStatement extends TokenSequence implements AbstractStatement, 
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		AbstractToken which = ifType.getWhich();
+		if (which instanceof VB_IfOneLiner)
+		{
+			VB_IfOneLiner oneLiner = (VB_IfOneLiner) which;
+			VB_Statement statement = new VB_Statement();
+			statement.baseStatement = oneLiner.thenStatement;
+			ifTrue.add(transformer.transformStatement(generator, statement.baseStatement.getWhich()));
+		}
+		else
+		{
+			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
+			for (VB_Statement statement : multiLiner.thenStatement._elements)
+			{
+				ifTrue.add(transformer.transformStatement(generator, statement.baseStatement.getWhich()));
+			}
+			
+			if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent() && multiLiner.elseIfClause.size() > 0)
+			{
+				throw new RuntimeException("Can't handle VB elseif yet. Has to recurse here.");
+			}
+			
+			if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())
+			{
+				for (VB_Statement statement : multiLiner.elseClause.elseStatement._elements)
+				{
+					ifFalse.add(transformer.transformStatement(generator, statement.baseStatement.getWhich()));
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

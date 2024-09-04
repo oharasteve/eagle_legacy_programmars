@@ -12,6 +12,8 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class Java_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
 {
@@ -49,5 +51,31 @@ public class Java_AssignmentExpression extends PrecedenceOperator implements Eag
 				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 			}
 		}
+	}
+	
+	public static Java_AssignmentExpression newAssignmentStatement(AbstractExpression varExpr,
+			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	{
+		Java_AssignmentExpression expr = new Java_AssignmentExpression();
+		expr.var = (Java_Expression) varExpr;
+		String punct;
+		switch (oper)
+		{
+		case EQUALS:
+			punct = "=";
+			break;
+		case PLUS_EQUALS:
+			punct = "+=";
+			break;
+		case MINUS_EQUALS:
+			punct = "-=";
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + oper);
+		}
+		expr.operator = new Java_PunctuationChoice(punct);
+		expr.expr = (Java_Expression) expression;
+		expr.setTransformationSource(source);
+		return expr;
 	}
 }

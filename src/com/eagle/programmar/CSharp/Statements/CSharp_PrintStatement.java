@@ -8,8 +8,10 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -46,5 +48,16 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 		}
 		
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
+	}
+
+	public static CSharp_PrintStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	{
+		CSharp_PrintStatement stmt = new CSharp_PrintStatement();
+		stmt.OUT = new CSharp_KeywordChoice("Out");
+		stmt.WRITE = new CSharp_KeywordChoice("WriteLine");
+		stmt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
+		stmt.exprs.addPrimaryElement((CSharp_Expression) line);
+		stmt.setTransformationSource(source);
+		return stmt;
 	}
 }

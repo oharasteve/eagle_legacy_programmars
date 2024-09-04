@@ -14,6 +14,7 @@ import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -62,14 +63,18 @@ public class VB_MultiplicativeExpression extends PrecedenceOperator implements E
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (operator.toString())
+		switch (operator.getWhich().toString())
 		{
 		case "*":
-			return generator.newTimesExpression(leftExpr, rightExpr);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "\\":
-			return generator.newDivideExpression(leftExpr, rightExpr);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
+		case "/":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
+		case "mod":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+			throw new RuntimeException("Unexpected multiplicative operator: " + operator.getWhich());
 		}
 	}
 }

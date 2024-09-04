@@ -3,13 +3,13 @@
 
 package com.eagle.programmar.JSON;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.JSON.Terminals.JSON_Comment;
 import com.eagle.programmar.JSON.Terminals.JSON_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class JSON_Program extends EagleLanguage
+public class JSON_Program extends AbstractLanguage
 {
 	public static final String JSON = "JSON";
 

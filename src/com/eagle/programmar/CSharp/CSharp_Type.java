@@ -79,4 +79,13 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		public @S(10) CSharp_Keyword EXTENDS = new CSharp_Keyword("extends");
 		public @S(20) CSharp_Identifier_Reference typeName;
 	}
+	
+	// Convert "double" to a CSharp_Type representing a double
+	public static CSharp_Type newPrimitiveType(String name)
+	{
+		CSharp_Type type = new CSharp_Type();
+		type.typeName = new CSharp_TypeName();
+		type.typeName.setWhich(new CSharp_KeywordChoice(name));
+		return type;
+	}
 }

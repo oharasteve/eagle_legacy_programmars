@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
-public class Lisp_Program extends EagleLanguage implements EagleRunnable
+public class Lisp_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String LISP = "Lisp";
 

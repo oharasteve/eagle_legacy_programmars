@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.Django;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.tokens.TokenList;
 
-public class Django_Program extends EagleLanguage
+public class Django_Program extends AbstractLanguage
 {
 	public static final String DJANGO = "Django";
 

@@ -5,7 +5,7 @@ package com.eagle.symbols_UNUSED;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleProject;
 import com.eagle.core.EagleSyntax;
 import com.eagle.core.ProgramEntry;
@@ -23,7 +23,7 @@ import com.eagle.tokens.AbstractToken;
 
 public class CSharp_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveLocalReferences(EagleLanguage language)
+	public void resolveLocalReferences(AbstractLanguage language)
 	{
 		CSharp_Program program = (CSharp_Program) language;
 		EagleScope scope = program.getScope();
@@ -53,7 +53,7 @@ public class CSharp_Resolve_References extends Eagle_Resolve_References
 	}
 
 	// Connect up all the external references from this program
-	public void resolveExternalReferences(EagleProject project, EagleLanguage language)
+	public void resolveExternalReferences(EagleProject project, AbstractLanguage language)
 	{
 		CSharp_Program program = (CSharp_Program) language;
 

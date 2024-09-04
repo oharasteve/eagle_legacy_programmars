@@ -5,7 +5,7 @@ package com.eagle.symbols_UNUSED;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Javascript.Javascript_Function;
 import com.eagle.programmar.Javascript.Javascript_Program;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
@@ -17,7 +17,7 @@ import com.eagle.tokens.DefinitionInterface;
 
 public class Javascript_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveReferences(EagleLanguage language)
+	public void resolveReferences(AbstractLanguage language)
 	{
 		Javascript_Program program = (Javascript_Program) language;
 		EagleScope scope = program.getScope();

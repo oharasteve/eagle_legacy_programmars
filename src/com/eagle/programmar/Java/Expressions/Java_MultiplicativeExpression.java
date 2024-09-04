@@ -7,15 +7,16 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_MultiplicativeExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("*", "/", "%");
@@ -49,20 +50,36 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		switch (operator.toString())
 		{
 		case "*":
-			return generator.newTimesExpression(leftExpr, rightExpr);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
-			return generator.newDivideExpression(leftExpr, rightExpr);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
+		case "%":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
 	
-	public static Java_MultiplicativeExpression generateExpression(AbstractExpression leftExpr, String oper, AbstractExpression rightExpr)
+	public static Java_MultiplicativeExpression generateExpression(AbstractExpression leftExpr, MultiplicativeEnum oper, AbstractExpression rightExpr, AbstractToken source)
 	{
 		Java_MultiplicativeExpression expr = new Java_MultiplicativeExpression();
 		expr.left = (Java_Expression) leftExpr;
 		expr.right = (Java_Expression) rightExpr;
-		expr.operator.setValue(oper);
+		switch(oper)
+		{
+		case TIMES:
+			expr.operator.setValue("*");
+			break;
+		case DIVIDE_TRUNCATE:
+			expr.operator.setValue("/");
+			break;
+		case MODULUS:
+			expr.operator.setValue("%");
+			break;
+		default:
+			throw new RuntimeException("Unable to handle: " + oper.toString());
+		}
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

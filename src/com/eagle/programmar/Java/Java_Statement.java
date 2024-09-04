@@ -8,6 +8,7 @@ import com.eagle.programmar.Java.Statements.Java_AssertStatement;
 import com.eagle.programmar.Java.Statements.Java_BreakStatement;
 import com.eagle.programmar.Java.Statements.Java_ContinueStatement;
 import com.eagle.programmar.Java.Statements.Java_DoStatement;
+import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_ForEachStatement;
 import com.eagle.programmar.Java.Statements.Java_ForStatement;
@@ -69,6 +70,7 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Java_BreakStatement XXbreakStatement;
 	public @CHOICE Java_ContinueStatement XXcontinueStatement;
 	public @CHOICE Java_DoStatement XXdoStatement;
+	public @CHOICE Java_ExitStatement XXexitStatement;
 	public @CHOICE Java_ForStatement XXforStatement;
 	public @CHOICE Java_ForEachStatement XXforEachStatement;
 	public @CHOICE Java_IfStatement XXifStatement;

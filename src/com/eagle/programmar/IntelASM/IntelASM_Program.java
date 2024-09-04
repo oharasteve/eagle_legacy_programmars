@@ -3,13 +3,13 @@
 
 package com.eagle.programmar.IntelASM;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Comment;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_EndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class IntelASM_Program extends EagleLanguage
+public class IntelASM_Program extends AbstractLanguage
 {
 	public static final String INTELASM = "IntelASM";
 

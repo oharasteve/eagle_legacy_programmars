@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
@@ -21,5 +23,13 @@ public class CSharp_ExpressionStatement extends TokenSequence implements EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expr);
+	}
+	
+	public static CSharp_ExpressionStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
+	{
+		CSharp_ExpressionStatement stmt = new CSharp_ExpressionStatement();
+		stmt.expr = (CSharp_Expression) expr;
+		stmt.setTransformationSource(source);
+		return stmt;
 	}
 }

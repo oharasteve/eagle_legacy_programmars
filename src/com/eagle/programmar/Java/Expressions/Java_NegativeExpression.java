@@ -7,15 +7,15 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGeneratableExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_NegativeExpression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression, EagleGeneratableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_PunctuationChoice operator = new Java_PunctuationChoice("-", "+");
 	public @S(20) Java_Expression expr;
@@ -44,17 +44,18 @@ public class Java_NegativeExpression extends PrimaryOperator
 		switch (operator.toString())
 		{
 		case "-":
-			return generator.newNegativeExpression(theExpr);
+			return generator.newNegativeExpression(theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negative operator: " + operator);
 		}
 	}
 	
-	public static Java_NegativeExpression generateExpression(String oper, AbstractExpression theExpr)
+	public static Java_NegativeExpression generateExpression(AbstractExpression theExpr, AbstractToken source)
 	{
 		Java_NegativeExpression expr = new Java_NegativeExpression();
 		expr.expr = (Java_Expression) theExpr;
-		expr.operator.setValue(oper);
+		expr.operator.setValue("-");
+		expr.setTransformationSource(source);
 		return expr;
 	}
 }

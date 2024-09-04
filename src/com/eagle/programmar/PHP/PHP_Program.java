@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.PHP;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.HTML.HTML_DocType;
@@ -20,7 +20,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class PHP_Program extends EagleLanguage implements EagleRunnable
+public class PHP_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String PHP = "PHP";
 

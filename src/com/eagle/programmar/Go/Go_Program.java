@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Go;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Go.Statements.Go_Data;
@@ -14,7 +14,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Go_Program extends EagleLanguage implements EagleRunnable
+public class Go_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String GO = "Go";
 

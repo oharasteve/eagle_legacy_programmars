@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Simple_Statement;
@@ -11,7 +11,7 @@ import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
 import com.eagle.tokens.TokenList;
 
-public class FSharp_Program extends EagleLanguage implements EagleRunnable
+public class FSharp_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String FSHARP = "FSharp";
 

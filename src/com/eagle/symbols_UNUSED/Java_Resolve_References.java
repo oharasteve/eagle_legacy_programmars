@@ -5,7 +5,7 @@ package com.eagle.symbols_UNUSED;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleProject;
 import com.eagle.core.EagleSyntax;
 import com.eagle.core.ProgramEntry;
@@ -25,7 +25,7 @@ import com.eagle.tokens.TokenList;
 
 public class Java_Resolve_References extends Eagle_Resolve_References
 {
-	public void resolveReferences(EagleLanguage language)
+	public void resolveReferences(AbstractLanguage language)
 	{
 		Java_Program program = (Java_Program) language;
 		EagleScope scope = program.getScope();
@@ -55,7 +55,7 @@ public class Java_Resolve_References extends Eagle_Resolve_References
 	}
 
 	// Connect up all the external references from this program
-	public void resolveExternalReferences(EagleProject project, EagleLanguage language)
+	public void resolveExternalReferences(EagleProject project, AbstractLanguage language)
 	{
 		Java_Program program = (Java_Program) language;
 

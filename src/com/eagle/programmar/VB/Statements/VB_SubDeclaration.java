@@ -18,8 +18,12 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_SubDeclaration extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
+public class VB_SubDeclaration extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public");
 	public @S(20) VB_Keyword SUB1 = new VB_Keyword("sub");
@@ -51,5 +55,11 @@ public class VB_SubDeclaration extends TokenSequence implements AbstractFunction
 		// Don't do anything here.
 		// We searched for all the subs in a preliminary pass
 		// And we only evaluate when it is called
+	}
+	
+	@Override
+	public AbstractFunction transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		throw new RuntimeException("Need to implement");
 	}
 }
