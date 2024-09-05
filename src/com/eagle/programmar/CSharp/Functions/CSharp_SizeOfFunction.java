@@ -9,7 +9,7 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_SizeOf extends PrimaryOperator
+public class CSharp_SizeOfFunction extends PrimaryOperator
 {
 	public @S(10) CSharp_KeywordChoice SIZEOF = new CSharp_KeywordChoice("sizeof", "typeof");
 	public @S(20) PunctuationLeftParen leftParen;

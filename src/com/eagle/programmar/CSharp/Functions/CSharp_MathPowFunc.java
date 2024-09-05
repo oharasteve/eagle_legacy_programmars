@@ -8,23 +8,20 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_MathPowFunction extends PrecedenceOperator implements EagleRunnable
+public class CSharp_MathPowFunc extends TokenSequence implements EagleRunnable
 {
-	public @S(10) CSharp_Keyword MATH = new CSharp_Keyword("Math");
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) CSharp_Keyword POW = new CSharp_Keyword("Pow");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) CSharp_Expression number;
-	public @S(60) PunctuationComma comma;
-	public @S(70) CSharp_Expression power;
-	public @S(80) PunctuationRightParen rightParen;
+	public @S(10) CSharp_Keyword POW = new CSharp_Keyword("Pow");
+	public @S(20) PunctuationLeftParen leftParen;
+	public @S(30) CSharp_Expression number;
+	public @S(40) PunctuationComma comma;
+	public @S(50) CSharp_Expression power;
+	public @S(60) PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -34,12 +31,12 @@ public class CSharp_MathPowFunction extends PrecedenceOperator implements EagleR
 		interpreter.pushDouble(Math.pow(num, pow));
 	}
 	
-	public static CSharp_MathPowFunction generateExpression(AbstractExpression number, AbstractExpression power, AbstractToken source)
+	public static CSharp_MathFunction generateExpression(AbstractExpression number, AbstractExpression power, AbstractToken source)
 	{
-		CSharp_MathPowFunction pow = new CSharp_MathPowFunction();
+		CSharp_MathPowFunc pow = new CSharp_MathPowFunc();
 		pow.number = (CSharp_Expression) number;
 		pow.power = (CSharp_Expression) power;
 		pow.setTransformationSource(source);
-		return pow;
+		return CSharp_MathFunction.wrapFunction(pow, source);
 	}
 }

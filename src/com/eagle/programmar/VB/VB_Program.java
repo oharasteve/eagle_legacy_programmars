@@ -8,8 +8,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
 import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
@@ -71,7 +73,8 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 			if (which instanceof EagleTransformableFunction)
 			{
 				EagleTransformableFunction transformable = (EagleTransformableFunction) which;
-				transformable.transformFunction(transformer, generator);
+				AbstractFunction newFunc = transformable.transformFunction(transformer, generator);
+				generator.addFunction(newFunc);
 			}
 		}
 		
@@ -82,7 +85,8 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 			if (which instanceof EagleTransformableStatement)
 			{
 				EagleTransformableStatement transformable = (EagleTransformableStatement) which;
-				transformable.transformStatement(transformer, generator);
+				AbstractStatement newStmt = transformable.transformStatement(transformer, generator);
+				generator.addStatement(newStmt);
 			}
 		}
 		

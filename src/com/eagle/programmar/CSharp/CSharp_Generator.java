@@ -17,7 +17,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
-import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunction;
+import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
@@ -25,6 +25,7 @@ import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -32,6 +33,11 @@ import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
 {
+	public CSharp_Generator()
+	{
+		_currentLanguage = new CSharp_Program();
+	}
+	
 	@Override
 	public String getName()
 	{
@@ -56,6 +62,18 @@ public class CSharp_Generator extends EagleGenerator
 		CSharp_Statement wrapper = new CSharp_Statement();
 		wrapper.setWhich(token);
 		return wrapper;
+	}
+
+	@Override
+	public void addFunction(AbstractFunction func)
+	{
+		
+	}
+	
+	@Override
+	public void addStatement(AbstractStatement stmt)
+	{
+		
 	}
 	
 	// ================ Statements ================
@@ -116,7 +134,7 @@ public class CSharp_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_MathPowFunction.generateExpression(left, right, source));
+		return wrapExpression(CSharp_MathPowFunc.generateExpression(left, right, source));
 	}
 	
 	@Override

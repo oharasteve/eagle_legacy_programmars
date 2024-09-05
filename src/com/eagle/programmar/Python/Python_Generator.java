@@ -28,6 +28,7 @@ import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Terminals.Python_Number;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -37,6 +38,11 @@ import com.eagle.transform.EagleGenerator;
 
 public class Python_Generator extends EagleGenerator
 {
+	public Python_Generator()
+	{
+		_currentLanguage = new Python3_Program();
+	}
+	
 	@Override
 	public String getName()
 	{
@@ -69,6 +75,18 @@ public class Python_Generator extends EagleGenerator
 		return wrapper;
 	}
 	
+	@Override
+	public void addFunction(AbstractFunction func)
+	{
+		
+	}
+	
+	@Override
+	public void addStatement(AbstractStatement stmt)
+	{
+		
+	}
+
 	// ================ Statements ================
 	
 	@Override

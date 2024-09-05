@@ -17,7 +17,7 @@ import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
-import com.eagle.programmar.Java.Functions.Java_MathPowFunction;
+import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
@@ -25,6 +25,7 @@ import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_PrintStatement;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -32,6 +33,11 @@ import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator extends EagleGenerator
 {
+	public Java_Generator()
+	{
+		_currentLanguage = new Java_Program();
+	}
+	
 	@Override
 	public String getName()
 	{
@@ -56,6 +62,18 @@ public class Java_Generator extends EagleGenerator
 		Java_Statement wrapper = new Java_Statement();
 		wrapper.setWhich(token);
 		return wrapper;
+	}
+
+	@Override
+	public void addFunction(AbstractFunction func)
+	{
+		
+	}
+	
+	@Override
+	public void addStatement(AbstractStatement stmt)
+	{
+		
 	}
 	
 	// ================ Statements ================
@@ -116,7 +134,7 @@ public class Java_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_MathPowFunction.generateExpression(left, right, source));
+		return wrapExpression(Java_MathPowFunc.generateExpression(left, right, source));
 	}
 	
 	@Override

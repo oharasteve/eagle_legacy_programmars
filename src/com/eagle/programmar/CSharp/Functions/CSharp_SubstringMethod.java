@@ -38,7 +38,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 		if (ncExpr != null && ncExpr.isPresent())
 		{
 			int nc = interpreter.getIntValue(ncExpr);
-			interpreter.pushStr(leftStr.substring(sc, nc));
+			interpreter.pushStr(leftStr.substring(sc, sc + nc));
 		}
 		else
 		{
