@@ -130,11 +130,10 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 		Python_IfStatement ifStmt = new Python_IfStatement();
 		ifStmt.condition = (Python_Expression) condition;
 
-		Python_StatementBlock thenBlock = new Python_StatementBlock();
+		ifStmt.ifThenStatements = new Python_StatementBlock();
 		Python_MultilineStatement thenMulti = new Python_MultilineStatement();
-		thenBlock.setWhich(thenMulti);
+		ifStmt.ifThenStatements.setWhich(thenMulti);
 		thenMulti.statements = new TokenList<Python_Statement>();
-		ifStmt.ifThenStatements.setWhich(thenBlock);
 		for (AbstractStatement stmt : thenStatements)
 		{
 			thenMulti.statements.addToken((Python_Statement) stmt);
@@ -144,11 +143,10 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 		{
 			ifStmt.ifElse = new Python_IfElse();
 			ifStmt.ifElse.setPresent(true);
-			Python_StatementBlock elseBlock = new Python_StatementBlock();
+			ifStmt.ifElse.ifElseStatements = new Python_StatementBlock();
 			Python_MultilineStatement elseMulti = new Python_MultilineStatement();
-			elseBlock.setWhich(elseMulti);
+			ifStmt.ifElse.ifElseStatements.setWhich(elseMulti);
 			elseMulti.statements = new TokenList<Python_Statement>();
-			ifStmt.ifElse.ifElseStatements.setWhich(elseBlock);
 			for (AbstractStatement stmt : elseStatements)
 			{
 				elseMulti.statements.addToken((Python_Statement) stmt);

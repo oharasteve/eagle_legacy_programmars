@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class CSharp_LengthMethod extends PrecedenceOperator implements EagleRunnable
@@ -21,5 +23,13 @@ public class CSharp_LengthMethod extends PrecedenceOperator implements EagleRunn
 	{
 		String leftStr = interpreter.getStrValue(left);
 		interpreter.pushInt(leftStr.length());
+	}
+	
+	public static CSharp_LengthMethod generateExpression(AbstractExpression expr, AbstractToken source)
+	{
+		CSharp_LengthMethod len = new CSharp_LengthMethod();
+		len.left = (CSharp_Expression) expr;
+		len.setTransformationSource(source);
+		return len;
 	}
 }

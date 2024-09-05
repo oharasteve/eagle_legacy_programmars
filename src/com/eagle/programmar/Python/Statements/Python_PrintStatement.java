@@ -4,6 +4,8 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Functions.Python_Print_Function;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.AbstractToken;
@@ -20,12 +22,14 @@ public class Python_PrintStatement extends TokenSequence implements AbstractStat
 	public @S(30) @OPT SeparatedList<Python_Expression, PunctuationComma> exprs;
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
 
-	public static Python_PrintStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	public static Python_ExpressionStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
-		Python_PrintStatement stmt = new Python_PrintStatement();
-		stmt.exprs = new SeparatedList<Python_Expression, PunctuationComma>();
-		stmt.exprs.addPrimaryElement((Python_Expression) line);
-		stmt.setTransformationSource(source);
+		Python_Print_Function func = new Python_Print_Function();
+		func.expr = (Python_Expression) line;
+		func.setTransformationSource(source);
+
+		Python_ExpressionStatement stmt = new Python_ExpressionStatement();
+		stmt.expression = Python_Generator.wrapExpression(func);
 		return stmt;
 	}
 }

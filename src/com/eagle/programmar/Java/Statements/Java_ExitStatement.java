@@ -18,9 +18,9 @@ public class Java_ExitStatement extends TokenSequence implements EagleRunnableWi
 {
 	public @S(10) @NEWLINE Java_Keyword SYSTEM = new Java_Keyword("System");
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(10) @NEWLINE Java_Keyword EXIT = new Java_Keyword("exit");
-	public @S(20) @NOSPACE Java_Expression code;
-	public @S(30) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(30) @NEWLINE Java_Keyword EXIT = new Java_Keyword("exit");
+	public @S(40) @NOSPACE Java_Expression code;
+	public @S(50) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

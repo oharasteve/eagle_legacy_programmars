@@ -64,6 +64,8 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 	public static Python_Parenthesized_Expression generateExpression(AbstractExpression theExpr, AbstractToken source)
 	{
 		Python_Parenthesized_Expression expr = new Python_Parenthesized_Expression();
+		expr.list = new Python_List();
+		expr.list.setPresent(true);
 		expr.list.expr = (Python_Expression) theExpr;
 		expr.setTransformationSource(source);
 		return expr;

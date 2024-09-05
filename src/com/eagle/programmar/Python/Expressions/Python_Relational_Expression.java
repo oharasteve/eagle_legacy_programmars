@@ -118,6 +118,7 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 			operator = new Python_PunctuationChoice(">=");
 			break;
 		}
+		expr.relOp = new Python_Relational_Operator();
 		expr.relOp.setWhich(operator);
 		expr.setTransformationSource(source);
 		return expr;

@@ -16,7 +16,9 @@ import com.eagle.programmar.Java.Expressions.Java_NegativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunction;
+import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
@@ -42,7 +44,7 @@ public class Java_Generator extends EagleGenerator
 		return ".java";
 	}
 	
-	private static Java_Expression wrapExpression(AbstractToken token)
+	public static Java_Expression wrapExpression(AbstractToken token)
 	{
 		Java_Expression wrapper = new Java_Expression();
 		wrapper.setWhich(token);
@@ -118,6 +120,12 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
+	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Java_LengthMethod.generateExpression(expr, source));
+	}
+	
+	@Override
 	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
 	{
 		return wrapExpression(Java_Literal.generateExpression(literal, source));
@@ -172,6 +180,13 @@ public class Java_Generator extends EagleGenerator
 		return wrapExpression(Java_RelationalExpression.generateExpression(left, relOp, right, source));
 	}
 	
+	@Override
+	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
+			SubstringEnum which, AbstractExpression scOrnc, AbstractToken source)
+	{
+		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, which, scOrnc, source));
+	}
+
 	@Override
 	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{

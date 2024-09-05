@@ -17,4 +17,13 @@ public class Java_CastExpression extends PrimaryOperator
 	public @S(20) SeparatedList<Java_Type, PunctuationAmpersand> types;
 	public @S(30) PunctuationRightParen rightParen;
 	public @S(40) Java_Expression expr;
+
+	public static Java_CastExpression newCastExpression(Java_Type type, Java_Expression expr)
+	{
+		Java_CastExpression cast = new Java_CastExpression();
+		cast.types = new SeparatedList<Java_Type, PunctuationAmpersand>();
+		cast.types.addPrimaryElement(type);
+		cast.expr = expr;
+		return cast;
+	}
 }

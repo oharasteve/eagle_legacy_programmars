@@ -7,11 +7,16 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
+import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubstringEnum;
 
 public class Python_Subscript extends TokenSequence
 {
@@ -73,5 +78,35 @@ public class Python_Subscript extends TokenSequence
 			}
 			interpreter.pushStr(str.substring(start, stop));
 		}
+	}
+	
+	public static Python_Subscript generateExpression(AbstractExpression sc,
+			SubstringEnum which, AbstractExpression ecOrnc, AbstractToken source)
+	{
+		Python_Subscript subscr = new Python_Subscript();
+		subscr.body = new Python_SubscrExpr();
+		subscr.body.subscr = (Python_Expression) sc;
+		subscr.body.subscr.setPresent(true);
+		subscr.body.subscriptStep = null;
+		
+		switch (which)
+		{
+		case GIVEN_EC:
+			subscr.body.subscriptStop = new Python_ColonSubscript();
+			subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
+			subscr.body.subscriptStop.setPresent(true);
+			break;
+		case GIVEN_NC:
+			subscr.body.subscriptStop = new Python_ColonSubscript();
+			Python_Additive_Expression scPlusNc = Python_Additive_Expression.generateExpression(sc, AdditiveEnum.PLUS, ecOrnc, source);
+			subscr.body.subscriptStop.expr = Python_Generator.wrapExpression(scPlusNc);
+			subscr.body.subscriptStop.setPresent(true);
+			break;
+		case GIVEN_NEITHER:
+			subscr.body.subscriptStop = null;
+			break;
+		}
+		subscr.setTransformationSource(source);
+		return subscr;
 	}
 }

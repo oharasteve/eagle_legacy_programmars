@@ -6,6 +6,8 @@ package com.eagle.programmar.Java.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -72,6 +74,12 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 			break;
 		case DIVIDE_TRUNCATE:
 			expr.operator.setValue("/");
+			break;
+		case DIVIDE_NO_TRUNCATE:
+			expr.operator.setValue("/");
+			Java_Type type = Java_Type.newPrimitiveType("double");
+			Java_CastExpression cast = Java_CastExpression.newCastExpression(type, expr.right);
+			expr.right = Java_Generator.wrapExpression(cast);
 			break;
 		case MODULUS:
 			expr.operator.setValue("%");

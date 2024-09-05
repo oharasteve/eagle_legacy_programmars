@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -23,5 +25,13 @@ public class Python_Len_Function extends PrimaryOperator implements EagleRunnabl
 	{
 		String line = interpreter.getStrValue(expr);
 		interpreter.pushInt(line.length());
+	}
+	
+	public static Python_Len_Function generateExpression(AbstractExpression expr, AbstractToken source)
+	{
+		Python_Len_Function len = new Python_Len_Function();
+		len.expr = (Python_Expression) expr;
+		len.setTransformationSource(source);
+		return len;
 	}
 }

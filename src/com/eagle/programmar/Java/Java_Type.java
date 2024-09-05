@@ -86,4 +86,13 @@ public class Java_Type extends TokenSequence implements AbstractType
 		public @S(10) Java_KeywordChoice EXTENDS = new Java_KeywordChoice("extends", "super");
 		public @S(20) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> typeName;
 	}
+	
+	// Convert "double" to a Java_Type representing a double
+	public static Java_Type newPrimitiveType(String name)
+	{
+		Java_Type type = new Java_Type();
+		type.typeName = new Java_TypeName();
+		type.typeName.setWhich(new Java_KeywordChoice(name));
+		return type;
+	}
 }

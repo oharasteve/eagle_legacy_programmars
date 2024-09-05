@@ -8,11 +8,16 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubstringEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_MidFunction extends PrimaryOperator implements EagleRunnable
+public class VB_MidFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Keyword MID = new VB_Keyword("MID");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -32,5 +37,14 @@ public class VB_MidFunction extends PrimaryOperator implements EagleRunnable
 		int len = str.length();
 		if (sc + nc > len) nc = len - sc;	// Don't go past the end of the string
 		interpreter.pushStr(str.substring(sc, sc + nc));
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
+		AbstractExpression nc = transformer.transformExpression(generator, ncExpr);
+		return generator.newSubstringFunction(theExpr, sc, SubstringEnum.GIVEN_NC, nc, this);
 	}
 }

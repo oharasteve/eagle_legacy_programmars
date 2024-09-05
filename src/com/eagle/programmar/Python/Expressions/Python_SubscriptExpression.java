@@ -8,7 +8,10 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Subscript;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator.SubstringEnum;
 
 public class Python_SubscriptExpression extends PrecedenceOperator implements EagleRunnable
 {
@@ -20,5 +23,14 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		Python_Subscript.evaluateSubscript(interpreter, value, subscr);
+	}
+	
+	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr, AbstractExpression sc,
+			SubstringEnum which, AbstractExpression ecOrnc, AbstractToken source)
+	{
+		Python_SubscriptExpression expr = new Python_SubscriptExpression();
+		expr.subscr = Python_Subscript.generateExpression(sc, which, ecOrnc, source);
+		expr.setTransformationSource(source);
+		return expr;
 	}
 }

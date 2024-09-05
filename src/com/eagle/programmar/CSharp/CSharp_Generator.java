@@ -16,7 +16,9 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_NegativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
+import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunction;
+import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
@@ -118,6 +120,12 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
+	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(CSharp_LengthMethod.generateExpression(expr, source));
+	}
+	
+	@Override
 	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
 	{
 		return wrapExpression(CSharp_Literal.generateExpression(literal, source));
@@ -172,6 +180,13 @@ public class CSharp_Generator extends EagleGenerator
 		return wrapExpression(CSharp_RelationalExpression.generateExpression(left, relOp, right, source));
 	}
 	
+	@Override
+	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
+			SubstringEnum which, AbstractExpression scOrnc, AbstractToken source)
+	{
+		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc, which, scOrnc, source));
+	}
+
 	@Override
 	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{

@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -25,5 +27,13 @@ public class Java_LengthMethod extends PrecedenceOperator implements EagleRunnab
 	{
 		String leftStr = interpreter.getStrValue(left);
 		interpreter.pushInt(leftStr.length());
+	}
+	
+	public static Java_LengthMethod generateExpression(AbstractExpression expr, AbstractToken source)
+	{
+		Java_LengthMethod len = new Java_LengthMethod();
+		len.left = (Java_Expression) expr;
+		len.setTransformationSource(source);
+		return len;
 	}
 }

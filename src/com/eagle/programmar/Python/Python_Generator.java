@@ -11,6 +11,7 @@ import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
+import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.programmar.Python.Expressions.Python_Logical_And_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Or_Expression;
@@ -19,12 +20,13 @@ import com.eagle.programmar.Python.Expressions.Python_Negative_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Power_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
+import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
+import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
-import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
@@ -47,7 +49,7 @@ public class Python_Generator extends EagleGenerator
 		return ".py";
 	}
 	
-	private static Python_Expression wrapExpression(AbstractToken token)
+	public static Python_Expression wrapExpression(AbstractToken token)
 	{
 		Python_Expression wrapper = new Python_Expression();
 		wrapper.setWhich(token);
@@ -129,9 +131,15 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
+	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Python_Len_Function.generateExpression(expr, source));
+	}
+	
+	@Override
 	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
 	{
-		return wrapExpression(Python_Literal.generateExpression(literal, source));
+		return wrapExpression(Python_Literals.generateExpression(literal, source));
 	}
 
 	@Override
@@ -183,6 +191,13 @@ public class Python_Generator extends EagleGenerator
 		return wrapExpression(Python_Relational_Expression.generateExpression(left, relOp, right, source));
 	}
 	
+	@Override
+	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
+			SubstringEnum which, AbstractExpression scOrnc, AbstractToken source)
+	{
+		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, which, scOrnc, source));
+	}
+
 	@Override
 	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{
