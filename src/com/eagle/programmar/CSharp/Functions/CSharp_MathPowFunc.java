@@ -16,12 +16,12 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_MathPowFunc extends TokenSequence implements EagleRunnable
 {
-	public @S(10) CSharp_Keyword POW = new CSharp_Keyword("Pow");
-	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) CSharp_Expression number;
-	public @S(40) PunctuationComma comma;
+	public @S(10) @NOSPACE CSharp_Keyword POW = new CSharp_Keyword("Pow");
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_Expression number;
+	public @S(40) @NOSPACE PunctuationComma comma;
 	public @S(50) CSharp_Expression power;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -34,8 +34,11 @@ public class CSharp_MathPowFunc extends TokenSequence implements EagleRunnable
 	public static CSharp_MathFunction generateExpression(AbstractExpression number, AbstractExpression power, AbstractToken source)
 	{
 		CSharp_MathPowFunc pow = new CSharp_MathPowFunc();
+		pow.leftParen = new PunctuationLeftParen();
 		pow.number = (CSharp_Expression) number;
+		pow.comma = new PunctuationComma();
 		pow.power = (CSharp_Expression) power;
+		pow.rightParen = new PunctuationRightParen();
 		pow.setTransformationSource(source);
 		return CSharp_MathFunction.wrapFunction(pow, source);
 	}

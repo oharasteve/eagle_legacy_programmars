@@ -5,6 +5,7 @@ package com.eagle.programmar.CSharp;
 
 import java.util.ArrayList;
 
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
@@ -33,9 +34,15 @@ import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
 {
+	public CSharp_Program _currentLanguage;
+	public CSharp_Class _currentClass;
+	public CSharp_Method _currentMethod;
+	
 	public CSharp_Generator()
 	{
-		_currentLanguage = new CSharp_Program();
+		_currentMethod = CSharp_Method.newCSharpMethod("Main");
+		_currentClass = CSharp_Class.newCSharpClass(_currentMethod, "Expressions_vbs");
+		_currentLanguage = CSharp_Program.newCSharpProgram(_currentClass);
 	}
 	
 	@Override
@@ -48,6 +55,12 @@ public class CSharp_Generator extends EagleGenerator
 	public String getSuffix()
 	{
 		return ".cs";
+	}
+	
+	@Override
+	public AbstractLanguage getTransfomedProgram()
+	{
+		return _currentLanguage;
 	}
 	
 	public static CSharp_Expression wrapExpression(AbstractToken token)
@@ -73,7 +86,10 @@ public class CSharp_Generator extends EagleGenerator
 	@Override
 	public void addStatement(AbstractStatement stmt)
 	{
-		
+		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) _currentMethod.body.getWhich();
+		CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
+		stmtOrComment.setWhich((CSharp_Statement) stmt);
+		impl.block.statements.addToken(stmtOrComment);
 	}
 	
 	// ================ Statements ================

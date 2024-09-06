@@ -23,7 +23,7 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword SYSTEM = new CSharp_Keyword("System");
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
-	public @S(30) @NEWLINE CSharp_Keyword CONSOLE = new CSharp_Keyword("Console");
+	public @S(30) @NOSPACE CSharp_Keyword CONSOLE = new CSharp_Keyword("Console");
 	public @S(40) @NOSPACE PunctuationPeriod dot2;
 	public @S(50) @NOSPACE @OPT CSharp_KeywordChoice OUT = new CSharp_KeywordChoice("Error", "Out");
 	public @S(60) @NOSPACE @OPT PunctuationPeriod dot3;
@@ -53,10 +53,22 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 	public static CSharp_PrintStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
 		CSharp_PrintStatement stmt = new CSharp_PrintStatement();
+		stmt.SYSTEM.setPresent(true);
+		stmt.dot1 = new PunctuationPeriod();
+		stmt.dot1.setPresent(true);
 		stmt.OUT = new CSharp_KeywordChoice("Out");
+		stmt.OUT.setPresent(true);
+		stmt.dot2 = new PunctuationPeriod();
+		stmt.dot2.setPresent(true);
 		stmt.WRITE = new CSharp_KeywordChoice("WriteLine");
+		stmt.dot3 = new PunctuationPeriod();
+		stmt.dot3.setPresent(true);
+		stmt.leftParen = new PunctuationLeftParen();
+		stmt.rightParen = new PunctuationRightParen();
+		
 		stmt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
 		stmt.exprs.addPrimaryElement((CSharp_Expression) line);
+		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

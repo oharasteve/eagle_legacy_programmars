@@ -130,8 +130,8 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1090) Java_MultiplicativeExpression multiplicativeExpression;
 	public @P(1100) Java_AdditiveExpression additiveExpression;
 	public @P(1110) Java_ShiftExpression shiftExpression;
-	public @P(1120) Java_RelationalExpression relationalExpression;
-	public @P(1130) Java_InstanceOfExpression instanceOfExpression;
+	public @P(1120) Java_InstanceOfExpression instanceOfExpression;
+	public @P(1130) Java_RelationalExpression relationalExpression;
 	public @P(1140) Java_BitwiseAndExpression andExpression;
 	public @P(1150) Java_ExclusiveOrExpression exclusiveOrExpression;
 	public @P(1160) Java_BitwiseOrExpression inclusiveOrExpression;

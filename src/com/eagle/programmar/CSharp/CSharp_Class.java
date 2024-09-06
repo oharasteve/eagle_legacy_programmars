@@ -119,4 +119,28 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 			interpreter.tryToInterpret(element);
 		}
 	}
+	
+	public static CSharp_Class newCSharpClass(CSharp_Method meth, String className)
+	{
+		CSharp_Class cls = new CSharp_Class();
+		cls.modifiers = new TokenList<CSharp_ClassModifier>();
+		CSharp_ClassModifier modifier = new CSharp_ClassModifier();
+		modifier.modifier = new CSharp_KeywordChoice("public");
+		cls.modifiers.addToken(modifier);
+		
+		cls.className = new CSharp_Class_Definition();
+		cls.className.setValue(className);
+		
+		CSharp_ClassElement element = new CSharp_ClassElement();
+		element.setWhich(meth);
+
+		cls.classOrInterface = new CSharp_KeywordChoice("class");
+		cls.elements = new TokenList<CSharp_ClassElement>();
+		cls.elements.addToken(element);
+		cls.elements.setPresent(true);
+		cls.leftBrace = new PunctuationLeftBrace();
+		cls.rightBrace = new PunctuationRightBrace();
+		
+		return cls;
+	}
 }

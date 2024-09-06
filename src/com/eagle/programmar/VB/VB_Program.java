@@ -92,6 +92,6 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 		
 		// Tie up loose ends
 		
-		return generator._currentLanguage;
+		return generator.getTransfomedProgram();
 	}
 }

@@ -22,13 +22,13 @@ import com.eagle.transform.EagleGenerator.SubstringEnum;
 public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) CSharp_Keyword SUBSTRING = new CSharp_Keyword("Substring");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) CSharp_Expression scExpr;
-	public @S(60) @OPT PunctuationComma comma;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE CSharp_Keyword SUBSTRING = new CSharp_Keyword("Substring");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE CSharp_Expression scExpr;
+	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT CSharp_Expression ncExpr;
-	public @S(80) PunctuationRightParen rightParen;
+	public @S(80) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -50,18 +50,25 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			SubstringEnum which, AbstractExpression ecOrnc, AbstractToken source)
 	{
 		CSharp_SubstringMethod expr = new CSharp_SubstringMethod();
+		expr.dot = new PunctuationPeriod();
+		expr.leftParen = new PunctuationLeftParen();
 		expr.left = (CSharp_Expression) theExpr;
 		expr.scExpr = (CSharp_Expression) sc;
+		expr.rightParen = new PunctuationRightParen();
 		
 		switch (which)
 		{
 		case GIVEN_EC:
+			expr.comma = new PunctuationComma();
+			expr.comma.setPresent(true);
 			CSharp_AdditiveExpression ecMinusSc = CSharp_AdditiveExpression.generateExpression(ecOrnc, AdditiveEnum.MINUS, sc, source);
 			CSharp_Expression ncExpr = CSharp_Generator.wrapExpression(ecMinusSc);
 			expr.ncExpr = CSharp_Generator.wrapExpression(ncExpr);
 			expr.ncExpr.setPresent(true);
 			break;
 		case GIVEN_NC:
+			expr.comma = new PunctuationComma();
+			expr.comma.setPresent(true);
 			expr.ncExpr = (CSharp_Expression) ecOrnc;
 			expr.ncExpr.setPresent(true);
 			break;

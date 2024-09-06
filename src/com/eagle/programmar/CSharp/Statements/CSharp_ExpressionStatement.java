@@ -29,6 +29,7 @@ public class CSharp_ExpressionStatement extends TokenSequence implements EagleRu
 	{
 		CSharp_ExpressionStatement stmt = new CSharp_ExpressionStatement();
 		stmt.expr = (CSharp_Expression) expr;
+		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

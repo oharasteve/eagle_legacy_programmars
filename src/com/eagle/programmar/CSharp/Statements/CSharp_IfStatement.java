@@ -19,7 +19,9 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
@@ -104,6 +106,8 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 		}
 
 		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
+		thenBlock.leftBrace = new PunctuationLeftBrace();
+		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<CSharp_StatementOrComment>();
 		ifStmt.thenStatement = new CSharp_Statement();
 		ifStmt.thenStatement.setWhich(thenBlock);
@@ -119,6 +123,8 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 			ifStmt.elseClause = new CSharp_IfElseClause();
 			ifStmt.elseClause.setPresent(true);
 			CSharp_StatementBlock elseBlock = new CSharp_StatementBlock();
+			elseBlock.leftBrace = new PunctuationLeftBrace();
+			elseBlock.rightBrace = new PunctuationRightBrace();
 			elseBlock.statements = new TokenList<CSharp_StatementOrComment>();
 			ifStmt.elseClause.elseStatement = new CSharp_Statement();
 			ifStmt.elseClause.elseStatement.setWhich(elseBlock);

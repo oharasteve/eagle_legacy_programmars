@@ -34,7 +34,6 @@ public class Python_Reserved_Words
 			"not",
 			"or",
 			"pass",
-			"quit",
 			"raise",
 			"return",
 			"try",

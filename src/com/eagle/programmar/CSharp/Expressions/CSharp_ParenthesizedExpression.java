@@ -38,7 +38,9 @@ public class CSharp_ParenthesizedExpression extends PrimaryOperator
 	public static CSharp_ParenthesizedExpression generateExpression(AbstractExpression theExpr, AbstractToken source)
 	{
 		CSharp_ParenthesizedExpression expr = new CSharp_ParenthesizedExpression();
+		expr.leftParen = new PunctuationLeftParen();
 		expr.expression = (CSharp_Expression) theExpr;
+		expr.rightParen = new PunctuationRightParen();
 		expr.setTransformationSource(source);
 		return expr;
 	}

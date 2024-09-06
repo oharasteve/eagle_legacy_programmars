@@ -5,6 +5,7 @@ package com.eagle.programmar.Java;
 
 import java.util.ArrayList;
 
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
@@ -33,6 +34,8 @@ import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator extends EagleGenerator
 {
+	public Java_Program _currentLanguage;
+	
 	public Java_Generator()
 	{
 		_currentLanguage = new Java_Program();
@@ -48,6 +51,12 @@ public class Java_Generator extends EagleGenerator
 	public String getSuffix()
 	{
 		return ".java";
+	}
+	
+	@Override
+	public AbstractLanguage getTransfomedProgram()
+	{
+		return _currentLanguage;
 	}
 	
 	public static Java_Expression wrapExpression(AbstractToken token)

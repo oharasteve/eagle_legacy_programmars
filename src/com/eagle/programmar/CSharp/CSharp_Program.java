@@ -93,4 +93,17 @@ public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 			}
 		}
 	}
+	
+	public static CSharp_Program newCSharpProgram(CSharp_Class cls)
+	{
+		CSharp_NamespaceOrClassEntry entry = new CSharp_NamespaceOrClassEntry();
+		entry.setWhich(cls);
+	
+		CSharp_Program prog = new CSharp_Program();
+		prog.myClasses = new TokenList<CSharp_NamespaceOrClassEntry>();
+		prog.myClasses.setPresent(true);
+		prog.myClasses.addToken(entry);
+		return prog;
+	}
+
 }

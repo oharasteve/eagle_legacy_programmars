@@ -14,8 +14,8 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) CSharp_Keyword MATH = new CSharp_Keyword("Math");
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) CSharp_MathChoice choice;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE CSharp_MathChoice choice;
 	
 	public static class CSharp_MathChoice extends TokenChooser
 	{
@@ -25,6 +25,7 @@ public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnabl
 	static CSharp_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)
 	{
 		CSharp_MathFunction func = new CSharp_MathFunction();
+		func.dot = new PunctuationPeriod();
 		func.choice = new CSharp_MathChoice();
 		func.choice.setWhich(choice);
 		func.setTransformationSource(source);

@@ -5,6 +5,7 @@ package com.eagle.programmar.Python;
 
 import java.util.ArrayList;
 
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
@@ -38,6 +39,8 @@ import com.eagle.transform.EagleGenerator;
 
 public class Python_Generator extends EagleGenerator
 {
+	public Python3_Program _currentLanguage;
+	
 	public Python_Generator()
 	{
 		_currentLanguage = new Python3_Program();
@@ -53,6 +56,12 @@ public class Python_Generator extends EagleGenerator
 	public String getSuffix()
 	{
 		return ".py";
+	}
+	
+	@Override
+	public AbstractLanguage getTransfomedProgram()
+	{
+		return _currentLanguage;
 	}
 	
 	public static Python_Expression wrapExpression(AbstractToken token)
