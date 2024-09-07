@@ -6,6 +6,9 @@ package com.eagle.programmar.Java.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Functions.Java_EqualsMethod;
+import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -47,9 +50,34 @@ public class Java_RelationalExpression extends PrecedenceOperator implements Eag
 		throw new RuntimeException("Unexpected relational operator: " + operator);
 	}
 	
-	public static Java_RelationalExpression generateExpression(AbstractExpression leftExpr, RelationalEnum relOp,
+	private static boolean isString(AbstractExpression expression)
+	{
+		Java_Expression expr = (Java_Expression) expression;
+		if (expr.getWhich() instanceof Java_Literal) return true;
+		return false;
+	}
+	
+	public static Java_Expression generateExpression(AbstractExpression leftExpr, RelationalEnum relOp,
 			AbstractExpression rightExpr, AbstractToken source)
 	{
+		if (isString(leftExpr) || isString(rightExpr))
+		{
+			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod((Java_Expression) leftExpr, (Java_Expression) rightExpr);
+			equals.setTransformationSource(source);
+			Java_Expression equalsExpr = Java_Generator.wrapExpression(equals);
+			switch (relOp)
+			{
+			case EQUALS:
+				return equalsExpr;
+			case NOT_EQUALS:
+				Java_LogicalNotExpression not = Java_LogicalNotExpression.newNotExpression(equalsExpr);
+				not.setTransformationSource(source);
+				return Java_Generator.wrapExpression(not);
+			default:
+				throw new RuntimeException("Unable to handle " + relOp + " with strings");
+			}
+		}
+
 		Java_RelationalExpression expr = new Java_RelationalExpression();
 		expr.left = (Java_Expression) leftExpr;
 		expr.right = (Java_Expression) rightExpr;
@@ -76,6 +104,6 @@ public class Java_RelationalExpression extends PrecedenceOperator implements Eag
 			break;
 		}
 		expr.setTransformationSource(source);
-		return expr;
+		return Java_Generator.wrapExpression(expr);
 	}
 }

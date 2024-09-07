@@ -13,19 +13,24 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) CSharp_Keyword MATH = new CSharp_Keyword("Math");
-	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NOSPACE CSharp_MathChoice choice;
+	public @S(10) @OPT CSharp_Keyword SYSTEM = new CSharp_Keyword("System");
+	public @S(20) @OPT @NOSPACE PunctuationPeriod dot1;
+	public @S(30) @NOSPACE CSharp_Keyword MATH = new CSharp_Keyword("Math");
+	public @S(40) @NOSPACE PunctuationPeriod dot2;
+	public @S(50) @NOSPACE CSharp_MathChoice choice;
 	
 	public static class CSharp_MathChoice extends TokenChooser
 	{
-		public @CHOICE CSharp_MathPowFunc mathPowFunction;
+		public @CHOICE CSharp_MathPowFunc XXmathPowFunction;
 	}
 	
 	static CSharp_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)
 	{
 		CSharp_MathFunction func = new CSharp_MathFunction();
-		func.dot = new PunctuationPeriod();
+		func.SYSTEM.setPresent(true);
+		func.dot1 = new PunctuationPeriod();
+		func.dot1.setPresent(true);
+		func.dot2 = new PunctuationPeriod();
 		func.choice = new CSharp_MathChoice();
 		func.choice.setWhich(choice);
 		func.setTransformationSource(source);

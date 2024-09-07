@@ -13,7 +13,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.SubstringEnum;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -45,6 +46,6 @@ public class VB_MidFunction extends PrimaryOperator implements EagleRunnable, Ea
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
 		AbstractExpression nc = transformer.transformExpression(generator, ncExpr);
-		return generator.newSubstringFunction(theExpr, sc, SubstringEnum.GIVEN_NC, nc, this);
+		return generator.newSubstringFunction(theExpr, sc, SubstringSCEnum.FIRST_CHAR_IS_ONE, SubstringECEnum.GIVEN_NC, nc, this);
 	}
 }

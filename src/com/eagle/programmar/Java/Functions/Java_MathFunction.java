@@ -14,20 +14,21 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Java_Keyword MATH = new Java_Keyword("Math");
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Java_MathChoice choice;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Java_MathChoice choice;
 	
 	public static class Java_MathChoice extends TokenChooser
 	{
-		public @CHOICE Java_MathPowFunc mathPowFunction;
-		public @CHOICE Java_MathLogFunc mathLogFunction;
-		public @CHOICE Java_MathRoundFunc mathRoundFunction;
-		public @CHOICE Java_MathAbsFunc mathAbsFunction;
+		public @CHOICE Java_MathPowFunc XXmathPowFunction;
+		public @CHOICE Java_MathLogFunc XXmathLogFunction;
+		public @CHOICE Java_MathRoundFunc XXmathRoundFunction;
+		public @CHOICE Java_MathAbsFunc XXmathAbsFunction;
 	}
 	
 	static Java_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)
 	{
 		Java_MathFunction func = new Java_MathFunction();
+		func.dot = new PunctuationPeriod();
 		func.choice = new Java_MathChoice();
 		func.choice.setWhich(choice);
 		func.setTransformationSource(source);

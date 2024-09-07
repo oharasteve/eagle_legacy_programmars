@@ -10,13 +10,9 @@ import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
-import com.eagle.programmar.Java.Terminals.Java_Identifier;
-import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Program extends AbstractLanguage implements EagleRunnable
@@ -62,20 +58,6 @@ public class Java_Program extends AbstractLanguage implements EagleRunnable
 		public @CHOICE Java_Enum XXenum;
 	}
 
-	public static class Java_Package extends TokenSequence
-	{
-		public @S(10) @BLANKLINE Java_Keyword PACKAGE = new Java_Keyword("package");
-		public @S(20) Java_Identifier id;
-		public @S(30) @OPT TokenList<Java_MorePackageIds> moreIds;
-		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
-
-		public static class Java_MorePackageIds extends TokenSequence
-		{
-			public @S(10) @NOSPACE PunctuationPeriod dot;
-			public @S(20) @NOSPACE Java_Identifier id;
-		}
-	}
-
 	public static class Java_ImportOrComment extends TokenChooser
 	{
 		public @CHOICE @NEWLINE Java_Comment XXcomment;
@@ -117,5 +99,21 @@ public class Java_Program extends AbstractLanguage implements EagleRunnable
 				interpreter.tryToInterpret(cls);
 			}
 		}
+	}
+	
+	public static Java_Program newJavaProgram(Java_Class cls, String pkg)
+	{
+		Java_ClassOrEnum entry = new Java_ClassOrEnum();
+		entry.setWhich(cls);
+	
+		Java_Program prog = new Java_Program();
+		prog.classOrEnumList = new TokenList<Java_ClassOrEnum>();
+		prog.classOrEnumList.setPresent(true);
+		prog.classOrEnumList.addToken(entry);
+
+		prog.jpackage = Java_Package.newPackage(pkg);
+		prog.jpackage.setPresent(true);
+		
+		return prog;
 	}
 }

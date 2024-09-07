@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -16,7 +17,8 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringEnum;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Python_Subscript extends TokenSequence
 {
@@ -81,15 +83,27 @@ public class Python_Subscript extends TokenSequence
 	}
 	
 	public static Python_Subscript generateExpression(AbstractExpression sc,
-			SubstringEnum which, AbstractExpression ecOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
 	{
 		Python_Subscript subscr = new Python_Subscript();
 		subscr.body = new Python_SubscrExpr();
-		subscr.body.subscr = (Python_Expression) sc;
-		subscr.body.subscr.setPresent(true);
 		subscr.body.subscriptStep = null;
 		
-		switch (which)
+		switch (whichSC)
+		{
+		case FIRST_CHAR_IS_ZERO:
+			subscr.body.subscr = (Python_Expression) sc;
+			subscr.body.subscr.setPresent(true);
+			break;
+		case FIRST_CHAR_IS_ONE:
+			Python_Expression one = Python_Generator.wrapExpression(Python_Number.generateExpression("1", source));
+			Python_Additive_Expression scMinusOne = Python_Additive_Expression.generateExpression(sc, AdditiveEnum.MINUS, one, source);
+			subscr.body.subscr = Python_Generator.wrapExpression(scMinusOne);
+			subscr.body.subscr.setPresent(true);
+			break;
+		}
+
+		switch (whichEC)
 		{
 		case GIVEN_EC:
 			subscr.body.subscriptStop = new Python_ColonSubscript();

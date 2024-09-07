@@ -30,6 +30,7 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
@@ -92,8 +93,21 @@ public class CSharp_Generator extends EagleGenerator
 		impl.block.statements.addToken(stmtOrComment);
 	}
 	
+	@Override
+	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		return CSharp_Type.transformType(type, typeName, source);
+	}
+
 	// ================ Statements ================
 	
+	@Override
+	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
+			AbstractExpression initial, AbstractToken source)
+	{
+		return wrapStatement(CSharp_Data.newDataDeclaration(name,size, type, initial, source));
+	}
+
 	@Override
 	public AbstractStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
@@ -216,9 +230,9 @@ public class CSharp_Generator extends EagleGenerator
 	
 	@Override
 	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringEnum which, AbstractExpression scOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
 	{
-		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc, which, scOrnc, source));
+		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}
 
 	@Override

@@ -16,7 +16,7 @@ public class Java_MathRoundFunc extends TokenSequence implements EagleRunnable
 	public @S(10) Java_Keyword ROUND = new Java_Keyword("round");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Java_Expression number;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(40) PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

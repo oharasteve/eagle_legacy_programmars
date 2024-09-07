@@ -9,6 +9,7 @@ import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -17,18 +18,19 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringEnum;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Java_SubstringMethod extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Java_Keyword SUBSTRING = new Java_Keyword("substring");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) Java_Expression scExpr;
-	public @S(60) @OPT PunctuationComma comma;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Java_Keyword SUBSTRING = new Java_Keyword("substring");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE Java_Expression scExpr;
+	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT Java_Expression ecExpr;
-	public @S(80) PunctuationRightParen rightParen;
+	public @S(80) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -47,20 +49,38 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 	}
 	
 	public static Java_SubstringMethod generateExpression(AbstractExpression theExpr, AbstractExpression sc,
-			SubstringEnum which, AbstractExpression ecOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
 	{
 		Java_SubstringMethod expr = new Java_SubstringMethod();
+		expr.dot = new PunctuationPeriod();
 		expr.left = (Java_Expression) theExpr;
-		expr.scExpr = (Java_Expression) sc;
+		expr.leftParen = new PunctuationLeftParen();
+		expr.rightParen = new PunctuationRightParen();
+
+		switch (whichSC)
+		{
+		case FIRST_CHAR_IS_ZERO:
+			expr.scExpr = (Java_Expression) sc;
+			break;
+		case FIRST_CHAR_IS_ONE:
+			Java_Expression one = Java_Generator.wrapExpression(Java_Number.generateExpression("1", source));
+			Java_AdditiveExpression scMinusOne = Java_AdditiveExpression.generateExpression(sc, AdditiveEnum.MINUS, one, source);
+			expr.scExpr = Java_Generator.wrapExpression(scMinusOne);
+			break;
+		}
 		
-		switch (which)
+		switch (whichEC)
 		{
 		case GIVEN_EC:
+			expr.comma = new PunctuationComma();
+			expr.comma.setPresent(true);
 			expr.ecExpr = (Java_Expression) ecOrnc;
 			expr.ecExpr.setPresent(true);
 			break;
 		case GIVEN_NC:
-			Java_AdditiveExpression scPlusNc = Java_AdditiveExpression.generateExpression(sc, AdditiveEnum.PLUS, ecOrnc, source);
+			expr.comma = new PunctuationComma();
+			expr.comma.setPresent(true);
+			Java_AdditiveExpression scPlusNc = Java_AdditiveExpression.generateExpression(expr.scExpr, AdditiveEnum.PLUS, ecOrnc, source);
 			expr.ecExpr = Java_Generator.wrapExpression(scPlusNc);
 			expr.ecExpr.setPresent(true);
 			break;
@@ -68,6 +88,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			expr.ecExpr = null;
 			break;
 		}
+		
 		expr.setTransformationSource(source);
 		return expr;
 	}

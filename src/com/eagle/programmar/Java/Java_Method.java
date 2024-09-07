@@ -6,10 +6,13 @@ package com.eagle.programmar.Java;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.Java.Java_ParameterList.Java_MethodParameter;
+import com.eagle.programmar.Java.Java_Type.Java_ArrayType;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Symbols.Java_Current_Class_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
+import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -23,8 +26,12 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Method extends TokenSequence
@@ -53,7 +60,7 @@ public class Java_Method extends TokenSequence
 	{
 		public @S(10) Java_Type jtype;
 		public @S(20) Java_Method_Definition methodName;
-		public @S(30) Java_ParameterList parameters;
+		public @S(30) @NOSPACE Java_ParameterList parameters;
 	}
 
 	public static class Java_MethodGeneric extends TokenSequence
@@ -159,5 +166,52 @@ public class Java_Method extends TokenSequence
 				interpreter.completedFunction("main", this);
 			}
 		}
+	}
+	
+	public static Java_Method newJavaMethod(String methodName)
+	{
+		Java_Method meth = new Java_Method();
+		meth.modifiers = new TokenList<Java_MethodModifier>();
+		Java_MethodModifier modifier1 = new Java_MethodModifier();
+		modifier1.setWhich(new Java_KeywordChoice("public"));
+		meth.modifiers.addToken(modifier1);
+		Java_MethodModifier modifier2 = new Java_MethodModifier();
+		modifier2.setWhich(new Java_KeywordChoice("static"));
+		meth.modifiers.addToken(modifier2);
+		
+		meth.typeAndName = new Java_MethodTypeAndName();
+		Java_MethodType methodType = new Java_MethodType();
+		methodType.jtype = Java_Type.newPrimitiveType("void");
+		methodType.parameters = new Java_ParameterList();
+		methodType.parameters.setPresent(true);
+		methodType.parameters.leftParen = new PunctuationLeftParen();
+		methodType.parameters.rightParen = new PunctuationRightParen();
+		meth.typeAndName.setWhich(methodType);
+		
+		Java_ArrayType array = new Java_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		Java_Type type = Java_Type.newPrimitiveType("String");
+		type.arrayTypes = new TokenList<Java_ArrayType>();
+		type.arrayTypes.addToken(array);
+		type.arrayTypes.setPresent(true);
+		
+		methodType.parameters.param = new Java_MethodParameter();
+		methodType.parameters.param.setPresent(true);
+		methodType.parameters.param.id = new Java_Variable_Definition();
+		methodType.parameters.param.id.setValue("args");
+		methodType.parameters.param.jtype = type;
+		
+		meth.body = new Java_MethodBody();
+		Java_MethodImplementation impl = new Java_MethodImplementation();
+		impl.block = new Java_StatementBlock();
+		impl.block.leftBrace = new PunctuationLeftBrace();
+		impl.block.statements = new TokenList<Java_StatementOrComment>();
+		impl.block.rightBrace = new PunctuationRightBrace();
+		meth.body.setWhich(impl);
+		
+		methodType.methodName = new Java_Method_Definition();
+		methodType.methodName.setValue(methodName);
+		return meth;
 	}
 }

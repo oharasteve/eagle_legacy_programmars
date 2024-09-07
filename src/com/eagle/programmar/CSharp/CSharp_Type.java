@@ -7,6 +7,7 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -16,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_Type extends TokenSequence implements AbstractType
 {
@@ -87,5 +89,22 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		type.typeName = new CSharp_TypeName();
 		type.typeName.setWhich(new CSharp_KeywordChoice(name));
 		return type;
+	}
+	
+	public static CSharp_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		switch (type)
+		{
+		case BOOLEAN:
+			return newPrimitiveType("bool");
+		case INTEGER:
+			return newPrimitiveType("int");
+		case DOUBLE:
+			return newPrimitiveType("double");
+		case STRING:
+			return newPrimitiveType("string");
+		default:
+			throw new RuntimeException("Can't transform type: " + type);
+		}
 	}
 }

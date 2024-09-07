@@ -18,7 +18,7 @@ public class Java_NegativeExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_PunctuationChoice operator = new Java_PunctuationChoice("-", "+");
-	public @S(20) Java_Expression expr;
+	public @S(20) @NOSPACE Java_Expression expr;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

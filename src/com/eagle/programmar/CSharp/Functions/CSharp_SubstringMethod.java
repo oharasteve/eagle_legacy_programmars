@@ -9,6 +9,7 @@ import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -17,7 +18,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringEnum;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleRunnable
 {
@@ -47,16 +49,27 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 	}
 	
 	public static CSharp_SubstringMethod generateExpression(AbstractExpression theExpr, AbstractExpression sc,
-			SubstringEnum which, AbstractExpression ecOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
 	{
 		CSharp_SubstringMethod expr = new CSharp_SubstringMethod();
 		expr.dot = new PunctuationPeriod();
-		expr.leftParen = new PunctuationLeftParen();
 		expr.left = (CSharp_Expression) theExpr;
-		expr.scExpr = (CSharp_Expression) sc;
+		expr.leftParen = new PunctuationLeftParen();
 		expr.rightParen = new PunctuationRightParen();
 		
-		switch (which)
+		switch (whichSC)
+		{
+		case FIRST_CHAR_IS_ZERO:
+			expr.scExpr = (CSharp_Expression) sc;
+			break;
+		case FIRST_CHAR_IS_ONE:
+			CSharp_Expression one = CSharp_Generator.wrapExpression(CSharp_Number.generateExpression("1", source));
+			CSharp_AdditiveExpression scMinusOne = CSharp_AdditiveExpression.generateExpression(sc, AdditiveEnum.MINUS, one, source);
+			expr.scExpr = CSharp_Generator.wrapExpression(scMinusOne);
+			break;
+		}
+		
+		switch (whichEC)
 		{
 		case GIVEN_EC:
 			expr.comma = new PunctuationComma();
@@ -76,6 +89,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			expr.ncExpr = null;
 			break;
 		}
+		
 		expr.setTransformationSource(source);
 		return expr;
 	}

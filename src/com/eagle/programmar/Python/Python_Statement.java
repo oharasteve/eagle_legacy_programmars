@@ -113,6 +113,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_BreakStatement XXbreakStatement;
 		public @CHOICE Python_ClassDeclaration XXclassDeclaration;
 		public @CHOICE Python_ContinueStatement XXcontinueStatement;
+		public @CHOICE Python_Data XXdataDeclaration;
 		public @CHOICE Python_DeleteStatement XXdelStatement;
 		public @CHOICE Python_ExecStatement XXexecStatement;
 		public @CHOICE Python_ForStatement XXforStatement;

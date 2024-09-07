@@ -18,7 +18,7 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("-", "+");
-	public @S(20) CSharp_Expression expr;
+	public @S(20) @NOSPACE CSharp_Expression expr;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

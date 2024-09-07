@@ -41,4 +41,11 @@ public class Java_LogicalNotExpression extends PrimaryOperator
 		expr.setTransformationSource(source);
 		return expr;
 	}
+	
+	public static Java_LogicalNotExpression newNotExpression(Java_Expression expr)
+	{
+		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
+		not.expr = expr;
+		return not;
+	}
 }

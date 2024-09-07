@@ -17,11 +17,11 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Java_Keyword POW = new Java_Keyword("pow");
-	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Java_Expression number;
-	public @S(40) PunctuationComma comma;
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE Java_Expression number;
+	public @S(40) @NOSPACE PunctuationComma comma;
 	public @S(50) Java_Expression power;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -34,8 +34,11 @@ public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
 	public static Java_MathFunction generateExpression(AbstractExpression number, AbstractExpression power, AbstractToken source)
 	{
 		Java_MathPowFunc pow = new Java_MathPowFunc();
+		pow.leftParen = new PunctuationLeftParen();
 		pow.number = (Java_Expression) number;
+		pow.comma = new PunctuationComma();
 		pow.power = (Java_Expression) power;
+		pow.rightParen = new PunctuationRightParen();
 		pow.setTransformationSource(source);
 		return Java_MathFunction.wrapFunction(pow, source);
 	}

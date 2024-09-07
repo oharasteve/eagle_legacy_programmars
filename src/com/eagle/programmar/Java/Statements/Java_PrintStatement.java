@@ -53,9 +53,18 @@ public class Java_PrintStatement extends TokenSequence implements AbstractStatem
 	public static Java_PrintStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
 		Java_PrintStatement stmt = new Java_PrintStatement();
+		stmt.dot1 = new PunctuationPeriod();
+		stmt.dot1.setPresent(true);
 		stmt.OUT = new Java_KeywordChoice("out");
+		stmt.dot2 = new PunctuationPeriod();
+		stmt.dot2.setPresent(true);
 		stmt.PRINT = new Java_KeywordChoice("println");
+		stmt.leftParen = new PunctuationLeftParen();
+		stmt.rightParen = new PunctuationRightParen();
+
 		stmt.expr = (Java_Expression) line;
+		stmt.expr.setPresent(true);
+		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

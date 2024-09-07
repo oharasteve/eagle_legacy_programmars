@@ -29,6 +29,7 @@ public class Java_ExpressionStatement extends TokenSequence implements EagleRunn
 	{
 		Java_ExpressionStatement stmt = new Java_ExpressionStatement();
 		stmt.expr = (Java_Expression) expr;
+		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

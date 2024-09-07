@@ -9,10 +9,13 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -70,5 +73,36 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 	{
 		EagleValue value = interpreter.getEagleValue(initialValue);
 		interpreter.setSymbol(id, id.toString(), value);
+	}
+	
+	public static Java_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
+				AbstractExpression initial, AbstractToken source)
+	{
+		if (type == null)
+		{
+			throw new RuntimeException("Can't create data without a type");
+		}
+		
+		Java_Data data = new Java_Data();
+		data.semicolon = new PunctuationSemicolon();
+		
+		// Set data name and type
+		data.id = new Java_Variable_Definition();
+		data.id.setValue(name);
+		data.jtype = (Java_Type) type;
+
+		// Set the initial value, if any
+		if (initial != null)
+		{
+			Java_DataInitialValue init = new Java_DataInitialValue();
+			init.setPresent(true);
+			init.equals = new PunctuationEquals();
+			init.expression = (Java_Expression) initial;
+			data.initialValue = init;
+			data.initialValue.setPresent(true);
+		}
+
+		data.setTransformationSource(source);
+		return data;
 	}
 }

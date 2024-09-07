@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -14,11 +16,17 @@ import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, AbstractStatement
+public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
 {
 	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public", "dim", "const");
 	public @S(20) @OPT VB_Keyword CONST = new VB_Keyword("const");
@@ -66,5 +74,105 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 				}
 			}
 		}
+	}
+	
+	// Essentially Hungarian-like notation to guess type of a VB variable
+	private static AbstractType guessTypeFromName(EagleGenerator generator, String name)
+	{
+		TypeEnum type;
+		if (name.startsWith("bool"))
+		{
+			type = TypeEnum.BOOLEAN;
+		}
+		else if (name.startsWith("int"))
+		{
+			type = TypeEnum.INTEGER;
+		}
+		else if (name.startsWith("dbl"))
+		{
+			type = TypeEnum.DOUBLE;
+		}
+		else if (name.startsWith("str"))
+		{
+			type = TypeEnum.STRING;
+		}
+		else return null;
+
+		return generator.transformType(type, name, null);
+	}
+	
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+		
+		TypeEnum type;
+		AbstractType newType = null;
+		if (dataType != null && dataType.isPresent())
+		{
+			String typeName = dataType.type.getWhich().toString();
+			switch (typeName)
+			{
+			case "boolean":
+				type = TypeEnum.BOOLEAN;
+				break;
+			case "integer":
+				type = TypeEnum.INTEGER;
+				break;
+			case "double":
+				type = TypeEnum.DOUBLE;
+				break;
+			case "string":
+				type = TypeEnum.STRING;
+				break;
+			default:
+				type = TypeEnum.OTHER;
+				break;
+			}
+			newType = generator.transformType(type, typeName, dataType);
+		}
+		
+		AbstractExpression size = null;
+		if (subscript != null && subscript.isPresent())
+		{
+			size = transformer.transformExpression(generator, subscript.exprs.first());
+		}
+		
+		AbstractExpression initial = null;
+		if (initializer != null && initializer.isPresent())
+		{
+			initial = transformer.transformExpression(generator, initializer.expr);
+		}
+		
+		String name = var.getValue();
+		AbstractType firstType = newType;
+		if (firstType == null)
+		{
+			firstType = guessTypeFromName(generator, name);
+		}
+		AbstractStatement stmt = generator.newDataDeclaration(name, size, firstType, initial, this);
+		result.add(stmt);
+		
+		if (moreVariables != null && moreVariables.isPresent())
+		{
+			for (VB_MoreVariables more : moreVariables._elements)
+			{
+				size = null;
+				if (more.subscript != null && more.subscript.isPresent())
+				{
+					size = transformer.transformExpression(generator, more.subscript.exprs.first());
+				}
+				name = more.var.getValue();
+				AbstractType nextType = newType;
+				if (nextType == null)
+				{
+					nextType = guessTypeFromName(generator, name);
+				}
+				stmt = generator.newDataDeclaration(name, size, nextType, initial, more);
+				result.add(stmt);
+			}
+		}
+
+		return result;
 	}
 }

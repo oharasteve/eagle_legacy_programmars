@@ -17,10 +17,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_LengthMethod extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Java_Keyword LENGTH = new Java_Keyword("length");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Java_Keyword LENGTH = new Java_Keyword("length");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -33,6 +33,9 @@ public class Java_LengthMethod extends PrecedenceOperator implements EagleRunnab
 	{
 		Java_LengthMethod len = new Java_LengthMethod();
 		len.left = (Java_Expression) expr;
+		len.dot = new PunctuationPeriod();
+		len.leftParen = new PunctuationLeftParen();
+		len.rightParen = new PunctuationRightParen();
 		len.setTransformationSource(source);
 		return len;
 	}

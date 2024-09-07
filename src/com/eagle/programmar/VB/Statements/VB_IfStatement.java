@@ -178,14 +178,20 @@ public class VB_IfStatement extends TokenSequence
 			VB_IfOneLiner oneLiner = (VB_IfOneLiner) which;
 			VB_Statement statement = new VB_Statement();
 			statement.baseStatement = oneLiner.thenStatement;
-			ifTrue.add(transformer.transformStatement(generator, statement.baseStatement.getWhich()));
+			for (AbstractStatement stmt: transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+			{
+				ifTrue.add(stmt);
+			}
 		}
 		else
 		{
 			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
 			for (VB_Statement statement : multiLiner.thenStatement._elements)
 			{
-				ifTrue.add(transformer.transformStatement(generator, statement.baseStatement.getWhich()));
+				for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+				{
+					ifTrue.add(stmt);
+				}
 			}
 			
 			if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent() && multiLiner.elseIfClause.size() > 0)
@@ -197,7 +203,10 @@ public class VB_IfStatement extends TokenSequence
 			{
 				for (VB_Statement statement : multiLiner.elseClause.elseStatement._elements)
 				{
-					ifFalse.add(transformer.transformStatement(generator, statement.baseStatement.getWhich()));
+					for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+					{
+						ifFalse.add(stmt);
+					}
 				}
 			}
 		}

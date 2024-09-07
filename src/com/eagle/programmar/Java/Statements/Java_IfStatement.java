@@ -20,7 +20,9 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
@@ -107,6 +109,8 @@ public class Java_IfStatement extends TokenSequence implements EagleRunnableWith
 		}
 
 		Java_StatementBlock thenBlock = new Java_StatementBlock();
+		thenBlock.leftBrace = new PunctuationLeftBrace();
+		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<Java_StatementOrComment>();
 		ifStmt.thenStatement = new Java_Statement();
 		ifStmt.thenStatement.setWhich(thenBlock);
@@ -122,6 +126,8 @@ public class Java_IfStatement extends TokenSequence implements EagleRunnableWith
 			ifStmt.elseClause = new Java_IfElseClause();
 			ifStmt.elseClause.setPresent(true);
 			Java_StatementBlock elseBlock = new Java_StatementBlock();
+			elseBlock.leftBrace = new PunctuationLeftBrace();
+			elseBlock.rightBrace = new PunctuationRightBrace();
 			elseBlock.statements = new TokenList<Java_StatementOrComment>();
 			ifStmt.elseClause.elseStatement = new Java_Statement();
 			ifStmt.elseClause.elseStatement.setWhich(elseBlock);

@@ -6,6 +6,7 @@ package com.eagle.programmar.Java;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
@@ -30,15 +31,20 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator extends EagleGenerator
 {
 	public Java_Program _currentLanguage;
+	public Java_Class _currentClass;
+	public Java_Method _currentMethod;
 	
 	public Java_Generator()
 	{
-		_currentLanguage = new Java_Program();
+		_currentMethod = Java_Method.newJavaMethod("main");
+		_currentClass = Java_Class.newJavaClass(_currentMethod, "Expressions_vbs");
+		_currentLanguage = Java_Program.newJavaProgram(_currentClass, "com.eagle.tests.VB.transformed");
 	}
 	
 	@Override
@@ -82,10 +88,26 @@ public class Java_Generator extends EagleGenerator
 	@Override
 	public void addStatement(AbstractStatement stmt)
 	{
-		
+		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
+		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
+		stmtOrComment.setWhich((Java_Statement) stmt);
+		impl.block.statements.addToken(stmtOrComment);
 	}
 	
+	@Override
+	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		return Java_Type.transformType(type, typeName, source);
+	}
+
 	// ================ Statements ================
+
+	@Override
+	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
+			AbstractExpression initial, AbstractToken source)
+	{
+		return wrapStatement(Java_Data.newDataDeclaration(name,size, type, initial, source));
+	}
 
 	@Override
 	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
@@ -204,14 +226,15 @@ public class Java_Generator extends EagleGenerator
 	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
 			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_RelationalExpression.generateExpression(left, relOp, right, source));
+		// Already wrapped because it can generate different kinds of expression
+		return Java_RelationalExpression.generateExpression(left, relOp, right, source);
 	}
 	
 	@Override
 	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringEnum which, AbstractExpression scOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
 	{
-		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, which, scOrnc, source));
+		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}
 
 	@Override

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.VB;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -15,7 +17,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
-import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class VB_Program extends AbstractLanguage implements EagleRunnable, EagleTransformableProgram
@@ -82,11 +83,13 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 		for (VB_Statement stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
-			if (which instanceof EagleTransformableStatement)
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+			if (newStmts != null)
 			{
-				EagleTransformableStatement transformable = (EagleTransformableStatement) which;
-				AbstractStatement newStmt = transformable.transformStatement(transformer, generator);
-				generator.addStatement(newStmt);
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt);
+				}
 			}
 		}
 		

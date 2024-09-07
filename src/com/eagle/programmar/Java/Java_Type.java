@@ -7,6 +7,7 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -16,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_Type extends TokenSequence implements AbstractType
 {
@@ -94,5 +96,22 @@ public class Java_Type extends TokenSequence implements AbstractType
 		type.typeName = new Java_TypeName();
 		type.typeName.setWhich(new Java_KeywordChoice(name));
 		return type;
+	}
+	
+	public static Java_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		switch (type)
+		{
+		case BOOLEAN:
+			return newPrimitiveType("boolean");
+		case INTEGER:
+			return newPrimitiveType("int");
+		case DOUBLE:
+			return newPrimitiveType("double");
+		case STRING:
+			return newPrimitiveType("String");
+		default:
+			throw new RuntimeException("Can't transform type: " + type);
+		}
 	}
 }

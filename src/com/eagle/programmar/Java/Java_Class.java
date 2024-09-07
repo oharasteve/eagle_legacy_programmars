@@ -114,11 +114,30 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		}
 	}
 
-//	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-//
-//	@Override
-//	public EagleScope getScope()
-//	{
-//		return _scope;
-//	}
+	
+	public static Java_Class newJavaClass(Java_Method meth, String className)
+	{
+		Java_Class cls = new Java_Class();
+		cls.modifierList = new Java_ClassModifierList();
+		cls.modifierList.setPresent(true);
+		cls.modifierList.modifiers = new TokenList<Java_ClassModifier>();
+		Java_ClassModifier modifier = new Java_ClassModifier();
+		modifier.setWhich(new Java_KeywordChoice("public"));
+		cls.modifierList.modifiers.addToken(modifier);
+		
+		cls.className = new Java_Class_Definition();
+		cls.className.setValue(className);
+		
+		Java_ClassElement element = new Java_ClassElement();
+		element.setWhich(meth);
+
+		cls.classOrInterface = new Java_KeywordChoice("class");
+		cls.elements = new TokenList<Java_ClassElement>();
+		cls.elements.addToken(element);
+		cls.elements.setPresent(true);
+		cls.leftBrace = new PunctuationLeftBrace();
+		cls.rightBrace = new PunctuationRightBrace();
+		
+		return cls;
+	}
 }

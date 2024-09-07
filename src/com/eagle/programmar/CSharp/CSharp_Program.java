@@ -105,5 +105,4 @@ public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 		prog.myClasses.addToken(entry);
 		return prog;
 	}
-
 }

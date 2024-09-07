@@ -38,7 +38,9 @@ public class Java_ParenthesizedExpression extends PrimaryOperator
 	public static Java_ParenthesizedExpression generateExpression(AbstractExpression theExpr, AbstractToken source)
 	{
 		Java_ParenthesizedExpression expr = new Java_ParenthesizedExpression();
+		expr.leftParen = new PunctuationLeftParen();
 		expr.expression = (Java_Expression) theExpr;
+		expr.rightParen = new PunctuationRightParen();
 		expr.setTransformationSource(source);
 		return expr;
 	}

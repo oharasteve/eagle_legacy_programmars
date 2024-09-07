@@ -32,8 +32,10 @@ import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 
@@ -44,6 +46,8 @@ public class Python_Generator extends EagleGenerator
 	public Python_Generator()
 	{
 		_currentLanguage = new Python3_Program();
+		_currentLanguage.entries = new TokenList<Python_Statement>();
+		_currentLanguage.entries.setPresent(true);
 	}
 	
 	@Override
@@ -93,10 +97,23 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public void addStatement(AbstractStatement stmt)
 	{
-		
+		_currentLanguage.entries.addToken((Python_Statement) stmt);
+	}
+
+	@Override
+	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		return Python_Type.transformType(type, typeName, source);
 	}
 
 	// ================ Statements ================
+
+	@Override
+	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
+			AbstractExpression initial, AbstractToken source)
+	{
+		return wrapStatement(Python_Data.newDataDeclaration(name,size, type, initial, source));
+	}
 	
 	@Override
 	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
@@ -220,9 +237,9 @@ public class Python_Generator extends EagleGenerator
 	
 	@Override
 	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringEnum which, AbstractExpression scOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
 	{
-		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, which, scOrnc, source));
+		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}
 
 	@Override
