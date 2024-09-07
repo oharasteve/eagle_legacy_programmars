@@ -30,7 +30,9 @@ public class Python_Len_Function extends PrimaryOperator implements EagleRunnabl
 	public static Python_Len_Function generateExpression(AbstractExpression expr, AbstractToken source)
 	{
 		Python_Len_Function len = new Python_Len_Function();
+		len.leftParen = new PunctuationLeftParen();
 		len.expr = (Python_Expression) expr;
+		len.rightParen = new PunctuationRightParen();
 		len.setTransformationSource(source);
 		return len;
 	}

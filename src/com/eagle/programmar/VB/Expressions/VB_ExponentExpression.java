@@ -16,9 +16,9 @@ import com.eagle.transform.EagleTransformer;
 public class VB_ExponentExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
 {
 	// Note: VB does these left-to-right. Most languages do right-to-left
-	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) VB_Punctuation operator = new VB_Punctuation('^');
-	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.ATLEAST);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

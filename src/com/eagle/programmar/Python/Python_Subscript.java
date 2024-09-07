@@ -24,8 +24,8 @@ public class Python_Subscript extends TokenSequence
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
 	public @S(20) @OPT Python_EndOfLine eoln;
-	public @S(30) @SYNTAX(Python_Multiline_Syntax.class) Python_SubscrExpr body;
-	public @S(40) PunctuationRightBracket rightBracket;
+	public @S(30) @SYNTAX(Python_Multiline_Syntax.class) @NOSPACE Python_SubscrExpr body;
+	public @S(40) @NOSPACE PunctuationRightBracket rightBracket;
 
 	public static class Python_SubscrExpr extends TokenSequence
 	{
@@ -86,8 +86,10 @@ public class Python_Subscript extends TokenSequence
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
 	{
 		Python_Subscript subscr = new Python_Subscript();
+		subscr.leftBracket = new PunctuationLeftBracket();
 		subscr.body = new Python_SubscrExpr();
 		subscr.body.subscriptStep = null;
+		subscr.rightBracket = new PunctuationRightBracket();
 		
 		switch (whichSC)
 		{
@@ -107,14 +109,18 @@ public class Python_Subscript extends TokenSequence
 		{
 		case GIVEN_EC:
 			subscr.body.subscriptStop = new Python_ColonSubscript();
-			subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
+			subscr.body.subscriptStop.colon = new PunctuationColon();
 			subscr.body.subscriptStop.setPresent(true);
+			subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
+			subscr.body.subscriptStop.expr.setPresent(true);
 			break;
 		case GIVEN_NC:
 			subscr.body.subscriptStop = new Python_ColonSubscript();
-			Python_Additive_Expression scPlusNc = Python_Additive_Expression.generateExpression(sc, AdditiveEnum.PLUS, ecOrnc, source);
-			subscr.body.subscriptStop.expr = Python_Generator.wrapExpression(scPlusNc);
+			subscr.body.subscriptStop.colon = new PunctuationColon();
 			subscr.body.subscriptStop.setPresent(true);
+			Python_Additive_Expression scPlusNc = Python_Additive_Expression.generateExpression(subscr.body.subscr, AdditiveEnum.PLUS, ecOrnc, source);
+			subscr.body.subscriptStop.expr = Python_Generator.wrapExpression(scPlusNc);
+			subscr.body.subscriptStop.expr.setPresent(true);
 			break;
 		case GIVEN_NEITHER:
 			subscr.body.subscriptStop = null;

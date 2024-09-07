@@ -87,8 +87,7 @@ public class Python_StartOfLine extends TerminalStartOfLine
 		while (parent != null)
 		{
 			if (DEBUG) System.out.println("**** Parent " + parent.getClass().getSimpleName() +
-					" at " + (parent.getStartLine()+1) + "/" +
-					(parent.getStartChar()+1));
+					" at " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
 
 			// Find the enclosing statement block(s)
 			if (parent instanceof Python_MultilineStatement)
@@ -96,11 +95,11 @@ public class Python_StartOfLine extends TerminalStartOfLine
 				depth++;
 			}
 			if (DEBUG) System.out.println("     Token " + this.getClass().getSimpleName() +
-						" at " + (getStartLine()+1) + "/" +
-						(getStartChar()+1) + " depth=" + depth);
+					" at " + (getStartLine()+1) + "/" + (getStartChar()+1) + " depth=" + depth);
 			parent = parent.getParent();
 		}
 		
+		// Might be a tad faster with the 'switch'. It is not needed.
 		switch (depth)
 		{
 		case 0: return "";

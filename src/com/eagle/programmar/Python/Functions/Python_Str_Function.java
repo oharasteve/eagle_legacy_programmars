@@ -24,4 +24,13 @@ public class Python_Str_Function extends PrimaryOperator implements EagleRunnabl
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushStr(str);
 	}
+	
+	public static Python_Str_Function newStrFunction(Python_Expression expr)
+	{
+		Python_Str_Function str = new Python_Str_Function();
+		str.leftParen = new PunctuationLeftParen();
+		str.expr = expr;
+		str.rightParen = new PunctuationRightParen();
+		return str;
+	}
 }

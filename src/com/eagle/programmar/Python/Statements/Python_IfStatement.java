@@ -28,7 +28,7 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;
 	public @S(30) @NOSPACE PunctuationColon colon;
-	public @S(40) Python_StatementBlock ifThenStatements;
+	public @S(40) @PYDENT Python_StatementBlock ifThenStatements;
 	public @S(50) @OPT TokenList<Python_IfElif> ifElif;
 	public @S(60) @OPT Python_IfElse ifElse;
 	public @S(70) @OPT TokenList<Python_Comment> comments;
@@ -42,7 +42,7 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 		public @S(30) @NOSPACE Python_Keyword ELIF = new Python_Keyword("elif");
 		public @S(40) Python_Expression condition;
 		public @S(50) @NOSPACE PunctuationColon colon;
-		public @S(60) Python_StatementBlock elifStatements;
+		public @S(60) @PYDENT Python_StatementBlock elifStatements;
 	}
 
 	public static class Python_IfElse extends TokenSequence
@@ -51,7 +51,7 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 		public @S(20) @NEWLINE Python_ElseStartOfLine soln = new Python_ElseStartOfLine();
 		public @S(30) @NOSPACE Python_Keyword ELSE = new Python_Keyword("else");
 		public @S(40) @NOSPACE PunctuationColon colon;
-		public @S(50) Python_StatementBlock ifElseStatements;
+		public @S(50) @PYDENT Python_StatementBlock ifElseStatements;
 	}
 	
 	@Override

@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -23,5 +25,15 @@ public class Python_Print_Function extends PrimaryOperator implements EagleRunna
 	{
 		String line = interpreter.getStrValue(expr);
 		System.out.println(line);
+	}
+	
+	public static Python_Print_Function newPrintFunction(AbstractExpression line, AbstractToken source)
+	{
+		Python_Print_Function func = new Python_Print_Function();
+		func.leftParen = new PunctuationLeftParen();
+		func.expr = (Python_Expression) line;
+		func.rightParen = new PunctuationRightParen();
+		func.setTransformationSource(source);
+		return func;
 	}
 }

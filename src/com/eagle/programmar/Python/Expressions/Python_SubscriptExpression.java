@@ -30,6 +30,7 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
 	{
 		Python_SubscriptExpression expr = new Python_SubscriptExpression();
+		expr.expr = (Python_Expression) theExpr;
 		expr.subscr = Python_Subscript.generateExpression(sc, whichSC, whichEC, ecOrnc, source);
 		expr.setTransformationSource(source);
 		return expr;

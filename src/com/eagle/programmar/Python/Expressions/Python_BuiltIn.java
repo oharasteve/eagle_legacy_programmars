@@ -36,10 +36,10 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 		switch (builtin)
 		{
 		case TRUE:
-			expr.builtins = new Python_KeywordChoice("true");
+			expr.builtins = new Python_KeywordChoice("True");
 			return expr;
 		case FALSE:
-			expr.builtins = new Python_KeywordChoice("false");
+			expr.builtins = new Python_KeywordChoice("False");
 			return expr;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin.toString());

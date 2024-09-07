@@ -24,6 +24,7 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
+import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
@@ -86,6 +87,24 @@ public class Python_Generator extends EagleGenerator
 		wrapper.statementOrComment = new Python_StatementOrComment();
 		wrapper.statementOrComment.setWhich(sameLine);
 		return wrapper;
+	}
+
+	private static Python_Expression maybeWrapStrFunction(AbstractExpression expression)
+	{
+		Python_Expression expr = (Python_Expression) expression;
+		AbstractToken which = expr.getWhich();
+		if (which instanceof Python_Literals)
+		{
+			return expr;
+		}
+		if (which instanceof Python_Additive_Expression)
+		{
+			Python_Additive_Expression adder = (Python_Additive_Expression) which;
+			if (adder.left.getWhich() instanceof Python_Literals) return expr;
+			if (adder.right.getWhich() instanceof Python_Literals) return expr;
+		}
+		Python_Expression newExpr = wrapExpression(Python_Str_Function.newStrFunction(expr));
+		return newExpr;
 	}
 	
 	@Override
@@ -151,7 +170,9 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Additive_Expression.generateExpression(left, AdditiveEnum.PLUS, right, source));
+		Python_Expression leftExpr = maybeWrapStrFunction(left);
+		Python_Expression rightExpr = maybeWrapStrFunction(right);
+		return wrapExpression(Python_Additive_Expression.generateExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, source));
 	}
 	
 	@Override

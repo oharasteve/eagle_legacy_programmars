@@ -24,12 +24,10 @@ public class Python_PrintStatement extends TokenSequence implements AbstractStat
 
 	public static Python_ExpressionStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
-		Python_Print_Function func = new Python_Print_Function();
-		func.expr = (Python_Expression) line;
-		func.setTransformationSource(source);
-
+		Python_Print_Function func = Python_Print_Function.newPrintFunction(line, source);
 		Python_ExpressionStatement stmt = new Python_ExpressionStatement();
 		stmt.expression = Python_Generator.wrapExpression(func);
+		stmt.setTransformationSource(source);
 		return stmt;
 	}
 }
