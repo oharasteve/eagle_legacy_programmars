@@ -52,6 +52,12 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
+	public void addMain()
+	{
+		// Don't really need a main
+	}
+
+	@Override
 	public String getName()
 	{
 		return "Python";

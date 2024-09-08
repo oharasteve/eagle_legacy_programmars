@@ -37,14 +37,24 @@ import com.eagle.transform.EagleGenerator;
 public class Java_Generator extends EagleGenerator
 {
 	public Java_Program _currentLanguage;
-	public Java_Class _currentClass;
+	public Java_Class _mainClass;
 	public Java_Method _currentMethod;
 	
 	public Java_Generator()
 	{
-		_currentMethod = Java_Method.newJavaMethod("main");
-		_currentClass = Java_Class.newJavaClass(_currentMethod, "Expressions_vbs");
-		_currentLanguage = Java_Program.newJavaProgram(_currentClass, "com.eagle.tests.VB.transformed");
+		_mainClass = Java_Class.newJavaClass(PrivacyEnum.PUBLIC, "Expressions_vbs");
+		_currentLanguage = Java_Program.newJavaProgram(_mainClass, "com.eagle.tests.VB.transformed");
+		addMain();
+	}
+	
+	@Override
+	public void addMain()
+	{
+		Java_Type mainType = Java_Type.newPrimitiveType("void");
+		_currentMethod = Java_Method.newJavaMethod(PrivacyEnum.PUBLIC, true, mainType, "main");
+		Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
+		_currentMethod.addJavaParameter(paramType, "args");
+		_mainClass.addMethod(_currentMethod);
 	}
 	
 	@Override

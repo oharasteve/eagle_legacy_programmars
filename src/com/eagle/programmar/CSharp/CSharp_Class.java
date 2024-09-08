@@ -26,6 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
 public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
@@ -120,27 +121,40 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		}
 	}
 	
-	public static CSharp_Class newCSharpClass(CSharp_Method meth, String className)
+	public static CSharp_Class newCSharpClass(PrivacyEnum privacy, String className)
 	{
 		CSharp_Class cls = new CSharp_Class();
 		cls.modifiers = new TokenList<CSharp_ClassModifier>();
 		CSharp_ClassModifier modifier = new CSharp_ClassModifier();
-		modifier.modifier = new CSharp_KeywordChoice("public");
+		switch (privacy)
+		{
+		case PUBLIC:
+			modifier.modifier = new CSharp_KeywordChoice("public");
+			break;
+		case PRIVATE:
+			modifier.modifier = new CSharp_KeywordChoice("private");
+			break;
+		default:
+			throw new RuntimeException("Can't handle privacy: " + privacy);
+		}
 		cls.modifiers.addToken(modifier);
 		
 		cls.className = new CSharp_Class_Definition();
 		cls.className.setValue(className);
 		
-		CSharp_ClassElement element = new CSharp_ClassElement();
-		element.setWhich(meth);
-
 		cls.classOrInterface = new CSharp_KeywordChoice("class");
 		cls.elements = new TokenList<CSharp_ClassElement>();
-		cls.elements.addToken(element);
 		cls.elements.setPresent(true);
 		cls.leftBrace = new PunctuationLeftBrace();
 		cls.rightBrace = new PunctuationRightBrace();
 		
 		return cls;
+	}
+	
+	public void addMethod(CSharp_Method method)
+	{
+		CSharp_ClassElement element = new CSharp_ClassElement();
+		element.setWhich(method);
+		elements.addToken(element);
 	}
 }

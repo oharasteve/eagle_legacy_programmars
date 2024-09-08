@@ -6,7 +6,6 @@ package com.eagle.programmar.CSharp;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.CSharp.CSharp_Type.CSharp_ArrayType;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;
@@ -24,16 +23,16 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
 public class CSharp_Method extends TokenSequence implements
 			AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
@@ -145,36 +144,39 @@ public class CSharp_Method extends TokenSequence implements
 		}
 	}
 	
-	public static CSharp_Method newCSharpMethod(String methodName)
+	public static CSharp_Method newCSharpMethod(PrivacyEnum privacy, boolean isStatic,
+			AbstractType returnType, String methodName)
 	{
 		CSharp_Method meth = new CSharp_Method();
 		meth.modifiers = new TokenList<CSharp_MethodModifier>();
-		CSharp_MethodModifier modifier1 = new CSharp_MethodModifier();
-		modifier1.modifier = new CSharp_KeywordChoice("public");
-		meth.modifiers.addToken(modifier1);
-		CSharp_MethodModifier modifier2 = new CSharp_MethodModifier();
-		modifier2.modifier = new CSharp_KeywordChoice("static");
-		meth.modifiers.addToken(modifier2);
 		
-		meth.returnType = CSharp_Type.newPrimitiveType("void");
+		CSharp_MethodModifier modifier1 = new CSharp_MethodModifier();
+		switch (privacy)
+		{
+		case PUBLIC:
+			modifier1.modifier = new CSharp_KeywordChoice("public");
+			break;
+		case PRIVATE:
+			modifier1.modifier = new CSharp_KeywordChoice("private");
+			break;
+		default:
+			throw new RuntimeException("Can't handle privacy: " + privacy);
+		}
+		meth.modifiers.addToken(modifier1);
+
+		if (isStatic)
+		{
+			CSharp_MethodModifier modifier2 = new CSharp_MethodModifier();
+			modifier2.modifier = new CSharp_KeywordChoice("static");
+			meth.modifiers.addToken(modifier2);
+		}
+		
+		meth.returnType = (CSharp_Type) returnType;
+		
 		meth.parameters = new CSharp_MethodParameters();
 		meth.parameters.setPresent(true);
 		meth.parameters.leftParen = new PunctuationLeftParen();
 		meth.parameters.rightParen = new PunctuationRightParen();
-		
-		CSharp_ArrayType array = new CSharp_ArrayType();
-		array.leftBracket = new PunctuationLeftBracket();
-		array.rightBracket = new PunctuationRightBracket();
-		CSharp_Type type = CSharp_Type.newPrimitiveType("string");
-		type.arrayTypes = new TokenList<CSharp_ArrayType>();
-		type.arrayTypes.addToken(array);
-		type.arrayTypes.setPresent(true);
-		
-		meth.parameters.param = new CSharp_MethodParameter();
-		meth.parameters.param.setPresent(true);
-		meth.parameters.param.id = new CSharp_Variable_Definition();
-		meth.parameters.param.id.setValue("args");
-		meth.parameters.param.cstype = type;
 		
 		meth.body = new CSharp_MethodBody();
 		CSharp_MethodImplementation impl = new CSharp_MethodImplementation();
@@ -187,5 +189,14 @@ public class CSharp_Method extends TokenSequence implements
 		meth.methodName = new CSharp_Method_Definition();
 		meth.methodName.setValue(methodName);
 		return meth;
+	}
+	
+	public void addCSharpParameter(AbstractType type, String name)
+	{
+		parameters.param = new CSharp_MethodParameter();
+		parameters.param.setPresent(true);
+		parameters.param.id = new CSharp_Variable_Definition();
+		parameters.param.id.setValue(name);
+		parameters.param.cstype = (CSharp_Type) type;
 	}
 }

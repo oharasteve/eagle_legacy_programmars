@@ -63,10 +63,8 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 	}
 	
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public void transformFunctions(EagleTransformer transformer, EagleGenerator generator)
 	{
-		// Create a shell main program
-		
 		// First pass, transform all the Function and Sub definitions
 		for (VB_Statement stmt : statements._elements)
 		{
@@ -78,7 +76,11 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 				generator.addFunction(newFunc);
 			}
 		}
+	}
 		
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
 		// Second pass, transform all the data and logic
 		for (VB_Statement stmt : statements._elements)
 		{
@@ -92,8 +94,6 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 				}
 			}
 		}
-		
-		// Tie up loose ends
 		
 		return generator.getTransfomedProgram();
 	}

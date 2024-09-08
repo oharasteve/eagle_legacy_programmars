@@ -107,4 +107,16 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			throw new RuntimeException("Can't transform type: " + type);
 		}
 	}
+	
+	public static CSharp_Type transformTypeArray(TypeEnum type)
+	{
+		CSharp_ArrayType array = new CSharp_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		CSharp_Type newType = CSharp_Type.transformType(type, null, null);
+		newType.arrayTypes = new TokenList<CSharp_ArrayType>();
+		newType.arrayTypes.addToken(array);
+		newType.arrayTypes.setPresent(true);
+		return newType;
+	}
 }

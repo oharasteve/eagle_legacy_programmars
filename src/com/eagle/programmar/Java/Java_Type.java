@@ -114,4 +114,16 @@ public class Java_Type extends TokenSequence implements AbstractType
 			throw new RuntimeException("Can't transform type: " + type);
 		}
 	}
+
+	public static Java_Type transformTypeArray(TypeEnum type)
+	{
+		Java_ArrayType array = new Java_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		Java_Type newType = Java_Type.transformType(type, null, null);
+		newType.arrayTypes = new TokenList<Java_ArrayType>();
+		newType.arrayTypes.addToken(array);
+		newType.arrayTypes.setPresent(true);
+		return newType;
+	}
 }

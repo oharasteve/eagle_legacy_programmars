@@ -35,15 +35,25 @@ import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
 {
-	public CSharp_Program _currentLanguage;
-	public CSharp_Class _currentClass;
-	public CSharp_Method _currentMethod;
+	public CSharp_Program _program;
+	private CSharp_Class _mainClass;
+	private CSharp_Method _currentMethod;
 	
 	public CSharp_Generator()
 	{
-		_currentMethod = CSharp_Method.newCSharpMethod("Main");
-		_currentClass = CSharp_Class.newCSharpClass(_currentMethod, "Expressions_vbs");
-		_currentLanguage = CSharp_Program.newCSharpProgram(_currentClass);
+		_mainClass = CSharp_Class.newCSharpClass(PrivacyEnum.PUBLIC, "Expressions_vbs");
+		_program = CSharp_Program.newCSharpProgram(_mainClass);
+		addMain();
+	}
+
+	@Override
+	public void addMain()
+	{
+		CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
+		_currentMethod = CSharp_Method.newCSharpMethod(PrivacyEnum.PUBLIC, true, mainType, "Main");
+		CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
+		_currentMethod.addCSharpParameter(paramType, "args");
+		_mainClass.addMethod(_currentMethod);
 	}
 	
 	@Override
@@ -61,7 +71,7 @@ public class CSharp_Generator extends EagleGenerator
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
-		return _currentLanguage;
+		return _program;
 	}
 	
 	public static CSharp_Expression wrapExpression(AbstractToken token)

@@ -23,6 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
 public class Java_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
@@ -115,29 +116,42 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 	}
 
 	
-	public static Java_Class newJavaClass(Java_Method meth, String className)
+	public static Java_Class newJavaClass(PrivacyEnum privacy, String className)
 	{
 		Java_Class cls = new Java_Class();
 		cls.modifierList = new Java_ClassModifierList();
 		cls.modifierList.setPresent(true);
 		cls.modifierList.modifiers = new TokenList<Java_ClassModifier>();
 		Java_ClassModifier modifier = new Java_ClassModifier();
-		modifier.setWhich(new Java_KeywordChoice("public"));
+		switch (privacy)
+		{
+		case PUBLIC:
+			modifier.setWhich(new Java_KeywordChoice("public"));
+			break;
+		case PRIVATE:
+			modifier.setWhich(new Java_KeywordChoice("private"));
+			break;
+		default:
+			throw new RuntimeException("Can't handle privacy: " + privacy);
+		}
 		cls.modifierList.modifiers.addToken(modifier);
 		
 		cls.className = new Java_Class_Definition();
 		cls.className.setValue(className);
 		
-		Java_ClassElement element = new Java_ClassElement();
-		element.setWhich(meth);
-
 		cls.classOrInterface = new Java_KeywordChoice("class");
 		cls.elements = new TokenList<Java_ClassElement>();
-		cls.elements.addToken(element);
 		cls.elements.setPresent(true);
 		cls.leftBrace = new PunctuationLeftBrace();
 		cls.rightBrace = new PunctuationRightBrace();
 		
 		return cls;
+	}
+	
+	public void addMethod(Java_Method method)
+	{
+		Java_ClassElement element = new Java_ClassElement();
+		element.setWhich(method);
+		elements.addToken(element);
 	}
 }
