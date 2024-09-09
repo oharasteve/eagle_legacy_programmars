@@ -103,6 +103,8 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("double");
 		case STRING:
 			return newPrimitiveType("string");
+		case VOID:
+			return newPrimitiveType("void");
 		default:
 			throw new RuntimeException("Can't transform type: " + type);
 		}

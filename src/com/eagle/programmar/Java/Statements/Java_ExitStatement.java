@@ -11,16 +11,20 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_ExitStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @NEWLINE Java_Keyword SYSTEM = new Java_Keyword("System");
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NEWLINE Java_Keyword EXIT = new Java_Keyword("exit");
-	public @S(40) @NOSPACE Java_Expression code;
-	public @S(50) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(30) @NOSPACE Java_Keyword EXIT = new Java_Keyword("exit");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE Java_Expression code;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
+	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
@@ -32,7 +36,11 @@ public class Java_ExitStatement extends TokenSequence implements EagleRunnableWi
 	public static Java_ExitStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		Java_ExitStatement stmt = new Java_ExitStatement();
+		stmt.dot = new PunctuationPeriod();
+		stmt.leftParen = new PunctuationLeftParen();
 		stmt.code = (Java_Expression) code;
+		stmt.rightParen = new PunctuationRightParen();
+		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

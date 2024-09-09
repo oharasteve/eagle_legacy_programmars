@@ -16,7 +16,7 @@ import com.eagle.programmar.Python.Statements.Python_ExecStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_FromStatement;
-import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
+import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_GlobalStatement;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_ImportStatement;
@@ -118,7 +118,7 @@ public class Python_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Python_ExecStatement XXexecStatement;
 		public @CHOICE Python_ForStatement XXforStatement;
 		public @CHOICE Python_FromStatement XXfromStatement;
-		public @CHOICE Python_FunctionDefinition XXfunctionDefinition;
+		public @CHOICE Python_Function XXfunctionDefinition;
 		public @CHOICE Python_GlobalStatement XXglobalStatement;
 		public @CHOICE Python_IfStatement XXifStatement;
 		public @CHOICE Python_ImportStatement XXimportStatement;

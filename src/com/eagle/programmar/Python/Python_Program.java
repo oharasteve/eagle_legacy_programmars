@@ -9,7 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Statements.Python_FunctionDefinition;
+import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.tokens.AbstractToken;
@@ -52,9 +52,9 @@ public abstract class Python_Program extends AbstractLanguage implements EagleRu
 				for (int i = 0; i < stmts.statements.getPrimaryCount(); i++)
 				{
 					Python_Simple_Statement simple = stmts.statements.getPrimaryElement(i);
-					if (simple.getWhich() instanceof Python_FunctionDefinition)
+					if (simple.getWhich() instanceof Python_Function)
 					{
-						Python_FunctionDefinition fn = (Python_FunctionDefinition) simple.getWhich();
+						Python_Function fn = (Python_Function) simple.getWhich();
 						if (fn.fnName.getWhich() instanceof Python_Function_Definition)
 						{
 							Python_Function_Definition name = (Python_Function_Definition) fn.fnName.getWhich();

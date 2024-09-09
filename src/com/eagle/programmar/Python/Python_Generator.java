@@ -6,6 +6,7 @@ package com.eagle.programmar.Python;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
@@ -26,6 +27,7 @@ import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
+import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
@@ -42,13 +44,17 @@ import com.eagle.transform.EagleGenerator;
 
 public class Python_Generator extends EagleGenerator
 {
-	public Python3_Program _currentLanguage;
+	public static String NAME = "Python";
+	public static String SUFFIX = ".py";
+	
+	private Python_Program _program;
+	private Python_Function _currentFunction = null;
 	
 	public Python_Generator()
 	{
-		_currentLanguage = new Python3_Program();
-		_currentLanguage.entries = new TokenList<Python_Statement>();
-		_currentLanguage.entries.setPresent(true);
+		_program = new Python3_Program();
+		_program.entries = new TokenList<Python_Statement>();
+		_program.entries.setPresent(true);
 	}
 	
 	@Override
@@ -60,19 +66,19 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public String getName()
 	{
-		return "Python";
+		return NAME;
 	}
 	
 	@Override
 	public String getSuffix()
 	{
-		return ".py";
+		return SUFFIX;
 	}
 	
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
-		return _currentLanguage;
+		return _program;
 	}
 	
 	public static Python_Expression wrapExpression(AbstractToken token)
@@ -114,15 +120,39 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public void addFunction(AbstractFunction func)
+	public Python_Function newFunction(String name, PrivacyEnum privacy, boolean isStatic, AbstractType type)
 	{
-		
+		Python_Function newFunction = Python_Function.newPythonFunction(name);
+		addStatement(wrapStatement(newFunction));
+		_currentFunction = newFunction;	// Has to follow the call to addStatement().
+		return newFunction;
+	}
+	
+	@Override
+	public void addFunctionParameter(AbstractFunction function, String name, AbstractType type)
+	{
+		Python_Function func = (Python_Function) function;
+		func.addFunctionParameter(name);
+	}
+	
+	@Override
+	public void doneFunctionParameters()
+	{
+		_currentFunction = null;
 	}
 	
 	@Override
 	public void addStatement(AbstractStatement stmt)
 	{
-		_currentLanguage.entries.addToken((Python_Statement) stmt);
+		if (_currentFunction == null)
+		{
+			_program.entries.addToken((Python_Statement) stmt);
+		}
+		else
+		{
+			Python_MultilineStatement multi = (Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
+			multi.statements.addToken((Python_Statement) stmt);
+		}
 	}
 
 	@Override

@@ -157,6 +157,7 @@ public class CSharp_Method extends TokenSequence implements
 			modifier1.modifier = new CSharp_KeywordChoice("public");
 			break;
 		case PRIVATE:
+		case NONE:
 			modifier1.modifier = new CSharp_KeywordChoice("private");
 			break;
 		default:

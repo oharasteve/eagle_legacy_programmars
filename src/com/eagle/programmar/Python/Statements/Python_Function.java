@@ -8,10 +8,16 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Python.Python_Decorators;
 import com.eagle.programmar.Python.Python_Parameter_List;
+import com.eagle.programmar.Python.Python_Params;
+import com.eagle.programmar.Python.Python_Params.Python_MoreParams;
+import com.eagle.programmar.Python.Python_Params.Python_Parameter;
+import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Python_Syntax;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
+import com.eagle.programmar.Python.Symbols.Python_Variable_Definition;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
@@ -23,9 +29,11 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 // Why does this implement AbstractMethod ?? Transformation needs / uses it, but why ??
-public class Python_FunctionDefinition extends TokenSequence
+public class Python_Function extends TokenSequence
 			implements AbstractMethod, AbstractFunction, EagleRunnable
 {
 	public @S(10) @OPT Python_Decorators decorators;
@@ -41,7 +49,7 @@ public class Python_FunctionDefinition extends TokenSequence
 		public @S(20) @OPT Python_ReturnType returnType;
 		public @S(30) @NOSPACE PunctuationColon colon;
 		public @S(40) @OPT TokenList<Python_Comment> comment;
-		public @S(50) Python_StatementBlock defBody;
+		public @S(50) @PYDENT Python_StatementBlock defBody;
 
 		private @SKIP EagleScope _scope = new EagleScope(this, Python_Syntax.IS_CASE_SENSITIVE);
 
@@ -78,5 +86,52 @@ public class Python_FunctionDefinition extends TokenSequence
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
+	}
+	
+	public static Python_Function newPythonFunction(String name)
+	{
+		Python_Function_Definition funcDef = new Python_Function_Definition();
+		funcDef.setValue(name);
+		Python_Function func = new Python_Function();
+		func.fnName = new Python_FunctionName();
+		func.fnName.setWhich(funcDef);
+		
+		func.header = new Python_FunctionHeader();
+		func.header.colon = new PunctuationColon();
+
+		func.header.params = new Python_Parameter_List();
+		func.header.params.leftParen = new PunctuationLeftParen();
+		func.header.params.params = new Python_Params();
+		func.header.params.rightParen = new PunctuationRightParen();
+		
+		func.header.defBody = new Python_StatementBlock();
+		Python_MultilineStatement multi = new Python_MultilineStatement();
+		multi.statements = new TokenList<Python_Statement>();
+		func.header.defBody.setWhich(multi);
+		
+		return func;
+	}
+	
+	public void addFunctionParameter(String name)
+	{
+		Python_Variable_Definition var = new Python_Variable_Definition();
+		var.setValue(name);
+		Python_Parameter newParam = new Python_Parameter();
+		newParam.setWhich(var);
+		
+		if (header.params.params.param == null)
+		{
+			header.params.params.param = newParam;
+		}
+		else
+		{
+			if (header.params.params.moreParams == null)
+			{
+				header.params.params.moreParams = new TokenList<Python_MoreParams>();
+			}
+			Python_MoreParams more = new Python_MoreParams();
+			more.param = newParam;
+			header.params.params.moreParams.addToken(more);
+		}
 	}
 }

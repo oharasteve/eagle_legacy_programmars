@@ -182,6 +182,7 @@ public class Java_Method extends TokenSequence
 			modifier1.setWhich(new Java_KeywordChoice("public"));
 			break;
 		case PRIVATE:
+		case NONE:
 			modifier1.setWhich(new Java_KeywordChoice("private"));
 			break;
 		default:

@@ -10,7 +10,7 @@ import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
-import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
+import com.eagle.programmar.VB.Statements.VB_Function;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Variable_Definition;
 import com.eagle.tokens.AbstractFunction;
@@ -50,11 +50,11 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		
 		// Look up the function
 		AbstractFunction fn = interpreter.findFunction(name);
-		if (fn == null || !(fn instanceof VB_FunctionDeclaration))
+		if (fn == null || !(fn instanceof VB_Function))
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
-		VB_FunctionDeclaration func = (VB_FunctionDeclaration) fn;
+		VB_Function func = (VB_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = callArguments.args.getPrimaryCount();

@@ -96,7 +96,12 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 		{
 			type = TypeEnum.STRING;
 		}
-		else return null;
+		else
+		{
+			// return null;
+			// throw new RuntimeException("Can't guess name from: " + name);
+			type = TypeEnum.INTEGER;
+		}
 
 		return generator.transformType(type, name, null);
 	}

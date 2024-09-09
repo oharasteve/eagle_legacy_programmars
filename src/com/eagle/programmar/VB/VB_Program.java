@@ -8,9 +8,8 @@ import java.util.Collection;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
-import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
-import com.eagle.tokens.AbstractFunction;
+import com.eagle.programmar.VB.Statements.VB_Function;
+import com.eagle.programmar.VB.Statements.VB_Subroutine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -43,14 +42,14 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 		for (VB_Statement stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
-			if (which instanceof VB_FunctionDeclaration)
+			if (which instanceof VB_Function)
 			{
-				VB_FunctionDeclaration func = (VB_FunctionDeclaration) which;
+				VB_Function func = (VB_Function) which;
 				interpreter.addFunction(func.name.getValue(), func);
 			}
-			if (which instanceof VB_SubDeclaration)
+			if (which instanceof VB_Subroutine)
 			{
-				VB_SubDeclaration sub = (VB_SubDeclaration) which;
+				VB_Subroutine sub = (VB_Subroutine) which;
 				interpreter.addFunction(sub.name.getValue(), sub);
 			}
 		}
@@ -63,7 +62,7 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 	}
 	
 	@Override
-	public void transformFunctions(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// First pass, transform all the Function and Sub definitions
 		for (VB_Statement stmt : statements._elements)
@@ -72,15 +71,10 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 			if (which instanceof EagleTransformableFunction)
 			{
 				EagleTransformableFunction transformable = (EagleTransformableFunction) which;
-				AbstractFunction newFunc = transformable.transformFunction(transformer, generator);
-				generator.addFunction(newFunc);
+				transformable.transformFunction(transformer, generator);
 			}
 		}
-	}
-		
-	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
-	{
+
 		// Second pass, transform all the data and logic
 		for (VB_Statement stmt : statements._elements)
 		{

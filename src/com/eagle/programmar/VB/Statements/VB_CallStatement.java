@@ -40,11 +40,11 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		
 		// Look up the subroutine
 		AbstractFunction func = interpreter.findFunction(name);
-		if (func == null || !(func instanceof VB_SubDeclaration))
+		if (func == null || !(func instanceof VB_Subroutine))
 		{
 			throw new RuntimeException("Unable to find a subroutine named " + name);
 		}
-		VB_SubDeclaration subr = (VB_SubDeclaration) func;
+		VB_Subroutine subr = (VB_Subroutine) func;
 
 		// Make sure the function args match up
 		int argCount = 0;

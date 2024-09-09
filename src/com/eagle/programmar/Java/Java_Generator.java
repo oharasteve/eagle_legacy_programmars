@@ -36,43 +36,48 @@ import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator extends EagleGenerator
 {
-	public Java_Program _currentLanguage;
-	public Java_Class _mainClass;
-	public Java_Method _currentMethod;
+	public static String NAME = "Java";
+	public static String SUFFIX = ".java";
 	
-	public Java_Generator()
+	private Java_Program _program;
+	private Java_Class _mainClass;
+	private Java_Method _mainMethod;
+	private Java_Method _currentMethod;
+	
+	public Java_Generator(String className)
 	{
-		_mainClass = Java_Class.newJavaClass(PrivacyEnum.PUBLIC, "Expressions_vbs");
-		_currentLanguage = Java_Program.newJavaProgram(_mainClass, "com.eagle.tests.VB.transformed");
+		_mainClass = Java_Class.newJavaClass(PrivacyEnum.PUBLIC, className);
+		_program = Java_Program.newJavaProgram(_mainClass, "com.eagle.tests.VB.transformed");
 		addMain();
-	}
-	
-	@Override
-	public void addMain()
-	{
-		Java_Type mainType = Java_Type.newPrimitiveType("void");
-		_currentMethod = Java_Method.newJavaMethod(PrivacyEnum.PUBLIC, true, mainType, "main");
-		Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
-		_currentMethod.addJavaParameter(paramType, "args");
-		_mainClass.addMethod(_currentMethod);
 	}
 	
 	@Override
 	public String getName()
 	{
-		return "Java";
+		return NAME;
 	}
 	
 	@Override
 	public String getSuffix()
 	{
-		return ".java";
+		return SUFFIX;
+	}
+
+	@Override
+	public void addMain()
+	{
+		Java_Type mainType = Java_Type.newPrimitiveType("void");
+		_mainMethod = Java_Method.newJavaMethod(PrivacyEnum.PUBLIC, true, mainType, "main");
+		Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
+		_mainMethod.addJavaParameter(paramType, "args");
+		_mainClass.addMethod(_mainMethod);
+		_currentMethod = _mainMethod;
 	}
 	
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
-		return _currentLanguage;
+		return _program;
 	}
 	
 	public static Java_Expression wrapExpression(AbstractToken token)
@@ -90,9 +95,24 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public void addFunction(AbstractFunction func)
+	public Java_Method newFunction(String name, PrivacyEnum privacy, boolean isStatic, AbstractType type)
 	{
-		
+		_currentMethod = Java_Method.newJavaMethod(privacy, isStatic, type, name);
+		_mainClass.addMethod(_currentMethod);
+		return _currentMethod;
+	}
+	
+	@Override
+	public void addFunctionParameter(AbstractFunction function, String name, AbstractType type)
+	{
+		Java_Method func = (Java_Method) function;
+		func.addJavaParameter(type, name);
+	}
+	
+	@Override
+	public void doneFunctionParameters()
+	{
+		_currentMethod = _mainMethod;
 	}
 	
 	@Override
@@ -116,7 +136,7 @@ public class Java_Generator extends EagleGenerator
 	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
 			AbstractExpression initial, AbstractToken source)
 	{
-		return wrapStatement(Java_Data.newDataDeclaration(name,size, type, initial, source));
+		return wrapStatement(Java_Data.newDataDeclaration(name, size, type, initial, source));
 	}
 
 	@Override

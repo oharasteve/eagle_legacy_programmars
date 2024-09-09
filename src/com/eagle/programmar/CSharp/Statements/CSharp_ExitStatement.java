@@ -38,7 +38,12 @@ public class CSharp_ExitStatement extends TokenSequence implements AbstractState
 	public static CSharp_ExitStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		CSharp_ExitStatement stmt = new CSharp_ExitStatement();
+		stmt.dot1 = new PunctuationPeriod();
+		stmt.dot2 = new PunctuationPeriod();
+		stmt.leftParen = new PunctuationLeftParen();
 		stmt.code = (CSharp_Expression) code;
+		stmt.rightParen = new PunctuationRightParen();
+		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

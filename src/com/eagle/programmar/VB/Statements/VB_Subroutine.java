@@ -13,16 +13,20 @@ import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
+import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
-public class VB_SubDeclaration extends TokenSequence
+public class VB_Subroutine extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public");
@@ -57,9 +61,67 @@ public class VB_SubDeclaration extends TokenSequence
 		// And we only evaluate when it is called
 	}
 	
-	@Override
-	public AbstractFunction transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	private static AbstractType findType(EagleGenerator generator, String typeName)
 	{
-		throw new RuntimeException("Need to implement");
+		TypeEnum type;
+		switch (typeName)
+		{
+		case "boolean":
+			type = TypeEnum.BOOLEAN;
+			break;
+		case "integer":
+			type = TypeEnum.INTEGER;
+			break;
+		case "double":
+			type = TypeEnum.DOUBLE;
+			break;
+		case "string":
+			type = TypeEnum.STRING;
+			break;
+		default:
+			type = TypeEnum.OTHER;
+			break;
+		}
+		return generator.transformType(type, null, null);
+	}
+	
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		PrivacyEnum privacy = PrivacyEnum.NONE;
+		if (modifier != null && modifier.isPresent())
+		{
+			switch (modifier.getValue())
+			{
+			case "private":
+				privacy = PrivacyEnum.PRIVATE;
+				break;
+			case "public":
+				privacy = PrivacyEnum.PUBLIC;
+				break;
+			default:
+				throw new RuntimeException("Unable to handle " + modifier.getValue());
+			}
+		}
+		
+		AbstractType newType = generator.transformType(TypeEnum.VOID, null, null);
+		
+		AbstractFunction func = generator.newFunction(name.getValue(), privacy, false, newType);
+		
+		if (params.params != null && params.params.isPresent())
+		{
+			for (int i = 0; i < params.params.getPrimaryCount(); i++)
+			{
+				VB_Parameter param = params.params.getPrimaryElement(i);
+				newType = null;
+				if (param.as != null && param.as.isPresent())
+				{
+					VB_KeywordChoice kw = (VB_KeywordChoice) param.as.type.getWhich();
+					newType = findType(generator, kw.getValue());
+				}
+				
+				generator.addFunctionParameter(func, param.var.getValue(), newType);
+			}
+		}
 	}
 }

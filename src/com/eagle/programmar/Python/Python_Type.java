@@ -98,6 +98,8 @@ public class Python_Type extends TokenChooser implements AbstractType
 			return newPrimitiveType("float");
 		case STRING:
 			return newPrimitiveType("str");
+		case VOID:
+			return newPrimitiveType("None");
 		default:
 			throw new RuntimeException("Can't transform type: " + type);
 		}

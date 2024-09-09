@@ -35,37 +35,42 @@ import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
 {
-	public CSharp_Program _program;
+	public static String NAME = "C#";
+	public static String SUFFIX = ".cs";
+	
+	private CSharp_Program _program;
 	private CSharp_Class _mainClass;
+	private CSharp_Method _mainMethod;
 	private CSharp_Method _currentMethod;
 	
-	public CSharp_Generator()
+	public CSharp_Generator(String className)
 	{
-		_mainClass = CSharp_Class.newCSharpClass(PrivacyEnum.PUBLIC, "Expressions_vbs");
+		_mainClass = CSharp_Class.newCSharpClass(PrivacyEnum.PUBLIC, className);
 		_program = CSharp_Program.newCSharpProgram(_mainClass);
 		addMain();
+	}
+
+	@Override
+	public String getName()
+	{
+		return NAME;
+	}
+	
+	@Override
+	public String getSuffix()
+	{
+		return SUFFIX;
 	}
 
 	@Override
 	public void addMain()
 	{
 		CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
-		_currentMethod = CSharp_Method.newCSharpMethod(PrivacyEnum.PUBLIC, true, mainType, "Main");
+		_mainMethod = CSharp_Method.newCSharpMethod(PrivacyEnum.PUBLIC, true, mainType, "Main");
 		CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
-		_currentMethod.addCSharpParameter(paramType, "args");
-		_mainClass.addMethod(_currentMethod);
-	}
-	
-	@Override
-	public String getName()
-	{
-		return "C#";
-	}
-	
-	@Override
-	public String getSuffix()
-	{
-		return ".cs";
+		_mainMethod.addCSharpParameter(paramType, "args");
+		_mainClass.addMethod(_mainMethod);
+		_currentMethod = _mainMethod;
 	}
 	
 	@Override
@@ -89,11 +94,26 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public void addFunction(AbstractFunction func)
+	public CSharp_Method newFunction(String name, PrivacyEnum privacy, boolean isStatic, AbstractType type)
 	{
-		
+		_currentMethod = CSharp_Method.newCSharpMethod(privacy, isStatic, type, name);
+		_mainClass.addMethod(_currentMethod);
+		return _currentMethod;
 	}
 	
+	@Override
+	public void addFunctionParameter(AbstractFunction function, String name, AbstractType type)
+	{
+		CSharp_Method func = (CSharp_Method) function;
+		func.addCSharpParameter(type, name);
+	}
+	
+	@Override
+	public void doneFunctionParameters()
+	{
+		_currentMethod = _mainMethod;
+	}
+
 	@Override
 	public void addStatement(AbstractStatement stmt)
 	{
@@ -115,7 +135,7 @@ public class CSharp_Generator extends EagleGenerator
 	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
 			AbstractExpression initial, AbstractToken source)
 	{
-		return wrapStatement(CSharp_Data.newDataDeclaration(name,size, type, initial, source));
+		return wrapStatement(CSharp_Data.newDataDeclaration(name, size, type, initial, source));
 	}
 
 	@Override
