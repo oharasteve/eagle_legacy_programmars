@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.IntelASM;
 
-import com.eagle.programmar.IntelASM.Symbols.IntelASM_Label_Reference;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_CALL;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_DB;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_DQ;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_JMP;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_NoArgs;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_OneArg;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_REPNE;
+import com.eagle.programmar.IntelASM.Instructions.IntelASM_TwoArgs;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Comment;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_EndOfLine;
-import com.eagle.programmar.IntelASM.Terminals.IntelASM_Keyword;
-import com.eagle.programmar.IntelASM.Terminals.IntelASM_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class IntelASM_Instruction extends TokenSequence
 {
@@ -20,45 +24,13 @@ public class IntelASM_Instruction extends TokenSequence
 
 	public static class IntelASM_RegularInstruction extends TokenChooser
 	{
-		public @CHOICE static class IntelASM_CALL extends TokenSequence
-		{
-			public @S(10) IntelASM_Keyword CALL = new IntelASM_Keyword("CALL");
-			public @S(20) IntelASM_Label_Reference label;
-		}
-
-		public @CHOICE static class IntelASM_JMP extends TokenSequence
-		{
-			public @S(10) IntelASM_KeywordChoice JMP = new IntelASM_KeywordChoice("JC", "JE", "JG", "JGE", "JL", "JLE",
-					"JMP", "JNE", "JNZ", "JZ");
-			public @S(20) IntelASM_Label_Reference label;
-		}
-
-		public @CHOICE static class IntelASM_NoArgs extends TokenSequence
-		{
-			public @S(10) IntelASM_KeywordChoice CMD = new IntelASM_KeywordChoice("CLD", "LODSB", "MOVSB", "NOP", "RET",
-					"STD", "STOSB");
-		}
-
-		public @CHOICE static class IntelASM_OneArg extends TokenSequence
-		{
-			public @S(10) IntelASM_KeywordChoice CMD = new IntelASM_KeywordChoice("DEC", "DIV", "INC", "MUL", "NEG",
-					"POP", "PUSH", "REP", "REPZ", "SETZ");
-			public @S(20) IntelASM_Expression arg;
-		}
-
-		public @CHOICE static class IntelASM_TwoArgs extends TokenSequence
-		{
-			public @S(10) IntelASM_KeywordChoice CMD = new IntelASM_KeywordChoice("ADD", "AND", "CMP", "LEA", "MOV",
-					"MOVSX", "MOVZX", "OR", "SHL", "SHR", "SUB", "TEST", "XOR");
-			public @S(20) IntelASM_Expression arg1;
-			public @S(30) PunctuationComma comma;
-			public @S(40) IntelASM_Expression arg2;
-		}
-
-		public @CHOICE static class IntelASM_REPNE extends TokenSequence
-		{
-			public @S(10) IntelASM_Keyword REPNE = new IntelASM_Keyword("REPNE");
-			public @S(20) IntelASM_Keyword SCASB = new IntelASM_Keyword("SCASB");
-		}
+		public @CHOICE IntelASM_CALL XXcallInstruction;
+		public @CHOICE IntelASM_DB XXdbInstruction;
+		public @CHOICE IntelASM_DQ XXdqInstruction;
+		public @CHOICE IntelASM_JMP XXjmpInstruction;
+		public @CHOICE IntelASM_NoArgs XXnoArgsInstruction;
+		public @CHOICE IntelASM_OneArg XXoneArgInstruction;
+		public @CHOICE IntelASM_TwoArgs XXtwoArgsInstruction;
+		public @CHOICE IntelASM_REPNE XXrepneInstruction;
 	}
 }

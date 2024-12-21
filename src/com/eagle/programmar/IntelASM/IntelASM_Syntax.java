@@ -26,6 +26,6 @@ public class IntelASM_Syntax extends EagleSyntax
 	}
 
 	private static final String[] RESERVED_WORDS = new String[] {
-			"BYTE", "DWORD", "PTR"
+			"BYTE", "COUNT", "DWORD", "PTR"
 	};
 }
