@@ -1,5 +1,5 @@
-// Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Nov 24, 2019
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Feb 18, 2025
 
 package com.eagle.programmar.Rexx.Terminals;
 

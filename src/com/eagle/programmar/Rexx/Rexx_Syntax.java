@@ -19,11 +19,12 @@ public class Rexx_Syntax extends EagleSyntax
 	{
 		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
+		_autoAdvance = false;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
-				"!=",
+				"\\=", "<=", ">=", "//"
 		};
 
-//		addReservedWords(Rexx_Reserved_Words.RESERVED_WORDS);
+		addReservedWords(Rexx_Reserved_Words.RESERVED_WORDS);
 	}
 }
