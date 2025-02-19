@@ -51,11 +51,6 @@ public class Rexx_Function extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
-		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
-		}
-
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called

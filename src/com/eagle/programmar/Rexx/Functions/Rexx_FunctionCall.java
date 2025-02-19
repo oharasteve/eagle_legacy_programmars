@@ -8,12 +8,12 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Statement;
 import com.eagle.programmar.Rexx.Statements.Rexx_Function;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
@@ -49,12 +49,11 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		
 		// Look up the function
-		AbstractFunction fn = interpreter.findFunction(name);
-		if (fn == null || !(fn instanceof Rexx_Function))
+		Rexx_Function func = (Rexx_Function) interpreter.findFunction(name);
+		if (func == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
-		Rexx_Function func = (Rexx_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = callArguments.args.getPrimaryCount();
@@ -95,6 +94,11 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (val != null)
 		{
 			interpreter.pushEagleValue(val);
+		}
+
+		if (func._metrics == null)
+		{
+			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), this);
 		}
 
 		// The result was already put on the runtime stack

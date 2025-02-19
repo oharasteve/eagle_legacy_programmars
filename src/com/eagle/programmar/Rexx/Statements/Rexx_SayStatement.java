@@ -3,13 +3,22 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Rexx_SayStatement extends TokenSequence implements AbstractStatement
+public class Rexx_SayStatement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) Rexx_Keyword SAY = new Rexx_Keyword("SAY");
 	public @S(30) Rexx_Expression expr;
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String line = interpreter.getStrValue(expr);
+		System.out.println(line);
+	}
 }

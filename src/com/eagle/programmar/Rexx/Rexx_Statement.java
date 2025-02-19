@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Rexx;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Rexx.Statements.Rexx_AssignmentStatement;
 import com.eagle.programmar.Rexx.Statements.Rexx_CallStatement;
 import com.eagle.programmar.Rexx.Statements.Rexx_DoStatement;
@@ -17,7 +19,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Rexx_Statement extends TokenSequence implements AbstractStatement
+public class Rexx_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) Rexx_BaseStatement baseStatement;
 	public @S(20) @OPT Rexx_Comment comment;
@@ -35,5 +37,11 @@ public class Rexx_Statement extends TokenSequence implements AbstractStatement
 		public @CHOICE Rexx_LeaveStatement XXleaveStatement;
 		public @CHOICE Rexx_ReturnStatement XXreturnStatement;
 		public @CHOICE Rexx_SayStatement XXsayStatement;
+	}
+	
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		return interpreter.tryToInterpret(baseStatement);
 	}
 }

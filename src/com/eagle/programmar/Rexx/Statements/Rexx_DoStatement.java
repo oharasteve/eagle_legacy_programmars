@@ -47,17 +47,28 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (loop == null)
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+
+		// Just a DO ... END block, no iteration
+		if (loop == null || ! loop.isPresent())
 		{
-			return null;
+			for (Rexx_Statement stmt : actions._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
 		}
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
+		int start = interpreter.getIntValue(loop.from);
+		interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(start));
+		
 		int current = interpreter.getIntValue(loop.from);
 		int stop = interpreter.getIntValue(loop.to);
 		int by = 1;
@@ -67,7 +78,6 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 			by = interpreter.getIntValue(loop.step.step);
 		}
 		
-		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
 			metric.iterate();

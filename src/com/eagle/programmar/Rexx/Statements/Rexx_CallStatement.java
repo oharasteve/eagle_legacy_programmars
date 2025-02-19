@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Statement;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
@@ -71,6 +72,11 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 			if (result != Eagle_Statement_Result.NORMAL) break; 
 		}
 		
+		if (func._metrics == null)
+		{
+			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), this);
+		}
+
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
 		func._metrics.addCallFrom(this, elapsedTime);

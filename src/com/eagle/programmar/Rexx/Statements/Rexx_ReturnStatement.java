@@ -19,8 +19,11 @@ public class Rexx_ReturnStatement extends TokenSequence implements AbstractState
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.pushEagleValue(val);
+		if (expr != null && expr.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.pushEagleValue(val);
+		}
 		return Eagle_Statement_Result.BREAK;
 	}
 }

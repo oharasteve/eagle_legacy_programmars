@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
-import com.eagle.programmar.Rexx.Rexx_Statement;
 import com.eagle.programmar.Rexx.Rexx_Statement.Rexx_BaseStatement;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Comment;
 import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
@@ -57,7 +56,7 @@ public class Rexx_IfStatement extends TokenSequence
 		{
 			result = interpreter.tryToInterpret(thenStatement);
 		}
-		else if (elseClause != null)
+		else if (elseClause != null && elseClause.isPresent())
 		{
 			result = interpreter.tryToInterpret(elseClause.elseStatement);
 		}
