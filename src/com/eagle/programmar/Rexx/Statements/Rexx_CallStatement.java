@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Rexx_CallStatement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
-	public @S(10) Rexx_Keyword CALL = new Rexx_Keyword("CALL");
+	public @S(10) @DOC("instructions-call") Rexx_Keyword CALL = new Rexx_Keyword("CALL");
 	public @S(20) Rexx_Identifier_Reference subName;
 	public @S(30) @OPT SeparatedList<Rexx_Expression, PunctuationComma> args;
 

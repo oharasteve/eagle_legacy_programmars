@@ -20,7 +20,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class Rexx_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) @DOC("752y8abs.aspx") Rexx_Keyword IF = new Rexx_Keyword("IF");
+	public @S(10) @DOC("instructions-if") Rexx_Keyword IF = new Rexx_Keyword("IF");
 	public @S(20) Rexx_Expression condition;
 	public @S(30) Rexx_Keyword THEN = new Rexx_Keyword("THEN");
 	public @S(40) Rexx_EndOfLine eoln;

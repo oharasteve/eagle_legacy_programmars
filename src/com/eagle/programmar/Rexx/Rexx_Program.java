@@ -23,7 +23,7 @@ public class Rexx_Program extends AbstractLanguage implements EagleRunnable
 	@Override
 	public String getDocRoot()
 	{
-		return "https://www.ibm.com/docs/en/cics-ts/6.x?topic=applications-writing-running-rexx-application";
+		return "https://www.ibm.com/docs/en/cics-ts/6.x?topic=";
 	}
 
 	public @S(10) TokenList<Rexx_Element> elements;

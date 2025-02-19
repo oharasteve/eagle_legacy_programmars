@@ -24,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Rexx_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
-	public @S(10) Rexx_Function_Definition name;
+	public @S(10) @DOC("reference-functions") Rexx_Function_Definition name;
 	public @S(20) PunctuationColon colon;
 	public @S(30) Rexx_EndOfLine eoln;
 	public @S(40) @OPT Rexx_Parameters params;

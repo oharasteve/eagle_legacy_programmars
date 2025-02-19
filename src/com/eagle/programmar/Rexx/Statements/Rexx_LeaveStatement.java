@@ -11,7 +11,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Rexx_LeaveStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) Rexx_Keyword LEAVE = new Rexx_Keyword("LEAVE");
+	public @S(10) @DOC("instructions-leave") Rexx_Keyword LEAVE = new Rexx_Keyword("LEAVE");
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

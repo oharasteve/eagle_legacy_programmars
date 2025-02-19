@@ -11,7 +11,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Rexx_ExitStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) Rexx_Keyword EXIT = new Rexx_Keyword("EXIT");
+	public @S(10) @DOC("ki-exit") Rexx_Keyword EXIT = new Rexx_Keyword("EXIT");
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

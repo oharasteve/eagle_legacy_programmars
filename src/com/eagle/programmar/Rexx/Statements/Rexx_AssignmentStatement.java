@@ -17,7 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 public class Rexx_AssignmentStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement
 {
-	public @S(10) Rexx_Variable variable;
+	public @S(10) @DOC("concepts-assignments-symbols") Rexx_Variable variable;
 	public @S(20) PunctuationEquals equals;
 	public @S(30) Rexx_Expression expr;
 

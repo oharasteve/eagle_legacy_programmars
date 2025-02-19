@@ -13,7 +13,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Rexx_ReturnStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) Rexx_Keyword RETURN = new Rexx_Keyword("RETURN");
+	public @S(10) @DOC("instructions-return") Rexx_Keyword RETURN = new Rexx_Keyword("RETURN");
 	public @S(20) @OPT Rexx_Expression expr;
 
 	@Override

@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Rexx_DoStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) @DOC("5z06z1kb.aspx") Rexx_Keyword DO = new Rexx_Keyword("DO");
+	public @S(10) @DOC("instructions-do") Rexx_Keyword DO = new Rexx_Keyword("DO");
 	public @S(20) @OPT Rexx_DoLoop loop;
 	public @S(30) Rexx_EndOfLine eoln1;
 	public @S(40) TokenList<Rexx_Statement> actions;
