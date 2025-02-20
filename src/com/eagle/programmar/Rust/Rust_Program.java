@@ -35,6 +35,8 @@ public class Rust_Program extends AbstractLanguage implements EagleRunnable
 		public @CHOICE Rust_Module XXmodule;
 		public @CHOICE Rust_Data XXdata;
 		public @CHOICE Rust_Use XXuse;
+		
+		public @LAST Rust_Statement XXstatement;
 	}
 
 	@Override
