@@ -3,21 +3,22 @@
 
 package com.eagle.programmar.Ada.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunnable
+public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Ada_Keyword INTEGER_IO = new Ada_Keyword("Integer_IO");
 	public @S(20) PunctuationPeriod dot;
@@ -35,6 +36,6 @@ public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunna
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue result = interpreter.getEagleValue(expr);
-		System.out.println(result.toString());
+		System.out.print(result.toString());
 	}
 }

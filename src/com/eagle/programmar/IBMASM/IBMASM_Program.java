@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.IBMASM;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.IBMASM.Data.IBMASM_DC_Instruction;
 import com.eagle.programmar.IBMASM.Data.IBMASM_DS_Instruction;
 import com.eagle.programmar.IBMASM.Terminals.IBMASM_Comment;
@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class IBMASM_Program extends EagleLanguage
+public class IBMASM_Program extends AbstractLanguage
 {
 	public static final String IBMASM = "IBMASM";
 
@@ -37,11 +37,11 @@ public class IBMASM_Program extends EagleLanguage
 
 	public static class IBMASM_LineContents extends TokenChooser
 	{
-		public @CHOICE IBMASM_Comment comment;
-		public @CHOICE IBMASM_Instruction instruction;
-		public @CHOICE IBMASM_Directive directive;
-		public @CHOICE IBMASM_Macro macro;
-		public @CHOICE IBMASM_DC_Instruction defineConstant;
-		public @CHOICE IBMASM_DS_Instruction declareStorage;
+		public @CHOICE IBMASM_Comment XXcomment;
+		public @CHOICE IBMASM_Instruction XXinstruction;
+		public @CHOICE IBMASM_Directive XXdirective;
+		public @CHOICE IBMASM_Macro XXmacro;
+		public @CHOICE IBMASM_DC_Instruction XXdefineConstant;
+		public @CHOICE IBMASM_DS_Instruction XXdeclareStorage;
 	}
 }

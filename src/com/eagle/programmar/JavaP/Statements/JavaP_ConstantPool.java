@@ -43,13 +43,13 @@ public class JavaP_ConstantPool extends TokenSequence
 		public static class JavaP_ConstantType extends TokenChooser
 		{
 			// All of these need to implement the JavaP_ConstantShowable interface
-			public @CHOICE JavaP_ConstantClass constantClass;
-			public @CHOICE JavaP_ConstantLong constantLong;
-			public @CHOICE JavaP_ConstantMethodRef methodRef;
-			public @CHOICE JavaP_ConstantMethodHandle methodHandle;
-			public @CHOICE JavaP_ConstantNameAndType nameAndType;
-			public @CHOICE JavaP_ConstantString constantString;
-			public @CHOICE JavaP_ConstantUtf8 constantUtf8;
+			public @CHOICE JavaP_ConstantClass XXconstantClass;
+			public @CHOICE JavaP_ConstantLong XXconstantLong;
+			public @CHOICE JavaP_ConstantMethodRef XXmethodRef;
+			public @CHOICE JavaP_ConstantMethodHandle XXmethodHandle;
+			public @CHOICE JavaP_ConstantNameAndType XXnameAndType;
+			public @CHOICE JavaP_ConstantString XXconstantString;
+			public @CHOICE JavaP_ConstantUtf8 XXconstantUtf8;
 		}
 	}
 

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CPlus;
 
-import com.eagle.programmar.C.C_Statement.C_StatementBlock;
+import com.eagle.programmar.C.Statements.C_StatementBlock;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CPlus_ConstructorValue extends TokenChooser
 {
-	public @CHOICE C_StatementBlock block;
+	public @CHOICE C_StatementBlock XXblock;
 
 	public @CHOICE static class CPlus_ConstructorNoBraces extends TokenSequence
 	{

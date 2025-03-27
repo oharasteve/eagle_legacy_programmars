@@ -9,6 +9,7 @@ import com.eagle.programmar.CSS.Terminals.CSS_Keyword;
 import com.eagle.programmar.CSS.Terminals.CSS_Literal;
 import com.eagle.programmar.CSS.Terminals.CSS_Punctuation;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -18,12 +19,12 @@ public class CSS_AtNamespace extends TokenSequence
 {
 	public @S(10) CSS_Punctuation at = new CSS_Punctuation('@');
 	public @S(20) CSS_Keyword NAMESPACE = new CSS_Keyword("namespace");
-	public @S(30) CSS_AtNameSpaceArg arg;
+	public @S(30) TokenList<CSS_AtNameSpaceArg> args;
 	public @S(40) PunctuationSemicolon semicolon;
 
 	public static class CSS_AtNameSpaceArg extends TokenChooser
 	{
-		public @CHOICE CSS_Literal literal;
+		public @CHOICE CSS_Literal XXliteral;
 
 		public @CHOICE static class CSS_AtNameSpaceURL extends TokenSequence
 		{

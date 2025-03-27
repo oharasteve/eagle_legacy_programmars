@@ -47,7 +47,7 @@ public class CPlus_Method extends TokenSequence implements AbstractMethod
 
 	public static class CPlus_MethodBody extends TokenChooser
 	{
-		public @LAST C_FunctionBody body;
+		public @LAST C_FunctionBody XXbody;
 
 		public @CHOICE static class CPlus_MethodUsing extends TokenSequence
 		{

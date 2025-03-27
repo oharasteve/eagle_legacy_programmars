@@ -8,6 +8,7 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -18,11 +19,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Python_Type extends TokenChooser implements AbstractType
 {
-	public @LAST Python_Literal typeName;
-	public @CHOICE Python_Punctuation ellipsis = new Python_Punctuation("...");
+	public @LAST Python_Literal XXtypeName;
+	public @CHOICE Python_Punctuation XXellipsis = new Python_Punctuation("...");
 
 	public @CHOICE static class Python_TypeParens extends TokenSequence
 	{
@@ -38,8 +40,8 @@ public class Python_Type extends TokenChooser implements AbstractType
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
-	public @CHOICE Python_KeywordChoice PRIMITIVES = new Python_KeywordChoice("Any", "None", "bool", "bytes", "float",
-			"int", "object", "str", "Text");
+	public @CHOICE Python_KeywordChoice XXPRIMITIVES = new Python_KeywordChoice(
+			"Any", "None", "bool", "bytes", "float", "int", "object", "str", "Text");
 
 	public @FIRST static class Python_MetaClass extends TokenSequence
 	{
@@ -71,8 +73,35 @@ public class Python_Type extends TokenChooser implements AbstractType
 
 		public static class Python_TypeName extends TokenChooser
 		{
-			public @CHOICE Python_Keyword SELF = new Python_Keyword("self");
-			public @CHOICE Python_Identifier_Reference id;
+			public @CHOICE Python_Keyword XXSELF = new Python_Keyword("self");
+			public @CHOICE Python_Identifier_Reference XXid;
+		}
+	}
+	
+	// Convert "double" to a Python_Type representing a double
+	public static Python_Type newPrimitiveType(String name)
+	{
+		Python_Type type = new Python_Type();
+		type.setWhich(new Python_KeywordChoice(name));
+		return type;
+	}
+
+	public static Python_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		switch (type)
+		{
+		case BOOLEAN:
+			return newPrimitiveType("bool");
+		case INTEGER:
+			return newPrimitiveType("int");
+		case DOUBLE:
+			return newPrimitiveType("float");
+		case STRING:
+			return newPrimitiveType("str");
+		case VOID:
+			return newPrimitiveType("None");
+		default:
+			throw new RuntimeException("Can't transform type: " + type);
 		}
 	}
 }

@@ -11,8 +11,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_SedCommand extends TokenSequence
+public class Bash_SedCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword SED = new Bash_Keyword("sed");
 	public @S(20) @OPT TokenList<Bash_SedOption> options;
@@ -21,7 +22,7 @@ public class Bash_SedCommand extends TokenSequence
 
 	public static class Bash_SedOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice E = new Bash_KeywordChoice("-E", "-e", "-i", "-r");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-E", "-e", "-i", "-r");
 
 		public @CHOICE static class Bash_SedOptionF extends TokenSequence
 		{

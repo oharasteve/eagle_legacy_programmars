@@ -6,8 +6,9 @@ package com.eagle.programmar.Python.Statements;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Python_AwaitStatement extends TokenSequence
+public class Python_AwaitStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @OPT Python_IfAwait ifAwait;
 	public @S(20) Python_Keyword AWAIT = new Python_Keyword("await");

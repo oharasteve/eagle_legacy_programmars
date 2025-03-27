@@ -8,7 +8,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 
 public class CSharp_Syntax extends EagleSyntax
 {
-	public static boolean isCaseSensitive = true;
+	public static final boolean IS_CASE_SENSITIVE = true;
 
 	@Override
 	public String syntaxId()
@@ -18,96 +18,14 @@ public class CSharp_Syntax extends EagleSyntax
 
 	public CSharp_Syntax()
 	{
-		_isCaseSensitive = isCaseSensitive;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
-				"!=", "<=", "==", ">=", "=>", "//", "...", "::"
+				"!=", "<=", "==", ">=", "=>", "//", "...", "::", "||", "&&"
 		};
 		_commentInstance = new CSharp_Comment();
 
-		addReservedWords(reservedWords);
+		addReservedWords(CSharp_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From
-	// https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
-	private static String[] reservedWords = new String[] {
-			"abstract",
-			"as",
-			"base",
-			"bool",
-			"break",
-			"byte",
-			"case",
-			"catch",
-			"char",
-			// "checked",
-			"class",
-			"const",
-			"continue",
-			"decimal",
-			"default",
-			"delegate",
-			"do",
-			"double",
-			"else",
-			"enum",
-			"event",
-			"explicit",
-			"extern",
-			"false",
-			"finally",
-			"fixed",
-			"float",
-			"for",
-			"foreach",
-			"goto",
-			"if",
-			"implicit",
-			"in",
-			"int",
-			"interface",
-			"internal",
-			"is",
-			"lock",
-			"long",
-			"namespace",
-			"new",
-			"null",
-			"object",
-			"operator",
-			"out",
-			"override",
-			"params",
-			"private",
-			"protected",
-			"public",
-			"readonly",
-			"ref",
-			"return",
-			"sbyte",
-			"sealed",
-			"short",
-			"sizeof",
-			"stackalloc",
-			"static",
-			"string",
-			"struct",
-			"switch",
-			"this",
-			"throw",
-			"true",
-			"try",
-			"typeof",
-			"unit",
-			"ulong",
-			// "unchecked",
-			"unsafe",
-			"ushort",
-			"using",
-			"virtual",
-			"void",
-			"volatile",
-			"while",
-	};
 }

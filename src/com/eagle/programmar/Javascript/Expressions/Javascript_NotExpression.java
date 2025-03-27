@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Javascript.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class Javascript_NotExpression extends PrimaryOperator implements EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

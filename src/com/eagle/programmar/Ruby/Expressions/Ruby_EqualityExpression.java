@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Ruby.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,17 +19,40 @@ public class Ruby_EqualityExpression extends PrecedenceOperator implements Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getValue();
+
+		if (leftValue.isInteger() && rightValue.isInteger())
 		{
-		case "==":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case "!=":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
+			int leftInt = interpreter.getIntValue(left);
+			int rightInt = interpreter.getIntValue(right);
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+
+		if (leftValue.isString() && rightValue.isString())
+		{
+			String leftStr = interpreter.getStrValue(left);
+			String rightStr = interpreter.getStrValue(right);
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			}
+		}
+
+		throw new RuntimeException("Unable to handle " + oper);
 	}
 }

@@ -3,18 +3,19 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.programmar.CMD.CMD_Argument;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class CMD_Rmdir_Statement extends TokenSequence
+public class CMD_Rmdir_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("rmdir.mspx") CMD_Keyword RMDIR = new CMD_Keyword("rmdir");
 	public @S(20) @OPT TokenList<CMD_Rmdir_Option> opts;
-	public @S(30) CMD_Argument dir;
+	public @S(30) CMD_Expression dir;
 
 	public static class CMD_Rmdir_Option extends TokenChooser
 	{

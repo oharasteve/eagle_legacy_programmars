@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Lisp.Operators;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;

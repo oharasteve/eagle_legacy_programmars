@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.PPSM;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.PPSM.Terminals.PPSM_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class PPSM_Program extends EagleLanguage
+public class PPSM_Program extends AbstractLanguage
 {
 	public static final String PPSM = "PPSM";
 

@@ -33,7 +33,7 @@ public class Powershell_Parameters extends TokenSequence
 
 	public static class Powershell_Param extends TokenChooser
 	{
-		public @CHOICE Powershell_CommentEoln comment;
+		public @CHOICE Powershell_CommentEoln XXcomment;
 
 		public @CHOICE static class Powershell_Parameter extends TokenSequence
 		{

@@ -3,14 +3,26 @@
 
 package com.eagle.programmar.Scala.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Scala_ReturnStatement extends TokenSequence
+public class Scala_ReturnStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) Scala_Keyword RETURN = new Scala_Keyword("return");
 	public @S(20) Scala_Expression expr;
 	public @S(30) Scala_EOLN eoln;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter.pushEagleValue(val);
+		return Eagle_Statement_Result.RETURN;
+	}
 }

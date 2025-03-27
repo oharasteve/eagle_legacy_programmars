@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class Eaglish_NotExpresion extends PrimaryOperator implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

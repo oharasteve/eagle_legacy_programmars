@@ -19,22 +19,22 @@ public class C_ArgumentList extends TokenSequence
 {
 	public @S(10) @OPT TokenList<C_IgnoreItem> comment1;
 	public @S(20) C_ExpressionArg arg;
-	public @S(30) @OPT TokenList<C_MoreArguments> moreArgs;
+	public @S(30) @OPT TokenList<C_MoreArgument> moreArgs;
 	public @S(40) @OPT TokenList<C_IgnoreItem> comment2;
 	public @S(50) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 
 	public static class C_IgnoreItem extends TokenChooser
 	{
-		public @CHOICE C_Comment comment;
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @CHOICE C_Comment XXcomment;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 	}
 
 	public static class C_ExpressionArg extends TokenChooser
 	{
-		public @FIRST C_Expression expr;
-		public @CHOICE C_Keyword CONST = new C_Keyword("const");
-		public @CHOICE C_TypePrimitive primitiveType;
-		public @LAST C_Lambda lambda;
+		public @FIRST C_Expression XXexpr;
+		public @CHOICE C_Keyword XXCONST = new C_Keyword("const");
+		public @CHOICE C_TypePrimitive XXprimitiveType;
+		public @LAST C_Lambda XXlambda;
 
 		public @CHOICE static class C_ExpressionArgType extends TokenSequence
 		{
@@ -43,7 +43,7 @@ public class C_ArgumentList extends TokenSequence
 		}
 	}
 
-	public static class C_MoreArguments extends TokenSequence
+	public static class C_MoreArgument extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT TokenList<C_IgnoreItem> comment1;

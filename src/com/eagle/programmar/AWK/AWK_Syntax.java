@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class AWK_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,44 +17,13 @@ public class AWK_Syntax extends EagleSyntax
 
 	public AWK_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				"==", "!=", "<=", ">=", "++", "--", "+=", "!~"
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(AWK_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.gnu.org/software/gawk/manual/html_node/Glossary.html under
-	// "Keyword"
-	private static String[] reservedWords = new String[] {
-			"BEGIN",
-			"BEGINFILE",
-			"END",
-			"ENDFILE",
-			"break",
-			"case",
-			"continue",
-			"default",
-			"delete",
-			"do",
-			"else",
-			"exit",
-			"for",
-			"function",
-			"func",
-			"if",
-			"in",
-			"int",
-			"length",
-			"next",
-			"nextfile",
-			"return",
-			"strcat",
-			"substr",
-			"switch",
-			"while",
-	};
 }

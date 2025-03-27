@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
@@ -39,8 +39,10 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(init.expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.toString(),
-				value);
+		if (init != null && init.isPresent())
+		{
+			EagleValue value = interpreter.getEagleValue(init.expr);
+			interpreter.setSymbol(var, var.toString(), value);
+		}
 	}
 }

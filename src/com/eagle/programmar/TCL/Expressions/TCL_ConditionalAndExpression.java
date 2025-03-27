@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
@@ -19,8 +19,8 @@ public class TCL_ConditionalAndExpression extends PrecedenceOperator implements 
 
 	public static class TCL_AndOperator extends TokenChooser
 	{
-		public @CHOICE TCL_Keyword AND = new TCL_Keyword("and");
-		public @CHOICE TCL_Punctuation and = new TCL_Punctuation("&&");
+		public @CHOICE TCL_Keyword XXAND = new TCL_Keyword("and");
+		public @CHOICE TCL_Punctuation XXand = new TCL_Punctuation("&&");
 	}
 
 	@Override

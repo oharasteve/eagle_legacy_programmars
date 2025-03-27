@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Variable_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
@@ -12,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Delphi_Consts extends TokenSequence
+public class Delphi_Consts extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Delphi_Keyword CONST = new Delphi_Keyword("Const");
 	public @S(20) @OPT TokenList<Delphi_Comment> comments;
@@ -31,6 +34,16 @@ public class Delphi_Consts extends TokenSequence
 		{
 			public @S(10) PunctuationColon colon;
 			public @S(20) Delphi_Type type;
+		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		for (Delphi_Const con : constants._elements)
+		{
+			EagleValue val = interpreter.getEagleValue(con.expr);
+			interpreter.setSymbol(con, con.constant.getValue(), val);
 		}
 	}
 }

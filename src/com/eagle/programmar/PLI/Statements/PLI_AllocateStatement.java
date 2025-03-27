@@ -9,13 +9,14 @@ import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_AllocateStatement extends TokenSequence
+public class PLI_AllocateStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.2") PLI_Keyword ALLOCATE = new PLI_Keyword("ALLOCATE");
 	public @S(20) PLI_AllocateVariable var;

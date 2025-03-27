@@ -19,9 +19,9 @@ public class CMacro_Pragma_CLang extends TokenSequence
 
 	public static class CMacro_Pragma_CLang_What extends TokenChooser
 	{
-		public @CHOICE CMacro_Literal literal;
+		public @CHOICE CMacro_Literal XXliteral;
 
-		public @CHOICE CMacro_KeywordChoice PUSH = new CMacro_KeywordChoice("push", "pop");
+		public @CHOICE CMacro_KeywordChoice XXPUSH = new CMacro_KeywordChoice("push", "pop");
 
 		public @CHOICE static class CMacro_Pragma_CLangOptimize extends TokenSequence
 		{

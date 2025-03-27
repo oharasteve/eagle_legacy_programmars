@@ -5,8 +5,8 @@ package com.eagle.programmar.AWK.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.AWK.AWK_Action;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
@@ -17,6 +17,7 @@ import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -30,7 +31,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 	public @S(60) AWK_IfBlock block;
 	public @S(70) @OPT AWK_IfElse ifelse;
 
-	public static class AWK_IfElse extends TokenSequence
+	public static class AWK_IfElse extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) AWK_Keyword ELSE = new AWK_Keyword("else");
 		public @S(20) @OPT AWK_EndOfLine eoln;
@@ -39,8 +40,8 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 
 	public static class AWK_IfBlock extends TokenChooser
 	{
-		public @CHOICE AWK_Statements stmt;
-		public @CHOICE AWK_Action action;
+		public @CHOICE AWK_Statements XXstmt;
+		public @CHOICE AWK_Action XXaction;
 	}
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
@@ -55,11 +56,10 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(getFileName(), getStartLine(), getStartChar()));
-			if (ifelse.isPresent())
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
+			if (ifelse != null && ifelse.isPresent())
 			{
-				_metrics.add(
-						new IfCondMetrics(ifelse.getFileName(), ifelse.getStartLine(), ifelse.getStartChar()));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, ifelse));
 			}
 		}
 
@@ -74,7 +74,7 @@ public class AWK_IfStatement extends TokenSequence implements EagleRunnableWithR
 			todo = null;
 
 			// Check for 'else'
-			if (ifelse.isPresent())
+			if (ifelse != null && ifelse.isPresent())
 			{
 				_metrics.get(1).completedIf(true);
 				todo = ifelse.block;

@@ -35,12 +35,12 @@ public class Javascript_UnparsedStatement extends UnparsedElement
 
 	public static class Javascript_UnparsedElement extends TokenChooser
 	{
-		public @CHOICE Javascript_Identifier_Reference id;
-		public @LAST Javascript_PunctuationChoice punct = new Javascript_PunctuationChoice(PUNCTS);
-		public @CHOICE Javascript_Literal literal;
-		public @CHOICE Javascript_Number number;
-		public @CHOICE Javascript_Comment comment;
-		public @CHOICE Javascript_RegularExpression regex;
-		public @CHOICE Javascript_KeywordChoice keyword = new Javascript_KeywordChoice(KEYWORDS);
+		public @CHOICE Javascript_Identifier_Reference XXid;
+		public @LAST Javascript_PunctuationChoice XXpunct = new Javascript_PunctuationChoice(PUNCTS);
+		public @CHOICE Javascript_Literal XXliteral;
+		public @CHOICE Javascript_Number XXnumber;
+		public @CHOICE Javascript_Comment XXcomment;
+		public @CHOICE Javascript_RegularExpression XXregex;
+		public @CHOICE Javascript_KeywordChoice XXkeyword = new Javascript_KeywordChoice(KEYWORDS);
 	}
 }

@@ -3,12 +3,21 @@
 
 package com.eagle.programmar.Julia.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Julia_BreakStatement extends TokenSequence
+public class Julia_BreakStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("base/base/#break") Julia_Keyword BREAK = new Julia_Keyword("break");
 	public @S(20) Julia_EOLN eoln;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		return Eagle_Statement_Result.BREAK;
+	}
 }

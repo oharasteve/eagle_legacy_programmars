@@ -24,7 +24,7 @@ public class CSS_URL_Value extends TokenSequence
 
 	public static class CSS_File extends TokenChooser
 	{
-		public @CHOICE CSS_FileName fileName;
+		public @CHOICE CSS_FileName XXfileName;
 
 		public @CHOICE static class CSS_FileInline extends TokenSequence
 		{

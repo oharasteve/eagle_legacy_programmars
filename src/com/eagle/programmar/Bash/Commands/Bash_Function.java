@@ -3,10 +3,16 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Syntax;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -16,9 +22,10 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Bash_Function extends TokenChooser implements AbstractFunction
+public class Bash_Function extends TokenChooser
 {
-	public @CHOICE static class Bash_Function_Explicit extends TokenSequence implements AbstractFunction
+	public @CHOICE static class Bash_Function_Explicit extends TokenSequence
+				implements AbstractFunction, EagleRunnable, EagleScopeInterface
 	{
 		public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
 		public @S(20) Bash_Function_Definition fnName;
@@ -33,6 +40,29 @@ public class Bash_Function extends TokenChooser implements AbstractFunction
 		{
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) PunctuationRightParen rightParen;
+		}
+		
+		public @SKIP CallMetrics _metrics = null;
+		
+		// Bash has a strange way of returning values
+		public @SKIP int _exitStatus = 0;
+		public @SKIP String _echoOutputs = null;
+
+		private @SKIP EagleScope _scope = new EagleScope(this, Bash_Syntax.IS_CASE_SENSITIVE);
+
+		@Override
+		public EagleScope getScope()
+		{
+			return _scope;
+		}
+		
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			if (_metrics == null)
+			{
+				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), this);
+			}
 		}
 	}
 

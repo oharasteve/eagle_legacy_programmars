@@ -3,12 +3,13 @@
 
 package com.eagle.programmar.Powershell;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
 import com.eagle.tokens.TokenList;
 
-public class Powershell_Program extends EagleLanguage implements EagleRunnable
+public class Powershell_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String POWERHSELL = "Powershell";
 
@@ -40,9 +41,20 @@ public class Powershell_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the FUNCTION definitions
 		for (Powershell_Statement stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.element.getWhich());
+			if (stmt.element.getWhich() instanceof Powershell_FunctionStatement)
+			{
+				Powershell_FunctionStatement fn = (Powershell_FunctionStatement) stmt.element.getWhich();
+				interpreter.addFunction(fn.name.getValue(), fn);
+			}
+		}
+
+		// Second pass, execute the program
+		for (Powershell_Statement stmt : statements._elements)
+		{
+			interpreter.tryToInterpret(stmt.element);
 		}
 	}
 }

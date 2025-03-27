@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.BNF;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.tokens.TokenList;
 
-public class BNF_Program extends EagleLanguage
+public class BNF_Program extends AbstractLanguage
 {
 	public static final String BNF = "BNF";
 

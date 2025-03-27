@@ -8,9 +8,10 @@ import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Bash_AwkCommand extends TokenSequence
+public class Bash_AwkCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword AWK = new Bash_Keyword("awk");
 	public @S(20) @OPT TokenList<Bash_AwkOption> options;

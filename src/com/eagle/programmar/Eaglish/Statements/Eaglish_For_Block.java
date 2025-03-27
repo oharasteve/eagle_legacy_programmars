@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
-import com.eagle.math.IntegerValue;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
@@ -16,9 +16,10 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWithResult
+public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword FOR = new Eaglish_Keyword("FOR");
 	public @S(20) Eaglish_Variable_Definition var;
@@ -43,70 +44,52 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(getFileName(), getStartLine(), getStartChar());
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		String which = TO.getValue();
-		switch (which)
+		boolean backwards = which.equals("DOWN_TO");
+
+		int i = start;
+		while (true)
 		{
-		case "TO":
-			for (int i = start; i <= stop; i++)
-			{
-				// 100% identical to "DOWN_TO" below
-				metric.iterate();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						var.toString(), new IntegerValue(i));
-				
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-				for (Eaglish_Statement stmt : statements._elements)
-				{
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
-				
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-				}
-			}
-			break;
-		case "DOWN_TO":
-			for (int i = start; i >= stop; i--)
-			{
-				// 100% identical to "TO" above
-				metric.iterate();
-				interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-						var.toString(), new IntegerValue(i));
+			if (!backwards && i > stop) break;
+			if (backwards && i < stop) break;
 
-				Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-				for (Eaglish_Statement stmt : statements._elements)
-				{
-					result = interpreter.tryToInterpret(stmt);
-					if (result != Eagle_Statement_Result.NORMAL) break;
-				}
+			metric.iterate();
+			interpreter.setSymbol(var, var.toString(), new EagleInteger(i));
 
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-				}
+			for (Eaglish_Statement stmt : statements._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			break;
-		default:
-			throw new RuntimeException("Unable to handle " + which);
+
+			if (result == Eagle_Statement_Result.BREAK)
+			{
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
+			}
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+
+			if (backwards)
+				i--;
+			else
+				i++;
 		}
 
 		_metrics.competedLoop(metric);
-		return Eagle_Statement_Result.NORMAL;
+		return result;
 	}
 }

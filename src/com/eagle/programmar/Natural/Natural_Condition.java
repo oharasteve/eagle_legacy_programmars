@@ -22,7 +22,7 @@ public class Natural_Condition extends TokenSequence
 
 	public static class Natural_Condition_Base extends TokenChooser
 	{
-		public @CHOICE Natural_Expression expr;
+		public @CHOICE Natural_Expression XXexpr;
 
 		public @CHOICE static class Natural_NotCondition extends TokenSequence
 		{
@@ -54,9 +54,9 @@ public class Natural_Condition extends TokenSequence
 
 		public static class Natural_Relational_Operator extends TokenChooser
 		{
-			public @CHOICE Natural_PunctuationChoice operator = new Natural_PunctuationChoice(">=", "<=", "<", ">",
-					"=");
-			public @CHOICE Natural_KeywordChoice GT = new Natural_KeywordChoice("GT", "LT", "NE");
+			public @CHOICE Natural_PunctuationChoice XXoperator = new Natural_PunctuationChoice(
+					">=", "<=", "<", ">", "=");
+			public @CHOICE Natural_KeywordChoice XXGT = new Natural_KeywordChoice("GT", "LT", "NE");
 
 			public @CHOICE static class Natural_Not_Equals extends TokenSequence
 			{

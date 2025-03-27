@@ -47,8 +47,8 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 
 			public static class JavaP_AnnotHexes extends TokenChooser
 			{
-				public @CHOICE JavaP_HexNoPrefix hex;
-				public @CHOICE JavaP_EndOfLine eoln;
+				public @CHOICE JavaP_HexNoPrefix XXhex;
+				public @CHOICE JavaP_EndOfLine XXeoln;
 			}
 		}
 
@@ -87,7 +87,7 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 
 				public static class JavaP_WhichAnno extends TokenChooser
 				{
-					public @CHOICE JavaP_AnnoIdentifier id;
+					public @CHOICE JavaP_AnnoIdentifier XXid;
 
 					public @CHOICE static class JavaP_AnnoList extends TokenSequence
 					{
@@ -110,17 +110,17 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 
 					public static class JavaP_AnnoValueClass extends TokenChooser
 					{
-						public @CHOICE JavaP_Literal literal;
-						public @CHOICE JavaP_Number number;
+						public @CHOICE JavaP_Literal XXliteral;
+						public @CHOICE JavaP_Number XXnumber;
 
-						public static @CHOICE class JavaP_AnnoValueOneClass extends TokenSequence
+						public @CHOICE static class JavaP_AnnoValueOneClass extends TokenSequence
 						{
 							public @S(10) JavaP_Keyword CLASS = new JavaP_Keyword("class");
 							public @S(20) JavaP_LClassName className;
 							public @S(30) PunctuationSemicolon semicolon;
 						}
 
-						public static @CHOICE class JavaP_AnnoValueRTClass extends TokenSequence
+						public @CHOICE static class JavaP_AnnoValueRTClass extends TokenSequence
 						{
 							public @S(10) JavaP_LClassName className;
 							public @S(20) PunctuationSemicolon semicolon;
@@ -128,7 +128,7 @@ public class JavaP_RuntimeVisibleAnnotations extends TokenSequence
 							public @S(40) JavaP_Keyword RT = new JavaP_Keyword("RUNTIME");
 						}
 
-						public static @CHOICE class JavaP_AnnoValueManyClasses extends TokenSequence
+						public @CHOICE static class JavaP_AnnoValueManyClasses extends TokenSequence
 						{
 							public @S(10) PunctuationLeftBracket leftBracket;
 							public @S(20) SeparatedList<JavaP_AnnoValueOneClass, PunctuationComma> classNames;

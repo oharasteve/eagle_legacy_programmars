@@ -7,8 +7,9 @@ import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.programmar.VB.Terminals.VB_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_CloseStatement extends TokenSequence
+public class VB_CloseStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword CLOSE = new VB_Keyword("close");
 	public @S(20) VB_Punctuation pound = new VB_Punctuation('#');

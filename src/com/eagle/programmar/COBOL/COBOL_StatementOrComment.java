@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class COBOL_StatementOrComment extends TokenChooser
 {
-	public @CHOICE COBOL_Comment comment;
-	public @CHOICE COBOL_Statement statement;
+	public @CHOICE COBOL_Comment XXcomment;
+	public @CHOICE COBOL_Statement XXstatement;
 }

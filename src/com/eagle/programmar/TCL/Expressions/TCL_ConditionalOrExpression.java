@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
@@ -19,8 +19,8 @@ public class TCL_ConditionalOrExpression extends PrecedenceOperator implements E
 
 	public static class TCL_OrOperator extends TokenChooser
 	{
-		public @CHOICE TCL_Keyword OR = new TCL_Keyword("or");
-		public @CHOICE TCL_Punctuation orOper = new TCL_Punctuation("||");
+		public @CHOICE TCL_Keyword XXOR = new TCL_Keyword("or");
+		public @CHOICE TCL_Punctuation XXorOper = new TCL_Punctuation("||");
 	}
 
 	@Override

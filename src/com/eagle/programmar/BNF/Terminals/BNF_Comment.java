@@ -3,12 +3,34 @@
 
 package com.eagle.programmar.BNF.Terminals;
 
-import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
-import com.eagle.programmar.Delphi.Terminals.Delphi_Include;
-import com.eagle.tokens.TokenChooser;
+import com.eagle.parsers.EagleFileReader;
+import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.terminals.TerminalCommentToken;
 
-public class BNF_Comment extends TokenChooser
+public class BNF_Comment extends TerminalCommentToken
 {
-	public @CHOICE Delphi_Comment comment;
-	public @CHOICE Delphi_Include include;
+	// Need a default constructor for the parser
+	public BNF_Comment()
+	{
+		this("");
+	}
+
+	public BNF_Comment(String comment)
+	{
+		super(comment);
+	}
+
+	@Override
+	public boolean parse(EagleFileReader lines)
+	{
+		if (findStart(lines) == FOUND.EOF) return false;
+
+		EagleLineReader rec = lines.get(_currentLine);
+		char ch = rec.charAt(_currentChar);
+		if (ch == '(')
+		{
+			return super.possibleCommentPair2(lines, rec, "(*", "*)");
+		}
+		return false;
+	}
 }

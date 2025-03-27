@@ -28,10 +28,10 @@ public class CSS_Gradient extends TokenSequence
 
 	public static class CSS_Gradient_Piece extends TokenChooser
 	{
-		public @CHOICE CSS_Keyword LINEAR = new CSS_Keyword("linear");
-		public @CHOICE CSS_KeywordChoice direction = new CSS_KeywordChoice("top", "bottom", "left", "right");
-		public @CHOICE CSS_HexNumber number;
-		public @CHOICE CSS_Color color;
+		public @CHOICE CSS_Keyword XXLINEAR = new CSS_Keyword("linear");
+		public @CHOICE CSS_KeywordChoice XXdirection = new CSS_KeywordChoice("top", "bottom", "left", "right");
+		public @CHOICE CSS_HexNumber XXnumber;
+		public @CHOICE CSS_Color XXcolor;
 
 		public @CHOICE static class CSS_Gradient_Direction extends TokenSequence
 		{

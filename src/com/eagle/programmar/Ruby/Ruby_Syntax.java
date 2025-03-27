@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Ruby_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,59 +17,13 @@ public class Ruby_Syntax extends EagleSyntax
 
 	public Ruby_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				"==", "!=", "<=", ">=", "++", "--", "+=", ".."
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Ruby_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.geeksforgeeks.org/ruby-keywords/
-	private static String[] reservedWords = new String[] {
-			"__ENCODING__",
-			"__LINE__",
-			"__FILE__",
-			"BEGIN",
-			"END",
-			"alias",
-			"and",
-			"begin",
-			"break",
-			"case",
-			"class",
-			"def",
-			"defined?",
-			"do",
-			"else",
-			"elsif",
-			"end",
-			"ensure",
-			"false",
-			"for",
-			"if",
-			"in",
-			"module",
-			"next",
-			"nil",
-			"not",
-			"or",
-			"puts",
-			"redo",
-			"rescue",
-			"retry",
-			"return",
-			"self",
-			"super",
-			"then",
-			"true",
-			"undef",
-			"unless",
-			"until",
-			"when",
-			"while",
-			"yield",
-	};
 }

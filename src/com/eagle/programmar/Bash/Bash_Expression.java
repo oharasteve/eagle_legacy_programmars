@@ -11,13 +11,14 @@ import com.eagle.programmar.Bash.Expressions.Bash_DollarNumber;
 import com.eagle.programmar.Bash.Expressions.Bash_DollarPound;
 import com.eagle.programmar.Bash.Expressions.Bash_DollarSubstring;
 import com.eagle.programmar.Bash.Expressions.Bash_Evaluate1;
+import com.eagle.programmar.Bash.Expressions.Bash_Evaluate2;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalAnd_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalNotExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_LogicalOr_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_MultiplicativeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_NegativeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_ParenthesizedExpression;
-import com.eagle.programmar.Bash.Expressions.Bash_Range;
+import com.eagle.programmar.Bash.Expressions.Bash_RangeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_Relational_Expression;
 import com.eagle.programmar.Bash.Expressions.Bash_SizeExpression;
 import com.eagle.programmar.Bash.Expressions.Bash_VariableExpression;
@@ -67,15 +68,15 @@ public class Bash_Expression extends PrecedenceChooser
 	public @P(190) Bash_Array array;
 	public @P(200) Bash_Evaluate1 evaluate1;
 	public @P(210) Bash_Evaluate2 evaluate2;
-	public @P(220) Bash_Range range;
+	public @P(220) Bash_RangeExpression range;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Bash_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) Bash_AdditiveExpression additiveExpression;
-	public @P(520) Bash_Relational_Expression relational_Expression;
-	public @P(530) Bash_LogicalAnd_Expression logicalAnd_Expression;
-	public @P(540) Bash_LogicalOr_Expression logicalOr_Expression;
-	public @P(550) Bash_Assignment_Expression assignment_Expression;
+	public @P(1000) Bash_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) Bash_AdditiveExpression additiveExpression;
+	public @P(1020) Bash_Relational_Expression relational_Expression;
+	public @P(1030) Bash_LogicalAnd_Expression logicalAnd_Expression;
+	public @P(1040) Bash_LogicalOr_Expression logicalOr_Expression;
+	public @P(1050) Bash_Assignment_Expression assignment_Expression;
 }

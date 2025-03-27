@@ -22,7 +22,7 @@ public class HTML_Script extends TokenSequence
 
 	public static class HTML_ScriptContents extends TokenChooser
 	{
-		public @CHOICE HTML_Punctuation endTag = new HTML_Punctuation("/>");
+		public @CHOICE HTML_Punctuation XXendTag = new HTML_Punctuation("/>");
 
 		public @CHOICE static class HTML_ScriptWithBody extends TokenSequence
 		{
@@ -32,8 +32,8 @@ public class HTML_Script extends TokenSequence
 
 			public static class HTML_ScriptBody extends TokenChooser
 			{
-				public @CHOICE @SYNTAX(Django_Syntax.class) @OPT Django_Control django;
-				public @CHOICE @SYNTAX(Javascript_Syntax.class) @OPT Javascript_Program javascript;
+				public @CHOICE @SYNTAX(Django_Syntax.class) @OPT Django_Control XXdjango;
+				public @CHOICE @SYNTAX(Javascript_Syntax.class) @OPT Javascript_Program XXjavascript;
 			}
 
 			public static class HTML_EndScript extends TokenSequence

@@ -67,14 +67,14 @@ public class CMacro_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) CMacro_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) CMacro_AdditiveExpression additiveExpression;
-	public @P(520) CMacro_RelationalExpression relationalExpression;
-	public @P(530) CMacro_EqualityExpression equalityExpression;
-	public @P(540) CMacro_BitwiseAndExpression bitwiseAndExpression;
-	public @P(550) CMacro_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(560) CMacro_BitwiseOrExpression bitwiseOrExpression;
-	public @P(570) CMacro_ConditionalAndExpression conditionalAndExpression;
-	public @P(580) CMacro_ConditionalOrExpression conditionalOrExpression;
-	public @P(590) CMacro_ConcatenateExpression concatenateExpression;
+	public @P(1000) CMacro_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) CMacro_AdditiveExpression additiveExpression;
+	public @P(1020) CMacro_RelationalExpression relationalExpression;
+	public @P(1030) CMacro_EqualityExpression equalityExpression;
+	public @P(1040) CMacro_BitwiseAndExpression bitwiseAndExpression;
+	public @P(1050) CMacro_ExclusiveOrExpression exclusiveOrExpression;
+	public @P(1060) CMacro_BitwiseOrExpression bitwiseOrExpression;
+	public @P(1070) CMacro_ConditionalAndExpression conditionalAndExpression;
+	public @P(1080) CMacro_ConditionalOrExpression conditionalOrExpression;
+	public @P(1090) CMacro_ConcatenateExpression concatenateExpression;
 }

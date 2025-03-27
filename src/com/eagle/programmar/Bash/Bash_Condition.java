@@ -3,26 +3,27 @@
 
 package com.eagle.programmar.Bash;
 
-import com.eagle.programmar.Bash.Commands.Bash_GrepCommand;
-import com.eagle.programmar.Bash.Commands.Bash_ReadCommand;
-import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
-import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
-import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
+import com.eagle.programmar.Bash.Conditions.Bash_BracketCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_BracketsCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_ConditionConstants;
+import com.eagle.programmar.Bash.Conditions.Bash_ExistsCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_ExpressionCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_GrepCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_LogicalAndCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_LogicalOrCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_NotCondition;
+import com.eagle.programmar.Bash.Conditions.Bash_ReadCondition;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.punctuation.PunctuationHyphen;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Bash_Condition extends PrecedenceChooser
 {
 	private static OperatorList _operators = new OperatorList();
 
 	//
-	// Note: All operators should stay in @P(#) order. This determines operator
-	// precedence.
+	// Note: All operators should stay in @P(#) order.
+	// This determines operator precedence.
 	//
 
 	public Bash_Condition()
@@ -38,68 +39,18 @@ public class Bash_Condition extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public static @P(100) class Bash_ExpressionCondition extends PrimaryOperator
-	{
-		public @S(10) Bash_Expression expression;
-	}
-
-	public static @P(110) class Bash_BracketCondition extends PrimaryOperator
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) Bash_Condition condition;
-		public @S(30) PunctuationRightBracket rightBracket;
-	}
-
-	public static @P(120) class Bash_BracketsCondition extends PrimaryOperator
-	{
-		public @S(10) Bash_Punctuation leftBrackets = new Bash_Punctuation("[[");
-		public @S(20) Bash_Condition condition;
-		public @S(30) Bash_Punctuation rightBrackets = new Bash_Punctuation("]]");
-	}
-
-	public static @P(130) class Bash_ExistsCondition extends PrimaryOperator
-	{
-		public @S(10) Bash_KeywordChoice E = new Bash_KeywordChoice("-d", "-e", "-f", "-n", "-x", "-z");
-		public @S(20) Bash_FilenameOrLiteral filename;
-	}
-
-	public static @P(140) class Bash_NotCondition extends PrimaryOperator
-	{
-		public @S(10) Bash_Punctuation NOT = new Bash_Punctuation("!");
-		public @S(20) Bash_Condition condition;
-	}
-
-	public static @P(150) class Bash_Constants extends PrimaryOperator
-	{
-		public @S(10) Bash_KeywordChoice TRUE = new Bash_KeywordChoice("false", "true");
-	}
-
-	public static @P(160) class Bash_GrepCondition extends PrimaryOperator
-	{
-		public @S(10) Bash_GrepCommand grepStatement;
-	}
-
-	public static @P(170) class Bash_ReadCondition extends PrimaryOperator
-	{
-		public @S(10) Bash_ReadCommand readStatement;
-	}
+	public @P(100) Bash_ExpressionCondition expressionCondition;
+	public @P(110) Bash_BracketCondition bracketCondition;
+	public @P(120) Bash_BracketsCondition bracketsCondition;
+	public @P(130) Bash_ExistsCondition existsCondition;
+	public @P(140) Bash_NotCondition notCondition;
+	public @P(150) Bash_ConditionConstants conditionConstants;
+	public @P(160) Bash_GrepCondition grepCondition;
+	public @P(170) Bash_ReadCondition readCondition;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class Bash_LogicalAnd_Condition extends PrecedenceOperator
-	{
-		public @S(10) Bash_Condition left = new Bash_Condition(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationHyphen dash;
-		public @S(30) Bash_Keyword AND = new Bash_Keyword("and");
-		public @S(40) Bash_Condition right = new Bash_Condition(this, AllowedPrecedence.HIGHER);
-	}
-
-	public static @P(510) class Bash_LogicalOr_Condition extends PrecedenceOperator
-	{
-		public @S(10) Bash_Condition left = new Bash_Condition(this, AllowedPrecedence.ATLEAST);
-		public @S(20) PunctuationHyphen dash;
-		public @S(30) Bash_Keyword OR = new Bash_Keyword("or");
-		public @S(40) Bash_Condition right = new Bash_Condition(this, AllowedPrecedence.HIGHER);
-	}
+	public @P(1000) Bash_LogicalAndCondition logicalAndCondition;
+	public @P(1010) Bash_LogicalOrCondition logicalOrCondition;
 }

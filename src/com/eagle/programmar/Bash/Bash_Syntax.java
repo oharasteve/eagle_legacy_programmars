@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Bash_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class Bash_Syntax extends EagleSyntax
 
 	public Bash_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "\\";
 		_extraCharacters = "";
 		_autoAdvance = false;
@@ -40,7 +42,8 @@ public class Bash_Syntax extends EagleSyntax
 				"+=",
 				"-=",
 				">=",
-				"<="
+				"<=",
+				"++"
 		};
 
 		addReservedWords(Bash_Reserved_Words.RESERVED_WORDS);

@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -21,37 +22,57 @@ public class Delphi_Relational_Expression extends PrecedenceOperator implements 
 
 	public static class Delphi_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Delphi_PunctuationChoice operator = new Delphi_PunctuationChoice("=", "<>", "<", ">", "<=",
-				">=");
-		public @CHOICE Delphi_KeywordChoice IN = new Delphi_KeywordChoice("In", "Is");
+		public @CHOICE Delphi_PunctuationChoice XXoperator = new Delphi_PunctuationChoice(
+				"=", "<>", "<", ">", "<=", ">=");
+		public @CHOICE Delphi_KeywordChoice XXIN = new Delphi_KeywordChoice("In", "Is");
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (relOp.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "=":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case "<>":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
-		case "<":
-			interpreter.pushBool(leftValue < rightValue);
-			return;
-		case "<=":
-			interpreter.pushBool(leftValue <= rightValue);
-			return;
-		case ">":
-			interpreter.pushBool(leftValue > rightValue);
-			return;
-		case ">=":
-			interpreter.pushBool(leftValue >= rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "<>":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
 		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "<>":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			}
+		}
+		
 		throw new RuntimeException("Unexpected relational operator: " + relOp.getWhich());
 	}
 }

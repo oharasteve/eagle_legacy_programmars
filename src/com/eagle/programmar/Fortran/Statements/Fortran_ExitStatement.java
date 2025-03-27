@@ -3,12 +3,21 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Fortran_ExitStatement extends TokenSequence
+public class Fortran_ExitStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) Fortran_Keyword EXIT = new Fortran_Keyword("EXIT");
 	public @S(20) Fortran_EOLN eoln;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		return Eagle_Statement_Result.BREAK;
+	}
 }

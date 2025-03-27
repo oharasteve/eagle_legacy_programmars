@@ -58,8 +58,8 @@ public class JavaP_CodeLocalValues extends TokenSequence
 
 			public static class JavaP_CodeLocalHexes extends TokenChooser
 			{
-				public @CHOICE JavaP_HexNoPrefix hex;
-				public @CHOICE JavaP_EndOfLine eoln;
+				public @CHOICE JavaP_HexNoPrefix XXhex;
+				public @CHOICE JavaP_EndOfLine XXeoln;
 			}
 		}
 	}

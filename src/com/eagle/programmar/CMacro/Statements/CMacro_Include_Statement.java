@@ -29,8 +29,8 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 
 	public static class CMacro_IncludeWhat extends TokenChooser
 	{
-		public @CHOICE CMacro_Literal filename;
-		public @CHOICE CMacro_IncludeSys sys;
+		public @CHOICE CMacro_Literal XXfilename;
+		public @CHOICE CMacro_IncludeSys XXsys;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 				int len = fileName.length();
 				fileName = fileName.substring(1, len - 1);
 			}
-			macro = preprocessor._findInclude.findFile("", fileName);
+			macro = preprocessor._findInclude.findIncludeFile("", fileName);
 		}
 		catch (IOException ex)
 		{

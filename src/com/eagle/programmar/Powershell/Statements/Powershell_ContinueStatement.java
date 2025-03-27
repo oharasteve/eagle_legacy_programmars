@@ -5,8 +5,9 @@ package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Powershell_ContinueStatement extends TokenSequence
+public class Powershell_ContinueStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#851-the-continue-statement") Powershell_Keyword CONTINUE = new Powershell_Keyword(
 			"Continue");

@@ -3,13 +3,14 @@
 
 package com.eagle.programmar.C.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ExpressionStatement extends TokenSequence implements EagleRunnable
+public class C_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("#Expression-Statements") C_Expression expr;
 	public @S(20) PunctuationSemicolon semicolon;

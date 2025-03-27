@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.VB;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.tokens.TokenList;
@@ -27,7 +27,7 @@ public class VB_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(var.toString());
+		EagleValue value = interpreter.findSymbol(var.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

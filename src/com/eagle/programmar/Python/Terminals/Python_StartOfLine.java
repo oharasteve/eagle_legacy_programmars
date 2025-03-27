@@ -4,13 +4,12 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.programmar.Python.Python_CommentList;
 import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_Statement_List;
-import com.eagle.programmar.Python.Statements.Python_IfStatement.Python_IfElif;
+import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.terminals.TerminalStartOfLine;
 
@@ -18,55 +17,56 @@ public class Python_StartOfLine extends TerminalStartOfLine
 {
 	private static final String TAB = "  ";
 	private static final int TABLEN = TAB.length();
+	
+	private static final boolean DEBUG = false;
 
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
+		
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
-			// Find the enclosing TokenList of statements
-			if (parent instanceof TokenList && !(parent instanceof SeparatedList))
+			if (DEBUG) System.out.println("**** Parent is " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
+			// Find the enclosing statement block
+			if (parent instanceof Python_StatementBlock)
 			{
-				@SuppressWarnings("unchecked")
-				TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
-				if (tokenList.size() == 0) break; // First entry always matches
-
-				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				AbstractToken firstToken = tokenList.first();
-				if (!(firstToken instanceof Python_IfElif))
+				Python_StatementBlock block = (Python_StatementBlock) parent;
+				if (block.getWhich() instanceof Python_MultilineStatement)
 				{
+					Python_MultilineStatement multi = (Python_MultilineStatement) block.getWhich();
+					if (DEBUG) System.out.println("**** Found a Python_MultilineStatement");
+					TokenList<? extends AbstractToken> tokenList = multi.statements;
+					if (tokenList.size() == 0) break; // First entry always matches
+	
 					// Find first non-comment statement
 					for (AbstractToken token : tokenList._elements)
 					{
-//						if (token instanceof Python_StartOfLine)
-//						{
-//							if (_currentLine == token._currentLine) return false;	// Cannot have two SOLN's on the same line
-//						}
-
-						if (token instanceof Python_Comment || token instanceof Python_CommentList)
+						if (DEBUG) System.out.println("**** Token is " + (token.getStartLine()+1) + "/" + (token.getStartChar()+1));
+						if (token instanceof Python_Comment)
 						{
 							continue; // Doesn't matter what columns comments are in
 						}
-
-						if (token instanceof Python_Statement)
+	
+						Python_Statement firstStmt = (Python_Statement) token;
+						AbstractToken child = firstStmt.statementOrComment.getWhich();
+						if (child instanceof Python_SameLineStatement)
 						{
-							Python_Statement firstStmt = (Python_Statement) token;
-							AbstractToken child = firstStmt.statementOrComment.getWhich();
-							if (child instanceof Python_Statement_List)
+							Python_SameLineStatement stmtList = (Python_SameLineStatement) child;
+							Python_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
+							/////// The KEY Line /////// Who doesn't like Key Lime pie?
+							if (_currentChar != otherStmt.getStartChar())
 							{
-								Python_Statement_List stmtList = (Python_Statement_List) child;
-								Python_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
-								// if (_currentLine == otherStmt._currentLine) return false; // Cannot have two
-								// SOLN's on the same line
-								if (_currentChar != otherStmt.getStartChar()) return false; /////// The KEY Line ///////
-								break;
+								if (DEBUG) System.out.println("**** FAIL: Comparing " +
+										(_currentLine+1) + "/" + (_currentChar+1) + " to " +
+										(otherStmt.getStartLine()+1) + "/" + (otherStmt.getStartChar()+1));
+								return false;
 							}
-						}
-						else
-						{
-							throw new RuntimeException("Expected a Python_Statement, not " + token);
+							if (DEBUG) System.out.println("**** MATCH: Comparing " +
+									(_currentLine+1) + "/" + (_currentChar+1) + " to " +
+									(otherStmt.getStartLine()+1) + "/" + (otherStmt.getStartChar()+1));
+							break;
 						}
 					}
 					break;
@@ -74,12 +74,6 @@ public class Python_StartOfLine extends TerminalStartOfLine
 			}
 			parent = parent.getParent();
 		}
-
-//		// This is an error -- the python statement was not inside a TokenList
-//		if (parent == null)
-//		{
-//			throw new RuntimeException("Never found the parent TokenList, at line " + _currentLine);
-//		}
 
 		foundIt(_currentLine, _currentChar - 1);
 		return true;
@@ -92,23 +86,30 @@ public class Python_StartOfLine extends TerminalStartOfLine
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
-			// Find the enclosing TokenList of statements
-			if (parent instanceof TokenList && !(parent instanceof SeparatedList))
-			{
-				@SuppressWarnings("unchecked")
-				TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
+			if (DEBUG) System.out.println("**** Parent " + parent.getClass().getSimpleName() +
+					" at " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
 
-				// The 'elif' clause is an irrelevant TokenList on an 'if' statement
-				if (tokenList.size() > 0 && !(tokenList.first() instanceof Python_IfElif))
-				{
-					depth++;
-				}
+			// Find the enclosing statement block(s)
+			if (parent instanceof Python_MultilineStatement)
+			{
+				depth++;
 			}
+			if (DEBUG) System.out.println("     Token " + this.getClass().getSimpleName() +
+					" at " + (getStartLine()+1) + "/" + (getStartChar()+1) + " depth=" + depth);
 			parent = parent.getParent();
 		}
-
+		
+		// Might be a tad faster with the 'switch'. It is not needed.
+		switch (depth)
+		{
+		case 0: return "";
+		case 1: return TAB;
+		case 2: return TAB + TAB;
+		case 3: return TAB + TAB + TAB;
+		case 4: return TAB + TAB + TAB + TAB;
+		}
 		StringBuffer sb = new StringBuffer(TABLEN * depth);
-		for (int i = 1; i < depth; i++) sb.append(TAB);
+		for (int i = 0; i < depth; i++) sb.append(TAB);
 		return sb.toString();
 	}
 }

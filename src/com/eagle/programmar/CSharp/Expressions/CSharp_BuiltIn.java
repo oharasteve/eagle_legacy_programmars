@@ -3,10 +3,12 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class CSharp_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
@@ -26,6 +28,22 @@ public class CSharp_BuiltIn extends PrimaryOperator implements EagleRunnable
 			break;
 		default:
 			throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
+		}
+	}
+	
+	public static CSharp_BuiltIn generateExpression(BuiltInEnum builtin, AbstractToken source)
+	{
+		CSharp_BuiltIn expr = new CSharp_BuiltIn();
+		switch (builtin)
+		{
+		case TRUE:
+			expr.builtinConstant = new CSharp_KeywordChoice("true");
+			return expr;
+		case FALSE:
+			expr.builtinConstant = new CSharp_KeywordChoice("false");
+			return expr;
+		default:
+			throw new RuntimeException("Unable to handle: " + builtin.toString());
 		}
 	}
 }

@@ -3,10 +3,12 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 {
@@ -25,6 +27,22 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 			break;
 		default:
 			throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtins);
+		}
+	}
+
+	public static Python_BuiltIn generateExpression(BuiltInEnum builtin, AbstractToken source)
+	{
+		Python_BuiltIn expr = new Python_BuiltIn();
+		switch (builtin)
+		{
+		case TRUE:
+			expr.builtins = new Python_KeywordChoice("True");
+			return expr;
+		case FALSE:
+			expr.builtins = new Python_KeywordChoice("False");
+			return expr;
+		default:
+			throw new RuntimeException("Unable to handle: " + builtin.toString());
 		}
 	}
 }

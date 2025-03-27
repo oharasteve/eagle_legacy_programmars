@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Java.Symbols;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 
 public class Java_Variable_Definition extends Java_Identifier_Definition implements EagleRunnable
 {
@@ -17,7 +17,7 @@ public class Java_Variable_Definition extends Java_Identifier_Definition impleme
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int val = interpreter._symbolTable.findSymbol(this.toString()).forceIntegerValue();
+		int val = interpreter.findSymbol(this.toString()).forceIntegerValue();
 		interpreter.pushInt(val);
 	}
 }

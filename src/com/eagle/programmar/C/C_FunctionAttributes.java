@@ -26,7 +26,7 @@ public class C_FunctionAttributes extends TokenSequence
 
 	public static class C_FunctionAttribute extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice ATTR = new C_KeywordChoice("__const__", "__deprecated__", "__leaf__",
+		public @CHOICE C_KeywordChoice XXATTR = new C_KeywordChoice("deprecated", "__const__", "__deprecated__", "__leaf__",
 				"__malloc__", "__noreturn__", "__nothrow__", "__pure__", "__warn_unused_result__");
 
 		public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence
@@ -51,9 +51,17 @@ public class C_FunctionAttributes extends TokenSequence
 
 		public @CHOICE static class C_FunctionAttributeAllocSize extends TokenSequence
 		{
-			public @S(10) C_Keyword NONNULL = new C_Keyword("__alloc_size__");
+			public @S(10) C_Keyword ALLOCSIZE = new C_Keyword("__alloc_size__");
 			public @S(20) PunctuationLeftParen leftParen;
 			public @S(30) SeparatedList<C_Number, PunctuationComma> numbers;
+			public @S(40) PunctuationRightParen rightParen;
+		}
+
+		public @CHOICE static class C_FunctionAttributeSentinel extends TokenSequence
+		{
+			public @S(10) C_Keyword sentinel = new C_Keyword("__sentinel__");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) C_Number number;
 			public @S(40) PunctuationRightParen rightParen;
 		}
 	}

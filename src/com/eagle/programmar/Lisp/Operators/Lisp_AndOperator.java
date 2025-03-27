@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Lisp.Operators;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.tokens.TokenList;
@@ -24,7 +24,7 @@ public class Lisp_AndOperator extends TokenSequence implements EagleRunnable
 	{
 		for (Lisp_SExpr expr : exprs._elements)
 		{
-			if (! interpreter.getBoolValue(expr))
+			if (!interpreter.getBoolValue(expr))
 			{
 				interpreter.pushBool(false);
 				return;

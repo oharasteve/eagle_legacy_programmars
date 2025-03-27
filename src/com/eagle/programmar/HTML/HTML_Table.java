@@ -17,14 +17,15 @@ import com.eagle.tokens.TokenSequence;
 public class HTML_Table extends TokenSequence
 {
 	public @S(10) @INDENT HTML_StartTable startTable;
-	public @S(20) TokenList<HTML_TableBodyElement> elements;
-	public @S(30) @OUTDENT HTML_EndTable endTable;
+	public @S(20) @OPT TokenList<HTML_TableBodyElement> elements;
+	public @S(30) @OPT @OUTDENT HTML_EndTable endTable;		// Optional in case there is never a closing </table>
+
 
 	public static class HTML_TableBodyElement extends TokenChooser
 	{
-		public @CHOICE PHP_Section php;
-		public @CHOICE Django_Control control;
-		public @CHOICE HTML_TablePiece piece;
+		public @CHOICE PHP_Section XXphp;
+		public @CHOICE Django_Control XXcontrol;
+		public @CHOICE HTML_TablePiece XXpiece;
 	}
 
 	public static class HTML_TableCol extends TokenSequence
@@ -37,11 +38,11 @@ public class HTML_Table extends TokenSequence
 
 	public static class HTML_TablePiece extends TokenChooser
 	{
-		public @CHOICE HTML_Comment comment;
-		public @CHOICE HTML_TableRow row;
-		public @CHOICE HTML_Caption caption;
-		public @CHOICE HTML_TableCol column;
-		public @CHOICE @CURIOUS("Missing table row") HTML_TableData data;
+		public @CHOICE HTML_Comment XXcomment;
+		public @CHOICE HTML_TableRow XXrow;
+		public @CHOICE HTML_Caption XXcaption;
+		public @CHOICE HTML_TableCol XXcolumn;
+		public @CHOICE @CURIOUS("Missing table row") HTML_TableData XXdata;
 
 		public @CHOICE static class HTML_TableColGroup extends TokenSequence
 		{
@@ -68,7 +69,7 @@ public class HTML_Table extends TokenSequence
 
 			public static class HTML_TableSectionBody extends TokenChooser
 			{
-				public @CHOICE Django_Control control;
+				public @CHOICE Django_Control XXcontrol;
 
 				public @CHOICE static class HTML_Table_NormalBody extends TokenSequence
 				{

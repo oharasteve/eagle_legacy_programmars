@@ -8,6 +8,8 @@ import com.eagle.programmar.HTML.HTML_Syntax;
 
 public class PHP_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class PHP_Syntax extends EagleSyntax
 
 	public PHP_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = HTML_Syntax.PUNCT;

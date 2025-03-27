@@ -3,18 +3,19 @@
 
 package com.eagle.programmar.AWK.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleHash;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
-import com.eagle.math.HashValue;
-import com.eagle.math.IntegerValue;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Variable;
 import com.eagle.programmar.AWK.AWK_Variable.AWK_VarSubscript;
 import com.eagle.programmar.AWK.Terminals.AWK_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class AWK_Assignment extends TokenSequence implements EagleRunnable
+public class AWK_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) AWK_Variable variable;
 	public @S(20) AWK_PunctuationChoice equals = new AWK_PunctuationChoice("=", "+=", "-=", "*=", "/=");
@@ -23,17 +24,16 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue var = interpreter._symbolTable.findSymbol(variable.id.toString());
+		EagleValue var = interpreter.findSymbol(variable.id.toString());
 		EagleValue val = interpreter.getEagleValue(expr);
-		
-		if (variable.subscripts.size() == 1)
+
+		if (variable.subscripts != null && variable.subscripts.size() == 1)
 		{
-			HashValue hash = (HashValue) var; 
+			EagleHash hash = (EagleHash) var;
 			if (hash == null)
 			{
-				hash = new HashValue();
-				interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-						variable.id.getValue(), hash);
+				hash = new EagleHash();
+				interpreter.setSymbol(variable, variable.id.getValue(), hash);
 			}
 			AWK_VarSubscript sub = variable.subscripts.first();
 			String key = interpreter.getStrValue(sub.expr);
@@ -48,23 +48,22 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable
 				v = val;
 				break;
 			case "+=":
-				v = new IntegerValue(var.forceIntegerValue() + val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() + val.forceIntegerValue());
 				break;
 			case "-=":
-				v = new IntegerValue(var.forceIntegerValue() - val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() - val.forceIntegerValue());
 				break;
 			case "*=":
-				v = new IntegerValue(var.forceIntegerValue() * val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() * val.forceIntegerValue());
 				break;
 			case "/=":
-				v = new IntegerValue(var.forceIntegerValue() / val.forceIntegerValue());
+				v = new EagleInteger(var.forceIntegerValue() / val.forceIntegerValue());
 				break;
 			default:
 				throw new RuntimeException("Unable to handle " + equals.getValue());
 			}
-			
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					variable.id.getValue(), v);
+
+			interpreter.setSymbol(variable, variable.id.getValue(), v);
 		}
 	}
 }

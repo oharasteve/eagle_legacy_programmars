@@ -3,18 +3,19 @@
 
 package com.eagle.programmar.Rust.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_LetStatement extends TokenSequence implements EagleRunnable
+public class Rust_LetStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("statements.html#let-statements") Rust_Keyword LET = new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
@@ -29,12 +30,11 @@ public class Rust_LetStatement extends TokenSequence implements EagleRunnable
 		public @S(10) Rust_Keyword AS = new Rust_Keyword("as");
 		public @S(20) Rust_Type type;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-				var.var.getValue(), val);
+		interpreter.setSymbol(var, var.var.getValue(), val);
 	}
 }

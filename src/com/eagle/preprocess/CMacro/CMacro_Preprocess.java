@@ -7,15 +7,13 @@ import java.io.IOException;
 
 import com.eagle.core.EagleProject;
 import com.eagle.math.EagleSymbolTable;
-import com.eagle.math.TokenValue;
+import com.eagle.math.EagleToken;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.parsers.EagleTracer;
 import com.eagle.parsers.ParserManager;
 import com.eagle.preprocess.EagleInclude;
 import com.eagle.preprocess.FindIncludeFile;
-import com.eagle.programmar.C.C_Program.C_StatementOrComment;
-import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.CMacro.CMacro_Processable;
 import com.eagle.programmar.CMacro.CMacro_Program;
 import com.eagle.programmar.CMacro.CMacro_Program.CMacro_CommentLine;
@@ -56,10 +54,13 @@ public class CMacro_Preprocess extends EagleInclude
 	{
 		_parser = parser;
 
-		StringBuffer sb = new StringBuffer("*** Pre-processing ");
-		for (int i = 0; i < _depth; i++) sb.append(". ");
-		sb.append(lines.getFileName()).append(" lines=").append(lines.numberLines());
-		System.out.println(sb);
+		if (VERBOSE)
+		{
+			StringBuffer sb = new StringBuffer("*** Pre-processing ");
+			for (int i = 0; i < _depth; i++) sb.append(". ");
+			sb.append(lines.getFileName()).append(" lines=").append(lines.numberLines());
+			System.out.println(sb);
+		}
 
 		if (_depth > 0)
 		{
@@ -170,10 +171,13 @@ public class CMacro_Preprocess extends EagleInclude
 			}
 		}
 
-		sb = new StringBuffer("***           done ");
-		for (int i = 0; i < _depth; i++) sb.append(". ");
-		sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
-		System.out.println(sb);
+		if (VERBOSE)
+		{
+			StringBuffer sb = new StringBuffer("***           done ");
+			for (int i = 0; i < _depth; i++) sb.append(". ");
+			sb.append(lines.getFileName()).append(" lines=").append(_newLines.numberLines());
+			System.out.println(sb);
+		}
 
 		return _newLines;
 	}
@@ -210,25 +214,6 @@ public class CMacro_Preprocess extends EagleInclude
 
 		// The macro didn't write anything on its own
 		copyElement(whichStatement);
-		return true;
-	}
-
-	// Returns true always, even if nothing was changed in the file (not including
-	// the symbol table)
-	public boolean preprocessCStatement(C_StatementOrComment element)
-	{
-		AbstractToken whichStatement = element.getWhich();
-		if (whichStatement instanceof C_Statement)
-		{
-			C_Statement cStatement = (C_Statement) whichStatement;
-			if (letMacroHandleIt(cStatement.getWhich()))
-			{
-				return true;
-			}
-		}
-
-		// The macro didn't write anything on its own
-		copyElement(element);
 		return true;
 	}
 
@@ -332,10 +317,10 @@ public class CMacro_Preprocess extends EagleInclude
 						String word = oldLine.substring(sc, ec);
 						// System.out.println("*** " + lineNum + " Checking '" + word + "' to see if it
 						// is a macro");
-						if (_symbolTable.isDefined(word))
+						if (_symbolTable.isSymbolDefined(word))
 						{
 							// Yes, found a macro!
-							TokenValue macroValue = (TokenValue) _symbolTable.findSymbol(word);
+							EagleToken macroValue = (EagleToken) _symbolTable.findSymbol(word);
 							AbstractToken macro = macroValue.getTokenValue();
 							if (macro instanceof CMacro_Define_Statement)
 							{

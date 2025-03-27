@@ -3,13 +3,13 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 
 /**
  * COBOL grammar
  */
 
-public abstract class COBOL_Program extends EagleLanguage
+public abstract class COBOL_Program extends AbstractLanguage
 {
 	public COBOL_Program(String name, COBOL_Syntax syntax)
 	{

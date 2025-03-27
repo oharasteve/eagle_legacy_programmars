@@ -3,13 +3,19 @@
 
 package com.eagle.programmar.Python;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
+import com.eagle.programmar.Python.Statements.Python_Function;
+import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
+import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public abstract class Python_Program extends EagleLanguage implements EagleRunnable
+public abstract class Python_Program extends AbstractLanguage implements EagleRunnable
 {
 	public Python_Program(String name, EagleSyntax syntax)
 	{
@@ -29,11 +35,37 @@ public abstract class Python_Program extends EagleLanguage implements EagleRunna
 		return "https://docs.python.org/3.10/reference/";
 	}
 
-	public @S(10) @OPT TokenList<Python_Statement> entries;
+	public @S(10) @OPT TokenList<Python_CommentEoln> comments;
+	public @S(20) @OPT TokenList<Python_EndOfLine> blankLines;
+	public @S(30) @OPT TokenList<Python_Statement> entries;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the FUNCTION definitions
+		for (Python_Statement stmt : entries._elements)
+		{
+			AbstractToken which = stmt.statementOrComment.getWhich();
+			if (which instanceof Python_SameLineStatement)
+			{
+				Python_SameLineStatement stmts = (Python_SameLineStatement) which;
+				for (int i = 0; i < stmts.statements.getPrimaryCount(); i++)
+				{
+					Python_Simple_Statement simple = stmts.statements.getPrimaryElement(i);
+					if (simple.getWhich() instanceof Python_Function)
+					{
+						Python_Function fn = (Python_Function) simple.getWhich();
+						if (fn.fnName.getWhich() instanceof Python_Function_Definition)
+						{
+							Python_Function_Definition name = (Python_Function_Definition) fn.fnName.getWhich();
+							interpreter.addFunction(name.getValue(), fn);
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, execute the program
 		for (Python_Statement stmt : entries._elements)
 		{
 			interpreter.tryToInterpret(stmt);

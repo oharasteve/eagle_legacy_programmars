@@ -3,13 +3,21 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.TokenSequence;
 
-public class Fortran_Implicit extends TokenSequence
+public class Fortran_Implicit extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("6j4m0vn9v/index.html") Fortran_Keyword IMPLICIT = new Fortran_Keyword("IMPLICIT");
 	public @S(20) Fortran_Keyword NONE = new Fortran_Keyword("NONE");
 	public @S(30) Fortran_EOLN eoln;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Nothing to do here
+	}
 }

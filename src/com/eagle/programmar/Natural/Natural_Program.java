@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.Natural;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Natural.Terminals.Natural_Keyword;
 import com.eagle.tokens.TokenList;
 
-public class Natural_Program extends EagleLanguage
+public class Natural_Program extends AbstractLanguage
 {
 	public static final String NATURAL = "Natural";
 

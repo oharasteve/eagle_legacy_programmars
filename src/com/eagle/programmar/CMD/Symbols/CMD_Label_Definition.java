@@ -3,9 +3,7 @@
 
 package com.eagle.programmar.CMD.Symbols;
 
-import com.eagle.tokens.AbstractFunction;
-
-public class CMD_Label_Definition extends CMD_Identifier_Definition implements AbstractFunction
+public class CMD_Label_Definition extends CMD_Identifier_Definition
 {
 	@Override
 	public DefinitionType getType()

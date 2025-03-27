@@ -9,7 +9,6 @@ import com.eagle.programmar.Fortran.Expressions.Fortran_BuiltIn;
 import com.eagle.programmar.Fortran.Expressions.Fortran_ConditionalAndExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_ConditionalOrExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_EqualityExpression;
-import com.eagle.programmar.Fortran.Expressions.Fortran_FunctionCall;
 import com.eagle.programmar.Fortran.Expressions.Fortran_MultiplicativeExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_NegativeExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_ParenthesizedExpression;
@@ -17,6 +16,11 @@ import com.eagle.programmar.Fortran.Expressions.Fortran_RelationalExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_StringConcatenation;
 import com.eagle.programmar.Fortran.Expressions.Fortran_Subscript;
 import com.eagle.programmar.Fortran.Expressions.Fortran_VariableExpression;
+import com.eagle.programmar.Fortran.Functions.Fortran_AdjustLFunction;
+import com.eagle.programmar.Fortran.Functions.Fortran_FunctionCall;
+import com.eagle.programmar.Fortran.Functions.Fortran_LenFunction;
+import com.eagle.programmar.Fortran.Functions.Fortran_ModFunction;
+import com.eagle.programmar.Fortran.Functions.Fortran_TrimFunction;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Literal;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -53,21 +57,25 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	// Primary expressions
 
 	public @P(100) Fortran_NegativeExpression negativeExpression;
-	public @P(110) Fortran_FunctionCall functionCall;
-	public @P(120) Fortran_Subscript subscript;
-	public @P(130) Fortran_BuiltIn builtIn;
-	public @P(140) Fortran_VariableExpression variableExpression;
-	public @P(150) Fortran_ParenthesizedExpression parenthesizedExpression;
-	public @P(160) Fortran_BracketExpression bracketExpression;
+	public @P(110) Fortran_AdjustLFunction adjustLFunction;
+	public @P(120) Fortran_LenFunction lenFunction;
+	public @P(130) Fortran_ModFunction modFunction;
+	public @P(140) Fortran_TrimFunction trimFunction;
+	public @P(150) Fortran_FunctionCall functionCall;
+	public @P(160) Fortran_Subscript subscript;
+	public @P(170) Fortran_BuiltIn builtIn;
+	public @P(180) Fortran_VariableExpression variableExpression;
+	public @P(190) Fortran_ParenthesizedExpression parenthesizedExpression;
+	public @P(200) Fortran_BracketExpression bracketExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Fortran_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) Fortran_AdditiveExpression additiveExpression;
-	public @P(520) Fortran_StringConcatenation stringConcatenation;
-	public @P(530) Fortran_RelationalExpression relationalExpression;
-	public @P(540) Fortran_EqualityExpression equalityExpression;
-	public @P(550) Fortran_ConditionalAndExpression conditionalAndExpression;
-	public @P(560) Fortran_ConditionalOrExpression conditionalOrExpression;
+	public @P(1000) Fortran_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) Fortran_AdditiveExpression additiveExpression;
+	public @P(1020) Fortran_StringConcatenation stringConcatenation;
+	public @P(1030) Fortran_RelationalExpression relationalExpression;
+	public @P(1040) Fortran_EqualityExpression equalityExpression;
+	public @P(1050) Fortran_ConditionalAndExpression conditionalAndExpression;
+	public @P(1060) Fortran_ConditionalOrExpression conditionalOrExpression;
 }

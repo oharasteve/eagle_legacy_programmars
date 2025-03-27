@@ -8,6 +8,8 @@ import com.eagle.programmar.Python.Terminals.Python_Comment;
 
 public class Python_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,55 +18,18 @@ public class Python_Syntax extends EagleSyntax
 
 	public Python_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				">>", "|=", "+=", "-=", "__", "_$", "**", ":=", "->", "..."
+				">>", "|=", "+=", "-=", "*=", "/=", "__", "_$", "**", ":=", "->", "..", "..."
 		};
 
 		_commentInstance = new Python_Comment();
 
-		addReservedWords(reservedWords);
+		addReservedWords(Python_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://realpython.com/lessons/reserved-keywords/
-	private static String[] reservedWords = new String[] {
-			"False",
-			"None",
-			"True",
-			"and",
-			"as",
-			"assert",
-			"break",
-			"class",
-			"continue",
-			"def",
-			"del",
-			"elif",
-			"else",
-			"except",
-			"finally",
-			"for",
-			"from",
-			"global",
-			"if",
-			"import",
-			"in",
-			"is",
-			"lambda",
-			"nonlocal",
-			"not",
-			"or",
-			"pass",
-			"raise",
-			"return",
-			"try",
-			"while",
-			"with",
-			"yield",
-	};
 
 	public static class Python_Multiline_Syntax extends Python_Syntax
 	{

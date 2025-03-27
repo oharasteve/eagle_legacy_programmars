@@ -30,16 +30,16 @@ public class IBMASM_Instruction extends TokenSequence
 
 	public static class IBMASM_Instr extends TokenChooser
 	{
-		public @CHOICE IBMASM_Format_I immediate;
-		public @CHOICE IBMASM_Format_R register;
-		public @CHOICE IBMASM_Format_RI registerImmediate;
-		public @CHOICE IBMASM_Format_RR registerRegister;
-		public @CHOICE IBMASM_Format_RRS registerRegisterAddress;
-		public @CHOICE IBMASM_Format_RSS registerAddressAddress;
-		public @CHOICE IBMASM_Format_RX rx;
-		public @CHOICE IBMASM_Format_S address;
-		public @CHOICE IBMASM_Format_SI addressImmediate;
-		public @CHOICE IBMASM_Format_SII addressImmediateImmediate;
-		public @CHOICE IBMASM_Format_SS addressAddress;
+		public @CHOICE IBMASM_Format_I XXimmediate;
+		public @CHOICE IBMASM_Format_R XXregister;
+		public @CHOICE IBMASM_Format_RI XXregisterImmediate;
+		public @CHOICE IBMASM_Format_RR XXregisterRegister;
+		public @CHOICE IBMASM_Format_RRS XXregisterRegisterAddress;
+		public @CHOICE IBMASM_Format_RSS XXregisterAddressAddress;
+		public @CHOICE IBMASM_Format_RX XXrx;
+		public @CHOICE IBMASM_Format_S XXaddress;
+		public @CHOICE IBMASM_Format_SI XXaddressImmediate;
+		public @CHOICE IBMASM_Format_SII XXaddressImmediateImmediate;
+		public @CHOICE IBMASM_Format_SS XXaddressAddress;
 	}
 }

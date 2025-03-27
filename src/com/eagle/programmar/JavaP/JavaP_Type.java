@@ -15,7 +15,7 @@ public class JavaP_Type extends TokenSequence
 
 	public static class JavaP_TypeScalar extends TokenChooser
 	{
-		public @CHOICE JavaP_Primitives primitives;
-		public @CHOICE JavaP_ClassName className;
+		public @CHOICE JavaP_Primitives XXprimitives;
+		public @CHOICE JavaP_ClassName XXclassName;
 	}
 }

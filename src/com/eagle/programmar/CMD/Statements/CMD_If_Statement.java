@@ -3,113 +3,118 @@
 
 package com.eagle.programmar.CMD.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.programmar.CMD.CMD_Argument;
-import com.eagle.programmar.CMD.CMD_Command.CMD_Statement;
+import java.util.ArrayList;
+
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.IfCondMetrics;
+import com.eagle.programmar.CMD.CMD_Expression;
+import com.eagle.programmar.CMD.CMD_Label;
+import com.eagle.programmar.CMD.CMD_Statement;
+import com.eagle.programmar.CMD.CMD_Variable;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
-import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
-import com.eagle.programmar.CMD.Terminals.CMD_Literal;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationHyphen;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class CMD_If_Statement extends TokenSequence implements EagleRunnable
+public class CMD_If_Statement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("if.mspx") CMD_Keyword IF = new CMD_Keyword("if");
 	public @S(20) @OPT CMD_Keyword NOT = new CMD_Keyword("not");
 	public @S(30) CMD_IfWhat what;
 	public @S(40) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 	public @S(50) CMD_Statement stmt;
+	public @S(60) @OPT CMD_IfElseClause elseClause;
 
-	public static class CMD_IfEqual extends TokenSequence
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
+
+	public static class CMD_IfElseClause extends TokenSequence
 	{
-		public @S(10) @OPT PunctuationHyphen minus1;
-		public @S(20) CMD_Argument expr1;
-		public @S(30) CMD_IfOperator operator;
-		public @S(40) @OPT PunctuationHyphen minus2;
-		public @S(50) CMD_Argument expr2;
-
-		public static class CMD_IfOperator extends TokenChooser
-		{
-			public @CHOICE CMD_KeywordChoice operator = new CMD_KeywordChoice("equ", "geq", "gtr", "leq", "lss", "neq");
-			public @CHOICE CMD_Punctuation equals = new CMD_Punctuation("==");
-		}
+		public @S(10) CMD_Keyword ELSE = new CMD_Keyword("else");
+		public @S(20) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+		public @S(30) CMD_Statement elseStatement;
 	}
-
+	
 	public static class CMD_IfWhat extends TokenChooser
 	{
-		public @LAST CMD_Literal literal;
-		public @CHOICE CMD_IfEqual ifEqual;
+		public @LAST CMD_Expression XXexpr;
+		public @CHOICE CMD_IfDefined XXifDefined;
+		public @CHOICE CMD_IfErrorLevel XXerrorLevel;
+		public @CHOICE CMD_IfExist XXifExist;
+	}
 
-		public @CHOICE static class CMD_IfDefined extends TokenSequence
-		{
-			public @S(10) CMD_Keyword DEFINED = new CMD_Keyword("defined");
-			public @S(20) CMD_Argument var;
-		}
+	public static class CMD_IfDefined extends TokenSequence
+	{
+		public @S(10) CMD_Keyword DEFINED = new CMD_Keyword("defined");
+		public @S(20) CMD_Variable var;
+	}
 
-		public @CHOICE static class CMD_IfErrorLevel extends TokenSequence
-		{
-			public @S(10) CMD_Keyword ERRORLEVEL = new CMD_Keyword("errorlevel");
-			public @S(20) CMD_Number level;
-		}
+	public static class CMD_IfErrorLevel extends TokenSequence
+	{
+		public @S(10) CMD_Keyword ERRORLEVEL = new CMD_Keyword("errorlevel");
+		public @S(20) CMD_Number level;
+	}
 
-		public @CHOICE static class CMD_IfExist extends TokenSequence
-		{
-			public @S(10) CMD_Keyword EXIST = new CMD_Keyword("exist");
-			public @S(20) CMD_Argument file;
-		}
-
-		public @LAST static class CMD_IfCondition extends TokenSequence
-		{
-			public @S(10) CMD_Argument condition;
-		}
+	public static class CMD_IfExist extends TokenSequence
+	{
+		public @S(10) CMD_Keyword EXIST = new CMD_Keyword("exist");
+		public @S(20) CMD_Expression file;
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (!(what.getWhich() instanceof CMD_IfEqual))
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line number etc are all set
+			_metrics = new ArrayList<IfCondMetrics>();
+			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
+			if (elseClause != null && elseClause.isPresent())
+			{
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause));
+			}
+		}
+		
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		boolean passTest = false;
+		if (what.getWhich() instanceof CMD_IfErrorLevel)
+		{
+			CMD_IfErrorLevel errLevel = (CMD_IfErrorLevel) what.getWhich();
+			CMD_Label func = (CMD_Label) interpreter.getCurrentFunction();
+			int actual = func._exitStatus;
+			int goal = Integer.parseInt(errLevel.level.getValue());
+			passTest = actual >= goal;
+		}
+		else if (what.getWhich() instanceof CMD_IfDefined)
+		{
+			CMD_IfDefined defined = (CMD_IfDefined) what.getWhich();
+			EagleValue val = interpreter.findSymbol(defined.var.id.getValue());
+			passTest = val != null;
+		}
+		else if (what.getWhich() instanceof CMD_Expression)
+		{
+			CMD_Expression expr = (CMD_Expression) what.getWhich();
+			passTest = interpreter.getBoolValue(expr);
+		}
+		else
 		{
 			throw new RuntimeException("Cannot handle 'if' condition: " + what.getWhich());
 		}
 
-		CMD_IfEqual ifEqual = (CMD_IfEqual) what.getWhich();
-		int left = interpreter.getIntValue(ifEqual.expr1.arg);
-		if (ifEqual.minus1.isPresent()) left = -left;
-		int right = interpreter.getIntValue(ifEqual.expr2.arg);
-		if (ifEqual.minus2.isPresent()) right = -right;
-		boolean passTest;
-		switch (ifEqual.operator.operator.getValue())
-		{
-		case "equ":
-			passTest = left == right;
-			break;
-		case "geq":
-			passTest = left >= right;
-			break;
-		case "gtr":
-			passTest = left > right;
-			break;
-		case "leq":
-			passTest = left <= right;
-			break;
-		case "lss":
-			passTest = left < right;
-			break;
-		case "neq":
-			passTest = left != right;
-			break;
-		default:
-			throw new RuntimeException("Cannot handle relational operator: " + ifEqual.operator.operator);
-		}
-
-		if (NOT.isPresent()) passTest = ! passTest;
+		if (NOT.isPresent()) passTest = !passTest;
+		_metrics.get(0).completedIf(passTest);
 		if (passTest)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			result = interpreter.tryToInterpret(stmt);
 		}
+		else if (elseClause != null && elseClause.isPresent())
+		{
+			_metrics.get(1).completedIf(true);
+			result = interpreter.tryToInterpret(elseClause.elseStatement);
+		}
+		return result;
 	}
 }

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Method.Java_Constructor;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Symbols.Java_Class_Definition;
@@ -13,8 +13,6 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -25,8 +23,9 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
-public class Java_Class extends TokenSequence implements EagleRunnable, EagleScopeInterface, AbstractClass
+public class Java_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
 	public @S(10) @OPT @BLANKLINE Java_ClassModifierList modifierList;
 	public @S(20) @OPT @CURIOUS("Extra at sign") Java_Punctuation atSign = new Java_Punctuation('@');
@@ -49,9 +48,9 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 
 	public static class Java_ClassModifier extends TokenChooser
 	{
-		public @FIRST @NEWLINE Java_Comment comment;
-		public @CHOICE Java_Annotation annotation;
-		public @CHOICE Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @FIRST @NEWLINE Java_Comment XXcomment;
+		public @CHOICE Java_Annotation XXannotation;
+		public @CHOICE Java_KeywordChoice XXmodifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 	}
 
 	public static class Java_ClassExtends extends TokenSequence
@@ -87,10 +86,10 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 
 	public static class Java_ClassElement extends TokenChooser
 	{
-		public @FIRST @NEWLINE Java_Comment comment;
-		public @CHOICE @NEWLINE Java_Method jmethod;
-		public @FIRST @NEWLINE Java_Constructor constructor;
-		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon semicolon;
+		public @FIRST @NEWLINE Java_Comment XXcomment;
+		public @CHOICE @NEWLINE Java_Method XXmethod;
+		public @FIRST @NEWLINE Java_Constructor XXconstructor;
+		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon XXsemicolon;
 
 		public @CHOICE static class Java_StaticStatement extends TokenSequence implements EagleRunnable
 		{
@@ -102,7 +101,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 			@Override
 			public void interpret(EagleInterpreter interpreter)
 			{
-				interpreter.tryToInterpret(statement.getWhich());
+				interpreter.tryToInterpret(statement);
 			}
 		}
 	}
@@ -112,21 +111,47 @@ public class Java_Class extends TokenSequence implements EagleRunnable, EagleSco
 	{
 		for (Java_ClassElement element : elements._elements)
 		{
-			interpreter.tryToInterpret(element.getWhich());
+			interpreter.tryToInterpret(element);
 		}
 	}
 
-	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
+	
+	public static Java_Class newJavaClass(PrivacyEnum privacy, String className)
 	{
-		return _scope;
+		Java_Class cls = new Java_Class();
+		cls.modifierList = new Java_ClassModifierList();
+		cls.modifierList.setPresent(true);
+		cls.modifierList.modifiers = new TokenList<Java_ClassModifier>();
+		Java_ClassModifier modifier = new Java_ClassModifier();
+		switch (privacy)
+		{
+		case PUBLIC:
+			modifier.setWhich(new Java_KeywordChoice("public"));
+			break;
+		case PRIVATE:
+			modifier.setWhich(new Java_KeywordChoice("private"));
+			break;
+		default:
+			throw new RuntimeException("Can't handle privacy: " + privacy);
+		}
+		cls.modifierList.modifiers.addToken(modifier);
+		
+		cls.className = new Java_Class_Definition();
+		cls.className.setValue(className);
+		
+		cls.classOrInterface = new Java_KeywordChoice("class");
+		cls.elements = new TokenList<Java_ClassElement>();
+		cls.elements.setPresent(true);
+		cls.leftBrace = new PunctuationLeftBrace();
+		cls.rightBrace = new PunctuationRightBrace();
+		
+		return cls;
 	}
-
-//	@Override
-//	public void setScope(EagleScope scope)
-//	{
-//		_scope = scope;
-//	}
+	
+	public void addMethod(Java_Method method)
+	{
+		Java_ClassElement element = new Java_ClassElement();
+		element.setWhich(method);
+		elements.addToken(element);
+	}
 }

@@ -3,15 +3,20 @@
 
 package com.eagle.programmar.C.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class C_WhileStatement extends TokenSequence
+public class C_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("#The-while-Statement") C_Keyword WHILE = new C_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -19,4 +24,44 @@ public class C_WhileStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT C_Comment comment;
 	public @S(60) C_Statement whileStatement;
+	
+	private @SKIP ForLoopMetrics _metrics = null;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			boolean keepGoing = interpreter.getBoolValue(condition);
+			if (!keepGoing) break;
+
+			metric.iterate();
+			result = interpreter.tryToInterpret(whileStatement);
+			if (result == Eagle_Statement_Result.BREAK)
+			{
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
+			}
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+		}
+
+		_metrics.competedLoop(metric);
+		return result;
+	}
 }

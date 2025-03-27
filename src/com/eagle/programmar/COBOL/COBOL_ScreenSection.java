@@ -36,9 +36,9 @@ public class COBOL_ScreenSection extends TokenSequence
 
 	public static class COBOL_CopyOrScreenDeclaration extends TokenChooser
 	{
-		public @CHOICE COBOL_Copy_Directive copyBook;
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_ScreenDeclaration screenDeclaration;
+		public @CHOICE COBOL_Copy_Directive XXcopyBook;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_ScreenDeclaration XXscreenDeclaration;
 	}
 
 	public static class COBOL_ScreenDeclaration extends TokenSequence
@@ -63,31 +63,31 @@ public class COBOL_ScreenSection extends TokenSequence
 
 		public static class COBOL_ScreenFieldName extends TokenChooser
 		{
-			public @CHOICE COBOL_Keyword FILLER = new COBOL_Keyword("FILLER");
-			public @CHOICE COBOL_Data_Definition unusable_id;
+			public @CHOICE COBOL_Keyword XXFILLER = new COBOL_Keyword("FILLER");
+			public @CHOICE COBOL_Data_Definition XXunusable_id;
 		}
 
 		public static class COBOL_ScreenClause extends TokenChooser
 		{
-			public @CHOICE COBOL_Comment comment;
-			public @CHOICE COBOL_Literal literal;
+			public @CHOICE COBOL_Comment XXcomment;
+			public @CHOICE COBOL_Literal XXliteral;
 
-			public @CHOICE COBOL_KeywordChoice option = new COBOL_KeywordChoice("AUTO", "BLINK", "HIGHLIGHT", "NO-ECHO",
+			public @CHOICE COBOL_KeywordChoice XXoption = new COBOL_KeywordChoice("AUTO", "BLINK", "HIGHLIGHT", "NO-ECHO",
 					"REVERSE-VIDEO", "SECURE");
 
-			public @CHOICE COBOL_ScreenBlankScreen blankScreen;
-			public @CHOICE COBOL_ScreenBlankWhenZero blankZero;
-			public @CHOICE COBOL_ScreenLine line;
-			public @CHOICE COBOL_ScreenColumn column;
-			public @CHOICE COBOL_BackgroundColor bgColor;
-			public @CHOICE COBOL_ForegroundColor fgColor;
-			public @CHOICE COBOL_ScreenValue value;
-			public @CHOICE COBOL_ScreenPicture picture;
-			public @CHOICE COBOL_ScreenPictureVariable pictureValue;
-			public @CHOICE COBOL_ScreenFrom from;
-			public @CHOICE COBOL_ScreenTo to;
-			public @CHOICE COBOL_ScreenUsing using;
-			public @CHOICE COBOL_ScreenPrompt prompt;
+			public @CHOICE COBOL_ScreenBlankScreen XXblankScreen;
+			public @CHOICE COBOL_ScreenBlankWhenZero XXblankZero;
+			public @CHOICE COBOL_ScreenLine XXline;
+			public @CHOICE COBOL_ScreenColumn XXcolumn;
+			public @CHOICE COBOL_BackgroundColor XXbgColor;
+			public @CHOICE COBOL_ForegroundColor XXfgColor;
+			public @CHOICE COBOL_ScreenValue XXvalue;
+			public @CHOICE COBOL_ScreenPicture XXpicture;
+			public @CHOICE COBOL_ScreenPictureVariable XXpictureValue;
+			public @CHOICE COBOL_ScreenFrom XXfrom;
+			public @CHOICE COBOL_ScreenTo XXto;
+			public @CHOICE COBOL_ScreenUsing XXusing;
+			public @CHOICE COBOL_ScreenPrompt XXprompt;
 		}
 	}
 }

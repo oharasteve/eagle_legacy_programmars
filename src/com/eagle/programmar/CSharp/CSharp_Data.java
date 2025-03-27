@@ -3,14 +3,17 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -28,7 +31,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		public @S(10) @OPT TokenList<CSharp_Annotation> annotation1;
 		public @S(20) @OPT TokenList<CSharp_DataModifier> modifiers;
 		public @S(30) @OPT TokenList<CSharp_Annotation> annotation2;
-		public @S(40) CSharp_Type jtype;
+		public @S(40) CSharp_Type type;
 		public @S(50) CSharp_Variable_Definition id;
 		public @S(60) @OPT PunctuationLeftBracket leftBracket;
 		public @S(70) @OPT PunctuationRightBracket rightBracket;
@@ -39,8 +42,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		public void interpret(EagleInterpreter interpreter)
 		{
 			EagleValue value = interpreter.getEagleValue(initialValue.expression);
-			interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(), id.toString(),
-					value);
+			interpreter.setSymbol(id, id.toString(), value);
 		}
 	}
 
@@ -68,5 +70,37 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(dataBody);
+	}
+	
+	public static CSharp_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
+				AbstractExpression initial, AbstractToken source)
+	{
+		if (type == null)
+		{
+			throw new RuntimeException("Can't create data without a type");
+		}
+		
+		CSharp_Data data = new CSharp_Data();
+		data.dataBody = new CSharp_DataBeforeSemicolon();
+		data.semicolon = new PunctuationSemicolon();
+		
+		// Set data name and type
+		data.dataBody.id = new CSharp_Variable_Definition();
+		data.dataBody.id.setValue(name);
+		data.dataBody.type = (CSharp_Type) type;
+
+		// Set the initial value, if any
+		if (initial != null)
+		{
+			CSharp_DataInitialValue init = new CSharp_DataInitialValue();
+			init.setPresent(true);
+			init.equals = new PunctuationEquals();
+			init.expression = (CSharp_Expression) initial;
+			data.dataBody.initialValue = init;
+			data.dataBody.initialValue.setPresent(true);
+		}
+
+		data.setTransformationSource(source);
+		return data;
 	}
 }

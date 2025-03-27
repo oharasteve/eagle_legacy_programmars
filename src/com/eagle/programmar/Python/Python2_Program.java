@@ -18,7 +18,7 @@ public class Python2_Program extends Python_Program
 
 	public static class Python2_Simple_Statement extends Python_Simple_Statement
 	{
-		public @CHOICE Python_PrintStatement printStatement;
+		public @CHOICE Python_PrintStatement XXprintStatement;
 	}
 
 	@Override

@@ -3,20 +3,18 @@
 
 package com.eagle.programmar.Go;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Go.Statements.Go_Data;
 import com.eagle.programmar.Go.Statements.Go_Function;
 import com.eagle.programmar.Go.Statements.Go_Import;
 import com.eagle.programmar.Go.Statements.Go_Package;
-import com.eagle.programmar.Go.Terminals.Go_Comment;
-import com.eagle.programmar.Go.Terminals.Go_EOLN;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 
-public class Go_Program extends EagleLanguage implements EagleRunnable
+public class Go_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String GO = "Go";
 
@@ -35,26 +33,32 @@ public class Go_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Go_Element extends TokenChooser
 	{
-		public @CHOICE Go_CommentEoln comment;
-		public @CHOICE Go_Package pkg;
-		public @CHOICE Go_Import imprt;
-		public @CHOICE Go_Data data;
-		public @CHOICE Go_Function function;
-		public @CHOICE Go_Statement stmt;
-	}
-
-	public static class Go_CommentEoln extends TokenSequence
-	{
-		public @S(10) Go_Comment comment;
-		public @S(20) Go_EOLN eoln;
+		public @CHOICE Go_CommentEoln XXcomment;
+		public @CHOICE Go_Package XXpkg;
+		public @CHOICE Go_Import XXimport;
+		public @CHOICE Go_Data XXdata;
+		public @CHOICE Go_Function XXfunction;
+		public @CHOICE Go_Statement XXstmt;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (Go_Element elt : elements._elements)
+		// First pass, just collect all the FUNCTION definitions
+		for (Go_Element element : elements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			AbstractToken which = element.getWhich();
+			if (which instanceof Go_Function)
+			{
+				Go_Function fn = (Go_Function) which;
+				interpreter.addFunction(fn.id.getValue(), fn);
+			}
+		}
+
+		// Second pass, execute the program
+		for (Go_Element element : elements._elements)
+		{
+			interpreter.tryToInterpret(element);
 		}
 	}
 }

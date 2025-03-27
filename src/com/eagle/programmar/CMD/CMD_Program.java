@@ -3,19 +3,16 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
-import com.eagle.programmar.CMD.Statements.CMD_Unparsed_Statement;
-import com.eagle.programmar.CMD.Symbols.CMD_Label_Definition;
-import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class CMD_Program extends EagleLanguage implements EagleRunnable
+public class CMD_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String CMD = "CMD";
 
@@ -30,45 +27,40 @@ public class CMD_Program extends EagleLanguage implements EagleRunnable
 		return "http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/";
 	}
 
-	public @S(10) @OPT TokenList<CMD_CommandOrLabelOrUnparsed> commands;
+	public @S(10) @OPT TokenList<CMD_CommandOrLabel> commands;
 
-	public @SKIP static class CMD_CommandOrLabelOrUnparsed extends TokenChooser
+	public @SKIP static class CMD_CommandOrLabel extends TokenChooser
 	{
-		public @CHOICE CMD_Command command;
-		public @CHOICE CMD_Label label;
-		public @LAST CMD_Unparsed_Statement unparsed;
-	}
-
-	public @SKIP static class CMD_Label extends TokenSequence
-	{
-		public @S(10) PunctuationColon colon;
-		public @S(20) CMD_Label_Definition label;
-		public @S(30) CMD_EndOfLine eoln;
+		public @CHOICE CMD_Command XXcommand;
+		public @CHOICE CMD_Label XXlabel;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
+		for (CMD_CommandOrLabel stmt : commands._elements)
 		{
 			AbstractToken which = stmt.getWhich();
-			if (which instanceof CMD_Label_Definition)
+			if (which instanceof CMD_Label)
 			{
-				CMD_Label_Definition fn = (CMD_Label_Definition) which;
-				interpreter._functionList.add(fn);
+				CMD_Label lbl = (CMD_Label) which;
+				interpreter.addFunction(lbl.label.getValue(), lbl);
+				if (lbl._metrics == null)
+				{
+					lbl._metrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(), lbl);
+				}
 			}
 		}
 
 		// Second pass, execute the program
-		for (CMD_CommandOrLabelOrUnparsed stmt : commands._elements)
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		for (CMD_CommandOrLabel stmt : commands._elements)
 		{
-			AbstractToken which = stmt.getWhich();
-			if (which instanceof CMD_Command)
+			if (stmt.getWhich() instanceof CMD_Command)
 			{
-				CMD_Command cmd = (CMD_Command) which;
-				AbstractToken command = cmd.command.getWhich();
-				interpreter.tryToInterpret(command);
+				result = interpreter.tryToInterpret(stmt.getWhich());
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 		}
 	}

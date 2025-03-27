@@ -4,13 +4,14 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
+import com.eagle.programmar.Rust.Expressions.Rust_BuiltinMethod;
 import com.eagle.programmar.Rust.Expressions.Rust_ConditionalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ConditionalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_DotDotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
-import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
@@ -21,6 +22,8 @@ import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_Subfield;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
+import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
+import com.eagle.programmar.Rust.Functions.Rust_MethodInvocation;
 import com.eagle.programmar.Rust.Terminals.Rust_BinaryNumber;
 import com.eagle.programmar.Rust.Terminals.Rust_Character_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_HexNumber;
@@ -68,20 +71,23 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(130) Rust_BuiltIn builtIn;
 	public @P(140) Rust_VariableExpression variableExpression;
 	public @P(150) Rust_RangeExpression rangeExpression;
-	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(170) Rust_ExpressionArray expressionArray;
+	public @P(160) Rust_FormatFunction builtinFunction;
+	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Rust_ExpressionArray expressionArray;
+	public @P(190) Rust_BorrowExpression borrowExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Rust_SubscriptExpression subscriptExpression;
-	public @P(510) Rust_Subfield subfield;
-	public @P(520) Rust_MultiplicativeExpression multiplicativeExpression;
-	public @P(530) Rust_AdditiveExpression additiveExpression;
-	public @P(540) Rust_ShiftExpression shiftExpression;
-	public @P(550) Rust_RelationalExpression relationalExpression;
-	public @P(560) Rust_EqualityExpression equalityExpression;
-	public @P(570) Rust_ConditionalAndExpression conditionalAndExpression;
-	public @P(580) Rust_ConditionalOrExpression conditionalOrExpression;
-	public @P(590) Rust_DotDotExpression dotDotExpression;
+	public @P(1000) Rust_SubscriptExpression subscriptExpression;
+	public @P(1010) Rust_BuiltinMethod builtinMethod;
+	public @P(1020) Rust_Subfield subfield;
+	public @P(1030) Rust_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) Rust_AdditiveExpression additiveExpression;
+	public @P(1050) Rust_ShiftExpression shiftExpression;
+	public @P(1060) Rust_RelationalExpression relationalExpression;
+	public @P(1070) Rust_EqualityExpression equalityExpression;
+	public @P(1080) Rust_ConditionalAndExpression conditionalAndExpression;
+	public @P(1090) Rust_ConditionalOrExpression conditionalOrExpression;
+	public @P(1100) Rust_DotDotExpression dotDotExpression;
 }

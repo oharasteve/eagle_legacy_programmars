@@ -7,8 +7,9 @@ import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Delphi_Statement_List;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_Repeat_Statement extends TokenSequence
+public class Delphi_Repeat_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#Repeat_Statements") Delphi_Keyword REPEAT = new Delphi_Keyword(
 			"Repeat");

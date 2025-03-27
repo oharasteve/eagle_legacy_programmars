@@ -3,11 +3,13 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -31,31 +33,33 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 
 	public static class C_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE C_Identifier_Reference id;
+		public @CHOICE C_CastedVariable XXcastedVariable;
+		public @CHOICE C_IndirectVariable XXindirectVariable;
+		public @CHOICE C_SubscriptedVariable XXsubscriptedVariable;
+		public @LAST C_Identifier_Reference XXid;
+	}
 
-		public @CHOICE static class C_CastedVariable extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen1;
-			public @S(20) PunctuationLeftParen leftParen2;
-			public @S(30) C_Type jtype;
-			public @S(40) PunctuationRightParen rightParen1;
-			public @S(50) C_Identifier_Reference id;
-			public @S(60) PunctuationRightParen rightParen2;
-		}
+	public static class C_CastedVariable extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen1;
+		public @S(20) PunctuationLeftParen leftParen2;
+		public @S(30) C_Type jtype;
+		public @S(40) PunctuationRightParen rightParen1;
+		public @S(50) C_Identifier_Reference id;
+		public @S(60) PunctuationRightParen rightParen2;
+	}
 
-		public @CHOICE static class C_IndirectVariable extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) TokenList<C_VariableStar> stars;
-			public @S(30) C_Identifier_Reference id;
-			public @S(40) PunctuationRightParen rightParen;
-		}
+	public static class C_IndirectVariable extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) C_Variable var;
+		public @S(30) PunctuationRightParen rightParen;
+	}
 
-		public @CHOICE static class C_SubscriptedVariable extends TokenSequence
-		{
-			public @S(10) C_Identifier_Reference id;
-			public @S(20) TokenList<C_Subscript> subscripts;
-		}
+	public static class C_SubscriptedVariable extends TokenSequence
+	{
+		public @S(10) C_Identifier_Reference id;
+		public @S(20) TokenList<C_Subscript> subscripts;
 	}
 
 	public static class C_ExtendedIdentifier extends TokenChooser
@@ -83,8 +87,20 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		C_Identifier_Reference which = (C_Identifier_Reference) firstId.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		AbstractToken which = firstId.getWhich();
+		if (which instanceof C_Identifier_Reference)
+		{
+			C_Identifier_Reference id = (C_Identifier_Reference) which;
+			EagleValue value = interpreter.findSymbol(id.getValue());
+			interpreter.pushEagleValue(value);
+		}
+		else if (which instanceof C_SubscriptedVariable)
+		{
+			C_SubscriptedVariable id = (C_SubscriptedVariable) which;
+			EagleArray value = (EagleArray) interpreter.findSymbol(id.id.getValue());
+			C_Subscript subscr = id.subscripts._elements.get(0);
+			int sub = interpreter.getIntValue(subscr.expr);
+			interpreter.pushEagleValue(value.getValue(sub));
+		}
 	}
 }

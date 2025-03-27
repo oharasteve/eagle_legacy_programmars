@@ -3,14 +3,15 @@
 
 package com.eagle.programmar.Bash;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Bash.Commands.Bash_Function;
+import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public class Bash_Program extends EagleLanguage implements EagleRunnable
+public class Bash_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String BASH = "Bash";
 
@@ -37,15 +38,18 @@ public class Bash_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Bash_Function)
 			{
 				Bash_Function fn = (Bash_Function) which;
-				interpreter._functionList.add(fn);
+				if (fn.getWhich() instanceof Bash_Function_Explicit)
+				{
+					Bash_Function_Explicit func = (Bash_Function_Explicit) fn.getWhich();
+					interpreter.addFunction(func.fnName.getValue(), func);
+				}
 			}
 		}
 
 		// Second pass, execute the program
 		for (Bash_Statement stmt : statements._elements)
 		{
-			AbstractToken cmd = stmt.element.getWhich();
-			interpreter.tryToInterpret(cmd);
+			interpreter.tryToInterpret(stmt.element);
 		}
 	}
 }

@@ -8,15 +8,16 @@ import com.eagle.programmar.Python.Python_ExpressionList;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Python_YieldStatement extends TokenSequence
+public class Python_YieldStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("simple_stmts.html#the-yield-statement") Python_Keyword YIELD = new Python_Keyword("yield");
 	public @S(20) @OPT Python_YieldWhat yieldWhat;
 
 	public static class Python_YieldWhat extends TokenChooser
 	{
-		public @CHOICE Python_ExpressionList expressionList;
+		public @CHOICE Python_ExpressionList XXexpressionList;
 
 		public @CHOICE static class Python_YieldFrom extends TokenSequence
 		{

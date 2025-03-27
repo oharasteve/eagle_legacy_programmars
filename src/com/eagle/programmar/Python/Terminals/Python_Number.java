@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class Python_Number extends TerminalNumberToken
@@ -13,5 +14,13 @@ public class Python_Number extends TerminalNumberToken
 	{
 		// J is for complex ...
 		return genericNumber(lines, "Ee", "JjLl", true);
+	}
+	
+	public static Python_Number generateExpression(String value, AbstractToken source)
+	{
+		Python_Number num = new Python_Number();
+		num.setValue(value);
+		num.setTransformationSource(source);
+		return num;
 	}
 }

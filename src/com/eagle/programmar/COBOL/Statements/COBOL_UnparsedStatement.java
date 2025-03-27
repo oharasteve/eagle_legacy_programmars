@@ -36,12 +36,12 @@ public class COBOL_UnparsedStatement extends UnparsedElement
 
 	public static class COBOL_UnparsedElement extends TokenChooser
 	{
-		public @CHOICE COBOL_Identifier_Reference id;
-		public @CHOICE COBOL_PunctuationChoice punct = new COBOL_PunctuationChoice(PUNCTS);
-		public @CHOICE COBOL_Literal literal;
-		public @CHOICE COBOL_Number number;
-		public @CHOICE COBOL_HexNumber hex;
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_KeywordChoice keyword = new COBOL_KeywordChoice(KEYWORDS);
+		public @CHOICE COBOL_Identifier_Reference XXid;
+		public @CHOICE COBOL_PunctuationChoice XXpunct = new COBOL_PunctuationChoice(PUNCTS);
+		public @CHOICE COBOL_Literal XXliteral;
+		public @CHOICE COBOL_Number XXnumber;
+		public @CHOICE COBOL_HexNumber XXhex;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_KeywordChoice XXkeyword = new COBOL_KeywordChoice(KEYWORDS);
 	}
 }

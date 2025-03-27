@@ -5,8 +5,9 @@ package com.eagle.programmar.COBOL.Expressions;
 
 import java.util.ArrayList;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
 import com.eagle.programmar.COBOL.COBOL_Subscript.COBOL_RegularSubscript;
@@ -37,25 +38,25 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (variable.ofList.isPresent() && variable.ofList.size() > 0)
+		if (variable.ofList != null && variable.ofList.isPresent() && variable.ofList.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle field references");
 		}
 
 		String varName = variable.id.getValue();
-		EagleValue val = interpreter._symbolTable.findSymbol(varName);
+		EagleValue val = interpreter.findSymbol(varName);
 		if (val == null)
 		{
 			throw new RuntimeException("Unable to find a variable named " + varName);
 		}
 
-		if (variable.subscript.isPresent() && variable.subscript.size() == 1)
+		if (variable.subscript != null && variable.subscript.isPresent() && variable.subscript.size() == 1)
 		{
 			if (val.isArray())
 			{
-				ArrayList<EagleValue> avals = val.forceArrayValue();
+				ArrayList<EagleValue> avals = ((EagleArray) val).getArrayValue();
 				int subscript = variable.subscript.first().getSubscriptValue(interpreter);
-				interpreter.pushEagleValue(avals.get(subscript));
+				interpreter.pushEagleValue(avals.get(subscript - 1));
 				return;
 			}
 
@@ -78,8 +79,11 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 					COBOL_RegularSubscript subscript = (COBOL_RegularSubscript) which;
 					if (subscript.range.isPresent())
 					{
+						int len = str.length();
 						int sc = interpreter.getIntValue(subscript.expr);
-						int ec = interpreter.getIntValue(subscript.range.expr);
+						int nc = interpreter.getIntValue(subscript.range.expr);
+						int ec = sc + nc - 1;
+						if (ec > len) ec = len;
 						String piece = str.substring(sc - 1, ec);
 						interpreter.pushStr(piece);
 						return;

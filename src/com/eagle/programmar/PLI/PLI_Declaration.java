@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
@@ -50,7 +51,7 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 
 	public static class PLI_Declare_Variables extends TokenChooser
 	{
-		public @CHOICE PLI_Variable_Definition varDecl;
+		public @CHOICE PLI_Variable_Definition XXvarDecl;
 
 		public @CHOICE static class PLI_Identifier_List extends TokenSequence
 		{
@@ -148,15 +149,27 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 		for (int i = 0; i < items.getPrimaryCount(); i++)
 		{
 			PLI_Declare_Item item = items.getPrimaryElement(i);
-			if (item.initial.isPresent())
+			if (item.initial != null && item.initial.isPresent())
 			{
 				AbstractToken token = item.declareVariables.getWhich();
 				if (token instanceof PLI_Variable_Definition)
 				{
 					PLI_Variable_Definition id = (PLI_Variable_Definition) token;
-					EagleValue val = interpreter.getEagleValue(item.initial.exprs.first());
-					interpreter._symbolTable.setSymbol(id.getFileName(), id.getStartLine(), id.getStartChar(),
-							id.toString(), val);
+					if (item.initial.exprs.getPrimaryCount() > 1)
+					{
+						EagleArray array =  new EagleArray();
+						for (int j = 0; j < item.initial.exprs.getPrimaryCount(); j++)
+						{
+							EagleValue val = interpreter.getEagleValue(item.initial.exprs.getPrimaryElement(j));
+							array.addValue(val);
+						}
+						interpreter.setSymbol(id, id.toString(), array);
+					}
+					else
+					{
+						EagleValue val = interpreter.getEagleValue(item.initial.exprs.first());
+						interpreter.setSymbol(id, id.toString(), val);
+					}
 				}
 			}
 		}

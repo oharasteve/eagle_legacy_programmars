@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class Django_Element extends TokenChooser
 {
-	public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_TableRow tableRow;
-	public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Element element;
-	public @CHOICE Django_Comment comment;
+	public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_TableRow XXtableRow;
+	public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Element XXelement;
+	public @CHOICE Django_Comment XXcomment;
 }

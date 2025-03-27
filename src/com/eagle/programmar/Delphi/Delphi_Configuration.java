@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
@@ -13,12 +13,14 @@ import com.eagle.tokens.terminals.TerminalEndOfLine;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.tokens.terminals.TerminalPunctuationToken;
 
-public class Delphi_Configuration extends EagleLanguage
+public class Delphi_Configuration extends AbstractLanguage
 {
 	public static final String DELPHIConfig = "Delphi_Configuration";
 
 	public static class Delphi_Config_Syntax extends EagleSyntax
 	{
+		public static final boolean IS_CASE_SENSITIVE = false;
+		
 		@Override
 		public String syntaxId()
 		{
@@ -27,7 +29,7 @@ public class Delphi_Configuration extends EagleLanguage
 
 		public Delphi_Config_Syntax()
 		{
-			_isCaseSensitive = false;
+			_isCaseSensitive = IS_CASE_SENSITIVE;
 			_continuationChar = "\\";
 			_extraCharacters = "";
 			_autoAdvance = false;

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_RelationalOperator;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -20,6 +20,10 @@ public class COBOL_AndCondition extends PrecedenceOperator implements EagleRunna
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (relationalOperator != null && relationalOperator.isPresent())
+		{
+			throw new RuntimeException("Can't handle AND with relational operators yet");
+		}
 		boolean leftValue = interpreter.getBoolValue(left);
 		boolean rightValue = interpreter.getBoolValue(right);
 		interpreter.pushBool(leftValue && rightValue);

@@ -8,11 +8,11 @@ import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Statements.Delphi_Break_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Case_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Close_Statement;
+import com.eagle.programmar.Delphi.Statements.Delphi_ExpressionStatement;
 import com.eagle.programmar.Delphi.Statements.Delphi_For_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Halt_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_If_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Inherited_Statement;
-import com.eagle.programmar.Delphi.Statements.Delphi_Procedure_Call;
 import com.eagle.programmar.Delphi.Statements.Delphi_Raise_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Readln_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Repeat_Statement;
@@ -27,26 +27,26 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Delphi_Statement extends TokenChooser implements AbstractStatement
 {
-	public @CHOICE PunctuationSemicolon semicolon;
+	public @CHOICE PunctuationSemicolon XXsemicolon;
 
-	public @CHOICE Delphi_Assignment assignment;
-	public @CHOICE Delphi_BeginEnd beginEnd;
-	public @CHOICE Delphi_Break_Statement breakStatement;
-	public @CHOICE Delphi_Case_Statement caseStatement;
-	public @CHOICE Delphi_Close_Statement closeStatement;
-	public @CHOICE Delphi_For_Statement forStatement;
-	public @CHOICE Delphi_Halt_Statement haltStatement;
-	public @CHOICE Delphi_If_Statement ifStatement;
-	public @CHOICE Delphi_Inherited_Statement inheritedStatement;
-	public @CHOICE Delphi_Raise_Statement raiseStatement;
-	public @CHOICE Delphi_Readln_Statement readlnStatement;
-	public @CHOICE Delphi_Repeat_Statement repeat_Statement;
-	public @CHOICE Delphi_Rewrite_Statement rewriteStatement;
-	public @CHOICE Delphi_Try_Statement tryStatement;
-	public @CHOICE Delphi_While_Statement while_Statement;
-	public @CHOICE Delphi_With_Statement with_Statement;
-	public @CHOICE Delphi_Writeln_Statement writelnStatement;
+	public @CHOICE Delphi_Assignment XXassignment;
+	public @CHOICE Delphi_BeginEnd XXbeginEnd;
+	public @CHOICE Delphi_Break_Statement XXbreakStatement;
+	public @CHOICE Delphi_Case_Statement XXcaseStatement;
+	public @CHOICE Delphi_Close_Statement XXcloseStatement;
+	public @CHOICE Delphi_For_Statement XXforStatement;
+	public @CHOICE Delphi_Halt_Statement XXhaltStatement;
+	public @CHOICE Delphi_If_Statement XXifStatement;
+	public @CHOICE Delphi_Inherited_Statement XXinheritedStatement;
+	public @CHOICE Delphi_Raise_Statement XXraiseStatement;
+	public @CHOICE Delphi_Readln_Statement XXreadlnStatement;
+	public @CHOICE Delphi_Repeat_Statement XXrepeat_Statement;
+	public @CHOICE Delphi_Rewrite_Statement XXrewriteStatement;
+	public @CHOICE Delphi_Try_Statement XXtryStatement;
+	public @CHOICE Delphi_While_Statement XXwhile_Statement;
+	public @CHOICE Delphi_With_Statement XXwith_Statement;
+	public @CHOICE Delphi_Writeln_Statement XXwritelnStatement;
 
 	// This guy has to be last
-	public @LAST Delphi_Procedure_Call procedureCall;
+	public @LAST Delphi_ExpressionStatement XXexpressionStatement;
 }

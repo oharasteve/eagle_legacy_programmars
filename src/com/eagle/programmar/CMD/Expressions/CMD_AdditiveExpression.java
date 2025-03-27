@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CMD.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -24,10 +24,10 @@ public class CMD_AdditiveExpression extends PrecedenceOperator implements EagleR
 		{
 		case "+":
 			interpreter.pushInt(leftValue + rightValue);
-			break;
+			return;
 		case "-":
 			interpreter.pushInt(leftValue - rightValue);
-			break;
+			return;
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}

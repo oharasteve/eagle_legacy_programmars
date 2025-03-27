@@ -8,6 +8,8 @@ import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 
 public class Perl_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class Perl_Syntax extends EagleSyntax
 
 	public Perl_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new Perl_Comment();

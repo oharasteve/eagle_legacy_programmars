@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Algol68;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Algol68_Program extends EagleLanguage implements EagleRunnable
+public class Algol68_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String ALGOL68 = "Algol68";
 
@@ -51,8 +51,8 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Algol68_Element extends TokenChooser
 	{
-		public @CHOICE Algol68_Statement statement;
-		public @CHOICE Algol68_Main main;
+		public @CHOICE Algol68_Statement XXstatement;
+		public @CHOICE Algol68_Main XXmain;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 				if (stmt.getWhich() instanceof Algol68_Procedure)
 				{
 					Algol68_Procedure fn = (Algol68_Procedure) stmt.getWhich();
-					interpreter._functionList.add(fn);
+					interpreter.addFunction(fn.id.getValue(), fn);
 				}
 			}
 		}
@@ -82,13 +82,13 @@ public class Algol68_Program extends EagleLanguage implements EagleRunnable
 				Algol68_Main main = (Algol68_Main) which;
 				for (Algol68_Element elt : main.elements._elements)
 				{
-					interpreter.tryToInterpret(elt.getWhich());
+					interpreter.tryToInterpret(elt);
 				}
 			}
 			else if (which instanceof Algol68_Statement)
 			{
 				Algol68_Statement stmt = (Algol68_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

@@ -3,28 +3,31 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
-import com.eagle.tokens.AbstractParagraph;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, AbstractParagraph
+public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, AbstractFunction
 {
 	public @S(10) @OPT TokenList<COBOL_ParagraphHeader> paragraphHeaders;
 	public @S(20) TokenList<COBOL_SentenceOrComment> sentences;
 
+	public @SKIP CallMetrics _metrics = null;
+
 	public static class COBOL_SentenceOrComment extends TokenChooser
 	{
-		public @CHOICE COBOL_Comment comment;
-		public @CHOICE COBOL_Sentence sentence;
-		public @LAST COBOL_ScreenDeclaration screen;
+		public @CHOICE COBOL_Comment XXcomment;
+		public @CHOICE COBOL_Sentence XXsentence;
+		public @LAST COBOL_ScreenDeclaration XXscreen;
 
 		public @LAST static class COBOL_DataInParagraph extends TokenSequence
 		{

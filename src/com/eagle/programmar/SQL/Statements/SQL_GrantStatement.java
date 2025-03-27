@@ -20,7 +20,7 @@ public class SQL_GrantStatement extends TokenSequence
 
 	public static class SQL_GrantPermission extends TokenChooser
 	{
-		public @CHOICE SQL_Identifier_Reference permission;
+		public @CHOICE SQL_Identifier_Reference XXpermission;
 
 		public @CHOICE static class SQL_GrantPermissionOn extends TokenSequence
 		{

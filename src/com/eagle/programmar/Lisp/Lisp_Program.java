@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
-public class Lisp_Program extends EagleLanguage implements EagleRunnable
+public class Lisp_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String LISP = "Lisp";
 
@@ -16,7 +16,7 @@ public class Lisp_Program extends EagleLanguage implements EagleRunnable
 	{
 		super(LISP, new Lisp_Syntax());
 	}
-	
+
 	@Override
 	public String booleanName(boolean flag)
 	{
@@ -30,14 +30,15 @@ public class Lisp_Program extends EagleLanguage implements EagleRunnable
 		return "http://www.lispworks.com/documentation/HyperSpec/Body/";
 	}
 
-	public @S(10) TokenList<Lisp_SExpr> sexprs;
+	public @S(10) TokenList<Lisp_SExprOrComment> elements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (Lisp_SExpr elt : sexprs._elements)
+		// Don't need two passes for Lisp. Functions cannot be called before defined.
+		for (Lisp_SExprOrComment elt : elements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			interpreter.tryToInterpret(elt);
 		}
 	}
 }

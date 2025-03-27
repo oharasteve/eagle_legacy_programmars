@@ -3,14 +3,26 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_ReturnStatement extends TokenSequence
+public class Ada_ReturnStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
 	public @S(20) Ada_Expression expr;
 	public @S(30) PunctuationSemicolon semicolon;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter.pushEagleValue(val);
+		return Eagle_Statement_Result.RETURN;
+	}
 }

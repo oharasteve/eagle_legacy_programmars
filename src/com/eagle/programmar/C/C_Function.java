@@ -3,7 +3,9 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.programmar.C.C_Data.C_FunctionPointer;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
@@ -13,6 +15,11 @@ import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Literal;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.programmar.C.Types.C_FunctionPointer;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -25,29 +32,32 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_Function extends TokenSequence
+public class C_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT C_Extern_C externC;
-	public @S(20) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
-	public @S(30) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
-	public @S(40) @OPT C_Comment comment1;
-	public @S(50) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
-	public @S(60) C_FunctionTypeName typeName;
-	public @S(70) C_Function_ParameterDefs parameters;
-	public @S(80) @OPT TokenList<C_Comment> comments2;
-	public @S(90) @OPT C_Keyword CONST = new C_Keyword("const");
-	public @S(100) C_FunctionBody body;
+	public @S(20) @OPT C_FunctionDeclspec declspec;
+	public @S(30) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
+	public @S(40) @OPT C_FunctionAttributes attributes;
+	public @S(50) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(60) @OPT C_Comment comment1;
+	public @S(70) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(80) C_FunctionTypeName typeName;
+	public @S(90) C_Function_ParameterDefs parameters;
+	public @S(100) @OPT TokenList<C_Comment> comments2;
+	public @S(110) @OPT C_Keyword CONST = new C_Keyword("const");
+	public @S(120) C_FunctionBody body;
 
 	public static class C_FunctionTypeName extends TokenChooser
 	{
-		public @CHOICE C_Keyword MAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
+		public @CHOICE C_Keyword XXMAIN = new C_Keyword("main"); // Strange syntax with no return type on 'main'
+		public @CHOICE C_Function_TypeAndName XXtypeAndName;
+	}
 
-		public @CHOICE static class C_Function_TypeAndName extends TokenSequence
-		{
-			public @S(10) C_Type ctype;
-			public @S(20) @OPT TokenList<C_Comment> comments1;
-			public @S(30) C_Function_Definition functionName;
-		}
+	public static class C_Function_TypeAndName extends TokenSequence
+	{
+		public @S(10) C_Type ctype;
+		public @S(20) @OPT TokenList<C_Comment> comments;
+		public @S(30) C_Function_Definition functionName;
 	}
 
 	public static class C_Function_ParameterDefs extends TokenSequence
@@ -62,42 +72,46 @@ public class C_Function extends TokenSequence
 
 	public static class C_FunctionParameter extends TokenChooser
 	{
-		public @FIRST C_FunctionPointer functionPointer;
+		public @FIRST C_FunctionPointer XXfunctionPointer;
+		public @CHOICE C_FunctionParamAmpersand XXparamAmpersand;
+		public @CHOICE C_FunctionFunctionParameter XXfunctionParam;
+		public @CHOICE C_FunctionDotDotDotParameter XXdotDotParam;
+		public @LAST C_FunctionRegularParameter XXparamRegular; // Otherwise it misses C_FunctionFunctionParameter
+	}
 
-		public @CHOICE static class C_FunctionParamAmpersand extends TokenSequence
+	public static class C_FunctionParamAmpersand extends TokenSequence
+	{
+		public @S(10) PunctuationAmpersand ampersand;
+		public @S(20) C_Type type;
+	}
+
+	public static class C_FunctionRegularParameter extends TokenSequence
+	{
+		public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(20) C_Type ctype;
+		public @S(30) @OPT C_KeywordChoice RESTRICT = new C_KeywordChoice("__restrict", "restrict");
+		public @S(40) @OPT C_Variable_Definition id;
+		public @S(50) @OPT TokenList<C_Subscript> subscripts;
+		public @S(60) @OPT C_FunctionDefaultValue value;
+		public @S(70) @OPT C_Comment comment;
+
+		public static class C_FunctionDefaultValue extends TokenSequence
 		{
-			public @S(10) PunctuationAmpersand ampersand;
-			public @S(20) C_Type type;
+			public @S(10) PunctuationEquals equals;
+			public @S(20) C_Expression expr;
 		}
+	}
 
-		public @CHOICE static class C_FunctionRegularParameter extends TokenSequence
-		{
-			public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
-			public @S(20) C_Type ctype;
-			public @S(30) @OPT C_Keyword RESTRICT = new C_Keyword("__restrict");
-			public @S(40) @OPT C_Variable_Definition id;
-			public @S(50) @OPT TokenList<C_Subscript> subscripts;
-			public @S(60) @OPT C_FunctionDefaultValue value;
-			public @S(70) @OPT C_Comment comment;
+	public static class C_FunctionFunctionParameter extends TokenSequence
+	{
+		public @S(10) C_Type ctype;
+		public @S(20) C_Function_Definition id;
+		public @S(30) C_Function_ParameterDefs params;
+	}
 
-			public static class C_FunctionDefaultValue extends TokenSequence
-			{
-				public @S(10) PunctuationEquals equals;
-				public @S(20) C_Expression expr;
-			}
-		}
-
-		public @CHOICE static class C_FunctionFunctionParameter extends TokenSequence
-		{
-			public @S(10) C_Type ctype;
-			public @S(20) C_Function_Definition id;
-			public @S(30) C_Function_ParameterDefs params;
-		}
-
-		public @CHOICE static class C_FunctionDotDotDotParameter extends TokenSequence
-		{
-			public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");
-		}
+	public static class C_FunctionDotDotDotParameter extends TokenSequence
+	{
+		public @S(10) C_Punctuation dotDotDot = new C_Punctuation("...");
 	}
 
 	public static class C_MoreParameterDefs extends TokenSequence
@@ -109,6 +123,8 @@ public class C_Function extends TokenSequence
 
 	public static class C_FunctionBody extends TokenChooser
 	{
+		public @CHOICE C_FunctionImplementation XXimplementation;
+
 		public @CHOICE static class C_FunctionEqualsZero extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
@@ -136,13 +152,65 @@ public class C_Function extends TokenSequence
 				public @S(50) PunctuationRightParen rightParen;
 			}
 		}
+	}
 
-		public @CHOICE static class C_FunctionImplementation extends TokenSequence
+	public static class C_FunctionImplementation extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBrace leftBrace;
+		public @S(20) @OPT TokenList<C_StatementOrComment> elements;
+		public @S(30) PunctuationRightBrace rightBrace;
+		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+	}
+	
+	public static class C_FunctionDeclspec extends TokenSequence
+	{
+		public @S(10) C_KeywordChoice DECLSPEC = new C_KeywordChoice("_declspec", "__declspec");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) C_Keyword DLLEXPORT = new C_Keyword("dllexport");
+		public @S(40) PunctuationRightParen rightParen;
+	}
+	
+	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
 		{
-			public @S(10) PunctuationLeftBrace leftBrace;
-			public @S(20) @OPT TokenList<C_StatementOrComment> elements;
-			public @S(30) PunctuationRightBrace rightBrace;
-			public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
+			String fname = "main";
+			AbstractToken which = typeName.getWhich();
+			if (which instanceof C_Function_TypeAndName)
+			{
+				C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
+				fname = typeAndName.functionName.getValue();
+			}
+			_metrics = new CallMetrics(interpreter._metrics, fname, this);
+
+			// Don't do anything here, unless the function name is 'main'
+			// We searched for all the functions in a preliminary pass
+			// And we only evaluate them when they are called
+			if (fname.equals("main"))
+			{
+				interpreter.callingFunction("main", this);
+				AbstractToken token = body.getWhich();
+				if (token instanceof C_FunctionImplementation)
+				{
+					C_FunctionImplementation impl = (C_FunctionImplementation) token;
+					for (C_StatementOrComment stmt : impl.elements._elements)
+					{
+						interpreter.tryToInterpret(stmt);
+					}
+				}
+				interpreter.completedFunction("main", this);
+			}
 		}
 	}
 }

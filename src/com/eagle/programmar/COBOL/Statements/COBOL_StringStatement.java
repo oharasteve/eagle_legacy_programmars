@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
@@ -40,10 +41,10 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 
 			public static class COBOL_StringDelimitByWhat extends TokenChooser
 			{
-				public @CHOICE COBOL_Keyword SIZE = new COBOL_Keyword("SIZE");
-				public @CHOICE COBOL_HexNumber hex;
-				public @CHOICE COBOL_Literal literal;
-				public @CHOICE COBOL_StringDelimitSpaces stringDelimitSpaces;
+				public @CHOICE COBOL_Keyword XXSIZE = new COBOL_Keyword("SIZE");
+				public @CHOICE COBOL_HexNumber XXhex;
+				public @CHOICE COBOL_Literal XXliteral;
+				public @CHOICE COBOL_StringDelimitSpaces XXstringDelimitSpaces;
 			}
 		}
 	}
@@ -82,7 +83,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		{
 			throw new RuntimeException("Can only handle one STRING result");
 		}
-		if (with.isPresent())
+		if (with != null && with.isPresent())
 		{
 			throw new RuntimeException("Cannot handle POINTER yet");
 		}
@@ -100,9 +101,10 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 			}
 
 			String piece = interpreter.getStrValue(what.expr);
-			result.append(piece);
+			result.append(piece.trim());
 		}
 
-		interpreter.pushStr(result.toString());
+		COBOL_StringPiece piece = pieces._elements.get(0);
+		interpreter.setSymbol(piece, piece.intoVar.getValue(), new EagleString(result.toString()));
 	}
 }

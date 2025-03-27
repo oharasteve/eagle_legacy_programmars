@@ -8,13 +8,14 @@ import com.eagle.programmar.Javascript.Javascript_Statement.Javascript_Statement
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_SwitchStatement extends TokenSequence
+public class Javascript_SwitchStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("js_switch.asp") Javascript_Keyword SWITCH = new Javascript_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;

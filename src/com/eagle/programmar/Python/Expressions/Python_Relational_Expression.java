@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Python_Relational_Expression extends PrecedenceOperator implements EagleRunnable
 {
@@ -20,8 +24,8 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 
 	public static class Python_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Python_PunctuationChoice operator = new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=",
-				"<", ">");
+		public @CHOICE Python_PunctuationChoice XXoperatorSymbol =
+				new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=", "<", ">");
 
 		public @CHOICE static class Python_IN_Operator extends TokenSequence
 		{
@@ -39,30 +43,84 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftInt = interpreter.getIntValue(left);
-		int rightInt = interpreter.getIntValue(right);
-		switch (relOp.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "==":
-			interpreter.pushBool(leftInt == rightInt);
-			return;
-		case "!=", "<>":
-			interpreter.pushBool(leftInt != rightInt);
-			return;
-		case "<":
-			interpreter.pushBool(leftInt < rightInt);
-			return;
-		case "<=":
-			interpreter.pushBool(leftInt <= rightInt);
-			return;
-		case ">":
-			interpreter.pushBool(leftInt > rightInt);
-			return;
-		case ">=":
-			interpreter.pushBool(leftInt >= rightInt);
-			return;
-		default:
-			throw new RuntimeException("Unable to handle operator: " + relOp.getWhich());
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
 		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (relOp.getWhich().toString())
+			{
+			case "==":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=", "<>":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			default:
+				throw new RuntimeException("Unable to handle operator: " + relOp.getWhich());
+			}
+		}
+	}
+
+	public static Python_Relational_Expression generateExpression(AbstractExpression leftExpr, RelationalEnum relOp,
+			AbstractExpression rightExpr, AbstractToken source)
+	{
+		Python_Relational_Expression expr = new Python_Relational_Expression();
+		expr.left = (Python_Expression) leftExpr;
+		expr.right = (Python_Expression) rightExpr;
+		
+		Python_PunctuationChoice operator = null;
+		switch (relOp)
+		{
+		case EQUALS:
+			operator = new Python_PunctuationChoice("==");
+			break;
+		case NOT_EQUALS:
+			operator = new Python_PunctuationChoice("!=");
+			break;
+		case LESS_THAN:
+			operator = new Python_PunctuationChoice("<");
+			break;
+		case LESS_EQUALS:
+			operator = new Python_PunctuationChoice("<=");
+			break;
+		case GREATER_THAN:
+			operator = new Python_PunctuationChoice(">");
+			break;
+		case GREATER_EQUALS:
+			operator = new Python_PunctuationChoice(">=");
+			break;
+		}
+		expr.relOp = new Python_Relational_Operator();
+		expr.relOp.setWhich(operator);
+		expr.setTransformationSource(source);
+		return expr;
 	}
 }

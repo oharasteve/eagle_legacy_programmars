@@ -3,14 +3,15 @@
 
 package com.eagle.programmar.Scala.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Scala.Symbols.Scala_Identifier_Reference;
 import com.eagle.programmar.Scala.Symbols.Scala_Object_Definition;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Scala_Object extends TokenSequence implements EagleRunnable
+public class Scala_Object extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Scala_Keyword OBJECT = new Scala_Keyword("object");
 	public @S(20) Scala_Object_Definition obj;

@@ -4,8 +4,8 @@
 package com.eagle.programmar.CPlus;
 
 import com.eagle.programmar.C.C_Extern_C;
-import com.eagle.programmar.C.C_Statement.C_StatementBlock;
 import com.eagle.programmar.C.C_TypeDef;
+import com.eagle.programmar.C.Statements.C_StatementBlock;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
@@ -16,8 +16,8 @@ public class CPlus_Extern extends TokenSequence
 
 	public static class CPlus_Extern_What extends TokenChooser
 	{
-		public @CHOICE CPlus_Method method;
-		public @CHOICE C_StatementBlock block;
-		public @CHOICE C_TypeDef typedef;
+		public @CHOICE CPlus_Method XXmethod;
+		public @CHOICE C_StatementBlock XXblock;
+		public @CHOICE C_TypeDef XXtypedef;
 	}
 }

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Scala;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Scala.Symbols.Scala_Identifier_Reference;
 import com.eagle.tokens.SeparatedList;
@@ -29,7 +29,7 @@ public class Scala_Variable extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Scala_Identifier_Reference first = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(first.toString());
+		EagleValue value = interpreter.findSymbol(first.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

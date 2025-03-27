@@ -7,11 +7,12 @@ import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Literal;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Delphi_Rewrite_Statement extends TokenSequence
+public class Delphi_Rewrite_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("System.Rewrite") Delphi_Keyword REWRITE = new Delphi_Keyword("ReWrite");
 	public @S(20) PunctuationLeftParen leftParen;

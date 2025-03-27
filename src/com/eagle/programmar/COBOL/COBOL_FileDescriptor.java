@@ -30,7 +30,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 
 	public static class COBOL_FD_ReportExternal extends TokenChooser
 	{
-		public static @CHOICE class COBOL_FD_ReportIs extends TokenSequence
+		public @CHOICE static class COBOL_FD_ReportIs extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");
 			public @S(20) COBOL_Keyword IS = new COBOL_Keyword("IS");
@@ -38,7 +38,7 @@ public class COBOL_FileDescriptor extends TokenSequence
 			public @S(40) @OPT COBOL_Identifier_Reference reportId;
 		}
 
-		public static @CHOICE class COBOL_FD_IsExternal extends TokenSequence
+		public @CHOICE static class COBOL_FD_IsExternal extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword IS = new COBOL_Keyword("IS");
 			public @S(20) COBOL_Keyword EXTERNAL = new COBOL_Keyword("EXTERNAL");
@@ -85,8 +85,8 @@ public class COBOL_FileDescriptor extends TokenSequence
 
 			public static class COBOL_FileId extends TokenChooser
 			{
-				public @CHOICE COBOL_Identifier_Reference fileRef;
-				public @CHOICE COBOL_Literal fileName;
+				public @CHOICE COBOL_Identifier_Reference XXfileRef;
+				public @CHOICE COBOL_Literal XXfileName;
 			}
 		}
 	}

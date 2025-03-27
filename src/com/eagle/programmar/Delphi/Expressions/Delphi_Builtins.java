@@ -3,14 +3,14 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 
 public class Delphi_Builtins extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice("False", "True", "Nil");
+	public @S(10) Delphi_KeywordChoice builtinConstant = new Delphi_KeywordChoice("False", "True", "Nil");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

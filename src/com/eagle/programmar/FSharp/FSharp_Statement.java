@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.FSharp.Statements.FSharp_Assignment;
 import com.eagle.programmar.FSharp.Statements.FSharp_ForStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
@@ -34,14 +35,20 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 
 	public static class FSharp_StatementOrComment extends TokenChooser
 	{
-		public @SKIP FSharp_MultilineStatement multiStatement; // Only needed for Transformation
+		public @SKIP FSharp_MultilineStatement XXmultiStatement; // Only needed for Transformation
 
-		public @CHOICE FSharp_Statement_List statements;
-		public @CHOICE FSharp_EndOfLine eoln;
+		public @CHOICE FSharp_Statement_List XXstatements;
+		public @CHOICE FSharp_EndOfLine XXeoln;
 
-		public @FIRST static class FSharp_CommentList extends TokenSequence
+		public @FIRST static class FSharp_CommentList extends TokenSequence implements EagleRunnable
 		{
 			public @S(10) SeparatedList<FSharp_Comment, FSharp_EndOfLine> comments;
+			
+			@Override
+			public void interpret(EagleInterpreter interpreter)
+			{
+				// Nothing to do
+			}
 		}
 	}
 
@@ -56,46 +63,71 @@ public class FSharp_Statement extends TokenSequence implements AbstractStatement
 			for (int i = 0; i < statements.getPrimaryCount(); i++)
 			{
 				FSharp_Simple_Statement stmt = statements.getPrimaryElement(i);
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}
 
 	public static class FSharp_Statement_Separator extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma comma;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE @CURIOUS("Comma instead of a semicolon") PunctuationComma XXcomma;
 	}
 
 	public static class FSharp_Simple_Statement extends TokenChooser
 	{
-		public @CHOICE FSharp_Assignment assignment;
-		public @CHOICE FSharp_ForStatement forStatement;
-		public @CHOICE FSharp_Function function;
-		public @CHOICE FSharp_IfStatement ifStatement;
-		public @CHOICE FSharp_LetStatement letStatement;
-		public @CHOICE FSharp_PrintfnStatement printfnStatement;
+		public @CHOICE FSharp_Assignment XXassignment;
+		public @CHOICE FSharp_ForStatement XXforStatement;
+		public @CHOICE FSharp_Function XXfunction;
+		public @CHOICE FSharp_IfStatement XXifStatement;
+		public @CHOICE FSharp_LetStatement XXletStatement;
+		public @CHOICE FSharp_PrintfnStatement XXprintfnStatement;
 
-		public @LAST FSharp_Expression returnValue;
+		public @LAST FSharp_Expression XXreturnValue;
 	}
 
-	public static class FSharp_MultilineStatement extends TokenSequence
+	public static class FSharp_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
 	{
 		public @S(10) @OPT FSharp_Comment comment;
 		public @S(20) FSharp_EndOfLine eoln;
 		public @S(30) TokenList<FSharp_Statement> statements;
+		
+		@Override
+		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+		{
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			for (FSharp_Statement stmt : statements._elements)
+			{
+				result = interpreter.tryToInterpret(stmt.statementOrComment);
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
+		}
+	}
+
+	public static class FSharp_SingleLineStatement extends TokenSequence implements EagleRunnableWithResult
+	{
+		public @S(10) SeparatedList<FSharp_Simple_Statement, PunctuationSemicolon> statements;
+		public @S(20) @OPT FSharp_Comment comment;
+		public @S(30) @OPT FSharp_EndOfLine eoln;
+
+		@Override
+		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+		{
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			for (int i = 0; i < statements.getPrimaryCount(); i++)
+			{
+				result = interpreter.tryToInterpret(statements.getPrimaryElement(i));
+				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
+		}
 	}
 
 	public static class FSharp_SingleOrMultiLineStatement extends TokenChooser
 	{
-		public @CHOICE FSharp_Punctuation dots = new FSharp_Punctuation("...");
-		public @CHOICE FSharp_MultilineStatement multilineStatement;
-
-		public @CHOICE static class FSharp_SingleLineStatement extends TokenSequence
-		{
-			public @S(10) SeparatedList<FSharp_Simple_Statement, PunctuationSemicolon> statements;
-			public @S(20) @OPT FSharp_Comment comment;
-			public @S(30) @OPT FSharp_EndOfLine eoln;
-		}
+		public @CHOICE FSharp_Punctuation XXdots = new FSharp_Punctuation("...");
+		public @CHOICE FSharp_MultilineStatement XXmultiLineStatement;
+		public @CHOICE FSharp_SingleLineStatement XXsingleLineStatement;
 	}
 }

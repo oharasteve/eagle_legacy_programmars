@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.HTML;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
@@ -21,7 +21,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class HTML_Program extends EagleLanguage implements EagleRunnable
+public class HTML_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String HTML = "HTML";
 
@@ -40,36 +40,36 @@ public class HTML_Program extends EagleLanguage implements EagleRunnable
 
 	public static class HTML_Element extends TokenChooser
 	{
-		public @CHOICE HTML_DocType docType;
+		public @CHOICE HTML_DocType XXdocType;
 
-		public @CHOICE HTML_Tag tag;
-		public @CHOICE HTML_EndTag endTag;
-		public @CHOICE HTML_Comment comment;
+		public @CHOICE HTML_Tag XXtag;
+		public @CHOICE HTML_EndTag XXendTag;
+		public @CHOICE HTML_Comment XXcomment;
 
 		// Statements, sort of
-		public @CHOICE HTML_IfCondition ifCondition;
-		public @CHOICE HTML_EndIfCondition endIfCondition;
+		public @CHOICE HTML_IfCondition XXifCondition;
+		public @CHOICE HTML_EndIfCondition XXendIfCondition;
 
 		// Custom tags that need to be processed separately
-		public @CHOICE HTML_Pre pre;
-		public @CHOICE HTML_Style style;
-		public @CHOICE HTML_Script script;
-		public @CHOICE HTML_Anchor anchor;
-		public @CHOICE HTML_Table table;
-		public @CHOICE HTML_Caption caption;
+		public @CHOICE HTML_Pre XXpre;
+		public @CHOICE HTML_Style XXstyle;
+		public @CHOICE HTML_Script XXscript;
+		public @CHOICE HTML_Anchor XXanchor;
+		public @CHOICE HTML_Table XXtable;
+		public @CHOICE HTML_Caption XXcaption;
 
 		// @FIRST for speed. Some Chromium HTML files have thousands of <span> tags all
 		// on one lien
-		public @FIRST HTML_Span span;
+		public @FIRST HTML_Span XXspan;
 
 		// PHP
-		public @CHOICE @SYNTAX(PHP_Syntax.class) PHP_Section php_block;
+		public @CHOICE @SYNTAX(PHP_Syntax.class) PHP_Section XXphp_block;
 
 		// Django
-		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Control dj_control;
-		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Insert dj_insert;
+		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Control XXdj_control;
+		public @CHOICE @SYNTAX(Django_Syntax.class) Django_Insert XXdj_insert;
 
-		public @LAST XML_Header xmlHeader;
+		public @LAST XML_Header XXxmlHeader;
 
 		public @LAST static class HTML_BogusEndAnchor extends TokenSequence
 		{
@@ -92,7 +92,7 @@ public class HTML_Program extends EagleLanguage implements EagleRunnable
 			if (element.getWhich() instanceof PHP_Section)
 			{
 				PHP_Section section = (PHP_Section) element.getWhich();
-				interpreter.tryToInterpret(section.body.getWhich());
+				interpreter.tryToInterpret(section.body);
 			}
 		}
 	}

@@ -3,22 +3,22 @@
 
 package com.eagle.programmar.Lisp.Functions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Lisp.Lisp_SExpr;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, EagleScopeInterface
+public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_let.htm") Lisp_KeywordChoice LET = new Lisp_KeywordChoice("let", "prog");
@@ -26,13 +26,14 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 	public @S(40) Lisp_LetVariables variables;
 	public @S(50) TokenList<Lisp_SExpr> values;
 	public @S(60) PunctuationRightParen rightParen;
-	
+
 	public static class Lisp_LetVar extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Lisp_Variable_Definition var;
-		public @S(30) Lisp_SExpr value;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(20) @OPT PunctuationComma comma;
+		public @S(30) Lisp_Variable_Definition var;
+		public @S(40) Lisp_SExpr value;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 
 	public static class Lisp_LetVariables extends TokenSequence
@@ -42,14 +43,14 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	private EagleScope _scope = new EagleScope(this, Java_Syntax.isCaseSensitive);
+//	private @SKIP EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
+//
+//	@Override
+//	public EagleScope getScope()
+//	{
+//		return _scope;
+//	}
 
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
-	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -57,13 +58,15 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ea
 		for (Lisp_LetVar var : variables.valuePairs._elements)
 		{
 			EagleValue val = interpreter.getEagleValue(var.value);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.var.toString(), val);
+			interpreter.setSymbol(var, var.var.toString(), val);
 		}
 
 		// Perform actions
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (Lisp_SExpr elt : values._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			result = interpreter.tryToInterpret(elt);
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
 	}
 }

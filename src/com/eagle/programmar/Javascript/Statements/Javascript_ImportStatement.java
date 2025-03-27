@@ -28,8 +28,8 @@ public class Javascript_ImportStatement extends TokenSequence
 
 		public static class Javascript_ImportWhat extends TokenChooser
 		{
-			public @CHOICE Javascript_Identifier_Reference theirId;
-			public @CHOICE Javascript_Literal literal;
+			public @CHOICE Javascript_Identifier_Reference XXtheirId;
+			public @CHOICE Javascript_Literal XXliteral;
 
 			public @CHOICE static class Javascript_ImportBraces extends TokenSequence
 			{

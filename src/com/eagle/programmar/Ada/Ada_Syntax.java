@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Ada_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,91 +17,13 @@ public class Ada_Syntax extends EagleSyntax
 
 	public Ada_Syntax()
 	{
-		_isCaseSensitive = false;
-		_extraCharacters = "";
+		_isCaseSensitive = IS_CASE_SENSITIVE;
+		_extraCharacters = "_";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {
 				":=", "/=", "..", "=>", "<=", ">="
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Ada_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From
-	// https://www.adaic.org/resources/add_content/standards/05rm/html/RM-2-9.html
-	private static String[] reservedWords = new String[] {
-			"abort",
-			"abs",
-			"abstract",
-			"accept",
-			"access",
-			"aliased",
-			"all",
-			"and",
-			"array",
-			"at",
-			"begin",
-			"body",
-			"case",
-			"constant",
-			"declare",
-			"delay",
-			"delta",
-			"digits",
-			"do",
-			"else",
-			"elsif",
-			"end",
-			"entry",
-			"exception",
-			"exit",
-			"for",
-			"function",
-			"generic",
-			"goto",
-			"if",
-			"in",
-			"interface",
-			"is",
-			"limited",
-			"loop",
-			"mod",
-			"new",
-			"not",
-			"null",
-			"of",
-			"or",
-			"others",
-			"out",
-			"overriding",
-			"package",
-			"pragma",
-			"private",
-			"procedure",
-			"protected",
-			"put",
-			"raise",
-			"range",
-			"record",
-			"rem",
-			"renames",
-			"requeue",
-			"return",
-			"reverse",
-			"select",
-			"separate",
-			"subtype",
-			"synchronized",
-			"tagged",
-			"task",
-			"terminate",
-			"then",
-			"type",
-			"until",
-			"use",
-			"when",
-			"while",
-			"with",
-			"xor",
-	};
 }

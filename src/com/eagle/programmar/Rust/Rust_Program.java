@@ -3,18 +3,15 @@
 
 package com.eagle.programmar.Rust;
 
-import java.util.ArrayList;
-
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Rust_Program extends EagleLanguage implements EagleRunnable
+public class Rust_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String RUST = "Rust";
 
@@ -33,25 +30,26 @@ public class Rust_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Rust_Element extends TokenChooser
 	{
-		public @CHOICE Rust_Comment comment;
-		public @CHOICE Rust_Function function;
-		public @CHOICE Rust_Module module;
-		public @CHOICE Rust_Data data;
-		public @CHOICE Rust_Use use;
+		public @CHOICE Rust_Comment XXcomment;
+		public @CHOICE Rust_Function XXfunction;
+		public @CHOICE Rust_Module XXmodule;
+		public @CHOICE Rust_Data XXdata;
+		public @CHOICE Rust_Use XXuse;
+		
+		public @LAST Rust_Statement XXstatement;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (Rust_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
 			if (which instanceof Rust_Function)
 			{
 				Rust_Function fn = (Rust_Function) which;
-				interpreter._functionList.add(fn);
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
 

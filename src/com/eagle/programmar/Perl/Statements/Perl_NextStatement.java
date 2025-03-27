@@ -6,9 +6,10 @@ package com.eagle.programmar.Perl.Statements;
 import com.eagle.programmar.Perl.Symbols.Perl_Label_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
 
-public class Perl_NextStatement extends TokenSequence
+public class Perl_NextStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Perl_Keyword NEXT = new Perl_Keyword("next");
 	public @S(20) @OPT Perl_Label_Reference label;

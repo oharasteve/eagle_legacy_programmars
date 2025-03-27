@@ -8,6 +8,7 @@ import com.eagle.programmar.IntelASM.Terminals.IntelASM_HexNumber;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Keyword;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Literal;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Number;
+import com.eagle.programmar.IntelASM.Terminals.IntelASM_Punctuation;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
@@ -47,7 +48,7 @@ public class IntelASM_Expression extends PrecedenceChooser
 	public @P(100) static class IntelASM_Brackets extends PrimaryOperator
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) IntelASM_Register register;
+		public @S(20) IntelASM_Expression expr;
 		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
@@ -66,18 +67,23 @@ public class IntelASM_Expression extends PrecedenceChooser
 		public @S(40) IntelASM_Expression expr;
 		public @S(50) PunctuationRightBracket rightBracket;
 	}
+	
+	public @P(130) static class IntelASM_Dollar extends PrimaryOperator
+	{
+		public @S(10) IntelASM_Punctuation dollar = new IntelASM_Punctuation('$');
+	}
 
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public static @P(500) class IntelASM_MultiplicativeExpression extends PrecedenceOperator
+	public static @P(1000) class IntelASM_MultiplicativeExpression extends PrecedenceOperator
 	{
 		public @S(10) IntelASM_Expression left = new IntelASM_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) IntelASM_PunctuationChoice operator = new IntelASM_PunctuationChoice("*");
 		public @S(30) IntelASM_Expression right = new IntelASM_Expression(this, AllowedPrecedence.HIGHER);
 	}
 
-	public static @P(510) class IntelASM_AdditiveExpression extends PrecedenceOperator
+	public static @P(1010) class IntelASM_AdditiveExpression extends PrecedenceOperator
 	{
 		public @S(10) IntelASM_Expression left = new IntelASM_Expression(this, AllowedPrecedence.ATLEAST);
 		public @S(20) IntelASM_PunctuationChoice operator = new IntelASM_PunctuationChoice("+", "-");

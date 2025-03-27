@@ -3,25 +3,16 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Program extends EagleLanguage implements EagleRunnable
+public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String CSHARP = "CSharp";
 
@@ -64,59 +55,54 @@ public class CSharp_Program extends EagleLanguage implements EagleRunnable
 
 	public static class CSharp_NamespaceOrClassEntry extends TokenChooser
 	{
-		public @CHOICE @NEWLINE CSharp_Using importList;
-		public @CHOICE @NEWLINE CSharp_Comment comment;
-		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
-		public @CHOICE @NEWLINE CSharp_Class elems;
-		public @CHOICE @NEWLINE CSharp_Annotation annotation;
-		public @CHOICE @NEWLINE CSharp_Directive directive;
-	}
-
-	public static class CSharp_Using extends TokenSequence
-	{
-		public @S(10) CSharp_Keyword USING = new CSharp_Keyword("using");
-		public @S(20) @OPT CSharp_Keyword STATIC = new CSharp_Keyword("static");
-		public @S(30) SeparatedList<CSharp_Identifier, PunctuationPeriod> id;
-		public @S(40) @OPT CSharp_UsingEquals alternateName;
-		public @S(50) PunctuationSemicolon semicolon;
-
-		public static class CSharp_UsingEquals extends TokenSequence
-		{
-			public @S(10) PunctuationEquals equals;
-			public @S(20) @OPT CSharp_UsingGlobal global;
-			public @S(30) SeparatedList<CSharp_Identifier, PunctuationPeriod> id;
-
-			public static class CSharp_UsingGlobal extends TokenSequence
-			{
-				public @S(10) CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
-				public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
-			}
-		}
-	}
-
-	public static class CSharp_Namespace extends TokenSequence
-	{
-		public @S(10) CSharp_Keyword NAMESPACE = new CSharp_Keyword("namespace");
-		public @S(20) SeparatedList<CSharp_Identifier, PunctuationPeriod> ids;
-		public @S(30) PunctuationLeftBrace leftBrace;
-		public @S(40) @OPT TokenList<CSharp_ProgramElems> elems;
-		public @S(50) PunctuationRightBrace rightBrace;
-	}
-
-	public static class CSharp_ProgramElems extends TokenChooser
-	{
-		public @CHOICE @NEWLINE CSharp_Namespace myNamespace;
-		public @CHOICE @NEWLINE CSharp_Using using;
-		public @CHOICE @NEWLINE CSharp_Comment comment;
-		public @CHOICE @NEWLINE CSharp_Class myClass;
-		public @CHOICE @NEWLINE CSharp_Enum enumeration;
-		public @CHOICE @NEWLINE CSharp_Method method;
-		public @CHOICE @NEWLINE CSharp_Directive directive;
+		public @CHOICE @NEWLINE CSharp_Using XXimportList;
+		public @CHOICE @NEWLINE CSharp_Comment XXcomment;
+		public @CHOICE @NEWLINE CSharp_Namespace XXmyNamespace;
+		public @CHOICE @NEWLINE CSharp_Class XXclass;
+		public @CHOICE @NEWLINE CSharp_Annotation XXannotation;
+		public @CHOICE @NEWLINE CSharp_Directive XXdirective;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(myClasses.first().getWhich());
+		// First pass, just collect all the method definitions
+		for (CSharp_NamespaceOrClassEntry nsClass : myClasses._elements)
+		{
+			if (nsClass.getWhich() instanceof CSharp_Class)
+			{
+				CSharp_Class cls = (CSharp_Class) nsClass.getWhich();
+				for (CSharp_ClassElement element : cls.elements._elements)
+				{
+					if (element.getWhich() instanceof CSharp_Method)
+					{
+						CSharp_Method meth = (CSharp_Method) element.getWhich();
+						interpreter.addFunction(meth.methodName.getValue(), meth);
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost class
+		for (CSharp_NamespaceOrClassEntry nsClass : myClasses._elements)
+		{
+			if (nsClass.getWhich() instanceof CSharp_Class)
+			{
+				CSharp_Class cls = (CSharp_Class) nsClass.getWhich();
+				interpreter.tryToInterpret(cls);
+			}
+		}
+	}
+	
+	public static CSharp_Program newCSharpProgram(CSharp_Class cls)
+	{
+		CSharp_NamespaceOrClassEntry entry = new CSharp_NamespaceOrClassEntry();
+		entry.setWhich(cls);
+	
+		CSharp_Program prog = new CSharp_Program();
+		prog.myClasses = new TokenList<CSharp_NamespaceOrClassEntry>();
+		prog.myClasses.setPresent(true);
+		prog.myClasses.addToken(entry);
+		return prog;
 	}
 }

@@ -32,8 +32,9 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 	public @S(40) @OPT CPlus_NamespaceList namespaces;
 	public @S(50) CPlus_Class_Definition className;
 	public @S(60) @OPT C_Generic generic;
-	public @S(70) @OPT CPlus_ClassExtendList extendsClasses;
-	public @S(80) CPlus_ClassBody body;
+	public @S(70) @OPT C_Keyword FINAL = new C_Keyword("final");
+	public @S(80) @OPT CPlus_ClassExtendList extendsClasses;
+	public @S(90) CPlus_ClassBody body;
 
 	public static class CPlus_ClassModifier extends TokenSequence
 	{
@@ -43,7 +44,7 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 
 	public static class CPlus_ClassBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
 
 		public @CHOICE static class CPlus_ClassBlockBody extends TokenSequence
 		{
@@ -55,15 +56,15 @@ public class CPlus_Class extends TokenSequence implements AbstractClass
 
 	public static class CPlus_ClassElement extends TokenChooser
 	{
-		public @FIRST CPlus_Constructor constructor;
-		public @FIRST CPlus_Operator operator;
-		public @FIRST CPlus_Data data;
-		public @CHOICE CPlus_Method method;
-		public @CHOICE CPlus_Extern externC;
-		public @CHOICE CPlus_Class innerClass;
-		public @CHOICE CPlus_Using using;
-		public @CHOICE CPlus_Template template;
-		public @LAST C_StatementOrComment c_stmt;
+		public @FIRST CPlus_Constructor XXconstructor;
+		public @FIRST CPlus_Operator XXoperator;
+		public @FIRST CPlus_Data XXdata;
+		public @CHOICE CPlus_Method XXmethod;
+		public @CHOICE CPlus_Extern XXexternC;
+		public @CHOICE CPlus_Class XXinnerClass;
+		public @CHOICE CPlus_Using XXusing;
+		public @CHOICE CPlus_Template XXtemplate;
+		public @LAST C_StatementOrComment XXc_stmt;
 
 		public @CHOICE static class CPlus_ClassPublicPrivate extends TokenSequence
 		{

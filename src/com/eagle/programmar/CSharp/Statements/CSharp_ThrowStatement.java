@@ -6,9 +6,10 @@ package com.eagle.programmar.CSharp.Statements;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_ThrowStatement extends TokenSequence
+public class CSharp_ThrowStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("statements.html#14.18") CSharp_Keyword THROW = new CSharp_Keyword("throw");
 	public @S(20) @OPT CSharp_Expression expression;

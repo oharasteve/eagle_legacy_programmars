@@ -3,12 +3,19 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Syntax;
 import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Definition;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -21,7 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Powershell_FunctionStatement extends TokenSequence
+public class Powershell_FunctionStatement extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword(
 			"Function");
@@ -32,6 +39,8 @@ public class Powershell_FunctionStatement extends TokenSequence
 	public @S(60) @OPT Powershell_EndOfLine eoln2;
 	public @S(70) @OPT TokenList<Powershell_Statement> stmts;
 	public @S(80) PunctuationRightBrace rightBrace;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class Powershell_FunctionParams extends TokenSequence
 	{
@@ -52,4 +61,26 @@ public class Powershell_FunctionStatement extends TokenSequence
 			public @S(30) PunctuationRightBracket rightBracket;
 		}
 	}
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Powershell_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
+		}
+
+		// Don't do anything here.
+		// We searched for all the function in a preliminary pass
+		// And we only evaluate when it is called
+	}
+
 }

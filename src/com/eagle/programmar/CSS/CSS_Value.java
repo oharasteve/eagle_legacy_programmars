@@ -25,23 +25,23 @@ import com.eagle.tokens.TokenChooser;
 
 public class CSS_Value extends TokenChooser
 {
-	public @CHOICE CSS_Alpha_Value alphaValue;
-	public @CHOICE CSS_Attr attr;
-	public @CHOICE CSS_Color color;
-	public @CHOICE CSS_Cubic_Bezier cubicBezier;
-	public @CHOICE CSS_Format format;
-	public @CHOICE CSS_Gradient gradient;
-	public @CHOICE CSS_HexNumber hex;
-	public @CHOICE CSS_Important important;
-	public @CHOICE CSS_Literal lit;
-	public @CHOICE CSS_Microsoft_Gradient msGradient;
-	public @CHOICE CSS_NumericValue numericValue;
-	public @CHOICE CSS_Rect rect;
-	public @CHOICE CSS_RotateValue rotateValue;
-	public @CHOICE CSS_Scale scale;
-	public @CHOICE CSS_Translate3d translate3d;
-	public @CHOICE CSS_URL_Value url;
-	public @CHOICE CSS_Webkit_Image_Set webkitImageSet;
+	public @CHOICE CSS_Alpha_Value XXalphaValue;
+	public @CHOICE CSS_Attr XXattr;
+	public @CHOICE CSS_Color XXcolor;
+	public @CHOICE CSS_Cubic_Bezier XXcubicBezier;
+	public @CHOICE CSS_Format XXformat;
+	public @CHOICE CSS_Gradient XXgradient;
+	public @CHOICE CSS_HexNumber XXhex;
+	public @CHOICE CSS_Important XXimportant;
+	public @CHOICE CSS_Literal XXlit;
+	public @CHOICE CSS_Microsoft_Gradient XXmsGradient;
+	public @CHOICE CSS_NumericValue XXnumericValue;
+	public @CHOICE CSS_Rect XXrect;
+	public @CHOICE CSS_RotateValue XXrotateValue;
+	public @CHOICE CSS_Scale XXscale;
+	public @CHOICE CSS_Translate3d XXtranslate3d;
+	public @CHOICE CSS_URL_Value XXurl;
+	public @CHOICE CSS_Webkit_Image_Set XXwebkitImageSet;
 
-	public @LAST CSS_IdentifierValue identifierValue;
+	public @LAST CSS_IdentifierValue XXidentifierValue;
 }

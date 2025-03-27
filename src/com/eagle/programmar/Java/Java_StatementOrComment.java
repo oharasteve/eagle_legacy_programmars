@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class Java_StatementOrComment extends TokenChooser
 {
-	public @FIRST @NEWLINE Java_Comment comment;
-	public @CHOICE @NEWLINE Java_Statement statement;
+	public @FIRST @NEWLINE Java_Comment XXcomment;
+	public @CHOICE @NEWLINE Java_Statement XXstatement;
 }

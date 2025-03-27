@@ -13,10 +13,10 @@ import com.eagle.tokens.TokenChooser;
 
 public class Gupta_Statement extends TokenChooser
 {
-	public @CHOICE Gupta_Call_Statement callStatement;
-	public @CHOICE Gupta_Comment_Statement commentStatement;
-	public @CHOICE Gupta_If_Statement ifStatement;
-	public @CHOICE Gupta_Return_Statement returnStatement;
-	public @CHOICE Gupta_Set_Statement setStatement;
-	public @CHOICE Gupta_While_Statement whileStatement;
+	public @CHOICE Gupta_Call_Statement XXcallStatement;
+	public @CHOICE Gupta_Comment_Statement XXcommentStatement;
+	public @CHOICE Gupta_If_Statement XXifStatement;
+	public @CHOICE Gupta_Return_Statement XXreturnStatement;
+	public @CHOICE Gupta_Set_Statement XXsetStatement;
+	public @CHOICE Gupta_While_Statement XXwhileStatement;
 }

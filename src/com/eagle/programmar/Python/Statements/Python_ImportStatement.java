@@ -8,11 +8,14 @@ import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenChooser.CHOICE;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
@@ -26,8 +29,8 @@ public class Python_ImportStatement extends TokenSequence
 
 	public static class Python_ImportWhat extends TokenChooser
 	{
-		public @CHOICE Python_Variable importName;
-		public @CHOICE PunctuationStar star;
+		public @CHOICE Python_ImportFile XXimportName;
+		public @CHOICE PunctuationStar XXstar;
 
 		public @CHOICE static class Python_ImportList extends TokenSequence
 		{
@@ -53,10 +56,15 @@ public class Python_ImportStatement extends TokenSequence
 		}
 	}
 
+	public @CHOICE static class Python_ImportFile extends TokenSequence
+	{
+		public @S(10) SeparatedList<Python_Variable,PunctuationPeriod> importName;
+	}
+	
 	public static class Python_MoreImports extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
-		public @S(20) Python_Variable importName;
+		public @S(20) Python_ImportFile importName;
 		public @S(30) @OPT Python_FromImportAs fromAs;
 	}
 

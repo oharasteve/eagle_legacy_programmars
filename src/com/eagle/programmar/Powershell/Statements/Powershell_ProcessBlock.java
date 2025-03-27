@@ -8,10 +8,11 @@ import com.eagle.programmar.Powershell.Powershell_Statement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Powershell_ProcessBlock extends TokenSequence
+public class Powershell_ProcessBlock extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Powershell_Keyword PROCESS = new Powershell_Keyword("Process");
 	public @S(20) @OPT Powershell_EndOfLine eoln1;

@@ -3,14 +3,25 @@
 
 package com.eagle.programmar.FSharp.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Variable;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class FSharp_Assignment extends TokenSequence
+public class FSharp_Assignment extends TokenSequence implements AbstractStatement, EagleRunnable
 {
 	public @S(10) FSharp_Variable var;
 	public @S(20) FSharp_Punctuation operator = new FSharp_Punctuation("<-");
 	public @S(30) FSharp_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter.setSymbol(var, var.id.getValue(), val);
+	}
 }

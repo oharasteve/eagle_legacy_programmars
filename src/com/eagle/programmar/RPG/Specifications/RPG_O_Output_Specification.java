@@ -16,10 +16,10 @@ public abstract class RPG_O_Output_Specification extends TokenSequence
 
 	public static class RPG_O_Output_Spec extends TokenChooser
 	{
-		public @CHOICE RPG_O_Output_Program_Record_Id recordId;
-		public @CHOICE RPG_O_Output_Program_Field_Descr fieldDescr;
-		public @CHOICE RPG_O_Output_External_Record_Id externalRecordId;
-		public @CHOICE RPG_O_Output_External_Field_Descr externalFieldDescr;
+		public @CHOICE RPG_O_Output_Program_Record_Id XXrecordId;
+		public @CHOICE RPG_O_Output_Program_Field_Descr XXfieldDescr;
+		public @CHOICE RPG_O_Output_External_Record_Id XXexternalRecordId;
+		public @CHOICE RPG_O_Output_External_Field_Descr XXexternalFieldDescr;
 	}
 
 	public abstract static class RPG_O_Output_Program_Record_Id extends TokenSequence

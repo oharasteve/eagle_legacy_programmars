@@ -3,12 +3,17 @@
 
 package com.eagle.programmar.VB.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Variable;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_VariableExpression extends PrimaryOperator implements EagleRunnable
+public class VB_VariableExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Variable variable;
 
@@ -16,5 +21,16 @@ public class VB_VariableExpression extends PrimaryOperator implements EagleRunna
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(variable);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		VB_Expression subscript = null;
+		if (variable.subscript != null && variable.subscript.isPresent())
+		{
+			subscript = variable.subscript.exprs.first();
+		}
+		return generator.newVariableExpression(variable.var.getValue(), subscript, this);
 	}
 }

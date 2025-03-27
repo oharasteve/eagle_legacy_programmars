@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.math.ArrayValue;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.math.IntegerValue;
-import com.eagle.math.StringValue;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleString;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Literal;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Number;
@@ -52,22 +52,22 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 	public static class COBOL_DataClause extends TokenChooser
 	{
-		public @CHOICE COBOL_Type primitive;
+		public @CHOICE COBOL_Type XXprimitive;
 
-		public @CHOICE COBOL_BlankWhenZero blankWhenZero;
-		public @CHOICE COBOL_Justified justified;
-		public @CHOICE COBOL_ObjectReference objectReference;
-		public @CHOICE COBOL_OccursClause occurs;
-		public @CHOICE COBOL_PictureClause pictureClause;
-		public @CHOICE COBOL_RedefinesClause redefinesClause;
-		public @CHOICE COBOL_RenamesClause renamesClause;
-		public @CHOICE COBOL_Sign sign;
-		public @CHOICE COBOL_ThruClause thruClause;
-		public @CHOICE COBOL_TypeLiteral type;
-		public @CHOICE COBOL_Typedef typedef;
-		public @CHOICE COBOL_Usage usage;
-		public @CHOICE COBOL_ValueClause valueClause;
-		public @CHOICE COBOL_ValueIsGlobal isGlobal;
+		public @CHOICE COBOL_BlankWhenZero XXblankWhenZero;
+		public @CHOICE COBOL_Justified XXjustified;
+		public @CHOICE COBOL_ObjectReference XXobjectReference;
+		public @CHOICE COBOL_OccursClause XXoccurs;
+		public @CHOICE COBOL_PictureClause XXpictureClause;
+		public @CHOICE COBOL_RedefinesClause XXredefinesClause;
+		public @CHOICE COBOL_RenamesClause XXrenamesClause;
+		public @CHOICE COBOL_Sign XXsign;
+		public @CHOICE COBOL_ThruClause XXthruClause;
+		public @CHOICE COBOL_TypeLiteral XXtype;
+		public @CHOICE COBOL_Typedef XXtypedef;
+		public @CHOICE COBOL_Usage XXusage;
+		public @CHOICE COBOL_ValueClause XXvalueClause;
+		public @CHOICE COBOL_ValueIsGlobal XXisGlobal;
 	}
 
 	public static class COBOL_Justified extends TokenSequence
@@ -78,14 +78,14 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 	public static class COBOL_DataFieldName extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword FILLER = new COBOL_Keyword("FILLER");
-		public @CHOICE COBOL_Data_Definition id;
+		public @CHOICE COBOL_Keyword XXFILLER = new COBOL_Keyword("FILLER");
+		public @CHOICE COBOL_Data_Definition XXid;
 	}
 
 	public static class COBOL_TypeLiteral extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword TYPE = new COBOL_Keyword("TYPE");
-		public @CHOICE COBOL_Literal type;
+		public @CHOICE COBOL_Keyword XXTYPE = new COBOL_Keyword("TYPE");
+		public @CHOICE COBOL_Literal XXtype;
 	}
 
 	public static class COBOL_OccursClause extends TokenSequence
@@ -148,49 +148,52 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			String varName = dataDef.getValue();
 			String pic = null;
 			String redefines = null;
-			IntegerValue initInteger = new IntegerValue(0);
-			StringValue initString = new StringValue("");
-			for (COBOL_DataClause clause : clauses._elements)
+			EagleInteger initInteger = new EagleInteger(0);
+			EagleString initString = new EagleString("");
+			if (clauses != null)
 			{
-				AbstractToken which = clause.getWhich();
-				if (which instanceof COBOL_PictureClause)
+				for (COBOL_DataClause clause : clauses._elements)
 				{
-					COBOL_PictureClause picClause = (COBOL_PictureClause) which;
-					pic = picClause.picture.getValue().toUpperCase();
-				}
-				if (which instanceof COBOL_RedefinesClause)
-				{
-					COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
-					redefines = redefinesClause.id.getValue();
-				}
-				if (which instanceof COBOL_ValueClause)
-				{
-					COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
-					COBOL_Picture_Value picValue = valueClause.values.first();
-					if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
+					AbstractToken which = clause.getWhich();
+					if (which instanceof COBOL_PictureClause)
 					{
-						COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
-						initInteger = new IntegerValue(Integer.parseInt(num.number.getValue()));
+						COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+						pic = picClause.picture.getValue().toUpperCase();
 					}
-					else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+					if (which instanceof COBOL_RedefinesClause)
 					{
-						COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
-						initString = new StringValue(lit.literal.getValue());
+						COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
+						redefines = redefinesClause.id.getValue();
 					}
-					break;
+					if (which instanceof COBOL_ValueClause)
+					{
+						COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
+						COBOL_Picture_Value picValue = valueClause.values.first();
+						if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
+						{
+							COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
+							initInteger = new EagleInteger(Integer.parseInt(num.number.getValue()));
+						}
+						else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+						{
+							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
+							initString = new EagleString(lit.literal.getValue());
+						}
+						break;
+					}
+	
 				}
-
 			}
 
 			// Check for REDEFINES first
 			EagleValue value = null;
 			if (redefines != null)
 			{
-				value = interpreter._symbolTable.findSymbol(redefines);
+				value = interpreter.findSymbol(redefines);
 				if (value != null)
 				{
 					// Change the name of the symbol
-					interpreter._symbolTable.removeSymbols(redefines);
+					interpreter.removeSymbol(redefines);
 				}
 			}
 
@@ -211,16 +214,15 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				System.err.println("*** data " + level + " " + varName + " " + pic);
 			}
-			interpreter._symbolTable.setSymbol(dataDef.getFileName(), dataDef.getStartLine(), dataDef.getStartChar(),
-					varName, value);
+			interpreter.setSymbol(dataDef, varName, value);
 
 		}
 	}
 
-	private static ArrayValue collectArrayValues(COBOL_DataDeclaration dataDeclaration)
+	private static EagleArray collectArrayValues(COBOL_DataDeclaration dataDeclaration)
 	{
 		// Look at all the children
-		ArrayValue array = new ArrayValue();
+		EagleArray array = new EagleArray();
 		for (COBOL_CopyOrDataDeclaration child : dataDeclaration.children._elements)
 		{
 			AbstractToken which = child.getWhich();
@@ -237,7 +239,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
 						{
 							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
-							StringValue str = new StringValue(lit.literal.getValue());
+							EagleString str = new EagleString(lit.literal.getValue());
 							// System.err.println("************** Adding " + str.toString());
 							array.addValue(str);
 						}

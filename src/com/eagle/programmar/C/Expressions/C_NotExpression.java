@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.C.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class C_NotExpression extends PrimaryOperator implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

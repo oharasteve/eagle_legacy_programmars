@@ -24,10 +24,10 @@ public class HTML_Tag extends TokenSequence
 
 	public static class HTML_TagElement extends TokenChooser
 	{
-		public @CHOICE HTML_Attribute attribute;
-		public @CHOICE Django_Control control;
-		public @CHOICE Django_Insert insert;
-		public @CHOICE Django_Comment comment;
+		public @CHOICE HTML_Attribute XXattribute;
+		public @CHOICE Django_Control XXcontrol;
+		public @CHOICE Django_Insert XXinsert;
+		public @CHOICE Django_Comment XXcomment;
 	}
 
 	public static class HTML_Tag_Namespace extends TokenSequence

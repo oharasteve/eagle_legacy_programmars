@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Javascript.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
@@ -20,17 +21,37 @@ public class Javascript_EqualityExpression extends PrecedenceOperator implements
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "==":
-			interpreter.pushBool(leftValue == rightValue);
-			return;
-		case "!=":
-			interpreter.pushBool(leftValue != rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (operator.toString())
+			{
+			case "==":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			}
+		}
+
+		throw new RuntimeException("Unexpected equality operator: " + operator);
 	}
 }

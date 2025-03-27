@@ -8,6 +8,8 @@ import com.eagle.programmar.CSS.Terminals.CSS_Comment;
 
 public class CSS_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class CSS_Syntax extends EagleSyntax
 
 	public CSS_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_punctuationExceptions = new String[] {
@@ -24,10 +26,10 @@ public class CSS_Syntax extends EagleSyntax
 		};
 		_commentInstance = new CSS_Comment();
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"media", "-moz-document", "namespace", "not", "rgb", "rgba", "rotate", "url-prefix"
 	};
 }

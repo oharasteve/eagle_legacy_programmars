@@ -12,7 +12,7 @@ public class Python_List extends TokenSequence
 {
 	public @S(10) @OPT TokenList<Python_Comment> comment1;
 	public @S(20) Python_Expression expr;
-	public @S(30) @OPT TokenList<Python_MoreListItem> more;
+	public @S(30) @OPT TokenList<Python_MoreListItem> moreItems;
 	public @S(40) @OPT PunctuationComma comma;
 	public @S(50) @OPT TokenList<Python_Comment> comment2;
 

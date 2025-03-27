@@ -11,6 +11,8 @@ public class HTML_Syntax extends EagleSyntax
 			"<!", "<!--", "</", "/>", "{%", "%}", "<?", "?>", "<%@", "%>",
 	};
 
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -19,15 +21,15 @@ public class HTML_Syntax extends EagleSyntax
 
 	public HTML_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_punctuationExceptions = PUNCT;
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"a", "caption", "pre", "script", "span", "style", "table", "td", "tr"
 	};
 }

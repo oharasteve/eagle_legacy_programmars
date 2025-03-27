@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_RealEndOfLine;
 import com.eagle.programmar.Bash.Terminals.Bash_SheBang;
 import com.eagle.programmar.Perl.Perl_Program;
@@ -13,9 +14,10 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSlash;
 
-public class Bash_PerlProgram extends TokenSequence
+public class Bash_PerlProgram extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_SheBang shebang;
 	public @S(20) @OPT SeparatedList<PunctuationSlash, Bash_Identifier_Reference> dir;
@@ -28,6 +30,7 @@ public class Bash_PerlProgram extends TokenSequence
 
 	public static class Bash_PerlOption extends TokenChooser
 	{
-		public @CHOICE Bash_Keyword W = new Bash_Keyword("-w");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice(
+				"-e", "-i", "-lne", "-pi", "-w");
 	}
 }

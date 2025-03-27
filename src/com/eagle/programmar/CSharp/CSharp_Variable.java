@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
@@ -19,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) CSharp_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> more;
+	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> moreIds;
 	public @S(30) @OPT TokenList<CSharp_Subscript> subscript;
 
 	public static class CSharp_MoreVariableIdentifiers extends TokenSequence
@@ -30,8 +31,8 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 
 	public static class CSharp_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE CSharp_KeywordChoice builtIn = new CSharp_KeywordChoice("this", "base", "class");
-		public @CHOICE CSharp_Identifier_Reference id;
+		public @CHOICE CSharp_KeywordChoice XXbuiltIn = new CSharp_KeywordChoice("this", "base", "class");
+		public @CHOICE CSharp_Identifier_Reference XXid;
 
 		public @CHOICE static class CSharp_CastedVariable extends TokenSequence
 		{
@@ -48,7 +49,27 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 	public void interpret(EagleInterpreter interpreter)
 	{
 		CSharp_Identifier_Reference which = (CSharp_Identifier_Reference) firstId.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		EagleValue value = interpreter.findSymbol(which.toString());
+		if (subscript != null && subscript.size() > 0)
+		{
+			EagleArray array = (EagleArray) value;
+			int sub = interpreter.getIntValue(subscript.first().expr);
+			EagleValue val = array.getValue(sub);
+			interpreter.pushEagleValue(val);
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
+	}
+	
+	public static CSharp_Variable newVariable(String name)
+	{
+		CSharp_Variable var = new CSharp_Variable();
+		var.firstId = new CSharp_VariableIdentifier();
+		CSharp_Identifier_Reference id = new CSharp_Identifier_Reference();
+		id.setValue(name);
+		var.firstId.setWhich(id);
+		return var;
 	}
 }

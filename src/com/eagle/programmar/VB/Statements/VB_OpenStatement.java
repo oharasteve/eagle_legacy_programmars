@@ -9,8 +9,9 @@ import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.programmar.VB.Terminals.VB_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_OpenStatement extends TokenSequence
+public class VB_OpenStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword OPEN = new VB_Keyword("open");
 	public @S(20) VB_Expression fileName;

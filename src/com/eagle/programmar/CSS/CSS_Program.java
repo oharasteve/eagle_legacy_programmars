@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSS;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.CSS.CSS_TagList.CSS_ColonOption;
 import com.eagle.programmar.CSS.Directives.CSS_If_Directive;
 import com.eagle.programmar.CSS.Terminals.CSS_Comment;
@@ -23,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class CSS_Program extends EagleLanguage
+public class CSS_Program extends AbstractLanguage
 {
 	public static final String CSS = "CSS";
 
@@ -42,10 +42,10 @@ public class CSS_Program extends EagleLanguage
 
 	public static class CSS_Entry extends TokenChooser
 	{
-		public @CHOICE CSS_Comment comment;
-		public @CHOICE CSS_Body body;
-		public @CHOICE CSS_If_Directive ifDirective;
-		public @CHOICE CSS_AtEntry atEntry;
+		public @CHOICE CSS_Comment XXcomment;
+		public @CHOICE CSS_Body XXbody;
+		public @CHOICE CSS_If_Directive XXifDirective;
+		public @CHOICE CSS_AtEntry XXatEntry;
 	}
 
 	public static class CSS_Body extends TokenSequence
@@ -80,8 +80,8 @@ public class CSS_Program extends EagleLanguage
 
 	public static class CSS_Item extends TokenChooser
 	{
-		public @CHOICE CSS_Comment comment;
-		public @CHOICE CSS_Line line;
+		public @CHOICE CSS_Comment XXcomment;
+		public @CHOICE CSS_Line XXline;
 
 		public @CHOICE static class CSS_PercentItem extends TokenSequence
 		{
@@ -123,7 +123,7 @@ public class CSS_Program extends EagleLanguage
 
 			public static class CSS_MoreValues extends TokenChooser
 			{
-				public @CHOICE CSS_Value val;
+				public @CHOICE CSS_Value XXval;
 
 				public @CHOICE static class CSS_MoreValuesComma extends TokenSequence
 				{

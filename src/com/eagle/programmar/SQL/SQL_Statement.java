@@ -32,33 +32,33 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_Statement extends TokenChooser
 {
-	public @CHOICE SQL_AlterStatement alterStmt;
-	public @CHOICE SQL_AtAtStatement atAtStmt;
-	public @CHOICE SQL_BeginStatement beginStmt;
-	public @CHOICE SQL_ColumnStatement columnStmt;
-	public @CHOICE SQL_CreateIndexStatement createIndexStmt;
-	public @CHOICE SQL_CreateRoleStatement createRoleStmt;
-	public @CHOICE SQL_CreateSynonymStatement createSynonymStmt;
-	public @CHOICE SQL_CreateTableStatement createTableStmt;
-	public @CHOICE SQL_CreateViewStatement createViewStmt;
-	public @CHOICE SQL_DeclareStatement declareStmt;
-	public @CHOICE SQL_DeleteStatement deleteStmt;
-	public @CHOICE SQL_DropStatement dropStmt;
-	public @CHOICE SQL_ForStatement forStmt;
-	public @CHOICE SQL_GrantStatement grantStmt;
-	public @CHOICE SQL_LoadStatement loadStmt;
-	public @CHOICE SQL_InsertStatement insertStmt;
-	public @CHOICE SQL_PragmaStatement pragmaStmt;
-	public @CHOICE SQL_SelectStatement selectStmt;
-	public @CHOICE SQL_SetStatement setStmt;
-	public @CHOICE SQL_SlashStatement slashStmt;
-	public @CHOICE SQL_UpdateStatement updateStmt;
-	public @CHOICE SQL_ValuesStatement valueStmt;
-	public @CHOICE SQL_VariableStatement variableStmt;
-	public @CHOICE SQL_WithStatement withStmt;
+	public @CHOICE SQL_AlterStatement XXalterStmt;
+	public @CHOICE SQL_AtAtStatement XXatAtStmt;
+	public @CHOICE SQL_BeginStatement XXbeginStmt;
+	public @CHOICE SQL_ColumnStatement XXcolumnStmt;
+	public @CHOICE SQL_CreateIndexStatement XXcreateIndexStmt;
+	public @CHOICE SQL_CreateRoleStatement XXcreateRoleStmt;
+	public @CHOICE SQL_CreateSynonymStatement XXcreateSynonymStmt;
+	public @CHOICE SQL_CreateTableStatement XXcreateTableStmt;
+	public @CHOICE SQL_CreateViewStatement XXcreateViewStmt;
+	public @CHOICE SQL_DeclareStatement XXdeclareStmt;
+	public @CHOICE SQL_DeleteStatement XXdeleteStmt;
+	public @CHOICE SQL_DropStatement XXdropStmt;
+	public @CHOICE SQL_ForStatement XXforStmt;
+	public @CHOICE SQL_GrantStatement XXgrantStmt;
+	public @CHOICE SQL_LoadStatement XXloadStmt;
+	public @CHOICE SQL_InsertStatement XXinsertStmt;
+	public @CHOICE SQL_PragmaStatement XXpragmaStmt;
+	public @CHOICE SQL_SelectStatement XXselectStmt;
+	public @CHOICE SQL_SetStatement XXsetStmt;
+	public @CHOICE SQL_SlashStatement XXslashStmt;
+	public @CHOICE SQL_UpdateStatement XXupdateStmt;
+	public @CHOICE SQL_ValuesStatement XXvalueStmt;
+	public @CHOICE SQL_VariableStatement XXvariableStmt;
+	public @CHOICE SQL_WithStatement XXwithStmt;
 
-	public @CHOICE PunctuationSemicolon semicolon;
+	public @CHOICE PunctuationSemicolon XXsemicolon;
 
-	public @LAST SQL_Function functionCall;
-	// public @LAST SQL_ExpressionStatement expressionStmt;
+	public @LAST SQL_Function XXfunctionCall;
+	// public @LAST SQL_ExpressionStatement XXexpressionStmt;
 }

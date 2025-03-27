@@ -59,7 +59,7 @@ public class SQL_CreateTableStatement extends TokenSequence
 
 	public static class SQL_CreateOption extends TokenChooser
 	{
-		public @CHOICE SQL_Keyword DEFAULT = new SQL_Keyword("DEFAULT");
+		public @CHOICE SQL_Keyword XXDEFAULT = new SQL_Keyword("DEFAULT");
 
 		public @CHOICE static class SQL_CreateEngine extends TokenSequence
 		{

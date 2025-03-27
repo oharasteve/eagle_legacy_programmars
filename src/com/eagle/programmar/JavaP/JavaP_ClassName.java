@@ -32,8 +32,8 @@ public class JavaP_ClassName extends TokenChooser
 
 			public static class JavaP_TemplateContents extends TokenChooser
 			{
-				public @CHOICE JavaP_ClassName className;
-				public @CHOICE PunctuationStar star;
+				public @CHOICE JavaP_ClassName XXclassName;
+				public @CHOICE PunctuationStar XXstar;
 
 				public @CHOICE static class JavaP_TemplateIds extends TokenSequence
 				{

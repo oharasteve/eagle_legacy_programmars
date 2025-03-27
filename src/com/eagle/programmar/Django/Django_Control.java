@@ -32,19 +32,19 @@ public class Django_Control extends TokenSequence
 
 	public static class Django_ControlChoices extends TokenChooser
 	{
-		public @CHOICE Django_AutoEscapeControl autoescapeControl;
-		public @CHOICE Django_BlockControl blockControl;
-		public @CHOICE Django_BlockTransControl blockTransControl;
-		public @CHOICE Django_CommentControl commentControl;
-		public @CHOICE Django_ExtendsControl extendsControl;
-		public @CHOICE Django_ForControl forControl;
-		public @CHOICE Django_FromControl fromControl;
-		public @CHOICE Django_IfControl ifControl;
-		public @CHOICE Django_ImportControl importControl;
-		public @CHOICE Django_LoadControl loadControl;
-		public @CHOICE Django_MacroControl macroControl;
-		public @CHOICE Django_SetControl setControl;
-		public @CHOICE Django_SpacelessControl spacelessControl;
-		public @CHOICE Django_TransControl transControl;
+		public @CHOICE Django_AutoEscapeControl XXautoescapeControl;
+		public @CHOICE Django_BlockControl XXblockControl;
+		public @CHOICE Django_BlockTransControl XXblockTransControl;
+		public @CHOICE Django_CommentControl XXcommentControl;
+		public @CHOICE Django_ExtendsControl XXextendsControl;
+		public @CHOICE Django_ForControl XXforControl;
+		public @CHOICE Django_FromControl XXfromControl;
+		public @CHOICE Django_IfControl XXifControl;
+		public @CHOICE Django_ImportControl XXimportControl;
+		public @CHOICE Django_LoadControl XXloadControl;
+		public @CHOICE Django_MacroControl XXmacroControl;
+		public @CHOICE Django_SetControl XXsetControl;
+		public @CHOICE Django_SpacelessControl XXspacelessControl;
+		public @CHOICE Django_TransControl XXtransControl;
 	}
 }

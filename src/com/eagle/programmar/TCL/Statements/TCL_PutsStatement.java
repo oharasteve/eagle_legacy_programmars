@@ -3,13 +3,14 @@
 
 package com.eagle.programmar.TCL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class TCL_PutsStatement extends TokenSequence implements EagleRunnable
+public class TCL_PutsStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @DOC("TclCmd/puts.html") TCL_Keyword PUTS = new TCL_Keyword("puts");
 	public @S(20) TCL_Expression expr;

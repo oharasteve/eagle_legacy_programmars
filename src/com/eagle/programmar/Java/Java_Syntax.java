@@ -8,7 +8,7 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 
 public class Java_Syntax extends EagleSyntax
 {
-	public static boolean isCaseSensitive = true;
+	public static final boolean IS_CASE_SENSITIVE = true;
 
 	@Override
 	public String syntaxId()
@@ -18,7 +18,7 @@ public class Java_Syntax extends EagleSyntax
 
 	public Java_Syntax()
 	{
-		_isCaseSensitive = isCaseSensitive;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new Java_Comment();
@@ -26,63 +26,6 @@ public class Java_Syntax extends EagleSyntax
 				"//", "/*", "!=", "<=", "==", ">=", "...", "++", "--", "||", "&&", "::", "->"
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Java_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.geeksforgeeks.org/list-of-all-java-keywords/
-	private static String[] reservedWords = new String[] {
-			"abstract",
-			"assert",
-			"boolean",
-			"break",
-			"byte",
-			"case",
-			"catch",
-			"char ",
-			"class",
-			"const",
-			"continue",
-			"default",
-			"do",
-			"double",
-			"else",
-			"enum",
-			"extends",
-			"false",
-			"final",
-			"finally",
-			"float",
-			"for",
-			"goto",
-			"if",
-			"implements",
-			"import ",
-			"instanceof",
-			"int",
-			"interface",
-			"long",
-			"native",
-			"new",
-			"null",
-			"package",
-			"private",
-			"protected",
-			"public",
-			"return",
-			"short",
-			"static",
-			"strictfp",
-			"super",
-			"switch",
-			"synchronized",
-			"this",
-			"throw ",
-			"throws",
-			"transient",
-			"true",
-			"try",
-			"void",
-			"volatile",
-			"while",
-	};
 }

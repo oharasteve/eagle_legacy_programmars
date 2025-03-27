@@ -6,9 +6,10 @@ package com.eagle.programmar.Java.Statements;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ThrowStatement extends TokenSequence
+public class Java_ThrowStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("statements.html#14.18") Java_Keyword THROW = new Java_Keyword("throw");
 	public @S(20) Java_Expression expression;

@@ -27,8 +27,8 @@ public class SQL_PragmaStatement extends TokenSequence
 
 			public static class SQL_Pragma_ForeignKey extends TokenChooser
 			{
-				public @CHOICE SQL_Number number;
-				public @CHOICE SQL_Keyword OFF = new SQL_Keyword("OFF");
+				public @CHOICE SQL_Number XXnumber;
+				public @CHOICE SQL_Keyword XXOFF = new SQL_Keyword("OFF");
 			}
 		}
 

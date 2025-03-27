@@ -22,7 +22,7 @@ public class Algol68_SubscriptExpression extends PrecedenceOperator
 
 	public static class Algol68_SubscriptionEnd extends TokenChooser
 	{
-		public @CHOICE Algol68_Keyword END = new Algol68_Keyword("end");
-		public @CHOICE Algol68_Expression subscr2;
+		public @CHOICE Algol68_Keyword XXEND = new Algol68_Keyword("end");
+		public @CHOICE Algol68_Expression XXsubscr;
 	}
 }

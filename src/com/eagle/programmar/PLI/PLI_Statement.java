@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
 import com.eagle.programmar.PLI.Statements.PLI_AllocateStatement;
 import com.eagle.programmar.PLI.Statements.PLI_AnswerStatement;
 import com.eagle.programmar.PLI.Statements.PLI_AssignmentStatement;
@@ -31,40 +29,34 @@ import com.eagle.programmar.PLI.Statements.PLI_StopStatement;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_Statement extends TokenChooser implements EagleRunnable
+public class PLI_Statement extends TokenChooser
 {
-	public @CHOICE PunctuationSemicolon semicolon; // Empty statement
+	public @CHOICE PunctuationSemicolon XXsemicolon; // Empty statement
 
-	public @LAST PLI_AssignmentStatement assignmentStatement;
+	public @LAST PLI_AssignmentStatement XXassignmentStatement;
 
-	public @CHOICE PLI_AllocateStatement allocateStatement;
-	public @CHOICE PLI_AnswerStatement answerStatement;
-	public @CHOICE PLI_BeginStatement beginStatement;
-	public @CHOICE PLI_CallStatement callStatement;
-	public @CHOICE PLI_DoStatement doStatement;
-	public @CHOICE PLI_FormatStatement formatStatement;
-	public @CHOICE PLI_FreeStatement freeStatement;
-	public @CHOICE PLI_GetStatement getStatement;
-	public @CHOICE PLI_GoStatement goStatement;
-	public @CHOICE PLI_IfStatement ifStatement;
-	public @CHOICE PLI_IterateStatement iterateStatement;
-	public @CHOICE PLI_LeaveStatement leaveStatement;
-	public @CHOICE PLI_NoteStatement noteStatement;
-	public @CHOICE PLI_OnStatement onStatement;
-	public @CHOICE PLI_OpenStatement openStatement;
-	public @CHOICE PLI_PercentStatement percentStmt;
-	public @CHOICE PLI_PutStatement putStatement;
-	public @CHOICE PLI_ReturnStatement returnStatement;
-	public @CHOICE PLI_RevertStatement revertStatement;
-	public @CHOICE PLI_SignalStatement signalStatement;
-	public @CHOICE PLI_SelectStatement selectStatement;
-	public @CHOICE PLI_StopStatement stopStatement;
+	public @CHOICE PLI_AllocateStatement XXallocateStatement;
+	public @CHOICE PLI_AnswerStatement XXanswerStatement;
+	public @CHOICE PLI_BeginStatement XXbeginStatement;
+	public @CHOICE PLI_CallStatement XXcallStatement;
+	public @CHOICE PLI_DoStatement XXdoStatement;
+	public @CHOICE PLI_FormatStatement XXformatStatement;
+	public @CHOICE PLI_FreeStatement XXfreeStatement;
+	public @CHOICE PLI_GetStatement XXgetStatement;
+	public @CHOICE PLI_GoStatement XXgoStatement;
+	public @CHOICE PLI_IfStatement XXifStatement;
+	public @CHOICE PLI_IterateStatement XXiterateStatement;
+	public @CHOICE PLI_LeaveStatement XXleaveStatement;
+	public @CHOICE PLI_NoteStatement XXnoteStatement;
+	public @CHOICE PLI_OnStatement XXonStatement;
+	public @CHOICE PLI_OpenStatement XXopenStatement;
+	public @CHOICE PLI_PercentStatement XXpercentStmt;
+	public @CHOICE PLI_PutStatement XXputStatement;
+	public @CHOICE PLI_ReturnStatement XXreturnStatement;
+	public @CHOICE PLI_RevertStatement XXrevertStatement;
+	public @CHOICE PLI_SignalStatement XXsignalStatement;
+	public @CHOICE PLI_SelectStatement XXselectStatement;
+	public @CHOICE PLI_StopStatement XXstopStatement;
 
-	public @CHOICE PLI_Procedure innerProcedure;
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		interpreter.tryToInterpret(getWhich());
-	}
+	public @CHOICE PLI_Procedure XXinnerProcedure;
 }

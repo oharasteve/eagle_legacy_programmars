@@ -3,19 +3,20 @@
 
 package com.eagle.programmar.VB;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.VB.Statements.VB_AssignmentStatement;
 import com.eagle.programmar.VB.Statements.VB_AttributeStatement;
 import com.eagle.programmar.VB.Statements.VB_BeginStatement;
 import com.eagle.programmar.VB.Statements.VB_CallStatement;
 import com.eagle.programmar.VB.Statements.VB_CloseStatement;
 import com.eagle.programmar.VB.Statements.VB_DataDeclaration;
+import com.eagle.programmar.VB.Statements.VB_DoStatement;
 import com.eagle.programmar.VB.Statements.VB_ExitStatement;
 import com.eagle.programmar.VB.Statements.VB_ExpressionStatement;
 import com.eagle.programmar.VB.Statements.VB_ForEachStatement;
 import com.eagle.programmar.VB.Statements.VB_ForStatement;
-import com.eagle.programmar.VB.Statements.VB_FunctionDeclaration;
+import com.eagle.programmar.VB.Statements.VB_Function;
 import com.eagle.programmar.VB.Statements.VB_GotoStatement;
 import com.eagle.programmar.VB.Statements.VB_IfStatement;
 import com.eagle.programmar.VB.Statements.VB_MessageBoxStatment;
@@ -24,17 +25,19 @@ import com.eagle.programmar.VB.Statements.VB_OpenStatement;
 import com.eagle.programmar.VB.Statements.VB_OptionStatement;
 import com.eagle.programmar.VB.Statements.VB_PrintStatement;
 import com.eagle.programmar.VB.Statements.VB_SetStatement;
-import com.eagle.programmar.VB.Statements.VB_SubDeclaration;
+import com.eagle.programmar.VB.Statements.VB_Subroutine;
 import com.eagle.programmar.VB.Statements.VB_VersionStatement;
+import com.eagle.programmar.VB.Statements.VB_WhileStatement;
 import com.eagle.programmar.VB.Statements.VB_WscriptEcho;
 import com.eagle.programmar.VB.Symbols.VB_Label_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class VB_Statement extends TokenSequence implements EagleRunnable
+public class VB_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) VB_BaseStatement baseStatement;
 	public @S(20) @OPT VB_Comment comment;
@@ -42,31 +45,33 @@ public class VB_Statement extends TokenSequence implements EagleRunnable
 
 	public static class VB_BaseStatement extends TokenChooser
 	{
-		public @CHOICE VB_Comment comment;
+		public @CHOICE VB_Comment XXcomment;
 
-		public @CHOICE VB_AssignmentStatement assignmentStatement;
-		public @CHOICE VB_AttributeStatement attributeStatement;
-		public @CHOICE VB_BeginStatement beginStatement;
-		public @CHOICE VB_CallStatement callStatement;
-		public @CHOICE VB_CloseStatement closeStatement;
-		public @CHOICE VB_DataDeclaration dataDeclaration;
-		public @CHOICE VB_ExitStatement exitStatement;
-		public @CHOICE VB_ForStatement forStatement;
-		public @CHOICE VB_ForEachStatement forEachStatement;
-		public @CHOICE VB_FunctionDeclaration functionDefinition;
-		public @CHOICE VB_GotoStatement gotoStatement;
-		public @CHOICE VB_IfStatement ifStatement;
-		public @CHOICE VB_MessageBoxStatment messageBoxStatment;
-		public @CHOICE VB_OnStatement onStatement;
-		public @CHOICE VB_OpenStatement openStatement;
-		public @CHOICE VB_OptionStatement optionStatement;
-		public @CHOICE VB_PrintStatement printStatement;
-		public @CHOICE VB_SetStatement setStatement;
-		public @CHOICE VB_SubDeclaration subDefinition;
-		public @CHOICE VB_VersionStatement versionStatement;
-		public @CHOICE VB_WscriptEcho wscriptEcho;
+		public @CHOICE VB_AssignmentStatement XXassignmentStatement;
+		public @CHOICE VB_AttributeStatement XXattributeStatement;
+		public @CHOICE VB_BeginStatement XXbeginStatement;
+		public @CHOICE VB_CallStatement XXcallStatement;
+		public @CHOICE VB_CloseStatement XXcloseStatement;
+		public @CHOICE VB_DataDeclaration XXdataDeclaration;
+		public @CHOICE VB_ExitStatement XXexitStatement;
+		public @CHOICE VB_DoStatement XXdoStatement;
+		public @CHOICE VB_ForStatement XXforStatement;
+		public @CHOICE VB_ForEachStatement XXforEachStatement;
+		public @CHOICE VB_Function XXfunctionDefinition;
+		public @CHOICE VB_GotoStatement XXgotoStatement;
+		public @CHOICE VB_IfStatement XXifStatement;
+		public @CHOICE VB_MessageBoxStatment XXmessageBoxStatment;
+		public @CHOICE VB_OnStatement XXonStatement;
+		public @CHOICE VB_OpenStatement XXopenStatement;
+		public @CHOICE VB_OptionStatement XXoptionStatement;
+		public @CHOICE VB_PrintStatement XXprintStatement;
+		public @CHOICE VB_SetStatement XXsetStatement;
+		public @CHOICE VB_Subroutine XXsubDefinition;
+		public @CHOICE VB_VersionStatement XXversionStatement;
+		public @CHOICE VB_WhileStatement XXwhileStatement;
+		public @CHOICE VB_WscriptEcho XXwscriptEcho;
 
-		public @LAST VB_ExpressionStatement expressionStatement;
+		public @LAST VB_ExpressionStatement XXexpressionStatement;
 
 		public @CHOICE static class VB_Label extends TokenSequence
 		{
@@ -74,10 +79,10 @@ public class VB_Statement extends TokenSequence implements EagleRunnable
 			public @S(20) PunctuationColon colon;
 		}
 	}
-
+	
 	@Override
-	public void interpret(EagleInterpreter interpreter)
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(baseStatement.getWhich());
+		return interpreter.tryToInterpret(baseStatement);
 	}
 }

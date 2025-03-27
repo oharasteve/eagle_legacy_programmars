@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java;
 
+import com.eagle.programmar.Java.Java_Variable.Java_VariableIdentifier;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -22,9 +23,16 @@ public class Java_Annotation extends TokenChooser
 	{
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
 		public @S(20) @NOSPACE Java_Variable var;
-		public @S(30) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(40) @OPT @NOSPACE SeparatedList<Java_Expression, PunctuationComma> expressions;
-		public @S(50) @NOSPACE PunctuationRightParen rightParen;
+		public @S(30) @OPT TokenList<Java_DotVar> moreIds;
+		public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(50) @OPT @NOSPACE SeparatedList<Java_Expression, PunctuationComma> expressions;
+		public @S(60) @NOSPACE PunctuationRightParen rightParen;
+
+		public static class Java_DotVar extends TokenSequence
+		{
+			public @S(10) @NOSPACE PunctuationPeriod dot;
+			public @S(20) @NOSPACE Java_VariableIdentifier nextId;
+		}
 	}
 
 	public @CHOICE static class Java_AnnotationCallList extends TokenSequence

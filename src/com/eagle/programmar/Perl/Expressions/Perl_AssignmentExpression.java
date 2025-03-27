@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_Variable.Perl_UserVariable;
@@ -21,13 +22,31 @@ public class Perl_AssignmentExpression extends PrecedenceOperator implements Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(expr);
-		if (var.getWhich() instanceof Perl_VariableExpression)
+		if (!(var.getWhich() instanceof Perl_VariableExpression))
 		{
-			Perl_VariableExpression varExpr = (Perl_VariableExpression) var.getWhich();
-			Perl_UserVariable userVar = (Perl_UserVariable) varExpr.variable.getWhich();
-			interpreter._symbolTable.setSymbol(userVar.getFileName(), userVar.getStartLine(), userVar.getStartChar(),
-					userVar.id.getValue(), value);
+			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
+		}
+		Perl_VariableExpression varExpr = (Perl_VariableExpression) var.getWhich();
+		if (!(varExpr.variable.getWhich() instanceof Perl_UserVariable))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
+		}
+
+		Perl_UserVariable userVar = (Perl_UserVariable) varExpr.variable.getWhich();
+		switch (operator.getValue())
+		{
+		case "=":
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.setSymbol(var, userVar.id.getValue(), val);
+			break;
+		case "+=":
+			int newVal = interpreter.getIntValue(expr);
+			EagleValue oldVar = interpreter.findSymbol(userVar.id.toString());
+			EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
+			interpreter.setSymbol(var, userVar.id.getValue(), newValue);
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 	}
 }

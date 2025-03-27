@@ -12,10 +12,11 @@ import com.eagle.programmar.Bash.Terminals.Bash_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-public class Bash_ChmodCommand extends TokenSequence
+public class Bash_ChmodCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword CHMOD = new Bash_Keyword("chmod");
 	public @S(20) @OPT TokenList<Bash_ChmodOption> options;
@@ -25,7 +26,7 @@ public class Bash_ChmodCommand extends TokenSequence
 
 	public static class Bash_ChmodOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice Re = new Bash_KeywordChoice("-R", "-e");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-R", "-e");
 	}
 
 	public static class Bash_ChmodMoreCodes extends TokenSequence
@@ -36,8 +37,8 @@ public class Bash_ChmodCommand extends TokenSequence
 
 	public static class Bash_ChmodCode extends TokenChooser
 	{
-		public @CHOICE Bash_Number number;
-		public @CHOICE Bash_ChmodLetters letters;
+		public @CHOICE Bash_Number XXnumber;
+		public @CHOICE Bash_ChmodLetters XXletters;
 	}
 
 	public static class Bash_ChmodLetters extends TerminalLiteralToken

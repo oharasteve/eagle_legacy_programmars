@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Go.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Terminals.Go_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,16 +19,35 @@ public class Go_AdditiveExpression extends PrecedenceOperator implements EagleRu
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "+":
-			interpreter.pushInt(leftValue + rightValue);
-			return;
-		case "-":
-			interpreter.pushInt(leftValue - rightValue);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (oper)
+			{
+			case "+":
+				interpreter.pushStr(leftStr + rightStr);
+				return;
+			}
+		}
+
+		if (leftValue.isInteger() || rightValue.isInteger())
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushInt(leftInt + rightInt);
+				return;
+			case "-":
+				interpreter.pushInt(leftInt - rightInt);
+				return;
+			}
 		}
 		throw new RuntimeException("Unexpected additive operator: " + operator);
 	}

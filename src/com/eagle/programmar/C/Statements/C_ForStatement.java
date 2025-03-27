@@ -3,53 +3,66 @@
 
 package com.eagle.programmar.C.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.C.C_Assignment;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Statement;
+import com.eagle.programmar.C.C_Syntax;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.C_Variable;
+import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class C_ForStatement extends TokenChooser
+public class C_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
 {
-	public @CHOICE static class C_ForLoopStatement extends TokenSequence
+	public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
+	public @S(20) C_ForLoopBody body;
+	public @S(30) C_Statement action;
+
+	public static class C_ForLoopBody extends TokenChooser
 	{
-		public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @OPT C_ForLoopVariable loopVar;
-		public @S(40) @OPT C_Comment comment1;
-		public @S(50) PunctuationSemicolon semicolon1;
-		public @S(60) @OPT C_Expression terminateCondition;
-		public @S(70) @OPT C_Comment comment2;
-		public @S(80) PunctuationSemicolon semicolon2;
-		public @S(90) @OPT C_Expression increment;
-		public @S(100) @OPT TokenList<C_MoreLoopIncrements> moreLoopIncrements;
-		public @S(110) @OPT C_Comment comment3;
-		public @S(120) PunctuationRightParen rightParen;
-		public @S(130) @OPT C_Comment comment4;
-		public @S(140) C_Statement action;
+		public @CHOICE C_ForLoopStatement XXloopStatement;
+		public @CHOICE C_ForCollectionStatement XXcollectionStatement;
+	}
+
+	public static class C_ForLoopStatement extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT SeparatedList<C_ForLoopVariable,PunctuationComma> loopVar;
+		public @S(30) @OPT C_Comment comment1;
+		public @S(40) PunctuationSemicolon semicolon1;
+		public @S(50) @OPT C_Expression terminateCondition;
+		public @S(60) @OPT C_Comment comment2;
+		public @S(70) PunctuationSemicolon semicolon2;
+		public @S(80) @OPT C_Expression increment;
+		public @S(90) @OPT TokenList<C_MoreLoopIncrements> moreLoopIncrements;
+		public @S(100) @OPT C_Comment comment3;
+		public @S(110) PunctuationRightParen rightParen;
+		public @S(120) @OPT C_Comment comment4;
 
 		public static class C_ForLoopVariable extends TokenChooser
 		{
-			public @FIRST static class C_ForLoopVariableWithType extends TokenSequence
-			{
-				public @S(10) C_Type varType;
-				public @S(20) C_Assignment assignment;
-			}
-
-			public @CHOICE static class C_ForLoopVariableNoType extends TokenSequence
-			{
-				public @S(10) C_Assignment assignment;
-			}
+			public @CHOICE C_Expression XXexpr;
+			public @FIRST C_ForWithType XXforWithType;
 		}
 
 		public static class C_MoreLoopIncrements extends TokenSequence
@@ -59,16 +72,110 @@ public class C_ForStatement extends TokenChooser
 		}
 	}
 
-	public @CHOICE static class C_ForCollectionStatement extends TokenSequence
+	public static class C_ForCollectionStatement extends TokenSequence
 	{
-		public @S(10) C_Keyword FOR = new C_Keyword("for");
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) @OPT C_Keyword CONST = new C_Keyword("const");
-		public @S(40) C_Type varType;
-		public @S(50) C_Variable forVar;
-		public @S(60) PunctuationColon colon;
-		public @S(70) C_Expression collection;
-		public @S(80) PunctuationRightParen rightParen;
-		public @S(90) C_Statement action;
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(30) C_Type varType;
+		public @S(40) C_Variable forVar;
+		public @S(50) PunctuationColon colon;
+		public @S(60) C_Expression collection;
+		public @S(70) PunctuationRightParen rightParen;
+	}
+
+	public static class C_ForWithType extends TokenSequence
+	{
+		public @S(10) C_Type varType;
+		public @S(20) C_Variable_Definition variable;
+		public @S(30) @OPT C_ForTypeInit equalsInit;
+		
+		public static class C_ForTypeInit extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) C_Expression initialExpr;
+		}
+	}
+
+	public static class C_ForLoopVariableNoType extends TokenSequence
+	{
+		public @S(10) C_Assignment assignment;
+	}
+
+	private @SKIP ForLoopMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		if (body.getWhich() instanceof C_ForLoopStatement)
+		{
+			C_ForLoopStatement what = (C_ForLoopStatement) body.getWhich();
+
+			AbstractToken which = what.loopVar.first().getWhich();
+			C_Assignment asg;
+			if (which instanceof C_ForWithType)
+			{
+				C_ForWithType whatforWith = (C_ForWithType) which;
+				EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
+				interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
+			}
+			else if (which instanceof C_ForLoopVariableNoType)
+			{
+				C_ForLoopVariableNoType token = (C_ForLoopVariableNoType) which;
+				asg = token.assignment;
+				interpreter.tryToInterpret(asg);
+			}
+			else
+			{
+				throw new RuntimeException("Cannot handle " + which);
+			}
+
+			if (_metrics == null)
+			{
+				_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			}
+			ForLoopMetric metric = new ForLoopMetric();
+
+			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+			while (true)
+			{
+				boolean keepGoing = interpreter.getBoolValue(what.terminateCondition);
+				if (!keepGoing) break;
+
+				metric.iterate();
+
+				result = interpreter.tryToInterpret(action);
+
+				if (result == Eagle_Statement_Result.BREAK)
+				{
+					metric.broke();
+					result = Eagle_Statement_Result.NORMAL;
+					break;
+				}
+				else if (result == Eagle_Statement_Result.CONTINUE)
+				{
+					metric.continued();
+					result = Eagle_Statement_Result.NORMAL;
+				}
+				else if (result == Eagle_Statement_Result.RETURN)
+				{
+					break;
+				}
+
+				interpreter.tryToInterpret(what.increment);
+			}
+
+			_metrics.competedLoop(metric);
+			return result;
+		}
+
+		throw new RuntimeException("Unexpected for loop construct: " + body.getWhich());
 	}
 }

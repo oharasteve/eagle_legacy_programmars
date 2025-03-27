@@ -5,8 +5,9 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Python_ContinueStatement extends TokenSequence
+public class Python_ContinueStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("simple_stmts.html#the-continue-statement") Python_Keyword CONTINUE = new Python_Keyword(
 			"continue");

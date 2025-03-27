@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Perl.Statements;
 
-import com.eagle.programmar.Perl.Perl_Statement.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -21,8 +20,8 @@ public class Perl_NamespaceStatement extends TokenSequence
 
 	public static class Perl_NamespaceBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE Perl_StatementBlock block;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE Perl_StatementBlock XXblock;
 	}
 
 	public static class Perl_MoreSpace extends TokenSequence

@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
@@ -27,8 +28,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 
 	public static class COBOL_AddType extends TokenChooser
 	{
-		public @FIRST COBOL_AddWithGiving addWithGiving;
-		public @CHOICE COBOL_AddNoGiving addNoGiving;
+		public @FIRST COBOL_AddWithGiving XXaddWithGiving;
+		public @CHOICE COBOL_AddNoGiving XXaddNoGiving;
 	}
 
 	public static class COBOL_AddWithGiving extends TokenSequence
@@ -53,13 +54,13 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 			public @S(10) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
 			public @S(20) COBOL_Variable var;
 			public @S(30) @OPT TokenList<COBOL_AddMoreVars> moreVars;
-
-			public static class COBOL_AddMoreVars extends TokenSequence
-			{
-				public @S(10) @OPT PunctuationComma comma;
-				public @S(20) COBOL_Variable var;
-			}
 		}
+	}
+
+	public static class COBOL_AddMoreVars extends TokenSequence
+	{
+		public @S(10) @OPT PunctuationComma comma;
+		public @S(20) COBOL_Variable var;
 	}
 
 	public static class COBOL_AddMoreExprs extends TokenSequence
@@ -86,18 +87,33 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 			throw new RuntimeException("Cannot handle " + which + " yet");
 		}
 		COBOL_AddNoGiving noGiving = (COBOL_AddNoGiving) which;
-		if (noGiving.moreExprs.isPresent() && noGiving.moreExprs.size() > 0)
+		if (noGiving.moreExprs != null && noGiving.moreExprs.isPresent() && noGiving.moreExprs.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle multiple expressions yet");
 		}
 
 		AbstractToken which2 = noGiving.addTo.var.getWhich();
+		EagleValue val = interpreter.getEagleValue(noGiving.expr);
+		int newVal = val.forceIntegerValue();
 		if (which2 instanceof COBOL_UserVariable)
 		{
 			COBOL_UserVariable variable = (COBOL_UserVariable) which2;
-			EagleValue val = interpreter.getEagleValue(noGiving.expr);
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					variable.id.getValue(), val);
+			EagleValue oldValue = interpreter.findSymbol(variable.id.getValue());
+			interpreter.setSymbol(variable, variable.id.getValue(),
+					new EagleInteger(newVal + oldValue.forceIntegerValue()));
+		}
+		if (noGiving.addTo.moreVars != null && noGiving.addTo.moreVars.isPresent())
+		{
+			for (COBOL_AddMoreVars more : noGiving.addTo.moreVars._elements)
+			{
+				AbstractToken which3 = more.var.getWhich();
+				if (which3 instanceof COBOL_UserVariable)
+				{
+					COBOL_UserVariable variable = (COBOL_UserVariable) which3;
+					EagleValue oldValue = interpreter.findSymbol(variable.id.getValue());
+					interpreter.setSymbol(variable, variable.id.getValue(),
+							new EagleInteger(oldValue.forceIntegerValue() + newVal));				}
+			}
 		}
 	}
 }

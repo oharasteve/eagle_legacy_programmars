@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class Perl_LogicalNotExpression extends PrimaryOperator implements EagleR
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

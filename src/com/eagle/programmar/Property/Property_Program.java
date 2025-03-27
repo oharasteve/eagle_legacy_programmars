@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Property;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.Property.Terminals.Property_Comment;
 import com.eagle.programmar.Property.Terminals.Property_EndOfLine;
 import com.eagle.programmar.Property.Terminals.Property_Identifier;
@@ -15,7 +15,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class Property_Program extends EagleLanguage
+public class Property_Program extends AbstractLanguage
 {
 	public static final String PROPERTY = "Property";
 
@@ -34,9 +34,9 @@ public class Property_Program extends EagleLanguage
 
 	public static class Property_Element extends TokenChooser
 	{
-		public @CHOICE Property_Comment comment;
-		public @CHOICE Property_Value pair;
-		public @CHOICE Property_EndOfLine eoln;
+		public @CHOICE Property_Comment XXcomment;
+		public @CHOICE Property_Value XXpair;
+		public @CHOICE Property_EndOfLine XXeoln;
 	}
 
 	public static class Property_Value extends TokenSequence

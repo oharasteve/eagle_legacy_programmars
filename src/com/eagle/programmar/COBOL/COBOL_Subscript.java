@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.core.EagleInterpreter;
+import com.eagle.interpret.EagleInterpreter;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
@@ -20,8 +20,8 @@ public class COBOL_Subscript extends TokenSequence
 
 	public static class COBOL_SubscriptType extends TokenChooser
 	{
-		public @CHOICE COBOL_Keyword ALL = new COBOL_Keyword("ALL");
-		public @CHOICE COBOL_RegularSubscript regularSubscript;
+		public @CHOICE COBOL_Keyword XXALL = new COBOL_Keyword("ALL");
+		public @CHOICE COBOL_RegularSubscript XXregularSubscript;
 	}
 
 	public static class COBOL_RegularSubscript extends TokenSequence
@@ -45,7 +45,7 @@ public class COBOL_Subscript extends TokenSequence
 		}
 
 		COBOL_RegularSubscript subscr = (COBOL_RegularSubscript) which;
-		if (subscr.range.isPresent())
+		if (subscr.range != null && subscr.range.isPresent())
 		{
 			throw new RuntimeException("Cannot handle subscript ranges yet");
 		}

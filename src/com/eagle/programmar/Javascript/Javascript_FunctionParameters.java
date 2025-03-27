@@ -24,8 +24,8 @@ public class Javascript_FunctionParameters extends TokenSequence
 
 		public static class Javascript_ParameterName extends TokenChooser
 		{
-			public @CHOICE Javascript_Variable_Definition id;
-			public @CHOICE Javascript_Punctuation dollar = new Javascript_Punctuation('$');
+			public @CHOICE Javascript_Variable_Definition XXid;
+			public @CHOICE Javascript_Punctuation XXdollar = new Javascript_Punctuation('$');
 		}
 
 		public static class Javascript_ParameterInitValue extends TokenSequence

@@ -23,9 +23,9 @@ public class IBMASM_Address extends TokenSequence
 
 	public static class IBMASM_Label_or_Star extends TokenChooser
 	{
-		public @CHOICE IBMASM_Label label;
-		public @CHOICE IBMASM_Number number;
-		public @CHOICE PunctuationStar star;
+		public @CHOICE IBMASM_Label XXlabel;
+		public @CHOICE IBMASM_Number XXnumber;
+		public @CHOICE PunctuationStar XXstar;
 
 		public @CHOICE static class IBMASM_Address_Equals extends TokenSequence
 		{

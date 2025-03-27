@@ -7,11 +7,12 @@ import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_Literal;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class PLI_OpenStatement extends TokenSequence
+public class PLI_OpenStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("7.37") PLI_Keyword OPEN = new PLI_Keyword("OPEN");
 	public @S(20) PLI_Keyword FILE = new PLI_Keyword("FILE");

@@ -3,11 +3,13 @@
 
 package com.eagle.programmar.PLI.Terminals;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-public class PLI_BitLiteral extends TerminalLiteralToken
+public class PLI_BitLiteral extends TerminalLiteralToken implements EagleRunnable
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -31,7 +33,7 @@ public class PLI_BitLiteral extends TerminalLiteralToken
 		if (rec.charAt(endChar) != '\'') return false;
 		if (Character.toUpperCase(rec.charAt(endChar + 1)) != 'B') return false;
 
-		_txt = rec.substring(_currentChar, endChar);
+		_txt = rec.substring(_currentChar, endChar + 2);
 		foundIt(_currentLine, endChar + 1);
 		return true;
 	}
@@ -46,5 +48,13 @@ public class PLI_BitLiteral extends TerminalLiteralToken
 	public String description()
 	{
 		return "A bit literal, like '0'B";
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_txt.equalsIgnoreCase("'1'B")) interpreter.pushBool(true);
+		else if (_txt.equalsIgnoreCase("'0'B")) interpreter.pushBool(false);
+		else throw new RuntimeException("Unexpected BIT value: " + _txt);
 	}
 }

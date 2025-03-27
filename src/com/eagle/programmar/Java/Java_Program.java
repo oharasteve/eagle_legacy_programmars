@@ -3,21 +3,19 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
+import com.eagle.programmar.Java.Java_Method.Java_MethodType;
+import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
-import com.eagle.programmar.Java.Terminals.Java_Identifier;
-import com.eagle.programmar.Java.Terminals.Java_Keyword;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Java_Program extends EagleLanguage implements EagleRunnable, EagleScopeInterface
+public class Java_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String JAVA = "Java";
 
@@ -56,55 +54,66 @@ public class Java_Program extends EagleLanguage implements EagleRunnable, EagleS
 
 	public static class Java_ClassOrEnum extends TokenChooser
 	{
-		public @CHOICE Java_Class jclass;
-		public @CHOICE Java_Enum jenum;
-	}
-
-	public static class Java_Package extends TokenSequence
-	{
-		public @S(10) @BLANKLINE Java_Keyword PACKAGE = new Java_Keyword("package");
-		public @S(20) Java_Identifier id;
-		public @S(30) @OPT TokenList<Java_MorePackageIds> moreIds;
-		public @S(40) @NOSPACE PunctuationSemicolon semicolon;
-
-		public static class Java_MorePackageIds extends TokenSequence
-		{
-			public @S(10) @NOSPACE PunctuationPeriod dot;
-			public @S(20) @NOSPACE Java_Identifier id;
-		}
+		public @CHOICE Java_Class XXclass;
+		public @CHOICE Java_Enum XXenum;
 	}
 
 	public static class Java_ImportOrComment extends TokenChooser
 	{
-		public @CHOICE @NEWLINE Java_Comment comment;
-		public @CHOICE @NEWLINE Java_Import jimport;
-		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon semicolon;
-	}
-
-	public static class Java_Import extends TokenSequence
-	{
-		public @S(10) @NEWLINE Java_Keyword IMPORT = new Java_Keyword("import");
-		public @S(20) @OPT Java_Keyword STATIC = new Java_Keyword("static");
-		public @S(30) Java_Identifier id;
-		public @S(40) @OPT TokenList<Java_DotIdentifierStar> dotId;
-		public @S(50) @NOSPACE PunctuationSemicolon semicolon;
-
-		public static class Java_DotIdentifierStar extends TokenSequence
-		{
-			public @S(10) @NOSPACE PunctuationPeriod dot;
-			public @S(20) @NOSPACE Java_IdentifierStar idStar;
-
-			public static class Java_IdentifierStar extends TokenChooser
-			{
-				public @CHOICE @NOSPACE Java_Identifier id;
-				public @CHOICE @NOSPACE PunctuationStar star;
-			}
-		}
+		public @CHOICE @NEWLINE Java_Comment XXcomment;
+		public @CHOICE @NEWLINE Java_Import XXimport;
+		public @CHOICE @NEWLINE @CURIOUS("Extra Semicolon") PunctuationSemicolon XXsemicolon;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(classOrEnumList.first().getWhich());
+		// First pass, just collect all the method definitions
+		for (Java_ClassOrEnum classOrEnum : classOrEnumList._elements)
+		{
+			if (classOrEnum.getWhich() instanceof Java_Class)
+			{
+				Java_Class cls = (Java_Class) classOrEnum.getWhich();
+				for (Java_ClassElement element : cls.elements._elements)
+				{
+					if (element.getWhich() instanceof Java_Method)
+					{
+						Java_Method meth = (Java_Method) element.getWhich();
+						AbstractToken which = meth.typeAndName.getWhich();
+						if (which instanceof Java_MethodType)
+						{
+							Java_Method_Definition methodName = ((Java_MethodType) which).methodName;
+							interpreter.addFunction(methodName.getValue(), meth);
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost class
+		for (Java_ClassOrEnum classOrEnum : classOrEnumList._elements)
+		{
+			if (classOrEnum.getWhich() instanceof Java_Class)
+			{
+				Java_Class cls = (Java_Class) classOrEnum.getWhich();
+				interpreter.tryToInterpret(cls);
+			}
+		}
+	}
+	
+	public static Java_Program newJavaProgram(Java_Class cls, String pkg)
+	{
+		Java_ClassOrEnum entry = new Java_ClassOrEnum();
+		entry.setWhich(cls);
+	
+		Java_Program prog = new Java_Program();
+		prog.classOrEnumList = new TokenList<Java_ClassOrEnum>();
+		prog.classOrEnumList.setPresent(true);
+		prog.classOrEnumList.addToken(entry);
+
+		prog.jpackage = Java_Package.newPackage(pkg);
+		prog.jpackage.setPresent(true);
+		
+		return prog;
 	}
 }

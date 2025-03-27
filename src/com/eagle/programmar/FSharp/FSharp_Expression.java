@@ -7,7 +7,6 @@ import com.eagle.programmar.FSharp.Expressions.FSharp_Additive_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_And_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_BracketBars;
 import com.eagle.programmar.FSharp.Expressions.FSharp_BuiltIn;
-import com.eagle.programmar.FSharp.Expressions.FSharp_FunctionCall;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Multiplicative_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_NotExpresion;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Or_Expression;
@@ -17,6 +16,9 @@ import com.eagle.programmar.FSharp.Expressions.FSharp_Subfield;
 import com.eagle.programmar.FSharp.Expressions.FSharp_SubscriptExpression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_UnarySign;
 import com.eagle.programmar.FSharp.Expressions.FSharp_VariableExpression;
+import com.eagle.programmar.FSharp.Functions.FSharp_FunctionCall;
+import com.eagle.programmar.FSharp.Functions.FSharp_LengthFunction;
+import com.eagle.programmar.FSharp.Functions.FSharp_StartsWithFunction;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Literal;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -63,11 +65,13 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) FSharp_SubscriptExpression subscriptExpression;
-	public @P(510) FSharp_Subfield subfield;
-	public @P(520) FSharp_Multiplicative_Expression multiplicative_Expression;
-	public @P(530) FSharp_Additive_Expression additive_Expression;
-	public @P(540) FSharp_Relational_Expression relational_Expression;
-	public @P(550) FSharp_And_Expression and_Expression;
-	public @P(560) FSharp_Or_Expression or_Expression;
+	public @P(1000) FSharp_SubscriptExpression subscriptExpression;
+	public @P(1010) FSharp_StartsWithFunction startswithFunction;
+	public @P(1020) FSharp_LengthFunction lengthFunction;
+	public @P(1030) FSharp_Subfield subfield;
+	public @P(1040) FSharp_Multiplicative_Expression multiplicative_Expression;
+	public @P(1050) FSharp_Additive_Expression additive_Expression;
+	public @P(1060) FSharp_Relational_Expression relational_Expression;
+	public @P(1070) FSharp_And_Expression and_Expression;
+	public @P(1080) FSharp_Or_Expression or_Expression;
 }

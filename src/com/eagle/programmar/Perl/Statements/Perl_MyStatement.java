@@ -24,7 +24,7 @@ public class Perl_MyStatement extends TokenSequence
 	{
 		public @CHOICE static class Perl_MyOne extends TokenSequence
 		{
-			public @S(10) Perl_Variable var;
+			public @S(10) Perl_Variable XXvar;
 		}
 
 		public @CHOICE static class Perl_MyMany extends TokenSequence

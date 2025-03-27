@@ -3,15 +3,16 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Eaglish_Return_Statement extends TokenSequence implements EagleRunnableWithResult
+public class Eaglish_Return_Statement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword RETURN = new Eaglish_Keyword("RETURN");
 	public @S(20) Eaglish_Expression expr;
@@ -22,6 +23,6 @@ public class Eaglish_Return_Statement extends TokenSequence implements EagleRunn
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
-		return Eagle_Statement_Result.BREAK;
+		return Eagle_Statement_Result.RETURN;
 	}
 }

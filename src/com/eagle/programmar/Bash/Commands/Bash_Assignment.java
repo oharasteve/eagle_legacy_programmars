@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Bash.Commands;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Bash_Variable;
 import com.eagle.programmar.Bash.Terminals.Bash_Filename;
@@ -13,8 +13,9 @@ import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.programmar.Bash.Terminals.Bash_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Bash_Assignment extends TokenSequence implements EagleRunnable
+public class Bash_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @OPT Bash_Keyword LOCAL = new Bash_Keyword("local");
 	public @S(20) @DOC("#Shell-Arithmetic") @OPT Bash_Keyword LET = new Bash_Keyword("let");
@@ -24,8 +25,8 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable
 
 	public static class Bash_AssignWhat extends TokenChooser
 	{
-		public @CHOICE Bash_Expression value;
-		public @LAST Bash_Filename fname;
+		public @CHOICE Bash_Expression XXvalue;
+		public @LAST Bash_Filename XXfname;
 	}
 
 	@Override
@@ -40,10 +41,8 @@ public class Bash_Assignment extends TokenSequence implements EagleRunnable
 		switch (equals.getValue())
 		{
 		case "=":
-			int x = interpreter.getIntValue(expr);
-			IntegerValue val = new IntegerValue(x);
-			interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-					variable.id.getValue(), val);
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.setSymbol(variable, variable.id.getValue(), val);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

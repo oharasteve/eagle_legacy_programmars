@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.FSharp.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class FSharp_NotExpresion extends PrimaryOperator implements EagleRunnabl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

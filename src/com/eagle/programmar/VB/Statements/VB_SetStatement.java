@@ -7,9 +7,10 @@ import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Variable;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class VB_SetStatement extends TokenSequence
+public class VB_SetStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword SET = new VB_Keyword("set");
 	public @S(20) VB_Variable var;

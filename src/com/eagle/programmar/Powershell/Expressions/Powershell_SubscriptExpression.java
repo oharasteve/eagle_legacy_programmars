@@ -10,7 +10,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Powershell_SubscriptExpression extends PrecedenceOperator
 {
-	public @S(10) Powershell_Expression expr = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
+	public @S(10) Powershell_Expression expr = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationLeftBracket leftBracket;
 	public @S(30) Powershell_Expression subscr;
 	public @S(40) PunctuationRightBracket rightBracket;

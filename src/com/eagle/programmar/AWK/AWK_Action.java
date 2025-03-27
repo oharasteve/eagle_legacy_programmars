@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.AWK;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnableWithResult;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.TokenChooser;
@@ -23,9 +23,9 @@ public class AWK_Action extends TokenSequence implements EagleRunnableWithResult
 
 	public static class AWK_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE AWK_Statements statements;
-		public @CHOICE AWK_Comment comment;
-		public @CHOICE AWK_Action action;
+		public @CHOICE AWK_Statements XXstatements;
+		public @CHOICE AWK_Comment XXcomment;
+		public @CHOICE AWK_Action XXaction;
 	}
 
 	@Override
@@ -34,12 +34,8 @@ public class AWK_Action extends TokenSequence implements EagleRunnableWithResult
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (AWK_StatementOrComment stmt : statements._elements)
 		{
-			result = interpreter.tryToInterpret(stmt.getWhich());
+			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;
-		}
-		if (result != Eagle_Statement_Result.NORMAL)
-		{
-			System.out.println("******************************** Action BROKE");
 		}
 		return result;
 	}

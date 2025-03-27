@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Algol68_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE= false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,81 +17,13 @@ public class Algol68_Syntax extends EagleSyntax
 
 	public Algol68_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_autoAdvance = true;
 		_punctuationExceptions = new String[] {
 				":=", "+:=", ">=", "<=", "~+", "/="
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Algol68_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://en.wikipedia.org/wiki/ALGOL_68#Bold_symbols_and_reserved_words
-	private static String[] reservedWords = new String[] {
-			"AT",
-			"BEGIN",
-			"BITS",
-			"BOOL",
-			"BY",
-			"BYTES",
-			"CASE",
-			"CHANNEL",
-			"CHAR",
-			"CO",
-			"COMMENT",
-			"COMPL",
-			"DO",
-			"EITHER",
-			"ELIF",
-			"ELSE",
-			"EMPTY",
-			"END",
-			"ESAC",
-			"EXIT",
-			"FALSE",
-			"FI",
-			"FILE",
-			"FLEX",
-			"FOR",
-			"FORMAT",
-			"FROM",
-			"GO",
-			"GOTO",
-			"HEAP",
-			"IF",
-			"IN",
-			"INT",
-			"IS",
-			"ISNT",
-			"LOC",
-			"LONG",
-			"MAIN",
-			"MODE",
-			"NEW",
-			"NIL",
-			"NOT",
-			"OD",
-			"OP",
-			"OUSE",
-			"OUT",
-			"PAR",
-			"PR",
-			"PRAGMAT",
-			"PRIO",
-			"PROC",
-			"REAL",
-			"REF",
-			"SEMA",
-			"SHORT",
-			"SKIP",
-			"STRING",
-			"STRUCT",
-			"THEN",
-			"TO",
-			"TRUE",
-			"UNION",
-			"VOID",
-			"WHILE",
-	};
 }

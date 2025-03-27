@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.RPG;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.parsers.EagleOverrideManager;
 import com.eagle.programmar.RPG.Directives.RPG_Copy_Directive;
 import com.eagle.programmar.RPG.Directives.RPG_Eject_Directive;
@@ -34,7 +34,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public abstract class RPG_Program extends EagleLanguage
+public abstract class RPG_Program extends AbstractLanguage
 {
 	public RPG_Program(String name)
 	{
@@ -55,22 +55,22 @@ public abstract class RPG_Program extends EagleLanguage
 
 	public static class RPG_Spec_or_Directive extends TokenChooser
 	{
-		public @CHOICE RPG_Comment comment;
+		public @CHOICE RPG_Comment XXcomment;
 
-		public @CHOICE RPG_Title_Directive titleDirective;
-		public @CHOICE RPG_Eject_Directive ejectDirective;
-		public @CHOICE RPG_Space_Directive spaceDirective;
-		public @CHOICE RPG_Copy_Directive copyDirective;
+		public @CHOICE RPG_Title_Directive XXtitleDirective;
+		public @CHOICE RPG_Eject_Directive XXejectDirective;
+		public @CHOICE RPG_Space_Directive XXspaceDirective;
+		public @CHOICE RPG_Copy_Directive XXcopyDirective;
 
-		public @CHOICE RPG_D_Data_Specification dSpec;
-		public @CHOICE RPG_U_AutoReport_Specification uSpec;
-		public @CHOICE RPG_H_Header_Specification hSpec;
-		public @CHOICE RPG_F_File_Specification fSpec;
-		public @CHOICE RPG_E_Extension_Specification eSpec;
-		public @CHOICE RPG_L_LineCounter_Specification lSpec;
-		public @CHOICE RPG_I_Input_Specification iSpec;
-		public @CHOICE RPG_C_Calculation_Specification cSpec;
-		public @CHOICE RPG_O_Output_Specification oSpec;
+		public @CHOICE RPG_D_Data_Specification XXdSpec;
+		public @CHOICE RPG_U_AutoReport_Specification XXuSpec;
+		public @CHOICE RPG_H_Header_Specification XXhSpec;
+		public @CHOICE RPG_F_File_Specification XXfSpec;
+		public @CHOICE RPG_E_Extension_Specification XXeSpec;
+		public @CHOICE RPG_L_LineCounter_Specification XXlSpec;
+		public @CHOICE RPG_I_Input_Specification XXiSpec;
+		public @CHOICE RPG_C_Calculation_Specification XXcSpec;
+		public @CHOICE RPG_O_Output_Specification XXoSpec;
 	}
 
 	// Components of an RPG Program

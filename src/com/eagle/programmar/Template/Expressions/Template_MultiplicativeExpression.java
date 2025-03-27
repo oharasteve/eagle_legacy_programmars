@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Template.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Template.Template_Expression;
 import com.eagle.programmar.Template.Terminals.Template_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;

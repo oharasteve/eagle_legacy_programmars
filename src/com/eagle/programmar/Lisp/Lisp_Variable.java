@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Identifier_Reference;
 import com.eagle.tokens.TokenChooser;
@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Lisp_Variable extends TokenChooser implements EagleRunnable
 {
-	public @CHOICE Lisp_Identifier_Reference var;
+	public @CHOICE Lisp_Identifier_Reference XXvar;
 
 	public @CHOICE static class Lisp_VariableWithDot extends TokenSequence
 	{
@@ -32,7 +32,7 @@ public class Lisp_Variable extends TokenChooser implements EagleRunnable
 		if (this.getWhich() instanceof Lisp_Identifier_Reference)
 		{
 			Lisp_Identifier_Reference id = (Lisp_Identifier_Reference) this.getWhich();
-			EagleValue value = interpreter._symbolTable.findSymbol(id.getValue());
+			EagleValue value = interpreter.findSymbol(id.getValue());
 			interpreter.pushEagleValue(value);
 		}
 	}

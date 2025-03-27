@@ -7,6 +7,7 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -16,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_Type extends TokenSequence implements AbstractType
 {
@@ -48,7 +50,8 @@ public class Java_Type extends TokenSequence implements AbstractType
 	// Delay finding this one until after looking for [] and <>
 	public static class Java_TypeName extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice primitive = new Java_KeywordChoice("void", "boolean", "byte", "short", "int",
+		public @FIRST Java_KeywordChoice XXprimitive = new Java_KeywordChoice(
+				"void", "boolean", "byte", "short", "int",
 				"long", "char", "float", "double", "String", "class");
 
 		public @CHOICE static class Java_IdList extends TokenSequence
@@ -84,5 +87,45 @@ public class Java_Type extends TokenSequence implements AbstractType
 	{
 		public @S(10) Java_KeywordChoice EXTENDS = new Java_KeywordChoice("extends", "super");
 		public @S(20) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> typeName;
+	}
+	
+	// Convert "double" to a Java_Type representing a double
+	public static Java_Type newPrimitiveType(String name)
+	{
+		Java_Type type = new Java_Type();
+		type.typeName = new Java_TypeName();
+		type.typeName.setWhich(new Java_KeywordChoice(name));
+		return type;
+	}
+	
+	public static Java_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		switch (type)
+		{
+		case BOOLEAN:
+			return newPrimitiveType("boolean");
+		case INTEGER:
+			return newPrimitiveType("int");
+		case DOUBLE:
+			return newPrimitiveType("double");
+		case STRING:
+			return newPrimitiveType("String");
+		case VOID:
+			return newPrimitiveType("void");
+		default:
+			throw new RuntimeException("Can't transform type: " + type);
+		}
+	}
+
+	public static Java_Type transformTypeArray(TypeEnum type)
+	{
+		Java_ArrayType array = new Java_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		Java_Type newType = Java_Type.transformType(type, null, null);
+		newType.arrayTypes = new TokenList<Java_ArrayType>();
+		newType.arrayTypes.addToken(array);
+		newType.arrayTypes.setPresent(true);
+		return newType;
 	}
 }

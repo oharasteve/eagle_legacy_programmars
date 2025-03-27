@@ -27,8 +27,8 @@ public class CMacro_Pragma_Warning extends TokenSequence
 
 	public static class CMacro_PragmaCode extends TokenChooser
 	{
-		public @CHOICE PunctuationComma comma;
-		public @CHOICE CMacro_Number number; // 1718 1501 0612 3021 4702 etc etc
-		public @CHOICE CMacro_Identifier code; // CS0618 and CS1718
+		public @CHOICE PunctuationComma XXcomma;
+		public @CHOICE CMacro_Number XXnumber; // 1718 1501 0612 3021 4702 etc etc
+		public @CHOICE CMacro_Identifier XXcode; // CS0618 and CS1718
 	}
 }

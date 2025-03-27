@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -19,8 +19,8 @@ public class Perl_ConditionalOrExpression extends PrecedenceOperator implements 
 
 	public static class Perl_OrOperator extends TokenChooser
 	{
-		public @CHOICE Perl_Punctuation orOperator = new Perl_Punctuation("||");
-		public @CHOICE Perl_Keyword OR = new Perl_Keyword("or");
+		public @CHOICE Perl_Punctuation XXorOperator = new Perl_Punctuation("||");
+		public @CHOICE Perl_Keyword XXOR = new Perl_Keyword("or");
 	}
 
 	@Override

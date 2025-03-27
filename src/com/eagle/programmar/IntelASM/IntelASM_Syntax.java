@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class IntelASM_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,15 +17,15 @@ public class IntelASM_Syntax extends EagleSyntax
 
 	public IntelASM_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "_";
 		_extraCharacters = "";
 		_autoAdvance = false;
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private static String[] keywords = new String[] {
-			"BYTE", "DWORD", "PTR"
+	private static final String[] RESERVED_WORDS = new String[] {
+			"BYTE", "COUNT", "DWORD", "PTR"
 	};
 }

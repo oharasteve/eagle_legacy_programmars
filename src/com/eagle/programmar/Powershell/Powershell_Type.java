@@ -19,13 +19,14 @@ public class Powershell_Type extends TokenSequence
 
 	public static class Powershell_BaseType extends TokenChooser
 	{
-		public @CHOICE Powershell_KeywordChoice PRIMITIVE = new Powershell_KeywordChoice("Array", "Boolean", "Char",
-				"DateTime", "Double", "Float", "Int", "Int32", "Int64", "Long", "PSCredential", "SecureString",
-				"String");
+		public @CHOICE Powershell_KeywordChoice XXPRIMITIVE = new Powershell_KeywordChoice(
+				"Array", "Boolean", "Char", "DateTime", "Double", "Float", "Int", "Int32",
+				"Int64", "Long", "PSCredential", "SecureString", "String");
 
 		public @CHOICE static class Powershell_SystemType extends TokenSequence
 		{
-			public @S(10) Powershell_KeywordChoice SYSTEM = new Powershell_KeywordChoice("Net", "System");
+			public @S(10) Powershell_KeywordChoice SYSTEM = new Powershell_KeywordChoice(
+					"Net", "System");
 			public @S(20) TokenList<Powershell_SystemSubType> subtype;
 
 			public static class Powershell_SystemSubType extends TokenSequence

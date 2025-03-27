@@ -61,16 +61,16 @@ public class CPlus_Program extends C_Program
 
 	public static class CPlus_Element extends TokenChooser
 	{
-		public @FIRST @SYNTAX(C_Syntax.class) C_Comment comment;
-		public @CHOICE CPlus_Namespace namespace;
-		public @CHOICE CPlus_Class classDefinition;
-		public @CHOICE CPlus_Using using;
-		public @CHOICE CPlus_Method method;
-		public @CHOICE CPlus_Extern extern;
-		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Class objCclass;
-		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Interface objCinterface;
-		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Protocol objCprotocol;
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
-		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment statementOrComment;
+		public @FIRST @SYNTAX(C_Syntax.class) C_Comment XXcomment;
+		public @CHOICE CPlus_Namespace XXnamespace;
+		public @CHOICE CPlus_Class XXclassDefinition;
+		public @CHOICE CPlus_Using XXusing;
+		public @CHOICE CPlus_Method XXmethod;
+		public @CHOICE CPlus_Extern XXextern;
+		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Class XXobjCclass;
+		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Interface XXobjCinterface;
+		public @CHOICE @SYNTAX(ObjectiveC_Syntax.class) ObjectiveC_Protocol XXobjCprotocol;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
+		public @LAST @SYNTAX(C_Syntax.class) C_StatementOrComment XXstatementOrComment;
 	}
 }

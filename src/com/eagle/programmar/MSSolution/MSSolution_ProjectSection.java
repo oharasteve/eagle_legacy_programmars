@@ -45,9 +45,9 @@ public class MSSolution_ProjectSection extends TokenSequence
 
 			public static class MSSolution_ProjectSectionEntryPropName extends TokenChooser
 			{
-				public @CHOICE MSSolution_KeywordChoice param = new MSSolution_KeywordChoice("ProjectReferences",
-						"SccAuxPath", "SccLocalPath", "SccProjectName", "SccProvider", "TargetFrameworkMoniker",
-						"VWDDynamicPort", "VWDPort");
+				public @CHOICE MSSolution_KeywordChoice XXparam = new MSSolution_KeywordChoice(
+						"ProjectReferences", "SccAuxPath", "SccLocalPath", "SccProjectName",
+						"SccProvider", "TargetFrameworkMoniker", "VWDDynamicPort", "VWDPort");
 
 				public @CHOICE static class MSSolution_ProjectSectionEntryPropLongName extends TokenSequence
 				{

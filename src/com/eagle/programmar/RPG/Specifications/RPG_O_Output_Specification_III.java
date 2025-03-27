@@ -13,11 +13,18 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 {
 	public RPG_O_Output_Specification_III()
 	{
-		spec = new RPG_O_Output_Spec();
-		spec.recordId = new RPG_O_Output_Program_Record_Id_III();
-		spec.fieldDescr = new RPG_O_Output_Program_Field_Descr_III();
-		spec.externalRecordId = new RPG_O_Output_External_Record_Id_III();
-		spec.externalFieldDescr = new RPG_O_Output_External_Field_Descr_III();
+		spec = new RPG_O_Output_Spec_III();
+	}
+	
+	public static class RPG_O_Output_Spec_III extends RPG_O_Output_Spec
+	{
+		public RPG_O_Output_Spec_III()
+		{
+			XXrecordId = new RPG_O_Output_Program_Record_Id_III();
+			XXfieldDescr = new RPG_O_Output_Program_Field_Descr_III();
+			XXexternalRecordId = new RPG_O_Output_External_Record_Id_III();
+			XXexternalFieldDescr = new RPG_O_Output_External_Field_Descr_III();
+		}
 	}
 
 	public static class RPG_O_Output_Program_Record_Id_III extends RPG_O_Output_Program_Record_Id
@@ -38,9 +45,9 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 	{
 		public RPG_O_Output_Program_Record_Id_Piece_III()
 		{
-			piece1 = new RPG_O_Output_Program_Record_Id_Piece1_III();
-			piece2 = new RPG_O_Output_Program_Record_Id_Piece2_III();
-			piece3 = new RPG_O_Output_Program_Record_Id_Piece3_III();
+			XXpiece1 = new RPG_O_Output_Program_Record_Id_Piece1_III();
+			XXpiece2 = new RPG_O_Output_Program_Record_Id_Piece2_III();
+			XXpiece3 = new RPG_O_Output_Program_Record_Id_Piece3_III();
 		}
 	}
 
@@ -111,9 +118,9 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 	{
 		public RPG_O_Output_External_Record_Id_Piece_III()
 		{
-			piece1 = new RPG_O_Output_External_Record_Id_Piece1_III();
-			piece2 = new RPG_O_Output_External_Record_Id_Piece2_III();
-			piece3 = new RPG_O_Output_External_Record_Id_Piece3_III();
+			XXpiece1 = new RPG_O_Output_External_Record_Id_Piece1_III();
+			XXpiece2 = new RPG_O_Output_External_Record_Id_Piece2_III();
+			XXpiece3 = new RPG_O_Output_External_Record_Id_Piece3_III();
 		}
 	}
 

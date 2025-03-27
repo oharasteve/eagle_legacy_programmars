@@ -3,13 +3,18 @@
 
 package com.eagle.programmar.Go.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Go.Go_Statement;
+import com.eagle.programmar.Go.Go_Syntax;
 import com.eagle.programmar.Go.Go_Type;
 import com.eagle.programmar.Go.Symbols.Go_Function_Definition;
 import com.eagle.programmar.Go.Symbols.Go_Variable_Definition;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -18,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
-public class Go_Function extends TokenSequence implements EagleRunnable
+public class Go_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("#Function_declarations") Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;
@@ -27,6 +32,8 @@ public class Go_Function extends TokenSequence implements EagleRunnable
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) @OPT Go_FuncReturnType returnType;
 	public @S(70) Go_Statement stmt;
+
+	public @SKIP CallMetrics _metrics = null;
 
 	public static class Go_FunctionParamater extends TokenSequence
 	{
@@ -37,7 +44,7 @@ public class Go_Function extends TokenSequence implements EagleRunnable
 
 	public static class Go_FuncReturnType extends TokenChooser
 	{
-		public @CHOICE Go_Type type;
+		public @CHOICE Go_Type XXtype;
 
 		public @CHOICE static class Go_FuncReturnMulti extends TokenSequence
 		{
@@ -47,9 +54,29 @@ public class Go_Function extends TokenSequence implements EagleRunnable
 		}
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Go_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(stmt.getWhich());
+		// Don't run it here. Wait until it is called.
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), this);
+		}
+		
+		// Unless the name is 'main'
+		if (id.getValue().equals("main"))
+		{
+			interpreter.callingFunction("main", this);
+			interpreter.tryToInterpret(stmt);
+			interpreter.completedFunction("main", this);
+		}
 	}
 }

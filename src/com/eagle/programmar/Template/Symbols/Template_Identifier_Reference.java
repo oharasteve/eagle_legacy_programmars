@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Template.Symbols;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Template.Terminals.Template_Identifier;
 import com.eagle.tokens.ReferenceInterface;
@@ -14,7 +14,7 @@ public class Template_Identifier_Reference extends Template_Identifier implement
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(_id.toString());
+		EagleValue value = interpreter.findSymbol(_id.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

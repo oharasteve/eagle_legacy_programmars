@@ -33,6 +33,6 @@ public class JavaP_OneClassFlags extends TokenSequence
 
 	public static class JavaP_OneClassFlag extends TokenChooser
 	{
-		public @CHOICE JavaP_KeywordChoice ACC = new JavaP_KeywordChoice(JavaP_Syntax.ACC_CODES);
+		public @CHOICE JavaP_KeywordChoice XXACC = new JavaP_KeywordChoice(JavaP_Syntax.ACC_CODES);
 	}
 }

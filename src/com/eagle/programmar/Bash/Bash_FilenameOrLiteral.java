@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class Bash_FilenameOrLiteral extends TokenChooser
 {
-	public @CHOICE Bash_Filename filename;
-	public @CHOICE Bash_PunctuationChoice star = new Bash_PunctuationChoice("*");
-	public @LAST Bash_Expression expression;
+	public @CHOICE Bash_Filename XXfilename;
+	public @CHOICE Bash_PunctuationChoice XXstar = new Bash_PunctuationChoice("*");
+	public @LAST Bash_Expression XXexpression;
 }

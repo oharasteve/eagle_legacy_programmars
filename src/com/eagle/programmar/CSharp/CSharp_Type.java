@@ -7,6 +7,7 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -16,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_Type extends TokenSequence implements AbstractType
 {
@@ -41,6 +43,11 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	// Delay finding this one until after looking for [] and <>
 	public static class CSharp_TypeName extends TokenChooser
 	{
+		public @FIRST CSharp_KeywordChoice XXprimitive = new CSharp_KeywordChoice(
+				"auto", "bool", "boolean", "byte", "char", "class", "decimal", "double",
+				"float", "int", "long", "object", "sbyte", "short", "string", "String",
+				"ulong", "ushort", "void");
+
 		public @CHOICE static class CSharp_IdList extends TokenSequence
 		{
 			public @S(10) @OPT CSharp_NamespaceId namespaceId;
@@ -62,10 +69,6 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			}
 		}
 
-		public @CHOICE CSharp_KeywordChoice primitive = new CSharp_KeywordChoice("auto", "bool", "boolean", "byte",
-				"char", "class", "decimal", "double", "float", "int", "long", "object", "sbyte", "short", "string",
-				"String", "ulong", "ushort", "void");
-
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{
 			public @S(10) CSharp_Punctuation question = new CSharp_Punctuation('?');
@@ -77,5 +80,45 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	{
 		public @S(10) CSharp_Keyword EXTENDS = new CSharp_Keyword("extends");
 		public @S(20) CSharp_Identifier_Reference typeName;
+	}
+	
+	// Convert "double" to a CSharp_Type representing a double
+	public static CSharp_Type newPrimitiveType(String name)
+	{
+		CSharp_Type type = new CSharp_Type();
+		type.typeName = new CSharp_TypeName();
+		type.typeName.setWhich(new CSharp_KeywordChoice(name));
+		return type;
+	}
+	
+	public static CSharp_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		switch (type)
+		{
+		case BOOLEAN:
+			return newPrimitiveType("bool");
+		case INTEGER:
+			return newPrimitiveType("int");
+		case DOUBLE:
+			return newPrimitiveType("double");
+		case STRING:
+			return newPrimitiveType("string");
+		case VOID:
+			return newPrimitiveType("void");
+		default:
+			throw new RuntimeException("Can't transform type: " + type);
+		}
+	}
+	
+	public static CSharp_Type transformTypeArray(TypeEnum type)
+	{
+		CSharp_ArrayType array = new CSharp_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		CSharp_Type newType = CSharp_Type.transformType(type, null, null);
+		newType.arrayTypes = new TokenList<CSharp_ArrayType>();
+		newType.arrayTypes.addToken(array);
+		newType.arrayTypes.setPresent(true);
+		return newType;
 	}
 }

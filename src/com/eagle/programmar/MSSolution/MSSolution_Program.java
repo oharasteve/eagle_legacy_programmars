@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.MSSolution;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.MSSolution.Terminals.MSSolution_EndOfLine;
 import com.eagle.tokens.TokenList;
 
-public class MSSolution_Program extends EagleLanguage
+public class MSSolution_Program extends AbstractLanguage
 {
 	public static final String MSSOLUTION = "MSSolution";
 

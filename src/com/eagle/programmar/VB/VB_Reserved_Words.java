@@ -13,6 +13,7 @@ public class VB_Reserved_Words
 			"Alias",
 			"And",
 			"AndAlso",
+			"Array",
 			"As",
 			"Boolean",
 			"ByRef",

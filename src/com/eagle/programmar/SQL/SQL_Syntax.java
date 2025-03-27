@@ -8,6 +8,8 @@ import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 
 public class SQL_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class SQL_Syntax extends EagleSyntax
 
 	public SQL_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_commentInstance = new SQL_Comment();

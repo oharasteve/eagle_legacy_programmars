@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Scala_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,57 +17,13 @@ public class Scala_Syntax extends EagleSyntax
 
 	public Scala_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				"<-", "==", "!=", "<=", ">=", "+=", "-=", "*=", "/="
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Scala_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From
-	// https://www.geeksforgeeks.org/scala-keywords/#:~:text=Keywords%20or%20Reserved%20words%20are,in%20a%20compile%2Dtime%20error.
-	private static String[] reservedWords = new String[] {
-			"abstract",
-			"case",
-			"catch",
-			"class",
-			"def",
-			"do",
-			"else",
-			"extends",
-			"false",
-			"final",
-			"finally",
-			"for",
-			"forSome",
-			"if",
-			"implicit",
-			"import",
-			"lazy",
-			"match",
-			"new",
-			"null",
-			"object",
-			"override",
-			"package",
-			"private",
-			"protected",
-			"return",
-			"sealed",
-			"super",
-			"this",
-			"throw",
-			"trait",
-			"true",
-			"try",
-			"type",
-			"val",
-			"var",
-			"while",
-			"with",
-			"yield",
-	};
 }

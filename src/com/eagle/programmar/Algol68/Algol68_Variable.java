@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Algol68;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Identifier_Reference;
 import com.eagle.tokens.SeparatedList;
@@ -30,7 +31,23 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Algol68_Identifier_Reference which = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		EagleValue value = interpreter.findSymbol(which.toString());
+		if (subscript != null && subscript.isPresent() && value.isArray())
+		{
+			EagleArray array = (EagleArray) value;
+			int sub = interpreter.getIntValue(subscript.expr);
+			EagleValue val = array.getValue(sub - 1);
+			interpreter.pushEagleValue(val);
+		}
+		else if (subscript != null && subscript.isPresent() && value.isString())
+		{
+			String str = value.forceStringValue();
+			int sub = interpreter.getIntValue(subscript.expr);
+			interpreter.pushStr(str.substring(sub-1, sub));
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

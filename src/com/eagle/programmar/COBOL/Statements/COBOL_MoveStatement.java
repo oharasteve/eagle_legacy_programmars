@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
@@ -40,7 +40,10 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (ALL.isPresent()) throw new RuntimeException("Can't handle MOVE ALL yet");
-		if (more.isPresent() && more.size() > 0) throw new RuntimeException("Can't handle multiple MOVEs yet");
+		if (more != null && more.isPresent() && more.size() > 0) 
+		{
+			throw new RuntimeException("Can't handle multiple MOVEs yet");
+		}
 
 		EagleValue val = interpreter.getEagleValue(expr);
 		AbstractToken which = var.getWhich();
@@ -49,7 +52,6 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		COBOL_UserVariable variable = (COBOL_UserVariable) which;
-		interpreter._symbolTable.setSymbol(variable.getFileName(), variable.getStartLine(), variable.getStartChar(),
-				variable.id.getValue(), val);
+		interpreter.setSymbol(variable, variable.id.getValue(), val);
 	}
 }

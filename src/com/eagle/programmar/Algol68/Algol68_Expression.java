@@ -11,7 +11,7 @@ import com.eagle.programmar.Algol68.Expressions.Algol68_BuiltIn;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ConditionalAndExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ConditionalOrExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalNotExpression;
-import com.eagle.programmar.Algol68.Expressions.Algol68_MethodInvocation;
+import com.eagle.programmar.Algol68.Expressions.Algol68_ProcedureCall;
 import com.eagle.programmar.Algol68.Expressions.Algol68_MultiplicativeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_NegativeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ParenthesizedExpression;
@@ -59,7 +59,7 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	// Primary expressions
 
 	public @P(100) Algol68_ArrayInfo arrayInfo;
-	public @P(110) Algol68_MethodInvocation methodInvocation;
+	public @P(110) Algol68_ProcedureCall methodInvocation;
 	public @P(120) Algol68_PreIncrementExpression preIncrementExpression;
 	public @P(130) Algol68_PostIncrementExpression postIncrementExpression;
 	public @P(140) Algol68_NegativeExpression negativeExpression;
@@ -72,14 +72,14 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Algol68_SubscriptExpression subscriptExpression;
-	public @P(510) Algol68_Subfield subfield;
-	public @P(520) Algol68_Power_Expression powerExpression;
-	public @P(530) Algol68_MultiplicativeExpression multiplicativeExpression;
-	public @P(540) Algol68_AdditiveExpression additiveExpression;
-	public @P(550) Algol68_RelationalExpression relationalExpression;
-	public @P(560) Algol68_ConditionalAndExpression conditionalAndExpression;
-	public @P(570) Algol68_ConditionalOrExpression conditionalOrExpression;
-	public @P(580) Algol68_AssignmentExpression assignmentExpression;
-	public @P(590) Algol68_RangeExpression rangeExpression;
+	public @P(1000) Algol68_SubscriptExpression subscriptExpression;
+	public @P(1010) Algol68_Subfield subfield;
+	public @P(1020) Algol68_Power_Expression powerExpression;
+	public @P(1030) Algol68_MultiplicativeExpression multiplicativeExpression;
+	public @P(1040) Algol68_AdditiveExpression additiveExpression;
+	public @P(1050) Algol68_RelationalExpression relationalExpression;
+	public @P(1060) Algol68_ConditionalAndExpression conditionalAndExpression;
+	public @P(1070) Algol68_ConditionalOrExpression conditionalOrExpression;
+	public @P(1080) Algol68_AssignmentExpression assignmentExpression;
+	public @P(1090) Algol68_RangeExpression rangeExpression;
 }

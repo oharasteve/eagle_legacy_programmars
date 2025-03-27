@@ -28,7 +28,7 @@ public class Java_LambdaExpression extends PrimaryOperator
 
 	public static class Java_LambdaVariables extends TokenChooser
 	{
-		public @CHOICE Java_Identifier id;
+		public @CHOICE Java_Identifier XXid;
 
 		public @CHOICE static class Java_LambdaVariableList extends TokenSequence
 		{
@@ -54,7 +54,7 @@ public class Java_LambdaExpression extends PrimaryOperator
 
 	public static class Java_LambdaValue extends TokenChooser
 	{
-		public @CHOICE Java_Expression value;
+		public @CHOICE Java_Expression XXvalue;
 
 		public @FIRST static class Java_LambdaBlock extends TokenSequence
 		{

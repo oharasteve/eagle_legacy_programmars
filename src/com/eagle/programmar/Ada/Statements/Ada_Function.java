@@ -3,12 +3,18 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
+import com.eagle.programmar.Ada.Ada_Syntax;
 import com.eagle.programmar.Ada.Ada_Type;
 import com.eagle.programmar.Ada.Symbols.Ada_Function_Definition;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Symbols.Ada_Variable_Definition;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -18,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_Function extends TokenSequence implements AbstractFunction
+public class Ada_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) Ada_Keyword FUNCTION = new Ada_Keyword("function");
 	public @S(20) Ada_Function_Definition id;
@@ -32,23 +38,44 @@ public class Ada_Function extends TokenSequence implements AbstractFunction
 	public @S(100) @OPT Ada_Identifier_Reference id2;
 	public @S(110) PunctuationSemicolon semicolon;
 
+	public @SKIP CallMetrics _metrics = null;
+
 	public static class Ada_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT SeparatedList<Ada_Parameter, PunctuationSemicolon> parameters;
 		public @S(30) PunctuationRightParen rightParen;
+	}
 
-		public static class Ada_Parameter extends TokenSequence
-		{
-			public @S(10) Ada_Variable_Definition param;
-			public @S(20) PunctuationColon colon;
-			public @S(30) Ada_Type type;
-		}
+	public static class Ada_Parameter extends TokenSequence
+	{
+		public @S(10) Ada_Variable_Definition param;
+		public @S(20) PunctuationColon colon;
+		public @S(30) Ada_Type type;
 	}
 
 	public static class Ada_FunctionReturns extends TokenSequence
 	{
 		public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
 		public @S(20) Ada_Type type;
+	}
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Ada_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), this);
+		}
+
+		// Nothing to do here. Ignore the function definitions
 	}
 }

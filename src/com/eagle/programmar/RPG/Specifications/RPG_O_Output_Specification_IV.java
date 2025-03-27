@@ -13,11 +13,18 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 {
 	public RPG_O_Output_Specification_IV()
 	{
-		spec = new RPG_O_Output_Spec();
-		spec.recordId = new RPG_O_Output_Program_Record_Id_IV();
-		spec.fieldDescr = new RPG_O_Output_Program_Field_Descr_IV();
-		spec.externalRecordId = new RPG_O_Output_External_Record_Id_IV();
-		spec.externalFieldDescr = new RPG_O_Output_External_Field_Descr_IV();
+		spec = new RPG_O_Output_Spec_IV();
+	}
+	
+	public static class RPG_O_Output_Spec_IV extends RPG_O_Output_Spec
+	{
+		public RPG_O_Output_Spec_IV()
+		{
+			XXrecordId = new RPG_O_Output_Program_Record_Id_IV();
+			XXfieldDescr = new RPG_O_Output_Program_Field_Descr_IV();
+			XXexternalRecordId = new RPG_O_Output_External_Record_Id_IV();
+			XXexternalFieldDescr = new RPG_O_Output_External_Field_Descr_IV();
+		}
 	}
 
 	public static class RPG_O_Output_Program_Record_Id_IV extends RPG_O_Output_Program_Record_Id
@@ -38,9 +45,9 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 	{
 		public RPG_O_Output_Program_Record_Id_Piece_IV()
 		{
-			piece1 = new RPG_O_Output_Program_Record_Id_Piece1_IV();
-			piece2 = new RPG_O_Output_Program_Record_Id_Piece2_IV();
-			piece3 = new RPG_O_Output_Program_Record_Id_Piece3_IV();
+			XXpiece1 = new RPG_O_Output_Program_Record_Id_Piece1_IV();
+			XXpiece2 = new RPG_O_Output_Program_Record_Id_Piece2_IV();
+			XXpiece3 = new RPG_O_Output_Program_Record_Id_Piece3_IV();
 		}
 	}
 
@@ -111,9 +118,9 @@ public class RPG_O_Output_Specification_IV extends RPG_O_Output_Specification
 	{
 		public RPG_O_Output_External_Record_Id_Piece_IV()
 		{
-			piece1 = new RPG_O_Output_External_Record_Id_Piece1_IV();
-			piece2 = new RPG_O_Output_External_Record_Id_Piece2_IV();
-			piece3 = new RPG_O_Output_External_Record_Id_Piece3_IV();
+			XXpiece1 = new RPG_O_Output_External_Record_Id_Piece1_IV();
+			XXpiece2 = new RPG_O_Output_External_Record_Id_Piece2_IV();
+			XXpiece3 = new RPG_O_Output_External_Record_Id_Piece3_IV();
 		}
 	}
 

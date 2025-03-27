@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Bash.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
@@ -20,8 +20,8 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 
 	public static class Bash_RelOp extends TokenChooser
 	{
-		public @CHOICE Bash_PunctuationChoice strOp = new Bash_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
-		public @CHOICE Bash_KeywordChoice numOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
+		public @CHOICE Bash_PunctuationChoice XXstrOp = new Bash_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+		public @CHOICE Bash_KeywordChoice XXnumOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 	}
 
 	@Override
@@ -36,22 +36,22 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 			int rightInt = rightValue.forceIntegerValue();
 			switch (operator.getWhich().toString())
 			{
-			case "-eq":
+			case "-eq", "==":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
-			case "-ne":
+			case "-ne", "!=":
 				interpreter.pushBool(leftInt != rightInt);
 				return;
-			case "-lt":
+			case "-lt", "<":
 				interpreter.pushBool(leftInt < rightInt);
 				return;
-			case "-le":
+			case "-le", "<=":
 				interpreter.pushBool(leftInt <= rightInt);
 				return;
-			case "-gt":
+			case "-gt", ">":
 				interpreter.pushBool(leftInt > rightInt);
 				return;
-			case "-ge":
+			case "-ge", ">=":
 				interpreter.pushBool(leftInt >= rightInt);
 				return;
 			default:
@@ -67,7 +67,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 			interpreter.pushBool(leftStr.equals(rightStr));
 			return;
 		case "!=":
-			interpreter.pushBool(! leftStr.equals(rightStr));
+			interpreter.pushBool(!leftStr.equals(rightStr));
 			return;
 		case "<":
 			interpreter.pushBool(leftStr.compareTo(rightStr) < 0);

@@ -24,11 +24,11 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 
 	public static class COBOL_EnvironmentEntry extends TokenChooser
 	{
-		public @CHOICE COBOL_ClassControl classControl;
-		public @CHOICE COBOL_ConfigurationSection configuration;
-		public @CHOICE COBOL_InputOutputSection inputOutput;
-		public @CHOICE COBOL_SpecialNames specialNames;
-		public @CHOICE COBOL_FileControl fileControl;
+		public @CHOICE COBOL_ClassControl XXclassControl;
+		public @CHOICE COBOL_ConfigurationSection XXconfiguration;
+		public @CHOICE COBOL_InputOutputSection XXinputOutput;
+		public @CHOICE COBOL_SpecialNames XXspecialNames;
+		public @CHOICE COBOL_FileControl XXfileControl;
 	}
 
 	public static class COBOL_ClassControl extends TokenSequence
@@ -77,9 +77,9 @@ public class COBOL_EnvironmentDivision extends TokenSequence
 
 	public static class COBOL_IOSectionEntry extends TokenChooser
 	{
-		public @CHOICE COBOL_FileControl fileControl;
-		public @CHOICE COBOL_IOControl ioControl;
-		public @CHOICE COBOL_IOControlSelect selectControl;
+		public @CHOICE COBOL_FileControl XXfileControl;
+		public @CHOICE COBOL_IOControl XXioControl;
+		public @CHOICE COBOL_IOControlSelect XXselectControl;
 	}
 
 	public static class COBOL_IOControl extends TokenSequence

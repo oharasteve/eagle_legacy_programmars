@@ -9,22 +9,35 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_VariableList extends TokenSequence
 {
-	public @S(10) SeparatedList<Python_Variable_or_List, PunctuationComma> vars;
+	public @S(10) SeparatedList<Python_VariableOrList, PunctuationComma> vars;
 	public @S(20) @OPT PunctuationComma comma;
 
-	public static class Python_Variable_or_List extends TokenChooser
+	public static class Python_VariableOrList extends TokenChooser
 	{
-		public @CHOICE Python_Variable var;
+		public @CHOICE Python_Just_Var XXjustVar;
+		public @CHOICE Python_Var_List XXvarList;
+	}
 
-		public @CHOICE static class Python_Var_List extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_VariableList more;
-			public @S(30) PunctuationRightParen rightParen;
-		}
+	public static class Python_Just_Var extends TokenSequence
+	{
+		public @S(10) SeparatedList<Python_VariableAndSubscript,PunctuationPeriod> variable;
+	}
+
+	public static class Python_VariableAndSubscript extends TokenSequence
+	{
+		public @S(10) Python_Variable variable;
+		public @S(20) @OPT Python_Subscript subscript;
+	}
+	
+	public static class Python_Var_List extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_VariableList more;
+		public @S(30) PunctuationRightParen rightParen;
 	}
 }

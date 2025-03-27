@@ -4,7 +4,8 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public abstract class COBOL_AbstractStatement extends TokenSequence
+public abstract class COBOL_AbstractStatement extends TokenSequence implements AbstractStatement
 {
 }

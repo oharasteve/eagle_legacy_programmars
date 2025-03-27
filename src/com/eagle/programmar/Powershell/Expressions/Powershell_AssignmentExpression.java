@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Powershell.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
@@ -23,9 +24,29 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 		if (var.getWhich() instanceof Powershell_VariableExpression)
 		{
 			Powershell_VariableExpression pVar = (Powershell_VariableExpression) var.getWhich();
-			EagleValue value = interpreter.getEagleValue(expr);
-			interpreter._symbolTable.setSymbol(pVar.getFileName(), pVar.getStartLine(), pVar.getStartChar(),
-					pVar.variable.id.getValue(), value);
+			EagleValue newValue;
+			switch (equals.getValue())
+			{
+			case "=":
+				newValue = interpreter.getEagleValue(expr);
+				break;
+			case "+=":
+				int newVal = interpreter.getIntValue(expr);
+				EagleValue oldVar = interpreter.findSymbol(pVar.variable.id.toString());
+				newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
+				break;
+			default:
+				throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());
+			}
+
+			if (pVar.variable.scope != null && pVar.variable.scope.isPresent())
+			{
+				interpreter.setGlobalSymbol(var, pVar.variable.id.getValue(), newValue);
+			}
+			else
+			{
+				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
+			}
 		}
 	}
 }

@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class TCL_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class TCL_Syntax extends EagleSyntax
 
 	public TCL_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		// _continuationChar = "+"; // THIS DOESN'T WORK WELL AT ALL.
 		_extraCharacters = "_";
 		_autoAdvance = false;
@@ -23,10 +25,10 @@ public class TCL_Syntax extends EagleSyntax
 				"--", "&&", "||", "<=", ">=", "<>", "!=", "=="
 		};
 
-		addReservedWords(keywords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private String[] keywords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"and", "break", "not", "or", "puts", "set",
 	};
 }

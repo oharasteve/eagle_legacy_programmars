@@ -3,14 +3,15 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Javascript_Program extends EagleLanguage implements EagleRunnable
+public class Javascript_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String JAVASCRIPT = "Javascript";
 
@@ -29,18 +30,33 @@ public class Javascript_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Javascript_Element extends TokenChooser
 	{
-		public @CHOICE Javascript_Comment comment;
-		public @CHOICE Javascript_Function function;
-		public @CHOICE Javascript_Statement statement;
-		public @CHOICE Javascript_Class clss;
+		public @CHOICE Javascript_Comment XXcomment;
+		public @CHOICE Javascript_Function XXfunction;
+		public @CHOICE Javascript_Statement XXstatement;
+		public @CHOICE Javascript_Class XXclass;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the method definitions
 		for (Javascript_Element element : elements._elements)
 		{
-			interpreter.tryToInterpret(element.getWhich());
+			if (element.getWhich() instanceof Javascript_Function)
+			{
+				Javascript_Function func = (Javascript_Function) element.getWhich();
+				Javascript_Function_Definition functionName = func.implementation.functionName;
+				if (functionName != null && functionName.isPresent())
+				{
+					interpreter.addFunction(functionName.getValue(), func);
+				}
+			}
+		}
+
+		// Second pass, run everything
+		for (Javascript_Element element : elements._elements)
+		{
+			interpreter.tryToInterpret(element);
 		}
 	}
 }

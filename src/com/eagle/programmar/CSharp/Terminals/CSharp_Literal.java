@@ -5,6 +5,7 @@ package com.eagle.programmar.CSharp.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CSharp_Literal extends TerminalLiteralToken
@@ -33,5 +34,13 @@ public class CSharp_Literal extends TerminalLiteralToken
 		}
 
 		return genericLiteral(lines, "\"", true, '\\', false, false);
+	}
+	
+	public static CSharp_Literal generateExpression(String value, AbstractToken source)
+	{
+		CSharp_Literal lit = new CSharp_Literal();
+		lit.setValue(value);
+		lit.setTransformationSource(source);
+		return lit;
 	}
 }

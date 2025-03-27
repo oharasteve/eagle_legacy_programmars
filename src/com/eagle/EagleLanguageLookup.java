@@ -3,7 +3,7 @@
 
 package com.eagle;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.LanguageLookup;
 import com.eagle.programmar.AWK.AWK_Program;
 import com.eagle.programmar.Ada.Ada_Program;
@@ -49,6 +49,7 @@ import com.eagle.programmar.Python.Python2_Program;
 import com.eagle.programmar.Python.Python3_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_III_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_IV_Program;
+import com.eagle.programmar.Rexx.Rexx_Program;
 import com.eagle.programmar.Ruby.Ruby_Program;
 import com.eagle.programmar.Rust.Rust_Program;
 import com.eagle.programmar.SQL.SQL_Program;
@@ -59,7 +60,7 @@ import com.eagle.programmar.XML.XML_Program;
 
 public class EagleLanguageLookup extends LanguageLookup
 {
-	public void add(String name, Class<? extends EagleLanguage> lang, String... suffixes)
+	public void add(String name, Class<? extends AbstractLanguage> lang, String... suffixes)
 	{
 		addLanguage(name, lang);
 		for (String suffix : suffixes)
@@ -95,7 +96,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Gupta_Program.GUPTA, Gupta_Program.class);
 		add(HTML_Program.HTML, HTML_Program.class, ".htm", ".html");
 		add(IBMASM_Program.IBMASM, IBMASM_Program.class);
-		add(IntelASM_Program.INTELASM, IntelASM_Program.class);
+		add(IntelASM_Program.INTELASM, IntelASM_Program.class, ".asm");
 		add(Java_Program.JAVA, Java_Program.class, ".java");
 		add(JavaP_Program.JAVAP, JavaP_Program.class, ".javap");
 		add(Javascript_Program.JAVASCRIPT, Javascript_Program.class, ".js");
@@ -113,6 +114,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Property_Program.PROPERTY, Property_Program.class, ".properties");
 		add(Python2_Program.PYTHON2, Python2_Program.class);
 		add(Python3_Program.PYTHON3, Python3_Program.class, ".py");
+		add(Rexx_Program.REXX, Rexx_Program.class, ".rexx");
 		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
 		add(Ruby_Program.RUBY, Ruby_Program.class, ".ruby");

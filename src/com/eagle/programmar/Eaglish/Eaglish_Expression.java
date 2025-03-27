@@ -5,11 +5,9 @@ package com.eagle.programmar.Eaglish;
 
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_AdditiveExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_BuiltInExpression;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_BuiltinFunction;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionStringMatch;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalAndExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalOrExpression;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_FunctionCall;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_MultiplicativeExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_NegativeExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_NotExpresion;
@@ -17,6 +15,8 @@ import com.eagle.programmar.Eaglish.Expressions.Eaglish_ParenthesizedExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_RelationalExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_SubscriptExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_VariableExpression;
+import com.eagle.programmar.Eaglish.Functions.Eaglish_FunctionCall;
+import com.eagle.programmar.Eaglish.Functions.Eaglish_LengthFunction;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Literal;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -52,7 +52,7 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Eaglish_BuiltinFunction builtinFunction;
+	public @P(100) Eaglish_LengthFunction lengthFunction;
 	public @P(110) Eaglish_FunctionCall funcCall;
 	public @P(120) Eaglish_NegativeExpression negativeExpr;
 	public @P(130) Eaglish_NotExpresion notExpr;
@@ -63,11 +63,11 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) Eaglish_SubscriptExpression subscrExpr;
-	public @P(510) Eaglish_MultiplicativeExpression multExpr;
-	public @P(520) Eaglish_AdditiveExpression addExpr;
-	public @P(530) Eaglish_RelationalExpression relExpr;
-	public @P(540) Eaglish_ConditionStringMatch matchExpr;
-	public @P(550) Eaglish_ConditionalAndExpression andExpr;
-	public @P(560) Eaglish_ConditionalOrExpression orExpr;
+	public @P(1000) Eaglish_SubscriptExpression subscrExpr;
+	public @P(1010) Eaglish_MultiplicativeExpression multExpr;
+	public @P(1020) Eaglish_AdditiveExpression addExpr;
+	public @P(1030) Eaglish_RelationalExpression relExpr;
+	public @P(1040) Eaglish_ConditionStringMatch matchExpr;
+	public @P(1050) Eaglish_ConditionalAndExpression andExpr;
+	public @P(1060) Eaglish_ConditionalOrExpression orExpr;
 }

@@ -28,7 +28,7 @@ public class BNF_Expression extends TokenSequence
 
 	public static class BNF_ExpressionTerm extends TokenChooser
 	{
-		public @CHOICE BNF_Literal literal;
+		public @CHOICE BNF_Literal XXliteral;
 
 		public @CHOICE static class BNF_Rulename extends TokenSequence
 		{

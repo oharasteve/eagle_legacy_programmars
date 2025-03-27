@@ -3,8 +3,10 @@
 
 package com.eagle.programmar.Algol68.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -21,7 +23,22 @@ public class Algol68_ParenthesizedExpression extends PrimaryOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Algol68_Expression expr = expressions.first();
-		interpreter.tryToInterpret(expr);
+		int numArgs = expressions.getPrimaryCount();
+		if (numArgs == 1)
+		{
+			Algol68_Expression expr = expressions.first();
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.pushEagleValue(val);
+		}
+		else
+		{
+			EagleArray array = new EagleArray();
+			for (int i = 0; i < numArgs; i++)
+			{
+				EagleValue val = interpreter.getEagleValue(expressions.getPrimaryElement(i));
+				array.addValue(val);
+			}
+			interpreter.pushEagleValue(array);
+		}
 	}
 }

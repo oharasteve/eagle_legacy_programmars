@@ -3,12 +3,15 @@
 
 package com.eagle.programmar.Fortran;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Fortran.Statements.Fortran_Function;
+import com.eagle.programmar.Fortran.Statements.Fortran_Subroutine;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 
-public class Fortran_Program extends EagleLanguage implements EagleRunnable
+public class Fortran_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String FORTRAN = "Fortran";
 
@@ -28,9 +31,26 @@ public class Fortran_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (Fortran_Statement elt : statements._elements)
+		// First pass, just collect all the FUNCTION definitions
+		for (Fortran_Statement stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			AbstractToken which = stmt.getWhich();
+			if (which instanceof Fortran_Function)
+			{
+				Fortran_Function fn = (Fortran_Function) which;
+				interpreter.addFunction(fn.fnName.getValue(), fn);
+			}
+			else if (which instanceof Fortran_Subroutine)
+			{
+				Fortran_Subroutine sub = (Fortran_Subroutine) which;
+				interpreter.addFunction(sub.subName.getValue(), sub);
+			}
+		}
+
+		// Second pass, execute the program
+		for (Fortran_Statement stmt : statements._elements)
+		{
+			interpreter.tryToInterpret(stmt);
 		}
 	}
 }

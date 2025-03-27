@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.CMacro.Symbols;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.math.StringValue;
+import com.eagle.math.EagleString;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Identifier;
 import com.eagle.tokens.ReferenceInterface;
 
@@ -15,8 +15,8 @@ public class CMacro_Identifier_Reference extends CMacro_Identifier implements Re
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(_id.toString());
-		if (value == null) value = new StringValue(""); // Treat undefined symbols as blank
+		EagleValue value = interpreter.findSymbol(_id.toString());
+		if (value == null) value = new EagleString(""); // Treat undefined symbols as blank
 		interpreter.pushEagleValue(value);
 	}
 }

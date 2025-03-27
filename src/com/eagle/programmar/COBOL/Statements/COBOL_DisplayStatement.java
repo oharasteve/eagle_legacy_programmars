@@ -3,16 +3,14 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.math.EagleValue;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -55,9 +53,9 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 
 		public static class COBOL_DisplayOptions extends TokenChooser
 		{
-			public @CHOICE COBOL_DisplayLine line;
-			public @CHOICE COBOL_DisplayColumn column;
-			public @CHOICE PunctuationComma comma;
+			public @CHOICE COBOL_DisplayLine XXline;
+			public @CHOICE COBOL_DisplayColumn XXcolumn;
+			public @CHOICE PunctuationComma XXcomma;
 
 			public @CHOICE static class COBOL_DisplayUpon extends TokenSequence
 			{
@@ -120,16 +118,14 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			for (AbstractToken token : exprs._elements)
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < exprs.getPrimaryCount(); i++)
 			{
-				if (token instanceof COBOL_Expression)
-				{
-					COBOL_Expression expr = (COBOL_Expression) token;
-					EagleValue result = interpreter.getEagleValue(expr);
-					System.out.print(result.toString());
-				}
+				COBOL_Expression expr = exprs.getPrimaryElement(i);
+				String val = interpreter.getStrValue(expr);
+				sb.append(val);
 			}
-			System.out.println();
+			System.out.println(sb.toString());
 		}
 	}
 

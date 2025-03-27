@@ -21,7 +21,7 @@ public class CMacro_Undef_Statement extends TokenSequence implements CMacro_Proc
 	{
 		String id = var.getValue();
 		// System.out.println("#undef " + id + " ...");
-		preprocessor._symbolTable.removeSymbols(id);
+		preprocessor._symbolTable.removeSymbol(id);
 		return true;
 	}
 }

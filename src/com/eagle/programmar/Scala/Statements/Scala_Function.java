@@ -3,13 +3,18 @@
 
 package com.eagle.programmar.Scala.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Scala.Scala_Statement;
+import com.eagle.programmar.Scala.Scala_Syntax;
 import com.eagle.programmar.Scala.Scala_Type;
 import com.eagle.programmar.Scala.Symbols.Scala_Function_Definition;
 import com.eagle.programmar.Scala.Symbols.Scala_Variable_Definition;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -18,15 +23,18 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Scala_Function extends TokenSequence implements EagleRunnable
+public class Scala_Function extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
 {
-	public @S(10) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
-	public @S(20) Scala_Function_Definition id;
-	public @S(30) @OPT Scala_FunctionParams params;
-	public @S(40) @OPT Scala_FunctionReturns returnType;
-	public @S(50) PunctuationEquals equals;
-	public @S(60) Scala_Statement stmt;
+	public @S(10) @OPT Scala_Keyword OVERRIDE = new Scala_Keyword("override");
+	public @S(20) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
+	public @S(30) Scala_Function_Definition id;
+	public @S(40) @OPT Scala_FunctionParams params;
+	public @S(50) @OPT Scala_FunctionReturns returnType;
+	public @S(60) PunctuationEquals equals;
+	public @S(70) Scala_Statement stmt;
 
+	public @SKIP CallMetrics _metrics = null;
+	
 	public static class Scala_FunctionReturns extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
@@ -36,28 +44,39 @@ public class Scala_Function extends TokenSequence implements EagleRunnable
 	public static class Scala_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<Scala_FunctionParamater, PunctuationComma> parameters;
+		public @S(20) @OPT SeparatedList<Scala_FunctionParameter, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	public static class Scala_FunctionParamater extends TokenSequence
+	public static class Scala_FunctionParameter extends TokenSequence
 	{
 		public @S(10) Scala_Variable_Definition var;
 		public @S(20) PunctuationColon colon;
 		public @S(30) Scala_Type type;
 	}
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Scala_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), this);
+		}
+
 		if (id.getValue().equals("main"))
 		{
 			// Run the main program
-			interpreter.tryToInterpret(stmt.getWhich());
-		}
-		else
-		{
-			throw new RuntimeException("Cannot run " + id.getValue() + " diectly.");
+			interpreter.callingFunction("main", this);
+			interpreter.tryToInterpret(stmt);
+			interpreter.completedFunction("main", this);
 		}
 	}
 }

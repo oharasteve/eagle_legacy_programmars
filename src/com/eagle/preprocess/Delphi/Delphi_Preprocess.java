@@ -19,7 +19,7 @@ import com.eagle.tokens.terminals.TerminalEndOfLine;
 public class Delphi_Preprocess extends EagleInclude
 {
 	private FindIncludeFile _findInclude;
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private static final String StartInclude = "{$I ";
 	private static final String EndInclude = "}";
@@ -38,7 +38,8 @@ public class Delphi_Preprocess extends EagleInclude
 		{
 			System.out.println("===================================================");
 			System.out.println(
-					"================ Pre-processing " + lines.getFileName() + " lines=" + lines.numberLines());
+					"================ Pre-processing " + lines.getFileName() +
+					" lines=" + lines.numberLines());
 			System.out.println();
 		}
 
@@ -79,7 +80,7 @@ public class Delphi_Preprocess extends EagleInclude
 						try
 						{
 							String includeFile = trimmedLine.substring(StartInclude.length(), ec);
-							EagleFileReader incFile = _findInclude.findFile(null, includeFile);
+							EagleFileReader incFile = _findInclude.findIncludeFile(null, includeFile);
 							incFile.setFileName(includeFile);
 							preprocessFile(parser, incFile);
 						}

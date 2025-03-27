@@ -3,17 +3,18 @@
 
 package com.eagle.programmar.Template.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Template.Template_Expression;
 import com.eagle.programmar.Template.Symbols.Template_Identifier_Definition;
 import com.eagle.programmar.Template.Terminals.Template_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Template_DataStatement extends TokenSequence implements EagleRunnable
+public class Template_DataStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Template_Keyword DATA = new Template_Keyword("data");
 	public @S(20) Template_Identifier_Definition var;
@@ -25,7 +26,6 @@ public class Template_DataStatement extends TokenSequence implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
-				value);
+		interpreter.setSymbol(var, var.getValue(), value);
 	}
 }

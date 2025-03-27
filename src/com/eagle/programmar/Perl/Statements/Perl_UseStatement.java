@@ -8,6 +8,7 @@ import com.eagle.programmar.Perl.Symbols.Perl_Use_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
+import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -36,7 +37,7 @@ public class Perl_UseStatement extends TokenSequence
 
 			public static class Perl_MoreUse extends TokenSequence
 			{
-				public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
+				public @S(10) Perl_PunctuationChoice backSlash = new Perl_PunctuationChoice("\\", "::");
 				public @S(20) Perl_Identifier_Reference id;
 			}
 		}

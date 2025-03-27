@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Go_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,44 +17,15 @@ public class Go_Syntax extends EagleSyntax
 
 	public Go_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				":=", "==", "!=", "<=", ">=", "++", "--", "+=", "-=", "*=", "/-", "!~"
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Go_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://www.tutorialandexample.com/keywords-in-golang
-	private static String[] reservedWords = new String[] {
-			"break",
-			"case",
-			"chan",
-			"const",
-			"continue",
-			"default",
-			"defer",
-			"else",
-			"fallthrough",
-			"for",
-			"func",
-			"go",
-			"goto",
-			"if",
-			"import",
-			"interface",
-			"map",
-			"package",
-			"range",
-			"return",
-			"select",
-			"struct",
-			"switch",
-			"type",
-			"var",
-	};
 
 	public static class Go_Multiline_Syntax extends Go_Syntax
 	{

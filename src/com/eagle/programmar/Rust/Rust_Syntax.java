@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Rust_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class Rust_Syntax extends EagleSyntax
 
 	public Rust_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
@@ -44,61 +46,6 @@ public class Rust_Syntax extends EagleSyntax
 				"||"
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Rust_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://doc.rust-lang.org/reference/keywords.html
-	private static String[] reservedWords = new String[] {
-			"Self",
-			"abstract",
-			"as",
-			"async",
-			"await",
-			"become",
-			"box",
-			"break",
-			"const",
-			"continue",
-			"crate",
-			"do",
-			"dyn",
-			"else",
-			"enum",
-			"extern",
-			"false",
-			"final",
-			"fn",
-			"for",
-			"if",
-			"impl",
-			"in",
-			"let",
-			"loop",
-			"macro",
-			"match",
-			"mod",
-			"move",
-			"mut",
-			"override",
-			"priv",
-			"pub",
-			"ref",
-			"return",
-			"self",
-			"static",
-			"struct",
-			"super",
-			"trait",
-			"true",
-			"try",
-			"type",
-			"typeof",
-			"unsafe",
-			"unsized",
-			"use",
-			"virtual",
-			"where",
-			"while",
-			"yield",
-	};
 }

@@ -10,13 +10,14 @@ import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.CSharp_Variable;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_ForEachStatement extends TokenSequence implements EagleScopeInterface
+public class CSharp_ForEachStatement extends TokenSequence implements AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @NEWLINE CSharp_Keyword FOREACH = new CSharp_Keyword("foreach");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -28,7 +29,7 @@ public class CSharp_ForEachStatement extends TokenSequence implements EagleScope
 	public @S(80) @OPT CSharp_Comment comment;
 	public @S(90) CSharp_Statement action;
 
-	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
 	public EagleScope getScope()

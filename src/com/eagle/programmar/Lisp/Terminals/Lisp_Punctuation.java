@@ -17,4 +17,9 @@ public class Lisp_Punctuation extends TerminalPunctuationToken
 	{
 		super(punct);
 	}
+
+	public Lisp_Punctuation(String punct)
+	{
+		super(punct);
+	}
 }

@@ -5,6 +5,8 @@ package com.eagle.programmar.IntelASM;
 
 import com.eagle.programmar.IntelASM.Directives.IntelASM_CpuDirective;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_DefineDirective;
+import com.eagle.programmar.IntelASM.Directives.IntelASM_EquDirective;
+import com.eagle.programmar.IntelASM.Directives.IntelASM_GlobalDirective;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_IncludeDirective;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_ListDirective;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_MacroDirective;
@@ -21,12 +23,14 @@ public class IntelASM_Directive extends TokenSequence
 
 	public static class IntelASM_DirectiveList extends TokenChooser
 	{
-		public @CHOICE IntelASM_CpuDirective cpuDirective;
-		public @CHOICE IntelASM_DefineDirective defineDirective;
-		public @CHOICE IntelASM_IncludeDirective includeDirective;
-		public @CHOICE IntelASM_ListDirective listDirective;
-		public @CHOICE IntelASM_MacroDirective macroDirective;
-		public @CHOICE IntelASM_SectionDirective sectionDirective;
-		public @CHOICE IntelASM_TitleDirective titleInstruction;
+		public @CHOICE IntelASM_CpuDirective XXcpuDirective;
+		public @CHOICE IntelASM_DefineDirective XXdefineDirective;
+		public @CHOICE IntelASM_EquDirective XXequDirective;
+		public @CHOICE IntelASM_GlobalDirective XXglobalDirective;
+		public @CHOICE IntelASM_IncludeDirective XXincludeDirective;
+		public @CHOICE IntelASM_ListDirective XXlistDirective;
+		public @CHOICE IntelASM_MacroDirective XXmacroDirective;
+		public @CHOICE IntelASM_SectionDirective XXsectionDirective;
+		public @CHOICE IntelASM_TitleDirective XXtitleInstruction;
 	}
 }

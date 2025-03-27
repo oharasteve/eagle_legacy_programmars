@@ -9,12 +9,13 @@ import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class Powershell_TryStatement extends TokenSequence
+public class Powershell_TryStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Powershell_Keyword TRY = new Powershell_Keyword("Try");
 	public @S(20) @OPT Powershell_EndOfLine eoln1;

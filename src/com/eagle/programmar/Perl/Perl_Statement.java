@@ -3,14 +3,16 @@
 
 package com.eagle.programmar.Perl;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Statements.Perl_ClassStatement;
+import com.eagle.programmar.Perl.Statements.Perl_ExpressionStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForEachStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForStatement;
 import com.eagle.programmar.Perl.Statements.Perl_IfStatement;
 import com.eagle.programmar.Perl.Statements.Perl_NamespaceStatement;
+import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Statements.Perl_SwitchStatement;
 import com.eagle.programmar.Perl.Statements.Perl_TraitStatement;
 import com.eagle.programmar.Perl.Statements.Perl_TryStatement;
@@ -23,40 +25,19 @@ import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Perl_Statement extends TokenChooser
 {
-	public @FIRST Perl_Comment comment;
-	public @CHOICE Perl_Include include;
-	public @CHOICE Perl_FunctionDefinition function;
-	public @CHOICE Perl_NamespaceStatement namespaceStatement;
-	public @CHOICE Perl_ClassStatement classStatement;
-	public @CHOICE Perl_Label label;
-	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon semicolon;
-
-	public @LAST static class Perl_ExpressionStatement extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) Perl_Expression expr;
-		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
-		public @S(30) @OPT PunctuationSemicolon semicolon;
-		public @S(40) @OPT TokenList<Perl_Comment> comments;
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(expr.getWhich());
-		}
-	}
-
-	public @CHOICE static class Perl_StatementBlock extends TokenSequence
-	{
-		public @S(10) PunctuationLeftBrace leftBrace;
-		public @S(20) @OPT TokenList<Perl_StatementOrComment> statements;
-		public @S(30) PunctuationRightBrace rightBrace;
-	}
+	public @FIRST Perl_Comment XXcomment;
+	public @CHOICE Perl_Include XXinclude;
+	public @CHOICE Perl_FunctionDefinition XXfunction;
+	public @CHOICE Perl_NamespaceStatement XXnamespaceStatement;
+	public @CHOICE Perl_ClassStatement XXclassStatement;
+	public @CHOICE Perl_Label XXlabel;
+	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon XXsemicolon;
+	public @LAST Perl_ExpressionStatement XXexpressionStatement; 
+	public @CHOICE Perl_StatementBlock XXstatementBlock;
 
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence
 	{
@@ -73,7 +54,7 @@ public class Perl_Statement extends TokenChooser
 		}
 	}
 
-	public @CHOICE static class Perl_SimpleStatement extends TokenSequence implements EagleRunnable
+	public @CHOICE static class Perl_SimpleStatement extends TokenSequence implements EagleRunnableWithResult
 	{
 		public @S(10) Perl_StatementList statement;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
@@ -81,21 +62,20 @@ public class Perl_Statement extends TokenChooser
 		public @S(40) @OPT TokenList<Perl_Comment> comments;
 
 		@Override
-		public void interpret(EagleInterpreter interpreter)
+		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
-			interpreter.tryToInterpret(statement.getWhich());
+			return interpreter.tryToInterpret(statement);
 		}
 	}
 
 	public @CHOICE static class Perl_CompundStatement extends TokenChooser
 	{
-		public @CHOICE Perl_ForStatement forStatement;
-		public @CHOICE Perl_ForEachStatement forEachStatement;
-		public @CHOICE Perl_IfStatement ifStatement;
-		public @CHOICE Perl_SwitchStatement switchStatement;
-		public @CHOICE Perl_TraitStatement traitStatement;
-		public @CHOICE Perl_TryStatement tryStatement;
-		public @CHOICE Perl_WhileStatement whileStatement;
+		public @CHOICE Perl_ForStatement XXforStatement;
+		public @CHOICE Perl_ForEachStatement XXforEachStatement;
+		public @CHOICE Perl_IfStatement XXifStatement;
+		public @CHOICE Perl_SwitchStatement XXswitchStatement;
+		public @CHOICE Perl_TraitStatement XXtraitStatement;
+		public @CHOICE Perl_TryStatement XXtryStatement;
+		public @CHOICE Perl_WhileStatement XXwhileStatement;
 	}
-
 }

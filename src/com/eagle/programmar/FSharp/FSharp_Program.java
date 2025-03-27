@@ -3,12 +3,15 @@
 
 package com.eagle.programmar.FSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Simple_Statement;
+import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
+import com.eagle.programmar.FSharp.Statements.FSharp_Function;
 import com.eagle.tokens.TokenList;
 
-public class FSharp_Program extends EagleLanguage implements EagleRunnable
+public class FSharp_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String FSHARP = "FSharp";
 
@@ -28,9 +31,28 @@ public class FSharp_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		for (FSharp_Statement stmt : elements._elements)
+		// First pass, just collect all the method definitions
+		for (FSharp_Statement element : elements._elements)
 		{
-			interpreter.tryToInterpret(stmt.statementOrComment.getWhich());
+			if (element.statementOrComment.getWhich() instanceof FSharp_Statement_List)
+			{
+				FSharp_Statement_List statements = (FSharp_Statement_List) element.statementOrComment.getWhich();
+				for (int i = 0; i < statements.statements.getPrimaryCount(); i++)
+				{
+					FSharp_Simple_Statement stmt = statements.statements.getPrimaryElement(i);
+					if (stmt.getWhich() instanceof FSharp_Function)
+					{
+						FSharp_Function func = (FSharp_Function) stmt.getWhich();
+						interpreter.addFunction(func.id.getValue(), func);
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost class
+		for (FSharp_Statement element : elements._elements)
+		{
+			interpreter.tryToInterpret(element.statementOrComment.getWhich());
 		}
 	}
 }

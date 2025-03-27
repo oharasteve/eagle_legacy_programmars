@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
-import com.eagle.math.IntegerValue;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
@@ -30,16 +30,13 @@ public class Rust_Data extends TokenSequence implements EagleRunnable
 		public @S(20) Rust_Expression expr;
 	}
 
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (init.isPresent())
 		{
-			int x = interpreter.getIntValue(init.expr);
-			IntegerValue val = new IntegerValue(x);
-			interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(),
-					var.getValue(), val);
+			EagleValue val = interpreter.getEagleValue(init.expr);
+			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
 }

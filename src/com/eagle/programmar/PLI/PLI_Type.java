@@ -17,11 +17,12 @@ import com.eagle.tokens.punctuation.PunctuationStar;
 
 public class PLI_Type extends TokenChooser
 {
-	public @CHOICE PunctuationStar star;
+	public @CHOICE PunctuationStar XXstar;
 
 	public @CHOICE static class PLI_BaseType extends TokenChooser
 	{
-		public @CHOICE PLI_KeywordChoice base = new PLI_KeywordChoice("COMPLEX", "FILE", "PRINT", "UNION", "VARYING");
+		public @CHOICE PLI_KeywordChoice XXbase = new PLI_KeywordChoice(
+				"COMPLEX", "FILE", "PRINT", "UNION", "VARYING");
 
 		public @CHOICE static class PLI_TypeCharacter extends TokenSequence
 		{
@@ -90,7 +91,7 @@ public class PLI_Type extends TokenChooser
 
 		public static class PLI_TypeSizeContents extends TokenChooser
 		{
-			public @CHOICE PunctuationStar star;
+			public @CHOICE PunctuationStar XXstar;
 
 			public @CHOICE static class PLI_TypeSizeNormal extends TokenSequence
 			{

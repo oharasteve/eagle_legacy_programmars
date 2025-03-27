@@ -3,20 +3,21 @@
 
 package com.eagle.programmar.Rust.Statements;
 
-import com.eagle.programmar.Rust.Rust_Expression;
-import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.tokens.SeparatedList;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Rust.Functions.Rust_MethodInvocation;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Rust_FunctionCall extends TokenSequence
+public class Rust_FunctionCall extends TokenSequence implements EagleRunnable, AbstractStatement
 {
-	public @S(10) Rust_Variable methodName;
-	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
-	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) @OPT PunctuationSemicolon semicolon;
+	public @S(10) Rust_MethodInvocation method;
+	public @S(20) @OPT PunctuationSemicolon semicolon;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(method);
+	}
 }

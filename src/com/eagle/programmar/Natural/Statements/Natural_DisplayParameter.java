@@ -19,8 +19,8 @@ public class Natural_DisplayParameter extends TokenSequence
 
 	public static class Natural_DisplayParameterContents extends TokenChooser
 	{
-		public @CHOICE Natural_DisplayParametersAD parameterAD;
-		public @CHOICE Natural_DisplayParametersCD parameterCD;
+		public @CHOICE Natural_DisplayParametersAD XXparameterAD;
+		public @CHOICE Natural_DisplayParametersCD XXparameterCD;
 
 		public @CHOICE static class NaturalDisplayParameterFieldRepresentation extends TokenSequence
 		{

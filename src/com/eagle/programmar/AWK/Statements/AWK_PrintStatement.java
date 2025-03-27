@@ -3,13 +3,14 @@
 
 package com.eagle.programmar.AWK.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -18,10 +19,10 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 	public @S(10) @DOC("#print") AWK_KeywordChoice PRINT = new AWK_KeywordChoice("print", "printf");
 	public @S(20) AWK_PrintParameters param;
 
-	public static class AWK_PrintParameters extends TokenChooser
+	public static class AWK_PrintParameters extends TokenChooser implements AbstractStatement
 	{
-		public @FIRST AWK_Print_WithParens withParens;
-		public @CHOICE AWK_Print_NoParens noParens;
+		public @FIRST AWK_Print_WithParens XXwithParens;
+		public @CHOICE AWK_Print_NoParens XXnoParens;
 	}
 
 	public static class AWK_Print_WithParens extends TokenSequence
@@ -53,10 +54,13 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 
 		String result = interpreter.getStrValue(args.expr);
 		System.out.print(result);
-		for (AWK_MoreArguments nxt : args.more._elements)
+		if (args.more != null)
 		{
-			result = interpreter.getStrValue(nxt.expr);
-			System.out.print(result);
+			for (AWK_MoreArguments nxt : args.more._elements)
+			{
+				result = interpreter.getStrValue(nxt.expr);
+				System.out.print(result);
+			}
 		}
 		System.out.println();
 	}

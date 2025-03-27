@@ -24,7 +24,7 @@ public class COBOL_StartStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_StartRelOp extends TokenChooser
 	{
-		public @CHOICE COBOL_PunctuationChoice operator = new COBOL_PunctuationChoice("<=", ">=", "<", ">");
+		public @CHOICE COBOL_PunctuationChoice XXoperator = new COBOL_PunctuationChoice("<=", ">=", "<", ">");
 
 		public @CHOICE static class COBOL_StartOper2 extends TokenSequence
 		{

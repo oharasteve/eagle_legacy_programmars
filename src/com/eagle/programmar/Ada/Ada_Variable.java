@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Ada;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
@@ -32,7 +32,7 @@ public class Ada_Variable extends TokenSequence implements EagleRunnable, Abstra
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ada_Identifier_Reference which = vars.first();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
+		EagleValue value = interpreter.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}
 }

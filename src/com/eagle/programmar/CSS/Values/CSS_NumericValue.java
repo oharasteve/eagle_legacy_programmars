@@ -18,8 +18,8 @@ public class CSS_NumericValue extends TokenSequence
 
 	public static class CSS_NumericSuffix extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice units = new CSS_KeywordChoice("deg", "em", "in", "px", "s", "vw");
-		public @CHOICE CSS_Punctuation percent = new CSS_Punctuation('%');
+		public @CHOICE CSS_KeywordChoice XXunits = new CSS_KeywordChoice("deg", "em", "in", "px", "s", "vw");
+		public @CHOICE CSS_Punctuation XXpercent = new CSS_Punctuation('%');
 	}
 
 	public static class CSS_SlashNumber extends TokenSequence

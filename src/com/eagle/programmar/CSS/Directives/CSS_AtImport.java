@@ -21,8 +21,8 @@ public class CSS_AtImport extends TokenSequence
 
 	public static class CSS_ImportWhat extends TokenChooser
 	{
-		public @FIRST CSS_URL_Value urlValue;
-		public @CHOICE CSS_FileName fileName;
-		public @CHOICE CSS_Literal literal;
+		public @FIRST CSS_URL_Value XXurlValue;
+		public @CHOICE CSS_FileName XXfileName;
+		public @CHOICE CSS_Literal XXliteral;
 	}
 }

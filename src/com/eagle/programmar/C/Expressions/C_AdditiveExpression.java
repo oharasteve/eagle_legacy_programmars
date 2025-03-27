@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.C.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,18 +19,34 @@ public class C_AdditiveExpression extends PrecedenceOperator implements EagleRun
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		int rightSide = interpreter.getIntValue(right);
+		if (leftValue.isString())
 		{
-		case "+":
-			interpreter.pushInt(leftValue + rightValue);
-			break;
-		case "-":
-			interpreter.pushInt(leftValue - rightValue);
-			break;
-		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			String leftSide = leftValue.forceStringValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushStr(leftSide.substring(rightSide));
+				break;
+			default:
+				throw new RuntimeException("Unexpected string additive operator: " + operator);
+			}
+		}
+		else
+		{
+			int leftSide = leftValue.forceIntegerValue();
+			switch (operator.toString())
+			{
+			case "+":
+				interpreter.pushInt(leftSide + rightSide);
+				break;
+			case "-":
+				interpreter.pushInt(leftSide - rightSide);
+				break;
+			default:
+				throw new RuntimeException("Unexpected numeric additive operator: " + operator);
+			}
 		}
 	}
 }

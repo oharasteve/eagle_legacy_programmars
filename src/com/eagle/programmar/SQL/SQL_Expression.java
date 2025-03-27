@@ -70,9 +70,9 @@ public class SQL_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(500) SQL_MultiplicativeExpression multiplicativeExpression;
-	public @P(510) SQL_AdditiveExpression additiveExpression;
-	public @P(520) SQL_RelationalExpression relationalExpression;
-	public @P(530) SQL_AndExpression andExpression;
-	public @P(540) SQL_OrExpression orExpression;
+	public @P(1000) SQL_MultiplicativeExpression multiplicativeExpression;
+	public @P(1010) SQL_AdditiveExpression additiveExpression;
+	public @P(1020) SQL_RelationalExpression relationalExpression;
+	public @P(1030) SQL_AndExpression andExpression;
+	public @P(1040) SQL_OrExpression orExpression;
 }

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CMacro.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CMacro.CMacroFunctionParens;
 import com.eagle.programmar.CMacro.Symbols.CMacro_Identifier_Reference;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Keyword;
@@ -34,13 +34,13 @@ public class CMacro_FunctionCall extends PrimaryOperator implements EagleRunnabl
 		{
 			throw new RuntimeException("Unexpected token: " + which.toString());
 		}
-		boolean val = interpreter._symbolTable.isDefined(name);
+		boolean val = interpreter.isSymbolDefined(name);
 		interpreter.pushBool(val);
 	}
 
 	public static class CMacro_FunctionType extends TokenChooser
 	{
-		public @CHOICE CMacro_Identifier_Reference variable;
-		public @CHOICE CMacroFunctionParens params;
+		public @CHOICE CMacro_Identifier_Reference XXvariable;
+		public @CHOICE CMacroFunctionParens XXparams;
 	}
 }

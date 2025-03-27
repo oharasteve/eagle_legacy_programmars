@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Bash.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class Bash_LogicalNotExpression extends PrimaryOperator implements EagleR
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class PLI_Signal extends TokenChooser
 {
-	public @CHOICE PLI_KeywordChoice which = new PLI_KeywordChoice(PLI_Signals.signals);
+	public @CHOICE PLI_KeywordChoice XXwhich = new PLI_KeywordChoice(PLI_Signals.signals);
 
 	public @CHOICE static class PLI_OnEndFile extends TokenSequence
 	{

@@ -21,18 +21,18 @@ import com.eagle.tokens.TokenChooser;
 
 public class JavaP_Statement extends TokenChooser
 {
-	public @CHOICE JavaP_BootstrapMethods bootstrapMethods;
-	public @CHOICE JavaP_Classes classes;
-	public @CHOICE JavaP_Classfile classfile;
-	public @CHOICE JavaP_CompiledFrom compiledFrom;
-	public @CHOICE JavaP_ConstantPool constantPool;
-	public @CHOICE JavaP_InnerClasses innerClasses;
-	public @CHOICE JavaP_MajorVersion majorVersion;
-	public @CHOICE JavaP_MinorVersion minorVersion;
-	public @CHOICE JavaP_NestHost nestHost;
-	public @CHOICE JavaP_NestMembers nestMembers;
-	public @CHOICE JavaP_PublicClass publicClass;
-	public @CHOICE JavaP_RuntimeVisibleAnnotations runtimeVisibleAnnotations;
-	public @CHOICE JavaP_Signature signature;
-	public @CHOICE JavaP_SourceFile sourceFile;
+	public @CHOICE JavaP_BootstrapMethods XXbootstrapMethods;
+	public @CHOICE JavaP_Classes XXclasses;
+	public @CHOICE JavaP_Classfile XXclassfile;
+	public @CHOICE JavaP_CompiledFrom XXcompiledFrom;
+	public @CHOICE JavaP_ConstantPool XXconstantPool;
+	public @CHOICE JavaP_InnerClasses XXinnerClasses;
+	public @CHOICE JavaP_MajorVersion XXmajorVersion;
+	public @CHOICE JavaP_MinorVersion XXminorVersion;
+	public @CHOICE JavaP_NestHost XXnestHost;
+	public @CHOICE JavaP_NestMembers XXnestMembers;
+	public @CHOICE JavaP_PublicClass XXpublicClass;
+	public @CHOICE JavaP_RuntimeVisibleAnnotations XXruntimeVisibleAnnotations;
+	public @CHOICE JavaP_Signature XXsignature;
+	public @CHOICE JavaP_SourceFile XXsourceFile;
 }

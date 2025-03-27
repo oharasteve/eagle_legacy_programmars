@@ -9,12 +9,13 @@ import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_TryStatement extends TokenSequence
+public class Javascript_TryStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("js_try_catch.asp") Javascript_Keyword TRY = new Javascript_Keyword("try");
 	public @S(20) PunctuationLeftBrace leftBrace;

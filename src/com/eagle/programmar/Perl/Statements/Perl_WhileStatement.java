@@ -9,10 +9,11 @@ import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_WhileStatement extends TokenSequence
+public class Perl_WhileStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control-structures.while.php") Perl_Keyword WHILE = new Perl_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;

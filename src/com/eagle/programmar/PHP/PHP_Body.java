@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.PHP;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.PHP.PHP_Program.PHP_EndTag;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -29,7 +29,7 @@ public class PHP_Body extends TokenChooser
 		{
 			for (PHP_Element entry : elements._elements)
 			{
-				interpreter.tryToInterpret(entry.getWhich());
+				interpreter.tryToInterpret(entry);
 			}
 		}
 	}

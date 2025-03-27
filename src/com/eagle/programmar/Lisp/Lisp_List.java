@@ -3,8 +3,13 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction.Lisp_ParamDef;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -19,54 +24,55 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (exprs._elements.isEmpty())
+		Lisp_SExpr first = exprs.first();
+		String name = first.showText();
+		
+		// See if it is one of the user defun's
+		AbstractFunction fn = interpreter.findFunction(name);
+		if (fn == null)
 		{
-			interpreter.pushBool(false); // () and NIL are identical in Lisp
+			throw new RuntimeException("Please implement " + name);
+		}
+		Lisp_DefunFunction func = (Lisp_DefunFunction) fn;
+
+		int argCount = exprs.size() - 1;	// Minus 1 for the function name
+		int paramCount = func.parameters.size();
+		
+		if (argCount != paramCount)
+		{
+			throw new RuntimeException(
+					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		Lisp_SExpr first = exprs._elements.get(0);
-		switch (first.getWhich().toString().toUpperCase())
+		// Now assign all the parameters
+		if (argCount > 0)
 		{
-		case "+":
-			int sum = 0;
-			for (int i = 1; i < exprs._elements.size(); i++)
+			for (int i = 0; i < argCount; i++)
 			{
-				sum += interpreter.getIntValue(exprs._elements.get(i));
+				Lisp_SExpr expr = exprs._elements.get(i + 1);
+				Lisp_ParamDef param = func.parameters._elements.get(i);
+				EagleValue val = interpreter.getEagleValue(expr);
+				interpreter.setSymbol(param, param.parameter.getValue(), val);
 			}
-			interpreter.pushInt(sum);
-			return;
-		case "*":
-			int product = 0;
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				product *= interpreter.getIntValue(exprs._elements.get(i));
-			}
-			interpreter.pushInt(product);
-			return;
-		case "OR":
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				if (interpreter.getBoolValue(exprs._elements.get(i)))
-				{
-					interpreter.pushBool(true);
-					return;
-				}
-			}
-			interpreter.pushBool(false);
-			return;
-		case "AND":
-			for (int i = 1; i < exprs._elements.size(); i++)
-			{
-				if (!interpreter.getBoolValue(exprs._elements.get(i)))
-				{
-					interpreter.pushBool(false);
-					return;
-				}
-			}
-			interpreter.pushBool(true);
-			return;
-		default:
-			throw new RuntimeException("Unable to handle function: " + first.getWhich());
 		}
+
+		// Prepare to evaluate the method
+		long startTime = System.nanoTime();
+
+		// And transfer control to the method
+		interpreter.callingFunction(name, func);
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		for (Lisp_SExpr stmt : func.body._elements)
+		{
+			result = interpreter.tryToInterpret(stmt);
+			if (result != Eagle_Statement_Result.NORMAL) break;
+		}
+
+		// The result was already put on the runtime stack
+		long elapsedTime = System.nanoTime() - startTime;
+		func._metrics.addCallFrom(this, elapsedTime);
+
+		// Now remove all those parameters
+		interpreter.completedFunction(name, func);
 	}
 }

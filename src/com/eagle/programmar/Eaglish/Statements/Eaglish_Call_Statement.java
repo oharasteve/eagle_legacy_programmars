@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
@@ -14,11 +14,12 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnable
+public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Eaglish_Keyword CALL = new Eaglish_Keyword("CALL");
 	public @S(20) Eaglish_Identifier_Reference name;
@@ -35,25 +36,13 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (interpreter._TRACE) System.err.println("*** Calling " + name);
-
 		// Have to search for the FUNCTION definition
-		Eaglish_Function_Block func = null;
-		for (AbstractFunction absFn : interpreter._functionList)
+		AbstractFunction fn = interpreter.findFunction(name.getValue());
+		if (fn == null)
 		{
-			Eaglish_Function_Block fn = (Eaglish_Function_Block) absFn;
-			if (fn.var.getValue().equalsIgnoreCase(name.getValue()))
-			{
-				// Found it!
-				func = fn;
-				break;
-			}
+			throw new RuntimeException("Unable to find a function named " + name.getValue());
 		}
-
-		if (func == null)
-		{
-			throw new RuntimeException("Unable to find a FUNCTION named " + name);
-		}
+		Eaglish_Function_Block func = (Eaglish_Function_Block) fn;
 
 		// Count the parameters
 		int expected = func.parameterStatements.size();
@@ -61,7 +50,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		if (actual != expected)
 		{
 			throw new RuntimeException(
-					"Function " + name + ", expected args=" + expected + ", but actual args = " + actual);
+					"Function " + name + ", expected params = " + expected + ", but actual args = " + actual);
 		}
 
 		// Assign all the parameters
@@ -69,26 +58,22 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		{
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			Eaglish_Expression arg = callParams.args.getPrimaryElement(i);
-			interpreter.tryToInterpret(arg);
+			// interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
-			interpreter._symbolTable.setSymbol(param.getFileName(), param.getStartLine(), param.getStartChar(),
-					param.param.getValue(), val);
+			interpreter.setSymbol(param, param.param.getValue(), val);
 		}
 
 		// Evaluate the function
 		long startTime = System.nanoTime();
+		interpreter.callingFunction(name.getValue(), func);
 		for (Eaglish_Statement stmt : func.statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.getWhich());
+			interpreter.tryToInterpret(stmt);
 		}
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this.getFileName(), this.getStartLine(), this.getStartChar(), elapsedTime);
+		func._metrics.addCallFrom(this, elapsedTime);
 
 		// Remove all the parameters
-		for (int i = 0; i < actual; i++)
-		{
-			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
-			interpreter._symbolTable.removeSymbols(param.param.getValue());
-		}
+		interpreter.completedFunction(name.getValue(), func);
 	}
 }

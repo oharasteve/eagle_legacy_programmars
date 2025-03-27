@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CMD;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMD.Symbols.CMD_Identifier_Reference;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
@@ -28,7 +28,13 @@ public class CMD_Variable extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
+		String name = id.getValue();
+		if (subscript != null && subscript.isPresent())
+		{
+			int sub = interpreter.getIntValue(subscript.expr);
+			name += "[" + sub + "]";
+		}
+		EagleValue value = interpreter.findSymbol(name);
 		interpreter.pushEagleValue(value);
 	}
 }

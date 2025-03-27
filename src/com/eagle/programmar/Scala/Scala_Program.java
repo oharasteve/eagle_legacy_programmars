@@ -3,19 +3,17 @@
 
 package com.eagle.programmar.Scala;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Scala.Statements.Scala_Function;
 import com.eagle.programmar.Scala.Statements.Scala_Import;
 import com.eagle.programmar.Scala.Statements.Scala_Object;
 import com.eagle.programmar.Scala.Statements.Scala_Package;
-import com.eagle.programmar.Scala.Terminals.Scala_Comment;
-import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 
-public class Scala_Program extends EagleLanguage implements EagleRunnable
+public class Scala_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String SCALA = "Scala";
 
@@ -34,25 +32,44 @@ public class Scala_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Scala_Element extends TokenChooser
 	{
-		public @CHOICE Scala_CommentEoln comment;
-		public @CHOICE Scala_Import imprt;
-		public @CHOICE Scala_Object object;
-		public @CHOICE Scala_Package pkg;
-		public @CHOICE Scala_Statement stmt;
-	}
-
-	public static class Scala_CommentEoln extends TokenSequence
-	{
-		public @S(10) Scala_Comment comment;
-		public @S(20) Scala_EOLN eoln;
+		public @CHOICE Scala_CommentEoln XXcomment;
+		public @CHOICE Scala_Import XXimport;
+		public @CHOICE Scala_Object XXobject;
+		public @CHOICE Scala_Package XXpkg;
+		public @CHOICE Scala_Statement XXstmt;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the method definitions
 		for (Scala_Element elt : elements._elements)
 		{
-			interpreter.tryToInterpret(elt.getWhich());
+			if (elt.getWhich() instanceof Scala_Object)
+			{
+				Scala_Object obj = (Scala_Object) elt.getWhich();
+				for (Scala_Statement stmt : obj.statement.statements._elements)
+				{
+					if (stmt.getWhich() instanceof Scala_Function)
+					{
+						Scala_Function func = (Scala_Function) stmt.getWhich();
+						interpreter.addFunction(func.id.getValue(), func);
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost 'object'
+		for (Scala_Element elt : elements._elements)
+		{
+			if (elt.getWhich() instanceof Scala_Object)
+			{
+				Scala_Object obj = (Scala_Object) elt.getWhich();
+				for (Scala_Statement stmt : obj.statement.statements._elements)
+				{
+					interpreter.tryToInterpret(stmt);
+				}
+			}
 		}
 	}
 }

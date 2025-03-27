@@ -9,13 +9,14 @@ import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_SwitchStatement extends TokenSequence
+public class Perl_SwitchStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("control-structures.switch.php") Perl_Keyword SWITCH = new Perl_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;

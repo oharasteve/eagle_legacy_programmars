@@ -1,0 +1,36 @@
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Apr 1, 2024
+
+package com.eagle.programmar.Python.Functions;
+
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+
+public class Python_Str_Function extends PrimaryOperator implements EagleRunnable
+{
+	public @S(10) Python_Keyword STR = new Python_Keyword("str");
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE Python_Expression expr;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String str = interpreter.getStrValue(expr);
+		interpreter.pushStr(str);
+	}
+	
+	public static Python_Str_Function newStrFunction(Python_Expression expr)
+	{
+		Python_Str_Function str = new Python_Str_Function();
+		str.leftParen = new PunctuationLeftParen();
+		str.expr = expr;
+		str.rightParen = new PunctuationRightParen();
+		return str;
+	}
+}

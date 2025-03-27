@@ -8,8 +8,9 @@ import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class VB_BeginStatement extends TokenSequence
+public class VB_BeginStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) VB_Keyword BEGIN = new VB_Keyword("begin");
 	public @S(20) VB_EndOfLine eoln;

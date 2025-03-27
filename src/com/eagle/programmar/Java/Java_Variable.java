@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -13,25 +14,24 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
-	public @S(10) Java_VariableIdentifier var;
-	public @S(20) @OPT TokenList<Java_DotVariable> moreIds;
-	public @S(30) @OPT TokenList<Java_Subscript> subscript;
+	public @S(10) Java_VariableIdentifier firstId;
+//	public S() @OPT TokenList<Java_DotVariable> moreIds;
+	public @S(20) @OPT TokenList<Java_Subscript> subscript;
 
-	public static class Java_DotVariable extends TokenSequence
-	{
-		public @S(10) @NOSPACE PunctuationPeriod dot;
-		public @S(20) @NOSPACE Java_VariableIdentifier id;
-	}
+//	public static class Java_DotVariable extends TokenSequence
+//	{
+//		public @S(10) @NOSPACE PunctuationPeriod dot;
+//		public @S(20) @NOSPACE Java_VariableIdentifier nextId;
+//	}
 
 	public static class Java_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE Java_KeywordChoice THIS = new Java_KeywordChoice("this", "class", "super");
-		public @CHOICE Java_Identifier_Reference id;
+		public @CHOICE Java_KeywordChoice XXbuiltIn = new Java_KeywordChoice("this", "class", "super");
+		public @CHOICE Java_Identifier_Reference XXid;
 
 		public @CHOICE static class Java_CastedVariable extends TokenSequence
 		{
@@ -47,8 +47,32 @@ public class Java_Variable extends TokenSequence implements EagleRunnable, Abstr
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Java_Identifier_Reference which = (Java_Identifier_Reference) var.getWhich();
-		EagleValue value = interpreter._symbolTable.findSymbol(which.toString());
-		interpreter.pushEagleValue(value);
+		Java_Identifier_Reference which = (Java_Identifier_Reference) firstId.getWhich();
+		EagleValue value = interpreter.findSymbol(which.toString());
+		if (value == null)
+		{
+			throw new RuntimeException("Unable to find a value for " + which.toString());
+		}
+		if (subscript != null && subscript.size() > 0)
+		{
+			EagleArray array = (EagleArray) value;
+			int sub = interpreter.getIntValue(subscript.first().expr);
+			EagleValue val = array.getValue(sub);
+			interpreter.pushEagleValue(val);
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
+	}
+	
+	public static Java_Variable newVariable(String name)
+	{
+		Java_Variable var = new Java_Variable();
+		var.firstId = new Java_VariableIdentifier();
+		Java_Identifier_Reference id = new Java_Identifier_Reference();
+		id.setValue(name);
+		var.firstId.setWhich(id);
+		return var;
 	}
 }

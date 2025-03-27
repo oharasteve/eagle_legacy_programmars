@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CPlus;
 
+import com.eagle.programmar.C.C_Reserved_Words;
 import com.eagle.programmar.C.C_Syntax;
 
 public class CPlus_Syntax extends C_Syntax
@@ -15,7 +16,7 @@ public class CPlus_Syntax extends C_Syntax
 
 	public CPlus_Syntax()
 	{
-		addReservedWords(C_Syntax.C_reservedWords);
+		addReservedWords(C_Reserved_Words.RESERVED_WORDS);
 		addReservedWords(reservedWords);
 	}
 

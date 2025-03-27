@@ -24,9 +24,9 @@ public class COBOL_MergeStatement extends COBOL_AbstractStatement
 
 	public static class COBOL_MergeEntry extends TokenChooser
 	{
-		public @CHOICE COBOL_MergeUsing using;
-		public @CHOICE COBOL_MergeGiving giving;
-		public @CHOICE COBOL_MergeOutput output;
+		public @CHOICE COBOL_MergeUsing XXusing;
+		public @CHOICE COBOL_MergeGiving XXgiving;
+		public @CHOICE COBOL_MergeOutput XXoutput;
 	}
 
 	public static class COBOL_MergeKey extends TokenSequence

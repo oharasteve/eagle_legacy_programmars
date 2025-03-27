@@ -16,16 +16,15 @@ public class Python_Decorators extends TokenSequence
 
 	public static class Python_MoreDecorators extends TokenChooser
 	{
-		public @CHOICE Python_Decorator decorator;
-		public @CHOICE Python_CommentEoln comment;
+		public @CHOICE Python_Decorator XXdecorator;
+		public @CHOICE Python_CommentEoln XXcomment;
 	}
 
 	public static class Python_Decorator extends TokenSequence
 	{
 		public @S(10) Python_Punctuation atSign = new Python_Punctuation('@');
-		public @S(20) Python_Variable id;
-		public @S(30) @OPT Python_Parameter_List params;
-		public @S(40) @OPT Python_CommentEoln comment;
-		public @S(50) @OPT Python_EndOfLine newLine;
+		public @S(20) Python_Expression expr;
+		public @S(30) @OPT Python_CommentEoln comment;
+		public @S(40) @OPT Python_EndOfLine newLine;
 	}
 }

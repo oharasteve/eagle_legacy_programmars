@@ -3,17 +3,20 @@
 
 package com.eagle.programmar.C;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
+import com.eagle.programmar.C.Statements.C_AsmVolatile;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class C_Program extends EagleLanguage implements EagleRunnable
+public class C_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String C = "C";
 
@@ -104,13 +107,14 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 
 	public static class C_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE C_Comment comment;
-		public @CHOICE C_TypeDef typeDef;
-		public @LAST C_Data data;
-		public @CHOICE C_Function function;
-		public @LAST C_Statement statement;
-		public @CHOICE C_Enum cenum;
-		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro;
+		public @CHOICE C_Comment XXcomment;
+		public @CHOICE C_TypeDef XXtypeDef;
+		public @LAST C_Data XXdata;
+		public @CHOICE C_Function XXfunction;
+		public @LAST C_Statement XXstatement;
+		public @CHOICE C_Enum XXcenum;
+		public @CHOICE C_AsmVolatile XXasmVolatile;
+		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 
 		// NOTE: C++ adds the 'extern' statement here. See the constructor in
 		// CPlus_Program.java
@@ -119,6 +123,25 @@ public class C_Program extends EagleLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// First pass, just collect all the functions definitions
+		for (C_StatementOrComment elt : elements._elements)
+		{
+			AbstractToken which = elt.getWhich();
+			if (which instanceof C_Function)
+			{
+				C_Function fn = (C_Function) which;
+				{
+					which = fn.typeName.getWhich();
+					if (which instanceof C_Function_TypeAndName)
+					{
+						C_Function_TypeAndName typeName = (C_Function_TypeAndName) which;
+						interpreter.addFunction(typeName.functionName.getValue(), fn);
+					}
+				}
+			}
+		}
+
+		// Second pass, execute the program
 		for (C_StatementOrComment element : elements._elements)
 		{
 			interpreter.tryToInterpret(element);

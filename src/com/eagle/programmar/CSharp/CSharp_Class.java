@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.CSharp;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Directives.CSharp_PragmaDirective;
 import com.eagle.programmar.CSharp.Directives.CSharp_RegionDirective;
@@ -15,8 +15,6 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Identifier;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -28,10 +26,11 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
-public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass, EagleScopeInterface
+public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
-	public @S(10) @OPT TokenList<CSharp_AnnotationOrComment> annotationOrComment;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_AnnotationOrComment> annotationOrComment;
 	public @S(20) @OPT TokenList<CSharp_ClassModifier> modifiers;
 	public @S(30) CSharp_KeywordChoice classOrInterface = new CSharp_KeywordChoice("class", "interface", "struct");
 	public @S(40) CSharp_Class_Definition className;
@@ -45,8 +44,8 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 
 	public static class CSharp_AnnotationOrComment extends TokenChooser
 	{
-		public @CHOICE CSharp_Annotation annotation;
-		public @CHOICE CSharp_Comment comment;
+		public @CHOICE CSharp_Annotation XXannotation;
+		public @CHOICE CSharp_Comment XXcomment;
 	}
 
 	public static class CSharp_ClassModifier extends TokenSequence
@@ -94,17 +93,17 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 
 	public static class CSharp_ClassElement extends TokenChooser
 	{
-		public @CHOICE @NEWLINE CSharp_Comment comment;
+		public @CHOICE @NEWLINE CSharp_Comment XXcomment;
 
-		public @CHOICE @NEWLINE CSharp_Property property;
-		public @CHOICE @NEWLINE CSharp_Constructor constructor;
-		public @FIRST @NEWLINE CSharp_Method method;
-		public @LAST @NEWLINE CSharp_Statement statement;
-		public @CHOICE @NEWLINE CSharp_SubscriptOperator subscriptOperator;
-		public @CHOICE @NEWLINE CSharp_Operator operator;
+		public @CHOICE @NEWLINE CSharp_Property XXproperty;
+		public @CHOICE @NEWLINE CSharp_Constructor XXconstructor;
+		public @FIRST @NEWLINE CSharp_Method XXmethod;
+		public @LAST @NEWLINE CSharp_Statement XXstatement;
+		public @CHOICE @NEWLINE CSharp_SubscriptOperator XXsubscriptOperator;
+		public @CHOICE @NEWLINE CSharp_Operator XXoperator;
 
-		public @CHOICE @NEWLINE CSharp_RegionDirective regionDirective;
-		public @CHOICE @NEWLINE CSharp_PragmaDirective pragmaDirective;
+		public @CHOICE @NEWLINE CSharp_RegionDirective XXregionDirective;
+		public @CHOICE @NEWLINE CSharp_PragmaDirective XXpragmaDirective;
 
 		public @CHOICE static class CSharp_StaticStatement extends TokenSequence
 		{
@@ -118,15 +117,44 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 	{
 		for (CSharp_ClassElement element : elements._elements)
 		{
-			interpreter.tryToInterpret(element.getWhich());
+			interpreter.tryToInterpret(element);
 		}
 	}
-
-	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
-
-	@Override
-	public EagleScope getScope()
+	
+	public static CSharp_Class newCSharpClass(PrivacyEnum privacy, String className)
 	{
-		return _scope;
+		CSharp_Class cls = new CSharp_Class();
+		cls.modifiers = new TokenList<CSharp_ClassModifier>();
+		CSharp_ClassModifier modifier = new CSharp_ClassModifier();
+		switch (privacy)
+		{
+		case PUBLIC:
+			modifier.modifier = new CSharp_KeywordChoice("public");
+			break;
+		case PRIVATE:
+			modifier.modifier = new CSharp_KeywordChoice("private");
+			break;
+		default:
+			throw new RuntimeException("Can't handle privacy: " + privacy);
+		}
+		cls.modifiers.addToken(modifier);
+		
+		cls.className = new CSharp_Class_Definition();
+		cls.className.setValue(className);
+		
+		cls.classOrInterface = new CSharp_KeywordChoice("class");
+		cls.elements = new TokenList<CSharp_ClassElement>();
+		cls.elements.setPresent(true);
+		cls.leftBrace = new PunctuationLeftBrace();
+		cls.rightBrace = new PunctuationRightBrace();
+		
+		return cls;
+	}
+	
+	public void addMethod(CSharp_Method method)
+	{
+		CSharp_ClassElement element = new CSharp_ClassElement();
+		element.setWhich(method);
+		elements.addToken(element);
 	}
 }

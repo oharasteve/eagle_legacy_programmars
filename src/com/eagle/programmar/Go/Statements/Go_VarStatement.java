@@ -8,8 +8,9 @@ import com.eagle.programmar.Go.Symbols.Go_Variable_Definition;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Go_VarStatement extends TokenSequence
+public class Go_VarStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Go_Keyword VAR = new Go_Keyword("var");
 	public @S(20) Go_Variable_Definition variable;

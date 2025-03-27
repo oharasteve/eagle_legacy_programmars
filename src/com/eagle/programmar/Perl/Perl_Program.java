@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.Perl;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.tokens.TokenList;
 
-public class Perl_Program extends EagleLanguage
+public class Perl_Program extends AbstractLanguage
 {
 	public static final String PERL = "Perl";
 

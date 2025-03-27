@@ -11,7 +11,7 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_RelationalOperator extends TokenChooser
 {
-	public @CHOICE COBOL_PunctuationChoice operator = new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">");
+	public @CHOICE COBOL_PunctuationChoice XXoperator = new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">");
 
 	public @CHOICE static class COBOL_Greater extends TokenSequence
 	{
@@ -45,5 +45,35 @@ public class COBOL_RelationalOperator extends TokenChooser
 			public @S(20) COBOL_Keyword EQUAL = new COBOL_Keyword("EQUAL");
 			public @S(30) @OPT COBOL_Keyword TO = new COBOL_Keyword("TO");
 		}
+	}
+	
+	// Return simplified version of the above, just "=", "<", etc.
+	public String canonicalForm()
+	{
+		if (this.getWhich() instanceof COBOL_PunctuationChoice)
+		{
+			COBOL_PunctuationChoice punct = (COBOL_PunctuationChoice) this.getWhich();
+			return punct.getValue();
+		}
+		if (this.getWhich() instanceof COBOL_Greater)
+		{
+			COBOL_Greater great = (COBOL_Greater) this.getWhich();
+			if (great.orEqual != null && great.orEqual.isPresent())
+			{
+				return ">=";
+			}
+			return ">";
+		}
+		if (this.getWhich() instanceof COBOL_Less)
+		{
+			COBOL_Less less = (COBOL_Less) this.getWhich();
+			if (less.orEqual != null && less.orEqual.isPresent())
+			{
+				return "<=";
+			}
+			return "<";
+		}
+		// Must be COBOL_Equal
+		return "=";
 	}
 }

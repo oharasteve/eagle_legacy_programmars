@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
@@ -26,7 +26,6 @@ public class COBOL_ComputeStatement extends COBOL_AbstractStatement implements E
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter._symbolTable.setSymbol(var.getFileName(), var.getStartLine(), var.getStartChar(), var.getValue(),
-				val);
+		interpreter.setSymbol(var, var.getValue(), val);
 	}
 }

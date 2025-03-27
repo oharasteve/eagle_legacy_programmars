@@ -3,16 +3,17 @@
 
 package com.eagle.programmar.Ada;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ada.Statements.Ada_Function;
+import com.eagle.programmar.Ada.Statements.Ada_Procedure;
 import com.eagle.programmar.Ada.Terminals.Ada_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class Ada_Program extends EagleLanguage implements EagleRunnable
+public class Ada_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String ADA = "Ada";
 
@@ -31,8 +32,8 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Ada_Element extends TokenChooser
 	{
-		public @CHOICE Ada_Comment comment;
-		public @CHOICE Ada_Statement stmt;
+		public @CHOICE Ada_Comment XXcomment;
+		public @CHOICE Ada_Statement XXstmt;
 	}
 
 	@Override
@@ -44,11 +45,24 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 			AbstractToken which = element.getWhich();
 			if (which instanceof Ada_Statement)
 			{
-				Ada_Statement stmt = (Ada_Statement) which;
-				if (stmt.getWhich() instanceof Ada_Function)
+				Ada_Statement statement = (Ada_Statement) which;
+				which = statement.getWhich();
+				if (which instanceof Ada_Procedure)
 				{
-					Ada_Function fn = (Ada_Function) stmt.getWhich();
-					interpreter._functionList.add(fn);
+					Ada_Procedure proc = (Ada_Procedure) which;
+					for (Ada_Statement stmt : proc.stmts1._elements)
+					{
+						if (stmt.getWhich() instanceof Ada_Function)
+						{
+							Ada_Function fn = (Ada_Function) stmt.getWhich();
+							interpreter.addFunction(fn.id.getValue(), fn);
+						}
+						if (stmt.getWhich() instanceof Ada_Procedure)
+						{
+							Ada_Procedure pr = (Ada_Procedure) stmt.getWhich();
+							interpreter.addFunction(pr.id.getValue(), pr);
+						}
+					}
 				}
 			}
 		}
@@ -60,7 +74,7 @@ public class Ada_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Ada_Statement)
 			{
 				Ada_Statement stmt = (Ada_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

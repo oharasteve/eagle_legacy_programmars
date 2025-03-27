@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Algol68.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
@@ -18,6 +18,6 @@ public class Algol68_LogicalNotExpression extends PrimaryOperator implements Eag
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

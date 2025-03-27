@@ -3,8 +3,9 @@
 
 package com.eagle.programmar.Powershell;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Variable_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
@@ -30,15 +31,24 @@ public class Powershell_Variable extends TokenSequence implements EagleRunnable
 
 	public static class Powershell_VariableScope extends TokenSequence
 	{
-		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice("env", "global", "script",
-				"variable");
+		public @S(10) Powershell_KeywordChoice SCRIPT = new Powershell_KeywordChoice(
+				"env", "global", "script", "variable");
 		public @S(20) PunctuationColon colon;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(id.toString());
-		interpreter.pushEagleValue(value);
+		EagleValue value = interpreter.findSymbol(id.toString());
+		if (subscript != null && subscript.isPresent() && value.isArray())
+		{
+			int sub = interpreter.getIntValue(subscript.subscr);
+			EagleArray array = (EagleArray) value;
+			interpreter.pushEagleValue(array.getValue(sub));
+		}
+		else
+		{
+			interpreter.pushEagleValue(value);
+		}
 	}
 }

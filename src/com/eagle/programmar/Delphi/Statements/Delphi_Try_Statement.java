@@ -6,8 +6,9 @@ package com.eagle.programmar.Delphi.Statements;
 import com.eagle.programmar.Delphi.Delphi_Statement_List;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Delphi_Try_Statement extends TokenSequence
+public class Delphi_Try_Statement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("Exceptions_(Delphi)") Delphi_Keyword TRY = new Delphi_Keyword("Try");
 	public @S(20) Delphi_Statement_List statements1;

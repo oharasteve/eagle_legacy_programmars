@@ -3,14 +3,16 @@
 
 package com.eagle.programmar.AWK;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -20,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_Function extends TokenSequence implements AbstractFunction, EagleRunnable
+public class AWK_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Identifier name;
@@ -55,13 +57,21 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 		public @S(40) PunctuationRightBrace rightBrace;
 		public @S(50) @OPT AWK_EndOfLine eoln2;
 	}
+	
+	private @SKIP EagleScope _scope = new EagleScope(this, AWK_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(name.getValue(), getFileName(), getStartLine(), getStartChar());
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
 		}
 
 		// Don't do anything here.

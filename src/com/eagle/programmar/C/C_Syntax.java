@@ -8,6 +8,8 @@ import com.eagle.programmar.CMacro.Terminals.CMacro_Comment;
 
 public class C_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = true;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -16,7 +18,7 @@ public class C_Syntax extends EagleSyntax
 
 	public C_Syntax()
 	{
-		_isCaseSensitive = true;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = "\\";
 		_extraCharacters = "_";
 		_commentInstance = new CMacro_Comment(); // Doesn't work at all
@@ -24,44 +26,6 @@ public class C_Syntax extends EagleSyntax
 				"!=", "<=", "==", ">=", "/*", "&&", "||", "..", "->", "++", "--", "::", "+=", "-=", "...", ">>", "<<"
 		};
 
-		addReservedWords(C_reservedWords);
+		addReservedWords(C_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From
-	// https://www.ibm.com/docs/en/developer-for-zos/14.2.0?topic=programs-c-reserved-keywords
-	// Left off _Packed which looks IBM-specific
-	protected static String[] C_reservedWords = new String[] {
-			"auto",
-			"break",
-			"case",
-			"char",
-			"const",
-			"continue",
-			"default",
-			"do",
-			"double",
-			"else",
-			"enum",
-			"extern",
-			"float",
-			"for",
-			"goto",
-			"if",
-			"int",
-			"long",
-			"register",
-			"return",
-			"short",
-			"signed",
-			"sizeof",
-			"static",
-			"struct",
-			"switch",
-			"typedef",
-			"union",
-			"unsigned",
-			"void",
-			"volatile",
-			"while",
-	};
 }

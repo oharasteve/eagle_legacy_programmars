@@ -3,36 +3,36 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
-import com.eagle.programmar.Python.Python_Parameter_List;
-import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
-import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.programmar.Python.Python_Subscript;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
-public class Python_SubscriptExpression extends PrecedenceOperator
+public class Python_SubscriptExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Python_Expression expr = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationLeftBracket leftBracket;
-	public @S(30) @OPT Python_EndOfLine eoln;
-	public @S(40) @SYNTAX(Python_Multiline_Syntax.class) Python_SubscrExpr subscr;
-	public @S(50) PunctuationRightBracket rightBracket;
-	public @S(60) @OPT Python_Parameter_List moreArguments;
+	public @S(20) Python_Subscript subscr;
 
-	public static class Python_SubscrExpr extends TokenSequence
+	@Override
+	public void interpret(EagleInterpreter interpreter)
 	{
-		public @S(10) @OPT Python_Expression subscr;
-		public @S(20) @OPT Python_ColonSubscript subscriptStop;
-		public @S(30) @OPT Python_ColonSubscript subscriptStep;
+		EagleValue value = interpreter.getEagleValue(expr);
+		Python_Subscript.evaluateSubscript(interpreter, value, subscr);
 	}
-
-	public static class Python_ColonSubscript extends TokenSequence
+	
+	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr, AbstractExpression sc,
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
 	{
-		public @S(10) PunctuationColon colon;
-		public @S(20) @OPT Python_EndOfLine eoln;
-		public @S(30) @OPT Python_Expression expr;
+		Python_SubscriptExpression expr = new Python_SubscriptExpression();
+		expr.expr = (Python_Expression) theExpr;
+		expr.subscr = Python_Subscript.generateExpression(sc, whichSC, whichEC, ecOrnc, source);
+		expr.setTransformationSource(source);
+		return expr;
 	}
 }

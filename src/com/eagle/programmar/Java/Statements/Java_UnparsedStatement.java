@@ -35,12 +35,12 @@ public class Java_UnparsedStatement extends UnparsedElement
 
 	public static class Java_UnparsedElement extends TokenChooser
 	{
-		public @CHOICE Java_Identifier_Reference id;
-		public @CHOICE Java_PunctuationChoice punct = new Java_PunctuationChoice(PUNCTS);
-		public @CHOICE Java_Literal literal;
-		public @CHOICE Java_Number number;
-		public @CHOICE Java_HexNumber hex;
-		public @CHOICE Java_Comment comment;
-		public @CHOICE Java_KeywordChoice keyword = new Java_KeywordChoice(KEYWORDS);
+		public @CHOICE Java_Identifier_Reference XXid;
+		public @CHOICE Java_PunctuationChoice XXpunct = new Java_PunctuationChoice(PUNCTS);
+		public @CHOICE Java_Literal XXliteral;
+		public @CHOICE Java_Number XXnumber;
+		public @CHOICE Java_HexNumber XXhex;
+		public @CHOICE Java_Comment XXcomment;
+		public @CHOICE Java_KeywordChoice XXkeyword = new Java_KeywordChoice(KEYWORDS);
 	}
 }

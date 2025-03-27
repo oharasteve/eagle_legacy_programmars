@@ -3,20 +3,17 @@
 
 package com.eagle.programmar.AWK;
 
-import java.util.ArrayList;
-
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class AWK_Program extends EagleLanguage implements EagleRunnable
+public class AWK_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String AWK = "AWK";
 
@@ -35,9 +32,9 @@ public class AWK_Program extends EagleLanguage implements EagleRunnable
 
 	public static class AWK_Element extends TokenChooser
 	{
-		public @CHOICE AWK_Command command;
-		public @FIRST AWK_CommentLine comment;
-		public @CHOICE AWK_Function function;
+		public @CHOICE AWK_Command XXcommand;
+		public @FIRST AWK_CommentLine XXcomment;
+		public @CHOICE AWK_Function XXfunction;
 	}
 
 	public static class AWK_CommentLine extends TokenSequence
@@ -50,14 +47,13 @@ public class AWK_Program extends EagleLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		interpreter._functionList = new ArrayList<AbstractFunction>();
 		for (AWK_Element element : elements._elements)
 		{
 			AbstractToken which = element.getWhich();
 			if (which instanceof AWK_Function)
 			{
 				AWK_Function fn = (AWK_Function) which;
-				interpreter._functionList.add(fn);
+				interpreter.addFunction(fn.name.getValue(), fn);
 			}
 		}
 

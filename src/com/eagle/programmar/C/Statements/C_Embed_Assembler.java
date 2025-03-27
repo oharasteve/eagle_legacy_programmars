@@ -8,10 +8,11 @@ import com.eagle.programmar.IntelASM.IntelASM_Program.IntelASM_Line;
 import com.eagle.programmar.IntelASM.IntelASM_Syntax;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class C_Embed_Assembler extends TokenSequence
+public class C_Embed_Assembler extends TokenSequence implements AbstractStatement
 {
 	public @S(10) C_KeywordChoice ASM = new C_KeywordChoice("__asm", "_asm");
 	public @S(20) PunctuationLeftBrace leftBrace;

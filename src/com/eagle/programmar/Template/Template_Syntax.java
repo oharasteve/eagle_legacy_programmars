@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Template_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,17 +17,17 @@ public class Template_Syntax extends EagleSyntax
 
 	public Template_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
 				"<=", ">=", "==", "!="
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	private static String[] reservedWords = new String[] {
+	private static String[] RESERVED_WORDS = new String[] {
 			"and", "data", "not", "or", "print",
 	};
 }

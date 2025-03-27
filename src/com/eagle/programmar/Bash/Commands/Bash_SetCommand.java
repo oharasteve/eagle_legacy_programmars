@@ -14,9 +14,10 @@ import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Bash_SetCommand extends TokenSequence
+public class Bash_SetCommand extends TokenSequence implements AbstractStatement
 {
 	public @S(10) Bash_Keyword SET = new Bash_Keyword("set");
 	public @S(20) @OPT TokenList<Bash_SetOption> options;
@@ -24,17 +25,17 @@ public class Bash_SetCommand extends TokenSequence
 
 	public static class Bash_SetOption extends TokenChooser
 	{
-		public @CHOICE Bash_KeywordChoice EUX = new Bash_KeywordChoice("-e", "-eu", "-ex", "-eE", "-eux", "-u", "-x");
+		public @CHOICE Bash_KeywordChoice XXopt = new Bash_KeywordChoice("-e", "-eu", "-ex", "-eE", "-eux", "-u", "-x");
 
 		public @CHOICE static class Bash_SetPlus extends TokenSequence
 		{
 			public @S(10) Bash_Punctuation PLUS = new Bash_Punctuation("+");
-			public @S(20) Bash_KeywordChoice EX = new Bash_KeywordChoice("e", "ex");
+			public @S(20) Bash_KeywordChoice EX = new Bash_KeywordChoice("e", "ex", "x");
 		}
 
 		public @CHOICE static class Bash_SetOptionO extends TokenSequence
 		{
-			public @S(10) Bash_KeywordChoice O = new Bash_KeywordChoice("-eo", "-euox", "-o");
+			public @S(10) Bash_KeywordChoice O = new Bash_KeywordChoice("-eo", "-euox", "-euxo", "-o");
 			public @S(20) Bash_Identifier_Reference id;
 		}
 
@@ -46,8 +47,8 @@ public class Bash_SetCommand extends TokenSequence
 
 			public static class Bash_SetValue extends TokenChooser
 			{
-				public @CHOICE Bash_Filename filename;
-				public @CHOICE Bash_Expression expr;
+				public @CHOICE Bash_Filename XXfilename;
+				public @CHOICE Bash_Expression XXexpr;
 			}
 		}
 	}

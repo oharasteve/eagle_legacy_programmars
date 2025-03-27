@@ -3,14 +3,16 @@
 
 package com.eagle.programmar.Ruby.Statements;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ruby.Ruby_Expression;
+import com.eagle.programmar.Ruby.Ruby_Format;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Ruby_PutsStatement extends TokenSequence implements EagleRunnable
+public class Ruby_PutsStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Ruby_Keyword PUTS = new Ruby_Keyword("puts");
 	public @S(20) Ruby_Expression expr;
@@ -20,6 +22,7 @@ public class Ruby_PutsStatement extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String val = interpreter.getStrValue(expr);
-		System.out.println(val);
+		String formatted = Ruby_Format.format(interpreter, val);
+		System.out.println(formatted);
 	}
 }

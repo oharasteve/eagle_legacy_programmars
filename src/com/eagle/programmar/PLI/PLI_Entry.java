@@ -3,8 +3,7 @@
 
 package com.eagle.programmar.PLI;
 
-import com.eagle.programmar.PLI.PLI_Procedure.PLI_ProcedureOptions;
-import com.eagle.programmar.PLI.PLI_Procedure.PLI_ProcedureReturns;
+import com.eagle.programmar.PLI.PLI_Procedure.PLI_ProcedureOption;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_Procedure_Parameters;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
@@ -23,11 +22,8 @@ public class PLI_Entry extends TokenSequence
 
 	public @S(40) PLI_Keyword ENTRY = new PLI_Keyword("ENTRY");
 	public @S(50) @OPT PLI_Procedure_Parameters params;
+	public @S(60) @OPT TokenList<PLI_ProcedureOption> options;
+	public @S(70) PunctuationSemicolon semicolon;
 
-	public @S(60) @OPT PLI_ProcedureOptions options1;
-	public @S(70) @OPT PLI_ProcedureReturns returns;
-	public @S(80) @OPT PLI_ProcedureOptions options2;
-	public @S(90) PunctuationSemicolon semicolon;
-
-	public @S(100) TokenList<PLI_StatementOrComment> statements;
+	public @S(80) TokenList<PLI_StatementOrComment> statements;
 }

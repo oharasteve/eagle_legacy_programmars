@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Julia;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleLanguage;
-import com.eagle.core.EagleRunnable;
+import com.eagle.core.AbstractLanguage;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Statements.Julia_Function;
 import com.eagle.programmar.Julia.Terminals.Julia_Comment;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
@@ -14,7 +14,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class Julia_Program extends EagleLanguage implements EagleRunnable
+public class Julia_Program extends AbstractLanguage implements EagleRunnable
 {
 	public static final String JULIA = "Julia";
 
@@ -33,14 +33,20 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 
 	public static class Julia_Element extends TokenChooser
 	{
-		public @CHOICE Julia_CommentEoln comment;
-		public @CHOICE Julia_Statement stmt;
+		public @CHOICE Julia_CommentEoln XXcomment;
+		public @CHOICE Julia_Statement XXstmt;
 	}
 
-	public static class Julia_CommentEoln extends TokenSequence
+	public static class Julia_CommentEoln extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Julia_Comment comment;
 		public @S(20) Julia_EOLN eoln;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			// Nothing to do here
+		}
 	}
 
 	@Override
@@ -57,7 +63,7 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 				if (which instanceof Julia_Function)
 				{
 					Julia_Function fn = (Julia_Function) which;
-					interpreter._functionList.add(fn);
+					interpreter.addFunction(fn.id.getValue(), fn);
 				}
 			}
 		}
@@ -69,7 +75,7 @@ public class Julia_Program extends EagleLanguage implements EagleRunnable
 			if (which instanceof Julia_Statement)
 			{
 				Julia_Statement stmt = (Julia_Statement) which;
-				interpreter.tryToInterpret(stmt.getWhich());
+				interpreter.tryToInterpret(stmt);
 			}
 		}
 	}

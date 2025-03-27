@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Delphi_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,7 +17,7 @@ public class Delphi_Syntax extends EagleSyntax
 
 	public Delphi_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
 		// _commentInstance = new Delphi_Comment();
@@ -23,75 +25,6 @@ public class Delphi_Syntax extends EagleSyntax
 				"<>", "<=", ">=", ":=", ".."
 		};
 
-		addReservedWords(reservedWords);
+		addReservedWords(Delphi_Reserved_Words.RESERVED_WORDS);
 	}
-
-	// From https://en.wikibooks.org/wiki/Delphi_Programming/Reserved_keywords
-	private static String[] reservedWords = new String[] {
-			"and",
-			"array",
-			"as",
-			"asm",
-			"begin",
-			"case",
-			"class",
-			"const",
-			"constructor",
-			"destructor",
-			"dispinterface",
-			"div",
-			"do",
-			"downto",
-			"else",
-			"end",
-			"except",
-			"exports",
-			"file",
-			"finalization",
-			"finally",
-			"for",
-			"function",
-			"goto",
-			"if",
-			"implementation",
-			"in",
-			"inherited",
-			"initialization",
-			"inline",
-			"interface",
-			"is",
-			"label",
-			"library",
-			"mod",
-			"nil",
-			"not",
-			"object",
-			"of",
-			"or",
-			// "out", // Not really reserved. And often used.
-			"packed",
-			"procedure",
-			"program",
-			"property",
-			"raise",
-			"record",
-			"repeat",
-			"resourcestring",
-			"set",
-			"shl",
-			"shr",
-			"string",
-			"then",
-			"threadvar",
-			"to",
-			"try",
-			"type",
-			"unit",
-			"until",
-			"uses",
-			"var",
-			"while",
-			"with",
-			"xor",
-	};
 }

@@ -7,6 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Eaglish_Syntax extends EagleSyntax
 {
+	public static final boolean IS_CASE_SENSITIVE = false;
+	
 	@Override
 	public String syntaxId()
 	{
@@ -15,18 +17,18 @@ public class Eaglish_Syntax extends EagleSyntax
 
 	public Eaglish_Syntax()
 	{
-		_isCaseSensitive = false;
+		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_autoAdvance = false;
 		_continuationChar = null;
 		_extraCharacters = "";
 		_punctuationExceptions = new String[] {
 				"<=", ">="
+
 		};
-		addReservedWords(reservedWords);
+		addReservedWords(RESERVED_WORDS);
 	}
 
-	// From https://en.wikibooks.org/wiki/Delphi_Programming/Reserved_keywords
-	private static String[] reservedWords = new String[] {
+	private static final String[] RESERVED_WORDS = new String[] {
 			"NOT"
 	};
 }

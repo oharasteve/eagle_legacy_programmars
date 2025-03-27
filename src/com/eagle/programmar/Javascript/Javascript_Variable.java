@@ -3,13 +3,14 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -20,14 +21,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Javascript_Variable extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Javascript_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<Javascript_DotField> moreIds;
-	public @S(30) @OPT TokenList<Javascript_Subscript> subscript;
+	public @S(20) @OPT TokenList<Javascript_VariableQualifier> qualifiers;
 
 	public static class Javascript_VariableIdentifier extends TokenChooser
 	{
-		public @CHOICE Javascript_Identifier_Reference id;
-		public @CHOICE Javascript_KeywordChoice THIS = new Javascript_KeywordChoice("this");
-		public @LAST Javascript_PunctuationChoice dollar = new Javascript_PunctuationChoice("$", "_");
+		public @CHOICE Javascript_Identifier_Reference XXid;
+		public @CHOICE Javascript_KeywordChoice XXTHIS = new Javascript_KeywordChoice("this");
+		public @LAST Javascript_PunctuationChoice XXdollar = new Javascript_PunctuationChoice("$", "_");
 
 		public @CHOICE static class Javascript_CastedVariable extends TokenSequence
 		{
@@ -39,17 +39,37 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 			public @S(60) PunctuationRightParen rightParen2;
 		}
 	}
-
-	public static class Javascript_DotField extends TokenSequence
+	
+	public static class Javascript_VariableQualifier extends TokenChooser
 	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) Javascript_Field_Reference id;
+		public @CHOICE Javascript_Subscript XXsubscript;
+		
+		public @CHOICE static class Javascript_VarField extends TokenSequence
+		{
+			public @S(10) PunctuationPeriod dot;
+			public @S(20) Javascript_Identifier_Reference id;
+		}
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter._symbolTable.findSymbol(firstId.getWhich().toString());
+		EagleValue value = interpreter.findSymbol(firstId.getWhich().toString());
+		
+		if (qualifiers != null && qualifiers.isPresent() && qualifiers.size() == 1)
+		{
+			AbstractToken which = qualifiers._elements.get(0).getWhich();
+			if (which instanceof Javascript_Subscript)
+			{
+				Javascript_Subscript subscript = (Javascript_Subscript) which;
+				EagleArray array = (EagleArray) value;
+				int sub = interpreter.getIntValue(subscript.expr);
+				EagleValue val = array.getValue(sub);
+				interpreter.pushEagleValue(val);
+				return;
+			}
+		}
+
 		interpreter.pushEagleValue(value);
 	}
 }

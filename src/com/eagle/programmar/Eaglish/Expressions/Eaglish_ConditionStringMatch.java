@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
@@ -32,7 +32,7 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 		String oper = matchOperator.getValue();
 
 		int sc = 0;
-		if (atClause.isPresent())
+		if (atClause != null && atClause.isPresent())
 		{
 			sc = interpreter.getIntValue(atClause.position);
 		}

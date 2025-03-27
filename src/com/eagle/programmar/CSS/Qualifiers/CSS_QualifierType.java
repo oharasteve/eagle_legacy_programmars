@@ -19,9 +19,9 @@ public class CSS_QualifierType extends TokenSequence
 
 	public static class CSS_QualifierWhichType extends TokenChooser
 	{
-		public @CHOICE CSS_KeywordChoice value = new CSS_KeywordChoice("button", "checkbox", "date", "datetime-local",
-				"email", "file", "month", "number", "password", "radio", "range", "reset", "search", "submit", "time",
-				"text");
-		public @CHOICE CSS_Literal literal;
+		public @CHOICE CSS_KeywordChoice XXvalue = new CSS_KeywordChoice(
+				"button", "checkbox", "date", "datetime-local", "email", "file","month", "number",
+				"password", "radio", "range", "reset", "search", "submit", "time", "text");
+		public @CHOICE CSS_Literal XXliteral;
 	}
 }

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.tokens.PrimaryOperator;
 
@@ -15,6 +15,6 @@ public class Perl_VariableExpression extends PrimaryOperator implements EagleRun
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(variable.getWhich());
+		interpreter.tryToInterpret(variable);
 	}
 }

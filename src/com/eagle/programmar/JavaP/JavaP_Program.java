@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.JavaP;
 
-import com.eagle.core.EagleLanguage;
+import com.eagle.core.AbstractLanguage;
 import com.eagle.tokens.TokenList;
 
-public class JavaP_Program extends EagleLanguage
+public class JavaP_Program extends AbstractLanguage
 {
 	public static final String JAVAP = "JavaP";
 

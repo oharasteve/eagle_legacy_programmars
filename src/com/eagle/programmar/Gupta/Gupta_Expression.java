@@ -52,7 +52,7 @@ public class Gupta_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(500) Gupta_Multiplicative_Expression multiplicative_Expression;
-	public @P(510) Gupta_Additive_Expression additive_Expression;
-	public @P(520) Gupta_StrCat_Expression strCat_Expression;
+	public @P(1000) Gupta_Multiplicative_Expression multiplicative_Expression;
+	public @P(1010) Gupta_Additive_Expression additive_Expression;
+	public @P(1020) Gupta_StrCat_Expression strCat_Expression;
 }

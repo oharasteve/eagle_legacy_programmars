@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.CMD.Terminals;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
 import com.eagle.core.EagleSyntax;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.programmar.Eaglish.Eaglish_Expression;
+import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnable
@@ -21,12 +21,18 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		int recLen = rec.length();
 		if (_currentChar >= recLen) return false;
 		char ch = rec.charAt(_currentChar);
-		if (ch == ':' || ch == '@' || ch == '-' || ch == '<' || ch == '>' || ch == '|' || ch == '&' || ch == ')')
+		if (":@<>|&),".indexOf(ch) >= 0)
+		{
 			return false;
+		}
 
 		int offset = 0;
 		char quote;
-		if (ch == '"' || ch == '\'')
+		if (ch == '!' || ch == '$')
+		{
+			return false;
+		}
+		else if (ch == '"' || ch == '\'')
 		{
 			quote = ch;
 
@@ -59,7 +65,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 				_endChar++;
 				if (_endChar >= recLen) break;
 				ch = rec.charAt(_endChar);
-				if (ch == ' ' || ch == '<' || ch == '>' || ch == '|' || ch == '&' || ch == '(' || ch == ')') break;
+				if (" <>|&(),".indexOf(ch) >= 0) break;
 
 				// Don't allow == in the middle of an argument
 				if (ch == '=')
@@ -96,6 +102,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		if (txt.indexOf('%') < 0)
 		{
 			interpreter.pushStr(txt);
+			return;
 		}
 
 		StringBuffer sb = new StringBuffer();
@@ -116,10 +123,26 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 			}
 
 			// Extract a variable name (or expression) and value
-			int second = txt.indexOf('%', first + 1);
-			if (second < 0) throw new RuntimeException("Missing % in " + txt);
-			String var = txt.substring(first + 1, second);
-			Eaglish_Expression expr = new Eaglish_Expression();
+			String var;
+			int ec;
+			if (first + 2 < nc && txt.charAt(first + 1) == '~' && Character.isDigit(txt.charAt(first + 2)))
+			{
+				var = txt.substring(first, first + 3);   // Treat %~2 special
+				ec = first + 2;
+			}
+			else if (first + 2 < nc && txt.charAt(first + 1) == '%' && Character.isLetter(txt.charAt(first + 2)))
+			{
+				var = txt.substring(first, first + 3);	// Treat %%A special
+				ec = first + 2;
+			}
+			else
+			{
+				ec = txt.indexOf('%', first + 1);
+				if (ec < 0) throw new RuntimeException("Missing second % in " + txt);
+				var = txt.substring(first + 1, ec);
+			}
+
+			CMD_Expression expr = new CMD_Expression();
 			if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + var);
@@ -128,7 +151,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 			sb.append(val);
 
 			// Look for the next piece
-			sc = second + 1;
+			sc = ec + 1;
 		}
 		interpreter.pushStr(sb.toString());
 	}

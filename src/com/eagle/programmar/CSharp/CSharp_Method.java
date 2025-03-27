@@ -3,7 +3,11 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
+import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Method_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Type_Definition;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
@@ -11,24 +15,31 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
-import com.eagle.tokens.EagleScope;
-import com.eagle.tokens.EagleScope.EagleScopeInterface;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
-public class CSharp_Method extends TokenSequence implements AbstractMethod, EagleScopeInterface
+public class CSharp_Method extends TokenSequence implements
+			AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
-	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifiers> modifiers;
+	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifier> modifiers;
 	public @S(40) @OPT TokenList<CSharp_Comment> comment2;
 	public @S(50) CSharp_Type returnType;
 	public @S(60) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
@@ -49,7 +60,7 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 		public @S(50) @OPT CSharp_Comment comment3;
 	}
 
-	public static class CSharp_MethodModifiers extends TokenSequence
+	public static class CSharp_MethodModifier extends TokenSequence
 	{
 		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
 	}
@@ -86,8 +97,8 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 
 	public static class CSharp_MethodBody extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE CSharp_MethodImplementation implementation;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE CSharp_MethodImplementation XXimplementation;
 
 		public @CHOICE static class CSharp_MethodLambda extends TokenSequence
 		{
@@ -97,11 +108,96 @@ public class CSharp_Method extends TokenSequence implements AbstractMethod, Eagl
 		}
 	}
 
-	private EagleScope _scope = new EagleScope(this, CSharp_Syntax.isCaseSensitive);
+	public @SKIP CallMetrics _metrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
 	public EagleScope getScope()
 	{
 		return _scope;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), this);
+		}
+
+		// Nothing to do here. Only run methods when they are called / invoked.
+		// Exception is 'Main'
+		if (methodName.getValue().equals("Main"))
+		{
+			interpreter.callingFunction("main", this);
+			AbstractToken which = body.getWhich();
+			if (which instanceof CSharp_MethodImplementation)
+			{
+				CSharp_MethodImplementation impl = (CSharp_MethodImplementation) which;
+				for (CSharp_StatementOrComment stmt : impl.block.statements._elements)
+				{
+					interpreter.tryToInterpret(stmt);
+				}
+			}
+			interpreter.completedFunction("main", this);
+		}
+	}
+	
+	public static CSharp_Method newCSharpMethod(PrivacyEnum privacy, boolean isStatic,
+			AbstractType returnType, String methodName)
+	{
+		CSharp_Method meth = new CSharp_Method();
+		meth.modifiers = new TokenList<CSharp_MethodModifier>();
+		
+		CSharp_MethodModifier modifier1 = new CSharp_MethodModifier();
+		switch (privacy)
+		{
+		case PUBLIC:
+			modifier1.modifier = new CSharp_KeywordChoice("public");
+			break;
+		case PRIVATE:
+		case NONE:
+			modifier1.modifier = new CSharp_KeywordChoice("private");
+			break;
+		default:
+			throw new RuntimeException("Can't handle privacy: " + privacy);
+		}
+		meth.modifiers.addToken(modifier1);
+
+		if (isStatic)
+		{
+			CSharp_MethodModifier modifier2 = new CSharp_MethodModifier();
+			modifier2.modifier = new CSharp_KeywordChoice("static");
+			meth.modifiers.addToken(modifier2);
+		}
+		
+		meth.returnType = (CSharp_Type) returnType;
+		
+		meth.parameters = new CSharp_MethodParameters();
+		meth.parameters.setPresent(true);
+		meth.parameters.leftParen = new PunctuationLeftParen();
+		meth.parameters.rightParen = new PunctuationRightParen();
+		
+		meth.body = new CSharp_MethodBody();
+		CSharp_MethodImplementation impl = new CSharp_MethodImplementation();
+		impl.block = new CSharp_StatementBlock();
+		impl.block.leftBrace = new PunctuationLeftBrace();
+		impl.block.statements = new TokenList<CSharp_StatementOrComment>();
+		impl.block.rightBrace = new PunctuationRightBrace();
+		meth.body.setWhich(impl);
+		
+		meth.methodName = new CSharp_Method_Definition();
+		meth.methodName.setValue(methodName);
+		return meth;
+	}
+	
+	public void addCSharpParameter(AbstractType type, String name)
+	{
+		parameters.param = new CSharp_MethodParameter();
+		parameters.param.setPresent(true);
+		parameters.param.id = new CSharp_Variable_Definition();
+		parameters.param.id.setValue(name);
+		parameters.param.cstype = (CSharp_Type) type;
 	}
 }

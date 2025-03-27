@@ -19,7 +19,7 @@ public class Rust_Module extends TokenSequence
 
 	public static class Rust_Module_Body extends TokenChooser
 	{
-		public @CHOICE PunctuationSemicolon semicolon;
-		public @CHOICE Rust_Block_Statement stmt;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE Rust_Block_Statement XXstmt;
 	}
 }

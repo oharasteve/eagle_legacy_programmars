@@ -23,9 +23,9 @@ public class CPlus_ArgumentList extends TokenSequence
 
 	public static class CPlus_ExpressionArg extends TokenChooser
 	{
-		public @FIRST C_Expression expr;
-		public @CHOICE C_Keyword CONST = new C_Keyword("const");
-		public @CHOICE C_TypePrimitive primitiveType;
+		public @FIRST C_Expression XXexpr;
+		public @CHOICE C_Keyword XXCONST = new C_Keyword("const");
+		public @CHOICE C_TypePrimitive XXprimitiveType;
 
 		public @CHOICE static class CPlus_ExpressionArgType extends TokenSequence
 		{

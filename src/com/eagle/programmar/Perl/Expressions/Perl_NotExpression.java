@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
-import com.eagle.core.EagleInterpreter;
-import com.eagle.core.EagleRunnable;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -18,14 +18,14 @@ public class Perl_NotExpression extends PrimaryOperator implements EagleRunnable
 
 	public static class Perl_NotOperator extends TokenChooser
 	{
-		public @CHOICE Perl_Punctuation notOperator = new Perl_Punctuation('!');
-		public @CHOICE Perl_Keyword NOT = new Perl_Keyword("not");
+		public @CHOICE Perl_Punctuation XXnotOperator = new Perl_Punctuation('!');
+		public @CHOICE Perl_Keyword XXNOT = new Perl_Keyword("not");
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(! value);
+		interpreter.pushBool(!value);
 	}
 }

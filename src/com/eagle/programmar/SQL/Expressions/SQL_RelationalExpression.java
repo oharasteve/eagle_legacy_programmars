@@ -17,7 +17,8 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 
 	public static class SQL_RelationalOperator extends TokenChooser
 	{
-		public @CHOICE SQL_KeywordChoice LIKE = new SQL_KeywordChoice("LIKE", "IN");
-		public @CHOICE SQL_PunctuationChoice operator = new SQL_PunctuationChoice("=", "!=", "<", ">", "<=", ">=");
+		public @CHOICE SQL_KeywordChoice XXLIKE = new SQL_KeywordChoice("LIKE", "IN");
+		public @CHOICE SQL_PunctuationChoice XXoperator = new SQL_PunctuationChoice(
+				"=", "!=", "<", ">", "<=", ">=");
 	}
 }
