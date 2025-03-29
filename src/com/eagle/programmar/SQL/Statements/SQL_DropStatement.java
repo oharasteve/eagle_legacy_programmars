@@ -5,59 +5,30 @@ package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
-import com.eagle.tokens.TokenChooser;
+import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_DropStatement extends TokenSequence
 {
 	public @S(10) SQL_Keyword DROP = new SQL_Keyword("DROP");
-	public @S(20) SQL_DropWhat what;
-	public @S(30) PunctuationSemicolon semicolon;
+	public @S(20) @OPT SQL_Keyword PUBLIC = new SQL_Keyword("PUBLIC");
+	public @S(30) SQL_KeywordChoice what = new SQL_KeywordChoice(
+			"FUNCTION",
+			"PACKAGE",
+			"PROCEDURE",
+			"ROLE",
+			"SYNONYM",
+			"TABLE",
+			"VIEW"
+		);
+	public @S(40) @OPT SQL_DropCondition condition;
+	public @S(50) SQL_Identifier_Reference id;
+	public @S(60) PunctuationSemicolon semicolon;
 
-	public static class SQL_DropWhat extends TokenChooser
+	public static class SQL_DropCondition extends TokenSequence
 	{
-		public @CHOICE static class SQL_DropFunction extends TokenSequence
-		{
-			public @S(10) SQL_Keyword FUNCTION = new SQL_Keyword("FUNCTION");
-			public @S(20) SQL_Identifier_Reference func;
-		}
-
-		public @CHOICE static class SQL_DropPackage extends TokenSequence
-		{
-			public @S(10) SQL_Keyword PACKAGE = new SQL_Keyword("PACKAGE");
-			public @S(20) SQL_Identifier_Reference pack;
-		}
-
-		public @CHOICE static class SQL_DropProcedure extends TokenSequence
-		{
-			public @S(10) SQL_Keyword PROCEDURE = new SQL_Keyword("PROCEDURE");
-			public @S(20) SQL_Identifier_Reference proc;
-		}
-
-		public @CHOICE static class SQL_DropRole extends TokenSequence
-		{
-			public @S(10) SQL_Keyword ROLE = new SQL_Keyword("ROLE");
-			public @S(20) SQL_Identifier_Reference role;
-		}
-
-		public @CHOICE static class SQL_DropSynonym extends TokenSequence
-		{
-			public @S(10) SQL_Keyword PUBLIC = new SQL_Keyword("PUBLIC");
-			public @S(20) SQL_Keyword SYNONYM = new SQL_Keyword("SYNONYM");
-			public @S(30) SQL_Identifier_Reference synonym;
-		}
-
-		public @CHOICE static class SQL_DropTable extends TokenSequence
-		{
-			public @S(10) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
-			public @S(20) SQL_Identifier_Reference table;
-		}
-
-		public @CHOICE static class SQL_DropView extends TokenSequence
-		{
-			public @S(10) SQL_Keyword VIEW = new SQL_Keyword("VIEW");
-			public @S(20) SQL_Identifier_Reference view;
-		}
+		public @S(10) SQL_Keyword IF = new SQL_Keyword("IF");
+		public @S(20) SQL_Keyword EXISTS = new SQL_Keyword("EXISTS");
 	}
 }
