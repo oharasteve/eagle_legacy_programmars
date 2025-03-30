@@ -15,7 +15,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_Function extends TokenSequence
 {
@@ -23,7 +22,6 @@ public class SQL_Function extends TokenSequence
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<SQL_FunctionParam, PunctuationComma> params;
 	public @S(40) PunctuationRightParen rightParen;
-	public @S(50) @OPT PunctuationSemicolon semicolon;
 
 	public static class SQL_FunctionParam extends TokenChooser
 	{
@@ -48,7 +46,7 @@ public class SQL_Function extends TokenSequence
 		public @LAST SQL_Variable XXvar;
 
 		public @FIRST SQL_KeywordChoice XXfnName = new SQL_KeywordChoice(
-				"COALESCE", "CONCAT", "COUNT", "CURRENT_TIMESTAMP", "LENGTH", "MIN",
+				"COALESCE", "CONCAT", "COUNT", "CURRENT_TIMESTAMP", "LEFT", "LENGTH", "MIN",
 				"RUN_METRIC", "SUBSTRING", "SYS_EXTRACT_UTC", "SYS_GUID");
 
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence

@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_SetStatement extends TokenSequence
 {
-	public @S(10) @DOC("sql_set.asp") SQL_Keyword SELECT = new SQL_Keyword("SET");
+	public @S(10) @DOC("sql_set.asp") SQL_Keyword SET = new SQL_Keyword("SET");
 	public @S(20) SQL_VariableExpression var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) SQL_Expression expr;

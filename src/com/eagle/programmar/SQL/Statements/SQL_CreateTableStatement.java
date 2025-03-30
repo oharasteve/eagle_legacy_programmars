@@ -22,7 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class SQL_CreateTableStatement extends TokenSequence
 {
 	public @S(10) @DOC("sql_create_table.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
-	public @S(20) @OPT SQL_Keyword VIRTUAL = new SQL_Keyword("VIRTUAL");
+	public @S(20) @OPT SQL_KeywordChoice VIRTUAL = new SQL_KeywordChoice("VIRTUAL", "TEMPORARY");
 	public @S(30) SQL_Keyword TABLE = new SQL_Keyword("TABLE");
 	public @S(40) @OPT SQL_IfTableNotExists ifNotExists;
 	public @S(50) SQL_Table_Definition table;

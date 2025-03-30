@@ -13,7 +13,9 @@ import com.eagle.programmar.SQL.Expressions.SQL_FunctionExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_InnerSelect;
 import com.eagle.programmar.SQL.Expressions.SQL_InnerValues;
 import com.eagle.programmar.SQL.Expressions.SQL_InnerWith;
+import com.eagle.programmar.SQL.Expressions.SQL_LogicalNotExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_MultiplicativeExpression;
+import com.eagle.programmar.SQL.Expressions.SQL_NegativeExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_OrExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Parentheses;
 import com.eagle.programmar.SQL.Expressions.SQL_RelationalExpression;
@@ -56,16 +58,18 @@ public class SQL_Expression extends PrecedenceChooser
 	// Primary expressions
 
 	public @P(100) SQL_CurrentTimeStamp currentTimeStamp;
-	public @P(110) SQL_Builtin builtin;
-	public @P(120) SQL_FunctionExpression functionExpression;
-	public @P(130) SQL_CastExpression castExpression;
-	public @P(140) SQL_DollarVariable dollarVariable;
-	public @P(150) SQL_VariableExpression variableExpression;
-	public @P(160) SQL_Star star;
-	public @P(170) SQL_InnerSelect innerSelect;
-	public @P(180) SQL_InnerValues innerValues;
-	public @P(190) SQL_InnerWith innerWith;
-	public @P(200) SQL_Parentheses parentheses;
+	public @P(110) SQL_NegativeExpression negativeExpression;
+	public @P(120) SQL_LogicalNotExpression notExpression;
+	public @P(130) SQL_Builtin builtin;
+	public @P(140) SQL_FunctionExpression functionExpression;
+	public @P(150) SQL_CastExpression castExpression;
+	public @P(160) SQL_DollarVariable dollarVariable;
+	public @P(170) SQL_VariableExpression variableExpression;
+	public @P(180) SQL_Star star;
+	public @P(190) SQL_InnerSelect innerSelect;
+	public @P(200) SQL_InnerValues innerValues;
+	public @P(210) SQL_InnerWith innerWith;
+	public @P(220) SQL_Parentheses parentheses;
 
 	///////////////////////////////////////////////
 	// Binary expressions

@@ -4,11 +4,13 @@
 package com.eagle.programmar.SQL;
 
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
+import com.eagle.programmar.SQL.Terminals.SQL_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class SQL_Variable extends TokenSequence
 {
-	public @S(10) SeparatedList<SQL_Identifier_Reference, PunctuationPeriod> field;
+	public @S(10) @OPT SQL_Punctuation AT = new SQL_Punctuation("@");
+	public @S(20) SeparatedList<SQL_Identifier_Reference, PunctuationPeriod> field;
 }

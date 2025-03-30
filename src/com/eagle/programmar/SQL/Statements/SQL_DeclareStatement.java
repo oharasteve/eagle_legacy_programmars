@@ -21,8 +21,8 @@ public class SQL_DeclareStatement extends TokenSequence
 	{
 		public @S(10) SQL_Declare_Definition definition;
 		public @S(20) SQL_Type type;
-		public @S(30) SQL_Punctuation colonEquals = new SQL_Punctuation(":=");
-		public @S(40) SQL_Expression value;
+		public @S(30) @OPT SQL_Punctuation colonEquals = new SQL_Punctuation(":=");
+		public @S(40) @OPT SQL_Expression value;
 		public @S(50) PunctuationSemicolon semicolon;
 	}
 }
