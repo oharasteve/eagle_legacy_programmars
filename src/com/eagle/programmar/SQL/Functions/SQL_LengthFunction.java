@@ -1,5 +1,5 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Mar 31, 2024
+// Original author: Steven A. O'Hara, Mar 31, 2025
 
 package com.eagle.programmar.SQL.Functions;
 

@@ -4,6 +4,8 @@
 package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Type;
 import com.eagle.programmar.SQL.Symbols.SQL_Parameter_Definition;
 import com.eagle.programmar.SQL.Symbols.SQL_Procedure_Definition;
@@ -18,7 +20,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class SQL_CreateProcedureStatement extends TokenSequence implements AbstractFunction
+public class SQL_CreateProcedureStatement extends TokenSequence
+		implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @DOC("sql_create_procedure.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
 	public @S(20) @OPT SQL_OrReplaceProcedure replace;
@@ -43,5 +46,13 @@ public class SQL_CreateProcedureStatement extends TokenSequence implements Abstr
 		public @S(10) @OPT SQL_KeywordChoice OUT = new SQL_KeywordChoice("IN", "OUT");
 		public @S(20) SQL_Parameter_Definition param;
 		public @S(30) SQL_Type type;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// This is unusual. SQL_Program collects these when it starts to run
+		// So there isn't really much to do here.
+		// It will get called at some point, that is when the work happens.
 	}
 }

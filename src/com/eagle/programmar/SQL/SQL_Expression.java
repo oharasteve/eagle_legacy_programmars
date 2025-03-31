@@ -21,8 +21,10 @@ import com.eagle.programmar.SQL.Expressions.SQL_RelationalExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Star;
 import com.eagle.programmar.SQL.Expressions.SQL_VariableExpression;
 import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
+import com.eagle.programmar.SQL.Functions.SQL_ConcatFunction;
 import com.eagle.programmar.SQL.Functions.SQL_LeftFunction;
 import com.eagle.programmar.SQL.Functions.SQL_LengthFunction;
+import com.eagle.programmar.SQL.Functions.SQL_SubstringFunction;
 import com.eagle.programmar.SQL.Terminals.SQL_HexString;
 import com.eagle.programmar.SQL.Terminals.SQL_Literal;
 import com.eagle.programmar.SQL.Terminals.SQL_Number;
@@ -64,16 +66,18 @@ public class SQL_Expression extends PrecedenceChooser
 	public @P(120) SQL_LogicalNotExpression notExpression;
 	public @P(130) SQL_Builtin builtin;
 	public @P(140) SQL_BuiltinFunction functionCall;
-	public @P(141) SQL_LengthFunction lengthFunction;
-	public @P(142) SQL_LeftFunction leftFunction;
-	public @P(150) SQL_CastExpression castExpression;
-	public @P(160) SQL_DollarVariable dollarVariable;
-	public @P(170) SQL_VariableExpression variableExpression;
-	public @P(180) SQL_Star star;
-	public @P(190) SQL_InnerSelect innerSelect;
-	public @P(200) SQL_InnerValues innerValues;
-	public @P(210) SQL_InnerWith innerWith;
-	public @P(220) SQL_Parentheses parentheses;
+	public @P(150) SQL_ConcatFunction concatFunction;
+	public @P(160) SQL_LeftFunction leftFunction;
+	public @P(170) SQL_LengthFunction lengthFunction;
+	public @P(180) SQL_SubstringFunction substringFunction;
+	public @P(190) SQL_CastExpression castExpression;
+	public @P(200) SQL_DollarVariable dollarVariable;
+	public @P(210) SQL_VariableExpression variableExpression;
+	public @P(220) SQL_Star star;
+	public @P(230) SQL_InnerSelect innerSelect;
+	public @P(240) SQL_InnerValues innerValues;
+	public @P(250) SQL_InnerWith innerWith;
+	public @P(260) SQL_Parentheses parentheses;
 
 	///////////////////////////////////////////////
 	// Binary expressions
