@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.SQL;
 
+import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
 import com.eagle.programmar.SQL.Statements.SQL_AlterStatement;
 import com.eagle.programmar.SQL.Statements.SQL_AtAtStatement;
 import com.eagle.programmar.SQL.Statements.SQL_BeginStatement;
@@ -71,6 +72,6 @@ public class SQL_Statement extends TokenChooser
 
 	public @CHOICE PunctuationSemicolon XXsemicolon;
 
-	public @LAST SQL_Function XXfunctionCall;
+	public @LAST SQL_BuiltinFunction XXfunctionCall;
 	// public @LAST SQL_ExpressionStatement XXexpressionStmt;
 }

@@ -26,7 +26,7 @@ public class Fortran_ConditionalAndExpression extends PrecedenceOperator impleme
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

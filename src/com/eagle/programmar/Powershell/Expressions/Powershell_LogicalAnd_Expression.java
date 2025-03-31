@@ -28,7 +28,7 @@ public class Powershell_LogicalAnd_Expression extends PrecedenceOperator impleme
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

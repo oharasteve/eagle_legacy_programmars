@@ -3,12 +3,21 @@
 
 package com.eagle.programmar.SQL.Expressions;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Terminals.SQL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class SQL_LogicalNotExpression extends PrimaryOperator
+public class SQL_LogicalNotExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) SQL_Punctuation notOperator = new SQL_Punctuation('!');
 	public @S(20) SQL_Expression expr;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		boolean value = interpreter.getBoolValue(expr);
+		interpreter.pushBool(!value);
+	}
 }

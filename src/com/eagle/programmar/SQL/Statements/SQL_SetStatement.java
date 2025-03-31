@@ -3,18 +3,30 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Expressions.SQL_VariableExpression;
+import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class SQL_SetStatement extends TokenSequence
+public class SQL_SetStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("sql_set.asp") SQL_Keyword SET = new SQL_Keyword("SET");
 	public @S(20) SQL_VariableExpression var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) SQL_Expression expr;
 	public @S(50) PunctuationSemicolon semicolon;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		SQL_Identifier_Reference id = var.variable.ids.first();
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter.setSymbol(var, id.getValue(), val);
+	}
 }

@@ -26,7 +26,7 @@ public class Javascript_ConditionalAndExpression extends PrecedenceOperator impl
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

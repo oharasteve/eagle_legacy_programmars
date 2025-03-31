@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.SQL.Statements;
 
-import com.eagle.programmar.SQL.SQL_Function;
+import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenSequence;
 
 public class SQL_CallStatement extends TokenSequence
 {
 	public @S(10) SQL_Keyword CALL = new SQL_Keyword("CALL");
-	public @S(20) SQL_Function func;
+	public @S(20) SQL_BuiltinFunction func;
 }

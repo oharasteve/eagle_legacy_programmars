@@ -1,8 +1,10 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Jun 24, 2015
 
-package com.eagle.programmar.SQL;
+package com.eagle.programmar.SQL.Functions;
 
+import com.eagle.programmar.SQL.SQL_Expression;
+import com.eagle.programmar.SQL.SQL_Variable;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
@@ -16,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class SQL_Function extends TokenSequence
+public class SQL_BuiltinFunction extends TokenSequence
 {
 	public @S(10) SQL_FunctionName funcName;
 	public @S(20) PunctuationLeftParen leftParen;
@@ -46,7 +48,7 @@ public class SQL_Function extends TokenSequence
 		public @LAST SQL_Variable XXvar;
 
 		public @FIRST SQL_KeywordChoice XXfnName = new SQL_KeywordChoice(
-				"COALESCE", "CONCAT", "COUNT", "CURRENT_TIMESTAMP", "LEFT", "LENGTH", "MIN",
+				"COALESCE", "CONCAT", "COUNT", "CURRENT_TIMESTAMP", "MIN",
 				"RUN_METRIC", "SUBSTRING", "SYS_EXTRACT_UTC", "SYS_GUID");
 
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence

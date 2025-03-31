@@ -32,7 +32,7 @@ public class Java_LogicalAndExpression extends PrecedenceOperator
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

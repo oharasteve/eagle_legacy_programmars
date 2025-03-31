@@ -3,16 +3,19 @@
 
 package com.eagle.programmar.SQL.Expressions;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.programmar.SQL.Terminals.SQL_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 
-public class SQL_RelationalExpression extends PrecedenceOperator
+public class SQL_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) SQL_RelationalOperator relationalOperator;
+	public @S(20) SQL_RelationalOperator operator;
 	public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
 
 	public static class SQL_RelationalOperator extends TokenChooser
@@ -20,5 +23,53 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 		public @CHOICE SQL_KeywordChoice XXLIKE = new SQL_KeywordChoice("LIKE", "IN", "IS");
 		public @CHOICE SQL_PunctuationChoice XXoperator = new SQL_PunctuationChoice(
 				"=", "!=", "<", ">", "<=", ">=");
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(! leftStr.equals(rightStr));
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (operator.getWhich().toString())
+			{
+			case "=":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			}
+		}
+		throw new RuntimeException("Unexpected relational operator: " + operator.getWhich());
 	}
 }

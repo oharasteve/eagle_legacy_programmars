@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.SQL.Expressions;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -10,9 +12,15 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class SQL_Parentheses extends PrimaryOperator
+public class SQL_Parentheses extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) SeparatedList<SQL_Expression, PunctuationComma> exprs;
 	public @S(30) PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(exprs.first());
+	}
 }

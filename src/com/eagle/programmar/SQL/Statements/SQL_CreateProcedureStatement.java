@@ -10,6 +10,7 @@ import com.eagle.programmar.SQL.Symbols.SQL_Procedure_Definition;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.programmar.SQL.Terminals.SQL_PunctuationChoice;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -17,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class SQL_CreateProcedureStatement extends TokenSequence
+public class SQL_CreateProcedureStatement extends TokenSequence implements AbstractFunction
 {
 	public @S(10) @DOC("sql_create_procedure.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
 	public @S(20) @OPT SQL_OrReplaceProcedure replace;

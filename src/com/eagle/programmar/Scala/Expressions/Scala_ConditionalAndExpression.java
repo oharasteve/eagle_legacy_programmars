@@ -26,7 +26,7 @@ public class Scala_ConditionalAndExpression extends PrecedenceOperator implement
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

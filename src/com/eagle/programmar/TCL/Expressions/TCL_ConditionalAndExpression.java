@@ -34,7 +34,7 @@ public class TCL_ConditionalAndExpression extends PrecedenceOperator implements 
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

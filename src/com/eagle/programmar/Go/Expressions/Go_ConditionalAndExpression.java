@@ -26,7 +26,7 @@ public class Go_ConditionalAndExpression extends PrecedenceOperator implements E
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}

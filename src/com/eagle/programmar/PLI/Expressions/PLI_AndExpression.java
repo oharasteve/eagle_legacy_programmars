@@ -26,7 +26,7 @@ public class PLI_AndExpression extends PrecedenceOperator implements EagleRunnab
 		}
 		else
 		{
-			// Short circuit, don't btoerh with RHS
+			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
 	}
