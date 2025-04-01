@@ -46,7 +46,7 @@ public class SQL_Program extends AbstractLanguage implements EagleRunnable
 				if (stmt.getWhich() instanceof SQL_CreateProcedureStatement)
 				{
 					SQL_CreateProcedureStatement proc = (SQL_CreateProcedureStatement) stmt.getWhich();
-					interpreter.addFunction(proc.proc.getValue(), proc);
+					interpreter.addFunction(proc.procName.getValue(), proc);
 				}
 			}
 		}

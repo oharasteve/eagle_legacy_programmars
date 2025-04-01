@@ -22,10 +22,10 @@ public class SQL_BuiltinFunction extends TokenSequence
 {
 	public @S(10) SQL_FunctionName funcName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<SQL_FunctionParam, PunctuationComma> params;
+	public @S(30) @OPT SeparatedList<SQL_FunctionArg, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
 
-	public static class SQL_FunctionParam extends TokenChooser
+	public static class SQL_FunctionArg extends TokenChooser
 	{
 		public @CHOICE SQL_Expression XXarg;
 
@@ -35,7 +35,7 @@ public class SQL_BuiltinFunction extends TokenSequence
 			public @S(20) SQL_Expression arg;
 		}
 
-		public @FIRST static class SQL_FunctionNamedParam extends TokenSequence
+		public @FIRST static class SQL_FunctionNamedArg extends TokenSequence
 		{
 			public @S(10) SQL_Identifier_Reference parameterName;
 			public @S(20) SQL_Punctuation equalsGreater = new SQL_Punctuation("=>");

@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class SQL_DropStatement extends TokenSequence
+public class SQL_DropStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) SQL_Keyword DROP = new SQL_Keyword("DROP");
 	public @S(20) @OPT SQL_Keyword PUBLIC = new SQL_Keyword("PUBLIC");
@@ -30,5 +32,11 @@ public class SQL_DropStatement extends TokenSequence
 	{
 		public @S(10) SQL_Keyword IF = new SQL_Keyword("IF");
 		public @S(20) SQL_Keyword EXISTS = new SQL_Keyword("EXISTS");
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Not currently creating real tables ... so ignore the DROP statements for now
 	}
 }
