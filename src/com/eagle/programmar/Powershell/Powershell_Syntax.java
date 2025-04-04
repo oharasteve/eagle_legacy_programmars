@@ -28,5 +28,6 @@ public class Powershell_Syntax extends EagleSyntax
 		// _commentInstance = new Powershell_Comment();
 
 		addReservedWords(Powershell_Reserved_Words.RESERVED_WORDS);
+		addHyphenWords(Powershell_Reserved_Words.HYPHEN_WORDS);
 	}
 }

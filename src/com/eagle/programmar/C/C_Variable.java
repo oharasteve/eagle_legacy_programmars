@@ -34,7 +34,6 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	public static class C_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE C_CastedVariable XXcastedVariable;
-		public @CHOICE C_IndirectVariable XXindirectVariable;
 		public @CHOICE C_SubscriptedVariable XXsubscriptedVariable;
 		public @LAST C_Identifier_Reference XXid;
 	}
@@ -47,13 +46,6 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 		public @S(40) PunctuationRightParen rightParen1;
 		public @S(50) C_Identifier_Reference id;
 		public @S(60) PunctuationRightParen rightParen2;
-	}
-
-	public static class C_IndirectVariable extends TokenSequence
-	{
-		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) C_Variable var;
-		public @S(30) PunctuationRightParen rightParen;
 	}
 
 	public static class C_SubscriptedVariable extends TokenSequence

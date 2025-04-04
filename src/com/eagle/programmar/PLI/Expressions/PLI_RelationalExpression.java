@@ -23,10 +23,10 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 
-		if (leftValue.isString() && rightValue.isString())
+		if (leftValue.isString() || rightValue.isString())
 		{
-			String leftStr = interpreter.getStrValue(left);
-			String rightStr = interpreter.getStrValue(right);
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
 			switch (operator.toString())
 			{
 			case "=":
@@ -35,14 +35,40 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 			case "^=":
 				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
-			default:
-				throw new RuntimeException("Unable to handle " + operator + " with strings");
 			}
 		}
-		else if (leftValue.isInteger() && rightValue.isInteger())
+		
+		if (leftValue.isDouble() || rightValue.isDouble())
 		{
-			int leftInt = interpreter.getIntValue(left);
-			int rightInt = interpreter.getIntValue(right);
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (operator.toString())
+			{
+			case "=":
+				interpreter.pushBool(leftDbl == rightDbl);
+				return;
+			case "^=":
+				interpreter.pushBool(leftDbl != rightDbl);
+				return;
+			case "<":
+				interpreter.pushBool(leftDbl < rightDbl);
+				return;
+			case "<=", "^>":
+				interpreter.pushBool(leftDbl <= rightDbl);
+				return;
+			case ">":
+				interpreter.pushBool(leftDbl > rightDbl);
+				return;
+			case ">=", "^<":
+				interpreter.pushBool(leftDbl >= rightDbl);
+				return;
+			}
+		}
+
+		if (leftValue.isInteger() || rightValue.isInteger())
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
 			switch (operator.toString())
 			{
 			case "=":
@@ -62,6 +88,21 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 				return;
 			case ">=", "^<":
 				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			}
+		}
+		
+		if (leftValue.isBoolean() || rightValue.isBoolean())
+		{
+			boolean leftBool = leftValue.forceBooleanValue();
+			boolean rightBool = rightValue.forceBooleanValue();
+			switch (operator.toString())
+			{
+			case "=":
+				interpreter.pushBool(leftBool == rightBool);
+				return;
+			case "^=":
+				interpreter.pushBool(leftBool != rightBool);
 				return;
 			}
 		}

@@ -91,7 +91,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		StringBuffer result = new StringBuffer();
 		for (COBOL_StringWhat what : elements._elements)
 		{
-			if (what.delimit.isPresent())
+			if (what.delimit != null && what.delimit.isPresent())
 			{
 				AbstractToken which = what.delimit.what.getWhich();
 				if (!(which instanceof COBOL_StringDelimitSpaces))

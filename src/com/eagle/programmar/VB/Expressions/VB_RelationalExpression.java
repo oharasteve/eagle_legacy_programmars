@@ -40,6 +40,32 @@ public class VB_RelationalExpression extends PrecedenceOperator implements Eagle
 				return;
 			}
 		}
+		else if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (operator.toString())
+			{
+			case "=":
+				interpreter.pushBool(leftDbl == rightDbl);
+				return;
+			case "<>":
+				interpreter.pushBool(leftDbl != rightDbl);
+				return;
+			case "<":
+				interpreter.pushBool(leftDbl < rightDbl);
+				return;
+			case "<=":
+				interpreter.pushBool(leftDbl <= rightDbl);
+				return;
+			case ">":
+				interpreter.pushBool(leftDbl > rightDbl);
+				return;
+			case ">=":
+				interpreter.pushBool(leftDbl >= rightDbl);
+				return;
+			}
+		}
 		else
 		{
 			int leftInt = leftValue.forceIntegerValue();

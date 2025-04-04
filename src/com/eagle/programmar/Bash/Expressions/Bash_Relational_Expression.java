@@ -30,59 +30,60 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 
-		if (leftValue.isInteger() && rightValue.isInteger())
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (operator.getWhich().toString())
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			case "<":
+				interpreter.pushBool(leftStr.compareTo(rightStr) < 0);
+				return;
+			case "<=":
+				interpreter.pushBool(leftStr.compareTo(rightStr) <= 0);
+				return;
+			case ">":
+				interpreter.pushBool(leftStr.compareTo(rightStr) > 0);
+				return;
+			case ">=":
+				interpreter.pushBool(leftStr.compareTo(rightStr) >= 0);
+				return;
+			}
+		}
+
+		if (leftValue.isInteger() || rightValue.isInteger())
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
 			switch (operator.getWhich().toString())
 			{
-			case "-eq", "==":
+			case "-eq":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
-			case "-ne", "!=":
+			case "-ne":
 				interpreter.pushBool(leftInt != rightInt);
 				return;
-			case "-lt", "<":
+			case "-lt":
 				interpreter.pushBool(leftInt < rightInt);
 				return;
-			case "-le", "<=":
+			case "-le":
 				interpreter.pushBool(leftInt <= rightInt);
 				return;
-			case "-gt", ">":
+			case "-gt":
 				interpreter.pushBool(leftInt > rightInt);
 				return;
-			case "-ge", ">=":
+			case "-ge":
 				interpreter.pushBool(leftInt >= rightInt);
 				return;
-			default:
-				throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with integers");
 			}
 		}
 
-		String leftStr = leftValue.forceStringValue();
-		String rightStr = rightValue.forceStringValue();
-		switch (operator.getWhich().toString())
-		{
-		case "==":
-			interpreter.pushBool(leftStr.equals(rightStr));
-			return;
-		case "!=":
-			interpreter.pushBool(!leftStr.equals(rightStr));
-			return;
-		case "<":
-			interpreter.pushBool(leftStr.compareTo(rightStr) < 0);
-			return;
-		case "<=":
-			interpreter.pushBool(leftStr.compareTo(rightStr) <= 0);
-			return;
-		case ">":
-			interpreter.pushBool(leftStr.compareTo(rightStr) > 0);
-			return;
-		case ">=":
-			interpreter.pushBool(leftStr.compareTo(rightStr) >= 0);
-			return;
-		default:
-			throw new RuntimeException("Unable to handle " + operator.getWhich().toString() + " with strings");
-		}
+		throw new RuntimeException("Unable to handle " + operator.getWhich().toString());
 	}
 }

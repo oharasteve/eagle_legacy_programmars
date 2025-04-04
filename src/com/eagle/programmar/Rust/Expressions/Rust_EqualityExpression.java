@@ -23,10 +23,40 @@ public class Rust_EqualityExpression extends PrecedenceOperator implements Eagle
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getValue();
 
-		if (leftValue.isInteger() && rightValue.isInteger())
+		if (leftValue.isString() || rightValue.isString())
 		{
-			int leftInt = interpreter.getIntValue(left);
-			int rightInt = interpreter.getIntValue(right);
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			}
+		}
+
+		if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftDbl == rightDbl);
+				return;
+			case "!=":
+				interpreter.pushBool(leftDbl != rightDbl);
+				return;
+			}
+		}
+
+		if (leftValue.isInteger() || rightValue.isInteger())
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
 			switch (oper)
 			{
 			case "==":
@@ -38,17 +68,17 @@ public class Rust_EqualityExpression extends PrecedenceOperator implements Eagle
 			}
 		}
 
-		if (leftValue.isString() && rightValue.isString())
+		if (leftValue.isBoolean() && rightValue.isBoolean())
 		{
-			String leftStr = interpreter.getStrValue(left);
-			String rightStr = interpreter.getStrValue(right);
+			boolean leftBool = leftValue.forceBooleanValue();
+			boolean rightBool = rightValue.forceBooleanValue();
 			switch (oper)
 			{
 			case "==":
-				interpreter.pushBool(leftStr.equals(rightStr));
+				interpreter.pushBool(leftBool == rightBool);
 				return;
 			case "!=":
-				interpreter.pushBool(!leftStr.equals(rightStr));
+				interpreter.pushBool(leftBool != rightBool);
 				return;
 			}
 		}

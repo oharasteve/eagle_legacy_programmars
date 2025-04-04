@@ -47,5 +47,6 @@ public class Bash_Syntax extends EagleSyntax
 		};
 
 		addReservedWords(Bash_Reserved_Words.RESERVED_WORDS);
+		addHyphenWords(Bash_Reserved_Words.HYPHEN_WORDS);
 	}
 }

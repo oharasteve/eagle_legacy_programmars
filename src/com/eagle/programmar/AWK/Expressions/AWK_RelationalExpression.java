@@ -22,7 +22,49 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 		EagleValue leftVal = interpreter.getEagleValue(left);
 		EagleValue rightVal = interpreter.getEagleValue(right);
 
-		if (leftVal.isInteger() && rightVal.isInteger())
+		if (leftVal.isString() || rightVal.isString())
+		{
+			String leftStr = leftVal.forceStringValue();
+			String rightStr = rightVal.forceStringValue();
+			switch (operator.getValue())
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			}
+		}
+
+		if (leftVal.isDouble() || rightVal.isDouble())
+		{
+			double leftDbl = leftVal.forceDoubleValue();
+			double rightDbl = rightVal.forceDoubleValue();
+			switch (operator.getValue())
+			{
+			case "==":
+				interpreter.pushBool(leftDbl == rightDbl);
+				return;
+			case "!=":
+				interpreter.pushBool(leftDbl != rightDbl);
+				return;
+			case "<":
+				interpreter.pushBool(leftDbl < rightDbl);
+				return;
+			case "<=":
+				interpreter.pushBool(leftDbl <= rightDbl);
+				return;
+			case ">":
+				interpreter.pushBool(leftDbl > rightDbl);
+				return;
+			case ">=":
+				interpreter.pushBool(leftDbl >= rightDbl);
+				return;
+			}
+		}
+
+		if (leftVal.isInteger() || rightVal.isInteger())
 		{
 			int leftInt = leftVal.forceIntegerValue();
 			int rightInt = rightVal.forceIntegerValue();
@@ -46,25 +88,6 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 			case ">=":
 				interpreter.pushBool(leftInt >= rightInt);
 				return;
-			default:
-				throw new RuntimeException("Unable to handle " + operator.getValue() + " with integers");
-			}
-		}
-
-		if (leftVal.isString() && rightVal.isString())
-		{
-			String leftStr = leftVal.forceStringValue();
-			String rightStr = rightVal.forceStringValue();
-			switch (operator.getValue())
-			{
-			case "==":
-				interpreter.pushBool(leftStr.equals(rightStr));
-				return;
-			case "!=":
-				interpreter.pushBool(!leftStr.equals(rightStr));
-				return;
-			default:
-				throw new RuntimeException("Unable to handle " + operator.getValue() + " with strings");
 			}
 		}
 

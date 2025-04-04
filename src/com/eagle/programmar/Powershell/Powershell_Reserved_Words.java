@@ -60,4 +60,10 @@ public class Powershell_Reserved_Words
 			"while",
 			"workflow",
 	};
+	
+	public static final String[] HYPHEN_WORDS = new String[] {
+			"eq", "ne", "gt", "ge", "lt", "le",
+			"match", "notmatch", "in", "notin",
+			"and", "or", "not",
+	};
 }

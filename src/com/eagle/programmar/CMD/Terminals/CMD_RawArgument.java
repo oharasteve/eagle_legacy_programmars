@@ -87,7 +87,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 				word = word.substring(0, dot);
 			}
 			EagleSyntax syntax = getSyntax();
-			if (syntax.isReserved(word)) return false;
+			if (syntax.isReservedWord(word)) return false;
 			offset = 1;
 		}
 
