@@ -3,14 +3,22 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class SQL_LeaveStatement extends TokenSequence
+public class SQL_LeaveStatement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) SQL_Keyword LEAVE = new SQL_Keyword("LEAVE");
 	public @S(20) SQL_Identifier_Reference label;
 	public @S(30) PunctuationSemicolon semicolon;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		return Eagle_Statement_Result.BREAK;
+	}
 }

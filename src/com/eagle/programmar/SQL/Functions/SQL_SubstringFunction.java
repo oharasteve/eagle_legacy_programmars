@@ -30,6 +30,6 @@ public class SQL_SubstringFunction extends PrimaryOperator implements EagleRunna
 		int sc = interpreter.getIntValue(scExpr) - 1;		// In SQL, first char is 1
 		int nc = interpreter.getIntValue(ncExpr);
 		if (sc + nc > strArg.length()) nc = strArg.length() - sc;
-		interpreter.pushStr(strArg.substring(sc, nc));
+		interpreter.pushStr(strArg.substring(sc, sc + nc));
 	}
 }

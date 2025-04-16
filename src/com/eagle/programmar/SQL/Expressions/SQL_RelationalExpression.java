@@ -48,7 +48,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator implements Eagl
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.getWhich().toString())
+			switch (operator.getWhich().toString().toUpperCase())
 			{
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);
@@ -67,6 +67,9 @@ public class SQL_RelationalExpression extends PrecedenceOperator implements Eagl
 				return;
 			case ">=":
 				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			case "IS":
+				interpreter.pushBool((leftInt != 0) == (rightInt != 0));
 				return;
 			}
 		}

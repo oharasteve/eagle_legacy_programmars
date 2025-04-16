@@ -7,9 +7,12 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
 import com.eagle.programmar.SQL.SQL_Variable;
+import com.eagle.programmar.SQL.Expressions.SQL_VariableExpression;
 import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
+import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction.SQL_FunctionArg;
 import com.eagle.programmar.SQL.Statements.SQL_CreateProcedureStatement.SQL_ProcedureParameter;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.AbstractFunction;
@@ -62,8 +65,19 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 			{
 				for (int i = 0; i < argCount; i++)
 				{
-					EagleValue val = interpreter.getEagleValue(func.args.getPrimaryElement(i));
 					SQL_ProcedureParameter param = proc.params.getPrimaryElement(i);
+
+//					// Skip any OUT parameters that don't have a value
+//					if (param.OUT != null && param.OUT.isPresent() &&
+//							param.OUT.getValue().toUpperCase().equals("OUT"))
+//					{
+//						if (interpreter.findSymbol(name) == null)
+//						{
+//							continue;
+//						}
+//					}
+					
+					EagleValue val = interpreter.getEagleValue(func.args.getPrimaryElement(i));
 					interpreter.setSymbol(param.param, param.param.getValue(), val);
 				}
 			}
@@ -81,6 +95,31 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
 			proc._metrics.addCallFrom(this, elapsedTime);
+
+			for (int i = 0; i < argCount; i++)
+			{
+				// Set values for any OUT parameters
+				SQL_ProcedureParameter param = proc.params.getPrimaryElement(i);
+				if (param.OUT != null && param.OUT.isPresent() &&
+						param.OUT.getValue().toUpperCase().equals("OUT"))
+				{
+					EagleValue val = interpreter.findSymbol(param.param.getValue());
+					SQL_FunctionArg arg = func.args.getPrimaryElement(i);
+					if (! (arg.getWhich() instanceof SQL_Expression))
+					{
+						throw new RuntimeException("OUT parameter must be an Expression");
+					}
+					SQL_Expression expr = (SQL_Expression) arg.getWhich();
+					if (! (expr.getWhich() instanceof SQL_VariableExpression))
+					{
+						throw new RuntimeException("OUT parameter must be a Variable");
+					}
+					SQL_VariableExpression var = (SQL_VariableExpression) expr.getWhich();
+					String varName = var.variable.ids.first().getValue();
+					// System.out.println("******** Setting OUT param " + varName + " to " + val);
+					interpreter.setSymbol(var, varName, val);
+				}
+			}
 
 			// Now remove all those parameters
 			interpreter.completedFunction(name, proc);

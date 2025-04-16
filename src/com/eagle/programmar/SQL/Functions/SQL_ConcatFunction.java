@@ -27,7 +27,7 @@ public class SQL_ConcatFunction extends PrimaryOperator implements EagleRunnable
 		for (int i = 0; i < exprs.getPrimaryCount(); i++)
 		{
 			String piece = interpreter.getStrValue(exprs.getPrimaryElement(i));
-			result.append(piece);
+			result.append(piece.replaceAll("\\\\n", "\n"));
 		}
 		interpreter.pushStr(result.toString());
 	}

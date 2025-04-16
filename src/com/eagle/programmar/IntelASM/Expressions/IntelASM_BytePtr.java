@@ -1,0 +1,15 @@
+// Copyright Eagle Legacy Modernization, LLC, 2010-date
+// Original author: Steven A. O'Hara, Apr 9, 2025
+
+package com.eagle.programmar.IntelASM.Expressions;
+
+import com.eagle.programmar.IntelASM.IntelASM_Expression;
+import com.eagle.programmar.IntelASM.Terminals.IntelASM_Keyword;
+import com.eagle.tokens.PrimaryOperator;
+
+public class IntelASM_BytePtr extends PrimaryOperator
+{
+	public @S(10) IntelASM_Keyword BYTE = new IntelASM_Keyword("BYTE");
+	public @S(20) IntelASM_Keyword PTR = new IntelASM_Keyword("PTR");
+	public @S(30) IntelASM_Expression exp;
+}

@@ -5,6 +5,7 @@ package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Type;
@@ -34,11 +35,12 @@ public class SQL_DeclareStatement extends TokenSequence implements EagleRunnable
 	{
 		for (SQL_Declaration decl : declarations._elements)
 		{
+			EagleValue value = new EagleString(""); // Create it with a bogus value
 			if (decl.initialValue != null && decl.initialValue.isPresent())
 			{
-				EagleValue value = interpreter.getEagleValue(decl.initialValue);
-				interpreter.setSymbol(decl.id, decl.id.toString(), value);
+				value = interpreter.getEagleValue(decl.initialValue);
 			}
+			interpreter.setSymbol(decl.id, decl.id.toString(), value);
 		}
 	}
 }

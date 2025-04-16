@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.metrics.ForLoopMetric;
+import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
@@ -13,7 +17,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class SQL_WhileStatement extends TokenSequence
+public class SQL_WhileStatement extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) @OPT SQL_WhileLabel label1;
 	public @S(20) SQL_Keyword WHILE1 = new SQL_Keyword("WHILE");
@@ -29,5 +33,53 @@ public class SQL_WhileStatement extends TokenSequence
 	{
 		public @S(10) SQL_Label_Definition label1;
 		public @S(20) PunctuationColon colon;
+	}
+	
+	private @SKIP ForLoopMetrics _metrics = null;
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			boolean keepGoing = interpreter.getBoolValue(condition);
+			if (!keepGoing) break;
+
+			metric.iterate();
+			for (SQL_StatementOrComment stmt : statements._elements)
+			{
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL)
+				{
+					break;
+				}
+			}
+			
+			if (result == Eagle_Statement_Result.BREAK)
+			{
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
+			}
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+		}
+
+		_metrics.competedLoop(metric);
+		return result;
 	}
 }

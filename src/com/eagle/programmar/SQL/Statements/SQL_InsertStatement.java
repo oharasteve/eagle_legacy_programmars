@@ -3,7 +3,19 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleString;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
+import com.eagle.programmar.SQL.SQL_StateMachine;
+import com.eagle.programmar.SQL.SQL_StateMachine.SQL_FieldEnum;
+import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Row;
+import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Table;
+import com.eagle.programmar.SQL.Statements.SQL_InsertStatement.SQL_InsertClause.SQL_InsertValues;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.SeparatedList;
@@ -15,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class SQL_InsertStatement extends TokenSequence
+public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @DOC("sql_insert.asp") SQL_Keyword INSERT = new SQL_Keyword("INSERT");
 	public @S(20) @OPT SQL_OrReplace orReplace;
@@ -49,20 +61,64 @@ public class SQL_InsertStatement extends TokenSequence
 		{
 			public @S(10) @OPT SQL_InsertNames insertNames;
 			public @S(20) SQL_Keyword VALUES = new SQL_Keyword("VALUES");
-			public @S(30) SeparatedList<SQL_InsertValue, PunctuationComma> value;
-
-			public static class SQL_InsertValue extends TokenSequence
-			{
-				public @S(10) PunctuationLeftParen leftParen;
-				public @S(20) SeparatedList<SQL_Expression, PunctuationComma> values;
-				public @S(30) PunctuationRightParen rightParen;
-			}
+			public @S(30) PunctuationLeftParen leftParen;
+			public @S(40) SeparatedList<SQL_Expression, PunctuationComma> values;
+			public @S(50) PunctuationRightParen rightParen;
 
 			public static class SQL_InsertNames extends TokenSequence
 			{
 				public @S(10) PunctuationLeftParen leftParen;
 				public @S(20) SeparatedList<SQL_Identifier_Reference, PunctuationComma> vars;
 				public @S(30) PunctuationRightParen rightParen;
+			}
+		}
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		SQL_StateMachine state = (SQL_StateMachine) interpreter._state;
+		
+		// Find the right table
+		String tableName = table.getValue().toUpperCase();
+		if (! state._tables.containsKey(tableName))
+		{
+			throw new RuntimeException("Unable to find table " + tableName);
+		}
+		SQL_Table stable = state._tables.get(tableName);
+		
+		if (! (clause.getWhich() instanceof SQL_InsertValues))
+		{
+			throw new RuntimeException("Can only handle Insert values");
+		}
+		SQL_InsertValues insert = (SQL_InsertValues) clause.getWhich();
+		int numValues = insert.values.getPrimaryCount();
+		int numFields = stable._fields.size();
+		if (numValues != numFields)
+		{
+			throw new RuntimeException("Number of fields to Insert is " + numValues +
+					", but should be " + numFields);
+		}
+		
+		SQL_Row row = new SQL_Row();
+		row._values = new ArrayList<EagleValue>();
+		stable._rows.add(row);
+		for (int i = 0; i < numValues; i++)
+		{
+			SQL_Expression expr = insert.values.getPrimaryElement(i);
+			SQL_FieldEnum type = stable._fields.get(i)._type;
+			switch (type)
+			{
+			case SQL_FieldInteger:
+				int val = interpreter.getIntValue(expr);
+				row._values.add(new EagleInteger(val));
+				break;
+			case SQL_FieldString:
+				String str = interpreter.getStrValue(expr);
+				row._values.add(new EagleString(str));
+				break;
+			default:
+				throw new RuntimeException("Unexpected field type: " + type.toString());
 			}
 		}
 	}

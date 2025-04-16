@@ -124,6 +124,7 @@ public class SQL_SelectStatement extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// This is essentially a PRINT statement
 		if (more != null && more.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle SELECT / UNION yet");
@@ -138,7 +139,7 @@ public class SQL_SelectStatement extends TokenSequence implements EagleRunnable
 		{
 			SQL_SelectWhat what = selectStatement.what.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(what.expr);
-			System.out.println(val);
+			System.out.print(val); // It should have its own newline '\n'
 		}
 	}
 }

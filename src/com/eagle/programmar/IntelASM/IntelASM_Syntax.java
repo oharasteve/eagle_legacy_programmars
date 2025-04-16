@@ -23,6 +23,7 @@ public class IntelASM_Syntax extends EagleSyntax
 		_autoAdvance = false;
 
 		addReservedWords(RESERVED_WORDS);
+		addReservedWords(IntelASM_Register._REGISTERS);
 	}
 
 	private static final String[] RESERVED_WORDS = new String[] {

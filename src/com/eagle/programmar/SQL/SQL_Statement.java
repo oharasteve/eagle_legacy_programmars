@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.SQL;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
 import com.eagle.programmar.SQL.Statements.SQL_AlterStatement;
 import com.eagle.programmar.SQL.Statements.SQL_AtAtStatement;
@@ -35,6 +37,7 @@ import com.eagle.programmar.SQL.Statements.SQL_VariableStatement;
 import com.eagle.programmar.SQL.Statements.SQL_WhileStatement;
 import com.eagle.programmar.SQL.Statements.SQL_WithStatement;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_Statement extends TokenChooser
@@ -70,8 +73,17 @@ public class SQL_Statement extends TokenChooser
 	public @CHOICE SQL_WhileStatement XXwhileStmt;
 	public @CHOICE SQL_WithStatement XXwithStmt;
 
-	public @CHOICE PunctuationSemicolon XXsemicolon;
-
 	public @LAST SQL_BuiltinFunction XXfunctionCall;
 	// public @LAST SQL_ExpressionStatement XXexpressionStmt;
+	
+	public @CHOICE static class SQL_Semicolon extends TokenSequence implements EagleRunnable
+	{
+		public @S(10) PunctuationSemicolon semicolon;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			// Nothing to do for a semicolon
+		}
+	}
 }

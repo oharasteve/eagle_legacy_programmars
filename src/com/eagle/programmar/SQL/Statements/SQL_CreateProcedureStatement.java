@@ -68,5 +68,9 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		// This is unusual. SQL_Program collects these when it starts to run
 		// So there isn't really much to do here.
 		// It will get called at some point, that is when the work happens.
+		if (_metrics == null)
+		{
+			_metrics = new CallMetrics(interpreter._metrics, procName.getValue(), this);
+		}
 	}
 }

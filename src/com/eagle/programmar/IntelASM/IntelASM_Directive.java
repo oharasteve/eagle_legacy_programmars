@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.IntelASM;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_CpuDirective;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_DefineDirective;
 import com.eagle.programmar.IntelASM.Directives.IntelASM_EquDirective;
@@ -16,7 +18,7 @@ import com.eagle.programmar.IntelASM.Terminals.IntelASM_EndOfLine;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
-public class IntelASM_Directive extends TokenSequence
+public class IntelASM_Directive extends TokenSequence implements EagleRunnable
 {
 	public @S(10) IntelASM_DirectiveList directive;
 	public @S(20) IntelASM_EndOfLine eoln;
@@ -32,5 +34,11 @@ public class IntelASM_Directive extends TokenSequence
 		public @CHOICE IntelASM_MacroDirective XXmacroDirective;
 		public @CHOICE IntelASM_SectionDirective XXsectionDirective;
 		public @CHOICE IntelASM_TitleDirective XXtitleInstruction;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(directive);
 	}
 }
