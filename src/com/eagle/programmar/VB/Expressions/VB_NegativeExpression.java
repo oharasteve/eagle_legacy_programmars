@@ -12,6 +12,7 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.NegativeEnum;
 
 public class VB_NegativeExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
@@ -42,7 +43,7 @@ public class VB_NegativeExpression extends PrimaryOperator implements EagleRunna
 		switch (operator.toString())
 		{
 		case "-":
-			return generator.newNegativeExpression(theExpr, this);
+			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negative operator: " + operator);
 		}

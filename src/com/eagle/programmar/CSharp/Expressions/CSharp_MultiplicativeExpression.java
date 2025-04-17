@@ -56,13 +56,15 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "%":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
 	
-	public static CSharp_MultiplicativeExpression generateExpression(AbstractExpression leftExpr, MultiplicativeEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	public static CSharp_MultiplicativeExpression generateMultiplicative(
+			AbstractExpression leftExpr, MultiplicativeEnum oper,
+			AbstractExpression rightExpr, AbstractToken source)
 	{
 		CSharp_MultiplicativeExpression expr = new CSharp_MultiplicativeExpression();
 		expr.left = (CSharp_Expression) leftExpr;
@@ -81,7 +83,7 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 			CSharp_CastExpression cast = CSharp_CastExpression.newCastExpression(type, expr.right);
 			expr.right = CSharp_Generator.wrapExpression(cast);
 			break;
-		case MODULUS:
+		case REMAINDER:
 			expr.operator.setValue("%");
 			break;
 		default:

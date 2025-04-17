@@ -72,7 +72,7 @@ public class VB_MultiplicativeExpression extends PrecedenceOperator implements E
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
 		case "mod":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator.getWhich());
 		}

@@ -64,7 +64,8 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			break;
 		case FIRST_CHAR_IS_ONE:
 			CSharp_Expression one = CSharp_Generator.wrapExpression(CSharp_Number.generateExpression("1", source));
-			CSharp_AdditiveExpression scMinusOne = CSharp_AdditiveExpression.generateExpression(sc, AdditiveEnum.MINUS, one, source);
+			CSharp_AdditiveExpression scMinusOne =
+					CSharp_AdditiveExpression.generateAdditive(sc, AdditiveEnum.MINUS, one, source);
 			expr.scExpr = CSharp_Generator.wrapExpression(scMinusOne);
 			break;
 		}
@@ -74,7 +75,8 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 		case GIVEN_EC:
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
-			CSharp_AdditiveExpression ecMinusSc = CSharp_AdditiveExpression.generateExpression(ecOrnc, AdditiveEnum.MINUS, sc, source);
+			CSharp_AdditiveExpression ecMinusSc =
+					CSharp_AdditiveExpression.generateAdditive(ecOrnc, AdditiveEnum.MINUS, sc, source);
 			CSharp_Expression ncExpr = CSharp_Generator.wrapExpression(ecMinusSc);
 			expr.ncExpr = CSharp_Generator.wrapExpression(ncExpr);
 			expr.ncExpr.setPresent(true);

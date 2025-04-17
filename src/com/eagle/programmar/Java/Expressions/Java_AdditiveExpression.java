@@ -75,7 +75,7 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 	
-	public static Java_AdditiveExpression generateExpression(AbstractExpression leftExpr, AdditiveEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	public static Java_AdditiveExpression generateAdditive(AbstractExpression leftExpr, AdditiveEnum oper, AbstractExpression rightExpr, AbstractToken source)
 	{
 		Java_AdditiveExpression expr = new Java_AdditiveExpression();
 		expr.left = (Java_Expression) leftExpr;

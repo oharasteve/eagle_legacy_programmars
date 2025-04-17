@@ -64,7 +64,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Java_Expression one = Java_Generator.wrapExpression(Java_Number.generateExpression("1", source));
-			Java_AdditiveExpression scMinusOne = Java_AdditiveExpression.generateExpression(sc, AdditiveEnum.MINUS, one, source);
+			Java_AdditiveExpression scMinusOne = Java_AdditiveExpression.generateAdditive(sc, AdditiveEnum.MINUS, one, source);
 			expr.scExpr = Java_Generator.wrapExpression(scMinusOne);
 			break;
 		}
@@ -80,7 +80,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 		case GIVEN_NC:
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
-			Java_AdditiveExpression scPlusNc = Java_AdditiveExpression.generateExpression(expr.scExpr, AdditiveEnum.PLUS, ecOrnc, source);
+			Java_AdditiveExpression scPlusNc = Java_AdditiveExpression.generateAdditive(expr.scExpr, AdditiveEnum.PLUS, ecOrnc, source);
 			expr.ecExpr = Java_Generator.wrapExpression(scPlusNc);
 			expr.ecExpr.setPresent(true);
 			break;

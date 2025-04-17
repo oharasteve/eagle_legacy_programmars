@@ -168,13 +168,13 @@ public class CSharp_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_AdditiveExpression.generateExpression(left, oper, right, source));
+		return wrapExpression(CSharp_AdditiveExpression.generateAdditive(left, oper, right, source));
 	}
 	
 	@Override
 	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_AdditiveExpression.generateExpression(left, AdditiveEnum.PLUS, right, source));
+		return wrapExpression(CSharp_AdditiveExpression.generateAdditive(left, AdditiveEnum.PLUS, right, source));
 	}
 
 	@Override
@@ -224,13 +224,13 @@ public class CSharp_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_MultiplicativeExpression.generateExpression(left, oper, right, source));
+		return wrapExpression(CSharp_MultiplicativeExpression.generateMultiplicative(left, oper, right, source));
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(AbstractExpression expr, AbstractToken source)
+	public AbstractExpression newNegativeExpression(NegativeEnum sign, AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(CSharp_NegativeExpression.generateExpression(expr, source));
+		return wrapExpression(CSharp_NegativeExpression.generateNegative(sign, expr, source));
 	}
 	
 	@Override

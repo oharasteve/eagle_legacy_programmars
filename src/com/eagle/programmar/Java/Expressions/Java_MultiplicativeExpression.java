@@ -56,13 +56,15 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "%":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
 	
-	public static Java_MultiplicativeExpression generateExpression(AbstractExpression leftExpr, MultiplicativeEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	public static Java_MultiplicativeExpression generateMultiplicative(
+			AbstractExpression leftExpr, MultiplicativeEnum oper,
+			AbstractExpression rightExpr, AbstractToken source)
 	{
 		Java_MultiplicativeExpression expr = new Java_MultiplicativeExpression();
 		expr.left = (Java_Expression) leftExpr;
@@ -81,7 +83,7 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 			Java_CastExpression cast = Java_CastExpression.newCastExpression(type, expr.right);
 			expr.right = Java_Generator.wrapExpression(cast);
 			break;
-		case MODULUS:
+		case REMAINDER:
 			expr.operator.setValue("%");
 			break;
 		default:

@@ -10,6 +10,7 @@ import com.eagle.programmar.Rexx.Terminals.Rexx_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -42,7 +43,7 @@ public class Rexx_NegativeExpression extends PrimaryOperator implements EagleRun
 		switch (operator.toString())
 		{
 		case "-":
-			return generator.newNegativeExpression(theExpr, this);
+			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negative operator: " + operator);
 		}

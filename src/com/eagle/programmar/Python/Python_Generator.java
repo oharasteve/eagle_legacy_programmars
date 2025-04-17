@@ -262,9 +262,9 @@ public class Python_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(AbstractExpression expr, AbstractToken source)
+	public AbstractExpression newNegativeExpression(NegativeEnum sign, AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Python_Negative_Expression.generateExpression(expr, source));
+		return wrapExpression(Python_Negative_Expression.generateNegative(sign, expr, source));
 	}
 	
 	@Override

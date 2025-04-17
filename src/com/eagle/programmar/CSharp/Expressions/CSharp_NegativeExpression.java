@@ -11,6 +11,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -44,17 +45,26 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 		switch (operator.toString())
 		{
 		case "-":
-			return generator.newNegativeExpression(theExpr, this);
+			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negative operator: " + operator);
 		}
 	}
 	
-	public static CSharp_NegativeExpression generateExpression(AbstractExpression theExpr, AbstractToken source)
+	public static CSharp_NegativeExpression generateNegative(
+			NegativeEnum sign, AbstractExpression theExpr, AbstractToken source)
 	{
 		CSharp_NegativeExpression expr = new CSharp_NegativeExpression();
 		expr.expr = (CSharp_Expression) theExpr;
-		expr.operator.setValue("-");
+		switch (sign)
+		{
+		case POSITIVE:
+			expr.operator.setValue("+");
+			break;
+		case NEGATIVE:
+			expr.operator.setValue("-");
+			break;
+		}
 		expr.setTransformationSource(source);
 		return expr;
 	}

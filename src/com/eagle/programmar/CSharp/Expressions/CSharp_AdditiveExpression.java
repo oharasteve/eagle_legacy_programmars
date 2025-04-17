@@ -75,7 +75,9 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 	
-	public static CSharp_AdditiveExpression generateExpression(AbstractExpression leftExpr, AdditiveEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	public static CSharp_AdditiveExpression generateAdditive(
+			AbstractExpression leftExpr, AdditiveEnum oper,
+			AbstractExpression rightExpr, AbstractToken source)
 	{
 		CSharp_AdditiveExpression expr = new CSharp_AdditiveExpression();
 		expr.left = (CSharp_Expression) leftExpr;
