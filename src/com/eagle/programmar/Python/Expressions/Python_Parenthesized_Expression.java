@@ -55,7 +55,7 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, list.expr);
 		return generator.newParenthesizedExpression(theExpr, this);

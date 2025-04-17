@@ -29,7 +29,7 @@ public class VB_ParenthesizedExpression extends PrimaryOperator implements Eagle
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
 		return generator.newParenthesizedExpression(theExpr, this);

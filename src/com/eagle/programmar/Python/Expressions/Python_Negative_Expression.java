@@ -39,7 +39,7 @@ public class Python_Negative_Expression extends PrimaryOperator
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (sign.toString())

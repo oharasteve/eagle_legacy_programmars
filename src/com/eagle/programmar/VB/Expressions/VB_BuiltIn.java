@@ -35,7 +35,7 @@ public class VB_BuiltIn extends PrimaryOperator implements EagleRunnable, EagleT
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		BuiltInEnum builtIn;
 		switch (builtIns.toString())

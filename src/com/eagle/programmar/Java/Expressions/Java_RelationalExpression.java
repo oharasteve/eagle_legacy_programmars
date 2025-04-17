@@ -57,7 +57,7 @@ public class Java_RelationalExpression extends PrecedenceOperator implements Eag
 		return false;
 	}
 	
-	public static Java_Expression generateExpression(AbstractExpression leftExpr, RelationalEnum relOp,
+	public static Java_Expression generateRelational(AbstractExpression leftExpr, RelationalEnum relOp,
 			AbstractExpression rightExpr, AbstractToken source)
 	{
 		if (isString(leftExpr) || isString(rightExpr))

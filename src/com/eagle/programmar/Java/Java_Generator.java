@@ -257,7 +257,7 @@ public class Java_Generator extends EagleGenerator
 			AbstractExpression right, AbstractToken source)
 	{
 		// Already wrapped because it can generate different kinds of expression
-		return Java_RelationalExpression.generateExpression(left, relOp, right, source);
+		return Java_RelationalExpression.generateRelational(left, relOp, right, source);
 	}
 	
 	@Override

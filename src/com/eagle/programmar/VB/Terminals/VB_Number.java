@@ -19,7 +19,7 @@ public class VB_Number extends TerminalNumberToken implements EagleTransformable
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newNumberExpression(_numberAsText, this);
 	}

@@ -37,7 +37,7 @@ public class Rexx_NegativeExpression extends PrimaryOperator implements EagleRun
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())

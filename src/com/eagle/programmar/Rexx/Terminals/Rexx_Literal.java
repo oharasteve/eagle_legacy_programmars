@@ -19,7 +19,7 @@ public class Rexx_Literal extends TerminalLiteralToken implements EagleTransform
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newLiteralExpression(_txt, this);
 	}

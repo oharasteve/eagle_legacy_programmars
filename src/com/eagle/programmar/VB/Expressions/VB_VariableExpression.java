@@ -24,7 +24,7 @@ public class VB_VariableExpression extends PrimaryOperator implements EagleRunna
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		VB_Expression subscript = null;
 		if (variable.subscript != null && variable.subscript.isPresent())

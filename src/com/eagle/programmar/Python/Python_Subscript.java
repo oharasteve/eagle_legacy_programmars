@@ -99,7 +99,7 @@ public class Python_Subscript extends TokenSequence
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Python_Expression one = Python_Generator.wrapExpression(Python_Number.generateExpression("1", source));
-			Python_Additive_Expression scMinusOne = Python_Additive_Expression.generateExpression(sc, AdditiveEnum.MINUS, one, source);
+			Python_Additive_Expression scMinusOne = Python_Additive_Expression.generateAdditive(sc, AdditiveEnum.MINUS, one, source);
 			subscr.body.subscr = Python_Generator.wrapExpression(scMinusOne);
 			subscr.body.subscr.setPresent(true);
 			break;
@@ -118,7 +118,7 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop = new Python_ColonSubscript();
 			subscr.body.subscriptStop.colon = new PunctuationColon();
 			subscr.body.subscriptStop.setPresent(true);
-			Python_Additive_Expression scPlusNc = Python_Additive_Expression.generateExpression(subscr.body.subscr, AdditiveEnum.PLUS, ecOrnc, source);
+			Python_Additive_Expression scPlusNc = Python_Additive_Expression.generateAdditive(subscr.body.subscr, AdditiveEnum.PLUS, ecOrnc, source);
 			subscr.body.subscriptStop.expr = Python_Generator.wrapExpression(scPlusNc);
 			subscr.body.subscriptStop.expr.setPresent(true);
 			break;

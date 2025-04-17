@@ -30,7 +30,7 @@ public class VB_LenFunction extends PrimaryOperator implements EagleRunnable, Ea
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		return generator.newLengthFunction(theExpr, this);

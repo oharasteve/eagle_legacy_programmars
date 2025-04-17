@@ -47,7 +47,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
@@ -66,7 +66,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		}
 	}
 	
-	public static Python_Multiplicative_Expression generateExpression(AbstractExpression leftExpr, MultiplicativeEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	public static Python_Multiplicative_Expression generateMultiplicative(AbstractExpression leftExpr, MultiplicativeEnum oper, AbstractExpression rightExpr, AbstractToken source)
 	{
 		Python_Multiplicative_Expression expr = new Python_Multiplicative_Expression();
 		expr.left = (Python_Expression) leftExpr;

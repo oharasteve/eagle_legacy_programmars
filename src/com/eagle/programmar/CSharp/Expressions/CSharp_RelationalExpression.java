@@ -67,7 +67,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator implements E
 		throw new RuntimeException("Unexpected relational operator: " + operator);
 	}
 	
-	public static CSharp_RelationalExpression generateExpression(AbstractExpression leftExpr, RelationalEnum relOp,
+	public static CSharp_RelationalExpression generateRelational(AbstractExpression leftExpr, RelationalEnum relOp,
 			AbstractExpression rightExpr, AbstractToken source)
 	{
 		CSharp_RelationalExpression expr = new CSharp_RelationalExpression();

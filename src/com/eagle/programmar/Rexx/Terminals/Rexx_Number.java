@@ -19,7 +19,7 @@ public class Rexx_Number extends TerminalNumberToken implements EagleTransformab
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newNumberExpression(_numberAsText, this);
 	}

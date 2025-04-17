@@ -89,7 +89,7 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 		}
 	}
 
-	public static Python_Relational_Expression generateExpression(AbstractExpression leftExpr, RelationalEnum relOp,
+	public static Python_Relational_Expression generateRelational(AbstractExpression leftExpr, RelationalEnum relOp,
 			AbstractExpression rightExpr, AbstractToken source)
 	{
 		Python_Relational_Expression expr = new Python_Relational_Expression();

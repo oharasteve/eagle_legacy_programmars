@@ -200,7 +200,7 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Additive_Expression.generateExpression(left, oper, right, source));
+		return wrapExpression(Python_Additive_Expression.generateAdditive(left, oper, right, source));
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class Python_Generator extends EagleGenerator
 	{
 		Python_Expression leftExpr = maybeWrapStrFunction(left);
 		Python_Expression rightExpr = maybeWrapStrFunction(right);
-		return wrapExpression(Python_Additive_Expression.generateExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, source));
+		return wrapExpression(Python_Additive_Expression.generateAdditive(leftExpr, AdditiveEnum.PLUS, rightExpr, source));
 	}
 	
 	@Override
@@ -258,7 +258,7 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Multiplicative_Expression.generateExpression(left, oper, right, source));
+		return wrapExpression(Python_Multiplicative_Expression.generateMultiplicative(left, oper, right, source));
 	}
 
 	@Override
@@ -289,7 +289,7 @@ public class Python_Generator extends EagleGenerator
 	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
 			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Relational_Expression.generateExpression(left, relOp, right, source));
+		return wrapExpression(Python_Relational_Expression.generateRelational(left, relOp, right, source));
 	}
 	
 	@Override

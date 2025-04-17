@@ -255,7 +255,7 @@ public class CSharp_Generator extends EagleGenerator
 	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
 			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_RelationalExpression.generateExpression(left, relOp, right, source));
+		return wrapExpression(CSharp_RelationalExpression.generateRelational(left, relOp, right, source));
 	}
 	
 	@Override
