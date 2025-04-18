@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp.Functions;
 
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.SubstringECEnum;
+import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -17,9 +20,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleRunnable
 {
@@ -64,9 +64,10 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			break;
 		case FIRST_CHAR_IS_ONE:
 			CSharp_Expression one = CSharp_Generator.wrapExpression(CSharp_Number.generateExpression("1", source));
-			CSharp_AdditiveExpression scMinusOne =
-					CSharp_AdditiveExpression.generateAdditive(sc, AdditiveEnum.MINUS, one, source);
-			expr.scExpr = CSharp_Generator.wrapExpression(scMinusOne);
+			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
+			CSharp_Expression scMinusOne = addExp.generateAdditive((CSharp_Expression) sc,
+					AdditiveEnum.MINUS, one, source);
+			expr.scExpr = scMinusOne;
 			break;
 		}
 		
@@ -75,10 +76,11 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 		case GIVEN_EC:
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
-			CSharp_AdditiveExpression ecMinusSc =
-					CSharp_AdditiveExpression.generateAdditive(ecOrnc, AdditiveEnum.MINUS, sc, source);
-			CSharp_Expression ncExpr = CSharp_Generator.wrapExpression(ecMinusSc);
-			expr.ncExpr = CSharp_Generator.wrapExpression(ncExpr);
+			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
+			CSharp_Expression ecMinusSc = addExp.generateAdditive((CSharp_Expression) ecOrnc,
+					AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
+			CSharp_Expression ncExpr = ecMinusSc;
+			expr.ncExpr = ncExpr;
 			expr.ncExpr.setPresent(true);
 			break;
 		case GIVEN_NC:

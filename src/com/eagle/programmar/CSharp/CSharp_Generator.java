@@ -6,6 +6,7 @@ package com.eagle.programmar.CSharp;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
@@ -31,7 +32,6 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator
 {
@@ -166,29 +166,37 @@ public class CSharp_Generator extends EagleGenerator
 	// ================ Expressions ================
 	
 	@Override
-	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
+	public CSharp_Expression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_AdditiveExpression.generateAdditive(left, oper, right, source));
+		CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
+		return addExp.generateAdditive((CSharp_Expression) left,
+				oper, (CSharp_Expression) right, source);
 	}
 	
 	@Override
 	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_AdditiveExpression.generateAdditive(left, AdditiveEnum.PLUS, right, source));
+		CSharp_AdditiveExpression appendExp = new CSharp_AdditiveExpression();
+		return appendExp.generateAdditive((CSharp_Expression) left,
+				AdditiveEnum.PLUS, (CSharp_Expression) right, source);
 	}
 
 	@Override
 	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
 			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
 	{
-		CSharp_Expression varExpr = wrapExpression(CSharp_VariableExpression.newVariableExpression(name, subscript, source));
-		return wrapExpression(CSharp_AssignmentExpression.newAssignmentStatement(varExpr, oper, expression, comment, source));
+		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
+		CSharp_Expression var = varExpr.generateVarExpr(name,
+				(CSharp_Expression) subscript, source);
+		return wrapExpression(CSharp_AssignmentExpression.newAssignmentStatement(var, oper,
+				expression, comment, source));
 	}
 	
 	@Override
-	public AbstractExpression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
+	public CSharp_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		return wrapExpression(CSharp_BuiltIn.generateExpression(builtin, source));
+		CSharp_BuiltIn built = new CSharp_BuiltIn();
+		return built.generateBuiltIn(builtin, source);
 	}
 	
 	@Override
@@ -210,33 +218,41 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newLogicalAndExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public CSharp_Expression newLogicalAndExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_LogicalAndExpression.generateExpression(left, right, source));
+		CSharp_LogicalAndExpression andExpr = new CSharp_LogicalAndExpression();
+		return andExpr.generateLogicalAnd((CSharp_Expression) left,
+				(CSharp_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newLogicalOrExpression(AbstractExpression left, LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	public CSharp_Expression newLogicalOrExpression(AbstractExpression left, LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_LogicalOrExpression.generateExpression(left, oper, right, source));
+		CSharp_LogicalOrExpression orExpr = new CSharp_LogicalOrExpression();
+		return orExpr.generateLogicalOr((CSharp_Expression) left, oper,
+				(CSharp_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	public CSharp_Expression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_MultiplicativeExpression.generateMultiplicative(left, oper, right, source));
+		CSharp_MultiplicativeExpression multExp = new CSharp_MultiplicativeExpression();
+		return multExp.generateMultiplicative((CSharp_Expression) left, oper,
+				(CSharp_Expression) right, source);
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(NegativeEnum sign, AbstractExpression expr, AbstractToken source)
+	public CSharp_Expression newNegativeExpression(NegativeEnum sign, AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(CSharp_NegativeExpression.generateNegative(sign, expr, source));
+		CSharp_NegativeExpression negExp = new CSharp_NegativeExpression();
+		return negExp.generateNegative(sign, (CSharp_Expression) expr, source);
 	}
 	
 	@Override
-	public AbstractExpression newNotExpression(AbstractExpression expr, AbstractToken source)
+	public CSharp_Expression newNotExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(CSharp_LogicalNotExpression.generateExpression(expr, source));
+		CSharp_LogicalNotExpression notExp = new CSharp_LogicalNotExpression();
+		return notExp.generateLogicalNot((CSharp_Expression) expr, source);
 	}
 	
 	@Override
@@ -246,16 +262,19 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	public CSharp_Expression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(CSharp_ParenthesizedExpression.generateExpression(expr, source));
+		CSharp_ParenthesizedExpression paren = new CSharp_ParenthesizedExpression();
+		return paren.generateParentheses((CSharp_Expression) expr, source);
 	}
 
 	@Override
-	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
+	public CSharp_Expression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
 			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(CSharp_RelationalExpression.generateRelational(left, relOp, right, source));
+		CSharp_RelationalExpression relExp = new CSharp_RelationalExpression();
+		return relExp.generateRelational((CSharp_Expression) left, relOp,
+				(CSharp_Expression) right, source);
 	}
 	
 	@Override
@@ -266,8 +285,10 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	public CSharp_Expression newVariableExpression(String name,
+			AbstractExpression subscript, AbstractToken source)
 	{
-		return wrapExpression(CSharp_VariableExpression.newVariableExpression(name, subscript, source));
+		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
+		return varExp.generateVarExpr(name, (CSharp_Expression) subscript, source);
 	}
 }

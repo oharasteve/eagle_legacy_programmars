@@ -3,59 +3,95 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.LogicalOrEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Logical_Or;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class CSharp_LogicalOrExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Logical_Or<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) CSharp_Punctuation orOperator = new CSharp_Punctuation("||");
+	public @S(20) CSharp_PunctuationChoice orOperator = new CSharp_PunctuationChoice("||", "^");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftValue = interpreter.getBoolValue(left);
-		if (leftValue)
+		boolean rightValue;
+		switch (orOperator.toString())
 		{
-			interpreter.pushBool(true);
-			return;
+		case "||":
+			if (leftValue)
+			{
+				// Short circuit, don't bother with RHS
+				interpreter.pushBool(true);
+			}
+			else
+			{
+				rightValue = interpreter.getBoolValue(right);
+				interpreter.pushBool(rightValue);
+			}
+			break;
+		case "^":
+			rightValue = interpreter.getBoolValue(right);
+			interpreter.pushBool(leftValue ^ rightValue);
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + orOperator);
 		}
-		boolean rightValue = interpreter.getBoolValue(right);
-		interpreter.pushBool(rightValue);
 	}
 	
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
+		LogicalOrEnum oper;
+		switch (orOperator.getValue())
+		{
+		case "||":
+			oper = LogicalOrEnum.OR;
+			break;
+		case "^":
+			oper = LogicalOrEnum.XOR;
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + orOperator);
+		}
+		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
 	
-	public static CSharp_LogicalOrExpression generateExpression(AbstractExpression leftExpr, LogicalOrEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public CSharp_Expression generateLogicalOr(CSharp_Expression leftExpr,
+			LogicalOrEnum oper, CSharp_Expression rightExpr, AbstractToken source)
 	{
-		CSharp_LogicalOrExpression expr = new CSharp_LogicalOrExpression();
-		expr.left = (CSharp_Expression) leftExpr;
-		expr.right = (CSharp_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		switch (oper)
 		{
 		case OR:
+			this.orOperator.setValue("||");
+			break;
+		case XOR:
+			this.orOperator.setValue("^");
 			break;
 		default:
-			throw new RuntimeException("Unable to handle: " + oper);
+			throw new RuntimeException("Unable to handle " + oper);
 		}
-		expr.setTransformationSource(source);
-		return expr;
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

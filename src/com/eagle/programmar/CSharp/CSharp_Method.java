@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.CSharp;
 
+import com.eagle.generate.EagleGenerator.PrivacyEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
@@ -32,7 +33,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
 public class CSharp_Method extends TokenSequence implements
 			AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface

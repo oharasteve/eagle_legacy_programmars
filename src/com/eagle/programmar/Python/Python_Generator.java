@@ -6,6 +6,7 @@ package com.eagle.programmar.Python;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
@@ -25,7 +26,6 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
-import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
@@ -40,7 +40,6 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
 
 public class Python_Generator extends EagleGenerator
 {
@@ -99,24 +98,6 @@ public class Python_Generator extends EagleGenerator
 		wrapper.statementOrComment = new Python_StatementOrComment();
 		wrapper.statementOrComment.setWhich(sameLine);
 		return wrapper;
-	}
-
-	private static Python_Expression maybeWrapStrFunction(AbstractExpression expression)
-	{
-		Python_Expression expr = (Python_Expression) expression;
-		AbstractToken which = expr.getWhich();
-		if (which instanceof Python_Literals)
-		{
-			return expr;
-		}
-		if (which instanceof Python_Additive_Expression)
-		{
-			Python_Additive_Expression adder = (Python_Additive_Expression) which;
-			if (adder.left.getWhich() instanceof Python_Literals) return expr;
-			if (adder.right.getWhich() instanceof Python_Literals) return expr;
-		}
-		Python_Expression newExpr = wrapExpression(Python_Str_Function.newStrFunction(expr));
-		return newExpr;
 	}
 	
 	@Override
@@ -198,110 +179,132 @@ public class Python_Generator extends EagleGenerator
 	// ================ Expressions ================
 	
 	@Override
-	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
+	public Python_Expression newAdditiveExpression(AbstractExpression left,
+			AdditiveEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Additive_Expression.generateAdditive(left, oper, right, source));
+		Python_Additive_Expression addExpr = new Python_Additive_Expression();
+		return addExpr.generateAdditive((Python_Expression) left, oper,
+				(Python_Expression) right, source);
 	}
 
 	@Override
-	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Python_Expression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
-		Python_Expression leftExpr = maybeWrapStrFunction(left);
-		Python_Expression rightExpr = maybeWrapStrFunction(right);
-		return wrapExpression(Python_Additive_Expression.generateAdditive(leftExpr, AdditiveEnum.PLUS, rightExpr, source));
+		Python_Additive_Expression appendExpr = new Python_Additive_Expression();
+		return appendExpr.generateAdditive((Python_Expression) left,
+				AdditiveEnum.PLUS, (Python_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
+	public Python_Expression newAssignmentExpression(String name, AbstractExpression subscript,
 			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
 	{
-		Python_Expression varExpr = wrapExpression(Python_VariableExpression.newVariableExpression(name, subscript, source));
-		return wrapExpression(Python_Assignment_Expression.newAssignmentStatement(varExpr, oper, expression, comment, source));
+		Python_VariableExpression varExpr = new Python_VariableExpression();
+		Python_Expression var = varExpr.generateVarExpr(name,
+				(Python_Expression) subscript, source);
+		return wrapExpression(Python_Assignment_Expression.newAssignmentStatement(var, oper, expression, comment, source));
 	}
 	
 	@Override
-	public AbstractExpression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
+	public Python_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		return wrapExpression(Python_BuiltIn.generateExpression(builtin, source));
+		Python_BuiltIn built = new Python_BuiltIn();
+		return built.generateBuiltIn(builtin, source);
 	}
 	
 	@Override
-	public AbstractExpression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Python_Expression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
 	{
 		return wrapExpression(Python_Power_Expression.generateExpression(left, right, source));
 	}
 	
 	@Override
-	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	public Python_Expression newLengthFunction(AbstractExpression expr, AbstractToken source)
 	{
 		return wrapExpression(Python_Len_Function.generateExpression(expr, source));
 	}
 	
 	@Override
-	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
+	public Python_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
 		return wrapExpression(Python_Literals.generateExpression(literal, source));
 	}
 
 	@Override
-	public AbstractExpression newLogicalAndExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Python_Expression newLogicalAndExpression(AbstractExpression left,
+			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Logical_And_Expression.generateExpression(left, right, source));
+		Python_Logical_And_Expression andExpr = new Python_Logical_And_Expression();
+		return andExpr.generateLogicalAnd((Python_Expression) left,
+				(Python_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newLogicalOrExpression(AbstractExpression left, LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	public Python_Expression newLogicalOrExpression(AbstractExpression left,
+			LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Logical_Or_Expression.generateExpression(left, oper, right, source));
+		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
+		return orExpr.generateLogicalOr((Python_Expression) left,
+				oper, (Python_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	public Python_Expression newMultiplicativeExpression(AbstractExpression left,
+			MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Multiplicative_Expression.generateMultiplicative(left, oper, right, source));
+		Python_Multiplicative_Expression multExp = new Python_Multiplicative_Expression();
+		return multExp.generateMultiplicative(
+				(Python_Expression) left, oper, (Python_Expression) right, source);
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(NegativeEnum sign, AbstractExpression expr, AbstractToken source)
+	public Python_Expression newNegativeExpression(NegativeEnum sign,
+			AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Python_Negative_Expression.generateNegative(sign, expr, source));
+		Python_Negative_Expression negExp = new Python_Negative_Expression();
+		return negExp.generateNegative(sign, (Python_Expression) expr, source);
 	}
 	
 	@Override
-	public AbstractExpression newNotExpression(AbstractExpression expr, AbstractToken source)
+	public Python_Expression newNotExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Python_Logical_Not_Expression.generateExpression(expr, source));
+		Python_Logical_Not_Expression notExp = new Python_Logical_Not_Expression();
+		return notExp.generateLogicalNot((Python_Expression) expr, source);
 	}
 	
 	@Override
-	public AbstractExpression newNumberExpression(String number, AbstractToken source)
+	public Python_Expression newNumberExpression(String number, AbstractToken source)
 	{
 		return wrapExpression(Python_Number.generateExpression(number, source));
 	}
 	
 	@Override
-	public AbstractExpression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	public Python_Expression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Python_Parenthesized_Expression.generateExpression(expr, source));
+		Python_Parenthesized_Expression paren = new Python_Parenthesized_Expression();
+		return paren.generateParentheses((Python_Expression) expr, source);
 	}
 
 	@Override
-	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
+	public Python_Expression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
 			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Python_Relational_Expression.generateRelational(left, relOp, right, source));
+		Python_Relational_Expression relExp = new Python_Relational_Expression();
+		return relExp.generateRelational((Python_Expression) left,
+				relOp, (Python_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
+	public Python_Expression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
 	{
 		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}
 
 	@Override
-	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	public Python_Expression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{
-		return wrapExpression(Python_VariableExpression.newVariableExpression(name, subscript, source));
+		Python_VariableExpression varExp = new Python_VariableExpression();
+		return varExp.generateVarExpr(name, (Python_Expression) subscript, source);
 	}
 }

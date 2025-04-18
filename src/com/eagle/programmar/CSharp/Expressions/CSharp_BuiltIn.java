@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator.BuiltInEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_BuiltIn;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
-public class CSharp_BuiltIn extends PrimaryOperator implements EagleRunnable
+public class CSharp_BuiltIn extends PrimaryOperator
+		implements EagleRunnable, Eagle_Generate_BuiltIn<CSharp_Expression>
 {
 	public @S(10) CSharp_KeywordChoice builtinConstant = new CSharp_KeywordChoice("default", "false", "true", "null",
 			"this", "super");
@@ -31,19 +35,21 @@ public class CSharp_BuiltIn extends PrimaryOperator implements EagleRunnable
 		}
 	}
 	
-	public static CSharp_BuiltIn generateExpression(BuiltInEnum builtin, AbstractToken source)
+	@Override
+	public CSharp_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{
-		CSharp_BuiltIn expr = new CSharp_BuiltIn();
 		switch (builtin)
 		{
 		case TRUE:
-			expr.builtinConstant = new CSharp_KeywordChoice("true");
-			return expr;
+			this.builtinConstant = new CSharp_KeywordChoice("true");
+			break;
 		case FALSE:
-			expr.builtinConstant = new CSharp_KeywordChoice("false");
-			return expr;
+			this.builtinConstant = new CSharp_KeywordChoice("false");
+			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin.toString());
 		}
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

@@ -3,21 +3,24 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Additive;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class CSharp_AdditiveExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Additive<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("+", "-");
@@ -60,7 +63,7 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 	}
 	
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
@@ -75,25 +78,25 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 	
-	public static CSharp_AdditiveExpression generateAdditive(
-			AbstractExpression leftExpr, AdditiveEnum oper,
-			AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public CSharp_Expression generateAdditive(
+			CSharp_Expression leftExpr, AdditiveEnum oper,
+			CSharp_Expression rightExpr, AbstractToken source)
 	{
-		CSharp_AdditiveExpression expr = new CSharp_AdditiveExpression();
-		expr.left = (CSharp_Expression) leftExpr;
-		expr.right = (CSharp_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		switch (oper)
 		{
 		case PLUS:
-			expr.operator.setValue("+");
+			this.operator.setValue("+");
 			break;
 		case MINUS:
-			expr.operator.setValue("-");
+			this.operator.setValue("-");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		expr.setTransformationSource(source);
-		return expr;
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator.BuiltInEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_BuiltIn;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
-public class Java_BuiltIn extends PrimaryOperator implements EagleRunnable
+public class Java_BuiltIn extends PrimaryOperator
+		implements EagleRunnable, Eagle_Generate_BuiltIn<Java_Expression>
 {
 	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice("false", "true", "null", "this", "String", "super");
 
@@ -29,19 +33,21 @@ public class Java_BuiltIn extends PrimaryOperator implements EagleRunnable
 		throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
 	}
 	
-	public static Java_BuiltIn generateExpression(BuiltInEnum builtin, AbstractToken source)
+	@Override
+	public Java_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{
-		Java_BuiltIn expr = new Java_BuiltIn();
 		switch (builtin)
 		{
 		case TRUE:
-			expr.builtinConstant = new Java_KeywordChoice("true");
-			return expr;
+			this.builtinConstant.setValue("true");
+			break;
 		case FALSE:
-			expr.builtinConstant = new Java_KeywordChoice("false");
-			return expr;
+			this.builtinConstant.setValue("false");
+			break;
 		default:
-			throw new RuntimeException("Unable to handle: " + builtin.toString());
+			throw new RuntimeException("Unable to handle: " + builtin);
 		}
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

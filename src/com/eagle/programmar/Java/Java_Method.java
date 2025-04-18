@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java;
 
+import com.eagle.generate.EagleGenerator.PrivacyEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
@@ -33,7 +34,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
 public class Java_Method extends TokenSequence
 		implements AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface

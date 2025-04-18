@@ -3,10 +3,10 @@
 
 package com.eagle.programmar.VB.Terminals;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -19,7 +19,7 @@ public class VB_Number extends TerminalNumberToken implements EagleTransformable
 	}
 
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newNumberExpression(_numberAsText, this);
 	}

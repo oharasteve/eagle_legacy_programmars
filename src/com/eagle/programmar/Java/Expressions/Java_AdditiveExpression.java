@@ -3,21 +3,23 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Additive;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Java_AdditiveExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression
+public class Java_AdditiveExpression extends PrecedenceOperator implements EagleRunnable,
+		EagleTransformableExpression, Eagle_Generate_Additive<Java_Expression>
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("+", "-");
@@ -60,7 +62,7 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 	}
 	
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
@@ -75,21 +77,22 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 	
-	public static Java_AdditiveExpression generateAdditive(AbstractExpression leftExpr, AdditiveEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public Java_Expression generateAdditive(Java_Expression leftExpr, AdditiveEnum oper,
+			Java_Expression rightExpr, AbstractToken source)
 	{
-		Java_AdditiveExpression expr = new Java_AdditiveExpression();
-		expr.left = (Java_Expression) leftExpr;
-		expr.right = (Java_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		switch (oper)
 		{
 		case PLUS:
-			expr.operator.setValue("+");
+			this.operator.setValue("+");
 			break;
 		case MINUS:
-			expr.operator.setValue("-");
+			this.operator.setValue("-");
 			break;
 		}
-		expr.setTransformationSource(source);
-		return expr;
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

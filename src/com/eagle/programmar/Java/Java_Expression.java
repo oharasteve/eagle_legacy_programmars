@@ -19,7 +19,6 @@ import com.eagle.programmar.Java.Expressions.Java_ColonColonNew;
 import com.eagle.programmar.Java.Expressions.Java_ColonColonType;
 import com.eagle.programmar.Java.Expressions.Java_CommentExpression;
 import com.eagle.programmar.Java.Expressions.Java_DotClass;
-import com.eagle.programmar.Java.Expressions.Java_ExclusiveOrExpression;
 import com.eagle.programmar.Java.Expressions.Java_ExpressionList;
 import com.eagle.programmar.Java.Expressions.Java_InstanceOfExpression;
 import com.eagle.programmar.Java.Expressions.Java_InterfaceCreationWithMethod;
@@ -133,10 +132,9 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1120) Java_InstanceOfExpression instanceOfExpression;
 	public @P(1130) Java_RelationalExpression relationalExpression;
 	public @P(1140) Java_BitwiseAndExpression andExpression;
-	public @P(1150) Java_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(1160) Java_BitwiseOrExpression inclusiveOrExpression;
-	public @P(1170) Java_LogicalAndExpression conditionalAndExpression;
-	public @P(1180) Java_LogicalOrExpression conditionalOrExpression;
-	public @P(1190) Java_AssignmentExpression assignmentExpression;
-	public @P(1200) Java_TrueFalseExpression trueFalseExpression;
+	public @P(1150) Java_BitwiseOrExpression inclusiveOrExpression;
+	public @P(1160) Java_LogicalAndExpression conditionalAndExpression;
+	public @P(1170) Java_LogicalOrExpression conditionalOrExpression;
+	public @P(1180) Java_AssignmentExpression assignmentExpression;
+	public @P(1190) Java_TrueFalseExpression trueFalseExpression;
 }

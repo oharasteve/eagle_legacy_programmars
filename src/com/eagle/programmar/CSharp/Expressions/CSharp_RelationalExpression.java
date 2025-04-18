@@ -3,17 +3,19 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class CSharp_RelationalExpression extends PrecedenceOperator implements EagleRunnable
+public class CSharp_RelationalExpression extends PrecedenceOperator
+		implements EagleRunnable, Eagle_Generate_Relational<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
@@ -67,35 +69,35 @@ public class CSharp_RelationalExpression extends PrecedenceOperator implements E
 		throw new RuntimeException("Unexpected relational operator: " + operator);
 	}
 	
-	public static CSharp_RelationalExpression generateRelational(AbstractExpression leftExpr, RelationalEnum relOp,
-			AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public CSharp_Expression generateRelational(CSharp_Expression leftExpr,
+			RelationalEnum relOp, CSharp_Expression rightExpr, AbstractToken source)
 	{
-		CSharp_RelationalExpression expr = new CSharp_RelationalExpression();
-		expr.left = (CSharp_Expression) leftExpr;
-		expr.right = (CSharp_Expression) rightExpr;
+		this.left = (CSharp_Expression) leftExpr;
+		this.right = (CSharp_Expression) rightExpr;
 		
 		switch (relOp)
 		{
 		case EQUALS:
-			expr.operator = new CSharp_PunctuationChoice("==");
+			this.operator = new CSharp_PunctuationChoice("==");
 			break;
 		case NOT_EQUALS:
-			expr.operator = new CSharp_PunctuationChoice("!=");
+			this.operator = new CSharp_PunctuationChoice("!=");
 			break;
 		case LESS_THAN:
-			expr.operator = new CSharp_PunctuationChoice("<");
+			this.operator = new CSharp_PunctuationChoice("<");
 			break;
 		case LESS_EQUALS:
-			expr.operator = new CSharp_PunctuationChoice("<=");
+			this.operator = new CSharp_PunctuationChoice("<=");
 			break;
 		case GREATER_THAN:
-			expr.operator = new CSharp_PunctuationChoice(">");
+			this.operator = new CSharp_PunctuationChoice(">");
 			break;
 		case GREATER_EQUALS:
-			expr.operator = new CSharp_PunctuationChoice(">=");
+			this.operator = new CSharp_PunctuationChoice(">=");
 			break;
 		}
-		expr.setTransformationSource(source);
-		return expr;
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

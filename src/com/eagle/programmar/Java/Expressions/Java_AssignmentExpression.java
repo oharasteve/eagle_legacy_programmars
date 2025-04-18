@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -13,7 +14,6 @@ import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class Java_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
 {

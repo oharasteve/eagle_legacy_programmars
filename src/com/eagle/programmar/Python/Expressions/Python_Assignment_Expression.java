@@ -3,13 +3,13 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class Python_Assignment_Expression extends PrecedenceOperator
 {

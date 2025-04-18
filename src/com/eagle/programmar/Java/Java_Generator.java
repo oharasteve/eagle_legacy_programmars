@@ -6,6 +6,7 @@ package com.eagle.programmar.Java;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
@@ -32,7 +33,6 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator extends EagleGenerator
 {
@@ -167,29 +167,37 @@ public class Java_Generator extends EagleGenerator
 	// ================ Expressions ================
 	
 	@Override
-	public AbstractExpression newAdditiveExpression(AbstractExpression left, AdditiveEnum oper, AbstractExpression right, AbstractToken source)
+	public Java_Expression newAdditiveExpression(AbstractExpression left,
+			AdditiveEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_AdditiveExpression.generateAdditive(left, oper, right, source));
+		Java_AdditiveExpression addExpr = new Java_AdditiveExpression();
+		return addExpr.generateAdditive((Java_Expression) left, oper,
+				(Java_Expression) right, source);
 	}
 
 	@Override
-	public AbstractExpression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Java_Expression newAppendExpression(AbstractExpression left,
+			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_AdditiveExpression.generateAdditive(left, AdditiveEnum.PLUS, right, source));
+		Java_AdditiveExpression appendExp = new Java_AdditiveExpression();
+		return appendExp.generateAdditive((Java_Expression) left,
+				AdditiveEnum.PLUS, (Java_Expression) right, source);
 	}
 	
 	@Override
 	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
 			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
 	{
-		Java_Expression varExpr = wrapExpression(Java_VariableExpression.newVariableExpression(name, subscript, source));
-		return wrapExpression(Java_AssignmentExpression.newAssignmentStatement(varExpr, oper, expression, comment, source));
+		Java_VariableExpression varExp = new Java_VariableExpression();
+		Java_Expression var = varExp.generateVarExpr(name, (Java_Expression) subscript, source);
+		return wrapExpression(Java_AssignmentExpression.newAssignmentStatement(var, oper, expression, comment, source));
 	}
 	
 	@Override
-	public AbstractExpression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
+	public Java_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		return wrapExpression(Java_BuiltIn.generateExpression(builtin, source));
+		Java_BuiltIn built = new Java_BuiltIn();
+		return built.generateBuiltIn(builtin, source);
 	}
 	
 	@Override
@@ -211,33 +219,45 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newLogicalAndExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Java_Expression newLogicalAndExpression(AbstractExpression left,
+			AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_LogicalAndExpression.generateExpression(left, right, source));
+		Java_LogicalAndExpression andExpr = new Java_LogicalAndExpression();
+		return andExpr.generateLogicalAnd((Java_Expression) left,
+				(Java_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newLogicalOrExpression(AbstractExpression left, LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	public Java_Expression newLogicalOrExpression(AbstractExpression left,
+			LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_LogicalOrExpression.generateExpression(left, oper, right, source));
+		Java_LogicalOrExpression orExpr = new Java_LogicalOrExpression();
+		return orExpr.generateLogicalOr((Java_Expression) left, oper,
+				(Java_Expression) right, source);
 	}
 	
 	@Override
-	public AbstractExpression newMultiplicativeExpression(AbstractExpression left, MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	public Java_Expression newMultiplicativeExpression(AbstractExpression left,
+			MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
 	{
-		return wrapExpression(Java_MultiplicativeExpression.generateMultiplicative(left, oper, right, source));
+		Java_MultiplicativeExpression mulExp = new Java_MultiplicativeExpression();
+		return mulExp.generateMultiplicative((Java_Expression) left, oper,
+				(Java_Expression) right, source);
 	}
 
 	@Override
-	public AbstractExpression newNegativeExpression(NegativeEnum sign, AbstractExpression expr, AbstractToken source)
+	public Java_Expression newNegativeExpression(NegativeEnum sign,
+			AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Java_NegativeExpression.generateNegative(sign, expr, source));
+		Java_NegativeExpression negExpr = new Java_NegativeExpression();
+		return negExpr.generateNegative(sign, (Java_Expression) expr, source);
 	}
 	
 	@Override
-	public AbstractExpression newNotExpression(AbstractExpression expr, AbstractToken source)
+	public Java_Expression newNotExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Java_LogicalNotExpression.generateExpression(expr, source));
+		Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
+		return notExpr.generateLogicalNot((Java_Expression) expr, source);
 	}
 
 	@Override
@@ -247,17 +267,19 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	public Java_Expression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
 	{
-		return wrapExpression(Java_ParenthesizedExpression.generateExpression(expr, source));
+		Java_ParenthesizedExpression paren = new Java_ParenthesizedExpression();
+		return paren.generateParentheses((Java_Expression) expr, source);
 	}
 
 	@Override
-	public AbstractExpression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
+	public Java_Expression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
 			AbstractExpression right, AbstractToken source)
 	{
-		// Already wrapped because it can generate different kinds of expression
-		return Java_RelationalExpression.generateRelational(left, relOp, right, source);
+		Java_RelationalExpression relExp = new Java_RelationalExpression();
+		return relExp.generateRelational((Java_Expression) left, relOp,
+				(Java_Expression) right, source);
 	}
 	
 	@Override
@@ -268,8 +290,9 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	public Java_Expression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{
-		return wrapExpression(Java_VariableExpression.newVariableExpression(name, subscript, source));
+		Java_VariableExpression varExp = new Java_VariableExpression();
+		return varExp.generateVarExpr(name, (Java_Expression) subscript, source);
 	}
 }

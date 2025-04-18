@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.SubstringECEnum;
+import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
@@ -16,9 +19,6 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Python_Subscript extends TokenSequence
 {
@@ -99,8 +99,10 @@ public class Python_Subscript extends TokenSequence
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Python_Expression one = Python_Generator.wrapExpression(Python_Number.generateExpression("1", source));
-			Python_Additive_Expression scMinusOne = Python_Additive_Expression.generateAdditive(sc, AdditiveEnum.MINUS, one, source);
-			subscr.body.subscr = Python_Generator.wrapExpression(scMinusOne);
+			Python_Additive_Expression addExpr = new Python_Additive_Expression();
+			Python_Expression scMinusOne = addExpr.generateAdditive(
+					(Python_Expression) sc, AdditiveEnum.MINUS, one, source);
+			subscr.body.subscr = scMinusOne;
 			subscr.body.subscr.setPresent(true);
 			break;
 		}
@@ -118,8 +120,10 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop = new Python_ColonSubscript();
 			subscr.body.subscriptStop.colon = new PunctuationColon();
 			subscr.body.subscriptStop.setPresent(true);
-			Python_Additive_Expression scPlusNc = Python_Additive_Expression.generateAdditive(subscr.body.subscr, AdditiveEnum.PLUS, ecOrnc, source);
-			subscr.body.subscriptStop.expr = Python_Generator.wrapExpression(scPlusNc);
+			Python_Additive_Expression addExpr = new Python_Additive_Expression();
+			Python_Expression scPlusNc = addExpr.generateAdditive(
+					subscr.body.subscr, AdditiveEnum.PLUS, (Python_Expression) ecOrnc, source);
+			subscr.body.subscriptStop.expr = scPlusNc;
 			subscr.body.subscriptStop.expr.setPresent(true);
 			break;
 		case GIVEN_NEITHER:

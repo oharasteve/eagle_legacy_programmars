@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java;
 
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -17,7 +18,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_Type extends TokenSequence implements AbstractType
 {

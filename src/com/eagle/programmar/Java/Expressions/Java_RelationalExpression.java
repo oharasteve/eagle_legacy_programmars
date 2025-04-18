@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -13,9 +15,9 @@ import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class Java_RelationalExpression extends PrecedenceOperator implements EagleRunnable
+public class Java_RelationalExpression extends PrecedenceOperator
+		implements EagleRunnable, Eagle_Generate_Relational<Java_Expression>
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
@@ -57,8 +59,9 @@ public class Java_RelationalExpression extends PrecedenceOperator implements Eag
 		return false;
 	}
 	
-	public static Java_Expression generateRelational(AbstractExpression leftExpr, RelationalEnum relOp,
-			AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public Java_Expression generateRelational(Java_Expression leftExpr, RelationalEnum relOp,
+			Java_Expression rightExpr, AbstractToken source)
 	{
 		if (isString(leftExpr) || isString(rightExpr))
 		{
@@ -70,40 +73,42 @@ public class Java_RelationalExpression extends PrecedenceOperator implements Eag
 			case EQUALS:
 				return equalsExpr;
 			case NOT_EQUALS:
-				Java_LogicalNotExpression not = Java_LogicalNotExpression.newNotExpression(equalsExpr);
-				not.setTransformationSource(source);
+				Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
+				Java_Expression not = notExpr.generateLogicalNot(rightExpr, source);
 				return Java_Generator.wrapExpression(not);
 			default:
 				throw new RuntimeException("Unable to handle " + relOp + " with strings");
 			}
 		}
 
-		Java_RelationalExpression expr = new Java_RelationalExpression();
-		expr.left = (Java_Expression) leftExpr;
-		expr.right = (Java_Expression) rightExpr;
-		
+		this.left = leftExpr;
+		this.right = rightExpr;
+		String oper;
 		switch (relOp)
 		{
 		case EQUALS:
-			expr.operator = new Java_PunctuationChoice("==");
+			oper = "==";
 			break;
 		case NOT_EQUALS:
-			expr.operator = new Java_PunctuationChoice("!=");
+			oper = "!=";
 			break;
 		case LESS_THAN:
-			expr.operator = new Java_PunctuationChoice("<");
+			oper = "<";
 			break;
 		case LESS_EQUALS:
-			expr.operator = new Java_PunctuationChoice("<=");
+			oper = "<=";
 			break;
 		case GREATER_THAN:
-			expr.operator = new Java_PunctuationChoice(">");
+			oper = ">";
 			break;
 		case GREATER_EQUALS:
-			expr.operator = new Java_PunctuationChoice(">=");
+			oper = ">=";
 			break;
+		default:
+			throw new RuntimeException("Unable to handle operator " + relOp);
 		}
-		expr.setTransformationSource(source);
-		return Java_Generator.wrapExpression(expr);
+		this.operator.setValue(oper);
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

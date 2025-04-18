@@ -3,20 +3,23 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.NegativeEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Negative;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Negative_Expression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Negative<Python_Expression>
 {
 	public @S(10) Python_PunctuationChoice sign = new Python_PunctuationChoice("*", "-", "+", "~");
 	public @S(20) Python_Expression expr;
@@ -39,7 +42,8 @@ public class Python_Negative_Expression extends PrimaryOperator
 	}
 	
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (sign.toString())
@@ -51,13 +55,13 @@ public class Python_Negative_Expression extends PrimaryOperator
 		}
 	}
 	
-	public static Python_Negative_Expression generateNegative(NegativeEnum sign,
-			AbstractExpression theExpr, AbstractToken source)
+	@Override
+	public Python_Expression generateNegative(NegativeEnum sign,
+			Python_Expression theExpr, AbstractToken source)
 	{
-		Python_Negative_Expression expr = new Python_Negative_Expression();
-		expr.expr = (Python_Expression) theExpr;
-		expr.sign.setValue("-");
-		expr.setTransformationSource(source);
-		return expr;
+		this.expr = theExpr;
+		this.sign.setValue("-");
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

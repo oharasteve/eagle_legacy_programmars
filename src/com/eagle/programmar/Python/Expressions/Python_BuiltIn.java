@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.EagleGenerator.BuiltInEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_BuiltIn;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
-public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
+public class Python_BuiltIn extends PrimaryOperator implements
+		EagleRunnable, Eagle_Generate_BuiltIn<Python_Expression>
 {
 	public @S(10) Python_KeywordChoice builtins = new Python_KeywordChoice("None", "False", "True");
 
@@ -30,19 +34,21 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 		}
 	}
 
-	public static Python_BuiltIn generateExpression(BuiltInEnum builtin, AbstractToken source)
+	@Override
+	public Python_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{
 		Python_BuiltIn expr = new Python_BuiltIn();
 		switch (builtin)
 		{
 		case TRUE:
 			expr.builtins = new Python_KeywordChoice("True");
-			return expr;
+			break;
 		case FALSE:
 			expr.builtins = new Python_KeywordChoice("False");
-			return expr;
+			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin.toString());
 		}
+		return Python_Generator.wrapExpression(expr);
 	}
 }

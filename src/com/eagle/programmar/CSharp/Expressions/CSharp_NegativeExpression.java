@@ -3,20 +3,23 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.NegativeEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Negative;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class CSharp_NegativeExpression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Negative<CSharp_Expression>
 {
 	public @S(10) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("-", "+");
 	public @S(20) @NOSPACE CSharp_Expression expr;
@@ -39,7 +42,7 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 	}
 	
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())
@@ -51,21 +54,21 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 		}
 	}
 	
-	public static CSharp_NegativeExpression generateNegative(
-			NegativeEnum sign, AbstractExpression theExpr, AbstractToken source)
+	@Override
+	public CSharp_Expression generateNegative(NegativeEnum sign,
+			CSharp_Expression theExpr, AbstractToken source)
 	{
-		CSharp_NegativeExpression expr = new CSharp_NegativeExpression();
-		expr.expr = (CSharp_Expression) theExpr;
+		this.expr = theExpr;
 		switch (sign)
 		{
 		case POSITIVE:
-			expr.operator.setValue("+");
+			this.operator.setValue("+");
 			break;
 		case NEGATIVE:
-			expr.operator.setValue("-");
+			this.operator.setValue("-");
 			break;
 		}
-		expr.setTransformationSource(source);
-		return expr;
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

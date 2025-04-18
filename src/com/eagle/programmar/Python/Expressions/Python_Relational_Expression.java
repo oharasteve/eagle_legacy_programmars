@@ -3,20 +3,22 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class Python_Relational_Expression extends PrecedenceOperator implements EagleRunnable
+public class Python_Relational_Expression extends PrecedenceOperator
+		implements EagleRunnable, Eagle_Generate_Relational<Python_Expression>
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Relational_Operator relOp;
@@ -89,12 +91,12 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 		}
 	}
 
-	public static Python_Relational_Expression generateRelational(AbstractExpression leftExpr, RelationalEnum relOp,
-			AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public Python_Expression generateRelational(Python_Expression leftExpr,
+			RelationalEnum relOp, Python_Expression rightExpr, AbstractToken source)
 	{
-		Python_Relational_Expression expr = new Python_Relational_Expression();
-		expr.left = (Python_Expression) leftExpr;
-		expr.right = (Python_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		
 		Python_PunctuationChoice operator = null;
 		switch (relOp)
@@ -118,9 +120,9 @@ public class Python_Relational_Expression extends PrecedenceOperator implements 
 			operator = new Python_PunctuationChoice(">=");
 			break;
 		}
-		expr.relOp = new Python_Relational_Operator();
-		expr.relOp.setWhich(operator);
-		expr.setTransformationSource(source);
-		return expr;
+		this.relOp = new Python_Relational_Operator();
+		this.relOp.setWhich(operator);
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

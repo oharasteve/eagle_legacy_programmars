@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Java.Functions;
 
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.SubstringECEnum;
+import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -17,9 +20,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Java_SubstringMethod extends PrecedenceOperator implements EagleRunnable
 {
@@ -64,7 +64,9 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Java_Expression one = Java_Generator.wrapExpression(Java_Number.generateExpression("1", source));
-			Java_AdditiveExpression scMinusOne = Java_AdditiveExpression.generateAdditive(sc, AdditiveEnum.MINUS, one, source);
+			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
+			Java_Expression scMinusOne = addExp.generateAdditive((Java_Expression) sc,
+					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = Java_Generator.wrapExpression(scMinusOne);
 			break;
 		}
@@ -80,7 +82,9 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 		case GIVEN_NC:
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
-			Java_AdditiveExpression scPlusNc = Java_AdditiveExpression.generateAdditive(expr.scExpr, AdditiveEnum.PLUS, ecOrnc, source);
+			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
+			Java_Expression scPlusNc = addExp.generateAdditive(expr.scExpr,
+					AdditiveEnum.PLUS, (Java_Expression) ecOrnc, source);
 			expr.ecExpr = Java_Generator.wrapExpression(scPlusNc);
 			expr.ecExpr.setPresent(true);
 			break;

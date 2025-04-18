@@ -3,21 +3,24 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Additive;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Additive_Expression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Additive<Python_Expression>
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("+", "-");
@@ -60,7 +63,7 @@ public class Python_Additive_Expression extends PrecedenceOperator
 	}
 	
 	@Override
-	public AbstractExpression transformAdditive(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
@@ -75,23 +78,24 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		}
 	}
 	
-	public static Python_Additive_Expression generateAdditive(AbstractExpression leftExpr, AdditiveEnum oper, AbstractExpression rightExpr, AbstractToken source)
+	@Override
+	public Python_Expression generateAdditive(Python_Expression leftExpr,
+			AdditiveEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
-		Python_Additive_Expression expr = new Python_Additive_Expression();
-		expr.left = (Python_Expression) leftExpr;
-		expr.right = (Python_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		switch (oper)
 		{
 		case PLUS:
-			expr.operator.setValue("+");
+			this.operator.setValue("+");
 			break;
 		case MINUS:
-			expr.operator.setValue("-");
+			this.operator.setValue("-");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		expr.setTransformationSource(source);
-		return expr;
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }
