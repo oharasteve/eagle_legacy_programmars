@@ -63,7 +63,8 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			expr.scExpr = (Java_Expression) sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
-			Java_Expression one = Java_Generator.wrapExpression(Java_Number.generateExpression("1", source));
+			Java_Number num = new Java_Number();
+			Java_Expression one = Java_Generator.wrapExpression(num.generateNumber("1", source));
 			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
 			Java_Expression scMinusOne = addExp.generateAdditive((Java_Expression) sc,
 					AdditiveEnum.MINUS, one, source);

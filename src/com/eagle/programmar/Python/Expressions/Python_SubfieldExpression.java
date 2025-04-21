@@ -3,15 +3,19 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.Expressions.Eagle_Generate_Subfield;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Functions.Python_Function_Call;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
-public class Python_Subfield extends PrecedenceOperator implements EagleRunnable
+public class Python_SubfieldExpression extends PrecedenceOperator
+		implements EagleRunnable, Eagle_Generate_Subfield<Python_Expression>
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -40,5 +44,16 @@ public class Python_Subfield extends PrecedenceOperator implements EagleRunnable
 		}
 		
 		throw new RuntimeException("Unable to handle " + left + " . " + right);
+	}
+
+	@Override
+	public Python_Expression generateSubfield(Python_Expression left,
+			Python_Expression right, AbstractToken source)
+	{
+		this.left = left;
+		this.dot = new PunctuationPeriod();
+		this.right = right;
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

@@ -3,14 +3,25 @@
 
 package com.eagle.programmar.CSharp.Terminals;
 
+import com.eagle.generate.Terminals.Eagle_Generate_HexNumber;
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class CSharp_HexNumber extends TerminalHexNumberToken
+		implements Eagle_Generate_HexNumber
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		return genericHex(lines, "0x", "LlUu");
+	}
+	
+	@Override
+	public CSharp_HexNumber generateHexNumber(String value, AbstractToken source)
+	{
+		this.setValue(value);
+		this.setTransformationSource(source);
+		return this;
 	}
 }

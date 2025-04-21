@@ -63,7 +63,8 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			expr.scExpr = (CSharp_Expression) sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
-			CSharp_Expression one = CSharp_Generator.wrapExpression(CSharp_Number.generateExpression("1", source));
+			CSharp_Number num = new CSharp_Number();
+			CSharp_Expression one = CSharp_Generator.wrapExpression(num.generateNumber("1", source));
 			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
 			CSharp_Expression scMinusOne = addExp.generateAdditive((CSharp_Expression) sc,
 					AdditiveEnum.MINUS, one, source);

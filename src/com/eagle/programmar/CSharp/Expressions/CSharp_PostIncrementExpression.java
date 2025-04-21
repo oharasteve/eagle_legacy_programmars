@@ -3,19 +3,26 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator.IncrementEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Post_Increment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Variable;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 
-public class CSharp_PostIncrementExpression extends PrimaryOperator implements EagleRunnable
+public class CSharp_PostIncrementExpression extends PrimaryOperator
+		implements EagleRunnable, Eagle_Generate_Post_Increment<CSharp_Expression, CSharp_Variable>
 {
 	public @S(10) CSharp_Variable var;
-	public @S(20) @NOSPACE CSharp_Punctuation postIncrementOperator = new CSharp_Punctuation("++");
+	public @S(20) @NOSPACE CSharp_PunctuationChoice operator =
+			new CSharp_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -25,9 +32,40 @@ public class CSharp_PostIncrementExpression extends PrimaryOperator implements E
 			CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) var.firstId.getWhich();
 			EagleValue val = interpreter.findSymbol(id.getValue());
 			int prev = val.forceIntegerValue();
-			EagleValue curr = new EagleInteger(prev + 1);
-			interpreter.setSymbol(var, id.getValue(), curr);
+			int curr;
+			switch (operator.getValue())
+			{
+			case "++":
+				curr = prev + 1;
+				break;
+			case "--":
+				curr = prev - 1;
+				break;
+			default:
+				throw new RuntimeException("Unexpected operator: " + operator);
+			}
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(curr));
 			interpreter.pushInt(prev);
 		}
+	}
+	
+	@Override
+	public CSharp_Expression generateIncrement(CSharp_Variable var,
+			IncrementEnum oper, AbstractToken source)
+	{
+		this.var = var;
+		switch (oper)
+		{
+		case INCREMENT:
+			this.operator.setValue("++");
+			break;
+		case DECREMENT:
+			this.operator.setValue("--");
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + oper);
+		}
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

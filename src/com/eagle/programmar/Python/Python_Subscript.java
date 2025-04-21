@@ -98,7 +98,8 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscr.setPresent(true);
 			break;
 		case FIRST_CHAR_IS_ONE:
-			Python_Expression one = Python_Generator.wrapExpression(Python_Number.generateExpression("1", source));
+			Python_Number num = new Python_Number();
+			Python_Expression one = Python_Generator.wrapExpression(num.generateNumber("1", source));
 			Python_Additive_Expression addExpr = new Python_Additive_Expression();
 			Python_Expression scMinusOne = addExpr.generateAdditive(
 					(Python_Expression) sc, AdditiveEnum.MINUS, one, source);

@@ -35,10 +35,11 @@ public class Python_Literals extends PrimaryOperator implements EagleRunnable
 	
 	public static Python_Literals generateExpression(String txt, AbstractToken source)
 	{
-		Python_Literal lit = Python_Literal.generateExpression(txt, source);
+		Python_Literal lit = new Python_Literal();
+		Python_Literal lit1 = lit.generateLiteral(txt, source);
 		Python_Literals lits = new Python_Literals();
 		lits.literals = new TokenList<Python_Literal>();
-		lits.literals.addToken(lit);
+		lits.literals.addToken(lit1);
 		lits.setTransformationSource(source);
 		return lits;
 	}

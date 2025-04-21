@@ -4,25 +4,26 @@
 package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class Python_Assignment_Expression extends PrecedenceOperator
+		implements Eagle_Generate_Assignment<Python_Expression>
 {
 	public @S(10) Python_Expression leftVar = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=", ":=");
 	public @S(30) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	
-	public static Python_Assignment_Expression newAssignmentStatement(AbstractExpression varExpr,
-			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	@Override
+	public Python_Expression generateAssignment(Python_Expression varExpr,
+			AssignmentEnum oper, Python_Expression expression, AbstractToken source)
 	{
-		Python_Assignment_Expression expr = new Python_Assignment_Expression();
-		expr.leftVar = (Python_Expression) varExpr;
 		String punct;
 		switch (oper)
 		{
@@ -38,9 +39,10 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		expr.equals = new Python_PunctuationChoice(punct);
-		expr.right = (Python_Expression) expression;
-		expr.setTransformationSource(source);
-		return expr;
+		this.leftVar = varExpr;
+		this.equals.setValue(punct);
+		this.right = expression;
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

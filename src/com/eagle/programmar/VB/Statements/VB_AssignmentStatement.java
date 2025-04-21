@@ -40,7 +40,7 @@ public class VB_AssignmentStatement extends TokenSequence
 			subscrExpr = transformer.transformExpression(generator, var.subscript.exprs.first());
 		}
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var.var.getValue(), subscrExpr, AssignmentEnum.EQUALS, value, null, this);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.var.getValue(), subscrExpr, AssignmentEnum.EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;
 	}

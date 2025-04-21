@@ -31,6 +31,8 @@ import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
+import com.eagle.programmar.Python.Terminals.Python_HexNumber;
+import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
@@ -197,12 +199,28 @@ public class Python_Generator extends EagleGenerator
 	
 	@Override
 	public Python_Expression newAssignmentExpression(String name, AbstractExpression subscript,
-			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+			AssignmentEnum oper, AbstractExpression expression, AbstractToken source)
 	{
 		Python_VariableExpression varExpr = new Python_VariableExpression();
 		Python_Expression var = varExpr.generateVarExpr(name,
 				(Python_Expression) subscript, source);
-		return wrapExpression(Python_Assignment_Expression.newAssignmentStatement(var, oper, expression, comment, source));
+		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
+		return asgExpr.generateAssignment(var, oper,
+				(Python_Expression) expression, source);
+	}
+	
+	@Override
+	public Python_Expression newPostIncrementExpression(String name, AbstractExpression subscript,
+			IncrementEnum oper, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
+	}
+	
+	@Override
+	public Python_Expression newPreIncrementExpression(String name, AbstractExpression subscript,
+			IncrementEnum oper, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
 	}
 	
 	@Override
@@ -275,7 +293,8 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public Python_Expression newNumberExpression(String number, AbstractToken source)
 	{
-		return wrapExpression(Python_Number.generateExpression(number, source));
+		Python_Number num = new Python_Number();
+		return wrapExpression(num.generateNumber(number, source));
 	}
 	
 	@Override
@@ -306,5 +325,35 @@ public class Python_Generator extends EagleGenerator
 	{
 		Python_VariableExpression varExp = new Python_VariableExpression();
 		return varExp.generateVarExpr(name, (Python_Expression) subscript, source);
+	}
+	
+	// ================ Terminals ================
+
+	@Override
+	public Python_Number newNumber(String value, AbstractToken source)
+	{
+		Python_Number num = new Python_Number();
+		return num.generateNumber(value, source);
+	}
+
+	@Override
+	public Python_HexNumber newHexNumber(String value, AbstractToken source)
+	{
+		Python_HexNumber num = new Python_HexNumber();
+		return num.generateHexNumber(value, source);
+	}
+
+	@Override
+	public Python_Literal newLiteral(String value, AbstractToken source)
+	{
+		Python_Literal lit = new Python_Literal();
+		return lit.generateLiteral(value, source);
+	}
+
+	@Override
+	public Python_Literal newCharLiteral(String value, AbstractToken source)
+	{
+		Python_Literal lit = new Python_Literal();
+		return lit.generateLiteral(value, source);
 	}
 }

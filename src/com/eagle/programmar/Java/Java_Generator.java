@@ -17,6 +17,8 @@ import com.eagle.programmar.Java.Expressions.Java_LogicalOrExpression;
 import com.eagle.programmar.Java.Expressions.Java_MultiplicativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_NegativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
+import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
+import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
@@ -26,6 +28,8 @@ import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_PrintStatement;
+import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
+import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractFunction;
@@ -185,12 +189,31 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
-			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	public Java_Expression newAssignmentExpression(String name, AbstractExpression subscript,
+			AssignmentEnum oper, AbstractExpression expression, AbstractToken source)
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
 		Java_Expression var = varExp.generateVarExpr(name, (Java_Expression) subscript, source);
-		return wrapExpression(Java_AssignmentExpression.newAssignmentStatement(var, oper, expression, comment, source));
+		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
+		return asgExpr.generateAssignment(var, oper, (Java_Expression) expression, source);
+	}
+	
+	@Override
+	public Java_Expression newPostIncrementExpression(String name, AbstractExpression subscript,
+			IncrementEnum oper, AbstractToken source)
+	{
+		Java_Variable var = Java_Variable.newVariable(name);
+		Java_PostIncrementExpression incrExpr = new Java_PostIncrementExpression();
+		return incrExpr.generateIncrement(var, oper, source);
+	}
+	
+	@Override
+	public Java_Expression newPreIncrementExpression(String name, AbstractExpression subscript,
+			IncrementEnum oper, AbstractToken source)
+	{
+		Java_Variable var = Java_Variable.newVariable(name);
+		Java_PreIncrementExpression incrExpr = new Java_PreIncrementExpression();
+		return incrExpr.generateIncrement(var, oper, source);
 	}
 	
 	@Override
@@ -213,9 +236,10 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
+	public Java_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
-		return wrapExpression(Java_Literal.generateExpression(literal, source));
+		Java_Literal lit = new Java_Literal();
+		return wrapExpression(lit.generateLiteral(literal, source));
 	}
 
 	@Override
@@ -261,9 +285,10 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newNumberExpression(String number, AbstractToken source)
+	public Java_Expression newNumberExpression(String number, AbstractToken source)
 	{
-		return wrapExpression(Java_Number.generateExpression(number, source));
+		Java_Number num = new Java_Number();
+		return wrapExpression(num.generateNumber(number, source));
 	}
 
 	@Override
@@ -294,5 +319,35 @@ public class Java_Generator extends EagleGenerator
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
 		return varExp.generateVarExpr(name, (Java_Expression) subscript, source);
+	}
+	
+	// ================ Terminals ================
+
+	@Override
+	public Java_Number newNumber(String value, AbstractToken source)
+	{
+		Java_Number num = new Java_Number();
+		return num.generateNumber(value, source);
+	}
+
+	@Override
+	public Java_HexNumber newHexNumber(String value, AbstractToken source)
+	{
+		Java_HexNumber num = new Java_HexNumber();
+		return num.generateHexNumber(value, source);
+	}
+
+	@Override
+	public Java_Literal newLiteral(String value, AbstractToken source)
+	{
+		Java_Literal lit = new Java_Literal();
+		return lit.generateLiteral(value, source);
+	}
+
+	@Override
+	public Java_Character_Literal newCharLiteral(String value, AbstractToken source)
+	{
+		Java_Character_Literal lit = new Java_Character_Literal();
+		return lit.generateCharLiteral(value, source);
 	}
 }

@@ -30,7 +30,7 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_StarStar_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Star_Expression;
-import com.eagle.programmar.Python.Expressions.Python_Subfield;
+import com.eagle.programmar.Python.Expressions.Python_SubfieldExpression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_Negative_Expression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
@@ -107,7 +107,7 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public @P(1000) Python_SubscriptExpression subscriptExpression;
 	public @P(1010) Python_Upper_Method upperMethod;
-	public @P(1020) Python_Subfield subfield;
+	public @P(1020) Python_SubfieldExpression subfield;
 	public @P(1030) Python_Power_Expression powerExpression;
 	public @P(1040) Python_Multiplicative_Expression multiplicativeExpression;
 	public @P(1050) Python_Additive_Expression additiveExpression;

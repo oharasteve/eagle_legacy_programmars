@@ -3,12 +3,14 @@
 
 package com.eagle.programmar.CSharp.Terminals;
 
+import com.eagle.generate.Terminals.Eagle_Generate_Literal;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CSharp_Literal extends TerminalLiteralToken
+		implements Eagle_Generate_Literal
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -36,11 +38,11 @@ public class CSharp_Literal extends TerminalLiteralToken
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 	
-	public static CSharp_Literal generateExpression(String value, AbstractToken source)
+	@Override
+	public CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
-		CSharp_Literal lit = new CSharp_Literal();
-		lit.setValue(value);
-		lit.setTransformationSource(source);
-		return lit;
+		this.setValue(value);
+		this.setTransformationSource(source);
+		return this;
 	}
 }

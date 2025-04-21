@@ -16,6 +16,8 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalOrExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_MultiplicativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_NegativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_PostIncrementExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_PreIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
@@ -25,6 +27,8 @@ import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
+import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractFunction;
@@ -182,14 +186,33 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newAssignmentExpression(String name, AbstractExpression subscript,
-			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	public CSharp_Expression newAssignmentExpression(String name, AbstractExpression subscript,
+			AssignmentEnum oper, AbstractExpression expression, AbstractToken source)
 	{
 		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
 		CSharp_Expression var = varExpr.generateVarExpr(name,
 				(CSharp_Expression) subscript, source);
-		return wrapExpression(CSharp_AssignmentExpression.newAssignmentStatement(var, oper,
-				expression, comment, source));
+		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
+		return asgExpr.generateAssignment(var, oper,
+				(CSharp_Expression) expression, source);
+	}
+	
+	@Override
+	public CSharp_Expression newPostIncrementExpression(String name, AbstractExpression subscript,
+			IncrementEnum oper, AbstractToken source)
+	{
+		CSharp_Variable var = CSharp_Variable.newVariable(name);
+		CSharp_PostIncrementExpression incrExpr = new CSharp_PostIncrementExpression();
+		return incrExpr.generateIncrement(var, oper, source);
+	}
+	
+	@Override
+	public CSharp_Expression newPreIncrementExpression(String name, AbstractExpression subscript,
+			IncrementEnum oper, AbstractToken source)
+	{
+		CSharp_Variable var = CSharp_Variable.newVariable(name);
+		CSharp_PreIncrementExpression incrExpr = new CSharp_PreIncrementExpression();
+		return incrExpr.generateIncrement(var, oper, source);
 	}
 	
 	@Override
@@ -212,9 +235,10 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newLiteralExpression(String literal, AbstractToken source)
+	public CSharp_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
-		return wrapExpression(CSharp_Literal.generateExpression(literal, source));
+		CSharp_Literal lit = new CSharp_Literal();
+		return wrapExpression(lit.generateLiteral(literal, source));
 	}
 
 	@Override
@@ -256,9 +280,10 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newNumberExpression(String number, AbstractToken source)
+	public CSharp_Expression newNumberExpression(String number, AbstractToken source)
 	{
-		return wrapExpression(CSharp_Number.generateExpression(number, source));
+		CSharp_Number num = new CSharp_Number();
+		return wrapExpression(num.generateNumber(number, source));
 	}
 	
 	@Override
@@ -290,5 +315,35 @@ public class CSharp_Generator extends EagleGenerator
 	{
 		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
 		return varExp.generateVarExpr(name, (CSharp_Expression) subscript, source);
+	}
+	
+	// ================ Terminals ================
+
+	@Override
+	public CSharp_Number newNumber(String value, AbstractToken source)
+	{
+		CSharp_Number num = new CSharp_Number();
+		return num.generateNumber(value, source);
+	}
+
+	@Override
+	public CSharp_HexNumber newHexNumber(String value, AbstractToken source)
+	{
+		CSharp_HexNumber num = new CSharp_HexNumber();
+		return num.generateHexNumber(value, source);
+	}
+
+	@Override
+	public CSharp_Literal newLiteral(String value, AbstractToken source)
+	{
+		CSharp_Literal lit = new CSharp_Literal();
+		return lit.generateLiteral(value, source);
+	}
+
+	@Override
+	public CSharp_Character_Literal newCharLiteral(String value, AbstractToken source)
+	{
+		CSharp_Character_Literal lit = new CSharp_Character_Literal();
+		return lit.generateCharLiteral(value, source);
 	}
 }

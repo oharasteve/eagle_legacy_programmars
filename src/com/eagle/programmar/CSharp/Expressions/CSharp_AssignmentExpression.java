@@ -4,18 +4,20 @@
 package com.eagle.programmar.CSharp.Expressions;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
 
-public class CSharp_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
+public class CSharp_AssignmentExpression extends PrecedenceOperator
+		implements EagleRunnable, Eagle_Generate_Assignment<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=",
@@ -53,11 +55,11 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 		}
 	}
 	
-	public static CSharp_AssignmentExpression newAssignmentStatement(AbstractExpression varExpr,
-			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	@Override
+	public CSharp_Expression generateAssignment(CSharp_Expression varExpr,
+			AssignmentEnum oper, CSharp_Expression expression,
+			AbstractToken source)
 	{
-		CSharp_AssignmentExpression expr = new CSharp_AssignmentExpression();
-		expr.var = (CSharp_Expression) varExpr;
 		String punct;
 		switch (oper)
 		{
@@ -73,9 +75,10 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator implements E
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		expr.operator = new CSharp_PunctuationChoice(punct);
-		expr.expr = (CSharp_Expression) expression;
-		expr.setTransformationSource(source);
-		return expr;
+		this.var = varExpr;
+		this.operator.setValue(punct);
+		this.expr = expression;
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

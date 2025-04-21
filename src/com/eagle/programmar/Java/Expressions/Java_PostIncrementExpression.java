@@ -3,19 +3,26 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator.IncrementEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Post_Increment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
-import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Java_PostIncrementExpression extends PrimaryOperator implements EagleRunnable
+public class Java_PostIncrementExpression extends PrimaryOperator
+		implements EagleRunnable, Eagle_Generate_Post_Increment<Java_Expression, Java_Variable>
 {
 	public @S(10) Java_Variable var;
-	public @S(20) @NOSPACE Java_Punctuation postIncrementOperator = new Java_Punctuation("++");
+	public @S(20) @NOSPACE Java_PunctuationChoice operator =
+			new Java_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -25,9 +32,40 @@ public class Java_PostIncrementExpression extends PrimaryOperator implements Eag
 			Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
 			EagleValue val = interpreter.findSymbol(id.getValue());
 			int prev = val.forceIntegerValue();
-			EagleValue curr = new EagleInteger(prev + 1);
-			interpreter.setSymbol(var, id.getValue(), curr);
+			int curr;
+			switch (operator.getValue())
+			{
+			case "++":
+				curr = prev + 1;
+				break;
+			case "--":
+				curr = prev - 1;
+				break;
+			default:
+				throw new RuntimeException("Unexpected operator: " + operator);
+			}
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(curr));
 			interpreter.pushInt(prev);
 		}
+	}
+
+	@Override
+	public Java_Expression generateIncrement(Java_Variable var,
+			IncrementEnum oper, AbstractToken source)
+	{
+		this.var = var;
+		switch (oper)
+		{
+		case INCREMENT:
+			this.operator.setValue("++");
+			break;
+		case DECREMENT:
+			this.operator.setValue("--");
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + oper);
+		}
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

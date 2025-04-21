@@ -30,9 +30,7 @@ import com.eagle.programmar.Java.Expressions.Java_MethodInvocation;
 import com.eagle.programmar.Java.Expressions.Java_MultiplicativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_NegativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
-import com.eagle.programmar.Java.Expressions.Java_PostDecrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
-import com.eagle.programmar.Java.Expressions.Java_PreDecrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_ShiftExpression;
@@ -103,16 +101,14 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(200) Java_MethodInvocation methodInvocation;
 	public @P(210) Java_AnnotationInvocation annotationInvocation;
 	public @P(220) Java_PreIncrementExpression preIncrementExpression;
-	public @P(230) Java_PreDecrementExpression preDecrementExpression;
-	public @P(240) Java_PostIncrementExpression postIncrementExpression;
-	public @P(250) Java_PostDecrementExpression postDecrementExpression;
-	public @P(260) Java_NegativeExpression negativeExpression;
-	public @P(270) Java_BitwiseNotExpression logicalNotExpression;
-	public @P(280) Java_LogicalNotExpression notExpression;
-	public @P(290) Java_BuiltIn builtIn;
-	public @P(300) Java_VariableExpression variableExpression;
-	public @P(310) Java_ParenthesizedExpression parenthesizedExpression;
-	public @P(320) Java_CommentExpression commentExpression;
+	public @P(230) Java_PostIncrementExpression postIncrementExpression;
+	public @P(240) Java_NegativeExpression negativeExpression;
+	public @P(250) Java_BitwiseNotExpression logicalNotExpression;
+	public @P(260) Java_LogicalNotExpression notExpression;
+	public @P(270) Java_BuiltIn builtIn;
+	public @P(280) Java_VariableExpression variableExpression;
+	public @P(290) Java_ParenthesizedExpression parenthesizedExpression;
+	public @P(300) Java_CommentExpression commentExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

@@ -4,18 +4,20 @@
 package com.eagle.programmar.Java.Expressions;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
 
-public class Java_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
+public class Java_AssignmentExpression extends PrecedenceOperator
+		implements EagleRunnable, Eagle_Generate_Assignment<Java_Expression>
 {
 	public @S(10) Java_Expression var = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=", "<<=",
@@ -53,11 +55,10 @@ public class Java_AssignmentExpression extends PrecedenceOperator implements Eag
 		}
 	}
 	
-	public static Java_AssignmentExpression newAssignmentStatement(AbstractExpression varExpr,
-			AssignmentEnum oper, AbstractExpression expression, String comment, AbstractToken source)
+	@Override
+	public Java_Expression generateAssignment(Java_Expression varExpr,
+			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
-		Java_AssignmentExpression expr = new Java_AssignmentExpression();
-		expr.var = (Java_Expression) varExpr;
 		String punct;
 		switch (oper)
 		{
@@ -73,9 +74,10 @@ public class Java_AssignmentExpression extends PrecedenceOperator implements Eag
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		expr.operator = new Java_PunctuationChoice(punct);
-		expr.expr = (Java_Expression) expression;
-		expr.setTransformationSource(source);
-		return expr;
+		this.var = varExpr;
+		this.operator.setValue(punct);
+		this.expr = expression;
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

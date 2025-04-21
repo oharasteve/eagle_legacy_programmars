@@ -3,12 +3,14 @@
 
 package com.eagle.programmar.Java.Terminals;
 
+import com.eagle.generate.Terminals.Eagle_Generate_Number;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
-public class Java_Number extends TerminalNumberToken implements EagleRunnable
+public class Java_Number extends TerminalNumberToken
+		implements EagleRunnable, Eagle_Generate_Number
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -16,11 +18,11 @@ public class Java_Number extends TerminalNumberToken implements EagleRunnable
 		return genericNumber(lines, "Ee", "LlFfDd", true, true, '_');
 	}
 	
-	public static Java_Number generateExpression(String value, AbstractToken source)
+	@Override
+	public Java_Number generateNumber(String value, AbstractToken source)
 	{
-		Java_Number num = new Java_Number();
-		num.setValue(value);
-		num.setTransformationSource(source);
-		return num;
+		this.setValue(value);
+		this.setTransformationSource(source);
+		return this;
 	}
 }
