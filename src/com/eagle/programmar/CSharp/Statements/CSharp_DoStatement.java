@@ -3,12 +3,20 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
+import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
+import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalNotExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
@@ -21,4 +29,36 @@ public class CSharp_DoStatement extends TokenSequence implements AbstractStateme
 	public @S(50) CSharp_Expression condition;
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
+
+	public static CSharp_DoStatement createDo(ArrayList<CSharp_Statement> actions,
+			CSharp_Expression whileExpression, AbstractToken source)
+	{
+		CSharp_DoStatement doStmt = new CSharp_DoStatement();
+		doStmt.leftParen = new PunctuationLeftParen();
+		doStmt.rightParen = new PunctuationRightParen();
+		doStmt.semicolon = new PunctuationSemicolon();
+		doStmt.setTransformationSource(source);
+
+		CSharp_StatementBlock body = new CSharp_StatementBlock();
+		body.statements = new TokenList<CSharp_StatementOrComment>();
+		body.leftBrace = new PunctuationLeftBrace();
+		body.rightBrace = new PunctuationRightBrace();
+
+		CSharp_Statement stmt = new CSharp_Statement();
+		doStmt.doStatement = stmt;
+		stmt.setWhich(body);
+
+		CSharp_LogicalNotExpression not = new CSharp_LogicalNotExpression();
+		CSharp_Expression notExpr = not.generateLogicalNot(whileExpression, source);
+		doStmt.condition = notExpr;
+
+		for (CSharp_Statement action : actions)
+		{
+			CSharp_StatementOrComment wrapper = new CSharp_StatementOrComment();
+			wrapper.setWhich(action);
+			body.statements.addToken(wrapper);
+		}
+
+		return doStmt;
+	}
 }

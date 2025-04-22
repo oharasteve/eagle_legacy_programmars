@@ -3,17 +3,24 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Statement;
+import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_WhileStatement extends TokenSequence
@@ -64,5 +71,43 @@ public class CSharp_WhileStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	public static CSharp_WhileStatement createWhile(ArrayList<CSharp_Statement> actions,
+			CSharp_Expression whileExpression, AbstractToken source)
+	{
+		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
+
+		whileStmt.leftParen = new PunctuationLeftParen();
+		whileStmt.rightParen = new PunctuationRightParen();
+
+		CSharp_StatementBlock body = new CSharp_StatementBlock();
+		body.statements = new TokenList<CSharp_StatementOrComment>();
+		body.leftBrace = new PunctuationLeftBrace();
+		body.rightBrace = new PunctuationRightBrace();
+
+		CSharp_Statement csStatement = new CSharp_Statement();
+		whileStmt.whileStatement = csStatement;
+		csStatement.setWhich(body);
+
+		whileStmt.condition = whileExpression;
+
+		for (CSharp_Statement action : actions)
+		{
+			CSharp_StatementOrComment wrapper = new CSharp_StatementOrComment();
+			wrapper.setWhich(action);
+			body.statements.addToken(wrapper);
+
+			// If the parent block gets the 'while' as the parent, line numbers in the
+			// side-by-side
+			// report will pick up the 'while' instead of the first statement.
+			if (csStatement.getTransformationSource() == null)
+			{
+				csStatement.setTransformationSource(action.getTransformationSource());
+			}
+		}
+
+		whileStmt.setTransformationSource(source);
+		return whileStmt;
 	}
 }

@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Python.Statements;
 
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -14,10 +15,13 @@ import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
 import com.eagle.programmar.Python.Python_VariableList.Python_VariableAndSubscript;
 import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
+import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
+import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -78,5 +82,28 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 			}
 		}
+	}
+	
+	public static Python_ExpressionStatement generateAssignment(String name, Python_Expression subscript,
+			AssignmentEnum oper, Python_Expression expression, String comment, AbstractToken source)
+	{
+		if (oper != AssignmentEnum.EQUALS)
+		{
+			throw new RuntimeException("Unexpected assigment operator: " + oper.toString());
+		}
+
+		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
+		Python_VariableExpression varExpr = new Python_VariableExpression();
+		asgExpr.leftVar = varExpr.generateVarExpr(name, subscript, source);
+		asgExpr.equals = new Python_PunctuationChoice("=");
+		asgExpr.right = expression;
+
+		Python_ExpressionStatement exprStmt = new Python_ExpressionStatement();
+		Python_Expression expr = new Python_Expression();
+		expr.setWhich(asgExpr);
+		exprStmt.expression = expr;
+		if (comment != null) exprStmt.comment = new Python_Comment(comment);
+		
+		return exprStmt;
 	}
 }

@@ -3,17 +3,25 @@
 
 package com.eagle.programmar.Java.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
+import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
+import com.eagle.programmar.Java.Expressions.Java_LogicalNotExpression;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
@@ -35,5 +43,37 @@ public class Java_DoStatement extends TokenSequence implements AbstractStatement
 	public EagleScope getScope()
 	{
 		return _scope;
+	}
+	
+	public static Java_DoStatement createDoUntil(ArrayList<Java_Statement> actions,
+			Java_Expression whileExpression, AbstractToken source)
+	{
+		Java_DoStatement doStmt = new Java_DoStatement();
+		doStmt.leftParen = new PunctuationLeftParen();
+		doStmt.rightParen = new PunctuationRightParen();
+		doStmt.semicolon = new PunctuationSemicolon();
+		doStmt.setTransformationSource(source);
+
+		Java_StatementBlock body = new Java_StatementBlock();
+		body.statements = new TokenList<Java_StatementOrComment>();
+		body.leftBrace = new PunctuationLeftBrace();
+		body.rightBrace = new PunctuationRightBrace();
+
+		Java_Statement javaStatement = new Java_Statement();
+		doStmt.doStatement = javaStatement;
+		javaStatement.setWhich(body);
+
+		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
+		Java_Expression notExpr = not.generateLogicalNot(whileExpression, source); 
+		doStmt.condition = notExpr;
+
+		for (Java_Statement action : actions)
+		{
+			Java_StatementOrComment wrapper = new Java_StatementOrComment();
+			wrapper.setWhich(action);
+			body.statements.addToken(wrapper);
+		}
+
+		return doStmt;
 	}
 }

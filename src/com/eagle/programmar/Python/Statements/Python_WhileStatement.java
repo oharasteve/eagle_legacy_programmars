@@ -3,18 +3,41 @@
 
 package com.eagle.programmar.Python.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.BuiltInEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Python_List;
+import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
+import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
+import com.eagle.programmar.Python.Expressions.Python_Literals;
+import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Logical_Or_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Logical_Or_Expression.Python_Or_Operation;
+import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Relational_Expression.Python_Relational_Operator;
+import com.eagle.programmar.Python.Expressions.Python_Relational_Expression.Python_Relational_Operator.Python_IN_Operator;
+import com.eagle.programmar.Python.Functions.Python_Locals_Function;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
@@ -76,5 +99,83 @@ public class Python_WhileStatement extends TokenSequence implements AbstractStat
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	public static Python_WhileStatement createDoUntil(ArrayList<Python_Statement> actions,
+			Python_Expression untilExpression, AbstractToken source)
+	{
+		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
+		
+		Python_Parenthesized_Expression parensExpr = new Python_Parenthesized_Expression();
+		parensExpr.leftParen = new PunctuationLeftParen();
+		parensExpr.list = new Python_List();
+		parensExpr.list.expr = untilExpression;
+		parensExpr.rightParen = new PunctuationRightParen();
+		
+		Python_Logical_Not_Expression notExpr = new Python_Logical_Not_Expression();
+		notExpr.expr = Python_Generator.wrapExpression(parensExpr);
+		notExpr.NOT = new Python_Keyword("not");
+		
+		Python_Literals lits = Python_Literals.generateExpression(oddName, null);
+		Python_Locals_Function localsFn = new Python_Locals_Function();
+		localsFn.LOCALS = new Python_KeywordChoice("locals");
+		Python_IN_Operator inOper = new Python_IN_Operator();
+		inOper.NOT = new Python_Keyword("not");
+		inOper.NOT.setPresent(true);
+		inOper.IN = new Python_Keyword("in");
+		
+		Python_Relational_Expression inExpr = new Python_Relational_Expression();
+		inExpr.left = Python_Generator.wrapExpression(lits);
+		inExpr.right = Python_Generator.wrapExpression(localsFn);
+		inExpr.relOp = new Python_Relational_Operator();
+		inExpr.relOp.setWhich(inOper);
+		
+		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
+		orExpr.left = Python_Generator.wrapExpression(inExpr);
+		Python_Keyword OR = new Python_Keyword("or");
+		orExpr.operator = new Python_Or_Operation();
+		orExpr.operator.setWhich(OR);
+		orExpr.right = Python_Generator.wrapExpression(notExpr);
+		
+		Python_Expression whileCond = Python_Generator.wrapExpression(orExpr);
+		
+		Python_BuiltIn built = new Python_BuiltIn();
+		Python_Expression trueExpr = built.generateBuiltIn(BuiltInEnum.TRUE, null);
+		Python_ExpressionStatement asgExprStmt = Python_Assignment.generateAssignment(
+				oddName, null, AssignmentEnum.EQUALS, trueExpr, null, source);
+		Python_Statement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
+		
+		actions.add(0, asgStmt);	// Destructive. Is that ok?
+		Python_WhileStatement whileStmt = Python_WhileStatement.createWhile(actions, whileCond, source);
+		return whileStmt;
+	}
+	
+	public static Python_WhileStatement createWhile(ArrayList<Python_Statement> actions, Python_Expression whileExpression,
+			AbstractToken source)
+	{
+		Python_WhileStatement whileStmt = new Python_WhileStatement();
+		whileStmt.colon = new PunctuationColon();
+
+		whileStmt.condition = whileExpression;
+		whileStmt.statements = new Python_StatementBlock();
+		Python_MultilineStatement multi = new Python_MultilineStatement();
+		multi.statements = new TokenList<Python_Statement>();
+		whileStmt.statements.setWhich(multi);
+
+		for (Python_Statement action : actions)
+		{
+			multi.statements.addToken(action);
+
+			// If the parent block gets the 'while' as the parent, line numbers in the
+			// side-by-side
+			// report will pick up the 'while' instead of the first statement.
+			if (whileStmt.getTransformationSource() == null)
+			{
+				whileStmt.setTransformationSource(action.getTransformationSource());
+			}
+		}
+
+		whileStmt.setTransformationSource(source);
+		return whileStmt;
 	}
 }
