@@ -4,15 +4,18 @@
 package com.eagle.programmar.CSharp;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalAndExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalNotExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalOrExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_MethodInvocation;
 import com.eagle.programmar.CSharp.Expressions.CSharp_MultiplicativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_NegativeExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
@@ -36,6 +39,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 
 public class CSharp_Generator extends EagleGenerator
 {
@@ -315,6 +319,22 @@ public class CSharp_Generator extends EagleGenerator
 	{
 		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
 		return varExp.generateVarExpr(name, (CSharp_Expression) subscript, source);
+	}
+	
+	@Override
+	public CSharp_Expression newClassCreation(AbstractType type,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
+		return creat.generateCreation((CSharp_Type) type, args, source);
+	}
+	
+	@Override
+	public CSharp_Expression newMethodInvocation(AbstractVariable var,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		CSharp_MethodInvocation creat = new CSharp_MethodInvocation();
+		return creat.generateInvocation((CSharp_Variable) var, args, source);
 	}
 	
 	// ================ Terminals ================

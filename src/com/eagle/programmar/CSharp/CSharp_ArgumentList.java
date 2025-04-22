@@ -3,9 +3,13 @@
 
 package com.eagle.programmar.CSharp;
 
+import java.util.Collection;
+
+import com.eagle.programmar.CSharp.CSharp_Argument.CSharp_ArgumentOut;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class CSharp_ArgumentList extends TokenSequence
@@ -19,5 +23,37 @@ public class CSharp_ArgumentList extends TokenSequence
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT CSharp_Argument arg;
 		public @S(30) @OPT TokenList<CSharp_Comment> comments;
+	}
+	
+	public static CSharp_ArgumentList createArgumentList(Collection<AbstractExpression> args)
+	{
+		if (args == null || args.size() == 0) return null;
+
+		CSharp_ArgumentList argList = new CSharp_ArgumentList();
+		boolean first = true;
+		for (AbstractExpression arg0 : args)
+		{
+			CSharp_Argument arg = new CSharp_Argument();
+			CSharp_ArgumentOut out = new CSharp_ArgumentOut();
+			out.arg = (CSharp_Expression) arg0;
+			arg.setWhich(out);
+
+			if (first)
+			{
+				first = false;
+				argList.arg = arg;
+				argList.arg.setPresent(true);
+			}
+			else
+			{
+				CSharp_MoreArguments more = new CSharp_MoreArguments();
+				more.comma = new PunctuationComma();
+				more.arg = arg;
+				more.arg.setPresent(true);
+				if (argList.moreArgs == null) argList.moreArgs = new TokenList<CSharp_MoreArguments>();
+				argList.moreArgs.addToken(more);
+			}
+		}
+		return argList;
 	}
 }

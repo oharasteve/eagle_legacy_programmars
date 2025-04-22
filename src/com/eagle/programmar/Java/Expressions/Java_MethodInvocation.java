@@ -3,11 +3,15 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import java.util.Collection;
+
+import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_ArgumentList;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Method;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
@@ -18,10 +22,12 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Java_MethodInvocation extends PrimaryOperator implements EagleRunnableWithResult
+public class Java_MethodInvocation extends PrimaryOperator implements EagleRunnableWithResult,
+		Eagle_Generate_MethodInvocation<Java_Expression, Java_Variable>
 {
 	public @S(10) Java_Variable methodName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -118,5 +124,20 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 			throw new RuntimeException("Unable to call method " + methodName);
 		}
 		return result;
+	}
+	
+	@Override
+	public Java_Expression generateInvocation(Java_Variable var,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		this.methodName = new Java_Variable();
+		this.methodName.firstId = var.firstId;
+		this.leftParen = new PunctuationLeftParen();
+		this.argList = Java_ArgumentList.createArgumentList(args);
+		if (args != null) this.argList.setPresent(true);
+		this.rightParen = new PunctuationRightParen();
+
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

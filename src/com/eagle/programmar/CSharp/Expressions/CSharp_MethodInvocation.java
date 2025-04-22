@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import java.util.Collection;
+
+import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -11,6 +14,7 @@ import com.eagle.programmar.CSharp.CSharp_Argument;
 import com.eagle.programmar.CSharp.CSharp_Argument.CSharp_ArgumentOut;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Method;
 import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodParameter;
 import com.eagle.programmar.CSharp.CSharp_MethodImplementation;
@@ -21,10 +25,13 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRunnable
+public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRunnable,
+		Eagle_Generate_MethodInvocation<CSharp_Expression, CSharp_Variable>
+
 {
 	public @S(10) CSharp_Variable methodName;
 	public @S(20) @OPT CSharp_GenericType generic;
@@ -116,5 +123,20 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 		{
 			throw new RuntimeException("Unable to call method " + methodName);
 		}
+	}
+	
+	@Override
+	public CSharp_Expression generateInvocation(CSharp_Variable var,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		this.methodName = new CSharp_Variable();
+		this.methodName.firstId = var.firstId;
+		this.leftParen = new PunctuationLeftParen();
+		this.argList = CSharp_ArgumentList.createArgumentList(args);
+		if (args != null) this.argList.setPresent(true);
+		this.rightParen = new PunctuationRightParen();
+
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

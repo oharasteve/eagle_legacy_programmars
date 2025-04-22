@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
@@ -14,6 +15,7 @@ import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
+import com.eagle.programmar.Python.Expressions.Python_Function_Call;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.programmar.Python.Expressions.Python_Logical_And_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
@@ -41,6 +43,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Python_Generator extends EagleGenerator
@@ -325,6 +328,21 @@ public class Python_Generator extends EagleGenerator
 	{
 		Python_VariableExpression varExp = new Python_VariableExpression();
 		return varExp.generateVarExpr(name, (Python_Expression) subscript, source);
+	}
+	
+	@Override
+	public Python_Expression newClassCreation(AbstractType type,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
+	}
+	
+	@Override
+	public Python_Expression newMethodInvocation(AbstractVariable var,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		Python_Function_Call creat = new Python_Function_Call();
+		return creat.generateInvocation((Python_Variable) var, args, source);
 	}
 	
 	// ================ Terminals ================

@@ -1,12 +1,17 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Apr 1, 2024
 
-package com.eagle.programmar.Python.Functions;
+package com.eagle.programmar.Python.Expressions;
 
+import java.util.Collection;
+
+import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.Python.Python_Argument_List;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Params.Python_Parameter;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Variable;
@@ -14,13 +19,16 @@ import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Symbols.Python_Variable_Definition;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_Function_Call extends PrimaryOperator implements EagleRunnable
+public class Python_Function_Call extends PrimaryOperator implements EagleRunnable,
+		Eagle_Generate_MethodInvocation<Python_Expression, Python_Variable>
 {
 	public @S(10) Python_Variable fnName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -91,5 +99,27 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func.header);
+	}
+	
+	public Python_Expression generateInvocation(Python_Variable var,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		this.leftParen = new PunctuationLeftParen();
+		this.leftParen.setPresent(true);
+		this.rightParen = new PunctuationRightParen();
+		this.rightParen.setPresent(true);
+		AbstractToken which = var.var.getWhich();
+		if (which instanceof Python_Identifier_Reference)
+		{
+			String id = ((Python_Identifier_Reference) which).getValue();
+			if (id.indexOf('.') < 0) id = "self." + id;
+			this.fnName = Python_Variable.newVariable(id);
+			this.argList = Python_Argument_List.createArgumentList(args);
+		}
+		else
+			throw new RuntimeException("Expected an Identifier, not " + which);
+
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

@@ -4,6 +4,7 @@
 package com.eagle.programmar.Java;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
@@ -11,9 +12,11 @@ import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
+import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalAndExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalNotExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalOrExpression;
+import com.eagle.programmar.Java.Expressions.Java_MethodInvocation;
 import com.eagle.programmar.Java.Expressions.Java_MultiplicativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_NegativeExpression;
 import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
@@ -37,6 +40,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 
 public class Java_Generator extends EagleGenerator
 {
@@ -321,6 +325,22 @@ public class Java_Generator extends EagleGenerator
 		return varExp.generateVarExpr(name, (Java_Expression) subscript, source);
 	}
 	
+	@Override
+	public Java_Expression newClassCreation(AbstractType type,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		Java_ClassCreationExpression creat = new Java_ClassCreationExpression();
+		return creat.generateCreation((Java_Type) type, args, source);
+	}
+	
+	@Override
+	public Java_Expression newMethodInvocation(AbstractVariable var,
+			Collection<AbstractExpression> args, AbstractToken source)
+	{
+		Java_MethodInvocation creat = new Java_MethodInvocation();
+		return creat.generateInvocation((Java_Variable) var, args, source);
+	}
+
 	// ================ Terminals ================
 
 	@Override
