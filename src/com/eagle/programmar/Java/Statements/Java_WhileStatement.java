@@ -5,11 +5,13 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
@@ -25,7 +27,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_WhileStatement extends TokenSequence implements
-		AbstractStatement, EagleRunnableWithResult
+		AbstractStatement, EagleRunnableWithResult,
+				Eagle_Generate_While<Java_Statement, Java_Expression>
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.12") Java_Keyword WHILE = new Java_Keyword("while");
@@ -75,13 +78,12 @@ public class Java_WhileStatement extends TokenSequence implements
 		return result;
 	}
 	
-	public static Java_WhileStatement createWhile(ArrayList<Java_Statement> actions, Java_Expression whileExpression,
-			AbstractToken source)
+	@Override
+	public Java_Statement generateWhile(Java_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
-		Java_WhileStatement whileStmt = new Java_WhileStatement();
-
-		whileStmt.leftParen = new PunctuationLeftParen();
-		whileStmt.rightParen = new PunctuationRightParen();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
 
 		Java_StatementBlock body = new Java_StatementBlock();
 		body.statements = new TokenList<Java_StatementOrComment>();
@@ -89,26 +91,27 @@ public class Java_WhileStatement extends TokenSequence implements
 		body.rightBrace = new PunctuationRightBrace();
 
 		Java_Statement javaStatement = new Java_Statement();
-		whileStmt.whileStatement = javaStatement;
+		this.whileStatement = javaStatement;
 		javaStatement.setWhich(body);
 
-		whileStmt.condition = whileExpression;
+		this.condition = condition;
 
-		for (Java_Statement action : actions)
+		for (AbstractStatement action : actions)
 		{
+			Java_Statement stmt = (Java_Statement) action;
 			Java_StatementOrComment wrapper = new Java_StatementOrComment();
-			wrapper.setWhich(action);
+			wrapper.setWhich(stmt);
 			body.statements.addToken(wrapper);
 
 			// If the parent block gets the 'while' as the parent, line numbers in the
 			// side-by-side report will pick up the 'while', not the first statement.
 			if (javaStatement.getTransformationSource() == null)
 			{
-				javaStatement.setTransformationSource(action.getTransformationSource());
+				javaStatement.setTransformationSource(stmt.getTransformationSource());
 			}
 		}
 
-		whileStmt.setTransformationSource(source);
-		return whileStmt;
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
 	}
 }

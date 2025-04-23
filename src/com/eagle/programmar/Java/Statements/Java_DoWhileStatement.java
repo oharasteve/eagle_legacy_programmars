@@ -5,7 +5,9 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.Statements.Eagle_Generate_DoUntil;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
@@ -25,7 +27,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_DoStatement extends TokenSequence implements AbstractStatement, EagleScopeInterface
+public class Java_DoWhileStatement extends TokenSequence
+		implements AbstractStatement, EagleScopeInterface,
+				Eagle_Generate_DoUntil<Java_Statement, Java_Expression>
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.13") Java_Keyword DO = new Java_Keyword("do");
@@ -44,15 +48,14 @@ public class Java_DoStatement extends TokenSequence implements AbstractStatement
 	{
 		return _scope;
 	}
-	
-	public static Java_DoStatement createDoUntil(ArrayList<Java_Statement> actions,
-			Java_Expression whileExpression, AbstractToken source)
+
+	@Override
+	public Java_Statement generateDoUntil(Java_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
-		Java_DoStatement doStmt = new Java_DoStatement();
-		doStmt.leftParen = new PunctuationLeftParen();
-		doStmt.rightParen = new PunctuationRightParen();
-		doStmt.semicolon = new PunctuationSemicolon();
-		doStmt.setTransformationSource(source);
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
+		this.semicolon = new PunctuationSemicolon();
 
 		Java_StatementBlock body = new Java_StatementBlock();
 		body.statements = new TokenList<Java_StatementOrComment>();
@@ -60,20 +63,21 @@ public class Java_DoStatement extends TokenSequence implements AbstractStatement
 		body.rightBrace = new PunctuationRightBrace();
 
 		Java_Statement javaStatement = new Java_Statement();
-		doStmt.doStatement = javaStatement;
+		this.doStatement = javaStatement;
 		javaStatement.setWhich(body);
 
 		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
-		Java_Expression notExpr = not.generateLogicalNot(whileExpression, source); 
-		doStmt.condition = notExpr;
+		Java_Expression notExpr = not.generateLogicalNot(condition, source); 
+		this.condition = notExpr;
 
-		for (Java_Statement action : actions)
+		for (AbstractStatement action : actions)
 		{
 			Java_StatementOrComment wrapper = new Java_StatementOrComment();
-			wrapper.setWhich(action);
+			wrapper.setWhich((Java_Statement) action);
 			body.statements.addToken(wrapper);
 		}
 
-		return doStmt;
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
 	}
 }

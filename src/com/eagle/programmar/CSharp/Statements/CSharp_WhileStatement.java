@@ -5,11 +5,13 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
@@ -24,7 +26,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				Eagle_Generate_While<CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.12") CSharp_Keyword WHILE = new CSharp_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -73,13 +76,12 @@ public class CSharp_WhileStatement extends TokenSequence
 		return result;
 	}
 	
-	public static CSharp_WhileStatement createWhile(ArrayList<CSharp_Statement> actions,
-			CSharp_Expression whileExpression, AbstractToken source)
+	@Override
+	public CSharp_Statement generateWhile(CSharp_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
-		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
-
-		whileStmt.leftParen = new PunctuationLeftParen();
-		whileStmt.rightParen = new PunctuationRightParen();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
 
 		CSharp_StatementBlock body = new CSharp_StatementBlock();
 		body.statements = new TokenList<CSharp_StatementOrComment>();
@@ -87,27 +89,27 @@ public class CSharp_WhileStatement extends TokenSequence
 		body.rightBrace = new PunctuationRightBrace();
 
 		CSharp_Statement csStatement = new CSharp_Statement();
-		whileStmt.whileStatement = csStatement;
+		this.whileStatement = csStatement;
 		csStatement.setWhich(body);
 
-		whileStmt.condition = whileExpression;
+		this.condition = condition;
 
-		for (CSharp_Statement action : actions)
+		for (AbstractStatement action : actions)
 		{
+			CSharp_Statement stmt = (CSharp_Statement) action;
 			CSharp_StatementOrComment wrapper = new CSharp_StatementOrComment();
-			wrapper.setWhich(action);
+			wrapper.setWhich(stmt);
 			body.statements.addToken(wrapper);
 
 			// If the parent block gets the 'while' as the parent, line numbers in the
-			// side-by-side
-			// report will pick up the 'while' instead of the first statement.
+			// side-by-side will pick up the 'while' instead of the first statement.
 			if (csStatement.getTransformationSource() == null)
 			{
-				csStatement.setTransformationSource(action.getTransformationSource());
+				csStatement.setTransformationSource(stmt.getTransformationSource());
 			}
 		}
 
-		whileStmt.setTransformationSource(source);
-		return whileStmt;
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(this);
 	}
 }

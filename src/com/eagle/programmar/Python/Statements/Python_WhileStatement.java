@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.EagleGenerator.BuiltInEnum;
+import com.eagle.generate.Statements.Eagle_Generate_DoUntil;
+import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -39,7 +41,10 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Python_WhileStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				Eagle_Generate_While<Python_Statement, Python_Expression>,
+				Eagle_Generate_DoUntil<Python_Statement, Python_Expression>
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");
@@ -101,15 +106,16 @@ public class Python_WhileStatement extends TokenSequence implements AbstractStat
 		return result;
 	}
 
-	public static Python_WhileStatement createDoUntil(ArrayList<Python_Statement> actions,
-			Python_Expression untilExpression, AbstractToken source)
+	@Override
+	public Python_Statement generateDoUntil(Python_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
 		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
 		
 		Python_Parenthesized_Expression parensExpr = new Python_Parenthesized_Expression();
 		parensExpr.leftParen = new PunctuationLeftParen();
 		parensExpr.list = new Python_List();
-		parensExpr.list.expr = untilExpression;
+		parensExpr.list.expr = condition;
 		parensExpr.rightParen = new PunctuationRightParen();
 		
 		Python_Logical_Not_Expression notExpr = new Python_Logical_Not_Expression();
@@ -146,36 +152,34 @@ public class Python_WhileStatement extends TokenSequence implements AbstractStat
 		Python_Statement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
 		
 		actions.add(0, asgStmt);	// Destructive. Is that ok?
-		Python_WhileStatement whileStmt = Python_WhileStatement.createWhile(actions, whileCond, source);
-		return whileStmt;
+		return generateWhile(whileCond, actions, source);
 	}
 	
-	public static Python_WhileStatement createWhile(ArrayList<Python_Statement> actions, Python_Expression whileExpression,
-			AbstractToken source)
+	public Python_Statement generateWhile(Python_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
-		Python_WhileStatement whileStmt = new Python_WhileStatement();
-		whileStmt.colon = new PunctuationColon();
+		this.colon = new PunctuationColon();
 
-		whileStmt.condition = whileExpression;
-		whileStmt.statements = new Python_StatementBlock();
+		this.condition = condition;
+		this.statements = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_Statement>();
-		whileStmt.statements.setWhich(multi);
+		this.statements.setWhich(multi);
 
-		for (Python_Statement action : actions)
+		for (AbstractStatement action : actions)
 		{
-			multi.statements.addToken(action);
+			Python_Statement stmt = (Python_Statement) action;
+			multi.statements.addToken(stmt);
 
 			// If the parent block gets the 'while' as the parent, line numbers in the
-			// side-by-side
-			// report will pick up the 'while' instead of the first statement.
-			if (whileStmt.getTransformationSource() == null)
+			// side-by-side will pick up the 'while' instead of the first statement.
+			if (this.getTransformationSource() == null)
 			{
-				whileStmt.setTransformationSource(action.getTransformationSource());
+				this.setTransformationSource(stmt.getTransformationSource());
 			}
 		}
 
-		whileStmt.setTransformationSource(source);
-		return whileStmt;
+		this.setTransformationSource(source);
+		return Python_Generator.wrapStatement(this);
 	}
 }

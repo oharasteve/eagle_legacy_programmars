@@ -30,6 +30,7 @@ import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
@@ -171,6 +172,14 @@ public class CSharp_Generator extends EagleGenerator
 		return wrapStatement(CSharp_PrintStatement.newPrintStatement(line, source));
 	}
 
+	@Override
+	public CSharp_Statement newWhileStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
+		return whileStmt.generateWhile((CSharp_Expression) condition, actions, source);
+	}
+	
 	// ================ Expressions ================
 	
 	@Override

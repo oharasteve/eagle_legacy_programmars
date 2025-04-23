@@ -31,6 +31,7 @@ import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_PrintStatement;
+import com.eagle.programmar.Java.Statements.Java_WhileStatement;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
@@ -172,6 +173,14 @@ public class Java_Generator extends EagleGenerator
 		return wrapStatement(Java_PrintStatement.newPrintStatement(line, source));
 	}
 
+	@Override
+	public Java_Statement newWhileStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Java_WhileStatement whileStmt = new Java_WhileStatement();
+		return whileStmt.generateWhile((Java_Expression) condition, actions, source);
+	}
+	
 	// ================ Expressions ================
 	
 	@Override

@@ -33,6 +33,7 @@ import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
+import com.eagle.programmar.Python.Statements.Python_WhileStatement;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
@@ -179,6 +180,14 @@ public class Python_Generator extends EagleGenerator
 	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
 		return wrapStatement(Python_PrintStatement.newPrintStatement(line, source));
+	}
+	
+	@Override
+	public Python_Statement newWhileStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Python_WhileStatement whileStmt = new Python_WhileStatement();
+		return whileStmt.generateWhile((Python_Expression) condition, actions, source);
 	}
 
 	// ================ Expressions ================
