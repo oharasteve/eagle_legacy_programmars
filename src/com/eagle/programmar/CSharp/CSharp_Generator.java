@@ -185,7 +185,7 @@ public class CSharp_Generator extends EagleGenerator
 			AbstractToken source)
 	{
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.createForLoop1((CSharp_Expression) init, (CSharp_Expression) term,
+		return forStmt.generateForLoop1((CSharp_Expression) init, (CSharp_Expression) term,
 				(CSharp_Expression) incr, (CSharp_Statement) action, source);
 	}
 
@@ -195,7 +195,7 @@ public class CSharp_Generator extends EagleGenerator
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.createForLoop((CSharp_Expression) init, (CSharp_Expression) term,
+		return forStmt.generateForLoop((CSharp_Expression) init, (CSharp_Expression) term,
 				(CSharp_Expression) incr, actions, source);
 	}
 

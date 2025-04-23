@@ -5,7 +5,11 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.IncrementEnum;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
+import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -19,6 +23,11 @@ import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
+import com.eagle.programmar.Java.Java_Variable;
+import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
+import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
+import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
+import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -40,7 +49,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-			Eagle_Generate_ForLoop<Java_Statement, Java_Expression>
+				Eagle_Generate_ForLoop<Java_Statement, Java_Expression>,
+				Eagle_Generate_ForRange<Java_Statement, Java_Expression>
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
@@ -142,7 +152,7 @@ public class Java_ForStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement createForLoop1(Java_Expression initExpression,
+	public Java_Statement generateForLoop1(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			Java_Statement action, AbstractToken source)
 	{
@@ -176,7 +186,7 @@ public class Java_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public Java_Statement createForLoop(Java_Expression initExpression,
+	public Java_Statement generateForLoop(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
@@ -191,7 +201,81 @@ public class Java_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return createForLoop1(initExpression, condExpression, incrExpression,
+		return generateForLoop1(initExpression, condExpression, incrExpression,
 				Java_Generator.wrapStatement(block), source);
+	}
+
+	@Override
+	public Java_Statement generateForRange1(String varName, Java_Expression fromExpression,
+			Java_Expression toExpression, Java_Expression delta,
+			Java_Statement action, AbstractToken source)
+	{
+		Java_VariableExpression tempVar = new Java_VariableExpression();
+		Java_Expression varExpr = tempVar.generateVarExpr(varName, null, null);
+		
+		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
+		Java_Expression initExpr = asgExpr.generateAssignment(varExpr, AssignmentEnum.EQUALS,
+				toExpression, source);
+
+		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		Java_ForWhat forWhat = new Java_ForWhat();
+		forWhat.setPresent(true);
+		forWhat.setWhich(initExpr);
+		initializer.addPrimaryElement(forWhat);
+
+		Java_RelationalExpression relExpr = new Java_RelationalExpression();
+		relExpr.generateRelational(varExpr, RelationalEnum.LESS_EQUALS, toExpression, toExpression);
+		Java_Expression untilCondition = Java_Generator.wrapExpression(relExpr);
+
+		Java_Expression loopTest = untilCondition;
+				
+		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
+		Java_Expression loopIncr;
+		if (delta == null)
+		{
+			Java_Variable var = Java_Variable.newVariable(varName);
+			Java_PostIncrementExpression postExpr = new Java_PostIncrementExpression();
+			loopIncr = postExpr.generateIncrement(var, IncrementEnum.INCREMENT, source);
+		}
+		else
+		{
+			Java_AssignmentExpression asgExp2 = new Java_AssignmentExpression();
+			loopIncr = asgExp2.generateAssignment(varExpr, AssignmentEnum.PLUS_EQUALS, delta, source);
+		}
+		loopIncrements.addPrimaryElement(loopIncr);
+
+		Java_ForStatement forStmt = new Java_ForStatement();
+		forStmt.leftParen = new PunctuationLeftParen();
+		forStmt.init.what = initializer;
+		forStmt.semicolon1 = new PunctuationSemicolon();
+		forStmt.terminateCondition = loopTest;
+		forStmt.terminateCondition.setPresent(true);
+		forStmt.semicolon2 = new PunctuationSemicolon();
+		forStmt.increments = loopIncrements;
+		forStmt.rightParen = new PunctuationRightParen();
+		forStmt.action = action;
+		
+		forStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(forStmt);
+	}
+	
+	@Override
+	public Java_Statement generateForRange(String varName, Java_Expression fromExpression,
+			Java_Expression toExpression, Java_Expression delta,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Java_StatementBlock block = new Java_StatementBlock();
+		block.leftBrace = new PunctuationLeftBrace();
+		block.rightBrace = new PunctuationRightBrace();
+		block.statements = new TokenList<Java_StatementOrComment>();
+		for (AbstractStatement stmt : actions)
+		{
+			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
+			stmtOrComment.setWhich((Java_Statement) stmt);
+			block.statements.addToken(stmtOrComment);
+		}
+		
+		return generateForRange1(varName, fromExpression, toExpression,
+				delta, Java_Generator.wrapStatement(block), source);
 	}
 }

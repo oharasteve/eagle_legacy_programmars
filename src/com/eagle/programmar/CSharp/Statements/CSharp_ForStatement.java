@@ -5,7 +5,11 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.IncrementEnum;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
+import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -17,6 +21,11 @@ import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.CSharp_Syntax;
 import com.eagle.programmar.CSharp.CSharp_Type;
+import com.eagle.programmar.CSharp.CSharp_Variable;
+import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_PostIncrementExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.scope.EagleScope;
@@ -37,7 +46,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_ForStatement extends TokenSequence
 			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-					Eagle_Generate_ForLoop<CSharp_Statement, CSharp_Expression>
+					Eagle_Generate_ForLoop<CSharp_Statement, CSharp_Expression>,
+					Eagle_Generate_ForRange<CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -130,7 +140,7 @@ public class CSharp_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public CSharp_Statement createForLoop1(CSharp_Expression initExpression,
+	public CSharp_Statement generateForLoop1(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			CSharp_Statement action, AbstractToken source)
 	{
@@ -159,7 +169,7 @@ public class CSharp_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public CSharp_Statement createForLoop(CSharp_Expression initExpression,
+	public CSharp_Statement generateForLoop(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
@@ -174,7 +184,81 @@ public class CSharp_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return createForLoop1(initExpression, condExpression, incrExpression,
+		return generateForLoop1(initExpression, condExpression, incrExpression,
 				CSharp_Generator.wrapStatement(block), source);
+	}
+	
+	@Override
+	public CSharp_Statement generateForRange1(String varName, CSharp_Expression fromExpression,
+			CSharp_Expression toExpression, CSharp_Expression delta,
+			CSharp_Statement action, AbstractToken source)
+	{
+		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
+		CSharp_Expression varExpr = tempVar.generateVarExpr(varName, null, null);
+		
+		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
+		CSharp_Expression init = asgExpr.generateAssignment(varExpr, AssignmentEnum.EQUALS,
+				toExpression, source);
+
+		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
+		CSharp_ForWhat forWhat = new CSharp_ForWhat();
+		forWhat.setPresent(true);
+		forWhat.setWhich(init);
+		initializer.addPrimaryElement(forWhat);
+
+		CSharp_RelationalExpression relExpr = new CSharp_RelationalExpression();
+		relExpr.generateRelational(varExpr, RelationalEnum.LESS_EQUALS, toExpression, toExpression);
+		CSharp_Expression untilCondition = CSharp_Generator.wrapExpression(relExpr);
+
+		CSharp_Expression loopTest = untilCondition;
+				
+		SeparatedList<CSharp_Expression, PunctuationComma> loopIncrements = new SeparatedList<CSharp_Expression, PunctuationComma>();
+		CSharp_Expression loopIncr;
+		if (delta == null)
+		{
+			CSharp_Variable var = CSharp_Variable.newVariable(varName);
+			CSharp_PostIncrementExpression postExpr = new CSharp_PostIncrementExpression();
+			loopIncr = postExpr.generateIncrement(var, IncrementEnum.INCREMENT, source);
+		}
+		else
+		{
+			CSharp_AssignmentExpression asgExp2 = new CSharp_AssignmentExpression();
+			loopIncr = asgExp2.generateAssignment(varExpr, AssignmentEnum.PLUS_EQUALS, delta, source);
+		}
+		loopIncrements.addPrimaryElement(loopIncr);
+
+		CSharp_ForStatement forStmt = new CSharp_ForStatement();
+		forStmt.leftParen = new PunctuationLeftParen();
+		forStmt.what = initializer;
+		forStmt.semicolon1 = new PunctuationSemicolon();
+		forStmt.terminateCondition = loopTest;
+		forStmt.terminateCondition.setPresent(true);
+		forStmt.semicolon2 = new PunctuationSemicolon();
+		forStmt.increments = loopIncrements;
+		forStmt.rightParen = new PunctuationRightParen();
+		forStmt.action = action;
+		
+		forStmt.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(forStmt);
+	}
+	
+	@Override
+	public CSharp_Statement generateForRange(String varName, CSharp_Expression fromExpression,
+			CSharp_Expression toExpression, CSharp_Expression delta,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		CSharp_StatementBlock block = new CSharp_StatementBlock();
+		block.leftBrace = new PunctuationLeftBrace();
+		block.rightBrace = new PunctuationRightBrace();
+		block.statements = new TokenList<CSharp_StatementOrComment>();
+		for (AbstractStatement stmt : actions)
+		{
+			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
+			stmtOrComment.setWhich((CSharp_Statement) stmt);
+			block.statements.addToken(stmtOrComment);
+		}
+		
+		return generateForRange1(varName, fromExpression, toExpression,
+				delta, CSharp_Generator.wrapStatement(block), source);
 	}
 }

@@ -211,7 +211,7 @@ public class Python_Generator extends EagleGenerator
 			AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
-		return forStmt.createForLoop1((Python_Expression) init, (Python_Expression) term,
+		return forStmt.generateForLoop1((Python_Expression) init, (Python_Expression) term,
 				(Python_Expression) incr, (Python_Statement) action, source);
 	}
 
@@ -221,7 +221,7 @@ public class Python_Generator extends EagleGenerator
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
-		return forStmt.createForLoop((Python_Expression) init, (Python_Expression) term,
+		return forStmt.generateForLoop((Python_Expression) init, (Python_Expression) term,
 				(Python_Expression) incr, actions, source);
 	}
 

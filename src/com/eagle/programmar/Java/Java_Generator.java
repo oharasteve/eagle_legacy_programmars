@@ -203,7 +203,7 @@ public class Java_Generator extends EagleGenerator
 			AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.createForLoop1((Java_Expression) init, (Java_Expression) term,
+		return forStmt.generateForLoop1((Java_Expression) init, (Java_Expression) term,
 				(Java_Expression) incr, (Java_Statement) action, source);
 	}
 
@@ -213,7 +213,7 @@ public class Java_Generator extends EagleGenerator
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.createForLoop((Java_Expression) init, (Java_Expression) term,
+		return forStmt.generateForLoop((Java_Expression) init, (Java_Expression) term,
 				(Java_Expression) incr, actions, source);
 	}
 

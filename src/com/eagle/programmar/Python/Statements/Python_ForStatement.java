@@ -5,7 +5,9 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
 import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
+import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -13,29 +15,45 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_ExpressionList;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
+import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
+import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
+import com.eagle.programmar.Python.Python_VariableList.Python_VariableAndSubscript;
 import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
+import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Function_Call;
+import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_ForStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_ForLoop<Python_Statement, Python_Expression>
+				Eagle_Generate_ForLoop<Python_Statement, Python_Expression>,
+				Eagle_Generate_ForRange<Python_Statement, Python_Expression>
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -157,21 +175,135 @@ public class Python_ForStatement extends TokenSequence
 	}
 
 	@Override
-	public Python_Statement createForLoop1(Python_Expression initExpression,
+	public Python_Statement generateForLoop1(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			Python_Statement action, AbstractToken source)
 	{
 		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
 		actions.add(action);
-		return createForLoop(initExpression, condExpression, incrExpression,
+		return generateForLoop(initExpression, condExpression, incrExpression,
 				actions, source);
 	}
 	
 	@Override
-	public Python_Statement createForLoop(Python_Expression initExpression,
+	public Python_Statement generateForLoop(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
 		throw new RuntimeException("Need to implement");
+	}
+
+	@Override
+	public Python_Statement generateForRange1(String varName, Python_Expression fromExpression,
+			Python_Expression toExpression, Python_Expression delta,
+			Python_Statement action, AbstractToken source)
+	{
+		Python_ForStatement forStmt = new Python_ForStatement();
+		forStmt.colon = new PunctuationColon();
+		forStmt.forBlock = new Python_StatementBlock();
+
+		AbstractToken which = action.statementOrComment.getWhich();
+		if (which instanceof Python_SameLineStatement)
+		{
+			Python_SameLineStatement statementList = (Python_SameLineStatement) which;
+			Python_MultilineStatement multi = new Python_MultilineStatement();
+			multi.statements = new TokenList<Python_Statement>();
+			multi.eoln = new Python_EndOfLine();
+
+			Python_StatementBlock singleOrMulti = new Python_StatementBlock();
+			singleOrMulti.setWhich(multi);
+
+			Python_Statement stmt = new Python_Statement();
+			stmt.statementOrComment = new Python_StatementOrComment();
+			stmt.statementOrComment.setWhich(statementList);
+			multi.statements.addToken(stmt);
+			forStmt.forBlock = singleOrMulti;
+		}
+		else if (which instanceof Python_MultilineStatement)
+		{
+			Python_MultilineStatement multi = (Python_MultilineStatement) which;
+			forStmt.forBlock.setWhich(multi);
+		}
+		else
+			throw new RuntimeException("Need to implement");
+
+		forStmt.what = new Python_ForWhat();
+		Python_VariableList varList = new Python_VariableList();
+		forStmt.what.setWhich(varList);
+		varList.vars = new SeparatedList<Python_VariableOrList, PunctuationComma>();
+
+		Python_VariableOrList varOrList = new Python_VariableOrList();
+		Python_Variable var = Python_Variable.newVariable(varName);
+		SeparatedList<Python_VariableAndSubscript,PunctuationPeriod> vars =
+				new SeparatedList<Python_VariableAndSubscript,PunctuationPeriod>();
+		Python_VariableAndSubscript varSub = new Python_VariableAndSubscript();
+		varSub.variable = var;
+		vars.addPrimaryElement(varSub);
+		Python_Just_Var justVar = new Python_Just_Var();
+		justVar.variable = vars;
+		varOrList.setWhich(justVar);
+		varList.vars.addPrimaryElement(varOrList);
+
+		SeparatedList<Python_Expression, PunctuationComma> argList = new SeparatedList<Python_Expression, PunctuationComma>();
+		argList.addPrimaryElement(fromExpression);
+		
+		// range(3,6,1) generates 3,4,5
+		// range(6,3,-1) generates 6,5,4
+		// Need to add 1 if delta > 0 or delta = null, subtract 1 if delta < 0
+		AdditiveEnum oper = AdditiveEnum.PLUS;
+		if (delta != null)
+		{
+			AbstractToken whichDelta = delta.getWhich();
+			if (whichDelta instanceof Python_Number)
+			{
+				Python_Number num = (Python_Number) whichDelta; // It is still a string
+				if (num.getValue().trim().startsWith("-")) oper = AdditiveEnum.MINUS;
+			}
+			else
+			{
+				throw new RuntimeException("need to implement");
+			}
+		}
+
+		Python_Number one = new Python_Number();
+		Python_Expression oneExpr = Python_Generator.wrapExpression(one.generateNumber("1", null));
+		
+		Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
+		Python_Expression parenExpr = parens.generateParentheses(toExpression, null);
+		
+		Python_Additive_Expression add = new Python_Additive_Expression();
+		Python_Expression addExpr = add.generateAdditive(parenExpr, oper, oneExpr, null);
+		argList.addSecondaryElement(new PunctuationComma());
+		argList.addPrimaryElement(addExpr);
+
+		if (delta != null)
+		{
+			argList.addSecondaryElement(new PunctuationComma());
+			argList.addPrimaryElement(delta);
+		}
+
+		Python_Function_Call fnCall = new Python_Function_Call();
+		fnCall.fnName = Python_Variable.newVariable("range");
+		fnCall.leftParen = new PunctuationLeftParen();
+		fnCall.argList = argList;
+		fnCall.rightParen = new PunctuationRightParen();
+
+		Python_Expression rangeExpr = new Python_Expression();
+		rangeExpr.setWhich(fnCall);
+
+		forStmt.expressionList = new Python_ExpressionList();
+		forStmt.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
+		forStmt.expressionList.expressions.addPrimaryElement(rangeExpr);
+
+		forStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(forStmt);
+	}
+	
+	@Override
+	public Python_Statement generateForRange(String varName, Python_Expression fromExpression,
+			Python_Expression toExpression, Python_Expression delta,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		throw new RuntimeException("need to implement");
 	}
 }
