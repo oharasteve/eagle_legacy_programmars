@@ -79,20 +79,29 @@ public class Java_WhileStatement extends TokenSequence implements
 	}
 	
 	@Override
-	public Java_Statement generateWhile(Java_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Java_Statement generateWhile1(Java_Expression condition,
+			Java_Statement action, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
 
+		this.whileStatement = action;
+		this.condition = condition;
+
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
+	}
+
+	@Override
+	public Java_Statement generateWhile(Java_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
 		Java_StatementBlock body = new Java_StatementBlock();
 		body.statements = new TokenList<Java_StatementOrComment>();
 		body.leftBrace = new PunctuationLeftBrace();
 		body.rightBrace = new PunctuationRightBrace();
 
 		Java_Statement javaStatement = new Java_Statement();
-		this.whileStatement = javaStatement;
-		javaStatement.setWhich(body);
 
 		this.condition = condition;
 
@@ -111,7 +120,6 @@ public class Java_WhileStatement extends TokenSequence implements
 			}
 		}
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		return generateWhile1(condition, Java_Generator.wrapStatement(body), source);
 	}
 }

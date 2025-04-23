@@ -26,6 +26,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
+import com.eagle.programmar.CSharp.Statements.CSharp_DoWhileStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
@@ -90,6 +91,7 @@ public class CSharp_Generator extends EagleGenerator
 	
 	public static CSharp_Expression wrapExpression(AbstractToken token)
 	{
+		if (token == null) return null;
 		CSharp_Expression wrapper = new CSharp_Expression();
 		wrapper.setWhich(token);
 		return wrapper;
@@ -148,6 +150,23 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
+	public CSharp_Statement newDoUntilStatement1(AbstractExpression condition,
+			AbstractStatement action, AbstractToken source)
+	{
+		CSharp_DoWhileStatement doStmt = new CSharp_DoWhileStatement();
+		return doStmt.generateDoUntil1((CSharp_Expression) condition,
+				(CSharp_Statement) action, source);
+	}
+
+	@Override
+	public CSharp_Statement newDoUntilStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		CSharp_DoWhileStatement doStmt = new CSharp_DoWhileStatement();
+		return doStmt.generateDoUntil((CSharp_Expression) condition, actions, source);
+	}
+
+	@Override
 	public AbstractStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
 		return wrapStatement(CSharp_ExpressionStatement.newExpressionStatement(expr, source));
@@ -160,16 +179,36 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
+	public CSharp_Statement newIfStatement1(AbstractExpression condition,
+			AbstractStatement ifTrue, AbstractStatement ifFalse, AbstractToken source)
+	{
+		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
+		return ifStmt.generateIfElse1((CSharp_Expression) condition,
+				(CSharp_Statement) ifTrue, (CSharp_Statement) ifFalse, source);
+	}
+	
+	@Override
+	public CSharp_Statement newIfStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> ifTrue,
 			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
 	{
-		return wrapStatement(CSharp_IfStatement.newIfStatement(condition, ifTrue, ifFalse, source));
+		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
+		return ifStmt.generateIfElse((CSharp_Expression) condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
 	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
 		return wrapStatement(CSharp_PrintStatement.newPrintStatement(line, source));
+	}
+
+	@Override
+	public CSharp_Statement newWhileStatement1(AbstractExpression condition,
+			AbstractStatement action, AbstractToken source)
+	{
+		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
+		return whileStmt.generateWhile1((CSharp_Expression) condition,
+				(CSharp_Statement) action, source);
 	}
 
 	@Override

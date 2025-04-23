@@ -50,8 +50,8 @@ public class Java_DoWhileStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement generateDoUntil(Java_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Java_Statement generateDoUntil1(Java_Expression condition,
+			Java_Statement action, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
@@ -62,13 +62,27 @@ public class Java_DoWhileStatement extends TokenSequence
 		body.leftBrace = new PunctuationLeftBrace();
 		body.rightBrace = new PunctuationRightBrace();
 
-		Java_Statement javaStatement = new Java_Statement();
-		this.doStatement = javaStatement;
-		javaStatement.setWhich(body);
+		this.doStatement = action;
 
 		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
 		Java_Expression notExpr = not.generateLogicalNot(condition, source); 
 		this.condition = notExpr;
+
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
+	}
+
+	@Override
+	public Java_Statement generateDoUntil(Java_Expression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Java_StatementBlock body = new Java_StatementBlock();
+		body.statements = new TokenList<Java_StatementOrComment>();
+		body.leftBrace = new PunctuationLeftBrace();
+		body.rightBrace = new PunctuationRightBrace();
+
+		Java_Statement javaStatement = new Java_Statement();
+		javaStatement.setWhich(body);
 
 		for (AbstractStatement action : actions)
 		{
@@ -77,7 +91,6 @@ public class Java_DoWhileStatement extends TokenSequence
 			body.statements.addToken(wrapper);
 		}
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		return generateDoUntil1(condition, Java_Generator.wrapStatement(javaStatement), source);
 	}
 }

@@ -5,10 +5,12 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
@@ -19,11 +21,12 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class Python_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Python_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				Eagle_Generate_IfElse<Python_Statement, Python_Expression>
 {
 	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;
@@ -123,17 +126,36 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 
 		return result;
 	}
+
+	@Override
+	public Python_Statement generateIfElse1(Python_Expression condition,
+			Python_Statement thenStatement,
+			Python_Statement elseStatement, AbstractToken source)
+	{
+		ArrayList<AbstractStatement> thens = new ArrayList<AbstractStatement>();
+		thens.add(thenStatement);
+		
+		ArrayList<AbstractStatement> elses = null;
+		if (elseStatement != null)
+		{
+			elses = new ArrayList<AbstractStatement>();
+			elses.add(elseStatement);
+		}
+
+		return generateIfElse(condition, thens, elses, source);
+	}
 	
-	public static Python_IfStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> thenStatements,
+	@Override
+	public Python_Statement generateIfElse(Python_Expression condition,
+			ArrayList<AbstractStatement> thenStatements,
 			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
 	{
-		Python_IfStatement ifStmt = new Python_IfStatement();
-		ifStmt.condition = (Python_Expression) condition;
-		ifStmt.colon = new PunctuationColon();
+		this.condition = (Python_Expression) condition;
+		this.colon = new PunctuationColon();
 
-		ifStmt.ifThenStatements = new Python_StatementBlock();
+		this.ifThenStatements = new Python_StatementBlock();
 		Python_MultilineStatement thenMulti = new Python_MultilineStatement();
-		ifStmt.ifThenStatements.setWhich(thenMulti);
+		this.ifThenStatements.setWhich(thenMulti);
 		thenMulti.statements = new TokenList<Python_Statement>();
 		for (AbstractStatement stmt : thenStatements)
 		{
@@ -142,12 +164,12 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 				
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			ifStmt.ifElse = new Python_IfElse();
-			ifStmt.ifElse.setPresent(true);
-			ifStmt.ifElse.colon = new PunctuationColon();
-			ifStmt.ifElse.ifElseStatements = new Python_StatementBlock();
+			this.ifElse = new Python_IfElse();
+			this.ifElse.setPresent(true);
+			this.ifElse.colon = new PunctuationColon();
+			this.ifElse.ifElseStatements = new Python_StatementBlock();
 			Python_MultilineStatement elseMulti = new Python_MultilineStatement();
-			ifStmt.ifElse.ifElseStatements.setWhich(elseMulti);
+			this.ifElse.ifElseStatements.setWhich(elseMulti);
 			elseMulti.statements = new TokenList<Python_Statement>();
 			for (AbstractStatement stmt : elseStatements)
 			{
@@ -155,7 +177,7 @@ public class Python_IfStatement extends TokenSequence implements AbstractStateme
 			}
 		}
 
-		ifStmt.setTransformationSource(source);
-		return ifStmt;
+		this.setTransformationSource(source);
+		return Python_Generator.wrapStatement(this);
 	}
 }

@@ -95,6 +95,7 @@ public class Python_Generator extends EagleGenerator
 	
 	public static Python_Statement wrapStatement(AbstractToken token)
 	{
+		if (token == null) return null;
 		Python_Simple_Statement simple = new Python_Simple_Statement();
 		simple.setWhich(token);
 		Python_SameLineStatement sameLine = new Python_SameLineStatement();
@@ -156,6 +157,23 @@ public class Python_Generator extends EagleGenerator
 	{
 		return wrapStatement(Python_Data.newDataDeclaration(name,size, type, initial, source));
 	}
+
+	@Override
+	public Python_Statement newDoUntilStatement1(AbstractExpression condition,
+			AbstractStatement action, AbstractToken source)
+	{
+		Python_WhileStatement doStmt = new Python_WhileStatement();
+		return doStmt.generateDoUntil1((Python_Expression) condition,
+				(Python_Statement) action, source);
+	}
+	
+	@Override
+	public Python_Statement newDoUntilStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Python_WhileStatement doStmt = new Python_WhileStatement();
+		return doStmt.generateDoUntil((Python_Expression) condition, actions, source);
+	}
 	
 	@Override
 	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
@@ -170,16 +188,35 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
+	public AbstractStatement newIfStatement1(AbstractExpression condition, AbstractStatement ifTrue,
+			AbstractStatement ifFalse, AbstractToken source)
+	{
+		Python_IfStatement ifStmt = new Python_IfStatement();
+		return ifStmt.generateIfElse1((Python_Expression) condition,
+				(Python_Statement) ifTrue,(Python_Statement) ifFalse, source);
+	}
+	
+	@Override
 	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
 			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
 	{
-		return wrapStatement(Python_IfStatement.newIfStatement(condition, ifTrue, ifFalse, source));
+		Python_IfStatement ifStmt = new Python_IfStatement();
+		return ifStmt.generateIfElse((Python_Expression) condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
 	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{
 		return wrapStatement(Python_PrintStatement.newPrintStatement(line, source));
+	}
+	
+	@Override
+	public Python_Statement newWhileStatement1(AbstractExpression condition,
+			AbstractStatement action, AbstractToken source)
+	{
+		Python_WhileStatement whileStmt = new Python_WhileStatement();
+		return whileStmt.generateWhile1((Python_Expression) condition,
+				(Python_Statement) action, source);
 	}
 	
 	@Override

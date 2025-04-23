@@ -27,6 +27,7 @@ import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
+import com.eagle.programmar.Java.Statements.Java_DoWhileStatement;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
@@ -98,6 +99,7 @@ public class Java_Generator extends EagleGenerator
 	
 	public static Java_Statement wrapStatement(AbstractToken token)
 	{
+		if (token == null) return null;
 		Java_Statement wrapper = new Java_Statement();
 		wrapper.setWhich(token);
 		return wrapper;
@@ -149,6 +151,23 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
+	public Java_Statement newDoUntilStatement1(AbstractExpression condition,
+			AbstractStatement action, AbstractToken source)
+	{
+		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
+		return doStmt.generateDoUntil1((Java_Expression) condition,
+				(Java_Statement) action, source);
+	}
+	
+	@Override
+	public Java_Statement newDoUntilStatement(AbstractExpression condition,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
+		return doStmt.generateDoUntil((Java_Expression) condition, actions, source);
+	}
+
+	@Override
 	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		return wrapStatement(Java_ExitStatement.newExitStatement(code, source));
@@ -161,10 +180,20 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
+	public AbstractStatement newIfStatement1(AbstractExpression condition,
+			AbstractStatement ifTrue, AbstractStatement ifFalse, AbstractToken source)
+	{
+		Java_IfStatement ifStmt = new Java_IfStatement();
+		return ifStmt.generateIfElse1((Java_Expression) condition,
+				(Java_Statement) ifTrue, (Java_Statement) ifFalse, source);
+	}
+	
+	@Override
 	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
 			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
 	{
-		return wrapStatement(Java_IfStatement.newIfStatement(condition, ifTrue, ifFalse, source));
+		Java_IfStatement ifStmt = new Java_IfStatement();
+		return ifStmt.generateIfElse((Java_Expression) condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
@@ -174,13 +203,22 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
+	public Java_Statement newWhileStatement1(AbstractExpression condition,
+			AbstractStatement action, AbstractToken source)
+	{
+		Java_WhileStatement whileStmt = new Java_WhileStatement();
+		return whileStmt.generateWhile1((Java_Expression) condition,
+				(Java_Statement) action, source);
+	}
+	
+	@Override
 	public Java_Statement newWhileStatement(AbstractExpression condition,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
 		Java_WhileStatement whileStmt = new Java_WhileStatement();
 		return whileStmt.generateWhile((Java_Expression) condition, actions, source);
 	}
-	
+
 	// ================ Expressions ================
 	
 	@Override

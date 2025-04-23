@@ -107,6 +107,15 @@ public class Python_WhileStatement extends TokenSequence
 	}
 
 	@Override
+	public Python_Statement generateDoUntil1(Python_Expression condition,
+			Python_Statement action, AbstractToken source)
+	{
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		actions.add(action);
+		return generateDoUntil(condition, actions, source);
+	}
+	
+	@Override
 	public Python_Statement generateDoUntil(Python_Expression condition,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
@@ -155,6 +164,15 @@ public class Python_WhileStatement extends TokenSequence
 		return generateWhile(whileCond, actions, source);
 	}
 	
+	@Override
+	public Python_Statement generateWhile1(Python_Expression condition,
+			Python_Statement action, AbstractToken source)
+	{
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		actions.add(action);
+		return generateWhile(condition, actions, source);
+	}
+
 	public Python_Statement generateWhile(Python_Expression condition,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{

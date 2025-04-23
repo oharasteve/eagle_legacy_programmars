@@ -5,10 +5,12 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
@@ -17,14 +19,15 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class CSharp_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement,
+				Eagle_Generate_IfElse<CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.9") CSharp_Keyword IF = new CSharp_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -85,12 +88,13 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 		return result;
 	}
 	
-	public static CSharp_IfStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> thenStatements,
-			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+	@Override
+	public CSharp_Statement generateIfElse1(CSharp_Expression condition,
+			CSharp_Statement thenStatement,
+			CSharp_Statement elseStatement, AbstractToken source)
 	{
-		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
-		ifStmt.leftParen = new PunctuationLeftParen();
-		ifStmt.rightParen = new PunctuationRightParen();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
 
 		CSharp_Expression cond = (CSharp_Expression) condition;
 		AbstractToken which = cond.getWhich();
@@ -98,19 +102,36 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 		{
 			CSharp_ParenthesizedExpression parensExpr = (CSharp_ParenthesizedExpression) which;
 			// Remove redundant parens
-			ifStmt.condition = parensExpr.expression;
+			this.condition = parensExpr.expression;
 		}
 		else
 		{
-			ifStmt.condition = cond;
+			this.condition = cond;
 		}
 
+		this.thenStatement = thenStatement;
+				
+		if (elseStatement != null && elseStatement.isPresent())
+		{
+			this.elseClause = new CSharp_IfElseClause();
+			this.elseClause.setPresent(true);
+			this.elseClause.elseStatement = elseStatement;
+		}
+
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(this);
+	}
+	
+	@Override
+	public CSharp_Statement generateIfElse(CSharp_Expression condition,
+			ArrayList<AbstractStatement> thenStatements,
+			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+	{
 		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
 		thenBlock.leftBrace = new PunctuationLeftBrace();
 		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<CSharp_StatementOrComment>();
-		ifStmt.thenStatement = new CSharp_Statement();
-		ifStmt.thenStatement.setWhich(thenBlock);
+		this.thenStatement = new CSharp_Statement();
 		for (AbstractStatement stmt : thenStatements)
 		{
 			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
@@ -118,16 +139,17 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 			thenBlock.statements.addToken(stmtOrComment);
 		}
 				
+		CSharp_StatementBlock elseBlock = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			ifStmt.elseClause = new CSharp_IfElseClause();
-			ifStmt.elseClause.setPresent(true);
-			CSharp_StatementBlock elseBlock = new CSharp_StatementBlock();
+			this.elseClause = new CSharp_IfElseClause();
+			this.elseClause.setPresent(true);
+			elseBlock = new CSharp_StatementBlock();
 			elseBlock.leftBrace = new PunctuationLeftBrace();
 			elseBlock.rightBrace = new PunctuationRightBrace();
 			elseBlock.statements = new TokenList<CSharp_StatementOrComment>();
-			ifStmt.elseClause.elseStatement = new CSharp_Statement();
-			ifStmt.elseClause.elseStatement.setWhich(elseBlock);
+			this.elseClause.elseStatement = new CSharp_Statement();
+			this.elseClause.elseStatement.setWhich(elseBlock);
 			for (AbstractStatement stmt : elseStatements)
 			{
 				CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
@@ -136,7 +158,7 @@ public class CSharp_IfStatement extends TokenSequence implements EagleRunnableWi
 			}
 		}
 
-		ifStmt.setTransformationSource(source);
-		return ifStmt;
+		return generateIfElse1(condition, CSharp_Generator.wrapStatement(thenBlock),
+				CSharp_Generator.wrapStatement(elseBlock), source);
 	}
 }

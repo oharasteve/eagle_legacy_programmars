@@ -75,14 +75,25 @@ public class CSharp_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric);
 		return result;
 	}
+
+	@Override
+	public CSharp_Statement generateWhile1(CSharp_Expression condition,
+			CSharp_Statement action, AbstractToken source)
+	{
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
+
+		this.whileStatement = action;
+		this.condition = condition;
+
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(this);
+	}
 	
 	@Override
 	public CSharp_Statement generateWhile(CSharp_Expression condition,
 			ArrayList<AbstractStatement> actions, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
-
 		CSharp_StatementBlock body = new CSharp_StatementBlock();
 		body.statements = new TokenList<CSharp_StatementOrComment>();
 		body.leftBrace = new PunctuationLeftBrace();
@@ -91,8 +102,6 @@ public class CSharp_WhileStatement extends TokenSequence
 		CSharp_Statement csStatement = new CSharp_Statement();
 		this.whileStatement = csStatement;
 		csStatement.setWhich(body);
-
-		this.condition = condition;
 
 		for (AbstractStatement action : actions)
 		{
@@ -109,7 +118,7 @@ public class CSharp_WhileStatement extends TokenSequence
 			}
 		}
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapStatement(this);
+		CSharp_Statement action = CSharp_Generator.wrapStatement(body);
+		return generateWhile1(condition, action, source);
 	}
 }

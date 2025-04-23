@@ -5,10 +5,12 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
@@ -18,14 +20,15 @@ import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Java_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Java_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement,
+				Eagle_Generate_IfElse<Java_Statement, Java_Expression>
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
@@ -88,12 +91,13 @@ public class Java_IfStatement extends TokenSequence implements EagleRunnableWith
 		return result;
 	}
 	
-	public static Java_IfStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> thenStatements,
-			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+	@Override
+	public Java_Statement generateIfElse1(Java_Expression condition,
+			Java_Statement thenStatement,
+			Java_Statement elseStatement, AbstractToken source)
 	{
-		Java_IfStatement ifStmt = new Java_IfStatement();
-		ifStmt.leftParen = new PunctuationLeftParen();
-		ifStmt.rightParen = new PunctuationRightParen();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
 
 		Java_Expression cond = (Java_Expression) condition;
 		AbstractToken which = cond.getWhich();
@@ -101,19 +105,33 @@ public class Java_IfStatement extends TokenSequence implements EagleRunnableWith
 		{
 			Java_ParenthesizedExpression parensExpr = (Java_ParenthesizedExpression) which;
 			// Remove redundant parens
-			ifStmt.condition = parensExpr.expression;
+			this.condition = parensExpr.expression;
 		}
 		else
 		{
-			ifStmt.condition = cond;
+			this.condition = cond;
 		}
 
+		this.thenStatement = thenStatement;
+				
+		if (elseStatement != null && elseStatement.isPresent())
+		{
+			this.elseClause.elseStatement = elseStatement;
+		}
+
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
+	}
+	
+	@Override
+	public Java_Statement generateIfElse(Java_Expression condition,
+			ArrayList<AbstractStatement> thenStatements,
+			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+	{
 		Java_StatementBlock thenBlock = new Java_StatementBlock();
 		thenBlock.leftBrace = new PunctuationLeftBrace();
 		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<Java_StatementOrComment>();
-		ifStmt.thenStatement = new Java_Statement();
-		ifStmt.thenStatement.setWhich(thenBlock);
 		for (AbstractStatement stmt : thenStatements)
 		{
 			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
@@ -121,16 +139,15 @@ public class Java_IfStatement extends TokenSequence implements EagleRunnableWith
 			thenBlock.statements.addToken(stmtOrComment);
 		}
 				
+		Java_StatementBlock elseBlock = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			ifStmt.elseClause = new Java_IfElseClause();
-			ifStmt.elseClause.setPresent(true);
-			Java_StatementBlock elseBlock = new Java_StatementBlock();
+			this.elseClause = new Java_IfElseClause();
+			this.elseClause.setPresent(true);
+			elseBlock = new Java_StatementBlock();
 			elseBlock.leftBrace = new PunctuationLeftBrace();
 			elseBlock.rightBrace = new PunctuationRightBrace();
 			elseBlock.statements = new TokenList<Java_StatementOrComment>();
-			ifStmt.elseClause.elseStatement = new Java_Statement();
-			ifStmt.elseClause.elseStatement.setWhich(elseBlock);
 			for (AbstractStatement stmt : elseStatements)
 			{
 				Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
@@ -139,7 +156,7 @@ public class Java_IfStatement extends TokenSequence implements EagleRunnableWith
 			}
 		}
 
-		ifStmt.setTransformationSource(source);
-		return ifStmt;
+		return generateIfElse1(condition, Java_Generator.wrapStatement(thenBlock),
+				Java_Generator.wrapStatement(elseBlock), source);
 	}
 }
