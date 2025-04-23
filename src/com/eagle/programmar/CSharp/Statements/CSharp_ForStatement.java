@@ -3,31 +3,41 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
+import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.CSharp_Syntax;
 import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_ForStatement extends TokenSequence
-			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
+			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
+					Eagle_Generate_ForLoop<CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -117,5 +127,54 @@ public class CSharp_ForStatement extends TokenSequence
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+	}
+	
+	@Override
+	public CSharp_Statement createForLoop1(CSharp_Expression initExpression,
+			CSharp_Expression condExpression, CSharp_Expression incrExpression,
+			CSharp_Statement action, AbstractToken source)
+	{
+		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
+		CSharp_ForWhat forWhat = new CSharp_ForWhat();
+		forWhat.setPresent(true);
+		forWhat.setWhich(initExpression);
+		initializer.addPrimaryElement(forWhat);
+
+		SeparatedList<CSharp_Expression, PunctuationComma> loopIncrements = new SeparatedList<CSharp_Expression, PunctuationComma>();
+		loopIncrements.addPrimaryElement(incrExpression);
+
+		CSharp_ForStatement forStmt = new CSharp_ForStatement();
+		forStmt.leftParen = new PunctuationLeftParen();
+		forStmt.what = initializer;
+		forStmt.semicolon1 = new PunctuationSemicolon();
+		forStmt.terminateCondition = condExpression;
+		forStmt.terminateCondition.setPresent(true);
+		forStmt.semicolon2 = new PunctuationSemicolon();
+		forStmt.increments = loopIncrements;
+		forStmt.rightParen = new PunctuationRightParen();
+		forStmt.action = action;
+		
+		forStmt.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(forStmt);
+	}
+	
+	@Override
+	public CSharp_Statement createForLoop(CSharp_Expression initExpression,
+			CSharp_Expression condExpression, CSharp_Expression incrExpression,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		CSharp_StatementBlock block = new CSharp_StatementBlock();
+		block.leftBrace = new PunctuationLeftBrace();
+		block.rightBrace = new PunctuationRightBrace();
+		block.statements = new TokenList<CSharp_StatementOrComment>();
+		for (AbstractStatement stmt : actions)
+		{
+			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
+			stmtOrComment.setWhich((CSharp_Statement) stmt);
+			block.statements.addToken(stmtOrComment);
+		}
+		
+		return createForLoop1(initExpression, condExpression, incrExpression,
+				CSharp_Generator.wrapStatement(block), source);
 	}
 }

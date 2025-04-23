@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Python.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -10,6 +13,7 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_ExpressionList;
+import com.eagle.programmar.Python.Python_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
@@ -21,6 +25,7 @@ import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -28,7 +33,9 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class Python_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Python_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				Eagle_Generate_ForLoop<Python_Statement, Python_Expression>
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -147,5 +154,24 @@ public class Python_ForStatement extends TokenSequence implements AbstractStatem
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public Python_Statement createForLoop1(Python_Expression initExpression,
+			Python_Expression condExpression, Python_Expression incrExpression,
+			Python_Statement action, AbstractToken source)
+	{
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		actions.add(action);
+		return createForLoop(initExpression, condExpression, incrExpression,
+				actions, source);
+	}
+	
+	@Override
+	public Python_Statement createForLoop(Python_Expression initExpression,
+			Python_Expression condExpression, Python_Expression incrExpression,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
 	}
 }

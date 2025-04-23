@@ -29,6 +29,7 @@ import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
 import com.eagle.programmar.CSharp.Statements.CSharp_DoWhileStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
@@ -176,6 +177,26 @@ public class CSharp_Generator extends EagleGenerator
 	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		return wrapStatement(CSharp_ExitStatement.newExitStatement(code, source));
+	}
+
+	@Override
+	public AbstractStatement newForLoopStatement1(AbstractExpression init,
+			AbstractExpression term, AbstractExpression incr, AbstractStatement action,
+			AbstractToken source)
+	{
+		CSharp_ForStatement forStmt = new CSharp_ForStatement();
+		return forStmt.createForLoop1((CSharp_Expression) init, (CSharp_Expression) term,
+				(CSharp_Expression) incr, (CSharp_Statement) action, source);
+	}
+
+	@Override
+	public AbstractStatement newForLoopStatement(AbstractExpression init,
+			AbstractExpression term, AbstractExpression incr,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		CSharp_ForStatement forStmt = new CSharp_ForStatement();
+		return forStmt.createForLoop((CSharp_Expression) init, (CSharp_Expression) term,
+				(CSharp_Expression) incr, actions, source);
 	}
 
 	@Override

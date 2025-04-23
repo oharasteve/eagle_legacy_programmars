@@ -131,7 +131,6 @@ public class CSharp_IfStatement extends TokenSequence
 		thenBlock.leftBrace = new PunctuationLeftBrace();
 		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<CSharp_StatementOrComment>();
-		this.thenStatement = new CSharp_Statement();
 		for (AbstractStatement stmt : thenStatements)
 		{
 			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
@@ -142,8 +141,6 @@ public class CSharp_IfStatement extends TokenSequence
 		CSharp_StatementBlock elseBlock = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			this.elseClause = new CSharp_IfElseClause();
-			this.elseClause.setPresent(true);
 			elseBlock = new CSharp_StatementBlock();
 			elseBlock.leftBrace = new PunctuationLeftBrace();
 			elseBlock.rightBrace = new PunctuationRightBrace();

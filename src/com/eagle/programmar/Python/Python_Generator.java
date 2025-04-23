@@ -29,6 +29,7 @@ import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
+import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
@@ -204,6 +205,26 @@ public class Python_Generator extends EagleGenerator
 		return ifStmt.generateIfElse((Python_Expression) condition, ifTrue, ifFalse, source);
 	}
 	
+	@Override
+	public AbstractStatement newForLoopStatement1(AbstractExpression init,
+			AbstractExpression term, AbstractExpression incr, AbstractStatement action,
+			AbstractToken source)
+	{
+		Python_ForStatement forStmt = new Python_ForStatement();
+		return forStmt.createForLoop1((Python_Expression) init, (Python_Expression) term,
+				(Python_Expression) incr, (Python_Statement) action, source);
+	}
+
+	@Override
+	public AbstractStatement newForLoopStatement(AbstractExpression init,
+			AbstractExpression term, AbstractExpression incr,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Python_ForStatement forStmt = new Python_ForStatement();
+		return forStmt.createForLoop((Python_Expression) init, (Python_Expression) term,
+				(Python_Expression) incr, actions, source);
+	}
+
 	@Override
 	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{

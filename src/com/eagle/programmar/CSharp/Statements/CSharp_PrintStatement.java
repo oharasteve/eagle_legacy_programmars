@@ -50,7 +50,8 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
 
-	public static CSharp_PrintStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	public static CSharp_PrintStatement newPrintStatement(AbstractExpression line,
+			AbstractToken source)
 	{
 		CSharp_PrintStatement stmt = new CSharp_PrintStatement();
 		stmt.SYSTEM.setPresent(true);

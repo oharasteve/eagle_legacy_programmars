@@ -30,6 +30,7 @@ import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
 import com.eagle.programmar.Java.Statements.Java_DoWhileStatement;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
+import com.eagle.programmar.Java.Statements.Java_ForStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_PrintStatement;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
@@ -196,6 +197,26 @@ public class Java_Generator extends EagleGenerator
 		return ifStmt.generateIfElse((Java_Expression) condition, ifTrue, ifFalse, source);
 	}
 	
+	@Override
+	public AbstractStatement newForLoopStatement1(AbstractExpression init,
+			AbstractExpression term, AbstractExpression incr, AbstractStatement action,
+			AbstractToken source)
+	{
+		Java_ForStatement forStmt = new Java_ForStatement();
+		return forStmt.createForLoop1((Java_Expression) init, (Java_Expression) term,
+				(Java_Expression) incr, (Java_Statement) action, source);
+	}
+
+	@Override
+	public AbstractStatement newForLoopStatement(AbstractExpression init,
+			AbstractExpression term, AbstractExpression incr,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Java_ForStatement forStmt = new Java_ForStatement();
+		return forStmt.createForLoop((Java_Expression) init, (Java_Expression) term,
+				(Java_Expression) incr, actions, source);
+	}
+
 	@Override
 	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
 	{

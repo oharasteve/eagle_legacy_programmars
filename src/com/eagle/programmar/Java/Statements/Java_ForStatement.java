@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Java.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -10,8 +13,10 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Java.Java_Annotation;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
+import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
@@ -19,17 +24,23 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
+public class Java_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
+			Eagle_Generate_ForLoop<Java_Statement, Java_Expression>
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
@@ -128,5 +139,59 @@ public class Java_ForStatement extends TokenSequence implements EagleRunnableWit
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+	}
+
+	@Override
+	public Java_Statement createForLoop1(Java_Expression initExpression,
+			Java_Expression condExpression, Java_Expression incrExpression,
+			Java_Statement action, AbstractToken source)
+	{
+		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		Java_ForWhat forWhat = new Java_ForWhat();
+		forWhat.setPresent(true);
+		forWhat.setWhich(initExpression);
+		initializer.addPrimaryElement(forWhat);
+
+		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
+		loopIncrements.addPrimaryElement(incrExpression);
+
+		Java_ForStatement forStmt = new Java_ForStatement();
+		forStmt.leftParen = new PunctuationLeftParen();
+		forStmt.init = new Java_ForInit();
+		forStmt.init.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		Java_ForWhat what = new Java_ForWhat();
+		what.setWhich(initExpression);
+		forStmt.init.what.addPrimaryElement(what);
+		
+		forStmt.semicolon1 = new PunctuationSemicolon();
+		forStmt.terminateCondition = condExpression;
+		forStmt.terminateCondition.setPresent(true);
+		forStmt.semicolon2 = new PunctuationSemicolon();
+		forStmt.increments = loopIncrements;
+		forStmt.rightParen = new PunctuationRightParen();
+		forStmt.action = action;
+		
+		forStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(forStmt);
+	}
+	
+	@Override
+	public Java_Statement createForLoop(Java_Expression initExpression,
+			Java_Expression condExpression, Java_Expression incrExpression,
+			ArrayList<AbstractStatement> actions, AbstractToken source)
+	{
+		Java_StatementBlock block = new Java_StatementBlock();
+		block.leftBrace = new PunctuationLeftBrace();
+		block.rightBrace = new PunctuationRightBrace();
+		block.statements = new TokenList<Java_StatementOrComment>();
+		for (AbstractStatement stmt : actions)
+		{
+			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
+			stmtOrComment.setWhich((Java_Statement) stmt);
+			block.statements.addToken(stmtOrComment);
+		}
+		
+		return createForLoop1(initExpression, condExpression, incrExpression,
+				Java_Generator.wrapStatement(block), source);
 	}
 }
