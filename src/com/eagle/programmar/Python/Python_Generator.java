@@ -226,9 +226,19 @@ public class Python_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	public AbstractStatement newPrintStatement1(AbstractExpression line, boolean newLine,
+			AbstractToken source)
 	{
-		return wrapStatement(Python_PrintStatement.newPrintStatement(line, source));
+		Python_PrintStatement prtStmt = new Python_PrintStatement();
+		return prtStmt.generatePrint1((Python_Expression) line, newLine, source);
+	}
+	
+	@Override
+	public AbstractStatement newPrintStatement(ArrayList<AbstractExpression> pieces,
+			boolean newLine, AbstractToken source)
+	{
+		Python_PrintStatement prtStmt = new Python_PrintStatement();
+		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 	
 	@Override

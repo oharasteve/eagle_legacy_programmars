@@ -29,7 +29,7 @@ public class VB_WscriptEcho extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue result = interpreter.getEagleValue(expr);
-		switch (ECHO.toString())
+		switch (ECHO.toString().toLowerCase())
 		{
 		case "echo":
 			System.out.println(result.toString());
@@ -44,11 +44,11 @@ public class VB_WscriptEcho extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		switch (ECHO.toString())
+		switch (ECHO.toString().toLowerCase())
 		{
 		case "echo":
 			AbstractExpression line = transformer.transformExpression(generator, expr);
-			return generator.newPrintStatement(line, this);
+			return generator.newPrintStatement1(line, true, this);
 		case "quit":
 			AbstractExpression code = transformer.transformExpression(generator, expr);
 			return generator.newExitStatement(code, this);

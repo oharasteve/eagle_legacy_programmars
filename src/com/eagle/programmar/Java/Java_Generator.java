@@ -218,9 +218,19 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	public AbstractStatement newPrintStatement1(AbstractExpression line, boolean newLine,
+			AbstractToken source)
 	{
-		return wrapStatement(Java_PrintStatement.newPrintStatement(line, source));
+		Java_PrintStatement prtStmt = new Java_PrintStatement();
+		return prtStmt.generatePrint1((Java_Expression) line, newLine, source);
+	}
+
+	@Override
+	public AbstractStatement newPrintStatement(ArrayList<AbstractExpression> pieces, boolean newLine,
+			AbstractToken source)
+	{
+		Java_PrintStatement prtStmt = new Java_PrintStatement();
+		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 
 	@Override

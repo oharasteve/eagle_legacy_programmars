@@ -3,9 +3,14 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -19,7 +24,9 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_PrintStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class CSharp_PrintStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable,
+				Eagle_Generate_Print<CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword SYSTEM = new CSharp_Keyword("System");
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
@@ -50,7 +57,15 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
 
-	public static CSharp_PrintStatement newPrintStatement(AbstractExpression line,
+	@Override
+	public CSharp_Statement generatePrint(ArrayList<AbstractExpression> pieces,
+			boolean newLine, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
+	}
+	
+	@Override
+	public CSharp_Statement generatePrint1(CSharp_Expression line, boolean newLine,
 			AbstractToken source)
 	{
 		CSharp_PrintStatement stmt = new CSharp_PrintStatement();
@@ -61,7 +76,16 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 		stmt.OUT.setPresent(true);
 		stmt.dot2 = new PunctuationPeriod();
 		stmt.dot2.setPresent(true);
-		stmt.WRITE = new CSharp_KeywordChoice("WriteLine");
+		
+		if (newLine)
+		{
+			stmt.WRITE = new CSharp_KeywordChoice("WriteLine");
+		}
+		else
+		{
+			stmt.WRITE = new CSharp_KeywordChoice("Write");
+		}
+		
 		stmt.dot3 = new PunctuationPeriod();
 		stmt.dot3.setPresent(true);
 		stmt.leftParen = new PunctuationLeftParen();
@@ -70,7 +94,8 @@ public class CSharp_PrintStatement extends TokenSequence implements AbstractStat
 		stmt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
 		stmt.exprs.addPrimaryElement((CSharp_Expression) line);
 		stmt.semicolon = new PunctuationSemicolon();
+		
 		stmt.setTransformationSource(source);
-		return stmt;
+		return CSharp_Generator.wrapStatement(stmt);
 	}
 }

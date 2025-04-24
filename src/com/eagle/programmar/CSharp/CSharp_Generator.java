@@ -218,9 +218,19 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractStatement newPrintStatement(AbstractExpression line, AbstractToken source)
+	public CSharp_Statement newPrintStatement1(AbstractExpression line,
+			boolean newLine, AbstractToken source)
 	{
-		return wrapStatement(CSharp_PrintStatement.newPrintStatement(line, source));
+		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
+		return prtStmt.generatePrint1((CSharp_Expression) line, newLine, source);
+	}
+
+	@Override
+	public CSharp_Statement newPrintStatement(ArrayList<AbstractExpression> pieces,
+			boolean newLine, AbstractToken source)
+	{
+		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
+		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 
 	@Override
