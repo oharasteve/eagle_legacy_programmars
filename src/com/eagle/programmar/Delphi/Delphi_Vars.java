@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.Delphi;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.Generate_Eagle_Statement.PRIVACY;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Variable_Definition;
@@ -32,6 +36,17 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// Nothing to do here wihtout initializers
+		// Nothing to do here without initializers
+	}
+	
+	@Override
+	public void transform(EagleGenerator generator)
+	{
+		ArrayList<Stmt> dataLines = _transformVars.transform(trans,
+				PRIVACY.PRIVATE, (Delphi_Vars) which);
+		for (Delphi_Statement data : dataLines)
+		{
+			data.addClassData(generator);
+		}
 	}
 }

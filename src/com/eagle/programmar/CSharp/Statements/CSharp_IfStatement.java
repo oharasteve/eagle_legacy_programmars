@@ -145,6 +145,7 @@ public class CSharp_IfStatement extends TokenSequence
 			elseBlock.leftBrace = new PunctuationLeftBrace();
 			elseBlock.rightBrace = new PunctuationRightBrace();
 			elseBlock.statements = new TokenList<CSharp_StatementOrComment>();
+			this.elseClause = new CSharp_IfElseClause();
 			this.elseClause.elseStatement = new CSharp_Statement();
 			this.elseClause.elseStatement.setWhich(elseBlock);
 			for (AbstractStatement stmt : elseStatements)

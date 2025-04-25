@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java;
 
+import com.eagle.programmar.CSharp.CSharp_Program.CSharp_NamespaceOrClassEntry;
 import com.eagle.programmar.Java.Java_Variable.Java_VariableIdentifier;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
@@ -52,5 +53,29 @@ public class Java_Annotation extends TokenChooser
 	{
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
 		public @S(20) @NOSPACE Java_Variable var;
+	}
+	
+	public static void translate(Java_Annotation annotation, TokenList<CSharp_NamespaceOrClassEntry> entries)
+	{
+//		if (annotation.isPresent())
+//		{
+//			CSharp_NamespaceOrClassEntry entry = new CSharp_NamespaceOrClassEntry();
+//			AbstractToken which = annotation.getWhich();
+//			if (which instanceof Java_AnnotationCallParens)
+//			{
+//				// Java_AnnotationCallParens annot = (Java_AnnotationCallParens) which;
+//				// TODO
+//			}
+//			else if (which instanceof Java_AnnotationSimple)
+//			{
+//				// Java_AnnotationSimple annot = (Java_AnnotationSimple) which;
+//				// TODO
+//			}
+//			else
+//			{
+//				throw new RuntimeException("Unable to handle " + which);
+//			}
+//			entries.addToken(entry);
+//		}
 	}
 }

@@ -5,6 +5,7 @@ package com.eagle.programmar.Delphi.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
@@ -14,9 +15,14 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_If_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Delphi_If_Statement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#If_Statements") Delphi_Keyword IF = new Delphi_Keyword(
 			"If");
@@ -75,5 +81,24 @@ public class Delphi_If_Statement extends TokenSequence implements AbstractStatem
 		}
 
 		return result;
+	}
+	
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator,
+				condition);
+		ArrayList<AbstractStatement> thenPart = transformer.transformStatement(generator,
+				thenStmt);
+
+		ArrayList<AbstractStatement> elsePart = null;
+		Delphi_Statement stmtElse = null;
+		if (ifElse != null)
+		{
+			stmtElse = ifElse.elseStmt;
+			elsePart = transformer.transformStatement(generator, stmtElse);
+		}
+
+		return generator.newIfStatement(cond, thenPart, elsePart, this);
 	}
 }

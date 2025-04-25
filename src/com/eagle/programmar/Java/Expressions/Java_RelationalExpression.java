@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
@@ -15,9 +16,12 @@ import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_RelationalExpression extends PrecedenceOperator
-		implements EagleRunnable, Eagle_Generate_Relational<Java_Expression>
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Relational<Java_Expression>
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
@@ -59,6 +63,36 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		return false;
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		switch (operator.toString())
+		{
+		case "==":
+			return generator.newRelationalExpression(leftExpr,	
+					RelationalEnum.EQUALS, rightExpr, this);
+		case "!=":
+			return generator.newRelationalExpression(leftExpr,
+					RelationalEnum.NOT_EQUALS, rightExpr, this);
+		case "<":
+			return generator.newRelationalExpression(leftExpr,
+					RelationalEnum.LESS_THAN, rightExpr, this);
+		case "<=":
+			return generator.newRelationalExpression(leftExpr,
+					RelationalEnum.LESS_EQUALS, rightExpr, this);
+		case ">":
+			return generator.newRelationalExpression(leftExpr,
+					RelationalEnum.GREATER_THAN, rightExpr, this);
+		case ">=":
+			return generator.newRelationalExpression(leftExpr,
+					RelationalEnum.GREATER_EQUALS, rightExpr, this);
+		}
+		throw new RuntimeException("Unexpected relational operator: " + operator);
+	}
+
 	@Override
 	public Java_Expression generateRelational(Java_Expression leftExpr, RelationalEnum relOp,
 			Java_Expression rightExpr, AbstractToken source)

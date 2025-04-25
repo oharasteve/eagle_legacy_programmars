@@ -4,13 +4,17 @@
 package com.eagle.programmar.Delphi;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Program extends AbstractLanguage implements EagleRunnable
+public class Delphi_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String DELPHI = "Delphi";
 
@@ -48,5 +52,17 @@ public class Delphi_Program extends AbstractLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(fullOrPartial);
+	}
+
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (! (fullOrPartial.getWhich() instanceof Delphi_Full))
+		{
+			throw new RuntimeException("Can only handle complete Delphi programs");
+		}
+		Delphi_Full full = (Delphi_Full) fullOrPartial.getWhich();
+		return full.transformProgram(transformer, generator);
 	}
 }

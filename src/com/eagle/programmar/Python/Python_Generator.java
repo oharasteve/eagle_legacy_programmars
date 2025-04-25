@@ -25,6 +25,7 @@ import com.eagle.programmar.Python.Expressions.Python_Negative_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Power_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
@@ -56,7 +57,7 @@ public class Python_Generator extends EagleGenerator
 	private Python_Program _program;
 	private Python_Function _currentFunction = null;
 	
-	public Python_Generator()
+	public Python_Generator(String mainName)
 	{
 		_program = new Python3_Program();
 		_program.entries = new TokenList<Python_Statement>();
@@ -109,7 +110,7 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Function newFunction(String name, PrivacyEnum privacy, boolean isStatic, AbstractType type)
+	public Python_Function newFunction(String name, PrivacyEnum privacy, StaticEnum isStatic, AbstractType type)
 	{
 		Python_Function newFunction = Python_Function.newPythonFunction(name);
 		addStatement(wrapStatement(newFunction));
@@ -241,6 +242,15 @@ public class Python_Generator extends EagleGenerator
 		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 	
+	@Override
+	public AbstractExpression newShiftExpression(AbstractExpression left,
+			ShiftEnum shift, AbstractExpression right, AbstractToken source)
+	{
+		Python_Shift_Expression shiftExpr = new Python_Shift_Expression();
+		return shiftExpr.generateShift((Python_Expression) left, shift,
+				(Python_Expression) right, source);
+	}
+
 	@Override
 	public Python_Statement newWhileStatement1(AbstractExpression condition,
 			AbstractStatement action, AbstractToken source)

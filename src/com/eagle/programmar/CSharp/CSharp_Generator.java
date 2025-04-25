@@ -22,6 +22,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_PostIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_PreIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ShiftExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
@@ -77,7 +78,8 @@ public class CSharp_Generator extends EagleGenerator
 	public void addMain()
 	{
 		CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
-		_mainMethod = CSharp_Method.newCSharpMethod(PrivacyEnum.PUBLIC, true, mainType, "Main");
+		_mainMethod = CSharp_Method.newCSharpMethod(PrivacyEnum.PUBLIC,
+				StaticEnum.STATIC, mainType, "Main");
 		CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
 		_mainMethod.addCSharpParameter(paramType, "args");
 		_mainClass.addMethod(_mainMethod);
@@ -106,7 +108,7 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public CSharp_Method newFunction(String name, PrivacyEnum privacy, boolean isStatic, AbstractType type)
+	public CSharp_Method newFunction(String name, PrivacyEnum privacy, StaticEnum isStatic, AbstractType type)
 	{
 		_currentMethod = CSharp_Method.newCSharpMethod(privacy, isStatic, type, name);
 		_mainClass.addMethod(_currentMethod);
@@ -386,8 +388,18 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
+	public AbstractExpression newShiftExpression(AbstractExpression left,
+			ShiftEnum shift, AbstractExpression right, AbstractToken source)
+	{
+		CSharp_ShiftExpression shiftExpr = new CSharp_ShiftExpression();
+		return shiftExpr.generateShift((CSharp_Expression) left, shift,
+				(CSharp_Expression) right, source);
+	}
+
+	@Override
+	public AbstractExpression newSubstringFunction(AbstractExpression expr,
+			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			AbstractExpression scOrnc, AbstractToken source)
 	{
 		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}

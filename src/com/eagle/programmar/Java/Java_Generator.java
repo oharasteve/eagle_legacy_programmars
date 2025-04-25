@@ -23,6 +23,7 @@ import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
 import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
+import com.eagle.programmar.Java.Expressions.Java_ShiftExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
@@ -78,7 +79,8 @@ public class Java_Generator extends EagleGenerator
 	public void addMain()
 	{
 		Java_Type mainType = Java_Type.newPrimitiveType("void");
-		_mainMethod = Java_Method.newJavaMethod(PrivacyEnum.PUBLIC, true, mainType, "main");
+		_mainMethod = Java_Method.newJavaMethod(PrivacyEnum.PUBLIC,
+				StaticEnum.STATIC, mainType, "main");
 		Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
 		_mainMethod.addJavaParameter(paramType, "args");
 		_mainClass.addMethod(_mainMethod);
@@ -107,7 +109,7 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public Java_Method newFunction(String name, PrivacyEnum privacy, boolean isStatic, AbstractType type)
+	public Java_Method newFunction(String name, PrivacyEnum privacy, StaticEnum isStatic, AbstractType type)
 	{
 		_currentMethod = Java_Method.newJavaMethod(privacy, isStatic, type, name);
 		_mainClass.addMethod(_currentMethod);
@@ -389,6 +391,15 @@ public class Java_Generator extends EagleGenerator
 				(Java_Expression) right, source);
 	}
 	
+	@Override
+	public AbstractExpression newShiftExpression(AbstractExpression left,
+			ShiftEnum shift, AbstractExpression right, AbstractToken source)
+	{
+		Java_ShiftExpression shiftExpr = new Java_ShiftExpression();
+		return shiftExpr.generateShift((Java_Expression) left, shift,
+				(Java_Expression) right, source);
+	}
+
 	@Override
 	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)

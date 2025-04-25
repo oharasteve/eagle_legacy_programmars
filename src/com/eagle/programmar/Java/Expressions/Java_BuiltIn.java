@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.BuiltInEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_BuiltIn;
 import com.eagle.interpret.EagleInterpreter;
@@ -12,11 +13,16 @@ import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_BuiltIn extends PrimaryOperator
-		implements EagleRunnable, Eagle_Generate_BuiltIn<Java_Expression>
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_BuiltIn<Java_Expression>
 {
-	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice("false", "true", "null", "this", "String", "super");
+	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice(
+			"false", "true", "null", "this", "super");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -33,6 +39,27 @@ public class Java_BuiltIn extends PrimaryOperator
 		throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		switch (builtinConstant.toString().toLowerCase())
+		{
+		case "false":
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		case "true":
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		case "null":
+			return generator.newBuiltInExpression(BuiltInEnum.NULL, this);
+		case "this":
+			return generator.newBuiltInExpression(BuiltInEnum.SELF, this);
+		case "super":
+			return generator.newBuiltInExpression(BuiltInEnum.SUPER, this);
+		default:
+			throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
+		}
+	}
+
 	@Override
 	public Java_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{

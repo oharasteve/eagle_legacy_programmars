@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.LogicalOrEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -11,8 +14,12 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Additive_Expression extends PrecedenceOperator implements EagleRunnable
+public class Delphi_Additive_Expression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Delphi_Additive_Operator operator;
@@ -74,5 +81,26 @@ public class Delphi_Additive_Expression extends PrecedenceOperator implements Ea
 		}
 		
 		throw new RuntimeException("Unexpected additive operator: " + oper);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		switch (operator.toString().toLowerCase())
+		{
+		case "+":
+			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
+		case "-":
+			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS, rightExpr, this);
+		case "or":
+			return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
+		case "xor":
+			return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.XOR, rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected additive operator: " + operator);
+		}
 	}
 }

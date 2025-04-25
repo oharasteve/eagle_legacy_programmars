@@ -31,11 +31,8 @@ public class Python_Shift_Expression extends PrecedenceOperator
 		case RIGHT:
 			oper = ">>";
 			break;
-		case RIGHTSIGNEXTEND:
-			oper = ">>>";
-			break;
 		default:
-			return null;
+			throw new RuntimeException("Unable to handle shift operator: " + operator);
 		}
 
 		this.left = left;

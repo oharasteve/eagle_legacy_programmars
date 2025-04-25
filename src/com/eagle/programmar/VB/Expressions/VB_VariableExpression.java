@@ -13,7 +13,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_VariableExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_VariableExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Variable variable;
 

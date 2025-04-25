@@ -5,18 +5,19 @@ package com.eagle.programmar.VB.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.PrivacyEnum;
+import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.VB.VB_Parameters;
+import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.VB_Syntax;
 import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
-import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
@@ -106,7 +107,8 @@ public class VB_Subroutine extends TokenSequence
 		
 		AbstractType newType = generator.transformType(TypeEnum.VOID, null, null);
 		
-		AbstractFunction func = generator.newFunction(name.getValue(), privacy, false, newType);
+		AbstractFunction func = generator.newFunction(name.getValue(), privacy,
+				StaticEnum.NONE, newType);
 		
 		if (params.params != null && params.params.isPresent())
 		{

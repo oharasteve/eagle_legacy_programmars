@@ -4,6 +4,7 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.generate.EagleGenerator.PrivacyEnum;
+import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
@@ -169,32 +170,44 @@ public class Java_Method extends TokenSequence
 		}
 	}
 	
-	public static Java_Method newJavaMethod(PrivacyEnum privacy, boolean isStatic,
+	public static Java_Method newJavaMethod(PrivacyEnum privacy, StaticEnum isStatic,
 			AbstractType returnType, String methodName)
 	{
 		Java_Method meth = new Java_Method();
 		meth.modifiers = new TokenList<Java_MethodModifier>();
 		
-		Java_MethodModifier modifier1 = new Java_MethodModifier();
+		Java_MethodModifier modifier1 = null;
 		switch (privacy)
 		{
+		case NONE:
+			break;
 		case PUBLIC:
+			modifier1 = new Java_MethodModifier();
 			modifier1.setWhich(new Java_KeywordChoice("public"));
 			break;
 		case PRIVATE:
-		case NONE:
+			modifier1 = new Java_MethodModifier();
 			modifier1.setWhich(new Java_KeywordChoice("private"));
 			break;
 		default:
 			throw new RuntimeException("Can't handle privacy: " + privacy);
 		}
-		meth.modifiers.addToken(modifier1);
-
-		if (isStatic)
+		if (modifier1 != null)
 		{
+			meth.modifiers.addToken(modifier1);
+		}
+
+		switch (isStatic)
+		{
+		case NONE:
+			break;
+		case STATIC:
 			Java_MethodModifier modifier2 = new Java_MethodModifier();
 			modifier2.setWhich(new Java_KeywordChoice("static"));
 			meth.modifiers.addToken(modifier2);
+			break;
+		default:
+			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
 		
 		meth.typeAndName = new Java_MethodTypeAndName();

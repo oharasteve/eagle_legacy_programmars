@@ -32,7 +32,8 @@ public class VB_AssignmentStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
 	{
 		AbstractExpression subscrExpr = null;
 		if (var.subscript != null && var.subscript.isPresent())

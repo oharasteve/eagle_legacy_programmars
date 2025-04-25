@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Java;
 
+import com.eagle.programmar.CSharp.CSharp_Namespace;
+import com.eagle.programmar.CSharp.CSharp_Program.CSharp_NamespaceOrClassEntry;
 import com.eagle.programmar.Java.Terminals.Java_Identifier;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.TokenList;
@@ -54,5 +56,31 @@ public class Java_Package extends TokenSequence
 		
 		pkg.semicolon = new PunctuationSemicolon();
 		return pkg;
+	}
+
+	public static CSharp_Namespace translate(Java_Package jpackage, TokenList<CSharp_NamespaceOrClassEntry> entries)
+	{
+		return null;
+//		CSharp_Namespace namespace = new CSharp_Namespace();
+//		namespace.id = new CSharp_Identifier();
+//		namespace.id.setValue(jpackage.id.getValue());
+//		namespace.moreIds = new TokenList<CSharp_MoreNamespaceId>();
+//		namespace.leftBrace = new PunctuationLeftBrace();
+//		namespace.elems = new TokenList<CSharp_ProgramElems>();
+//		namespace.rightBrace = new PunctuationRightBrace();
+//
+//		for (Java_MorePackageIds nxt : jpackage.moreIds._elements)
+//		{
+//			CSharp_MoreNamespaceId more = new CSharp_MoreNamespaceId();
+//			more.id = new CSharp_Identifier();
+//			more.id.setValue(nxt.id.getValue());
+//			more.dot = new PunctuationPeriod();
+//			namespace.moreIds.addToken(more);
+//		}
+//
+//		CSharp_NamespaceOrClassEntry entry = new CSharp_NamespaceOrClassEntry();
+//		entry.setWhich(namespace);
+//		entries.addToken(entry);
+//		return namespace;
 	}
 }

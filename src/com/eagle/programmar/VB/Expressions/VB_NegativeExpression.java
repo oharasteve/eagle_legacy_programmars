@@ -14,7 +14,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_NegativeExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_NegativeExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_PunctuationChoice operator = new VB_PunctuationChoice("-", "+");
 	public @S(20) VB_Expression expr;

@@ -14,7 +14,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_AdditiveExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_AdditiveExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice("+", "-");
@@ -39,7 +40,8 @@ public class VB_AdditiveExpression extends PrecedenceOperator implements EagleRu
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);

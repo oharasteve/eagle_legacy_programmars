@@ -5,6 +5,7 @@ package com.eagle.programmar.VB.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.PrivacyEnum;
+import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -114,7 +115,8 @@ public class VB_Function extends TokenSequence
 			newType = findType(generator, kw.getValue());
 		}
 		
-		AbstractFunction func = generator.newFunction(name.getValue(), privacy, false, newType);
+		AbstractFunction func = generator.newFunction(name.getValue(), privacy,
+				StaticEnum.NONE, newType);
 		
 		if (params.params != null && params.params.isPresent())
 		{

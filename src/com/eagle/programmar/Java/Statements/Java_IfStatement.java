@@ -5,6 +5,7 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
@@ -20,11 +21,13 @@ import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_IfStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
@@ -91,6 +94,25 @@ public class Java_IfStatement extends TokenSequence
 		return result;
 	}
 	
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator,
+				condition);
+		AbstractStatement thenPart = transformer.transformStatement1(generator,
+				thenStatement);
+
+		AbstractStatement elsePart = null;
+		Java_Statement stmtElse = null;
+		if (elseClause != null && elseClause.isPresent())
+		{
+			stmtElse = elseClause.elseStatement;
+			elsePart = transformer.transformStatement1(generator, stmtElse);
+		}
+
+		return generator.newIfStatement1(cond, thenPart, elsePart, this);
+	}
+
 	@Override
 	public Java_Statement generateIfElse1(Java_Expression condition,
 			Java_Statement thenStatement,

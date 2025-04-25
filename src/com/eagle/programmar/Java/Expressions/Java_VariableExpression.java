@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.Expressions.Eagle_Generate_VarExpr;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -10,14 +11,19 @@ import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Subscript;
 import com.eagle.programmar.Java.Java_Variable;
+import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_VariableExpression extends PrimaryOperator
-		implements EagleRunnable, Eagle_Generate_VarExpr<Java_Expression>
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_VarExpr<Java_Expression>
 {
 	public @S(10) Java_Variable variable;
 
@@ -25,6 +31,25 @@ public class Java_VariableExpression extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(variable);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscript = null;
+		if (variable.subscript != null && variable.subscript.isPresent())
+		{
+			Java_Subscript first = variable.subscript.first();
+			subscript = transformer.transformExpression(generator, first.expr);
+		}
+		AbstractToken which = variable.firstId.getWhich();
+		if (! (which instanceof Java_Identifier_Reference))
+		{
+			throw new RuntimeException("Cannot handle variable: " + which);
+		}
+		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
+			return generator.newVariableExpression(id.getValue(), subscript, this);
 	}
 
 	@Override

@@ -46,6 +46,8 @@ public class Java_NegativeExpression extends PrimaryOperator implements EagleRun
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())
 		{
+		case "+":
+			return theExpr;
 		case "-":
 			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:

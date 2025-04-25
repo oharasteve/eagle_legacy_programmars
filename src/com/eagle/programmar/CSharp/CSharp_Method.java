@@ -4,6 +4,7 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.generate.EagleGenerator.PrivacyEnum;
+import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
@@ -62,13 +63,15 @@ public class CSharp_Method extends TokenSequence implements
 
 	public static class CSharp_MethodModifier extends TokenSequence
 	{
-		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(CSharp_Program.MODIFIERS);
+		public @S(10) CSharp_KeywordChoice modifier = new CSharp_KeywordChoice(
+				CSharp_Program.MODIFIERS);
 	}
 
 	public static class CSharp_MethodParameter extends TokenSequence
 	{
 		public @S(10) @OPT CSharp_Annotation annotation;
-		public @S(20) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice("ref", "out", "this", "params");
+		public @S(20) @OPT CSharp_KeywordChoice passBy = new CSharp_KeywordChoice(
+				"ref", "out", "this", "params");
 		public @S(30) CSharp_Type cstype;
 		public @S(40) CSharp_Variable_Definition id;
 		public @S(50) @OPT CSharp_Punctuation emptySubscript = new CSharp_Punctuation("[]");
@@ -144,7 +147,7 @@ public class CSharp_Method extends TokenSequence implements
 		}
 	}
 	
-	public static CSharp_Method newCSharpMethod(PrivacyEnum privacy, boolean isStatic,
+	public static CSharp_Method newCSharpMethod(PrivacyEnum privacy, StaticEnum isStatic,
 			AbstractType returnType, String methodName)
 	{
 		CSharp_Method meth = new CSharp_Method();
@@ -165,11 +168,17 @@ public class CSharp_Method extends TokenSequence implements
 		}
 		meth.modifiers.addToken(modifier1);
 
-		if (isStatic)
+		switch (isStatic)
 		{
+		case NONE:
+			break;
+		case STATIC:
 			CSharp_MethodModifier modifier2 = new CSharp_MethodModifier();
 			modifier2.modifier = new CSharp_KeywordChoice("static");
 			meth.modifiers.addToken(modifier2);
+			break;
+		default:
+			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
 		
 		meth.returnType = (CSharp_Type) returnType;
