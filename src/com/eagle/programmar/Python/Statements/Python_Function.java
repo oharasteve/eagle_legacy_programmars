@@ -28,6 +28,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -112,7 +113,7 @@ public class Python_Function extends TokenSequence
 		return func;
 	}
 	
-	public void addFunctionParameter(String name)
+	public void addFunctionParameter(AbstractType type, String name)
 	{
 		Python_Variable_Definition var = new Python_Variable_Definition();
 		var.setValue(name);

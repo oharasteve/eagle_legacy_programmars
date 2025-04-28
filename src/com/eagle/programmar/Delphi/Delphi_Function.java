@@ -3,9 +3,11 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
@@ -14,8 +16,11 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
@@ -55,5 +60,31 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 		{
 			_metrics = new CallMetrics(interpreter._metrics, forward.name.var.getValue(), this);
 		}
+	}
+	
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (this.headers != null)
+		{
+			for (Delphi_Header header : this.headers._elements)
+			{
+				header.processHeader(transformer, generator);
+			}
+		}
+
+		String funcName = this.forward.name.var.getValue();
+		AbstractType type = this.forward.type.convertType(generator);
+		generator.addMethod(type, funcName, this);
+		
+		Delphi_Parameter param = this.forward.args.firstParam;
+		if (param != null && param.isPresent())
+		{
+			AbstractType paramType = param.type.convertType(generator);
+			String paramName = param.names.first().var.getValue();
+			generator.addMethodParameter(paramType, paramName);
+		}
+
+		AbstractStatement newStmt = transformer.transformStatement1(generator, this.body);
+		generator.addStatement(newStmt, this.body);
 	}
 }

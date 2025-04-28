@@ -31,9 +31,14 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 				newValue = interpreter.getEagleValue(expr);
 				break;
 			case "+=":
-				int newVal = interpreter.getIntValue(expr);
-				EagleValue oldVar = interpreter.findSymbol(pVar.variable.id.toString());
-				newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
+				int newVal1 = interpreter.getIntValue(expr);
+				EagleValue oldVar1 = interpreter.findSymbol(pVar.variable.id.toString());
+				newValue = new EagleInteger(oldVar1.forceIntegerValue() + newVal1);
+				break;
+			case "-=":
+				int newVal2 = interpreter.getIntValue(expr);
+				EagleValue oldVar2 = interpreter.findSymbol(pVar.variable.id.toString());
+				newValue = new EagleInteger(oldVar2.forceIntegerValue() - newVal2);
 				break;
 			default:
 				throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

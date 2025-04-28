@@ -10,6 +10,7 @@ import com.eagle.programmar.Delphi.Statements.Delphi_Case_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Close_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_ExpressionStatement;
 import com.eagle.programmar.Delphi.Statements.Delphi_For_Statement;
+import com.eagle.programmar.Delphi.Statements.Delphi_GetDateTime_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Halt_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_If_Statement;
 import com.eagle.programmar.Delphi.Statements.Delphi_Inherited_Statement;
@@ -35,6 +36,7 @@ public class Delphi_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Delphi_Case_Statement XXcaseStatement;
 	public @CHOICE Delphi_Close_Statement XXcloseStatement;
 	public @CHOICE Delphi_For_Statement XXforStatement;
+	public @CHOICE Delphi_GetDateTime_Statement XXgetDateTimeStatement;
 	public @CHOICE Delphi_Halt_Statement XXhaltStatement;
 	public @CHOICE Delphi_If_Statement XXifStatement;
 	public @CHOICE Delphi_Inherited_Statement XXinheritedStatement;

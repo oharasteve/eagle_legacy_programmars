@@ -1,8 +1,11 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Apr 1, 2024
 
-package com.eagle.programmar.Delphi.Functions;
+package com.eagle.programmar.Delphi.Expressions;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -17,10 +20,15 @@ import com.eagle.programmar.Delphi.Delphi_Procedure;
 import com.eagle.programmar.Delphi.Delphi_Statement_List.Delphi_MoreStatements;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
+import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnable
+public class Delphi_Function_Call extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Delphi_Variable name;
 	public @S(20) Delphi_Argument_List argList;
@@ -123,5 +131,26 @@ public class Delphi_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		// Now remove all those parameters
 		interpreter.completedFunction(fnName, func);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		Delphi_Variable variable = this.name;
+		Delphi_Identifier_Reference id = (Delphi_Identifier_Reference) variable.var;
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		if (this.argList != null && this.argList.isPresent())
+		{
+			int nargs = this.argList.exprs.getPrimaryCount();
+			for (int i = 0; i < nargs; i++)
+			{
+				Delphi_Expression expr = this.argList.exprs.getPrimaryElement(i);
+				args.add(transformer.transformExpression(generator, expr));
+			}
+		}
+		
+		Delphi_Variable var = Delphi_Variable.newVariable(id.getValue());
+		return generator.newMethodInvocation(var, args, this);
 	}
 }

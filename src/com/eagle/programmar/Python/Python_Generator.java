@@ -29,17 +29,18 @@ import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
+import com.eagle.programmar.Python.Statements.Python_BreakStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
+import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
 import com.eagle.programmar.Python.Statements.Python_WhileStatement;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -55,7 +56,6 @@ public class Python_Generator extends EagleGenerator
 	public static String SUFFIX = ".py";
 	
 	private Python_Program _program;
-	private Python_Function _currentFunction = null;
 	
 	public Python_Generator(String mainName)
 	{
@@ -64,12 +64,6 @@ public class Python_Generator extends EagleGenerator
 		_program.entries.setPresent(true);
 	}
 	
-	@Override
-	public void addMain()
-	{
-		// Don't really need a main
-	}
-
 	@Override
 	public String getName()
 	{
@@ -110,29 +104,31 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Function newFunction(String name, PrivacyEnum privacy, StaticEnum isStatic, AbstractType type)
+	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	{
+		return Python_Type.transformType(type, typeName, source);
+	}
+
+	// ================== Main program and class ==================
+	
+	private Python_Function _currentFunction = null;
+
+	@Override
+	public void addMethod(AbstractType returnType, String name, AbstractToken source)
 	{
 		Python_Function newFunction = Python_Function.newPythonFunction(name);
-		addStatement(wrapStatement(newFunction));
+		addStatement(wrapStatement(newFunction), source);
 		_currentFunction = newFunction;	// Has to follow the call to addStatement().
-		return newFunction;
 	}
 	
 	@Override
-	public void addFunctionParameter(AbstractFunction function, String name, AbstractType type)
+	public void addMethodParameter(AbstractType type, String name)
 	{
-		Python_Function func = (Python_Function) function;
-		func.addFunctionParameter(name);
+		_currentFunction.addFunctionParameter(type, name);
 	}
 	
 	@Override
-	public void doneFunctionParameters()
-	{
-		_currentFunction = null;
-	}
-	
-	@Override
-	public void addStatement(AbstractStatement stmt)
+	public void addStatement(AbstractStatement stmt, AbstractToken source)
 	{
 		if (_currentFunction == null)
 		{
@@ -146,12 +142,26 @@ public class Python_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	public void addComment(String comment, AbstractToken source)
 	{
-		return Python_Type.transformType(type, typeName, source);
+		throw new RuntimeException("Need to implement");
 	}
 
 	// ================ Statements ================
+
+	@Override
+	public AbstractStatement newBlockStatement(
+			ArrayList<AbstractStatement> statements, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
+	}
+
+	@Override
+	public AbstractStatement newBreakStatement(AbstractToken source)
+	{
+		Python_BreakStatement brkStmt = new Python_BreakStatement();
+		return wrapStatement(brkStmt.generateBreak(source));
+	}
 
 	@Override
 	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
@@ -242,6 +252,14 @@ public class Python_Generator extends EagleGenerator
 		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 	
+	@Override
+	public Python_Statement newReturnStatement(AbstractExpression ret,
+			AbstractToken source)
+	{
+		Python_ReturnStatement retStmt = new Python_ReturnStatement();
+		return retStmt.generateReturn((Python_Expression) ret, source);
+	}
+
 	@Override
 	public AbstractExpression newShiftExpression(AbstractExpression left,
 			ShiftEnum shift, AbstractExpression right, AbstractToken source)
@@ -430,6 +448,12 @@ public class Python_Generator extends EagleGenerator
 	{
 		Python_Function_Call creat = new Python_Function_Call();
 		return creat.generateInvocation((Python_Variable) var, args, source);
+	}
+	
+	@Override
+	public AbstractExpression newCurrentDatetime()
+	{
+		throw new RuntimeException("Need to implement");
 	}
 	
 	// ================ Terminals ================

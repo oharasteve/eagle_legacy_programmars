@@ -6,6 +6,7 @@ package com.eagle.programmar.Java;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.programmar.Java.Terminals.Java_Punctuation;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -16,9 +17,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_ParameterList extends TokenSequence
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) @OPT @NOSPACE Java_MethodParameter param;
-	public @S(30) @OPT @NOSPACE TokenList<Java_MoreParameters> moreParams;
-	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+	public @S(20) @OPT @NOSPACE SeparatedList<Java_MethodParameter, PunctuationComma> params;
+	public @S(30) @NOSPACE PunctuationRightParen rightParen;
 
 	public static class Java_MethodParameter extends TokenSequence
 	{
@@ -38,11 +38,5 @@ public class Java_ParameterList extends TokenSequence
 			public @CHOICE Java_KeywordChoice XXFINAL = new Java_KeywordChoice("final", "static");
 			public @CHOICE Java_Annotation XXannotation;
 		}
-	}
-
-	public static class Java_MoreParameters extends TokenSequence
-	{
-		public @S(10) @NOSPACE PunctuationComma comma;
-		public @S(20) Java_MethodParameter param;
 	}
 }

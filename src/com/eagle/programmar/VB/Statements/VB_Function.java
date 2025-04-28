@@ -4,8 +4,6 @@
 package com.eagle.programmar.VB.Statements;
 
 import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.PrivacyEnum;
-import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -92,21 +90,21 @@ public class VB_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		PrivacyEnum privacy = PrivacyEnum.NONE;
-		if (modifier != null && modifier.isPresent())
-		{
-			switch (modifier.getValue())
-			{
-			case "private":
-				privacy = PrivacyEnum.PRIVATE;
-				break;
-			case "public":
-				privacy = PrivacyEnum.PUBLIC;
-				break;
-			default:
-				throw new RuntimeException("Unable to handle " + modifier.getValue());
-			}
-		}
+//		PrivacyEnum privacy = PrivacyEnum.NONE;
+//		if (modifier != null && modifier.isPresent())
+//		{
+//			switch (modifier.getValue())
+//			{
+//			case "private":
+//				privacy = PrivacyEnum.PRIVATE;
+//				break;
+//			case "public":
+//				privacy = PrivacyEnum.PUBLIC;
+//				break;
+//			default:
+//				throw new RuntimeException("Unable to handle " + modifier.getValue());
+//			}
+//		}
 		
 		AbstractType newType = null;
 		if (type != null && type.isPresent())
@@ -115,25 +113,22 @@ public class VB_Function extends TokenSequence
 			newType = findType(generator, kw.getValue());
 		}
 		
-		AbstractFunction func = generator.newFunction(name.getValue(), privacy,
-				StaticEnum.NONE, newType);
+		generator.addMethod(newType, name.getValue(), this);
 		
 		if (params.params != null && params.params.isPresent())
 		{
 			for (int i = 0; i < params.params.getPrimaryCount(); i++)
 			{
 				VB_Parameter param = params.params.getPrimaryElement(i);
-				newType = null;
+				AbstractType paramType = null;
 				if (param.as != null && param.as.isPresent())
 				{
 					VB_KeywordChoice kw = (VB_KeywordChoice) param.as.type.getWhich();
-					newType = findType(generator, kw.getValue());
+					paramType = findType(generator, kw.getValue());
 				}
 				
-				generator.addFunctionParameter(func, param.var.getValue(), newType);
+				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-		
-		generator.doneFunctionParameters();
 	}
 }

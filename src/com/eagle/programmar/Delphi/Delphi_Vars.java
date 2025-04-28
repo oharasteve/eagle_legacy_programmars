@@ -6,7 +6,6 @@ package com.eagle.programmar.Delphi;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Generate_Eagle_Statement.PRIVACY;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Variable_Definition;
@@ -15,9 +14,12 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Vars extends TokenSequence implements EagleRunnable
 {
@@ -39,14 +41,30 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 		// Nothing to do here without initializers
 	}
 	
-	@Override
-	public void transform(EagleGenerator generator)
+	public void transformVars(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<Stmt> dataLines = _transformVars.transform(trans,
-				PRIVACY.PRIVATE, (Delphi_Vars) which);
-		for (Delphi_Statement data : dataLines)
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+	
+		for (Delphi_Var var : this.vars._elements)
 		{
-			data.addClassData(generator);
+			for (Delphi_Comment comment : var.comments._elements)
+			{
+				generator.addComment(comment.getValue(), comment);
+			}
+
+			AbstractType type = var.type.convertType(generator);
+
+			for (int i = 0; i < var.vars.getPrimaryCount(); i++)
+			{
+				Delphi_Variable_Definition def = var.vars.getPrimaryElement(i);
+				String varName = def.getValue();
+				AbstractStatement data = generator.newDataDeclaration(varName, null,
+						type, null, def);
+				if (data != null)
+				{
+					result.add(data);
+				}
+			}
 		}
 	}
 }

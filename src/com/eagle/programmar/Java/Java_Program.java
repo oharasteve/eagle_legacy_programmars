@@ -116,4 +116,17 @@ public class Java_Program extends AbstractLanguage implements EagleRunnable
 		
 		return prog;
 	}
+	
+	public void addClass(Java_Class cls)
+	{
+		Java_ClassOrEnum entry = new Java_ClassOrEnum();
+		entry.setWhich(cls);
+	
+		if (this.classOrEnumList == null)
+		{
+			this.classOrEnumList = new TokenList<Java_ClassOrEnum>();
+			this.classOrEnumList.setPresent(true);
+		}
+		this.classOrEnumList.addToken(entry);
+	}
 }

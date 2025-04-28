@@ -3,21 +3,29 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Writeln_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Delphi_Writeln_Statement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("System.Writeln") Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
+	public @S(10) @DOC("System.Writeln") Delphi_KeywordChoice WRITELN =
+			new Delphi_KeywordChoice("Write", "WriteLn");
 	public @S(20) @OPT Delphi_WriteLn_Something something;
 
 	public static class Delphi_WriteLn_Piece extends TokenSequence
@@ -45,10 +53,49 @@ public class Delphi_Writeln_Statement extends TokenSequence implements EagleRunn
 	{
 		for (int i = 0; i < something.pieces.getPrimaryCount(); i++)
 		{
-			Delphi_WriteLn_Piece item = something.pieces.getPrimaryElement(i);
-			String result = interpreter.getStrValue(item.expr);
+			Delphi_WriteLn_Piece piece = something.pieces.getPrimaryElement(i);
+			if (piece.width != null && piece.width.isPresent())
+			{
+				throw new RuntimeException("Can't handle field widths");
+			}
+			String result = interpreter.getStrValue(piece.expr);
 			System.out.print(result);
 		}
 		System.out.println();
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+		if (something != null && something.isPresent())
+		{
+			int numPieces = something.pieces.getPrimaryCount();
+			for (int i = 0; i < numPieces; i++)
+			{
+				Delphi_WriteLn_Piece piece = something.pieces.getPrimaryElement(i);
+				if (piece.width != null && piece.width.isPresent())
+				{
+					throw new RuntimeException("Can't handle field widths");
+				}
+				pieces.add(piece.expr);
+			}
+		}
+		
+		boolean newLine;
+		switch (WRITELN.getValue().toLowerCase())
+		{
+		case "write":
+			newLine = false;
+			break;
+		case "writeln":
+			newLine = true;
+			break;
+		default:
+			throw new RuntimeException("Unexpected write command: " + WRITELN.getValue());
+		}
+		
+		return generator.newPrintStatement(pieces, newLine, this);
 	}
 }

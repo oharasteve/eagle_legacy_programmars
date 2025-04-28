@@ -170,11 +170,10 @@ public class Java_Method extends TokenSequence
 		}
 	}
 	
-	public static Java_Method newJavaMethod(PrivacyEnum privacy, StaticEnum isStatic,
+	public void newJavaMethod(PrivacyEnum privacy, StaticEnum isStatic,
 			AbstractType returnType, String methodName)
 	{
-		Java_Method meth = new Java_Method();
-		meth.modifiers = new TokenList<Java_MethodModifier>();
+		this.modifiers = new TokenList<Java_MethodModifier>();
 		
 		Java_MethodModifier modifier1 = null;
 		switch (privacy)
@@ -194,7 +193,7 @@ public class Java_Method extends TokenSequence
 		}
 		if (modifier1 != null)
 		{
-			meth.modifiers.addToken(modifier1);
+			this.modifiers.addToken(modifier1);
 		}
 
 		switch (isStatic)
@@ -204,15 +203,15 @@ public class Java_Method extends TokenSequence
 		case STATIC:
 			Java_MethodModifier modifier2 = new Java_MethodModifier();
 			modifier2.setWhich(new Java_KeywordChoice("static"));
-			meth.modifiers.addToken(modifier2);
+			this.modifiers.addToken(modifier2);
 			break;
 		default:
 			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
 		
-		meth.typeAndName = new Java_MethodTypeAndName();
+		this.typeAndName = new Java_MethodTypeAndName();
 		Java_MethodType methodType = new Java_MethodType();
-		meth.typeAndName.setWhich(methodType);
+		this.typeAndName.setWhich(methodType);
 		methodType.jtype = (Java_Type) returnType;
 		
 		methodType.parameters = new Java_ParameterList();
@@ -220,26 +219,39 @@ public class Java_Method extends TokenSequence
 		methodType.parameters.leftParen = new PunctuationLeftParen();
 		methodType.parameters.rightParen = new PunctuationRightParen();
 		
-		meth.body = new Java_MethodBody();
+		this.body = new Java_MethodBody();
 		Java_MethodImplementation impl = new Java_MethodImplementation();
 		impl.block = new Java_StatementBlock();
 		impl.block.leftBrace = new PunctuationLeftBrace();
 		impl.block.statements = new TokenList<Java_StatementOrComment>();
 		impl.block.rightBrace = new PunctuationRightBrace();
-		meth.body.setWhich(impl);
+		this.body.setWhich(impl);
 		
 		methodType.methodName = new Java_Method_Definition();
 		methodType.methodName.setValue(methodName);
-		return meth;
 	}
 	
-	public void addJavaParameter(AbstractType type, String name)
+	public void addMethodParameter(AbstractType type, String name)
 	{
-		Java_MethodType methodType = (Java_MethodType) typeAndName.getWhich();
-		methodType.parameters.param = new Java_MethodParameter();
-		methodType.parameters.param.setPresent(true);
-		methodType.parameters.param.id = new Java_Variable_Definition();
-		methodType.parameters.param.id.setValue(name);
-		methodType.parameters.param.jtype = (Java_Type) type;
+		Java_MethodParameter param = new Java_MethodParameter();
+		param.setPresent(true);
+		param.id = new Java_Variable_Definition();
+		param.id.setValue(name);
+		param.jtype = (Java_Type) type;
+		
+		AbstractToken which = this.typeAndName.getWhich();
+		if (which instanceof Java_MethodType)
+		{
+			Java_MethodType methType = (Java_MethodType) which;
+			if (methType.parameters.params.size() > 0)
+			{
+				methType.parameters.params.addSecondaryElement(new PunctuationComma());
+			}
+			methType.parameters.params.addPrimaryElement(param);
+		}
+		else
+		{
+			throw new RuntimeException("Can't handle: " + which);
+		}
 	}
 }

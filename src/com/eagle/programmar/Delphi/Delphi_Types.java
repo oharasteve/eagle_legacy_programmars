@@ -3,12 +3,16 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Type_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Types extends TokenSequence
 {
@@ -21,5 +25,17 @@ public class Delphi_Types extends TokenSequence
 		public @S(20) PunctuationEquals equals;
 		public @S(30) Delphi_Type type;
 		public @S(40) PunctuationSemicolon semicolon;
+	}
+	
+	public void transformTypes(EagleTransformer transformer, EagleGenerator generator)
+	{
+		for (Delphi_MoreTypes typeEntry : this.moreTypes._elements)
+		{
+			String varName = typeEntry.name.getValue();
+			AbstractType type = typeEntry.type.convertType(generator);
+			AbstractStatement data = generator.newDataDeclaration(varName, null,
+					type, null, typeEntry);
+			generator.addStatement(data, typeEntry);
+		}
 	}
 }

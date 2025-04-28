@@ -28,18 +28,20 @@ import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
+import com.eagle.programmar.Java.Statements.Java_BreakStatement;
 import com.eagle.programmar.Java.Statements.Java_DoWhileStatement;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_ForStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_PrintStatement;
+import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
+import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -52,15 +54,12 @@ public class Java_Generator extends EagleGenerator
 	public static String SUFFIX = ".java";
 	
 	private Java_Program _program;
-	private Java_Class _mainClass;
-	private Java_Method _mainMethod;
-	private Java_Method _currentMethod;
+	private String _className;
 	
 	public Java_Generator(String className)
 	{
-		_mainClass = Java_Class.newJavaClass(PrivacyEnum.PUBLIC, className);
-		_program = Java_Program.newJavaProgram(_mainClass, "com.eagle.tests.VB.transformed");
-		addMain();
+		_program = new Java_Program();
+		_className = className;
 	}
 	
 	@Override
@@ -75,18 +74,6 @@ public class Java_Generator extends EagleGenerator
 		return SUFFIX;
 	}
 
-	@Override
-	public void addMain()
-	{
-		Java_Type mainType = Java_Type.newPrimitiveType("void");
-		_mainMethod = Java_Method.newJavaMethod(PrivacyEnum.PUBLIC,
-				StaticEnum.STATIC, mainType, "main");
-		Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
-		_mainMethod.addJavaParameter(paramType, "args");
-		_mainClass.addMethod(_mainMethod);
-		_currentMethod = _mainMethod;
-	}
-	
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
@@ -109,42 +96,95 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public Java_Method newFunction(String name, PrivacyEnum privacy, StaticEnum isStatic, AbstractType type)
-	{
-		_currentMethod = Java_Method.newJavaMethod(privacy, isStatic, type, name);
-		_mainClass.addMethod(_currentMethod);
-		return _currentMethod;
-	}
-	
-	@Override
-	public void addFunctionParameter(AbstractFunction function, String name, AbstractType type)
-	{
-		Java_Method func = (Java_Method) function;
-		func.addJavaParameter(type, name);
-	}
-	
-	@Override
-	public void doneFunctionParameters()
-	{
-		_currentMethod = _mainMethod;
-	}
-	
-	@Override
-	public void addStatement(AbstractStatement stmt)
-	{
-		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
-		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-		stmtOrComment.setWhich((Java_Statement) stmt);
-		impl.block.statements.addToken(stmtOrComment);
-	}
-	
-	@Override
 	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
 	{
 		return Java_Type.transformType(type, typeName, source);
 	}
 
+	// ================== Main program and class ==================
+	
+	private Java_Class _currentClass = null;
+	private Java_Method _currentMethod = null;
+
+	private void checkClass()
+	{
+		if (_currentClass == null)
+		{
+			_currentClass = new Java_Class();
+			_currentClass.newJavaClass(PrivacyEnum.PUBLIC, _className);
+			_program.addClass(_currentClass);
+		}
+	}
+	
+	private void checkMethod()
+	{
+		checkClass();
+		
+		if (_currentMethod == null)
+		{
+			Java_Type mainType = Java_Type.newPrimitiveType("void");
+			_currentMethod = new Java_Method();
+			_currentMethod.newJavaMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
+					mainType, "Main");
+			_currentClass.addMethod(_currentMethod);
+			
+			Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
+			_currentMethod.addMethodParameter(paramType, "args");
+		}
+	}
+	
+	@Override
+	public void addMethod(AbstractType returnType, String name, AbstractToken source)
+	{
+		checkClass();
+
+		_currentMethod = new Java_Method();
+		_currentMethod.newJavaMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
+				returnType, name);
+		_currentMethod.setTransformationSource(source);
+		_currentClass.addMethod(_currentMethod);
+	}
+	
+	@Override
+	public void addMethodParameter(AbstractType type, String name)
+	{
+		_currentMethod.addMethodParameter(type, name);
+	}
+
+	@Override
+	public void addStatement(AbstractStatement stmt, AbstractToken source)
+	{
+		checkMethod();
+		
+		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
+		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
+		stmtOrComment.setWhich((Java_Statement) stmt);
+		stmtOrComment.setTransformationSource(source);
+		impl.block.statements.addToken(stmtOrComment);
+	}
+	
+	@Override
+	public void addComment(String comment, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
+	}
+	
 	// ================ Statements ================
+
+	@Override
+	public AbstractStatement newBlockStatement(
+			ArrayList<AbstractStatement> statements, AbstractToken source)
+	{
+		Java_StatementBlock block = new Java_StatementBlock();
+		return wrapStatement(block.generateBlock(statements, source));
+	}
+
+	@Override
+	public AbstractStatement newBreakStatement(AbstractToken source)
+	{
+		Java_BreakStatement brkStmt = new Java_BreakStatement();
+		return wrapStatement(brkStmt.generateBreak(source));
+	}
 
 	@Override
 	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
@@ -233,6 +273,14 @@ public class Java_Generator extends EagleGenerator
 	{
 		Java_PrintStatement prtStmt = new Java_PrintStatement();
 		return prtStmt.generatePrint(pieces, newLine, source);
+	}
+
+	@Override
+	public Java_Statement newReturnStatement(AbstractExpression ret,
+			AbstractToken source)
+	{
+		Java_ReturnStatement retStmt = new Java_ReturnStatement();
+		return retStmt.generateReturn((Java_Expression) ret, source);
 	}
 
 	@Override
@@ -428,6 +476,12 @@ public class Java_Generator extends EagleGenerator
 	{
 		Java_MethodInvocation creat = new Java_MethodInvocation();
 		return creat.generateInvocation((Java_Variable) var, args, source);
+	}
+		
+	@Override
+	public AbstractExpression newCurrentDatetime()
+	{
+		throw new RuntimeException("Need to implement");
 	}
 
 	// ================ Terminals ================

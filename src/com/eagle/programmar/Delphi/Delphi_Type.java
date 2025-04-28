@@ -3,16 +3,20 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Variable_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Number;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -87,5 +91,34 @@ public class Delphi_Type extends TokenChooser
 		public @S(20) PunctuationLeftBracket leftBracket;
 		public @S(30) Delphi_Expression expr;
 		public @S(40) PunctuationRightBracket rightBracket;
+	}
+
+	public AbstractType convertType(EagleGenerator generator)
+	{
+		TypeEnum newType;
+		String userType = null;
+		AbstractToken which = this.getWhich();
+		if (which instanceof Delphi_KeywordChoice)
+		{
+			Delphi_KeywordChoice kw = (Delphi_KeywordChoice) which;
+			switch (kw.getValue().toLowerCase())
+			{
+			case "integer":
+				newType = TypeEnum.INTEGER;
+			default:
+				throw new RuntimeException("Unable to convert type: " + kw.getValue());
+			}
+		}
+		else if (which instanceof Delphi_Identifier_Reference)
+		{
+			Delphi_Identifier_Reference id = (Delphi_Identifier_Reference) which;
+			newType = TypeEnum.OTHER;
+			userType = id.getValue();
+		}
+		else
+		{
+			throw new RuntimeException("Can't handle type yet: " + which);
+		}
+		return generator.transformType(newType, userType, this);
 	}
 }

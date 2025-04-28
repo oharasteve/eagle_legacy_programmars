@@ -5,6 +5,7 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.EagleGenerator.IncrementEnum;
 import com.eagle.generate.EagleGenerator.RelationalEnum;
@@ -38,6 +39,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -46,9 +48,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
+				EagleTransformableStatement,
 				Eagle_Generate_ForLoop<Java_Statement, Java_Expression>,
 				Eagle_Generate_ForRange<Java_Statement, Java_Expression>
 {
@@ -151,6 +156,37 @@ public class Java_ForStatement extends TokenSequence
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
 
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (this.init.what.getPrimaryCount() == 1)
+		{
+			Java_ForWhat what = this.init.what.getPrimaryElement(0);
+			if (what.getWhich() instanceof Java_ForWithType)
+			{
+				Java_ForWithType withType = (Java_ForWithType) what.getWhich();
+				String varName = withType.variable.getValue();
+				AbstractExpression fromExpr = transformer.transformExpression(generator,
+						withType.equalsInit.initialExpr);
+				AbstractExpression asgExpr = generator.newAssignmentExpression(varName, null,
+						AssignmentEnum.EQUALS, fromExpr, null);
+				
+				if (this.increments.getPrimaryCount() == 1)
+				{
+					AbstractExpression toExpr = transformer.transformExpression(generator,
+							withType.equalsInit.initialExpr);
+					AbstractExpression delta = transformer.transformExpression(generator,
+							increments.first());
+					AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
+					return generator.newForLoopStatement1(asgExpr, toExpr, delta, newAction, this);
+				}
+			}
+		}
+		
+		throw new RuntimeException("Unable to handle for loop: " + this);
+	}
+	
 	@Override
 	public Java_Statement generateForLoop1(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.programmar.Delphi.Statements.Delphi_Readln_Statement.Delphi_Readln_What.Delphi_Readln_FromFile;
+import com.eagle.programmar.Delphi.Statements.Delphi_Readln_Statement.Delphi_Readln_What.Delphi_Readln_NoFile;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenChooser;
@@ -11,8 +14,11 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Readln_Statement extends TokenSequence implements AbstractStatement
+public class Delphi_Readln_Statement extends TokenSequence
+		implements AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("System.Readln") Delphi_Keyword READLN = new Delphi_Keyword("ReadLn");
 	public @S(20) @OPT Delphi_Readln_What what;
@@ -34,5 +40,24 @@ public class Delphi_Readln_Statement extends TokenSequence implements AbstractSt
 			public @S(40) Delphi_Identifier_Reference var;
 			public @S(50) PunctuationRightParen rightParen;
 		}
+	}
+
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (what.getWhich() instanceof Delphi_Readln_NoFile)
+		{
+			Delphi_Readln_NoFile noFile = (Delphi_Readln_NoFile) what.getWhich();
+			String var1 = noFile.var.getValue();
+			return generator.newReadInteger(var1, this);
+		}
+		else if (what.getWhich() instanceof Delphi_Readln_FromFile)
+		{
+			Delphi_Readln_FromFile fromFile = (Delphi_Readln_FromFile) what.getWhich();
+			String id = fromFile.file.getValue();
+			String var2 = fromFile.var.getValue();
+			return generator.newFileReadStatement(id, var2, this);
+		}
+		else throw new RuntimeException("Unable to handle: " + what.getWhich());
 	}
 }

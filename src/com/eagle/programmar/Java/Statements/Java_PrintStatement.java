@@ -6,6 +6,7 @@ package com.eagle.programmar.Java.Statements;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -22,9 +23,11 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_PrintStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable,
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement,
 				Eagle_Generate_Print<Java_Statement, Java_Expression>
 {
 	public @S(10) @NEWLINE Java_Keyword SYSTEM = new Java_Keyword("System");
@@ -54,6 +57,27 @@ public class Java_PrintStatement extends TokenSequence
 		}
 		
 		throw new RuntimeException("Unexpected keyword: " + PRINT.getValue());
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		boolean newLine;
+		switch (PRINT.getValue())
+		{
+		case "print":
+			newLine = false;
+			break;
+		case "println":
+			newLine = true;
+			break;
+		default:
+			throw new RuntimeException("Unexpected PRINT value: " + PRINT.getValue());
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		return generator.newPrintStatement1(value, newLine, this);
 	}
 
 	@Override

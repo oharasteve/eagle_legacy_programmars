@@ -121,10 +121,9 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		}
 	}
 	
-	public static CSharp_Class newCSharpClass(PrivacyEnum privacy, String className)
+	public void newCSharpClass(PrivacyEnum privacy, String className)
 	{
-		CSharp_Class cls = new CSharp_Class();
-		cls.modifiers = new TokenList<CSharp_ClassModifier>();
+		this.modifiers = new TokenList<CSharp_ClassModifier>();
 		CSharp_ClassModifier modifier = new CSharp_ClassModifier();
 		switch (privacy)
 		{
@@ -137,24 +136,22 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		default:
 			throw new RuntimeException("Can't handle privacy: " + privacy);
 		}
-		cls.modifiers.addToken(modifier);
+		this.modifiers.addToken(modifier);
 		
-		cls.className = new CSharp_Class_Definition();
-		cls.className.setValue(className);
+		this.className = new CSharp_Class_Definition();
+		this.className.setValue(className);
 		
-		cls.classOrInterface = new CSharp_KeywordChoice("class");
-		cls.elements = new TokenList<CSharp_ClassElement>();
-		cls.elements.setPresent(true);
-		cls.leftBrace = new PunctuationLeftBrace();
-		cls.rightBrace = new PunctuationRightBrace();
-		
-		return cls;
+		this.classOrInterface = new CSharp_KeywordChoice("class");
+		this.elements = new TokenList<CSharp_ClassElement>();
+		this.elements.setPresent(true);
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
 	}
 	
 	public void addMethod(CSharp_Method method)
 	{
 		CSharp_ClassElement element = new CSharp_ClassElement();
 		element.setWhich(method);
-		elements.addToken(element);
+		this.elements.addToken(element);
 	}
 }

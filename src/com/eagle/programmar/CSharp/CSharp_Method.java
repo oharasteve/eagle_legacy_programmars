@@ -21,6 +21,7 @@ import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -55,10 +56,9 @@ public class CSharp_Method extends TokenSequence implements
 	public static class CSharp_MethodParameters extends TokenSequence
 	{
 		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(20) @OPT @NOSPACE CSharp_MethodParameter param;
-		public @S(30) @OPT TokenList<CSharp_MoreParameters> moreParams;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
-		public @S(50) @OPT CSharp_Comment comment3;
+		public @S(20) @OPT @NOSPACE SeparatedList<CSharp_MethodParameter, PunctuationComma> params;
+		public @S(30) @NOSPACE PunctuationRightParen rightParen;
+		public @S(40) @OPT CSharp_Comment comment3;
 	}
 
 	public static class CSharp_MethodModifier extends TokenSequence
@@ -82,12 +82,6 @@ public class CSharp_Method extends TokenSequence implements
 			public @S(10) PunctuationEquals equals;
 			public @S(20) CSharp_Expression value;
 		}
-	}
-
-	public static class CSharp_MoreParameters extends TokenSequence
-	{
-		public @S(10) PunctuationComma comma;
-		public @S(20) CSharp_MethodParameter param;
 	}
 
 	public static class CSharp_MethodWhere extends TokenSequence
@@ -147,11 +141,10 @@ public class CSharp_Method extends TokenSequence implements
 		}
 	}
 	
-	public static CSharp_Method newCSharpMethod(PrivacyEnum privacy, StaticEnum isStatic,
-			AbstractType returnType, String methodName)
+	public void newCSharpMethod(PrivacyEnum privacy,
+			StaticEnum isStatic, AbstractType returnType, String methodName)
 	{
-		CSharp_Method meth = new CSharp_Method();
-		meth.modifiers = new TokenList<CSharp_MethodModifier>();
+		this.modifiers = new TokenList<CSharp_MethodModifier>();
 		
 		CSharp_MethodModifier modifier1 = new CSharp_MethodModifier();
 		switch (privacy)
@@ -166,7 +159,7 @@ public class CSharp_Method extends TokenSequence implements
 		default:
 			throw new RuntimeException("Can't handle privacy: " + privacy);
 		}
-		meth.modifiers.addToken(modifier1);
+		this.modifiers.addToken(modifier1);
 
 		switch (isStatic)
 		{
@@ -175,38 +168,44 @@ public class CSharp_Method extends TokenSequence implements
 		case STATIC:
 			CSharp_MethodModifier modifier2 = new CSharp_MethodModifier();
 			modifier2.modifier = new CSharp_KeywordChoice("static");
-			meth.modifiers.addToken(modifier2);
+			this.modifiers.addToken(modifier2);
 			break;
 		default:
 			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
 		
-		meth.returnType = (CSharp_Type) returnType;
+		this.returnType = (CSharp_Type) returnType;
 		
-		meth.parameters = new CSharp_MethodParameters();
-		meth.parameters.setPresent(true);
-		meth.parameters.leftParen = new PunctuationLeftParen();
-		meth.parameters.rightParen = new PunctuationRightParen();
+		this.parameters = new CSharp_MethodParameters();
+		this.parameters.setPresent(true);
+		this.parameters.leftParen = new PunctuationLeftParen();
+		this.parameters.params = new SeparatedList<CSharp_MethodParameter, PunctuationComma>();
+		this.parameters.rightParen = new PunctuationRightParen();
 		
-		meth.body = new CSharp_MethodBody();
+		this.body = new CSharp_MethodBody();
 		CSharp_MethodImplementation impl = new CSharp_MethodImplementation();
 		impl.block = new CSharp_StatementBlock();
 		impl.block.leftBrace = new PunctuationLeftBrace();
 		impl.block.statements = new TokenList<CSharp_StatementOrComment>();
 		impl.block.rightBrace = new PunctuationRightBrace();
-		meth.body.setWhich(impl);
+		this.body.setWhich(impl);
 		
-		meth.methodName = new CSharp_Method_Definition();
-		meth.methodName.setValue(methodName);
-		return meth;
+		this.methodName = new CSharp_Method_Definition();
+		this.methodName.setValue(methodName);
 	}
 	
-	public void addCSharpParameter(AbstractType type, String name)
+	public void addMethodParameter(AbstractType type, String name)
 	{
-		parameters.param = new CSharp_MethodParameter();
-		parameters.param.setPresent(true);
-		parameters.param.id = new CSharp_Variable_Definition();
-		parameters.param.id.setValue(name);
-		parameters.param.cstype = (CSharp_Type) type;
+		CSharp_MethodParameter param = new CSharp_MethodParameter();
+		param.setPresent(true);
+		param.id = new CSharp_Variable_Definition();
+		param.id.setValue(name);
+		param.cstype = (CSharp_Type) type;
+		
+		if (this.parameters.params.size() > 0)
+		{
+			this.parameters.params.addSecondaryElement(new PunctuationComma());
+		}
+		this.parameters.params.addPrimaryElement(param);
 	}
 }

@@ -3,16 +3,22 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
+import com.eagle.generate.Statements.Eagle_Generate_Return;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_ReturnStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class CSharp_ReturnStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement,
+				Eagle_Generate_Return<CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
 	public @S(20) @DOC("statements.html#14.17") CSharp_Keyword RETURN = new CSharp_Keyword("return");
@@ -25,5 +31,16 @@ public class CSharp_ReturnStatement extends TokenSequence implements EagleRunnab
 		EagleValue val = interpreter.getEagleValue(expression);
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
+	}
+	
+	@Override
+	public CSharp_Statement generateReturn(CSharp_Expression ret, AbstractToken source)
+	{
+		if (ret != null && ret.isPresent())
+		{
+			this.expression = ret;
+		}
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(this);
 	}
 }

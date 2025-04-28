@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -17,9 +19,14 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_For_Statement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Delphi_For_Statement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#For_Statements") Delphi_Keyword FOR = new Delphi_Keyword(
 			"For");
@@ -84,5 +91,35 @@ public class Delphi_For_Statement extends TokenSequence implements EagleRunnable
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression fromExpr = transformer.transformExpression(generator, this.from);
+		AbstractExpression toExpr = transformer.transformExpression(generator, this.to);
+		String var = this.var.getValue();
+		AbstractStatement newAction = transformer.transformStatement1(
+				generator, this.stmt);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var, null,
+				AssignmentEnum.EQUALS, fromExpr, null);
+
+		String toDownto = this.TO_DOWNTO.getValue();
+		AbstractExpression delta;
+		switch (this.TO_DOWNTO.getValue().toLowerCase())
+		{
+		case "to":
+			delta = null;
+			break;
+		case "downto":
+			delta = generator.newNumberExpression("-1", null);
+			break;
+		default:
+			throw new RuntimeException("Expected TO or DOWNTO, not " + toDownto);
+		}
+
+		return generator.newForLoopStatement1(asgExpr, toExpr, delta,
+				newAction, this);
 	}
 }

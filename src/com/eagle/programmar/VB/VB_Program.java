@@ -84,7 +84,7 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 			{
 				for (AbstractStatement newStmt : newStmts)
 				{
-					generator.addStatement(newStmt);
+					generator.addStatement(newStmt, stmt);
 				}
 			}
 		}

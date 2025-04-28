@@ -3,13 +3,16 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_ArgumentList;
+import com.eagle.programmar.Java.Java_ArgumentList.Java_MoreArguments;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Method;
@@ -25,9 +28,12 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_MethodInvocation extends PrimaryOperator implements EagleRunnableWithResult,
-		Eagle_Generate_MethodInvocation<Java_Expression, Java_Variable>
+public class Java_MethodInvocation extends PrimaryOperator
+		implements EagleRunnableWithResult, EagleTransformableExpression,
+				Eagle_Generate_MethodInvocation<Java_Expression, Java_Variable>
 {
 	public @S(10) Java_Variable methodName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -66,16 +72,7 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 				if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount += argList.moreArgs.size();
 			}
 
-			int paramCount = 0;
-			if (parameters != null)
-			{
-				if (parameters.param != null && parameters.param.isPresent()) paramCount = 1;
-				if (parameters.moreParams != null && parameters.moreParams.isPresent())
-				{
-					paramCount += parameters.moreParams.size();
-				}
-			}
-			
+			int paramCount = parameters.params.getPrimaryCount();
 			if (argCount != paramCount)
 			{
 				throw new RuntimeException(
@@ -88,14 +85,13 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 			if (argCount > 0)
 			{
 				Java_Expression expr = argList.arg;
-				Java_MethodParameter param = parameters.param;
 				for (int i = 0; i < argCount; i++)
 				{
 					if (i > 0)
 					{
 						expr = argList.moreArgs._elements.get(i-1).arg;
-						param = parameters.moreParams._elements.get(i-1).param;
 					}
+					Java_MethodParameter param = parameters.params.getPrimaryElement(i);
 					EagleValue val = interpreter.getEagleValue(expr);
 					interpreter.setSymbol(param.id, param.id.getValue(), val);
 				}
@@ -126,6 +122,33 @@ public class Java_MethodInvocation extends PrimaryOperator implements EagleRunna
 		return result;
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		Java_Variable variable = this.methodName;
+		if (variable.firstId.getWhich() instanceof Java_Identifier_Reference)
+		{
+			Java_Identifier_Reference id = (Java_Identifier_Reference) variable.firstId.getWhich();
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			if (this.argList != null && this.argList.isPresent())
+			{
+				args.add(transformer.transformExpression(generator, this.argList.arg));
+				if (this.argList.moreArgs != null && this.argList.moreArgs.isPresent())
+				{
+					for (Java_MoreArguments arg : this.argList.moreArgs._elements)
+					{
+						args.add(transformer.transformExpression(generator, arg.arg));
+					}
+				}
+			}
+			
+			Java_Variable var = Java_Variable.newVariable(id.getValue());
+			return generator.newMethodInvocation(var, args, this);
+		}
+		throw new RuntimeException("Can't handle: " + this);
+	}
+
 	@Override
 	public Java_Expression generateInvocation(Java_Variable var,
 			Collection<AbstractExpression> args, AbstractToken source)

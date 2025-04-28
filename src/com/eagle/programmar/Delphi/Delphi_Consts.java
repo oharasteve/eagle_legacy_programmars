@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -11,9 +13,13 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Consts extends TokenSequence implements EagleRunnable
 {
@@ -44,6 +50,20 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 		{
 			EagleValue val = interpreter.getEagleValue(con.expr);
 			interpreter.setSymbol(con, con.constant.getValue(), val);
+		}
+	}
+	
+	public void transformConsts(EagleTransformer transformer, EagleGenerator generator)
+	{
+		for (Delphi_Const constant : this.constants._elements)
+		{
+			String varName = constant.constant.getValue();
+			AbstractExpression expression = transformer.transformExpression(generator,
+					constant.expr);
+			AbstractType type = generator.transformType(TypeEnum.INTEGER, null, constant);
+			AbstractStatement data = generator.newDataDeclaration(
+					varName, null, type, expression, this);
+			generator.addStatement(data, constant);
 		}
 	}
 }

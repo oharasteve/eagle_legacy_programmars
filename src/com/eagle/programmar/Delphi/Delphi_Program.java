@@ -63,6 +63,7 @@ public class Delphi_Program extends AbstractLanguage
 			throw new RuntimeException("Can only handle complete Delphi programs");
 		}
 		Delphi_Full full = (Delphi_Full) fullOrPartial.getWhich();
-		return full.transformProgram(transformer, generator);
+		full.transformFull(transformer, generator);
+		return this;
 	}
 }

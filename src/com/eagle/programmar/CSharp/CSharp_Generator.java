@@ -27,18 +27,20 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
+import com.eagle.programmar.CSharp.Statements.CSharp_BreakStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_DoWhileStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_ReturnStatement;
+import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
-import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -51,15 +53,12 @@ public class CSharp_Generator extends EagleGenerator
 	public static String SUFFIX = ".cs";
 	
 	private CSharp_Program _program;
-	private CSharp_Class _mainClass;
-	private CSharp_Method _mainMethod;
-	private CSharp_Method _currentMethod;
+	private String _className;
 	
 	public CSharp_Generator(String className)
 	{
-		_mainClass = CSharp_Class.newCSharpClass(PrivacyEnum.PUBLIC, className);
-		_program = CSharp_Program.newCSharpProgram(_mainClass);
-		addMain();
+		_program = new CSharp_Program();
+		_className = className;
 	}
 
 	@Override
@@ -74,18 +73,6 @@ public class CSharp_Generator extends EagleGenerator
 		return SUFFIX;
 	}
 
-	@Override
-	public void addMain()
-	{
-		CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
-		_mainMethod = CSharp_Method.newCSharpMethod(PrivacyEnum.PUBLIC,
-				StaticEnum.STATIC, mainType, "Main");
-		CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
-		_mainMethod.addCSharpParameter(paramType, "args");
-		_mainClass.addMethod(_mainMethod);
-		_currentMethod = _mainMethod;
-	}
-	
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
@@ -108,43 +95,96 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public CSharp_Method newFunction(String name, PrivacyEnum privacy, StaticEnum isStatic, AbstractType type)
-	{
-		_currentMethod = CSharp_Method.newCSharpMethod(privacy, isStatic, type, name);
-		_mainClass.addMethod(_currentMethod);
-		return _currentMethod;
-	}
-	
-	@Override
-	public void addFunctionParameter(AbstractFunction function, String name, AbstractType type)
-	{
-		CSharp_Method func = (CSharp_Method) function;
-		func.addCSharpParameter(type, name);
-	}
-	
-	@Override
-	public void doneFunctionParameters()
-	{
-		_currentMethod = _mainMethod;
-	}
-
-	@Override
-	public void addStatement(AbstractStatement stmt)
-	{
-		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) _currentMethod.body.getWhich();
-		CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-		stmtOrComment.setWhich((CSharp_Statement) stmt);
-		impl.block.statements.addToken(stmtOrComment);
-	}
-	
-	@Override
 	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
 	{
 		return CSharp_Type.transformType(type, typeName, source);
 	}
 
+	// ================== Main program and class ==================
+	
+	private CSharp_Class _currentClass = null;
+	private CSharp_Method _currentMethod = null;
+
+	private void checkClass()
+	{
+		if (_currentClass == null)
+		{
+			_currentClass = new CSharp_Class();
+			_currentClass.newCSharpClass(PrivacyEnum.PUBLIC, _className);
+			_program.addClass(_currentClass);
+		}
+	}
+	
+	private void checkMethod()
+	{
+		checkClass();
+		
+		if (_currentMethod == null)
+		{
+			CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
+			_currentMethod = new CSharp_Method();
+			_currentMethod.newCSharpMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
+					mainType, "Main");
+			_currentClass.addMethod(_currentMethod);
+			
+			CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
+			_currentMethod.addMethodParameter(paramType, "args");
+		}
+	}
+	
+	@Override
+	public void addMethod(AbstractType returnType, String name, AbstractToken source)
+	{
+		checkClass();
+
+		_currentMethod = new CSharp_Method();
+		_currentMethod.newCSharpMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
+				returnType, name);
+		_currentMethod.setTransformationSource(source);
+		_currentClass.addMethod(_currentMethod);
+	}
+	
+	@Override
+	public void addMethodParameter(AbstractType type, String name)
+	{
+		_currentMethod.addMethodParameter(type, name);
+	}
+	
+	@Override
+	public void addStatement(AbstractStatement stmt, AbstractToken source)
+	{
+		checkMethod();
+		
+		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) _currentMethod.body.getWhich();
+		CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
+		stmtOrComment.setWhich((CSharp_Statement) stmt);
+		stmtOrComment.setTransformationSource(source);
+		impl.block.statements.addToken(stmtOrComment);
+	}
+	
+	@Override
+	public void addComment(String comment, AbstractToken source)
+	{
+		throw new RuntimeException("Need to implement");
+	}
+	
 	// ================ Statements ================
 	
+	@Override
+	public AbstractStatement newBlockStatement(
+			ArrayList<AbstractStatement> statements, AbstractToken source)
+	{
+		CSharp_StatementBlock block = new CSharp_StatementBlock();
+		return wrapStatement(block.generateBlock(statements, source));
+	}
+
+	@Override
+	public AbstractStatement newBreakStatement(AbstractToken source)
+	{
+		CSharp_BreakStatement brkStmt = new CSharp_BreakStatement();
+		return wrapStatement(brkStmt.generateBreak(source));
+	}
+
 	@Override
 	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
 			AbstractExpression initial, AbstractToken source)
@@ -233,6 +273,14 @@ public class CSharp_Generator extends EagleGenerator
 	{
 		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
 		return prtStmt.generatePrint(pieces, newLine, source);
+	}
+
+	@Override
+	public CSharp_Statement newReturnStatement(AbstractExpression ret,
+			AbstractToken source)
+	{
+		CSharp_ReturnStatement retStmt = new CSharp_ReturnStatement();
+		return retStmt.generateReturn((CSharp_Expression) ret, source);
 	}
 
 	@Override
@@ -427,6 +475,13 @@ public class CSharp_Generator extends EagleGenerator
 		CSharp_MethodInvocation creat = new CSharp_MethodInvocation();
 		return creat.generateInvocation((CSharp_Variable) var, args, source);
 	}
+	
+	@Override
+	public AbstractExpression newCurrentDatetime()
+	{
+		throw new RuntimeException("Need to implement");
+	}
+
 	
 	// ================ Terminals ================
 

@@ -65,4 +65,20 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 
 		interpreter.pushEagleValue(value);
 	}
+
+	public static Delphi_Variable newVariable(String name)
+	{
+		Delphi_Variable var = new Delphi_Variable();
+		Delphi_Extended_Variable extVar = new Delphi_Extended_Variable();
+		Delphi_DotName dotName = new Delphi_DotName();
+		dotName.dot = new PunctuationPeriod();
+		Delphi_Identifier_Reference id = new Delphi_Identifier_Reference();
+		id.setValue(name);
+		dotName.var = id;
+		extVar.setWhich(dotName);
+
+		var.extensions = new TokenList<Delphi_Extended_Variable>();
+		var.extensions.addToken(extVar);
+		return var;
+	}
 }

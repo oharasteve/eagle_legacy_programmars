@@ -3,10 +3,7 @@
 
 package com.eagle.programmar.Delphi;
 
-import java.util.ArrayList;
-
 import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Generate_Eagle_Statement.PRIVACY;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Include;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -14,7 +11,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.Delphi.Transform_Delphi;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Header extends TokenChooser
 {
@@ -38,46 +35,48 @@ public class Delphi_Header extends TokenChooser
 		public @S(30) PunctuationSemicolon semicolon;
 	}
 	
-	public void transformHeader(EagleGenerator generator)
+	public void processHeader(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken which = this.getWhich();
 		if (which instanceof Delphi_Comment)
 		{
 			String comment = ((Delphi_Comment) which).getValue();
-			generator._mainClass.addComment(comment, which);
+			generator.addComment(comment, which);
 		}
 		else if (which instanceof Delphi_Include)
 		{
 			String comment = ((Delphi_Include) which).getValue();
-			generator._mainClass.addComment(comment, which);
+			generator.addComment(comment, which);
 		}
 		else if (which instanceof Delphi_Uses)
 		{
 			Delphi_Uses uses = (Delphi_Uses) which;
-			uses.transform(generator);
+			uses.transformUses(transformer, generator);
 		}
 		else if (which instanceof Delphi_Types)
 		{
 			Delphi_Types types = (Delphi_Types) which;
-			types.transform(generator);
+			types.transformTypes(transformer, generator);
 		}
 		else if (which instanceof Delphi_Consts)
 		{
 			Delphi_Consts consts = (Delphi_Consts) which;
-			consts.transform(generator);
+			consts.transformConsts(transformer, generator);
 		}
 		else if (which instanceof Delphi_Vars)
 		{
 			Delphi_Vars vars = (Delphi_Vars) which;
-			vars.transform(generator);
+			vars.transformVars(transformer, generator);
 		}
 		else if (which instanceof Delphi_Procedure)
 		{
-			_transformProcedure.transform(trans, (Delphi_Procedure) which);
+			Delphi_Procedure proc = (Delphi_Procedure) which;
+			proc.transformProcedure(transformer, generator);
 		}
 		else if (which instanceof Delphi_Function)
 		{
-			_transformFunction.transform(trans, (Delphi_Function) which);
+			Delphi_Function func = (Delphi_Function) which;
+			func.transformFunction(transformer, generator);
 		}
 		else
 			throw new RuntimeException("Cannot handle " + which + " yet.");

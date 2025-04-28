@@ -59,13 +59,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			if (argList.arg.isPresent()) argCount = 1;
 			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount = 1 + argList.moreArgs.size();
 
-			int paramCount = 0;
-			if (meth.parameters.param.isPresent()) paramCount = 1;
-			if (meth.parameters.moreParams != null && meth.parameters.moreParams.isPresent())
-			{
-				paramCount = 1 + meth.parameters.moreParams.size();
-			}
-			
+			int paramCount = meth.parameters.params.getPrimaryCount();
 			if (argCount != paramCount)
 			{
 				throw new RuntimeException(
@@ -78,14 +72,13 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			if (argCount > 0)
 			{
 				CSharp_Argument arg = argList.arg;
-				CSharp_MethodParameter param = meth.parameters.param;
 				for (int i = 0; i < argCount; i++)
 				{
 					if (i > 0)
 					{
 						arg = argList.moreArgs._elements.get(i-1).arg;
-						param = meth.parameters.moreParams._elements.get(i-1).param;
 					}
+					CSharp_MethodParameter param = meth.parameters.params.getPrimaryElement(i);
 					AbstractToken which = arg.getWhich();
 					if (which instanceof CSharp_ArgumentOut)
 					{

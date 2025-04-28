@@ -4,13 +4,14 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MethodParameter;
-import com.eagle.programmar.CSharp.CSharp_Method.CSharp_MoreParameters;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
@@ -37,9 +38,8 @@ public class CSharp_Property extends TokenSequence
 	public static class CSharp_PropertySubscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) @OPT CSharp_MethodParameter param;
-		public @S(30) @OPT TokenList<CSharp_MoreParameters> moreParams;
-		public @S(40) PunctuationRightBracket rightBracket;
+		public @S(20) @OPT SeparatedList<CSharp_MethodParameter, PunctuationComma> params;
+		public @S(30) PunctuationRightBracket rightBracket;
 	}
 
 	public static class CSharp_GetterSetter extends TokenChooser

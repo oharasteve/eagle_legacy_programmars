@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Close_Statement extends TokenSequence implements AbstractStatement
+public class Delphi_Close_Statement extends TokenSequence
+		implements AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("Standard_Routines_and_Input-Output#The_Close_function") Delphi_Keyword CLOSE = new Delphi_Keyword(
 			"Close");
@@ -21,5 +25,13 @@ public class Delphi_Close_Statement extends TokenSequence implements AbstractSta
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) Delphi_Identifier_Reference file;
 		public @S(30) PunctuationRightParen rightParen;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String id = params.file.getValue();
+		return generator.newFileCloseStatement(id, this);
 	}
 }

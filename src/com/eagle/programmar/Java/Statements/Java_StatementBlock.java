@@ -3,20 +3,29 @@
 
 package com.eagle.programmar.Java.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.Statements.Eagle_Generate_Block;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
+import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_StatementBlock extends TokenSequence implements EagleRunnableWithResult, EagleScopeInterface
+public class Java_StatementBlock extends TokenSequence
+		implements EagleRunnableWithResult, EagleScopeInterface,
+				Eagle_Generate_Block<Java_Statement>
 {
 	public @S(10) @OPT Java_Label label;
 	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
@@ -45,5 +54,21 @@ public class Java_StatementBlock extends TokenSequence implements EagleRunnableW
 	public EagleScope getScope()
 	{
 		return _scope;
+	}
+	
+	@Override
+	public Java_Statement generateBlock(ArrayList<AbstractStatement> statements,
+			AbstractToken source)
+	{
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
+		this.statements = new TokenList<Java_StatementOrComment>();
+		for (AbstractStatement stmt : statements)
+		{
+			Java_StatementOrComment stmtComm = new Java_StatementOrComment();
+			stmtComm.setWhich((Java_Statement) stmt);
+			this.statements.addToken(stmtComm);
+		}
+		return Java_Generator.wrapStatement(this);
 	}
 }

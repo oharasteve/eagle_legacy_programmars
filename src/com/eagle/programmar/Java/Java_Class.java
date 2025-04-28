@@ -115,13 +115,11 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		}
 	}
 
-	
-	public static Java_Class newJavaClass(PrivacyEnum privacy, String className)
+	public void newJavaClass(PrivacyEnum privacy, String className)
 	{
-		Java_Class cls = new Java_Class();
-		cls.modifierList = new Java_ClassModifierList();
-		cls.modifierList.setPresent(true);
-		cls.modifierList.modifiers = new TokenList<Java_ClassModifier>();
+		this.modifierList = new Java_ClassModifierList();
+		this.modifierList.setPresent(true);
+		this.modifierList.modifiers = new TokenList<Java_ClassModifier>();
 		Java_ClassModifier modifier = new Java_ClassModifier();
 		switch (privacy)
 		{
@@ -134,24 +132,22 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		default:
 			throw new RuntimeException("Can't handle privacy: " + privacy);
 		}
-		cls.modifierList.modifiers.addToken(modifier);
+		this.modifierList.modifiers.addToken(modifier);
 		
-		cls.className = new Java_Class_Definition();
-		cls.className.setValue(className);
+		this.className = new Java_Class_Definition();
+		this.className.setValue(className);
 		
-		cls.classOrInterface = new Java_KeywordChoice("class");
-		cls.elements = new TokenList<Java_ClassElement>();
-		cls.elements.setPresent(true);
-		cls.leftBrace = new PunctuationLeftBrace();
-		cls.rightBrace = new PunctuationRightBrace();
-		
-		return cls;
+		this.classOrInterface = new Java_KeywordChoice("class");
+		this.elements = new TokenList<Java_ClassElement>();
+		this.elements.setPresent(true);
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
 	}
 	
 	public void addMethod(Java_Method method)
 	{
 		Java_ClassElement element = new Java_ClassElement();
 		element.setWhich(method);
-		elements.addToken(element);
+		this.elements.addToken(element);
 	}
 }

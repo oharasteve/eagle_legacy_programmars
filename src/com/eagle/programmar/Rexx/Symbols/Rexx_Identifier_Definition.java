@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Rexx.Symbols;
 
-import com.eagle.programmar.VB.Terminals.VB_Identifier;
+import com.eagle.programmar.Rexx.Terminals.Rexx_Identifier;
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Rexx_Identifier_Definition extends VB_Identifier implements DefinitionInterface
+public abstract class Rexx_Identifier_Definition extends Rexx_Identifier implements DefinitionInterface
 {
 }

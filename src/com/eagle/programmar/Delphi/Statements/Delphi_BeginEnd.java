@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Delphi.Delphi_Statement_List;
@@ -12,8 +15,11 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_BeginEnd extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Delphi_BeginEnd extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("Programs_and_Units_(Delphi)#The_Block") Delphi_Keyword BEGIN = new Delphi_Keyword("Begin");
 	public @S(20) @OPT TokenList<Delphi_Comment> comments;
@@ -34,5 +40,25 @@ public class Delphi_BeginEnd extends TokenSequence implements EagleRunnableWithR
 			}
 		}
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> statements = new ArrayList<AbstractStatement>();
+		AbstractStatement newStmt = transformer.transformStatement1(generator,
+				this.statements.stmt);
+		statements.add(newStmt);
+		if (this.statements.stmts != null)
+		{
+			for (Delphi_MoreStatements more : this.statements.stmts._elements)
+			{
+				newStmt = transformer.transformStatement1(generator, more.stmt);
+				statements.add(newStmt);
+			}
+		}
+
+		return generator.newBlockStatement(statements, this);
 	}
 }
