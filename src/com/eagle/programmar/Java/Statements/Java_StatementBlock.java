@@ -57,16 +57,18 @@ public class Java_StatementBlock extends TokenSequence
 	}
 	
 	@Override
-	public Java_Statement generateBlock(ArrayList<AbstractStatement> statements,
+	public Java_Statement generateBlock(ArrayList<AbstractStatement> stmts,
 			AbstractToken source)
 	{
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.statements = new TokenList<Java_StatementOrComment>();
-		for (AbstractStatement stmt : statements)
+		this.statements.setPresent(true);
+		for (AbstractStatement stmt : stmts)
 		{
 			Java_StatementOrComment stmtComm = new Java_StatementOrComment();
 			stmtComm.setWhich((Java_Statement) stmt);
+			stmtComm.setPresent(true);
 			this.statements.addToken(stmtComm);
 		}
 		return Java_Generator.wrapStatement(this);

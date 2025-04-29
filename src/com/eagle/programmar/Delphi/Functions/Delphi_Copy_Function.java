@@ -3,16 +3,23 @@
 
 package com.eagle.programmar.Delphi.Functions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubstringECEnum;
+import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Copy_Function extends PrimaryOperator implements EagleRunnable
+public class Delphi_Copy_Function extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Delphi_Keyword COPY = new Delphi_Keyword("Copy");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -32,5 +39,17 @@ public class Delphi_Copy_Function extends PrimaryOperator implements EagleRunnab
 		int nc = str.length();
 		if (ec > nc) ec = nc; 
 		interpreter.pushStr(str.substring(sc, ec));
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		AbstractExpression newSc = transformer.transformExpression(generator, scExpr);
+		AbstractExpression newEc = transformer.transformExpression(generator, ecExpr);
+		return generator.newSubstringFunction(newExpr, newSc,
+				SubstringSCEnum.FIRST_CHAR_IS_ONE, SubstringECEnum.GIVEN_NC,
+				newEc, this);
 	}
 }

@@ -105,6 +105,10 @@ public class Delphi_Type extends TokenChooser
 			{
 			case "integer":
 				newType = TypeEnum.INTEGER;
+				break;
+			case "string":
+				newType = TypeEnum.STRING;
+				break;
 			default:
 				throw new RuntimeException("Unable to convert type: " + kw.getValue());
 			}

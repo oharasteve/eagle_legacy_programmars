@@ -42,6 +42,7 @@ public class Python_PrintStatement extends TokenSequence
 		func.leftParen = new PunctuationLeftParen();
 		func.exprs = new SeparatedList<Python_Expression,PunctuationComma>();
 		
+		// ''.join(str(x) for x in ['abc',4,5'xys])
 		boolean first = true;
 		for (AbstractExpression piece : pieces)
 		{

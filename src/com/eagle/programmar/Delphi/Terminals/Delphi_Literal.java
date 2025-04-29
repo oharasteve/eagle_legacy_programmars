@@ -3,14 +3,26 @@
 
 package com.eagle.programmar.Delphi.Terminals;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Literal extends TerminalLiteralToken
+		implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
 		return genericLiteral(lines, "'", false, '?', true, false);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return generator.newLiteralExpression(_txt, this);
 	}
 }

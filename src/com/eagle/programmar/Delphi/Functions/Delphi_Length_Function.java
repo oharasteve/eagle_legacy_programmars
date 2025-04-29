@@ -3,15 +3,20 @@
 
 package com.eagle.programmar.Delphi.Functions;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Length_Function extends PrimaryOperator implements EagleRunnable
+public class Delphi_Length_Function extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Delphi_Keyword LENGTH = new Delphi_Keyword("Length");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -23,5 +28,13 @@ public class Delphi_Length_Function extends PrimaryOperator implements EagleRunn
 	{
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushInt(str.length());
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newLengthFunction(newExpr, this);
 	}
 }

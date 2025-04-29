@@ -11,6 +11,14 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
+import com.eagle.programmar.CSharp.CSharp_Type;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName.CSharp_IdList;
+import com.eagle.programmar.CSharp.CSharp_Variable;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_MethodInvocation;
+import com.eagle.programmar.CSharp.Expressions.CSharp_SubfieldExpression;
+import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -61,7 +69,39 @@ public class CSharp_PrintStatement extends TokenSequence
 	public CSharp_Statement generatePrint(ArrayList<AbstractExpression> pieces,
 			boolean newLine, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		if (pieces.size() == 1)
+		{
+			return generatePrint1((CSharp_Expression) pieces.get(0), newLine, source);
+		}
+
+		CSharp_IdList ids = new CSharp_IdList();
+		ids.typeName = new CSharp_Identifier_Reference();
+		ids.typeName.setValue("StringBuffer");
+
+		CSharp_Type type = new CSharp_Type();
+		type.typeName = new CSharp_TypeName();
+		type.typeName.setWhich(ids);
+		
+		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
+		creat.generateCreation(type, null, source);
+		CSharp_Expression line = CSharp_Generator.wrapExpression(creat);
+		
+		for (AbstractExpression piece : pieces)
+		{
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			args.add(piece);
+			
+			CSharp_Variable app = CSharp_Variable.newVariable("append");
+			CSharp_MethodInvocation meth = new CSharp_MethodInvocation();
+			meth.generateInvocation(app, args, null);
+			CSharp_Expression right = CSharp_Generator.wrapExpression(meth);
+
+			CSharp_SubfieldExpression subf = new CSharp_SubfieldExpression();
+			line = subf.generateSubfield(line, right, (CSharp_Expression) piece);
+		}
+		
+		// new StringBuffer().append("abc").append(3).append("def");
+		return generatePrint1(line, newLine, source);
 	}
 	
 	@Override

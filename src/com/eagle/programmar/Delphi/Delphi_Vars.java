@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Delphi;
 
-import java.util.ArrayList;
-
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -43,8 +41,6 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 	
 	public void transformVars(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
-	
 		for (Delphi_Var var : this.vars._elements)
 		{
 			for (Delphi_Comment comment : var.comments._elements)
@@ -62,7 +58,7 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 						type, null, def);
 				if (data != null)
 				{
-					result.add(data);
+					generator.addStatement(data, def);
 				}
 			}
 		}

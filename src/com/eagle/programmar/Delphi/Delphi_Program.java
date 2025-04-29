@@ -64,6 +64,6 @@ public class Delphi_Program extends AbstractLanguage
 		}
 		Delphi_Full full = (Delphi_Full) fullOrPartial.getWhich();
 		full.transformFull(transformer, generator);
-		return this;
+		return generator.getTransfomedProgram();
 	}
 }

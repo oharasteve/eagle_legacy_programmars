@@ -13,6 +13,14 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Statement;
+import com.eagle.programmar.Java.Java_Type;
+import com.eagle.programmar.Java.Java_Type.Java_TypeName;
+import com.eagle.programmar.Java.Java_Type.Java_TypeName.Java_IdList;
+import com.eagle.programmar.Java.Java_Variable;
+import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
+import com.eagle.programmar.Java.Expressions.Java_MethodInvocation;
+import com.eagle.programmar.Java.Expressions.Java_SubfieldExpression;
+import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -84,7 +92,39 @@ public class Java_PrintStatement extends TokenSequence
 	public Java_Statement generatePrint(ArrayList<AbstractExpression> pieces,
 			boolean newLine, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		if (pieces.size() == 1)
+		{
+			return generatePrint1((Java_Expression) pieces.get(0), newLine, source);
+		}
+
+		Java_IdList ids = new Java_IdList();
+		ids.typeName = new Java_Identifier_Reference();
+		ids.typeName.setValue("StringBuffer");
+
+		Java_Type type = new Java_Type();
+		type.typeName = new Java_TypeName();
+		type.typeName.setWhich(ids);
+		
+		Java_ClassCreationExpression creat = new Java_ClassCreationExpression();
+		creat.generateCreation(type, null, source);
+		Java_Expression line = Java_Generator.wrapExpression(creat);
+		
+		for (AbstractExpression piece : pieces)
+		{
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			args.add(piece);
+			
+			Java_Variable app = Java_Variable.newVariable("append");
+			Java_MethodInvocation meth = new Java_MethodInvocation();
+			meth.generateInvocation(app, args, null);
+			Java_Expression right = Java_Generator.wrapExpression(meth);
+
+			Java_SubfieldExpression subf = new Java_SubfieldExpression();
+			line = subf.generateSubfield(line, right, (Java_Expression) piece);
+		}
+		
+		// new StringBuffer().append("abc").append(3).append("def");
+		return generatePrint1(line, newLine, source);
 	}
 	
 	@Override

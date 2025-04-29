@@ -48,14 +48,21 @@ public class Delphi_BeginEnd extends TokenSequence
 	{
 		ArrayList<AbstractStatement> statements = new ArrayList<AbstractStatement>();
 		AbstractStatement newStmt = transformer.transformStatement1(generator,
-				this.statements.stmt);
-		statements.add(newStmt);
+				this.statements.stmt.getWhich());
+		if (newStmt != null)
+		{
+			statements.add(newStmt);
+		}
+		
 		if (this.statements.stmts != null)
 		{
 			for (Delphi_MoreStatements more : this.statements.stmts._elements)
 			{
-				newStmt = transformer.transformStatement1(generator, more.stmt);
-				statements.add(newStmt);
+				newStmt = transformer.transformStatement1(generator, more.stmt.getWhich());
+				if (newStmt != null)
+				{
+					statements.add(newStmt);
+				}
 			}
 		}
 

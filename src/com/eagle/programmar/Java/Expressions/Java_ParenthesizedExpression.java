@@ -17,8 +17,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Java_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable,
-		EagleTransformableExpression, Eagle_Generate_Parentheses<Java_Expression>
+public class Java_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Parentheses<Java_Expression>
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @NOSPACE Java_Expression expression;

@@ -87,7 +87,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (relOp.toString())
+		switch (relOp.getWhich().toString())
 		{
 		case "<":
 			return generator.newRelationalExpression(leftExpr,

@@ -173,6 +173,7 @@ public class Java_Method extends TokenSequence
 	public void newJavaMethod(PrivacyEnum privacy, StaticEnum isStatic,
 			AbstractType returnType, String methodName)
 	{
+		this.setPresent(true);
 		this.modifiers = new TokenList<Java_MethodModifier>();
 		
 		Java_MethodModifier modifier1 = null;
@@ -243,6 +244,11 @@ public class Java_Method extends TokenSequence
 		if (which instanceof Java_MethodType)
 		{
 			Java_MethodType methType = (Java_MethodType) which;
+			if (methType.parameters.params == null)
+			{
+				methType.parameters.params =
+						new SeparatedList<Java_MethodParameter, PunctuationComma>();
+			}
 			if (methType.parameters.params.size() > 0)
 			{
 				methType.parameters.params.addSecondaryElement(new PunctuationComma());

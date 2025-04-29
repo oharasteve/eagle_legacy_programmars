@@ -30,7 +30,7 @@ public class Delphi_Variable_Expression extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression subscript = null;
-		if (variable.extensions != null && variable.extensions.isPresent())
+		if (variable.extensions != null && variable.extensions.size() > 0)
 		{
 			AbstractToken first = variable.extensions.first().getWhich();
 			if (first instanceof Delphi_Subscript)

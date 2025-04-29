@@ -90,8 +90,10 @@ public class Java_Generator extends EagleGenerator
 	public static Java_Statement wrapStatement(AbstractToken token)
 	{
 		if (token == null) return null;
+		token.setPresent(true);
 		Java_Statement wrapper = new Java_Statement();
 		wrapper.setWhich(token);
+		wrapper.setPresent(true);
 		return wrapper;
 	}
 
@@ -160,6 +162,7 @@ public class Java_Generator extends EagleGenerator
 		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
 		stmtOrComment.setWhich((Java_Statement) stmt);
 		stmtOrComment.setTransformationSource(source);
+		stmtOrComment.setPresent(true);
 		impl.block.statements.addToken(stmtOrComment);
 	}
 	
@@ -176,7 +179,7 @@ public class Java_Generator extends EagleGenerator
 			ArrayList<AbstractStatement> statements, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
-		return wrapStatement(block.generateBlock(statements, source));
+		return block.generateBlock(statements, source);
 	}
 
 	@Override
@@ -362,12 +365,6 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
-	{
-		return wrapExpression(Java_LengthMethod.generateExpression(expr, source));
-	}
-	
-	@Override
 	public Java_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
 		Java_Literal lit = new Java_Literal();
@@ -449,13 +446,6 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
-	{
-		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
-	}
-
-	@Override
 	public Java_Expression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
@@ -482,6 +472,21 @@ public class Java_Generator extends EagleGenerator
 	public AbstractExpression newCurrentDatetime()
 	{
 		throw new RuntimeException("Need to implement");
+	}
+
+	// ================ Functions ================
+
+	@Override
+	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Java_LengthMethod.generateExpression(expr, source));
+	}
+	
+	@Override
+	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
+	{
+		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}
 
 	// ================ Terminals ================

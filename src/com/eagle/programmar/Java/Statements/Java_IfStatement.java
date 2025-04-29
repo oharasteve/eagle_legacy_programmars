@@ -43,8 +43,6 @@ public class Java_IfStatement extends TokenSequence
 	public @S(80) Java_Statement thenStatement;
 	public @S(90) @OPT Java_IfElseClause elseClause;
 
-	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
-
 	public static class Java_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<Java_Comment> comment3;
@@ -52,6 +50,8 @@ public class Java_IfStatement extends TokenSequence
 		public @S(30) @OPT Java_Comment comment;
 		public @S(40) Java_Statement elseStatement;
 	}
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
@@ -136,9 +136,12 @@ public class Java_IfStatement extends TokenSequence
 
 		this.thenStatement = thenStatement;
 				
-		if (elseStatement != null && elseStatement.isPresent())
+		if (elseStatement != null)
 		{
+			this.elseClause = new Java_IfElseClause();
+			this.elseClause.setPresent(true);
 			this.elseClause.elseStatement = elseStatement;
+			this.elseClause.elseStatement.setPresent(true);
 		}
 
 		this.setTransformationSource(source);
@@ -164,8 +167,6 @@ public class Java_IfStatement extends TokenSequence
 		Java_StatementBlock elseBlock = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			this.elseClause = new Java_IfElseClause();
-			this.elseClause.setPresent(true);
 			elseBlock = new Java_StatementBlock();
 			elseBlock.leftBrace = new PunctuationLeftBrace();
 			elseBlock.rightBrace = new PunctuationRightBrace();

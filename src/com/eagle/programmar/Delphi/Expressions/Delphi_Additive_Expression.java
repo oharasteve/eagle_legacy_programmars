@@ -89,7 +89,7 @@ public class Delphi_Additive_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (operator.toString().toLowerCase())
+		switch (operator.getWhich().toString().toLowerCase())
 		{
 		case "+":
 			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
@@ -100,7 +100,7 @@ public class Delphi_Additive_Expression extends PrecedenceOperator
 		case "xor":
 			return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.XOR, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			throw new RuntimeException("Unexpected additive operator: " + operator.getWhich());
 		}
 	}
 }

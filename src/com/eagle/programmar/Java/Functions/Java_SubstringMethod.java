@@ -48,8 +48,9 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 		}
 	}
 	
-	public static Java_SubstringMethod generateExpression(AbstractExpression theExpr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
+	public static Java_SubstringMethod generateExpression(AbstractExpression theExpr,
+			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			AbstractExpression ecOrnc, AbstractToken source)
 	{
 		Java_SubstringMethod expr = new Java_SubstringMethod();
 		expr.dot = new PunctuationPeriod();
@@ -68,7 +69,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
 			Java_Expression scMinusOne = addExp.generateAdditive((Java_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
-			expr.scExpr = Java_Generator.wrapExpression(scMinusOne);
+			expr.scExpr = scMinusOne;
 			break;
 		}
 		
@@ -86,7 +87,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
 			Java_Expression scPlusNc = addExp.generateAdditive(expr.scExpr,
 					AdditiveEnum.PLUS, (Java_Expression) ecOrnc, source);
-			expr.ecExpr = Java_Generator.wrapExpression(scPlusNc);
+			expr.ecExpr = scPlusNc;
 			expr.ecExpr.setPresent(true);
 			break;
 		case GIVEN_NEITHER:

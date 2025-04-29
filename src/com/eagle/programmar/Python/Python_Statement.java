@@ -41,7 +41,8 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Python_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Python_Statement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @NEWLINE Python_StartOfLine soln;
 	public @S(20) Python_StatementOrComment statementOrComment;

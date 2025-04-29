@@ -175,7 +175,7 @@ public class CSharp_Generator extends EagleGenerator
 			ArrayList<AbstractStatement> statements, AbstractToken source)
 	{
 		CSharp_StatementBlock block = new CSharp_StatementBlock();
-		return wrapStatement(block.generateBlock(statements, source));
+		return block.generateBlock(statements, source);
 	}
 
 	@Override
@@ -362,12 +362,6 @@ public class CSharp_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
-	{
-		return wrapExpression(CSharp_LengthMethod.generateExpression(expr, source));
-	}
-	
-	@Override
 	public CSharp_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
 		CSharp_Literal lit = new CSharp_Literal();
@@ -445,14 +439,6 @@ public class CSharp_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractExpression newSubstringFunction(AbstractExpression expr,
-			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
-			AbstractExpression scOrnc, AbstractToken source)
-	{
-		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
-	}
-
-	@Override
 	public CSharp_Expression newVariableExpression(String name,
 			AbstractExpression subscript, AbstractToken source)
 	{
@@ -482,7 +468,22 @@ public class CSharp_Generator extends EagleGenerator
 		throw new RuntimeException("Need to implement");
 	}
 
+	// ================ Functions ================
 	
+	@Override
+	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(CSharp_LengthMethod.generateExpression(expr, source));
+	}
+	
+	@Override
+	public AbstractExpression newSubstringFunction(AbstractExpression expr,
+			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			AbstractExpression scOrnc, AbstractToken source)
+	{
+		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
+	}
+
 	// ================ Terminals ================
 
 	@Override

@@ -79,7 +79,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 				{
 					throw new RuntimeException("Can't handle field widths");
 				}
-				pieces.add(piece.expr);
+				pieces.add(transformer.transformExpression(generator, piece.expr));
 			}
 		}
 		

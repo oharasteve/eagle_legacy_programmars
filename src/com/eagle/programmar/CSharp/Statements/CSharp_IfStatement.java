@@ -37,8 +37,6 @@ public class CSharp_IfStatement extends TokenSequence
 	public @S(60) CSharp_Statement thenStatement;
 	public @S(70) @OPT CSharp_IfElseClause elseClause;
 
-	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
-
 	public static class CSharp_IfElseClause extends TokenSequence
 	{
 		public @S(10) @OPT TokenList<CSharp_Comment> comments2;
@@ -46,6 +44,8 @@ public class CSharp_IfStatement extends TokenSequence
 		public @S(30) @OPT TokenList<CSharp_Comment> comments3;
 		public @S(40) CSharp_Statement elseStatement;
 	}
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
@@ -111,11 +111,12 @@ public class CSharp_IfStatement extends TokenSequence
 
 		this.thenStatement = thenStatement;
 				
-		if (elseStatement != null && elseStatement.isPresent())
+		if (elseStatement != null)
 		{
 			this.elseClause = new CSharp_IfElseClause();
 			this.elseClause.setPresent(true);
 			this.elseClause.elseStatement = elseStatement;
+			this.elseClause.elseStatement.setPresent(true);
 		}
 
 		this.setTransformationSource(source);

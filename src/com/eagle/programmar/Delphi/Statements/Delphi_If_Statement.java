@@ -83,22 +83,21 @@ public class Delphi_If_Statement extends TokenSequence
 		return result;
 	}
 	
+	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator,
 				condition);
-		ArrayList<AbstractStatement> thenPart = transformer.transformStatement(generator,
-				thenStmt);
+		AbstractStatement thenPart = transformer.transformStatement1(generator,
+				thenStmt.getWhich());
 
-		ArrayList<AbstractStatement> elsePart = null;
-		Delphi_Statement stmtElse = null;
+		AbstractStatement elsePart = null;
 		if (ifElse != null)
 		{
-			stmtElse = ifElse.elseStmt;
-			elsePart = transformer.transformStatement(generator, stmtElse);
+			elsePart = transformer.transformStatement1(generator, ifElse.elseStmt.getWhich());
 		}
 
-		return generator.newIfStatement(cond, thenPart, elsePart, this);
+		return generator.newIfStatement1(cond, thenPart, elsePart, this);
 	}
 }

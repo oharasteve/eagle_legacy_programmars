@@ -345,12 +345,6 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Expression newLengthFunction(AbstractExpression expr, AbstractToken source)
-	{
-		return wrapExpression(Python_Len_Function.generateExpression(expr, source));
-	}
-	
-	@Override
 	public Python_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
 		return wrapExpression(Python_Literals.generateExpression(literal, source));
@@ -422,13 +416,6 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Expression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
-	{
-		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
-	}
-
-	@Override
 	public Python_Expression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
 	{
 		Python_VariableExpression varExp = new Python_VariableExpression();
@@ -456,6 +443,21 @@ public class Python_Generator extends EagleGenerator
 		throw new RuntimeException("Need to implement");
 	}
 	
+	// ================ Functions ================
+
+	@Override
+	public Python_Expression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	{
+		return wrapExpression(Python_Len_Function.generateExpression(expr, source));
+	}
+	
+	@Override
+	public Python_Expression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
+	{
+		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
+	}
+
 	// ================ Terminals ================
 
 	@Override
