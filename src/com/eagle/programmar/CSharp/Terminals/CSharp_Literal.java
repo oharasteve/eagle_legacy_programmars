@@ -41,7 +41,12 @@ public class CSharp_Literal extends TerminalLiteralToken
 	@Override
 	public CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
-		this.setValue(value);
+		String val = value;
+		if (! val.startsWith("\""))
+		{
+			val = '"' + val + '"';
+		}
+		this.setValue(val);
 		this.setTransformationSource(source);
 		return this;
 	}

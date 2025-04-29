@@ -14,6 +14,7 @@ import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName.CSharp_IdList;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName.CSharp_IdList.CSharp_MoreIds;
 import com.eagle.programmar.CSharp.CSharp_Variable;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_MethodInvocation;
@@ -23,6 +24,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -42,7 +44,8 @@ public class CSharp_PrintStatement extends TokenSequence
 	public @S(40) @NOSPACE PunctuationPeriod dot2;
 	public @S(50) @NOSPACE @OPT CSharp_KeywordChoice OUT = new CSharp_KeywordChoice("Error", "Out");
 	public @S(60) @NOSPACE @OPT PunctuationPeriod dot3;
-	public @S(70) @NOSPACE CSharp_KeywordChoice WRITE = new CSharp_KeywordChoice("Flush", "ReadLine", "SetOut", "Write", "WriteLine");
+	public @S(70) @NOSPACE CSharp_KeywordChoice WRITE = new CSharp_KeywordChoice(
+			"Flush", "ReadLine", "SetOut", "Write", "WriteLine");
 	public @S(80) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(90) @NOSPACE @OPT SeparatedList<CSharp_Expression,PunctuationComma> exprs;
 	public @S(100) @NOSPACE PunctuationRightParen rightParen;
@@ -76,12 +79,30 @@ public class CSharp_PrintStatement extends TokenSequence
 
 		CSharp_IdList ids = new CSharp_IdList();
 		ids.typeName = new CSharp_Identifier_Reference();
-		ids.typeName.setValue("StringBuffer");
-
+		ids.typeName.setValue("System");
 		CSharp_Type type = new CSharp_Type();
 		type.typeName = new CSharp_TypeName();
 		type.typeName.setWhich(ids);
 		
+		ids.moreIds = new TokenList<CSharp_MoreIds>();
+		CSharp_MoreIds more2 = new CSharp_MoreIds();
+		CSharp_IdList ids2 = new CSharp_IdList();
+		ids2.typeName = new CSharp_Identifier_Reference();
+		ids2.typeName.setValue("Text");
+		more2.dot = new PunctuationPeriod();
+		more2.nextId = new CSharp_TypeName();
+		more2.nextId.setWhich(ids2);
+		ids.moreIds.addToken(more2);
+		
+		CSharp_MoreIds more3 = new CSharp_MoreIds();
+		CSharp_IdList ids3 = new CSharp_IdList();
+		ids3.typeName = new CSharp_Identifier_Reference();
+		ids3.typeName.setValue("StringBuilder");
+		more3.dot = new PunctuationPeriod();
+		more3.nextId = new CSharp_TypeName();
+		more3.nextId.setWhich(ids3);
+		ids.moreIds.addToken(more3);
+	
 		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
 		creat.generateCreation(type, null, source);
 		CSharp_Expression line = CSharp_Generator.wrapExpression(creat);
@@ -91,7 +112,7 @@ public class CSharp_PrintStatement extends TokenSequence
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 			args.add(piece);
 			
-			CSharp_Variable app = CSharp_Variable.newVariable("append");
+			CSharp_Variable app = CSharp_Variable.newVariable("Append");
 			CSharp_MethodInvocation meth = new CSharp_MethodInvocation();
 			meth.generateInvocation(app, args, null);
 			CSharp_Expression right = CSharp_Generator.wrapExpression(meth);
@@ -100,7 +121,7 @@ public class CSharp_PrintStatement extends TokenSequence
 			line = subf.generateSubfield(line, right, (CSharp_Expression) piece);
 		}
 		
-		// new StringBuffer().append("abc").append(3).append("def");
+		// new System.Text.StringBuilder().Append("abc").Append(3).Append("def");
 		return generatePrint1(line, newLine, source);
 	}
 	
@@ -112,10 +133,12 @@ public class CSharp_PrintStatement extends TokenSequence
 		stmt.SYSTEM.setPresent(true);
 		stmt.dot1 = new PunctuationPeriod();
 		stmt.dot1.setPresent(true);
-		stmt.OUT = new CSharp_KeywordChoice("Out");
-		stmt.OUT.setPresent(true);
 		stmt.dot2 = new PunctuationPeriod();
 		stmt.dot2.setPresent(true);
+		stmt.OUT = new CSharp_KeywordChoice("Out");
+		stmt.OUT.setPresent(true);
+		stmt.dot3 = new PunctuationPeriod();
+		stmt.dot3.setPresent(true);
 		
 		if (newLine)
 		{

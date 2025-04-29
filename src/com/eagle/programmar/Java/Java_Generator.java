@@ -127,7 +127,7 @@ public class Java_Generator extends EagleGenerator
 			Java_Type mainType = Java_Type.newPrimitiveType("void");
 			_currentMethod = new Java_Method();
 			_currentMethod.newJavaMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
-					mainType, "Main");
+					mainType, "main");
 			_currentClass.addMethod(_currentMethod);
 			
 			Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
