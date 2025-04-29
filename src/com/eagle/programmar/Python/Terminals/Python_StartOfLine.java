@@ -5,10 +5,10 @@ package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Python.Python_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
-import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.terminals.TerminalStartOfLine;

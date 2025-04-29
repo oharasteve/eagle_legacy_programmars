@@ -9,6 +9,7 @@ import com.eagle.generate.EagleGenerator.LogicalOrEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_PunctuationChoice;
@@ -31,12 +32,20 @@ public class Delphi_Additive_Expression extends PrecedenceOperator
 		public @CHOICE Delphi_KeywordChoice XXOR = new Delphi_KeywordChoice("Or", "Xor");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 		
 		if (leftValue.isString() || rightValue.isString())
 		{

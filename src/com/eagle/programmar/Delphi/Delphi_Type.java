@@ -97,6 +97,7 @@ public class Delphi_Type extends TokenChooser
 	{
 		TypeEnum newType;
 		String userType = null;
+		boolean isArray = false;
 		AbstractToken which = this.getWhich();
 		if (which instanceof Delphi_KeywordChoice)
 		{
@@ -113,6 +114,17 @@ public class Delphi_Type extends TokenChooser
 				throw new RuntimeException("Unable to convert type: " + kw.getValue());
 			}
 		}
+		else if (which instanceof Delphi_Range)
+		{
+			// TODO: limit values to the given range
+			newType = TypeEnum.INTEGER;
+		}
+		else if (which instanceof Delphi_Array)
+		{
+			// TODO: can be integer or string or ...
+			newType = TypeEnum.INTEGER;
+			isArray = true;
+		}
 		else if (which instanceof Delphi_Identifier_Reference)
 		{
 			Delphi_Identifier_Reference id = (Delphi_Identifier_Reference) which;
@@ -123,6 +135,6 @@ public class Delphi_Type extends TokenChooser
 		{
 			throw new RuntimeException("Can't handle type yet: " + which);
 		}
-		return generator.transformType(newType, userType, this);
+		return generator.transformType(isArray, newType, userType, this);
 	}
 }

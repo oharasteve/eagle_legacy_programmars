@@ -24,6 +24,8 @@ import com.eagle.programmar.Python.Statements.Python_PassStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_RaiseStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Statements.Python_TryStatement;
 import com.eagle.programmar.Python.Statements.Python_TypeDeclaration;
 import com.eagle.programmar.Python.Statements.Python_WhileStatement;
@@ -31,9 +33,7 @@ import com.eagle.programmar.Python.Statements.Python_WithStatement;
 import com.eagle.programmar.Python.Statements.Python_YieldStatement;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
-import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.programmar.Python.Terminals.Python_StartOfLine;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -53,57 +53,11 @@ public class Python_Statement extends TokenSequence
  
 	public static class Python_StatementOrComment extends TokenChooser
 	{
-		// Only needed for Transformation. Look at createStatementBlock in
-		// Generate_Python_Statement
+		// Only needed for Transformation. Look at Python_StatementBlock.java
 		public @SKIP Python_MultilineStatement XXmultiStatement;
 
 		public @FIRST Python_Comment XXcomment;
 		public @CHOICE Python_SameLineStatement XXstatements;
-	}
-
-	public static class Python_StatementBlock extends TokenChooser
-	{
-		public @CHOICE Python_Punctuation XXdots = new Python_Punctuation("...");
-		public @CHOICE Python_SameLineStatement XXsingleLine;
-		public @CHOICE Python_MultilineStatement XXmultiLine;
-	}
-
-	public static class Python_SameLineStatement extends TokenSequence implements EagleRunnableWithResult
-	{
-		public @S(10) SeparatedList<Python_Simple_Statement, PunctuationSemicolon> statements;
-		public @S(20) @OPT Python_Comment comment;
-
-		@Override
-		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
-		{
-			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			for (int i = 0; i < statements.getPrimaryCount(); i++)
-			{
-				Python_Simple_Statement stmt = statements.getPrimaryElement(i);
-				result = interpreter.tryToInterpret(stmt.getWhich());
-				if (result != Eagle_Statement_Result.NORMAL) break;
-			}
-			return result;
-		}
-	}
-
-	public static class Python_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
-	{
-		public @S(10) @OPT Python_Comment comment;
-		public @S(20) Python_EndOfLine eoln;
-		public @S(30) TokenList<Python_Statement> statements;
-
-		@Override
-		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
-		{
-			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			for (Python_Statement stmt : statements._elements)
-			{
-				result = interpreter.tryToInterpret(stmt);
-				if (result != Eagle_Statement_Result.NORMAL) break;
-			}
-			return result;
-		}
 	}
 	
 	public static class Python_Simple_Statement extends TokenChooser

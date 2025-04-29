@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.MultiplicativeEnum;
 import com.eagle.generate.EagleGenerator.ShiftEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_PunctuationChoice;
@@ -31,35 +33,47 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 				"Div", "Mod", "And", "Shl", "Shr", "As");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		switch (multOp.getWhich().toString().toLowerCase())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = multOp.getWhich().toString();
+
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		switch (oper.toLowerCase())
 		{
 		case "*":
-			int leftValue = interpreter.getIntValue(left);
-			int rightValue = interpreter.getIntValue(right);
-			interpreter.pushInt(leftValue * rightValue);
+			int leftInt1 = leftValue.forceIntegerValue();
+			int rightInt1 = rightValue.forceIntegerValue();
+			interpreter.pushInt(leftInt1 * rightInt1);
 			return;
 		case "/":
-			leftValue = interpreter.getIntValue(left);
-			rightValue = interpreter.getIntValue(right);
-			interpreter.pushDouble(leftValue / (double) rightValue);
+			int leftInt2 = leftValue.forceIntegerValue();
+			int rightInt2 = rightValue.forceIntegerValue();
+			interpreter.pushDouble(leftInt2 / (double) rightInt2);
 			return;
 		case "div":
-			leftValue = interpreter.getIntValue(left);
-			rightValue = interpreter.getIntValue(right);
-			interpreter.pushInt(leftValue / rightValue);
+			int leftInt3 = leftValue.forceIntegerValue();
+			int rightInt3 = rightValue.forceIntegerValue();
+			interpreter.pushInt(leftInt3 / rightInt3);
 			return;
 		case "mod":
-			leftValue = interpreter.getIntValue(left);
-			rightValue = interpreter.getIntValue(right);
-			interpreter.pushInt(leftValue % rightValue);
+			int leftInt4 = leftValue.forceIntegerValue();
+			int rightInt4 = rightValue.forceIntegerValue();
+			interpreter.pushInt(leftInt4 % rightInt4);
 			return;
 		case "and":
-			boolean leftVal = interpreter.getBoolValue(left);
-			boolean rightVal = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftVal && rightVal);
+			boolean leftBool = leftValue.forceBooleanValue();
+			boolean rightBool = rightValue.forceBooleanValue();
+			interpreter.pushBool(leftBool && rightBool);
 			return;
 		}
 		throw new RuntimeException("Unexpected multiplicative operator: " + multOp.getWhich());

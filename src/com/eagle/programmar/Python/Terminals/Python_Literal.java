@@ -6,6 +6,9 @@ package com.eagle.programmar.Python.Terminals;
 import com.eagle.generate.Terminals.Eagle_Generate_Literal;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
@@ -81,5 +84,11 @@ public class Python_Literal extends TerminalLiteralToken
 		this.setValue(value);
 		this.setTransformationSource(source);
 		return this;
+	}
+	
+	public static Python_Expression generateLiteralExpression(String value, AbstractToken source)
+	{
+		Python_Literals literals = Python_Literals.generateLiterals(value, source);
+		return Python_Generator.wrapExpression(literals);
 	}
 }

@@ -8,6 +8,7 @@ import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -33,16 +34,26 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 		public @CHOICE Delphi_KeywordChoice XXIN = new Delphi_KeywordChoice("In", "Is");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = relOp.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (relOp.getWhich().toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -56,7 +67,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (relOp.getWhich().toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);

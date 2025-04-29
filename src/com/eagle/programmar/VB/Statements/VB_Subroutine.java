@@ -81,7 +81,7 @@ public class VB_Subroutine extends TokenSequence
 			type = TypeEnum.OTHER;
 			break;
 		}
-		return generator.transformType(type, null, null);
+		return generator.transformType(false, type, null, null);
 	}
 	
 	@Override

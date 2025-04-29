@@ -91,7 +91,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		return type;
 	}
 	
-	public static CSharp_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	public static CSharp_Type transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
 	{
 		switch (type)
 		{
@@ -115,7 +115,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		CSharp_ArrayType array = new CSharp_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
-		CSharp_Type newType = CSharp_Type.transformType(type, null, null);
+		CSharp_Type newType = CSharp_Type.transformType(true, type, null, null);
 		newType.arrayTypes = new TokenList<CSharp_ArrayType>();
 		newType.arrayTypes.addToken(array);
 		newType.arrayTypes.setPresent(true);

@@ -60,8 +60,7 @@ public class Python_PrintStatement extends TokenSequence
 		if (! newLine)
 		{
 			func.exprs.addSecondaryElement(new PunctuationComma());
-			Python_Literal empty1 = new Python_Literal();
-			Python_Expression emptyExpr1 = Python_Generator.wrapExpression(empty1);
+			Python_Expression emptyExpr1 = Python_Literal.generateLiteralExpression("", null);
 			Python_VariableExpression endVar = new Python_VariableExpression();
 			Python_Expression end = endVar.generateVarExpr("end", null, null);
 			Python_Assignment_Expression asg1 = new Python_Assignment_Expression();
@@ -73,8 +72,7 @@ public class Python_PrintStatement extends TokenSequence
 		if (pieces.size() > 1)
 		{
 			func.exprs.addSecondaryElement(new PunctuationComma());
-			Python_Literal empty2 = new Python_Literal();
-			Python_Expression emptyExpr2 = Python_Generator.wrapExpression(empty2);
+			Python_Expression emptyExpr2 = Python_Literal.generateLiteralExpression("", null);
 			Python_VariableExpression sepVar = new Python_VariableExpression();
 			Python_Expression sep = sepVar.generateVarExpr("sep", null, null);
 			Python_Assignment_Expression asg2 = new Python_Assignment_Expression();

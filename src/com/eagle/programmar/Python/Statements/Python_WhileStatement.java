@@ -17,8 +17,6 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_List;
 import com.eagle.programmar.Python.Python_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementBlock;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
@@ -29,6 +27,7 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression.Python_Relational_Operator;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression.Python_Relational_Operator.Python_IN_Operator;
 import com.eagle.programmar.Python.Functions.Python_Locals_Function;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
@@ -131,7 +130,7 @@ public class Python_WhileStatement extends TokenSequence
 		notExpr.expr = Python_Generator.wrapExpression(parensExpr);
 		notExpr.NOT = new Python_Keyword("not");
 		
-		Python_Literals lits = Python_Literals.generateExpression(oddName, null);
+		Python_Literals lits = Python_Literals.generateLiterals(oddName, null);
 		Python_Locals_Function localsFn = new Python_Locals_Function();
 		localsFn.LOCALS = new Python_KeywordChoice("locals");
 		Python_IN_Operator inOper = new Python_IN_Operator();

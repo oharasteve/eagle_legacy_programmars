@@ -98,9 +98,10 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	public AbstractType transformType(boolean isArray, TypeEnum type,
+			String typeName, AbstractToken source)
 	{
-		return Java_Type.transformType(type, typeName, source);
+		return Java_Type.transformType(isArray, type, typeName, source);
 	}
 
 	// ================== Main program and class ==================

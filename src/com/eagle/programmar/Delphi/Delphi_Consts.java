@@ -60,7 +60,8 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 			String varName = constant.constant.getValue();
 			AbstractExpression expression = transformer.transformExpression(generator,
 					constant.expr);
-			AbstractType type = generator.transformType(TypeEnum.INTEGER, null, constant);
+			AbstractType type = generator.transformType(false, TypeEnum.INTEGER,
+					null, constant);
 			AbstractStatement data = generator.newDataDeclaration(
 					varName, null, type, expression, this);
 			generator.addStatement(data, constant);

@@ -8,8 +8,6 @@ import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
-import com.eagle.programmar.Python.Python_Statement.Python_MultilineStatement;
-import com.eagle.programmar.Python.Python_Statement.Python_SameLineStatement;
 import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
@@ -37,6 +35,9 @@ import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Statements.Python_WhileStatement;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
@@ -104,9 +105,9 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractType transformType(TypeEnum type, String typeName, AbstractToken source)
+	public AbstractType transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
 	{
-		return Python_Type.transformType(type, typeName, source);
+		return Python_Type.transformType(isArray, type, typeName, source);
 	}
 
 	// ================== Main program and class ==================
@@ -136,7 +137,8 @@ public class Python_Generator extends EagleGenerator
 		}
 		else
 		{
-			Python_MultilineStatement multi = (Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
+			Python_MultilineStatement multi =
+					(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
 			multi.statements.addToken((Python_Statement) stmt);
 		}
 	}
@@ -153,7 +155,8 @@ public class Python_Generator extends EagleGenerator
 	public AbstractStatement newBlockStatement(
 			ArrayList<AbstractStatement> statements, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		Python_StatementBlock block = new Python_StatementBlock();
+		return block.addStatements(statements);
 	}
 
 	@Override
@@ -347,7 +350,7 @@ public class Python_Generator extends EagleGenerator
 	@Override
 	public Python_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
-		return wrapExpression(Python_Literals.generateExpression(literal, source));
+		return wrapExpression(Python_Literals.generateLiterals(literal, source));
 	}
 
 	@Override

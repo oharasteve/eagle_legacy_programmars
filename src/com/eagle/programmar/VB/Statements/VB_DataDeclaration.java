@@ -103,7 +103,7 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 			type = TypeEnum.INTEGER;
 		}
 
-		return generator.transformType(type, name, null);
+		return generator.transformType(false, type, name, null);
 	}
 	
 	@Override
@@ -134,7 +134,7 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 				type = TypeEnum.OTHER;
 				break;
 			}
-			newType = generator.transformType(type, typeName, dataType);
+			newType = generator.transformType(false, type, typeName, dataType);
 		}
 		
 		AbstractExpression size = null;

@@ -98,7 +98,8 @@ public class Java_Type extends TokenSequence implements AbstractType
 		return type;
 	}
 	
-	public static Java_Type transformType(TypeEnum type, String typeName, AbstractToken source)
+	public static Java_Type transformType(boolean isArray, TypeEnum type,
+			String typeName, AbstractToken source)
 	{
 		switch (type)
 		{
@@ -122,7 +123,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		Java_ArrayType array = new Java_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
-		Java_Type newType = Java_Type.transformType(type, null, null);
+		Java_Type newType = Java_Type.transformType(true, type, null, null);
 		newType.arrayTypes = new TokenList<Java_ArrayType>();
 		newType.arrayTypes.addToken(array);
 		newType.arrayTypes.setPresent(true);

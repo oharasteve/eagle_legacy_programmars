@@ -84,7 +84,7 @@ public class VB_Function extends TokenSequence
 			type = TypeEnum.OTHER;
 			break;
 		}
-		return generator.transformType(type, null, null);
+		return generator.transformType(false, type, null, null);
 	}
 	
 	@Override
