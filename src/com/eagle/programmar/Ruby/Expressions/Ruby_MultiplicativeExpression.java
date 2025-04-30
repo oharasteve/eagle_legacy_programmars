@@ -5,6 +5,8 @@ package com.eagle.programmar.Ruby.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -15,24 +17,36 @@ public class Ruby_MultiplicativeExpression extends PrecedenceOperator implements
 	public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("*", "/", "%");
 	public @S(30) Ruby_Expression right = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "*":
-			interpreter.pushInt(leftValue * rightValue);
+			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
-			interpreter.pushInt(leftValue / rightValue);
+			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "%":
-			interpreter.pushInt(leftValue % rightValue);
+			interpreter.pushInt(leftInt % rightInt);
 			return;
 		default:
-			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 		}
 	}
 }

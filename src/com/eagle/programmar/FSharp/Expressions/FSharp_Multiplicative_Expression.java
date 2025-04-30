@@ -5,6 +5,8 @@ package com.eagle.programmar.FSharp.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -15,23 +17,35 @@ public class FSharp_Multiplicative_Expression extends PrecedenceOperator impleme
 	public @S(20) FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("*", "/", "%");
 	public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "*":
-			interpreter.pushInt(leftValue * rightValue);
+			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
-			interpreter.pushInt(leftValue / rightValue);
+			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "%":
-			interpreter.pushInt(leftValue % rightValue);
+			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
 }

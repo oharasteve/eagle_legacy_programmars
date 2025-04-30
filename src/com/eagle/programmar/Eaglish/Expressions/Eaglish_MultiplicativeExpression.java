@@ -5,12 +5,12 @@ package com.eagle.programmar.Eaglish.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_PunctuationChoice;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenChooser;
 
 public class Eaglish_MultiplicativeExpression extends PrecedenceOperator implements EagleRunnable
@@ -25,29 +25,35 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator impleme
 		public @CHOICE Eaglish_KeywordChoice XXoperWord = new Eaglish_KeywordChoice("DIVIDE_TRUNCATE", "REMAINDER");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		AbstractToken which = operator.getWhich();
-		if (which instanceof TerminalToken)
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
 		{
-			String oper = ((TerminalToken) which).getValue();
-			int leftValue = interpreter.getIntValue(left);
-			int rightValue = interpreter.getIntValue(right);
-			switch (oper)
-			{
-			case "*":
-				interpreter.pushInt(leftValue * rightValue);
-				return;
-			case "DIVIDE_TRUNCATE":
-				interpreter.pushInt(leftValue / rightValue);
-				return;
-			case "REMAINDER":
-				interpreter.pushInt(leftValue % rightValue);
-				return;
-			}
-			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_MultiplicativeExpression");
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
 		}
-		throw new RuntimeException("Unexpected operator: " + which.getClass().getName());
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper.toUpperCase())
+		{
+		case "*":
+			interpreter.pushInt(leftInt * rightInt);
+			return;
+		case "DIVIDE_TRUNCATE":
+			interpreter.pushInt(leftInt / rightInt);
+			return;
+		case "REMAINDER":
+			interpreter.pushInt(leftInt % rightInt);
+			return;
+		}
+		throw new RuntimeException("Unable to handle: " + oper);
 	}
 }

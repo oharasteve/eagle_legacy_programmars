@@ -6,6 +6,7 @@ package com.eagle.programmar.SQL.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.programmar.SQL.Terminals.SQL_PunctuationChoice;
@@ -25,16 +26,26 @@ public class SQL_RelationalExpression extends PrecedenceOperator implements Eagl
 				"=", "!=", "<", ">", "<=", ">=");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.getWhich().toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -48,7 +59,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator implements Eagl
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.getWhich().toString().toUpperCase())
+			switch (oper.toUpperCase())
 			{
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);
@@ -73,6 +84,6 @@ public class SQL_RelationalExpression extends PrecedenceOperator implements Eagl
 				return;
 			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator.getWhich());
+		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 }

@@ -6,6 +6,7 @@ package com.eagle.programmar.PLI.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -17,17 +18,26 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 			"^>", "^<", "^=", "<=", ">=", ">", "<", "=");
 	public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -42,7 +52,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 		{
 			double leftDbl = leftValue.forceDoubleValue();
 			double rightDbl = rightValue.forceDoubleValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftDbl == rightDbl);
@@ -69,7 +79,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);
@@ -96,7 +106,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 		{
 			boolean leftBool = leftValue.forceBooleanValue();
 			boolean rightBool = rightValue.forceBooleanValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftBool == rightBool);
@@ -106,6 +116,6 @@ public class PLI_RelationalExpression extends PrecedenceOperator implements Eagl
 				return;
 			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 }

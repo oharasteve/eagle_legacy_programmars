@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.NegativeEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Negative;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator1Metrics;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
@@ -23,11 +25,22 @@ public class Java_NegativeExpression extends PrimaryOperator implements EagleRun
 	public @S(10) Java_PunctuationChoice operator = new Java_PunctuationChoice("-", "+");
 	public @S(20) @NOSPACE Java_Expression expr;
 
+	private @SKIP Operator1Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int val = interpreter.getIntValue(expr);
-		switch (operator.toString())
+		EagleValue value = interpreter.getEagleValue(expr);
+		String oper = operator.getValue();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator1Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(value.typeName());
+
+		int val = value.forceIntegerValue();
+		switch (oper)
 		{
 		case "+":
 			interpreter.pushInt(val);
@@ -36,7 +49,7 @@ public class Java_NegativeExpression extends PrimaryOperator implements EagleRun
 			interpreter.pushInt(-val);
 			break;
 		default:
-			throw new RuntimeException("Unexpected negation operator: " + operator);
+			throw new RuntimeException("Unexpected negation operator: " + oper);
 		}
 	}
 	

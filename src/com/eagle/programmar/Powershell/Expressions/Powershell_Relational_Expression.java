@@ -6,6 +6,7 @@ package com.eagle.programmar.Powershell.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -17,16 +18,26 @@ public class Powershell_Relational_Expression extends PrecedenceOperator impleme
 			"-ceq", "-cne", "-eq", "-ge", "-gt", "-ieq", "-ine", "-le", "-lt", "-ne");
 	public @S(30) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.toString())
+			switch (oper.toLowerCase())
 			{
 			case "-eq":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -40,7 +51,7 @@ public class Powershell_Relational_Expression extends PrecedenceOperator impleme
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.toString())
+			switch (oper.toLowerCase())
 			{
 			case "-eq":
 				interpreter.pushBool(leftInt == rightInt);
@@ -61,7 +72,7 @@ public class Powershell_Relational_Expression extends PrecedenceOperator impleme
 				interpreter.pushBool(leftInt >= rightInt);
 				return;
 			}
-			throw new RuntimeException("Unexpected relational operator: " + operator);
+			throw new RuntimeException("Unexpected relational operator: " + oper);
 		}
 	}
 }

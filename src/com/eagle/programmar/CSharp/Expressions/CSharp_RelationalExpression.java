@@ -8,6 +8,7 @@ import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
@@ -21,16 +22,26 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -44,7 +55,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftInt == rightInt);
@@ -66,7 +77,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 				return;
 			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 	
 	@Override

@@ -5,6 +5,8 @@ package com.eagle.programmar.CMD.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Format;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
@@ -24,15 +26,26 @@ public class CMD_EqualityExpression extends PrecedenceOperator implements EagleR
 		public @CHOICE CMD_Punctuation XXequals = new CMD_Punctuation("==");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		String leftStr = interpreter.getStrValue(left);
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		String leftStr = leftValue.forceStringValue();
 		String leftVal = CMD_Format.format(interpreter, leftStr);
-		String rightStr = interpreter.getStrValue(right);
+		String rightStr = rightValue.forceStringValue();
 		String rightVal = CMD_Format.format(interpreter, rightStr);
-		switch (oper)
+		switch (oper.toLowerCase())
 		{
 		case "equ", "==":
 			interpreter.pushBool(leftVal.equalsIgnoreCase(rightVal));

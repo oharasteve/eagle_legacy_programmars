@@ -23,10 +23,8 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Python_StatementBlock extends TokenChooser
 {
 	public @CHOICE Python_Punctuation XXdots = new Python_Punctuation("...");
-	public @CHOICE Python_SameLineStatement XXsingleLine;
-	public @CHOICE Python_MultilineStatement XXmultiLine;
 
-	public static class Python_SameLineStatement extends TokenSequence implements EagleRunnableWithResult
+	public @CHOICE static class Python_SameLineStatement extends TokenSequence implements EagleRunnableWithResult
 	{
 		public @S(10) SeparatedList<Python_Simple_Statement, PunctuationSemicolon> statements;
 		public @S(20) @OPT Python_Comment comment;
@@ -45,7 +43,8 @@ public class Python_StatementBlock extends TokenChooser
 		}
 	}
 
-	public static class Python_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
+	public @CHOICE static class Python_MultilineStatement extends TokenSequence
+			implements EagleRunnableWithResult
 	{
 		public @S(10) @OPT Python_Comment comment;
 		public @S(20) Python_EndOfLine eoln;

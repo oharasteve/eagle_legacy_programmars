@@ -6,6 +6,7 @@ package com.eagle.programmar.Algol68.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -16,29 +17,39 @@ public class Algol68_AdditiveExpression extends PrecedenceOperator implements Ea
 	public @S(20) Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("+", "-");
 	public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "+":
 				interpreter.pushStr(leftStr + rightStr);
 				break;
 			default:
-				throw new RuntimeException("Unexpected concatenation operator: " + operator);
+				throw new RuntimeException("Unexpected concatenation operator: " + oper);
 			}
 		}
 		else
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "+":
 				interpreter.pushInt(leftInt + rightInt);
@@ -47,7 +58,7 @@ public class Algol68_AdditiveExpression extends PrecedenceOperator implements Ea
 				interpreter.pushInt(leftInt - rightInt);
 				break;
 			default:
-				throw new RuntimeException("Unexpected additive operator: " + operator);
+				throw new RuntimeException("Unexpected additive operator: " + oper);
 			}
 		}
 	}

@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.MultiplicativeEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Multiplicative;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Type;
@@ -26,24 +28,36 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("*", "/", "%");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "*":
-			interpreter.pushInt(leftValue * rightValue);
+			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
-			interpreter.pushInt(leftValue / rightValue);
+			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "%":
-			interpreter.pushInt(leftValue % rightValue);
+			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
 	
 	@Override

@@ -141,8 +141,8 @@ public class Python_WhileStatement extends TokenSequence
 		Python_Relational_Expression inExpr = new Python_Relational_Expression();
 		inExpr.left = Python_Generator.wrapExpression(lits);
 		inExpr.right = Python_Generator.wrapExpression(localsFn);
-		inExpr.relOp = new Python_Relational_Operator();
-		inExpr.relOp.setWhich(inOper);
+		inExpr.operator = new Python_Relational_Operator();
+		inExpr.operator.setWhich(inOper);
 		
 		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
 		orExpr.left = Python_Generator.wrapExpression(inExpr);

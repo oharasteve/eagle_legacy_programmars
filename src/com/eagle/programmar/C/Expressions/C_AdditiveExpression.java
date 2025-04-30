@@ -6,6 +6,7 @@ package com.eagle.programmar.C.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -16,36 +17,47 @@ public class C_AdditiveExpression extends PrecedenceOperator implements EagleRun
 	public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice("+", "-");
 	public @S(30) C_Expression right = new C_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
-		int rightSide = interpreter.getIntValue(right);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		int rightInt = rightValue.forceIntegerValue();
 		if (leftValue.isString())
 		{
-			String leftSide = leftValue.forceStringValue();
+			String leftStr = leftValue.forceStringValue();
 			switch (operator.toString())
 			{
 			case "+":
-				interpreter.pushStr(leftSide.substring(rightSide));
+				interpreter.pushStr(leftStr.substring(rightInt));
 				break;
 			default:
-				throw new RuntimeException("Unexpected string additive operator: " + operator);
+				throw new RuntimeException("Unexpected string additive operator: " + oper);
 			}
 		}
 		else
 		{
-			int leftSide = leftValue.forceIntegerValue();
+			int leftInt = leftValue.forceIntegerValue();
 			switch (operator.toString())
 			{
 			case "+":
-				interpreter.pushInt(leftSide + rightSide);
+				interpreter.pushInt(leftInt + rightInt);
 				break;
 			case "-":
-				interpreter.pushInt(leftSide - rightSide);
+				interpreter.pushInt(leftInt - rightInt);
 				break;
 			default:
-				throw new RuntimeException("Unexpected numeric additive operator: " + operator);
+				throw new RuntimeException("Unexpected numeric additive operator: " + oper);
 			}
 		}
 	}

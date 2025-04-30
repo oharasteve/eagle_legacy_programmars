@@ -6,12 +6,11 @@ package com.eagle.programmar.Eaglish.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_PunctuationChoice;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenChooser;
 
 public class Eaglish_RelationalExpression extends PrecedenceOperator implements EagleRunnable
@@ -26,75 +25,82 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator implements 
 		public @CHOICE Eaglish_KeywordChoice XXoperWord = new Eaglish_KeywordChoice("EQUALS", "NOT_EQUALS");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		AbstractToken which = operator.getWhich();
-		if (which instanceof TerminalToken)
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
 		{
-			String oper = ((TerminalToken) which).getValue();
-			EagleValue leftValue = interpreter.getEagleValue(left);
-			EagleValue rightValue = interpreter.getEagleValue(right);
-
-			if (leftValue.isString() && rightValue.isString())
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = interpreter.getStrValue(left);
+			String rightStr = interpreter.getStrValue(right);
+			switch (oper.toUpperCase())
 			{
-				String leftStr = interpreter.getStrValue(left);
-				String rightStr = interpreter.getStrValue(right);
-				switch (oper)
-				{
-				case "=", "EQUALS":
-					interpreter.pushBool(leftStr.equals(rightStr));
-					return;
-				case "NOT_EQUALS":
-					interpreter.pushBool(!leftStr.equals(rightStr));
-					return;
-				default:
-					throw new RuntimeException("Unable to handle " + oper + " with strings");
-				}
-			}
-			else if (leftValue.isInteger() && rightValue.isInteger())
-			{
-				int leftInt = interpreter.getIntValue(left);
-				int rightInt = interpreter.getIntValue(right);
-				switch (oper)
-				{
-				case "=", "EQUALS":
-					interpreter.pushBool(leftInt == rightInt);
-					return;
-				case "NOT_EQUALS":
-					interpreter.pushBool(leftInt != rightInt);
-					return;
-				case "<":
-					interpreter.pushBool(leftInt < rightInt);
-					return;
-				case "<=":
-					interpreter.pushBool(leftInt <= rightInt);
-					return;
-				case ">":
-					interpreter.pushBool(leftInt > rightInt);
-					return;
-				case ">=":
-					interpreter.pushBool(leftInt >= rightInt);
-					return;
-				default:
-					throw new RuntimeException("Unable to handle " + oper + " with integers");
-				}
-			}
-			else if (leftValue.isBoolean() && rightValue.isBoolean())
-			{
-				boolean leftBool = interpreter.getBoolValue(left);
-				boolean rightBool = interpreter.getBoolValue(right);
-				switch (oper)
-				{
-				case "=", "EQUALS":
-					interpreter.pushBool(leftBool == rightBool);
-					return;
-				case "NOT_EQUALS":
-					interpreter.pushBool(leftBool != rightBool);
-					return;
-				}
+			case "=", "EQUALS":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "NOT_EQUALS":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			default:
+				throw new RuntimeException("Unable to handle " + oper + " with strings");
 			}
 		}
-		throw new RuntimeException("Unexpected operator: " + which);
+		
+		if (leftValue.isInteger() || rightValue.isInteger())
+		{
+			int leftInt = interpreter.getIntValue(left);
+			int rightInt = interpreter.getIntValue(right);
+			switch (oper.toUpperCase())
+			{
+			case "=", "EQUALS":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "NOT_EQUALS":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			default:
+				throw new RuntimeException("Unable to handle " + oper + " with integers");
+			}
+		}
+		
+		if (leftValue.isBoolean() || rightValue.isBoolean())
+		{
+			boolean leftBool = interpreter.getBoolValue(left);
+			boolean rightBool = interpreter.getBoolValue(right);
+			switch (oper.toUpperCase())
+			{
+			case "=", "EQUALS":
+				interpreter.pushBool(leftBool == rightBool);
+				return;
+			case "NOT_EQUALS":
+				interpreter.pushBool(leftBool != rightBool);
+				return;
+			}
+		}
+		
+		throw new RuntimeException("Unexpected operator: " + oper);
 	}
 }

@@ -5,6 +5,8 @@ package com.eagle.programmar.Algol68.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_KeywordChoice;
 import com.eagle.programmar.Algol68.Terminals.Algol68_PunctuationChoice;
@@ -23,28 +25,40 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator impleme
 		public @CHOICE Algol68_KeywordChoice XXMOD = new Algol68_KeywordChoice("mod", "over");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "*":
-			interpreter.pushInt(leftValue * rightValue);
+			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/", "over":
-			if (leftValue % rightValue == 0)
+			if (leftInt % rightInt == 0)
 			{
-				interpreter.pushInt(leftValue / rightValue);
+				interpreter.pushInt(leftInt / rightInt);
 				return;
 			}
-			interpreter.pushDouble(leftValue / (double) rightValue);
+			interpreter.pushDouble(leftInt / (double) rightInt);
 			return;
 		case "%", "mod":
-			interpreter.pushInt(leftValue % rightValue);
+			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
 }

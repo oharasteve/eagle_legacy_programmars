@@ -8,6 +8,7 @@ import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
@@ -21,7 +22,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		implements EagleRunnable, Eagle_Generate_Relational<Python_Expression>
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Python_Relational_Operator relOp;
+	public @S(20) Python_Relational_Operator operator;
 	public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 
 	public static class Python_Relational_Operator extends TokenChooser
@@ -42,16 +43,26 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		}
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (relOp.getWhich().toString())
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -65,7 +76,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (relOp.getWhich().toString())
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftInt == rightInt);
@@ -86,7 +97,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 				interpreter.pushBool(leftInt >= rightInt);
 				return;
 			default:
-				throw new RuntimeException("Unable to handle operator: " + relOp.getWhich());
+				throw new RuntimeException("Unable to handle operator: " + oper);
 			}
 		}
 	}
@@ -120,8 +131,8 @@ public class Python_Relational_Expression extends PrecedenceOperator
 			operator = new Python_PunctuationChoice(">=");
 			break;
 		}
-		this.relOp = new Python_Relational_Operator();
-		this.relOp.setWhich(operator);
+		this.operator = new Python_Relational_Operator();
+		this.operator.setWhich(operator);
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

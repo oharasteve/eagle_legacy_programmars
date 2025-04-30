@@ -5,6 +5,8 @@ package com.eagle.programmar.Eaglish.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator1Metrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
@@ -14,21 +16,31 @@ public class Eaglish_NegativeExpression extends PrimaryOperator implements Eagle
 	public @S(10) Eaglish_PunctuationChoice operator = new Eaglish_PunctuationChoice("-", "+");
 	public @S(20) Eaglish_Expression expr;
 
+	private @SKIP Operator1Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int value = interpreter.getIntValue(expr);
+		EagleValue value = interpreter.getEagleValue(expr);
 		String oper = operator.getValue();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator1Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(value.typeName());
+
+		int val = value.forceIntegerValue();
 		switch (oper)
 		{
-		case "-":
-			interpreter.pushInt(-value);
-			return;
 		case "+":
-			interpreter.pushInt(value);
-			return;
+			interpreter.pushInt(val);
+			break;
+		case "-":
+			interpreter.pushInt(-val);
+			break;
 		default:
-			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_NegativeExpression");
+			throw new RuntimeException("Unexpected negation operator: " + oper);
 		}
 	}
 }

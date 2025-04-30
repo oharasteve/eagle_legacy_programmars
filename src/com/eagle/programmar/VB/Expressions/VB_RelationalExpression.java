@@ -8,6 +8,7 @@ import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -21,16 +22,26 @@ public class VB_RelationalExpression extends PrecedenceOperator implements Eagle
 	public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice("=", "<=", ">=", "<>", "<", ">");
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -44,7 +55,7 @@ public class VB_RelationalExpression extends PrecedenceOperator implements Eagle
 		{
 			double leftDbl = leftValue.forceDoubleValue();
 			double rightDbl = rightValue.forceDoubleValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftDbl == rightDbl);
@@ -70,7 +81,7 @@ public class VB_RelationalExpression extends PrecedenceOperator implements Eagle
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.toString())
+			switch (oper)
 			{
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);
@@ -93,7 +104,7 @@ public class VB_RelationalExpression extends PrecedenceOperator implements Eagle
 			}
 		}
 		
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 	
 	@Override

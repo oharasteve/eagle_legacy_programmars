@@ -5,6 +5,8 @@ package com.eagle.programmar.Ada.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_PunctuationChoice;
@@ -23,23 +25,35 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator implements 
 		public @CHOICE Ada_Keyword XXMOD = new Ada_Keyword("mod");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.getWhich().toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "*":
-			interpreter.pushInt(leftValue * rightValue);
+			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
-			interpreter.pushInt(leftValue / rightValue);
+			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "mod":
-			interpreter.pushInt(leftValue % rightValue);
+			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
 }

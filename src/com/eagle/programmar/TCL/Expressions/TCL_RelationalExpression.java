@@ -6,6 +6,7 @@ package com.eagle.programmar.TCL.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_KeywordChoice;
 import com.eagle.programmar.TCL.Terminals.TCL_PunctuationChoice;
@@ -15,7 +16,7 @@ import com.eagle.tokens.TokenChooser;
 public class TCL_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) TCL_RelOperator relOper;
+	public @S(20) TCL_RelOperator operator;
 	public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
 
 	public static class TCL_RelOperator extends TokenChooser
@@ -26,16 +27,26 @@ public class TCL_RelationalExpression extends PrecedenceOperator implements Eagl
 				"<", ">", "<=", ">=", "==", "<>", "!=");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (relOper.getWhich().toString())
+			switch (oper.toLowerCase())
 			{
 			case "==", "eq":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -49,7 +60,7 @@ public class TCL_RelationalExpression extends PrecedenceOperator implements Eagl
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (relOper.getWhich().toString())
+			switch (oper.toLowerCase())
 			{
 			case "==", "eq":
 				interpreter.pushBool(leftInt == rightInt);
@@ -72,6 +83,6 @@ public class TCL_RelationalExpression extends PrecedenceOperator implements Eagl
 			}
 		}
 		
-		throw new RuntimeException("Unexpected relational operator: " + relOper.getWhich());
+		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 }

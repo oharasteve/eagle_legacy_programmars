@@ -5,6 +5,8 @@ package com.eagle.programmar.Powershell.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_RealEndOfLine;
@@ -17,30 +19,42 @@ public class Powershell_Multiplicative_Expression extends PrecedenceOperator imp
 	public @S(30) @OPT Powershell_RealEndOfLine eoln;
 	public @S(40) Powershell_Expression right = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "*":
-			interpreter.pushInt(leftValue * rightValue);
+			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
-			if (leftValue % rightValue == 0)
+			if (leftInt % rightInt == 0)
 			{
-				interpreter.pushInt(leftValue / rightValue);
+				interpreter.pushInt(leftInt / rightInt);
 			}
 			else
 			{
-				interpreter.pushDouble((double) leftValue / rightValue);
+				interpreter.pushDouble((double) leftInt / rightInt);
 			}
 			return;
 		case "%":
-			interpreter.pushInt(leftValue % rightValue);
+			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
 }

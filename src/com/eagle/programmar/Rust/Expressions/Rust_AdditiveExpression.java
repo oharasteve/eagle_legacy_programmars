@@ -5,6 +5,8 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -15,21 +17,33 @@ public class Rust_AdditiveExpression extends PrecedenceOperator implements Eagle
 	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("+", "-");
 	public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "+":
-			interpreter.pushInt(leftValue + rightValue);
+			interpreter.pushInt(leftInt + rightInt);
 			return;
 		case "-":
-			interpreter.pushInt(leftValue - rightValue);
+			interpreter.pushInt(leftInt - rightInt);
 			return;
 		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			throw new RuntimeException("Unexpected additive operator: " + oper);
 		}
 	}
 }

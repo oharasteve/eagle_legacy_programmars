@@ -6,6 +6,7 @@ package com.eagle.programmar.AWK.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.Terminals.AWK_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -16,17 +17,26 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 	public @S(20) AWK_PunctuationChoice operator = new AWK_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 	public @S(30) AWK_Expression right = new AWK_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue leftVal = interpreter.getEagleValue(left);
-		EagleValue rightVal = interpreter.getEagleValue(right);
-
-		if (leftVal.isString() || rightVal.isString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
 		{
-			String leftStr = leftVal.forceStringValue();
-			String rightStr = rightVal.forceStringValue();
-			switch (operator.getValue())
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -37,11 +47,11 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 			}
 		}
 
-		if (leftVal.isDouble() || rightVal.isDouble())
+		if (leftValue.isDouble() || rightValue.isDouble())
 		{
-			double leftDbl = leftVal.forceDoubleValue();
-			double rightDbl = rightVal.forceDoubleValue();
-			switch (operator.getValue())
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftDbl == rightDbl);
@@ -64,11 +74,11 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 			}
 		}
 
-		if (leftVal.isInteger() || rightVal.isInteger())
+		if (leftValue.isInteger() || rightValue.isInteger())
 		{
-			int leftInt = leftVal.forceIntegerValue();
-			int rightInt = rightVal.forceIntegerValue();
-			switch (operator.getValue())
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftInt == rightInt);
@@ -91,6 +101,6 @@ public class AWK_RelationalExpression extends PrecedenceOperator implements Eagl
 			}
 		}
 
-		throw new RuntimeException("Can only handle ints and strings");
+		throw new RuntimeException("Unexpected additive operator: " + oper);
 	}
 }

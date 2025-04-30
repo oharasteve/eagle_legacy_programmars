@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Functions.Java_EqualsMethod;
@@ -27,33 +29,45 @@ public class Java_RelationalExpression extends PrecedenceOperator
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 	public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		switch (operator.toString())
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		
+		int leftInt = leftValue.forceIntegerValue();
+		int rightInt = rightValue.forceIntegerValue();
+		switch (oper)
 		{
 		case "==":
-			interpreter.pushBool(leftValue == rightValue);
+			interpreter.pushBool(leftInt == rightInt);
 			return;
 		case "!=":
-			interpreter.pushBool(leftValue != rightValue);
+			interpreter.pushBool(leftInt != rightInt);
 			return;
 		case "<":
-			interpreter.pushBool(leftValue < rightValue);
+			interpreter.pushBool(leftInt < rightInt);
 			return;
 		case "<=":
-			interpreter.pushBool(leftValue <= rightValue);
+			interpreter.pushBool(leftInt <= rightInt);
 			return;
 		case ">":
-			interpreter.pushBool(leftValue > rightValue);
+			interpreter.pushBool(leftInt > rightInt);
 			return;
 		case ">=":
-			interpreter.pushBool(leftValue >= rightValue);
+			interpreter.pushBool(leftInt >= rightInt);
 			return;
 		}
-		throw new RuntimeException("Unexpected relational operator: " + operator);
+		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 	
 	private static boolean isString(AbstractExpression expression)

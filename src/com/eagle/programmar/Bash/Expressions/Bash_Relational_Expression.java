@@ -6,6 +6,7 @@ package com.eagle.programmar.Bash.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_KeywordChoice;
 import com.eagle.programmar.Bash.Terminals.Bash_PunctuationChoice;
@@ -24,17 +25,26 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 		public @CHOICE Bash_KeywordChoice XXnumOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 	}
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.getWhich().toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
 			String rightStr = rightValue.forceStringValue();
-			switch (operator.getWhich().toString())
+			switch (oper)
 			{
 			case "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
@@ -61,7 +71,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();
-			switch (operator.getWhich().toString())
+			switch (oper)
 			{
 			case "-eq":
 				interpreter.pushBool(leftInt == rightInt);
@@ -84,6 +94,6 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 			}
 		}
 
-		throw new RuntimeException("Unable to handle " + operator.getWhich().toString());
+		throw new RuntimeException("Unable to handle " + oper);
 	}
 }

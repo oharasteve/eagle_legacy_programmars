@@ -6,6 +6,7 @@ package com.eagle.programmar.COBOL.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_RelationalOperator;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -19,12 +20,21 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 	public @S(40) COBOL_RelationalOperator relationalOperator;
 	public @S(50) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = relationalOperator.canonicalForm(); // Returns "<", "=", etc.
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
 		boolean not = NOT.isPresent();
 		boolean result;
 
