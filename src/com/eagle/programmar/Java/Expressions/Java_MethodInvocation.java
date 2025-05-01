@@ -4,7 +4,6 @@
 package com.eagle.programmar.Java.Expressions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
@@ -151,7 +150,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 
 	@Override
 	public Java_Expression generateInvocation(Java_Variable var,
-			Collection<AbstractExpression> args, AbstractToken source)
+			ArrayList<Java_Expression> args, AbstractToken source)
 	{
 		this.methodName = new Java_Variable();
 		this.methodName.firstId = var.firstId;

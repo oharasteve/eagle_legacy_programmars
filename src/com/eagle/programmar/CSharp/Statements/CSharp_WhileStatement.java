@@ -92,7 +92,7 @@ public class CSharp_WhileStatement extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateWhile(CSharp_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock body = new CSharp_StatementBlock();
 		body.statements = new TokenList<CSharp_StatementOrComment>();
@@ -103,9 +103,8 @@ public class CSharp_WhileStatement extends TokenSequence
 		this.whileStatement = csStatement;
 		csStatement.setWhich(body);
 
-		for (AbstractStatement action : actions)
+		for (CSharp_Statement stmt : actions)
 		{
-			CSharp_Statement stmt = (CSharp_Statement) action;
 			CSharp_StatementOrComment wrapper = new CSharp_StatementOrComment();
 			wrapper.setWhich(stmt);
 			body.statements.addToken(wrapper);

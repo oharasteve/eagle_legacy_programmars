@@ -108,7 +108,7 @@ public class Java_WhileStatement extends TokenSequence implements
 
 	@Override
 	public Java_Statement generateWhile(Java_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock body = new Java_StatementBlock();
 		body.statements = new TokenList<Java_StatementOrComment>();

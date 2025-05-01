@@ -17,7 +17,6 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
@@ -53,16 +52,16 @@ public class CSharp_StatementBlock extends TokenSequence
 	}
 	
 	@Override
-	public CSharp_Statement generateBlock(ArrayList<AbstractStatement> statements,
-			AbstractToken source)
+	public CSharp_Statement generateBlock(
+			ArrayList<CSharp_Statement> statements, AbstractToken source)
 	{
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.statements = new TokenList<CSharp_StatementOrComment>();
-		for (AbstractStatement stmt : statements)
+		for (CSharp_Statement stmt : statements)
 		{
 			CSharp_StatementOrComment stmtComm = new CSharp_StatementOrComment();
-			stmtComm.setWhich((CSharp_Statement) stmt);
+			stmtComm.setWhich(stmt);
 			this.statements.addToken(stmtComm);
 		}
 		return CSharp_Generator.wrapStatement(this);

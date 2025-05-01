@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
@@ -22,7 +22,6 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -102,7 +101,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 	}
 	
 	public Python_Expression generateInvocation(Python_Variable var,
-			Collection<AbstractExpression> args, AbstractToken source)
+			ArrayList<Python_Expression> args, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
 		this.leftParen.setPresent(true);

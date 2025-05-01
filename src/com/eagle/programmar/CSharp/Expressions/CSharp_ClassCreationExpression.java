@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import com.eagle.generate.Expressions.Eagle_Generate_ClassCreation;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
@@ -15,7 +15,6 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -31,7 +30,7 @@ public class CSharp_ClassCreationExpression extends PrimaryOperator implements
 	
 	@Override
 	public CSharp_Expression generateCreation(CSharp_Type type,
-			Collection<AbstractExpression> args, AbstractToken source)
+			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{
 		this.cstype = type;
 		this.leftParen = new PunctuationLeftParen();

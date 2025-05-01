@@ -89,12 +89,12 @@ public class Java_PrintStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement generatePrint(ArrayList<AbstractExpression> pieces,
+	public Java_Statement generatePrint(ArrayList<Java_Expression> pieces,
 			boolean newLine, AbstractToken source)
 	{
 		if (pieces.size() == 1)
 		{
-			return generatePrint1((Java_Expression) pieces.get(0), newLine, source);
+			return generatePrint1(pieces.get(0), newLine, source);
 		}
 
 		Java_IdList ids = new Java_IdList();
@@ -109,9 +109,9 @@ public class Java_PrintStatement extends TokenSequence
 		creat.generateCreation(type, null, source);
 		Java_Expression line = Java_Generator.wrapExpression(creat);
 		
-		for (AbstractExpression piece : pieces)
+		for (Java_Expression piece : pieces)
 		{
-			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
 			args.add(piece);
 			
 			Java_Variable app = Java_Variable.newVariable("append");

@@ -62,7 +62,7 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 			AbstractType type = generator.transformType(false, TypeEnum.OTHER,
 					className, ids);
 
-			Collection<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 			if (this.argList != null && this.argList.isPresent())
 			{
 				args.add(transformer.transformExpression(generator, this.argList.arg));
@@ -82,7 +82,7 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 	
 	@Override
 	public Java_Expression generateCreation(Java_Type type,
-			Collection<AbstractExpression> args, AbstractToken source)
+			ArrayList<Java_Expression> args, AbstractToken source)
 	{
 		this.jtype = type;
 		this.leftParen = new PunctuationLeftParen();

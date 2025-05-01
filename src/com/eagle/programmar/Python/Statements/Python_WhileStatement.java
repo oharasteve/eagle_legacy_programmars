@@ -109,14 +109,14 @@ public class Python_WhileStatement extends TokenSequence
 	public Python_Statement generateDoUntil1(Python_Expression condition,
 			Python_Statement action, AbstractToken source)
 	{
-		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
 		actions.add(action);
 		return generateDoUntil(condition, actions, source);
 	}
 	
 	@Override
 	public Python_Statement generateDoUntil(Python_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
 		
@@ -159,21 +159,26 @@ public class Python_WhileStatement extends TokenSequence
 				oddName, null, AssignmentEnum.EQUALS, trueExpr, null, source);
 		Python_Statement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
 		
-		actions.add(0, asgStmt);	// Destructive. Is that ok?
-		return generateWhile(whileCond, actions, source);
+		ArrayList<Python_Statement> copyActions = new ArrayList<Python_Statement>();
+		copyActions.add(asgStmt);
+		for (AbstractStatement act : actions)
+		{
+			copyActions.add((Python_Statement) act);
+		}
+		return generateWhile(whileCond, copyActions, source);
 	}
 	
 	@Override
 	public Python_Statement generateWhile1(Python_Expression condition,
 			Python_Statement action, AbstractToken source)
 	{
-		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
 		actions.add(action);
 		return generateWhile(condition, actions, source);
 	}
 
 	public Python_Statement generateWhile(Python_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		this.colon = new PunctuationColon();
 
@@ -183,9 +188,8 @@ public class Python_WhileStatement extends TokenSequence
 		multi.statements = new TokenList<Python_Statement>();
 		this.statements.setWhich(multi);
 
-		for (AbstractStatement action : actions)
+		for (Python_Statement stmt : actions)
 		{
-			Python_Statement stmt = (Python_Statement) action;
 			multi.statements.addToken(stmt);
 
 			// If the parent block gets the 'while' as the parent, line numbers in the

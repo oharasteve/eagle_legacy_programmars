@@ -4,7 +4,6 @@
 package com.eagle.programmar.Python;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
@@ -45,13 +44,10 @@ import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Python_Generator extends EagleGenerator
+public class Python_Generator extends EagleGenerator<Python_Statement,
+		Python_Expression, Python_Variable, Python_Type>
 {
 	public static String NAME = "Python";
 	public static String SUFFIX = ".py";
@@ -105,7 +101,7 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractType transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
+	public Python_Type transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
 	{
 		return Python_Type.transformType(isArray, type, typeName, source);
 	}
@@ -115,7 +111,7 @@ public class Python_Generator extends EagleGenerator
 	private Python_Function _currentFunction = null;
 
 	@Override
-	public void addMethod(AbstractType returnType, String name, AbstractToken source)
+	public void addMethod(Python_Type returnType, String name, AbstractToken source)
 	{
 		Python_Function newFunction = Python_Function.newPythonFunction(name);
 		addStatement(wrapStatement(newFunction), source);
@@ -123,23 +119,23 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public void addMethodParameter(AbstractType type, String name)
+	public void addMethodParameter(Python_Type type, String name)
 	{
 		_currentFunction.addFunctionParameter(type, name);
 	}
 	
 	@Override
-	public void addStatement(AbstractStatement stmt, AbstractToken source)
+	public void addStatement(Python_Statement stmt, AbstractToken source)
 	{
 		if (_currentFunction == null)
 		{
-			_program.entries.addToken((Python_Statement) stmt);
+			_program.entries.addToken(stmt);
 		}
 		else
 		{
 			Python_MultilineStatement multi =
 					(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
-			multi.statements.addToken((Python_Statement) stmt);
+			multi.statements.addToken(stmt);
 		}
 	}
 
@@ -152,103 +148,104 @@ public class Python_Generator extends EagleGenerator
 	// ================ Statements ================
 
 	@Override
-	public AbstractStatement newBlockStatement(
-			ArrayList<AbstractStatement> statements, AbstractToken source)
+	public Python_Statement newBlockStatement(
+			ArrayList<Python_Statement> statements, AbstractToken source)
 	{
 		Python_StatementBlock block = new Python_StatementBlock();
 		return block.addStatements(statements);
 	}
 
 	@Override
-	public AbstractStatement newBreakStatement(AbstractToken source)
+	public Python_Statement newBreakStatement(AbstractToken source)
 	{
 		Python_BreakStatement brkStmt = new Python_BreakStatement();
 		return wrapStatement(brkStmt.generateBreak(source));
 	}
 
 	@Override
-	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
-			AbstractExpression initial, AbstractToken source)
+	public Python_Statement newDataDeclaration(String name, Python_Expression size, Python_Type type,
+			Python_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Python_Data.newDataDeclaration(name,size, type, initial, source));
 	}
 
 	@Override
-	public Python_Statement newDoUntilStatement1(AbstractExpression condition,
-			AbstractStatement action, AbstractToken source)
+	public Python_Statement newDoUntilStatement1(Python_Expression condition,
+			Python_Statement action, AbstractToken source)
 	{
 		Python_WhileStatement doStmt = new Python_WhileStatement();
-		return doStmt.generateDoUntil1((Python_Expression) condition,
-				(Python_Statement) action, source);
+		return doStmt.generateDoUntil1(condition,
+				action, source);
 	}
 	
 	@Override
-	public Python_Statement newDoUntilStatement(AbstractExpression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Python_Statement newDoUntilStatement(Python_Expression condition,
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		Python_WhileStatement doStmt = new Python_WhileStatement();
-		return doStmt.generateDoUntil((Python_Expression) condition, actions, source);
+		return doStmt.generateDoUntil(condition, actions, source);
 	}
 	
 	@Override
-	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
+	public Python_Statement newExitStatement(Python_Expression code, AbstractToken source)
 	{
 		return wrapStatement(Python_QuitStatement.newQuitStatement(code, source));
 	}
 
 	@Override
-	public AbstractStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
+	public Python_Statement newExpressionStatement(Python_Expression expr, AbstractToken source)
 	{
 		return wrapStatement(Python_ExpressionStatement.newExpressionStatement(expr, source));
 	}
 	
 	@Override
-	public AbstractStatement newIfStatement1(AbstractExpression condition, AbstractStatement ifTrue,
-			AbstractStatement ifFalse, AbstractToken source)
+	public Python_Statement newIfStatement1(Python_Expression condition, Python_Statement ifTrue,
+			Python_Statement ifFalse, AbstractToken source)
 	{
 		Python_IfStatement ifStmt = new Python_IfStatement();
-		return ifStmt.generateIfElse1((Python_Expression) condition,
-				(Python_Statement) ifTrue,(Python_Statement) ifFalse, source);
+		return ifStmt.generateIfElse1(condition,
+				ifTrue,ifFalse, source);
 	}
 	
 	@Override
-	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
-			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
+	public Python_Statement newIfStatement(Python_Expression condition,
+			ArrayList<Python_Statement> ifTrue,
+			ArrayList<Python_Statement> ifFalse, AbstractToken source)
 	{
 		Python_IfStatement ifStmt = new Python_IfStatement();
-		return ifStmt.generateIfElse((Python_Expression) condition, ifTrue, ifFalse, source);
+		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
-	public AbstractStatement newForLoopStatement1(AbstractExpression init,
-			AbstractExpression term, AbstractExpression incr, AbstractStatement action,
+	public Python_Statement newForLoopStatement1(Python_Expression init,
+			Python_Expression term, Python_Expression incr, Python_Statement action,
 			AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
-		return forStmt.generateForLoop1((Python_Expression) init, (Python_Expression) term,
-				(Python_Expression) incr, (Python_Statement) action, source);
+		return forStmt.generateForLoop1(init, term,
+				incr, action, source);
 	}
 
 	@Override
-	public AbstractStatement newForLoopStatement(AbstractExpression init,
-			AbstractExpression term, AbstractExpression incr,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Python_Statement newForLoopStatement(Python_Expression init,
+			Python_Expression term, Python_Expression incr,
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
-		return forStmt.generateForLoop((Python_Expression) init, (Python_Expression) term,
-				(Python_Expression) incr, actions, source);
+		return forStmt.generateForLoop(init, term,
+				incr, actions, source);
 	}
 
 	@Override
-	public AbstractStatement newPrintStatement1(AbstractExpression line, boolean newLine,
+	public Python_Statement newPrintStatement1(Python_Expression line, boolean newLine,
 			AbstractToken source)
 	{
 		Python_PrintStatement prtStmt = new Python_PrintStatement();
-		return prtStmt.generatePrint1((Python_Expression) line, newLine, source);
+		return prtStmt.generatePrint1(line, newLine, source);
 	}
 	
 	@Override
-	public AbstractStatement newPrintStatement(ArrayList<AbstractExpression> pieces,
+	public Python_Statement newPrintStatement(ArrayList<Python_Expression> pieces,
 			boolean newLine, AbstractToken source)
 	{
 		Python_PrintStatement prtStmt = new Python_PrintStatement();
@@ -256,79 +253,79 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Statement newReturnStatement(AbstractExpression ret,
+	public Python_Statement newReturnStatement(Python_Expression ret,
 			AbstractToken source)
 	{
 		Python_ReturnStatement retStmt = new Python_ReturnStatement();
-		return retStmt.generateReturn((Python_Expression) ret, source);
+		return retStmt.generateReturn(ret, source);
 	}
 
 	@Override
-	public AbstractExpression newShiftExpression(AbstractExpression left,
-			ShiftEnum shift, AbstractExpression right, AbstractToken source)
+	public Python_Expression newShiftExpression(Python_Expression left,
+			ShiftEnum shift, Python_Expression right, AbstractToken source)
 	{
 		Python_Shift_Expression shiftExpr = new Python_Shift_Expression();
-		return shiftExpr.generateShift((Python_Expression) left, shift,
-				(Python_Expression) right, source);
+		return shiftExpr.generateShift(left, shift,
+				right, source);
 	}
 
 	@Override
-	public Python_Statement newWhileStatement1(AbstractExpression condition,
-			AbstractStatement action, AbstractToken source)
+	public Python_Statement newWhileStatement1(Python_Expression condition,
+			Python_Statement action, AbstractToken source)
 	{
 		Python_WhileStatement whileStmt = new Python_WhileStatement();
-		return whileStmt.generateWhile1((Python_Expression) condition,
-				(Python_Statement) action, source);
+		return whileStmt.generateWhile1(condition,
+				action, source);
 	}
 	
 	@Override
-	public Python_Statement newWhileStatement(AbstractExpression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Python_Statement newWhileStatement(Python_Expression condition,
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		Python_WhileStatement whileStmt = new Python_WhileStatement();
-		return whileStmt.generateWhile((Python_Expression) condition, actions, source);
+		return whileStmt.generateWhile(condition, actions, source);
 	}
 
 	// ================ Expressions ================
 	
 	@Override
-	public Python_Expression newAdditiveExpression(AbstractExpression left,
-			AdditiveEnum oper, AbstractExpression right, AbstractToken source)
+	public Python_Expression newAdditiveExpression(Python_Expression left,
+			AdditiveEnum oper, Python_Expression right, AbstractToken source)
 	{
 		Python_Additive_Expression addExpr = new Python_Additive_Expression();
-		return addExpr.generateAdditive((Python_Expression) left, oper,
-				(Python_Expression) right, source);
+		return addExpr.generateAdditive(left, oper,
+				right, source);
 	}
 
 	@Override
-	public Python_Expression newAppendExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Python_Expression newAppendExpression(Python_Expression left, Python_Expression right, AbstractToken source)
 	{
 		Python_Additive_Expression appendExpr = new Python_Additive_Expression();
-		return appendExpr.generateAdditive((Python_Expression) left,
-				AdditiveEnum.PLUS, (Python_Expression) right, source);
+		return appendExpr.generateAdditive(left,
+				AdditiveEnum.PLUS, right, source);
 	}
 	
 	@Override
-	public Python_Expression newAssignmentExpression(String name, AbstractExpression subscript,
-			AssignmentEnum oper, AbstractExpression expression, AbstractToken source)
+	public Python_Expression newAssignmentExpression(String name, Python_Expression subscript,
+			AssignmentEnum oper, Python_Expression expression, AbstractToken source)
 	{
 		Python_VariableExpression varExpr = new Python_VariableExpression();
 		Python_Expression var = varExpr.generateVarExpr(name,
-				(Python_Expression) subscript, source);
+				subscript, source);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		return asgExpr.generateAssignment(var, oper,
-				(Python_Expression) expression, source);
+				expression, source);
 	}
 	
 	@Override
-	public Python_Expression newPostIncrementExpression(String name, AbstractExpression subscript,
+	public Python_Expression newPostIncrementExpression(String name, Python_Expression subscript,
 			IncrementEnum oper, AbstractToken source)
 	{
 		throw new RuntimeException("Need to implement");
 	}
 	
 	@Override
-	public Python_Expression newPreIncrementExpression(String name, AbstractExpression subscript,
+	public Python_Expression newPreIncrementExpression(String name, Python_Expression subscript,
 			IncrementEnum oper, AbstractToken source)
 	{
 		throw new RuntimeException("Need to implement");
@@ -342,7 +339,7 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Expression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Python_Expression newExponentExpression(Python_Expression left, Python_Expression right, AbstractToken source)
 	{
 		return wrapExpression(Python_Power_Expression.generateExpression(left, right, source));
 	}
@@ -354,45 +351,45 @@ public class Python_Generator extends EagleGenerator
 	}
 
 	@Override
-	public Python_Expression newLogicalAndExpression(AbstractExpression left,
-			AbstractExpression right, AbstractToken source)
+	public Python_Expression newLogicalAndExpression(Python_Expression left,
+			Python_Expression right, AbstractToken source)
 	{
 		Python_Logical_And_Expression andExpr = new Python_Logical_And_Expression();
-		return andExpr.generateLogicalAnd((Python_Expression) left,
-				(Python_Expression) right, source);
+		return andExpr.generateLogicalAnd(left,
+				right, source);
 	}
 	
 	@Override
-	public Python_Expression newLogicalOrExpression(AbstractExpression left,
-			LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	public Python_Expression newLogicalOrExpression(Python_Expression left,
+			LogicalOrEnum oper, Python_Expression right, AbstractToken source)
 	{
 		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
-		return orExpr.generateLogicalOr((Python_Expression) left,
-				oper, (Python_Expression) right, source);
+		return orExpr.generateLogicalOr(left,
+				oper, right, source);
 	}
 	
 	@Override
-	public Python_Expression newMultiplicativeExpression(AbstractExpression left,
-			MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	public Python_Expression newMultiplicativeExpression(Python_Expression left,
+			MultiplicativeEnum oper, Python_Expression right, AbstractToken source)
 	{
 		Python_Multiplicative_Expression multExp = new Python_Multiplicative_Expression();
 		return multExp.generateMultiplicative(
-				(Python_Expression) left, oper, (Python_Expression) right, source);
+				left, oper, right, source);
 	}
 
 	@Override
 	public Python_Expression newNegativeExpression(NegativeEnum sign,
-			AbstractExpression expr, AbstractToken source)
+			Python_Expression expr, AbstractToken source)
 	{
 		Python_Negative_Expression negExp = new Python_Negative_Expression();
-		return negExp.generateNegative(sign, (Python_Expression) expr, source);
+		return negExp.generateNegative(sign, expr, source);
 	}
 	
 	@Override
-	public Python_Expression newNotExpression(AbstractExpression expr, AbstractToken source)
+	public Python_Expression newNotExpression(Python_Expression expr, AbstractToken source)
 	{
 		Python_Logical_Not_Expression notExp = new Python_Logical_Not_Expression();
-		return notExp.generateLogicalNot((Python_Expression) expr, source);
+		return notExp.generateLogicalNot(expr, source);
 	}
 	
 	@Override
@@ -403,45 +400,45 @@ public class Python_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Python_Expression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	public Python_Expression newParenthesizedExpression(Python_Expression expr, AbstractToken source)
 	{
 		Python_Parenthesized_Expression paren = new Python_Parenthesized_Expression();
-		return paren.generateParentheses((Python_Expression) expr, source);
+		return paren.generateParentheses(expr, source);
 	}
 
 	@Override
-	public Python_Expression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
-			AbstractExpression right, AbstractToken source)
+	public Python_Expression newRelationalExpression(Python_Expression left, RelationalEnum relOp,
+			Python_Expression right, AbstractToken source)
 	{
 		Python_Relational_Expression relExp = new Python_Relational_Expression();
-		return relExp.generateRelational((Python_Expression) left,
-				relOp, (Python_Expression) right, source);
+		return relExp.generateRelational(left,
+				relOp, right, source);
 	}
 	
 	@Override
-	public Python_Expression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	public Python_Expression newVariableExpression(String name, Python_Expression subscript, AbstractToken source)
 	{
 		Python_VariableExpression varExp = new Python_VariableExpression();
-		return varExp.generateVarExpr(name, (Python_Expression) subscript, source);
+		return varExp.generateVarExpr(name, subscript, source);
 	}
 	
 	@Override
-	public Python_Expression newClassCreation(AbstractType type,
-			Collection<AbstractExpression> args, AbstractToken source)
+	public Python_Expression newClassCreation(Python_Type type,
+			ArrayList<Python_Expression> args, AbstractToken source)
 	{
 		throw new RuntimeException("Need to implement");
 	}
 	
 	@Override
-	public Python_Expression newMethodInvocation(AbstractVariable var,
-			Collection<AbstractExpression> args, AbstractToken source)
+	public Python_Expression newMethodInvocation(Python_Variable var,
+			ArrayList<Python_Expression> args, AbstractToken source)
 	{
 		Python_Function_Call creat = new Python_Function_Call();
-		return creat.generateInvocation((Python_Variable) var, args, source);
+		return creat.generateInvocation(var, args, source);
 	}
 	
 	@Override
-	public AbstractExpression newCurrentDatetime()
+	public Python_Expression newCurrentDatetime()
 	{
 		throw new RuntimeException("Need to implement");
 	}
@@ -449,14 +446,14 @@ public class Python_Generator extends EagleGenerator
 	// ================ Functions ================
 
 	@Override
-	public Python_Expression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	public Python_Expression newLengthFunction(Python_Expression expr, AbstractToken source)
 	{
 		return wrapExpression(Python_Len_Function.generateExpression(expr, source));
 	}
 	
 	@Override
-	public Python_Expression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
+	public Python_Expression newSubstringFunction(Python_Expression expr, Python_Expression sc,
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, Python_Expression scOrnc, AbstractToken source)
 	{
 		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}

@@ -26,7 +26,6 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -69,12 +68,12 @@ public class CSharp_PrintStatement extends TokenSequence
 	}
 
 	@Override
-	public CSharp_Statement generatePrint(ArrayList<AbstractExpression> pieces,
+	public CSharp_Statement generatePrint(ArrayList<CSharp_Expression> pieces,
 			boolean newLine, AbstractToken source)
 	{
 		if (pieces.size() == 1)
 		{
-			return generatePrint1((CSharp_Expression) pieces.get(0), newLine, source);
+			return generatePrint1(pieces.get(0), newLine, source);
 		}
 
 		CSharp_IdList ids = new CSharp_IdList();
@@ -107,9 +106,9 @@ public class CSharp_PrintStatement extends TokenSequence
 		creat.generateCreation(type, null, source);
 		CSharp_Expression line = CSharp_Generator.wrapExpression(creat);
 		
-		for (AbstractExpression piece : pieces)
+		for (CSharp_Expression piece : pieces)
 		{
-			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<CSharp_Expression> args = new ArrayList<CSharp_Expression>();
 			args.add(piece);
 			
 			CSharp_Variable app = CSharp_Variable.newVariable("Append");
@@ -118,7 +117,7 @@ public class CSharp_PrintStatement extends TokenSequence
 			CSharp_Expression right = CSharp_Generator.wrapExpression(meth);
 
 			CSharp_SubfieldExpression subf = new CSharp_SubfieldExpression();
-			line = subf.generateSubfield(line, right, (CSharp_Expression) piece);
+			line = subf.generateSubfield(line, right, piece);
 		}
 		
 		// new System.Text.StringBuilder().Append("abc").Append(3).Append("def");
@@ -155,7 +154,7 @@ public class CSharp_PrintStatement extends TokenSequence
 		stmt.rightParen = new PunctuationRightParen();
 		
 		stmt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
-		stmt.exprs.addPrimaryElement((CSharp_Expression) line);
+		stmt.exprs.addPrimaryElement(line);
 		stmt.semicolon = new PunctuationSemicolon();
 		
 		stmt.setTransformationSource(source);

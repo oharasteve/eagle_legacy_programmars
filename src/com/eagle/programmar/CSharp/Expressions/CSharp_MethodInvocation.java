@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
@@ -25,7 +25,6 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -120,7 +119,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 	
 	@Override
 	public CSharp_Expression generateInvocation(CSharp_Variable var,
-			Collection<AbstractExpression> args, AbstractToken source)
+			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{
 		this.methodName = new CSharp_Variable();
 		this.methodName.firstId = var.firstId;

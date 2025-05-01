@@ -4,7 +4,6 @@
 package com.eagle.programmar.Java;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
@@ -43,12 +42,9 @@ import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.tokens.interfaces.AbstractVariable;
 
-public class Java_Generator extends EagleGenerator
+public class Java_Generator
+		extends EagleGenerator<Java_Statement, Java_Expression, Java_Variable, Java_Type>
 {
 	public static String NAME = "Java";
 	public static String SUFFIX = ".java";
@@ -98,7 +94,7 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public AbstractType transformType(boolean isArray, TypeEnum type,
+	public Java_Type transformType(boolean isArray, TypeEnum type,
 			String typeName, AbstractToken source)
 	{
 		return Java_Type.transformType(isArray, type, typeName, source);
@@ -137,7 +133,7 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public void addMethod(AbstractType returnType, String name, AbstractToken source)
+	public void addMethod(Java_Type returnType, String name, AbstractToken source)
 	{
 		checkClass();
 
@@ -149,19 +145,19 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public void addMethodParameter(AbstractType type, String name)
+	public void addMethodParameter(Java_Type type, String name)
 	{
 		_currentMethod.addMethodParameter(type, name);
 	}
 
 	@Override
-	public void addStatement(AbstractStatement stmt, AbstractToken source)
+	public void addStatement(Java_Statement stmt, AbstractToken source)
 	{
 		checkMethod();
 		
 		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
 		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-		stmtOrComment.setWhich((Java_Statement) stmt);
+		stmtOrComment.setWhich(stmt);
 		stmtOrComment.setTransformationSource(source);
 		stmtOrComment.setPresent(true);
 		impl.block.statements.addToken(stmtOrComment);
@@ -176,103 +172,105 @@ public class Java_Generator extends EagleGenerator
 	// ================ Statements ================
 
 	@Override
-	public AbstractStatement newBlockStatement(
-			ArrayList<AbstractStatement> statements, AbstractToken source)
+	public Java_Statement newBlockStatement(
+			ArrayList<Java_Statement> statements, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
 		return block.generateBlock(statements, source);
 	}
 
 	@Override
-	public AbstractStatement newBreakStatement(AbstractToken source)
+	public Java_Statement newBreakStatement(AbstractToken source)
 	{
 		Java_BreakStatement brkStmt = new Java_BreakStatement();
 		return wrapStatement(brkStmt.generateBreak(source));
 	}
 
 	@Override
-	public AbstractStatement newDataDeclaration(String name, AbstractExpression size, AbstractType type,
-			AbstractExpression initial, AbstractToken source)
+	public Java_Statement newDataDeclaration(String name, Java_Expression size, Java_Type type,
+			Java_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Java_Data.newDataDeclaration(name, size, type, initial, source));
 	}
 
 	@Override
-	public Java_Statement newDoUntilStatement1(AbstractExpression condition,
-			AbstractStatement action, AbstractToken source)
+	public Java_Statement newDoUntilStatement1(Java_Expression condition,
+			Java_Statement action, AbstractToken source)
 	{
 		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
-		return doStmt.generateDoUntil1((Java_Expression) condition,
-				(Java_Statement) action, source);
+		return doStmt.generateDoUntil1(condition,
+				action, source);
 	}
 	
 	@Override
-	public Java_Statement newDoUntilStatement(AbstractExpression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Java_Statement newDoUntilStatement(Java_Expression condition,
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
-		return doStmt.generateDoUntil((Java_Expression) condition, actions, source);
+		return doStmt.generateDoUntil(condition, actions, source);
 	}
 
 	@Override
-	public AbstractStatement newExitStatement(AbstractExpression code, AbstractToken source)
+	public Java_Statement newExitStatement(Java_Expression code, AbstractToken source)
 	{
 		return wrapStatement(Java_ExitStatement.newExitStatement(code, source));
 	}
 	
 	@Override
-	public AbstractStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
+	public Java_Statement newExpressionStatement(Java_Expression expr, AbstractToken source)
 	{
 		return wrapStatement(Java_ExpressionStatement.newExpressionStatement(expr, source));
 	}
 	
 	@Override
-	public AbstractStatement newIfStatement1(AbstractExpression condition,
-			AbstractStatement ifTrue, AbstractStatement ifFalse, AbstractToken source)
+	public Java_Statement newIfStatement1(Java_Expression condition,
+			Java_Statement ifTrue, Java_Statement ifFalse, AbstractToken source)
 	{
 		Java_IfStatement ifStmt = new Java_IfStatement();
-		return ifStmt.generateIfElse1((Java_Expression) condition,
-				(Java_Statement) ifTrue, (Java_Statement) ifFalse, source);
+		return ifStmt.generateIfElse1(condition,
+				ifTrue, ifFalse, source);
 	}
 	
 	@Override
-	public AbstractStatement newIfStatement(AbstractExpression condition, ArrayList<AbstractStatement> ifTrue,
-			ArrayList<AbstractStatement> ifFalse, AbstractToken source)
+	public Java_Statement newIfStatement(Java_Expression condition,
+			ArrayList<Java_Statement> ifTrue,
+			ArrayList<Java_Statement> ifFalse, AbstractToken source)
 	{
 		Java_IfStatement ifStmt = new Java_IfStatement();
-		return ifStmt.generateIfElse((Java_Expression) condition, ifTrue, ifFalse, source);
+		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
-	public AbstractStatement newForLoopStatement1(AbstractExpression init,
-			AbstractExpression term, AbstractExpression incr, AbstractStatement action,
+	public Java_Statement newForLoopStatement1(Java_Expression init,
+			Java_Expression term, Java_Expression incr, Java_Statement action,
 			AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForLoop1((Java_Expression) init, (Java_Expression) term,
-				(Java_Expression) incr, (Java_Statement) action, source);
+		return forStmt.generateForLoop1(init, term,
+				incr, action, source);
 	}
 
 	@Override
-	public AbstractStatement newForLoopStatement(AbstractExpression init,
-			AbstractExpression term, AbstractExpression incr,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Java_Statement newForLoopStatement(Java_Expression init,
+			Java_Expression term, Java_Expression incr,
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForLoop((Java_Expression) init, (Java_Expression) term,
-				(Java_Expression) incr, actions, source);
+		return forStmt.generateForLoop(init, term,
+				incr, actions, source);
 	}
 
 	@Override
-	public AbstractStatement newPrintStatement1(AbstractExpression line, boolean newLine,
+	public Java_Statement newPrintStatement1(Java_Expression line, boolean newLine,
 			AbstractToken source)
 	{
 		Java_PrintStatement prtStmt = new Java_PrintStatement();
-		return prtStmt.generatePrint1((Java_Expression) line, newLine, source);
+		return prtStmt.generatePrint1(line, newLine, source);
 	}
 
 	@Override
-	public AbstractStatement newPrintStatement(ArrayList<AbstractExpression> pieces, boolean newLine,
+	public Java_Statement newPrintStatement(
+			ArrayList<Java_Expression> pieces, boolean newLine,
 			AbstractToken source)
 	{
 		Java_PrintStatement prtStmt = new Java_PrintStatement();
@@ -280,62 +278,62 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public Java_Statement newReturnStatement(AbstractExpression ret,
+	public Java_Statement newReturnStatement(Java_Expression ret,
 			AbstractToken source)
 	{
 		Java_ReturnStatement retStmt = new Java_ReturnStatement();
-		return retStmt.generateReturn((Java_Expression) ret, source);
+		return retStmt.generateReturn(ret, source);
 	}
 
 	@Override
-	public Java_Statement newWhileStatement1(AbstractExpression condition,
-			AbstractStatement action, AbstractToken source)
+	public Java_Statement newWhileStatement1(Java_Expression condition,
+			Java_Statement action, AbstractToken source)
 	{
 		Java_WhileStatement whileStmt = new Java_WhileStatement();
-		return whileStmt.generateWhile1((Java_Expression) condition,
-				(Java_Statement) action, source);
+		return whileStmt.generateWhile1(condition,
+				action, source);
 	}
 	
 	@Override
-	public Java_Statement newWhileStatement(AbstractExpression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+	public Java_Statement newWhileStatement(Java_Expression condition,
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_WhileStatement whileStmt = new Java_WhileStatement();
-		return whileStmt.generateWhile((Java_Expression) condition, actions, source);
+		return whileStmt.generateWhile(condition, actions, source);
 	}
 
 	// ================ Expressions ================
 	
 	@Override
-	public Java_Expression newAdditiveExpression(AbstractExpression left,
-			AdditiveEnum oper, AbstractExpression right, AbstractToken source)
+	public Java_Expression newAdditiveExpression(Java_Expression left,
+			AdditiveEnum oper, Java_Expression right, AbstractToken source)
 	{
 		Java_AdditiveExpression addExpr = new Java_AdditiveExpression();
-		return addExpr.generateAdditive((Java_Expression) left, oper,
-				(Java_Expression) right, source);
+		return addExpr.generateAdditive(left, oper,
+				right, source);
 	}
 
 	@Override
-	public Java_Expression newAppendExpression(AbstractExpression left,
-			AbstractExpression right, AbstractToken source)
+	public Java_Expression newAppendExpression(Java_Expression left,
+			Java_Expression right, AbstractToken source)
 	{
 		Java_AdditiveExpression appendExp = new Java_AdditiveExpression();
-		return appendExp.generateAdditive((Java_Expression) left,
-				AdditiveEnum.PLUS, (Java_Expression) right, source);
+		return appendExp.generateAdditive(left,
+				AdditiveEnum.PLUS, right, source);
 	}
 	
 	@Override
-	public Java_Expression newAssignmentExpression(String name, AbstractExpression subscript,
-			AssignmentEnum oper, AbstractExpression expression, AbstractToken source)
+	public Java_Expression newAssignmentExpression(String name, Java_Expression subscript,
+			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
-		Java_Expression var = varExp.generateVarExpr(name, (Java_Expression) subscript, source);
+		Java_Expression var = varExp.generateVarExpr(name, subscript, source);
 		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-		return asgExpr.generateAssignment(var, oper, (Java_Expression) expression, source);
+		return asgExpr.generateAssignment(var, oper, expression, source);
 	}
 	
 	@Override
-	public Java_Expression newPostIncrementExpression(String name, AbstractExpression subscript,
+	public Java_Expression newPostIncrementExpression(String name, Java_Expression subscript,
 			IncrementEnum oper, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
@@ -344,7 +342,7 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public Java_Expression newPreIncrementExpression(String name, AbstractExpression subscript,
+	public Java_Expression newPreIncrementExpression(String name, Java_Expression subscript,
 			IncrementEnum oper, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
@@ -360,7 +358,7 @@ public class Java_Generator extends EagleGenerator
 	}
 	
 	@Override
-	public AbstractExpression newExponentExpression(AbstractExpression left, AbstractExpression right, AbstractToken source)
+	public Java_Expression newExponentExpression(Java_Expression left, Java_Expression right, AbstractToken source)
 	{
 		return wrapExpression(Java_MathPowFunc.generateExpression(left, right, source));
 	}
@@ -373,45 +371,45 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public Java_Expression newLogicalAndExpression(AbstractExpression left,
-			AbstractExpression right, AbstractToken source)
+	public Java_Expression newLogicalAndExpression(Java_Expression left,
+			Java_Expression right, AbstractToken source)
 	{
 		Java_LogicalAndExpression andExpr = new Java_LogicalAndExpression();
-		return andExpr.generateLogicalAnd((Java_Expression) left,
-				(Java_Expression) right, source);
+		return andExpr.generateLogicalAnd(left,
+				right, source);
 	}
 	
 	@Override
-	public Java_Expression newLogicalOrExpression(AbstractExpression left,
-			LogicalOrEnum oper, AbstractExpression right, AbstractToken source)
+	public Java_Expression newLogicalOrExpression(Java_Expression left,
+			LogicalOrEnum oper, Java_Expression right, AbstractToken source)
 	{
 		Java_LogicalOrExpression orExpr = new Java_LogicalOrExpression();
-		return orExpr.generateLogicalOr((Java_Expression) left, oper,
-				(Java_Expression) right, source);
+		return orExpr.generateLogicalOr(left, oper,
+				right, source);
 	}
 	
 	@Override
-	public Java_Expression newMultiplicativeExpression(AbstractExpression left,
-			MultiplicativeEnum oper, AbstractExpression right, AbstractToken source)
+	public Java_Expression newMultiplicativeExpression(Java_Expression left,
+			MultiplicativeEnum oper, Java_Expression right, AbstractToken source)
 	{
 		Java_MultiplicativeExpression mulExp = new Java_MultiplicativeExpression();
-		return mulExp.generateMultiplicative((Java_Expression) left, oper,
-				(Java_Expression) right, source);
+		return mulExp.generateMultiplicative(left, oper,
+				right, source);
 	}
 
 	@Override
 	public Java_Expression newNegativeExpression(NegativeEnum sign,
-			AbstractExpression expr, AbstractToken source)
+			Java_Expression expr, AbstractToken source)
 	{
 		Java_NegativeExpression negExpr = new Java_NegativeExpression();
-		return negExpr.generateNegative(sign, (Java_Expression) expr, source);
+		return negExpr.generateNegative(sign, expr, source);
 	}
 	
 	@Override
-	public Java_Expression newNotExpression(AbstractExpression expr, AbstractToken source)
+	public Java_Expression newNotExpression(Java_Expression expr, AbstractToken source)
 	{
 		Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
-		return notExpr.generateLogicalNot((Java_Expression) expr, source);
+		return notExpr.generateLogicalNot(expr, source);
 	}
 
 	@Override
@@ -422,55 +420,55 @@ public class Java_Generator extends EagleGenerator
 	}
 
 	@Override
-	public Java_Expression newParenthesizedExpression(AbstractExpression expr, AbstractToken source)
+	public Java_Expression newParenthesizedExpression(Java_Expression expr, AbstractToken source)
 	{
 		Java_ParenthesizedExpression paren = new Java_ParenthesizedExpression();
-		return paren.generateParentheses((Java_Expression) expr, source);
+		return paren.generateParentheses(expr, source);
 	}
 
 	@Override
-	public Java_Expression newRelationalExpression(AbstractExpression left, RelationalEnum relOp,
-			AbstractExpression right, AbstractToken source)
+	public Java_Expression newRelationalExpression(Java_Expression left, RelationalEnum relOp,
+			Java_Expression right, AbstractToken source)
 	{
 		Java_RelationalExpression relExp = new Java_RelationalExpression();
-		return relExp.generateRelational((Java_Expression) left, relOp,
-				(Java_Expression) right, source);
+		return relExp.generateRelational(left, relOp,
+				right, source);
 	}
 	
 	@Override
-	public AbstractExpression newShiftExpression(AbstractExpression left,
-			ShiftEnum shift, AbstractExpression right, AbstractToken source)
+	public Java_Expression newShiftExpression(Java_Expression left,
+			ShiftEnum shift, Java_Expression right, AbstractToken source)
 	{
 		Java_ShiftExpression shiftExpr = new Java_ShiftExpression();
-		return shiftExpr.generateShift((Java_Expression) left, shift,
-				(Java_Expression) right, source);
+		return shiftExpr.generateShift(left, shift,
+				right, source);
 	}
 
 	@Override
-	public Java_Expression newVariableExpression(String name, AbstractExpression subscript, AbstractToken source)
+	public Java_Expression newVariableExpression(String name, Java_Expression subscript, AbstractToken source)
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
-		return varExp.generateVarExpr(name, (Java_Expression) subscript, source);
+		return varExp.generateVarExpr(name, subscript, source);
 	}
 	
 	@Override
-	public Java_Expression newClassCreation(AbstractType type,
-			Collection<AbstractExpression> args, AbstractToken source)
+	public Java_Expression newClassCreation(Java_Type type,
+			ArrayList<Java_Expression> args, AbstractToken source)
 	{
 		Java_ClassCreationExpression creat = new Java_ClassCreationExpression();
-		return creat.generateCreation((Java_Type) type, args, source);
+		return creat.generateCreation(type, args, source);
 	}
 	
 	@Override
-	public Java_Expression newMethodInvocation(AbstractVariable var,
-			Collection<AbstractExpression> args, AbstractToken source)
+	public Java_Expression newMethodInvocation(Java_Variable var,
+			ArrayList<Java_Expression> args, AbstractToken source)
 	{
 		Java_MethodInvocation creat = new Java_MethodInvocation();
-		return creat.generateInvocation((Java_Variable) var, args, source);
+		return creat.generateInvocation(var, args, source);
 	}
 		
 	@Override
-	public AbstractExpression newCurrentDatetime()
+	public Java_Expression newCurrentDatetime()
 	{
 		throw new RuntimeException("Need to implement");
 	}
@@ -478,14 +476,14 @@ public class Java_Generator extends EagleGenerator
 	// ================ Functions ================
 
 	@Override
-	public AbstractExpression newLengthFunction(AbstractExpression expr, AbstractToken source)
+	public Java_Expression newLengthFunction(Java_Expression expr, AbstractToken source)
 	{
 		return wrapExpression(Java_LengthMethod.generateExpression(expr, source));
 	}
 	
 	@Override
-	public AbstractExpression newSubstringFunction(AbstractExpression expr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression scOrnc, AbstractToken source)
+	public Java_Expression newSubstringFunction(Java_Expression expr, Java_Expression sc,
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression scOrnc, AbstractToken source)
 	{
 		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
 	}

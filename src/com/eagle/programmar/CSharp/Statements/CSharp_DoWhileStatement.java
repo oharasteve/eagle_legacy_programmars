@@ -54,7 +54,7 @@ public class CSharp_DoWhileStatement extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateDoUntil(CSharp_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock body = new CSharp_StatementBlock();
 		body.statements = new TokenList<CSharp_StatementOrComment>();
@@ -65,10 +65,10 @@ public class CSharp_DoWhileStatement extends TokenSequence
 		this.doStatement = stmt;
 		stmt.setWhich(body);
 
-		for (AbstractStatement action : actions)
+		for (CSharp_Statement action : actions)
 		{
 			CSharp_StatementOrComment wrapper = new CSharp_StatementOrComment();
-			wrapper.setWhich((CSharp_Statement) action);
+			wrapper.setWhich(action);
 			body.statements.addToken(wrapper);
 		}
 

@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Java;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.tokens.TokenList;
@@ -26,7 +26,7 @@ public class Java_ArgumentList extends TokenSequence
 		public @S(40) @OPT TokenList<Java_Comment> comment2;
 	}
 
-	public static Java_ArgumentList createArgumentList(Collection<AbstractExpression> args)
+	public static Java_ArgumentList createArgumentList(ArrayList<Java_Expression> args)
 	{
 		if (args == null || args.size() == 0) return null;
 

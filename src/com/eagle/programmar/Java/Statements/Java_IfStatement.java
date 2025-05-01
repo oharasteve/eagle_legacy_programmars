@@ -121,8 +121,7 @@ public class Java_IfStatement extends TokenSequence
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
 
-		Java_Expression cond = (Java_Expression) condition;
-		AbstractToken which = cond.getWhich();
+		AbstractToken which = condition.getWhich();
 		if (which instanceof Java_ParenthesizedExpression)
 		{
 			Java_ParenthesizedExpression parensExpr = (Java_ParenthesizedExpression) which;
@@ -131,7 +130,7 @@ public class Java_IfStatement extends TokenSequence
 		}
 		else
 		{
-			this.condition = cond;
+			this.condition = condition;
 		}
 
 		this.thenStatement = thenStatement;
@@ -150,17 +149,17 @@ public class Java_IfStatement extends TokenSequence
 	
 	@Override
 	public Java_Statement generateIfElse(Java_Expression condition,
-			ArrayList<AbstractStatement> thenStatements,
-			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+			ArrayList<Java_Statement> thenStatements,
+			ArrayList<Java_Statement> elseStatements, AbstractToken source)
 	{
 		Java_StatementBlock thenBlock = new Java_StatementBlock();
 		thenBlock.leftBrace = new PunctuationLeftBrace();
 		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<Java_StatementOrComment>();
-		for (AbstractStatement stmt : thenStatements)
+		for (Java_Statement stmt : thenStatements)
 		{
 			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich((Java_Statement) stmt);
+			stmtOrComment.setWhich(stmt);
 			thenBlock.statements.addToken(stmtOrComment);
 		}
 				
@@ -171,10 +170,10 @@ public class Java_IfStatement extends TokenSequence
 			elseBlock.leftBrace = new PunctuationLeftBrace();
 			elseBlock.rightBrace = new PunctuationRightBrace();
 			elseBlock.statements = new TokenList<Java_StatementOrComment>();
-			for (AbstractStatement stmt : elseStatements)
+			for (Java_Statement stmt : elseStatements)
 			{
 				Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-				stmtOrComment.setWhich((Java_Statement) stmt);
+				stmtOrComment.setWhich(stmt);
 				elseBlock.statements.addToken(stmtOrComment);
 			}
 		}

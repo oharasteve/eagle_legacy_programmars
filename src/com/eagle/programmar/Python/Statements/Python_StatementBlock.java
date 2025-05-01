@@ -63,7 +63,7 @@ public class Python_StatementBlock extends TokenChooser
 		}
 	}
 	
-	public Python_Statement addStatements(ArrayList<AbstractStatement> statements)
+	public Python_Statement addStatements(ArrayList<? extends AbstractStatement> statements)
 	{
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_Statement>();

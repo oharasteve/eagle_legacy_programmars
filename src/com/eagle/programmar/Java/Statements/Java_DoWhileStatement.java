@@ -74,7 +74,7 @@ public class Java_DoWhileStatement extends TokenSequence
 
 	@Override
 	public Java_Statement generateDoUntil(Java_Expression condition,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock body = new Java_StatementBlock();
 		body.statements = new TokenList<Java_StatementOrComment>();
@@ -84,10 +84,10 @@ public class Java_DoWhileStatement extends TokenSequence
 		Java_Statement javaStatement = new Java_Statement();
 		javaStatement.setWhich(body);
 
-		for (AbstractStatement action : actions)
+		for (Java_Statement action : actions)
 		{
 			Java_StatementOrComment wrapper = new Java_StatementOrComment();
-			wrapper.setWhich((Java_Statement) action);
+			wrapper.setWhich(action);
 			body.statements.addToken(wrapper);
 		}
 

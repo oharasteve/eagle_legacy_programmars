@@ -171,16 +171,16 @@ public class CSharp_ForStatement extends TokenSequence
 	@Override
 	public CSharp_Statement generateForLoop(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock block = new CSharp_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
 		block.rightBrace = new PunctuationRightBrace();
 		block.statements = new TokenList<CSharp_StatementOrComment>();
-		for (AbstractStatement stmt : actions)
+		for (CSharp_Statement stmt : actions)
 		{
 			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-			stmtOrComment.setWhich((CSharp_Statement) stmt);
+			stmtOrComment.setWhich(stmt);
 			block.statements.addToken(stmtOrComment);
 		}
 		
@@ -245,16 +245,16 @@ public class CSharp_ForStatement extends TokenSequence
 	@Override
 	public CSharp_Statement generateForRange(String varName, CSharp_Expression fromExpression,
 			CSharp_Expression toExpression, CSharp_Expression delta,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock block = new CSharp_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
 		block.rightBrace = new PunctuationRightBrace();
 		block.statements = new TokenList<CSharp_StatementOrComment>();
-		for (AbstractStatement stmt : actions)
+		for (CSharp_Statement stmt : actions)
 		{
 			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-			stmtOrComment.setWhich((CSharp_Statement) stmt);
+			stmtOrComment.setWhich(stmt);
 			block.statements.addToken(stmtOrComment);
 		}
 		

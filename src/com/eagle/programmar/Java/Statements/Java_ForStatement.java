@@ -224,16 +224,16 @@ public class Java_ForStatement extends TokenSequence
 	@Override
 	public Java_Statement generateForLoop(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
 		block.rightBrace = new PunctuationRightBrace();
 		block.statements = new TokenList<Java_StatementOrComment>();
-		for (AbstractStatement stmt : actions)
+		for (Java_Statement stmt : actions)
 		{
 			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich((Java_Statement) stmt);
+			stmtOrComment.setWhich(stmt);
 			block.statements.addToken(stmtOrComment);
 		}
 		
@@ -298,16 +298,16 @@ public class Java_ForStatement extends TokenSequence
 	@Override
 	public Java_Statement generateForRange(String varName, Java_Expression fromExpression,
 			Java_Expression toExpression, Java_Expression delta,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
 		block.rightBrace = new PunctuationRightBrace();
 		block.statements = new TokenList<Java_StatementOrComment>();
-		for (AbstractStatement stmt : actions)
+		for (Java_Statement stmt : actions)
 		{
 			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich((Java_Statement) stmt);
+			stmtOrComment.setWhich(stmt);
 			block.statements.addToken(stmtOrComment);
 		}
 		

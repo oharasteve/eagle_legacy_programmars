@@ -131,13 +131,13 @@ public class Python_IfStatement extends TokenSequence
 			Python_Statement thenStatement,
 			Python_Statement elseStatement, AbstractToken source)
 	{
-		ArrayList<AbstractStatement> thens = new ArrayList<AbstractStatement>();
+		ArrayList<Python_Statement> thens = new ArrayList<Python_Statement>();
 		thens.add(thenStatement);
 		
-		ArrayList<AbstractStatement> elses = null;
+		ArrayList<Python_Statement> elses = null;
 		if (elseStatement != null)
 		{
-			elses = new ArrayList<AbstractStatement>();
+			elses = new ArrayList<Python_Statement>();
 			elses.add(elseStatement);
 		}
 
@@ -146,10 +146,10 @@ public class Python_IfStatement extends TokenSequence
 	
 	@Override
 	public Python_Statement generateIfElse(Python_Expression condition,
-			ArrayList<AbstractStatement> thenStatements,
-			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+			ArrayList<Python_Statement> thenStatements,
+			ArrayList<Python_Statement> elseStatements, AbstractToken source)
 	{
-		this.condition = (Python_Expression) condition;
+		this.condition = condition;
 		this.colon = new PunctuationColon();
 
 		this.ifThenStatements = new Python_StatementBlock();

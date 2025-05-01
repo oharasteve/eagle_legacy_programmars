@@ -178,7 +178,7 @@ public class Python_ForStatement extends TokenSequence
 			Python_Expression condExpression, Python_Expression incrExpression,
 			Python_Statement action, AbstractToken source)
 	{
-		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
 		actions.add(action);
 		return generateForLoop(initExpression, condExpression, incrExpression,
 				actions, source);
@@ -187,7 +187,7 @@ public class Python_ForStatement extends TokenSequence
 	@Override
 	public Python_Statement generateForLoop(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		throw new RuntimeException("Need to implement");
 	}
@@ -301,7 +301,7 @@ public class Python_ForStatement extends TokenSequence
 	@Override
 	public Python_Statement generateForRange(String varName, Python_Expression fromExpression,
 			Python_Expression toExpression, Python_Expression delta,
-			ArrayList<AbstractStatement> actions, AbstractToken source)
+			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		throw new RuntimeException("need to implement");
 	}

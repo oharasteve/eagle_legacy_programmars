@@ -35,12 +35,12 @@ public class Python_PrintStatement extends TokenSequence
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
 
 	@Override
-	public Python_Statement generatePrint(ArrayList<AbstractExpression> pieces,
+	public Python_Statement generatePrint(ArrayList<Python_Expression> pieces,
 			boolean newLine, AbstractToken source)
 	{
 		Python_Print_Function func = new Python_Print_Function();
 		func.leftParen = new PunctuationLeftParen();
-		func.exprs = new SeparatedList<Python_Expression,PunctuationComma>();
+		func.exprs = new SeparatedList<Python_Expression, PunctuationComma>();
 		
 		// ''.join(str(x) for x in ['abc',4,5'xys])
 		boolean first = true;
@@ -95,7 +95,7 @@ public class Python_PrintStatement extends TokenSequence
 	public Python_Statement generatePrint1(Python_Expression line,
 			boolean newLine, AbstractToken source)
 	{
-		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+		ArrayList<Python_Expression> pieces = new ArrayList<Python_Expression>();
 		pieces.add(line);
 		return generatePrint(pieces, newLine, source);
 	}

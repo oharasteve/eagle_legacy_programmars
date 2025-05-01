@@ -96,7 +96,7 @@ public class CSharp_IfStatement extends TokenSequence
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
 
-		CSharp_Expression cond = (CSharp_Expression) condition;
+		CSharp_Expression cond = condition;
 		AbstractToken which = cond.getWhich();
 		if (which instanceof CSharp_ParenthesizedExpression)
 		{
@@ -125,17 +125,17 @@ public class CSharp_IfStatement extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateIfElse(CSharp_Expression condition,
-			ArrayList<AbstractStatement> thenStatements,
-			ArrayList<AbstractStatement> elseStatements, AbstractToken source)
+			ArrayList<CSharp_Statement> thenStatements,
+			ArrayList<CSharp_Statement> elseStatements, AbstractToken source)
 	{
 		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
 		thenBlock.leftBrace = new PunctuationLeftBrace();
 		thenBlock.rightBrace = new PunctuationRightBrace();
 		thenBlock.statements = new TokenList<CSharp_StatementOrComment>();
-		for (AbstractStatement stmt : thenStatements)
+		for (CSharp_Statement stmt : thenStatements)
 		{
 			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-			stmtOrComment.setWhich((CSharp_Statement) stmt);
+			stmtOrComment.setWhich(stmt);
 			thenBlock.statements.addToken(stmtOrComment);
 		}
 				
@@ -149,10 +149,10 @@ public class CSharp_IfStatement extends TokenSequence
 			this.elseClause = new CSharp_IfElseClause();
 			this.elseClause.elseStatement = new CSharp_Statement();
 			this.elseClause.elseStatement.setWhich(elseBlock);
-			for (AbstractStatement stmt : elseStatements)
+			for (CSharp_Statement stmt : elseStatements)
 			{
 				CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-				stmtOrComment.setWhich((CSharp_Statement) stmt);
+				stmtOrComment.setWhich(stmt);
 				elseBlock.statements.addToken(stmtOrComment);
 			}
 		}

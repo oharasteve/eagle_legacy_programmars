@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Python;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -11,7 +11,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_Argument_List
 {
-	public static SeparatedList<Python_Expression, PunctuationComma> createArgumentList(Collection<AbstractExpression> args)
+	public static SeparatedList<Python_Expression, PunctuationComma> createArgumentList(
+			ArrayList<Python_Expression> args)
 	{
 		SeparatedList<Python_Expression, PunctuationComma> argList =
 				new SeparatedList<Python_Expression, PunctuationComma>();
