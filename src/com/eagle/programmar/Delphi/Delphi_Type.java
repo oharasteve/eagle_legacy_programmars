@@ -104,7 +104,10 @@ public class Delphi_Type extends TokenChooser
 			Delphi_KeywordChoice kw = (Delphi_KeywordChoice) which;
 			switch (kw.getValue().toLowerCase())
 			{
-			case "integer":
+			case "boolean":
+				newType = TypeEnum.BOOLEAN;
+				break;
+			case "integer", "longint":
 				newType = TypeEnum.INTEGER;
 				break;
 			case "string":

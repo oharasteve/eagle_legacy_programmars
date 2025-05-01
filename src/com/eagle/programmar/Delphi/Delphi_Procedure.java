@@ -7,6 +7,7 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
@@ -72,9 +73,16 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 		Delphi_Parameter param = this.forward.args.firstParam;
 		if (param != null && param.isPresent())
 		{
-			AbstractType paramType = param.type.convertType(generator);
-			String paramName = param.names.first().var.getValue();
-			generator.addMethodParameter(paramType, paramName);
+			AbstractType paramType1 = param.type.convertType(generator);
+			String paramName1 = param.names.first().var.getValue();
+			generator.addMethodParameter(paramType1, paramName1);
+			
+			for (Delphi_MoreParameters more : this.forward.args.moreParams._elements)
+			{
+				AbstractType paramType2 = more.param.type.convertType(generator);
+				String paramName2 = more.param.names.first().var.getValue();
+				generator.addMethodParameter(paramType2, paramName2);
+			}
 		}
 
 		AbstractStatement newStmt = transformer.transformStatement1(generator, this.body);

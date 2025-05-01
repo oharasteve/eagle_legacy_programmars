@@ -159,7 +159,7 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	public Python_Statement newBreakStatement(AbstractToken source)
 	{
 		Python_BreakStatement brkStmt = new Python_BreakStatement();
-		return wrapStatement(brkStmt.generateBreak(source));
+		return brkStmt.generateBreak(source);
 	}
 
 	@Override
@@ -321,14 +321,32 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	public Python_Expression newPostIncrementExpression(String name, Python_Expression subscript,
 			IncrementEnum oper, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		Python_VariableExpression varExpr = new Python_VariableExpression();
+		Python_Expression var = varExpr.generateVarExpr(name,
+				subscript, source);
+		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
+		Python_Expression one = newNumberExpression("1", null);
+		AssignmentEnum asg;
+		switch (oper)
+		{
+		case INCREMENT:
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case DECREMENT:
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected increment: " + oper);
+		}
+		return asgExpr.generateAssignment(var, asg, one, source);
 	}
 	
 	@Override
 	public Python_Expression newPreIncrementExpression(String name, Python_Expression subscript,
 			IncrementEnum oper, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		// ++i and i++ are really the same in Python. Both map to i += 1
+		return newPostIncrementExpression(name, subscript, oper, source);
 	}
 	
 	@Override
@@ -420,6 +438,12 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	{
 		Python_VariableExpression varExp = new Python_VariableExpression();
 		return varExp.generateVarExpr(name, subscript, source);
+	}
+	
+	@Override
+	public Python_Variable newVariable(String name)
+	{
+		return Python_Variable.newVariable(name);
 	}
 	
 	@Override

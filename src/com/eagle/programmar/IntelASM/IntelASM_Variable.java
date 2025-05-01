@@ -39,10 +39,7 @@ public class IntelASM_Variable extends TokenChooser
 			IntelASM_Register reg = (IntelASM_Register) which;
 			return reg.getValue(state);
 		}
-		else
-		{
-			throw new RuntimeException("Unexpected variable: " + which.getClass().getCanonicalName());
-		}
+		throw new RuntimeException("Unexpected variable: " + which.getClass().getCanonicalName());
 	}
 	
 	public void setValue(EagleInterpreter interpreter, int value)

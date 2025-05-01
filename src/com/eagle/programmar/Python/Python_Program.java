@@ -11,6 +11,7 @@ import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
+import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
@@ -70,5 +71,16 @@ public abstract class Python_Program extends AbstractLanguage implements EagleRu
 		{
 			interpreter.tryToInterpret(stmt);
 		}
+	}
+	
+	public void addComment(Python_Comment comment)
+	{
+		if (this.comments == null)
+		{
+			this.comments = new TokenList<Python_CommentEoln>();
+		}
+		Python_CommentEoln eol = new Python_CommentEoln();
+		eol.comment = comment;
+		this.comments.addToken(eol);
 	}
 }

@@ -39,9 +39,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class CSharp_Method extends TokenSequence implements
 			AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
 {
-	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comment;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comments;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
-	public @S(30) @OPT @NEWLINE TokenList<CSharp_MethodModifier> modifiers;
+	public @S(30) @OPT TokenList<CSharp_MethodModifier> modifiers;
 	public @S(40) @OPT TokenList<CSharp_Comment> comment2;
 	public @S(50) CSharp_Type returnType;
 	public @S(60) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
@@ -142,7 +142,7 @@ public class CSharp_Method extends TokenSequence implements
 	}
 	
 	public void newCSharpMethod(PrivacyEnum privacy,
-			StaticEnum isStatic, AbstractType returnType, String methodName)
+			StaticEnum isStatic, CSharp_Type returnType, String methodName)
 	{
 		this.modifiers = new TokenList<CSharp_MethodModifier>();
 		
@@ -174,7 +174,14 @@ public class CSharp_Method extends TokenSequence implements
 			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
 		
-		this.returnType = (CSharp_Type) returnType;
+		if (returnType == null)
+		{
+			this.returnType = CSharp_Type.newPrimitiveType("void");
+		}
+		else
+		{
+			this.returnType = returnType;
+		}
 		
 		this.parameters = new CSharp_MethodParameters();
 		this.parameters.setPresent(true);
@@ -207,5 +214,14 @@ public class CSharp_Method extends TokenSequence implements
 			this.parameters.params.addSecondaryElement(new PunctuationComma());
 		}
 		this.parameters.params.addPrimaryElement(param);
+	}
+	
+	public void addComment(CSharp_Comment comment)
+	{
+		if (this.comments == null)
+		{
+			this.comments = new TokenList<CSharp_Comment>();
+		}
+		this.comments.addToken(comment);
 	}
 }

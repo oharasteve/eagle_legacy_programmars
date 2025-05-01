@@ -38,8 +38,7 @@ public class IntelASM_TwoArgs extends TokenSequence implements EagleRunnable
 			{
 				throw new RuntimeException("Characters must be length 1, not " + s);
 			}
-			char ch = s.charAt(0);
-			val = (int) ch;
+			val = s.charAt(0);
 		}
 
 		switch (CMD.toString().toUpperCase())

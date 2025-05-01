@@ -93,7 +93,7 @@ public class Delphi_If_Statement extends TokenSequence
 				thenStmt.getWhich());
 
 		AbstractStatement elsePart = null;
-		if (ifElse != null)
+		if (ifElse != null && ifElse.isPresent())
 		{
 			elsePart = transformer.transformStatement1(generator, ifElse.elseStmt.getWhich());
 		}

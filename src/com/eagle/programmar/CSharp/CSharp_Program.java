@@ -106,4 +106,13 @@ public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 		}
 		this.myClasses.addToken(entry);
 	}
+	
+	public void addComment(CSharp_Comment comment)
+	{
+		if (this.comments1 == null)
+		{
+			this.comments1 = new TokenList<CSharp_Comment>();
+		}
+		this.comments1.addToken(comment);
+	}
 }

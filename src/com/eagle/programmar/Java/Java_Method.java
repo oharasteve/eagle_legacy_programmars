@@ -171,7 +171,7 @@ public class Java_Method extends TokenSequence
 	}
 	
 	public void newJavaMethod(PrivacyEnum privacy, StaticEnum isStatic,
-			AbstractType returnType, String methodName)
+			Java_Type returnType, String methodName)
 	{
 		this.setPresent(true);
 		this.modifiers = new TokenList<Java_MethodModifier>();
@@ -213,7 +213,14 @@ public class Java_Method extends TokenSequence
 		this.typeAndName = new Java_MethodTypeAndName();
 		Java_MethodType methodType = new Java_MethodType();
 		this.typeAndName.setWhich(methodType);
-		methodType.jtype = (Java_Type) returnType;
+		if (returnType == null)
+		{
+			methodType.jtype = Java_Type.newPrimitiveType("void");
+		}
+		else
+		{
+			methodType.jtype = returnType;
+		}
 		
 		methodType.parameters = new Java_ParameterList();
 		methodType.parameters.setPresent(true);
@@ -259,5 +266,14 @@ public class Java_Method extends TokenSequence
 		{
 			throw new RuntimeException("Can't handle: " + which);
 		}
+	}
+	
+	public void addComment(Java_Comment comment)
+	{
+		if (this.comments == null)
+		{
+			this.comments = new TokenList<Java_Comment>();
+		}
+		this.comments.addToken(comment);
 	}
 }

@@ -113,7 +113,7 @@ public class Java_RelationalExpression extends PrecedenceOperator
 	{
 		if (isString(leftExpr) || isString(rightExpr))
 		{
-			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod((Java_Expression) leftExpr, (Java_Expression) rightExpr);
+			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod(leftExpr, rightExpr);
 			equals.setTransformationSource(source);
 			Java_Expression equalsExpr = Java_Generator.wrapExpression(equals);
 			switch (relOp)

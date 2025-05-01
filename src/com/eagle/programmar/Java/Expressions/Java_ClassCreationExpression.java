@@ -4,7 +4,6 @@
 package com.eagle.programmar.Java.Expressions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.TypeEnum;

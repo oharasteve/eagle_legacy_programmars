@@ -50,10 +50,12 @@ public class Java_ReturnStatement extends TokenSequence
 	@Override
 	public Java_Statement generateReturn(Java_Expression ret, AbstractToken source)
 	{
-		if (ret != null && ret.isPresent())
+		if (ret != null)
 		{
 			this.expression = ret;
+			this.expression.setPresent(true);
 		}
+		this.semicolon = new PunctuationSemicolon();
 		this.setTransformationSource(source);
 		return Java_Generator.wrapStatement(this);
 	}

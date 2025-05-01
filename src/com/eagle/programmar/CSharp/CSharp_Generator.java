@@ -37,6 +37,7 @@ import com.eagle.programmar.CSharp.Statements.CSharp_ReturnStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
@@ -162,7 +163,20 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		CSharp_Comment comm = new CSharp_Comment(comment);
+		comm.setTransformationSource(source);
+		if (_currentMethod != null)
+		{
+			_currentMethod.addComment(comm);
+		}
+		else if (_currentClass != null)
+		{
+			_currentClass.addComment(comm);
+		}
+		else
+		{
+			_program.addComment(comm);
+		}
 	}
 	
 	// ================ Statements ================
@@ -179,7 +193,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	public CSharp_Statement newBreakStatement(AbstractToken source)
 	{
 		CSharp_BreakStatement brkStmt = new CSharp_BreakStatement();
-		return wrapStatement(brkStmt.generateBreak(source));
+		return brkStmt.generateBreak(source);
 	}
 
 	@Override
@@ -436,6 +450,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
 		return varExp.generateVarExpr(name, subscript, source);
+	}
+	
+	@Override
+	public CSharp_Variable newVariable(String name)
+	{
+		return CSharp_Variable.newVariable(name);
 	}
 	
 	@Override

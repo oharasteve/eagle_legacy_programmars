@@ -38,6 +38,7 @@ import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
+import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
@@ -166,7 +167,20 @@ public class Java_Generator
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		Java_Comment comm = new Java_Comment(comment);
+		comm.setTransformationSource(source);
+		if (_currentMethod != null)
+		{
+			_currentMethod.addComment(comm);
+		}
+		else if (_currentClass != null)
+		{
+			_currentClass.addComment(comm);
+		}
+		else
+		{
+			_program.addComment(comm);
+		}
 	}
 	
 	// ================ Statements ================
@@ -183,7 +197,7 @@ public class Java_Generator
 	public Java_Statement newBreakStatement(AbstractToken source)
 	{
 		Java_BreakStatement brkStmt = new Java_BreakStatement();
-		return wrapStatement(brkStmt.generateBreak(source));
+		return brkStmt.generateBreak(source);
 	}
 
 	@Override
@@ -449,6 +463,12 @@ public class Java_Generator
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
 		return varExp.generateVarExpr(name, subscript, source);
+	}
+	
+	@Override
+	public Java_Variable newVariable(String name)
+	{
+		return Java_Variable.newVariable(name);
 	}
 	
 	@Override

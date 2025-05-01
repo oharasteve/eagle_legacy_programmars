@@ -36,10 +36,12 @@ public class CSharp_ReturnStatement extends TokenSequence
 	@Override
 	public CSharp_Statement generateReturn(CSharp_Expression ret, AbstractToken source)
 	{
-		if (ret != null && ret.isPresent())
+		if (ret != null)
 		{
 			this.expression = ret;
+			this.expression.setPresent(true);
 		}
+		this.semicolon = new PunctuationSemicolon();
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(this);
 	}

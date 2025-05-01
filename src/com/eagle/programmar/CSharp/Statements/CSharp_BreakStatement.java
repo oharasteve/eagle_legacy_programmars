@@ -31,6 +31,7 @@ public class CSharp_BreakStatement extends TokenSequence
 	@Override
 	public CSharp_Statement generateBreak(AbstractToken source)
 	{
+		this.semicolon = new PunctuationSemicolon();
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(this);
 	}

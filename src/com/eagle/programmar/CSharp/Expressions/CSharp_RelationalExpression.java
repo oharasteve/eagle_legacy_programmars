@@ -84,8 +84,8 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 	public CSharp_Expression generateRelational(CSharp_Expression leftExpr,
 			RelationalEnum relOp, CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = (CSharp_Expression) leftExpr;
-		this.right = (CSharp_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		
 		switch (relOp)
 		{

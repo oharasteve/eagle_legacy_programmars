@@ -8,15 +8,12 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
-import com.eagle.programmar.Java.Java_Import.Java_DotIdentifierStar;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
-import com.eagle.programmar.Java.Java_Package.Java_MorePackageIds;
 import com.eagle.programmar.Java.Symbols.Java_Method_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
@@ -141,59 +138,68 @@ public class Java_Program extends AbstractLanguage
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		generator.addComments(this.comments1, this.comments1);
-		generator.addComments(this.comments2, this.comments2);
-
-		StringBuffer sbPkg = new StringBuffer();
-		sbPkg.append(this.jpackage.id);
-		for (Java_MorePackageIds piece : this.jpackage.moreIds._elements)
-		{
-			sbPkg.append('.');
-			sbPkg.append(piece.id.toString());
-		}
-		generator.setPackage(sbPkg.toString(), this.jpackage);
-
-		if (this.jimportList != null)
-		{
-			for (Java_ImportOrComment element : this.jimportList._elements)
-			{
-				AbstractToken which = element.getWhich();
-				if (which instanceof Java_Comment)
-				{
-					Java_Comment comment = (Java_Comment) which;
-					generator.addComment(comment.getValue(), comment);
-				}
-				if (which instanceof Java_Import)
-				{
-					Java_Import jimport = (Java_Import) which;
-					StringBuffer sbImp = new StringBuffer();
-					sbImp.append(jimport.id);
-					for (Java_DotIdentifierStar piece : jimport.dotId._elements)
-					{
-						sbImp.append('.');
-						sbImp.append(piece.idStar.getWhich().toString());
-					}
-					generator.addImport(sbImp.toString(), false, jimport);
-				}
-			}
-		}
-
-		for (Java_ClassOrEnum element : this.classOrEnumList._elements)
-		{
-			AbstractToken which = element.getWhich();
-			if (which instanceof Java_Class)
-			{
-				Java_Class jClass = (Java_Class) which;
-				AbstractClass cls = generator.transformClass(this, jClass);
-				generator.addClass(cls);
-			}
-			if (which instanceof Java_Enum)
-			{
-				Java_Enum jEnum = (Java_Enum) which;
-				AbstractClass cls = generator.transformEnum(this, jEnum);
-				generator.addClass(cls);
-			}
-		}
+//		generator.addComments(this.comments1, this.comments1);
+//		generator.addComments(this.comments2, this.comments2);
+//
+//		StringBuffer sbPkg = new StringBuffer();
+//		sbPkg.append(this.jpackage.id);
+//		for (Java_MorePackageIds piece : this.jpackage.moreIds._elements)
+//		{
+//			sbPkg.append('.');
+//			sbPkg.append(piece.id.toString());
+//		}
+//		generator.setPackage(sbPkg.toString(), this.jpackage);
+//
+//		if (this.jimportList != null)
+//		{
+//			for (Java_ImportOrComment element : this.jimportList._elements)
+//			{
+//				AbstractToken which = element.getWhich();
+//				if (which instanceof Java_Comment)
+//				{
+//					Java_Comment comment = (Java_Comment) which;
+//					generator.addComment(comment.getValue(), comment);
+//				}
+//				if (which instanceof Java_Import)
+//				{
+//					Java_Import jimport = (Java_Import) which;
+//					StringBuffer sbImp = new StringBuffer();
+//					sbImp.append(jimport.id);
+//					for (Java_DotIdentifierStar piece : jimport.dotId._elements)
+//					{
+//						sbImp.append('.');
+//						sbImp.append(piece.idStar.getWhich().toString());
+//					}
+//					generator.addImport(sbImp.toString(), false, jimport);
+//				}
+//			}
+//		}
+//
+//		for (Java_ClassOrEnum element : this.classOrEnumList._elements)
+//		{
+//			AbstractToken which = element.getWhich();
+//			if (which instanceof Java_Class)
+//			{
+//				Java_Class jClass = (Java_Class) which;
+//				AbstractClass cls = generator.transformClass(this, jClass);
+//				generator.addClass(cls);
+//			}
+//			if (which instanceof Java_Enum)
+//			{
+//				Java_Enum jEnum = (Java_Enum) which;
+//				AbstractClass cls = generator.transformEnum(this, jEnum);
+//				generator.addClass(cls);
+//			}
+//		}
 		return generator.getTransfomedProgram();
+	}
+	
+	public void addComment(Java_Comment comment)
+	{
+		if (this.comments1 == null)
+		{
+			this.comments1 = new TokenList<Java_Comment>();
+		}
+		this.comments1.addToken(comment);
 	}
 }

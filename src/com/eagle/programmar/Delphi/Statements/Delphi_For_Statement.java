@@ -5,6 +5,8 @@ package com.eagle.programmar.Delphi.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.IncrementEnum;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -100,6 +102,7 @@ public class Delphi_For_Statement extends TokenSequence
 		AbstractExpression fromExpr = transformer.transformExpression(generator, this.from);
 		AbstractExpression toExpr = transformer.transformExpression(generator, this.to);
 		String var = this.var.getValue();
+		AbstractExpression varExpr = generator.newVariableExpression(var, null, null);
 		AbstractStatement newAction = transformer.transformStatement1(
 				generator, this.stmt);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(var, null,
@@ -107,19 +110,26 @@ public class Delphi_For_Statement extends TokenSequence
 
 		String toDownto = this.TO_DOWNTO.getValue();
 		AbstractExpression delta;
+		AbstractExpression term;
 		switch (this.TO_DOWNTO.getValue().toLowerCase())
 		{
 		case "to":
-			delta = null;
+			delta = generator.newPostIncrementExpression(var, null,
+					IncrementEnum.INCREMENT, null);
+			term = generator.newRelationalExpression(varExpr,
+					RelationalEnum.LESS_EQUALS, toExpr, null);
 			break;
 		case "downto":
-			delta = generator.newNumberExpression("-1", null);
+			delta = generator.newPostIncrementExpression(var, null,
+					IncrementEnum.DECREMENT, null);
+			term = generator.newRelationalExpression(varExpr,
+					RelationalEnum.GREATER_EQUALS, toExpr, null);
 			break;
 		default:
 			throw new RuntimeException("Expected TO or DOWNTO, not " + toDownto);
 		}
 
-		return generator.newForLoopStatement1(asgExpr, toExpr, delta,
+		return generator.newForLoopStatement1(asgExpr, term, delta,
 				newAction, this);
 	}
 }

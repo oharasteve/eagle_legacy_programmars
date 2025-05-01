@@ -84,8 +84,8 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 			CSharp_Expression leftExpr, MultiplicativeEnum oper,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = (CSharp_Expression) leftExpr;
-		this.right = (CSharp_Expression) rightExpr;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		switch (oper)
 		{
 		case TIMES:

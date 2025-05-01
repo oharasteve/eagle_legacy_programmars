@@ -40,12 +40,13 @@ public class Python_ReturnStatement extends TokenSequence
 	@Override
 	public Python_Statement generateReturn(Python_Expression ret, AbstractToken source)
 	{
-		if (ret != null && ret.isPresent())
+		if (ret != null)
 		{
 			this.expressionList = new Python_ExpressionList();
 			this.expressionList.expressions =
 					new SeparatedList<Python_Expression, PunctuationComma>();
 			this.expressionList.expressions.addPrimaryElement(ret);
+			this.expressionList.setPresent(true);
 		}
 		this.setTransformationSource(source);
 		return Python_Generator.wrapStatement(this);

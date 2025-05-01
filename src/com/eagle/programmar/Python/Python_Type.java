@@ -86,6 +86,16 @@ public class Python_Type extends TokenChooser implements AbstractType
 		return type;
 	}
 
+	// Convert "foo" to a Python_Type representing the user class foo
+	public static Python_Type newIdentifierType(String name)
+	{
+		Python_Type type = new Python_Type();
+		Python_Literal lit = new Python_Literal();
+		lit.setValue(name);
+		type.setWhich(lit);
+		return type;
+	}
+
 	public static Python_Type transformType(boolean isArray, TypeEnum type,
 			String typeName, AbstractToken source)
 	{
@@ -101,6 +111,8 @@ public class Python_Type extends TokenChooser implements AbstractType
 			return newPrimitiveType("str");
 		case VOID:
 			return newPrimitiveType("None");
+		case OTHER:
+			return newIdentifierType(typeName);
 		default:
 			throw new RuntimeException("Can't transform type: " + type);
 		}

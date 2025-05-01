@@ -61,7 +61,7 @@ public class Java_ForStatement extends TokenSequence
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) @OPT @NOSPACE Java_Annotation annotation;
-	public @S(50) @OPT Java_ForInit init;
+	public @S(50) @OPT @NOSPACE Java_ForInit init;
 	public @S(60) @NOSPACE PunctuationSemicolon semicolon1;
 	public @S(70) @OPT Java_Expression terminateCondition;
 	public @S(80) @NOSPACE PunctuationSemicolon semicolon2;
@@ -204,6 +204,7 @@ public class Java_ForStatement extends TokenSequence
 		Java_ForStatement forStmt = new Java_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
 		forStmt.init = new Java_ForInit();
+		forStmt.init.setPresent(true);
 		forStmt.init.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat what = new Java_ForWhat();
 		what.setWhich(initExpression);

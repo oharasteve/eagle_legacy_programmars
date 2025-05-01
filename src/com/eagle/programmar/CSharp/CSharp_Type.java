@@ -4,6 +4,7 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.generate.EagleGenerator.TypeEnum;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName.CSharp_IdList;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
@@ -53,7 +54,6 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			public @S(10) @OPT CSharp_NamespaceId namespaceId;
 			public @S(20) CSharp_Identifier_Reference typeName;
 			public @S(30) @OPT CSharp_ExtendsType extendsType;
-
 			public @S(40) @OPT TokenList<CSharp_MoreIds> moreIds;
 
 			public static class CSharp_MoreIds extends TokenSequence
@@ -91,6 +91,18 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		return type;
 	}
 	
+	// Convert "foo" to a CSharp_Type representing the user class foo
+	public static CSharp_Type newIdentifierType(String name)
+	{
+		CSharp_Type type = new CSharp_Type();
+		type.typeName = new CSharp_TypeName();
+		CSharp_IdList ids = new CSharp_IdList();
+		ids.typeName = new CSharp_Identifier_Reference();
+		ids.typeName.setValue(name);
+		type.typeName.setWhich(ids);
+		return type;
+	}
+	
 	public static CSharp_Type transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
 	{
 		switch (type)
@@ -105,6 +117,8 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("string");
 		case VOID:
 			return newPrimitiveType("void");
+		case OTHER:
+			return newIdentifierType(typeName);
 		default:
 			throw new RuntimeException("Can't transform type: " + type);
 		}

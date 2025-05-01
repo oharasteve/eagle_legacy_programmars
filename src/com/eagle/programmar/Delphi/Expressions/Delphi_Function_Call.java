@@ -24,6 +24,7 @@ import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -138,7 +139,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		Delphi_Variable variable = this.name;
-		Delphi_Identifier_Reference id = (Delphi_Identifier_Reference) variable.var;
+		Delphi_Identifier_Reference id = variable.var;
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 		if (this.argList != null && this.argList.isPresent())
 		{
@@ -150,7 +151,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 			}
 		}
 		
-		Delphi_Variable var = Delphi_Variable.newVariable(id.getValue());
+		AbstractVariable var = generator.newVariable(id.getValue());
 		return generator.newMethodInvocation(var, args, this);
 	}
 }

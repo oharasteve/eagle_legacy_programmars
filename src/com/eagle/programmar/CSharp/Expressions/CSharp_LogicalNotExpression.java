@@ -42,7 +42,7 @@ public class CSharp_LogicalNotExpression extends PrimaryOperator
 	public CSharp_Expression generateLogicalNot(CSharp_Expression theExpr,
 			AbstractToken source)
 	{
-		this.expr = (CSharp_Expression) theExpr;
+		this.expr = theExpr;
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
 	}

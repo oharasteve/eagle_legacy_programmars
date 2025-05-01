@@ -120,7 +120,7 @@ public class Java_PrintStatement extends TokenSequence
 			Java_Expression right = Java_Generator.wrapExpression(meth);
 
 			Java_SubfieldExpression subf = new Java_SubfieldExpression();
-			line = subf.generateSubfield(line, right, (Java_Expression) piece);
+			line = subf.generateSubfield(line, right, piece);
 		}
 		
 		// new StringBuffer().append("abc").append(3).append("def");

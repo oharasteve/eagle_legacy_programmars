@@ -4,6 +4,7 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.generate.EagleGenerator.TypeEnum;
+import com.eagle.programmar.Java.Java_Type.Java_TypeName.Java_IdList;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -98,6 +99,18 @@ public class Java_Type extends TokenSequence implements AbstractType
 		return type;
 	}
 	
+	// Convert "foo" to a Java_Type representing the user class foo
+	public static Java_Type newIdentifierType(String name)
+	{
+		Java_Type type = new Java_Type();
+		type.typeName = new Java_TypeName();
+		Java_IdList ids = new Java_IdList();
+		ids.typeName = new Java_Identifier_Reference();
+		ids.typeName.setValue(name);
+		type.typeName.setWhich(ids);
+		return type;
+	}
+
 	public static Java_Type transformType(boolean isArray, TypeEnum type,
 			String typeName, AbstractToken source)
 	{
@@ -113,6 +126,8 @@ public class Java_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("String");
 		case VOID:
 			return newPrimitiveType("void");
+		case OTHER:
+			return newIdentifierType(typeName);
 		default:
 			throw new RuntimeException("Can't transform type: " + type);
 		}

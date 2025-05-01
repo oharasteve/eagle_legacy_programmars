@@ -30,7 +30,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {
-	public @S(10) @OPT @NEWLINE TokenList<CSharp_AnnotationOrComment> annotationOrComment;
+	public @S(10) @OPT @NEWLINE TokenList<CSharp_AnnotationOrComment> annotationsOrComments;
 	public @S(20) @OPT TokenList<CSharp_ClassModifier> modifiers;
 	public @S(30) CSharp_KeywordChoice classOrInterface = new CSharp_KeywordChoice("class", "interface", "struct");
 	public @S(40) CSharp_Class_Definition className;
@@ -153,5 +153,17 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		CSharp_ClassElement element = new CSharp_ClassElement();
 		element.setWhich(method);
 		this.elements.addToken(element);
+	}
+	
+	
+	public void addComment(CSharp_Comment comment)
+	{
+		if (this.annotationsOrComments == null)
+		{
+			this.annotationsOrComments = new TokenList<CSharp_AnnotationOrComment>();
+		}
+		CSharp_AnnotationOrComment annot = new CSharp_AnnotationOrComment();
+		annot.setWhich(comment);
+		this.annotationsOrComments.addToken(annot);
 	}
 }

@@ -151,4 +151,13 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		element.setWhich(method);
 		this.elements.addToken(element);
 	}
+	
+	public void addComment(Java_Comment comment)
+	{
+		if (this.comments3 == null)
+		{
+			this.comments3 = new TokenList<Java_Comment>();
+		}
+		this.comments3.addToken(comment);
+	}
 }
