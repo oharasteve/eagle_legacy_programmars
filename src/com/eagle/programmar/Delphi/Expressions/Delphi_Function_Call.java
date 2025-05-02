@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Delphi_Argument_List;
 import com.eagle.programmar.Delphi.Delphi_Expression;
@@ -34,6 +35,8 @@ public class Delphi_Function_Call extends PrimaryOperator
 	public @S(10) Delphi_Variable name;
 	public @S(20) Delphi_Argument_List argList;
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -43,6 +46,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		Delphi_Parameter_List paramList = null;
 		CallMetrics metrics = null;
 		Delphi_BeginEnd body = null;
+		String name = null;
 		
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
@@ -52,6 +56,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		if (fn instanceof Delphi_Procedure)
 		{
 			proc = (Delphi_Procedure) fn;
+			name = proc.forward.name.var.getValue();
 			paramList = proc.forward.args;
 			metrics = proc._metrics;
 			body = proc.body;
@@ -59,6 +64,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		else if (fn instanceof Delphi_Function)
 		{
 			func = (Delphi_Function) fn;
+			name = func.forward.name.var.getValue();
 			paramList = func.forward.args;
 			metrics = func._metrics;
 			body = func.body;
@@ -80,6 +86,12 @@ public class Delphi_Function_Call extends PrimaryOperator
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		if (argCount > 0)
 		{
@@ -93,10 +105,12 @@ public class Delphi_Function_Call extends PrimaryOperator
 				}
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.names.first().var.getValue(), val);
+				argTypes.add(val.typeName());
 			}
 		}
 
 		// Prepare to evaluate the procedure or function
+		_metrics.called(argTypes);
 		long startTime = System.nanoTime();
 
 		// And transfer control to the procedure or function

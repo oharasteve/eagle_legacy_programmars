@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
@@ -48,9 +50,17 @@ public class Delphi_Writeln_Statement extends TokenSequence
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, WRITELN.getValue());
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		for (int i = 0; i < something.pieces.getPrimaryCount(); i++)
 		{
 			Delphi_WriteLn_Piece piece = something.pieces.getPrimaryElement(i);
@@ -58,9 +68,12 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			{
 				throw new RuntimeException("Can't handle field widths");
 			}
-			String result = interpreter.getStrValue(piece.expr);
+			EagleValue val = interpreter.getEagleValue(piece.expr);
+			String result = val.forceStringValue();
+			argTypes.add(val.typeName());
 			System.out.print(result);
 		}
+		_metrics.called(argTypes);
 		System.out.println();
 	}
 	
