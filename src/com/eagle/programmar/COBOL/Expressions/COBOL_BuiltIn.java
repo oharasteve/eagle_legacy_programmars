@@ -3,12 +3,18 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.BuiltInEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_BuiltIn extends PrimaryOperator implements EagleRunnable
+public class COBOL_BuiltIn extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) COBOL_KeywordChoice logicalConstant = new COBOL_KeywordChoice("ANY", "FALSE", "HIGH-VALUES",
 			"LINAGE-COUNTER", "LOW-VALUES", "QUOTE", "RETURN-CODE", "SPACE", "SPACES", "TRUE", "ZERO", "ZEROES",
@@ -17,7 +23,7 @@ public class COBOL_BuiltIn extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String name = logicalConstant.toString();
+		String name = logicalConstant.toString().toUpperCase();
 		switch (name)
 		{
 		case "FALSE":
@@ -31,6 +37,21 @@ public class COBOL_BuiltIn extends PrimaryOperator implements EagleRunnable
 			break;
 		default:
 			throw new RuntimeException("Can't handle BuiltIn's other than TRUE/FALSE: " + name);
+		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		switch (logicalConstant.toString().toUpperCase())
+		{
+		case "FALSE":
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		case "TRUE":
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		default:
+			throw new RuntimeException("Can't handle BuiltIn: " + logicalConstant);
 		}
 	}
 }

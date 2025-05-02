@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -11,8 +13,12 @@ import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_RelationalOperator;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_RelationCondition extends PrecedenceOperator implements EagleRunnable
+public class COBOL_RelationCondition extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
@@ -79,5 +85,63 @@ public class COBOL_RelationCondition extends PrecedenceOperator implements Eagle
 
 		if (not) result = !result;
 		interpreter.pushBool(result);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		String oper = relationalOperator.canonicalForm(); // Returns "<", "=", etc.
+		RelationalEnum newOper;
+		
+		if (NOT.isPresent())
+		{
+			switch (oper)
+			{
+			case "=":
+				newOper = RelationalEnum.NOT_EQUALS;
+				break;
+			case "<":
+				newOper = RelationalEnum.GREATER_EQUALS;
+				break;
+			case "<=":
+				newOper = RelationalEnum.GREATER_THAN;
+				break;
+			case ">":
+				newOper = RelationalEnum.LESS_EQUALS;
+				break;
+			case ">=":
+				newOper = RelationalEnum.LESS_THAN;
+				break;
+			default:
+				throw new RuntimeException("Unexpected relational operator: NOT " + oper);
+			}
+		}
+		else
+		{
+			switch (oper)
+			{
+			case "=":
+				newOper = RelationalEnum.EQUALS;
+				break;
+			case "<":
+				newOper = RelationalEnum.LESS_THAN;
+				break;
+			case "<=":
+				newOper = RelationalEnum.LESS_EQUALS;
+				break;
+			case ">":
+				newOper = RelationalEnum.GREATER_THAN;
+				break;
+			case ">=":
+				newOper = RelationalEnum.GREATER_EQUALS;
+				break;
+			default:
+				throw new RuntimeException("Unexpected relational operator: " + oper);
+			}
+		}
+		return generator.newRelationalExpression(leftExpr, newOper, rightExpr, this);
 	}
 }

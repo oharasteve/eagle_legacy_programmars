@@ -13,7 +13,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Java_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Java_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @NEWLINE Java_Expression expr;
 	public @S(20) @NOSPACE PunctuationSemicolon semicolon;

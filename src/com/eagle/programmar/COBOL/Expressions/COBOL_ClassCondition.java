@@ -3,16 +3,68 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
-import com.eagle.programmar.COBOL.COBOL_Variable;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_ClassCondition extends PrimaryOperator
+		implements EagleTransformableExpression
 {
-	public @S(10) COBOL_Variable var;
+	public @S(10) COBOL_Expression expr;
 	public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 	public @S(30) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
 	public @S(40) COBOL_KeywordChoice type = new COBOL_KeywordChoice("ALPHABETIC", "ALPHABETIC-LOWER",
 			"ALPHABETIC-UPPER", "NEGATIVE", "NUMERIC", "POSITIVE", "ZERO");
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		String oper = type.getValue();
+		RelationalEnum newOper;
+		
+		if (NOT.isPresent())
+		{
+			switch (oper.toUpperCase())
+			{
+			case "NEGATIVE":
+				newOper = RelationalEnum.GREATER_EQUALS;
+				break;
+			case "POSITIVE":
+				newOper = RelationalEnum.LESS_EQUALS;
+				break;
+			case "ZERO":
+				newOper = RelationalEnum.NOT_EQUALS;
+				break;
+			default:
+				throw new RuntimeException("Unexpected relational operator: NOT " + oper);
+			}
+		}
+		else
+		{
+			switch (oper.toUpperCase())
+			{
+			case "NEGATIVE":
+				newOper = RelationalEnum.LESS_THAN;
+				break;
+			case "POSITIVE":
+				newOper = RelationalEnum.GREATER_THAN;
+				break;
+			case "ZERO":
+				newOper = RelationalEnum.EQUALS;
+				break;
+			default:
+				throw new RuntimeException("Unexpected relational operator: " + oper);
+			}
+		}
+		AbstractExpression zero = generator.newNumberExpression("0", null);
+		return generator.newRelationalExpression(theExpr, newOper, zero, this);
+	}
 }

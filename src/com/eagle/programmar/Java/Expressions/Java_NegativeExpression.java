@@ -19,8 +19,9 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Java_NegativeExpression extends PrimaryOperator implements EagleRunnable,
-		EagleTransformableExpression, Eagle_Generate_Negative<Java_Expression>
+public class Java_NegativeExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression,
+		Eagle_Generate_Negative<Java_Expression>
 {
 	public @S(10) Java_PunctuationChoice operator = new Java_PunctuationChoice("-", "+");
 	public @S(20) @NOSPACE Java_Expression expr;

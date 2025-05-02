@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -10,8 +12,12 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_AdditiveExpression extends PrecedenceOperator implements EagleRunnable
+public class COBOL_AdditiveExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) COBOL_PunctuationChoice operator = new COBOL_PunctuationChoice("+", "-");
@@ -44,6 +50,24 @@ public class COBOL_AdditiveExpression extends PrecedenceOperator implements Eagl
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
+		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		switch (operator.toString())
+		{
+		case "+":
+			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS,
+					rightExpr, this);
+		case "-":
+			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS,
+					rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
 }

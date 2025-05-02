@@ -16,8 +16,9 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Java_LogicalAndExpression extends PrecedenceOperator implements EagleRunnable,
-		EagleTransformableExpression, Eagle_Generate_Logical_And<Java_Expression>
+public class Java_LogicalAndExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression,
+				Eagle_Generate_Logical_And<Java_Expression>
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_Punctuation andOperator = new Java_Punctuation("&&");
