@@ -3,11 +3,14 @@
 
 package com.eagle.programmar.VB.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.Statements.VB_Function;
@@ -32,6 +35,8 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		public @S(20) @OPT SeparatedList<VB_Expression, PunctuationComma> args;
 		public @S(30) PunctuationRightParen rightParen;
 	}
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -67,6 +72,12 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		interpreter.callingFunction(name, func);
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -75,7 +86,9 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

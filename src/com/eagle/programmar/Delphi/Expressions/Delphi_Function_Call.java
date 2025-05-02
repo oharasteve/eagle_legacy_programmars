@@ -108,9 +108,9 @@ public class Delphi_Function_Call extends PrimaryOperator
 				argTypes.add(val.typeName());
 			}
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the procedure or function
-		_metrics.called(argTypes);
 		long startTime = System.nanoTime();
 
 		// And transfer control to the procedure or function

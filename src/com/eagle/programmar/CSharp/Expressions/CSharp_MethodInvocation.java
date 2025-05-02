@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.CSharp.CSharp_Argument;
 import com.eagle.programmar.CSharp.CSharp_Argument.CSharp_ArgumentOut;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
@@ -37,6 +38,8 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @OPT @NOSPACE CSharp_ArgumentList argList;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -67,6 +70,12 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 
 			interpreter.callingFunction(name, meth);
 
+			if (_metrics == null)
+			{
+				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			}
+			ArrayList<String> argTypes = new ArrayList<String>();
+
 			// Now assign all the parameters
 			if (argCount > 0)
 			{
@@ -84,9 +93,11 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 						CSharp_Expression expr = ((CSharp_ArgumentOut) which).arg;
 						EagleValue val = interpreter.getEagleValue(expr);
 						interpreter.setSymbol(param.id, param.id.getValue(), val);
+						argTypes.add(val.typeName());
 					}
 				}
 			}
+			_metrics.called(argTypes);
 
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();

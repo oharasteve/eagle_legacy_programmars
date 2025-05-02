@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.CMD.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
@@ -47,6 +50,8 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		public @S(20) CMD_BasicExpression option;
 	}
 	
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -61,6 +66,12 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		// AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
 		interpreter.setCurrentFunction(func);
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters (%1 %2 etc)
 		int argCount = 0;
 		if (args != null && args.isPresent())
@@ -73,9 +84,11 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 					argCount++;
 					EagleValue val = interpreter.getEagleValue(argComma.arg);
 					interpreter.setSymbol(arg, "%~" + argCount, val);
+					argTypes.add(val.typeName());
 				}
 			}
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the label
 		long startTime = System.nanoTime();

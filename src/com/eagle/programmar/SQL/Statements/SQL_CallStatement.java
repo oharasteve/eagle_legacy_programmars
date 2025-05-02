@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
 import com.eagle.programmar.SQL.SQL_Variable;
@@ -23,6 +26,8 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) SQL_Keyword CALL = new SQL_Keyword("CALL");
 	public @S(20) SQL_BuiltinFunction func;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -60,6 +65,12 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 
 			interpreter.callingFunction(name, proc);
 
+			if (_metrics == null)
+			{
+				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			}
+			ArrayList<String> argTypes = new ArrayList<String>();
+
 			// Now assign all the parameters
 			if (argCount > 0)
 			{
@@ -79,8 +90,10 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 					
 					EagleValue val = interpreter.getEagleValue(func.args.getPrimaryElement(i));
 					interpreter.setSymbol(param.param, param.param.getValue(), val);
+					argTypes.add(val.typeName());
 				}
 			}
+			_metrics.called(argTypes);
 
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();

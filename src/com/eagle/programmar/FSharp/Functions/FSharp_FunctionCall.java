@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.FSharp.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Statement;
 import com.eagle.programmar.FSharp.FSharp_Variable;
@@ -25,6 +28,8 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<FSharp_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -47,15 +52,22 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
 			FSharp_Expression expr = argList.getPrimaryElement(i);
 			FSharp_FunctionParam param = func.params.getPrimaryElement(i);
-
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.var.getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

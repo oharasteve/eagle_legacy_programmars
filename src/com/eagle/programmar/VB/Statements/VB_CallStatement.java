@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
@@ -33,6 +36,8 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -61,6 +66,12 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 
 		interpreter.callingFunction(name, subr);
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -69,7 +80,9 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

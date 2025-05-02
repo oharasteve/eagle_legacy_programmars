@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Javascript.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Function;
 import com.eagle.programmar.Javascript.Javascript_FunctionBody;
@@ -25,6 +28,8 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 {
 	public @S(10) Javascript_Variable functionName;
 	public @S(20) Javascript_ParenthesizedExpression arguments;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -65,6 +70,12 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		if (argCount > 0)
 		{
@@ -82,9 +93,11 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 				{
 					Javascript_Variable_Definition id = (Javascript_Variable_Definition) which;
 					interpreter.setSymbol(param, id.getValue(), val);
+					argTypes.add(val.typeName());
 				}
 			}
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

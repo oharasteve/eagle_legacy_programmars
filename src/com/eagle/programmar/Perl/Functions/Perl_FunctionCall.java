@@ -3,9 +3,12 @@
 
 package com.eagle.programmar.Perl.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariable;
@@ -52,6 +55,8 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 		public @S(40) Perl_Expression argument;
 	}
 	
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -79,6 +84,12 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 	
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		Perl_Expression arg = argument;
 		Perl_FunctionVariableOrTypeVariable param = func.params.param;
@@ -94,8 +105,10 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 				Perl_FunctionVariable fnVar = (Perl_FunctionVariable) param.getWhich();
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter.setSymbol(param, fnVar.param.getValue(), val);
+				argTypes.add(val.typeName());
 			}
 		}
+		_metrics.called(argTypes);
 	
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

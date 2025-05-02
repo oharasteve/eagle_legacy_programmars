@@ -10,6 +10,7 @@ import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Java.Java_ArgumentList;
 import com.eagle.programmar.Java.Java_ArgumentList.Java_MoreArguments;
 import com.eagle.programmar.Java.Java_Expression;
@@ -38,6 +39,8 @@ public class Java_MethodInvocation extends PrimaryOperator
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE @OPT Java_ArgumentList argList;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
@@ -80,6 +83,12 @@ public class Java_MethodInvocation extends PrimaryOperator
 
 			interpreter.callingFunction(name, meth);
 
+			if (_metrics == null)
+			{
+				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			}
+			ArrayList<String> argTypes = new ArrayList<String>();
+
 			// Now assign all the parameters
 			if (argCount > 0)
 			{
@@ -93,8 +102,10 @@ public class Java_MethodInvocation extends PrimaryOperator
 					Java_MethodParameter param = parameters.params.getPrimaryElement(i);
 					EagleValue val = interpreter.getEagleValue(expr);
 					interpreter.setSymbol(param.id, param.id.getValue(), val);
+					argTypes.add(val.typeName());
 				}
 			}
+			_metrics.called(argTypes);
 
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();

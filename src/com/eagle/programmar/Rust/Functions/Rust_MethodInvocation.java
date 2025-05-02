@@ -3,9 +3,12 @@
 
 package com.eagle.programmar.Rust.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Function;
 import com.eagle.programmar.Rust.Rust_Function.Rust_Parameter;
@@ -25,6 +28,8 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
 	public @S(50) PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
@@ -47,6 +52,12 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -54,7 +65,9 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 			Rust_Parameter param = func.funcParamDefs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter.setSymbol(param, param.var.getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();

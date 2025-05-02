@@ -3,11 +3,14 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Bash.Bash_Statement;
 import com.eagle.programmar.Bash.Bash_Variable;
 import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
@@ -38,6 +41,8 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 		public @CHOICE Bash_Variable XXvariable;
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -60,6 +65,12 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 	
 			int argCount = args.size();
 	
+			if (_metrics == null)
+			{
+				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			}
+			ArrayList<String> argTypes = new ArrayList<String>();
+
 			// Now assign all the parameters
 			for (int i = 0; i < argCount; i++)
 			{
@@ -67,7 +78,9 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 				String paramName = "$" + (i+1);
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter.setSymbol(this, paramName, val);
+				argTypes.add(val.typeName());
 			}
+			_metrics.called(argTypes);
 	
 			// Prepare to evaluate the function
 			long startTime = System.nanoTime();

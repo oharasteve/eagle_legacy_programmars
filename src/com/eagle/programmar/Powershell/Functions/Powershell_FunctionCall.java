@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Powershell.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Library;
@@ -30,8 +33,6 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 	public @S(30) Powershell_Function_Reference funcRef;
 	public @S(40) @OPT TokenList<Powershell_FunctionArg> arguments;
 
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class Powershell_DiscardResult extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -45,6 +46,9 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		public @S(20) @OPT PunctuationComma comma;
 	}
 	
+	public @SKIP CallMetrics _callMetrics = null;
+	private @SKIP ArgumentsMetrics _argMetrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -57,9 +61,9 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		Powershell_FunctionStatement func = (Powershell_FunctionStatement) fn;
 		String name = func.name.getValue();
 
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, funcRef.getValue(), this);
+			_callMetrics = new CallMetrics(interpreter._metrics, funcRef.getValue(), this);
 		}
 		
 		// Call the function
@@ -72,15 +76,22 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_argMetrics == null)
+		{
+			_argMetrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
 			Powershell_Expression expr = arguments._elements.get(i).expr;
 			Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
-
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.var.id.getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_argMetrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

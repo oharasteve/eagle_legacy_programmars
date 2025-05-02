@@ -3,11 +3,14 @@
 
 package com.eagle.programmar.Fortran.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Statement;
@@ -28,52 +31,54 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 	public @S(30) SeparatedList<Fortran_Expression, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String fnName = variable.getValue().toUpperCase();
 		int argCount = args.getPrimaryCount();
 		
-		// Check for built-in function names first
-		switch (fnName)
-		{
-		case "ADJUSTL":
-			if (argCount != 1)
-			{
-				throw new RuntimeException("ADJUSTL function requires 1 argument");
-			}
-			String str1 = interpreter.getStrValue(args.getPrimaryElement(0));
-			String trimmedStr = str1.stripLeading();
-			int lengthDifference = str1.length() - trimmedStr.length();
-			String newStr = trimmedStr + str1.substring(0, lengthDifference);
-			interpreter.pushStr(newStr);	// Left justifies a string, but keeps length same
-			return;
-		case "LEN":
-			if (argCount != 1)
-			{
-				throw new RuntimeException("LEN function requires 1 argument");
-			}
-			String str2 = interpreter.getStrValue(args.getPrimaryElement(0));
-			interpreter.pushInt(str2.length());
-			return;
-		case "MOD":
-			if (argCount != 2)
-			{
-				throw new RuntimeException("MOD function requires 2 arguments");
-			}
-			int numer = interpreter.getIntValue(args.getPrimaryElement(0));
-			int denom = interpreter.getIntValue(args.getPrimaryElement(1));
-			interpreter.pushInt(numer % denom);
-			return;
-		case "TRIM":
-			if (argCount != 1)
-			{
-				throw new RuntimeException("TRIM function requires 1 argument");
-			}
-			String str3 = interpreter.getStrValue(args.getPrimaryElement(0));
-			interpreter.pushStr(str3.stripTrailing());	// Only removes trailing spaces
-			return;
-		}
+//		// Check for built-in function names first
+//		switch (fnName)
+//		{
+//		case "ADJUSTL":
+//			if (argCount != 1)
+//			{
+//				throw new RuntimeException("ADJUSTL function requires 1 argument");
+//			}
+//			String str1 = interpreter.getStrValue(args.getPrimaryElement(0));
+//			String trimmedStr = str1.stripLeading();
+//			int lengthDifference = str1.length() - trimmedStr.length();
+//			String newStr = trimmedStr + str1.substring(0, lengthDifference);
+//			interpreter.pushStr(newStr);	// Left justifies a string, but keeps length same
+//			return;
+//		case "LEN":
+//			if (argCount != 1)
+//			{
+//				throw new RuntimeException("LEN function requires 1 argument");
+//			}
+//			String str2 = interpreter.getStrValue(args.getPrimaryElement(0));
+//			interpreter.pushInt(str2.length());
+//			return;
+//		case "MOD":
+//			if (argCount != 2)
+//			{
+//				throw new RuntimeException("MOD function requires 2 arguments");
+//			}
+//			int numer = interpreter.getIntValue(args.getPrimaryElement(0));
+//			int denom = interpreter.getIntValue(args.getPrimaryElement(1));
+//			interpreter.pushInt(numer % denom);
+//			return;
+//		case "TRIM":
+//			if (argCount != 1)
+//			{
+//				throw new RuntimeException("TRIM function requires 1 argument");
+//			}
+//			String str3 = interpreter.getStrValue(args.getPrimaryElement(0));
+//			interpreter.pushStr(str3.stripTrailing());	// Only removes trailing spaces
+//			return;
+//		}
 		
 		// Check for subscripts second
 		EagleValue var = interpreter.findSymbol(fnName);
@@ -102,6 +107,12 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 					"Function " + fnName + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, fnName);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -109,7 +120,9 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 			Fortran_Variable_Reference param = func.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the procedure or function
 		long startTime = System.nanoTime();

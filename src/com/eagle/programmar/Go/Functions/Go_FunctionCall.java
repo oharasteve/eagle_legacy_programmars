@@ -3,9 +3,12 @@
 
 package com.eagle.programmar.Go.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Variable;
 import com.eagle.programmar.Go.Statements.Go_Function;
@@ -24,6 +27,8 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<Go_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -52,17 +57,22 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 					"Function " + fnName + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		// Now assign all the parameters
-		if (argCount > 0)
+		if (_metrics == null)
 		{
-			for (int i = 0; i < argCount; i++)
-			{
-				Go_Expression expr = arguments.getPrimaryElement(i);
-				Go_FunctionParamater param = func.parameters.getPrimaryElement(i);
-				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(param, param.var.getValue(), val);
-			}
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, fnName);
 		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
+		// Now assign all the parameters
+		for (int i = 0; i < argCount; i++)
+		{
+			Go_Expression expr = arguments.getPrimaryElement(i);
+			Go_FunctionParamater param = func.parameters.getPrimaryElement(i);
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.setSymbol(param, param.var.getValue(), val);
+			argTypes.add(val.typeName());
+		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();

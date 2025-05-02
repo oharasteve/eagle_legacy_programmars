@@ -45,8 +45,6 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 	public @S(120) PLI_Identifier_Reference id2;
 	public @S(130) PunctuationSemicolon semicolon2;
 
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class PLI_ProcedureOption extends TokenChooser
 	{
 		public @CHOICE PLI_ProcedureOptionsMain XXoptionsMain;
@@ -89,6 +87,8 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @CHOICE PLI_Declaration XXdeclaration;
 		public @CHOICE PLI_Signals XXsignals;
 	}
+
+	public @SKIP CallMetrics _metrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, PLI_Syntax.IS_CASE_SENSITIVE);
 

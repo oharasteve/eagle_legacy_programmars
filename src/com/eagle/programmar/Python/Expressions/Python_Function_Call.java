@@ -9,6 +9,7 @@ import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Python.Python_Argument_List;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
@@ -34,6 +35,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 	public @S(30) @NOSPACE @OPT @SYNTAX(Python_Multiline_Syntax.class) SeparatedList<Python_Expression, PunctuationComma> argList;
 	public @S(40) @OPT PunctuationComma extraComma;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -69,6 +72,12 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		interpreter.callingFunction(name, func.header);
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		Python_Parameter param = func.header.params.params.param;
 		for (int i = 0; i < argCount; i++)
@@ -83,8 +92,10 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 				Python_Variable_Definition def = (Python_Variable_Definition) param.getWhich();
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(def, def.getValue(), val);
+				argTypes.add(val.typeName());
 			}
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

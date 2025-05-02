@@ -3,11 +3,14 @@
 
 package com.eagle.programmar.Ada.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Statement;
@@ -54,6 +57,8 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -120,6 +125,12 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 						"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
 
+			if (_metrics == null)
+			{
+				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			}
+			ArrayList<String> argTypes = new ArrayList<String>();
+
 			// Now assign all the parameters
 			for (int i = 0; i < argCount; i++)
 			{
@@ -131,8 +142,10 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 					Ada_Expression expr = (Ada_Expression) which;
 					EagleValue val = interpreter.getEagleValue(expr);
 					interpreter.setSymbol(param, param.param.getValue(), val);
+					argTypes.add(val.typeName());
 				}
 			}
+			_metrics.called(argTypes);
 		}
 
 		// Prepare to evaluate the function

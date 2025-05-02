@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Julia.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.programmar.Julia.Julia_Variable;
@@ -25,6 +28,8 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) SeparatedList<Julia_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -88,6 +93,12 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -96,7 +107,9 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.vars.first().getValue(), val);
+			argTypes.add(val.typeName());
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

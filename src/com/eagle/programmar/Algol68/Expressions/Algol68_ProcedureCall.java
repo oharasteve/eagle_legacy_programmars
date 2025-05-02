@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Algol68.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Algol68_Variable;
@@ -35,7 +38,6 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) SeparatedList<Algol68_FunctionArg, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
-
 	}
 
 	public static class Algol68_FunctionArg extends TokenChooser
@@ -49,6 +51,8 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 			public @S(30) Algol68_Expression expr;
 		}
 	}
+
+	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -73,6 +77,12 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 					"Proc " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
@@ -84,8 +94,10 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 				Algol68_Expression expr = (Algol68_Expression) which;
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.param.getValue(), val);
+				argTypes.add(val.typeName());
 			}
 		}
+		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
