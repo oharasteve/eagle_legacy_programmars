@@ -50,10 +50,10 @@ public class CSharp_PreIncrementExpression extends PrimaryOperator
 	}
 	
 	@Override
-	public CSharp_Expression generateIncrement(CSharp_Variable var,
+	public CSharp_Expression generateIncrement(CSharp_Variable variable,
 			IncrementEnum oper, AbstractToken source)
 	{
-		this.var = var;
+		this.var = variable;
 		switch (oper)
 		{
 		case INCREMENT:

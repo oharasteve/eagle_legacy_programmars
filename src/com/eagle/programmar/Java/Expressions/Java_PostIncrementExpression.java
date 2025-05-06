@@ -50,10 +50,10 @@ public class Java_PostIncrementExpression extends PrimaryOperator
 	}
 
 	@Override
-	public Java_Expression generateIncrement(Java_Variable var,
+	public Java_Expression generateIncrement(Java_Variable varName,
 			IncrementEnum oper, AbstractToken source)
 	{
-		this.var = var;
+		this.var = varName;
 		switch (oper)
 		{
 		case INCREMENT:

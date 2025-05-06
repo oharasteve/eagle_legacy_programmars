@@ -20,12 +20,12 @@ public class Java_SubfieldExpression extends PrecedenceOperator
 	public @S(40) @NOSPACE Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
-	public Java_Expression generateSubfield(Java_Expression left,
-			Java_Expression right, AbstractToken source)
+	public Java_Expression generateSubfield(Java_Expression leftExpr,
+			Java_Expression rightExpr, AbstractToken source)
 	{
-		this.left = left;
+		this.left = leftExpr;
 		this.dot = new PunctuationPeriod();
-		this.right = right;
+		this.right = rightExpr;
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

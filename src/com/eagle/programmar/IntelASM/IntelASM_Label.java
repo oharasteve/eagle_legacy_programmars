@@ -39,7 +39,7 @@ public class IntelASM_Label extends TokenSequence implements EagleRunnable
 			break;
 		default:
 			// System.out.println("******** Setting label " + lbl + " to " + state._currentLine);
-			state._labels.put(lbl, state._currentLine);
+			state._labels.put(lbl, Integer.valueOf(state._currentLine));
 			break;
 		}
 	}

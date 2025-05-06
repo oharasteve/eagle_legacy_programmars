@@ -190,7 +190,7 @@ public class Java_ForStatement extends TokenSequence
 	@Override
 	public Java_Statement generateForLoop1(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
-			Java_Statement action, AbstractToken source)
+			Java_Statement act, AbstractToken source)
 	{
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
@@ -216,7 +216,7 @@ public class Java_ForStatement extends TokenSequence
 		forStmt.semicolon2 = new PunctuationSemicolon();
 		forStmt.increments = loopIncrements;
 		forStmt.rightParen = new PunctuationRightParen();
-		forStmt.action = action;
+		forStmt.action = act;
 		
 		forStmt.setTransformationSource(source);
 		return Java_Generator.wrapStatement(forStmt);
@@ -225,13 +225,13 @@ public class Java_ForStatement extends TokenSequence
 	@Override
 	public Java_Statement generateForLoop(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
-			ArrayList<Java_Statement> actions, AbstractToken source)
+			ArrayList<Java_Statement> acts, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
 		block.rightBrace = new PunctuationRightBrace();
 		block.statements = new TokenList<Java_StatementOrComment>();
-		for (Java_Statement stmt : actions)
+		for (Java_Statement stmt : acts)
 		{
 			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
 			stmtOrComment.setWhich(stmt);
@@ -245,7 +245,7 @@ public class Java_ForStatement extends TokenSequence
 	@Override
 	public Java_Statement generateForRange1(String varName, Java_Expression fromExpression,
 			Java_Expression toExpression, Java_Expression delta,
-			Java_Statement action, AbstractToken source)
+			Java_Statement act, AbstractToken source)
 	{
 		Java_VariableExpression tempVar = new Java_VariableExpression();
 		Java_Expression varExpr = tempVar.generateVarExpr(varName, null, null);
@@ -290,7 +290,7 @@ public class Java_ForStatement extends TokenSequence
 		forStmt.semicolon2 = new PunctuationSemicolon();
 		forStmt.increments = loopIncrements;
 		forStmt.rightParen = new PunctuationRightParen();
-		forStmt.action = action;
+		forStmt.action = act;
 		
 		forStmt.setTransformationSource(source);
 		return Java_Generator.wrapStatement(forStmt);

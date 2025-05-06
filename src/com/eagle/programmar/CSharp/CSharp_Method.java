@@ -142,7 +142,7 @@ public class CSharp_Method extends TokenSequence implements
 	}
 	
 	public void newCSharpMethod(PrivacyEnum privacy,
-			StaticEnum isStatic, CSharp_Type returnType, String methodName)
+			StaticEnum isStatic, CSharp_Type retType, String mName)
 	{
 		this.modifiers = new TokenList<CSharp_MethodModifier>();
 		
@@ -174,13 +174,13 @@ public class CSharp_Method extends TokenSequence implements
 			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
 		
-		if (returnType == null)
+		if (retType == null)
 		{
 			this.returnType = CSharp_Type.newPrimitiveType("void");
 		}
 		else
 		{
-			this.returnType = returnType;
+			this.returnType = retType;
 		}
 		
 		this.parameters = new CSharp_MethodParameters();
@@ -198,7 +198,7 @@ public class CSharp_Method extends TokenSequence implements
 		this.body.setWhich(impl);
 		
 		this.methodName = new CSharp_Method_Definition();
-		this.methodName.setValue(methodName);
+		this.methodName.setValue(mName);
 	}
 	
 	public void addMethodParameter(AbstractType type, String name)

@@ -8,15 +8,16 @@ import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
-import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class COBOL_ClassCondition extends PrimaryOperator
+public class COBOL_ClassCondition extends PrecedenceOperator
 		implements EagleTransformableExpression
 {
-	public @S(10) COBOL_Expression expr;
+	public @S(10) COBOL_Expression expr = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
+	// public @S(10) COBOL_Variable var;	// Cannot use a COBOL_Expression here -- infinite loop
 	public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 	public @S(30) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
 	public @S(40) COBOL_KeywordChoice type = new COBOL_KeywordChoice("ALPHABETIC", "ALPHABETIC-LOWER",
@@ -27,6 +28,7 @@ public class COBOL_ClassCondition extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		
 		String oper = type.getValue();
 		RelationalEnum newOper;
 		

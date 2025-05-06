@@ -53,12 +53,12 @@ public class CSharp_StatementBlock extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateBlock(
-			ArrayList<CSharp_Statement> statements, AbstractToken source)
+			ArrayList<CSharp_Statement> stmts, AbstractToken source)
 	{
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.statements = new TokenList<CSharp_StatementOrComment>();
-		for (CSharp_Statement stmt : statements)
+		for (CSharp_Statement stmt : stmts)
 		{
 			CSharp_StatementOrComment stmtComm = new CSharp_StatementOrComment();
 			stmtComm.setWhich(stmt);

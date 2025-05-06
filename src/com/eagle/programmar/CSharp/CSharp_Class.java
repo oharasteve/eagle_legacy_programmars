@@ -121,7 +121,7 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		}
 	}
 	
-	public void newCSharpClass(PrivacyEnum privacy, String className)
+	public void newCSharpClass(PrivacyEnum privacy, String cName)
 	{
 		this.modifiers = new TokenList<CSharp_ClassModifier>();
 		CSharp_ClassModifier modifier = new CSharp_ClassModifier();
@@ -139,7 +139,7 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 		this.modifiers.addToken(modifier);
 		
 		this.className = new CSharp_Class_Definition();
-		this.className.setValue(className);
+		this.className.setValue(cName);
 		
 		this.classOrInterface = new CSharp_KeywordChoice("class");
 		this.elements = new TokenList<CSharp_ClassElement>();

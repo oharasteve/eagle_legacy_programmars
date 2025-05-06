@@ -114,14 +114,13 @@ public class Java_IfStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement generateIfElse1(Java_Expression condition,
-			Java_Statement thenStatement,
-			Java_Statement elseStatement, AbstractToken source)
+	public Java_Statement generateIfElse1(Java_Expression cond,
+			Java_Statement thenStmt, Java_Statement elseStmt, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
 
-		AbstractToken which = condition.getWhich();
+		AbstractToken which = cond.getWhich();
 		if (which instanceof Java_ParenthesizedExpression)
 		{
 			Java_ParenthesizedExpression parensExpr = (Java_ParenthesizedExpression) which;
@@ -130,16 +129,16 @@ public class Java_IfStatement extends TokenSequence
 		}
 		else
 		{
-			this.condition = condition;
+			this.condition = cond;
 		}
 
-		this.thenStatement = thenStatement;
+		this.thenStatement = thenStmt;
 				
-		if (elseStatement != null)
+		if (elseStmt != null)
 		{
 			this.elseClause = new Java_IfElseClause();
 			this.elseClause.setPresent(true);
-			this.elseClause.elseStatement = elseStatement;
+			this.elseClause.elseStatement = elseStmt;
 			this.elseClause.elseStatement.setPresent(true);
 		}
 
@@ -148,7 +147,7 @@ public class Java_IfStatement extends TokenSequence
 	}
 	
 	@Override
-	public Java_Statement generateIfElse(Java_Expression condition,
+	public Java_Statement generateIfElse(Java_Expression cond,
 			ArrayList<Java_Statement> thenStatements,
 			ArrayList<Java_Statement> elseStatements, AbstractToken source)
 	{
@@ -178,7 +177,7 @@ public class Java_IfStatement extends TokenSequence
 			}
 		}
 
-		return generateIfElse1(condition, Java_Generator.wrapStatement(thenBlock),
+		return generateIfElse1(cond, Java_Generator.wrapStatement(thenBlock),
 				Java_Generator.wrapStatement(elseBlock), source);
 	}
 }

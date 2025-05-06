@@ -59,7 +59,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 			// Make sure the function args match up
 			int argCount = 0;
 			if (argList.arg.isPresent()) argCount = 1;
-			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount = 1 + argList.moreArgs.size();
+			if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount += argList.moreArgs.size();
 
 			int paramCount = meth.parameters.params.getPrimaryCount();
 			if (argCount != paramCount)

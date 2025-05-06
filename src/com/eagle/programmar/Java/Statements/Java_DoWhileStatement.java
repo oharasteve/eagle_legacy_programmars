@@ -50,7 +50,7 @@ public class Java_DoWhileStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement generateDoUntil1(Java_Expression condition,
+	public Java_Statement generateDoUntil1(Java_Expression cond,
 			Java_Statement action, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
@@ -65,7 +65,7 @@ public class Java_DoWhileStatement extends TokenSequence
 		this.doStatement = action;
 
 		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
-		Java_Expression notExpr = not.generateLogicalNot(condition, source); 
+		Java_Expression notExpr = not.generateLogicalNot(cond, source); 
 		this.condition = notExpr;
 
 		this.setTransformationSource(source);
@@ -73,7 +73,7 @@ public class Java_DoWhileStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement generateDoUntil(Java_Expression condition,
+	public Java_Statement generateDoUntil(Java_Expression cond,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock body = new Java_StatementBlock();
@@ -91,6 +91,6 @@ public class Java_DoWhileStatement extends TokenSequence
 			body.statements.addToken(wrapper);
 		}
 
-		return generateDoUntil1(condition, Java_Generator.wrapStatement(javaStatement), source);
+		return generateDoUntil1(cond, Java_Generator.wrapStatement(javaStatement), source);
 	}
 }

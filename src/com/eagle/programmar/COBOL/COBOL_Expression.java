@@ -69,10 +69,9 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(150) COBOL_LengthFunction lengthFunction;
 	public @P(160) COBOL_TrimFunction trimFunction;
 	public @P(170) COBOL_ExpressionFunction expressionFunction;
-	public @P(180) COBOL_ClassCondition classCondition;
-	public @P(190) COBOL_SignedExpression signedExpression;
-	public @P(200) COBOL_NotCondition notCondition;
-	public @P(210) COBOL_VariableExpression variableExpression;
+	public @P(180) COBOL_SignedExpression signedExpression;
+	public @P(190) COBOL_NotCondition notCondition;
+	public @P(200) COBOL_VariableExpression variableExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
@@ -82,8 +81,9 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(1020) COBOL_ExponentExpression exponentExpression;
 	public @P(1030) COBOL_MultiplicativeExpression multiplicativeExpression;
 	public @P(1040) COBOL_AdditiveExpression additiveExpression;
-	public @P(1050) COBOL_RelationCondition relationCondition;
-	public @P(1060) COBOL_AndCondition andCondition;
-	public @P(1070) COBOL_OrCondition orCondition;
-	public @P(1080) COBOL_IsType isType;
+	public @P(1050) COBOL_ClassCondition classCondition;
+	public @P(1060) COBOL_RelationCondition relationCondition;
+	public @P(1070) COBOL_AndCondition andCondition;
+	public @P(1080) COBOL_OrCondition orCondition;
+	public @P(1090) COBOL_IsType isType;
 }

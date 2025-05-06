@@ -67,12 +67,12 @@ public class CSharp_SubfieldExpression extends PrecedenceOperator
 	}
 
 	@Override
-	public CSharp_Expression generateSubfield(CSharp_Expression left,
-			CSharp_Expression right, AbstractToken source)
+	public CSharp_Expression generateSubfield(CSharp_Expression leftExpr,
+			CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = left;
+		this.left = leftExpr;
 		this.dot = new PunctuationPeriod();
-		this.right = right;
+		this.right = rightExpr;
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
 	}

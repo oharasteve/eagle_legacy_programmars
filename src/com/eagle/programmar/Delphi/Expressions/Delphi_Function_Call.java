@@ -46,7 +46,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		Delphi_Parameter_List paramList = null;
 		CallMetrics metrics = null;
 		Delphi_BeginEnd body = null;
-		String name = null;
+		String procName = null;
 		
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
@@ -56,7 +56,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		if (fn instanceof Delphi_Procedure)
 		{
 			proc = (Delphi_Procedure) fn;
-			name = proc.forward.name.var.getValue();
+			procName = proc.forward.name.var.getValue();
 			paramList = proc.forward.args;
 			metrics = proc._metrics;
 			body = proc.body;
@@ -64,7 +64,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		else if (fn instanceof Delphi_Function)
 		{
 			func = (Delphi_Function) fn;
-			name = func.forward.name.var.getValue();
+			procName = func.forward.name.var.getValue();
 			paramList = func.forward.args;
 			metrics = func._metrics;
 			body = func.body;
@@ -88,7 +88,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, this, procName);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

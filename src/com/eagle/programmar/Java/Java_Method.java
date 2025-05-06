@@ -268,12 +268,12 @@ public class Java_Method extends TokenSequence
 		}
 	}
 	
-	public void addComment(Java_Comment comment)
+	public void addComment(Java_Comment comm)
 	{
 		if (this.comments == null)
 		{
 			this.comments = new TokenList<Java_Comment>();
 		}
-		this.comments.addToken(comment);
+		this.comments.addToken(comm);
 	}
 }

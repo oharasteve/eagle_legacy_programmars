@@ -77,21 +77,21 @@ public class CSharp_WhileStatement extends TokenSequence
 	}
 
 	@Override
-	public CSharp_Statement generateWhile1(CSharp_Expression condition,
+	public CSharp_Statement generateWhile1(CSharp_Expression cond,
 			CSharp_Statement action, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
 
 		this.whileStatement = action;
-		this.condition = condition;
+		this.condition = cond;
 
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(this);
 	}
 	
 	@Override
-	public CSharp_Statement generateWhile(CSharp_Expression condition,
+	public CSharp_Statement generateWhile(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock body = new CSharp_StatementBlock();
@@ -118,6 +118,6 @@ public class CSharp_WhileStatement extends TokenSequence
 		}
 
 		CSharp_Statement action = CSharp_Generator.wrapStatement(body);
-		return generateWhile1(condition, action, source);
+		return generateWhile1(cond, action, source);
 	}
 }

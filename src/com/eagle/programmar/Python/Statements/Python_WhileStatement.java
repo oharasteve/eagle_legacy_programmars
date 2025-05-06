@@ -106,16 +106,16 @@ public class Python_WhileStatement extends TokenSequence
 	}
 
 	@Override
-	public Python_Statement generateDoUntil1(Python_Expression condition,
+	public Python_Statement generateDoUntil1(Python_Expression cond,
 			Python_Statement action, AbstractToken source)
 	{
 		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
 		actions.add(action);
-		return generateDoUntil(condition, actions, source);
+		return generateDoUntil(cond, actions, source);
 	}
 	
 	@Override
-	public Python_Statement generateDoUntil(Python_Expression condition,
+	public Python_Statement generateDoUntil(Python_Expression cond,
 			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
@@ -123,7 +123,7 @@ public class Python_WhileStatement extends TokenSequence
 		Python_Parenthesized_Expression parensExpr = new Python_Parenthesized_Expression();
 		parensExpr.leftParen = new PunctuationLeftParen();
 		parensExpr.list = new Python_List();
-		parensExpr.list.expr = condition;
+		parensExpr.list.expr = cond;
 		parensExpr.rightParen = new PunctuationRightParen();
 		
 		Python_Logical_Not_Expression notExpr = new Python_Logical_Not_Expression();
@@ -169,20 +169,21 @@ public class Python_WhileStatement extends TokenSequence
 	}
 	
 	@Override
-	public Python_Statement generateWhile1(Python_Expression condition,
+	public Python_Statement generateWhile1(Python_Expression cond,
 			Python_Statement action, AbstractToken source)
 	{
 		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
 		actions.add(action);
-		return generateWhile(condition, actions, source);
+		return generateWhile(cond, actions, source);
 	}
 
-	public Python_Statement generateWhile(Python_Expression condition,
+	@Override
+	public Python_Statement generateWhile(Python_Expression cond,
 			ArrayList<Python_Statement> actions, AbstractToken source)
 	{
 		this.colon = new PunctuationColon();
 
-		this.condition = condition;
+		this.condition = cond;
 		this.statements = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_Statement>();

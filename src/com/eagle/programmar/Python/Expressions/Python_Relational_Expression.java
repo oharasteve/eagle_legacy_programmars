@@ -109,30 +109,30 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		this.left = leftExpr;
 		this.right = rightExpr;
 		
-		Python_PunctuationChoice operator = null;
+		Python_PunctuationChoice oper = null;
 		switch (relOp)
 		{
 		case EQUALS:
-			operator = new Python_PunctuationChoice("==");
+			oper = new Python_PunctuationChoice("==");
 			break;
 		case NOT_EQUALS:
-			operator = new Python_PunctuationChoice("!=");
+			oper = new Python_PunctuationChoice("!=");
 			break;
 		case LESS_THAN:
-			operator = new Python_PunctuationChoice("<");
+			oper = new Python_PunctuationChoice("<");
 			break;
 		case LESS_EQUALS:
-			operator = new Python_PunctuationChoice("<=");
+			oper = new Python_PunctuationChoice("<=");
 			break;
 		case GREATER_THAN:
-			operator = new Python_PunctuationChoice(">");
+			oper = new Python_PunctuationChoice(">");
 			break;
 		case GREATER_EQUALS:
-			operator = new Python_PunctuationChoice(">=");
+			oper = new Python_PunctuationChoice(">=");
 			break;
 		}
 		this.operator = new Python_Relational_Operator();
-		this.operator.setWhich(operator);
+		this.operator.setWhich(oper);
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

@@ -35,7 +35,7 @@ public class CSharp_DoWhileStatement extends TokenSequence
 	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
-	public CSharp_Statement generateDoUntil1(CSharp_Expression condition,
+	public CSharp_Statement generateDoUntil1(CSharp_Expression cond,
 			CSharp_Statement action, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
@@ -45,7 +45,7 @@ public class CSharp_DoWhileStatement extends TokenSequence
 		this.doStatement = action;
 
 		CSharp_LogicalNotExpression not = new CSharp_LogicalNotExpression();
-		CSharp_Expression notExpr = not.generateLogicalNot(condition, source);
+		CSharp_Expression notExpr = not.generateLogicalNot(cond, source);
 		this.condition = notExpr;
 
 		this.setTransformationSource(source);
@@ -53,7 +53,7 @@ public class CSharp_DoWhileStatement extends TokenSequence
 	}
 	
 	@Override
-	public CSharp_Statement generateDoUntil(CSharp_Expression condition,
+	public CSharp_Statement generateDoUntil(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock body = new CSharp_StatementBlock();
@@ -73,6 +73,6 @@ public class CSharp_DoWhileStatement extends TokenSequence
 		}
 
 		CSharp_Statement action = CSharp_Generator.wrapStatement(body);
-		return generateDoUntil1(condition, action, source);
+		return generateDoUntil1(cond, action, source);
 	}
 }

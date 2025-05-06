@@ -46,12 +46,12 @@ public class Delphi_BeginEnd extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> statements = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
 		AbstractStatement newStmt = transformer.transformStatement1(generator,
 				this.statements.stmt.getWhich());
 		if (newStmt != null)
 		{
-			statements.add(newStmt);
+			stmts.add(newStmt);
 		}
 		
 		if (this.statements.stmts != null)
@@ -61,11 +61,11 @@ public class Delphi_BeginEnd extends TokenSequence
 				newStmt = transformer.transformStatement1(generator, more.stmt.getWhich());
 				if (newStmt != null)
 				{
-					statements.add(newStmt);
+					stmts.add(newStmt);
 				}
 			}
 		}
 
-		return generator.newBlockStatement(statements, this);
+		return generator.newBlockStatement(stmts, this);
 	}
 }

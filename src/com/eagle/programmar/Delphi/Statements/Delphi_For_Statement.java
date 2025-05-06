@@ -101,11 +101,11 @@ public class Delphi_For_Statement extends TokenSequence
 	{
 		AbstractExpression fromExpr = transformer.transformExpression(generator, this.from);
 		AbstractExpression toExpr = transformer.transformExpression(generator, this.to);
-		String var = this.var.getValue();
-		AbstractExpression varExpr = generator.newVariableExpression(var, null, null);
+		String varName = this.var.getValue();
+		AbstractExpression varExpr = generator.newVariableExpression(varName, null, null);
 		AbstractStatement newAction = transformer.transformStatement1(
 				generator, this.stmt);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var, null,
+		AbstractExpression asgExpr = generator.newAssignmentExpression(varName, null,
 				AssignmentEnum.EQUALS, fromExpr, null);
 
 		String toDownto = this.TO_DOWNTO.getValue();
@@ -114,13 +114,13 @@ public class Delphi_For_Statement extends TokenSequence
 		switch (this.TO_DOWNTO.getValue().toLowerCase())
 		{
 		case "to":
-			delta = generator.newPostIncrementExpression(var, null,
+			delta = generator.newPostIncrementExpression(varName, null,
 					IncrementEnum.INCREMENT, null);
 			term = generator.newRelationalExpression(varExpr,
 					RelationalEnum.LESS_EQUALS, toExpr, null);
 			break;
 		case "downto":
-			delta = generator.newPostIncrementExpression(var, null,
+			delta = generator.newPostIncrementExpression(varName, null,
 					IncrementEnum.DECREMENT, null);
 			term = generator.newRelationalExpression(varExpr,
 					RelationalEnum.GREATER_EQUALS, toExpr, null);

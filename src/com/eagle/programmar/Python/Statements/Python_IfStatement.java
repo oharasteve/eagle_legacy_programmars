@@ -127,41 +127,39 @@ public class Python_IfStatement extends TokenSequence
 	}
 
 	@Override
-	public Python_Statement generateIfElse1(Python_Expression condition,
-			Python_Statement thenStatement,
-			Python_Statement elseStatement, AbstractToken source)
+	public Python_Statement generateIfElse1(Python_Expression cond,
+			Python_Statement thenStmt, Python_Statement elseStmt, AbstractToken source)
 	{
 		ArrayList<Python_Statement> thens = new ArrayList<Python_Statement>();
-		thens.add(thenStatement);
+		thens.add(thenStmt);
 		
 		ArrayList<Python_Statement> elses = null;
-		if (elseStatement != null)
+		if (elseStmt != null)
 		{
 			elses = new ArrayList<Python_Statement>();
-			elses.add(elseStatement);
+			elses.add(elseStmt);
 		}
 
-		return generateIfElse(condition, thens, elses, source);
+		return generateIfElse(cond, thens, elses, source);
 	}
 	
 	@Override
-	public Python_Statement generateIfElse(Python_Expression condition,
-			ArrayList<Python_Statement> thenStatements,
-			ArrayList<Python_Statement> elseStatements, AbstractToken source)
+	public Python_Statement generateIfElse(Python_Expression cond,
+			ArrayList<Python_Statement> thenStmts, ArrayList<Python_Statement> elseSmts, AbstractToken source)
 	{
-		this.condition = condition;
+		this.condition = cond;
 		this.colon = new PunctuationColon();
 
 		this.ifThenStatements = new Python_StatementBlock();
 		Python_MultilineStatement thenMulti = new Python_MultilineStatement();
 		this.ifThenStatements.setWhich(thenMulti);
 		thenMulti.statements = new TokenList<Python_Statement>();
-		for (AbstractStatement stmt : thenStatements)
+		for (AbstractStatement stmt : thenStmts)
 		{
 			thenMulti.statements.addToken((Python_Statement) stmt);
 		}
 				
-		if (elseStatements != null && elseStatements.size() > 0)
+		if (elseSmts != null && elseSmts.size() > 0)
 		{
 			this.ifElse = new Python_IfElse();
 			this.ifElse.setPresent(true);
@@ -170,7 +168,7 @@ public class Python_IfStatement extends TokenSequence
 			Python_MultilineStatement elseMulti = new Python_MultilineStatement();
 			this.ifElse.ifElseStatements.setWhich(elseMulti);
 			elseMulti.statements = new TokenList<Python_Statement>();
-			for (AbstractStatement stmt : elseStatements)
+			for (AbstractStatement stmt : elseSmts)
 			{
 				elseMulti.statements.addToken((Python_Statement) stmt);
 			}

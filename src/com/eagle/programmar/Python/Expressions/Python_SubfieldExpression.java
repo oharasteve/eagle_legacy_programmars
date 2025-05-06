@@ -46,12 +46,12 @@ public class Python_SubfieldExpression extends PrecedenceOperator
 	}
 
 	@Override
-	public Python_Expression generateSubfield(Python_Expression left,
-			Python_Expression right, AbstractToken source)
+	public Python_Expression generateSubfield(Python_Expression leftExpr,
+			Python_Expression rightExpr, AbstractToken source)
 	{
-		this.left = left;
+		this.left = leftExpr;
 		this.dot = new PunctuationPeriod();
-		this.right = right;
+		this.right = rightExpr;
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

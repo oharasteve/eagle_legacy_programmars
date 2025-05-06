@@ -30,7 +30,7 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
-		state._calls.push(state._nextInstruction);
+		state._calls.push(Integer.valueOf(state._nextInstruction));
 
 		// And transfer control to the label
 		state._nextInstruction = state._labels.get(name);

@@ -115,7 +115,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		}
 	}
 
-	public void newJavaClass(PrivacyEnum privacy, String className)
+	public void newJavaClass(PrivacyEnum privacy, String cName)
 	{
 		this.setPresent(true);
 		this.modifierList = new Java_ClassModifierList();
@@ -136,7 +136,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		this.modifierList.modifiers.addToken(modifier);
 		
 		this.className = new Java_Class_Definition();
-		this.className.setValue(className);
+		this.className.setValue(cName);
 		
 		this.classOrInterface = new Java_KeywordChoice("class");
 		this.elements = new TokenList<Java_ClassElement>();

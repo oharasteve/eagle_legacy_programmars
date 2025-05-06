@@ -142,7 +142,7 @@ public class CSharp_ForStatement extends TokenSequence
 	@Override
 	public CSharp_Statement generateForLoop1(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
-			CSharp_Statement action, AbstractToken source)
+			CSharp_Statement act, AbstractToken source)
 	{
 		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
 		CSharp_ForWhat forWhat = new CSharp_ForWhat();
@@ -162,7 +162,7 @@ public class CSharp_ForStatement extends TokenSequence
 		forStmt.semicolon2 = new PunctuationSemicolon();
 		forStmt.increments = loopIncrements;
 		forStmt.rightParen = new PunctuationRightParen();
-		forStmt.action = action;
+		forStmt.action = act;
 		
 		forStmt.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(forStmt);
@@ -191,7 +191,7 @@ public class CSharp_ForStatement extends TokenSequence
 	@Override
 	public CSharp_Statement generateForRange1(String varName, CSharp_Expression fromExpression,
 			CSharp_Expression toExpression, CSharp_Expression delta,
-			CSharp_Statement action, AbstractToken source)
+			CSharp_Statement act, AbstractToken source)
 	{
 		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
 		CSharp_Expression varExpr = tempVar.generateVarExpr(varName, null, null);
@@ -236,7 +236,7 @@ public class CSharp_ForStatement extends TokenSequence
 		forStmt.semicolon2 = new PunctuationSemicolon();
 		forStmt.increments = loopIncrements;
 		forStmt.rightParen = new PunctuationRightParen();
-		forStmt.action = action;
+		forStmt.action = act;
 		
 		forStmt.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(forStmt);

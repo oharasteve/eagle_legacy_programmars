@@ -19,8 +19,8 @@ public class CSharp_ShiftExpression extends PrecedenceOperator
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
-	public CSharp_Expression generateShift(CSharp_Expression left, ShiftEnum shift,
-			CSharp_Expression right, AbstractToken source)
+	public CSharp_Expression generateShift(CSharp_Expression leftExpr, ShiftEnum shift,
+			CSharp_Expression rightExpr, AbstractToken source)
 	{
 		String oper;
 		switch (shift)
@@ -38,8 +38,8 @@ public class CSharp_ShiftExpression extends PrecedenceOperator
 			return null;
 		}
 
-		this.left = left;
-		this.right = right;
+		this.left = leftExpr;
+		this.right = rightExpr;
 		this.operator = new CSharp_PunctuationChoice(oper);
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
