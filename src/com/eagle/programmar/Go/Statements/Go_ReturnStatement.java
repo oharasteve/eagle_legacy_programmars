@@ -21,7 +21,7 @@ public class Go_ReturnStatement extends TokenSequence implements AbstractStateme
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (expression != null && expression.isPresent())
+		if (expression != null)
 		{
 			EagleValue val = interpreter.getEagleValue(expression);
 			interpreter.pushEagleValue(val);

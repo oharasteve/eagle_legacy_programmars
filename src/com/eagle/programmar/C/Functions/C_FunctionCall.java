@@ -75,7 +75,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			int actual = 0;
 			if (argList != null)
 			{
-				if (argList.arg != null && argList.arg.isPresent()) actual++;
+				if (argList.arg != null && argList.arg.getWhich() != null) actual++;
 				if (argList.moreArgs != null && argList.moreArgs.isPresent()) actual += argList.moreArgs.size();
 			}
 

@@ -70,7 +70,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 			int argCount = 0;
 			if (argList != null)
 			{
-				if (argList.arg != null && argList.arg.isPresent()) argCount = 1;
+				if (argList.arg != null && argList.arg.getWhich() != null) argCount = 1;
 				if (argList.moreArgs != null && argList.moreArgs.isPresent()) argCount += argList.moreArgs.size();
 			}
 

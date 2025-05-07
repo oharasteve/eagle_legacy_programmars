@@ -114,23 +114,22 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 
 		// Make sure the function args match up
-		int argCount = 0;
-		if (argList.isPresent())
+		int argCount = argList.arguments.getPrimaryCount();
+		int paramCount = params.parameters.getPrimaryCount();
+		if (argCount != paramCount)
 		{
-			argCount = argList.arguments.getPrimaryCount();
-			int paramCount = params.parameters.getPrimaryCount();
-			if (argCount != paramCount)
-			{
-				throw new RuntimeException(
-						"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
-			}
+			throw new RuntimeException(
+					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
+		}
 
+		if (argCount > 0)
+		{
 			if (_metrics == null)
 			{
 				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
 			}
 			ArrayList<String> argTypes = new ArrayList<String>();
-
+	
 			// Now assign all the parameters
 			for (int i = 0; i < argCount; i++)
 			{
