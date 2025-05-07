@@ -11,6 +11,12 @@ public class TCL_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", "Ll", true);
+		return genericNumber(lines, "Ee", "Ll", true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "Ll", true, false, '?');
 	}
 }

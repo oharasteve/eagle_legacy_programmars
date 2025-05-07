@@ -18,6 +18,12 @@ public class Java_Character_Literal extends TerminalLiteralToken
 	}
 	
 	@Override
+	public String description()
+	{
+		return super.genericDescription("'", true, '\\', false, false);
+	}
+	
+	@Override
 	public Java_Character_Literal generateCharLiteral(String value, AbstractToken source)
 	{
 		this.setValue(value);

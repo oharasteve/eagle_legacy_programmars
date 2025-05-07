@@ -11,6 +11,12 @@ public class JSON_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "e", null, true);
+		return genericNumber(lines, "e", null, true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("e", null, true, false, '?');
 	}
 }

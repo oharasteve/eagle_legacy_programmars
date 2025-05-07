@@ -29,4 +29,10 @@ public class IntelASM_CommentToEndOfLine extends TerminalCommentToken
 		_comment = rec.substring(_currentChar, ec);
 		return true;
 	}
+
+	@Override
+	public String description()
+	{
+		return "comment to end of line";
+	}
 }

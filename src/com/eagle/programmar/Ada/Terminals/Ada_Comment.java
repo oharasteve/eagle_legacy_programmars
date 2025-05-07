@@ -26,4 +26,10 @@ public class Ada_Comment extends TerminalCommentToken
 		EagleLineReader rec = lines.get(_currentLine);
 		return super.possibleCommentToEndOfLine(rec, "--");
 	}
+
+	@Override
+	public String description()
+	{
+		return "-- comment";
+	}
 }

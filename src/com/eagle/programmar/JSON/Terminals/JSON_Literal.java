@@ -13,4 +13,10 @@ public class JSON_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"", true, '\\', false, true);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"", true, '\\', false, true);
+	}
 }

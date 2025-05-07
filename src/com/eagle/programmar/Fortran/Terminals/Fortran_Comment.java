@@ -27,4 +27,10 @@ public class Fortran_Comment extends TerminalCommentToken implements AbstractCom
 		EagleLineReader rec = lines.get(_currentLine);
 		return possibleCommentToEndOfLine(rec, "!");
 	}
+
+	@Override
+	public String description()
+	{
+		return "! comment to end of line";
+	}
 }

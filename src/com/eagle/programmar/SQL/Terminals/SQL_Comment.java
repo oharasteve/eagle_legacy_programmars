@@ -54,4 +54,10 @@ public class SQL_Comment extends TerminalCommentToken
 
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "/* comment */ or -- comment to end of line";
+	}
 }

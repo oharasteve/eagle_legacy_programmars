@@ -16,6 +16,12 @@ public class Java_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"", true, '\\', false, false);
+	}
 
 	@Override
 	public Java_Literal generateLiteral(String value, AbstractToken source)

@@ -36,4 +36,10 @@ public class RPG_Comment extends TerminalCommentToken
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "* comment";
+	}
 }

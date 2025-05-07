@@ -16,6 +16,12 @@ public class CSharp_Character_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'", true, '\\', false, false);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("'", true, '\\', false, false);
+	}
 
 	@Override
 	public CSharp_Character_Literal generateCharLiteral(String value, AbstractToken source)

@@ -13,4 +13,10 @@ public class C_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", "LlFfUu", true, true, '\'');
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "LlFfUu", true, true, '\'');
+	}
 }

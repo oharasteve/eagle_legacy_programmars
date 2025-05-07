@@ -15,7 +15,13 @@ public class VB_Number extends TerminalNumberToken implements EagleTransformable
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", null, true);
+		return genericNumber(lines, "Ee", null, true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", null, true, false, '?');
 	}
 
 	@Override

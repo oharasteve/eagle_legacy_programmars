@@ -12,6 +12,12 @@ public class FSharp_Number extends TerminalNumberToken
 	public boolean parse(EagleFileReader lines)
 	{
 		// J is for complex ...
-		return genericNumber(lines, "Ee", "JjLl", true);
+		return genericNumber(lines, "Ee", "JjLl", true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "JjLl", true, false, '?');
 	}
 }

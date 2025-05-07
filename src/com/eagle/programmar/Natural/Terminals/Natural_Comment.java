@@ -51,4 +51,10 @@ public class Natural_Comment extends TerminalCommentToken
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "* or ** or /* comment";
+	}
 }

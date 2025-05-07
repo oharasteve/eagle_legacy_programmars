@@ -12,6 +12,12 @@ public class Eaglish_Number extends TerminalNumberToken implements EagleRunnable
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, null, null, true, false, '_');
+		return genericNumber(lines, null, null, true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription(null, null, true, false, '?');
 	}
 }

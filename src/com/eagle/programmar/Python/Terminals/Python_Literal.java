@@ -66,8 +66,10 @@ public class Python_Literal extends TerminalLiteralToken
 			}
 		}
 		else
+		{
 			ok = false;
-
+		}
+		
 		if (ok)
 		{
 			if (prefixLen == 1)
@@ -76,6 +78,12 @@ public class Python_Literal extends TerminalLiteralToken
 		}
 		_currentChar -= prefixLen;
 		return ok;
+	}
+	
+	@Override
+	public String description()
+	{
+		return "python literal";
 	}
 		
 	@Override

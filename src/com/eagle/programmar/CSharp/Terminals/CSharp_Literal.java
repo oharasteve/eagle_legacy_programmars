@@ -39,6 +39,12 @@ public class CSharp_Literal extends TerminalLiteralToken
 	}
 	
 	@Override
+	public String description()
+	{
+		return "C# literals may have @ or $";
+	}
+	
+	@Override
 	public CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
 		String val = value;

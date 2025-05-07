@@ -33,4 +33,10 @@ public class Lisp_Comment extends TerminalCommentToken
 		_comment = rec.substring(_currentChar, nc);
 		return true;
 	}
+
+	@Override
+	public String description()
+	{
+		return "; comment to end of line";
+	}
 }

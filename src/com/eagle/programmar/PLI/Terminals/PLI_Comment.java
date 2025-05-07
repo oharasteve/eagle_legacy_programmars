@@ -29,4 +29,10 @@ public class PLI_Comment extends TerminalCommentToken
 		if (rec.charAt(_currentChar) != '/') return false;
 		return super.possibleCommentPair2(lines, rec, "/*", "*/");
 	}
+
+	@Override
+	public String description()
+	{
+		return "/* comment */";
+	}
 }

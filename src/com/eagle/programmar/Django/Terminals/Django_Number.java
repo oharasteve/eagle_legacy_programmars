@@ -11,6 +11,12 @@ public class Django_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, null, null, false);
+		return genericNumber(lines, null, null, false, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription(null, null, false, false, '?');
 	}
 }

@@ -94,6 +94,12 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		foundIt(_currentLine, _endChar - offset);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "argument";
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -27,4 +27,10 @@ public class Django_CommentUntilBrace extends TerminalCommentToken
 		EagleLineReader rec = lines.get(_currentLine);
 		return commentUntilSentinel(lines, rec, "{%");
 	}
+
+	@Override
+	public String description()
+	{
+		return "comment {%";
+	}
 }

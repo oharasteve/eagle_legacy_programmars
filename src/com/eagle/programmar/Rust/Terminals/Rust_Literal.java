@@ -15,6 +15,12 @@ public class Rust_Literal extends TerminalLiteralToken implements EagleRunnable
 	{
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"", true, '\\', false, false);
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

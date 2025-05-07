@@ -11,6 +11,12 @@ public class PLI_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", null, false);
+		return genericNumber(lines, "Ee", null, false, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", null, false, false, '?');
 	}
 }

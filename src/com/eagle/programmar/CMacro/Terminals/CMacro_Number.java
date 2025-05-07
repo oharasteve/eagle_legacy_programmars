@@ -13,7 +13,13 @@ public class CMacro_Number extends TerminalNumberToken implements EagleRunnable
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", "Lf", true);
+		return genericNumber(lines, "Ee", "Lf", true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "Lf", true, false, '?');
 	}
 
 	@Override

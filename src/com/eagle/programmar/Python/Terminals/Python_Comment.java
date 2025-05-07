@@ -50,4 +50,10 @@ public class Python_Comment extends TerminalCommentToken implements AbstractComm
 
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "/* comment */ or # comment to end of line";
+	}
 }

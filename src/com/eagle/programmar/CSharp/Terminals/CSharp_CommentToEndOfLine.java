@@ -29,4 +29,10 @@ public class CSharp_CommentToEndOfLine extends TerminalCommentToken
 		_comment = rec.substring(_currentChar, _endChar);
 		return true;
 	}
+
+	@Override
+	public String description()
+	{
+		return "comment to end of line";
+	}
 }

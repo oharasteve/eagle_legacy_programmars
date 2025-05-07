@@ -108,6 +108,12 @@ public class Delphi_Configuration extends AbstractLanguage
 			foundIt(_currentLine, _endChar - 1);
 			return true;
 		}
+		
+		@Override
+		public String description()
+		{
+			return "configuration value";
+		}
 	}
 
 	public static class Delphi_Config_Punctuation extends TerminalPunctuationToken

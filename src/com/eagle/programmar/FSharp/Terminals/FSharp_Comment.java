@@ -27,4 +27,10 @@ public class FSharp_Comment extends TerminalCommentToken implements AbstractComm
 		EagleLineReader rec = lines.get(_currentLine);
 		return possibleCommentToEndOfLine(rec, "//");
 	}
+
+	@Override
+	public String description()
+	{
+		return "// comment to end of line";
+	}
 }

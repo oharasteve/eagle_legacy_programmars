@@ -16,7 +16,13 @@ public class Delphi_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", null, true);
+		return genericNumber(lines, "Ee", null, true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", null, true, false, '?');
 	}
 
 	@Override

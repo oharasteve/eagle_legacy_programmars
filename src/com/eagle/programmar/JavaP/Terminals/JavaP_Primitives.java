@@ -39,4 +39,10 @@ public class JavaP_Primitives extends TerminalLiteralToken
 		_txt = rec.substring(_currentChar, endChar);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "primitive";
+	}
 }

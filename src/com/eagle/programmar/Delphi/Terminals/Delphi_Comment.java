@@ -40,4 +40,10 @@ public class Delphi_Comment extends TerminalCommentToken
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "{ comment } or (* comment *) or // comment to end of line";
+	}
 }

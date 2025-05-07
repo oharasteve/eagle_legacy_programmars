@@ -41,4 +41,10 @@ public class Lisp_Character extends TerminalLiteralToken
 		foundIt(_currentLine, _currentChar + 2);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "character literal";
+	}
 }

@@ -38,4 +38,10 @@ public class HTML_ExtraEndAnchor extends TerminalLiteralToken
 		}
 		return false;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "html extra end anchor";
+	}
 }

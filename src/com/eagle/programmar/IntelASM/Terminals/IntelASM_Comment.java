@@ -41,4 +41,10 @@ public class IntelASM_Comment extends TerminalCommentToken
 
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "; or // comment to end of line";
+	}
 }

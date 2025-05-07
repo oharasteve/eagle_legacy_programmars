@@ -14,4 +14,10 @@ public class Rust_Number extends TerminalNumberToken implements EagleRunnable
 	{
 		return genericNumber(lines, "Ee", "LlFfDd", true, true, '_');
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "LlFfDd", true, true, '_');
+	}
 }

@@ -17,6 +17,12 @@ public class Rexx_Literal extends TerminalLiteralToken implements EagleTransform
 	{
 		return genericLiteral(lines, "\"", false, '?', true, false);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"", false, '?', true, false);
+	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)

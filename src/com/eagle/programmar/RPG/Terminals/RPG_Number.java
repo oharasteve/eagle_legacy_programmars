@@ -35,4 +35,10 @@ public class RPG_Number extends TerminalNumberToken
 		foundIt(_currentLine, _endChar - 1);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "Number";
+	}
 }

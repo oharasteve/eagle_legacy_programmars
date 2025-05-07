@@ -11,6 +11,12 @@ public class BNF_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, "Ee", "Lf", true);
+		return genericNumber(lines, "Ee", "Lf", true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "Lf", true, false, '?');
 	}
 }

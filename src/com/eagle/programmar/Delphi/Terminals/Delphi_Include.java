@@ -30,4 +30,10 @@ public class Delphi_Include extends TerminalCommentToken
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "{$I include }";
+	}
 }

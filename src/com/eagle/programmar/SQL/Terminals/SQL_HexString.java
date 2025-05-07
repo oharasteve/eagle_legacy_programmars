@@ -36,4 +36,10 @@ public class SQL_HexString extends TerminalLiteralToken
 		foundIt(_currentLine, endChar);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "hex string";
+	}
 }

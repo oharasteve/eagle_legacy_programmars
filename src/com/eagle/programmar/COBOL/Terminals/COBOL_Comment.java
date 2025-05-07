@@ -42,4 +42,10 @@ public class COBOL_Comment extends TerminalCommentToken
 		_comment = rec.substring(_currentChar, _endChar);
 		return true;
 	}
+
+	@Override
+	public String description()
+	{
+		return "* comment";
+	}
 }

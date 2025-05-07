@@ -46,4 +46,10 @@ public class Java_Comment extends TerminalCommentToken implements AbstractCommen
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "/* comment */ or // comment to end of line";
+	}
 }

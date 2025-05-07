@@ -45,6 +45,12 @@ public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
 		_txt += rec.substring(_currentChar, endChar);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "rest of line";
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

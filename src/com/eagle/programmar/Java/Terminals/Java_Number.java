@@ -19,6 +19,12 @@ public class Java_Number extends TerminalNumberToken
 	}
 	
 	@Override
+	public String description()
+	{
+		return super.genericDescription("Ee", "LlFfDd", true, true, '_');
+	}
+	
+	@Override
 	public Java_Number generateNumber(String value, AbstractToken source)
 	{
 		this.setValue(value);

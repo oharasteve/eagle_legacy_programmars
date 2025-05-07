@@ -13,4 +13,10 @@ public class Powershell_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"'", true, '`', true, false); // Careful with the funny backtick
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"'", true, '`', true, false);
+	}
 }

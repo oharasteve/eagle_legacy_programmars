@@ -61,4 +61,10 @@ public class Powershell_Comment extends TerminalCommentToken
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "/* comment */ or # or // comment to end of line";
+	}
 }

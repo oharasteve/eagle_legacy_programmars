@@ -26,4 +26,10 @@ public class Algol68_Comment extends TerminalCommentToken
 		EagleLineReader rec = lines.get(_currentLine);
 		return super.possibleCommentPair1(lines, rec, '#', '#');
 	}
+
+	@Override
+	public String description()
+	{
+		return "# comment #";
+	}
 }

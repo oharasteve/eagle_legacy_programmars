@@ -16,6 +16,12 @@ public class Eaglish_Literal extends TerminalLiteralToken implements EagleRunnab
 	{
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"", true, '\\', false, false);
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -35,4 +35,10 @@ public class Bash_Comment extends TerminalCommentToken
 		// Dang, it is a she-bang (#!)
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "# comment";
+	}
 }

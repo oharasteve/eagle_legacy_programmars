@@ -39,4 +39,10 @@ public class CSS_FileName extends TerminalLiteralToken
 		foundIt(_currentLine, endChar - 1);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "file name";
+	}
 }

@@ -11,6 +11,12 @@ public class HTML_Number extends TerminalNumberToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericNumber(lines, null, "%", true);
+		return genericNumber(lines, null, "%", true, false, '?');
+	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription(null, "%", true, false, '?');
 	}
 }

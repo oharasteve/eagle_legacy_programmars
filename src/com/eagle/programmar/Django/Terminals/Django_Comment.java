@@ -27,4 +27,10 @@ public class Django_Comment extends TerminalCommentToken
 		EagleLineReader rec = lines.get(_currentLine);
 		return super.possibleCommentPair2(lines, rec, "{#", "#}");
 	}
+
+	@Override
+	public String description()
+	{
+		return "{# comment #}";
+	}
 }

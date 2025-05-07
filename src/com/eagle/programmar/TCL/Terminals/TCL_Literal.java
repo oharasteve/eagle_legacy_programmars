@@ -16,6 +16,12 @@ public class TCL_Literal extends TerminalLiteralToken implements EagleRunnable
 	{
 		return genericLiteral(lines, "\"", false, '?', false, false);
 	}
+	
+	@Override
+	public String description()
+	{
+		return super.genericDescription("\"", false, '?', false, false);
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

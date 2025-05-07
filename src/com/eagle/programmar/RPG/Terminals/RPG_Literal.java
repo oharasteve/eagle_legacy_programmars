@@ -34,4 +34,10 @@ public class RPG_Literal extends TerminalLiteralToken
 		foundIt(_currentLine, _endChar - 1);
 		return true;
 	}
+	
+	@Override
+	public String description()
+	{
+		return "RPG literal";
+	}
 }

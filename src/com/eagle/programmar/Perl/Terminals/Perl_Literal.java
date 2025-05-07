@@ -21,4 +21,10 @@ public class Perl_Literal extends TerminalLiteralToken
 
 		return genericLiteral(lines, "\"'`", true, '\\', false, true);
 	}
+	
+	@Override
+	public String description()
+	{
+		return "perl literal depends on << and <<<";
+	}
 }

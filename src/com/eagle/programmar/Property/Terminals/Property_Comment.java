@@ -34,4 +34,10 @@ public class Property_Comment extends TerminalCommentToken
 		}
 		return false;
 	}
+
+	@Override
+	public String description()
+	{
+		return "# comment to end of line";
+	}
 }
