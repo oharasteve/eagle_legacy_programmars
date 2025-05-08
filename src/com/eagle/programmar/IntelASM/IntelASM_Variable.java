@@ -14,6 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 public class IntelASM_Variable extends TokenChooser
 {
 	public @CHOICE IntelASM_Register XXreg;
+	public @LAST IntelASM_Identifier_Reference XXvar;
 	
 	public @CHOICE static class IntelASM_Brackets_Register extends TokenSequence
 	{
