@@ -4,7 +4,6 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.generate.EagleGenerator.TypeEnum;
-import com.eagle.programmar.Java.Java_Type.Java_TypeName.Java_IdList;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -48,6 +47,28 @@ public class Java_Type extends TokenSequence implements AbstractType
 		}
 	}
 
+	public static class Java_IdList extends TokenSequence
+	{
+		public @S(10) Java_Identifier_Reference typeName;
+		public @S(20) @OPT Java_ExtendsType extendsType;
+		public @S(30) @OPT TokenList<Java_MoreIds> moreIds;
+		public @S(40) @OPT Java_ExtendsMultiple multiple;
+
+		public static class Java_MoreIds extends TokenSequence
+		{
+			public @S(10) @NOSPACE PunctuationPeriod dot;
+			public @S(20) @NOSPACE Java_TypeName nextId;
+		}
+
+		public static class Java_ExtendsMultiple extends TokenSequence
+		{
+			public @S(10) Java_Punctuation ampersand = new Java_Punctuation('&');
+			public @S(20) Java_Identifier_Reference typeName;
+			public @S(30) @OPT Java_ExtendsType extendsType;
+			public @S(40) @OPT TokenList<Java_MoreIds> moreIds;
+		}
+	}
+
 	// Delay finding this one until after looking for [] and <>
 	public static class Java_TypeName extends TokenChooser
 	{
@@ -55,27 +76,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 				"void", "boolean", "byte", "short", "int",
 				"long", "char", "float", "double", "String", "class");
 
-		public @CHOICE static class Java_IdList extends TokenSequence
-		{
-			public @S(10) Java_Identifier_Reference typeName;
-			public @S(20) @OPT Java_ExtendsType extendsType;
-			public @S(30) @OPT TokenList<Java_MoreIds> moreIds;
-			public @S(40) @OPT Java_ExtendsMultiple multiple;
-
-			public static class Java_MoreIds extends TokenSequence
-			{
-				public @S(10) @NOSPACE PunctuationPeriod dot;
-				public @S(20) @NOSPACE Java_TypeName nextId;
-			}
-
-			public static class Java_ExtendsMultiple extends TokenSequence
-			{
-				public @S(10) Java_Punctuation ampersand = new Java_Punctuation('&');
-				public @S(20) Java_Identifier_Reference typeName;
-				public @S(30) @OPT Java_ExtendsType extendsType;
-				public @S(40) @OPT TokenList<Java_MoreIds> moreIds;
-			}
-		}
+		public @CHOICE Java_IdList idList;
 
 		public @CHOICE static class Java_GenericTypeQuestion extends TokenSequence
 		{

@@ -4,8 +4,6 @@
 package com.eagle.programmar.Delphi.Statements;
 
 import com.eagle.generate.EagleGenerator;
-import com.eagle.programmar.Delphi.Statements.Delphi_Readln_Statement.Delphi_Readln_What.Delphi_Readln_FromFile;
-import com.eagle.programmar.Delphi.Statements.Delphi_Readln_Statement.Delphi_Readln_What.Delphi_Readln_NoFile;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenChooser;
@@ -25,21 +23,24 @@ public class Delphi_Readln_Statement extends TokenSequence
 
 	public static class Delphi_Readln_What extends TokenChooser
 	{
-		public @CHOICE static class Delphi_Readln_NoFile extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) Delphi_Identifier_Reference var;
-			public @S(30) PunctuationRightParen rightParen;
-		}
+		public @CHOICE Delphi_Readln_NoFile noFile;
+		public @CHOICE Delphi_Readln_FromFile fromFile;
+	}
 
-		public @CHOICE static class Delphi_Readln_FromFile extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) Delphi_Identifier_Reference file;
-			public @S(30) PunctuationComma comma;
-			public @S(40) Delphi_Identifier_Reference var;
-			public @S(50) PunctuationRightParen rightParen;
-		}
+	public static class Delphi_Readln_NoFile extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Delphi_Identifier_Reference var;
+		public @S(30) PunctuationRightParen rightParen;
+	}
+
+	public static class Delphi_Readln_FromFile extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Delphi_Identifier_Reference file;
+		public @S(30) PunctuationComma comma;
+		public @S(40) Delphi_Identifier_Reference var;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 
 	@Override

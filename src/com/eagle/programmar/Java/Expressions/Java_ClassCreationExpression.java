@@ -14,7 +14,7 @@ import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Type;
-import com.eagle.programmar.Java.Java_Type.Java_TypeName.Java_IdList;
+import com.eagle.programmar.Java.Java_Type.Java_IdList;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;

@@ -4,7 +4,6 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.generate.EagleGenerator.TypeEnum;
-import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName.CSharp_IdList;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
@@ -41,6 +40,26 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		public @S(30) @NOSPACE CSharp_Punctuation greaterThan = new CSharp_Punctuation('>');
 	}
 
+	public static class CSharp_MoreIds extends TokenSequence
+	{
+		public @S(10) @NOSPACE PunctuationPeriod dot;
+		public @S(20) @NOSPACE CSharp_TypeName nextId;
+	}
+
+	public static class CSharp_NamespaceId extends TokenSequence
+	{
+		public @S(10) CSharp_Identifier_Reference namespace;
+		public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
+	}
+
+	public static class CSharp_IdList extends TokenSequence
+	{
+		public @S(10) @OPT CSharp_NamespaceId namespaceId;
+		public @S(20) CSharp_Identifier_Reference typeName;
+		public @S(30) @OPT CSharp_ExtendsType extendsType;
+		public @S(40) @OPT TokenList<CSharp_MoreIds> moreIds;
+	}
+
 	// Delay finding this one until after looking for [] and <>
 	public static class CSharp_TypeName extends TokenChooser
 	{
@@ -49,25 +68,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 				"float", "int", "long", "object", "sbyte", "short", "string", "String",
 				"ulong", "ushort", "void");
 
-		public @CHOICE static class CSharp_IdList extends TokenSequence
-		{
-			public @S(10) @OPT CSharp_NamespaceId namespaceId;
-			public @S(20) CSharp_Identifier_Reference typeName;
-			public @S(30) @OPT CSharp_ExtendsType extendsType;
-			public @S(40) @OPT TokenList<CSharp_MoreIds> moreIds;
-
-			public static class CSharp_MoreIds extends TokenSequence
-			{
-				public @S(10) @NOSPACE PunctuationPeriod dot;
-				public @S(20) @NOSPACE CSharp_TypeName nextId;
-			}
-
-			public static class CSharp_NamespaceId extends TokenSequence
-			{
-				public @S(10) CSharp_Identifier_Reference namespace;
-				public @S(20) CSharp_Punctuation colonColon = new CSharp_Punctuation("::");
-			}
-		}
+		public @CHOICE CSharp_IdList idList;
 
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{

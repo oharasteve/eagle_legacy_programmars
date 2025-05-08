@@ -14,7 +14,6 @@ import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Row;
 import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Table;
 import com.eagle.programmar.SQL.SQL_Type.SQL_BaseType;
 import com.eagle.programmar.SQL.Statements.SQL_CreateTableField.SQL_CreateFieldKey;
-import com.eagle.programmar.SQL.Statements.SQL_CreateTableStatement.SQL_TableType.SQL_TableNormal;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Symbols.SQL_Table_Definition;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
@@ -42,23 +41,26 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 
 	public static class SQL_TableType extends TokenChooser
 	{
-		public @CHOICE static class SQL_TableNormal extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) SeparatedList<SQL_CreateTableField, PunctuationComma> createFields;
-			public @S(30) @OPT TokenList<SQL_CreateFieldKey> keys;
-			public @S(40) PunctuationRightParen rightParen;
-			public @S(50) @OPT TokenList<SQL_CreateOption> options;
-		}
+		public @CHOICE SQL_TableNormal tableNormal;
+		public @CHOICE SQL_TableUsing tableUsing;
+	}
 
-		public @CHOICE static class SQL_TableUsing extends TokenSequence
-		{
-			public @S(10) SQL_Keyword USING = new SQL_Keyword("USING");
-			public @S(20) SQL_Keyword SPAN_JOIN = new SQL_Keyword("SPAN_JOIN");
-			public @S(30) PunctuationLeftParen leftParen;
-			public @S(40) SeparatedList<SQL_Identifier_Reference, PunctuationComma> names;
-			public @S(50) PunctuationRightParen rightParen;
-		}
+	public static class SQL_TableNormal extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<SQL_CreateTableField, PunctuationComma> createFields;
+		public @S(30) @OPT TokenList<SQL_CreateFieldKey> keys;
+		public @S(40) PunctuationRightParen rightParen;
+		public @S(50) @OPT TokenList<SQL_CreateOption> options;
+	}
+
+	public static class SQL_TableUsing extends TokenSequence
+	{
+		public @S(10) SQL_Keyword USING = new SQL_Keyword("USING");
+		public @S(20) SQL_Keyword SPAN_JOIN = new SQL_Keyword("SPAN_JOIN");
+		public @S(30) PunctuationLeftParen leftParen;
+		public @S(40) SeparatedList<SQL_Identifier_Reference, PunctuationComma> names;
+		public @S(50) PunctuationRightParen rightParen;
 	}
 
 	public static class SQL_IfTableNotExists extends TokenSequence
