@@ -41,8 +41,8 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 
 	public static class SQL_TableType extends TokenChooser
 	{
-		public @CHOICE SQL_TableNormal tableNormal;
-		public @CHOICE SQL_TableUsing tableUsing;
+		public @CHOICE SQL_TableNormal XXtableNormal;
+		public @CHOICE SQL_TableUsing XXtableUsing;
 	}
 
 	public static class SQL_TableNormal extends TokenSequence
@@ -78,21 +78,23 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 		{
 			public @S(10) SQL_Keyword ENGINE = new SQL_Keyword("ENGINE");
 			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_Keyword MYIASM = new SQL_Keyword("MyISAM");
+			public @S(30) SQL_KeywordChoice MYIASM = new SQL_KeywordChoice("MyISAM", "InnoDB");
 		}
 
 		public @CHOICE static class SQL_CreateCharset extends TokenSequence
 		{
 			public @S(10) SQL_Keyword CHARSET = new SQL_Keyword("CHARSET");
 			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice("latin1", "utf8");
+			public @S(30) SQL_KeywordChoice charset = new SQL_KeywordChoice(
+					"latin1", "utf8", "utf8mb4");
 		}
 
 		public @CHOICE static class SQL_CreateCollate extends TokenSequence
 		{
 			public @S(10) SQL_Keyword COLLATE = new SQL_Keyword("COLLATE");
 			public @S(20) PunctuationEquals equals;
-			public @S(30) SQL_KeywordChoice collseq = new SQL_KeywordChoice("utf8_general_ci");
+			public @S(30) SQL_KeywordChoice collseq = new SQL_KeywordChoice(
+					"utf8_general_ci", "utf8mb4_unicode_ci");
 		}
 
 		public @CHOICE static class SQL_CreateComment extends TokenSequence

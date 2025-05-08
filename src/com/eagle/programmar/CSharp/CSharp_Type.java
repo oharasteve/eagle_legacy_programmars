@@ -68,7 +68,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 				"float", "int", "long", "object", "sbyte", "short", "string", "String",
 				"ulong", "ushort", "void");
 
-		public @CHOICE CSharp_IdList idList;
+		public @CHOICE CSharp_IdList XXidList;
 
 		public @CHOICE static class CSharp_GenericTypeQuestion extends TokenSequence
 		{

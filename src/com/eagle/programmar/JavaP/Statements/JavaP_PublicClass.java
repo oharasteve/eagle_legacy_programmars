@@ -30,21 +30,21 @@ public class JavaP_PublicClass extends TokenSequence
 	public @S(40) JavaP_KeywordChoice CLASS = new JavaP_KeywordChoice("class", "interface");
 	public @S(50) JavaP_QualifiedName className;
 	public @S(60) @OPT JavaP_OneClassGeneric generic;
-	public @S(70) @OPT TokenList<JavaP_ClassExtends> extendsOrImplements;
-	public @S(80) JavaP_EndOfLine eoln;
+	public @S(70) @OPT TokenList<JavaP_ClassExtends> classExtends;
+	public @S(80) @OPT TokenList<JavaP_ClassImplements> classImplements;
+	public @S(90) JavaP_EndOfLine eoln;
 
-	public @S(90) @OPT JavaP_MinorVersion minorVersion;
-	public @S(100) @OPT JavaP_MajorVersion majorVersion;
-	public @S(110) @OPT JavaP_Flags flags;
-	public @S(120) @OPT JavaP_ThisClass thisClass;
-	public @S(130) @OPT JavaP_SuperClass superClass;
-	public @S(140) @OPT JavaP_Interfaces interfaces;
+	public @S(100) @OPT JavaP_MinorVersion minorVersion;
+	public @S(110) @OPT JavaP_MajorVersion majorVersion;
+	public @S(120) @OPT JavaP_Flags flags;
+	public @S(130) @OPT JavaP_ThisClass thisClass;
+	public @S(140) @OPT JavaP_SuperClass superClass;
+	public @S(150) @OPT JavaP_Interfaces interfaces;
 
-	public static class JavaP_ClassExtends extends TokenSequence
+	public static class JavaP_ExtendsClass extends TokenSequence
 	{
-		public @S(10) JavaP_KeywordChoice EXTENDS = new JavaP_KeywordChoice("extends", "implements");
-		public @S(20) SeparatedList<JavaP_QualifiedName, PunctuationComma> parentClassName;
-		public @S(30) @OPT JavaP_ExtendsTemplatedClass templatedClass;
+		public @S(10) JavaP_QualifiedName qualifiedName;
+		public @S(20) @OPT JavaP_ExtendsTemplatedClass genericName;
 
 		public static class JavaP_ExtendsTemplatedClass extends TokenSequence
 		{
@@ -52,6 +52,18 @@ public class JavaP_PublicClass extends TokenSequence
 			public @S(20) SeparatedList<JavaP_QualifiedName, PunctuationComma> names;
 			public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 		}
+	}
+	
+	public static class JavaP_ClassExtends extends TokenSequence
+	{
+		public @S(10) JavaP_Keyword EXTENDS = new JavaP_Keyword("extends");
+		public @S(20) SeparatedList<JavaP_ExtendsClass, PunctuationComma> parentClassName;
+	}
+
+	public static class JavaP_ClassImplements extends TokenSequence
+	{
+		public @S(10) JavaP_Keyword IMPLEMENTS = new JavaP_Keyword("implements");
+		public @S(20) SeparatedList<JavaP_ExtendsClass, PunctuationComma> parentClassName;
 	}
 
 	public static class JavaP_Flags extends TokenSequence

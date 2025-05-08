@@ -23,8 +23,8 @@ public class Delphi_Readln_Statement extends TokenSequence
 
 	public static class Delphi_Readln_What extends TokenChooser
 	{
-		public @CHOICE Delphi_Readln_NoFile noFile;
-		public @CHOICE Delphi_Readln_FromFile fromFile;
+		public @CHOICE Delphi_Readln_NoFile XXnoFile;
+		public @CHOICE Delphi_Readln_FromFile XXfromFile;
 	}
 
 	public static class Delphi_Readln_NoFile extends TokenSequence

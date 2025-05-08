@@ -137,6 +137,7 @@ public class SQL_Reserved_Words
 			"SETOF",
 			"SHOW",
 			"SOME",
+			"SYS_GUID",
 			"TABLE",
 			"THEN",
 			"TIES",

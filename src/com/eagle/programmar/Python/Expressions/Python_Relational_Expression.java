@@ -41,8 +41,8 @@ public class Python_Relational_Expression extends PrecedenceOperator
 	{
 		public @CHOICE Python_PunctuationChoice XXoperatorSymbol =
 				new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=", "<", ">");
-		public @CHOICE Python_IN_Operator inOperator;
-		public @CHOICE Python_IS_Operator isOperator;
+		public @CHOICE Python_IN_Operator XXinOperator;
+		public @CHOICE Python_IS_Operator XXisOperator;
 	}
 
 	private @SKIP Operator2Metrics _metrics = null;

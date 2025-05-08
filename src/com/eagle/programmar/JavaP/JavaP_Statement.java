@@ -11,6 +11,7 @@ import com.eagle.programmar.JavaP.Statements.JavaP_ConstantPool;
 import com.eagle.programmar.JavaP.Statements.JavaP_InnerClasses;
 import com.eagle.programmar.JavaP.Statements.JavaP_MajorVersion;
 import com.eagle.programmar.JavaP.Statements.JavaP_MinorVersion;
+import com.eagle.programmar.JavaP.Statements.JavaP_MissingTypes;
 import com.eagle.programmar.JavaP.Statements.JavaP_NestHost;
 import com.eagle.programmar.JavaP.Statements.JavaP_NestMembers;
 import com.eagle.programmar.JavaP.Statements.JavaP_PublicClass;
@@ -29,6 +30,7 @@ public class JavaP_Statement extends TokenChooser
 	public @CHOICE JavaP_InnerClasses XXinnerClasses;
 	public @CHOICE JavaP_MajorVersion XXmajorVersion;
 	public @CHOICE JavaP_MinorVersion XXminorVersion;
+	public @CHOICE JavaP_MissingTypes XXmissingTypes;
 	public @CHOICE JavaP_NestHost XXnestHost;
 	public @CHOICE JavaP_NestMembers XXnestMembers;
 	public @CHOICE JavaP_PublicClass XXpublicClass;

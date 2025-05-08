@@ -29,7 +29,7 @@ public class JavaP_Syntax extends EagleSyntax
 	}
 
 	private String[] keywords = new String[] {
-			"class", "const", "public",
+			"class", "const", "extends", "implements", "public"
 	};
 
 	public static final String[] ACC_CODES = new String[] {

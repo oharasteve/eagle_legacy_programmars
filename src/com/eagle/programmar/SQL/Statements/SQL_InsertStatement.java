@@ -43,8 +43,8 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 
 	public static class SQL_InsertClause extends TokenChooser
 	{
-		public @CHOICE SQL_InsertSet insertSet;
-		public @CHOICE SQL_InsertValues insertValues;
+		public @CHOICE SQL_InsertSet XXinsertSet;
+		public @CHOICE SQL_InsertValues XXinsertValues;
 	}
 	
 	public static class SQL_InsertSet extends TokenSequence

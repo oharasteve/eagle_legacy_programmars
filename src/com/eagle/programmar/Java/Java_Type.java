@@ -76,7 +76,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 				"void", "boolean", "byte", "short", "int",
 				"long", "char", "float", "double", "String", "class");
 
-		public @CHOICE Java_IdList idList;
+		public @CHOICE Java_IdList XXidList;
 
 		public @CHOICE static class Java_GenericTypeQuestion extends TokenSequence
 		{
