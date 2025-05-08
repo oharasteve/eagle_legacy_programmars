@@ -65,11 +65,11 @@ public class SQL_Expression extends PrecedenceChooser
 	public @P(110) SQL_NegativeExpression negativeExpression;
 	public @P(120) SQL_LogicalNotExpression notExpression;
 	public @P(130) SQL_Builtin builtin;
-	public @P(140) SQL_BuiltinFunction functionCall;
-	public @P(150) SQL_ConcatFunction concatFunction;
-	public @P(160) SQL_LeftFunction leftFunction;
-	public @P(170) SQL_LengthFunction lengthFunction;
-	public @P(180) SQL_SubstringFunction substringFunction;
+	public @P(140) SQL_ConcatFunction concatFunction;
+	public @P(150) SQL_LeftFunction leftFunction;
+	public @P(160) SQL_LengthFunction lengthFunction;
+	public @P(170) SQL_SubstringFunction substringFunction;
+	public @P(180) SQL_BuiltinFunction functionCall;
 	public @P(190) SQL_CastExpression castExpression;
 	public @P(200) SQL_DollarVariable dollarVariable;
 	public @P(210) SQL_VariableExpression variableExpression;

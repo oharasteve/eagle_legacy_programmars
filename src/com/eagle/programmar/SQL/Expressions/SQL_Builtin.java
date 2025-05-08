@@ -10,7 +10,8 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class SQL_Builtin extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) SQL_KeywordChoice builtin = new SQL_KeywordChoice("FALSE", "NULL", "SYSTIMESTAMP", "TRUE");
+	public @S(10) SQL_KeywordChoice builtin = new SQL_KeywordChoice(
+			"FALSE", "NULL", "SYSTIMESTAMP", "TRUE");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

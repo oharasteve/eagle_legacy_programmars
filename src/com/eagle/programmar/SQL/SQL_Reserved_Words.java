@@ -49,6 +49,7 @@ public class SQL_Reserved_Words
 			"DEALLOCATE",
 			"DEC",
 			"DECIMAL",
+			"DECLARE",
 			"DECODE",
 			"DEFAULT",
 			"DESC",

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.SQL.Functions;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Variable;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
@@ -19,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class SQL_BuiltinFunction extends PrimaryOperator
+public class SQL_BuiltinFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) SQL_FunctionName funcName;
 	public @S(20) PunctuationLeftParen leftParen;
@@ -49,8 +51,8 @@ public class SQL_BuiltinFunction extends PrimaryOperator
 		public @LAST SQL_Variable XXvar;
 
 		public @FIRST SQL_KeywordChoice XXfnName = new SQL_KeywordChoice(
-				"COALESCE", "CONCAT", "COUNT", "CURRENT_TIMESTAMP", "MIN",
-				"RUN_METRIC", "SUBSTRING", "SYS_EXTRACT_UTC", "SYS_GUID");
+				"COALESCE", "COUNT", "CURRENT_TIMESTAMP", "MIN",
+				"RUN_METRIC", "SYS_EXTRACT_UTC", "SYS_GUID");
 
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence
 		{
@@ -71,6 +73,17 @@ public class SQL_BuiltinFunction extends PrimaryOperator
 			public @S(10) SQL_Keyword DBMSJOB = new SQL_Keyword("DBMS_JOB");
 			public @S(20) PunctuationPeriod dot;
 			public @S(30) SQL_Keyword REMOVE = new SQL_Keyword("REMOVE");
+		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String func = funcName.getWhich().toString();
+		switch (func.toUpperCase())
+		{
+		default:
+			throw new RuntimeException("Unable to handle: " + func);
 		}
 	}
 }
