@@ -10,6 +10,7 @@ import com.eagle.programmar.Ada.Ada_Program;
 import com.eagle.programmar.Algol68.Algol68_Program;
 import com.eagle.programmar.BNF.BNF_Program;
 import com.eagle.programmar.Bash.Bash_Program;
+import com.eagle.programmar.Basic.Basic_Program;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.CMD.CMD_Program;
 import com.eagle.programmar.CMacro.CMacro_Program;
@@ -76,6 +77,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Algol68_Program.ALGOL68, Algol68_Program.class, ".a68");
 		add(AWK_Program.AWK, AWK_Program.class, ".awk");
 		add(Bash_Program.BASH, Bash_Program.class, ".bash", ".sh");
+		add(Basic_Program.BASIC, Basic_Program.class, ".bas");
 		add(BNF_Program.BNF, BNF_Program.class, ".bnf");
 		add(C_Program.C, C_Program.class, ".c", ".h");
 		add(CMacro_Program.CMACRO, CMacro_Program.class);
