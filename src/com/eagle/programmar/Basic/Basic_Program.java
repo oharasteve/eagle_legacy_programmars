@@ -28,6 +28,9 @@ public class Basic_Program extends AbstractLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		Basic_StateMachine state = new Basic_StateMachine();
+		interpreter._state = state;
+
 		for (Basic_Statement stmt : statements._elements)
 		{
 			interpreter.tryToInterpret(stmt);

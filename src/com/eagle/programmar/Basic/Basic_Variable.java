@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Basic.Symbols.Basic_Identifier_Reference;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -19,7 +21,7 @@ public class Basic_Variable extends TokenSequence implements EagleRunnable
 	public static class Basic_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Basic_Expression expr;
+		public @S(20) SeparatedList<Basic_Expression,PunctuationComma> exprs;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 

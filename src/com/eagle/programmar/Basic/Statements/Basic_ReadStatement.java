@@ -5,20 +5,22 @@ package com.eagle.programmar.Basic.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Basic.Terminals.Basic_Comment;
+import com.eagle.programmar.Basic.Basic_Variable;
 import com.eagle.programmar.Basic.Terminals.Basic_Keyword;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationComma;
 
-public class Basic_RemStatement extends TokenSequence
+public class Basic_ReadStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement
 {
-	public @S(10) Basic_Keyword REM = new Basic_Keyword("REM");
-	public @S(20) Basic_Comment comment;
+	public @S(10) Basic_Keyword READ = new Basic_Keyword("READ");
+	public @S(20) SeparatedList<Basic_Variable,PunctuationComma> var;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// Nothin' to do
+		throw new RuntimeException("Need to implement");
 	}
 }

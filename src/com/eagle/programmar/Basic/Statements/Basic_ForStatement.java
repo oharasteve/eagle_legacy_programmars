@@ -25,7 +25,6 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 	public @S(50) Basic_Keyword TO = new Basic_Keyword("TO");
 	public @S(60) Basic_Expression to;
 	public @S(70) @OPT Basic_ForStep step;
-	public @S(80) Basic_EndOfLine eoln;
 
 	public static class Basic_ForStep extends TokenSequence
 	{

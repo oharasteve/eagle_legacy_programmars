@@ -7,31 +7,63 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Basic.Basic_Expression;
 import com.eagle.programmar.Basic.Terminals.Basic_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Basic_PrintStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Basic_KeywordChoice PRINT = new Basic_KeywordChoice("PRINT", "PRI");
-	public @S(20) @OPT TokenList<Basic_Expression> exprs;
-	public @S(30) @OPT PunctuationSemicolon semicolon;
+	public @S(20) @OPT TokenList<Basic_PrintItem> items;
+	
+	public static class Basic_PrintItem extends TokenChooser
+	{
+		public @CHOICE Basic_Expression XXexpr;
+		public @CHOICE PunctuationSemicolon XXsemicolon;
+		public @CHOICE PunctuationComma XXcomma;
+	}
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (exprs != null && exprs.size() > 0)
+		if (items != null && items.size() > 0)
 		{
-			for (Basic_Expression expr : exprs._elements)
+			AbstractToken previous = null;
+			for (Basic_PrintItem item : items._elements)
 			{
-				String piece = interpreter.getStrValue(expr);
-				System.out.print(piece);
+				AbstractToken which = item.getWhich();
+				if (which instanceof Basic_Expression)
+				{
+					Basic_Expression expr = (Basic_Expression) item.getWhich();
+					String piece = interpreter.getStrValue(expr);
+					System.out.print(piece);
+				}
+				else if (which instanceof PunctuationSemicolon)
+				{
+					
+				}
+				else if (which instanceof PunctuationComma)
+				{
+					System.out.print("    ");
+				}
+				else
+				{
+					throw new RuntimeException("Unexpected PRINT item: " + which);
+				}
+				previous = which;
+			}
+
+			if (! (previous instanceof PunctuationSemicolon))
+			{
+				System.out.println();
 			}
 		}
-		
-		if (semicolon == null || ! semicolon.isPresent())
+		else
 		{
 			System.out.println();
 		}

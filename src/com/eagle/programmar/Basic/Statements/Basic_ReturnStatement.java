@@ -5,20 +5,18 @@ package com.eagle.programmar.Basic.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.programmar.Basic.Symbols.Basic_Identifier_Reference;
 import com.eagle.programmar.Basic.Terminals.Basic_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Basic_NextStatement extends TokenSequence
+public class Basic_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement
 {
-	public @S(10) Basic_KeywordChoice NEXT = new Basic_KeywordChoice("NEXT", "NEX");
-	public @S(20) Basic_Identifier_Reference id;
+	public @S(10) Basic_KeywordChoice RETURN = new Basic_KeywordChoice("RETURN", "RET");
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		return Eagle_Statement_Result.BREAK;
+		return Eagle_Statement_Result.RETURN;
 	}
 }
