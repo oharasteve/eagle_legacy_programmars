@@ -5,6 +5,7 @@ package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Variable;
@@ -16,14 +17,34 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Rust_AssignmentStatement extends TokenSequence implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Rust_Variable var;
-	public @S(20) Rust_PunctuationChoice equals = new Rust_PunctuationChoice("=", "+=", "-=");
+	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("=", "+=", "-=");
 	public @S(30) Rust_Expression expr;
 	public @S(40) @OPT PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var, var.var.getValue(), val);
+		String id = var.var.getValue();
+		switch (operator.getValue())
+		{
+		case "=":
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.setSymbol(var, id, val);
+			break;
+		case "+=":
+			int newVal1 = interpreter.getIntValue(expr);
+			EagleValue oldVar1 = interpreter.findSymbol(id);
+			EagleInteger newValue1 = new EagleInteger(oldVar1.forceIntegerValue() + newVal1);
+			interpreter.setSymbol(var, id, newValue1);
+			break;
+		case "-=":
+			int newVal2 = interpreter.getIntValue(expr);
+			EagleValue oldVar2 = interpreter.findSymbol(id);
+			EagleInteger newValue2 = new EagleInteger(oldVar2.forceIntegerValue() - newVal2);
+			interpreter.setSymbol(var, id, newValue2);
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
 	}
 }

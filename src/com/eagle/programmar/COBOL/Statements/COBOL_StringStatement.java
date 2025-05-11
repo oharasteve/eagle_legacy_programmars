@@ -101,7 +101,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 			}
 
 			String piece = interpreter.getStrValue(what.expr);
-			result.append(piece.trim());
+			result.append(piece);
 		}
 
 		COBOL_StringPiece piece = pieces._elements.get(0);

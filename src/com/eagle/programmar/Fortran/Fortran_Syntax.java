@@ -19,7 +19,7 @@ public class Fortran_Syntax extends EagleSyntax
 	{
 		_autoAdvance = false;
 		_isCaseSensitive = IS_CASE_SENSITIVE;
-		_continuationChar = null;
+		_continuationChar = "&";
 		_extraCharacters = "";
 		_fixedStartColumn = 6;
 		_fixedEndColumn = 72;
