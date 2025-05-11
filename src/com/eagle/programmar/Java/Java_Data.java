@@ -71,8 +71,11 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(initialValue);
-		interpreter.setSymbol(id, id.toString(), value);
+		if (initialValue != null && initialValue.isPresent())
+		{
+			EagleValue value = interpreter.getEagleValue(initialValue);
+			interpreter.setSymbol(id, id.toString(), value);
+		}
 	}
 	
 	public static Java_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
