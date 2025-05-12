@@ -59,7 +59,8 @@ public class CMD_Program extends AbstractLanguage implements EagleRunnable
 		{
 			if (stmt.getWhich() instanceof CMD_Command)
 			{
-				result = interpreter.tryToInterpret(stmt.getWhich());
+				CMD_Command cmd = (CMD_Command) stmt.getWhich();
+				result = interpreter.tryToInterpret(cmd.command.getWhich());
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 		}

@@ -20,7 +20,6 @@ public class COBOL_PerformClause extends TokenChooser
 		public @S(40) COBOL_Expression from;
 		public @S(50) COBOL_Keyword BY = new COBOL_Keyword("BY");
 		public @S(60) COBOL_Expression by;
-		public @S(70) @OPT COBOL_PerformUntil until;
 	}
 
 	public @CHOICE static class COBOL_PerformUntil extends TokenSequence

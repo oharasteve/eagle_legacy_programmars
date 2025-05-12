@@ -13,6 +13,7 @@ import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Statement;
 import com.eagle.programmar.CMD.CMD_Variable;
+import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
@@ -34,8 +35,9 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 	public static class CMD_IfElseClause extends TokenSequence
 	{
 		public @S(10) CMD_Keyword ELSE = new CMD_Keyword("else");
-		public @S(20) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-		public @S(30) CMD_Statement elseStatement;
+		public @S(20) @OPT CMD_EndOfLine eoln;
+		public @S(30) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+		public @S(40) CMD_Statement elseStatement;
 	}
 	
 	public static class CMD_IfWhat extends TokenChooser

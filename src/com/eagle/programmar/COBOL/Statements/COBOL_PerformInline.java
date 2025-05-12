@@ -9,7 +9,9 @@ import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
+import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformUntil;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformVarying;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
@@ -23,11 +25,25 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (clauseList == null || clauseList.size() != 1)
+		COBOL_PerformVarying varyingClause = null;
+		COBOL_PerformUntil untilClause = null;
+		int i = 0;
+		int incr = 0;
+		
+		for (COBOL_PerformClause clause : clauseList._elements)
 		{
-			throw new RuntimeException("Can only handle simple inline PERFORMs right now");
+			AbstractToken which = clause.getWhich();
+			if (which instanceof COBOL_PerformVarying)
+			{
+				varyingClause = (COBOL_PerformVarying) which;
+				i = interpreter.getIntValue(varyingClause.from);
+				incr = interpreter.getIntValue(varyingClause.by);
+			}
+			else if (which instanceof COBOL_PerformUntil)
+			{
+				untilClause = (COBOL_PerformUntil) which;
+			}
 		}
-		COBOL_PerformVarying clause = (COBOL_PerformVarying) clauseList._elements.get(0).getWhich();
 
 		if (_metrics == null)
 		{
@@ -37,14 +53,18 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 
 		// Evaluate the paragraph
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		int i = interpreter.getIntValue(clause.from);
-		int incr = interpreter.getIntValue(clause.by);
 		while (true)
 		{
-			interpreter.setSymbol(clause, clause.id.getValue(), new EagleInteger(i));
-
-			boolean stop = interpreter.getBoolValue(clause.until.condition);
-			if (stop) break;
+			if (varyingClause != null)
+			{
+				interpreter.setSymbol(varyingClause, varyingClause.id.getValue(), new EagleInteger(i));
+			}
+			if (untilClause != null)
+			{
+				boolean stop = interpreter.getBoolValue(untilClause.condition);
+				if (stop) break;
+			}
+			
 			metric.iterate();
 
 			for (COBOL_StatementOrComment sentence : statements._elements)
@@ -69,7 +89,10 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 				break;
 			}
 			
-			i += incr;
+			if (varyingClause != null)	// Don't need this test really
+			{
+				i += incr;
+			}
 		}
 		
 		_metrics.competedLoop(metric);

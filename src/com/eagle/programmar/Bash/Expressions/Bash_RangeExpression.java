@@ -9,6 +9,9 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
+// Consider using: a=3; b=7; for i in $(seq $a $b); do echo $i; done
+// if you want to use variables instead of numbers
+
 public class Bash_RangeExpression extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
