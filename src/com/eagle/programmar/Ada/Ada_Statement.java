@@ -14,6 +14,7 @@ import com.eagle.programmar.Ada.Statements.Ada_Procedure;
 import com.eagle.programmar.Ada.Statements.Ada_PutIntegerStatement;
 import com.eagle.programmar.Ada.Statements.Ada_PutStatement;
 import com.eagle.programmar.Ada.Statements.Ada_ReturnStatement;
+import com.eagle.programmar.Ada.Statements.Ada_WhileStatement;
 import com.eagle.programmar.Ada.Statements.Ada_WithUseStatement;
 import com.eagle.programmar.Ada.Terminals.Ada_Comment;
 import com.eagle.tokens.TokenChooser;
@@ -32,6 +33,7 @@ public class Ada_Statement extends TokenChooser
 	public @CHOICE Ada_Procedure XXprocedure;
 	public @CHOICE Ada_ReturnStatement XXreturnStatement;
 	public @CHOICE Ada_WithUseStatement XXwithUseStatement;
+	public @CHOICE Ada_WhileStatement XXwhileStatement;
 
 	public @LAST Ada_ExpressionStatement XXexpressionStatement;
 }

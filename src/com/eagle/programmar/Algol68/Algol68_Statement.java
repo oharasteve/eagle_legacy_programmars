@@ -11,6 +11,7 @@ import com.eagle.programmar.Algol68.Statements.Algol68_IfStatement;
 import com.eagle.programmar.Algol68.Statements.Algol68_PrintStatement;
 import com.eagle.programmar.Algol68.Statements.Algol68_PrintfStatement;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
+import com.eagle.programmar.Algol68.Statements.Algol68_WhileStatement;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Comment;
 import com.eagle.tokens.TokenChooser;
 
@@ -23,6 +24,7 @@ public class Algol68_Statement extends TokenChooser
 	public @CHOICE Algol68_PrintStatement XXprintStatement;
 	public @CHOICE Algol68_PrintfStatement XXprintfStatement;
 	public @CHOICE Algol68_Procedure XXprocedure;
+	public @CHOICE Algol68_WhileStatement XXwhileStatement;
 
 	public @LAST Algol68_Assignment XXassignment;
 	public @LAST Algol68_ExpressionStatement XXexpressionStatement;

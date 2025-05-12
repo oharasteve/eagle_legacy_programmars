@@ -47,9 +47,14 @@ public class C_AssignmentExpression extends PrecedenceOperator implements EagleR
 			interpreter.setSymbol(var, id.getValue(), val);
 			break;
 		case "+=":
-			EagleValue oldValue = interpreter.findSymbol(id.getValue());
-			int newValue = val.forceIntegerValue() + oldValue.forceIntegerValue();
-			interpreter.setSymbol(var, id.getValue(), new EagleInteger(newValue));
+			EagleValue oldValue1 = interpreter.findSymbol(id.getValue());
+			int newValue1 = oldValue1.forceIntegerValue() + val.forceIntegerValue();
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(newValue1));
+			break;
+		case "-=":
+			EagleValue oldValue2 = interpreter.findSymbol(id.getValue());
+			int newValue2 = oldValue2.forceIntegerValue() - val.forceIntegerValue();
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(newValue2));
 			break;
 		default:
 			throw new RuntimeException("Can only handle = and += right now");

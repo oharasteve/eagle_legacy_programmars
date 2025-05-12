@@ -89,9 +89,6 @@ public class Algol68_ForStatement extends TokenSequence implements EagleRunnable
 
 			for (Algol68_Statement stmt : statements._elements)
 			{
-				result = interpreter.tryToInterpret(stmt);
-				if (result != Eagle_Statement_Result.NORMAL) break;
-				
 				if (whileExpr != null)
 				{
 					boolean whileResult = interpreter.getBoolValue(whileExpr);
@@ -101,6 +98,9 @@ public class Algol68_ForStatement extends TokenSequence implements EagleRunnable
 						break;
 					}
 				}
+
+				result = interpreter.tryToInterpret(stmt);
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 
 			if (result == Eagle_Statement_Result.BREAK)
