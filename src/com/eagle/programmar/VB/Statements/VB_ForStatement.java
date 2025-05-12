@@ -61,7 +61,17 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
+			if (by < 0)
+			{
+				if (current < stop) break;
+			}
+			else
+			{
+				if (current > stop) break;
+			}
+
 			metric.iterate();
+			
 			interpreter.setSymbol(this, var.getValue(), new EagleInteger(current));
 
 			for (VB_Statement stmt : actions._elements)
@@ -87,14 +97,6 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 			}
 
 			current += by;
-			if (by < 0)
-			{
-				if (current < stop) break;
-			}
-			else
-			{
-				if (current > stop) break;
-			}
 		}
 
 		_metrics.competedLoop(metric);

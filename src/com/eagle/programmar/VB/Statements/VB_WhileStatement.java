@@ -11,17 +11,19 @@ import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Statement;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
+import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class VB_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) VB_Keyword WHILE = new VB_Keyword("While");
+	public @S(10) VB_Keyword WHILE1 = new VB_Keyword("While");
 	public @S(20) VB_Expression condition;
 	public @S(30) VB_EndOfLine eoln;
 	public @S(40) TokenList<VB_Statement> actions;
-	public @S(50) VB_Keyword WEND = new VB_Keyword("Wend");
+	public @S(50) VB_KeywordChoice WEND = new VB_KeywordChoice("Wend", "End");
+	public @S(60) @OPT VB_Keyword WHILE2 = new VB_Keyword("While");
 	
 	private @SKIP ForLoopMetrics _metrics = null;
 	
