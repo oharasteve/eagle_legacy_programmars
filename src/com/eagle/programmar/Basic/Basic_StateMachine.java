@@ -10,5 +10,5 @@ import com.eagle.interpret.EagleStateMachine;
 public class Basic_StateMachine extends EagleStateMachine
 {
 	public Stack<Integer> _goSubs = new Stack<Integer>(); // GoSub history so RETURN works
-	public Stack<Integer> _forLoops = new Stack<Integer>(); // FOR history so NEXT works
+	// public Stack<Integer> _forLoops = new Stack<Integer>(); // FOR history so NEXT works
 }

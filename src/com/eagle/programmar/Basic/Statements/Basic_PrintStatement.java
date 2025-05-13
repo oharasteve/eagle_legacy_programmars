@@ -41,11 +41,11 @@ public class Basic_PrintStatement extends TokenSequence
 				{
 					Basic_Expression expr = (Basic_Expression) item.getWhich();
 					String piece = interpreter.getStrValue(expr);
-					System.out.print(piece);
+					System.out.print(" " + piece + " ");
 				}
 				else if (which instanceof PunctuationSemicolon)
 				{
-					
+					// No padding
 				}
 				else if (which instanceof PunctuationComma)
 				{

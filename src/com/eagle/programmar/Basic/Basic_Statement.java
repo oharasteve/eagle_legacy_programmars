@@ -13,7 +13,6 @@ import com.eagle.programmar.Basic.Statements.Basic_ForStatement;
 import com.eagle.programmar.Basic.Statements.Basic_GoSubStatement;
 import com.eagle.programmar.Basic.Statements.Basic_IfStatement;
 import com.eagle.programmar.Basic.Statements.Basic_InputStatement;
-import com.eagle.programmar.Basic.Statements.Basic_NextStatement;
 import com.eagle.programmar.Basic.Statements.Basic_PrintStatement;
 import com.eagle.programmar.Basic.Statements.Basic_ReadStatement;
 import com.eagle.programmar.Basic.Statements.Basic_RemStatement;
@@ -41,7 +40,6 @@ public class Basic_Statement extends TokenSequence implements AbstractStatement,
 		public @CHOICE Basic_GoSubStatement XXgosubStatement;
 		public @CHOICE Basic_IfStatement XXifStatement;
 		public @CHOICE Basic_InputStatement XXinputStatement;
-		public @CHOICE Basic_NextStatement XXnextStatement;
 		public @CHOICE Basic_PrintStatement XXprintStatement;
 		public @CHOICE Basic_ReadStatement XXreadStatement;
 		public @CHOICE Basic_RemStatement XXremStatement;
