@@ -59,6 +59,15 @@ public class Delphi_For_Statement extends TokenSequence
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
+			if (reverse)
+			{
+				if (current < stop) break;
+			}
+			else
+			{
+				if (current > stop) break;
+			}
+
 			metric.iterate();
 			interpreter.setSymbol(this, var.getValue(), new EagleInteger(current));
 
@@ -82,12 +91,10 @@ public class Delphi_For_Statement extends TokenSequence
 			if (reverse)
 			{
 				current--;
-				if (current < stop) break;
 			}
 			else
 			{
 				current++;
-				if (current > stop) break;
 			}
 		}
 
