@@ -8,10 +8,13 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
+import com.eagle.programmar.Delphi.Terminals.Delphi_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.AbstractToken.OPT;
+import com.eagle.tokens.TokenSequence.S;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -31,8 +34,9 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 
 	public static class Delphi_DotName extends TokenSequence
 	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) Delphi_Identifier_Reference var;
+		public @S(10) @OPT Delphi_Punctuation caret = new Delphi_Punctuation("^");
+		public @S(20) PunctuationPeriod dot;
+		public @S(30) Delphi_Identifier_Reference var;
 	}
 
 	public static class Delphi_Subscript extends TokenSequence

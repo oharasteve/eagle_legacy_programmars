@@ -32,9 +32,9 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 	public @S(40) Basic_Expression from;
 	public @S(50) Basic_Keyword TO = new Basic_Keyword("TO");
 	public @S(60) Basic_Expression to;
+	public @S(70) @OPT Basic_ForStep step;
 	
 	// What a mess! rest of this line, some lines, start of line with NEXT on it. Ooof.
-	public @S(70) @OPT Basic_ForStep step;
 	public @S(80) @OPT Basic_For_PostFor block1;
 	public @S(90) @OPT Basic_EndOfLine eoln;
 	public @S(100) @OPT TokenList<Basic_Statement> statements2;
