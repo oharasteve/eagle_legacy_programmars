@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Basic.Basic_Expression;
+import com.eagle.programmar.Basic.Basic_StateMachine;
 import com.eagle.programmar.Basic.Basic_Statement.Basic_BaseStatement;
 import com.eagle.programmar.Basic.Terminals.Basic_Keyword;
 import com.eagle.programmar.Basic.Terminals.Basic_KeywordChoice;
@@ -48,17 +49,20 @@ public class Basic_IfStatement extends TokenSequence
 		boolean cond1 = interpreter.getBoolValue(condition);
 		_metrics.get(0).completedIf(cond1);
 
-		if (ifWhat.getWhich() instanceof Basic_BaseStatement)
+		if (cond1)
 		{
-			Basic_BaseStatement stmt = (Basic_BaseStatement) ifWhat.getWhich();
-			if (cond1)
+			if (ifWhat.getWhich() instanceof Basic_BaseStatement)
 			{
+				Basic_BaseStatement stmt = (Basic_BaseStatement) ifWhat.getWhich();
 				result = interpreter.tryToInterpret(stmt);
 			}
-		}
-		else // Must be a Basic_Number
-		{
-			// TODO: GOTO that label
+			else // Must be a Basic_Number
+			{
+				Basic_Number label = (Basic_Number) ifWhat.getWhich();
+				int lbl = Integer.parseInt(label.getValue());
+				Basic_StateMachine state = (Basic_StateMachine) interpreter._state;
+				state.gotoStatement(lbl); // Goto this label
+			}
 		}
 
 		return result;

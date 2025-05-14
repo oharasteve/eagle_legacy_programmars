@@ -5,7 +5,7 @@ package com.eagle.programmar.Basic.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleDouble;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Basic.Basic_Expression;
@@ -92,13 +92,13 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
-		int current = interpreter.getIntValue(from);
-		int stop = interpreter.getIntValue(to);
-		int by = 1;
+		double current = interpreter.getDoubleValue(from);
+		double stop = interpreter.getDoubleValue(to);
+		double by = 1;
 		
 		if (step != null && step.isPresent())
 		{
-			by = interpreter.getIntValue(step.step);
+			by = interpreter.getDoubleValue(step.step);
 		}
 		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
@@ -114,7 +114,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 			}
 
 			metric.iterate();
-			interpreter.setSymbol(this, var1.getValue(), new EagleInteger(current));
+			interpreter.setSymbol(this, var1.getValue(), new EagleDouble(current));
 
 			// Rest of this line, following the FOR
 			if (block1 != null && block1.pairs != null && block1.pairs.size() > 0)

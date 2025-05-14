@@ -47,6 +47,11 @@ public class Basic_PrintStatement extends TokenSequence
 						int num = val.forceIntegerValue();
 						System.out.print(" " + num + " ");
 					}
+					else if (val.isDouble())
+					{
+						double number = val.forceDoubleValue();
+						System.out.print(" " + number + " ");
+					}
 					else
 					{
 						String piece = val.forceStringValue();

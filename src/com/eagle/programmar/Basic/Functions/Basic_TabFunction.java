@@ -21,7 +21,8 @@ public class Basic_TabFunction extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int tab = interpreter.getIntValue(expr);
+		// Wonder why it is negative in Banner.bas? 3*E - 35 when E is 5 or 6
+		int tab = Math.abs(interpreter.getIntValue(expr));
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < tab; i++)
 		{

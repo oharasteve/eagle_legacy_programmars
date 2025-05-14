@@ -21,7 +21,7 @@ public class Basic_AbsFunction extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int x = interpreter.getIntValue(expr);
-		interpreter.pushInt(Math.abs(x));
+		double x = interpreter.getDoubleValue(expr);
+		interpreter.pushDouble(Math.abs(x));
 	}
 }

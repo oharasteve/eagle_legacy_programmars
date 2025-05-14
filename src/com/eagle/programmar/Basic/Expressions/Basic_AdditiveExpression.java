@@ -33,16 +33,33 @@ public class Basic_AdditiveExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 		
-		int leftInt = leftValue.forceIntegerValue();
-		int rightInt = rightValue.forceIntegerValue();
-		switch (oper)
+		if (leftValue.isDouble() || rightValue.isDouble())
 		{
-		case "+":
-			interpreter.pushInt(leftInt + rightInt);
-			return;
-		case "-":
-			interpreter.pushInt(leftInt - rightInt);
-			return;
+			double leftDouble = leftValue.forceDoubleValue();
+			double rightDouble = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "+":
+				interpreter.pushDouble(leftDouble + rightDouble);
+				return;
+			case "-":
+				interpreter.pushDouble(leftDouble - rightDouble);
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (oper)
+			{
+			case "+":
+				interpreter.pushInt(leftInt + rightInt);
+				return;
+			case "-":
+				interpreter.pushInt(leftInt - rightInt);
+				return;
+			}
 		}
 		throw new RuntimeException("Unable to handle " + oper);
 	}

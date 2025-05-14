@@ -6,6 +6,7 @@ package com.eagle.programmar.Basic;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.programmar.Basic.Basic_Statement.Basic_BaseStatement;
 import com.eagle.programmar.Basic.Statements.Basic_DataStatement;
 import com.eagle.programmar.Basic.Terminals.Basic_Number;
@@ -34,9 +35,12 @@ public class Basic_Program extends AbstractLanguage implements EagleRunnable
 		Basic_StateMachine state = new Basic_StateMachine();
 		interpreter._state = state;
 		
-		// Pull out all the DATA lines and put them in the State Machine
 		for (Basic_Statement statement : statements._elements)
 		{
+			// Collect every statement in a list, with their labels
+			state.addStatement(statement);
+			
+			// Pull out all the DATA lines and put them in the State Machine
 			int numStmt = statement.statements.getPrimaryCount();
 			for (int i = 0; i < numStmt; i++)
 			{
@@ -55,9 +59,19 @@ public class Basic_Program extends AbstractLanguage implements EagleRunnable
 			}
 		}
 
-		for (Basic_Statement stmt : statements._elements)
+		while (true)
 		{
-			interpreter.tryToInterpret(stmt);
+			Basic_Statement stmt = state.nextStatement();
+			if (stmt == null)
+			{
+				break;
+			}
+			
+			Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);
+			if (result != Eagle_Statement_Result.NORMAL)
+			{
+				break;
+			}
 		}
 	}
 }
