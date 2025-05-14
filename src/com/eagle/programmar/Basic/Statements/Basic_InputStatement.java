@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleDouble;
 import com.eagle.programmar.Basic.Basic_Variable;
 import com.eagle.programmar.Basic.Terminals.Basic_KeywordChoice;
 import com.eagle.programmar.Basic.Terminals.Basic_Literal;
@@ -27,25 +27,44 @@ public class Basic_InputStatement extends TokenSequence
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 	public @S(40) SeparatedList<Basic_Variable,PunctuationComma> vars;
 
+	public @SKIP static BufferedReader _br = null;
+	
+	// Force it to start reading fom stdin again
+	public static void resetReader()
+	{
+		_br = null;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (prompt != null && prompt.isPresent())
 		{
-			System.out.print(prompt.getValue() + "?");
+			String val = prompt.getValue().replaceAll("\"", "");
+			System.out.print(val + "?");
 		}
-		
+
+		if (_br == null)
+		{
+			_br = new BufferedReader(new InputStreamReader(System.in));
+		}
+
 		String line = null;
 		try
 		{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            line = reader.readLine();
+            line = _br.readLine();
         }
 		catch (IOException ex)
 		{
             throw new RuntimeException("Error reading from stdin", ex);
         }
 		
+		if (line == null)
+		{
+			throw new RuntimeException("No input given to INPUT");
+		}
+
+		System.out.println(line);
 		String[] pieces = line.split(",");
 		int piecesGot = pieces.length;
 		int piecesExpected = vars.getPrimaryCount();
@@ -57,9 +76,9 @@ public class Basic_InputStatement extends TokenSequence
 		
 		for (int i = 0; i < piecesGot; i++)
 		{
-			int val = Integer.parseInt(pieces[i].trim());
+			double val = Double.parseDouble(pieces[i].trim());
 			Basic_Variable var = vars.getPrimaryElement(i);
-			interpreter.setSymbol(this, var.var.getValue(), new EagleInteger(val));
+			var.assignValue(interpreter, new EagleDouble(val));
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable, 
 		}
 
 		EagleArray array = new EagleArray();
-		array.setValue(vals);
+		array.setValues(vals);
 		interpreter.setSymbol(var, var.toString(), array);
 	}
 }

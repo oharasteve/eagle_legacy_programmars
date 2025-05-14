@@ -5,6 +5,9 @@ package com.eagle.programmar.Basic.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleArray;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleMatrix;
 import com.eagle.programmar.Basic.Basic_Expression;
 import com.eagle.programmar.Basic.Symbols.Basic_Identifier_Definition;
 import com.eagle.programmar.Basic.Terminals.Basic_Keyword;
@@ -32,6 +35,32 @@ public class Basic_DimStatement extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		throw new RuntimeException("Need to implement");
+		int entries = values.getPrimaryCount();
+		for (int i = 0; i < entries; i++)
+		{
+			Basic_DimEntry entry = values.getPrimaryElement(i);
+			if (entry.dimensions.getPrimaryCount() == 1)
+			{
+				Basic_Expression sizeExpr = entry.dimensions.first();
+				int size = interpreter.getIntValue(sizeExpr);
+				EagleArray array = new EagleArray();
+				array.setValue(size-1, new EagleInteger(0));	// Fills it all with 0's
+				interpreter.setSymbol(entry, entry.id.getValue(), array);
+			}
+			else if (entry.dimensions.getPrimaryCount() == 2)
+			{
+				Basic_Expression sizeExpr1 = entry.dimensions.getPrimaryElement(0);
+				Basic_Expression sizeExpr2 = entry.dimensions.getPrimaryElement(1);
+				int size1 = interpreter.getIntValue(sizeExpr1);
+				int size2 = interpreter.getIntValue(sizeExpr2);
+				EagleMatrix matrix = new EagleMatrix();
+				matrix.setValue(size1 - 1, size2 - 1, new EagleInteger(0));	// Fills it all with 0's
+				interpreter.setSymbol(entry, entry.id.getValue(), matrix);
+			}
+			else
+			{
+				throw new RuntimeException("DIM must have exactly one dimension");
+			}
+		}
 	}
 }

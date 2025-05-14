@@ -21,6 +21,6 @@ public class Basic_DataStatement extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		throw new RuntimeException("Need to implement");
+		// Nothing to do, already done in Basic_Program.java
 	}
 }

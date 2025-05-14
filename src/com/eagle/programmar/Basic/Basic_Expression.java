@@ -14,6 +14,7 @@ import com.eagle.programmar.Basic.Expressions.Basic_VariableExpression;
 import com.eagle.programmar.Basic.Functions.Basic_AbsFunction;
 import com.eagle.programmar.Basic.Functions.Basic_ChrFunction;
 import com.eagle.programmar.Basic.Functions.Basic_IntFunction;
+import com.eagle.programmar.Basic.Functions.Basic_TabFunction;
 import com.eagle.programmar.Basic.Functions.Basic_TrigFunction;
 import com.eagle.programmar.Basic.Terminals.Basic_Literal;
 import com.eagle.programmar.Basic.Terminals.Basic_Number;
@@ -55,8 +56,9 @@ public class Basic_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(120) Basic_AbsFunction absFunction;
 	public @P(130) Basic_ChrFunction chrFunction;
 	public @P(140) Basic_IntFunction intFunction;
-	public @P(150) Basic_TrigFunction trigFunction;
-	public @P(160) Basic_VariableExpression variableExpression;
+	public @P(150) Basic_TabFunction tabFunction;
+	public @P(160) Basic_TrigFunction trigFunction;
+	public @P(170) Basic_VariableExpression variableExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

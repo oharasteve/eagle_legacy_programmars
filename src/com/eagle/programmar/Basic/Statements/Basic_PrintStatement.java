@@ -5,6 +5,7 @@ package com.eagle.programmar.Basic.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Basic.Basic_Expression;
 import com.eagle.programmar.Basic.Terminals.Basic_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -40,8 +41,17 @@ public class Basic_PrintStatement extends TokenSequence
 				if (which instanceof Basic_Expression)
 				{
 					Basic_Expression expr = (Basic_Expression) item.getWhich();
-					String piece = interpreter.getStrValue(expr);
-					System.out.print(" " + piece + " ");
+					EagleValue val = interpreter.getEagleValue(expr);
+					if (val.isInteger())
+					{
+						int num = val.forceIntegerValue();
+						System.out.print(" " + num + " ");
+					}
+					else
+					{
+						String piece = val.forceStringValue();
+						System.out.print(piece);
+					}
 				}
 				else if (which instanceof PunctuationSemicolon)
 				{
