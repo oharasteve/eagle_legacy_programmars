@@ -9,7 +9,7 @@ import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
-import com.eagle.programmar.Rexx.Rexx_Statement;
+import com.eagle.programmar.Rexx.Rexx_Element;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
@@ -23,7 +23,7 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 	public @S(10) @DOC("instructions-do") Rexx_Keyword DO = new Rexx_Keyword("DO");
 	public @S(20) @OPT Rexx_DoLoop loop;
 	public @S(30) Rexx_EndOfLine eoln1;
-	public @S(40) TokenList<Rexx_Statement> actions;
+	public @S(40) TokenList<Rexx_Element> actions;
 	public @S(50) Rexx_Keyword END = new Rexx_Keyword("END");
 	
 	public static class Rexx_DoLoop extends TokenSequence
@@ -52,7 +52,7 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 		// Just a DO ... END block, no iteration
 		if (loop == null || ! loop.isPresent())
 		{
-			for (Rexx_Statement stmt : actions._elements)
+			for (Rexx_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
@@ -83,7 +83,7 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 			metric.iterate();
 			interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(current));
 
-			for (Rexx_Statement stmt : actions._elements)
+			for (Rexx_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;

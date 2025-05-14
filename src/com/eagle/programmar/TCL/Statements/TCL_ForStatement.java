@@ -8,7 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.TCL.TCL_Expression;
-import com.eagle.programmar.TCL.TCL_Statement;
+import com.eagle.programmar.TCL.TCL_Element;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -19,15 +19,15 @@ public class TCL_ForStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("TclCmd/for.html") TCL_Keyword FOR = new TCL_Keyword("for");
 	public @S(20) PunctuationLeftBrace leftBrace1;
-	public @S(30) TCL_Statement initialize;
+	public @S(30) TCL_Element initialize;
 	public @S(40) PunctuationRightBrace rightBrace1;
 	public @S(50) PunctuationLeftBrace leftBrace2;
 	public @S(60) TCL_Expression condition;
 	public @S(70) PunctuationRightBrace rightBrace2;
 	public @S(80) PunctuationLeftBrace leftBrace3;
-	public @S(90) TCL_Statement increment;
+	public @S(90) TCL_Element increment;
 	public @S(100) PunctuationRightBrace rightBrace3;
-	public @S(110) TCL_Statement action;
+	public @S(110) TCL_Element action;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 

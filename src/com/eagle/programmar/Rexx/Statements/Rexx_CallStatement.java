@@ -9,7 +9,7 @@ import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
-import com.eagle.programmar.Rexx.Rexx_Statement;
+import com.eagle.programmar.Rexx.Rexx_Element;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
@@ -66,7 +66,7 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 
 		// And transfer control to the method
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (Rexx_Statement stmt : func.stmts._elements)
+		for (Rexx_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break; 

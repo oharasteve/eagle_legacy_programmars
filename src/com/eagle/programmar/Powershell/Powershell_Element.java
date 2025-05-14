@@ -29,13 +29,13 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
-public class Powershell_Statement extends TokenSequence
+public class Powershell_Element extends TokenSequence
 {
-	public @S(10) Powershell_Element element;
+	public @S(10) Powershell_Statement element;
 	public @S(20) @OPT Powershell_Comment comment;
 	public @S(30) @OPT Powershell_EndOfLine eoln;
 
-	public static class Powershell_Element extends TokenChooser
+	public static class Powershell_Statement extends TokenChooser
 	{
 		public @CHOICE Powershell_BeginBlock XXbeginBlock;
 		public @CHOICE Powershell_BreakStatement XXbreakStatement;

@@ -46,12 +46,12 @@ import com.eagle.programmar.Bash.Terminals.Bash_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
-public class Bash_Statement extends TokenSequence
+public class Bash_Element extends TokenSequence
 {
-	public @S(10) Bash_Element element;
+	public @S(10) Bash_Statement element;
 	public @S(20) @OPT Bash_EndOfLine eoln;
 
-	public static class Bash_Element extends TokenChooser
+	public static class Bash_Statement extends TokenChooser
 	{
 		public @CHOICE Bash_AwkCommand XXawkCommand;
 		public @CHOICE Bash_BreakStatement XXbreakStatement;

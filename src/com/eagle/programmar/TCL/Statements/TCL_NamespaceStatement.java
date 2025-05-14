@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.TCL.Statements;
 
-import com.eagle.programmar.TCL.TCL_Statement;
+import com.eagle.programmar.TCL.TCL_Element;
 import com.eagle.programmar.TCL.Symbols.TCL_Namespace_Definition;
 import com.eagle.programmar.TCL.Terminals.TCL_EndOfLine;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
@@ -20,7 +20,7 @@ public class TCL_NamespaceStatement extends TokenSequence
 	public @S(40) PunctuationLeftBrace leftBrace;
 	public @S(50) TCL_EndOfLine endOfLine;
 
-	public @S(60) TokenList<TCL_Statement> statements;
+	public @S(60) TokenList<TCL_Element> statements;
 
 	public @S(70) PunctuationRightBrace rightBrace;
 }

@@ -4,7 +4,7 @@
 package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenChooser;
@@ -33,7 +33,7 @@ public class Powershell_StartJob extends TokenSequence implements AbstractStatem
 			public @S(10) Powershell_Keyword SCRIPTBLOCK = new Powershell_Keyword("-ScriptBlock");
 			public @S(20) PunctuationLeftBrace leftBrace;
 			public @S(30) @OPT Powershell_EndOfLine eoln;
-			public @S(40) TokenList<Powershell_Statement> stmts;
+			public @S(40) TokenList<Powershell_Element> stmts;
 			public @S(50) PunctuationRightBrace rightBrace;
 		}
 	}

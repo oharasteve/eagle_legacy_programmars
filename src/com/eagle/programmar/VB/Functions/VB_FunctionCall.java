@@ -12,7 +12,7 @@ import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.Statements.VB_Function;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Variable_Definition;
@@ -95,7 +95,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// And transfer control to the method
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (VB_Statement stmt : func.stmts._elements)
+		for (VB_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break; 

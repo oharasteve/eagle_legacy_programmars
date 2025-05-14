@@ -10,7 +10,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Syntax;
 import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
@@ -33,7 +33,7 @@ public class VB_Subroutine extends TokenSequence
 	public @S(30) VB_Sub_Definition name;
 	public @S(40) VB_Parameters params;
 	public @S(50) VB_EndOfLine eoln;
-	public @S(60) @OPT TokenList<VB_Statement> stmts;
+	public @S(60) @OPT TokenList<VB_Element> stmts;
 	public @S(70) VB_Keyword END = new VB_Keyword("end");
 	public @S(80) VB_Keyword SUB2 = new VB_Keyword("sub");
 	

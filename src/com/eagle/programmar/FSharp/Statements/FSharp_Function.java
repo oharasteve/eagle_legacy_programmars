@@ -6,7 +6,7 @@ package com.eagle.programmar.FSharp.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.FSharp.FSharp_Statement;
+import com.eagle.programmar.FSharp.FSharp_Element;
 import com.eagle.programmar.FSharp.FSharp_Syntax;
 import com.eagle.programmar.FSharp.FSharp_Type;
 import com.eagle.programmar.FSharp.Symbols.FSharp_Function_Definition;
@@ -34,7 +34,7 @@ public class FSharp_Function extends TokenSequence implements AbstractFunction, 
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) PunctuationEquals equals;
 	public @S(70) FSharp_EndOfLine eoln;
-	public @S(80) TokenList<FSharp_Statement> statements;
+	public @S(80) TokenList<FSharp_Element> statements;
 
 	public static class FSharp_FunctionParam extends TokenSequence
 	{

@@ -9,7 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.TCL.TCL_Expression;
-import com.eagle.programmar.TCL.TCL_Statement;
+import com.eagle.programmar.TCL.TCL_Element;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
@@ -21,7 +21,7 @@ public class TCL_IfStatement extends TokenSequence implements AbstractStatement,
 	public @S(20) TCL_PunctuationChoice left = new TCL_PunctuationChoice("{", "(");
 	public @S(30) TCL_Expression condition;
 	public @S(40) TCL_PunctuationChoice right = new TCL_PunctuationChoice("}", ")");
-	public @S(50) TCL_Statement thenStatement;
+	public @S(50) TCL_Element thenStatement;
 	public @S(60) @OPT TCL_ElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
@@ -29,14 +29,14 @@ public class TCL_IfStatement extends TokenSequence implements AbstractStatement,
 	public static class TCL_ElseClause extends TokenSequence
 	{
 		public @S(10) TCL_Keyword ELSE = new TCL_Keyword("else");
-		public @S(20) TCL_Statement elseStatement;
+		public @S(20) TCL_Element elseStatement;
 	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		TCL_Statement todo = null;
+		TCL_Element todo = null;
 
 		if (_metrics == null)
 		{

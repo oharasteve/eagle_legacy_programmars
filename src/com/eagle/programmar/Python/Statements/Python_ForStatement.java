@@ -16,8 +16,8 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_ExpressionList;
 import com.eagle.programmar.Python.Python_Generator;
-import com.eagle.programmar.Python.Python_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
+import com.eagle.programmar.Python.Python_ComplexStatement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
@@ -51,8 +51,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_ForStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_ForLoop<Python_Statement, Python_Expression>,
-				Eagle_Generate_ForRange<Python_Statement, Python_Expression>
+				Eagle_Generate_ForLoop<Python_ComplexStatement, Python_Expression>,
+				Eagle_Generate_ForRange<Python_ComplexStatement, Python_Expression>
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -174,28 +174,28 @@ public class Python_ForStatement extends TokenSequence
 	}
 
 	@Override
-	public Python_Statement generateForLoop1(Python_Expression initExpression,
+	public Python_ComplexStatement generateForLoop1(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
-			Python_Statement action, AbstractToken source)
+			Python_ComplexStatement action, AbstractToken source)
 	{
-		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
+		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
 		return generateForLoop(initExpression, condExpression, incrExpression,
 				actions, source);
 	}
 	
 	@Override
-	public Python_Statement generateForLoop(Python_Expression initExpression,
+	public Python_ComplexStatement generateForLoop(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		throw new RuntimeException("Need to implement");
 	}
 
 	@Override
-	public Python_Statement generateForRange1(String varName, Python_Expression fromExpression,
+	public Python_ComplexStatement generateForRange1(String varName, Python_Expression fromExpression,
 			Python_Expression toExpression, Python_Expression delta,
-			Python_Statement action, AbstractToken source)
+			Python_ComplexStatement action, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
 		forStmt.colon = new PunctuationColon();
@@ -206,13 +206,13 @@ public class Python_ForStatement extends TokenSequence
 		{
 			Python_SameLineStatement statementList = (Python_SameLineStatement) which;
 			Python_MultilineStatement multi = new Python_MultilineStatement();
-			multi.statements = new TokenList<Python_Statement>();
+			multi.statements = new TokenList<Python_ComplexStatement>();
 			multi.eoln = new Python_EndOfLine();
 
 			Python_StatementBlock singleOrMulti = new Python_StatementBlock();
 			singleOrMulti.setWhich(multi);
 
-			Python_Statement stmt = new Python_Statement();
+			Python_ComplexStatement stmt = new Python_ComplexStatement();
 			stmt.statementOrComment = new Python_StatementOrComment();
 			stmt.statementOrComment.setWhich(statementList);
 			multi.statements.addToken(stmt);
@@ -299,9 +299,9 @@ public class Python_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public Python_Statement generateForRange(String varName, Python_Expression fromExpression,
+	public Python_ComplexStatement generateForRange(String varName, Python_Expression fromExpression,
 			Python_Expression toExpression, Python_Expression delta,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		throw new RuntimeException("need to implement");
 	}

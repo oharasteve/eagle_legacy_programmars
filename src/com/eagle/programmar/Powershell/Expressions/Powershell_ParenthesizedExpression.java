@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -28,7 +28,7 @@ public class Powershell_ParenthesizedExpression extends PrimaryOperator implemen
 	public static class Powershell_ParenStatement extends TokenSequence
 	{
 		// Don't share right paren because expression might stop early, causing a failure
-		public @S(10) Powershell_Statement statement;
+		public @S(10) Powershell_Element statement;
 		public @S(20) PunctuationRightParen rightParen;
 	}
 

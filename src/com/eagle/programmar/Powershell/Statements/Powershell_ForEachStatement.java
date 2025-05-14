@@ -5,7 +5,7 @@ package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
@@ -26,7 +26,7 @@ public class Powershell_ForEachStatement extends TokenSequence implements Abstra
 	public @S(30) @OPT Powershell_EndOfLine eoln1;
 	public @S(40) PunctuationLeftBrace leftBrace;
 	public @S(50) @OPT Powershell_EndOfLine eoln2;
-	public @S(60) TokenList<Powershell_Statement> stmts;
+	public @S(60) TokenList<Powershell_Element> stmts;
 	public @S(70) PunctuationRightBrace rightBrace;
 
 	public static class Powershell_ForEach extends TokenChooser

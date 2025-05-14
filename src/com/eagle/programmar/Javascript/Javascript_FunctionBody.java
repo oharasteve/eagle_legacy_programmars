@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.programmar.Javascript.Javascript_Statement.Javascript_StatementOrComment;
+import com.eagle.programmar.Javascript.Javascript_Element.Javascript_StatementOrComment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;

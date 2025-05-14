@@ -11,7 +11,7 @@ import com.eagle.programmar.Python.Python_Parameter_List;
 import com.eagle.programmar.Python.Python_Params;
 import com.eagle.programmar.Python.Python_Params.Python_MoreParams;
 import com.eagle.programmar.Python.Python_Params.Python_Parameter;
-import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Syntax;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
@@ -106,7 +106,7 @@ public class Python_Function extends TokenSequence
 		
 		func.header.defBody = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
-		multi.statements = new TokenList<Python_Statement>();
+		multi.statements = new TokenList<Python_ComplexStatement>();
 		func.header.defBody.setWhich(multi);
 		
 		return func;

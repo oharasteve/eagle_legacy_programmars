@@ -9,7 +9,7 @@ import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
-import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Print_Function;
@@ -27,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_PrintStatement extends TokenSequence
 		implements AbstractStatement,
-				Eagle_Generate_Print<Python_Statement, Python_Expression>
+				Eagle_Generate_Print<Python_ComplexStatement, Python_Expression>
 {
 	public @S(10) @NOSPACE Python_Keyword PRINT = new Python_Keyword("print");
 	public @S(20) @OPT Python_Punctuation greaterGreater = new Python_Punctuation(">>");
@@ -35,7 +35,7 @@ public class Python_PrintStatement extends TokenSequence
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
 
 	@Override
-	public Python_Statement generatePrint(ArrayList<Python_Expression> pieces,
+	public Python_ComplexStatement generatePrint(ArrayList<Python_Expression> pieces,
 			boolean newLine, AbstractToken source)
 	{
 		Python_Print_Function func = new Python_Print_Function();
@@ -92,7 +92,7 @@ public class Python_PrintStatement extends TokenSequence
 	}
 	
 	@Override
-	public Python_Statement generatePrint1(Python_Expression line,
+	public Python_ComplexStatement generatePrint1(Python_Expression line,
 			boolean newLine, AbstractToken source)
 	{
 		ArrayList<Python_Expression> pieces = new ArrayList<Python_Expression>();

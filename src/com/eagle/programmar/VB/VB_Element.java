@@ -37,13 +37,13 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
-public class VB_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class VB_Element extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) VB_BaseStatement baseStatement;
+	public @S(10) VB_Statement baseStatement;
 	public @S(20) @OPT VB_Comment comment;
 	public @S(30) VB_EndOfLine eoln;
 
-	public static class VB_BaseStatement extends TokenChooser
+	public static class VB_Statement extends TokenChooser
 	{
 		public @CHOICE VB_Comment XXcomment;
 

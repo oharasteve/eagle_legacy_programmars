@@ -9,7 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
-import com.eagle.programmar.Rexx.Rexx_Statement.Rexx_BaseStatement;
+import com.eagle.programmar.Rexx.Rexx_Element.Rexx_Statement;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Comment;
 import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
@@ -24,7 +24,7 @@ public class Rexx_IfStatement extends TokenSequence
 	public @S(20) Rexx_Expression condition;
 	public @S(30) Rexx_Keyword THEN = new Rexx_Keyword("THEN");
 	public @S(40) Rexx_EndOfLine eoln;
-	public @S(50) Rexx_BaseStatement thenStatement;
+	public @S(50) Rexx_Statement thenStatement;
 	public @S(60) @OPT Rexx_IfElseClause elseClause;
 
 	public static class Rexx_IfElseClause extends TokenSequence
@@ -33,7 +33,7 @@ public class Rexx_IfStatement extends TokenSequence
 		public @S(20) Rexx_EndOfLine eoln1;
 		public @S(30) Rexx_Keyword ELSE = new Rexx_Keyword("ELSE");
 		public @S(40) Rexx_EndOfLine eoln2;
-		public @S(50) Rexx_BaseStatement elseStatement;
+		public @S(50) Rexx_Statement elseStatement;
 	}
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;

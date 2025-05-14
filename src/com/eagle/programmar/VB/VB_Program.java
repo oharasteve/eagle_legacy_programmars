@@ -33,13 +33,13 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 		return "http://msdn.microsoft.com/en-us/library/";
 	}
 
-	public @S(10) @OPT TokenList<VB_Statement> statements;
+	public @S(10) @OPT TokenList<VB_Element> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the Function and Sub definitions
-		for (VB_Statement stmt : statements._elements)
+		for (VB_Element stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
 			if (which instanceof VB_Function)
@@ -55,7 +55,7 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 		}
 
 		// Second pass, run any stuff in the outermost 'object'
-		for (VB_Statement stmt : statements._elements)
+		for (VB_Element stmt : statements._elements)
 		{
 			interpreter.tryToInterpret(stmt.baseStatement);
 		}
@@ -65,7 +65,7 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// First pass, transform all the Function and Sub definitions
-		for (VB_Statement stmt : statements._elements)
+		for (VB_Element stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
 			if (which instanceof EagleTransformableFunction)
@@ -76,7 +76,7 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 		}
 
 		// Second pass, transform all the data and logic
-		for (VB_Statement stmt : statements._elements)
+		for (VB_Element stmt : statements._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);

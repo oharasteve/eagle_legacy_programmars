@@ -5,7 +5,7 @@ package com.eagle.programmar.Bash.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -15,7 +15,7 @@ public class Bash_Evaluate1 extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Bash_Statement stmt;
+	public @S(30) Bash_Element stmt;
 	public @S(40) PunctuationRightParen rightParen;
 	
 	@Override

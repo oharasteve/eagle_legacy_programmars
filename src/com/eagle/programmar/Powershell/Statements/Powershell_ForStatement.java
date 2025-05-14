@@ -10,7 +10,7 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
@@ -39,7 +39,7 @@ public class Powershell_ForStatement extends TokenSequence implements AbstractSt
 
 	public @S(110) PunctuationLeftBrace leftBrace;
 	public @S(120) @OPT Powershell_EndOfLine eoln;
-	public @S(130) TokenList<Powershell_Statement> stmts;
+	public @S(130) TokenList<Powershell_Element> stmts;
 	public @S(140) PunctuationRightBrace rightBrace;
 	
 	private @SKIP ForLoopMetrics _metrics = null;
@@ -63,7 +63,7 @@ public class Powershell_ForStatement extends TokenSequence implements AbstractSt
 			if (!keepGoing) break;
 			metric.iterate();
 
-			for (Powershell_Statement stmt : stmts._elements)
+			for (Powershell_Element stmt : stmts._elements)
 			{
 				result = interpreter.tryToInterpret(stmt.element);
 				if (result != Eagle_Statement_Result.NORMAL) break;

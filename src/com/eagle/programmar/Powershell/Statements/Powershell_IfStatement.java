@@ -10,7 +10,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -30,7 +30,7 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 	public @S(50) @OPT Powershell_EndOfLine eoln1;
 	public @S(60) PunctuationLeftBrace leftBrace;
 	public @S(70) @OPT Powershell_EndOfLine eoln2;
-	public @S(80) @OPT TokenList<Powershell_Statement> statements;
+	public @S(80) @OPT TokenList<Powershell_Element> statements;
 	public @S(90) PunctuationRightBrace rightBrace;
 	public @S(100) @OPT Powershell_EndOfLine eoln3;
 	public @S(110) @OPT TokenList<Powershell_IfElseIfStatement> elseIfStmts;
@@ -46,7 +46,7 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 		public @S(40) PunctuationRightParen rightParen;
 		public @S(50) PunctuationLeftBrace leftBrace;
 		public @S(60) @OPT Powershell_EndOfLine eoln;
-		public @S(70) @OPT TokenList<Powershell_Statement> statements;
+		public @S(70) @OPT TokenList<Powershell_Element> statements;
 		public @S(80) PunctuationRightBrace rightBrace;
 		public @S(90) @OPT Powershell_EndOfLine eoln2;
 	}
@@ -56,7 +56,7 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 		public @S(10) Powershell_Keyword ELSE = new Powershell_Keyword("Else");
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) @OPT Powershell_EndOfLine eoln;
-		public @S(40) @OPT TokenList<Powershell_Statement> statements;
+		public @S(40) @OPT TokenList<Powershell_Element> statements;
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
 
@@ -64,7 +64,7 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		TokenList<Powershell_Statement> todo = null;
+		TokenList<Powershell_Element> todo = null;
 
 		if (_metrics == null)
 		{
@@ -125,7 +125,7 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 		if (todo != null)
 		{
 			result = Eagle_Statement_Result.NORMAL;
-			for (Powershell_Statement stmt : todo._elements)
+			for (Powershell_Element stmt : todo._elements)
 			{
 				result = interpreter.tryToInterpret(stmt.element);
 				if (result != Eagle_Statement_Result.NORMAL) break;

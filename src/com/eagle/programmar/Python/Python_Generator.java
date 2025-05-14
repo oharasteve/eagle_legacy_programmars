@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
@@ -46,7 +46,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Python_Generator extends EagleGenerator<Python_Statement,
+public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Expression, Python_Variable, Python_Type>
 {
 	public static String NAME = "Python";
@@ -57,7 +57,7 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	public Python_Generator(String mainName)
 	{
 		_program = new Python3_Program();
-		_program.entries = new TokenList<Python_Statement>();
+		_program.entries = new TokenList<Python_ComplexStatement>();
 		_program.entries.setPresent(true);
 	}
 	
@@ -86,15 +86,15 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 		return wrapper;
 	}
 	
-	public static Python_Statement wrapStatement(AbstractToken token)
+	public static Python_ComplexStatement wrapStatement(AbstractToken token)
 	{
 		if (token == null) return null;
-		Python_Simple_Statement simple = new Python_Simple_Statement();
+		Python_Statement simple = new Python_Statement();
 		simple.setWhich(token);
 		Python_SameLineStatement sameLine = new Python_SameLineStatement();
-		sameLine.statements = new SeparatedList<Python_Simple_Statement, PunctuationSemicolon>();
+		sameLine.statements = new SeparatedList<Python_Statement, PunctuationSemicolon>();
 		sameLine.statements.addPrimaryElement(simple);
-		Python_Statement wrapper = new Python_Statement();
+		Python_ComplexStatement wrapper = new Python_ComplexStatement();
 		wrapper.statementOrComment = new Python_StatementOrComment();
 		wrapper.statementOrComment.setWhich(sameLine);
 		return wrapper;
@@ -125,7 +125,7 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 	
 	@Override
-	public void addStatement(Python_Statement stmt, AbstractToken source)
+	public void addStatement(Python_ComplexStatement stmt, AbstractToken source)
 	{
 		if (_currentFunction == null)
 		{
@@ -148,30 +148,30 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	// ================ Statements ================
 
 	@Override
-	public Python_Statement newBlockStatement(
-			ArrayList<Python_Statement> statements, AbstractToken source)
+	public Python_ComplexStatement newBlockStatement(
+			ArrayList<Python_ComplexStatement> statements, AbstractToken source)
 	{
 		Python_StatementBlock block = new Python_StatementBlock();
 		return block.addStatements(statements);
 	}
 
 	@Override
-	public Python_Statement newBreakStatement(AbstractToken source)
+	public Python_ComplexStatement newBreakStatement(AbstractToken source)
 	{
 		Python_BreakStatement brkStmt = new Python_BreakStatement();
 		return brkStmt.generateBreak(source);
 	}
 
 	@Override
-	public Python_Statement newDataDeclaration(String name, Python_Expression size, Python_Type type,
+	public Python_ComplexStatement newDataDeclaration(String name, Python_Expression size, Python_Type type,
 			Python_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Python_Data.newDataDeclaration(name,size, type, initial, source));
 	}
 
 	@Override
-	public Python_Statement newDoUntilStatement1(Python_Expression condition,
-			Python_Statement action, AbstractToken source)
+	public Python_ComplexStatement newDoUntilStatement1(Python_Expression condition,
+			Python_ComplexStatement action, AbstractToken source)
 	{
 		Python_WhileStatement doStmt = new Python_WhileStatement();
 		return doStmt.generateDoUntil1(condition,
@@ -179,28 +179,28 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 	
 	@Override
-	public Python_Statement newDoUntilStatement(Python_Expression condition,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+	public Python_ComplexStatement newDoUntilStatement(Python_Expression condition,
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		Python_WhileStatement doStmt = new Python_WhileStatement();
 		return doStmt.generateDoUntil(condition, actions, source);
 	}
 	
 	@Override
-	public Python_Statement newExitStatement(Python_Expression code, AbstractToken source)
+	public Python_ComplexStatement newExitStatement(Python_Expression code, AbstractToken source)
 	{
 		return wrapStatement(Python_QuitStatement.newQuitStatement(code, source));
 	}
 
 	@Override
-	public Python_Statement newExpressionStatement(Python_Expression expr, AbstractToken source)
+	public Python_ComplexStatement newExpressionStatement(Python_Expression expr, AbstractToken source)
 	{
 		return wrapStatement(Python_ExpressionStatement.newExpressionStatement(expr, source));
 	}
 	
 	@Override
-	public Python_Statement newIfStatement1(Python_Expression condition, Python_Statement ifTrue,
-			Python_Statement ifFalse, AbstractToken source)
+	public Python_ComplexStatement newIfStatement1(Python_Expression condition, Python_ComplexStatement ifTrue,
+			Python_ComplexStatement ifFalse, AbstractToken source)
 	{
 		Python_IfStatement ifStmt = new Python_IfStatement();
 		return ifStmt.generateIfElse1(condition,
@@ -208,17 +208,17 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 	
 	@Override
-	public Python_Statement newIfStatement(Python_Expression condition,
-			ArrayList<Python_Statement> ifTrue,
-			ArrayList<Python_Statement> ifFalse, AbstractToken source)
+	public Python_ComplexStatement newIfStatement(Python_Expression condition,
+			ArrayList<Python_ComplexStatement> ifTrue,
+			ArrayList<Python_ComplexStatement> ifFalse, AbstractToken source)
 	{
 		Python_IfStatement ifStmt = new Python_IfStatement();
 		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
-	public Python_Statement newForLoopStatement1(Python_Expression init,
-			Python_Expression term, Python_Expression incr, Python_Statement action,
+	public Python_ComplexStatement newForLoopStatement1(Python_Expression init,
+			Python_Expression term, Python_Expression incr, Python_ComplexStatement action,
 			AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
@@ -227,9 +227,9 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 
 	@Override
-	public Python_Statement newForLoopStatement(Python_Expression init,
+	public Python_ComplexStatement newForLoopStatement(Python_Expression init,
 			Python_Expression term, Python_Expression incr,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
 		return forStmt.generateForLoop(init, term,
@@ -237,7 +237,7 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 
 	@Override
-	public Python_Statement newPrintStatement1(Python_Expression line, boolean newLine,
+	public Python_ComplexStatement newPrintStatement1(Python_Expression line, boolean newLine,
 			AbstractToken source)
 	{
 		Python_PrintStatement prtStmt = new Python_PrintStatement();
@@ -245,7 +245,7 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 	
 	@Override
-	public Python_Statement newPrintStatement(ArrayList<Python_Expression> pieces,
+	public Python_ComplexStatement newPrintStatement(ArrayList<Python_Expression> pieces,
 			boolean newLine, AbstractToken source)
 	{
 		Python_PrintStatement prtStmt = new Python_PrintStatement();
@@ -253,7 +253,7 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 	
 	@Override
-	public Python_Statement newReturnStatement(Python_Expression ret,
+	public Python_ComplexStatement newReturnStatement(Python_Expression ret,
 			AbstractToken source)
 	{
 		Python_ReturnStatement retStmt = new Python_ReturnStatement();
@@ -270,8 +270,8 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 
 	@Override
-	public Python_Statement newWhileStatement1(Python_Expression condition,
-			Python_Statement action, AbstractToken source)
+	public Python_ComplexStatement newWhileStatement1(Python_Expression condition,
+			Python_ComplexStatement action, AbstractToken source)
 	{
 		Python_WhileStatement whileStmt = new Python_WhileStatement();
 		return whileStmt.generateWhile1(condition,
@@ -279,8 +279,8 @@ public class Python_Generator extends EagleGenerator<Python_Statement,
 	}
 	
 	@Override
-	public Python_Statement newWhileStatement(Python_Expression condition,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+	public Python_ComplexStatement newWhileStatement(Python_Expression condition,
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		Python_WhileStatement whileStmt = new Python_WhileStatement();
 		return whileStmt.generateWhile(condition, actions, source);

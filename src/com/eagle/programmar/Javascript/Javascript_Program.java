@@ -32,7 +32,7 @@ public class Javascript_Program extends AbstractLanguage implements EagleRunnabl
 	{
 		public @CHOICE Javascript_Comment XXcomment;
 		public @CHOICE Javascript_Function XXfunction;
-		public @CHOICE Javascript_Statement XXstatement;
+		public @CHOICE Javascript_Element XXstatement;
 		public @CHOICE Javascript_Class XXclass;
 	}
 

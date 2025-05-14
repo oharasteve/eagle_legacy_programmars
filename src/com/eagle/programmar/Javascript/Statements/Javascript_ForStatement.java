@@ -10,7 +10,7 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Javascript.Javascript_Data.Javascript_More_Variables;
 import com.eagle.programmar.Javascript.Javascript_Expression;
-import com.eagle.programmar.Javascript.Javascript_Statement;
+import com.eagle.programmar.Javascript.Javascript_Element;
 import com.eagle.programmar.Javascript.Javascript_Type;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
@@ -61,7 +61,7 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 		public @S(100) @OPT Javascript_Expression extraIncrement;
 		public @S(110) PunctuationRightParen rightParen;
 		public @S(120) @OPT TokenList<Javascript_Comment> comments;
-		public @S(130) Javascript_Statement action;
+		public @S(130) Javascript_Element action;
 		
 		public static class Javascript_ForLoopVariable extends TokenChooser
 		{
@@ -90,7 +90,7 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 		public @S(50) Javascript_Expression collection;
 		public @S(60) PunctuationRightParen rightParen;
 		public @S(70) @OPT TokenList<Javascript_Comment> comments;
-		public @S(80) Javascript_Statement action;
+		public @S(80) Javascript_Element action;
 
 		public static class Javascript_ForVariables extends TokenSequence
 		{

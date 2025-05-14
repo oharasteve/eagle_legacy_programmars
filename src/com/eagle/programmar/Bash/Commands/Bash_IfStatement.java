@@ -10,7 +10,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Bash.Bash_Condition;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
-import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -23,7 +23,7 @@ public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 	public @S(30) Bash_EndOfLine eoln1;
 	public @S(40) Bash_Keyword THEN = new Bash_Keyword("then");
 	public @S(50) @OPT Bash_EndOfLine eoln2;
-	public @S(60) TokenList<Bash_Statement> statements;
+	public @S(60) TokenList<Bash_Element> statements;
 	public @S(70) @OPT TokenList<Bash_If_Elif> elseIfBlock;
 	public @S(80) @OPT Bash_If_Else elseBlock;
 	public @S(90) Bash_Keyword FI = new Bash_Keyword("fi");
@@ -37,21 +37,21 @@ public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 		public @S(30) Bash_EndOfLine eoln1;
 		public @S(40) Bash_Keyword THEN = new Bash_Keyword("then");
 		public @S(50) @OPT Bash_EndOfLine eoln2;
-		public @S(60) TokenList<Bash_Statement> statements;
+		public @S(60) TokenList<Bash_Element> statements;
 	}
 
 	public static class Bash_If_Else extends TokenSequence
 	{
 		public @S(10) Bash_Keyword ELSE = new Bash_Keyword("else");
 		public @S(20) @OPT Bash_EndOfLine eoln;
-		public @S(30) TokenList<Bash_Statement> statements;
+		public @S(30) TokenList<Bash_Element> statements;
 	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		TokenList<Bash_Statement> todo = null;
+		TokenList<Bash_Element> todo = null;
 
 		if (_metrics == null)
 		{
@@ -112,7 +112,7 @@ public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 		if (todo != null)
 		{
 			result = Eagle_Statement_Result.NORMAL;
-			for (Bash_Statement stmt : todo._elements)
+			for (Bash_Element stmt : todo._elements)
 			{
 				result = interpreter.tryToInterpret(stmt.element);
 				if (result != Eagle_Statement_Result.NORMAL) break;

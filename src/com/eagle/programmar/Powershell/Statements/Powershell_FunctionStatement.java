@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Syntax;
 import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Powershell_Variable;
@@ -37,7 +37,7 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 	public @S(40) @OPT Powershell_EndOfLine eoln1;
 	public @S(50) PunctuationLeftBrace leftBrace;
 	public @S(60) @OPT Powershell_EndOfLine eoln2;
-	public @S(70) @OPT TokenList<Powershell_Statement> stmts;
+	public @S(70) @OPT TokenList<Powershell_Element> stmts;
 	public @S(80) PunctuationRightBrace rightBrace;
 
 	public @SKIP CallMetrics _metrics = null;

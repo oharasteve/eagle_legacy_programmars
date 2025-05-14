@@ -9,7 +9,7 @@ import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -28,7 +28,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 	public @S(60) VB_Expression to;
 	public @S(70) @OPT VB_ForStep step;
 	public @S(80) VB_EndOfLine eoln;
-	public @S(90) TokenList<VB_Statement> actions;
+	public @S(90) TokenList<VB_Element> actions;
 	public @S(100) VB_Keyword NEXT = new VB_Keyword("next");
 	public @S(110) @OPT VB_Identifier_Reference var2;
 
@@ -74,7 +74,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 			
 			interpreter.setSymbol(this, var.getValue(), new EagleInteger(current));
 
-			for (VB_Statement stmt : actions._elements)
+			for (VB_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;

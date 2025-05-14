@@ -30,7 +30,7 @@ public class Rexx_Program extends AbstractLanguage implements EagleRunnable
 
 	public static class Rexx_Element extends TokenChooser
 	{
-		public @CHOICE Rexx_Statement XXstatement;
+		public @CHOICE Rexx_Element XXstatement;
 		public @CHOICE Rexx_Function XXfunction;
 	}
 

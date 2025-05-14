@@ -11,7 +11,7 @@ import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.FSharp.FSharp_Expression;
-import com.eagle.programmar.FSharp.FSharp_Statement;
+import com.eagle.programmar.FSharp.FSharp_Element;
 import com.eagle.programmar.FSharp.FSharp_Variable;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function.FSharp_FunctionParam;
@@ -75,7 +75,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 		// And transfer control to the method
 		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (FSharp_Statement stmt : func.statements._elements)
+		for (FSharp_Element stmt : func.statements._elements)
 		{
 			result = interpreter.tryToInterpret(stmt.statementOrComment);
 			if (result != Eagle_Statement_Result.NORMAL) break;

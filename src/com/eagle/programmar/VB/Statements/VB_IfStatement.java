@@ -10,8 +10,8 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
-import com.eagle.programmar.VB.VB_Statement.VB_BaseStatement;
+import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Element.VB_Statement;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -42,13 +42,13 @@ public class VB_IfStatement extends TokenSequence
 
 	public static class VB_IfOneLiner extends TokenSequence
 	{
-		public @S(10) VB_BaseStatement thenStatement;
+		public @S(10) VB_Statement thenStatement;
 	}
 
 	public static class VB_IfMultiLiner extends TokenSequence
 	{
 		public @S(10) VB_EndOfLine eoln;
-		public @S(20) TokenList<VB_Statement> thenStatement;
+		public @S(20) TokenList<VB_Element> thenStatement;
 		public @S(30) @OPT TokenList<VB_IfElseIfClause> elseIfClause;
 		public @S(40) @OPT VB_IfElseClause elseClause;
 		public @S(50) VB_Keyword END = new VB_Keyword("end");
@@ -62,7 +62,7 @@ public class VB_IfStatement extends TokenSequence
 		public @S(30) VB_Expression condition;
 		public @S(40) VB_Keyword THEN = new VB_Keyword("then");
 		public @S(50) VB_EndOfLine eoln;
-		public @S(60) TokenList<VB_Statement> elseIfStatement;
+		public @S(60) TokenList<VB_Element> elseIfStatement;
 	}
 
 	public static class VB_IfElseClause extends TokenSequence
@@ -70,14 +70,14 @@ public class VB_IfStatement extends TokenSequence
 		public @S(10) @OPT TokenList<VB_Comment> comments;
 		public @S(20) VB_Keyword ELSE = new VB_Keyword("else");
 		public @S(30) VB_EndOfLine eoln;
-		public @S(40) TokenList<VB_Statement> elseStatement;
+		public @S(40) TokenList<VB_Element> elseStatement;
 	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		TokenList<VB_Statement> todo = null;
+		TokenList<VB_Element> todo = null;
 
 		if (_metrics == null)
 		{
@@ -154,7 +154,7 @@ public class VB_IfStatement extends TokenSequence
 			if (todo != null)
 			{
 				result = Eagle_Statement_Result.NORMAL;
-				for (VB_Statement stmt : todo._elements)
+				for (VB_Element stmt : todo._elements)
 				{
 					result = interpreter.tryToInterpret(stmt);
 					if (result != Eagle_Statement_Result.NORMAL) break;
@@ -176,7 +176,7 @@ public class VB_IfStatement extends TokenSequence
 		if (which instanceof VB_IfOneLiner)
 		{
 			VB_IfOneLiner oneLiner = (VB_IfOneLiner) which;
-			VB_Statement statement = new VB_Statement();
+			VB_Element statement = new VB_Element();
 			statement.baseStatement = oneLiner.thenStatement;
 			for (AbstractStatement stmt: transformer.transformStatement(generator, statement.baseStatement.getWhich()))
 			{
@@ -186,7 +186,7 @@ public class VB_IfStatement extends TokenSequence
 		else
 		{
 			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
-			for (VB_Statement statement : multiLiner.thenStatement._elements)
+			for (VB_Element statement : multiLiner.thenStatement._elements)
 			{
 				for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
 				{
@@ -201,7 +201,7 @@ public class VB_IfStatement extends TokenSequence
 			
 			if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())
 			{
-				for (VB_Statement statement : multiLiner.elseClause.elseStatement._elements)
+				for (VB_Element statement : multiLiner.elseClause.elseStatement._elements)
 				{
 					for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
 					{

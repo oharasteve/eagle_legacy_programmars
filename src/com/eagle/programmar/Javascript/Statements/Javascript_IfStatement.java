@@ -9,7 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Javascript.Javascript_Expression;
-import com.eagle.programmar.Javascript.Javascript_Statement;
+import com.eagle.programmar.Javascript.Javascript_Element;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.SeparatedList;
@@ -28,7 +28,7 @@ public class Javascript_IfStatement extends TokenSequence implements AbstractSta
 	public @S(40) @OPT TokenList<Javascript_Comment> comment1;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) @OPT TokenList<Javascript_Comment> comments2;
-	public @S(70) Javascript_Statement thenStatement;
+	public @S(70) Javascript_Element thenStatement;
 	public @S(80) @OPT TokenList<Javascript_Comment> comments3;
 	public @S(90) @OPT Javascript_IfElseClause elseClause;
 
@@ -38,14 +38,14 @@ public class Javascript_IfStatement extends TokenSequence implements AbstractSta
 	{
 		public @S(10) Javascript_Keyword ELSE = new Javascript_Keyword("else");
 		public @S(20) @OPT Javascript_Comment comment;
-		public @S(30) Javascript_Statement elseStatement;
+		public @S(30) Javascript_Element elseStatement;
 	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		Javascript_Statement todo = null;
+		Javascript_Element todo = null;
 
 		if (_metrics == null)
 		{

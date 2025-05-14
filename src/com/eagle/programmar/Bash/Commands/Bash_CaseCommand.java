@@ -5,7 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Expression;
-import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Terminals.Bash_Identifier;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
@@ -34,7 +34,7 @@ public class Bash_CaseCommand extends TokenSequence implements AbstractStatement
 		public @S(20) Bash_Identifier regex;
 		public @S(30) PunctuationRightBracket rightBracket;
 		public @S(40) PunctuationRightParen rightParen;
-		public @S(50) Bash_Statement stmt;
+		public @S(50) Bash_Element stmt;
 		public @S(60) PunctuationSemicolon semicolon1;
 		public @S(70) @OPT PunctuationSemicolon semicolon2;
 		public @S(80) Bash_EndOfLine eoln;
@@ -44,7 +44,7 @@ public class Bash_CaseCommand extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) PunctuationStar star;
 		public @S(20) PunctuationRightParen rightParen;
-		public @S(30) Bash_Statement stmt;
+		public @S(30) Bash_Element stmt;
 		public @S(40) PunctuationSemicolon semicolon1;
 		public @S(50) @OPT PunctuationSemicolon semicolon2;
 		public @S(60) Bash_EndOfLine eoln;

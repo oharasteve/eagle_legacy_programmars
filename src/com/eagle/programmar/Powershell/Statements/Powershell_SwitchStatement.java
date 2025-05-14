@@ -5,7 +5,7 @@ package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -34,7 +34,7 @@ public class Powershell_SwitchStatement extends TokenSequence implements Abstrac
 		public @S(10) Powershell_SwitchCondition switchCondition;
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) @OPT Powershell_EndOfLine eoln1;
-		public @S(40) @OPT TokenList<Powershell_Statement> stmts;
+		public @S(40) @OPT TokenList<Powershell_Element> stmts;
 		public @S(50) PunctuationRightBrace rightBrace;
 		public @S(60) @OPT Powershell_EndOfLine eoln2;
 	}

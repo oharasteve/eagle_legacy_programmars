@@ -11,7 +11,7 @@ import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Bash_Variable;
 import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
 import com.eagle.programmar.Bash.Terminals.Bash_Filename;
@@ -87,7 +87,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 	
 			// And transfer control to the function
 			interpreter.callingFunction(name, func);
-			for (Bash_Statement stmt : func.statements._elements)
+			for (Bash_Element stmt : func.statements._elements)
 			{
 				Eagle_Statement_Result result = interpreter.tryToInterpret(stmt.element);
 				if (result != Eagle_Statement_Result.NORMAL) break;

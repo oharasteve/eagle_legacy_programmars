@@ -4,7 +4,7 @@
 package com.eagle.programmar.Python;
 
 import com.eagle.parsers.EagleOverrideManager;
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 
 public class Python3_Program extends Python_Program
 {
@@ -15,7 +15,7 @@ public class Python3_Program extends Python_Program
 		super(PYTHON3, new Python_Syntax());
 	}
 
-	public static class Python3_Simple_Statement extends Python_Simple_Statement
+	public static class Python3_Simple_Statement extends Python_Statement
 	{
 
 	}
@@ -23,7 +23,7 @@ public class Python3_Program extends Python_Program
 	@Override
 	public void findLanguageOverrides(EagleOverrideManager overrider)
 	{
-		overrider.override(Python_Simple_Statement.class, Python3_Simple_Statement.class);
+		overrider.override(Python_Statement.class, Python3_Simple_Statement.class);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Bash.Bash_Condition;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
-import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -23,7 +23,7 @@ public class Bash_WhileStatement extends TokenSequence
 	public @S(30) Bash_EndOfLine eoln1;
 	public @S(40) Bash_Keyword DO = new Bash_Keyword("do");
 	public @S(50) @OPT Bash_EndOfLine eoln2;
-	public @S(60) TokenList<Bash_Statement> statements;
+	public @S(60) TokenList<Bash_Element> statements;
 	public @S(70) Bash_Keyword DONE = new Bash_Keyword("done");
 	
 	private @SKIP ForLoopMetrics _metrics = null;
@@ -44,7 +44,7 @@ public class Bash_WhileStatement extends TokenSequence
 			if (!keepGoing) break;
 
 			metric.iterate();
-			for (Bash_Statement stmt : statements._elements)
+			for (Bash_Element stmt : statements._elements)
 			{
 				result = interpreter.tryToInterpret(stmt.element);
 				if (result != Eagle_Statement_Result.NORMAL)

@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Delphi_Succ_Function extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) Delphi_Keyword PRED = new Delphi_Keyword("Pred");
+	public @S(10) Delphi_Keyword SUCC = new Delphi_Keyword("Succ");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Delphi_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;

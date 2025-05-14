@@ -10,7 +10,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_ExpressionList;
 import com.eagle.programmar.Python.Python_Generator;
-import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -21,7 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 
 public class Python_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-			Eagle_Generate_Return<Python_Statement, Python_Expression>
+			Eagle_Generate_Return<Python_ComplexStatement, Python_Expression>
 {
 	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN =
 			new Python_Keyword("return");
@@ -38,7 +38,7 @@ public class Python_ReturnStatement extends TokenSequence
 	}
 	
 	@Override
-	public Python_Statement generateReturn(Python_Expression ret, AbstractToken source)
+	public Python_ComplexStatement generateReturn(Python_Expression ret, AbstractToken source)
 	{
 		if (ret != null)
 		{

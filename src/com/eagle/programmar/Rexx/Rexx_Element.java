@@ -19,13 +19,13 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class Rexx_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Rexx_Element extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) Rexx_BaseStatement baseStatement;
+	public @S(10) Rexx_Statement baseStatement;
 	public @S(20) @OPT Rexx_Comment comment;
 	public @S(30) Rexx_EndOfLine eoln;
 
-	public static class Rexx_BaseStatement extends TokenChooser
+	public static class Rexx_Statement extends TokenChooser
 	{
 		public @CHOICE Rexx_Comment XXcomment;
 	

@@ -10,7 +10,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Syntax;
 import com.eagle.programmar.VB.VB_Type;
 import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
@@ -36,7 +36,7 @@ public class VB_Function extends TokenSequence
 	public @S(50) @OPT VB_Keyword AS = new VB_Keyword("as");
 	public @S(60) @OPT VB_Type type;
 	public @S(70) VB_EndOfLine eoln;
-	public @S(80) @OPT TokenList<VB_Statement> stmts;
+	public @S(80) @OPT TokenList<VB_Element> stmts;
 	public @S(90) VB_Keyword END = new VB_Keyword("end");
 	public @S(100) VB_Keyword FUNCTION2 = new VB_Keyword("function");
 	

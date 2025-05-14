@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Javascript.Statements;
 
-import com.eagle.programmar.Javascript.Javascript_Statement;
-import com.eagle.programmar.Javascript.Javascript_Statement.Javascript_StatementOrComment;
+import com.eagle.programmar.Javascript.Javascript_Element;
+import com.eagle.programmar.Javascript.Javascript_Element.Javascript_StatementOrComment;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.TokenList;
@@ -30,12 +30,12 @@ public class Javascript_TryStatement extends TokenSequence implements AbstractSt
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) Javascript_Variable_Definition id;
 		public @S(40) PunctuationRightParen rightParen;
-		public @S(50) Javascript_Statement catchStatement;
+		public @S(50) Javascript_Element catchStatement;
 	}
 
 	public static class Javascript_FinallyBlock extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword FINALLY = new Javascript_Keyword("finally");
-		public @S(20) Javascript_Statement finallyStatement;
+		public @S(20) Javascript_Element finallyStatement;
 	}
 }

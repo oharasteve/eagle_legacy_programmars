@@ -41,7 +41,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Python_Statement extends TokenSequence
+public class Python_ComplexStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @NEWLINE Python_StartOfLine soln;
@@ -60,7 +60,7 @@ public class Python_Statement extends TokenSequence
 		public @CHOICE Python_SameLineStatement XXstatements;
 	}
 	
-	public static class Python_Simple_Statement extends TokenChooser
+	public static class Python_Statement extends TokenChooser
 	{
 		public @CHOICE Python_Assignment XXassignment;
 		public @CHOICE Python_AssertStatement XXassertStatement;

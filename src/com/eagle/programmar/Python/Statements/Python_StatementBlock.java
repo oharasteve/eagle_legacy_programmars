@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.programmar.Python.Python_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_StatementOrComment;
+import com.eagle.programmar.Python.Python_ComplexStatement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
@@ -26,7 +26,7 @@ public class Python_StatementBlock extends TokenChooser
 
 	public @CHOICE static class Python_SameLineStatement extends TokenSequence implements EagleRunnableWithResult
 	{
-		public @S(10) SeparatedList<Python_Simple_Statement, PunctuationSemicolon> statements;
+		public @S(10) SeparatedList<Python_Statement, PunctuationSemicolon> statements;
 		public @S(20) @OPT Python_Comment comment;
 
 		@Override
@@ -35,7 +35,7 @@ public class Python_StatementBlock extends TokenChooser
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			for (int i = 0; i < statements.getPrimaryCount(); i++)
 			{
-				Python_Simple_Statement stmt = statements.getPrimaryElement(i);
+				Python_Statement stmt = statements.getPrimaryElement(i);
 				result = interpreter.tryToInterpret(stmt.getWhich());
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
@@ -48,13 +48,13 @@ public class Python_StatementBlock extends TokenChooser
 	{
 		public @S(10) @OPT Python_Comment comment;
 		public @S(20) Python_EndOfLine eoln;
-		public @S(30) TokenList<Python_Statement> statements;
+		public @S(30) TokenList<Python_ComplexStatement> statements;
 
 		@Override
 		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			for (Python_Statement stmt : statements._elements)
+			for (Python_ComplexStatement stmt : statements._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
@@ -63,16 +63,16 @@ public class Python_StatementBlock extends TokenChooser
 		}
 	}
 	
-	public Python_Statement addStatements(ArrayList<? extends AbstractStatement> statements)
+	public Python_ComplexStatement addStatements(ArrayList<? extends AbstractStatement> statements)
 	{
 		Python_MultilineStatement multi = new Python_MultilineStatement();
-		multi.statements = new TokenList<Python_Statement>();
+		multi.statements = new TokenList<Python_ComplexStatement>();
 		for (AbstractStatement stmt : statements)
 		{
-			multi.statements.addToken((Python_Statement) stmt);
+			multi.statements.addToken((Python_ComplexStatement) stmt);
 		}
 		this.setWhich(multi);
-		Python_Statement wrapper = new Python_Statement();
+		Python_ComplexStatement wrapper = new Python_ComplexStatement();
 		wrapper.statementOrComment = new Python_StatementOrComment();
 		wrapper.statementOrComment.setWhich(multi);
 		return wrapper;

@@ -26,13 +26,13 @@ public class Bash_Program extends AbstractLanguage implements EagleRunnable
 		return "https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html";
 	}
 
-	public @S(10) TokenList<Bash_Statement> statements;
+	public @S(10) TokenList<Bash_Element> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		for (Bash_Statement stmt : statements._elements)
+		for (Bash_Element stmt : statements._elements)
 		{
 			AbstractToken which = stmt.element.getWhich();
 			if (which instanceof Bash_Function)
@@ -47,7 +47,7 @@ public class Bash_Program extends AbstractLanguage implements EagleRunnable
 		}
 
 		// Second pass, execute the program
-		for (Bash_Statement stmt : statements._elements)
+		for (Bash_Element stmt : statements._elements)
 		{
 			interpreter.tryToInterpret(stmt.element);
 		}

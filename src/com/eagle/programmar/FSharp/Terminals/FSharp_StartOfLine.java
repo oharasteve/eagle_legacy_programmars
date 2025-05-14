@@ -4,9 +4,9 @@
 package com.eagle.programmar.FSharp.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.programmar.FSharp.FSharp_Statement;
-import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Simple_Statement;
-import com.eagle.programmar.FSharp.FSharp_Statement.FSharp_Statement_List;
+import com.eagle.programmar.FSharp.FSharp_Element;
+import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement;
+import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_IfStatement.FSharp_IfElif;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
@@ -48,14 +48,14 @@ public class FSharp_StartOfLine extends TerminalLiteralToken
 							continue; // Doesn't matter what columns comments are in
 						}
 
-						if (token instanceof FSharp_Statement)
+						if (token instanceof FSharp_Element)
 						{
-							FSharp_Statement firstStmt = (FSharp_Statement) token;
+							FSharp_Element firstStmt = (FSharp_Element) token;
 							AbstractToken child = firstStmt.statementOrComment.getWhich();
 							if (child instanceof FSharp_Statement_List)
 							{
 								FSharp_Statement_List stmtList = (FSharp_Statement_List) child;
-								FSharp_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
+								FSharp_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
 								// if (_currentLine == otherStmt._currentLine) return false; // Cannot have two
 								// SOLN's on the same line
 								if (_currentChar != otherStmt.getStartChar()) return false;

@@ -24,7 +24,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class TCL_Statement extends TokenSequence implements EagleRunnableWithResult
+public class TCL_Element extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) TCL_Compound_Statement compoundStatement;
 	public @S(20) @OPT TCL_Comment comment;
@@ -32,10 +32,10 @@ public class TCL_Statement extends TokenSequence implements EagleRunnableWithRes
 
 	public static class TCL_Compound_Statement extends TokenSequence
 	{
-		public @S(10) SeparatedList<TCL_BaseStatement, PunctuationSemicolon> statements;
+		public @S(10) SeparatedList<TCL_Statement, PunctuationSemicolon> statements;
 	}
 
-	public static class TCL_BaseStatement extends TokenChooser
+	public static class TCL_Statement extends TokenChooser
 	{
 		public @CHOICE TCL_Comment XXcomment;
 		public @CHOICE TCL_BlockStatement XXblockStatement;
@@ -61,7 +61,7 @@ public class TCL_Statement extends TokenSequence implements EagleRunnableWithRes
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (int i = 0; i < compoundStatement.statements.getPrimaryCount(); i++)
 		{
-			TCL_BaseStatement stmt = compoundStatement.statements.getPrimaryElement(i);
+			TCL_Statement stmt = compoundStatement.statements.getPrimaryElement(i);
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;
 		}

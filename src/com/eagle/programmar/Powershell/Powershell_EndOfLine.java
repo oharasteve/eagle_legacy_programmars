@@ -47,7 +47,7 @@ public class Powershell_EndOfLine extends TokenSequence
 			public @S(10) Powershell_PunctuationChoice separator = new Powershell_PunctuationChoice(
 					"|", ";", "||", "&&");
 			public @S(20) @OPT Powershell_RealEndOfLine eoln;
-			public @S(30) Powershell_Statement statement;
+			public @S(30) Powershell_Element statement;
 		}
 
 		public @FIRST static class Powershell_PipeBogusSemicolon extends TokenSequence

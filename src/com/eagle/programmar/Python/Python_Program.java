@@ -7,7 +7,7 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
@@ -38,13 +38,13 @@ public abstract class Python_Program extends AbstractLanguage implements EagleRu
 
 	public @S(10) @OPT TokenList<Python_CommentEoln> comments;
 	public @S(20) @OPT TokenList<Python_EndOfLine> blankLines;
-	public @S(30) @OPT TokenList<Python_Statement> entries;
+	public @S(30) @OPT TokenList<Python_ComplexStatement> entries;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		for (Python_Statement stmt : entries._elements)
+		for (Python_ComplexStatement stmt : entries._elements)
 		{
 			AbstractToken which = stmt.statementOrComment.getWhich();
 			if (which instanceof Python_SameLineStatement)
@@ -52,7 +52,7 @@ public abstract class Python_Program extends AbstractLanguage implements EagleRu
 				Python_SameLineStatement stmts = (Python_SameLineStatement) which;
 				for (int i = 0; i < stmts.statements.getPrimaryCount(); i++)
 				{
-					Python_Simple_Statement simple = stmts.statements.getPrimaryElement(i);
+					Python_Statement simple = stmts.statements.getPrimaryElement(i);
 					if (simple.getWhich() instanceof Python_Function)
 					{
 						Python_Function fn = (Python_Function) simple.getWhich();
@@ -67,7 +67,7 @@ public abstract class Python_Program extends AbstractLanguage implements EagleRu
 		}
 
 		// Second pass, execute the program
-		for (Python_Statement stmt : entries._elements)
+		for (Python_ComplexStatement stmt : entries._elements)
 		{
 			interpreter.tryToInterpret(stmt);
 		}

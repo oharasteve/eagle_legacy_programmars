@@ -13,7 +13,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Library;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement.Powershell_FunctionParam;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
@@ -99,7 +99,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		// And transfer control to the method
 		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (Powershell_Statement stmt : func.stmts._elements)
+		for (Powershell_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt.element);
 			if (result != Eagle_Statement_Result.NORMAL) break;

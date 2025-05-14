@@ -11,7 +11,7 @@ import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Variable_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -89,7 +89,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 
 		// And transfer control to the method
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (VB_Statement stmt : subr.stmts._elements)
+		for (VB_Element stmt : subr.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break; 

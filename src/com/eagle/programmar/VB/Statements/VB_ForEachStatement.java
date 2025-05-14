@@ -4,7 +4,7 @@
 package com.eagle.programmar.VB.Statements;
 
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -20,7 +20,7 @@ public class VB_ForEachStatement extends TokenSequence implements AbstractStatem
 	public @S(40) VB_Keyword IN = new VB_Keyword("in");
 	public @S(50) VB_Expression from;
 	public @S(60) VB_EndOfLine eoln;
-	public @S(70) TokenList<VB_Statement> action;
+	public @S(70) TokenList<VB_Element> action;
 	public @S(80) VB_Keyword NEXT = new VB_Keyword("next");
 	public @S(90) @OPT VB_Identifier_Reference var2;
 }

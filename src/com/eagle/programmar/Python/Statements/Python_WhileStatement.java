@@ -16,7 +16,7 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_List;
-import com.eagle.programmar.Python.Python_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
@@ -42,8 +42,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_While<Python_Statement, Python_Expression>,
-				Eagle_Generate_DoUntil<Python_Statement, Python_Expression>
+				Eagle_Generate_While<Python_ComplexStatement, Python_Expression>,
+				Eagle_Generate_DoUntil<Python_ComplexStatement, Python_Expression>
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");
@@ -106,17 +106,17 @@ public class Python_WhileStatement extends TokenSequence
 	}
 
 	@Override
-	public Python_Statement generateDoUntil1(Python_Expression cond,
-			Python_Statement action, AbstractToken source)
+	public Python_ComplexStatement generateDoUntil1(Python_Expression cond,
+			Python_ComplexStatement action, AbstractToken source)
 	{
-		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
+		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
 		return generateDoUntil(cond, actions, source);
 	}
 	
 	@Override
-	public Python_Statement generateDoUntil(Python_Expression cond,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+	public Python_ComplexStatement generateDoUntil(Python_Expression cond,
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
 		
@@ -157,39 +157,39 @@ public class Python_WhileStatement extends TokenSequence
 		Python_Expression trueExpr = built.generateBuiltIn(BuiltInEnum.TRUE, null);
 		Python_ExpressionStatement asgExprStmt = Python_Assignment.generateAssignment(
 				oddName, null, AssignmentEnum.EQUALS, trueExpr, null, source);
-		Python_Statement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
+		Python_ComplexStatement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
 		
-		ArrayList<Python_Statement> copyActions = new ArrayList<Python_Statement>();
+		ArrayList<Python_ComplexStatement> copyActions = new ArrayList<Python_ComplexStatement>();
 		copyActions.add(asgStmt);
 		for (AbstractStatement act : actions)
 		{
-			copyActions.add((Python_Statement) act);
+			copyActions.add((Python_ComplexStatement) act);
 		}
 		return generateWhile(whileCond, copyActions, source);
 	}
 	
 	@Override
-	public Python_Statement generateWhile1(Python_Expression cond,
-			Python_Statement action, AbstractToken source)
+	public Python_ComplexStatement generateWhile1(Python_Expression cond,
+			Python_ComplexStatement action, AbstractToken source)
 	{
-		ArrayList<Python_Statement> actions = new ArrayList<Python_Statement>();
+		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
 		return generateWhile(cond, actions, source);
 	}
 
 	@Override
-	public Python_Statement generateWhile(Python_Expression cond,
-			ArrayList<Python_Statement> actions, AbstractToken source)
+	public Python_ComplexStatement generateWhile(Python_Expression cond,
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		this.colon = new PunctuationColon();
 
 		this.condition = cond;
 		this.statements = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
-		multi.statements = new TokenList<Python_Statement>();
+		multi.statements = new TokenList<Python_ComplexStatement>();
 		this.statements.setWhich(multi);
 
-		for (Python_Statement stmt : actions)
+		for (Python_ComplexStatement stmt : actions)
 		{
 			multi.statements.addToken(stmt);
 

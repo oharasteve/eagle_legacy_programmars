@@ -6,7 +6,7 @@ package com.eagle.programmar.Rexx.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Rexx.Rexx_Statement;
+import com.eagle.programmar.Rexx.Rexx_Element;
 import com.eagle.programmar.Rexx.Rexx_Syntax;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Function_Definition;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
@@ -28,7 +28,7 @@ public class Rexx_Function extends TokenSequence
 	public @S(20) PunctuationColon colon;
 	public @S(30) Rexx_EndOfLine eoln;
 	public @S(40) @OPT Rexx_Parameters params;
-	public @S(50) TokenList<Rexx_Statement> stmts;
+	public @S(50) TokenList<Rexx_Element> stmts;
 	
 	private @SKIP EagleScope _scope = new EagleScope(this, Rexx_Syntax.IS_CASE_SENSITIVE);
 

@@ -36,13 +36,13 @@ public class Powershell_Program extends AbstractLanguage implements EagleRunnabl
 	public @S(30) @OPT Powershell_CmdletBinding cmdletBinding;
 	public @S(40) @OPT Powershell_Parameters parameters;
 	public @S(50) @OPT TokenList<Powershell_CommentEoln> comments2;
-	public @S(60) @OPT TokenList<Powershell_Statement> statements;
+	public @S(60) @OPT TokenList<Powershell_Element> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		for (Powershell_Statement stmt : statements._elements)
+		for (Powershell_Element stmt : statements._elements)
 		{
 			if (stmt.element.getWhich() instanceof Powershell_FunctionStatement)
 			{
@@ -52,7 +52,7 @@ public class Powershell_Program extends AbstractLanguage implements EagleRunnabl
 		}
 
 		// Second pass, execute the program
-		for (Powershell_Statement stmt : statements._elements)
+		for (Powershell_Element stmt : statements._elements)
 		{
 			interpreter.tryToInterpret(stmt.element);
 		}

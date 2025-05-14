@@ -8,7 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
@@ -21,7 +21,7 @@ public class VB_DoStatement extends TokenSequence implements AbstractStatement, 
 	public @S(10) VB_Keyword DO = new VB_Keyword("Do");
 	public @S(20) @OPT VB_DoCondition cond1;
 	public @S(30) VB_EndOfLine eoln;
-	public @S(40) TokenList<VB_Statement> actions;
+	public @S(40) TokenList<VB_Element> actions;
 	public @S(50) VB_Keyword LOOP = new VB_Keyword("Loop");
 	public @S(60) @OPT VB_DoCondition cond2;
 	
@@ -57,7 +57,7 @@ public class VB_DoStatement extends TokenSequence implements AbstractStatement, 
 
 			metric.iterate();
 			
-			for (VB_Statement stmt : actions._elements)
+			for (VB_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;

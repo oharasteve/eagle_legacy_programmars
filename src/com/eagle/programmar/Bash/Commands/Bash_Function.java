@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
-import com.eagle.programmar.Bash.Bash_Statement;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Bash_Syntax;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
@@ -33,7 +33,7 @@ public class Bash_Function extends TokenChooser
 		public @S(40) @OPT Bash_EndOfLine eoln1;
 		public @S(50) PunctuationLeftBrace leftBrace;
 		public @S(60) Bash_EndOfLine eoln2;
-		public @S(70) TokenList<Bash_Statement> statements;
+		public @S(70) TokenList<Bash_Element> statements;
 		public @S(80) PunctuationRightBrace rightBrace;
 
 		public static class Bash_FunctionParams extends TokenSequence
@@ -73,7 +73,7 @@ public class Bash_Function extends TokenChooser
 		public @S(30) PunctuationRightParen rightParen;
 		public @S(40) PunctuationLeftBrace leftBrace;
 		public @S(50) Bash_EndOfLine eoln1;
-		public @S(60) TokenList<Bash_Statement> statements;
+		public @S(60) TokenList<Bash_Element> statements;
 		public @S(70) PunctuationRightBrace rightBrace;
 	}
 }

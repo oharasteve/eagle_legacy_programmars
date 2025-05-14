@@ -4,7 +4,7 @@
 package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
-import com.eagle.programmar.Powershell.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
@@ -21,7 +21,7 @@ public class Powershell_TryStatement extends TokenSequence implements AbstractSt
 	public @S(20) @OPT Powershell_EndOfLine eoln1;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT Powershell_EndOfLine eoln2;
-	public @S(50) @OPT TokenList<Powershell_Statement> statements;
+	public @S(50) @OPT TokenList<Powershell_Element> statements;
 	public @S(60) PunctuationRightBrace rightBrace;
 	public @S(70) @OPT TokenList<Powershell_CatchBlock> catchBlocks;
 	public @S(80) @OPT Powershell_FinallyBlock finallyBlock;
@@ -32,7 +32,7 @@ public class Powershell_TryStatement extends TokenSequence implements AbstractSt
 		public @S(20) @OPT Powershell_CatchType type;
 		public @S(30) PunctuationLeftBrace leftBrace;
 		public @S(40) @OPT Powershell_EndOfLine eoln;
-		public @S(50) @OPT TokenList<Powershell_Statement> statements;
+		public @S(50) @OPT TokenList<Powershell_Element> statements;
 		public @S(60) PunctuationRightBrace rightBrace;
 
 		public static class Powershell_CatchType extends TokenSequence
@@ -48,7 +48,7 @@ public class Powershell_TryStatement extends TokenSequence implements AbstractSt
 		public @S(10) Powershell_Keyword FINALLY = new Powershell_Keyword("Finally");
 		public @S(20) PunctuationLeftBrace leftBrace;
 		public @S(30) @OPT Powershell_EndOfLine eoln;
-		public @S(40) @OPT TokenList<Powershell_Statement> statements;
+		public @S(40) @OPT TokenList<Powershell_Element> statements;
 		public @S(50) PunctuationRightBrace rightBrace;
 	}
 }

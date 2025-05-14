@@ -8,7 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.VB_Statement;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
@@ -21,7 +21,7 @@ public class VB_WhileStatement extends TokenSequence implements AbstractStatemen
 	public @S(10) VB_Keyword WHILE1 = new VB_Keyword("While");
 	public @S(20) VB_Expression condition;
 	public @S(30) VB_EndOfLine eoln;
-	public @S(40) TokenList<VB_Statement> actions;
+	public @S(40) TokenList<VB_Element> actions;
 	public @S(50) VB_KeywordChoice WEND = new VB_KeywordChoice("Wend", "End");
 	public @S(60) @OPT VB_Keyword WHILE2 = new VB_Keyword("While");
 	
@@ -44,7 +44,7 @@ public class VB_WhileStatement extends TokenSequence implements AbstractStatemen
 
 			metric.iterate();
 			
-			for (VB_Statement stmt : actions._elements)
+			for (VB_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;

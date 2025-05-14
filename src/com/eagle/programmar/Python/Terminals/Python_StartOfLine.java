@@ -4,8 +4,8 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.programmar.Python.Python_Statement;
-import com.eagle.programmar.Python.Python_Statement.Python_Simple_Statement;
+import com.eagle.programmar.Python.Python_ComplexStatement;
+import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
@@ -49,12 +49,12 @@ public class Python_StartOfLine extends TerminalStartOfLine
 							continue; // Doesn't matter what columns comments are in
 						}
 	
-						Python_Statement firstStmt = (Python_Statement) token;
+						Python_ComplexStatement firstStmt = (Python_ComplexStatement) token;
 						AbstractToken child = firstStmt.statementOrComment.getWhich();
 						if (child instanceof Python_SameLineStatement)
 						{
 							Python_SameLineStatement stmtList = (Python_SameLineStatement) child;
-							Python_Simple_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
+							Python_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
 							/////// The KEY Line /////// Who doesn't like Key Lime pie?
 							if (_currentChar != otherStmt.getStartChar())
 							{

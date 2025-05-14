@@ -6,7 +6,7 @@ package com.eagle.programmar.TCL;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.TCL.TCL_Statement.TCL_BaseStatement;
+import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.tokens.TokenList;
 
 public class TCL_Program extends AbstractLanguage implements EagleRunnable
@@ -31,17 +31,17 @@ public class TCL_Program extends AbstractLanguage implements EagleRunnable
 		return "https://www.tcl.tk/man/tcl8.7/";
 	}
 
-	public @S(10) TokenList<TCL_Statement> statements;
+	public @S(10) TokenList<TCL_Element> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		for (TCL_Statement stmt : statements._elements)
+		for (TCL_Element stmt : statements._elements)
 		{
 			for (int i = 0; i < stmt.compoundStatement.statements.getPrimaryCount(); i++)
 			{
-				TCL_BaseStatement base = stmt.compoundStatement.statements.getPrimaryElement(i);
+				TCL_Statement base = stmt.compoundStatement.statements.getPrimaryElement(i);
 				if (base.getWhich() instanceof TCL_Procedure)
 				{
 					TCL_Procedure proc = (TCL_Procedure) base.getWhich();
@@ -51,7 +51,7 @@ public class TCL_Program extends AbstractLanguage implements EagleRunnable
 		}
 
 		// Second pass, run any stuff in the outermost 'object'
-		for (TCL_Statement stmt : statements._elements)
+		for (TCL_Element stmt : statements._elements)
 		{
 			interpreter.tryToInterpret(stmt);
 		}

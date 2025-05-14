@@ -27,10 +27,10 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Javascript_Statement extends TokenSequence implements EagleRunnableWithResult
+public class Javascript_Element extends TokenSequence implements EagleRunnableWithResult
 {
 	public @S(10) @OPT Javascript_Label label;
-	public @S(20) Javascript_RealStatement statement;
+	public @S(20) Javascript_Statement statement;
 
 	public static class Javascript_Label extends TokenSequence
 	{
@@ -38,7 +38,7 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 		public @S(20) PunctuationColon colon;
 	}
 
-	public static class Javascript_RealStatement extends TokenChooser
+	public static class Javascript_Statement extends TokenChooser
 	{
 		public @FIRST Javascript_StatementBlock XXblock;
 		public @CHOICE Javascript_Data XXdata;
@@ -53,7 +53,7 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 			public static class Javascript_MoreStatements extends TokenSequence
 			{
 				public @S(10) PunctuationComma comma;
-				public @S(20) Javascript_Statement statement;
+				public @S(20) Javascript_Element statement;
 			}
 
 			@Override
@@ -81,7 +81,7 @@ public class Javascript_Statement extends TokenSequence implements EagleRunnable
 
 	public static class Javascript_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE Javascript_Statement XXstatement;
+		public @CHOICE Javascript_Element XXstatement;
 		public @CHOICE Javascript_Comment XXcomment;
 	}
 
