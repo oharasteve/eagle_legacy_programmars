@@ -52,7 +52,7 @@ public class Basic_PrintStatement extends TokenSequence
 						double number = val.forceDoubleValue();
 						System.out.print(" " + number + " ");
 					}
-					else
+					else // string
 					{
 						String piece = val.forceStringValue();
 						System.out.print(piece);

@@ -6,6 +6,8 @@ package com.eagle.programmar.Basic.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleDouble;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Basic.Basic_Expression;
@@ -92,29 +94,81 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
-		double current = interpreter.getDoubleValue(from);
-		double stop = interpreter.getDoubleValue(to);
-		double by = 1;
+		// Have to decide whether to loop over Integers or Doubles
+		boolean useDoubles;
+		
+		int currentInt = 0;
+		int stopInt = 0;
+		int byInt = 1;
+		double currentDbl = 0.0;
+		double stopDbl = 0.0;
+		double byDbl = 1.0;
+		
+		EagleValue current = interpreter.getEagleValue(from);
+		EagleValue stop = interpreter.getEagleValue(to);
+		EagleValue by = null;
 		
 		if (step != null && step.isPresent())
 		{
-			by = interpreter.getDoubleValue(step.step);
+			by = interpreter.getEagleValue(step.step);
+		}
+
+		if (current.isDouble() || stop.isDouble() || (by != null && by.isDouble()))
+		{
+			useDoubles = true;
+			currentDbl = current.forceDoubleValue();
+			stopDbl = stop.forceDoubleValue();
+			if (by != null)
+			{
+				byDbl = by.forceDoubleValue();
+			}
+		}
+		else
+		{
+			useDoubles = false;
+			currentInt = current.forceIntegerValue();
+			stopInt = stop.forceIntegerValue();
+			if (by != null)
+			{
+				byInt = by.forceIntegerValue();
+			}
 		}
 		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
-			if (by < 0)
+			if (useDoubles)
 			{
-				if (current < stop) break;
+				if (byDbl < 0)
+				{
+					if (currentDbl < stopDbl) break;
+				}
+				else
+				{
+					if (currentDbl > stopDbl) break;
+				}
 			}
-			else
+			else // use integers
 			{
-				if (current > stop) break;
+				if (byInt < 0)
+				{
+					if (currentInt < stopInt) break;
+				}
+				else
+				{
+					if (currentInt > stopInt) break;
+				}
 			}
 
 			metric.iterate();
-			interpreter.setSymbol(this, var1.getValue(), new EagleDouble(current));
+			if (useDoubles)
+			{
+				interpreter.setSymbol(this, var1.getValue(), new EagleDouble(currentDbl));
+			}
+			else
+			{
+				interpreter.setSymbol(this, var1.getValue(), new EagleInteger(currentInt));
+			}
 
 			// Rest of this line, following the FOR
 			if (block1 != null && block1.pairs != null && block1.pairs.size() > 0)
@@ -169,7 +223,14 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 				break;
 			}
 
-			current += by;
+			if (useDoubles)
+			{
+				currentDbl += byDbl;
+			}
+			else
+			{
+				currentInt += byInt;
+			}
 		}
 
 		_metrics.competedLoop(metric);

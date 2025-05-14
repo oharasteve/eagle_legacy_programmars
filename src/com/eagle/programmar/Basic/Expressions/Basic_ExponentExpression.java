@@ -33,8 +33,17 @@ public class Basic_ExponentExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 		
-		double leftDbl = leftValue.forceDoubleValue();
-		double rightDbl = rightValue.forceDoubleValue();
-		interpreter.pushDouble(Math.pow(leftDbl, rightDbl));
+		if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDouble = leftValue.forceDoubleValue();
+			double rightDouble = rightValue.forceDoubleValue();
+			interpreter.pushDouble(Math.pow(leftDouble, rightDouble));
+		}
+		else
+		{
+			int leftInteger = leftValue.forceIntegerValue();
+			int rightInteger = rightValue.forceIntegerValue();
+			interpreter.pushInt((int) Math.pow(leftInteger, rightInteger));
+		}
 	}
 }

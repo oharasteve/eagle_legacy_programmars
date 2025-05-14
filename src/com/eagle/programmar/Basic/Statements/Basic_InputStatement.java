@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleDouble;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Basic.Basic_Variable;
 import com.eagle.programmar.Basic.Terminals.Basic_KeywordChoice;
 import com.eagle.programmar.Basic.Terminals.Basic_Literal;
@@ -76,9 +77,18 @@ public class Basic_InputStatement extends TokenSequence
 		
 		for (int i = 0; i < piecesGot; i++)
 		{
-			double val = Double.parseDouble(pieces[i].trim());
 			Basic_Variable var = vars.getPrimaryElement(i);
-			var.assignValue(interpreter, new EagleDouble(val));
+			String piece = pieces[i].trim();
+			if (piece.indexOf('.') >= 0)
+			{
+				double valDbl = Double.parseDouble(piece);
+				var.assignValue(interpreter, new EagleDouble(valDbl));
+			}
+			else
+			{
+				int valInt = Integer.parseInt(piece);
+				var.assignValue(interpreter, new EagleInteger(valInt));
+			}
 		}
 	}
 }
