@@ -13,8 +13,6 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Basic.Basic_Expression;
 import com.eagle.programmar.Basic.Basic_Statement;
 import com.eagle.programmar.Basic.Basic_Statement.Basic_BaseStatement;
-import com.eagle.programmar.Basic.Statements.Basic_ForStatement.Basic_For_PostFor.Basic_For_PostPair;
-import com.eagle.programmar.Basic.Statements.Basic_ForStatement.Basic_For_PreNext.Basic_For_PreNextPair;
 import com.eagle.programmar.Basic.Symbols.Basic_Identifier_Reference;
 import com.eagle.programmar.Basic.Terminals.Basic_EndOfLine;
 import com.eagle.programmar.Basic.Terminals.Basic_Keyword;
@@ -57,23 +55,23 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 	public static class Basic_For_PostFor extends TokenSequence
 	{
 		public @S(10) TokenList<Basic_For_PostPair> pairs;
-		
-		public static class Basic_For_PostPair extends TokenSequence
-		{
-			public @S(10) PunctuationBackSlash backSlash;
-			public @S(20) Basic_BaseStatement statement;
-		}
+	}
+	
+	public static class Basic_For_PostPair extends TokenSequence
+	{
+		public @S(10) PunctuationBackSlash backSlash;
+		public @S(20) Basic_BaseStatement statement;
 	}
 	
 	public static class Basic_For_PreNext extends TokenSequence
 	{
 		public @S(10) TokenList<Basic_For_PreNextPair> pairs;
-		
-		public static class Basic_For_PreNextPair extends TokenSequence
-		{
-			public @S(10) Basic_BaseStatement statement;
-			public @S(20) PunctuationBackSlash backSlash;
-		}
+	}
+	
+	public static class Basic_For_PreNextPair extends TokenSequence
+	{
+		public @S(10) Basic_BaseStatement statement;
+		public @S(20) PunctuationBackSlash backSlash;
 	}
 	
 	public static class Basic_For_IfThenNext extends TokenSequence

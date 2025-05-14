@@ -16,6 +16,8 @@ import com.eagle.programmar.Eaglish.Statements.Eaglish_Print_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Return_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Set_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_String_Data;
+import com.eagle.programmar.Eaglish.Statements.Eaglish_Subtract_Statement;
+import com.eagle.programmar.Eaglish.Statements.Eaglish_While_Block;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_CommentEoln;
 import com.eagle.tokens.TokenChooser;
 
@@ -35,4 +37,6 @@ public class Eaglish_Statement extends TokenChooser
 	public @CHOICE Eaglish_Return_Statement XXreturnStatement;
 	public @CHOICE Eaglish_Set_Statement XXsetStatement;
 	public @CHOICE Eaglish_String_Data XXstringData;
+	public @CHOICE Eaglish_Subtract_Statement XXsubtractStatement;
+	public @CHOICE Eaglish_While_Block XXwhileBlock;
 }
