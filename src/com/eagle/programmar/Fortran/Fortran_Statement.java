@@ -17,6 +17,7 @@ import com.eagle.programmar.Fortran.Statements.Fortran_Implicit;
 import com.eagle.programmar.Fortran.Statements.Fortran_PrintStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_ProgramBlock;
 import com.eagle.programmar.Fortran.Statements.Fortran_Subroutine;
+import com.eagle.programmar.Fortran.Statements.Fortran_WhileStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_WriteStatement;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Comment;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
@@ -38,6 +39,7 @@ public class Fortran_Statement extends TokenChooser
 	public @CHOICE Fortran_ProgramBlock XXprogramBlock;
 	public @CHOICE Fortran_Subroutine XXsubroutine;
 	public @CHOICE Fortran_WriteStatement XXwriteStatement;
+	public @CHOICE Fortran_WhileStatement XXwhileStatement;
 
 	public @CHOICE static class Fortran_CommentEOLN extends TokenSequence implements EagleRunnable
 	{
