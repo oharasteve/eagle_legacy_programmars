@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.programmar.Javascript.Javascript_Program.Javascript_Element;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Definition;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;

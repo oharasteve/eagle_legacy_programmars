@@ -26,9 +26,9 @@ public class Javascript_Program extends AbstractLanguage implements EagleRunnabl
 		return "http://www.w3schools.com/js/";
 	}
 
-	public @S(10) @OPT TokenList<Javascript_Element> elements;
+	public @S(10) @OPT TokenList<Javascript_TopElement> elements;
 
-	public static class Javascript_Element extends TokenChooser
+	public static class Javascript_TopElement extends TokenChooser
 	{
 		public @CHOICE Javascript_Comment XXcomment;
 		public @CHOICE Javascript_Function XXfunction;
@@ -40,7 +40,7 @@ public class Javascript_Program extends AbstractLanguage implements EagleRunnabl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the method definitions
-		for (Javascript_Element element : elements._elements)
+		for (Javascript_TopElement element : elements._elements)
 		{
 			if (element.getWhich() instanceof Javascript_Function)
 			{
@@ -54,7 +54,7 @@ public class Javascript_Program extends AbstractLanguage implements EagleRunnabl
 		}
 
 		// Second pass, run everything
-		for (Javascript_Element element : elements._elements)
+		for (Javascript_TopElement element : elements._elements)
 		{
 			interpreter.tryToInterpret(element);
 		}
