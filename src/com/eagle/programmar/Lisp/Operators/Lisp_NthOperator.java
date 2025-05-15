@@ -8,7 +8,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Lisp_List;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Lisp_Variable;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Identifier_Reference;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
@@ -20,8 +20,8 @@ public class Lisp_NthOperator extends TokenSequence implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_Keyword NTH = new Lisp_Keyword("NTH");
-	public @S(30) Lisp_SExpr index;
-	public @S(40) Lisp_SExpr list;
+	public @S(30) Lisp_Expression index;
+	public @S(40) Lisp_Expression list;
 	public @S(50) PunctuationRightParen rightParen;
 
 	@Override

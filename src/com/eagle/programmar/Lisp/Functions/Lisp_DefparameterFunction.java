@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Lisp.Functions;
 
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Parameter_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.tokens.TokenSequence;
@@ -15,6 +15,6 @@ public class Lisp_DefparameterFunction extends TokenSequence
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defpar.htm") Lisp_Keyword DEFPARAMETER = new Lisp_Keyword("defparameter");
 	public @S(30) Lisp_Parameter_Definition name;
-	public @S(40) Lisp_SExpr value;
+	public @S(40) Lisp_Expression value;
 	public @S(50) PunctuationRightParen rightParen;
 }

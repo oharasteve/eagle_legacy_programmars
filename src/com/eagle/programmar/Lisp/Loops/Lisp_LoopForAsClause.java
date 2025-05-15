@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Lisp.Loops;
 
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Lisp_Variable;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
@@ -24,19 +24,19 @@ public class Lisp_LoopForAsClause extends TokenSequence
 		{
 			public @S(10) Lisp_KeywordChoice direction = new Lisp_KeywordChoice(
 					"across", "below", "from", "in", "on", "to");
-			public @S(20) Lisp_SExpr expr;
+			public @S(20) Lisp_Expression expr;
 		}
 
 		public @CHOICE static class Lisp_ForEqualsThen extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
-			public @S(20) Lisp_SExpr expr;
+			public @S(20) Lisp_Expression expr;
 			public @S(30) @OPT Lisp_LoopForThen thenClause;
 
 			public static class Lisp_LoopForThen extends TokenSequence
 			{
 				public @S(10) Lisp_Keyword THEN = new Lisp_Keyword("then");
-				public @S(20) Lisp_SExpr expr;
+				public @S(20) Lisp_Expression expr;
 			}
 		}
 	}

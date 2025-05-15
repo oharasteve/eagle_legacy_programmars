@@ -45,7 +45,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Lisp_SExpr extends TokenChooser
+public class Lisp_Expression extends TokenChooser
 {
 	public @CHOICE Lisp_Number XXnumber;
 	public @CHOICE Lisp_Literal XXliteral;
@@ -90,32 +90,32 @@ public class Lisp_SExpr extends TokenChooser
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation ampersand = new Lisp_Punctuation('&');
-		public @S(20) Lisp_SExpr expr;
+		public @S(20) Lisp_Expression expr;
 	}
 
 	public @CHOICE static class Lisp_Colon extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
-		public @S(20) Lisp_SExpr expr;
+		public @S(20) Lisp_Expression expr;
 	}
 
 	public @CHOICE static class Lisp_Comma extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT Lisp_Punctuation at = new Lisp_Punctuation('@');
-		public @S(30) Lisp_SExpr expr;
+		public @S(30) Lisp_Expression expr;
 	}
 
 	public @CHOICE static class Lisp_Hash extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation hash = new Lisp_Punctuation('#');
-		public @S(20) Lisp_SExpr expr;
+		public @S(20) Lisp_Expression expr;
 	}
 
 	public @CHOICE static class Lisp_QuoteList extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) Lisp_Punctuation quote = new Lisp_Punctuation('\'');
-		public @S(20) Lisp_SExpr expr;
+		public @S(20) Lisp_Expression expr;
 
 		@Override
 		public void interpret(EagleInterpreter interpreter)
@@ -124,7 +124,7 @@ public class Lisp_SExpr extends TokenChooser
 			{
 				EagleArray array = new EagleArray();
 				Lisp_List list = (Lisp_List) expr.getWhich();
-				for (Lisp_SExpr item : list.exprs._elements)
+				for (Lisp_Expression item : list.exprs._elements)
 				{
 					String value = item.showText();
 					array.addValue(new EagleString(value));
@@ -138,7 +138,7 @@ public class Lisp_SExpr extends TokenChooser
 	public @CHOICE static class Lisp_Tick extends TokenSequence
 	{
 		public @S(10) Lisp_Punctuation tick = new Lisp_Punctuation('`');
-		public @S(20) Lisp_SExpr expr;
+		public @S(20) Lisp_Expression expr;
 	}
 
 	public @CHOICE static class Lisp_CharString extends TokenSequence

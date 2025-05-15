@@ -8,6 +8,6 @@ import com.eagle.tokens.TokenChooser;
 
 public class Lisp_SExprOrComment extends TokenChooser
 {
-	public @CHOICE Lisp_SExpr XXexpr;
+	public @CHOICE Lisp_Expression XXexpr;
 	public @CHOICE Lisp_Comment XXcomment;
 }

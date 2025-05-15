@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Lisp.Functions;
 
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Loops.Lisp_LoopConditional;
 import com.eagle.programmar.Lisp.Loops.Lisp_LoopForAsClause;
 import com.eagle.programmar.Lisp.Loops.Lisp_LoopInitialFinal;
@@ -31,7 +31,7 @@ public class Lisp_LoopFunction extends TokenSequence implements AbstractStatemen
 
 	public static class Lisp_LoopType extends TokenChooser
 	{
-		public @CHOICE Lisp_SExpr XXsimpleExpr;
+		public @CHOICE Lisp_Expression XXsimpleExpr;
 
 		public @CHOICE static class Lisp_LoopFancy extends TokenSequence
 		{

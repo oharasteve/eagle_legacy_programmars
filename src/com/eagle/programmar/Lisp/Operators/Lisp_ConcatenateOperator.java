@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Operators;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Lisp_Type;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.tokens.TokenList;
@@ -18,14 +18,14 @@ public class Lisp_ConcatenateOperator extends TokenSequence implements EagleRunn
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_Keyword CONCATENATE = new Lisp_Keyword("CONCATENATE");
 	public @S(30) Lisp_Type type;
-	public @S(40) TokenList<Lisp_SExpr> exprs;
+	public @S(40) TokenList<Lisp_Expression> exprs;
 	public @S(50) PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		StringBuffer sb = new StringBuffer();
-		for (Lisp_SExpr expr : exprs._elements)
+		for (Lisp_Expression expr : exprs._elements)
 		{
 			String piece = interpreter.getStrValue(expr);
 			sb.append(piece);

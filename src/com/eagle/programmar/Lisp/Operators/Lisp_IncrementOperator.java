@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Operators;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -15,7 +15,7 @@ public class Lisp_IncrementOperator extends TokenSequence implements EagleRunnab
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_PunctuationChoice INCR = new Lisp_PunctuationChoice("1+", "1-");
-	public @S(30) Lisp_SExpr expr;
+	public @S(30) Lisp_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override

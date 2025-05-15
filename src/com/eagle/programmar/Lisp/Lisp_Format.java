@@ -9,7 +9,7 @@ import com.eagle.tokens.TokenList;
 public class Lisp_Format
 {
 	// Handle ~d and ~A. Super simple ones only for now
-	public static String format(EagleInterpreter interpreter, TokenList<Lisp_SExpr> exprs)
+	public static String format(EagleInterpreter interpreter, TokenList<Lisp_Expression> exprs)
 	{
 		String fmt = interpreter.getStrValue(exprs._elements.get(0));
 		fmt = fmt.replaceAll("~%", "");	// Remove newlines from format
@@ -38,7 +38,7 @@ public class Lisp_Format
 			index++;
 			if (index < numArgs)
 			{
-				Lisp_SExpr expr = exprs._elements.get(index);
+				Lisp_Expression expr = exprs._elements.get(index);
 				String val = interpreter.getStrValue(expr);
 				sb.append(val);
 			}

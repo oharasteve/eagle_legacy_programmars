@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.TokenList;
@@ -24,7 +24,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 	public @S(20) @DOC("s_let.htm") Lisp_KeywordChoice LET = new Lisp_KeywordChoice("let", "prog");
 	public @S(30) @OPT PunctuationStar star;
 	public @S(40) Lisp_LetVariables variables;
-	public @S(50) TokenList<Lisp_SExpr> values;
+	public @S(50) TokenList<Lisp_Expression> values;
 	public @S(60) PunctuationRightParen rightParen;
 
 	public static class Lisp_LetVar extends TokenSequence
@@ -32,7 +32,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT PunctuationComma comma;
 		public @S(30) Lisp_Variable_Definition var;
-		public @S(40) Lisp_SExpr value;
+		public @S(40) Lisp_Expression value;
 		public @S(50) PunctuationRightParen rightParen;
 	}
 
@@ -63,7 +63,7 @@ public class Lisp_LetFunction extends TokenSequence implements EagleRunnable, Ab
 
 		// Perform actions
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (Lisp_SExpr elt : values._elements)
+		for (Lisp_Expression elt : values._elements)
 		{
 			result = interpreter.tryToInterpret(elt);
 			if (result != Eagle_Statement_Result.NORMAL) break;

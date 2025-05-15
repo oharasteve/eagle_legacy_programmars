@@ -6,7 +6,7 @@ package com.eagle.programmar.Lisp.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Lisp_Syntax;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Function_Definition;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Parameter_Definition;
@@ -29,7 +29,7 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 	public @S(50) PunctuationLeftParen leftParen2;
 	public @S(60) @OPT TokenList<Lisp_ParamDef> parameters;
 	public @S(70) PunctuationRightParen rightParen2;
-	public @S(80) TokenList<Lisp_SExpr> body;
+	public @S(80) TokenList<Lisp_Expression> body;
 	public @S(90) PunctuationRightParen rightParen;
 
 	public static class Lisp_ParamDef extends TokenSequence

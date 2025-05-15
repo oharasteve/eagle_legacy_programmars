@@ -8,7 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.tokens.TokenList;
@@ -24,14 +24,14 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 	public @S(30) PunctuationLeftParen leftParen2;
 	public @S(40) PunctuationLeftParen leftParen3;
 	public @S(50) Lisp_Variable_Definition var;
-	public @S(60) Lisp_SExpr initialValue;
-	public @S(70) Lisp_SExpr increment;
+	public @S(60) Lisp_Expression initialValue;
+	public @S(70) Lisp_Expression increment;
 	public @S(80) PunctuationRightParen rightParen3;
 	public @S(90) PunctuationRightParen rightParen2;
 	public @S(100) PunctuationLeftParen leftParen4;
-	public @S(110) Lisp_SExpr terminateCondition;
+	public @S(110) Lisp_Expression terminateCondition;
 	public @S(120) PunctuationRightParen rightParen4;
-	public @S(130) TokenList<Lisp_SExpr> actions;
+	public @S(130) TokenList<Lisp_Expression> actions;
 	public @S(140) PunctuationRightParen rightParen1;
 
 	private @SKIP ForLoopMetrics _metrics = null;
@@ -56,7 +56,7 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 			
 			metric.iterate();
 
-			for (Lisp_SExpr action : actions._elements)
+			for (Lisp_Expression action : actions._elements)
 			{
 				result = interpreter.tryToInterpret(action);
 				

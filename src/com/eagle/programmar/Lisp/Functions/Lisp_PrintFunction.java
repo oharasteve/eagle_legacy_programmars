@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -16,7 +16,7 @@ public class Lisp_PrintFunction extends TokenSequence implements EagleRunnable, 
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_print.htm") Lisp_KeywordChoice PRINT = new Lisp_KeywordChoice("print", "princ");
-	public @S(30) Lisp_SExpr expr;
+	public @S(30) Lisp_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override

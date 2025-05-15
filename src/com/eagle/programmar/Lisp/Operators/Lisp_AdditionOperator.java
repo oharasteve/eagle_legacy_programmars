@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Operators;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -16,7 +16,7 @@ public class Lisp_AdditionOperator extends TokenSequence implements EagleRunnabl
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_PunctuationChoice PLUS = new Lisp_PunctuationChoice("+", "++", "+++", "-");
-	public @S(30) TokenList<Lisp_SExpr> exprs;
+	public @S(30) TokenList<Lisp_Expression> exprs;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override
@@ -26,7 +26,7 @@ public class Lisp_AdditionOperator extends TokenSequence implements EagleRunnabl
 		{
 		case "+":
 			int sum = 0;
-			for (Lisp_SExpr expr : exprs._elements)
+			for (Lisp_Expression expr : exprs._elements)
 			{
 				sum += interpreter.getIntValue(expr);
 			}
@@ -42,7 +42,7 @@ public class Lisp_AdditionOperator extends TokenSequence implements EagleRunnabl
 			}
 			else
 			{
-				for (Lisp_SExpr expr : exprs._elements)
+				for (Lisp_Expression expr : exprs._elements)
 				{
 					if (first)
 					{

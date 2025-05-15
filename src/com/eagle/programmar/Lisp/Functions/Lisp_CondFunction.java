@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -28,8 +28,8 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 	public static class Lisp_CondPair extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Lisp_SExpr condition;
-		public @S(30) TokenList<Lisp_SExpr> values;
+		public @S(20) Lisp_Expression condition;
+		public @S(30) TokenList<Lisp_Expression> values;
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
@@ -58,7 +58,7 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 			if (cond)
 			{
 				// Rarely will there be more than one value per pair
-				for (Lisp_SExpr expr : condPair.values._elements)
+				for (Lisp_Expression expr : condPair.values._elements)
 				{
 					result = interpreter.tryToInterpret(expr);
 					if (result != Eagle_Statement_Result.NORMAL) break;

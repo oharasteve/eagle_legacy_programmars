@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Operators;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -15,8 +15,8 @@ public class Lisp_RemainderOperator extends TokenSequence implements EagleRunnab
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_KeywordChoice REM = new Lisp_KeywordChoice("MOD", "REM");
-	public @S(30) Lisp_SExpr leftExpr;
-	public @S(40) Lisp_SExpr rightExpr;
+	public @S(30) Lisp_Expression leftExpr;
+	public @S(40) Lisp_Expression rightExpr;
 	public @S(50) PunctuationRightParen rightParen;
 
 	@Override

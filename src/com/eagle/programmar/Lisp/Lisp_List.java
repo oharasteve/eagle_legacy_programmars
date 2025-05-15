@@ -18,13 +18,13 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Lisp_List extends TokenSequence implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) @OPT TokenList<Lisp_SExpr> exprs;
+	public @S(20) @OPT TokenList<Lisp_Expression> exprs;
 	public @S(30) PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Lisp_SExpr first = exprs.first();
+		Lisp_Expression first = exprs.first();
 		String name = first.showText();
 		
 		// See if it is one of the user defun's
@@ -49,7 +49,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		{
 			for (int i = 0; i < argCount; i++)
 			{
-				Lisp_SExpr expr = exprs._elements.get(i + 1);
+				Lisp_Expression expr = exprs._elements.get(i + 1);
 				Lisp_ParamDef param = func.parameters._elements.get(i);
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.parameter.getValue(), val);
@@ -62,7 +62,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		// And transfer control to the method
 		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (Lisp_SExpr stmt : func.body._elements)
+		for (Lisp_Expression stmt : func.body._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;

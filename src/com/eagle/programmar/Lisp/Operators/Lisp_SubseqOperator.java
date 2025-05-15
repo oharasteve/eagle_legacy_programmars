@@ -5,7 +5,7 @@ package com.eagle.programmar.Lisp.Operators;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -15,9 +15,9 @@ public class Lisp_SubseqOperator extends TokenSequence implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_Keyword SUBSEQ = new Lisp_Keyword("SUBSEQ");
-	public @S(30) Lisp_SExpr expr;
-	public @S(40) Lisp_SExpr scExpr;
-	public @S(50) Lisp_SExpr ecExpr;
+	public @S(30) Lisp_Expression expr;
+	public @S(40) Lisp_Expression scExpr;
+	public @S(50) Lisp_Expression ecExpr;
 	public @S(60) PunctuationRightParen rightParen;
 
 	@Override

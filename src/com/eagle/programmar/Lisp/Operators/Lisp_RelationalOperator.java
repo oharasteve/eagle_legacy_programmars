@@ -6,7 +6,7 @@ package com.eagle.programmar.Lisp.Operators;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
@@ -19,7 +19,7 @@ public class Lisp_RelationalOperator extends TokenSequence implements EagleRunna
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_RelOp relOp;
-	public @S(30) TokenList<Lisp_SExpr> exprs;
+	public @S(30) TokenList<Lisp_Expression> exprs;
 	public @S(40) PunctuationRightParen rightParen;
 
 	public static class Lisp_RelOp extends TokenChooser
@@ -38,7 +38,7 @@ public class Lisp_RelationalOperator extends TokenSequence implements EagleRunna
 		if (firstValue.isString())
 		{
 			String prevStr = firstValue.forceStringValue();
-			for (Lisp_SExpr expr : exprs._elements)
+			for (Lisp_Expression expr : exprs._elements)
 			{
 				if (first)
 				{
@@ -68,7 +68,7 @@ public class Lisp_RelationalOperator extends TokenSequence implements EagleRunna
 		
 		// Integer compare
 		int previous = firstValue.forceIntegerValue();
-		for (Lisp_SExpr expr : exprs._elements)
+		for (Lisp_Expression expr : exprs._elements)
 		{
 			if (first)
 			{

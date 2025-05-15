@@ -6,7 +6,7 @@ package com.eagle.programmar.Lisp.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Lisp.Lisp_Format;
-import com.eagle.programmar.Lisp.Lisp_SExpr;
+import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -19,7 +19,7 @@ public class Lisp_FormatFunction extends TokenSequence implements EagleRunnable,
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_format.htm") Lisp_Keyword FORMAT = new Lisp_Keyword("format");
 	public @S(30) Lisp_Keyword T = new Lisp_Keyword("T");
-	public @S(40) TokenList<Lisp_SExpr> items;
+	public @S(40) TokenList<Lisp_Expression> items;
 	public @S(50) PunctuationRightParen rightParen;
 
 	@Override
