@@ -22,18 +22,23 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 	public @S(10) PunctuationLeftParen leftParen1;
 	public @S(20) @DOC("s_do.htm") Lisp_Keyword DO = new Lisp_Keyword("do");
 	public @S(30) PunctuationLeftParen leftParen2;
-	public @S(40) PunctuationLeftParen leftParen3;
-	public @S(50) Lisp_Variable_Definition var;
-	public @S(60) Lisp_Expression initialValue;
-	public @S(70) Lisp_Expression increment;
+	public @S(40) @OPT Lisp_DoVariables variables;
+	public @S(50) PunctuationRightParen rightParen2;
+	public @S(60) PunctuationLeftParen leftParen3;
+	public @S(70) Lisp_Expression terminateCondition;
 	public @S(80) PunctuationRightParen rightParen3;
-	public @S(90) PunctuationRightParen rightParen2;
-	public @S(100) PunctuationLeftParen leftParen4;
-	public @S(110) Lisp_Expression terminateCondition;
-	public @S(120) PunctuationRightParen rightParen4;
-	public @S(130) TokenList<Lisp_Expression> actions;
-	public @S(140) PunctuationRightParen rightParen1;
+	public @S(90) TokenList<Lisp_Expression> actions;
+	public @S(100) PunctuationRightParen rightParen1;
 
+	public static class Lisp_DoVariables extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) Lisp_Variable_Definition var;
+		public @S(30) Lisp_Expression initialValue;
+		public @S(40) @OPT Lisp_Expression increment;
+		public @S(50) PunctuationRightParen rightParen;
+	}
+	
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -45,8 +50,12 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
-		EagleValue val = interpreter.getEagleValue(initialValue);
-		interpreter.setSymbol(var, var.getValue(), val);
+		EagleValue val = null;
+		if (variables != null && variables.isPresent())
+		{
+			val = interpreter.getEagleValue(variables.initialValue);
+			interpreter.setSymbol(variables.var, variables.var.getValue(), val);
+		}
 		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
@@ -68,13 +77,21 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			if (result != Eagle_Statement_Result.NORMAL) break;
-			val = interpreter.getEagleValue(increment);
-			interpreter.setSymbol(increment, var.getValue(), val);
+			
+			if (variables.initialValue != null && variables.increment != null)
+			{
+				val = interpreter.getEagleValue(variables.increment);
+				interpreter.setSymbol(variables.increment, variables.var.getValue(), val);
+			}
 		}
 		
 		_metrics.competedLoop(metric);
 
-		interpreter.removeSymbol(var.getValue());
+		if (variables != null && variables.var != null)
+		{
+			interpreter.removeSymbol(variables.var.getValue());
+		}
+		
 		return Eagle_Statement_Result.NORMAL;
 	}
 }
