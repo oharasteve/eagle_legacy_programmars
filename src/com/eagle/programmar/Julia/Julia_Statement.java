@@ -14,6 +14,7 @@ import com.eagle.programmar.Julia.Statements.Julia_Function;
 import com.eagle.programmar.Julia.Statements.Julia_IfStatement;
 import com.eagle.programmar.Julia.Statements.Julia_PrintlnStatement;
 import com.eagle.programmar.Julia.Statements.Julia_ReturnStatement;
+import com.eagle.programmar.Julia.Statements.Julia_WhileStatement;
 import com.eagle.tokens.TokenChooser;
 
 public class Julia_Statement extends TokenChooser
@@ -28,6 +29,7 @@ public class Julia_Statement extends TokenChooser
 	public @CHOICE Julia_IfStatement XXifStatement;
 	public @CHOICE Julia_PrintlnStatement XXputsStatement;
 	public @CHOICE Julia_ReturnStatement XXreturnStatement;
+	public @CHOICE Julia_WhileStatement XXwhileStatement;
 	
 	public @LAST Julia_ExpressionStatement XXexpressionStatement;
 }
