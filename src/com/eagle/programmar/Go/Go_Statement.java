@@ -13,6 +13,7 @@ import com.eagle.programmar.Go.Statements.Go_ReturnStatement;
 import com.eagle.programmar.Go.Statements.Go_SwitchStatement;
 import com.eagle.programmar.Go.Statements.Go_TypeDefinition;
 import com.eagle.programmar.Go.Statements.Go_VarStatement;
+import com.eagle.programmar.Go.Statements.Go_WhileStatement;
 import com.eagle.tokens.TokenChooser;
 
 public class Go_Statement extends TokenChooser
@@ -28,4 +29,5 @@ public class Go_Statement extends TokenChooser
 	public @CHOICE Go_SwitchStatement XXswitchStatement;
 	public @CHOICE Go_TypeDefinition XXtypeDefinition;
 	public @CHOICE Go_VarStatement XXvarStatement;
+	public @CHOICE Go_WhileStatement XXwhileStatement;
 }

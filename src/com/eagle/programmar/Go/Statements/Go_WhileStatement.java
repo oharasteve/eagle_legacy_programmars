@@ -1,25 +1,23 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, May 15, 2025
 
-package com.eagle.programmar.FSharp.Statements;
+package com.eagle.programmar.Go.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.FSharp.FSharp_Element.FSharp_SingleOrMultiLineStatement;
-import com.eagle.programmar.FSharp.FSharp_Expression;
-import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
+import com.eagle.programmar.Go.Go_Expression;
+import com.eagle.programmar.Go.Go_Statement;
+import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class FSharp_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+public class Go_WhileStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
-	public @S(10) FSharp_Keyword WHILE = new FSharp_Keyword("while");
-	public @S(20) FSharp_Expression condition;
-	public @S(30) FSharp_Keyword DO = new FSharp_Keyword("do");
-	public @S(40) FSharp_SingleOrMultiLineStatement forActions;
+	public @S(10) Go_Keyword WHILE = new Go_Keyword("while");
+	public @S(20) Go_Expression condition;
+	public @S(30) Go_Statement statement;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
@@ -33,7 +31,6 @@ public class FSharp_WhileStatement extends TokenSequence
 		ForLoopMetric metric = new ForLoopMetric();
 
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-
 		while (true)
 		{
 			boolean keepGoing = interpreter.getBoolValue(condition);
@@ -41,8 +38,7 @@ public class FSharp_WhileStatement extends TokenSequence
 
 			metric.iterate();
 
-			result = interpreter.tryToInterpret(forActions);
-
+			result = interpreter.tryToInterpret(statement);
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();

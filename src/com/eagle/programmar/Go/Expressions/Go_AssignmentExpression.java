@@ -36,11 +36,16 @@ public class Go_AssignmentExpression extends PrecedenceOperator implements Eagle
 			interpreter.setSymbol(id, id.toString(), val);
 			return;
 		case "+=":
-			EagleValue oldValue = interpreter.findSymbol(id.getValue());
-			int newVal = val.forceIntegerValue() + oldValue.forceIntegerValue();
-			interpreter.setSymbol(id, id.toString(), new EagleInteger(newVal));
+			EagleValue oldValue1 = interpreter.findSymbol(id.getValue());
+			int newVal1 = oldValue1.forceIntegerValue() + val.forceIntegerValue();
+			interpreter.setSymbol(id, id.toString(), new EagleInteger(newVal1));
+			return;
+		case "-=":
+			EagleValue oldValue2 = interpreter.findSymbol(id.getValue());
+			int newVal2 = oldValue2.forceIntegerValue() - val.forceIntegerValue();
+			interpreter.setSymbol(id, id.toString(), new EagleInteger(newVal2));
 			return;
 		}
-		throw new RuntimeException("Unable to handle equality operator: " + equals.getValue());
+		throw new RuntimeException("Unable to handle assignment operator: " + equals.getValue());
 	}
 }
