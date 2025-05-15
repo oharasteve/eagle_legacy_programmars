@@ -5,38 +5,27 @@ package com.eagle.programmar.FSharp.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_SingleOrMultiLineStatement;
-import com.eagle.programmar.FSharp.FSharp_Variable;
+import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
-import com.eagle.programmar.FSharp.Terminals.FSharp_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class FSharp_ForStatement extends TokenSequence
+public class FSharp_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) @DOC("loops-for-to-expression") FSharp_Keyword FOR = new FSharp_Keyword("for");
-	public @S(20) FSharp_Variable var;
-	public @S(30) PunctuationEquals equals;
-	public @S(40) FSharp_Expression startValue;
-	public @S(50) FSharp_KeywordChoice TO = new FSharp_KeywordChoice("to", "downto");
-	public @S(60) FSharp_Expression stopValue;
-	public @S(70) FSharp_Keyword DO = new FSharp_Keyword("do");
-	public @S(80) FSharp_SingleOrMultiLineStatement forActions;
+	public @S(10) FSharp_Keyword WHILE = new FSharp_Keyword("while");
+	public @S(20) FSharp_Expression condition;
+	public @S(30) FSharp_Keyword DO = new FSharp_Keyword("do");
+	public @S(40) FSharp_SingleOrMultiLineStatement forActions;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		int start = interpreter.getIntValue(startValue);
-		int stop = interpreter.getIntValue(stopValue);
-
 		if (_metrics == null)
 		{
 			_metrics = new ForLoopMetrics(interpreter._metrics, this);
@@ -44,17 +33,13 @@ public class FSharp_ForStatement extends TokenSequence
 		ForLoopMetric metric = new ForLoopMetric();
 
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		String which = TO.getValue();
-		boolean backwards = which.equals("downto");
 
-		int i = start;
 		while (true)
 		{
-			if (!backwards && i > stop) break;
-			if (backwards && i < stop) break;
+			boolean keepGoing = interpreter.getBoolValue(condition);
+			if (!keepGoing) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var, var.id.getValue(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(forActions);
 
@@ -73,11 +58,6 @@ public class FSharp_ForStatement extends TokenSequence
 			{
 				break;
 			}
-
-			if (backwards)
-				i--;
-			else
-				i++;
 		}
 
 		_metrics.competedLoop(metric);

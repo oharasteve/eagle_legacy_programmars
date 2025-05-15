@@ -12,6 +12,7 @@ import com.eagle.programmar.FSharp.Statements.FSharp_Function;
 import com.eagle.programmar.FSharp.Statements.FSharp_IfStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_LetStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_PrintfnStatement;
+import com.eagle.programmar.FSharp.Statements.FSharp_WhileStatement;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Comment;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Punctuation;
@@ -82,6 +83,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		public @CHOICE FSharp_IfStatement XXifStatement;
 		public @CHOICE FSharp_LetStatement XXletStatement;
 		public @CHOICE FSharp_PrintfnStatement XXprintfnStatement;
+		public @CHOICE FSharp_WhileStatement XXwhileStatement;
 
 		public @LAST FSharp_Expression XXreturnValue;
 	}
