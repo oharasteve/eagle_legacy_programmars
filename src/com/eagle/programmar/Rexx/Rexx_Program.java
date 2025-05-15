@@ -26,11 +26,11 @@ public class Rexx_Program extends AbstractLanguage implements EagleRunnable
 		return "https://www.ibm.com/docs/en/cics-ts/6.x?topic=";
 	}
 
-	public @S(10) TokenList<Rexx_Element> elements;
+	public @S(10) TokenList<Rexx_TopElement> elements;
 
-	public static class Rexx_Element extends TokenChooser
+	public static class Rexx_TopElement extends TokenChooser
 	{
-		public @CHOICE Rexx_Element XXstatement;
+		public @CHOICE Rexx_Element XXelement;
 		public @CHOICE Rexx_Function XXfunction;
 	}
 
@@ -38,7 +38,7 @@ public class Rexx_Program extends AbstractLanguage implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the Function and Sub definitions
-		for (Rexx_Element elt : elements._elements)
+		for (Rexx_TopElement elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
 			if (which instanceof Rexx_Function)
@@ -49,7 +49,7 @@ public class Rexx_Program extends AbstractLanguage implements EagleRunnable
 		}
 
 		// Second pass, run any stuff in the outermost 'object'
-		for (Rexx_Element elt : elements._elements)
+		for (Rexx_TopElement elt : elements._elements)
 		{
 			interpreter.tryToInterpret(elt);
 		}
