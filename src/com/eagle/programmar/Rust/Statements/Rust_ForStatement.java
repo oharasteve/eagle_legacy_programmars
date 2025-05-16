@@ -46,13 +46,13 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 		if (step < 0)
 		{
 			backwards = true;
-			i = stop - 1;
+			i = stop;
 		}
 
 		while (true)
 		{
-			if (backwards && i < start) break;
-			if (!backwards && i >= stop) break;
+			if (backwards && i <= start) break;
+			if (! backwards && i >= stop) break;
 
 			metric.iterate();
 			interpreter.setSymbol(var, var.var.toString(), new EagleInteger(i));
