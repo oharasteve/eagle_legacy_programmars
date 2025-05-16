@@ -8,8 +8,8 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Element;
+import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
@@ -22,9 +22,10 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 {
 	public @S(10) @DOC("instructions-do") Rexx_Keyword DO = new Rexx_Keyword("DO");
 	public @S(20) @OPT Rexx_DoLoop loop;
-	public @S(30) Rexx_EndOfLine eoln1;
-	public @S(40) TokenList<Rexx_Element> actions;
-	public @S(50) Rexx_Keyword END = new Rexx_Keyword("END");
+	public @S(30) @OPT Rexx_DoWhile doWhile;
+	public @S(40) Rexx_EndOfLine eoln1;
+	public @S(50) TokenList<Rexx_Element> actions;
+	public @S(60) Rexx_Keyword END = new Rexx_Keyword("END");
 	
 	public static class Rexx_DoLoop extends TokenSequence
 	{
@@ -42,6 +43,12 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 		}
 	}
 	
+	public static class Rexx_DoWhile extends TokenSequence
+	{
+		public @S(10) Rexx_Keyword WHILE = new Rexx_Keyword("WHILE");
+		public @S(20) Rexx_Expression condition;
+	}
+	
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -50,7 +57,7 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
 		// Just a DO ... END block, no iteration
-		if (loop == null || ! loop.isPresent())
+		if ((loop == null || ! loop.isPresent()) && (doWhile == null || ! doWhile.isPresent()))
 		{
 			for (Rexx_Element stmt : actions._elements)
 			{
@@ -66,20 +73,46 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
-		int start = interpreter.getIntValue(loop.from);
-		interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(start));
+		int start = 0;
+		int stop = 0;
+		int by = 0;
+		int current = 0;
 		
-		int current = interpreter.getIntValue(loop.from);
-		int stop = interpreter.getIntValue(loop.to);
-		int by = 1;
-		
-		if (loop.step != null && loop.step.isPresent())
+		if (loop != null && loop.isPresent())
 		{
-			by = interpreter.getIntValue(loop.step.step);
+			start = interpreter.getIntValue(loop.from);
+			interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(start));
+			
+			current = interpreter.getIntValue(loop.from);
+			stop = interpreter.getIntValue(loop.to);
+			by = 1;
+			
+			if (loop.step != null && loop.step.isPresent())
+			{
+				by = interpreter.getIntValue(loop.step.step);
+			}
 		}
 		
 		while (true)
 		{
+			if (doWhile != null && doWhile.isPresent())
+			{
+				boolean keepGoing = interpreter.getBoolValue(doWhile.condition);
+				if (!keepGoing) break;
+			}
+
+			if (loop != null && loop.isPresent())
+			{
+				if (by < 0)
+				{
+					if (current < stop) break;
+				}
+				else
+				{
+					if (current > stop) break;
+				}
+			}
+
 			metric.iterate();
 			interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(current));
 
@@ -105,14 +138,9 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 				break;
 			}
 
-			current += by;
-			if (by < 0)
+			if (loop != null && loop.isPresent())
 			{
-				if (current < stop) break;
-			}
-			else
-			{
-				if (current > stop) break;
+				current += by;
 			}
 		}
 
