@@ -9,8 +9,8 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Javascript.Javascript_Data.Javascript_More_Variables;
-import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Element;
+import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Type;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
@@ -38,6 +38,9 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 	public @S(10) @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Javascript_ForWhat forWhat;
+	public @S(40) PunctuationRightParen rightParen;
+	public @S(50) @OPT TokenList<Javascript_Comment> comments;
+	public @S(60) Javascript_Element action;
 	
 	private @SKIP ForLoopMetrics _metrics = null;
 
@@ -59,9 +62,6 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 		public @S(80) @OPT Javascript_Expression increment;
 		public @S(90) @OPT PunctuationComma comma;
 		public @S(100) @OPT Javascript_Expression extraIncrement;
-		public @S(110) PunctuationRightParen rightParen;
-		public @S(120) @OPT TokenList<Javascript_Comment> comments;
-		public @S(130) Javascript_Element action;
 		
 		public static class Javascript_ForLoopVariable extends TokenChooser
 		{
@@ -88,9 +88,6 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 		public @S(30) @OPT Javascript_ForVariables forVars;
 		public @S(40) Javascript_InOrColon inOrColon;
 		public @S(50) Javascript_Expression collection;
-		public @S(60) PunctuationRightParen rightParen;
-		public @S(70) @OPT TokenList<Javascript_Comment> comments;
-		public @S(80) Javascript_Element action;
 
 		public static class Javascript_ForVariables extends TokenSequence
 		{
@@ -145,7 +142,7 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 				if (!keepGoing) break;
 
 				metric.iterate();
-				result = interpreter.tryToInterpret(forLoop.action);
+				result = interpreter.tryToInterpret(action);
 				if (result == Eagle_Statement_Result.BREAK)
 				{
 					metric.broke();
