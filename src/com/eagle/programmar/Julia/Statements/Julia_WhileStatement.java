@@ -18,11 +18,11 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class Julia_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) Julia_Keyword WHILE = new Julia_Keyword("while");
-	public @S(40) Julia_Expression condition;
-	public @S(50) Julia_EOLN eoln1;
-	public @S(60) TokenList<Julia_Statement> statements;
-	public @S(70) Julia_Keyword END = new Julia_Keyword("end");
-	public @S(80) Julia_EOLN eoln2;
+	public @S(20) Julia_Expression condition;
+	public @S(30) Julia_EOLN eoln1;
+	public @S(40) TokenList<Julia_Statement> statements;
+	public @S(50) Julia_Keyword END = new Julia_Keyword("end");
+	public @S(60) Julia_EOLN eoln2;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 

@@ -34,9 +34,14 @@ public class Ruby_Assignment extends TokenSequence implements EagleRunnable, Abs
 			interpreter.setSymbol(var, id.getValue(), val);
 			break;
 		case "+=":
-			EagleValue oldValue = interpreter.findSymbol(id.getValue());
-			int old = oldValue.forceIntegerValue();
-			interpreter.setSymbol(var, id.getValue(), new EagleInteger(old + val.forceIntegerValue()));
+			EagleValue oldValue1 = interpreter.findSymbol(id.getValue());
+			int old1 = oldValue1.forceIntegerValue();
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(old1 + val.forceIntegerValue()));
+			break;
+		case "-=":
+			EagleValue oldValue2 = interpreter.findSymbol(id.getValue());
+			int old2 = oldValue2.forceIntegerValue();
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(old2 - val.forceIntegerValue()));
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

@@ -14,6 +14,7 @@ import com.eagle.programmar.Ruby.Statements.Ruby_Function;
 import com.eagle.programmar.Ruby.Statements.Ruby_IfStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_PutsStatement;
 import com.eagle.programmar.Ruby.Statements.Ruby_ReturnStatement;
+import com.eagle.programmar.Ruby.Statements.Ruby_WhileStatement;
 import com.eagle.tokens.TokenChooser;
 
 public class Ruby_Statement extends TokenChooser
@@ -28,6 +29,7 @@ public class Ruby_Statement extends TokenChooser
 	public @CHOICE Ruby_IfStatement XXifStatement;
 	public @CHOICE Ruby_PutsStatement XXputsStatement;
 	public @CHOICE Ruby_ReturnStatement XXreturnStatement;
+	public @CHOICE Ruby_WhileStatement XXwhileStatement;
 	
 	public @LAST Ruby_ExpressionStatement XXexpressionStatement;
 }
