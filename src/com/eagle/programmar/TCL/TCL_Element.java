@@ -17,6 +17,7 @@ import com.eagle.programmar.TCL.Statements.TCL_PutsStatement;
 import com.eagle.programmar.TCL.Statements.TCL_ReturnStatement;
 import com.eagle.programmar.TCL.Statements.TCL_SetStatement;
 import com.eagle.programmar.TCL.Statements.TCL_VariableStatement;
+import com.eagle.programmar.TCL.Statements.TCL_WhileStatement;
 import com.eagle.programmar.TCL.Terminals.TCL_Comment;
 import com.eagle.programmar.TCL.Terminals.TCL_EndOfLine;
 import com.eagle.tokens.SeparatedList;
@@ -50,6 +51,7 @@ public class TCL_Element extends TokenSequence implements EagleRunnableWithResul
 		public @CHOICE TCL_ReturnStatement XXreturnStatement;
 		public @CHOICE TCL_SetStatement XXsetStatement;
 		public @CHOICE TCL_VariableStatement XXvariableStatement;
+		public @CHOICE TCL_WhileStatement XXwhileStatement;
 
 		public @LAST TCL_FunctionCall XXfunctionCall;
 		public @LAST TCL_ExpressionStatement XXexpressionStatement;

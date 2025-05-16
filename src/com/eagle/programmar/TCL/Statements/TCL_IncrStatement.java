@@ -26,8 +26,21 @@ public class TCL_IncrStatement extends TokenSequence implements AbstractStatemen
 		{
 			x = interpreter.getIntValue(amount);
 		}
+		
 		int prev = interpreter.getIntValue(var);
-		EagleInteger val = new EagleInteger(prev + x);
+		int newV;
+		switch (INCR.getValue().toLowerCase())
+		{
+		case "incr":
+			newV = prev + x;
+			break;
+		case "decr":
+			newV = prev - x;
+			break;
+		default:
+			throw new RuntimeException("Unexpected keyword: " + INCR.getValue());
+		}
+		EagleInteger val = new EagleInteger(newV);
 
 		interpreter.setSymbol(var, var.id.getValue(), val);
 	}
