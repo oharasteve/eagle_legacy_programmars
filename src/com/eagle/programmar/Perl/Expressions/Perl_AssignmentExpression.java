@@ -40,10 +40,16 @@ public class Perl_AssignmentExpression extends PrecedenceOperator implements Eag
 			interpreter.setSymbol(var, userVar.id.getValue(), val);
 			break;
 		case "+=":
-			int newVal = interpreter.getIntValue(expr);
-			EagleValue oldVar = interpreter.findSymbol(userVar.id.toString());
-			EagleInteger newValue = new EagleInteger(newVal + oldVar.forceIntegerValue());
-			interpreter.setSymbol(var, userVar.id.getValue(), newValue);
+			int newVal1 = interpreter.getIntValue(expr);
+			EagleValue oldVar1 = interpreter.findSymbol(userVar.id.toString());
+			EagleInteger newValue1 = new EagleInteger(oldVar1.forceIntegerValue() + newVal1);
+			interpreter.setSymbol(var, userVar.id.getValue(), newValue1);
+			break;
+		case "-=":
+			int newVal2 = interpreter.getIntValue(expr);
+			EagleValue oldVar2 = interpreter.findSymbol(userVar.id.toString());
+			EagleInteger newValue2 = new EagleInteger(oldVar2.forceIntegerValue() - newVal2);
+			interpreter.setSymbol(var, userVar.id.getValue(), newValue2);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
