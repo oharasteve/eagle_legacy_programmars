@@ -14,6 +14,7 @@ import com.eagle.programmar.Scala.Statements.Scala_IfStatement;
 import com.eagle.programmar.Scala.Statements.Scala_ReturnStatement;
 import com.eagle.programmar.Scala.Statements.Scala_ValStatement;
 import com.eagle.programmar.Scala.Statements.Scala_VarStatement;
+import com.eagle.programmar.Scala.Statements.Scala_WhileStatement;
 import com.eagle.tokens.TokenChooser;
 
 public class Scala_Statement extends TokenChooser
@@ -29,6 +30,7 @@ public class Scala_Statement extends TokenChooser
 	public @CHOICE Scala_Function XXfunction;
 	public @CHOICE Scala_IfStatement XXifStatement;
 	public @CHOICE Scala_ReturnStatement XXreturnStatement;
+	public @CHOICE Scala_WhileStatement XXwhileStatement;
 	
 	public @LAST Scala_ExpressionStatement XXexpressionStatement;
 }
