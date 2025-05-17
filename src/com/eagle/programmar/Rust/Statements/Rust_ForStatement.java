@@ -45,13 +45,16 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 		boolean backwards = false;
 		if (step < 0)
 		{
+			// Careful!
+			//   1..4           does 1, 2, 3
+			//  (1..4).rev()    does 3, 2, 1
 			backwards = true;
-			i = stop;
+			i = stop + step;	// Careful!
 		}
 
 		while (true)
 		{
-			if (backwards && i <= start) break;
+			if (backwards && i < start) break;
 			if (! backwards && i >= stop) break;
 
 			metric.iterate();
