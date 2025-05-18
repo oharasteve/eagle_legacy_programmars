@@ -22,7 +22,7 @@ public class Fortran_EqualityExpression extends PrecedenceOperator implements Ea
 	public static class Fortran_EqOper extends TokenChooser
 	{
 		public @CHOICE Fortran_KeywordChoice XXEQ = new Fortran_KeywordChoice(".EQ.", ".NE.");
-		public @CHOICE Fortran_PunctuationChoice XXoper = new Fortran_PunctuationChoice("=", "/=");
+		public @CHOICE Fortran_PunctuationChoice XXoper = new Fortran_PunctuationChoice("==", "/=");
 	}
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -46,7 +46,7 @@ public class Fortran_EqualityExpression extends PrecedenceOperator implements Ea
 			String rightStr = rightValue.forceStringValue();
 			switch (oper.toUpperCase())
 			{
-			case ".EQ.", "=":
+			case ".EQ.", "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case ".NE.", "/=":
@@ -60,7 +60,7 @@ public class Fortran_EqualityExpression extends PrecedenceOperator implements Ea
 			int rightInt = rightValue.forceIntegerValue();
 			switch (oper.toUpperCase())
 			{
-			case ".EQ.", "=":
+			case ".EQ.", "==":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
 			case ".NE.", "/=":
