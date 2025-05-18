@@ -15,7 +15,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Go_WhileStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
-	public @S(10) Go_Keyword WHILE = new Go_Keyword("while");
+	public @S(10) Go_Keyword FOR = new Go_Keyword("for");
 	public @S(20) Go_Expression condition;
 	public @S(30) Go_Statement statement;
 
