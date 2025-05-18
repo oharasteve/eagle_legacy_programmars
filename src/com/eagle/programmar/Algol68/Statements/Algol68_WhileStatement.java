@@ -13,6 +13,7 @@ import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Algol68_WhileStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement
@@ -22,6 +23,7 @@ public class Algol68_WhileStatement extends TokenSequence
 	public @S(30) Algol68_Keyword DO = new Algol68_Keyword("DO");
 	public @S(40) TokenList<Algol68_Statement> statements;
 	public @S(50) Algol68_Keyword OD = new Algol68_Keyword("OD");
+	public @S(60) @OPT PunctuationSemicolon semicolon;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
