@@ -5,9 +5,7 @@ package com.eagle.programmar.Basic.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.programmar.Basic.Basic_StateMachine;
-import com.eagle.programmar.Basic.Basic_Statement;
 import com.eagle.programmar.Basic.Terminals.Basic_Keyword;
 import com.eagle.programmar.Basic.Terminals.Basic_Number;
 import com.eagle.tokens.TokenSequence;
@@ -23,31 +21,7 @@ public class Basic_GoToStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Basic_StateMachine state = (Basic_StateMachine) interpreter._state;
-		
 		int label = Integer.parseInt(lbl.getValue());
-		int save = state.getCurrentStatement();
-		state.gotoStatement(label); // Gosub this label
-		
-		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		while (true)
-		{
-			Basic_Statement stmt = state.nextStatement();
-			if (stmt == null)
-			{
-				break;
-			}
-			
-			// Recursive ... goes away for a while
-			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL)
-			{
-				break;
-			}
-		}
-		
-		if (result == Eagle_Statement_Result.RETURN)
-		{
-			state.setCurrentStatement(save);
-		}
+		state.gotoStatement(label); // Goto this label. No Deposit. No Return.
 	}
 }
