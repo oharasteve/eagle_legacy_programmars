@@ -11,6 +11,7 @@ import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
+import com.eagle.programmar.PLI.Terminals.PLI_Literal;
 import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
@@ -48,8 +49,10 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 	public static class PLI_ProcedureOption extends TokenChooser
 	{
 		public @CHOICE PLI_ProcedureOptionsMain XXoptionsMain;
+		public @CHOICE PLI_ProcedureOptionsLinkage XXoptionsLinkage;
 		public @CHOICE PLI_Keyword XXRECURSIVE = new PLI_Keyword("RECURSIVE");
 		public @CHOICE PLI_ProcedureReturns XXreturns;
+		public @CHOICE PLI_ProcedureExternal XXexternal;
 	}
 	
 	public static class PLI_Procedure_Parameters extends TokenSequence
@@ -70,6 +73,17 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @S(60) PunctuationRightParen rightParen;
 	}
 
+	public static class PLI_ProcedureOptionsLinkage extends TokenSequence
+	{
+		public @S(10) PLI_Keyword OPTIONS = new PLI_Keyword("OPTIONS");
+		public @S(20) PunctuationLeftParen leftParen1;
+		public @S(30) PLI_Keyword LINKAGE = new PLI_Keyword("LINKAGE");
+		public @S(40) PunctuationLeftParen leftParen2;
+		public @S(50) PLI_Keyword SYSTEM = new PLI_Keyword("SYSTEM");
+		public @S(60) PunctuationRightParen rightParen2;
+		public @S(70) PunctuationRightParen rightParen1;
+	}
+
 	public static class PLI_ProcedureReturns extends TokenSequence
 	{
 		public @S(10) PLI_Keyword RETURNS = new PLI_Keyword("RETURNS");
@@ -77,6 +91,14 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @S(30) PLI_Type type;
 		public @S(40) @OPT PLI_Keyword BYADDR = new PLI_Keyword("BYADDR");
 		public @S(50) PunctuationRightParen rightParen;
+	}
+
+	public static class PLI_ProcedureExternal extends TokenSequence
+	{
+		public @S(10) PLI_KeywordChoice EXTERNAL = new PLI_KeywordChoice("EXT", "EXTERNAL");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) PLI_Literal literal;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static class PLI_StatementOrComment extends TokenChooser

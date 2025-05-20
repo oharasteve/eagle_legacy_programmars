@@ -22,7 +22,7 @@ public class PLI_Type extends TokenChooser
 	public @CHOICE static class PLI_BaseType extends TokenChooser
 	{
 		public @CHOICE PLI_KeywordChoice XXbase = new PLI_KeywordChoice(
-				"COMPLEX", "FILE", "PRINT", "UNION", "VARYING");
+				"COMPLEX", "FILE", "PRINT", "PTR", "UNION", "VARYING");
 
 		public @CHOICE static class PLI_TypeCharacter extends TokenSequence
 		{

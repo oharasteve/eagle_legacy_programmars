@@ -11,6 +11,15 @@ public class Basic_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericIdentifier(lines, ALPHAS, null, true, false);
+		boolean ok = genericIdentifier(lines, ALPHAS, DIGITS+"$", true, false);
+		if (ok)
+		{
+			if (_id.length() > 2)
+			{
+				// Can only have one '$' or digit
+				return false;
+			}
+		}
+		return ok;
 	}
 }
