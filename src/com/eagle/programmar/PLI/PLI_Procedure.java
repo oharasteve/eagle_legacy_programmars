@@ -69,7 +69,7 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT PLI_Keyword MAIN = new PLI_Keyword("MAIN");
 		public @S(40) @OPT PunctuationComma comma;
-		public @S(50) @OPT PLI_KeywordChoice order = new PLI_KeywordChoice("ORDER", "REORDER");
+		public @S(50) @OPT PLI_KeywordChoice order = new PLI_KeywordChoice("ORDER","REENTRANT", "REORDER");
 		public @S(60) PunctuationRightParen rightParen;
 	}
 

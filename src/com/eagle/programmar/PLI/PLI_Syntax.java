@@ -4,6 +4,7 @@
 package com.eagle.programmar.PLI;
 
 import com.eagle.core.EagleSyntax;
+import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 
 public class PLI_Syntax extends EagleSyntax
 {
@@ -20,5 +21,6 @@ public class PLI_Syntax extends EagleSyntax
 		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "_";
+		this._commentInstance = new PLI_Comment();
 	}
 }
