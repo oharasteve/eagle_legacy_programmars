@@ -40,7 +40,14 @@ public class PLI_MultiplicativeExpression extends PrecedenceOperator implements 
 			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
-			interpreter.pushInt(leftInt / rightInt);
+			if (leftInt % rightInt == 0)
+			{
+				interpreter.pushInt(leftInt / rightInt);
+			}
+			else
+			{
+				interpreter.pushDouble((double) leftInt / rightInt);
+			}
 			return;
 		}
 		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
