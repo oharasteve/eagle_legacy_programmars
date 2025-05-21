@@ -28,7 +28,7 @@ public class Basic_InputStatement extends TokenSequence
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 	public @S(40) SeparatedList<Basic_Variable,PunctuationComma> vars;
 
-	public static BufferedReader _br = null;
+	public @SKIP static BufferedReader _br = null;
 	
 	// Force it to start reading fom stdin again
 	public static void resetReader()

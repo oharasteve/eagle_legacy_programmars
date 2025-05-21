@@ -21,13 +21,13 @@ public class Basic_Program extends AbstractLanguage implements EagleRunnable
 		super(BASIC, new Basic_Syntax());
 	}
 
+	public @S(10) @OPT TokenList<Basic_Statement> statements;
+
 	@Override
 	public String getDocRoot()
 	{
 		return null;
 	}
-
-	public @S(10) @OPT TokenList<Basic_Statement> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
