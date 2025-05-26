@@ -72,7 +72,7 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, functionName, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

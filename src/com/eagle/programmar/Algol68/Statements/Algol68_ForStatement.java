@@ -72,7 +72,7 @@ public class Algol68_ForStatement extends TokenSequence implements EagleRunnable
 		
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

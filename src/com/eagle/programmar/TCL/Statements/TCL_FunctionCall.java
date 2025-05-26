@@ -48,7 +48,7 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, function, function.getValue());
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

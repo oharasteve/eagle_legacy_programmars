@@ -32,7 +32,7 @@ public class C_WhileStatement extends TokenSequence implements AbstractStatement
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

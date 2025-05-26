@@ -89,7 +89,7 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 			if (_metrics == null)
 			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, this, fnName);
+				_metrics = new ArgumentsMetrics(interpreter._metrics, functionName, fnName);
 			}
 			ArrayList<String> argTypes = new ArrayList<String>();
 

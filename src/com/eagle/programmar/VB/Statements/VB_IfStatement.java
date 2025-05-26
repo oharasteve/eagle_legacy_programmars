@@ -92,13 +92,13 @@ public class VB_IfStatement extends TokenSequence
 				{
 					for (VB_IfElseIfClause elif : multi.elseIfClause._elements)
 					{
-						_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
+						_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELSEIF));
 					}
 				}
 	
 				if (multi.elseClause != null && multi.elseClause.isPresent())
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, multi.elseClause));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, multi.elseClause.ELSE));
 				}
 			}
 		}

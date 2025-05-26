@@ -42,7 +42,7 @@ public class TCL_Procedure extends TokenSequence implements AbstractFunction, Ea
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
 		}
 
 		// Don't do anything here.

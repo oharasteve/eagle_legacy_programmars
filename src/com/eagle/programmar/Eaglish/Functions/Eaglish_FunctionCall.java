@@ -58,7 +58,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, fnName, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

@@ -30,7 +30,7 @@ public class Scala_WhileStatement extends TokenSequence implements EagleRunnable
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

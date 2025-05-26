@@ -74,7 +74,7 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 		
 		if (func._metrics == null)
 		{
-			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), this);
+			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), func.name);
 		}
 
 		// The result was already put on the runtime stack

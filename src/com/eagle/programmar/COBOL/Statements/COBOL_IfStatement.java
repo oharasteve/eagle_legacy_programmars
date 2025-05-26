@@ -39,10 +39,10 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement implements EagleR
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
 			if (elseClause != null && elseClause.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
 			}
 		}
 		

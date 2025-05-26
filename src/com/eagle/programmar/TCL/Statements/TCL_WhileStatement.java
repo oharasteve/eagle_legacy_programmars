@@ -30,7 +30,7 @@ public class TCL_WhileStatement extends TokenSequence implements AbstractStateme
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

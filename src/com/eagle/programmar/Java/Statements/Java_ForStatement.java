@@ -118,7 +118,7 @@ public class Java_ForStatement extends TokenSequence
 
 			if (_metrics == null)
 			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, this);
+				_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 			}
 			ForLoopMetric metric = new ForLoopMetric();
 

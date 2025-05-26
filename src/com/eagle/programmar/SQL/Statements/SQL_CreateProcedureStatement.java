@@ -70,7 +70,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		// It will get called at some point, that is when the work happens.
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, procName.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, procName.getValue(), procName);
 		}
 	}
 }

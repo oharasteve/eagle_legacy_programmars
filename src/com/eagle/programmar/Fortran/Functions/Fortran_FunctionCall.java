@@ -109,7 +109,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, fnName);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, variable, fnName);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

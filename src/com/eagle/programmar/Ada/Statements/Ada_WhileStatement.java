@@ -32,7 +32,7 @@ public class Ada_WhileStatement extends TokenSequence implements EagleRunnableWi
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

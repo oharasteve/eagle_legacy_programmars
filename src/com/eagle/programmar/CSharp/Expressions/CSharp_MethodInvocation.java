@@ -72,7 +72,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 
 			if (_metrics == null)
 			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+				_metrics = new ArgumentsMetrics(interpreter._metrics, methodName, name);
 			}
 			ArrayList<String> argTypes = new ArrayList<String>();
 

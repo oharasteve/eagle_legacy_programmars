@@ -42,7 +42,7 @@ public class SQL_WhileStatement extends TokenSequence implements EagleRunnableWi
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE1);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

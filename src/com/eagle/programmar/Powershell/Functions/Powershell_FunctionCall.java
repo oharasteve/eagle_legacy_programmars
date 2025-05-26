@@ -63,7 +63,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 
 		if (_callMetrics == null)
 		{
-			_callMetrics = new CallMetrics(interpreter._metrics, funcRef.getValue(), this);
+			_callMetrics = new CallMetrics(interpreter._metrics, funcRef.getValue(), funcRef);
 		}
 		
 		// Call the function

@@ -68,7 +68,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, CALL, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

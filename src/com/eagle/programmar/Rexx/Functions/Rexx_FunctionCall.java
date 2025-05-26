@@ -73,7 +73,7 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, fnName, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 
@@ -110,7 +110,7 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		if (func._metrics == null)
 		{
-			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), this);
+			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), func.name);
 		}
 
 		// The result was already put on the runtime stack

@@ -17,7 +17,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Eaglish_While_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
-	public @S(10) Eaglish_Keyword FOR = new Eaglish_Keyword("WHILE");
+	public @S(10) Eaglish_Keyword WHILE = new Eaglish_Keyword("WHILE");
 	public @S(20) Eaglish_Expression condition;
 	public @S(30) Eaglish_EndOfLine eoln1;
 
@@ -33,7 +33,7 @@ public class Eaglish_While_Block extends TokenSequence implements EagleRunnableW
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

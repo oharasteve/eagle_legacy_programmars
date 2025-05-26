@@ -33,7 +33,7 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, CALL, name);
 		}
 		_metrics.called(null);
 

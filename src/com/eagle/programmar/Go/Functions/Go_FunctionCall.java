@@ -59,7 +59,7 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, fnName);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, funcName, fnName);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

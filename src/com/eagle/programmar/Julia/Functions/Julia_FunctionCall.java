@@ -95,7 +95,7 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, variable, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

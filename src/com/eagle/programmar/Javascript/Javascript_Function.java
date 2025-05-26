@@ -52,7 +52,8 @@ public class Javascript_Function extends TokenSequence implements AbstractFuncti
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, implementation.functionName.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, implementation.functionName.getValue(),
+					implementation.functionName);
 		}
 
 		// Nothing to do here. Only run functions when they are called / invoked.

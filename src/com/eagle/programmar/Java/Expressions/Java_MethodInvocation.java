@@ -85,7 +85,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 
 			if (_metrics == null)
 			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+				_metrics = new ArgumentsMetrics(interpreter._metrics, methodName, name);
 			}
 			ArrayList<String> argTypes = new ArrayList<String>();
 

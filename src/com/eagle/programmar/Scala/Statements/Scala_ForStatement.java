@@ -71,7 +71,7 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

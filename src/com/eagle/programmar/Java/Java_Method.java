@@ -148,7 +148,7 @@ public class Java_Method extends TokenSequence
 		
 			if (_metrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), this);
+				_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), methodName);
 			}
 	
 			// Nothing to do here. Only run methods when they are called / invoked.

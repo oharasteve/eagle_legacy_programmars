@@ -47,10 +47,10 @@ public class Fortran_IfStatement extends TokenSequence implements AbstractStatem
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, IF1));
 			if (ifElse != null && ifElse.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse.ELSE));
 			}
 		}
 

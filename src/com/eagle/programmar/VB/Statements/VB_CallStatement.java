@@ -68,7 +68,7 @@ public class VB_CallStatement extends TokenSequence implements AbstractStatement
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, subName, subName.getValue());
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

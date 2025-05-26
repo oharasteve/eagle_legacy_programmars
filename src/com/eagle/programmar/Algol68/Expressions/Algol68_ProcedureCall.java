@@ -79,7 +79,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, procName, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

@@ -71,7 +71,7 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), FUNCTION);
 		}
 
 		// Don't do anything here.

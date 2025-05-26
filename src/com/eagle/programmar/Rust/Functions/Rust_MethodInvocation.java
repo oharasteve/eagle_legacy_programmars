@@ -54,7 +54,7 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, methodName.var, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

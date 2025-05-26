@@ -52,7 +52,7 @@ public class Powershell_ForStatement extends TokenSequence implements AbstractSt
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

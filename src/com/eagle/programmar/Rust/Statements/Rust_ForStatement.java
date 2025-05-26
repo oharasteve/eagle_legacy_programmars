@@ -36,7 +36,7 @@ public class Rust_ForStatement extends TokenSequence implements EagleRunnableWit
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

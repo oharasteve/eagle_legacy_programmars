@@ -88,7 +88,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, procName);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, name, procName);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

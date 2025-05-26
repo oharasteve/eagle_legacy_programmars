@@ -43,7 +43,7 @@ public class Delphi_Additive_Expression extends PrecedenceOperator
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 		

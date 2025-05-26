@@ -66,19 +66,19 @@ public class Python_IfStatement extends TokenSequence
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
 			
 			if (ifElif != null)
 			{
 				for (Python_IfElif elif : ifElif._elements)
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELIF));
 				}
 			}
 			
 			if (ifElse != null && ifElse.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse.ELSE));
 			}
 		}
 

@@ -45,7 +45,7 @@ public class Eaglish_Function_Block extends TokenSequence implements EagleRunnab
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, var.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, var.getValue(), FUNCTION);
 		}
 
 		// Don't do anything here.

@@ -46,7 +46,7 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, DO);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

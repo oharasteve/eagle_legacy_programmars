@@ -53,19 +53,19 @@ public class Algol68_IfStatement extends TokenSequence implements EagleRunnableW
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			_metrics.add(new IfCondMetrics(interpreter._metrics, this));
+			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
 			
 			if (elifClause != null)
 			{
 				for (Algol68_IfElifClause elif : elifClause._elements)
 				{
-					_metrics.add(new IfCondMetrics(interpreter._metrics, elif));
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELIF));
 				}
 			}
 
 			if (elseClause != null && elseClause.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
 			}
 		}
 

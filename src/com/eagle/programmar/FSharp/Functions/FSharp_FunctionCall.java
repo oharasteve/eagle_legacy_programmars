@@ -54,7 +54,7 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, functionName, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

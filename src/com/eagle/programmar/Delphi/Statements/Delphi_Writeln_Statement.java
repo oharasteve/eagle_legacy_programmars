@@ -57,7 +57,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, WRITELN.getValue());
+			_metrics = new ArgumentsMetrics(interpreter._metrics, WRITELN, WRITELN.getValue());
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

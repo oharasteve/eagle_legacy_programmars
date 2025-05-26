@@ -80,7 +80,7 @@ public class Python_Function extends TokenSequence
 		if (_metrics == null)
 		{
 			Python_Function_Definition def = (Python_Function_Definition) fnName.getWhich();
-			_metrics = new CallMetrics(interpreter._metrics, def.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, def.getValue(), def);
 		}
 
 		// Don't do anything here.

@@ -56,7 +56,7 @@ public class Fortran_DoStatement extends TokenSequence
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, DO1);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

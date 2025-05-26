@@ -74,7 +74,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, fnName, fnName.getValue());
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

@@ -56,7 +56,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, this, name);
+			_metrics = new ArgumentsMetrics(interpreter._metrics, id, name);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 

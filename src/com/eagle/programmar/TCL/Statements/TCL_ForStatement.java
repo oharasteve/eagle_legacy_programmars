@@ -38,7 +38,7 @@ public class TCL_ForStatement extends TokenSequence implements AbstractStatement
 
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
