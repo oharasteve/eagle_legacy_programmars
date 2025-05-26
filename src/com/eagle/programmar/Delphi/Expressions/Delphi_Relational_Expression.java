@@ -23,7 +23,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Delphi_Relational_Operator relOp;
+	public @S(20) Delphi_Relational_Operator operator;
 	public @S(30) @OPT Delphi_Comment comment;
 	public @S(40) Delphi_Expression right = new Delphi_Expression(this, AllowedPrecedence.HIGHER);
 
@@ -41,11 +41,11 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = relOp.getWhich().toString();
+		String oper = operator.getWhich().toString();
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 
@@ -89,7 +89,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 				return;
 			}
 		}
-		throw new RuntimeException("Unexpected relational operator: " + relOp.getWhich());
+		throw new RuntimeException("Unexpected relational operator: " + operator.getWhich());
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (relOp.getWhich().toString())
+		switch (operator.getWhich().toString())
 		{
 		case "<":
 			return generator.newRelationalExpression(leftExpr,
@@ -119,6 +119,6 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 			return generator.newRelationalExpression(leftExpr,
 					RelationalEnum.GREATER_THAN, rightExpr, this);
 		}
-		throw new RuntimeException("Unexpected relational operator: " + relOp.getWhich());
+		throw new RuntimeException("Unexpected relational operator: " + operator.getWhich());
 	}
 }

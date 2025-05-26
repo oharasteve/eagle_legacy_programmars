@@ -69,7 +69,7 @@ public class IntelASM_JMP extends TokenSequence implements EagleRunnable
 			
 			if (fn._jumpMetrics == null)
 			{
-				fn._jumpMetrics = new JumpMetrics(interpreter._metrics, name, this);
+				fn._jumpMetrics = new JumpMetrics(interpreter._metrics, name, fn);
 			}
 			fn._jumpMetrics.addJumpFrom(this);
 		}

@@ -26,7 +26,7 @@ public class Ada_NegativeExpression extends PrimaryOperator implements EagleRunn
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator1Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(value.typeName());
 		

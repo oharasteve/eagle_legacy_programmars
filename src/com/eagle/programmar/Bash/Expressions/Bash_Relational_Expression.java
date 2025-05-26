@@ -36,7 +36,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator implements Ea
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 

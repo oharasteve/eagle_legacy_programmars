@@ -16,7 +16,7 @@ import com.eagle.tokens.TokenChooser;
 public class Algol68_RelationalExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Algol68_Expression left = new Algol68_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Algol68_RelOp relOp;
+	public @S(20) Algol68_RelOp operator;
 	public @S(30) Algol68_Expression right = new Algol68_Expression(this, AllowedPrecedence.HIGHER);
 
 	public static class Algol68_RelOp extends TokenChooser
@@ -34,11 +34,11 @@ public class Algol68_RelationalExpression extends PrecedenceOperator implements 
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = relOp.getWhich().toString();
+		String oper = operator.getWhich().toString();
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 

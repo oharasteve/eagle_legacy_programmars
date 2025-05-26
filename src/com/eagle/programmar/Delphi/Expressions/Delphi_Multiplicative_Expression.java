@@ -23,7 +23,7 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Delphi_Expression left = new Delphi_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Delphi_Multiplicative_Operator multOp;
+	public @S(20) Delphi_Multiplicative_Operator operator;
 	public @S(30) Delphi_Expression right = new Delphi_Expression(this, AllowedPrecedence.HIGHER);
 
 	public static class Delphi_Multiplicative_Operator extends TokenChooser
@@ -40,11 +40,11 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = multOp.getWhich().toString();
+		String oper = operator.getWhich().toString();
 
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 
@@ -76,7 +76,7 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 			interpreter.pushBool(leftBool && rightBool);
 			return;
 		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + multOp.getWhich());
+		throw new RuntimeException("Unexpected multiplicative operator: " + operator.getWhich());
 	}
 	
 	@Override
@@ -85,7 +85,7 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (multOp.getWhich().toString().toLowerCase())
+		switch (operator.getWhich().toString().toLowerCase())
 		{
 		case "*":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
@@ -102,7 +102,7 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 		case "and":
 			return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected multiplicative operator: " + multOp.getWhich());
+			throw new RuntimeException("Unexpected multiplicative operator: " + operator.getWhich());
 		}
 	}
 }

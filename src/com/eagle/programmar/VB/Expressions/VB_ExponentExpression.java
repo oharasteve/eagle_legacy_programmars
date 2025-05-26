@@ -6,6 +6,8 @@ package com.eagle.programmar.VB.Expressions;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
@@ -13,19 +15,32 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_ExponentExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_ExponentExpression extends PrecedenceOperator 
+		implements EagleRunnable, EagleTransformableExpression
 {
 	// Note: VB does these left-to-right. Most languages do right-to-left
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) VB_Punctuation operator = new VB_Punctuation('^');
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.ATLEAST);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		interpreter.pushDouble(Math.pow(leftValue, rightValue));
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		double leftDbl = leftValue.forceDoubleValue();
+		int rightInt = rightValue.forceIntegerValue();
+		interpreter.pushDouble(Math.pow(leftDbl, rightInt));
 	}
 	
 	@Override

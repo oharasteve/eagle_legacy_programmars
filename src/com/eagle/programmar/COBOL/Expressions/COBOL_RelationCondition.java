@@ -23,7 +23,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 	public @S(10) COBOL_Expression left = new COBOL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
 	public @S(30) @OPT COBOL_Keyword NOT = new COBOL_Keyword("NOT");
-	public @S(40) COBOL_RelationalOperator relationalOperator;
+	public @S(40) COBOL_RelationalOperator operator;
 	public @S(50) COBOL_Expression right = new COBOL_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -33,11 +33,11 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = relationalOperator.canonicalForm(); // Returns "<", "=", etc.
+		String oper = operator.canonicalForm(); // Returns "<", "=", etc.
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 
@@ -93,7 +93,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		String oper = relationalOperator.canonicalForm(); // Returns "<", "=", etc.
+		String oper = operator.canonicalForm(); // Returns "<", "=", etc.
 		RelationalEnum newOper;
 		
 		if (NOT.isPresent())

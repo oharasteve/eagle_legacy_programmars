@@ -28,7 +28,7 @@ public class Go_AdditiveExpression extends PrecedenceOperator implements EagleRu
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 		

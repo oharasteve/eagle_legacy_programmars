@@ -32,7 +32,7 @@ public class VB_WhileStatement extends TokenSequence implements AbstractStatemen
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, this);
+			_metrics = new ForLoopMetrics(interpreter._metrics, WHILE1);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 

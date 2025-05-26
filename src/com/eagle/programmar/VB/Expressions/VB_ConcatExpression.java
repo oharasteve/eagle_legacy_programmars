@@ -6,6 +6,8 @@ package com.eagle.programmar.VB.Expressions;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
@@ -16,15 +18,27 @@ import com.eagle.transform.EagleTransformer;
 public class VB_ConcatExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) VB_Punctuation ampersand = new VB_Punctuation('&');
+	public @S(20) VB_Punctuation operator = new VB_Punctuation('&');
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
+
+	private @SKIP Operator2Metrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String leftValue = interpreter.getStrValue(left);
-		String rightValue = interpreter.getStrValue(right);
-		interpreter.pushStr(leftValue + rightValue);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		String oper = operator.toString();
+
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		String leftStr = leftValue.forceStringValue();
+		String rightStr = rightValue.forceStringValue();
+		interpreter.pushStr(leftStr + rightStr);
 	}
 
 	@Override

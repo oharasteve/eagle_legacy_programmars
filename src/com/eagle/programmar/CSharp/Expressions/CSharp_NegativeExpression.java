@@ -36,7 +36,7 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 		
 		if (_metrics == null)
 		{
-			_metrics = new Operator1Metrics(interpreter._metrics, this, oper);
+			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(value.typeName());
 
