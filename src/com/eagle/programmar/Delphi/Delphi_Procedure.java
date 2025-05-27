@@ -10,6 +10,7 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
+import com.eagle.programmar.Delphi.Symbols.Delphi_Procedure_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -35,7 +36,7 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Procedure_Declarations") Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice(
 				"Procedure", "Constructor", "Destructor");
-		public @S(20) Delphi_Variable name;
+		public @S(20) Delphi_Procedure_Definition name;
 		public @S(30) @OPT Delphi_Parameter_List args;
 		public @S(40) PunctuationSemicolon semicolon;
 		public @S(50) @OPT Delphi_Override override;
@@ -53,7 +54,7 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 		// Don't run it here. Wait until it is called.
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, forward.name.var.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, forward.name.getValue(), forward.name);
 		}
 	}
 
@@ -67,7 +68,7 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 			}
 		}
 
-		String procName = this.forward.name.var.getValue();
+		String procName = this.forward.name.getValue();
 		generator.addMethod(null, procName, this);
 
 		Delphi_Parameter param = this.forward.args.firstParam;

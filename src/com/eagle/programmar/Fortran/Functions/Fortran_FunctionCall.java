@@ -39,48 +39,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		String fnName = variable.getValue().toUpperCase();
 		int argCount = args.getPrimaryCount();
 		
-//		// Check for built-in function names first
-//		switch (fnName)
-//		{
-//		case "ADJUSTL":
-//			if (argCount != 1)
-//			{
-//				throw new RuntimeException("ADJUSTL function requires 1 argument");
-//			}
-//			String str1 = interpreter.getStrValue(args.getPrimaryElement(0));
-//			String trimmedStr = str1.stripLeading();
-//			int lengthDifference = str1.length() - trimmedStr.length();
-//			String newStr = trimmedStr + str1.substring(0, lengthDifference);
-//			interpreter.pushStr(newStr);	// Left justifies a string, but keeps length same
-//			return;
-//		case "LEN":
-//			if (argCount != 1)
-//			{
-//				throw new RuntimeException("LEN function requires 1 argument");
-//			}
-//			String str2 = interpreter.getStrValue(args.getPrimaryElement(0));
-//			interpreter.pushInt(str2.length());
-//			return;
-//		case "MOD":
-//			if (argCount != 2)
-//			{
-//				throw new RuntimeException("MOD function requires 2 arguments");
-//			}
-//			int numer = interpreter.getIntValue(args.getPrimaryElement(0));
-//			int denom = interpreter.getIntValue(args.getPrimaryElement(1));
-//			interpreter.pushInt(numer % denom);
-//			return;
-//		case "TRIM":
-//			if (argCount != 1)
-//			{
-//				throw new RuntimeException("TRIM function requires 1 argument");
-//			}
-//			String str3 = interpreter.getStrValue(args.getPrimaryElement(0));
-//			interpreter.pushStr(str3.stripTrailing());	// Only removes trailing spaces
-//			return;
-//		}
-		
-		// Check for subscripts second
+		// Check for subscripts
 		EagleValue var = interpreter.findSymbol(fnName);
 		if (var != null && var.isArray() && argCount == 1)
 		{
@@ -91,7 +50,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 			return;
 		}
 		
-		// Check for user functions third
+		// Check for user functions
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null || !(fn instanceof Fortran_Function))
 		{
@@ -148,7 +107,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		long elapsedTime = System.nanoTime() - startTime;
 		if (func._metrics == null)
 		{
-			func._metrics = new CallMetrics(interpreter._metrics, fnName, func);
+			func._metrics = new CallMetrics(interpreter._metrics, fnName, func.fnName);
 		}
 		func._metrics.addCallFrom(this, elapsedTime);
 

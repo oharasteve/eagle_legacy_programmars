@@ -74,7 +74,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 			if (_metrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, name, this);
+				_metrics = new CallMetrics(interpreter._metrics, name, func.name);
 			}
 			
 			// Call the function

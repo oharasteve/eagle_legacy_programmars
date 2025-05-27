@@ -42,7 +42,8 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		COBOL_Paragraph paragraph = (COBOL_Paragraph) fn;
 		if (paragraph._metrics == null)
 		{
-			paragraph._metrics = new CallMetrics(interpreter._metrics, startPara, this);
+			paragraph._metrics = new CallMetrics(interpreter._metrics, startPara,
+					paragraph.paragraphHeaders.first().paragraphName);
 		}
 
 		// Prepare to evaluate the function

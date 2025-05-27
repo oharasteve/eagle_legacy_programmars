@@ -75,7 +75,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		long elapsedTime = System.nanoTime() - startTime;
 		if (sub._metrics == null)
 		{
-			sub._metrics = new CallMetrics(interpreter._metrics, fnName, sub);
+			sub._metrics = new CallMetrics(interpreter._metrics, fnName, sub.subName);
 		}
 		sub._metrics.addCallFrom(this, elapsedTime);
 

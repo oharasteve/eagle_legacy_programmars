@@ -48,7 +48,7 @@ public class Ada_Procedure extends TokenSequence implements EagleRunnable, Abstr
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), PROCEDURE);
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Only deal with main procedure

@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
+import com.eagle.programmar.AWK.Symbols.AWK_Function_Definition;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
@@ -25,7 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class AWK_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
-	public @S(20) AWK_Identifier name;
+	public @S(20) AWK_Function_Definition id;
 	public @S(30) AWK_Function_ParameterDefs parameters;
 	public @S(40) @OPT TokenList<AWK_Comment> comments;
 	public @S(50) AWK_FunctionBody body;
@@ -71,7 +72,7 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), FUNCTION);
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

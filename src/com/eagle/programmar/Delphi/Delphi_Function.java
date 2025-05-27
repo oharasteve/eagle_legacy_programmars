@@ -10,6 +10,7 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
+import com.eagle.programmar.Delphi.Symbols.Delphi_Function_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.scope.EagleScope;
@@ -37,7 +38,7 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword(
 				"Function");
-		public @S(20) Delphi_Variable name;
+		public @S(20) Delphi_Function_Definition name;
 		public @S(30) @OPT Delphi_Parameter_List args;
 		public @S(40) PunctuationColon colon;
 		public @S(50) Delphi_Type type;
@@ -59,7 +60,7 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 		
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, forward.name.var.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, forward.name.getValue(), forward.name);
 		}
 	}
 	
@@ -73,7 +74,7 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 			}
 		}
 
-		String funcName = this.forward.name.var.getValue();
+		String funcName = this.forward.name.getValue();
 		AbstractType type = this.forward.type.convertType(generator);
 		generator.addMethod(type, funcName, this);
 		

@@ -56,7 +56,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		if (fn instanceof Delphi_Procedure)
 		{
 			proc = (Delphi_Procedure) fn;
-			procName = proc.forward.name.var.getValue();
+			procName = proc.forward.name.getValue();
 			paramList = proc.forward.args;
 			metrics = proc._metrics;
 			body = proc.body;
@@ -64,7 +64,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		else if (fn instanceof Delphi_Function)
 		{
 			func = (Delphi_Function) fn;
-			procName = func.forward.name.var.getValue();
+			procName = func.forward.name.getValue();
 			paramList = func.forward.args;
 			metrics = func._metrics;
 			body = func.body;

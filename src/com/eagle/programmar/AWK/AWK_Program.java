@@ -53,7 +53,7 @@ public class AWK_Program extends AbstractLanguage implements EagleRunnable
 			if (which instanceof AWK_Function)
 			{
 				AWK_Function fn = (AWK_Function) which;
-				interpreter.addFunction(fn.name.getValue(), fn);
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
 

@@ -73,7 +73,7 @@ public class Algol68_Procedure extends TokenSequence implements EagleRunnable, A
 	{
 		if (_metrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), this);
+			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
 		}
 		
 		// Nothing to do here -- just defining the procedure

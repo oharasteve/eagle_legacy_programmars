@@ -95,7 +95,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 			long elapsedTime = System.nanoTime() - startTime;
 			if (proc._metrics == null)
 			{
-				proc._metrics = new CallMetrics(interpreter._metrics, name, proc);
+				proc._metrics = new CallMetrics(interpreter._metrics, name, proc.id1);
 			}
 			proc._metrics.addCallFrom(this, elapsedTime);
 
