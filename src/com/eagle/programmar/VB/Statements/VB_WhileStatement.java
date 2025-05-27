@@ -18,7 +18,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class VB_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) VB_Keyword WHILE1 = new VB_Keyword("While");
+	public @S(10) @DOC("statements/while-end-while-statement") VB_Keyword WHILE1 = new VB_Keyword("While");
 	public @S(20) VB_Expression condition;
 	public @S(30) VB_EndOfLine eoln;
 	public @S(40) TokenList<VB_Element> actions;

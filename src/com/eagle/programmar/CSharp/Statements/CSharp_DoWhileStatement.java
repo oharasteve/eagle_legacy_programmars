@@ -26,7 +26,7 @@ public class CSharp_DoWhileStatement extends TokenSequence
 		implements AbstractStatement,
 				Eagle_Generate_DoUntil<CSharp_Statement, CSharp_Expression>
 {
-	public @S(10) @NEWLINE @DOC("statements.html#14.13") CSharp_Keyword DO = new CSharp_Keyword("do");
+	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword DO = new CSharp_Keyword("do");
 	public @S(20) CSharp_Statement doStatement;
 	public @S(30) CSharp_Keyword WHILE = new CSharp_Keyword("while");
 	public @S(40) PunctuationLeftParen leftParen;

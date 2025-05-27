@@ -14,7 +14,7 @@ import com.eagle.tokens.PrecedenceOperator;
 public class FSharp_Multiplicative_Expression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("*", "/", "%");
+	public @S(20) @DOC("symbol-and-operator-reference/arithmetic-operators") FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("*", "/", "%");
 	public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;

@@ -10,6 +10,7 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
+import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Procedure_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
@@ -19,6 +20,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleTransformer;
 
@@ -36,11 +38,18 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Procedure_Declarations") Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice(
 				"Procedure", "Constructor", "Destructor");
-		public @S(20) Delphi_Procedure_Definition name;
-		public @S(30) @OPT Delphi_Parameter_List args;
-		public @S(40) PunctuationSemicolon semicolon;
-		public @S(50) @OPT Delphi_Override override;
+		public @S(20) @OPT TokenList<Delphi_ProcedureClass> classes;
+		public @S(30) Delphi_Procedure_Definition name;
+		public @S(40) @OPT Delphi_Parameter_List args;
+		public @S(50) PunctuationSemicolon semicolon;
+		public @S(60) @OPT Delphi_Override override;
 
+		public static class Delphi_ProcedureClass extends TokenSequence
+		{
+			public @S(10) Delphi_Identifier_Reference clsRef;
+			public @S(20) PunctuationPeriod dot;
+		}
+		
 		public static class Delphi_Override extends TokenSequence
 		{
 			public @S(10) Delphi_Keyword OVERRIDE = new Delphi_Keyword("Override");

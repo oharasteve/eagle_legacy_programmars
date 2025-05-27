@@ -29,7 +29,7 @@ public class CSharp_IfStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
 				Eagle_Generate_IfElse<CSharp_Statement, CSharp_Expression>
 {
-	public @S(10) @NEWLINE @DOC("statements.html#14.9") CSharp_Keyword IF = new CSharp_Keyword("if");
+	public @S(10) @NEWLINE @DOC("statements/selection-statements") CSharp_Keyword IF = new CSharp_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression condition;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;

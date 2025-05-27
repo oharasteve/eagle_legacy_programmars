@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class VB_UcaseFunction extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) VB_KeywordChoice UCASE = new VB_KeywordChoice("Lcase", "Ucase");
+	public @S(10) @DOC("functions/string-functions") VB_KeywordChoice UCASE = new VB_KeywordChoice("Lcase", "Ucase");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) VB_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;

@@ -25,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class VB_CallStatement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
-	public @S(10) VB_Keyword CALL = new VB_Keyword("call");
+	public @S(10) @DOC("statements/call-statement") VB_Keyword CALL = new VB_Keyword("call");
 	public @S(20) VB_Identifier_Reference subName;
 	public @S(30) @OPT VB_CallArguments callArguments;
 

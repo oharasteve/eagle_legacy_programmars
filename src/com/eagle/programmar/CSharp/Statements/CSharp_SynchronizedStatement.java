@@ -13,8 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_SynchronizedStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @NEWLINE @DOC("statements.html#14.19") CSharp_Keyword SYNCHRONIZED = new CSharp_Keyword(
-			"synchronized");
+	public @S(10) @NEWLINE CSharp_Keyword SYNCHRONIZED = new CSharp_Keyword("synchronized");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression expr;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;

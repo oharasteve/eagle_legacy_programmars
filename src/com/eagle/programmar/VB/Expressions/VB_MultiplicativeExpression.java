@@ -22,7 +22,7 @@ public class VB_MultiplicativeExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) VB_MultiplyOperation operator;
+	public @S(20) @DOC("operators/arithmetic-operators") VB_MultiplyOperation operator;
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 
 	public static class VB_MultiplyOperation extends TokenChooser

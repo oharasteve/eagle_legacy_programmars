@@ -12,7 +12,7 @@ import com.eagle.tokens.PrecedenceOperator;
 public class FSharp_Or_Expression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) FSharp_Punctuation OR = new FSharp_Punctuation("||");
+	public @S(20) @DOC("symbol-and-operator-reference/boolean-operators") FSharp_Punctuation OR = new FSharp_Punctuation("||");
 	public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override

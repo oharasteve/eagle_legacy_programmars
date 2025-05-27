@@ -49,7 +49,7 @@ public class CSharp_ForStatement extends TokenSequence
 					Eagle_Generate_ForLoop<CSharp_Statement, CSharp_Expression>,
 					Eagle_Generate_ForRange<CSharp_Statement, CSharp_Expression>
 {
-	public @S(10) @NEWLINE @DOC("statements.html#14.14") CSharp_Keyword FOR = new CSharp_Keyword("for");
+	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT @NOSPACE SeparatedList<CSharp_ForWhat, PunctuationComma> what;
 	public @S(40) @NOSPACE PunctuationSemicolon semicolon1;

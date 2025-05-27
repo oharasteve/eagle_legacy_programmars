@@ -17,7 +17,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class VB_LenFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) VB_Keyword LEN = new VB_Keyword("LEN");
+	public @S(10) @DOC("functions/string-functions") VB_Keyword LEN = new VB_Keyword("LEN");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) VB_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;

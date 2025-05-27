@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) @DOC("5z06z1kb.aspx") VB_Keyword FOR = new VB_Keyword("for");
+	public @S(10) @DOC("statements/for-next-statement") VB_Keyword FOR = new VB_Keyword("for");
 	public @S(20) VB_Identifier_Reference var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) VB_Expression from;

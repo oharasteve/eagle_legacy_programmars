@@ -42,8 +42,9 @@ public class Basic_InputStatement extends TokenSequence
 		if (prompt != null && prompt.isPresent())
 		{
 			String val = prompt.getValue().replaceAll("\"", "");
-			System.out.print(val + "?");
+			System.out.print(val);
 		}
+		System.out.print("?");
 
 		if (_br == null)
 		{

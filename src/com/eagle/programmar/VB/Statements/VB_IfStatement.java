@@ -27,7 +27,7 @@ import com.eagle.transform.EagleTransformer;
 public class VB_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
-	public @S(10) @DOC("752y8abs.aspx") VB_Keyword IF1 = new VB_Keyword("if");
+	public @S(10) @DOC("statements/if-then-else-statement") VB_Keyword IF1 = new VB_Keyword("if");
 	public @S(20) VB_Expression condition;
 	public @S(30) VB_Keyword THEN = new VB_Keyword("then");
 	public @S(40) VB_IfType ifType;

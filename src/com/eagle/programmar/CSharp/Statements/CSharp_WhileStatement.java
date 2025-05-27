@@ -29,7 +29,7 @@ public class CSharp_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
 				Eagle_Generate_While<CSharp_Statement, CSharp_Expression>
 {
-	public @S(10) @NEWLINE @DOC("statements.html#14.12") CSharp_Keyword WHILE = new CSharp_Keyword("while");
+	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword WHILE = new CSharp_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression condition;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;

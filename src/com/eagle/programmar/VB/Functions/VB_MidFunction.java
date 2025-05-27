@@ -20,7 +20,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class VB_MidFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) VB_Keyword MID = new VB_Keyword("MID");
+	public @S(10) @DOC("functions/string-functions") VB_Keyword MID = new VB_Keyword("MID");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) VB_Expression expr;
 	public @S(40) PunctuationComma comma1;

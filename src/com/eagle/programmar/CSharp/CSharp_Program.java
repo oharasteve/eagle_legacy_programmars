@@ -24,7 +24,7 @@ public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 	@Override
 	public String getDocRoot()
 	{
-		return "http://java.sun.com/docs/books/jls/third_edition/html/";
+		return "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/";
 	}
 
 	public static final String[] MODIFIERS = new String[] {

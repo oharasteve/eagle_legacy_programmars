@@ -16,7 +16,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class FSharp_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) FSharp_Keyword WHILE = new FSharp_Keyword("while");
+	public @S(10) @DOC("loops-while-do-expression") FSharp_Keyword WHILE = new FSharp_Keyword("while");
 	public @S(20) FSharp_Expression condition;
 	public @S(30) FSharp_Keyword DO = new FSharp_Keyword("do");
 	public @S(40) FSharp_SingleOrMultiLineStatement forActions;

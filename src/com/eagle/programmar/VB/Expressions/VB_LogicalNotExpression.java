@@ -15,7 +15,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class VB_LogicalNotExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) VB_Keyword NOT = new VB_Keyword("NOT");
+	public @S(10) @DOC("operators/logical-bitwise-operators") VB_Keyword NOT = new VB_Keyword("NOT");
 	public @S(20) VB_Expression expr;
 
 	@Override

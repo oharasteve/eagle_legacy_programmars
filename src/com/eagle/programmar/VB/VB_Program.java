@@ -30,7 +30,7 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 	@Override
 	public String getDocRoot()
 	{
-		return "http://msdn.microsoft.com/en-us/library/";
+		return "https://learn.microsoft.com/en-us/dotnet/visual-basic/language-reference/";
 	}
 
 	public @S(10) @OPT TokenList<VB_Element> statements;

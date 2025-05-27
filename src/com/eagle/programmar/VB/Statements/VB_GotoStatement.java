@@ -10,6 +10,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class VB_GotoStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) VB_Keyword GOTO = new VB_Keyword("goto");
+	public @S(10) @DOC("statements/goto-statement") VB_Keyword GOTO = new VB_Keyword("goto");
 	public @S(20) VB_Identifier_Reference lbl;
 }

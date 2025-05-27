@@ -11,7 +11,7 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class FSharp_NotExpresion extends PrimaryOperator implements EagleRunnable
 {
-	public @S(10) FSharp_Keyword NOT = new FSharp_Keyword("Not");
+	public @S(10) @DOC("symbol-and-operator-reference/boolean-operators") FSharp_Keyword NOT = new FSharp_Keyword("Not");
 	public @S(20) FSharp_Expression expr;
 
 	@Override

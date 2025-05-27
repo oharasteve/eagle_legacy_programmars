@@ -11,6 +11,7 @@ import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Function_Definition;
+import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.scope.EagleScope;
@@ -21,6 +22,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleTransformer;
 
@@ -38,13 +40,20 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword(
 				"Function");
-		public @S(20) Delphi_Function_Definition name;
-		public @S(30) @OPT Delphi_Parameter_List args;
-		public @S(40) PunctuationColon colon;
-		public @S(50) Delphi_Type type;
-		public @S(60) PunctuationSemicolon semicolon1;
+		public @S(20) @OPT TokenList<Delphi_FunctionClass> classes;
+		public @S(30) Delphi_Function_Definition name;
+		public @S(40) @OPT Delphi_Parameter_List args;
+		public @S(50) PunctuationColon colon;
+		public @S(60) Delphi_Type type;
+		public @S(70) PunctuationSemicolon semicolon1;
 	}
 	
+	public static class Delphi_FunctionClass extends TokenSequence
+	{
+		public @S(10) Delphi_Identifier_Reference clsRef;
+		public @S(20) PunctuationPeriod dot;
+	}
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Delphi_Syntax.IS_CASE_SENSITIVE);
 
 	@Override

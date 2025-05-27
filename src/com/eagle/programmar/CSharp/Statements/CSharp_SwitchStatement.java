@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_SwitchStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @NEWLINE @DOC("statements.html#14.11") CSharp_Keyword SWITCH = new CSharp_Keyword("switch");
+	public @S(10) @NEWLINE @DOC("statements/selection-statements") CSharp_Keyword SWITCH = new CSharp_Keyword("switch");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression val;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;

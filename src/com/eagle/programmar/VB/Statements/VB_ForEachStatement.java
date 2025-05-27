@@ -14,7 +14,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class VB_ForEachStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @DOC("5z06z1kb.aspx") VB_Keyword FOR = new VB_Keyword("for");
+	public @S(10) @DOC("statements/for-each-next-statement") VB_Keyword FOR = new VB_Keyword("for");
 	public @S(20) VB_Keyword EACH = new VB_Keyword("each");
 	public @S(30) VB_Identifier_Reference var;
 	public @S(40) VB_Keyword IN = new VB_Keyword("in");

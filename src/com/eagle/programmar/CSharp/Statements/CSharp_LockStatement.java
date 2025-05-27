@@ -13,7 +13,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_LockStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @NEWLINE CSharp_Keyword LOCK = new CSharp_Keyword("lock");
+	public @S(10) @NEWLINE @DOC("statements/lock") CSharp_Keyword LOCK = new CSharp_Keyword("lock");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression expr;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;

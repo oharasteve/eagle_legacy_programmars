@@ -20,7 +20,7 @@ public class CSharp_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression,
 				Eagle_Generate_Logical_Not<CSharp_Expression>
 {
-	public @S(10) CSharp_Punctuation notOperator = new CSharp_Punctuation('!');
+	public @S(10) @DOC("operators/boolean-logical-operators") CSharp_Punctuation notOperator = new CSharp_Punctuation('!');
 	public @S(20) CSharp_Expression expr;
 
 	@Override

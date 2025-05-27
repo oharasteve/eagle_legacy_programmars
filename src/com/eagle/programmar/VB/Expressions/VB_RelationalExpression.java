@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 public class VB_RelationalExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) VB_PunctuationChoice operator = new VB_PunctuationChoice("=", "<=", ">=", "<>", "<", ">");
+	public @S(20) @DOC("operators/comparison-operators") VB_PunctuationChoice operator = new VB_PunctuationChoice("=", "<=", ">=", "<>", "<", ">");
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;

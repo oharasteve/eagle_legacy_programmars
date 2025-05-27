@@ -18,7 +18,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class VB_DoStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) VB_Keyword DO = new VB_Keyword("Do");
+	public @S(10) @DOC("statements/do-loop-statement") VB_Keyword DO = new VB_Keyword("Do");
 	public @S(20) @OPT VB_DoCondition cond1;
 	public @S(30) VB_EndOfLine eoln;
 	public @S(40) TokenList<VB_Element> actions;

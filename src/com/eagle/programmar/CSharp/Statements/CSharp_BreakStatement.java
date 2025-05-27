@@ -19,7 +19,7 @@ public class CSharp_BreakStatement extends TokenSequence
 				Eagle_Generate_Break<CSharp_Statement>
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
-	public @S(20) @DOC("statements.html#14.15") CSharp_Keyword BREAK = new CSharp_Keyword("break");
+	public @S(20) @DOC("statements/jump-statements#the-break-statement") CSharp_Keyword BREAK = new CSharp_Keyword("break");
 	public @S(30) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override

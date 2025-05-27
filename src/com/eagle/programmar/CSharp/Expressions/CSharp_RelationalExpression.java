@@ -19,7 +19,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		implements EagleRunnable, Eagle_Generate_Relational<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+	public @S(20) @DOC("operators/comparison-operators") CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;

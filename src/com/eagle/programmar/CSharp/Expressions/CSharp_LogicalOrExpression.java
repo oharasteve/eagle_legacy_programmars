@@ -22,7 +22,7 @@ public class CSharp_LogicalOrExpression extends PrecedenceOperator
 				Eagle_Generate_Logical_Or<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) CSharp_PunctuationChoice orOperator = new CSharp_PunctuationChoice("||", "^");
+	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_PunctuationChoice orOperator = new CSharp_PunctuationChoice("||", "^");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override

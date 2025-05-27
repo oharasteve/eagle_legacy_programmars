@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class VB_SetStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) VB_Keyword SET = new VB_Keyword("set");
+	public @S(10) @DOC("statements/set-statement") VB_Keyword SET = new VB_Keyword("set");
 	public @S(20) VB_Variable var;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) VB_Expression expr;
