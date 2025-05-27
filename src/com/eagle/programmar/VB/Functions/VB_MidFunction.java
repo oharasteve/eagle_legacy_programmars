@@ -46,6 +46,7 @@ public class VB_MidFunction extends PrimaryOperator implements EagleRunnable, Ea
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
 		AbstractExpression nc = transformer.transformExpression(generator, ncExpr);
-		return generator.newSubstringFunction(theExpr, sc, SubstringSCEnum.FIRST_CHAR_IS_ONE, SubstringECEnum.GIVEN_NC, nc, this);
+		return generator.newSubstringFunction(theExpr, sc, SubstringSCEnum.FIRST_CHAR_IS_ONE,
+				SubstringECEnum.GIVEN_NC, nc, this);
 	}
 }

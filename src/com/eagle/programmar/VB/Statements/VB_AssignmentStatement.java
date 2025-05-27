@@ -28,7 +28,7 @@ public class VB_AssignmentStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var, var.var.getValue(), value);
+		interpreter.setSymbol(var.var, var.var.getValue(), value);
 	}
 
 	@Override
