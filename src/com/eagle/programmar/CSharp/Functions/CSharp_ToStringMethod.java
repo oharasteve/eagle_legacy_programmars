@@ -20,10 +20,10 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleGenerateString<CSharp_Expression>
 {
 	public @S(10) CSharp_Expression expression = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) CSharp_Keyword TOSTRING = new CSharp_Keyword("toString");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE CSharp_Keyword TOSTRING = new CSharp_Keyword("ToString");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

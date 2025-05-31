@@ -29,9 +29,12 @@ import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Statements.Java_ForStatement.Java_ForWithType.Java_ForTypeInit;
+import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
@@ -201,25 +204,24 @@ public class Java_ForStatement extends TokenSequence
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
 		loopIncrements.addPrimaryElement(incrExpression);
 
-		Java_ForStatement forStmt = new Java_ForStatement();
-		forStmt.leftParen = new PunctuationLeftParen();
-		forStmt.initial = new Java_ForInit();
-		forStmt.initial.setPresent(true);
-		forStmt.initial.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		this.leftParen = new PunctuationLeftParen();
+		this.initial = new Java_ForInit();
+		this.initial.setPresent(true);
+		this.initial.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat what = new Java_ForWhat();
 		what.setWhich(initExpression);
-		forStmt.initial.what.addPrimaryElement(what);
+		this.initial.what.addPrimaryElement(what);
 		
-		forStmt.semicolon1 = new PunctuationSemicolon();
-		forStmt.terminateCondition = condExpression;
-		forStmt.terminateCondition.setPresent(true);
-		forStmt.semicolon2 = new PunctuationSemicolon();
-		forStmt.increments = loopIncrements;
-		forStmt.rightParen = new PunctuationRightParen();
-		forStmt.action = act;
+		this.semicolon1 = new PunctuationSemicolon();
+		this.terminateCondition = condExpression;
+		this.terminateCondition.setPresent(true);
+		this.semicolon2 = new PunctuationSemicolon();
+		this.increments = loopIncrements;
+		this.rightParen = new PunctuationRightParen();
+		this.action = act;
 		
-		forStmt.setTransformationSource(source);
-		return Java_Generator.wrapStatement(forStmt);
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
 	}
 	
 	@Override
@@ -251,24 +253,29 @@ public class Java_ForStatement extends TokenSequence
 		tempVar.variable = var;
 		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
 		
-		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-		Java_Expression init = asgExpr.generateAssignment(varExpr, AssignmentEnum.EQUALS,
-				toExpression, source);
-
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
 		forWhat.setPresent(true);
-		forWhat.setWhich(init);
+		Java_ForWithType withType = new Java_ForWithType();
+		withType.equalsInit = new Java_ForTypeInit();
+		withType.equalsInit.setPresent(true);
+		withType.equalsInit.equals = new PunctuationEquals();
+		withType.equalsInit.initialExpr = fromExpression;
+		withType.variable = new Java_Variable_Definition();
+		AbstractToken which = var.firstId.getWhich();
+		if (! (which instanceof Java_Identifier_Reference))
+		{
+			throw new RuntimeException("Cannot loop over " + which);
+		}
+		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
+		withType.variable.setValue(id.getValue());
+		withType.varType = Java_Type.newPrimitiveType("int");
+		forWhat.setWhich(withType);
 		initializer.addPrimaryElement(forWhat);
 
-		Java_RelationalExpression relExpr = new Java_RelationalExpression();
-		relExpr.generateRelational(varExpr, RelationalEnum.LESS_EQUALS, toExpression, toExpression);
-		Java_Expression untilCondition = Java_Generator.wrapExpression(relExpr);
-
-		Java_Expression loopTest = untilCondition;
-				
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
 		Java_Expression loopIncr;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 		if (delta == null)
 		{
 			Java_PostIncrementExpression postExpr = new Java_PostIncrementExpression();
@@ -276,25 +283,42 @@ public class Java_ForStatement extends TokenSequence
 		}
 		else
 		{
+			AbstractToken whichDelta = delta.getWhich();
+			if (! (whichDelta instanceof Java_Number))
+			{
+				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
+			}
+			Java_Number del = (Java_Number) whichDelta;
+			int d = Integer.parseInt(del.getValue());
+			if (d < 0)
+			{
+				relOp = RelationalEnum.GREATER_EQUALS;  // Backwards!
+			}
+			
 			Java_AssignmentExpression asgExp2 = new Java_AssignmentExpression();
 			loopIncr = asgExp2.generateAssignment(varExpr, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
 		loopIncrements.addPrimaryElement(loopIncr);
 
-		Java_ForStatement forStmt = new Java_ForStatement();
-		forStmt.leftParen = new PunctuationLeftParen();
-		forStmt.initial = new Java_ForInit();
-		forStmt.initial.what = initializer;
-		forStmt.semicolon1 = new PunctuationSemicolon();
-		forStmt.terminateCondition = loopTest;
-		forStmt.terminateCondition.setPresent(true);
-		forStmt.semicolon2 = new PunctuationSemicolon();
-		forStmt.increments = loopIncrements;
-		forStmt.rightParen = new PunctuationRightParen();
-		forStmt.action = act;
+		Java_RelationalExpression relExpr = new Java_RelationalExpression();
+		relExpr.generateRelational(varExpr, relOp, toExpression, toExpression);
+		Java_Expression untilCondition = Java_Generator.wrapExpression(relExpr);
+		Java_Expression loopTest = untilCondition;
+
+		this.leftParen = new PunctuationLeftParen();
+		this.initial = new Java_ForInit();
+		this.initial.setPresent(true);
+		this.initial.what = initializer;
+		this.semicolon1 = new PunctuationSemicolon();
+		this.terminateCondition = loopTest;
+		this.terminateCondition.setPresent(true);
+		this.semicolon2 = new PunctuationSemicolon();
+		this.increments = loopIncrements;
+		this.rightParen = new PunctuationRightParen();
+		this.action = act;
 		
-		forStmt.setTransformationSource(source);
-		return Java_Generator.wrapStatement(forStmt);
+		this.setTransformationSource(source);
+		return Java_Generator.wrapStatement(this);
 	}
 	
 	@Override

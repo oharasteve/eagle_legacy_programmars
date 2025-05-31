@@ -8,7 +8,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_Expression;
-import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -35,12 +34,14 @@ public class Java_ToStringMethod extends PrecedenceOperator
 	@Override
 	public Java_Expression generateString(Java_Expression expr, AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
-		
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		// Java does not like 'ok.toString()' where 'ok' is an int instead of an Integer.
+		return expr;
+//		this.expression = expr;
+//		this.dot = new PunctuationPeriod();
+//		this.leftParen = new PunctuationLeftParen();
+//		this.rightParen = new PunctuationRightParen();
+//		
+//		this.setTransformationSource(source);
+//		return Java_Generator.wrapExpression(this);
 	}
 }
