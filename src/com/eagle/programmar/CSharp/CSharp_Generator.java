@@ -11,6 +11,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ExpressionList;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalAndExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalNotExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalOrExpression;
@@ -42,6 +43,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_Expression, CSharp_Variable, CSharp_Type>
@@ -86,6 +88,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	
 	public static CSharp_Statement wrapStatement(AbstractToken token)
 	{
+		if (token == null) return null;
 		CSharp_Statement wrapper = new CSharp_Statement();
 		wrapper.setWhich(token);
 		return wrapper;
@@ -443,6 +446,15 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_ShiftExpression shiftExpr = new CSharp_ShiftExpression();
 		return shiftExpr.generateShift(left, shift, right, source);
 	}
+
+	@Override
+	public CSharp_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
+			AbstractToken source)
+	{
+		CSharp_ExpressionList exprList = new CSharp_ExpressionList();
+		return exprList.generateArray(exprs, source);
+	}
+
 
 	@Override
 	public CSharp_Expression newVariableExpression(String name,

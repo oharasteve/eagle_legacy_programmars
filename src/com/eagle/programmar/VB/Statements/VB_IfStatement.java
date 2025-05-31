@@ -88,7 +88,7 @@ public class VB_IfStatement extends TokenSequence
 			if (ifType.getWhich() instanceof VB_IfMultiLiner)
 			{
 				VB_IfMultiLiner multi = (VB_IfMultiLiner) ifType.getWhich();
-				if (multi.elseIfClause != null)
+				if (multi.elseIfClause != null && multi.elseIfClause.isPresent())
 				{
 					for (VB_IfElseIfClause elif : multi.elseIfClause._elements)
 					{
@@ -125,7 +125,7 @@ public class VB_IfStatement extends TokenSequence
 			{
 				int seq = 1;
 				// Check for each 'else if'
-				if (multi.elseIfClause != null)
+				if (multi.elseIfClause != null && multi.elseIfClause.isPresent())
 				{
 					for (VB_IfElseIfClause elif : multi.elseIfClause._elements)
 					{

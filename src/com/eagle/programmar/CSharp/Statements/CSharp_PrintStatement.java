@@ -136,8 +136,6 @@ public class CSharp_PrintStatement extends TokenSequence
 		stmt.dot2.setPresent(true);
 		stmt.OUT = new CSharp_KeywordChoice("Out");
 		stmt.OUT.setPresent(true);
-		stmt.dot3 = new PunctuationPeriod();
-		stmt.dot3.setPresent(true);
 		
 		if (newLine)
 		{

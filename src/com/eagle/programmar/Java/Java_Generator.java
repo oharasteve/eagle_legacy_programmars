@@ -12,6 +12,7 @@ import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
+import com.eagle.programmar.Java.Expressions.Java_ExpressionList;
 import com.eagle.programmar.Java.Expressions.Java_LogicalAndExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalNotExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalOrExpression;
@@ -43,6 +44,7 @@ import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class Java_Generator
 		extends EagleGenerator<Java_Statement, Java_Expression, Java_Variable, Java_Type>
@@ -456,6 +458,14 @@ public class Java_Generator
 		Java_ShiftExpression shiftExpr = new Java_ShiftExpression();
 		return shiftExpr.generateShift(left, shift,
 				right, source);
+	}
+
+	@Override
+	public Java_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
+			AbstractToken source)
+	{
+		Java_ExpressionList exprList = new Java_ExpressionList();
+		return exprList.generateArray(exprs, source);
 	}
 
 	@Override

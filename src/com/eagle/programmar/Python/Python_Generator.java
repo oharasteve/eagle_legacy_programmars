@@ -11,6 +11,7 @@ import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Brackets;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
 import com.eagle.programmar.Python.Expressions.Python_Function_Call;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
@@ -44,6 +45,7 @@ import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
@@ -261,15 +263,6 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_Expression newShiftExpression(Python_Expression left,
-			ShiftEnum shift, Python_Expression right, AbstractToken source)
-	{
-		Python_Shift_Expression shiftExpr = new Python_Shift_Expression();
-		return shiftExpr.generateShift(left, shift,
-				right, source);
-	}
-
-	@Override
 	public Python_ComplexStatement newWhileStatement1(Python_Expression condition,
 			Python_ComplexStatement action, AbstractToken source)
 	{
@@ -433,6 +426,23 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 				relOp, right, source);
 	}
 	
+	@Override
+	public Python_Expression newShiftExpression(Python_Expression left,
+			ShiftEnum shift, Python_Expression right, AbstractToken source)
+	{
+		Python_Shift_Expression shiftExpr = new Python_Shift_Expression();
+		return shiftExpr.generateShift(left, shift,
+				right, source);
+	}
+
+	@Override
+	public Python_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
+			AbstractToken source)
+	{
+		Python_Brackets exprList = new Python_Brackets();
+		return exprList.generateArray(exprs, source);
+	}
+
 	@Override
 	public Python_Expression newVariableExpression(String name, Python_Expression subscript, AbstractToken source)
 	{
