@@ -27,6 +27,7 @@ import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
+import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Statements.Python_BreakStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
@@ -501,7 +502,15 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	@Override
 	public Python_Expression newLengthFunction(Python_Expression expr, AbstractToken source)
 	{
-		return wrapExpression(Python_Len_Function.generateExpression(expr, source));
+		Python_Len_Function lenFn = new Python_Len_Function();
+		return lenFn.generateLength(expr, source);
+	}
+	
+	@Override
+	public Python_Expression newStringFunction(Python_Expression expr, AbstractToken source)
+	{
+		Python_Str_Function strFn = new Python_Str_Function();
+		return strFn.generateString(expr, source);
 	}
 	
 	@Override

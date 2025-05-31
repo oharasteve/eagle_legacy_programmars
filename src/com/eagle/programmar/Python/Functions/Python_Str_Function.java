@@ -3,34 +3,41 @@
 
 package com.eagle.programmar.Python.Functions;
 
+import com.eagle.generate.Functions.EagleGenerateString;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_Str_Function extends PrimaryOperator implements EagleRunnable
+public class Python_Str_Function extends PrimaryOperator
+		implements EagleRunnable, EagleGenerateString<Python_Expression>
 {
 	public @S(10) Python_Keyword STR = new Python_Keyword("str");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE Python_Expression expr;
+	public @S(30) @NOSPACE Python_Expression expression;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String str = interpreter.getStrValue(expr);
+		String str = interpreter.getStrValue(expression);
 		interpreter.pushStr(str);
 	}
 	
-	public static Python_Str_Function newStrFunction(Python_Expression expr)
+	@Override
+	public Python_Expression generateString(Python_Expression expr, AbstractToken source)
 	{
 		Python_Str_Function str = new Python_Str_Function();
 		str.leftParen = new PunctuationLeftParen();
-		str.expr = expr;
+		str.expression = expr;
 		str.rightParen = new PunctuationRightParen();
-		return str;
+		
+		str.setTransformationSource(source);
+		return Python_Generator.wrapExpression(str);
 	}
 }

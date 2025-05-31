@@ -3,37 +3,40 @@
 
 package com.eagle.programmar.Python.Functions;
 
+import com.eagle.generate.Functions.EagleGenerateLength;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_Len_Function extends PrimaryOperator implements EagleRunnable
+public class Python_Len_Function extends PrimaryOperator
+		implements EagleRunnable, EagleGenerateLength<Python_Expression>
 {
 	public @S(10) Python_Keyword LEN = new Python_Keyword("len");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE Python_Expression expr;
+	public @S(30) @NOSPACE Python_Expression expression;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String line = interpreter.getStrValue(expr);
+		String line = interpreter.getStrValue(expression);
 		interpreter.pushInt(line.length());
 	}
 	
-	public static Python_Len_Function generateExpression(AbstractExpression expr, AbstractToken source)
+	@Override
+	public Python_Expression generateLength(Python_Expression expr, AbstractToken source)
 	{
-		Python_Len_Function len = new Python_Len_Function();
-		len.leftParen = new PunctuationLeftParen();
-		len.expr = (Python_Expression) expr;
-		len.rightParen = new PunctuationRightParen();
-		len.setTransformationSource(source);
-		return len;
+		this.leftParen = new PunctuationLeftParen();
+		this.expression = expr;
+		this.rightParen = new PunctuationRightParen();
+		
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

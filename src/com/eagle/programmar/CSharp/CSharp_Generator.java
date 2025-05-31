@@ -27,6 +27,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
+import com.eagle.programmar.CSharp.Functions.CSharp_ToStringMethod;
 import com.eagle.programmar.CSharp.Statements.CSharp_BreakStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_DoWhileStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
@@ -515,7 +516,15 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	@Override
 	public CSharp_Expression newLengthFunction(CSharp_Expression expr, AbstractToken source)
 	{
-		return wrapExpression(CSharp_LengthMethod.generateExpression(expr, source));
+		CSharp_LengthMethod lenMeth = new CSharp_LengthMethod();
+		return lenMeth.generateLength(expr, source);
+	}
+	
+	@Override
+	public CSharp_Expression newStringFunction(CSharp_Expression expr, AbstractToken source)
+	{
+		CSharp_ToStringMethod strMeth = new CSharp_ToStringMethod();
+		return strMeth.generateString(expr, source);
 	}
 	
 	@Override

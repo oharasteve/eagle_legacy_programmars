@@ -24,6 +24,7 @@ import com.eagle.programmar.VB.Expressions.VB_ShiftExpression;
 import com.eagle.programmar.VB.Expressions.VB_Subfield;
 import com.eagle.programmar.VB.Expressions.VB_SubscriptExpression;
 import com.eagle.programmar.VB.Expressions.VB_VariableExpression;
+import com.eagle.programmar.VB.Functions.VB_CStrFunction;
 import com.eagle.programmar.VB.Functions.VB_FunctionCall;
 import com.eagle.programmar.VB.Functions.VB_LenFunction;
 import com.eagle.programmar.VB.Functions.VB_MidFunction;
@@ -68,12 +69,13 @@ public class VB_Expression extends PrecedenceChooser implements AbstractExpressi
 	public @P(120) VB_MidFunction midFunction;
 	public @P(130) VB_LenFunction lenFunction;
 	public @P(140) VB_UcaseFunction ucaseFunction;
-	public @P(150) VB_FunctionCall functionCall;
-	public @P(160) VB_NegativeExpression negativeExpression;
-	public @P(170) VB_LogicalNotExpression notExpression;
-	public @P(180) VB_VariableExpression variableExpression;
-	public @P(190) VB_ParenthesizedExpression parenthesizedExpression;
-	public @P(200) VB_CommentExpression commentExpression;
+	public @P(150) VB_CStrFunction cstrFunction;
+	public @P(160) VB_FunctionCall functionCall;
+	public @P(170) VB_NegativeExpression negativeExpression;
+	public @P(180) VB_LogicalNotExpression notExpression;
+	public @P(190) VB_VariableExpression variableExpression;
+	public @P(200) VB_ParenthesizedExpression parenthesizedExpression;
+	public @P(210) VB_CommentExpression commentExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
