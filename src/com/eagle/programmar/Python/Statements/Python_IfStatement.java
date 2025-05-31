@@ -145,7 +145,8 @@ public class Python_IfStatement extends TokenSequence
 	
 	@Override
 	public Python_ComplexStatement generateIfElse(Python_Expression cond,
-			ArrayList<Python_ComplexStatement> thenStmts, ArrayList<Python_ComplexStatement> elseSmts, AbstractToken source)
+			ArrayList<Python_ComplexStatement> thenStmts, ArrayList<Python_ComplexStatement> elseSmts,
+			AbstractToken source)
 	{
 		this.condition = cond;
 		this.colon = new PunctuationColon();
@@ -154,9 +155,9 @@ public class Python_IfStatement extends TokenSequence
 		Python_MultilineStatement thenMulti = new Python_MultilineStatement();
 		this.ifThenStatements.setWhich(thenMulti);
 		thenMulti.statements = new TokenList<Python_ComplexStatement>();
-		for (AbstractStatement stmt : thenStmts)
+		for (Python_ComplexStatement stmt : thenStmts)
 		{
-			thenMulti.statements.addToken((Python_ComplexStatement) stmt);
+			thenMulti.statements.addToken(stmt);
 		}
 				
 		if (elseSmts != null && elseSmts.size() > 0)
@@ -168,9 +169,9 @@ public class Python_IfStatement extends TokenSequence
 			Python_MultilineStatement elseMulti = new Python_MultilineStatement();
 			this.ifElse.ifElseStatements.setWhich(elseMulti);
 			elseMulti.statements = new TokenList<Python_ComplexStatement>();
-			for (AbstractStatement stmt : elseSmts)
+			for (Python_ComplexStatement stmt : elseSmts)
 			{
-				elseMulti.statements.addToken((Python_ComplexStatement) stmt);
+				elseMulti.statements.addToken(stmt);
 			}
 		}
 

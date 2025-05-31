@@ -254,6 +254,24 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
+	public CSharp_Statement newForRangeStatement1(CSharp_Variable var, CSharp_Expression first,
+			CSharp_Expression last, CSharp_Expression step, CSharp_Statement action,
+			AbstractToken source)
+	{
+		CSharp_ForStatement forStmt = new CSharp_ForStatement();
+		return forStmt.generateForRange1(var, first, last, step, action, source);
+	}
+
+	@Override
+	public CSharp_Statement newForRangeStatement(CSharp_Variable var, CSharp_Expression first,
+			CSharp_Expression last, CSharp_Expression step,
+			ArrayList<CSharp_Statement> actions, AbstractToken source)
+	{
+		CSharp_ForStatement forStmt = new CSharp_ForStatement();
+		return forStmt.generateForRange(var, first, last, step, actions, source);
+	}
+
+	@Override
 	public CSharp_Statement newIfStatement1(CSharp_Expression condition,
 			CSharp_Statement ifTrue, CSharp_Statement ifFalse, AbstractToken source)
 	{

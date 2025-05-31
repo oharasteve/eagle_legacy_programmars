@@ -13,11 +13,10 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_ExpressionList;
 import com.eagle.programmar.Python.Python_Generator;
-import com.eagle.programmar.Python.Python_ComplexStatement;
-import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Python_VariableList;
 import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
@@ -28,7 +27,6 @@ import com.eagle.programmar.Python.Expressions.Python_Function_Call;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
-import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
@@ -52,7 +50,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Python_ForStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
 				Eagle_Generate_ForLoop<Python_ComplexStatement, Python_Expression>,
-				Eagle_Generate_ForRange<Python_ComplexStatement, Python_Expression>
+				Eagle_Generate_ForRange<Python_Variable, Python_ComplexStatement, Python_Expression>
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -61,7 +59,7 @@ public class Python_ForStatement extends TokenSequence
 	public @S(50) Python_ExpressionList expressionList;
 	public @S(60) @NOSPACE PunctuationColon colon;
 	public @S(70) @OPT Python_Comment comment;
-	public @S(80) Python_StatementBlock forBlock;
+	public @S(80) @PYDENT Python_StatementBlock forBlock;
 	public @S(90) @OPT Python_ForElse forElseStatement;
 
 	public static class Python_ForWhat extends TokenChooser
@@ -193,55 +191,50 @@ public class Python_ForStatement extends TokenSequence
 	}
 
 	@Override
-	public Python_ComplexStatement generateForRange1(String varName, Python_Expression fromExpression,
+	public Python_ComplexStatement generateForRange1(Python_Variable var, Python_Expression fromExpression,
 			Python_Expression toExpression, Python_Expression delta,
 			Python_ComplexStatement action, AbstractToken source)
 	{
-		Python_ForStatement forStmt = new Python_ForStatement();
-		forStmt.colon = new PunctuationColon();
-		forStmt.forBlock = new Python_StatementBlock();
+		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
+		actions.add(action);
+		return generateForRange(var, fromExpression, toExpression, delta, actions, source);
+	}
 
-		AbstractToken which = action.statementOrComment.getWhich();
-		if (which instanceof Python_SameLineStatement)
-		{
-			Python_SameLineStatement statementList = (Python_SameLineStatement) which;
-			Python_MultilineStatement multi = new Python_MultilineStatement();
-			multi.statements = new TokenList<Python_ComplexStatement>();
-			multi.eoln = new Python_EndOfLine();
-
-			Python_StatementBlock singleOrMulti = new Python_StatementBlock();
-			singleOrMulti.setWhich(multi);
-
-			Python_ComplexStatement stmt = new Python_ComplexStatement();
-			stmt.statementOrComment = new Python_StatementOrComment();
-			stmt.statementOrComment.setWhich(statementList);
-			multi.statements.addToken(stmt);
-			forStmt.forBlock = singleOrMulti;
-		}
-		else if (which instanceof Python_MultilineStatement)
-		{
-			Python_MultilineStatement multi = (Python_MultilineStatement) which;
-			forStmt.forBlock.setWhich(multi);
-		}
-		else
-			throw new RuntimeException("Need to implement");
-
-		forStmt.what = new Python_ForWhat();
+	@Override
+	public Python_ComplexStatement generateForRange(Python_Variable var, Python_Expression fromExpression,
+			Python_Expression toExpression, Python_Expression delta,
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
+	{
+		this.colon = new PunctuationColon();
+		this.forBlock = new Python_StatementBlock();
+		Python_MultilineStatement multi = new Python_MultilineStatement();
+		multi.statements = new TokenList<Python_ComplexStatement>();
+		this.forBlock.setWhich(multi);
+		
+		this.what = new Python_ForWhat();
 		Python_VariableList varList = new Python_VariableList();
-		forStmt.what.setWhich(varList);
 		varList.vars = new SeparatedList<Python_VariableOrList, PunctuationComma>();
-
 		Python_VariableOrList varOrList = new Python_VariableOrList();
-		Python_Variable var = Python_Variable.newVariable(varName);
-		SeparatedList<Python_VariableAndSubscript,PunctuationPeriod> vars =
-				new SeparatedList<Python_VariableAndSubscript,PunctuationPeriod>();
-		Python_VariableAndSubscript varSub = new Python_VariableAndSubscript();
-		varSub.variable = var;
-		vars.addPrimaryElement(varSub);
 		Python_Just_Var justVar = new Python_Just_Var();
-		justVar.variable = vars;
+		justVar.variable = new SeparatedList<Python_VariableAndSubscript, PunctuationPeriod>();
+		Python_VariableAndSubscript varAndSub = new Python_VariableAndSubscript();
+		varAndSub.variable = var;
+		justVar.variable.addPrimaryElement(varAndSub);
 		varOrList.setWhich(justVar);
 		varList.vars.addPrimaryElement(varOrList);
+		this.what.setWhich(varList);
+
+		for (Python_ComplexStatement stmt : actions)
+		{
+			multi.statements.addToken(stmt);
+
+			// If the parent block gets the 'while' as the parent, line numbers in the
+			// side-by-side will pick up the 'while' instead of the first statement.
+			if (this.getTransformationSource() == null)
+			{
+				this.setTransformationSource(stmt.getTransformationSource());
+			}
+		}
 
 		SeparatedList<Python_Expression, PunctuationComma> argList = new SeparatedList<Python_Expression, PunctuationComma>();
 		argList.addPrimaryElement(fromExpression);
@@ -290,19 +283,11 @@ public class Python_ForStatement extends TokenSequence
 		Python_Expression rangeExpr = new Python_Expression();
 		rangeExpr.setWhich(fnCall);
 
-		forStmt.expressionList = new Python_ExpressionList();
-		forStmt.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
-		forStmt.expressionList.expressions.addPrimaryElement(rangeExpr);
+		this.expressionList = new Python_ExpressionList();
+		this.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
+		this.expressionList.expressions.addPrimaryElement(rangeExpr);
 
-		forStmt.setTransformationSource(source);
-		return Python_Generator.wrapStatement(forStmt);
-	}
-	
-	@Override
-	public Python_ComplexStatement generateForRange(String varName, Python_Expression fromExpression,
-			Python_Expression toExpression, Python_Expression delta,
-			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
-	{
-		throw new RuntimeException("need to implement");
+		this.setTransformationSource(source);
+		return Python_Generator.wrapStatement(this);
 	}
 }

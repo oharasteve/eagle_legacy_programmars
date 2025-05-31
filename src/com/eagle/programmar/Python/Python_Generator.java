@@ -83,6 +83,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	
 	public static Python_Expression wrapExpression(AbstractToken token)
 	{
+		if (token == null) return null;
 		Python_Expression wrapper = new Python_Expression();
 		wrapper.setWhich(token);
 		return wrapper;
@@ -236,6 +237,24 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_ForStatement forStmt = new Python_ForStatement();
 		return forStmt.generateForLoop(init, term,
 				incr, actions, source);
+	}
+
+	@Override
+	public Python_ComplexStatement newForRangeStatement1(Python_Variable var, Python_Expression first,
+			Python_Expression last, Python_Expression step, Python_ComplexStatement action,
+			AbstractToken source)
+	{
+		Python_ForStatement forStmt = new Python_ForStatement();
+		return forStmt.generateForRange1(var, first, last, step, action, source);
+	}
+
+	@Override
+	public Python_ComplexStatement newForRangeStatement(Python_Variable var, Python_Expression first,
+			Python_Expression last, Python_Expression step,
+			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
+	{
+		Python_ForStatement forStmt = new Python_ForStatement();
+		return forStmt.generateForRange(var, first, last, step, actions, source);
 	}
 
 	@Override

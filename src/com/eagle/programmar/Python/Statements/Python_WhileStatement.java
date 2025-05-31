@@ -13,10 +13,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_List;
-import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
@@ -49,7 +49,7 @@ public class Python_WhileStatement extends TokenSequence
 			"while");
 	public @S(20) Python_Expression condition;
 	public @S(30) @NOSPACE PunctuationColon colon;
-	public @S(40) Python_StatementBlock statements;
+	public @S(40) @PYDENT Python_StatementBlock statements;
 	public @S(50) @OPT Python_WhileElse whileElse;
 
 	public static class Python_WhileElse extends TokenSequence
@@ -181,9 +181,9 @@ public class Python_WhileStatement extends TokenSequence
 	public Python_ComplexStatement generateWhile(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
-		this.colon = new PunctuationColon();
-
 		this.condition = cond;
+		this.colon = new PunctuationColon();
+		
 		this.statements = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_ComplexStatement>();

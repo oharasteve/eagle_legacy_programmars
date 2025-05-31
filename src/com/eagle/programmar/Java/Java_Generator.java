@@ -277,6 +277,24 @@ public class Java_Generator
 	}
 
 	@Override
+	public Java_Statement newForRangeStatement1(Java_Variable var, Java_Expression first,
+			Java_Expression last, Java_Expression step, Java_Statement action,
+			AbstractToken source)
+	{
+		Java_ForStatement forStmt = new Java_ForStatement();
+		return forStmt.generateForRange1(var, first, last, step, action, source);
+	}
+
+	@Override
+	public Java_Statement newForRangeStatement(Java_Variable var, Java_Expression first,
+			Java_Expression last, Java_Expression step,
+			ArrayList<Java_Statement> actions, AbstractToken source)
+	{
+		Java_ForStatement forStmt = new Java_ForStatement();
+		return forStmt.generateForRange(var, first, last, step, actions, source);
+	}
+
+	@Override
 	public Java_Statement newPrintStatement1(Java_Expression line, boolean newLine,
 			AbstractToken source)
 	{

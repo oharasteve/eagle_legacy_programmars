@@ -47,7 +47,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class CSharp_ForStatement extends TokenSequence
 			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
 					Eagle_Generate_ForLoop<CSharp_Statement, CSharp_Expression>,
-					Eagle_Generate_ForRange<CSharp_Statement, CSharp_Expression>
+					Eagle_Generate_ForRange<CSharp_Variable, CSharp_Statement, CSharp_Expression>
 {
 	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -189,12 +189,13 @@ public class CSharp_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public CSharp_Statement generateForRange1(String varName, CSharp_Expression fromExpression,
+	public CSharp_Statement generateForRange1(CSharp_Variable var, CSharp_Expression fromExpression,
 			CSharp_Expression toExpression, CSharp_Expression delta,
 			CSharp_Statement act, AbstractToken source)
 	{
 		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
-		CSharp_Expression varExpr = tempVar.generateVarExpr(varName, null, null);
+		tempVar.variable = var;
+		CSharp_Expression varExpr = CSharp_Generator.wrapExpression(tempVar);
 		
 		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
 		CSharp_Expression init = asgExpr.generateAssignment(varExpr, AssignmentEnum.EQUALS,
@@ -216,7 +217,6 @@ public class CSharp_ForStatement extends TokenSequence
 		CSharp_Expression loopIncr;
 		if (delta == null)
 		{
-			CSharp_Variable var = CSharp_Variable.newVariable(varName);
 			CSharp_PostIncrementExpression postExpr = new CSharp_PostIncrementExpression();
 			loopIncr = postExpr.generateIncrement(var, IncrementEnum.INCREMENT, source);
 		}
@@ -243,7 +243,7 @@ public class CSharp_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public CSharp_Statement generateForRange(String varName, CSharp_Expression fromExpression,
+	public CSharp_Statement generateForRange(CSharp_Variable var, CSharp_Expression fromExpression,
 			CSharp_Expression toExpression, CSharp_Expression delta,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
@@ -258,7 +258,7 @@ public class CSharp_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return generateForRange1(varName, fromExpression, toExpression,
+		return generateForRange1(var, fromExpression, toExpression,
 				delta, CSharp_Generator.wrapStatement(block), source);
 	}
 }

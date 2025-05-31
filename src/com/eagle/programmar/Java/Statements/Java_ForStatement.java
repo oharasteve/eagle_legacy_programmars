@@ -55,13 +55,13 @@ public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
 				EagleTransformableStatement,
 				Eagle_Generate_ForLoop<Java_Statement, Java_Expression>,
-				Eagle_Generate_ForRange<Java_Statement, Java_Expression>
+				Eagle_Generate_ForRange<Java_Variable, Java_Statement, Java_Expression>
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) @OPT @NOSPACE Java_Annotation annotation;
-	public @S(50) @OPT @NOSPACE Java_ForInit init;
+	public @S(50) @OPT @NOSPACE Java_ForInit initial;
 	public @S(60) @NOSPACE PunctuationSemicolon semicolon1;
 	public @S(70) @OPT Java_Expression terminateCondition;
 	public @S(80) @NOSPACE PunctuationSemicolon semicolon2;
@@ -108,13 +108,13 @@ public class Java_ForStatement extends TokenSequence
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		Java_ForWhat forWhat = init.what.first();
+		Java_ForWhat forWhat = initial.what.first();
 		if (forWhat.getWhich() instanceof Java_ForWithType)
 		{
 			Java_ForWithType whatforWith = (Java_ForWithType) forWhat.getWhich();
 
-			EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
-			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
+			EagleValue init = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
+			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), init);
 
 			if (_metrics == null)
 			{
@@ -160,9 +160,9 @@ public class Java_ForStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		if (this.init.what.getPrimaryCount() == 1)
+		if (this.initial.what.getPrimaryCount() == 1)
 		{
-			Java_ForWhat what = this.init.what.getPrimaryElement(0);
+			Java_ForWhat what = this.initial.what.getPrimaryElement(0);
 			if (what.getWhich() instanceof Java_ForWithType)
 			{
 				Java_ForWithType withType = (Java_ForWithType) what.getWhich();
@@ -203,12 +203,12 @@ public class Java_ForStatement extends TokenSequence
 
 		Java_ForStatement forStmt = new Java_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
-		forStmt.init = new Java_ForInit();
-		forStmt.init.setPresent(true);
-		forStmt.init.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		forStmt.initial = new Java_ForInit();
+		forStmt.initial.setPresent(true);
+		forStmt.initial.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat what = new Java_ForWhat();
 		what.setWhich(initExpression);
-		forStmt.init.what.addPrimaryElement(what);
+		forStmt.initial.what.addPrimaryElement(what);
 		
 		forStmt.semicolon1 = new PunctuationSemicolon();
 		forStmt.terminateCondition = condExpression;
@@ -243,21 +243,22 @@ public class Java_ForStatement extends TokenSequence
 	}
 
 	@Override
-	public Java_Statement generateForRange1(String varName, Java_Expression fromExpression,
+	public Java_Statement generateForRange1(Java_Variable var, Java_Expression fromExpression,
 			Java_Expression toExpression, Java_Expression delta,
 			Java_Statement act, AbstractToken source)
 	{
 		Java_VariableExpression tempVar = new Java_VariableExpression();
-		Java_Expression varExpr = tempVar.generateVarExpr(varName, null, null);
+		tempVar.variable = var;
+		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
 		
 		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-		Java_Expression initExpr = asgExpr.generateAssignment(varExpr, AssignmentEnum.EQUALS,
+		Java_Expression init = asgExpr.generateAssignment(varExpr, AssignmentEnum.EQUALS,
 				toExpression, source);
 
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
 		forWhat.setPresent(true);
-		forWhat.setWhich(initExpr);
+		forWhat.setWhich(init);
 		initializer.addPrimaryElement(forWhat);
 
 		Java_RelationalExpression relExpr = new Java_RelationalExpression();
@@ -270,7 +271,6 @@ public class Java_ForStatement extends TokenSequence
 		Java_Expression loopIncr;
 		if (delta == null)
 		{
-			Java_Variable var = Java_Variable.newVariable(varName);
 			Java_PostIncrementExpression postExpr = new Java_PostIncrementExpression();
 			loopIncr = postExpr.generateIncrement(var, IncrementEnum.INCREMENT, source);
 		}
@@ -283,7 +283,8 @@ public class Java_ForStatement extends TokenSequence
 
 		Java_ForStatement forStmt = new Java_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
-		forStmt.init.what = initializer;
+		forStmt.initial = new Java_ForInit();
+		forStmt.initial.what = initializer;
 		forStmt.semicolon1 = new PunctuationSemicolon();
 		forStmt.terminateCondition = loopTest;
 		forStmt.terminateCondition.setPresent(true);
@@ -297,7 +298,7 @@ public class Java_ForStatement extends TokenSequence
 	}
 	
 	@Override
-	public Java_Statement generateForRange(String varName, Java_Expression fromExpression,
+	public Java_Statement generateForRange(Java_Variable var, Java_Expression fromExpression,
 			Java_Expression toExpression, Java_Expression delta,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
@@ -312,7 +313,7 @@ public class Java_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return generateForRange1(varName, fromExpression, toExpression,
+		return generateForRange1(var, fromExpression, toExpression,
 				delta, Java_Generator.wrapStatement(block), source);
 	}
 }

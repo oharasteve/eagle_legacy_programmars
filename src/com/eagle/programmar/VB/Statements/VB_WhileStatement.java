@@ -3,20 +3,27 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class VB_WhileStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("statements/while-end-while-statement") VB_Keyword WHILE1 = new VB_Keyword("While");
 	public @S(20) VB_Expression condition;
@@ -69,5 +76,23 @@ public class VB_WhileStatement extends TokenSequence implements AbstractStatemen
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		for (VB_Element statement : actions._elements)
+		{
+			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+			{
+				whileTrue.add(stmt);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

@@ -3,25 +3,33 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class VB_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("statements/for-next-statement") VB_Keyword FOR = new VB_Keyword("for");
-	public @S(20) VB_Identifier_Reference var;
+	public @S(20) VB_Identifier_Reference variable;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) VB_Expression from;
 	public @S(50) VB_Keyword TO = new VB_Keyword("to");
@@ -72,7 +80,7 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 
 			metric.iterate();
 			
-			interpreter.setSymbol(var, var.getValue(), new EagleInteger(current));
+			interpreter.setSymbol(variable, variable.getValue(), new EagleInteger(current));
 
 			for (VB_Element stmt : actions._elements)
 			{
@@ -101,5 +109,34 @@ public class VB_ForStatement extends TokenSequence implements AbstractStatement,
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression initExpr = transformer.transformExpression(generator, from);
+		AbstractExpression termExpr = transformer.transformExpression(generator, to);
+		AbstractExpression incrExpr = null;
+		if (step != null && step.isPresent())
+		{
+			incrExpr = transformer.transformExpression(generator, step.step);
+		}
+		
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		for (VB_Element statement : actions._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.baseStatement.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt : stmts)
+				{
+					actionList.add(stmt);
+				}
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(variable.getValue());
+		AbstractStatement stmt = generator.newForRangeStatement(var, initExpr, termExpr, incrExpr, actionList, this);
+		return stmt;
 	}
 }
