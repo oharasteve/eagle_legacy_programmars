@@ -29,7 +29,6 @@ import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
-import com.eagle.programmar.Java.Statements.Java_ForStatement.Java_ForWithType.Java_ForTypeInit;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
@@ -90,12 +89,12 @@ public class Java_ForStatement extends TokenSequence
 		public @S(10) Java_Type varType;
 		public @S(20) Java_Variable_Definition variable;
 		public @S(30) @OPT Java_ForTypeInit equalsInit;
-		
-		public static class Java_ForTypeInit extends TokenSequence
-		{
-			public @S(10) PunctuationEquals equals;
-			public @S(20) Java_Expression initialExpr;
-		}
+	}
+
+	public static class Java_ForTypeInit extends TokenSequence
+	{
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Java_Expression initialExpr;
 	}
 
 	private @SKIP ForLoopMetrics _metrics = null;
