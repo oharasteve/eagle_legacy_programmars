@@ -100,8 +100,8 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		Python_VariableExpression varExpr = new Python_VariableExpression();
-		asgExpr.leftVar = varExpr.generateVarExpr(name, subscript, source);
-		asgExpr.equals = new Python_PunctuationChoice("=");
+		asgExpr.left = varExpr.generateVarExpr(name, subscript, source);
+		asgExpr.operator = new Python_PunctuationChoice("=");
 		asgExpr.right = expression;
 
 		Python_ExpressionStatement exprStmt = new Python_ExpressionStatement();

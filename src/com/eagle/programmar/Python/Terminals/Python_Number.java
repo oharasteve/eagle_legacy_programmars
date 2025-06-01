@@ -31,4 +31,11 @@ public class Python_Number extends TerminalNumberToken
 		this.setTransformationSource(source);
 		return this;
 	}
+	
+	public static Python_Number createNumber(int value)
+	{
+		Python_Number num = new Python_Number();
+		num.setValue(Integer.toString(value));
+		return num;
+	}
 }

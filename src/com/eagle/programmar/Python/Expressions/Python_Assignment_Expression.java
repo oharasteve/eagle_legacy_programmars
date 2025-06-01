@@ -15,8 +15,8 @@ import com.eagle.tokens.PrecedenceOperator;
 public class Python_Assignment_Expression extends PrecedenceOperator
 		implements Eagle_Generate_Assignment<Python_Expression>
 {
-	public @S(10) Python_Expression leftVar = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Python_PunctuationChoice equals = new Python_PunctuationChoice("=", "+=", "-=", ":=");
+	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("=", "+=", "-=", ":=");
 	public @S(30) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	
@@ -39,8 +39,8 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		this.leftVar = varExpr;
-		this.equals.setValue(punct);
+		this.left = varExpr;
+		this.operator.setValue(punct);
 		this.right = expression;
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
