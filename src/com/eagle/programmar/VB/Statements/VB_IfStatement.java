@@ -9,9 +9,9 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
-import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Element.VB_Statement;
+import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -188,9 +188,13 @@ public class VB_IfStatement extends TokenSequence
 			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
 			for (VB_Element statement : multiLiner.thenStatement._elements)
 			{
-				for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.baseStatement.getWhich());
+				if (stmts != null)
 				{
-					ifTrue.add(stmt);
+					for (AbstractStatement stmt : stmts)
+					{
+						ifTrue.add(stmt);
+					}
 				}
 			}
 			

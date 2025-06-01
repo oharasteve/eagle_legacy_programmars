@@ -5,6 +5,7 @@ package com.eagle.programmar.VB.Functions;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -20,11 +21,16 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class VB_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Identifier_Reference fnName;
 	public @S(20) VB_FnCallArguments callArguments;
@@ -32,7 +38,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public static class VB_FnCallArguments extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<VB_Expression, PunctuationComma> args;
+		public @S(20) @OPT SeparatedList<VB_Expression, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
@@ -48,7 +54,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (value != null && value.isArray())
 		{
 			EagleArray array = (EagleArray) value;
-			int index = interpreter.getIntValue(callArguments.args.first());
+			int index = interpreter.getIntValue(callArguments.arguments.first());
 			interpreter.pushEagleValue(array.getValue(index));
 			return;
 		}
@@ -62,7 +68,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		VB_Function func = (VB_Function) fn;
 
 		// Make sure the function args match up
-		int argCount = callArguments.args.getPrimaryCount();
+		int argCount = callArguments.arguments.getPrimaryCount();
 		int paramCount = func.params.params.getPrimaryCount();
 		if (argCount != paramCount)
 		{
@@ -81,7 +87,7 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
 		{
-			VB_Expression expr = callArguments.args.getPrimaryElement(i);
+			VB_Expression expr = callArguments.arguments.getPrimaryElement(i);
 			VB_Variable_Definition param = func.params.params.getPrimaryElement(i).var;
 
 			EagleValue val = interpreter.getEagleValue(expr);
@@ -116,5 +122,14 @@ public class VB_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractVariable var = generator.newVariable(fnName.getValue());
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		return generator.newMethodInvocation(var, args, fnName);
 	}
 }

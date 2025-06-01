@@ -23,8 +23,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 public class CSharp_ExpressionList extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
-	public @S(20) @OPT @NOSPACE TokenList<CSharp_Comment> comment;
-	public @S(30) CSharp_ArgumentList valueList;
+	public @S(20) @OPT TokenList<CSharp_Comment> comment;
+	public @S(30) @NOSPACE CSharp_ArgumentList valueList;
 	public @S(40) @NOSPACE PunctuationRightBrace rightBrace;
 
 	public CSharp_Expression generateArray(ArrayList<AbstractExpression> exprs,
@@ -44,6 +44,7 @@ public class CSharp_ExpressionList extends PrimaryOperator
 			if (i == 0)
 			{
 				this.valueList.arg = arg;
+				this.valueList.arg.setPresent(true);
 			}
 			else
 			{
@@ -54,6 +55,7 @@ public class CSharp_ExpressionList extends PrimaryOperator
 				CSharp_MoreArguments more = new CSharp_MoreArguments();
 				more.comma = new PunctuationComma();
 				more.arg = arg;
+				more.arg.setPresent(true);
 				this.valueList.moreArgs.addToken(more);
 			}
 		}

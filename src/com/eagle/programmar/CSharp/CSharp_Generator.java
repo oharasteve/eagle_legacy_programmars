@@ -151,6 +151,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		_currentMethod.addMethodParameter(type, name);
 	}
+
+	@Override
+	public void doneMethod()
+	{
+		_currentMethod = null;
+	}
 	
 	@Override
 	public void addStatement(CSharp_Statement stmt, AbstractToken source)

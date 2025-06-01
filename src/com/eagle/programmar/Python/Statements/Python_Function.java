@@ -6,12 +6,12 @@ package com.eagle.programmar.Python.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Decorators;
 import com.eagle.programmar.Python.Python_Parameter_List;
 import com.eagle.programmar.Python.Python_Params;
 import com.eagle.programmar.Python.Python_Params.Python_MoreParams;
 import com.eagle.programmar.Python.Python_Params.Python_Parameter;
-import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Syntax;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
@@ -29,6 +29,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -102,6 +103,7 @@ public class Python_Function extends TokenSequence
 		func.header.params = new Python_Parameter_List();
 		func.header.params.leftParen = new PunctuationLeftParen();
 		func.header.params.params = new Python_Params();
+		func.header.params.params.setPresent(true);
 		func.header.params.rightParen = new PunctuationRightParen();
 		
 		func.header.defBody = new Python_StatementBlock();
@@ -130,6 +132,7 @@ public class Python_Function extends TokenSequence
 				header.params.params.moreParams = new TokenList<Python_MoreParams>();
 			}
 			Python_MoreParams more = new Python_MoreParams();
+			more.comma = new PunctuationComma();
 			more.param = newParam;
 			header.params.params.moreParams.addToken(more);
 		}

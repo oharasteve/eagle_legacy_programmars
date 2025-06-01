@@ -136,7 +136,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 		this.methodName.firstId = var.firstId;
 		this.leftParen = new PunctuationLeftParen();
 		this.argList = CSharp_ArgumentList.createArgumentList(args);
-		if (args != null) this.argList.setPresent(true);
+		if (this.argList != null) this.argList.setPresent(true);
 		this.rightParen = new PunctuationRightParen();
 
 		this.setTransformationSource(source);

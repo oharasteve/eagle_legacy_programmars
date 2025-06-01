@@ -49,7 +49,11 @@ public class CSharp_ArgumentList extends TokenSequence
 				more.comma = new PunctuationComma();
 				more.arg = arg;
 				more.arg.setPresent(true);
-				if (argList.moreArgs == null) argList.moreArgs = new TokenList<CSharp_MoreArguments>();
+				if (argList.moreArgs == null)
+				{
+					argList.moreArgs = new TokenList<CSharp_MoreArguments>();
+					argList.moreArgs.setPresent(true);
+				}
 				argList.moreArgs.addToken(more);
 			}
 		}

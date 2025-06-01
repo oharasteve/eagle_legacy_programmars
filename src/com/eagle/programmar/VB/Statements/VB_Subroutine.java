@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.Collection;
+
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
@@ -19,8 +21,10 @@ import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
@@ -120,5 +124,20 @@ public class VB_Subroutine extends TokenSequence
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
+		
+		for (VB_Element stmt : stmts._elements)
+		{
+			AbstractToken which = stmt.baseStatement.getWhich();
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+			if (newStmts != null)
+			{
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt, stmt);
+				}
+			}
+		}
+		
+		generator.doneMethod();
 	}
 }

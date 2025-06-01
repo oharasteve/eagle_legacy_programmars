@@ -129,6 +129,12 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
+	public void doneMethod()
+	{
+		_currentFunction = null;
+	}
+
+	@Override
 	public void addStatement(Python_ComplexStatement stmt, AbstractToken source)
 	{
 		if (_currentFunction == null)

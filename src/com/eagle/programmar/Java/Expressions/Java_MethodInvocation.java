@@ -167,7 +167,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 		this.methodName.firstId = var.firstId;
 		this.leftParen = new PunctuationLeftParen();
 		this.argList = Java_ArgumentList.createArgumentList(args);
-		if (args != null) this.argList.setPresent(true);
+		if (this.argList != null) this.argList.setPresent(true);
 		this.rightParen = new PunctuationRightParen();
 
 		this.setTransformationSource(source);

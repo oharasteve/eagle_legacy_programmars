@@ -22,8 +22,8 @@ public class Java_ExpressionList extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<Java_Comment> comment;
-	public @S(30) @OPT Java_ArgumentList valueList;
-	public @S(40) PunctuationRightBrace rightBrace;
+	public @S(30) @OPT @NOSPACE Java_ArgumentList valueList;
+	public @S(40) @NOSPACE PunctuationRightBrace rightBrace;
 
 	public Java_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
@@ -31,6 +31,7 @@ public class Java_ExpressionList extends PrimaryOperator
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.valueList = new Java_ArgumentList();
+		this.valueList.setPresent(true);
 		
 		for (int i = 0; i < exprs.size(); i++)
 		{
@@ -43,6 +44,7 @@ public class Java_ExpressionList extends PrimaryOperator
 				if (this.valueList.moreArgs == null)
 				{
 					this.valueList.moreArgs = new TokenList<Java_MoreArguments>();
+					this.valueList.moreArgs.setPresent(true);
 				}
 				Java_MoreArguments more = new Java_MoreArguments();
 				more.comma = new PunctuationComma();

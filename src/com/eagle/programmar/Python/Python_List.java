@@ -18,7 +18,7 @@ public class Python_List extends TokenSequence
 
 	public static class Python_MoreListItem extends TokenSequence
 	{
-		public @S(10) PunctuationComma comma;
+		public @S(10) @NOSPACE PunctuationComma comma;
 		public @S(20) @OPT TokenList<Python_Comment> comment;
 		public @S(30) Python_Expression expr;
 	}

@@ -155,6 +155,12 @@ public class Java_Generator
 	}
 
 	@Override
+	public void doneMethod()
+	{
+		_currentMethod = null;
+	}
+
+	@Override
 	public void addStatement(Java_Statement stmt, AbstractToken source)
 	{
 		checkMethod();

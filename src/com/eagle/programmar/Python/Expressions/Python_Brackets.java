@@ -26,8 +26,8 @@ public class Python_Brackets extends PrimaryOperator
 	public @S(20) @OPT Python_EndOfLine eoln1;
 	public @S(30) @OPT TokenList<Python_Comment> comment;
 	public @S(40) @OPT Python_EndOfLine eoln2;
-	public @S(50) @OPT @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
-	public @S(60) PunctuationRightBracket rightBracket;
+	public @S(50) @OPT @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
+	public @S(60) @NOSPACE PunctuationRightBracket rightBracket;
 
 	public Python_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
@@ -35,6 +35,7 @@ public class Python_Brackets extends PrimaryOperator
 		this.leftBracket = new PunctuationLeftBracket();
 		this.rightBracket = new PunctuationRightBracket();
 		this.list = new Python_List();
+		this.list.setPresent(true);
 		
 		for (int i = 0; i < exprs.size(); i++)
 		{
@@ -50,6 +51,7 @@ public class Python_Brackets extends PrimaryOperator
 				}
 				Python_MoreListItem more = new Python_MoreListItem();
 				more.comma = new PunctuationComma();
+				more.comma.setPresent(true);
 				more.expr = (Python_Expression) exprs.get(i);
 				this.list.moreItems.addToken(more);
 			}
