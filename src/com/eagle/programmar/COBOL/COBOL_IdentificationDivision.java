@@ -35,15 +35,16 @@ public class COBOL_IdentificationDivision extends TokenSequence
 	public static class COBOL_IdentificationHeader extends TokenChooser
 	{
 		public @CHOICE COBOL_ProgramId XXprogramId;
+		public @CHOICE COBOL_IdentificationPresent XXidPresent;
+	}
 
-		public @CHOICE static class COBOL_IdentificationPresent extends TokenSequence
-		{
-			public @S(10) COBOL_KeywordChoice identification = new COBOL_KeywordChoice("IDENTIFICATION", "ID");
-			public @S(20) COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
-			public @S(30) PunctuationPeriod dot;
-			public @S(40) @OPT TokenList<COBOL_Comment> comments;
-			public @S(50) @OPT COBOL_ProgramId programId;
-		}
+	public static class COBOL_IdentificationPresent extends TokenSequence
+	{
+		public @S(10) COBOL_KeywordChoice identification = new COBOL_KeywordChoice("IDENTIFICATION", "ID");
+		public @S(20) COBOL_Keyword DIVISION = new COBOL_Keyword("DIVISION");
+		public @S(30) PunctuationPeriod dot;
+		public @S(40) @OPT TokenList<COBOL_Comment> comments;
+		public @S(50) @OPT COBOL_ProgramId programId;
 	}
 
 	public static class COBOL_ProgramId extends TokenSequence
@@ -59,14 +60,7 @@ public class COBOL_IdentificationDivision extends TokenSequence
 	{
 		public @CHOICE COBOL_SpecialNames XXspecialNames;
 		public @CHOICE COBOL_Comment XXcomment;
-
-		public @CHOICE static class COBOL_IdentificationSimple extends TokenSequence
-		{
-			public @S(10) COBOL_KeywordChoice entryWord = new COBOL_KeywordChoice("AUTHOR", "INSTALLATION",
-					"DATE-WRITTEN", "DATE-COMPILED", "SECURITY");
-			public @S(20) @OPT PunctuationPeriod dot;
-			public @S(30) TokenList<COBOL_CommentToEndOfLine> comments;
-		}
+		public @CHOICE COBOL_IdentificationSimple XXidSimple;
 
 		public @CHOICE static class COBOL_IdentificationRepository extends TokenSequence
 		{
@@ -99,6 +93,14 @@ public class COBOL_IdentificationDivision extends TokenSequence
 				public @S(50) PunctuationPeriod dot;
 			}
 		}
+	}
+
+	public static class COBOL_IdentificationSimple extends TokenSequence
+	{
+		public @S(10) COBOL_KeywordChoice entryWord = new COBOL_KeywordChoice("AUTHOR", "INSTALLATION",
+				"DATE-WRITTEN", "DATE-COMPILED", "SECURITY");
+		public @S(20) @OPT PunctuationPeriod dot;
+		public @S(30) TokenList<COBOL_CommentToEndOfLine> comments;
 	}
 
 	public static class COBOL_Program_Subname extends TokenSequence

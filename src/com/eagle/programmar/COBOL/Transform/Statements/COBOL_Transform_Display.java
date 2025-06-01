@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.COBOL.COBOL_Expression;
+import com.eagle.programmar.COBOL.Statements.COBOL_DisplayOptions;
+import com.eagle.programmar.COBOL.Statements.COBOL_DisplayOptions.COBOL_DisplayWithNoAdvancing;
 import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement.COBOL_DisplayClause;
-import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement.COBOL_DisplayClause.COBOL_DisplayOptions;
-import com.eagle.programmar.COBOL.Statements.COBOL_DisplayStatement.COBOL_DisplayClause.COBOL_DisplayOptions.COBOL_DisplayWithNoAdvancing;
 import com.eagle.programmar.COBOL.Transform.Transform_COBOL;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractClass;

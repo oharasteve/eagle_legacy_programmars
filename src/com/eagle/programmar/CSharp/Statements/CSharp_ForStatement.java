@@ -26,7 +26,6 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_PostIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
-import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement.CSharp_ForWithType.CSharp_ForTypeInit;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
@@ -75,14 +74,14 @@ public class CSharp_ForStatement extends TokenSequence
 		public @S(10) CSharp_Type varType;
 		public @S(20) CSharp_Variable_Definition variable;
 		public @S(30) @OPT CSharp_ForTypeInit equalsInit;
-		
-		public static class CSharp_ForTypeInit extends TokenSequence
-		{
-			public @S(10) PunctuationEquals equals;
-			public @S(20) CSharp_Expression initialExpr;
-		}
 	}
 	
+	public static class CSharp_ForTypeInit extends TokenSequence
+	{
+		public @S(10) PunctuationEquals equals;
+		public @S(20) CSharp_Expression initialExpr;
+	}
+
 	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
