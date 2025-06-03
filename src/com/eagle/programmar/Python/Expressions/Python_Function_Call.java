@@ -123,7 +123,7 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		if (which instanceof Python_Identifier_Reference)
 		{
 			String id = ((Python_Identifier_Reference) which).getValue();
-			if (id.indexOf('.') < 0) id = "self." + id;
+			// if (id.indexOf('.') < 0) id = "self." + id;
 			this.fnName = Python_Variable.newVariable(id);
 			this.argList = Python_Argument_List.createArgumentList(args);
 		}

@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -86,20 +87,22 @@ public class Rexx_RelationalExpression extends PrecedenceOperator implements Eag
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(this._fileName, this._currentLine, this._currentChar);
+
 		switch (operator.toString())
 		{
 		case "=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
 		case "\\=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
 		case "<":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);
 		case "<=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.LESS_EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_EQUALS, rightExpr, this);
 		case ">":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.GREATER_THAN, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_THAN, rightExpr, this);
 		case ">=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}

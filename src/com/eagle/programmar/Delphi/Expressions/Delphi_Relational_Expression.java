@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -98,25 +99,27 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(this._fileName, this._currentLine, this._currentChar);
+		
 		switch (operator.getWhich().toString())
 		{
 		case "<":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.LESS_THAN, rightExpr, this);
 		case "<=":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.LESS_EQUALS, rightExpr, this);
 		case "=":
-			return generator.newRelationalExpression(leftExpr,	
+			return generator.newRelationalExpression(types, leftExpr,	
 					RelationalEnum.EQUALS, rightExpr, this);
 		case "<>":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.NOT_EQUALS, rightExpr, this);
 		case ">=":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		case ">":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.GREATER_THAN, rightExpr, this);
 		}
 		throw new RuntimeException("Unexpected relational operator: " + operator.getWhich());

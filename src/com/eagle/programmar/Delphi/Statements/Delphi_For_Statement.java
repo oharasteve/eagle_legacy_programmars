@@ -12,6 +12,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Delphi_Statement;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
@@ -118,18 +119,19 @@ public class Delphi_For_Statement extends TokenSequence
 		String toDownto = this.TO_DOWNTO.getValue();
 		AbstractExpression delta;
 		AbstractExpression term;
+		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
 		switch (this.TO_DOWNTO.getValue().toLowerCase())
 		{
 		case "to":
 			delta = generator.newPostIncrementExpression(varName, null,
 					IncrementEnum.INCREMENT, null);
-			term = generator.newRelationalExpression(varExpr,
+			term = generator.newRelationalExpression(types, varExpr,
 					RelationalEnum.LESS_EQUALS, toExpr, null);
 			break;
 		case "downto":
 			delta = generator.newPostIncrementExpression(varName, null,
 					IncrementEnum.DECREMENT, null);
-			term = generator.newRelationalExpression(varExpr,
+			term = generator.newRelationalExpression(types, varExpr,
 					RelationalEnum.GREATER_EQUALS, toExpr, null);
 			break;
 		default:

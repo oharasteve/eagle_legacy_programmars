@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
@@ -81,7 +82,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 	}
 	
 	@Override
-	public CSharp_Expression generateRelational(CSharp_Expression leftExpr,
+	public CSharp_Expression generateRelational(Oper2Types types, CSharp_Expression leftExpr,
 			RelationalEnum relOp, CSharp_Expression rightExpr, AbstractToken source)
 	{
 		this.left = leftExpr;

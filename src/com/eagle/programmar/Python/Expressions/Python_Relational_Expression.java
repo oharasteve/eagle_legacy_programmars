@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
@@ -105,7 +106,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 	}
 
 	@Override
-	public Python_Expression generateRelational(Python_Expression leftExpr,
+	public Python_Expression generateRelational(Oper2Types types, Python_Expression leftExpr,
 			RelationalEnum relOp, Python_Expression rightExpr, AbstractToken source)
 	{
 		this.left = leftExpr;

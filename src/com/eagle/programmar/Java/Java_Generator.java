@@ -7,12 +7,13 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
-import com.eagle.programmar.Java.Expressions.Java_ExpressionList;
+import com.eagle.programmar.Java.Expressions.Java_ClassCreationWithInitializers;
 import com.eagle.programmar.Java.Expressions.Java_LogicalAndExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalNotExpression;
 import com.eagle.programmar.Java.Expressions.Java_LogicalOrExpression;
@@ -468,12 +469,11 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Expression newRelationalExpression(Java_Expression left, RelationalEnum relOp,
+	public Java_Expression newRelationalExpression(Oper2Types types, Java_Expression left, RelationalEnum relOp,
 			Java_Expression right, AbstractToken source)
 	{
 		Java_RelationalExpression relExp = new Java_RelationalExpression();
-		return relExp.generateRelational(left, relOp,
-				right, source);
+		return relExp.generateRelational(types, left, relOp, right, source);
 	}
 	
 	@Override
@@ -489,8 +489,8 @@ public class Java_Generator
 	public Java_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		Java_ExpressionList exprList = new Java_ExpressionList();
-		return exprList.generateArray(exprs, source);
+		Java_ClassCreationWithInitializers creat = new Java_ClassCreationWithInitializers();
+		return creat.generateArray(exprs, source);
 	}
 
 	@Override

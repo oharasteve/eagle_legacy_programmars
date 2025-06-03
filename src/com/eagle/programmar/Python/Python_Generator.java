@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
@@ -444,12 +445,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_Expression newRelationalExpression(Python_Expression left, RelationalEnum relOp,
-			Python_Expression right, AbstractToken source)
+	public Python_Expression newRelationalExpression(Oper2Types types, Python_Expression left,
+			RelationalEnum relOp, Python_Expression right, AbstractToken source)
 	{
 		Python_Relational_Expression relExp = new Python_Relational_Expression();
-		return relExp.generateRelational(left,
-				relOp, right, source);
+		return relExp.generateRelational(types, left, relOp, right, source);
 	}
 	
 	@Override

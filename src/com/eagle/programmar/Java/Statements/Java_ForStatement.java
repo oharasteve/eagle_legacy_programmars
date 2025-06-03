@@ -13,9 +13,11 @@ import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
 import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Annotation;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
@@ -300,7 +302,8 @@ public class Java_ForStatement extends TokenSequence
 		loopIncrements.addPrimaryElement(loopIncr);
 
 		Java_RelationalExpression relExpr = new Java_RelationalExpression();
-		relExpr.generateRelational(varExpr, relOp, toExpression, toExpression);
+		relExpr.generateRelational(new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER),
+				varExpr, relOp, toExpression, toExpression);
 		Java_Expression untilCondition = Java_Generator.wrapExpression(relExpr);
 		Java_Expression loopTest = untilCondition;
 

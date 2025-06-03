@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.MultiplicativeEnum;
 import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.PrimaryOperator;
@@ -39,12 +41,13 @@ public class Delphi_Odd_Function extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		AbstractExpression one = generator.newNumberExpression("1", null);
 		AbstractExpression two = generator.newNumberExpression("2", null);
+		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
 
 		AbstractExpression theExpr2 = generator.newParenthesizedExpression(theExpr, null);
 		AbstractExpression rem = generator.newMultiplicativeExpression(
 				theExpr2, MultiplicativeEnum.REMAINDER, two, null);
 		AbstractExpression result = generator.newRelationalExpression(
-				rem, RelationalEnum.EQUALS, one, null);
+				types, rem, RelationalEnum.EQUALS, one, null);
 		return generator.newParenthesizedExpression(result, this);
 	}
 }

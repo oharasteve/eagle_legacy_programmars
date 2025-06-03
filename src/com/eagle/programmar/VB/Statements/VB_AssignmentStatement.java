@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Variable;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -35,6 +36,24 @@ public class VB_AssignmentStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		// VB doesn't have a Return statement. It assigns a value to the function name
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof VB_Function)
+			{
+				VB_Function func = (VB_Function) parent;
+				if (var.var.getValue().equals(func.name.getValue()))
+				{
+					AbstractExpression retExpr = transformer.transformExpression(generator, expr);
+					return generator.newReturnStatement(retExpr, this);
+				}
+				break;
+			}
+			parent = parent.getParent();
+		}
+
+		// Normal assignment ...
 		AbstractExpression subscrExpr = null;
 		if (var.subscript != null && var.subscript.isPresent())
 		{

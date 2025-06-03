@@ -3,23 +3,36 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
+import com.eagle.programmar.CSharp.CSharp_Argument;
 import com.eagle.programmar.CSharp.CSharp_Argument.CSharp_ArgumentOut;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList.CSharp_MoreArguments;
+import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Type;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_ArrayType;
+import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class CSharp_ClassCreationWithInitializers extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) CSharp_Keyword NEW = new CSharp_Keyword("new");
-	public @S(20) CSharp_Type jtype;
+	public @S(20) CSharp_Type cstype;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT @NOSPACE CSharp_ArgumentList valueList;
 	public @S(50) @NOSPACE PunctuationRightBrace rightBrace;
@@ -53,5 +66,57 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator implem
 		}
 		
 		interpreter.pushEagleValue(array);
+	}
+
+	public CSharp_Expression generateArray(ArrayList<AbstractExpression> exprs,
+			AbstractToken source)
+	{
+		// Want to end up with: new String[] {"abc", "def"}
+		this.cstype = new CSharp_Type();
+		CSharp_KeywordChoice str = new CSharp_KeywordChoice("String");
+		this.cstype.typeName = new CSharp_TypeName();
+		this.cstype.typeName.setWhich(str);
+		
+		CSharp_ArrayType array = new CSharp_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		
+		this.cstype.arrayTypes = new TokenList<CSharp_ArrayType>();
+		this.cstype.arrayTypes.setPresent(true);
+		this.cstype.arrayTypes.addToken(array);
+		
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
+		this.valueList = new CSharp_ArgumentList();
+		this.valueList.setPresent(true);
+		
+		for (int i = 0; i < exprs.size(); i++)
+		{
+			CSharp_ArgumentOut argOut = new CSharp_ArgumentOut();
+			argOut.arg = (CSharp_Expression) exprs.get(i);
+			CSharp_Argument arg = new CSharp_Argument();
+			arg.setWhich(argOut);
+			
+			if (i == 0)
+			{
+				this.valueList.arg = arg;
+				this.valueList.arg.setPresent(true);
+			}
+			else
+			{
+				if (this.valueList.moreArgs == null)
+				{
+					this.valueList.moreArgs = new TokenList<CSharp_MoreArguments>();
+				}
+				CSharp_MoreArguments more = new CSharp_MoreArguments();
+				more.comma = new PunctuationComma();
+				more.arg = arg;
+				more.arg.setPresent(true);
+				this.valueList.moreArgs.addToken(more);
+			}
+		}
+
+		this.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }

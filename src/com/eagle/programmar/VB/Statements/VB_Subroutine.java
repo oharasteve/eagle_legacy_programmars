@@ -10,9 +10,9 @@ import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
-import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Syntax;
 import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
@@ -108,6 +108,7 @@ public class VB_Subroutine extends TokenSequence
 //		}
 		
 		generator.addMethod(null, name.getValue(), this);
+		generator.addMethodName(name.getValue());
 		
 		if (params.params != null && params.params.isPresent())
 		{

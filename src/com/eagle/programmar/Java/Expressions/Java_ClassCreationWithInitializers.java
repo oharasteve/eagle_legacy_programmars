@@ -3,17 +3,29 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.programmar.Java.Java_ArgumentList;
 import com.eagle.programmar.Java.Java_ArgumentList.Java_MoreArguments;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Type;
+import com.eagle.programmar.Java.Java_Type.Java_ArrayType;
+import com.eagle.programmar.Java.Java_Type.Java_TypeName;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Java_ClassCreationWithInitializers extends PrimaryOperator implements EagleRunnable
 {
@@ -43,5 +55,51 @@ public class Java_ClassCreationWithInitializers extends PrimaryOperator implemen
 		}
 		
 		interpreter.pushEagleValue(array);
+	}
+	
+	public Java_Expression generateArray(ArrayList<AbstractExpression> exprs,
+			AbstractToken source)
+	{
+		// Want to end up with: new String[] {"abc", "def"}
+		this.jtype = new Java_Type();
+		Java_KeywordChoice str = new Java_KeywordChoice("String");
+		this.jtype.typeName = new Java_TypeName();
+		this.jtype.typeName.setWhich(str);
+		
+		Java_ArrayType array = new Java_ArrayType();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+		
+		this.jtype.arrayTypes = new TokenList<Java_ArrayType>();
+		this.jtype.arrayTypes.setPresent(true);
+		this.jtype.arrayTypes.addToken(array);
+		
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
+		this.valueList = new Java_ArgumentList();
+		this.valueList.setPresent(true);
+		
+		for (int i = 0; i < exprs.size(); i++)
+		{
+			if (i == 0)
+			{
+				this.valueList.arg = (Java_Expression) exprs.get(0);
+			}
+			else
+			{
+				if (this.valueList.moreArgs == null)
+				{
+					this.valueList.moreArgs = new TokenList<Java_MoreArguments>();
+					this.valueList.moreArgs.setPresent(true);
+				}
+				Java_MoreArguments more = new Java_MoreArguments();
+				more.comma = new PunctuationComma();
+				more.arg = (Java_Expression) exprs.get(i);
+				this.valueList.moreArgs.addToken(more);
+			}
+		}
+
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

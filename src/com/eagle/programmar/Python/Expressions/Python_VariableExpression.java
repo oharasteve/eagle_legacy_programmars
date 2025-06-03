@@ -21,7 +21,7 @@ public class Python_VariableExpression extends PrimaryOperator
 		implements EagleRunnable, Eagle_Generate_VarExpr<Python_Expression>
 {
 	public @S(10) Python_Variable variable;
-	public @S(20) @OPT Python_Subscript subscript;
+	public @S(20) @OPT @NOSPACE Python_Subscript subscript;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -45,12 +45,12 @@ public class Python_VariableExpression extends PrimaryOperator
 		if (subscrExpr != null)
 		{
 			this.subscript = new Python_Subscript();
+			this.subscript.setPresent(true);
 			this.subscript.leftBracket = new PunctuationLeftBracket();
-			this.subscript.leftBracket.setPresent(true);
 			this.subscript.rightBracket = new PunctuationRightBracket();
-			this.subscript.rightBracket.setPresent(true);
 			this.subscript.body = new Python_SubscrExpr();
 			this.subscript.body.subscr = subscrExpr;
+			this.subscript.body.subscr.setPresent(true);
 		}
 
 		this.setTransformationSource(source);

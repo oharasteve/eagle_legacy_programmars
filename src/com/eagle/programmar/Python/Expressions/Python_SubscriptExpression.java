@@ -17,7 +17,7 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 public class Python_SubscriptExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Python_Expression expr = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Python_Subscript subscr;
+	public @S(20) @NOSPACE Python_Subscript subscr;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

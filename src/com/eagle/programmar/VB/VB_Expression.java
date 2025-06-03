@@ -22,7 +22,6 @@ import com.eagle.programmar.VB.Expressions.VB_ParenthesizedExpression;
 import com.eagle.programmar.VB.Expressions.VB_RelationalExpression;
 import com.eagle.programmar.VB.Expressions.VB_ShiftExpression;
 import com.eagle.programmar.VB.Expressions.VB_Subfield;
-import com.eagle.programmar.VB.Expressions.VB_SubscriptExpression;
 import com.eagle.programmar.VB.Expressions.VB_VariableExpression;
 import com.eagle.programmar.VB.Functions.VB_CStrFunction;
 import com.eagle.programmar.VB.Functions.VB_FunctionCall;
@@ -80,18 +79,17 @@ public class VB_Expression extends PrecedenceChooser implements AbstractExpressi
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(1000) VB_SubscriptExpression subscriptExpression;
-	public @P(1010) VB_Subfield subfield;
-	public @P(1020) VB_ExponentExpression exponentExpression;
-	public @P(1030) VB_MultiplicativeExpression multiplicativeExpression;
-	public @P(1040) VB_AdditiveExpression additiveExpression;
-	public @P(1050) VB_ConcatExpression concatExpression;
-	public @P(1060) VB_ShiftExpression shiftExpression;
-	public @P(1070) VB_RelationalExpression relationalExpression;
-	public @P(1080) VB_InstanceOfExpression instanceOfExpression;
-	public @P(1090) VB_EqualityExpression equalityExpression;
-	public @P(1100) VB_BitwiseAndExpression andExpression;
-	public @P(1110) VB_LogicalXorExpression inclusiveOrExpression;
-	public @P(1120) VB_LogicalAndExpression conditionalAndExpression;
-	public @P(1130) VB_LogicalOrExpression conditionalOrExpression;
+	public @P(1000) VB_Subfield subfield;
+	public @P(1010) VB_ExponentExpression exponentExpression;
+	public @P(1020) VB_MultiplicativeExpression multiplicativeExpression;
+	public @P(1030) VB_AdditiveExpression additiveExpression;
+	public @P(1040) VB_ConcatExpression concatExpression;
+	public @P(1050) VB_ShiftExpression shiftExpression;
+	public @P(1060) VB_RelationalExpression relationalExpression;
+	public @P(1070) VB_InstanceOfExpression instanceOfExpression;
+	public @P(1080) VB_EqualityExpression equalityExpression;
+	public @P(1090) VB_BitwiseAndExpression andExpression;
+	public @P(1100) VB_LogicalXorExpression inclusiveOrExpression;
+	public @P(1110) VB_LogicalAndExpression conditionalAndExpression;
+	public @P(1120) VB_LogicalOrExpression conditionalOrExpression;
 }

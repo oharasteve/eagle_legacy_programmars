@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_RelationalOperator;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -93,6 +94,8 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(this._fileName, this._currentLine, this._currentChar);
+
 		String oper = operator.canonicalForm(); // Returns "<", "=", etc.
 		RelationalEnum newOper;
 		
@@ -142,6 +145,6 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 				throw new RuntimeException("Unexpected relational operator: " + oper);
 			}
 		}
-		return generator.newRelationalExpression(leftExpr, newOper, rightExpr, this);
+		return generator.newRelationalExpression(types, leftExpr, newOper, rightExpr, this);
 	}
 }

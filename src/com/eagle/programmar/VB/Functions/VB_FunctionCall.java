@@ -128,8 +128,25 @@ public class VB_FunctionCall extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		AbstractVariable var = generator.newVariable(fnName.getValue());
-		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-		return generator.newMethodInvocation(var, args, fnName);
+		String name = fnName.getValue();
+		if (generator.isKnownMethod(name))
+		{
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			int argCount = callArguments.arguments.getPrimaryCount();
+			for (int i = 0; i < argCount; i++)
+			{
+				VB_Expression arg = callArguments.arguments.getPrimaryElement(i);
+				AbstractExpression newArg = transformer.transformExpression(generator, arg);
+				args.add(newArg);
+			}
+	
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, fnName);
+		}
+
+		// Dang. VB uses () for both arrays and function calls
+		// It is not a function, so must be an array
+		AbstractExpression index = transformer.transformExpression(generator, callArguments.arguments.first());
+		return generator.newVariableExpression(name, index, this);
 	}
 }

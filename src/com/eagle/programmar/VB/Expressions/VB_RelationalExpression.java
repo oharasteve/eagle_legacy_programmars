@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -16,10 +17,12 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_RelationalExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_RelationalExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("operators/comparison-operators") VB_PunctuationChoice operator = new VB_PunctuationChoice("=", "<=", ">=", "<>", "<", ">");
+	public @S(20) @DOC("operators/comparison-operators") VB_PunctuationChoice operator =
+			new VB_PunctuationChoice("=", "<=", ">=", "<>", "<", ">");
 	public @S(30) VB_Expression right = new VB_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -112,20 +115,22 @@ public class VB_RelationalExpression extends PrecedenceOperator implements Eagle
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator.getFileName(), operator.getStartLine(), operator.getStartChar());
+			
 		switch (operator.toString())
 		{
 		case "=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
 		case "<>":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
 		case "<":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);
 		case "<=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.LESS_EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_EQUALS, rightExpr, this);
 		case ">":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.GREATER_THAN, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_THAN, rightExpr, this);
 		case ">=":
-			return generator.newRelationalExpression(leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}

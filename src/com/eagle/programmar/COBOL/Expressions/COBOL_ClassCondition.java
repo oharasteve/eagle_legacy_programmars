@@ -5,6 +5,8 @@ package com.eagle.programmar.COBOL.Expressions;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.math.EagleInteger;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
@@ -67,6 +69,7 @@ public class COBOL_ClassCondition extends PrecedenceOperator
 			}
 		}
 		AbstractExpression zero = generator.newNumberExpression("0", null);
-		return generator.newRelationalExpression(theExpr, newOper, zero, this);
+		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		return generator.newRelationalExpression(types, theExpr, newOper, zero, this);
 	}
 }

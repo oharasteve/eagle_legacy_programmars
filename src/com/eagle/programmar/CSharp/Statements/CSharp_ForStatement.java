@@ -247,7 +247,7 @@ public class CSharp_ForStatement extends TokenSequence
 		loopIncrements.addPrimaryElement(loopIncr);
 
 		CSharp_RelationalExpression relExpr = new CSharp_RelationalExpression();
-		relExpr.generateRelational(varExpr, relOp, toExpression, toExpression);
+		relExpr.generateRelational(null, varExpr, relOp, toExpression, toExpression);
 		CSharp_Expression untilCondition = CSharp_Generator.wrapExpression(relExpr);
 		CSharp_Expression loopTest = untilCondition;
 				

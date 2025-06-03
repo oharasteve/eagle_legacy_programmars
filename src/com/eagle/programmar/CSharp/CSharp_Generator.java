@@ -7,11 +7,12 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
-import com.eagle.programmar.CSharp.Expressions.CSharp_ExpressionList;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationWithInitializers;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalAndExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalNotExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalOrExpression;
@@ -456,11 +457,11 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Expression newRelationalExpression(CSharp_Expression left, RelationalEnum relOp,
+	public CSharp_Expression newRelationalExpression(Oper2Types types, CSharp_Expression left, RelationalEnum relOp,
 			CSharp_Expression right, AbstractToken source)
 	{
 		CSharp_RelationalExpression relExp = new CSharp_RelationalExpression();
-		return relExp.generateRelational(left, relOp,
+		return relExp.generateRelational(types, left, relOp,
 				right, source);
 	}
 	
@@ -476,8 +477,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	public CSharp_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		CSharp_ExpressionList exprList = new CSharp_ExpressionList();
-		return exprList.generateArray(exprs, source);
+		CSharp_ClassCreationWithInitializers creat = new CSharp_ClassCreationWithInitializers();
+		return creat.generateArray(exprs, source);
 	}
 
 

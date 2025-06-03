@@ -17,13 +17,13 @@ public class Python_RangeExpression extends PrimaryOperator
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE Python_Expression start;
 	public @S(40) @NOSPACE PunctuationComma comma;
-	public @S(50) @NOSPACE Python_Expression stop;
+	public @S(50) Python_Expression stop;
 	public @S(60) @NOSPACE @OPT Python_RangeIncr increment;
 	public @S(70) @NOSPACE PunctuationRightParen rightParen;
 	
 	public static class Python_RangeIncr extends TokenSequence
 	{
-		public @S(10) @NOSPACE PunctuationComma comma;
-		public @S(20) @NOSPACE Python_Expression incr;
+		public @S(10) PunctuationComma comma;
+		public @S(20) Python_Expression incr;
 	}
 }

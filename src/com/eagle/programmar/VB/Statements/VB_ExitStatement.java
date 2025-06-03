@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class VB_ExitStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class VB_ExitStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("statements/exit-statement") VB_Keyword EXIT = new VB_Keyword("exit");
 	public @S(20) VB_KeywordChoice FOR = new VB_KeywordChoice("do", "for", "function", "sub");
@@ -29,5 +33,11 @@ public class VB_ExitStatement extends TokenSequence implements AbstractStatement
 		}
 		
 		throw new RuntimeException("Cannot handle exit " + FOR + " yet.");
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newBreakStatement(EXIT);
 	}
 }

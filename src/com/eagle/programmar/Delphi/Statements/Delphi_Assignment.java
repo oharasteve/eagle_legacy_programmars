@@ -45,6 +45,7 @@ public class Delphi_Assignment extends TokenSequence
 
 		String varName = var.var.getValue();
 		
+		// Delphi doesn't have a Return statement. It assigns a value to the function name
 		AbstractToken parent = var.var;
 		while (parent != null)
 		{

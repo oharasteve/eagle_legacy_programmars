@@ -112,8 +112,16 @@ public class VB_CallStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractVariable var = generator.newVariable(subName.getValue());
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = callArguments.arguments.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			VB_Expression arg = callArguments.arguments.getPrimaryElement(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(subName.getValue());
 		AbstractExpression expr = generator.newMethodInvocation(var, args, subName);
 		return generator.newExpressionStatement(expr, subName);
 	}

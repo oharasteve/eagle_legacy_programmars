@@ -10,9 +10,9 @@ import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
-import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Syntax;
 import com.eagle.programmar.VB.VB_Type;
 import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
@@ -118,6 +118,7 @@ public class VB_Function extends TokenSequence
 		}
 		
 		generator.addMethod(newType, name.getValue(), this);
+		generator.addMethodName(name.getValue());
 		
 		if (params.params != null && params.params.isPresent())
 		{
@@ -138,6 +139,7 @@ public class VB_Function extends TokenSequence
 		for (VB_Element stmt : stmts._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
+
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
 			if (newStmts != null)
 			{

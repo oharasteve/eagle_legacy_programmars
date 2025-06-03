@@ -8,8 +8,10 @@ import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Functions.Java_EqualsMethod;
@@ -83,35 +85,54 @@ public class Java_RelationalExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(this._fileName, this._currentLine, this._currentChar);
+
 		switch (operator.toString())
 		{
 		case "==":
-			return generator.newRelationalExpression(leftExpr,	
+			return generator.newRelationalExpression(types, leftExpr,	
 					RelationalEnum.EQUALS, rightExpr, this);
 		case "!=":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.NOT_EQUALS, rightExpr, this);
 		case "<":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.LESS_THAN, rightExpr, this);
 		case "<=":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.LESS_EQUALS, rightExpr, this);
 		case ">":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.GREATER_THAN, rightExpr, this);
 		case ">=":
-			return generator.newRelationalExpression(leftExpr,
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		}
 		throw new RuntimeException("Unexpected relational operator: " + operator);
 	}
 
 	@Override
-	public Java_Expression generateRelational(Java_Expression leftExpr, RelationalEnum relOp,
+	public Java_Expression generateRelational(Oper2Types types, Java_Expression leftExpr, RelationalEnum relOp,
 			Java_Expression rightExpr, AbstractToken source)
 	{
-		if (isString(leftExpr) || isString(rightExpr))
+		boolean doStrings = false;
+		if (types != null)
+		{
+			if (types._type1.equals(EagleString.STRING) && types._type2.equals(EagleString.STRING))
+			{
+				doStrings = true;
+			}
+		}
+		
+		if (! doStrings)
+		{
+			if (isString(leftExpr) || isString(rightExpr))
+			{
+				doStrings = true;
+			}
+		}
+		
+		if (doStrings)
 		{
 			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod(leftExpr, rightExpr);
 			equals.setTransformationSource(source);
