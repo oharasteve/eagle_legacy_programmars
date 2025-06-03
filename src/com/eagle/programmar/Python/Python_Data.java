@@ -43,6 +43,13 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 			throw new RuntimeException("Can't create data without a type");
 		}
 		
+		if (initial == null)
+		{
+			// Don't bother with declarations without initial values
+			// Python ignores them at runtime anyways
+			return null;
+		}
+		
 		Python_Data data = new Python_Data();
 		
 		// Set data name and type
@@ -51,16 +58,13 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 		data.colon = new PunctuationColon();
 		data.type = (Python_Type) type;
 
-		// Set the initial value, if any
-		if (initial != null)
-		{
-			Python_DataInitialValue init = new Python_DataInitialValue();
-			init.setPresent(true);
-			init.equals = new PunctuationEquals();
-			init.expression = (Python_Expression) initial;
-			data.initialValue = init;
-			data.initialValue.setPresent(true);
-		}
+		// Set the initial value
+		Python_DataInitialValue init = new Python_DataInitialValue();
+		init.setPresent(true);
+		init.equals = new PunctuationEquals();
+		init.expression = (Python_Expression) initial;
+		data.initialValue = init;
+		data.initialValue.setPresent(true);
 
 		data.setTransformationSource(source);
 		return data;

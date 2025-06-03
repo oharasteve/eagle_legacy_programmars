@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.SubstringECEnum;
 import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
@@ -67,7 +69,8 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			Java_Number num = new Java_Number();
 			Java_Expression one = Java_Generator.wrapExpression(num.generateNumber("1", source));
 			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
-			Java_Expression scMinusOne = addExp.generateAdditive((Java_Expression) sc,
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Java_Expression scMinusOne = addExp.generateAdditive(types, (Java_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
 			break;
@@ -85,7 +88,8 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
 			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
-			Java_Expression scPlusNc = addExp.generateAdditive(expr.scExpr,
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Java_Expression scPlusNc = addExp.generateAdditive(types, expr.scExpr,
 					AdditiveEnum.PLUS, (Java_Expression) ecOrnc, source);
 			expr.ecExpr = scPlusNc;
 			expr.ecExpr.setPresent(true);

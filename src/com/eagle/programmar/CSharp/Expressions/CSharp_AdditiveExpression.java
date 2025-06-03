@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
@@ -79,19 +80,21 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+				
 		switch (operator.toString())
 		{
 		case "+":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.PLUS, rightExpr, this);
 		case "-":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.MINUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
 	
 	@Override
-	public CSharp_Expression generateAdditive(
+	public CSharp_Expression generateAdditive(Oper2Types types,
 			CSharp_Expression leftExpr, AdditiveEnum oper,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{

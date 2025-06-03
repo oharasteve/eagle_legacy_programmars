@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, May 17, 2017
 
-package com.eagle.programmar.Python.Generate;
+package com.eagle.programmar.Python.Generate_Unused;
 
 public class Generate_Python_Method
 //		implements Generate_Eagle_Method<Python_Function, Python_Statement>

@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
@@ -77,19 +78,21 @@ public class Java_AdditiveExpression extends PrecedenceOperator implements Eagle
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+
 		switch (operator.toString())
 		{
 		case "+":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.PLUS, rightExpr, this);
 		case "-":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.MINUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
 	
 	@Override
-	public Java_Expression generateAdditive(Java_Expression leftExpr, AdditiveEnum oper,
+	public Java_Expression generateAdditive(Oper2Types types, Java_Expression leftExpr, AdditiveEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{
 		this.left = leftExpr;

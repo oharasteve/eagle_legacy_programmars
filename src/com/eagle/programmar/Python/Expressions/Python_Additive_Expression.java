@@ -8,10 +8,13 @@ import com.eagle.generate.EagleGenerator.AdditiveEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Additive;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -79,23 +82,39 @@ public class Python_Additive_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+		
 		switch (operator.toString())
 		{
 		case "+":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.PLUS, rightExpr, this);
 		case "-":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.MINUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
 	
 	@Override
-	public Python_Expression generateAdditive(Python_Expression leftExpr,
+	public Python_Expression generateAdditive(Oper2Types types, Python_Expression leftExpr,
 			AdditiveEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
 		this.left = leftExpr;
 		this.right = rightExpr;
+		if (types != null)
+		{
+			if (types._type1.equals(EagleString.STRING) && ! types._type2.equals(EagleString.STRING))
+			{
+				Python_Str_Function strFn = new Python_Str_Function();
+				this.right = strFn.generateString(rightExpr, rightExpr);
+			}
+			else if (! types._type1.equals(EagleString.STRING) && types._type2.equals(EagleString.STRING))
+			{
+				Python_Str_Function strFn = new Python_Str_Function();
+				this.left = strFn.generateString(leftExpr, leftExpr);
+			}
+		}
+		
 		switch (oper)
 		{
 		case PLUS:

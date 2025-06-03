@@ -309,20 +309,19 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	// ================ Expressions ================
 	
 	@Override
-	public Python_Expression newAdditiveExpression(Python_Expression left,
+	public Python_Expression newAdditiveExpression(Oper2Types types, Python_Expression left,
 			AdditiveEnum oper, Python_Expression right, AbstractToken source)
 	{
 		Python_Additive_Expression addExpr = new Python_Additive_Expression();
-		return addExpr.generateAdditive(left, oper,
-				right, source);
+		return addExpr.generateAdditive(types, left, oper, right, source);
 	}
 
 	@Override
-	public Python_Expression newAppendExpression(Python_Expression left, Python_Expression right, AbstractToken source)
+	public Python_Expression newAppendExpression(Oper2Types types,
+			Python_Expression left, Python_Expression right, AbstractToken source)
 	{
 		Python_Additive_Expression appendExpr = new Python_Additive_Expression();
-		return appendExpr.generateAdditive(left,
-				AdditiveEnum.PLUS, right, source);
+		return appendExpr.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 	
 	@Override
@@ -333,8 +332,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Expression var = varExpr.generateVarExpr(name,
 				subscript, source);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
-		return asgExpr.generateAssignment(var, oper,
-				expression, source);
+		return asgExpr.generateAssignment(var, oper, expression, source);
 	}
 	
 	@Override
@@ -342,8 +340,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 			IncrementEnum oper, AbstractToken source)
 	{
 		Python_VariableExpression varExpr = new Python_VariableExpression();
-		Python_Expression var = varExpr.generateVarExpr(name,
-				subscript, source);
+		Python_Expression var = varExpr.generateVarExpr(name, subscript, source);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		Python_Expression one = newNumberExpression("1", null);
 		AssignmentEnum asg;

@@ -76,18 +76,18 @@ public class EagleTransformMain<Lang extends AbstractLanguage,
 		Old_Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type> transformTarget;
 		if (targetFile.endsWith(".java"))
 		{
-//			Generate_Java jTrans = null;    // new Generate_Java(targetFile, _forceDate);
-			transformTarget = null;         // (Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type>) jTrans;
+			// Generate_Java jTrans = new Generate_Java(targetFile, _forceDate);
+			transformTarget = null; // (Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type>) jTrans;
 		}
 		else if (targetFile.endsWith(".cs"))
 		{
-//			Generate_CSharp csTrans = null; // new Generate_CSharp(targetFile, _forceDate);
-			transformTarget = null;         // (Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type>) csTrans;
+			// Generate_CSharp csTrans = new Generate_CSharp(targetFile, _forceDate);
+			transformTarget = null; // (Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type>) csTrans;
 		}
 		else if (targetFile.endsWith(".py"))
 		{
-//			Generate_Python pyTrans = null; // new Generate_Python(targetFile, _forceDate);
-			transformTarget = null;         // (Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type>) pyTrans;
+			// Generate_Python pyTrans = new Generate_Python(targetFile, _forceDate);
+			transformTarget = null; // (Generate_Eagle<Lang, Cls, Stmt, Meth, Expr, Var, Type>) pyTrans;
 		}
 		else
 		{

@@ -85,7 +85,7 @@ public class Java_RelationalExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		Oper2Types types = transformer.findOperator2Metric(this._fileName, this._currentLine, this._currentChar);
+		Oper2Types types = transformer.findOperator2Metric(operator);
 
 		switch (operator.toString())
 		{
@@ -144,7 +144,7 @@ public class Java_RelationalExpression extends PrecedenceOperator
 			case NOT_EQUALS:
 				Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
 				Java_Expression not = notExpr.generateLogicalNot(rightExpr, source);
-				return Java_Generator.wrapExpression(not);
+				return not;
 			default:
 				throw new RuntimeException("Unable to handle " + relOp + " with strings");
 			}

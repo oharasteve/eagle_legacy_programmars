@@ -13,6 +13,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_ExpressionList;
@@ -356,7 +357,8 @@ public class Python_ForStatement extends TokenSequence
 		Python_Expression parenExpr = parens.generateParentheses(toExpression, null);
 		
 		Python_Additive_Expression add = new Python_Additive_Expression();
-		Python_Expression addExpr = add.generateAdditive(parenExpr, oper, oneExpr, null);
+		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		Python_Expression addExpr = add.generateAdditive(types, parenExpr, oper, oneExpr, null);
 		argList.addSecondaryElement(new PunctuationComma());
 		argList.addPrimaryElement(addExpr);
 

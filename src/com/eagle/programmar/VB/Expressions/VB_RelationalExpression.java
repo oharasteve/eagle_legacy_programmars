@@ -115,7 +115,7 @@ public class VB_RelationalExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		Oper2Types types = transformer.findOperator2Metric(operator.getFileName(), operator.getStartLine(), operator.getStartChar());
+		Oper2Types types = transformer.findOperator2Metric(operator);
 			
 		switch (operator.toString())
 		{

@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.programmar.Delphi.Terminals.Delphi_PunctuationChoice;
@@ -98,12 +99,14 @@ public class Delphi_Additive_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+
 		switch (operator.getWhich().toString().toLowerCase())
 		{
 		case "+":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.PLUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.PLUS, rightExpr, this);
 		case "-":
-			return generator.newAdditiveExpression(leftExpr, AdditiveEnum.MINUS, rightExpr, this);
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.MINUS, rightExpr, this);
 		case "or":
 			return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
 		case "xor":

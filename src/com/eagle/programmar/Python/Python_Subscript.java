@@ -8,7 +8,9 @@ import com.eagle.generate.EagleGenerator.SubstringECEnum;
 import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleArray;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
@@ -101,7 +103,8 @@ public class Python_Subscript extends TokenSequence
 			Python_Number num = new Python_Number();
 			Python_Expression one = Python_Generator.wrapExpression(num.generateNumber("1", source));
 			Python_Additive_Expression addExpr = new Python_Additive_Expression();
-			Python_Expression scMinusOne = addExpr.generateAdditive(
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Python_Expression scMinusOne = addExpr.generateAdditive(types,
 					(Python_Expression) sc, AdditiveEnum.MINUS, one, source);
 			subscr.body.subscr = scMinusOne;
 			subscr.body.subscr.setPresent(true);
@@ -122,7 +125,8 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop.colon = new PunctuationColon();
 			subscr.body.subscriptStop.setPresent(true);
 			Python_Additive_Expression addExpr = new Python_Additive_Expression();
-			Python_Expression scPlusNc = addExpr.generateAdditive(
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Python_Expression scPlusNc = addExpr.generateAdditive(types,
 					subscr.body.subscr, AdditiveEnum.PLUS, (Python_Expression) ecOrnc, source);
 			subscr.body.subscriptStop.expr = scPlusNc;
 			subscr.body.subscriptStop.expr.setPresent(true);

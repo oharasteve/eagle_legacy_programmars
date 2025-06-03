@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Sep 29, 2016
 
-package com.eagle.programmar.CSharp.Generate;
+package com.eagle.programmar.CSharp.Generate_Unused;
 
 public class Generate_CSharp_Expression
 //		implements Generate_Eagle_Expression<CSharp_Expression, CSharp_Variable, CSharp_Type>

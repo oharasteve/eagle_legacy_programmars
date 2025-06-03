@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, May 5, 2017
 
-package com.eagle.programmar.CSharp.Generate;
+package com.eagle.programmar.CSharp.Generate_Unused;
 
 public class Generate_CSharp_Method
 //		implements Generate_Eagle_Method<CSharp_Method, CSharp_Statement>

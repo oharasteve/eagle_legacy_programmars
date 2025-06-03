@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Sep 29, 2016
 
-package com.eagle.programmar.Java.Generate;
+package com.eagle.programmar.Java.Generate_Unused;
 
 public class Generate_Java_Statement
 //		implements Generate_Eagle_Statement<Java_Statement, Java_Expression, Java_Variable, Java_Type>

@@ -347,21 +347,19 @@ public class Java_Generator
 	// ================ Expressions ================
 	
 	@Override
-	public Java_Expression newAdditiveExpression(Java_Expression left,
+	public Java_Expression newAdditiveExpression(Oper2Types types, Java_Expression left,
 			AdditiveEnum oper, Java_Expression right, AbstractToken source)
 	{
 		Java_AdditiveExpression addExpr = new Java_AdditiveExpression();
-		return addExpr.generateAdditive(left, oper,
-				right, source);
+		return addExpr.generateAdditive(types, left, oper, right, source);
 	}
 
 	@Override
-	public Java_Expression newAppendExpression(Java_Expression left,
-			Java_Expression right, AbstractToken source)
+	public Java_Expression newAppendExpression(Oper2Types types,
+			Java_Expression left, Java_Expression right, AbstractToken source)
 	{
 		Java_AdditiveExpression appendExp = new Java_AdditiveExpression();
-		return appendExp.generateAdditive(left,
-				AdditiveEnum.PLUS, right, source);
+		return appendExp.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 	
 	@Override

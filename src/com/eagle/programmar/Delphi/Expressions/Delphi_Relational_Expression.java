@@ -99,7 +99,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		Oper2Types types = transformer.findOperator2Metric(this._fileName, this._currentLine, this._currentChar);
+		Oper2Types types = transformer.findOperator2Metric(operator);
 		
 		switch (operator.getWhich().toString())
 		{

@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -34,8 +35,17 @@ public class Python_Str_Function extends PrimaryOperator
 	{
 		Python_Str_Function str = new Python_Str_Function();
 		str.leftParen = new PunctuationLeftParen();
-		str.expression = expr;
 		str.rightParen = new PunctuationRightParen();
+		if (expr.getWhich() instanceof Python_Parenthesized_Expression)
+		{
+			// Don't create a second set of parens
+			Python_Parenthesized_Expression parens = (Python_Parenthesized_Expression) expr.getWhich();
+			str.expression = parens.list.expr;
+		}
+		else
+		{
+			str.expression = expr;
+		}
 		
 		str.setTransformationSource(source);
 		return Python_Generator.wrapExpression(str);

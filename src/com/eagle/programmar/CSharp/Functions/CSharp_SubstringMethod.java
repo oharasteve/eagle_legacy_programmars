@@ -8,6 +8,8 @@ import com.eagle.generate.EagleGenerator.SubstringECEnum;
 import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
@@ -68,7 +70,8 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			num.generateNumber("1", source);
 			CSharp_Expression one = CSharp_Generator.wrapExpression(num);
 			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
-			CSharp_Expression scMinusOne = addExp.generateAdditive((CSharp_Expression) sc,
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			CSharp_Expression scMinusOne = addExp.generateAdditive(types, (CSharp_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
 			break;
@@ -80,7 +83,8 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
 			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
-			CSharp_Expression ecMinusSc = addExp.generateAdditive((CSharp_Expression) ecOrnc,
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			CSharp_Expression ecMinusSc = addExp.generateAdditive(types, (CSharp_Expression) ecOrnc,
 					AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
 			CSharp_Expression ncExpr = ecMinusSc;
 			expr.ncExpr = ncExpr;
