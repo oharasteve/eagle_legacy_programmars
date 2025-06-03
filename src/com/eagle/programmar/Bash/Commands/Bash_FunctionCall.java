@@ -10,7 +10,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Bash_Variable;
 import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
@@ -41,8 +40,6 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 		public @CHOICE Bash_Variable XXvariable;
 	}
 
-	private @SKIP ArgumentsMetrics _metrics = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -65,10 +62,6 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 	
 			int argCount = args.size();
 	
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, var, name);
-			}
 			ArrayList<String> argTypes = new ArrayList<String>();
 
 			// Now assign all the parameters
@@ -80,7 +73,6 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 				interpreter.setSymbol(this, paramName, val);
 				argTypes.add(val.typeName());
 			}
-			_metrics.called(argTypes);
 	
 			// Prepare to evaluate the function
 			long startTime = System.nanoTime();
@@ -95,7 +87,8 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 	
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this, elapsedTime);
+			func._callMetrics.addCallFrom(this, elapsedTime);
+			func._argumentsMetrics.calledWith(argTypes);
 	
 			// Now remove all those parameters
 			interpreter.completedFunction(name, func);

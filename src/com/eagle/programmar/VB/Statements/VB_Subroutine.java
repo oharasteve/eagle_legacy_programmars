@@ -3,17 +3,20 @@
 
 package com.eagle.programmar.VB.Statements;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
 import com.eagle.programmar.VB.VB_Syntax;
+import com.eagle.programmar.VB.VB_Type;
 import com.eagle.programmar.VB.Symbols.VB_Sub_Definition;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -34,7 +37,7 @@ public class VB_Subroutine extends TokenSequence
 {
 	public @S(10) @OPT VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public");
 	public @S(20) @DOC("statements/sub-statement") VB_Keyword SUB1 = new VB_Keyword("sub");
-	public @S(30) VB_Sub_Definition name;
+	public @S(30) VB_Sub_Definition id;
 	public @S(40) VB_Parameters params;
 	public @S(50) VB_EndOfLine eoln;
 	public @S(60) @OPT TokenList<VB_Element> stmts;
@@ -49,43 +52,24 @@ public class VB_Subroutine extends TokenSequence
 		return _scope;
 	}
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.
 		// We searched for all the subs in a preliminary pass
 		// And we only evaluate when it is called
-	}
-	
-	private static AbstractType findType(EagleGenerator generator, String typeName)
-	{
-		TypeEnum type;
-		switch (typeName)
-		{
-		case "boolean":
-			type = TypeEnum.BOOLEAN;
-			break;
-		case "integer":
-			type = TypeEnum.INTEGER;
-			break;
-		case "double":
-			type = TypeEnum.DOUBLE;
-			break;
-		case "string":
-			type = TypeEnum.STRING;
-			break;
-		default:
-			type = TypeEnum.OTHER;
-			break;
-		}
-		return generator.transformType(false, type, null, null);
 	}
 	
 	@Override
@@ -107,9 +91,12 @@ public class VB_Subroutine extends TokenSequence
 //			}
 //		}
 		
-		generator.addMethod(null, name.getValue(), this);
-		generator.addMethodName(name.getValue());
+		generator.addMethod(null, id.getValue(), this);
+		generator.addMethodName(id.getValue());
 		
+		// Search metrics for arg types -- might not be any
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
+
 		if (params.params != null && params.params.isPresent())
 		{
 			for (int i = 0; i < params.params.getPrimaryCount(); i++)
@@ -119,7 +106,13 @@ public class VB_Subroutine extends TokenSequence
 				if (param.as != null && param.as.isPresent())
 				{
 					VB_KeywordChoice kw = (VB_KeywordChoice) param.as.type.getWhich();
-					paramType = findType(generator, kw.getValue());
+					paramType = VB_Type.findType(generator, kw.getValue());
+				}
+
+				if (paramType == null && argTypes != null && i < argTypes.size())
+				{
+					TypeEnum metricArgType = argTypes.get(i);
+					paramType = generator.transformType(false, metricArgType, null, param);
 				}
 				
 				generator.addMethodParameter(paramType, param.var.getValue());

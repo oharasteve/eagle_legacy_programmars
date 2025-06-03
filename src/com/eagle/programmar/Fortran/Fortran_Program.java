@@ -38,12 +38,12 @@ public class Fortran_Program extends AbstractLanguage implements EagleRunnable
 			if (which instanceof Fortran_Function)
 			{
 				Fortran_Function fn = (Fortran_Function) which;
-				interpreter.addFunction(fn.fnName.getValue(), fn);
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 			else if (which instanceof Fortran_Subroutine)
 			{
 				Fortran_Subroutine sub = (Fortran_Subroutine) which;
-				interpreter.addFunction(sub.subName.getValue(), sub);
+				interpreter.addFunction(sub.id.getValue(), sub);
 			}
 		}
 

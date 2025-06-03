@@ -5,6 +5,7 @@ package com.eagle.programmar.Javascript;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
@@ -28,7 +29,7 @@ public class Javascript_Function extends TokenSequence implements AbstractFuncti
 
 	public static class Javascript_FunctionImplementation extends TokenSequence
 	{
-		public @S(10) @OPT Javascript_Function_Definition functionName;
+		public @S(10) @OPT Javascript_Function_Definition id;
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT Javascript_FunctionParameters params;
 		public @S(40) @OPT TokenList<Javascript_Comment> comments1;
@@ -37,7 +38,8 @@ public class Javascript_Function extends TokenSequence implements AbstractFuncti
 		public @S(70) Javascript_FunctionBody body;
 	}
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Javascript_Syntax.IS_CASE_SENSITIVE);
 
@@ -50,10 +52,13 @@ public class Javascript_Function extends TokenSequence implements AbstractFuncti
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, implementation.functionName.getValue(),
-					implementation.functionName);
+			_callMetrics = new CallMetrics(interpreter._metrics, implementation.id.getValue(), implementation.id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, implementation.id.getValue(), implementation.id);
 		}
 
 		// Nothing to do here. Only run functions when they are called / invoked.

@@ -10,8 +10,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Statements.Fortran_Function;
@@ -30,8 +28,6 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) SeparatedList<Fortran_Expression, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -66,13 +62,8 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 					"Function " + fnName + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, variable, fnName);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Fortran_Expression expr = args.getPrimaryElement(i);
@@ -81,7 +72,6 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 			interpreter.setSymbol(param, param.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the procedure or function
 		long startTime = System.nanoTime();
@@ -105,11 +95,8 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		}
 		
 		long elapsedTime = System.nanoTime() - startTime;
-		if (func._metrics == null)
-		{
-			func._metrics = new CallMetrics(interpreter._metrics, fnName, func.fnName);
-		}
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(fnName, func);

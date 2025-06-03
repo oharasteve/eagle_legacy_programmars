@@ -35,8 +35,6 @@ public class Delphi_Function_Call extends PrimaryOperator
 	public @S(10) Delphi_Variable name;
 	public @S(20) Delphi_Argument_List argList;
 
-	private @SKIP ArgumentsMetrics _metrics = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -44,9 +42,9 @@ public class Delphi_Function_Call extends PrimaryOperator
 		Delphi_Procedure proc = null;
 		Delphi_Function func = null;
 		Delphi_Parameter_List paramList = null;
-		CallMetrics metrics = null;
+		CallMetrics callMetrics = null;
+		ArgumentsMetrics argumentsMetrics = null;
 		Delphi_BeginEnd body = null;
-		String procName = null;
 		
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
@@ -56,17 +54,17 @@ public class Delphi_Function_Call extends PrimaryOperator
 		if (fn instanceof Delphi_Procedure)
 		{
 			proc = (Delphi_Procedure) fn;
-			procName = proc.forward.name.getValue();
 			paramList = proc.forward.args;
-			metrics = proc._metrics;
+			callMetrics = proc._callMetrics;
+			argumentsMetrics = proc._argumentsMetrics;
 			body = proc.body;
 		}
 		else if (fn instanceof Delphi_Function)
 		{
 			func = (Delphi_Function) fn;
-			procName = func.forward.name.getValue();
 			paramList = func.forward.args;
-			metrics = func._metrics;
+			callMetrics = func._callMetrics;
+			argumentsMetrics = func._argumentsMetrics;
 			body = func.body;
 		}
 
@@ -86,13 +84,8 @@ public class Delphi_Function_Call extends PrimaryOperator
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, name, procName);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		if (argCount > 0)
 		{
 			Delphi_Parameter param = paramList.firstParam;
@@ -108,7 +101,6 @@ public class Delphi_Function_Call extends PrimaryOperator
 				argTypes.add(val.typeName());
 			}
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the procedure or function
 		long startTime = System.nanoTime();
@@ -142,7 +134,8 @@ public class Delphi_Function_Call extends PrimaryOperator
 		}
 		
 		long elapsedTime = System.nanoTime() - startTime;
-		metrics.addCallFrom(this, elapsedTime);
+		callMetrics.addCallFrom(this, elapsedTime);
+		argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(fnName, func);

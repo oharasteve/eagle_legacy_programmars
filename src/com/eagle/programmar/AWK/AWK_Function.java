@@ -5,6 +5,7 @@ package com.eagle.programmar.AWK;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.Symbols.AWK_Function_Definition;
@@ -31,7 +32,8 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 	public @S(40) @OPT TokenList<AWK_Comment> comments;
 	public @S(50) AWK_FunctionBody body;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class AWK_Function_ParameterDefs extends TokenSequence
 	{
@@ -70,9 +72,13 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

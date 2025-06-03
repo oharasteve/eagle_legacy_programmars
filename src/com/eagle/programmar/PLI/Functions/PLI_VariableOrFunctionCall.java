@@ -10,8 +10,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Procedure;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
@@ -25,8 +23,6 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 {
 	public @S(10) PLI_Identifier_Reference id;
 	public @S(20) @OPT PLI_Subscript subscript;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -63,10 +59,6 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 						"Function " + name + ", expected params = " + paramCount + ", but actual args = " + argCount);
 			}
 
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, id, name);
-			}
 			ArrayList<String> argTypes = new ArrayList<String>();
 
 			// Assign all the parameters
@@ -79,7 +71,6 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 				interpreter.setSymbol(param, param.getValue(), val);
 				argTypes.add(val.typeName());
 			}
-			_metrics.called(argTypes);
 
 			// Evaluate the function
 			long startTime = System.nanoTime();
@@ -93,11 +84,8 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 			}
 			
 			long elapsedTime = System.nanoTime() - startTime;
-			if (proc._metrics == null)
-			{
-				proc._metrics = new CallMetrics(interpreter._metrics, name, proc.id1);
-			}
-			proc._metrics.addCallFrom(this, elapsedTime);
+			proc._callMetrics.addCallFrom(this, elapsedTime);
+			proc._argumentsMetrics.calledWith(argTypes);
 
 			// Remove all the parameters
 			interpreter.completedFunction(name, proc);

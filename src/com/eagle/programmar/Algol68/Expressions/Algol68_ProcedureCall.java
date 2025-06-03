@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Algol68_Variable;
@@ -52,8 +51,6 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		}
 	}
 
-	private @SKIP ArgumentsMetrics _metrics = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -77,13 +74,8 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 					"Proc " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, procName, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Algol68_FunctionArg arg = args.arguments.getPrimaryElement(i);
@@ -97,7 +89,6 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 				argTypes.add(val.typeName());
 			}
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
@@ -113,7 +104,8 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		proc._metrics.addCallFrom(this, elapsedTime);
+		proc._callMetrics.addCallFrom(this, elapsedTime);
+		proc._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, proc);

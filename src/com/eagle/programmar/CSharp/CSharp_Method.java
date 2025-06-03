@@ -7,6 +7,7 @@ import com.eagle.generate.EagleGenerator.PrivacyEnum;
 import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_GenericType;
 import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
@@ -46,7 +47,7 @@ public class CSharp_Method extends TokenSequence implements
 	public @S(50) CSharp_Type returnType;
 	public @S(60) @OPT CSharp_Keyword GLOBAL = new CSharp_Keyword("global");
 	public @S(70) @OPT CSharp_Punctuation colon2 = new CSharp_Punctuation("::");
-	public @S(80) CSharp_Method_Definition methodName;
+	public @S(80) CSharp_Method_Definition id;
 	public @S(90) @OPT CSharp_GenericType generic;
 	public @S(100) @OPT CSharp_MethodParameters parameters;
 	public @S(110) @OPT TokenList<CSharp_MethodWhere> where;
@@ -105,7 +106,8 @@ public class CSharp_Method extends TokenSequence implements
 		}
 	}
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
 
@@ -118,14 +120,18 @@ public class CSharp_Method extends TokenSequence implements
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), methodName);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Nothing to do here. Only run methods when they are called / invoked.
 		// Exception is 'Main'
-		if (methodName.getValue().equals("Main"))
+		if (id.getValue().equals("Main"))
 		{
 			interpreter.callingFunction("main", this);
 			AbstractToken which = body.getWhich();
@@ -197,8 +203,8 @@ public class CSharp_Method extends TokenSequence implements
 		impl.block.rightBrace = new PunctuationRightBrace();
 		this.body.setWhich(impl);
 		
-		this.methodName = new CSharp_Method_Definition();
-		this.methodName.setValue(mName);
+		this.id = new CSharp_Method_Definition();
+		this.id.setValue(mName);
 	}
 	
 	public void addMethodParameter(AbstractType type, String name)

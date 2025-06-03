@@ -44,7 +44,8 @@ public class Rexx_Program extends AbstractLanguage implements EagleRunnable
 			if (which instanceof Rexx_Function)
 			{
 				Rexx_Function func = (Rexx_Function) which;
-				interpreter.addFunction(func.name.getValue(), func);
+				interpreter.addFunction(func.id.getValue(), func);
+				interpreter.tryToInterpret(func);	// Initialize metrics because functions *follow* main()
 			}
 		}
 

@@ -5,6 +5,7 @@ package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
 import com.eagle.programmar.SQL.SQL_Syntax;
@@ -39,8 +40,6 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 	public @S(100) SQL_Keyword END = new SQL_Keyword("END");
 	public @S(110) SQL_PunctuationChoice semicolon = new SQL_PunctuationChoice(";", "//");
 	
-	public @SKIP CallMetrics _metrics = null;
-
 	public static class SQL_OrReplaceProcedure extends TokenSequence
 	{
 		public @S(10) SQL_Keyword OR = new SQL_Keyword("OR");
@@ -54,6 +53,9 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		public @S(30) SQL_Type type;
 	}
 	
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+
 	private @SKIP EagleScope _scope = new EagleScope(this, SQL_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -68,9 +70,13 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		// This is unusual. SQL_Program collects these when it starts to run
 		// So there isn't really much to do here.
 		// It will get called at some point, that is when the work happens.
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, procName.getValue(), procName);
+			_callMetrics = new CallMetrics(interpreter._metrics, procName.getValue(), procName);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, procName.getValue(), procName);
 		}
 	}
 }

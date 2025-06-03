@@ -7,6 +7,7 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -46,9 +47,13 @@ public class CMD_Program extends AbstractLanguage implements EagleRunnable
 			{
 				CMD_Label lbl = (CMD_Label) which;
 				interpreter.addFunction(lbl.label.getValue(), lbl);
-				if (lbl._metrics == null)
+				if (lbl._callMetrics == null)
 				{
-					lbl._metrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(), lbl.label);
+					lbl._callMetrics = new CallMetrics(interpreter._metrics, lbl.label.getValue(), lbl.label);
+				}
+				if (lbl._argumentsMetrics == null)
+				{
+					lbl._argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, lbl.label.getValue(), lbl.label);
 				}
 			}
 		}

@@ -3,11 +3,12 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Reference;
@@ -53,12 +54,14 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		}
 
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Fortran_Expression expr = args.getPrimaryElement(i);
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
 
 		// Prepare to evaluate the procedure or function
@@ -73,11 +76,8 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		}
 
 		long elapsedTime = System.nanoTime() - startTime;
-		if (sub._metrics == null)
-		{
-			sub._metrics = new CallMetrics(interpreter._metrics, fnName, sub.subName);
-		}
-		sub._metrics.addCallFrom(this, elapsedTime);
+		sub._callMetrics.addCallFrom(this, elapsedTime);
+		sub._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		for (int i = 0; i < argCount; i++)

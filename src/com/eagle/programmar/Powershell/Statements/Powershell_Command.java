@@ -3,13 +3,16 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Element;
+import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement.Powershell_FunctionParam;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Filename;
@@ -31,7 +34,8 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 	public @S(10) Powershell_WhichCommand which; // Like Get-Content or javac
 	public @S(20) @OPT TokenList<Powershell_CommandArg> argList;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Powershell_WhichCommand extends TokenChooser
 	{
@@ -70,11 +74,15 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 				throw new RuntimeException("Unable to find a function named " + fnName.getValue());
 			}
 			Powershell_FunctionStatement func = (Powershell_FunctionStatement) fn;
-			String name = func.name.getValue();
+			String name = func.id.getValue();
 
-			if (_metrics == null)
+			if (_callMetrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, name, func.name);
+				_callMetrics = new CallMetrics(interpreter._metrics, name, func.id);
+			}
+			if (_argumentsMetrics == null)
+			{
+				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, name, func.id);
 			}
 			
 			// Call the function
@@ -88,6 +96,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			}
 
 			// Now assign all the parameters
+			ArrayList<String> argTypes = new ArrayList<String>();
 			for (int i = 0; i < argCount; i++)
 			{
 				Powershell_CommandArg arg = argList._elements.get(i);
@@ -98,6 +107,7 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 					Powershell_Expression expr = (Powershell_Expression) arg.arg.getWhich();
 					EagleValue val = interpreter.getEagleValue(expr);
 					interpreter.setSymbol(param, param.var.id.getValue(), val);
+					argTypes.add(val.typeName());
 				}
 			}
 
@@ -115,7 +125,8 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this, elapsedTime);
+			func._callMetrics.addCallFrom(this, elapsedTime);
+			func._argumentsMetrics.calledWith(argTypes);
 
 			// Now remove all those parameters
 			interpreter.completedFunction(name, func);

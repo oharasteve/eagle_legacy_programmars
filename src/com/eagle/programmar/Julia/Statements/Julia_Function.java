@@ -5,6 +5,7 @@ package com.eagle.programmar.Julia.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.programmar.Julia.Julia_Syntax;
@@ -32,7 +33,8 @@ public class Julia_Function extends TokenSequence implements AbstractFunction, E
 	public @S(60) Julia_Keyword END = new Julia_Keyword("end");
 	public @S(70) Julia_EOLN eoln2;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Julia_FunctionParams extends TokenSequence
 	{
@@ -52,9 +54,13 @@ public class Julia_Function extends TokenSequence implements AbstractFunction, E
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

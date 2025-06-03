@@ -10,7 +10,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.CSharp.CSharp_Argument;
 import com.eagle.programmar.CSharp.CSharp_Argument.CSharp_ArgumentOut;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
@@ -38,8 +37,6 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @OPT @NOSPACE CSharp_ArgumentList argList;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -70,13 +67,8 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 
 			interpreter.callingFunction(name, meth);
 
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, methodName, name);
-			}
-			ArrayList<String> argTypes = new ArrayList<String>();
-
 			// Now assign all the parameters
+			ArrayList<String> argTypes = new ArrayList<String>();
 			if (argCount > 0)
 			{
 				CSharp_Argument arg = argList.arg;
@@ -97,7 +89,6 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 					}
 				}
 			}
-			_metrics.called(argTypes);
 
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();
@@ -117,7 +108,8 @@ public class CSharp_MethodInvocation extends PrimaryOperator implements EagleRun
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			meth._metrics.addCallFrom(this, elapsedTime);
+			meth._callMetrics.addCallFrom(this, elapsedTime);
+			meth._argumentsMetrics.calledWith(argTypes);
 
 			// Now remove all those parameters
 			interpreter.completedFunction(name, meth);

@@ -57,7 +57,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 	{
 		if (_metrics == null)
 		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, WRITELN, WRITELN.getValue());
+			_metrics = new ArgumentsMetrics(interpreter._metrics, WRITELN.getValue(), WRITELN);
 		}
 		ArrayList<String> argTypes = new ArrayList<String>();
 
@@ -73,7 +73,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			argTypes.add(val.typeName());
 			System.out.print(result);
 		}
-		_metrics.called(argTypes);
+		_metrics.calledWith(argTypes);
 		System.out.println();
 	}
 	

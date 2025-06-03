@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Variable;
 import com.eagle.programmar.Go.Statements.Go_Function;
@@ -27,8 +26,6 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<Go_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -57,13 +54,8 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 					"Function " + fnName + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, funcName, fnName);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Go_Expression expr = arguments.getPrimaryElement(i);
@@ -72,7 +64,6 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 			interpreter.setSymbol(param, param.var.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
@@ -82,7 +73,8 @@ public class Go_FunctionCall extends PrimaryOperator implements EagleRunnable, A
 		interpreter.tryToInterpret(func.stmt);
 
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(fnName, func);

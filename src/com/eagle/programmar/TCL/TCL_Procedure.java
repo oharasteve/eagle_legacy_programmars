@@ -5,6 +5,7 @@ package com.eagle.programmar.TCL;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.TCL.Statements.TCL_BlockStatement;
 import com.eagle.programmar.TCL.Symbols.TCL_Function_Definition;
@@ -27,7 +28,8 @@ public class TCL_Procedure extends TokenSequence implements AbstractFunction, Ea
 	public @S(50) PunctuationRightBrace rightBrace;
 	public @S(60) TCL_BlockStatement block;
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, TCL_Syntax.IS_CASE_SENSITIVE);
 
@@ -40,9 +42,13 @@ public class TCL_Procedure extends TokenSequence implements AbstractFunction, Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
+			_callMetrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, name.getValue(), name);
 		}
 
 		// Don't do anything here.

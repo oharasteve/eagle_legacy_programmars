@@ -6,6 +6,7 @@ package com.eagle.programmar.Delphi;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
@@ -32,14 +33,15 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 	public @S(40) @OPT TokenList<Delphi_Comment> comments;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Delphi_ProcedureForward extends TokenSequence
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Procedure_Declarations") Delphi_KeywordChoice PROCEDURE = new Delphi_KeywordChoice(
 				"Procedure", "Constructor", "Destructor");
 		public @S(20) @OPT TokenList<Delphi_ProcedureClass> classes;
-		public @S(30) Delphi_Procedure_Definition name;
+		public @S(30) Delphi_Procedure_Definition id;
 		public @S(40) @OPT Delphi_Parameter_List args;
 		public @S(50) PunctuationSemicolon semicolon;
 		public @S(60) @OPT Delphi_Override override;
@@ -61,9 +63,13 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Don't run it here. Wait until it is called.
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, forward.name.getValue(), forward.name);
+			_callMetrics = new CallMetrics(interpreter._metrics, forward.id.getValue(), forward.id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, forward.id.getValue(), forward.id);
 		}
 	}
 
@@ -77,7 +83,7 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 			}
 		}
 
-		String procName = this.forward.name.getValue();
+		String procName = this.forward.id.getValue();
 		generator.addMethod(null, procName, this);
 
 		Delphi_Parameter param = this.forward.args.firstParam;

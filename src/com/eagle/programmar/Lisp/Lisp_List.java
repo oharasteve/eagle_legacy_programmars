@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Lisp;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -45,6 +47,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		}
 
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		if (argCount > 0)
 		{
 			for (int i = 0; i < argCount; i++)
@@ -53,6 +56,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 				Lisp_ParamDef param = func.parameters._elements.get(i);
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.parameter.getValue(), val);
+				argTypes.add(val.typeName());
 			}
 		}
 
@@ -70,7 +74,8 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

@@ -90,7 +90,7 @@ public class PHP_Program extends AbstractLanguage implements EagleRunnable
 										if (stmt.getWhich() instanceof Perl_FunctionDefinition)
 										{
 											Perl_FunctionDefinition func = (Perl_FunctionDefinition) stmt.getWhich();
-											interpreter.addFunction(func.fnName.getValue(), func);
+											interpreter.addFunction(func.id.getValue(), func);
 										}
 									}
 								}

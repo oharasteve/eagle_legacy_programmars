@@ -5,6 +5,7 @@ package com.eagle.programmar.Fortran.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Definition;
@@ -23,7 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Fortran_Subroutine extends TokenSequence implements AbstractFunction, EagleRunnable
 {
 	public @S(10) @DOC("6j4m0vnbg/index.html") Fortran_Keyword SUBROUTINE1 = new Fortran_Keyword("SUBROUTINE");
-	public @S(20) Fortran_Function_Definition subName;
+	public @S(20) Fortran_Function_Definition id;
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(50) PunctuationRightParen rightParen;
@@ -36,11 +37,21 @@ public class Fortran_Subroutine extends TokenSequence implements AbstractFunctio
 	public @S(100) Fortran_Function_Reference subName2;
 	public @S(110) Fortran_EOLN eoln2;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_callMetrics == null)
+		{
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+
 		// Nothing to do here -- only act when it is called
 	}
 }

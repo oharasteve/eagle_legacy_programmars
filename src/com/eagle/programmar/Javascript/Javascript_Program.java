@@ -45,7 +45,7 @@ public class Javascript_Program extends AbstractLanguage implements EagleRunnabl
 			if (element.getWhich() instanceof Javascript_Function)
 			{
 				Javascript_Function func = (Javascript_Function) element.getWhich();
-				Javascript_Function_Definition functionName = func.implementation.functionName;
+				Javascript_Function_Definition functionName = func.implementation.id;
 				if (functionName != null && functionName.isPresent())
 				{
 					interpreter.addFunction(functionName.getValue(), func);

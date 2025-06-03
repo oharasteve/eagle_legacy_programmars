@@ -52,7 +52,7 @@ public class Delphi_Assignment extends TokenSequence
 			if (parent instanceof Delphi_Function)
 			{
 				Delphi_Function fn = (Delphi_Function) parent;
-				if (fn.forward.name.getValue().equals(varName))
+				if (fn.forward.id.getValue().equals(varName))
 				{
 					// Is a function return: function cube(a) begin cube := a*a*a end
 					return generator.newReturnStatement(newExpr, this);

@@ -57,8 +57,6 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 	}
 
-	private @SKIP ArgumentsMetrics _metrics = null;
-	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -71,7 +69,8 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		Ada_FunctionParams params;
 		TokenList<Ada_Statement> stmts1;
 		TokenList<Ada_Statement> stmts2;
-		CallMetrics metrics;
+		CallMetrics callMetrics;
+		ArgumentsMetrics argumentsMetrics;
 
 		Ada_Function func = null;
 		Ada_Procedure proc = null;
@@ -79,7 +78,8 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		{
 			func = (Ada_Function) fn;
 			params = func.params;
-			metrics = func._metrics;
+			callMetrics = func._callMetrics;
+			argumentsMetrics = func._argumentsMetrics;
 			stmts1 = func.stmts1;
 			stmts2 = func.stmts2;
 			interpreter.tryToInterpret(func); // Doesn't do much, just set metrics
@@ -88,7 +88,8 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		{
 			proc = (Ada_Procedure) fn;
 			params = proc.params;
-			metrics = proc._metrics;
+			callMetrics = proc._callMetrics;
+			argumentsMetrics = proc._argumentsMetrics;
 			stmts1 = proc.stmts1;
 			stmts2 = proc.stmts2;
 			interpreter.tryToInterpret(proc); // Doesn't do much, just set metrics
@@ -122,14 +123,9 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		ArrayList<String> argTypes = new ArrayList<String>();
 		if (argCount > 0)
 		{
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, functionName, name);
-			}
-			ArrayList<String> argTypes = new ArrayList<String>();
-	
 			// Now assign all the parameters
 			for (int i = 0; i < argCount; i++)
 			{
@@ -144,7 +140,6 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 					argTypes.add(val.typeName());
 				}
 			}
-			_metrics.called(argTypes);
 		}
 
 		// Prepare to evaluate the function
@@ -170,7 +165,8 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		metrics.addCallFrom(this, elapsedTime);
+		callMetrics.addCallFrom(this, elapsedTime);
+		argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		if (func != null) interpreter.completedFunction(name, func);

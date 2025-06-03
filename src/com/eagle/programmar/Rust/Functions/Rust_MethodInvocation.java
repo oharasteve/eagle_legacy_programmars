@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Function;
 import com.eagle.programmar.Rust.Rust_Function.Rust_Parameter;
@@ -28,8 +27,6 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
 	public @S(50) PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
@@ -52,13 +49,8 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, methodName.var, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Rust_Expression arg = argList.getPrimaryElement(i);
@@ -67,7 +59,6 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 			interpreter.setSymbol(param, param.var.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
@@ -78,7 +69,8 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

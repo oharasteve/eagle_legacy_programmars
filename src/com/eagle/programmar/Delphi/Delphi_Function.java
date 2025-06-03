@@ -6,6 +6,7 @@ package com.eagle.programmar.Delphi;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_MoreParameters;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
@@ -34,14 +35,15 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 	public @S(40) @OPT TokenList<Delphi_Comment> comments;
 	public @S(50) PunctuationSemicolon semicolon2;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Delphi_FunctionForward extends TokenSequence
 	{
 		public @S(10) @DOC("Procedures_and_Functions_(Delphi)#Function_Declarations") Delphi_Keyword FUNCTION = new Delphi_Keyword(
 				"Function");
 		public @S(20) @OPT TokenList<Delphi_FunctionClass> classes;
-		public @S(30) Delphi_Function_Definition name;
+		public @S(30) Delphi_Function_Definition id;
 		public @S(40) @OPT Delphi_Parameter_List args;
 		public @S(50) PunctuationColon colon;
 		public @S(60) Delphi_Type type;
@@ -67,9 +69,13 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 	{
 		// Don't run it here. Wait until it is called.
 		
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, forward.name.getValue(), forward.name);
+			_callMetrics = new CallMetrics(interpreter._metrics, forward.id.getValue(), forward.id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, forward.id.getValue(), forward.id);
 		}
 	}
 	
@@ -83,7 +89,7 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 			}
 		}
 
-		String funcName = this.forward.name.getValue();
+		String funcName = this.forward.id.getValue();
 		AbstractType type = this.forward.type.convertType(generator);
 		generator.addMethod(type, funcName, this);
 		

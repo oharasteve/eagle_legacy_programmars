@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Decorators;
@@ -73,15 +74,21 @@ public class Python_Function extends TokenSequence
 		public @S(20) Python_Type type;
 	}
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			Python_Function_Definition def = (Python_Function_Definition) fnName.getWhich();
-			_metrics = new CallMetrics(interpreter._metrics, def.getValue(), def);
+			Python_Function_Definition id = (Python_Function_Definition) fnName.getWhich();
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			Python_Function_Definition id = (Python_Function_Definition) fnName.getWhich();
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

@@ -40,11 +40,6 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 			throw new RuntimeException("Unable to find a Paragraph named " + startPara);
 		}
 		COBOL_Paragraph paragraph = (COBOL_Paragraph) fn;
-		if (paragraph._metrics == null)
-		{
-			paragraph._metrics = new CallMetrics(interpreter._metrics, startPara,
-					paragraph.paragraphHeaders.first().paragraphName);
-		}
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
@@ -59,7 +54,13 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		}
 		
 		long elapsedTime = System.nanoTime() - startTime;
-		paragraph._metrics.addCallFrom(this, elapsedTime);
+
+		if (paragraph._callMetrics == null)
+		{
+			paragraph._callMetrics = new CallMetrics(interpreter._metrics, startPara,
+					paragraph.paragraphHeaders.first().paragraphName);
+		}
+		paragraph._callMetrics.addCallFrom(this, elapsedTime);
 		
 		// Remove parameter values (none really)
 		interpreter.completedFunction(startPara, null);

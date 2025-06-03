@@ -9,7 +9,6 @@ import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Python.Python_Argument_List;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
@@ -35,8 +34,6 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 	public @S(30) @NOSPACE @OPT @SYNTAX(Python_Multiline_Syntax.class) SeparatedList<Python_Expression, PunctuationComma> argList;
 	public @S(40) @OPT PunctuationComma extraComma;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -72,13 +69,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		interpreter.callingFunction(name, func.header);
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, fnName.var, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		Python_Parameter param = func.header.params.params.param;
 		for (int i = 0; i < argCount; i++)
 		{
@@ -95,7 +87,6 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 				argTypes.add(val.typeName());
 			}
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
@@ -105,7 +96,8 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func.header);

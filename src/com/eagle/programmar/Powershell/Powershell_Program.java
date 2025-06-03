@@ -47,7 +47,7 @@ public class Powershell_Program extends AbstractLanguage implements EagleRunnabl
 			if (stmt.element.getWhich() instanceof Powershell_FunctionStatement)
 			{
 				Powershell_FunctionStatement fn = (Powershell_FunctionStatement) stmt.element.getWhich();
-				interpreter.addFunction(fn.name.getValue(), fn);
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
 

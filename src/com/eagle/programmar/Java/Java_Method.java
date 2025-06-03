@@ -7,6 +7,7 @@ import com.eagle.generate.EagleGenerator.PrivacyEnum;
 import com.eagle.generate.EagleGenerator.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Java.Java_ParameterList.Java_MethodParameter;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
@@ -49,7 +50,8 @@ public class Java_Method extends TokenSequence
 	public @S(80) @OPT Java_Comment comment;
 	public @S(90) Java_MethodBody body;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{
@@ -144,16 +146,20 @@ public class Java_Method extends TokenSequence
 		AbstractToken which = typeAndName.getWhich();
 		if (which instanceof Java_MethodType)
 		{
-			Java_Method_Definition methodName = ((Java_MethodType) which).methodName;
+			Java_Method_Definition id = ((Java_MethodType) which).methodName;
 		
-			if (_metrics == null)
+			if (_callMetrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, methodName.getValue(), methodName);
+				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+			}
+			if (_argumentsMetrics == null)
+			{
+				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 			}
 	
 			// Nothing to do here. Only run methods when they are called / invoked.
 			// Exception is 'main'
-			if (methodName.getValue().equals("main"))
+			if (id.getValue().equals("main"))
 			{
 				interpreter.callingFunction("main", this);
 				which = body.getWhich();

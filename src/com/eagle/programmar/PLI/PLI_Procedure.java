@@ -5,6 +5,7 @@ package com.eagle.programmar.PLI;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
@@ -110,7 +111,8 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @CHOICE PLI_Signals XXsignals;
 	}
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, PLI_Syntax.IS_CASE_SENSITIVE);
 
@@ -123,6 +125,15 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_callMetrics == null)
+		{
+			_callMetrics = new CallMetrics(interpreter._metrics, id1.getValue(), id1);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id1.getValue(), id1);
+		}
+
 		// Only run the Procedure if it has OPTIONS(MAIN)
 		if (options != null && options.isPresent())
 		{

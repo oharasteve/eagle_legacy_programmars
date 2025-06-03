@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
 import com.eagle.programmar.SQL.SQL_Variable;
@@ -26,8 +25,6 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) SQL_Keyword CALL = new SQL_Keyword("CALL");
 	public @S(20) SQL_BuiltinFunction func;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -65,13 +62,8 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 
 			interpreter.callingFunction(name, proc);
 
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, proc, name);
-			}
-			ArrayList<String> argTypes = new ArrayList<String>();
-
 			// Now assign all the parameters
+			ArrayList<String> argTypes = new ArrayList<String>();
 			if (argCount > 0)
 			{
 				for (int i = 0; i < argCount; i++)
@@ -93,7 +85,6 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 					argTypes.add(val.typeName());
 				}
 			}
-			_metrics.called(argTypes);
 
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();
@@ -107,7 +98,8 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			proc._metrics.addCallFrom(this, elapsedTime);
+			proc._callMetrics.addCallFrom(this, elapsedTime);
+			proc._argumentsMetrics.calledWith(argTypes);
 
 			for (int i = 0; i < argCount; i++)
 			{

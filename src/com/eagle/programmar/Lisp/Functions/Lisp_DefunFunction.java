@@ -5,6 +5,7 @@ package com.eagle.programmar.Lisp.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Lisp_Syntax;
@@ -25,7 +26,7 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");
 	public @S(30) @OPT PunctuationComma comma;
-	public @S(40) Lisp_Function_Definition name;
+	public @S(40) Lisp_Function_Definition id;
 	public @S(50) PunctuationLeftParen leftParen2;
 	public @S(60) @OPT TokenList<Lisp_ParamDef> parameters;
 	public @S(70) PunctuationRightParen rightParen2;
@@ -38,7 +39,8 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 		public @S(20) Lisp_Parameter_Definition parameter;
 	}
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Lisp_Syntax.IS_CASE_SENSITIVE);
 
@@ -51,11 +53,15 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.addFunction(name.getValue(), this);
+		interpreter.addFunction(id.getValue(), this);
 		
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 	}
 }

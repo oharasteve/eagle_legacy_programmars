@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Ruby_Statement;
 import com.eagle.programmar.Ruby.Ruby_Variable;
@@ -29,8 +28,6 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public @S(30) SeparatedList<Ruby_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
 	
-	private @SKIP ArgumentsMetrics _metrics = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -54,13 +51,8 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, id, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Ruby_Expression expr = arguments.getPrimaryElement(i);
@@ -69,7 +61,6 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 			interpreter.setSymbol(param, param.vars.first().getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
@@ -85,7 +76,8 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

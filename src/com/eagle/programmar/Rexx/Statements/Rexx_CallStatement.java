@@ -3,13 +3,14 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Element;
+import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
@@ -52,6 +53,7 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 		interpreter.callingFunction(name, func);
 
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Rexx_Expression expr = args.getPrimaryElement(i);
@@ -59,6 +61,7 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
 
 		// Prepare to evaluate the method
@@ -72,14 +75,10 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 			if (result != Eagle_Statement_Result.NORMAL) break; 
 		}
 		
-		if (func._metrics == null)
-		{
-			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), func.name);
-		}
-
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

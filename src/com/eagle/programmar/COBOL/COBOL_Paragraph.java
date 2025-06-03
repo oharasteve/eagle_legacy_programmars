@@ -21,7 +21,7 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 	public @S(10) @OPT TokenList<COBOL_ParagraphHeader> paragraphHeaders;
 	public @S(20) TokenList<COBOL_SentenceOrComment> sentences;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
 
 	public static class COBOL_SentenceOrComment extends TokenChooser
 	{

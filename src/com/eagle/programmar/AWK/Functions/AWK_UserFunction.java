@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.AWK.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -40,6 +42,7 @@ public class AWK_UserFunction extends PrimaryOperator implements EagleRunnable
 		interpreter.tryToInterpret(func);
 
 		// Make sure the function args match up
+		ArrayList<String> argTypes = new ArrayList<String>();
 		int argCount = 0;
 		if (argList != null && argList.isPresent())
 		{
@@ -65,6 +68,7 @@ public class AWK_UserFunction extends PrimaryOperator implements EagleRunnable
 				}
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter.setSymbol(param, param.getValue(), val);
+				argTypes.add(val.typeName());
 			}
 		}
 
@@ -81,7 +85,8 @@ public class AWK_UserFunction extends PrimaryOperator implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

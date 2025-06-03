@@ -10,10 +10,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Element;
+import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Statements.Rexx_Function;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
@@ -35,8 +33,6 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 		public @S(20) @OPT SeparatedList<Rexx_Expression, PunctuationComma> args;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -71,13 +67,8 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		interpreter.callingFunction(name, func);
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, fnName, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Rexx_Expression expr = callArguments.args.getPrimaryElement(i);
@@ -86,7 +77,6 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 			interpreter.setSymbol(param, param.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
@@ -108,14 +98,10 @@ public class Rexx_FunctionCall extends PrimaryOperator implements EagleRunnable
 			interpreter.pushEagleValue(val);
 		}
 
-		if (func._metrics == null)
-		{
-			func._metrics = new CallMetrics(interpreter._metrics, func.name.getValue(), func.name);
-		}
-
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.C.C_ArgumentList;
 import com.eagle.programmar.C.C_Function;
 import com.eagle.programmar.C.C_Function.C_FunctionImplementation;
@@ -34,8 +33,6 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) @OPT C_ArgumentList argList;
 	public @S(60) PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -87,13 +84,8 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 			interpreter.callingFunction(fnName, func);
 
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, functionName, fnName);
-			}
-			ArrayList<String> argTypes = new ArrayList<String>();
-
 			// Assign all the parameters
+			ArrayList<String> argTypes = new ArrayList<String>();
 			if (argList != null)
 			{
 				AbstractToken arg = argList.arg.getWhich();
@@ -111,7 +103,6 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 					argTypes.add(val.typeName());
 				}
 			}
-			_metrics.called(argTypes);
 
 			// Evaluate the function
 			long startTime = System.nanoTime();
@@ -124,7 +115,8 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			}
 			
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this, elapsedTime);
+			func._callMetrics.addCallFrom(this, elapsedTime);
+			func._argumentsMetrics.calledWith(argTypes);
 
 			// Remove all the parameters
 			interpreter.completedFunction(fnName, func);

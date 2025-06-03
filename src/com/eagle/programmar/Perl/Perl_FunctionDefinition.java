@@ -5,6 +5,7 @@ package com.eagle.programmar.Perl;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
@@ -28,7 +29,7 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 {
 	public @S(10) @OPT TokenList<Perl_FunctionPrefix> modifiers;
 	public @S(20) Perl_Keyword FUNCTION = new Perl_Keyword("function");
-	public @S(30) Perl_Function_Definition fnName;
+	public @S(30) Perl_Function_Definition id;
 	public @S(40) Perl_Function_Parameters params;
 	public @S(50) Perl_FunctionBlock block;
 
@@ -40,7 +41,8 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 		return _scope;
 	}
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Perl_FunctionPrefix extends TokenSequence
 	{
@@ -94,9 +96,13 @@ public class Perl_FunctionDefinition extends TokenSequence implements AbstractFu
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), fnName);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

@@ -47,12 +47,12 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 			if (which instanceof Delphi_Procedure)
 			{
 				Delphi_Procedure proc = (Delphi_Procedure) which;
-				interpreter.addFunction(proc.forward.name.getValue(), proc);
+				interpreter.addFunction(proc.forward.id.getValue(), proc);
 			}
 			else if (which instanceof Delphi_Function)
 			{
 				Delphi_Function fn = (Delphi_Function) which;
-				interpreter.addFunction(fn.forward.name.getValue(), fn);
+				interpreter.addFunction(fn.forward.id.getValue(), fn);
 			}
 		}
 

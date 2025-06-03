@@ -10,7 +10,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
@@ -42,8 +41,6 @@ public class VB_CallStatement extends TokenSequence
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
-	private @SKIP ArgumentsMetrics _metrics = null;
-	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -72,13 +69,8 @@ public class VB_CallStatement extends TokenSequence
 
 		interpreter.callingFunction(name, subr);
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, subName, subName.getValue());
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			VB_Expression expr = callArguments.arguments.getPrimaryElement(i);
@@ -88,7 +80,6 @@ public class VB_CallStatement extends TokenSequence
 			interpreter.setSymbol(param, param.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
@@ -103,7 +94,8 @@ public class VB_CallStatement extends TokenSequence
 		
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		subr._metrics.addCallFrom(this, elapsedTime);
+		subr._callMetrics.addCallFrom(CALL, elapsedTime);
+		subr._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, subr);

@@ -3,8 +3,11 @@
 
 package com.eagle.programmar.VB;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractType;
 
 public class VB_Type extends TokenChooser
 {
@@ -12,4 +15,30 @@ public class VB_Type extends TokenChooser
 			"boolean", "byte", "sbyte", "char", "date",
 			"short", "integer", "long", "ushort", "uinteger", "ulong",
 			"single", "double", "decimal", "range", "string", "worksheet");
+	
+	public static AbstractType findType(EagleGenerator generator, String typeName)
+	{
+		TypeEnum newType;
+		switch (typeName)
+		{
+		case "boolean":
+			newType = TypeEnum.BOOLEAN;
+			break;
+		case "short":
+		case "integer":
+			newType = TypeEnum.INTEGER;
+			break;
+		case "single":
+		case "double":
+			newType = TypeEnum.DOUBLE;
+			break;
+		case "string":
+			newType = TypeEnum.STRING;
+			break;
+		default:
+			newType = TypeEnum.OTHER;
+			break;
+		}
+		return generator.transformType(false, newType, null, null);
+	}
 }

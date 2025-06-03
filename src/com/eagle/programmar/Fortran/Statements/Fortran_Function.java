@@ -5,6 +5,7 @@ package com.eagle.programmar.Fortran.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Fortran_Syntax;
@@ -28,7 +29,7 @@ public class Fortran_Function extends TokenSequence implements AbstractFunction,
 {
 	public @S(10) Fortran_Type type;
 	public @S(20) @DOC("6j4m0vn9h/index.html") Fortran_Keyword FUNCTION1 = new Fortran_Keyword("FUNCTION");
-	public @S(30) Fortran_Function_Definition fnName;
+	public @S(30) Fortran_Function_Definition id;
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(60) PunctuationRightParen rightParen;
@@ -41,7 +42,8 @@ public class Fortran_Function extends TokenSequence implements AbstractFunction,
 	public @S(110) Fortran_Function_Reference fnName2;
 	public @S(120) Fortran_EOLN eoln2;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	
 	private @SKIP EagleScope _scope = new EagleScope(this, Fortran_Syntax.IS_CASE_SENSITIVE);
 
@@ -54,6 +56,15 @@ public class Fortran_Function extends TokenSequence implements AbstractFunction,
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_callMetrics == null)
+		{
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+
 		// Nothing to do here -- only act when it is called
 	}
 }

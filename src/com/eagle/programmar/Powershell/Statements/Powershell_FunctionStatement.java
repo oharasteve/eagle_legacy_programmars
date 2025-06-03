@@ -5,9 +5,10 @@ package com.eagle.programmar.Powershell.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Element;
+import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Syntax;
 import com.eagle.programmar.Powershell.Powershell_Type;
 import com.eagle.programmar.Powershell.Powershell_Variable;
@@ -32,7 +33,7 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword(
 			"Function");
-	public @S(20) Powershell_Function_Definition name;
+	public @S(20) Powershell_Function_Definition id;
 	public @S(30) @OPT Powershell_FunctionParams params;
 	public @S(40) @OPT Powershell_EndOfLine eoln1;
 	public @S(50) PunctuationLeftBrace leftBrace;
@@ -40,7 +41,8 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 	public @S(70) @OPT TokenList<Powershell_Element> stmts;
 	public @S(80) PunctuationRightBrace rightBrace;
 
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Powershell_FunctionParams extends TokenSequence
 	{
@@ -73,9 +75,13 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

@@ -5,6 +5,7 @@ package com.eagle.programmar.Rexx.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Rexx.Rexx_Element;
 import com.eagle.programmar.Rexx.Rexx_Syntax;
@@ -24,7 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class Rexx_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
-	public @S(10) @DOC("reference-functions") Rexx_Function_Definition name;
+	public @S(10) @DOC("reference-functions") Rexx_Function_Definition id;
 	public @S(20) PunctuationColon colon;
 	public @S(30) Rexx_EndOfLine eoln;
 	public @S(40) @OPT Rexx_Parameters params;
@@ -46,11 +47,21 @@ public class Rexx_Function extends TokenSequence
 		return _scope;
 	}
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_callMetrics == null)
+		{
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called

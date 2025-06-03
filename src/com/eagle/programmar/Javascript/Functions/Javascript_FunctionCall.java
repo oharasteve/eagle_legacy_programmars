@@ -9,14 +9,13 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.programmar.Javascript.Javascript_Element.Javascript_StatementOrComment;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Function;
 import com.eagle.programmar.Javascript.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Javascript_FunctionParameters;
 import com.eagle.programmar.Javascript.Javascript_FunctionParameters.Javascript_FunctionParameter;
 import com.eagle.programmar.Javascript.Javascript_ParenthesizedExpression;
-import com.eagle.programmar.Javascript.Javascript_Element.Javascript_StatementOrComment;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
@@ -28,8 +27,6 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 {
 	public @S(10) Javascript_Variable functionName;
 	public @S(20) Javascript_ParenthesizedExpression arguments;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -70,13 +67,8 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, functionName, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		if (argCount > 0)
 		{
 			Javascript_FunctionParameter param = parameters.param;
@@ -97,7 +89,6 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 				}
 			}
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
@@ -114,7 +105,8 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

@@ -45,12 +45,12 @@ public class VB_Program extends AbstractLanguage implements EagleRunnable, Eagle
 			if (which instanceof VB_Function)
 			{
 				VB_Function func = (VB_Function) which;
-				interpreter.addFunction(func.name.getValue(), func);
+				interpreter.addFunction(func.id.getValue(), func);
 			}
 			if (which instanceof VB_Subroutine)
 			{
 				VB_Subroutine sub = (VB_Subroutine) which;
-				interpreter.addFunction(sub.name.getValue(), sub);
+				interpreter.addFunction(sub.id.getValue(), sub);
 			}
 		}
 

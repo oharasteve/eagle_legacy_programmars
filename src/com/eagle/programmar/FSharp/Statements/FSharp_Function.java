@@ -5,6 +5,7 @@ package com.eagle.programmar.FSharp.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.FSharp.FSharp_Element;
 import com.eagle.programmar.FSharp.FSharp_Syntax;
@@ -43,7 +44,8 @@ public class FSharp_Function extends TokenSequence implements AbstractFunction, 
 		public @S(30) FSharp_Type type;
 	}
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, FSharp_Syntax.IS_CASE_SENSITIVE);
 
@@ -56,9 +58,13 @@ public class FSharp_Function extends TokenSequence implements AbstractFunction, 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
-			_metrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_argumentsMetrics == null)
+		{
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

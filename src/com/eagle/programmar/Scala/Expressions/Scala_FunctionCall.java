@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Scala_Variable;
 import com.eagle.programmar.Scala.Statements.Scala_Function;
@@ -28,8 +27,6 @@ public class Scala_FunctionCall extends PrimaryOperator implements EagleRunnable
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<Scala_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -68,14 +65,9 @@ public class Scala_FunctionCall extends PrimaryOperator implements EagleRunnable
 				throw new RuntimeException(
 						"Method " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
-	
-			if (_metrics == null)
-			{
-				_metrics = new ArgumentsMetrics(interpreter._metrics, id, name);
-			}
-			ArrayList<String> argTypes = new ArrayList<String>();
 
 			// Now assign all the parameters
+			ArrayList<String> argTypes = new ArrayList<String>();
 			for (int i = 0; i < argCount; i++)
 			{
 				Scala_Expression expr = argList.getPrimaryElement(i);
@@ -84,7 +76,6 @@ public class Scala_FunctionCall extends PrimaryOperator implements EagleRunnable
 				interpreter.setSymbol(param, param.var.getValue(), val);
 				argTypes.add(val.typeName());
 			}
-			_metrics.called(argTypes);
 	
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();
@@ -95,7 +86,8 @@ public class Scala_FunctionCall extends PrimaryOperator implements EagleRunnable
 	
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
-			func._metrics.addCallFrom(this, elapsedTime);
+			func._callMetrics.addCallFrom(this, elapsedTime);
+			func._argumentsMetrics.calledWith(argTypes);
 	
 			// Now remove all those parameters
 			interpreter.completedFunction(name, func);

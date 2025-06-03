@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.TCL.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -46,6 +48,7 @@ public class TCL_BracketFunction extends PrimaryOperator implements EagleRunnabl
 		}
 
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			TCL_Expression expr = values._elements.get(i);
@@ -53,6 +56,7 @@ public class TCL_BracketFunction extends PrimaryOperator implements EagleRunnabl
 
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
 
 		// Prepare to evaluate the method
@@ -64,7 +68,8 @@ public class TCL_BracketFunction extends PrimaryOperator implements EagleRunnabl
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		proc._metrics.addCallFrom(this, elapsedTime);
+		proc._callMetrics.addCallFrom(this, elapsedTime);
+		proc._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, proc);

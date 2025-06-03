@@ -57,7 +57,7 @@ public class Eaglish_Program extends AbstractLanguage implements EagleRunnable
 			if (which instanceof Eaglish_Function_Block)
 			{
 				Eaglish_Function_Block fn = (Eaglish_Function_Block) which;
-				interpreter.addFunction(fn.var.getValue(), fn);
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
 

@@ -5,7 +5,6 @@ package com.eagle.programmar.IntelASM.Instructions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.IntelASM.IntelASM_Label;
 import com.eagle.programmar.IntelASM.IntelASM_Program;
@@ -19,8 +18,6 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 	public @S(10) IntelASM_Keyword CALL = new IntelASM_Keyword("CALL");
 	public @S(20) IntelASM_Label_Reference label;
 
-	private @SKIP ArgumentsMetrics _metrics = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -30,12 +27,6 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 		String name = label.getValue().toUpperCase();
 		
 		interpreter.callingFunction(name, null);
-
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, CALL, name);
-		}
-		_metrics.called(null);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

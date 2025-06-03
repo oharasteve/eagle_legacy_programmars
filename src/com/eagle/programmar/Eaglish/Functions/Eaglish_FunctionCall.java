@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Function_Block;
@@ -28,8 +27,6 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) @OPT SeparatedList<Eaglish_Expression, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -56,13 +53,8 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, fnName, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Eaglish_Expression arg = args.getPrimaryElement(i);
@@ -71,7 +63,6 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 			interpreter.setSymbol(param, param.param.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
@@ -86,7 +77,8 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);

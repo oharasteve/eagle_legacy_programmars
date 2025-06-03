@@ -5,6 +5,7 @@ package com.eagle.programmar.C;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
@@ -170,7 +171,8 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 		public @S(40) PunctuationRightParen rightParen;
 	}
 	
-	public @SKIP CallMetrics _metrics = null;
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
 
@@ -183,15 +185,17 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_metrics == null)
+		if (_callMetrics == null)
 		{
 			String fname = "main";
 			AbstractToken which = typeName.getWhich();
 			if (which instanceof C_Function_TypeAndName)
 			{
 				C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
-				fname = typeAndName.functionName.getValue();
-				_metrics = new CallMetrics(interpreter._metrics, fname, typeAndName.functionName);
+				C_Function_Definition id = typeAndName.functionName;
+				fname = id.getValue();
+				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 			}
 
 			// Don't do anything here, unless the function name is 'main'

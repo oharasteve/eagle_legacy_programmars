@@ -5,9 +5,10 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Element;
+import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Syntax;
 import com.eagle.programmar.Bash.Symbols.Bash_Function_Definition;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
@@ -28,7 +29,7 @@ public class Bash_Function extends TokenChooser
 				implements AbstractFunction, EagleRunnable, EagleScopeInterface
 	{
 		public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
-		public @S(20) Bash_Function_Definition fnName;
+		public @S(20) Bash_Function_Definition id;
 		public @S(30) @OPT Bash_FunctionParams params;
 		public @S(40) @OPT Bash_EndOfLine eoln1;
 		public @S(50) PunctuationLeftBrace leftBrace;
@@ -42,7 +43,8 @@ public class Bash_Function extends TokenChooser
 			public @S(20) PunctuationRightParen rightParen;
 		}
 		
-		public @SKIP CallMetrics _metrics = null;
+		public @SKIP CallMetrics _callMetrics = null;
+		public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 		
 		// Bash has a strange way of returning values
 		public @SKIP int _exitStatus = 0;
@@ -59,9 +61,13 @@ public class Bash_Function extends TokenChooser
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{
-			if (_metrics == null)
+			if (_callMetrics == null)
 			{
-				_metrics = new CallMetrics(interpreter._metrics, fnName.getValue(), fnName);
+				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+			}
+			if (_argumentsMetrics == null)
+			{
+				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 			}
 		}
 	}

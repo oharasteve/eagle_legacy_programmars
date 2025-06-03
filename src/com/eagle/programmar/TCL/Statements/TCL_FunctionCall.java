@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Procedure;
 import com.eagle.programmar.TCL.Symbols.TCL_Function_Reference;
@@ -21,8 +20,6 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 {
 	public @S(10) TCL_Function_Reference function;
 	public @S(20) TokenList<TCL_Expression> values;
-
-	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -46,13 +43,8 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 					"Procedure " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, function, function.getValue());
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
 			TCL_Expression expr = values._elements.get(i);
@@ -61,7 +53,6 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 			interpreter.setSymbol(param, param.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
@@ -72,7 +63,8 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		proc._metrics.addCallFrom(this, elapsedTime);
+		proc._callMetrics.addCallFrom(this, elapsedTime);
+		proc._argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, proc);

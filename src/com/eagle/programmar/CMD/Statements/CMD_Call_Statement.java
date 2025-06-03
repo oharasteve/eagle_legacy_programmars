@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.CMD.CMD_BasicExpression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Program;
@@ -50,8 +49,6 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		public @S(20) CMD_BasicExpression option;
 	}
 	
-	private @SKIP ArgumentsMetrics _metrics = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -66,14 +63,9 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		// AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
 		interpreter.setCurrentFunction(func);
 
-		if (_metrics == null)
-		{
-			_metrics = new ArgumentsMetrics(interpreter._metrics, CALL, name);
-		}
-		ArrayList<String> argTypes = new ArrayList<String>();
-
 		// Now assign all the parameters (%1 %2 etc)
 		int argCount = 0;
+		ArrayList<String> argTypes = new ArrayList<String>();
 		if (args != null && args.isPresent())
 		{
 			for (CMD_Call_Argument arg : args._elements)
@@ -88,7 +80,6 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 				}
 			}
 		}
-		_metrics.called(argTypes);
 
 		// Prepare to evaluate the label
 		long startTime = System.nanoTime();
@@ -123,7 +114,8 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Remove all the parameter values
 	}

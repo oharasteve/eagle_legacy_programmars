@@ -43,7 +43,7 @@ public class VB_AssignmentStatement extends TokenSequence
 			if (parent instanceof VB_Function)
 			{
 				VB_Function func = (VB_Function) parent;
-				if (var.var.getValue().equals(func.name.getValue()))
+				if (var.var.getValue().equals(func.id.getValue()))
 				{
 					AbstractExpression retExpr = transformer.transformExpression(generator, expr);
 					return generator.newReturnStatement(retExpr, this);

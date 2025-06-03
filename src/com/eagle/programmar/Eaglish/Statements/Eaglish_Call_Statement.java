@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -54,6 +56,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		}
 
 		// Assign all the parameters
+		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < actual; i++)
 		{
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
@@ -61,6 +64,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 			// interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter.setSymbol(param, param.param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
 
 		// Evaluate the function
@@ -71,7 +75,8 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 			interpreter.tryToInterpret(stmt);
 		}
 		long elapsedTime = System.nanoTime() - startTime;
-		func._metrics.addCallFrom(this, elapsedTime);
+		func._callMetrics.addCallFrom(this, elapsedTime);
+		func._argumentsMetrics.calledWith(argTypes);
 
 		// Remove all the parameters
 		interpreter.completedFunction(name.getValue(), func);
