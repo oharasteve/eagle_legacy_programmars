@@ -30,6 +30,22 @@ public class VB_AssignmentStatement extends TokenSequence
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		interpreter.setSymbol(var.var, var.var.getValue(), value);
+
+		// VB doesn't have a Return statement. It assigns a value to the function name
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof VB_Function)
+			{
+				VB_Function func = (VB_Function) parent;
+				if (var.var.getValue().equals(func.id.getValue()))
+				{
+					func._returnMetrics.returned(value.typeName());
+				}
+				break;
+			}
+			parent = parent.getParent();
+		}
 	}
 
 	@Override

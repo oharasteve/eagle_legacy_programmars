@@ -50,6 +50,6 @@ public class Delphi_Copy_Function extends PrimaryOperator
 		AbstractExpression newEc = transformer.transformExpression(generator, ecExpr);
 		return generator.newSubstringFunction(newExpr, newSc,
 				SubstringSCEnum.FIRST_CHAR_IS_ONE, SubstringECEnum.GIVEN_NC,
-				newEc, this);
+				newEc, true, this);
 	}
 }

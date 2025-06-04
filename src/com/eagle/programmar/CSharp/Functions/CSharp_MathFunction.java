@@ -22,6 +22,7 @@ public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnabl
 	public static class CSharp_MathChoice extends TokenChooser
 	{
 		public @CHOICE CSharp_MathPowFunc XXmathPowFunction;
+		public @CHOICE CSharp_MathMinMaxFunc XXmathMinMaxFunction;
 	}
 	
 	static CSharp_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)

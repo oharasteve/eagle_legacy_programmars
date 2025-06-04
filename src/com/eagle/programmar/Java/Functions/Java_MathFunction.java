@@ -23,6 +23,7 @@ public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
 		public @CHOICE Java_MathLogFunc XXmathLogFunction;
 		public @CHOICE Java_MathRoundFunc XXmathRoundFunction;
 		public @CHOICE Java_MathAbsFunc XXmathAbsFunction;
+		public @CHOICE Java_MathMinMaxFunc XXmathMinMaxFunction;
 	}
 	
 	static Java_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)

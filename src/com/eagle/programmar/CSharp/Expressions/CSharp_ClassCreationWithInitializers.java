@@ -16,9 +16,7 @@ import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.CSharp_Type.CSharp_ArrayType;
-import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
-import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
@@ -71,11 +69,8 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator implem
 	public CSharp_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		// Want to end up with: new String[] {"abc", "def"}
-		this.cstype = new CSharp_Type();
-		CSharp_KeywordChoice str = new CSharp_KeywordChoice("String");
-		this.cstype.typeName = new CSharp_TypeName();
-		this.cstype.typeName.setWhich(str);
+		// Want to end up with: new string[] {"abc", "def"}
+		this.cstype = CSharp_Type.newPrimitiveType("string");
 		
 		CSharp_ArrayType array = new CSharp_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();

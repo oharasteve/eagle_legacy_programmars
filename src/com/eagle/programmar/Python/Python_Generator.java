@@ -518,9 +518,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	
 	@Override
 	public Python_Expression newSubstringFunction(Python_Expression expr, Python_Expression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, Python_Expression scOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, Python_Expression scOrnc,
+			boolean ncMightBeTooBig, AbstractToken source)
 	{
-		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
+		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC,
+				whichEC, scOrnc, ncMightBeTooBig, source));
 	}
 
 	// ================ Terminals ================

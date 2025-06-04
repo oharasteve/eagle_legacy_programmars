@@ -544,9 +544,11 @@ public class Java_Generator
 	
 	@Override
 	public Java_Expression newSubstringFunction(Java_Expression expr, Java_Expression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression scOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression scOrnc,
+			boolean ncMightBeTooBig, AbstractToken source)
 	{
-		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC, whichEC, scOrnc, source));
+		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC,
+				whichEC, scOrnc, ncMightBeTooBig, source));
 	}
 
 	// ================ Terminals ================

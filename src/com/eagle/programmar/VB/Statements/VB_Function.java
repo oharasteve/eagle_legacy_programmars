@@ -12,6 +12,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
@@ -56,6 +57,7 @@ public class VB_Function extends TokenSequence
 	
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -67,6 +69,10 @@ public class VB_Function extends TokenSequence
 		if (_argumentsMetrics == null)
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.
@@ -98,6 +104,12 @@ public class VB_Function extends TokenSequence
 		{
 			VB_KeywordChoice kw = (VB_KeywordChoice) returnType.getWhich();
 			newReturnType = VB_Type.findType(generator, kw.getValue());
+		}
+		
+		if (newReturnType == null)
+		{
+			TypeEnum metricRetType = transformer.findReturnMetric(id);
+			newReturnType = generator.transformType(false, metricRetType, null, id);
 		}
 		
 		generator.addMethod(newReturnType, id.getValue(), this);

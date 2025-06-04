@@ -85,7 +85,8 @@ public class Python_Subscript extends TokenSequence
 	}
 	
 	public static Python_Subscript generateExpression(AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc,
+			AbstractToken source)
 	{
 		Python_Subscript subscr = new Python_Subscript();
 		subscr.leftBracket = new PunctuationLeftBracket();

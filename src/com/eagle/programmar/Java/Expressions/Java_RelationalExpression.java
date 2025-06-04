@@ -143,7 +143,7 @@ public class Java_RelationalExpression extends PrecedenceOperator
 				return equalsExpr;
 			case NOT_EQUALS:
 				Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
-				Java_Expression not = notExpr.generateLogicalNot(rightExpr, source);
+				Java_Expression not = notExpr.generateLogicalNot(equalsExpr, source);
 				return not;
 			default:
 				throw new RuntimeException("Unable to handle " + relOp + " with strings");

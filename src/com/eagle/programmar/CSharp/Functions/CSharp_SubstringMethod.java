@@ -13,10 +13,12 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -52,7 +54,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 	
 	public static CSharp_SubstringMethod generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
-			AbstractExpression ecOrnc, AbstractToken source)
+			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		CSharp_SubstringMethod expr = new CSharp_SubstringMethod();
 		expr.dot = new PunctuationPeriod();
@@ -99,6 +101,32 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 		case GIVEN_NEITHER:
 			expr.ncExpr = null;
 			break;
+		}
+		
+		// Need to handle ncMightBeTooBig. Can't let nc go past len(left) minus scS
+		if (ncMightBeTooBig && expr.ncExpr != null)
+		{
+			CSharp_LengthMethod lenFn = new CSharp_LengthMethod();
+			CSharp_Expression lenExp = lenFn.generateLength((CSharp_Expression) theExpr, source);
+
+			CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
+			CSharp_Expression parenExp = parens.generateParentheses(expr.scExpr, source);
+			
+			CSharp_AdditiveExpression subtrExp = new CSharp_AdditiveExpression();
+			subtrExp.generateAdditive(null, lenExp, AdditiveEnum.MINUS, parenExp, source);
+			
+			CSharp_MathMinMaxFunc minFn = new CSharp_MathMinMaxFunc();
+			minFn.leftParen = new PunctuationLeftParen();
+			minFn.expressions = new SeparatedList<CSharp_Expression, PunctuationComma>();
+			minFn.expressions.addPrimaryElement(expr.ncExpr);
+			minFn.expressions.addSecondaryElement(new PunctuationComma());
+			minFn.expressions.addPrimaryElement(CSharp_Generator.wrapExpression(subtrExp));
+			minFn.rightParen = new PunctuationRightParen();
+			
+			
+			CSharp_MathFunction mathFn = CSharp_MathFunction.wrapFunction(minFn, source);
+			expr.ncExpr = CSharp_Generator.wrapExpression(mathFn);
+			expr.ncExpr.setPresent(true);
 		}
 		
 		expr.setTransformationSource(source);

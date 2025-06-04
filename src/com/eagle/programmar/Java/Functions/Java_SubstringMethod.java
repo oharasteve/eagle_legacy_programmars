@@ -17,6 +17,7 @@ import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -52,7 +53,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 	
 	public static Java_SubstringMethod generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
-			AbstractExpression ecOrnc, AbstractToken source)
+			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		Java_SubstringMethod expr = new Java_SubstringMethod();
 		expr.dot = new PunctuationPeriod();
@@ -97,6 +98,24 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 		case GIVEN_NEITHER:
 			expr.ecExpr = null;
 			break;
+		}
+		
+		// Need to handle ncMightBeTooBig. Can't let ec go past len(left)
+		if (ncMightBeTooBig && expr.ecExpr != null)
+		{
+			Java_MathMinMaxFunc minFn = new Java_MathMinMaxFunc();
+			minFn.leftParen = new PunctuationLeftParen();
+			minFn.expressions = new SeparatedList<Java_Expression, PunctuationComma>();
+			minFn.expressions.addPrimaryElement(expr.ecExpr);
+			minFn.expressions.addSecondaryElement(new PunctuationComma());
+			minFn.rightParen = new PunctuationRightParen();
+			
+			Java_LengthMethod lenFn = new Java_LengthMethod();
+			minFn.expressions.addPrimaryElement(lenFn.generateLength((Java_Expression) theExpr, source));
+			
+			Java_MathFunction mathFn = Java_MathFunction.wrapFunction(minFn, source);
+			expr.ecExpr = Java_Generator.wrapExpression(mathFn);
+			expr.ecExpr.setPresent(true);
 		}
 		
 		expr.setTransformationSource(source);

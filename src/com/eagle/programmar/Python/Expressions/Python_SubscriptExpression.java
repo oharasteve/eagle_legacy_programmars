@@ -26,9 +26,12 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 		Python_Subscript.evaluateSubscript(interpreter, value, subscr);
 	}
 	
-	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr, AbstractExpression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, AbstractExpression ecOrnc, AbstractToken source)
+	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr,
+			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
+		// Note: python doesn't care if nc is too big
+		// if a = 'abc', then a[1:40] is 'bc'
 		Python_SubscriptExpression expr = new Python_SubscriptExpression();
 		expr.expr = (Python_Expression) theExpr;
 		expr.subscr = Python_Subscript.generateExpression(sc, whichSC, whichEC, ecOrnc, source);
