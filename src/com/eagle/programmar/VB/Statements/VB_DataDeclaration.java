@@ -13,11 +13,9 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Subscript;
 import com.eagle.programmar.VB.VB_Type;
-import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Variable_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
-import com.eagle.tokens.ReferenceInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -78,78 +76,41 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 		}
 	}
 	
-	// Essentially Hungarian-like notation to guess type of a VB variable
-	private static AbstractType guessTypeFromName(EagleGenerator generator, String name)
-	{
-		TypeEnum type;
-		if (name.startsWith("bool"))
-		{
-			type = TypeEnum.BOOLEAN;
-		}
-		else if (name.startsWith("int"))
-		{
-			type = TypeEnum.INTEGER;
-		}
-		else if (name.startsWith("dbl"))
-		{
-			type = TypeEnum.DOUBLE;
-		}
-		else if (name.startsWith("str"))
-		{
-			type = TypeEnum.STRING;
-		}
-		else
-		{
-			// return null;
-			// throw new RuntimeException("Can't guess name from: " + name);
-			type = TypeEnum.INTEGER;
-		}
-
-		return generator.transformType(false, type, name, null);
-	}
-	
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		
-		TypeEnum oldType = null;
-		AbstractType newType = null;
+		TypeEnum givenType = null;
 		if (dataType != null && dataType.isPresent())
 		{
 			String typeName = dataType.type.getWhich().toString();
 			switch (typeName)
 			{
 			case "boolean":
-				oldType = TypeEnum.BOOLEAN;
+				givenType = TypeEnum.BOOLEAN;
 				break;
 			case "integer":
-				oldType = TypeEnum.INTEGER;
+				givenType = TypeEnum.INTEGER;
 				break;
 			case "double":
-				oldType = TypeEnum.DOUBLE;
+				givenType = TypeEnum.DOUBLE;
 				break;
 			case "string":
-				oldType = TypeEnum.STRING;
+				givenType = TypeEnum.STRING;
 				break;
 			}
 		}
 		
-		// See if the type can be deduced from metrics
-		if (oldType == null)
+		System.out.println("**** Looking at " + var.getValue());
+		
+		TypeEnum type = givenType;	// Usually not given
+		if (type == null)
 		{
-			if (var.listReferences() != null)
-			{
-				for (ReferenceInterface ref : var.listReferences())
-				{
-					oldType = transformer.findAssignMetric((VB_Identifier_Reference) ref);
-					if (oldType != null)
-					{
-						break;
-					}
-				}
-			}
+			// See if the Definition has some assignments in the metrics file
+			type = transformer.findAssignMetric(var);
 		}
+		AbstractType newType = generator.transformType(false, type, null, dataType);
 		
 		AbstractExpression size = null;
 		if (subscript != null && subscript.isPresent())
@@ -164,31 +125,31 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 		}
 		
 		String name = var.getValue();
-		newType = generator.transformType(false, oldType, null, dataType);
-		AbstractType firstType = newType;
-		if (firstType == null)
-		{
-			firstType = guessTypeFromName(generator, name);
-		}
-		AbstractStatement stmt = generator.newDataDeclaration(name, size, firstType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(name, size, newType, initial, this);
 		result.add(stmt);
 		
 		if (moreVariables != null && moreVariables.isPresent())
 		{
 			for (VB_MoreVariables more : moreVariables._elements)
 			{
+				System.out.println("            and " + more.var.getValue());
+
 				size = null;
 				if (more.subscript != null && more.subscript.isPresent())
 				{
 					size = transformer.transformExpression(generator, more.subscript.exprs.first());
 				}
 				name = more.var.getValue();
-				AbstractType nextType = newType;
-				if (nextType == null)
+				
+				type = givenType;	// Usually not given
+				if (type == null)
 				{
-					nextType = guessTypeFromName(generator, name);
+					// See if the Definition has some assignments in the metrics file
+					type = transformer.findAssignMetric(more.var);
 				}
-				stmt = generator.newDataDeclaration(name, size, nextType, initial, more);
+				newType = generator.transformType(false, type, null, dataType);
+
+				stmt = generator.newDataDeclaration(name, size, newType, initial, more);
 				result.add(stmt);
 			}
 		}

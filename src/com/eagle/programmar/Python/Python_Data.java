@@ -38,11 +38,6 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 	public static Python_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
 				AbstractExpression initial, AbstractToken source)
 	{
-		if (type == null)
-		{
-			throw new RuntimeException("Can't create data without a type");
-		}
-		
 		if (initial == null)
 		{
 			// Don't bother with declarations without initial values

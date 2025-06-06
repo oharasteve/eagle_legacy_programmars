@@ -80,7 +80,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 	{
 		if (type == null)
 		{
-			throw new RuntimeException("Can't create data without a type");
+			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
 		
 		CSharp_Data data = new CSharp_Data();

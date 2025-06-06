@@ -83,7 +83,7 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 	{
 		if (type == null)
 		{
-			throw new RuntimeException("Can't create data without a type");
+			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
 		
 		Java_Data data = new Java_Data();
