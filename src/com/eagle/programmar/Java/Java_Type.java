@@ -115,6 +115,11 @@ public class Java_Type extends TokenSequence implements AbstractType
 	public static Java_Type transformType(boolean isArray, TypeEnum type,
 			String typeName, AbstractToken source)
 	{
+		if (type == null)
+		{
+			return null;
+		}
+		
 		switch (type)
 		{
 		case BOOLEAN:

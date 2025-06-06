@@ -81,14 +81,6 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 	
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (this.headers != null)
-		{
-			for (Delphi_Header header : this.headers._elements)
-			{
-				header.processHeader(transformer, generator);
-			}
-		}
-
 		String funcName = this.forward.id.getValue();
 		AbstractType type = this.forward.type.convertType(generator);
 		generator.addMethod(type, funcName, this);
@@ -105,6 +97,14 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 				AbstractType paramType2 = more.param.type.convertType(generator);
 				String paramName2 = more.param.names.first().var.getValue();
 				generator.addMethodParameter(paramType2, paramName2);
+			}
+		}
+
+		if (this.headers != null)
+		{
+			for (Delphi_Header header : this.headers._elements)
+			{
+				header.processHeader(transformer, generator);
 			}
 		}
 

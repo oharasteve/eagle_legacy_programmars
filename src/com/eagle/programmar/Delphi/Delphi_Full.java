@@ -70,16 +70,17 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 	public void transformFull(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		AbstractStatement body = transformer.transformStatement1(
+				generator, this.beginEnd);
+		generator.addStatement(body, this);
+
 		for (Delphi_Header header : this.headers._elements)
 		{
 			header.processHeader(transformer, generator);
 		}
+		
 //		String programId = this.id.getValue();
 //		generator.addMain(programId, this);
-
-		AbstractStatement body = transformer.transformStatement1(
-				generator, this.beginEnd);
-		generator.addStatement(body, this);
 //		
 //		Meth method = generator.createMethod(PrivacyEnum.PUBLIC,
 //				StaticEnum.NONE, TypeEnum.VOID, null,

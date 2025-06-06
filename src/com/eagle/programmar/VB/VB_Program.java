@@ -18,7 +18,8 @@ import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_Program extends AbstractLanguage implements EagleRunnable, EagleTransformableProgram
+public class VB_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String VB = "VB";
 

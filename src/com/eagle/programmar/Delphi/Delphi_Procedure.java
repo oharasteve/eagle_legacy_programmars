@@ -75,14 +75,6 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 
 	public void transformProcedure(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (this.headers != null)
-		{
-			for (Delphi_Header header : this.headers._elements)
-			{
-				header.processHeader(transformer, generator);
-			}
-		}
-
 		String procName = this.forward.id.getValue();
 		generator.addMethod(null, procName, this);
 
@@ -98,6 +90,14 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 				AbstractType paramType2 = more.param.type.convertType(generator);
 				String paramName2 = more.param.names.first().var.getValue();
 				generator.addMethodParameter(paramType2, paramName2);
+			}
+		}
+
+		if (this.headers != null)
+		{
+			for (Delphi_Header header : this.headers._elements)
+			{
+				header.processHeader(transformer, generator);
 			}
 		}
 

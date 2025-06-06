@@ -30,7 +30,7 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 	public static class Delphi_Const extends TokenSequence
 	{
 		public @S(10) Delphi_Variable_Definition constant;
-		public @S(20) @OPT Delphi_ConstType type;
+		public @S(20) @OPT Delphi_ConstType cType;
 		public @S(30) PunctuationEquals equals;
 		public @S(40) Delphi_Expression expr;
 		public @S(50) PunctuationSemicolon semicolon;
@@ -57,13 +57,18 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 	{
 		for (Delphi_Const constant : this.constants._elements)
 		{
+			TypeEnum oldType = TypeEnum.INTEGER;
+			if (constant.cType != null && constant.cType.isPresent())
+			{
+				
+			}
+			
 			String varName = constant.constant.getValue();
 			AbstractExpression expression = transformer.transformExpression(generator,
 					constant.expr);
-			AbstractType type = generator.transformType(false, TypeEnum.INTEGER,
-					null, constant);
+			AbstractType newType = generator.transformType(false, oldType, null, constant);
 			AbstractStatement data = generator.newDataDeclaration(
-					varName, null, type, expression, this);
+					varName, null, newType, expression, this);
 			generator.addStatement(data, constant);
 		}
 	}

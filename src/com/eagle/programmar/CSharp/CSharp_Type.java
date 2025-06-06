@@ -106,6 +106,11 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 	
 	public static CSharp_Type transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
 	{
+		if (type == null)
+		{
+			return null;
+		}
+		
 		switch (type)
 		{
 		case BOOLEAN:

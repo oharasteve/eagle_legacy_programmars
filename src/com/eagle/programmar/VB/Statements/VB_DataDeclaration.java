@@ -13,9 +13,11 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Subscript;
 import com.eagle.programmar.VB.VB_Type;
+import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Symbols.VB_Variable_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
+import com.eagle.tokens.ReferenceInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -111,7 +113,7 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		
-		TypeEnum type;
+		TypeEnum oldType = null;
 		AbstractType newType = null;
 		if (dataType != null && dataType.isPresent())
 		{
@@ -119,22 +121,34 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 			switch (typeName)
 			{
 			case "boolean":
-				type = TypeEnum.BOOLEAN;
+				oldType = TypeEnum.BOOLEAN;
 				break;
 			case "integer":
-				type = TypeEnum.INTEGER;
+				oldType = TypeEnum.INTEGER;
 				break;
 			case "double":
-				type = TypeEnum.DOUBLE;
+				oldType = TypeEnum.DOUBLE;
 				break;
 			case "string":
-				type = TypeEnum.STRING;
-				break;
-			default:
-				type = TypeEnum.OTHER;
+				oldType = TypeEnum.STRING;
 				break;
 			}
-			newType = generator.transformType(false, type, typeName, dataType);
+		}
+		
+		// See if the type can be deduced from metrics
+		if (oldType == null)
+		{
+			if (var.listReferences() != null)
+			{
+				for (ReferenceInterface ref : var.listReferences())
+				{
+					oldType = transformer.findAssignMetric((VB_Identifier_Reference) ref);
+					if (oldType != null)
+					{
+						break;
+					}
+				}
+			}
 		}
 		
 		AbstractExpression size = null;
@@ -150,6 +164,7 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 		}
 		
 		String name = var.getValue();
+		newType = generator.transformType(false, oldType, null, dataType);
 		AbstractType firstType = newType;
 		if (firstType == null)
 		{
