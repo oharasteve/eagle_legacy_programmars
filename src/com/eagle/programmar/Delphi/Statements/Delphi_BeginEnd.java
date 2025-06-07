@@ -9,7 +9,7 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Delphi.Delphi_Statement_List;
-import com.eagle.programmar.Delphi.Delphi_Statement_List.Delphi_MoreStatements;
+import com.eagle.programmar.Delphi.Delphi_Statement_List.Delphi_NextStatement;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
@@ -33,7 +33,7 @@ public class Delphi_BeginEnd extends TokenSequence
 		if (result != Eagle_Statement_Result.NORMAL) return result;
 		if (statements.stmts != null)
 		{
-			for (Delphi_MoreStatements more : statements.stmts._elements)
+			for (Delphi_NextStatement more : statements.stmts._elements)
 			{
 				result = interpreter.tryToInterpret(more.stmt);
 				if (result != Eagle_Statement_Result.NORMAL) return result;
@@ -56,7 +56,7 @@ public class Delphi_BeginEnd extends TokenSequence
 		
 		if (this.statements.stmts != null)
 		{
-			for (Delphi_MoreStatements more : this.statements.stmts._elements)
+			for (Delphi_NextStatement more : this.statements.stmts._elements)
 			{
 				newStmt = transformer.transformStatement1(generator, more.stmt.getWhich());
 				if (newStmt != null)

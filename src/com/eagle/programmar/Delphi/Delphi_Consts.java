@@ -4,7 +4,6 @@
 package com.eagle.programmar.Delphi;
 
 import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -57,16 +56,15 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 	{
 		for (Delphi_Const constant : this.constants._elements)
 		{
-			TypeEnum oldType = TypeEnum.INTEGER;
+			AbstractType newType = null;
 			if (constant.cType != null && constant.cType.isPresent())
 			{
-				
+				newType = constant.cType.type.convertType(generator);
 			}
-			
+
 			String varName = constant.constant.getValue();
 			AbstractExpression expression = transformer.transformExpression(generator,
 					constant.expr);
-			AbstractType newType = generator.transformType(false, oldType, null, constant);
 			AbstractStatement data = generator.newDataDeclaration(
 					varName, null, newType, expression, this);
 			generator.addStatement(data, constant);

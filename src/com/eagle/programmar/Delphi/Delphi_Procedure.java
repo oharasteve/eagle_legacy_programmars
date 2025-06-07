@@ -103,5 +103,7 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 
 		AbstractStatement newStmt = transformer.transformStatement1(generator, this.body);
 		generator.addStatement(newStmt, this.body);
+		
+		generator.doneMethod();
 	}
 }

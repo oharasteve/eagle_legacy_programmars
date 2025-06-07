@@ -18,7 +18,7 @@ import com.eagle.programmar.Delphi.Delphi_Function;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List;
 import com.eagle.programmar.Delphi.Delphi_Parameter_List.Delphi_Parameter;
 import com.eagle.programmar.Delphi.Delphi_Procedure;
-import com.eagle.programmar.Delphi.Delphi_Statement_List.Delphi_MoreStatements;
+import com.eagle.programmar.Delphi.Delphi_Statement_List.Delphi_NextStatement;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
@@ -113,7 +113,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		{
 			if (body.statements.stmts != null)
 			{
-				for (Delphi_MoreStatements stmt : body.statements.stmts._elements)
+				for (Delphi_NextStatement stmt : body.statements.stmts._elements)
 				{
 					result = interpreter.tryToInterpret(stmt.stmt);
 					if (result != Eagle_Statement_Result.NORMAL) break;

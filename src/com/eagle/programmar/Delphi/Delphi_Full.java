@@ -6,6 +6,7 @@ package com.eagle.programmar.Delphi;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Delphi.Delphi_Statement_List.Delphi_NextStatement;
 import com.eagle.programmar.Delphi.Statements.Delphi_BeginEnd;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Program_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
@@ -70,9 +71,17 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 	public void transformFull(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		AbstractStatement body = transformer.transformStatement1(
-				generator, this.beginEnd);
-		generator.addStatement(body, this);
+		Delphi_Statement_List stmtList = this.beginEnd.statements;
+		AbstractStatement newStmt = transformer.transformStatement1(generator, stmtList.stmt.getWhich());
+		generator.addStatement(newStmt, stmtList);
+		if (stmtList.stmts != null && stmtList.stmts.size() > 0)
+		{
+			for (Delphi_NextStatement nextStmt : stmtList.stmts._elements)
+			{
+				newStmt = transformer.transformStatement1(generator, nextStmt.stmt.getWhich());
+				generator.addStatement(newStmt, nextStmt);
+			}
+		}
 
 		for (Delphi_Header header : this.headers._elements)
 		{
