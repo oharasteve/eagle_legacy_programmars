@@ -102,8 +102,6 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 			}
 		}
 		
-		System.out.println("**** Looking at " + var.getValue());
-		
 		TypeEnum type = givenType;	// Usually not given
 		if (type == null)
 		{
@@ -132,8 +130,6 @@ public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, 
 		{
 			for (VB_MoreVariables more : moreVariables._elements)
 			{
-				System.out.println("            and " + more.var.getValue());
-
 				size = null;
 				if (more.subscript != null && more.subscript.isPresent())
 				{

@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
+import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
+import com.eagle.programmar.Java.Java_Class.Java_ClassElement.Java_StaticStatement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
+import com.eagle.programmar.Java.Java_Method.Java_MethodType;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
@@ -43,6 +46,7 @@ import com.eagle.programmar.Java.Statements.Java_WhileStatement;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
+import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
@@ -165,6 +169,27 @@ public class Java_Generator
 	public void addStatement(Java_Statement stmt, AbstractToken source)
 	{
 		checkMethod();
+		
+		// Cannot put data into the 'main' method when it was declared in a global area
+		if (stmt.getWhich() instanceof Java_Data)
+		{
+			if (_currentMethod.typeAndName.getWhich() instanceof Java_MethodType)
+			{
+				Java_MethodType methType = (Java_MethodType) _currentMethod.typeAndName.getWhich();
+				if (methType.methodName.getValue().equals("main"))
+				{
+					// Put it in top-level class, not the 'main' method
+					Java_StaticStatement staticStmt = new Java_StaticStatement();
+					staticStmt.STATIC = new Java_Keyword("static");
+					staticStmt.STATIC.setPresent(true);
+					staticStmt.statement = stmt;
+					Java_ClassElement element = new Java_ClassElement();
+					element.setWhich(staticStmt);
+					_currentClass.elements.addToken(element);
+					return;
+				}
+			}
+		}
 		
 		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
 		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();

@@ -121,6 +121,8 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("double");
 		case STRING:
 			return newPrimitiveType("string");
+		case STRING_ARRAY:
+			return transformTypeArray(TypeEnum.STRING);
 		case VOID:
 			return newPrimitiveType("void");
 		case OTHER:

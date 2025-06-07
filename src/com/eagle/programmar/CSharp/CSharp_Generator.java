@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
+import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
+import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement.CSharp_StaticStatement;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
@@ -42,6 +44,7 @@ import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_HexNumber;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
@@ -164,6 +167,23 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		checkMethod();
 		
+		// Cannot put data into the 'main' method when it was declared in a global area
+		if (stmt.getWhich() instanceof CSharp_Data)
+		{
+			if (_currentMethod.id.getValue().equals("Main"))
+			{
+				// Put it in top-level class, not the 'main' method
+				CSharp_StaticStatement staticStmt = new CSharp_StaticStatement();
+				staticStmt.STATIC = new CSharp_Keyword("static");
+				staticStmt.STATIC.setPresent(true);
+				staticStmt.statement = stmt;
+				CSharp_ClassElement element = new CSharp_ClassElement();
+				element.setWhich(staticStmt);
+				_currentClass.elements.addToken(element);
+				return;
+			}
+		}
+
 		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) _currentMethod.body.getWhich();
 		CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
 		stmtOrComment.setWhich(stmt);

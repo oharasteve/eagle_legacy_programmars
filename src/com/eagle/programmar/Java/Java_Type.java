@@ -130,6 +130,8 @@ public class Java_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("double");
 		case STRING:
 			return newPrimitiveType("String");
+		case STRING_ARRAY:
+			return transformTypeArray(TypeEnum.STRING);
 		case VOID:
 			return newPrimitiveType("void");
 		case OTHER:

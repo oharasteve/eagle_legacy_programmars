@@ -107,8 +107,8 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 
 		public @CHOICE static class CSharp_StaticStatement extends TokenSequence
 		{
-			public @S(10) CSharp_Keyword STATIC = new CSharp_Keyword("static");
-			public @S(20) @NEWLINE CSharp_Statement statement;
+			public @S(10) @NEWLINE CSharp_Keyword STATIC = new CSharp_Keyword("static");
+			public @S(20) CSharp_Statement statement;
 		}
 	}
 
