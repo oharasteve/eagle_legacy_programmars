@@ -54,7 +54,7 @@ public abstract class RPG_C_Calculation_Specification extends TokenSequence
 			result = new RPG_Literal(43, 48);
 			length = new RPG_Number(49, 51);
 			decimalPositions = new RPG_Number(52, 52);
-			operationExtender = new RPG_KeywordChoice(53, 53, "H", "N", "P");
+			operationExtender = new RPG_KeywordChoice(53, 53, "H", "N", "P", "R");
 			resultIndicator1 = new RPG_Literal(54, 55);
 			resultIndicator2 = new RPG_Literal(56, 57);
 			resultIndicator3 = new RPG_Literal(58, 59);

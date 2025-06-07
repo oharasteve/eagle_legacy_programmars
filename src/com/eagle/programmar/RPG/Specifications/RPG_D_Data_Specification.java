@@ -12,7 +12,7 @@ import com.eagle.tokens.TokenSequence;
 
 public abstract class RPG_D_Data_Specification extends TokenSequence
 {
-	public @S(10) RPG_Keyword D = new RPG_Keyword(6, 6, "D");
+	public @S(10) RPG_Keyword D = new RPG_Keyword(5, 6, " D");
 	public @S(20) @OPT RPG_Literal name;
 	public @S(30) @OPT RPG_Keyword externalDescription;
 	public @S(40) @OPT RPG_KeywordChoice entryType;
@@ -39,8 +39,8 @@ public abstract class RPG_D_Data_Specification extends TokenSequence
 			definitionType = new RPG_KeywordChoice(24, 25, "C", "DS", "PI", "PR", "S");
 			fromPosition = new RPG_Number(26, 32);
 			toPositionOrLength = new RPG_Number(33, 39);
-			dataType = new RPG_KeywordChoice(40, 40, "A", "B", "C", "D", "F", "G", "I", "N", "O", "P", "S", "T", "U",
-					"Z");
+			dataType = new RPG_KeywordChoice(40, 40, "A", "B", "C", "D", "F", "G",
+					"I", "N", "O", "P", "S", "T", "U", "Z");
 			decimalPosition = new RPG_Number(41, 42);
 			blank = new RPG_Blanks(43, 43);
 			keywords = new RPG_Literal(44, 80);

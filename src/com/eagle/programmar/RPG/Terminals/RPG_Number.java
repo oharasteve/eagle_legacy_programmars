@@ -9,6 +9,7 @@ import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class RPG_Number extends TerminalNumberToken
 {
+	private static final String DIGITS = "0123456789";
 	private int fixedSc, fixedEc;
 
 	// Used by XML Reader ...
@@ -32,6 +33,37 @@ public class RPG_Number extends TerminalNumberToken
 		if (_endChar > fixedEc) _endChar = fixedEc;
 		_numberAsText = rec.substring(fixedSc, _endChar).trim();
 		if (_numberAsText.length() == 0) return false; // No number there
+		
+		// Make sure it looks like a number
+		boolean foundDigit = false;
+		boolean foundDecimalPoint = false;
+		for (int i = 0; i < _numberAsText.length(); i++)
+		{
+			char ch = _numberAsText.charAt(i);
+			if (ch == ' ')
+			{
+				continue;
+			}
+			if (ch == '.')
+			{
+				// Only allow one decimal point
+				if (foundDecimalPoint)
+				{
+					return false;
+				}
+				foundDecimalPoint = true;
+			}
+			if (DIGITS.indexOf(ch) < 0)
+			{
+				return false;
+			}
+			foundDigit = true;
+		}
+		if (! foundDigit)
+		{
+			return false;
+		}
+		
 		foundIt(_currentLine, _endChar - 1);
 		return true;
 	}

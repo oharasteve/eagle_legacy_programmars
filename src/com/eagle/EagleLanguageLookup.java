@@ -50,6 +50,7 @@ import com.eagle.programmar.Python.Python2_Program;
 import com.eagle.programmar.Python.Python3_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_III_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_IV_Program;
+import com.eagle.programmar.RPGFree.RPGFree_Program;
 import com.eagle.programmar.Rexx.Rexx_Program;
 import com.eagle.programmar.Ruby.Ruby_Program;
 import com.eagle.programmar.Rust.Rust_Program;
@@ -119,6 +120,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Rexx_Program.REXX, Rexx_Program.class, ".rexx");
 		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
+		add(RPGFree_Program.RPGFree, RPGFree_Program.class);
 		add(Ruby_Program.RUBY, Ruby_Program.class, ".ruby");
 		add(Rust_Program.RUST, Rust_Program.class, ".rs", ".rust");
 		add(Scala_Program.SCALA, Scala_Program.class, ".scala");

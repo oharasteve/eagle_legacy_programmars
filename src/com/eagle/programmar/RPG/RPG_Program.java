@@ -75,7 +75,15 @@ public abstract class RPG_Program extends AbstractLanguage
 
 	// Components of an RPG Program
 	public @S(10) TokenList<RPG_Item> items;
+	public @S(20) @OPT TokenList<RPG_CTDATA> ctDataItems;
+	public @S(30) @OPT TokenList<RPG_CommentEOLN> comments;
 
+	public static class RPG_CommentEOLN extends TokenSequence
+	{
+		public @S(10) RPG_Comment comment;
+		public @S(20) RPG_EndOfLine eoln;
+	}
+	
 	public static class RPG_III_Program extends RPG_Program
 	{
 		public static final String RPGIII = "RPG_III";
