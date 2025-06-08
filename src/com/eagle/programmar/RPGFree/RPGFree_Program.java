@@ -40,11 +40,11 @@ public class RPGFree_Program extends AbstractLanguage
 	
 	public static class RPGFree_Item extends TokenChooser
 	{
-		public @CHOICE RPGFree_Comment comment;
-		public @CHOICE RPGFree_Control ctlOpt;
-		public @CHOICE RPGFree_Declare declare;
-		public @CHOICE RPGFree_Assignment assign;
-		public @CHOICE RPGFree_Display display;
-		public @CHOICE RPGFree_Return retrn;
+		public @CHOICE RPGFree_Comment XXcomment;
+		public @CHOICE RPGFree_Control XXctlOpt;
+		public @CHOICE RPGFree_Declare XXdeclare;
+		public @CHOICE RPGFree_Assignment XXassign;
+		public @CHOICE RPGFree_Display XXdisplay;
+		public @CHOICE RPGFree_Return XXreturn;
 	}
 }

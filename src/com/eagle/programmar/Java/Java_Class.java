@@ -91,18 +91,20 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		public @FIRST @NEWLINE Java_Constructor XXconstructor;
 		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon XXsemicolon;
 
-		public @CHOICE static class Java_StaticStatement extends TokenSequence implements EagleRunnable
-		{
-			public @S(10) @OPT @NEWLINE Java_Keyword PRIVATE = new Java_Keyword("private");
-			public @S(20) @OPT Java_Annotation annotation;
-			public @S(30) @OPT Java_Keyword STATIC = new Java_Keyword("static");
-			public @S(40) Java_Statement statement;
+		public @CHOICE Java_StaticStatement XXstaticStatement;
+	}
 
-			@Override
-			public void interpret(EagleInterpreter interpreter)
-			{
-				interpreter.tryToInterpret(statement);
-			}
+	public static class Java_StaticStatement extends TokenSequence implements EagleRunnable
+	{
+		public @S(10) @OPT @NEWLINE Java_Keyword PRIVATE = new Java_Keyword("private");
+		public @S(20) @OPT Java_Annotation annotation;
+		public @S(30) @OPT Java_Keyword STATIC = new Java_Keyword("static");
+		public @S(40) Java_Statement statement;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
+		{
+			interpreter.tryToInterpret(statement);
 		}
 	}
 

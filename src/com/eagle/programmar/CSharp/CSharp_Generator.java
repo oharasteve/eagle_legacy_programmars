@@ -9,7 +9,7 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
-import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement.CSharp_StaticStatement;
+import com.eagle.programmar.CSharp.CSharp_Class.CSharp_StaticStatement;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;

@@ -9,7 +9,7 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
-import com.eagle.programmar.Java.Java_Class.Java_ClassElement.Java_StaticStatement;
+import com.eagle.programmar.Java.Java_Class.Java_StaticStatement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;

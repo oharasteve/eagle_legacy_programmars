@@ -50,6 +50,6 @@ public class RPGFree_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////
 	// Binary expressions
 
-	public @P(1010) RPGFree_Multiplicative multiplicative;
-	public @P(1020) RPGFree_Additive additive;
+	public @P(1000) RPGFree_Multiplicative multiplicative;
+	public @P(1010) RPGFree_Additive additive;
 }

@@ -1,5 +1,5 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
-// Original author: Steven A. O'Hara, Feb 18, 2025
+// Original author: Steven A. O'Hara, Jun 7, 2025
 
 package com.eagle.programmar.RPGFree.Expressions;
 
@@ -9,17 +9,17 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics;
-import com.eagle.programmar.Rexx.Rexx_Expression;
-import com.eagle.programmar.Rexx.Terminals.Rexx_PunctuationChoice;
+import com.eagle.programmar.RPGFree.RPGFree_Expression;
+import com.eagle.programmar.RPGFree.Terminals.RPGFree_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rexx_NegativeExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class RPGFree_NegativeExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Rexx_PunctuationChoice operator = new Rexx_PunctuationChoice("-", "+");
-	public @S(20) Rexx_Expression expr;
+	public @S(10) RPGFree_PunctuationChoice operator = new RPGFree_PunctuationChoice("-", "+");
+	public @S(20) RPGFree_Expression expr;
 
 	private @SKIP Operator1Metrics _metrics = null;
 
