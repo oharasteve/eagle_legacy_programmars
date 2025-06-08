@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
@@ -11,11 +12,16 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements EagleRunnable
+public class COBOL_DisplayStatement extends COBOL_AbstractStatement
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpsdisp.htm") COBOL_Keyword DISPLAY = new COBOL_Keyword("DISPLAY");
 	public @S(20) @OPT COBOL_DisplayPosition position;
@@ -73,5 +79,21 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement implements E
 		{
 			interpreter.tryToInterpret(clause.what);
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (clauses.size() == 1)
+		{
+			COBOL_DisplayClause clause = clauses.first();
+			if (clause.what.exprs.getPrimaryCount() == 1)
+			{
+				COBOL_Expression expr = clause.what.exprs.first();
+				AbstractExpression line = transformer.transformExpression(generator, expr);
+				return generator.newPrintStatement1(line, true, this);
+			}
+		}
+		throw new RuntimeException("Unable to handle DISPLAY: " + this);
 	}
 }

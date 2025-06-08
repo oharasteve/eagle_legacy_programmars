@@ -4,7 +4,7 @@
 package com.eagle.programmar.COBOL.Terminals;
 
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration;
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.terminals.TerminalLevelToken;

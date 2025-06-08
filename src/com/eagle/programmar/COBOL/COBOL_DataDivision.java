@@ -3,14 +3,16 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.interpret.EagleInterpreter;
-import com.eagle.interpret.EagleRunnable;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_DataDivision extends TokenSequence
 {
@@ -28,7 +30,7 @@ public class COBOL_DataDivision extends TokenSequence
 	{
 		public @CHOICE COBOL_Comment XXcomment;
 		public @CHOICE COBOL_FileSection XXfileSection;
-		public @CHOICE COBOL_WorkingStorageSection XXworkingStorageSection;
+		public @CHOICE COBOL_WorkingStorage XXworkingStorageSection;
 		public @CHOICE COBOL_LocalStorageSection XXlocalStorageSection;
 		public @CHOICE COBOL_ScreenSection XXscreenSection;
 		public @CHOICE COBOL_LinkageSection XXlinkageSection;
@@ -48,23 +50,6 @@ public class COBOL_DataDivision extends TokenSequence
 		public @CHOICE COBOL_Copy_Directive XXcopyDirective;
 		public @CHOICE COBOL_Comment XXcomment;
 		public @CHOICE COBOL_FileDescriptor XXfileDescriptor;
-	}
-
-	public static class COBOL_WorkingStorageSection extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) COBOL_Keyword WORKINGSTORAGE = new COBOL_Keyword("WORKING-STORAGE");
-		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
-		public @S(30) PunctuationPeriod dot;
-		public @S(40) TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)
-			{
-				interpreter.tryToInterpret(decl);
-			}
-		}
 	}
 
 	public static class COBOL_LocalStorageSection extends TokenSequence
@@ -91,9 +76,16 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(40) TokenList<COBOL_ReportEntry> reportEntries;
 	}
 
-	public static class COBOL_CopyOrDataDeclaration extends TokenChooser
+	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
-		public @CHOICE COBOL_Copy_Directive XXcopyBook;
-		public @CHOICE COBOL_DataDeclaration XXdeclaration;
+		for (COBOL_DataSection section : sections._elements)
+		{
+			AbstractToken which = section.getWhich();
+			if (which instanceof COBOL_WorkingStorage)
+			{
+				COBOL_WorkingStorage work = (COBOL_WorkingStorage) which;
+				work.transform(transformer, generator);
+			}
+		}
 	}
 }

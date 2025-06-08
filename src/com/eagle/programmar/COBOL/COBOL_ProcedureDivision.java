@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_ParagraphHeader;
@@ -13,6 +14,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunnable
 {
@@ -68,5 +70,13 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(sections.first());
+	}
+	
+	public void transform(EagleTransformer transformer, EagleGenerator generator)
+	{
+		for (COBOL_Section section : sections._elements)
+		{
+			section.transform(transformer, generator);
+		}
 	}
 }

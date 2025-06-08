@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_File_Definition;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;

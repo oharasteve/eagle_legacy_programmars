@@ -3,11 +3,12 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.tokens.AbstractFunction;
@@ -15,6 +16,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, AbstractFunction
 {
@@ -47,6 +49,18 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 		for (COBOL_SentenceOrComment sentence : sentences._elements)
 		{
 			interpreter.tryToInterpret(sentence);
+		}
+	}
+	
+	public void transform(EagleTransformer transformer, EagleGenerator generator)
+	{
+		for (COBOL_SentenceOrComment sentOrComm : sentences._elements)
+		{
+			if (sentOrComm.getWhich() instanceof COBOL_Sentence)
+			{
+				COBOL_Sentence sent = (COBOL_Sentence) sentOrComm.getWhich();
+				sent.transform(transformer, generator);
+			}
 		}
 	}
 }

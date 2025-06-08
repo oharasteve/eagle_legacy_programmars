@@ -3,9 +3,17 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
@@ -17,9 +25,14 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_StringStatement extends COBOL_AbstractStatement implements EagleRunnable
+public class COBOL_StringStatement extends COBOL_AbstractStatement
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpsstri.htm") COBOL_Keyword STRING = new COBOL_Keyword("STRING");
 	public @S(20) TokenList<COBOL_StringWhat> elements;
@@ -76,10 +89,18 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 		public @S(30) COBOL_Identifier_Reference withPointer;
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (pieces.size() > 1)
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, STRING.getValue(), STRING);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
+		if (pieces.size() != 1)
 		{
 			throw new RuntimeException("Can only handle one STRING result");
 		}
@@ -100,11 +121,73 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement implements Ea
 				}
 			}
 
-			String piece = interpreter.getStrValue(what.expr);
+			EagleValue val = interpreter.getEagleValue(what.expr);
+			String piece = val.forceStringValue();
+			argTypes.add(val.typeName());
 			result.append(piece);
 		}
+		_metrics.calledWith(argTypes);
 
+		COBOL_StringPiece strPiece = pieces._elements.get(0);
+		interpreter.setSymbol(strPiece, strPiece.intoVar.getValue(),
+				new EagleString(result.toString()));
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		Oper2Types types = null;
+
+		if (pieces.size() != 1)
+		{
+			throw new RuntimeException("Can only handle one STRING result");
+		}
+		if (with != null && with.isPresent())
+		{
+			throw new RuntimeException("Cannot handle POINTER yet");
+		}
+
+		// Pick up metrics, if known
+		ArrayList<String> metrics = transformer.findArgumentsMetric(STRING);
+		if (metrics != null)
+		{
+			System.err.println("***************** FOUND METRICS");
+			types = new Oper2Types();
+		}
+
+		AbstractExpression newExpr = null;
+		int i = 0;
+		for (COBOL_StringWhat what : elements._elements)
+		{
+			if (what.delimit != null && what.delimit.isPresent())
+			{
+				throw new RuntimeException("Can't handle DELIMITED BY yet: " + this);
+			}
+			
+			AbstractExpression nextExpr = transformer.transformExpression(generator, what.expr);
+			if (newExpr == null)
+			{
+				newExpr = nextExpr;
+			}
+			else // Concatenate
+			{
+				if (metrics != null)
+				{
+					types._type1 = metrics.get(i-1);
+					types._type2 = metrics.get(i);
+				}
+
+				newExpr = generator.newAdditiveExpression(types, newExpr, AdditiveEnum.PLUS, nextExpr, what);
+			}
+			
+			i++;
+		}
+		
 		COBOL_StringPiece piece = pieces._elements.get(0);
-		interpreter.setSymbol(piece, piece.intoVar.getValue(), new EagleString(result.toString()));
+		AbstractExpression asgExpr = generator.newAssignmentExpression(piece.intoVar.getValue(), null,
+				AssignmentEnum.EQUALS, newExpr, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }
+	

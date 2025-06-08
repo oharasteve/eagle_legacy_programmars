@@ -3,10 +3,14 @@
 
 package com.eagle.programmar.COBOL.Terminals;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_Literal extends TerminalLiteralToken
+public class COBOL_Literal extends TerminalLiteralToken implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -18,5 +22,11 @@ public class COBOL_Literal extends TerminalLiteralToken
 	public String description()
 	{
 		return super.genericDescription("'\"", false, '?', true, false);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
 	}
 }

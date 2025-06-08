@@ -88,7 +88,6 @@ public class Delphi_Writeln_Statement extends TokenSequence
 		if (something != null && something.isPresent())
 		{
 			// Pick up metrics, if known
-			
 			ArrayList<String> metrics = transformer.findArgumentsMetric(WRITELN);
 			if (metrics != null)
 			{

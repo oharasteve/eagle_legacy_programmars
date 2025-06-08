@@ -15,7 +15,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) VB_Expression expression;

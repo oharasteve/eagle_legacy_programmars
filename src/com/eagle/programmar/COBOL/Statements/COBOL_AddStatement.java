@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -17,9 +19,14 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_AddStatement extends COBOL_AbstractStatement implements EagleRunnable
+public class COBOL_AddStatement extends COBOL_AbstractStatement
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpsadd.htm") COBOL_Keyword ADD = new COBOL_Keyword("ADD");
 	public @S(20) COBOL_AddType type;
@@ -115,5 +122,44 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement implements Eagle
 							new EagleInteger(oldValue.forceIntegerValue() + newVal));				}
 			}
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (! (type.getWhich() instanceof COBOL_AddNoGiving))
+		{
+			throw new RuntimeException("Can't handle ADD with GIVING: " + this);
+		}
+		COBOL_AddNoGiving addNoGiving = (COBOL_AddNoGiving) type.getWhich();
+		if (addNoGiving.moreExprs != null && addNoGiving.moreExprs.size() > 0)
+		{
+			throw new RuntimeException("Can't handle multiple arguments to ADD: " + this);
+		}
+		if (addNoGiving.addTo == null || ! addNoGiving.addTo.isPresent())
+		{
+			throw new RuntimeException("ADD value TO var is required: " + this);
+		}
+		
+		COBOL_Variable var = addNoGiving.addTo.var;
+		if (! (var.getWhich() instanceof COBOL_UserVariable))
+		{
+			throw new RuntimeException("Can only ADD to a Variable: " + this);
+		}
+		COBOL_UserVariable userVar = (COBOL_UserVariable) var.getWhich();
+		if (userVar.subscript != null && userVar.subscript.size() > 0)
+		{
+			throw new RuntimeException("Can't handle subscripts here: " + this);
+		}
+		if (userVar.ofList != null && userVar.ofList.size() > 0)
+		{
+			throw new RuntimeException("Can't handle field OF variable: " + this);
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, addNoGiving.expr);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(), null,
+				AssignmentEnum.PLUS_EQUALS, value, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

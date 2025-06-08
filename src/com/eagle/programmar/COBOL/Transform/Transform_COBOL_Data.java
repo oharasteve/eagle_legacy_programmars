@@ -11,12 +11,12 @@ import com.eagle.generate.Old_Generate_Eagle_Statement.PRIVACY;
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration;
 import com.eagle.programmar.COBOL.COBOL_DataDeclaration.COBOL_DataClause;
 import com.eagle.programmar.COBOL.COBOL_DataDivision;
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_WorkingStorageSection;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Keyword;
 import com.eagle.programmar.COBOL.COBOL_Program_Complete;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
 import com.eagle.programmar.COBOL.COBOL_Subscript.COBOL_RegularSubscript;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Picture.COBOL_PictureClause;
 import com.eagle.programmar.COBOL.Picture.COBOL_ValueClause;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Data_Definition;
@@ -50,9 +50,9 @@ public class Transform_COBOL_Data<Lang extends AbstractLanguage, Cls extends Abs
 		for (COBOL_DataDivision.COBOL_DataSection section : div.sections._elements)
 		{
 			AbstractToken whichSection = section.getWhich();
-			if (whichSection instanceof COBOL_WorkingStorageSection)
+			if (whichSection instanceof COBOL_WorkingStorage)
 			{
-				COBOL_WorkingStorageSection workingStorage = (COBOL_WorkingStorageSection) whichSection;
+				COBOL_WorkingStorage workingStorage = (COBOL_WorkingStorage) whichSection;
 
 				if (workingStorage.dataDeclarations != null)
 				{

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_DataSection;
@@ -12,8 +14,11 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public abstract class COBOL_Program_Complete extends COBOL_Program implements EagleRunnable
+public abstract class COBOL_Program_Complete extends COBOL_Program
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
 	{
@@ -81,5 +86,17 @@ public abstract class COBOL_Program_Complete extends COBOL_Program implements Ea
 				}
 			}
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (dataDiv != null && dataDiv.isPresent())
+		{
+			dataDiv.transform(transformer, generator);
+		}
+		procedureDiv.transform(transformer, generator);
+		return generator.getTransfomedProgram();
 	}
 }

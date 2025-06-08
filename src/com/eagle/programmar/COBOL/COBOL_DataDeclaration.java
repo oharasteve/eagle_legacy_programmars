@@ -3,15 +3,17 @@
 
 package com.eagle.programmar.COBOL;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
-import com.eagle.math.EagleValue;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
-import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_CopyOrDataDeclaration;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Literal;
 import com.eagle.programmar.COBOL.COBOL_Picture_Value.COBOL_Picture_Value_Number;
+import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Picture.COBOL_BlankWhenZero;
 import com.eagle.programmar.COBOL.Picture.COBOL_ObjectReference;
 import com.eagle.programmar.COBOL.Picture.COBOL_PictureClause;
@@ -34,8 +36,12 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationStar;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnable
 {
@@ -148,8 +154,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			String varName = dataDef.getValue();
 			String pic = null;
 			String redefines = null;
-			EagleInteger initInteger = new EagleInteger(0);
-			EagleString initString = new EagleString("");
+			EagleInteger initInteger = null;
+			EagleString initString = null;
 			if (clauses != null)
 			{
 				for (COBOL_DataClause clause : clauses._elements)
@@ -179,7 +185,6 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
 							initString = new EagleString(lit.literal.getValue());
 						}
-						break;
 					}
 	
 				}
@@ -215,7 +220,6 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				System.err.println("*** data " + level + " " + varName + " " + pic);
 			}
 			interpreter.setSymbol(dataDef, varName, value);
-
 		}
 	}
 
@@ -243,11 +247,69 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 							// System.err.println("************** Adding " + str.toString());
 							array.addValue(str);
 						}
-						break;
 					}
 				}
 			}
 		}
 		return array;
+	}
+	
+	public void transform(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
+		{
+			COBOL_Data_Definition dataDef = (COBOL_Data_Definition) fieldName.getWhich();
+			String varName = dataDef.getValue();
+			AbstractType newType = null;
+			AbstractExpression expression = null;
+			if (clauses != null)
+			{
+				for (COBOL_DataClause clause : clauses._elements)
+				{
+					AbstractToken which = clause.getWhich();
+					if (which instanceof COBOL_PictureClause)
+					{
+						COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+						String pic = picClause.picture.getValue().toUpperCase();
+						if (pic.startsWith("9") || pic.startsWith("Z"))
+						{
+							newType = generator.transformType(false, TypeEnum.INTEGER, null, picClause);
+						}
+						else if (pic.startsWith("X"))
+						{
+							newType = generator.transformType(false, TypeEnum.STRING, null, picClause);
+						}
+					}
+					if (which instanceof COBOL_RedefinesClause)
+					{
+						throw new RuntimeException("Can't handle REDEFINES yet: " + this);
+					}
+					if (which instanceof COBOL_ValueClause)
+					{
+						COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
+						COBOL_Picture_Value picValue = valueClause.values.first();
+						if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
+						{
+							COBOL_Picture_Value_Number num = (COBOL_Picture_Value_Number) picValue.getWhich();
+							expression = generator.newNumberExpression(num.number.getValue(), num);
+						}
+						else if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
+						{
+							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
+							expression = generator.newLiteralExpression(lit.literal.getValue(), lit);
+						}
+					}
+				}
+			}
+
+			if (newType != null)
+			{
+				AbstractStatement data = generator.newDataDeclaration(
+						varName, null, newType, expression, this);
+				generator.addStatement(data, this);
+				return;
+			}
+		}
+		throw new RuntimeException("Unable to process: " + this);
 	}
 }

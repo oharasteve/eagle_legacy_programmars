@@ -5,6 +5,7 @@ package com.eagle.programmar.COBOL.Expressions;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -17,16 +18,20 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_VariableExpression extends PrimaryOperator implements EagleRunnable
+public class COBOL_VariableExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) COBOL_VariableRef variable;
 
 	public static class COBOL_VariableRef extends TokenSequence
 	{
 		public @S(10) COBOL_Identifier_Reference id;
-		public @S(20) @OPT TokenList<COBOL_Subscript> subscript;
-		public @S(30) @OPT TokenList<COBOL_OfVariableRef> ofList;
+		public @S(20) @OPT TokenList<COBOL_Subscript> subscripts;
+		public @S(30) @OPT TokenList<COBOL_OfVariableRef> ofLists;
 
 		public static class COBOL_OfVariableRef extends TokenSequence
 		{
@@ -38,7 +43,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (variable.ofList != null && variable.ofList.isPresent() && variable.ofList.size() > 0)
+		if (variable.ofLists != null && variable.ofLists.isPresent() && variable.ofLists.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle field references");
 		}
@@ -50,12 +55,12 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 			throw new RuntimeException("Unable to find a variable named " + varName);
 		}
 
-		if (variable.subscript != null && variable.subscript.isPresent() && variable.subscript.size() == 1)
+		if (variable.subscripts != null && variable.subscripts.isPresent() && variable.subscripts.size() == 1)
 		{
 			if (val.isArray())
 			{
 				ArrayList<EagleValue> avals = ((EagleArray) val).getArrayValue();
-				int subscript = variable.subscript.first().getSubscriptValue(interpreter);
+				int subscript = variable.subscripts.first().getSubscriptValue(interpreter);
 				interpreter.pushEagleValue(avals.get(subscript - 1));
 				return;
 			}
@@ -73,7 +78,7 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 
 			if (str != null)
 			{
-				AbstractToken which = variable.subscript.first().type.getWhich();
+				AbstractToken which = variable.subscripts.first().type.getWhich();
 				if (which instanceof COBOL_RegularSubscript)
 				{
 					COBOL_RegularSubscript subscript = (COBOL_RegularSubscript) which;
@@ -94,5 +99,15 @@ public class COBOL_VariableExpression extends PrimaryOperator implements EagleRu
 		}
 
 		interpreter.pushEagleValue(val);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (variable.subscripts != null && variable.subscripts.size() > 0)
+		{
+			throw new RuntimeException("Can't handle variables with subscripts: " + this);
+		}
+		return generator.newVariableExpression(variable.id.getValue(), null, this);
 	}
 }

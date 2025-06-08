@@ -6,7 +6,6 @@ package com.eagle.programmar.RPG.Specifications;
 import com.eagle.programmar.RPG.Terminals.RPG_Keyword;
 import com.eagle.programmar.RPG.Terminals.RPG_KeywordChoice;
 import com.eagle.programmar.RPG.Terminals.RPG_Literal;
-import com.eagle.programmar.RPG.Terminals.RPG_Number;
 import com.eagle.tokens.TokenSequence;
 
 public abstract class RPG_C_Calculation_Specification extends TokenSequence
@@ -24,11 +23,11 @@ public abstract class RPG_C_Calculation_Specification extends TokenSequence
 	public @S(80) @OPT RPG_Literal indicator3;
 
 	public @S(90) @OPT RPG_Literal factor1;
-	public @S(100) @OPT RPG_Literal operation;
-	public @S(110) @OPT RPG_Literal factor2;
+	public @S(100) @OPT RPG_Literal operation;			// Operations 'eval' and 'if' are very different!
+	public @S(110) @OPT RPG_Literal factor2;			// Rest of line is free format for them, and possibly continued
 	public @S(120) @OPT RPG_Literal result;
-	public @S(130) @OPT RPG_Number length;
-	public @S(140) @OPT RPG_Number decimalPositions;
+	public @S(130) @OPT RPG_Literal length;		        // Really should be RPG_Number
+	public @S(140) @OPT RPG_Literal decimalPositions;   // Really should be RPG_Number
 	public @S(150) @OPT RPG_KeywordChoice operationExtender;
 
 	public @S(160) @OPT RPG_Literal resultIndicator1;
@@ -52,8 +51,8 @@ public abstract class RPG_C_Calculation_Specification extends TokenSequence
 			operation = new RPG_Literal(28, 32);
 			factor2 = new RPG_Literal(33, 42);
 			result = new RPG_Literal(43, 48);
-			length = new RPG_Number(49, 51);
-			decimalPositions = new RPG_Number(52, 52);
+			length = new RPG_Literal(49, 51);
+			decimalPositions = new RPG_Literal(52, 52);
 			operationExtender = new RPG_KeywordChoice(53, 53, "H", "N", "P", "R");
 			resultIndicator1 = new RPG_Literal(54, 55);
 			resultIndicator2 = new RPG_Literal(56, 57);
@@ -77,8 +76,8 @@ public abstract class RPG_C_Calculation_Specification extends TokenSequence
 			operation = new RPG_Literal(26, 35);
 			factor2 = new RPG_Literal(36, 49);
 			result = new RPG_Literal(50, 63);
-			length = new RPG_Number(64, 68);
-			decimalPositions = new RPG_Number(69, 70);
+			length = new RPG_Literal(64, 68);
+			decimalPositions = new RPG_Literal(69, 70);
 			operationExtender = new RPG_KeywordChoice(0, 0, // Unused
 					"A", "D", "E", "H", "M", "N", "P", "R", "T", "Z");
 			resultIndicator1 = new RPG_Literal(71, 72);
