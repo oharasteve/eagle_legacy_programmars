@@ -12,6 +12,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.EagleMetrics;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
@@ -95,7 +96,7 @@ public class VB_Subroutine extends TokenSequence
 		generator.addMethodName(id.getValue());
 		
 		// Search metrics for arg types -- might not be any
-		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
 
 		if (params.params != null && params.params.isPresent())
 		{
@@ -111,8 +112,9 @@ public class VB_Subroutine extends TokenSequence
 
 				if (paramType == null && argTypes != null && i < argTypes.size())
 				{
-					TypeEnum metricArgType = argTypes.get(i);
-					paramType = generator.transformType(false, metricArgType, null, param);
+					String metricArgType = argTypes.get(i);
+					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					paramType = generator.transformType(false, metricArg, null, param);
 				}
 				
 				generator.addMethodParameter(paramType, param.var.getValue());

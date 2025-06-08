@@ -109,7 +109,7 @@ public class Delphi_Type extends TokenSequence
 
 	public AbstractType convertType(EagleGenerator generator)
 	{
-		TypeEnum newType;
+		TypeEnum newType = null;
 		String userType = null;
 		boolean isArray = false;
 		AbstractToken which = this.baseType.getWhich();
@@ -138,9 +138,17 @@ public class Delphi_Type extends TokenSequence
 		}
 		else if (which instanceof Delphi_Array)
 		{
-			// TODO: can be integer or string or ...
-			newType = TypeEnum.INTEGER;
-			isArray = true;
+			Delphi_Array array = (Delphi_Array) which;
+			AbstractToken which2 = array.type.baseType.getWhich();
+			if (which2 instanceof Delphi_KeywordChoice)
+			{
+				Delphi_KeywordChoice kw2 = (Delphi_KeywordChoice) which2;
+				if (kw2.getValue().toLowerCase().equals("string"))
+				{
+					newType = TypeEnum.STRING_ARRAY;
+					isArray = true;
+				}
+			}
 		}
 		else if (which instanceof Delphi_Identifier_Reference)
 		{
@@ -148,7 +156,8 @@ public class Delphi_Type extends TokenSequence
 			newType = TypeEnum.OTHER;
 			userType = id.getValue();
 		}
-		else
+		
+		if (newType == null)
 		{
 			throw new RuntimeException("Can't handle type yet: " + which);
 		}

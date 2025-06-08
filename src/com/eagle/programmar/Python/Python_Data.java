@@ -50,8 +50,8 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 		// Set data name and type
 		data.id = new Python_Variable_Definition();
 		data.id.setValue(name);
-		data.colon = new PunctuationColon();
-		data.type = (Python_Type) type;
+		// data.colon = new PunctuationColon();
+		// data.type = (Python_Type) type;
 
 		// Set the initial value
 		Python_DataInitialValue init = new Python_DataInitialValue();

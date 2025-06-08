@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.Python.Statements;
 
-import java.util.ArrayList;
-
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.Statements.Eagle_Generate_Print;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
-import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Print_Function;
@@ -19,7 +17,6 @@ import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -35,27 +32,13 @@ public class Python_PrintStatement extends TokenSequence
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
 
 	@Override
-	public Python_ComplexStatement generatePrint(ArrayList<Python_Expression> pieces,
+	public Python_ComplexStatement generatePrint1(Python_Expression line,
 			boolean newLine, AbstractToken source)
 	{
 		Python_Print_Function func = new Python_Print_Function();
 		func.leftParen = new PunctuationLeftParen();
 		func.exprs = new SeparatedList<Python_Expression, PunctuationComma>();
-		
-		// ''.join(str(x) for x in ['abc',4,5'xys])
-		boolean first = true;
-		for (AbstractExpression piece : pieces)
-		{
-			if (first)
-			{
-				first = false;
-			}
-			else
-			{
-				func.exprs.addSecondaryElement(new PunctuationComma());
-			}
-			func.exprs.addPrimaryElement((Python_Expression) piece);
-		}
+		func.exprs.addPrimaryElement(line);
 		
 		if (! newLine)
 		{
@@ -69,18 +52,6 @@ public class Python_PrintStatement extends TokenSequence
 			func.exprs.addPrimaryElement(asgExpr1);
 		}
 		
-		if (pieces.size() > 1)
-		{
-			func.exprs.addSecondaryElement(new PunctuationComma());
-			Python_Expression emptyExpr2 = Python_Literal.generateLiteralExpression("", null);
-			Python_VariableExpression sepVar = new Python_VariableExpression();
-			Python_Expression sep = sepVar.generateVarExpr("sep", null, null);
-			Python_Assignment_Expression asg2 = new Python_Assignment_Expression();
-			Python_Expression asgExpr2 = asg2.generateAssignment(sep,
-					AssignmentEnum.EQUALS, emptyExpr2, source);
-			func.exprs.addPrimaryElement(asgExpr2);
-		}
-
 		func.rightParen = new PunctuationRightParen();
 		func.setTransformationSource(source);
 		
@@ -89,14 +60,5 @@ public class Python_PrintStatement extends TokenSequence
 		
 		stmt.setTransformationSource(source);
 		return Python_Generator.wrapStatement(stmt);
-	}
-	
-	@Override
-	public Python_ComplexStatement generatePrint1(Python_Expression line,
-			boolean newLine, AbstractToken source)
-	{
-		ArrayList<Python_Expression> pieces = new ArrayList<Python_Expression>();
-		pieces.add(line);
-		return generatePrint(pieces, newLine, source);
 	}
 }

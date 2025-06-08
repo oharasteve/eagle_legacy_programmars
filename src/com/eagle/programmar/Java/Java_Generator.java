@@ -168,29 +168,42 @@ public class Java_Generator
 	@Override
 	public void addStatement(Java_Statement stmt, AbstractToken source)
 	{
-		checkMethod();
+		if (stmt == null) return;
+		checkClass();
 		
 		// Cannot put data into the 'main' method when it was declared in a global area
 		if (stmt.getWhich() instanceof Java_Data)
 		{
-			if (_currentMethod.typeAndName.getWhich() instanceof Java_MethodType)
+			boolean saveInClass = false;
+			if (_currentMethod == null)
+			{
+				saveInClass = true;
+			}
+			else if (_currentMethod.typeAndName.getWhich() instanceof Java_MethodType)
 			{
 				Java_MethodType methType = (Java_MethodType) _currentMethod.typeAndName.getWhich();
 				if (methType.methodName.getValue().equals("main"))
 				{
-					// Put it in top-level class, not the 'main' method
-					Java_StaticStatement staticStmt = new Java_StaticStatement();
-					staticStmt.STATIC = new Java_Keyword("static");
-					staticStmt.STATIC.setPresent(true);
-					staticStmt.statement = stmt;
-					Java_ClassElement element = new Java_ClassElement();
-					element.setWhich(staticStmt);
-					_currentClass.elements.addToken(element);
-					return;
+					saveInClass = true;
 				}
+			}
+			
+			if (saveInClass)
+			{
+				// Put it in top-level class, not the 'main' method
+				Java_StaticStatement staticStmt = new Java_StaticStatement();
+				staticStmt.STATIC = new Java_Keyword("static");
+				staticStmt.STATIC.setPresent(true);
+				staticStmt.statement = stmt;
+				Java_ClassElement element = new Java_ClassElement();
+				element.setWhich(staticStmt);
+				_currentClass.elements.addToken(element);
+				return;
 			}
 		}
 		
+		checkMethod();
+
 		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
 		Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
 		stmtOrComment.setWhich(stmt);
@@ -333,15 +346,6 @@ public class Java_Generator
 	{
 		Java_PrintStatement prtStmt = new Java_PrintStatement();
 		return prtStmt.generatePrint1(line, newLine, source);
-	}
-
-	@Override
-	public Java_Statement newPrintStatement(
-			ArrayList<Java_Expression> pieces, boolean newLine,
-			AbstractToken source)
-	{
-		Java_PrintStatement prtStmt = new Java_PrintStatement();
-		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 
 	@Override

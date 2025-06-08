@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Delphi;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Statement_List extends TokenSequence
 {
@@ -23,5 +26,20 @@ public class Delphi_Statement_List extends TokenSequence
 		public @S(20) @OPT TokenList<Delphi_Comment> comments4;
 		public @S(30) Delphi_Statement stmt;
 		public @S(40) @OPT TokenList<Delphi_Comment> comments5;
+	}
+
+	// It looks odd to leave extra { } around the program / function / procedure implementation
+	public void transformRemoveBeginEnd(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractStatement newStmt = transformer.transformStatement1(generator, this.stmt.getWhich());
+		generator.addStatement(newStmt, this);
+		if (this.stmts != null && this.stmts.size() > 0)
+		{
+			for (Delphi_NextStatement nextStmt : this.stmts._elements)
+			{
+				newStmt = transformer.transformStatement1(generator, nextStmt.stmt.getWhich());
+				generator.addStatement(newStmt, nextStmt);
+			}
+		}
 	}
 }

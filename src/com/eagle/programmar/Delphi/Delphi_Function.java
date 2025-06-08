@@ -20,7 +20,6 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -108,8 +107,7 @@ public class Delphi_Function extends TokenSequence implements AbstractFunction, 
 			}
 		}
 
-		AbstractStatement newStmt = transformer.transformStatement1(generator, this.body);
-		generator.addStatement(newStmt, this.body);
+		this.body.statements.transformRemoveBeginEnd(transformer, generator);
 
 		generator.doneMethod();
 	}

@@ -165,12 +165,23 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	@Override
 	public void addStatement(CSharp_Statement stmt, AbstractToken source)
 	{
-		checkMethod();
+		if (stmt == null) return;
+		checkClass();
 		
 		// Cannot put data into the 'main' method when it was declared in a global area
 		if (stmt.getWhich() instanceof CSharp_Data)
 		{
-			if (_currentMethod.id.getValue().equals("Main"))
+			boolean saveInClass = false;
+			if (_currentMethod == null)
+			{
+				saveInClass = true;
+			}
+			else if (_currentMethod.id.getValue().equals("Main"))
+			{
+				saveInClass = true;
+			}
+			
+			if (saveInClass)
 			{
 				// Put it in top-level class, not the 'main' method
 				CSharp_StaticStatement staticStmt = new CSharp_StaticStatement();
@@ -183,6 +194,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 				return;
 			}
 		}
+		
+		checkMethod();
 
 		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) _currentMethod.body.getWhich();
 		CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
@@ -322,14 +335,6 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
 		return prtStmt.generatePrint1(line, newLine, source);
-	}
-
-	@Override
-	public CSharp_Statement newPrintStatement(ArrayList<CSharp_Expression> pieces,
-			boolean newLine, AbstractToken source)
-	{
-		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
-		return prtStmt.generatePrint(pieces, newLine, source);
 	}
 
 	@Override

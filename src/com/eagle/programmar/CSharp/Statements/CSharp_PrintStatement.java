@@ -3,28 +3,16 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
-import java.util.ArrayList;
-
 import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
-import com.eagle.programmar.CSharp.CSharp_Type;
-import com.eagle.programmar.CSharp.CSharp_Type.CSharp_IdList;
-import com.eagle.programmar.CSharp.CSharp_Type.CSharp_MoreIds;
-import com.eagle.programmar.CSharp.CSharp_Type.CSharp_TypeName;
-import com.eagle.programmar.CSharp.CSharp_Variable;
-import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
-import com.eagle.programmar.CSharp.Expressions.CSharp_MethodInvocation;
-import com.eagle.programmar.CSharp.Expressions.CSharp_SubfieldExpression;
-import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -67,63 +55,6 @@ public class CSharp_PrintStatement extends TokenSequence
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
 
-	@Override
-	public CSharp_Statement generatePrint(ArrayList<CSharp_Expression> pieces,
-			boolean newLine, AbstractToken source)
-	{
-		if (pieces.size() == 1)
-		{
-			return generatePrint1(pieces.get(0), newLine, source);
-		}
-
-		CSharp_IdList ids = new CSharp_IdList();
-		ids.typeName = new CSharp_Identifier_Reference();
-		ids.typeName.setValue("System");
-		CSharp_Type type = new CSharp_Type();
-		type.typeName = new CSharp_TypeName();
-		type.typeName.setWhich(ids);
-		
-		ids.moreIds = new TokenList<CSharp_MoreIds>();
-		CSharp_MoreIds more2 = new CSharp_MoreIds();
-		CSharp_IdList ids2 = new CSharp_IdList();
-		ids2.typeName = new CSharp_Identifier_Reference();
-		ids2.typeName.setValue("Text");
-		more2.dot = new PunctuationPeriod();
-		more2.nextId = new CSharp_TypeName();
-		more2.nextId.setWhich(ids2);
-		ids.moreIds.addToken(more2);
-		
-		CSharp_MoreIds more3 = new CSharp_MoreIds();
-		CSharp_IdList ids3 = new CSharp_IdList();
-		ids3.typeName = new CSharp_Identifier_Reference();
-		ids3.typeName.setValue("StringBuilder");
-		more3.dot = new PunctuationPeriod();
-		more3.nextId = new CSharp_TypeName();
-		more3.nextId.setWhich(ids3);
-		ids.moreIds.addToken(more3);
-	
-		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
-		creat.generateCreation(type, null, source);
-		CSharp_Expression line = CSharp_Generator.wrapExpression(creat);
-		
-		for (CSharp_Expression piece : pieces)
-		{
-			ArrayList<CSharp_Expression> args = new ArrayList<CSharp_Expression>();
-			args.add(piece);
-			
-			CSharp_Variable app = CSharp_Variable.newVariable("Append");
-			CSharp_MethodInvocation meth = new CSharp_MethodInvocation();
-			meth.generateInvocation(app, args, null);
-			CSharp_Expression right = CSharp_Generator.wrapExpression(meth);
-
-			CSharp_SubfieldExpression subf = new CSharp_SubfieldExpression();
-			line = subf.generateSubfield(line, right, piece);
-		}
-		
-		// new System.Text.StringBuilder().Append("abc").Append(3).Append("def");
-		return generatePrint1(line, newLine, source);
-	}
-	
 	@Override
 	public CSharp_Statement generatePrint1(CSharp_Expression line, boolean newLine,
 			AbstractToken source)

@@ -19,7 +19,6 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -101,8 +100,7 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 			}
 		}
 
-		AbstractStatement newStmt = transformer.transformStatement1(generator, this.body);
-		generator.addStatement(newStmt, this.body);
+		this.body.statements.transformRemoveBeginEnd(transformer, generator);
 		
 		generator.doneMethod();
 	}

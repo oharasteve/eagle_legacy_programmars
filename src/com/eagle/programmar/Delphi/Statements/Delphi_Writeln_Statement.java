@@ -6,10 +6,12 @@ package com.eagle.programmar.Delphi.Statements;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
@@ -81,9 +83,18 @@ public class Delphi_Writeln_Statement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+		AbstractExpression line = null;
+		Oper2Types types = null;
 		if (something != null && something.isPresent())
 		{
+			// Pick up metrics, if known
+			
+			ArrayList<String> metrics = transformer.findArgumentsMetric(WRITELN);
+			if (metrics != null)
+			{
+				types = new Oper2Types();
+			}
+			
 			int numPieces = something.pieces.getPrimaryCount();
 			for (int i = 0; i < numPieces; i++)
 			{
@@ -92,7 +103,21 @@ public class Delphi_Writeln_Statement extends TokenSequence
 				{
 					throw new RuntimeException("Can't handle field widths");
 				}
-				pieces.add(transformer.transformExpression(generator, piece.expr));
+				if (i == 0)
+				{
+					line = transformer.transformExpression(generator, piece.expr);
+				}
+				else
+				{
+					if (metrics != null)
+					{
+						types._type1 = metrics.get(i-1);
+						types._type2 = metrics.get(i);
+					}
+					
+					AbstractExpression next = transformer.transformExpression(generator, piece.expr);
+					line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
+				}
 			}
 		}
 		
@@ -109,6 +134,6 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			throw new RuntimeException("Unexpected write command: " + WRITELN.getValue());
 		}
 		
-		return generator.newPrintStatement(pieces, newLine, this);
+		return generator.newPrintStatement1(line, newLine, this);
 	}
 }

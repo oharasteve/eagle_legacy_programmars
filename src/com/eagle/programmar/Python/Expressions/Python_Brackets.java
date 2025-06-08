@@ -48,10 +48,10 @@ public class Python_Brackets extends PrimaryOperator
 				if (this.list.moreItems == null)
 				{
 					this.list.moreItems = new TokenList<Python_MoreListItem>();
+					this.list.moreItems.setPresent(true);
 				}
 				Python_MoreListItem more = new Python_MoreListItem();
 				more.comma = new PunctuationComma();
-				more.comma.setPresent(true);
 				more.expr = (Python_Expression) exprs.get(i);
 				this.list.moreItems.addToken(more);
 			}

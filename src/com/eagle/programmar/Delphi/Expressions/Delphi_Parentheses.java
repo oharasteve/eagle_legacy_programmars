@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -48,8 +50,18 @@ public class Delphi_Parentheses extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator,
-				exprList.first());
-		return generator.newParenthesizedExpression(theExpr, this);
+		int nItems = exprList.getPrimaryCount();
+		if (nItems == 1)
+		{
+			AbstractExpression theExpr = transformer.transformExpression(generator, exprList.first());
+			return generator.newParenthesizedExpression(theExpr, this);
+		}
+
+		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+		for (int i = 0; i < nItems; i++)
+		{
+			exprs.add(transformer.transformExpression(generator, exprList.getPrimaryElement(i)));
+		}
+		return generator.newArrayExpression(exprs, exprList);
 	}
 }

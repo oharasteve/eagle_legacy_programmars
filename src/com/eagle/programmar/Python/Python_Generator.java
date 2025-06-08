@@ -274,14 +274,6 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
-	public Python_ComplexStatement newPrintStatement(ArrayList<Python_Expression> pieces,
-			boolean newLine, AbstractToken source)
-	{
-		Python_PrintStatement prtStmt = new Python_PrintStatement();
-		return prtStmt.generatePrint(pieces, newLine, source);
-	}
-	
-	@Override
 	public Python_ComplexStatement newReturnStatement(Python_Expression ret,
 			AbstractToken source)
 	{
