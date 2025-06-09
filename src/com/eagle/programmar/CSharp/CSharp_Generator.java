@@ -31,6 +31,7 @@ import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_ToStringMethod;
+import com.eagle.programmar.CSharp.Functions.CSharp_TrimMethod;
 import com.eagle.programmar.CSharp.Statements.CSharp_BreakStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_DoWhileStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
@@ -570,6 +571,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return lenMeth.generateLength(expr, source);
 	}
 	
+	@Override
+	public CSharp_Expression newTrimFunction(CSharp_Expression expr, AbstractToken source)
+	{
+		CSharp_TrimMethod trimMeth = new CSharp_TrimMethod();
+		return trimMeth.generateTrim(expr, source);
+	}
+
 	@Override
 	public CSharp_Expression newStringFunction(CSharp_Expression expr, AbstractToken source)
 	{

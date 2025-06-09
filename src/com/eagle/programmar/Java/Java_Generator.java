@@ -33,6 +33,7 @@ import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
 import com.eagle.programmar.Java.Functions.Java_ToStringMethod;
+import com.eagle.programmar.Java.Functions.Java_TrimMethod;
 import com.eagle.programmar.Java.Statements.Java_BreakStatement;
 import com.eagle.programmar.Java.Statements.Java_DoWhileStatement;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
@@ -579,6 +580,13 @@ public class Java_Generator
 	{
 		Java_LengthMethod lenMeth = new Java_LengthMethod();
 		return lenMeth.generateLength(expr, source);
+	}
+	
+	@Override
+	public Java_Expression newTrimFunction(Java_Expression expr, AbstractToken source)
+	{
+		Java_TrimMethod trimMeth = new Java_TrimMethod();
+		return trimMeth.generateTrim(expr, source);
 	}
 	
 	@Override

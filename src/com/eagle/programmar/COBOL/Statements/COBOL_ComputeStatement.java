@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -11,9 +13,14 @@ import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_ComputeStatement extends COBOL_AbstractStatement implements EagleRunnable
+public class COBOL_ComputeStatement extends COBOL_AbstractStatement
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpscomp.htm") COBOL_Keyword COMPUTE = new COBOL_Keyword("COMPUTE");
 	public @S(20) COBOL_Modifiable_Identifier var;
@@ -27,5 +34,20 @@ public class COBOL_ComputeStatement extends COBOL_AbstractStatement implements E
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.setSymbol(var, var.getValue(), val);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (subscript != null && subscript.isPresent())
+		{
+			throw new RuntimeException("Can't handle subscripts here: " + this);
+		}
+
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.getValue(), null,
+				AssignmentEnum.EQUALS, value, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

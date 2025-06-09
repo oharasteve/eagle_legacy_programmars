@@ -29,6 +29,7 @@ import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
+import com.eagle.programmar.Python.Functions.Python_Strip_Method;
 import com.eagle.programmar.Python.Statements.Python_BreakStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
@@ -518,6 +519,13 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		return lenFn.generateLength(expr, source);
 	}
 	
+	@Override
+	public Python_Expression newTrimFunction(Python_Expression expr, AbstractToken source)
+	{
+		Python_Strip_Method stripMeth = new Python_Strip_Method();
+		return stripMeth.generateTrim(expr, source);
+	}
+
 	@Override
 	public Python_Expression newStringFunction(Python_Expression expr, AbstractToken source)
 	{
