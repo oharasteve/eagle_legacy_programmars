@@ -19,10 +19,10 @@ public class Python_Strip_Method extends PrecedenceOperator
 		implements EagleRunnable, EagleGenerateTrim<Python_Expression>
 {
 	public @S(10) Python_Expression expression = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Python_Keyword STRIP = new Python_Keyword("strip");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Python_Keyword STRIP = new Python_Keyword("strip");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -34,6 +34,7 @@ public class Python_Strip_Method extends PrecedenceOperator
 	@Override
 	public Python_Expression generateTrim(Python_Expression expr, AbstractToken source)
 	{
+		this.dot = new PunctuationPeriod();
 		this.leftParen = new PunctuationLeftParen();
 		this.expression = expr;
 		this.rightParen = new PunctuationRightParen();

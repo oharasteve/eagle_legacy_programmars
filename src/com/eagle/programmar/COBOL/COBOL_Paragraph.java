@@ -54,6 +54,16 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 	
 	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
+		String paraName = "paragraph_with_no_name";
+		for (COBOL_ParagraphHeader header : paragraphHeaders._elements)
+		{
+			paraName = COBOL_Variable.repairName(header.paragraphName.getValue());
+		}
+		if (! paraName.equals("main"))
+		{
+			generator.addMethod(null, paraName, paragraphHeaders);
+		}
+		
 		for (COBOL_SentenceOrComment sentOrComm : sentences._elements)
 		{
 			if (sentOrComm.getWhich() instanceof COBOL_Sentence)
@@ -61,6 +71,11 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 				COBOL_Sentence sent = (COBOL_Sentence) sentOrComm.getWhich();
 				sent.transform(transformer, generator);
 			}
+		}
+		
+		if (! paraName.equals("main"))
+		{
+			generator.doneMethod();
 		}
 	}
 }

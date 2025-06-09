@@ -15,10 +15,10 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Python_Upper_Method extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Python_KeywordChoice UPPER = new Python_KeywordChoice("lower", "upper");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Python_KeywordChoice UPPER = new Python_KeywordChoice("lower", "upper");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -50,6 +50,8 @@ public class COBOL_BuiltIn extends PrimaryOperator
 			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
 		case "TRUE":
 			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		case "SPACES":
+			return generator.newLiteralExpression("", this);
 		default:
 			throw new RuntimeException("Can't handle BuiltIn: " + logicalConstant);
 		}

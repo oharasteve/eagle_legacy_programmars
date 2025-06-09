@@ -88,7 +88,8 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(), null,
+		AbstractExpression asgExpr = generator.newAssignmentExpression(
+				COBOL_Variable.repairName(userVar.id.getValue()), null,
 				AssignmentEnum.EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;

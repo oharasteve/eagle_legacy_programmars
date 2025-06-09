@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL;
 
+import java.util.ArrayList;
+
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
@@ -52,8 +54,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 	public @S(50) PunctuationPeriod dot;
 	public @S(60) @OPT COBOL_DataComment comment;
 
-	// These are special -- context-sensitive, must have larger (deeper) Level
-	// numbers
+	// These are special -- context-sensitive, must have
+	// larger (deeper) Level numbers
 	public @S(70) @OPT TokenList<COBOL_CopyOrDataDeclaration> children;
 
 	public static class COBOL_DataClause extends TokenChooser
@@ -205,7 +207,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			// Now check for PICTURE
 			else if (pic == null)
 			{
-				value = collectArrayValues(this);
+				value = collectArrayValues();
 			}
 			else if (pic.startsWith("X"))
 			{
@@ -223,11 +225,11 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		}
 	}
 
-	private static EagleArray collectArrayValues(COBOL_DataDeclaration dataDeclaration)
+	private EagleArray collectArrayValues()
 	{
 		// Look at all the children
 		EagleArray array = new EagleArray();
-		for (COBOL_CopyOrDataDeclaration child : dataDeclaration.children._elements)
+		for (COBOL_CopyOrDataDeclaration child : this.children._elements)
 		{
 			AbstractToken which = child.getWhich();
 			if (which instanceof COBOL_DataDeclaration)
@@ -259,7 +261,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
 		{
 			COBOL_Data_Definition dataDef = (COBOL_Data_Definition) fieldName.getWhich();
-			String varName = dataDef.getValue();
+			String varName = COBOL_Variable.repairName(dataDef.getValue());
 			AbstractType newType = null;
 			AbstractExpression expression = null;
 			if (clauses != null)
@@ -282,7 +284,14 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					}
 					if (which instanceof COBOL_RedefinesClause)
 					{
-						throw new RuntimeException("Can't handle REDEFINES yet: " + this);
+						COBOL_RedefinesClause redefClause = (COBOL_RedefinesClause) which;
+						String redefWhat = redefClause.id.getValue();
+						AbstractExpression redef = generator.newVariableExpression(redefWhat, null, this);
+						newType = generator.transformType(true, TypeEnum.STRING_ARRAY, varName, this);
+						AbstractStatement data = generator.newDataDeclaration(
+								varName, null, newType, redef, this);
+						generator.addStatement(data, this);
+						return;
 					}
 					if (which instanceof COBOL_ValueClause)
 					{
@@ -309,7 +318,32 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				generator.addStatement(data, this);
 				return;
 			}
+			
+			// Maybe it is an array definition
+			EagleArray array = this.collectArrayValues();
+			if (array != null)
+			{
+				ArrayList<EagleValue> values = array.getArrayValue();
+				if (values != null && values.size() > 0)
+				{
+					ArrayList<AbstractExpression> newValues = new ArrayList<AbstractExpression>();
+					for (EagleValue val : values)
+					{
+						String str = val.forceStringValue();
+						AbstractExpression newExpr = generator.newLiteralExpression(str, this);
+						newValues.add(newExpr);
+					}
+
+					AbstractExpression arrayExpr = generator.newArrayExpression(newValues, this);
+					newType = generator.transformType(true, TypeEnum.STRING_ARRAY, varName, this);
+					AbstractStatement data = generator.newDataDeclaration(
+							varName, null, newType, arrayExpr, this);
+					generator.addStatement(data, this);
+					return;
+				}
+			}
 		}
+		
 		throw new RuntimeException("Unable to process: " + this);
 	}
 }

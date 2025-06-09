@@ -82,6 +82,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
+		Python3_Program program = (Python3_Program) _program;
+		Python_Variable mainVar = this.newVariable("main");
+		Python_Expression mainExpr = this.newMethodInvocation(mainVar, null, program);
+		Python_ComplexStatement mainStmt = newExpressionStatement(mainExpr, program);
+		program.entries.addToken(mainStmt);
 		return _program;
 	}
 	
@@ -117,12 +122,22 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	
 	private Python_Function _currentFunction = null;
 
+	private void checkMethod()
+	{
+		if (_currentFunction == null)
+		{
+			_currentFunction = Python_Function.newPythonFunction("main");
+			_program.entries.addToken(wrapStatement(_currentFunction));
+		}
+	}
+
 	@Override
 	public void addMethod(Python_Type returnType, String name, AbstractToken source)
 	{
 		Python_Function newFunction = Python_Function.newPythonFunction(name);
 		addStatement(wrapStatement(newFunction), source);
 		_currentFunction = newFunction;	// Has to follow the call to addStatement().
+		_program.entries.addToken(wrapStatement(_currentFunction));
 	}
 	
 	@Override
@@ -140,16 +155,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	@Override
 	public void addStatement(Python_ComplexStatement stmt, AbstractToken source)
 	{
-		if (_currentFunction == null)
-		{
-			_program.entries.addToken(stmt);
-		}
-		else
-		{
-			Python_MultilineStatement multi =
-					(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
-			multi.statements.addToken(stmt);
-		}
+		checkMethod();
+		
+		Python_MultilineStatement multi =
+				(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
+		multi.statements.addToken(stmt);
 	}
 
 	@Override
@@ -433,7 +443,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
 	{
 		Python_BuiltIn builtin = new Python_BuiltIn();
-		builtin.builtins.setValue(bool ? "true" : "false");
+		builtin.builtins.setValue(bool ? "True" : "False");
 		return wrapExpression(builtin);
 	}
 

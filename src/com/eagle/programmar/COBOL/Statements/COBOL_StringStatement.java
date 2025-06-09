@@ -16,6 +16,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
+import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_HexNumber;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -184,7 +185,8 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 		}
 		
 		COBOL_StringPiece piece = pieces._elements.get(0);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(piece.intoVar.getValue(), null,
+		AbstractExpression asgExpr = generator.newAssignmentExpression(
+				COBOL_Variable.repairName(piece.intoVar.getValue()), null,
 				AssignmentEnum.EQUALS, newExpr, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;

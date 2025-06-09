@@ -157,7 +157,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, addNoGiving.expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(), null,
+		AbstractExpression asgExpr = generator.newAssignmentExpression(
+				COBOL_Variable.repairName(userVar.id.getValue()), null,
 				AssignmentEnum.PLUS_EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;

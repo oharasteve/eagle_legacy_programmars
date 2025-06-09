@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_SentenceOrComment;
+import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformUntil;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformVarying;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_Paragraph_or_Section_Thru;
@@ -116,7 +117,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 			}
 		}
 
-		AbstractVariable para = generator.newVariable(performStartParagraph.getValue());
+		AbstractVariable para = generator.newVariable(COBOL_Variable.repairName(performStartParagraph.getValue()));
 		AbstractExpression expr = generator.newMethodInvocation(para, null, this);
 		AbstractStatement stmt = generator.newExpressionStatement(expr, this);
 		
@@ -127,7 +128,8 @@ public class COBOL_PerformParagraph extends TokenSequence
 		}
 		if (whileExpr == null)
 		{
-			whileExpr = generator.newLogicalExpression(true, this);
+			AbstractExpression callExpr = generator.newMethodInvocation(para, null, this);
+			return generator.newExpressionStatement(callExpr, this);
 		}
 		return generator.newWhileStatement1(whileExpr, stmt, this);
 	}

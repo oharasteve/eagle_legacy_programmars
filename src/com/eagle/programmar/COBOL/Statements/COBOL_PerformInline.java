@@ -154,7 +154,7 @@ public class COBOL_PerformInline extends TokenSequence
 		}
 		if (whileExpr == null)
 		{
-			whileExpr = generator.newLogicalExpression(true, this);
+			return generator.newBlockStatement(stmts, this);
 		}
 		return generator.newWhileStatement(whileExpr, stmts, this);
 	}

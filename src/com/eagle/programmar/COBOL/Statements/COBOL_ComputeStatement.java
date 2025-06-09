@@ -11,6 +11,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
+import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Modifiable_Identifier;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -45,7 +46,8 @@ public class COBOL_ComputeStatement extends COBOL_AbstractStatement
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var.getValue(), null,
+		AbstractExpression asgExpr = generator.newAssignmentExpression(
+				COBOL_Variable.repairName(var.getValue()), null,
 				AssignmentEnum.EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;

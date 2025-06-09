@@ -6,11 +6,14 @@ package com.eagle.programmar.COBOL.Expressions;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubstringECEnum;
+import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.COBOL.COBOL_Subscript;
+import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.COBOL_Subscript.COBOL_RegularSubscript;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -106,8 +109,35 @@ public class COBOL_VariableExpression extends PrimaryOperator
 	{
 		if (variable.subscripts != null && variable.subscripts.size() > 0)
 		{
-			throw new RuntimeException("Can't handle variables with subscripts: " + this);
+			if (variable.subscripts.size() == 1)
+			{
+				COBOL_Subscript sub = variable.subscripts._elements.get(0);
+				if (sub.type.getWhich() instanceof COBOL_RegularSubscript)
+				{
+					COBOL_RegularSubscript regular = (COBOL_RegularSubscript) sub.type.getWhich();
+					
+					// This is actually a subscript range
+					if (regular.range != null && regular.range.isPresent())
+					{
+						AbstractExpression sc = transformer.transformExpression(generator, regular.expr);
+						AbstractExpression ec = transformer.transformExpression(generator, regular.range.expr);
+						AbstractExpression varExp = generator.newVariableExpression(
+								COBOL_Variable.repairName(variable.id.getValue()), null, this);
+						AbstractExpression subscrExpr = generator.newSubstringFunction(varExp,
+								sc, SubstringSCEnum.FIRST_CHAR_IS_ONE,
+								SubstringECEnum.GIVEN_EC, ec, false, this);
+						return subscrExpr;
+					}
+					
+					AbstractExpression newSub = transformer.transformExpression(generator, regular.expr);
+					return generator.newVariableExpression(variable.id.getValue(), newSub, this);
+				}
+			}
+			
+			throw new RuntimeException("Can't handle this subscript: " + variable.subscripts);
 		}
-		return generator.newVariableExpression(variable.id.getValue(), null, this);
+
+		return generator.newVariableExpression(
+				COBOL_Variable.repairName(variable.id.getValue()), null, this);
 	}
 }
