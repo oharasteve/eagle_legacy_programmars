@@ -3,19 +3,30 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_SentenceOrComment;
+import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformUntil;
+import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformVarying;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_Paragraph_or_Section_Thru;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement.COBOL_PerformTestWhen;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnableWithResult
+public class COBOL_PerformParagraph extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) COBOL_Identifier_Reference performStartParagraph;
 	public @S(20) @OPT COBOL_Paragraph_or_Section_Thru performThrough;
@@ -66,5 +77,58 @@ public class COBOL_PerformParagraph extends TokenSequence implements EagleRunnab
 		interpreter.completedFunction(startPara, null);
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (performThrough != null && performThrough.isPresent())
+		{
+			throw new RuntimeException("Cannot handle PERFORM multiple paragraphs yet " + this);
+		}
+		
+		String indexVar = null;
+		AbstractExpression initExpr = null;
+		AbstractExpression incrExpr = null;
+		AbstractExpression whileExpr = null;
+		
+		TokenList<COBOL_PerformClause> clauses = this.clauseList;
+		if (clauses != null)
+		{
+			for (COBOL_PerformClause clause : clauses._elements)
+			{
+				AbstractToken which = clause.getWhich();
+				if (which instanceof COBOL_PerformVarying)
+				{
+					COBOL_PerformVarying varying = (COBOL_PerformVarying) which;
+					indexVar = varying.id.getValue();
+					AbstractExpression fromExpr = transformer.transformExpression(generator, varying.from);
+					initExpr = generator.newAssignmentExpression(indexVar, null, AssignmentEnum.EQUALS, fromExpr, which);
+					AbstractExpression byExpr = transformer.transformExpression(generator, varying.by);
+					incrExpr = generator.newAssignmentExpression(indexVar, null, AssignmentEnum.PLUS_EQUALS, byExpr, which);
+				}
+				else if (which instanceof COBOL_PerformUntil)
+				{
+					COBOL_PerformUntil until = (COBOL_PerformUntil) which;
+					AbstractExpression untilExpr = transformer.transformExpression(generator, until.condition);
+					whileExpr = generator.newNotExpression(untilExpr, which);
+				}
+			}
+		}
+
+		AbstractVariable para = generator.newVariable(performStartParagraph.getValue());
+		AbstractExpression expr = generator.newMethodInvocation(para, null, this);
+		AbstractStatement stmt = generator.newExpressionStatement(expr, this);
+		
+		// Four cases: both varying and while; just varying; just while; neither
+		if (initExpr != null)
+		{
+			return generator.newForLoopStatement1(initExpr, whileExpr, incrExpr, stmt, this);
+		}
+		if (whileExpr == null)
+		{
+			whileExpr = generator.newLogicalExpression(true, this);
+		}
+		return generator.newWhileStatement1(whileExpr, stmt, this);
 	}
 }

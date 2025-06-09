@@ -48,6 +48,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
@@ -465,7 +466,23 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	public CSharp_Expression newNotExpression(CSharp_Expression expr, AbstractToken source)
 	{
 		CSharp_LogicalNotExpression notExp = new CSharp_LogicalNotExpression();
-		return notExp.generateLogicalNot(expr, source);
+		AbstractToken which = expr.getWhich();
+		if (which instanceof TerminalToken || which instanceof CSharp_ParenthesizedExpression)
+		{
+			return notExp.generateLogicalNot(expr, source);
+		}
+
+		CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
+		parens.generateParentheses(expr, source);
+		return notExp.generateLogicalNot(CSharp_Generator.wrapExpression(parens), source);
+	}
+	
+	@Override
+	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
+	{
+		CSharp_BuiltIn builtin = new CSharp_BuiltIn();
+		builtin.builtinConstant.setValue(bool ? "true" : "false");
+		return wrapExpression(builtin);
 	}
 	
 	@Override

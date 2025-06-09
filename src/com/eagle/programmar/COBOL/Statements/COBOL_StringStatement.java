@@ -151,7 +151,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 		ArrayList<String> metrics = transformer.findArgumentsMetric(STRING);
 		if (metrics != null)
 		{
-			System.err.println("***************** FOUND METRICS");
+			// System.err.println("***************** FOUND METRICS");
 			types = new Oper2Types();
 		}
 

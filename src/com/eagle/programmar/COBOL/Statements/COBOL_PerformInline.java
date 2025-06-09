@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -14,8 +18,13 @@ import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformVa
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_PerformInline extends TokenSequence implements EagleRunnableWithResult
+public class COBOL_PerformInline extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @OPT TokenList<COBOL_PerformClause> clauseList;
 	public @S(20) TokenList<COBOL_StatementOrComment> statements;
@@ -97,5 +106,56 @@ public class COBOL_PerformInline extends TokenSequence implements EagleRunnableW
 		
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String indexVar = null;
+		AbstractExpression initExpr = null;
+		AbstractExpression incrExpr = null;
+		AbstractExpression whileExpr = null;
+		
+		TokenList<COBOL_PerformClause> clauses = this.clauseList;
+		if (clauses != null)
+		{
+			for (COBOL_PerformClause clause : clauses._elements)
+			{
+				AbstractToken which = clause.getWhich();
+				if (which instanceof COBOL_PerformVarying)
+				{
+					COBOL_PerformVarying varying = (COBOL_PerformVarying) which;
+					indexVar = varying.id.getValue();
+					AbstractExpression fromExpr = transformer.transformExpression(generator, varying.from);
+					initExpr = generator.newAssignmentExpression(indexVar, null, AssignmentEnum.EQUALS, fromExpr, which);
+					AbstractExpression byExpr = transformer.transformExpression(generator, varying.by);
+					incrExpr = generator.newAssignmentExpression(indexVar, null, AssignmentEnum.PLUS_EQUALS, byExpr, which);
+				}
+				else if (which instanceof COBOL_PerformUntil)
+				{
+					COBOL_PerformUntil until = (COBOL_PerformUntil) which;
+					AbstractExpression untilExpr = transformer.transformExpression(generator, until.condition);
+					whileExpr = generator.newNotExpression(untilExpr, which);
+				}
+			}
+		}
+		
+		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
+		for (COBOL_StatementOrComment stmtOrComm : statements._elements)
+		{
+			AbstractStatement newStmt = transformer.transformStatement1(generator, stmtOrComm.getWhich());
+			stmts.add(newStmt);
+		}
+		
+		// Four cases: both varying and while; just varying; just while; neither
+		if (initExpr != null)
+		{
+			return generator.newForLoopStatement(initExpr, whileExpr, incrExpr, stmts, this);
+		}
+		if (whileExpr == null)
+		{
+			whileExpr = generator.newLogicalExpression(true, this);
+		}
+		return generator.newWhileStatement(whileExpr, stmts, this);
 	}
 }

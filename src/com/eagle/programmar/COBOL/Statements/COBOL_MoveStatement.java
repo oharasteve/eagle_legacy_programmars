@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -16,9 +18,14 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_MoveStatement extends COBOL_AbstractStatement implements EagleRunnable
+public class COBOL_MoveStatement extends COBOL_AbstractStatement
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpsmove.htm") COBOL_Keyword MOVE = new COBOL_Keyword("MOVE");
 	public @S(20) @OPT COBOL_Keyword ALL = new COBOL_Keyword("ALL");
@@ -53,5 +60,37 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement implements Eagl
 		}
 		COBOL_UserVariable variable = (COBOL_UserVariable) which;
 		interpreter.setSymbol(variable, variable.id.getValue(), val);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (ALL != null && ALL.isPresent())
+		{
+			throw new RuntimeException("Can't handle MOVE ALL now: " + this);
+		}
+		if (more != null && more.size() > 0)
+		{
+			throw new RuntimeException("Can't handle MOVE TO many variables: " + this);
+		}
+		if (! (var.getWhich() instanceof COBOL_UserVariable))
+		{
+			throw new RuntimeException("Can only ADD to a Variable: " + this);
+		}
+		COBOL_UserVariable userVar = (COBOL_UserVariable) var.getWhich();
+		if (userVar.subscript != null && userVar.subscript.size() > 0)
+		{
+			throw new RuntimeException("Can't handle subscripts here: " + this);
+		}
+		if (userVar.ofList != null && userVar.ofList.size() > 0)
+		{
+			throw new RuntimeException("Can't handle field OF variable: " + this);
+		}
+
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(), null,
+				AssignmentEnum.EQUALS, value, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
@@ -15,8 +16,12 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_PerformStatement extends COBOL_AbstractStatement implements EagleRunnableWithResult
+public class COBOL_PerformStatement extends COBOL_AbstractStatement
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpsperf.htm") COBOL_Keyword PERFORM = new COBOL_Keyword("PERFORM");
 	public @S(20) @OPT COBOL_PerformTestWhen testWhen;
@@ -87,5 +92,21 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement implements E
 		}
 		
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (what.getWhich() instanceof COBOL_PerformParagraph)
+		{
+			COBOL_PerformParagraph para = (COBOL_PerformParagraph) what.getWhich();
+			return para.transformStatement(transformer, generator);
+		}
+		if (what.getWhich() instanceof COBOL_PerformInline)
+		{
+			COBOL_PerformInline inline = (COBOL_PerformInline) what.getWhich();
+			return inline.transformStatement(transformer, generator);
+		}
+		throw new RuntimeException("Unable to handle PERFORM: " + this);
 	}
 }

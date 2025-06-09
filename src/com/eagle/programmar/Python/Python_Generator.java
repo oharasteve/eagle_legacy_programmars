@@ -46,6 +46,7 @@ import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -416,9 +417,25 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public Python_Expression newNotExpression(Python_Expression expr, AbstractToken source)
 	{
 		Python_Logical_Not_Expression notExp = new Python_Logical_Not_Expression();
-		return notExp.generateLogicalNot(expr, source);
+		AbstractToken which = expr.getWhich();
+		if (which instanceof TerminalToken || which instanceof Python_Parenthesized_Expression)
+		{
+			return notExp.generateLogicalNot(expr, source);
+		}
+
+		Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
+		parens.generateParentheses(expr, source);
+		return notExp.generateLogicalNot(Python_Generator.wrapExpression(parens), source);
 	}
 	
+	@Override
+	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
+	{
+		Python_BuiltIn builtin = new Python_BuiltIn();
+		builtin.builtins.setValue(bool ? "true" : "false");
+		return wrapExpression(builtin);
+	}
+
 	@Override
 	public Python_Expression newNumberExpression(String number, AbstractToken source)
 	{

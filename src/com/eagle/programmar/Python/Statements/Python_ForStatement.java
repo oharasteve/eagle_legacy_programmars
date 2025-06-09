@@ -26,6 +26,7 @@ import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Function_Call;
+import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
@@ -192,9 +193,54 @@ public class Python_ForStatement extends TokenSequence
 			Python_Expression condExpression, Python_Expression incrExpression,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
+		// Condition might be "! (x < 10)" or something. Oof.
+		Python_Expression condition = condExpression;
+		if (condExpression.getWhich() instanceof Python_Logical_Not_Expression)
+		{
+			Python_Logical_Not_Expression notExpr = (Python_Logical_Not_Expression) condExpression.getWhich();
+			if (notExpr.expr.getWhich() instanceof Python_Parenthesized_Expression)
+			{
+				Python_Parenthesized_Expression parens = (Python_Parenthesized_Expression) notExpr.expr.getWhich();
+				if (parens.list.expr.getWhich() instanceof Python_Relational_Expression)
+				{
+					// Ok, it matches, now reverse the relational operator. '<' becomes '>=' etc
+					Python_Relational_Expression rel = (Python_Relational_Expression) parens.list.expr.getWhich();
+					if (rel.operator.getWhich() instanceof Python_PunctuationChoice)
+					{
+						Python_PunctuationChoice punct = (Python_PunctuationChoice) rel.operator.getWhich();
+						Python_PunctuationChoice newPunct = null;
+						switch (punct.getValue())
+						{
+						case "<":
+							newPunct = new Python_PunctuationChoice(">=");
+							break;
+						case "<=":
+							newPunct = new Python_PunctuationChoice(">");
+							break;
+						case "==":
+							newPunct = new Python_PunctuationChoice("!=");
+							break;
+						case "!=", "<>":
+							newPunct = new Python_PunctuationChoice("==");
+							break;
+						case ">=":
+							newPunct = new Python_PunctuationChoice("<");
+							break;
+						case ">":
+							newPunct = new Python_PunctuationChoice("<=");
+							break;
+						}
+						// Switch to this new inverted condition
+						rel.operator.setWhich(newPunct);
+						condition = Python_Generator.wrapExpression(rel);
+					}
+				}
+			}
+		}
+		
 		// Let's just deal with easy case: for (i=0; i<10; i++) etc.
 		if (! (initExpression.getWhich() instanceof Python_Assignment_Expression) ||
-				! (condExpression.getWhich() instanceof Python_Relational_Expression) ||
+				! (condition.getWhich() instanceof Python_Relational_Expression) ||
 				! (incrExpression.getWhich() instanceof Python_Assignment_Expression))
 		{
 			throw new RuntimeException("Need to implement");
@@ -227,7 +273,7 @@ public class Python_ForStatement extends TokenSequence
 			throw new RuntimeException("Unexpected operator: " + incrOper);
 		}
 		
-		Python_Relational_Expression cond = (Python_Relational_Expression) condExpression.getWhich();
+		Python_Relational_Expression cond = (Python_Relational_Expression) condition.getWhich();
 		if (! (cond.operator.getWhich() instanceof Python_PunctuationChoice) ||
 				! (cond.left.getWhich() instanceof Python_VariableExpression))
 		{

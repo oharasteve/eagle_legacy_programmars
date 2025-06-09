@@ -50,13 +50,14 @@ import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class Java_Generator
 		extends EagleGenerator<Java_Statement, Java_Expression, Java_Variable, Java_Type>
 {
 	public static String NAME = "Java";
-	public static String SUFFIX = ".java";
+	public static String SUFFIX = ".Java";
 	
 	private Java_Program _program;
 	private String _className;
@@ -477,8 +478,24 @@ public class Java_Generator
 	@Override
 	public Java_Expression newNotExpression(Java_Expression expr, AbstractToken source)
 	{
-		Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
-		return notExpr.generateLogicalNot(expr, source);
+		Java_LogicalNotExpression notExp = new Java_LogicalNotExpression();
+		AbstractToken which = expr.getWhich();
+		if (which instanceof TerminalToken || which instanceof Java_ParenthesizedExpression)
+		{
+			return notExp.generateLogicalNot(expr, source);
+		}
+
+		Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
+		parens.generateParentheses(expr, source);
+		return notExp.generateLogicalNot(Java_Generator.wrapExpression(parens), source);
+	}
+
+	@Override
+	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
+	{
+		Java_BuiltIn builtin = new Java_BuiltIn();
+		builtin.builtinConstant.setValue(bool ? "true" : "false");
+		return wrapExpression(builtin);
 	}
 
 	@Override
