@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Method.Java_Constructor;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
+import com.eagle.programmar.Java.Statements.Java_StaticStatement;
 import com.eagle.programmar.Java.Symbols.Java_Class_Definition;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
@@ -92,20 +93,6 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon XXsemicolon;
 
 		public @CHOICE Java_StaticStatement XXstaticStatement;
-	}
-
-	public static class Java_StaticStatement extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) @OPT @NEWLINE Java_Keyword PRIVATE = new Java_Keyword("private");
-		public @S(20) @OPT Java_Annotation annotation;
-		public @S(30) @OPT Java_Keyword STATIC = new Java_Keyword("static");
-		public @S(40) Java_Statement statement;
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(statement);
-		}
 	}
 
 	@Override

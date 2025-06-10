@@ -11,7 +11,9 @@ import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_TrimMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleGenerateTrim<CSharp_Expression>
@@ -19,6 +21,8 @@ public class CSharp_TrimMethod extends PrecedenceOperator
 	public @S(10) CSharp_Expression expression = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE CSharp_Keyword TRIM = new CSharp_Keyword("Trim");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -30,8 +34,11 @@ public class CSharp_TrimMethod extends PrecedenceOperator
 	@Override
 	public CSharp_Expression generateTrim(CSharp_Expression expr, AbstractToken source)
 	{
-		this.dot = new PunctuationPeriod();
 		this.expression = expr;
+		this.dot = new PunctuationPeriod();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
+
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
 	}

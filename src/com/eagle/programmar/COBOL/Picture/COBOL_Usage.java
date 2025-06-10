@@ -3,13 +3,15 @@
 
 package com.eagle.programmar.COBOL.Picture;
 
-import com.eagle.programmar.COBOL.COBOL_Type;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 
 public class COBOL_Usage extends TokenSequence
 {
-	public @S(10) COBOL_Keyword USAGE = new COBOL_Keyword("USAGE");
+	public @S(10) @OPT COBOL_Keyword USAGE = new COBOL_Keyword("USAGE");
 	public @S(20) @OPT COBOL_Keyword IS = new COBOL_Keyword("IS");
-	public @S(30) COBOL_Type type;
+	public @S(30) COBOL_KeywordChoice type = new COBOL_KeywordChoice(
+			"BINARY", "COMP", "COMP-0", "COMP-1", "COMP-3", "COMP-5",
+			"COMP-X", "COMPUTATIONAL", "DISPLAY", "PACKED-DECIMAL");
 }

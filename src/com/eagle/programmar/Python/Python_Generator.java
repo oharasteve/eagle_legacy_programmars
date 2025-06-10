@@ -42,6 +42,7 @@ import com.eagle.programmar.Python.Statements.Python_StatementBlock;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Statements.Python_WhileStatement;
+import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
@@ -121,22 +122,22 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	// ================== Main program and class ==================
 	
 	private Python_Function _currentFunction = null;
+	private boolean didMain = false;
 
 	private void checkMethod()
 	{
-		if (_currentFunction == null)
+		if (_currentFunction == null && ! didMain)
 		{
-			_currentFunction = Python_Function.newPythonFunction("main");
-			_program.entries.addToken(wrapStatement(_currentFunction));
+			Python_Type voidType = Python_Type.newPrimitiveType("void");
+			addMethod(voidType, "main", null);
+			didMain = true;
 		}
 	}
 
 	@Override
 	public void addMethod(Python_Type returnType, String name, AbstractToken source)
 	{
-		Python_Function newFunction = Python_Function.newPythonFunction(name);
-		addStatement(wrapStatement(newFunction), source);
-		_currentFunction = newFunction;	// Has to follow the call to addStatement().
+		_currentFunction = Python_Function.newPythonFunction(name);
 		_program.entries.addToken(wrapStatement(_currentFunction));
 	}
 	
@@ -155,8 +156,45 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	@Override
 	public void addStatement(Python_ComplexStatement stmt, AbstractToken source)
 	{
+		if (stmt == null) return;
 		checkMethod();
 		
+		// Cannot put data into the 'main' method when it was declared in a global area
+		boolean saveInClass = false;
+		AbstractToken which = stmt.statementOrComment.getWhich();
+		if (which instanceof Python_SameLineStatement)
+		{
+			Python_SameLineStatement same = (Python_SameLineStatement) which;
+			if (same.statements.getPrimaryCount() == 1)
+			{
+				Python_Statement stmt1 = same.statements.first();
+				if (stmt1.getWhich() instanceof Python_Data)
+				{
+					if (_currentFunction == null)
+					{
+						saveInClass = true;
+					}
+					else
+					{
+						if (_currentFunction.fnName.getWhich() instanceof Python_Function_Definition)
+						{
+							Python_Function_Definition def = (Python_Function_Definition) _currentFunction.fnName.getWhich();
+							if (def.getValue().equals("main"))
+							{
+								saveInClass = true;
+							}
+						}
+					}
+				}
+			}
+		}
+			
+		if (saveInClass)
+		{
+			_program.entries.addToken(stmt);
+			return;
+		}
+
 		Python_MultilineStatement multi =
 				(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
 		multi.statements.addToken(stmt);

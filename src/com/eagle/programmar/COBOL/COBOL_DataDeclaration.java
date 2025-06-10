@@ -158,6 +158,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			String redefines = null;
 			EagleInteger initInteger = null;
 			EagleString initString = null;
+			boolean isComp = false;
 			if (clauses != null)
 			{
 				for (COBOL_DataClause clause : clauses._elements)
@@ -172,6 +173,14 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					{
 						COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
 						redefines = redefinesClause.id.getValue();
+					}
+					if (which instanceof COBOL_Usage)
+					{
+						COBOL_Usage usage = (COBOL_Usage) which;
+						if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+						{
+							isComp = true;
+						}
 					}
 					if (which instanceof COBOL_ValueClause)
 					{
@@ -204,18 +213,17 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				}
 			}
 
-			// Now check for PICTURE
+			else if (isComp)
+			{
+				value = initInteger;
+			}
 			else if (pic == null)
 			{
 				value = collectArrayValues();
 			}
-			else if (pic.startsWith("X"))
+			else if (pic.startsWith("X") || pic.startsWith("Z") || pic.startsWith("9"))
 			{
 				value = initString;
-			}
-			else if (pic.startsWith("Z") || pic.startsWith("9"))
-			{
-				value = initInteger;
 			}
 			else
 			{
@@ -264,6 +272,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			String varName = COBOL_Variable.repairName(dataDef.getValue());
 			AbstractType newType = null;
 			AbstractExpression expression = null;
+			boolean isComp = false;
 			if (clauses != null)
 			{
 				for (COBOL_DataClause clause : clauses._elements)
@@ -273,13 +282,10 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					{
 						COBOL_PictureClause picClause = (COBOL_PictureClause) which;
 						String pic = picClause.picture.getValue().toUpperCase();
-						if (pic.startsWith("9") || pic.startsWith("Z"))
-						{
-							newType = generator.transformType(false, TypeEnum.INTEGER, null, picClause);
-						}
-						else if (pic.startsWith("X"))
+						if (pic.startsWith("9") || pic.startsWith("X") || pic.startsWith("Z"))
 						{
 							newType = generator.transformType(false, TypeEnum.STRING, null, picClause);
+							// Will get replaced by INTEGER if USAGE COMP is present
 						}
 					}
 					if (which instanceof COBOL_RedefinesClause)
@@ -308,9 +314,21 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 							expression = generator.newLiteralExpression(lit.literal.getValue(), lit);
 						}
 					}
+					if (which instanceof COBOL_Usage)
+					{
+						COBOL_Usage usage = (COBOL_Usage) which;
+						if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+						{
+							isComp = true;
+						}
+					}
 				}
 			}
 
+			if (isComp) // COMP, COMP-1, etc.
+			{
+				newType = generator.transformType(false, TypeEnum.INTEGER, null, null);
+			}
 			if (newType != null)
 			{
 				AbstractStatement data = generator.newDataDeclaration(
