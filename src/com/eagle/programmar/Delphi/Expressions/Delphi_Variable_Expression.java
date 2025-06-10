@@ -4,6 +4,7 @@
 package com.eagle.programmar.Delphi.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Variable;
@@ -39,6 +40,8 @@ public class Delphi_Variable_Expression extends PrimaryOperator
 				subscript = transformer.transformExpression(generator, sub.exprs.first());
 			}
 		}
-		return generator.newVariableExpression(variable.var.getValue(), subscript, this);
+		// Actually, this depends on how the array is defined: Array[0..9] of String
+		return generator.newVariableExpression(variable.var.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 }

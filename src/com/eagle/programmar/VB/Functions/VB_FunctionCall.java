@@ -6,6 +6,7 @@ package com.eagle.programmar.VB.Functions;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -138,7 +139,8 @@ public class VB_FunctionCall extends PrimaryOperator
 
 		// Dang. VB uses () for both arrays and function calls
 		// It is not a function, so must be an array
-		AbstractExpression index = transformer.transformExpression(generator, callArguments.arguments.first());
-		return generator.newVariableExpression(name, index, this);
+		AbstractExpression index = transformer.transformExpression(generator,
+				callArguments.arguments.first());
+		return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, index, this);
 	}
 }

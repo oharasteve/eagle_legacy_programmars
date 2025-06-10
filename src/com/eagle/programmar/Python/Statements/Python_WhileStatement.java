@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.EagleGenerator.BuiltInEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.Statements.Eagle_Generate_DoUntil;
 import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
@@ -156,7 +157,8 @@ public class Python_WhileStatement extends TokenSequence
 		Python_BuiltIn built = new Python_BuiltIn();
 		Python_Expression trueExpr = built.generateBuiltIn(BuiltInEnum.TRUE, null);
 		Python_ExpressionStatement asgExprStmt = Python_Assignment.generateAssignment(
-				oddName, null, AssignmentEnum.EQUALS, trueExpr, null, source);
+				oddName, SubscriptEnum.FIRST_IS_ZERO, null,
+				AssignmentEnum.EQUALS, trueExpr, null, source);
 		Python_ComplexStatement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
 		
 		ArrayList<Python_ComplexStatement> copyActions = new ArrayList<Python_ComplexStatement>();

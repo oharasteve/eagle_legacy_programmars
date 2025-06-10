@@ -4,14 +4,19 @@
 package com.eagle.programmar.Java.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_VarExpr;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Subscript;
 import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
+import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
@@ -49,11 +54,13 @@ public class Java_VariableExpression extends PrimaryOperator
 			throw new RuntimeException("Cannot handle variable: " + which);
 		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
-			return generator.newVariableExpression(id.getValue(), subscript, this);
+			return generator.newVariableExpression(id.getValue(),
+					SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 
 	@Override
-	public Java_Expression generateVarExpr(String name, Java_Expression subscrExpr, AbstractToken source)
+	public Java_Expression generateVarExpr(String name, SubscriptEnum offset,
+			Java_Expression subscrExpr, AbstractToken source)
 	{
 		this.variable = Java_Variable.newVariable(name);
 
@@ -61,7 +68,22 @@ public class Java_VariableExpression extends PrimaryOperator
 		{
 			Java_Subscript subscript = new Java_Subscript();
 			subscript.leftBracket = new PunctuationLeftBracket();
-			subscript.expr = subscrExpr;
+			
+			if (offset == SubscriptEnum.FIRST_IS_ONE)
+			{
+				Java_Number num = new Java_Number();
+				Java_Expression one = Java_Generator.wrapExpression(num.generateNumber("1", source));
+				Java_AdditiveExpression addExp = new Java_AdditiveExpression();
+				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Java_Expression minusOne = addExp.generateAdditive(types, subscrExpr,
+						AdditiveEnum.MINUS, one, source);
+				subscript.expr = minusOne;
+			}
+			else
+			{
+				subscript.expr = subscrExpr;
+			}
+
 			subscript.expr.setPresent(true);
 			subscript.rightBracket = new PunctuationRightBracket();
 

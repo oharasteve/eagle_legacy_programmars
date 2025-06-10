@@ -7,6 +7,7 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.EagleGenerator.IncrementEnum;
 import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -110,11 +111,12 @@ public class Delphi_For_Statement extends TokenSequence
 		AbstractExpression fromExpr = transformer.transformExpression(generator, this.from);
 		AbstractExpression toExpr = transformer.transformExpression(generator, this.to);
 		String varName = this.var.getValue();
-		AbstractExpression varExpr = generator.newVariableExpression(varName, null, null);
+		AbstractExpression varExpr = generator.newVariableExpression(varName,
+				SubscriptEnum.FIRST_IS_ZERO, null, null);
 		AbstractStatement newAction = transformer.transformStatement1(
 				generator, this.stmt);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(varName, null,
-				AssignmentEnum.EQUALS, fromExpr, null);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
 
 		String toDownto = this.TO_DOWNTO.getValue();
 		AbstractExpression delta;
@@ -123,14 +125,14 @@ public class Delphi_For_Statement extends TokenSequence
 		switch (this.TO_DOWNTO.getValue().toLowerCase())
 		{
 		case "to":
-			delta = generator.newPostIncrementExpression(varName, null,
-					IncrementEnum.INCREMENT, null);
+			delta = generator.newPostIncrementExpression(varName,
+					SubscriptEnum.FIRST_IS_ZERO, null, IncrementEnum.INCREMENT, null);
 			term = generator.newRelationalExpression(types, varExpr,
 					RelationalEnum.LESS_EQUALS, toExpr, null);
 			break;
 		case "downto":
-			delta = generator.newPostIncrementExpression(varName, null,
-					IncrementEnum.DECREMENT, null);
+			delta = generator.newPostIncrementExpression(varName,
+					SubscriptEnum.FIRST_IS_ZERO, null, IncrementEnum.DECREMENT, null);
 			term = generator.newRelationalExpression(types, varExpr,
 					RelationalEnum.GREATER_EQUALS, toExpr, null);
 			break;

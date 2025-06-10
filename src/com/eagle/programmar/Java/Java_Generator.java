@@ -394,18 +394,18 @@ public class Java_Generator
 	}
 	
 	@Override
-	public Java_Expression newAssignmentExpression(String name, Java_Expression subscript,
-			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
+	public Java_Expression newAssignmentExpression(String name, SubscriptEnum offset,
+			Java_Expression subscript, AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
-		Java_Expression var = varExp.generateVarExpr(name, subscript, source);
+		Java_Expression var = varExp.generateVarExpr(name, offset, subscript, source);
 		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
 		return asgExpr.generateAssignment(var, oper, expression, source);
 	}
 	
 	@Override
-	public Java_Expression newPostIncrementExpression(String name, Java_Expression subscript,
-			IncrementEnum oper, AbstractToken source)
+	public Java_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
+			Java_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
 		Java_PostIncrementExpression incrExpr = new Java_PostIncrementExpression();
@@ -413,8 +413,8 @@ public class Java_Generator
 	}
 	
 	@Override
-	public Java_Expression newPreIncrementExpression(String name, Java_Expression subscript,
-			IncrementEnum oper, AbstractToken source)
+	public Java_Expression newPreIncrementExpression(String name, SubscriptEnum offset,
+			Java_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
 		Java_PreIncrementExpression incrExpr = new Java_PreIncrementExpression();
@@ -539,10 +539,11 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Expression newVariableExpression(String name, Java_Expression subscript, AbstractToken source)
+	public Java_Expression newVariableExpression(String name, SubscriptEnum offset,
+			Java_Expression subscript, AbstractToken source)
 	{
 		Java_VariableExpression varExp = new Java_VariableExpression();
-		return varExp.generateVarExpr(name, subscript, source);
+		return varExp.generateVarExpr(name, offset, subscript, source);
 	}
 	
 	@Override

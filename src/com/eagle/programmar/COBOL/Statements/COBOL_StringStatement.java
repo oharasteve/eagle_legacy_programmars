@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AdditiveEnum;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
@@ -186,8 +187,8 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 		
 		COBOL_StringPiece piece = pieces._elements.get(0);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(
-				COBOL_Variable.repairName(piece.intoVar.getValue()), null,
-				AssignmentEnum.EQUALS, newExpr, this);
+				COBOL_Variable.repairName(piece.intoVar.getValue()),
+				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, newExpr, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;
 	}

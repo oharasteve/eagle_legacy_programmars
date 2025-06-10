@@ -9,6 +9,7 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.EagleGenerator.IncrementEnum;
 import com.eagle.generate.EagleGenerator.RelationalEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
 import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
@@ -173,8 +174,8 @@ public class Java_ForStatement extends TokenSequence
 				String varName = withType.variable.getValue();
 				AbstractExpression fromExpr = transformer.transformExpression(generator,
 						withType.equalsInit.initialExpr);
-				AbstractExpression asgExpr = generator.newAssignmentExpression(varName, null,
-						AssignmentEnum.EQUALS, fromExpr, null);
+				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
 				
 				if (this.increments.getPrimaryCount() == 1)
 				{

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -127,9 +128,11 @@ public class COBOL_PerformInline extends TokenSequence
 					COBOL_PerformVarying varying = (COBOL_PerformVarying) which;
 					indexVar = varying.id.getValue();
 					AbstractExpression fromExpr = transformer.transformExpression(generator, varying.from);
-					initExpr = generator.newAssignmentExpression(indexVar, null, AssignmentEnum.EQUALS, fromExpr, which);
+					initExpr = generator.newAssignmentExpression(indexVar, SubscriptEnum.FIRST_IS_ONE,
+							null, AssignmentEnum.EQUALS, fromExpr, which);
 					AbstractExpression byExpr = transformer.transformExpression(generator, varying.by);
-					incrExpr = generator.newAssignmentExpression(indexVar, null, AssignmentEnum.PLUS_EQUALS, byExpr, which);
+					incrExpr = generator.newAssignmentExpression(indexVar, SubscriptEnum.FIRST_IS_ONE,
+							null, AssignmentEnum.PLUS_EQUALS, byExpr, which);
 				}
 				else if (which instanceof COBOL_PerformUntil)
 				{

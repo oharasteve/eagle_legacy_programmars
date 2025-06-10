@@ -4,6 +4,7 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -90,8 +91,9 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 		}
 	}
 	
-	public static Python_ExpressionStatement generateAssignment(String name, Python_Expression subscript,
-			AssignmentEnum oper, Python_Expression expression, String comment, AbstractToken source)
+	public static Python_ExpressionStatement generateAssignment(String name, SubscriptEnum offset,
+			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression,
+			String comment, AbstractToken source)
 	{
 		if (oper != AssignmentEnum.EQUALS)
 		{
@@ -100,7 +102,7 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		Python_VariableExpression varExpr = new Python_VariableExpression();
-		asgExpr.left = varExpr.generateVarExpr(name, subscript, source);
+		asgExpr.left = varExpr.generateVarExpr(name, offset, subscript, source);
 		asgExpr.operator = new Python_PunctuationChoice("=");
 		asgExpr.right = expression;
 

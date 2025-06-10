@@ -5,6 +5,7 @@ package com.eagle.programmar.Delphi.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
@@ -29,8 +30,8 @@ public class Delphi_GetDateTime_Statement extends TokenSequence
 	{
 		String varName = var.var.getValue();
 		AbstractExpression getDateTime = generator.newCurrentDatetime();
-		AbstractExpression asgExp = generator.newAssignmentExpression(varName, null,
-				AssignmentEnum.EQUALS, getDateTime, var);
+		AbstractExpression asgExp = generator.newAssignmentExpression(varName,
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, getDateTime, var);
 		return generator.newExpressionStatement(asgExp, this);
 	}
 }

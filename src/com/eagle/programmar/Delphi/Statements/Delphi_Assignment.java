@@ -5,6 +5,7 @@ package com.eagle.programmar.Delphi.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -83,8 +84,8 @@ public class Delphi_Assignment extends TokenSequence
 			}
 		}
 
-		AbstractExpression asgStmt = generator.newAssignmentExpression(varName, subscrExpr,
-				AssignmentEnum.EQUALS, newExpr, null);
+		AbstractExpression asgStmt = generator.newAssignmentExpression(varName,
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, newExpr, null);
 		return generator.newExpressionStatement(asgStmt, this);
 	}
 }

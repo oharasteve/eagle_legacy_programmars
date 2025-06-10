@@ -128,8 +128,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	{
 		if (_currentFunction == null && ! didMain)
 		{
-			Python_Type voidType = Python_Type.newPrimitiveType("void");
-			addMethod(voidType, "main", null);
+			addMethod(null, "main", null);
 			didMain = true;
 		}
 	}
@@ -367,22 +366,22 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
-	public Python_Expression newAssignmentExpression(String name, Python_Expression subscript,
-			AssignmentEnum oper, Python_Expression expression, AbstractToken source)
+	public Python_Expression newAssignmentExpression(String name, SubscriptEnum offset,
+			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression, AbstractToken source)
 	{
 		Python_VariableExpression varExpr = new Python_VariableExpression();
-		Python_Expression var = varExpr.generateVarExpr(name,
+		Python_Expression var = varExpr.generateVarExpr(name, offset,
 				subscript, source);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		return asgExpr.generateAssignment(var, oper, expression, source);
 	}
 	
 	@Override
-	public Python_Expression newPostIncrementExpression(String name, Python_Expression subscript,
-			IncrementEnum oper, AbstractToken source)
+	public Python_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
+			Python_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		Python_VariableExpression varExpr = new Python_VariableExpression();
-		Python_Expression var = varExpr.generateVarExpr(name, subscript, source);
+		Python_Expression var = varExpr.generateVarExpr(name, offset, subscript, source);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		Python_Expression one = newNumberExpression("1", null);
 		AssignmentEnum asg;
@@ -401,11 +400,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
-	public Python_Expression newPreIncrementExpression(String name, Python_Expression subscript,
-			IncrementEnum oper, AbstractToken source)
+	public Python_Expression newPreIncrementExpression(String name, SubscriptEnum offset,
+			Python_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		// ++i and i++ are really the same in Python. Both map to i += 1
-		return newPostIncrementExpression(name, subscript, oper, source);
+		return newPostIncrementExpression(name, offset, subscript, oper, source);
 	}
 	
 	@Override
@@ -525,10 +524,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_Expression newVariableExpression(String name, Python_Expression subscript, AbstractToken source)
+	public Python_Expression newVariableExpression(String name, SubscriptEnum offset,
+			Python_Expression subscript, AbstractToken source)
 	{
 		Python_VariableExpression varExp = new Python_VariableExpression();
-		return varExp.generateVarExpr(name, subscript, source);
+		return varExp.generateVarExpr(name, offset, subscript, source);
 	}
 	
 	@Override

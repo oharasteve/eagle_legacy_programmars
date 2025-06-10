@@ -5,6 +5,7 @@ package com.eagle.programmar.VB.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -76,7 +77,8 @@ public class VB_AssignmentStatement extends TokenSequence
 			subscrExpr = transformer.transformExpression(generator, var.subscript.exprs.first());
 		}
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var.var.getValue(), subscrExpr, AssignmentEnum.EQUALS, value, this);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.var.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;
 	}

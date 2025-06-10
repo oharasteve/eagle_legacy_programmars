@@ -5,6 +5,7 @@ package com.eagle.programmar.COBOL.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -122,8 +123,8 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(), null,
-				AssignmentEnum.MINUS_EQUALS, value, this);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(),
+				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.MINUS_EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;
 	}

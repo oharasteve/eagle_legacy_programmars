@@ -4,6 +4,7 @@
 package com.eagle.programmar.VB.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.VB_Expression;
@@ -25,13 +26,15 @@ public class VB_VariableExpression extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
 	{
 		VB_Expression subscript = null;
 		if (variable.subscript != null && variable.subscript.isPresent())
 		{
 			subscript = variable.subscript.exprs.first();
 		}
-		return generator.newVariableExpression(variable.var.getValue(), subscript, this);
+		return generator.newVariableExpression(variable.var.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 }

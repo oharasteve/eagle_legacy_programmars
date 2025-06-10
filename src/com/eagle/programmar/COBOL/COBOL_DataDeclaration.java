@@ -6,6 +6,7 @@ package com.eagle.programmar.COBOL;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -292,7 +293,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					{
 						COBOL_RedefinesClause redefClause = (COBOL_RedefinesClause) which;
 						String redefWhat = redefClause.id.getValue();
-						AbstractExpression redef = generator.newVariableExpression(redefWhat, null, this);
+						AbstractExpression redef = generator.newVariableExpression(redefWhat,
+								SubscriptEnum.FIRST_IS_ONE, null, this);
 						newType = generator.transformType(true, TypeEnum.STRING_ARRAY, varName, this);
 						AbstractStatement data = generator.newDataDeclaration(
 								varName, null, newType, redef, this);

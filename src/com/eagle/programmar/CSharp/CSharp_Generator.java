@@ -383,11 +383,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Expression newAssignmentExpression(String name, CSharp_Expression subscript,
-			AssignmentEnum oper, CSharp_Expression expression, AbstractToken source)
+	public CSharp_Expression newAssignmentExpression(String name, SubscriptEnum offset,
+			CSharp_Expression subscript, AssignmentEnum oper, CSharp_Expression expression,
+			AbstractToken source)
 	{
 		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
-		CSharp_Expression var = varExpr.generateVarExpr(name,
+		CSharp_Expression var = varExpr.generateVarExpr(name, offset,
 				subscript, source);
 		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
 		return asgExpr.generateAssignment(var, oper,
@@ -395,8 +396,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 	
 	@Override
-	public CSharp_Expression newPostIncrementExpression(String name, CSharp_Expression subscript,
-			IncrementEnum oper, AbstractToken source)
+	public CSharp_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
+			CSharp_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		CSharp_Variable var = CSharp_Variable.newVariable(name);
 		CSharp_PostIncrementExpression incrExpr = new CSharp_PostIncrementExpression();
@@ -404,8 +405,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 	
 	@Override
-	public CSharp_Expression newPreIncrementExpression(String name, CSharp_Expression subscript,
-			IncrementEnum oper, AbstractToken source)
+	public CSharp_Expression newPreIncrementExpression(String name, SubscriptEnum offset,
+			CSharp_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		CSharp_Variable var = CSharp_Variable.newVariable(name);
 		CSharp_PreIncrementExpression incrExpr = new CSharp_PreIncrementExpression();
@@ -527,11 +528,11 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 
 
 	@Override
-	public CSharp_Expression newVariableExpression(String name,
+	public CSharp_Expression newVariableExpression(String name, SubscriptEnum offset,
 			CSharp_Expression subscript, AbstractToken source)
 	{
 		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
-		return varExp.generateVarExpr(name, subscript, source);
+		return varExp.generateVarExpr(name, offset, subscript, source);
 	}
 	
 	@Override

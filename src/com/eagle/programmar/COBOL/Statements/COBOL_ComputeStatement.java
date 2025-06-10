@@ -5,6 +5,7 @@ package com.eagle.programmar.COBOL.Statements;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -47,8 +48,8 @@ public class COBOL_ComputeStatement extends COBOL_AbstractStatement
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(
-				COBOL_Variable.repairName(var.getValue()), null,
-				AssignmentEnum.EQUALS, value, this);
+				COBOL_Variable.repairName(var.getValue()),
+				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;
 	}
