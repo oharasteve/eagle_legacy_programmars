@@ -124,12 +124,12 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 
 	public @P(1000) CSharp_SubscriptExpression subscriptExpression;
 	public @P(1010) CSharp_NamespaceExpression namespaceExpression;
-	public @P(1020) CSharp_LengthMethod lengthMethod;
-	public @P(1030) CSharp_ToUpperMethod toUpperMethod;
-	public @P(1040) CSharp_TrimMethod trimMethod;
-	public @P(1050) CSharp_ToStringMethod toStringMethod;
-	public @P(1060) CSharp_SubstringMethod substringMethod;
-	public @P(1070) CSharp_StartsWithMethod startswithMethod;
+	public @P(1020) CSharp_ToUpperMethod toUpperMethod;
+	public @P(1030) CSharp_TrimMethod trimMethod;
+	public @P(1040) CSharp_ToStringMethod toStringMethod;
+	public @P(1050) CSharp_SubstringMethod substringMethod;
+	public @P(1060) CSharp_StartsWithMethod startswithMethod;
+	public @P(1070) CSharp_LengthMethod lengthMethod;
 	public @P(1080) CSharp_SubfieldExpression subfieldExpression;
 	public @P(1090) CSharp_MultiplicativeExpression multiplicativeExpression;
 	public @P(1100) CSharp_AdditiveExpression additiveExpression;
