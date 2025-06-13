@@ -86,10 +86,13 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement
 		
 		for (COBOL_StatementOrComment stmtOrComm : thenActions._elements)
 		{
-			AbstractStatement thenStmt = stmtOrComm.transform(transformer, generator);
-			if (thenStmt != null)
+			ArrayList<AbstractStatement> thenStmts = stmtOrComm.transformStatement(transformer, generator);
+			if (thenStmts != null)
 			{
-				ifTrue.add(thenStmt);
+				for (AbstractStatement stmt : thenStmts)
+				{
+					ifTrue.add(stmt);
+				}
 			}
 		}
 		
@@ -97,10 +100,13 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement
 		{
 			for (COBOL_StatementOrComment stmtOrComm : elseClause.elseActions._elements)
 			{
-				AbstractStatement elseStmt = stmtOrComm.transform(transformer, generator);
-				if (elseStmt != null)
+				ArrayList<AbstractStatement> elseStmts = stmtOrComm.transformStatement(transformer, generator);
+				if (elseStmts != null)
 				{
-					ifFalse.add(elseStmt);
+					for (AbstractStatement stmt : elseStmts)
+					{
+						ifFalse.add(stmt);
+					}
 				}
 			}
 		}

@@ -146,8 +146,11 @@ public class COBOL_PerformInline extends TokenSequence
 		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
 		for (COBOL_StatementOrComment stmtOrComm : statements._elements)
 		{
-			AbstractStatement newStmt = transformer.transformStatement1(generator, stmtOrComm.getWhich());
-			stmts.add(newStmt);
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmtOrComm);
+			for (AbstractStatement stmt : newStmts)
+			{
+				stmts.add(stmt);
+			}
 		}
 		
 		// Four cases: both varying and while; just varying; just while; neither
