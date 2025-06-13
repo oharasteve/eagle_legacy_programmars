@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.generate.EagleGenerator.SubscriptEnum;
@@ -23,11 +25,11 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
 public class COBOL_AddStatement extends COBOL_AbstractStatement
-		implements EagleRunnable, EagleTransformableStatement
+		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) @DOC("rlpsadd.htm") COBOL_Keyword ADD = new COBOL_Keyword("ADD");
 	public @S(20) COBOL_AddType type;
@@ -126,7 +128,7 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		if (! (type.getWhich() instanceof COBOL_AddNoGiving))
 		{
@@ -157,11 +159,29 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 			throw new RuntimeException("Can't handle field OF variable: " + this);
 		}
 		
+		ArrayList<AbstractStatement> results = new ArrayList<AbstractStatement>();
+		
+		// ADD 1 TO X
 		AbstractExpression value = transformer.transformExpression(generator, addNoGiving.expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(
 				COBOL_Variable.repairName(userVar.id.getValue()), SubscriptEnum.FIRST_IS_ONE,
 				null, AssignmentEnum.PLUS_EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
-		return exprStmt;
+		results.add(exprStmt);
+
+		// ADD 1 TO X, Y, Z
+		if (addNoGiving.addTo.moreVars != null && addNoGiving.addTo.moreVars.size() > 0)
+		{
+			for (COBOL_AddMoreVars more : addNoGiving.addTo.moreVars._elements)
+			{
+				COBOL_UserVariable moreVar = (COBOL_UserVariable) more.var.getWhich();
+				AbstractExpression moreExpr = generator.newAssignmentExpression(
+						COBOL_Variable.repairName(moreVar.id.getValue()), SubscriptEnum.FIRST_IS_ONE,
+						null, AssignmentEnum.PLUS_EQUALS, value, this);
+				AbstractStatement moreStmt = generator.newExpressionStatement(moreExpr, this);
+				results.add(moreStmt);
+			}
+		}
+		return results;
 	}
 }
