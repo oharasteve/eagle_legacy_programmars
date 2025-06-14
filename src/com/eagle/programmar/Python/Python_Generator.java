@@ -42,7 +42,6 @@ import com.eagle.programmar.Python.Statements.Python_StatementBlock;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Statements.Python_WhileStatement;
-import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
 import com.eagle.programmar.Python.Terminals.Python_HexNumber;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.programmar.Python.Terminals.Python_Number;
@@ -61,11 +60,19 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	
 	private Python_Program _program;
 	
+	// Python requires functions to be declared (visible) before usage.
+	// Also, you cannot access variables inside another function.
+	// So, we split everything up into three groups and collect them separately.
+	// At completion, we combine them back into a single program
+	// See getTransformedProgram() for the combining logic.
+	// See addStatement() for the logic splitting things up into three parts
+	private ArrayList<Python_ComplexStatement> _globalData = new ArrayList<Python_ComplexStatement>();
+	private ArrayList<Python_ComplexStatement> _allFunctions = new ArrayList<Python_ComplexStatement>();
+	private ArrayList<Python_ComplexStatement> _mainLogic = new ArrayList<Python_ComplexStatement>();
+	
 	public Python_Generator(String mainName)
 	{
 		_program = new Python3_Program();
-		_program.entries = new TokenList<Python_ComplexStatement>();
-		_program.entries.setPresent(true);
 	}
 	
 	@Override
@@ -83,11 +90,20 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
-		Python3_Program program = (Python3_Program) _program;
-		Python_Variable mainVar = this.newVariable("main");
-		Python_Expression mainExpr = this.newMethodInvocation(mainVar, null, program);
-		Python_ComplexStatement mainStmt = newExpressionStatement(mainExpr, program);
-		program.entries.addToken(mainStmt);
+		_program.entries = new TokenList<Python_ComplexStatement>();
+		_program.entries.setPresent(true);
+		for (Python_ComplexStatement stmt1 : _globalData)
+		{
+			_program.entries.addToken(stmt1);
+		}
+		for (Python_ComplexStatement stmt2 : _allFunctions)
+		{
+			_program.entries.addToken(stmt2);
+		}
+		for (Python_ComplexStatement stmt3 : _mainLogic)
+		{
+			_program.entries.addToken(stmt3);
+		}
 		return _program;
 	}
 	
@@ -122,22 +138,12 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	// ================== Main program and class ==================
 	
 	private Python_Function _currentFunction = null;
-	private boolean didMain = false;
-
-	private void checkMethod()
-	{
-		if (_currentFunction == null && ! didMain)
-		{
-			addMethod(null, "main", null);
-			didMain = true;
-		}
-	}
 
 	@Override
 	public void addMethod(Python_Type returnType, String name, AbstractToken source)
 	{
 		_currentFunction = Python_Function.newPythonFunction(name);
-		_program.entries.addToken(wrapStatement(_currentFunction));
+		_allFunctions.add(wrapStatement(_currentFunction));
 	}
 	
 	@Override
@@ -156,10 +162,17 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public void addStatement(Python_ComplexStatement stmt, AbstractToken source)
 	{
 		if (stmt == null) return;
-		checkMethod();
+		
+		if (_currentFunction != null)
+		{
+			// Save everything inside the function, both data and logic
+			Python_MultilineStatement multi =
+					(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
+			multi.statements.addToken(stmt);
+			return;
+		}
 		
 		// Cannot put data into the 'main' method when it was declared in a global area
-		boolean saveInClass = false;
 		AbstractToken which = stmt.statementOrComment.getWhich();
 		if (which instanceof Python_SameLineStatement)
 		{
@@ -169,34 +182,14 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 				Python_Statement stmt1 = same.statements.first();
 				if (stmt1.getWhich() instanceof Python_Data)
 				{
-					if (_currentFunction == null)
-					{
-						saveInClass = true;
-					}
-					else
-					{
-						if (_currentFunction.fnName.getWhich() instanceof Python_Function_Definition)
-						{
-							Python_Function_Definition def = (Python_Function_Definition) _currentFunction.fnName.getWhich();
-							if (def.getValue().equals("main"))
-							{
-								saveInClass = true;
-							}
-						}
-					}
+					_globalData.add(stmt);
+					return;
 				}
 			}
 		}
-			
-		if (saveInClass)
-		{
-			_program.entries.addToken(stmt);
-			return;
-		}
-
-		Python_MultilineStatement multi =
-				(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
-		multi.statements.addToken(stmt);
+		
+		// Must be global logic (i.e., "main")
+		_mainLogic.add(stmt);
 	}
 
 	@Override
@@ -298,20 +291,20 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 
 	@Override
 	public Python_ComplexStatement newForRangeStatement1(Python_Variable var, Python_Expression first,
-			Python_Expression last, Python_Expression step, Python_ComplexStatement action,
-			AbstractToken source)
+			RelationalEnum relOp, Python_Expression last, Python_Expression step,
+			Python_ComplexStatement action, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
-		return forStmt.generateForRange1(var, first, last, step, action, source);
+		return forStmt.generateForRange1(var, first, relOp, last, step, action, source);
 	}
 
 	@Override
 	public Python_ComplexStatement newForRangeStatement(Python_Variable var, Python_Expression first,
-			Python_Expression last, Python_Expression step,
+			RelationalEnum relOp, Python_Expression last, Python_Expression step,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
-		return forStmt.generateForRange(var, first, last, step, actions, source);
+		return forStmt.generateForRange(var, first, relOp, last, step, actions, source);
 	}
 
 	@Override
