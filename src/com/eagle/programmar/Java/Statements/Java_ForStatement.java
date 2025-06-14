@@ -248,7 +248,7 @@ public class Java_ForStatement extends TokenSequence
 
 	@Override
 	public Java_Statement generateForRange1(Java_Variable var, Java_Expression fromExpression,
-			Java_Expression toExpression, Java_Expression delta,
+			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
 			Java_Statement act, AbstractToken source)
 	{
 		Java_VariableExpression tempVar = new Java_VariableExpression();
@@ -326,7 +326,7 @@ public class Java_ForStatement extends TokenSequence
 	
 	@Override
 	public Java_Statement generateForRange(Java_Variable var, Java_Expression fromExpression,
-			Java_Expression toExpression, Java_Expression delta,
+			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
@@ -340,7 +340,7 @@ public class Java_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return generateForRange1(var, fromExpression, toExpression,
+		return generateForRange1(var, fromExpression, relOper, toExpression,
 				delta, Java_Generator.wrapStatement(block), source);
 	}
 }

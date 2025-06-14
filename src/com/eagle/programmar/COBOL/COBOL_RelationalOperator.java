@@ -11,7 +11,8 @@ import com.eagle.tokens.TokenSequence;
 
 public class COBOL_RelationalOperator extends TokenChooser
 {
-	public @CHOICE COBOL_PunctuationChoice XXoperator = new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">");
+	public @CHOICE COBOL_PunctuationChoice XXoperator =
+			new COBOL_PunctuationChoice("<=", "<", "=", ">=", ">", "<>");
 
 	public @CHOICE static class COBOL_Greater extends TokenSequence
 	{

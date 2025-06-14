@@ -192,7 +192,7 @@ public class CSharp_ForStatement extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateForRange1(CSharp_Variable var, CSharp_Expression fromExpression,
-			CSharp_Expression toExpression, CSharp_Expression delta,
+			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
 			CSharp_Statement act, AbstractToken source)
 	{
 		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
@@ -268,7 +268,7 @@ public class CSharp_ForStatement extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateForRange(CSharp_Variable var, CSharp_Expression fromExpression,
-			CSharp_Expression toExpression, CSharp_Expression delta,
+			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock block = new CSharp_StatementBlock();
@@ -282,7 +282,7 @@ public class CSharp_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return generateForRange1(var, fromExpression, toExpression,
+		return generateForRange1(var, fromExpression, relOper, toExpression,
 				delta, CSharp_Generator.wrapStatement(block), source);
 	}
 }

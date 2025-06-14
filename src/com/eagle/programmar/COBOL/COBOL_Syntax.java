@@ -21,7 +21,7 @@ public abstract class COBOL_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_extraCharacters = "-";
 		_punctuationExceptions = new String[] {
-				"**"
+				"**", "<=", ">=", "<>"
 		};
 
 		addReservedWords(COBOL_Reserved_Words.RESERVED_WORDS);

@@ -198,7 +198,7 @@ public abstract class Eagle_RunTest extends TestCase
 		}
 		catch (Exception ex)
 		{
-			throw new RuntimeException("Failed running Python version of " + entry.sourceFile, ex);
+			throw new RuntimeException("Diff failed running " + entry.sourceFile, ex);
 		}
 	}
 }

@@ -6,6 +6,7 @@ package com.eagle.programmar.VB.Statements;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -125,7 +126,8 @@ public class VB_ForStatement extends TokenSequence
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (VB_Element statement : actions._elements)
 		{
-			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.baseStatement.getWhich());
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+					statement.baseStatement.getWhich());
 			if (stmts != null)
 			{
 				for (AbstractStatement stmt : stmts)
@@ -136,7 +138,8 @@ public class VB_ForStatement extends TokenSequence
 		}
 		
 		AbstractVariable var = generator.newVariable(variable.getValue());
-		AbstractStatement stmt = generator.newForRangeStatement(var, initExpr, termExpr, incrExpr, actionList, this);
+		AbstractStatement stmt = generator.newForRangeStatement(var, initExpr,
+				RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
 		return stmt;
 	}
 }

@@ -67,6 +67,9 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 			case "=":
 				result = leftInt == rightInt;
 				break;
+			case "<>":
+				result = leftInt != rightInt;
+				break;
 			case "<":
 				result = leftInt < rightInt;
 				break;
@@ -106,6 +109,9 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 			case "=":
 				newOper = RelationalEnum.NOT_EQUALS;
 				break;
+			case "<>":
+				newOper = RelationalEnum.EQUALS;
+				break;
 			case "<":
 				newOper = RelationalEnum.GREATER_EQUALS;
 				break;
@@ -128,6 +134,9 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 			{
 			case "=":
 				newOper = RelationalEnum.EQUALS;
+				break;
+			case "<>":
+				newOper = RelationalEnum.NOT_EQUALS;
 				break;
 			case "<":
 				newOper = RelationalEnum.LESS_THAN;

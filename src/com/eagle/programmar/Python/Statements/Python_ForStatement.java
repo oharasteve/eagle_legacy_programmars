@@ -6,6 +6,7 @@ package com.eagle.programmar.Python.Statements;
 import java.util.ArrayList;
 
 import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
 import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
@@ -279,25 +280,31 @@ public class Python_ForStatement extends TokenSequence
 		{
 			throw new RuntimeException("Condition part too complicated for now.");
 		}
-//		Python_PunctuationChoice condOper = (Python_PunctuationChoice) cond.operator.getWhich();
-//		RelationalEnum relOper;
-//		switch (condOper.getValue())
-//		{
-//		case "<":
-//			relOper = RelationalEnum.LESS_THAN;
-//			break;
-//		case "<=":
-//			relOper = RelationalEnum.LESS_EQUALS;
-//			break;
-//		case ">=":
-//			relOper = RelationalEnum.GREATER_EQUALS;
-//			break;
-//		case ">":
-//			relOper = RelationalEnum.GREATER_THAN;
-//			break;
-//		default:
-//			throw new RuntimeException("Unexpected operator: " + condOper.getValue());
-//		}
+		Python_PunctuationChoice condOper = (Python_PunctuationChoice) cond.operator.getWhich();
+		RelationalEnum relOper;
+		switch (condOper.getValue())
+		{
+		case "=":
+			relOper = RelationalEnum.EQUALS;
+			break;
+		case "<>", "!=":
+			relOper = RelationalEnum.NOT_EQUALS;
+			break;
+		case "<":
+			relOper = RelationalEnum.LESS_THAN;
+			break;
+		case "<=":
+			relOper = RelationalEnum.LESS_EQUALS;
+			break;
+		case ">=":
+			relOper = RelationalEnum.GREATER_EQUALS;
+			break;
+		case ">":
+			relOper = RelationalEnum.GREATER_THAN;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + condOper.getValue());
+		}
 		
 		Python_VariableExpression initVarExp = (Python_VariableExpression) init.left.getWhich();
 		Python_VariableExpression condVarExp = (Python_VariableExpression) cond.left.getWhich();
@@ -326,22 +333,22 @@ public class Python_ForStatement extends TokenSequence
 		Python_Number numb = Python_Number.createNumber(delta);
 		Python_Expression deltaExp = new Python_Expression();
 		deltaExp.setWhich(numb);
-		return generateForRange(initVarExp.variable, init.right, cond.right, deltaExp, actions, source);
+		return generateForRange(initVarExp.variable, init.right, relOper, cond.right, deltaExp, actions, source);
 	}
 
 	@Override
 	public Python_ComplexStatement generateForRange1(Python_Variable var, Python_Expression fromExpression,
-			Python_Expression toExpression, Python_Expression delta,
+			RelationalEnum relOp, Python_Expression toExpression, Python_Expression delta,
 			Python_ComplexStatement action, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
-		return generateForRange(var, fromExpression, toExpression, delta, actions, source);
+		return generateForRange(var, fromExpression, relOp, toExpression, delta, actions, source);
 	}
 
 	@Override
 	public Python_ComplexStatement generateForRange(Python_Variable var, Python_Expression fromExpression,
-			Python_Expression toExpression, Python_Expression delta,
+			RelationalEnum relOper, Python_Expression toExpression, Python_Expression delta,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		this.colon = new PunctuationColon();
@@ -375,38 +382,49 @@ public class Python_ForStatement extends TokenSequence
 			}
 		}
 
-		SeparatedList<Python_Expression, PunctuationComma> argList = new SeparatedList<Python_Expression, PunctuationComma>();
+		SeparatedList<Python_Expression, PunctuationComma> argList =
+				new SeparatedList<Python_Expression, PunctuationComma>();
 		argList.addPrimaryElement(fromExpression);
 		
 		// range(3,6,1) generates 3,4,5
 		// range(6,3,-1) generates 6,5,4
 		// Need to add 1 if delta > 0 or delta = null, subtract 1 if delta < 0
-		AdditiveEnum oper = AdditiveEnum.PLUS;
-		if (delta != null)
+		Python_Expression high = toExpression;
+		switch (relOper)
 		{
-			AbstractToken whichDelta = delta.getWhich();
-			if (whichDelta instanceof Python_Number)
+		case LESS_EQUALS:
+		case GREATER_EQUALS:
+			// Have to switch to x+1 or x-1
+			AdditiveEnum oper = AdditiveEnum.PLUS;
+			if (delta != null)
 			{
-				Python_Number num = (Python_Number) whichDelta; // It is still a string
-				if (num.getValue().trim().startsWith("-")) oper = AdditiveEnum.MINUS;
+				AbstractToken whichDelta = delta.getWhich();
+				if (whichDelta instanceof Python_Number)
+				{
+					Python_Number num = (Python_Number) whichDelta; // It is still a string
+					if (num.getValue().trim().startsWith("-")) oper = AdditiveEnum.MINUS;
+				}
+				else
+				{
+					throw new RuntimeException("need to implement");
+				}
 			}
-			else
-			{
-				throw new RuntimeException("need to implement");
-			}
-		}
 
-		Python_Number one = new Python_Number();
-		Python_Expression oneExpr = Python_Generator.wrapExpression(one.generateNumber("1", null));
+			Python_Number one = new Python_Number();
+			Python_Expression oneExpr = Python_Generator.wrapExpression(one.generateNumber("1", null));
 		
-		Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
-		Python_Expression parenExpr = parens.generateParentheses(toExpression, null);
-		
-		Python_Additive_Expression add = new Python_Additive_Expression();
-		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-		Python_Expression addExpr = add.generateAdditive(types, parenExpr, oper, oneExpr, null);
+			Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
+			Python_Expression parenExpr = parens.generateParentheses(toExpression, null);
+			
+			Python_Additive_Expression add = new Python_Additive_Expression();
+			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			high = add.generateAdditive(types, parenExpr, oper, oneExpr, null);
+			break;
+		default:
+			// No change needed for =, <>, <= or >=
+		}
 		argList.addSecondaryElement(new PunctuationComma());
-		argList.addPrimaryElement(addExpr);
+		argList.addPrimaryElement(high);
 
 		if (delta != null)
 		{
