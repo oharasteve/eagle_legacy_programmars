@@ -83,6 +83,12 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
 		
+		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+		
 		CSharp_Data data = new CSharp_Data();
 		data.dataBody = new CSharp_DataBeforeSemicolon();
 		data.semicolon = new PunctuationSemicolon();

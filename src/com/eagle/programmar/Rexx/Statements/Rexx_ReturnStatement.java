@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -27,6 +28,19 @@ public class Rexx_ReturnStatement extends TokenSequence
 		if (expr != null && expr.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(expr);
+
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof Rexx_Function)
+				{
+					Rexx_Function func = (Rexx_Function) parent;
+					func._returnMetrics.returned(val.typeName());
+					break;
+				}
+				parent = parent.getParent();
+			}
+
 			interpreter.pushEagleValue(val);
 		}
 		return Eagle_Statement_Result.BREAK;

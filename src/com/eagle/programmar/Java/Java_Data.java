@@ -86,6 +86,12 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
 		
+		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+		
 		Java_Data data = new Java_Data();
 		data.semicolon = new PunctuationSemicolon();
 		

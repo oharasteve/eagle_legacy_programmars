@@ -4,6 +4,7 @@
 package com.eagle.programmar.Rexx;
 
 import com.eagle.programmar.Rexx.Expressions.Rexx_AdditiveExpression;
+import com.eagle.programmar.Rexx.Expressions.Rexx_BuiltIns;
 import com.eagle.programmar.Rexx.Expressions.Rexx_CommentExpression;
 import com.eagle.programmar.Rexx.Expressions.Rexx_ConcatExpression;
 import com.eagle.programmar.Rexx.Expressions.Rexx_LogicalAndExpression;
@@ -59,9 +60,10 @@ public class Rexx_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(120) Rexx_FunctionCall functionCall;
 	public @P(130) Rexx_NegativeExpression negativeExpression;
 	public @P(140) Rexx_LogicalNotExpression notExpression;
-	public @P(150) Rexx_VariableExpression variableExpression;
-	public @P(160) Rexx_ParenthesizedExpression parenthesizedExpression;
-	public @P(170) Rexx_CommentExpression commentExpression;
+	public @P(150) Rexx_BuiltIns builtIn;
+	public @P(160) Rexx_VariableExpression variableExpression;
+	public @P(170) Rexx_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Rexx_CommentExpression commentExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

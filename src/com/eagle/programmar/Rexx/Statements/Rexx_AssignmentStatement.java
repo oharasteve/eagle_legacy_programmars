@@ -96,8 +96,16 @@ public class Rexx_AssignmentStatement extends TokenSequence
 				throw new RuntimeException("Unexpected subscript: " + which);
 			}
 		}
+		
+		String name = variable.var.getValue();
+		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.var.getValue(),
+		AbstractExpression asgExpr = generator.newAssignmentExpression(name,
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;

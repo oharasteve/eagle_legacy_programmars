@@ -45,6 +45,12 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 			return null;
 		}
 		
+		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+		
 		Python_Data data = new Python_Data();
 		
 		// Set data name and type
