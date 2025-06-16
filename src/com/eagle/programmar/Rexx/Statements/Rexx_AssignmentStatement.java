@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleHash;
@@ -10,12 +13,17 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Subscript;
 import com.eagle.programmar.Rexx.Rexx_Variable;
+import com.eagle.programmar.Rexx.Terminals.Rexx_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Rexx_AssignmentStatement extends TokenSequence
-		implements EagleRunnable, AbstractStatement
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("concepts-assignments-symbols") Rexx_Variable variable;
 	public @S(20) PunctuationEquals equals;
@@ -43,5 +51,55 @@ public class Rexx_AssignmentStatement extends TokenSequence
 		{
 			interpreter.setSymbol(variable, variable.var.getValue(), val);
 		}
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		// Rexx doesn't have a Return statement. It assigns a value to the function name
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof Rexx_Function)
+			{
+				Rexx_Function func = (Rexx_Function) parent;
+				if (variable.var.getValue().equals(func.id.getValue()))
+				{
+					AbstractExpression retExpr = transformer.transformExpression(generator, expr);
+					return generator.newReturnStatement(retExpr, this);
+				}
+				break;
+			}
+			parent = parent.getParent();
+		}
+
+		// Normal assignment ...
+		AbstractExpression subscrExpr = null;
+		if (variable.subscript != null && variable.subscript.isPresent())
+		{
+			AbstractToken which = variable.subscript.subscr.getWhich();
+			if (which instanceof Rexx_Number)
+			{
+				Rexx_Number number = (Rexx_Number) which;
+				subscrExpr = generator.newNumberExpression(number.getValue(),
+						variable.subscript.subscr);
+			}
+			else if (which instanceof Rexx_Variable)
+			{
+				Rexx_Variable var = (Rexx_Variable) which;
+				subscrExpr = generator.newVariableExpression(var.var.getValue(),
+						SubscriptEnum.FIRST_IS_ZERO, null, variable.subscript.subscr);
+			}
+			else
+			{
+				throw new RuntimeException("Unexpected subscript: " + which);
+			}
+		}
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.var.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

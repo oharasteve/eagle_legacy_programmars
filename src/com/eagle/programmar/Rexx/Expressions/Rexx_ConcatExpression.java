@@ -6,6 +6,8 @@ package com.eagle.programmar.Rexx.Expressions;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Punctuation;
@@ -20,12 +22,23 @@ public class Rexx_ConcatExpression extends PrecedenceOperator implements EagleRu
 	public @S(20) Rexx_Punctuation operator = new Rexx_Punctuation("||");
 	public @S(30) Rexx_Expression right = new Rexx_Expression(this, AllowedPrecedence.HIGHER);
 
+	private @SKIP Operator2Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String leftValue = interpreter.getStrValue(left);
-		String rightValue = interpreter.getStrValue(right);
-		interpreter.pushStr(leftValue + rightValue);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+		
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, operator.getValue());
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		String leftStr = leftValue.forceStringValue();
+		String rightStr = rightValue.forceStringValue();
+		interpreter.pushStr(leftStr + rightStr);
 	}
 
 	@Override

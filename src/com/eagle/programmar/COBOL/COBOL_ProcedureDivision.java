@@ -10,6 +10,7 @@ import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_ParagraphHeader;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -33,13 +34,22 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 	public static class COBOL_ProcedureUsing extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword USING = new COBOL_Keyword("USING");
-		public @S(20) COBOL_Identifier_Reference id;
-		public @S(30) @OPT TokenList<COBOL_ProcedureUsingWhat> uses;
+		public @S(20) @OPT COBOL_ProcedureUsingBy by;
+		public @S(30) COBOL_Identifier_Reference id;
+		public @S(40) @OPT TokenList<COBOL_ProcedureUsingWhat> uses;
 
+		public static class COBOL_ProcedureUsingBy extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword BY = new COBOL_Keyword("BY");
+			public @S(20) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice
+					("CONTENT", "REFERENCE", "VALUE");
+		}
+		
 		public static class COBOL_ProcedureUsingWhat extends TokenSequence
 		{
 			public @S(10) @OPT PunctuationComma comma;
-			public @S(20) COBOL_Identifier_Reference id;
+			public @S(20) @OPT COBOL_ProcedureUsingBy by;
+			public @S(30) COBOL_Identifier_Reference id;
 		}
 	}
 

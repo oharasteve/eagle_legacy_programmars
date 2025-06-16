@@ -3,12 +3,17 @@
 
 package com.eagle.programmar.Rexx.Terminals;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.interfaces.AbstractComment;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.terminals.TerminalCommentToken;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rexx_Comment extends TerminalCommentToken implements AbstractComment
+public class Rexx_Comment extends TerminalCommentToken
+		implements AbstractComment, EagleTransformableStatement
 {
 	// Need a default constructor for the parser
 	public Rexx_Comment()
@@ -51,5 +56,12 @@ public class Rexx_Comment extends TerminalCommentToken implements AbstractCommen
 	public String description()
 	{
 		return "/* comment */ or // comment to end of line";
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return null;		// Might want to keep comment statements somehow.
 	}
 }

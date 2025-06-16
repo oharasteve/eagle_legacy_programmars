@@ -14,7 +14,6 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -67,27 +66,32 @@ public class Rexx_Program extends AbstractLanguage
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
-		// First pass, transform all the Function and Sub definitions
+		// First pass, transform all the Function definitions
 		for (Rexx_TopElement stmt : elements._elements)
 		{
-			AbstractToken which = stmt.getWhich();
-			if (which instanceof EagleTransformableFunction)
+			AbstractToken which1 = stmt.getWhich();
+			if (which1 instanceof Rexx_Function)
 			{
-				EagleTransformableFunction transformable = (EagleTransformableFunction) which;
-				transformable.transformFunction(transformer, generator);
+				Rexx_Function func = (Rexx_Function) which1;
+				func.transformFunction(transformer, generator);
 			}
 		}
 
 		// Second pass, transform all the data and logic
 		for (Rexx_TopElement stmt : elements._elements)
 		{
-			AbstractToken which = stmt.getWhich();
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
-			if (newStmts != null)
+			AbstractToken which2 = stmt.getWhich();
+			if (which2 instanceof Rexx_Element)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				Rexx_Element elt = (Rexx_Element) which2;
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(
+						generator, elt.baseStatement.getWhich());
+				if (newStmts != null)
 				{
-					generator.addStatement(newStmt, stmt);
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, elt);
+					}
 				}
 			}
 		}

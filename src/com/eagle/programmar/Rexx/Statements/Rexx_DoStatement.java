@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -15,10 +19,15 @@ import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rexx_DoStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Rexx_DoStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("instructions-do") Rexx_Keyword DO = new Rexx_Keyword("DO");
 	public @S(20) @OPT Rexx_DoLoop loop;
@@ -146,5 +155,78 @@ public class Rexx_DoStatement extends TokenSequence implements AbstractStatement
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (loop != null && loop.isPresent())
+		{
+			if (doWhile != null && doWhile.isPresent())
+			{
+				throw new RuntimeException("Need to implement DO LOOP with WHILE");
+			}
+			
+			AbstractExpression initExpr = transformer.transformExpression(generator, loop.from);
+			AbstractExpression termExpr = transformer.transformExpression(generator, loop.to);
+			AbstractExpression incrExpr = null;
+			if (loop.step != null && loop.step.isPresent())
+			{
+				incrExpr = transformer.transformExpression(generator, loop.step.step);
+			}
+			
+			ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+			for (Rexx_Element statement : actions._elements)
+			{
+				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+						statement.baseStatement.getWhich());
+				if (stmts != null)
+				{
+					for (AbstractStatement stmt : stmts)
+					{
+						actionList.add(stmt);
+					}
+				}
+			}
+			
+			AbstractVariable var = generator.newVariable(loop.var.getValue());
+			AbstractStatement stmt = generator.newForRangeStatement(var, initExpr,
+					RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
+			return stmt;
+		}
+
+		if (doWhile != null && doWhile.isPresent())
+		{
+			AbstractExpression cond = transformer.transformExpression(generator, doWhile.condition);
+			ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+			
+			for (Rexx_Element statement : actions._elements)
+			{
+				for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+				{
+					whileTrue.add(stmt);
+				}
+			}
+			
+			AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+			return stmt;
+		}
+
+		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
+		if (this.actions != null)
+		{
+			for (Rexx_Element elt : this.actions._elements)
+			{
+				AbstractStatement newStmt = transformer.transformStatement1(generator,
+						elt.baseStatement.getWhich());
+				if (newStmt != null)
+				{
+					stmts.add(newStmt);
+				}
+			}
+		}
+
+		return generator.newBlockStatement(stmts, this);
 	}
 }

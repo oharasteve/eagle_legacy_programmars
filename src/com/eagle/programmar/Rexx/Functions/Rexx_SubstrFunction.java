@@ -47,6 +47,6 @@ public class Rexx_SubstrFunction extends PrimaryOperator implements EagleRunnabl
 		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
 		AbstractExpression nc = transformer.transformExpression(generator, ncExpr);
 		return generator.newSubstringFunction(theExpr, sc, SubstringSCEnum.FIRST_CHAR_IS_ONE,
-				SubstringECEnum.GIVEN_NC, nc, false, this);
+				SubstringECEnum.GIVEN_NC, nc, true, this);
 	}
 }

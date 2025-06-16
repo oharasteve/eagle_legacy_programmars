@@ -37,8 +37,9 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class CSharp_Method extends TokenSequence implements
-			AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
+public class CSharp_Method extends TokenSequence
+		implements AbstractMethod, AbstractFunction, EagleRunnable,
+				EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comments;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;

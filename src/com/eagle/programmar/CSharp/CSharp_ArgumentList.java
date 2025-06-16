@@ -19,7 +19,7 @@ public class CSharp_ArgumentList extends TokenSequence
 
 	public static class CSharp_MoreArguments extends TokenSequence
 	{
-		public @S(10) PunctuationComma comma;
+		public @S(10) @NOSPACE PunctuationComma comma;
 		public @S(20) @OPT CSharp_Argument arg;
 		public @S(30) @OPT TokenList<CSharp_Comment> comments;
 	}

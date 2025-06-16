@@ -17,7 +17,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rexx_AdditiveExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_AdditiveExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_Expression left = new Rexx_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Rexx_PunctuationChoice operator = new Rexx_PunctuationChoice("+", "-");

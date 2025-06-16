@@ -3,10 +3,17 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.EagleMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Rexx.Rexx_Element;
 import com.eagle.programmar.Rexx.Rexx_Syntax;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Function_Definition;
@@ -16,14 +23,20 @@ import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
 public class Rexx_Function extends TokenSequence
-		implements AbstractFunction, EagleRunnable, EagleScopeInterface
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @DOC("reference-functions") Rexx_Function_Definition id;
 	public @S(20) PunctuationColon colon;
@@ -31,8 +44,6 @@ public class Rexx_Function extends TokenSequence
 	public @S(40) @OPT Rexx_Parameters params;
 	public @S(50) TokenList<Rexx_Element> stmts;
 	
-	private @SKIP EagleScope _scope = new EagleScope(this, Rexx_Syntax.IS_CASE_SENSITIVE);
-
 	public static class Rexx_Parameters extends TokenSequence
 	{
 		public @S(10) Rexx_Keyword PARSE = new Rexx_Keyword("PARSE");
@@ -41,6 +52,8 @@ public class Rexx_Function extends TokenSequence
 		public @S(40) Rexx_EndOfLine eoln;
 	}
 	
+	private @SKIP EagleScope _scope = new EagleScope(this, Rexx_Syntax.IS_CASE_SENSITIVE);
+
 	@Override
 	public EagleScope getScope()
 	{
@@ -49,6 +62,7 @@ public class Rexx_Function extends TokenSequence
 	
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -61,9 +75,61 @@ public class Rexx_Function extends TokenSequence
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
+		}
 		
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
+	}
+
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		TypeEnum metricRetType = transformer.findReturnMetric(id);
+		AbstractType newReturnType = generator.transformType(false, metricRetType, null, id);
+		
+		generator.addMethod(newReturnType, id.getValue(), this);
+		generator.addMethodName(id.getValue());
+		
+		// Search metrics for arg types -- might not be any
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		
+		if (params != null && params.isPresent())
+		{
+			for (int i = 0; i < params.params.getPrimaryCount(); i++)
+			{
+				Rexx_Variable_Definition param = params.params.getPrimaryElement(i);
+				AbstractType paramType = null;
+				
+				if (argTypes != null && i < argTypes.size())
+				{
+					String metricArgType = argTypes.get(i);
+					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					paramType = generator.transformType(false, metricArg, null, param);
+				}
+				
+				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+				generator.addMethodParameter(paramType, param.getValue());
+			}
+		}
+		
+		for (Rexx_Element stmt : stmts._elements)
+		{
+			AbstractToken which = stmt.baseStatement.getWhich();
+
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+			if (newStmts != null)
+			{
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt, stmt);
+				}
+			}
+		}
+		
+		generator.doneMethod();
 	}
 }

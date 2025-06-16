@@ -3,14 +3,19 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rexx_SayStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Rexx_SayStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("instructions-say") Rexx_Keyword SAY = new Rexx_Keyword("SAY");
 	public @S(20) Rexx_Expression expr;
@@ -20,5 +25,12 @@ public class Rexx_SayStatement extends TokenSequence implements AbstractStatemen
 	{
 		String line = interpreter.getStrValue(expr);
 		System.out.println(line);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression line = transformer.transformExpression(generator, expr);
+		return generator.newPrintStatement1(line, true, this);
 	}
 }

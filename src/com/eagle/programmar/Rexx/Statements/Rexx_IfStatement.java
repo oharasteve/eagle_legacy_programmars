@@ -5,20 +5,24 @@ package com.eagle.programmar.Rexx.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
-import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Rexx_Element.Rexx_Statement;
+import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Comment;
 import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Rexx_IfStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("instructions-if") Rexx_Keyword IF = new Rexx_Keyword("IF");
 	public @S(20) Rexx_Expression condition;
@@ -61,5 +65,36 @@ public class Rexx_IfStatement extends TokenSequence
 			result = interpreter.tryToInterpret(elseClause.elseStatement);
 		}
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+				this.thenStatement.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt : stmts)
+			{
+				ifTrue.add(stmt);
+			}
+		}
+		
+		if (this.elseClause != null && this.elseClause.isPresent())
+		{
+			for (AbstractStatement stmt : transformer.transformStatement(generator,
+					this.elseClause.elseStatement.getWhich()))
+			{
+				ifFalse.add(stmt);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

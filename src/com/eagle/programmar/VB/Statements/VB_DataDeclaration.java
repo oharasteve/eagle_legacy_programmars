@@ -26,7 +26,8 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_DataDeclaration extends TokenSequence implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
+public class VB_DataDeclaration extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
 {
 	public @S(10) VB_KeywordChoice modifier = new VB_KeywordChoice("private", "public", "dim", "const");
 	public @S(20) @OPT VB_Keyword CONST = new VB_Keyword("const");

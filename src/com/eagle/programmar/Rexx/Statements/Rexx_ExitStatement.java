@@ -3,13 +3,18 @@
 
 package com.eagle.programmar.Rexx.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rexx_ExitStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Rexx_ExitStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("ki-exit") Rexx_Keyword EXIT = new Rexx_Keyword("EXIT");
 
@@ -17,5 +22,13 @@ public class Rexx_ExitStatement extends TokenSequence implements AbstractStateme
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		return Eagle_Statement_Result.RETURN;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression zero = generator.newNumberExpression("0", null);
+		return generator.newExitStatement(zero, this);
 	}
 }

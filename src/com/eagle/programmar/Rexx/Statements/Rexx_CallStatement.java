@@ -5,6 +5,7 @@ package com.eagle.programmar.Rexx.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -16,14 +17,19 @@ import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rexx_CallStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Rexx_CallStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("instructions-call") Rexx_Keyword CALL = new Rexx_Keyword("CALL");
 	public @S(20) Rexx_Identifier_Reference subName;
-	public @S(30) @OPT SeparatedList<Rexx_Expression, PunctuationComma> args;
+	public @S(30) @OPT SeparatedList<Rexx_Expression, PunctuationComma> arguments;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -39,9 +45,9 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 
 		// Make sure the function args match up
 		int argCount = 0;
-		if (args != null)
+		if (arguments != null)
 		{
-			argCount = args.getPrimaryCount();
+			argCount = arguments.getPrimaryCount();
 		}
 		int paramCount = func.params.params.getPrimaryCount();
 		if (argCount != paramCount)
@@ -56,7 +62,7 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			Rexx_Expression expr = args.getPrimaryElement(i);
+			Rexx_Expression expr = arguments.getPrimaryElement(i);
 			Rexx_Variable_Definition param = func.params.params.getPrimaryElement(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
@@ -82,5 +88,22 @@ public class Rexx_CallStatement extends TokenSequence implements AbstractStateme
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = arguments.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Rexx_Expression arg = arguments.getPrimaryElement(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(subName.getValue());
+		AbstractExpression expr = generator.newMethodInvocation(var, args, subName);
+		return generator.newExpressionStatement(expr, subName);
 	}
 }
