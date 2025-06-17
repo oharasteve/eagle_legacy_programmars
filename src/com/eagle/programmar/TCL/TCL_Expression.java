@@ -5,6 +5,7 @@ package com.eagle.programmar.TCL;
 
 import com.eagle.programmar.TCL.Expressions.TCL_AdditiveExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ArrayExpression;
+import com.eagle.programmar.TCL.Expressions.TCL_BuiltIns;
 import com.eagle.programmar.TCL.Expressions.TCL_NotExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ConditionalAndExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ConditionalOrExpression;
@@ -53,16 +54,17 @@ public class TCL_Expression extends PrecedenceChooser implements AbstractExpress
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) TCL_VariableExpression variableExpression;
-	public @P(110) TCL_SignedExpression signedExpression;
-	public @P(120) TCL_NotExpression bangExpression;
-	public @P(130) TCL_ParenthesizedExpression parenthesizedExpression;
-	public @P(140) TCL_ArrayExpression arrayExpression;
-	public @P(150) TCL_BracketExpr exprExpression;
-	public @P(160) TCL_BracketLindex lindexExpression;
-	public @P(170) TCL_BracketStringFirst stringFirstExpression;
-	public @P(180) TCL_BracketStringLength stringLengthExpression;
-	public @P(190) TCL_BracketFunction functionCall;
+	public @P(100) TCL_SignedExpression signedExpression;
+	public @P(110) TCL_NotExpression bangExpression;
+	public @P(120) TCL_BuiltIns builtIn;
+	public @P(130) TCL_VariableExpression variableExpression;
+	public @P(140) TCL_ParenthesizedExpression parenthesizedExpression;
+	public @P(150) TCL_ArrayExpression arrayExpression;
+	public @P(160) TCL_BracketExpr exprExpression;
+	public @P(170) TCL_BracketLindex lindexExpression;
+	public @P(180) TCL_BracketStringFirst stringFirstExpression;
+	public @P(190) TCL_BracketStringLength stringLengthExpression;
+	public @P(200) TCL_BracketFunction functionCall;
 
 	///////////////////////////////////////////////
 	// Binary expressions

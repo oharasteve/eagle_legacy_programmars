@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -19,9 +20,9 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_Find_Function extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateIndexOf<Python_Expression>
+		implements EagleRunnable, EagleGenerateIndexOf<Python_Expression, Python_Variable>
 {
-	public @S(10) Python_Expression string;
+	public @S(10) Python_Variable string;
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE Python_Keyword FIND = new Python_Keyword("find");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
@@ -52,7 +53,7 @@ public class Python_Find_Function extends PrimaryOperator
 	}
 	
 	@Override
-	public Python_Expression generateIndexOf(Python_Expression str, Python_Expression patt,
+	public Python_Expression generateIndexOf(Python_Variable str, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		this.string = str;

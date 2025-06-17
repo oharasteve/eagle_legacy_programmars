@@ -597,7 +597,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Expression newIndexOfFunction(CSharp_Expression string,
+	public CSharp_Expression newIndexOfFunction(CSharp_Variable string,
 			CSharp_Expression patt, CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		CSharp_IndexOfMethod indexMeth = new CSharp_IndexOfMethod();

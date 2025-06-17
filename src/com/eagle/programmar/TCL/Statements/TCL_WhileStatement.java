@@ -10,7 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.TCL.TCL_Element;
+import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
@@ -28,7 +28,7 @@ public class TCL_WhileStatement extends TokenSequence
 	public @S(20) PunctuationLeftBrace leftBrace1;
 	public @S(30) TCL_Expression condition;
 	public @S(40) PunctuationRightBrace rightBrace1;
-	public @S(50) TCL_Element action;
+	public @S(50) TCL_Statement action;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
@@ -76,11 +76,15 @@ public class TCL_WhileStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
-		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
 		
-		for (AbstractStatement stmt : transformer.transformStatement(generator, action))
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, action.getWhich());
+		if (stmts != null)
 		{
-			whileTrue.add(stmt);
+			for (AbstractStatement stmt : stmts)
+			{
+				whileTrue.add(stmt);
+			}
 		}
 		
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.TCL.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -10,9 +13,13 @@ import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_IncrStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class TCL_IncrStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("TclCmd/incr.html") TCL_Keyword INCR = new TCL_Keyword("incr");
 	public @S(20) TCL_Variable var;
@@ -31,5 +38,31 @@ public class TCL_IncrStatement extends TokenSequence implements AbstractStatemen
 		int newV = prev + x;
 		EagleInteger val = new EagleInteger(newV);
 		interpreter.setSymbol(var, var.id.getValue(), val);
+	}
+
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscrExpr = null;
+		AbstractExpression value;
+		if (amount != null && amount.isPresent())
+		{
+			value = transformer.transformExpression(generator, amount);
+		}
+		else
+		{
+			value = generator.newNumberExpression("1", INCR);
+		}
+		return generator.newAssignmentExpression(var.id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.PLUS_EQUALS, value, this);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression asgExpr = this.transformExpression(transformer, generator);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

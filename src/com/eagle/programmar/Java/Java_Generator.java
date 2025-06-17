@@ -608,7 +608,7 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Expression newIndexOfFunction(Java_Expression string,
+	public Java_Expression newIndexOfFunction(Java_Variable string,
 			Java_Expression patt, Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		Java_IndexOfMethod indexMeth = new Java_IndexOfMethod();

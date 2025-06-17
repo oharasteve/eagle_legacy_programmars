@@ -8,9 +8,11 @@ import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
+import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleTransformableExpression;
@@ -23,7 +25,7 @@ public class TCL_BracketStringFirst extends PrimaryOperator
 	public @S(20) TCL_Keyword STRING = new TCL_Keyword("string");
 	public @S(30) TCL_Keyword FIRST = new TCL_Keyword("first");
 	public @S(40) TCL_Expression pattern;
-	public @S(50) TCL_Expression string;
+	public @S(50) TCL_Variable string;
 	public @S(60) @OPT TCL_Expression start;
 	public @S(70) PunctuationRightBracket rightBracket;
 	
@@ -46,13 +48,13 @@ public class TCL_BracketStringFirst extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression strExpr = transformer.transformExpression(generator, string);
+		AbstractVariable strVar = generator.newVariable(string.id.getValue());
 		AbstractExpression pattExpr = transformer.transformExpression(generator, pattern);
 		AbstractExpression startExpr = null;
 		if (start != null && start.isPresent())
 		{
 			startExpr = transformer.transformExpression(generator, start);
 		}
-		return generator.newIndexOfFunction(strExpr, pattExpr, startExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
+		return generator.newIndexOfFunction(strVar, pattExpr, startExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 }

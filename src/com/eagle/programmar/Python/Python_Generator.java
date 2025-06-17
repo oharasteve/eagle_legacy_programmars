@@ -585,7 +585,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_Expression newIndexOfFunction(Python_Expression string,
+	public Python_Expression newIndexOfFunction(Python_Variable string,
 			Python_Expression patt, Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		Python_Find_Function indexFn = new Python_Find_Function();

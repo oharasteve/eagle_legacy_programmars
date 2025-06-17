@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Variable;
-import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
@@ -18,8 +17,7 @@ import com.eagle.transform.EagleTransformer;
 public class TCL_VariableExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) @OPT TCL_Punctuation dollar = new TCL_Punctuation("$");
-	public @S(20) TCL_Variable variable;
+	public @S(10) TCL_Variable variable;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

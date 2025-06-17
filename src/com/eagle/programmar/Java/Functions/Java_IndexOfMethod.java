@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -19,9 +20,9 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_IndexOfMethod extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateIndexOf<Java_Expression>
+		implements EagleRunnable, EagleGenerateIndexOf<Java_Expression, Java_Variable>
 {
-	public @S(10) Java_Expression string;
+	public @S(10) Java_Variable string;
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE Java_Keyword INDEXOF = new Java_Keyword("indexOf");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
@@ -52,7 +53,7 @@ public class Java_IndexOfMethod extends PrimaryOperator
 	}
 	
 	@Override
-	public Java_Expression generateIndexOf(Java_Expression str, Java_Expression patt,
+	public Java_Expression generateIndexOf(Java_Variable str, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		this.string = str;

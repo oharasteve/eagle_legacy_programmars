@@ -3,31 +3,38 @@
 
 package com.eagle.programmar.TCL.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Expression;
-import com.eagle.programmar.TCL.TCL_Element;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class TCL_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("TclCmd/for.html") TCL_Keyword FOR = new TCL_Keyword("for");
 	public @S(20) PunctuationLeftBrace leftBrace1;
-	public @S(30) TCL_Element initialize;
+	public @S(30) TCL_SetStatement initialize;
 	public @S(40) PunctuationRightBrace rightBrace1;
 	public @S(50) PunctuationLeftBrace leftBrace2;
 	public @S(60) TCL_Expression condition;
 	public @S(70) PunctuationRightBrace rightBrace2;
 	public @S(80) PunctuationLeftBrace leftBrace3;
-	public @S(90) TCL_Element increment;
+	public @S(90) TCL_IncrStatement increment;
 	public @S(100) PunctuationRightBrace rightBrace3;
-	public @S(110) TCL_Element action;
+	public @S(110) TCL_Statement action;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
@@ -73,5 +80,26 @@ public class TCL_ForStatement extends TokenSequence implements AbstractStatement
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression initExpr = initialize.transformExpression(transformer, generator);
+		AbstractExpression termCond = transformer.transformExpression(generator, condition);
+		AbstractExpression incrExpr = increment.transformExpression(transformer, generator);
+		
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, action.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt : stmts)
+			{
+				whileTrue.add(stmt);
+			}
+		}
+		
+		return generator.newForLoopStatement(initExpr, termCond, incrExpr, whileTrue, this);
 	}
 }

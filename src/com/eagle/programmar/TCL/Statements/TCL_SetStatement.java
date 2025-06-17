@@ -32,14 +32,27 @@ public class TCL_SetStatement extends TokenSequence
 		interpreter.setSymbol(var, var.id.getValue(), val);
 	}
 
-	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer,
+	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		AbstractExpression subscrExpr = null;
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var.id.getValue(),
+		return generator.newAssignmentExpression(var.id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = var.id.getValue();
+		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+
+		AbstractExpression asgExpr = this.transformExpression(transformer, generator);
 		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
 		return exprStmt;
 	}

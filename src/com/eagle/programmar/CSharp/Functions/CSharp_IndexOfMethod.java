@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.CSharp_Variable;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -19,12 +20,12 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_IndexOfMethod extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateIndexOf<CSharp_Expression>
+		implements EagleRunnable, EagleGenerateIndexOf<CSharp_Expression, CSharp_Variable>
 {
-	public @S(30) CSharp_Expression string;
+	public @S(10) CSharp_Variable string;
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(10) @NOSPACE CSharp_Keyword INDEXOF = new CSharp_Keyword("IndexOf");
-	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_Keyword INDEXOF = new CSharp_Keyword("IndexOf");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE CSharp_Expression pattern;
 	public @S(60) @OPT @NOSPACE CSharp_Index_SC scExpr;
 	public @S(70) @NOSPACE PunctuationRightParen rightParen;
@@ -52,7 +53,7 @@ public class CSharp_IndexOfMethod extends PrimaryOperator
 	}
 	
 	@Override
-	public CSharp_Expression generateIndexOf(CSharp_Expression str, CSharp_Expression patt,
+	public CSharp_Expression generateIndexOf(CSharp_Variable str, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		this.string = str;
