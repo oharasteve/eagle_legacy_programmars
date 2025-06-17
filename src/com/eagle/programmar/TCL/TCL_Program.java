@@ -3,13 +3,21 @@
 
 package com.eagle.programmar.TCL;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_Program extends AbstractLanguage implements EagleRunnable
+public class TCL_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String TCL = "TCL";
 
@@ -39,9 +47,9 @@ public class TCL_Program extends AbstractLanguage implements EagleRunnable
 		// First pass, just collect all the method definitions
 		for (TCL_Element stmt : statements._elements)
 		{
-			for (int i = 0; i < stmt.compoundStatement.statements.getPrimaryCount(); i++)
+			for (int i = 0; i < stmt.statements.getPrimaryCount(); i++)
 			{
-				TCL_Statement base = stmt.compoundStatement.statements.getPrimaryElement(i);
+				TCL_Statement base = stmt.statements.getPrimaryElement(i);
 				if (base.getWhich() instanceof TCL_Procedure)
 				{
 					TCL_Procedure proc = (TCL_Procedure) base.getWhich();
@@ -55,5 +63,44 @@ public class TCL_Program extends AbstractLanguage implements EagleRunnable
 		{
 			interpreter.tryToInterpret(stmt);
 		}
+	}
+
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, transform all the Procedure definitions
+		for (TCL_Element element : statements._elements)
+		{
+			int nstmts = element.statements.getPrimaryCount();
+			for (int i = 0; i < nstmts; i++)
+			{
+				TCL_Statement stmt = element.statements.getPrimaryElement(i);
+				if (stmt instanceof EagleTransformableFunction)
+				{
+					EagleTransformableFunction transformable = (EagleTransformableFunction) stmt;
+					transformable.transformFunction(transformer, generator);
+				}
+			}
+		}
+
+		// Second pass, transform all the data and logic
+		for (TCL_Element element : statements._elements)
+		{
+			int nstmts = element.statements.getPrimaryCount();
+			for (int i = 0; i < nstmts; i++)
+			{
+				TCL_Statement stmt = element.statements.getPrimaryElement(i);
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
+				}
+			}
+		}
+		
+		return generator.getTransfomedProgram();
 	}
 }

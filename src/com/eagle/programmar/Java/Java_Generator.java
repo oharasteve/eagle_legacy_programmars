@@ -28,6 +28,7 @@ import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_ShiftExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Functions.Java_IndexOfMethod;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
@@ -58,7 +59,7 @@ public class Java_Generator
 		extends EagleGenerator<Java_Statement, Java_Expression, Java_Variable, Java_Type>
 {
 	public static String NAME = "Java";
-	public static String SUFFIX = ".Java";
+	public static String SUFFIX = ".java";
 	
 	private Java_Program _program;
 	private String _className;
@@ -606,6 +607,14 @@ public class Java_Generator
 				whichEC, scOrnc, ncMightBeTooBig, source));
 	}
 
+	@Override
+	public Java_Expression newIndexOfFunction(Java_Expression string,
+			Java_Expression patt, Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		Java_IndexOfMethod indexMeth = new Java_IndexOfMethod();
+		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
+	}
+	
 	// ================ Terminals ================
 
 	@Override

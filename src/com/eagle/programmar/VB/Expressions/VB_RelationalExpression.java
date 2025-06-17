@@ -132,7 +132,7 @@ public class VB_RelationalExpression extends PrecedenceOperator
 		case ">=":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			throw new RuntimeException("Unexpected relational operator: " + operator);
 		}
 	}
 }

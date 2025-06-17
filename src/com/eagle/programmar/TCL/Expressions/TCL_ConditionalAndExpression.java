@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
@@ -10,8 +11,12 @@ import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_ConditionalAndExpression extends PrecedenceOperator implements EagleRunnable
+public class TCL_ConditionalAndExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) TCL_AndOperator andOper;
@@ -37,5 +42,13 @@ public class TCL_ConditionalAndExpression extends PrecedenceOperator implements 
 			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 }

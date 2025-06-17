@@ -3,30 +3,56 @@
 
 package com.eagle.programmar.TCL.Functions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_BracketStringFirst extends PrimaryOperator implements EagleRunnable
+public class TCL_BracketStringFirst extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
 	public @S(20) TCL_Keyword STRING = new TCL_Keyword("string");
 	public @S(30) TCL_Keyword FIRST = new TCL_Keyword("first");
-	public @S(40) TCL_Expression string;
-	public @S(50) TCL_Expression pattern;
-	public @S(60) TCL_Expression start;
+	public @S(40) TCL_Expression pattern;
+	public @S(50) TCL_Expression string;
+	public @S(60) @OPT TCL_Expression start;
 	public @S(70) PunctuationRightBracket rightBracket;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String patt = interpreter.getStrValue(string);
-		String str = interpreter.getStrValue(pattern);
-		int sc = interpreter.getIntValue(start);
-		interpreter.pushInt(str.indexOf(patt, sc));
+		String patt = interpreter.getStrValue(pattern);
+		String str = interpreter.getStrValue(string);
+		if (start != null && start.isPresent())
+		{
+			int sc = interpreter.getIntValue(start);
+			interpreter.pushInt(str.indexOf(patt, sc));
+		}
+		else
+		{
+			interpreter.pushInt(str.indexOf(patt));
+		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression strExpr = transformer.transformExpression(generator, string);
+		AbstractExpression pattExpr = transformer.transformExpression(generator, pattern);
+		AbstractExpression startExpr = null;
+		if (start != null && start.isPresent())
+		{
+			startExpr = transformer.transformExpression(generator, start);
+		}
+		return generator.newIndexOfFunction(strExpr, pattExpr, startExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 }

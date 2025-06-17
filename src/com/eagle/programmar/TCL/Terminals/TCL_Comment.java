@@ -3,11 +3,16 @@
 
 package com.eagle.programmar.TCL.Terminals;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.terminals.TerminalCommentToken;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class TCL_Comment extends TerminalCommentToken
+		implements EagleTransformableStatement
 {
 	public TCL_Comment()
 	{
@@ -37,5 +42,12 @@ public class TCL_Comment extends TerminalCommentToken
 	public String description()
 	{
 		return "# comment to end of line";
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return null;		// Might want to keep comment statements somehow.
 	}
 }

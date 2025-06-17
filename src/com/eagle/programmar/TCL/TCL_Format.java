@@ -3,7 +3,12 @@
 
 package com.eagle.programmar.TCL;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.AdditiveEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
 
 public class TCL_Format
 {
@@ -68,5 +73,71 @@ public class TCL_Format
 			sb.append(val);
 		}
 		return sb.toString();
+	}
+	
+	public static AbstractExpression compile(EagleGenerator generator, String fmt, AbstractToken source)
+	{
+		AbstractExpression result = null;
+
+		String txt = fmt.replaceAll("\"", "");
+		if (txt.indexOf('[') >= 0)
+		{
+			throw new RuntimeException("Can't handle [] in TCL_Format.compile yet");
+		}
+
+		int sc = 0;
+		int nc = txt.length();
+		// Pull in first text string, if any
+		int firstDollar = txt.indexOf('$');
+		if (firstDollar >= 0)
+		{
+			AbstractExpression piece = generator.newLiteralExpression(txt.substring(0, firstDollar), null);
+			result = piece;
+			sc = firstDollar;
+		}
+		
+		while (sc < nc)
+		{
+			// Pull in a text string
+			firstDollar = txt.indexOf('$', sc);
+			if (firstDollar < 0)
+			{
+				AbstractExpression piece = generator.newLiteralExpression(txt.substring(sc, nc), null);
+				if (result == null)
+				{
+					result = piece;
+				}
+				else
+				{
+					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, piece, null);
+				}
+				break; // Done -- no more $
+			}
+
+			// Pick out the variable name, like $ok
+			int endDollar = firstDollar + 1;
+			while (endDollar < nc)
+			{
+				// Stop on a space or comma or what?
+				if (" ,.".indexOf(txt.charAt(endDollar)) >= 0) break;
+				endDollar++;
+			}
+			String var = txt.substring(firstDollar + 1, endDollar);
+			AbstractExpression varExpr = generator.newVariableExpression(var,
+					SubscriptEnum.FIRST_IS_ZERO, null, null);
+			// Always wrap in a str() function for now
+			AbstractExpression strExpr = generator.newStringFunction(varExpr, null);
+			if (result == null)
+			{
+				result = varExpr;
+			}
+			else
+			{
+				result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, strExpr, null);
+			}
+			sc = endDollar;
+		}
+		
+		return result;
 	}
 }

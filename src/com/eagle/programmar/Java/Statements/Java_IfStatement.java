@@ -14,7 +14,6 @@ import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
-import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Expressions.Java_ParenthesizedExpression;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -23,9 +22,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleTransformer;
 
@@ -152,32 +149,15 @@ public class Java_IfStatement extends TokenSequence
 			ArrayList<Java_Statement> elseStatements, AbstractToken source)
 	{
 		Java_StatementBlock thenBlock = new Java_StatementBlock();
-		thenBlock.leftBrace = new PunctuationLeftBrace();
-		thenBlock.rightBrace = new PunctuationRightBrace();
-		thenBlock.statements = new TokenList<Java_StatementOrComment>();
-		for (Java_Statement stmt : thenStatements)
-		{
-			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			thenBlock.statements.addToken(stmtOrComment);
-		}
+		Java_Statement block1 = thenBlock.generateBlock(thenStatements, source);
 				
-		Java_StatementBlock elseBlock = null;
+		Java_Statement block2 = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			elseBlock = new Java_StatementBlock();
-			elseBlock.leftBrace = new PunctuationLeftBrace();
-			elseBlock.rightBrace = new PunctuationRightBrace();
-			elseBlock.statements = new TokenList<Java_StatementOrComment>();
-			for (Java_Statement stmt : elseStatements)
-			{
-				Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-				stmtOrComment.setWhich(stmt);
-				elseBlock.statements.addToken(stmtOrComment);
-			}
+			Java_StatementBlock elseBlock = new Java_StatementBlock();
+			block2 = elseBlock.generateBlock(elseStatements, source);
 		}
 
-		return generateIfElse1(cond, Java_Generator.wrapStatement(thenBlock),
-				Java_Generator.wrapStatement(elseBlock), source);
+		return generateIfElse1(cond, block1, block2, source);
 	}
 }

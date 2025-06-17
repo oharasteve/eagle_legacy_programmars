@@ -12,7 +12,6 @@ import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
-import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
@@ -20,9 +19,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_IfStatement extends TokenSequence
@@ -124,39 +121,19 @@ public class CSharp_IfStatement extends TokenSequence
 	
 	@Override
 	public CSharp_Statement generateIfElse(CSharp_Expression cond,
-			ArrayList<CSharp_Statement> thenStmts,
-			ArrayList<CSharp_Statement> elseStmts, AbstractToken source)
+			ArrayList<CSharp_Statement> thenStatements,
+			ArrayList<CSharp_Statement> elseStatements, AbstractToken source)
 	{
 		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
-		thenBlock.leftBrace = new PunctuationLeftBrace();
-		thenBlock.rightBrace = new PunctuationRightBrace();
-		thenBlock.statements = new TokenList<CSharp_StatementOrComment>();
-		for (CSharp_Statement stmt : thenStmts)
-		{
-			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			thenBlock.statements.addToken(stmtOrComment);
-		}
+		CSharp_Statement block1 = thenBlock.generateBlock(thenStatements, source);
 				
-		CSharp_StatementBlock elseBlock = null;
-		if (elseStmts != null && elseStmts.size() > 0)
+		CSharp_Statement block2 = null;
+		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			elseBlock = new CSharp_StatementBlock();
-			elseBlock.leftBrace = new PunctuationLeftBrace();
-			elseBlock.rightBrace = new PunctuationRightBrace();
-			elseBlock.statements = new TokenList<CSharp_StatementOrComment>();
-			this.elseClause = new CSharp_IfElseClause();
-			this.elseClause.elseStatement = new CSharp_Statement();
-			this.elseClause.elseStatement.setWhich(elseBlock);
-			for (CSharp_Statement stmt : elseStmts)
-			{
-				CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-				stmtOrComment.setWhich(stmt);
-				elseBlock.statements.addToken(stmtOrComment);
-			}
+			CSharp_StatementBlock elseBlock = new CSharp_StatementBlock();
+			block2 = elseBlock.generateBlock(elseStatements, source);
 		}
 
-		return generateIfElse1(cond, CSharp_Generator.wrapStatement(thenBlock),
-				CSharp_Generator.wrapStatement(elseBlock), source);
+		return generateIfElse1(cond, block1, block2, source);
 	}
 }

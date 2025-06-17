@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.TCL;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.TCL.Expressions.TCL_ExpressionStatement;
@@ -23,18 +26,17 @@ import com.eagle.programmar.TCL.Terminals.TCL_EndOfLine;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_Element extends TokenSequence implements EagleRunnableWithResult
+public class TCL_Element extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
-	public @S(10) TCL_Compound_Statement compoundStatement;
+	public @S(10) SeparatedList<TCL_Statement, PunctuationSemicolon> statements;
 	public @S(20) @OPT TCL_Comment comment;
 	public @S(30) @OPT TCL_EndOfLine eoln;
-
-	public static class TCL_Compound_Statement extends TokenSequence
-	{
-		public @S(10) SeparatedList<TCL_Statement, PunctuationSemicolon> statements;
-	}
 
 	public static class TCL_Statement extends TokenChooser
 	{
@@ -61,12 +63,33 @@ public class TCL_Element extends TokenSequence implements EagleRunnableWithResul
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (int i = 0; i < compoundStatement.statements.getPrimaryCount(); i++)
+		for (int i = 0; i < statements.getPrimaryCount(); i++)
 		{
-			TCL_Statement stmt = compoundStatement.statements.getPrimaryElement(i);
+			TCL_Statement stmt = statements.getPrimaryElement(i);
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
+		if (statements != null && statements.isPresent())
+		{
+			for (int i = 0; i < statements.getPrimaryCount(); i++)
+			{
+				TCL_Statement stmt = statements.getPrimaryElement(i);
+				AbstractStatement newStmt = transformer.transformStatement1(generator, stmt);
+				if (newStmt != null)
+				{
+					stmts.add(newStmt);
+				}
+			}
+		}
+
+		return generator.newBlockStatement(stmts, this);
 	}
 }

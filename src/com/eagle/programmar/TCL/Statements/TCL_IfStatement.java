@@ -5,23 +5,28 @@ package com.eagle.programmar.TCL.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
+import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Expression;
-import com.eagle.programmar.TCL.TCL_Element;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class TCL_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("TclCmd/if.html") TCL_Keyword IF = new TCL_Keyword("if");
 	public @S(20) TCL_PunctuationChoice left = new TCL_PunctuationChoice("{", "(");
 	public @S(30) TCL_Expression condition;
 	public @S(40) TCL_PunctuationChoice right = new TCL_PunctuationChoice("}", ")");
-	public @S(50) TCL_Element thenStatement;
+	public @S(50) TCL_Statement thenStatement;
 	public @S(60) @OPT TCL_ElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
@@ -29,14 +34,14 @@ public class TCL_IfStatement extends TokenSequence implements AbstractStatement,
 	public static class TCL_ElseClause extends TokenSequence
 	{
 		public @S(10) TCL_Keyword ELSE = new TCL_Keyword("else");
-		public @S(20) TCL_Element elseStatement;
+		public @S(20) TCL_Statement elseStatement;
 	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		TCL_Element todo = null;
+		TCL_Statement todo = null;
 
 		if (_metrics == null)
 		{
@@ -71,5 +76,34 @@ public class TCL_IfStatement extends TokenSequence implements AbstractStatement,
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator, thenStatement.getWhich());
+		if (stmts1 != null)
+		{
+			for (AbstractStatement stmt : stmts1)
+			{
+				ifTrue.add(stmt);
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, elseClause.elseStatement.getWhich());
+			for (AbstractStatement stmt : stmts2)
+			{
+				ifFalse.add(stmt);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

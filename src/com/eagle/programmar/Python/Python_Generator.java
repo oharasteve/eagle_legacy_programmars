@@ -27,6 +27,7 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
+import com.eagle.programmar.Python.Functions.Python_Find_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Functions.Python_Strip_Method;
@@ -581,6 +582,14 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	{
 		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC,
 				whichEC, scOrnc, ncMightBeTooBig, source));
+	}
+
+	@Override
+	public Python_Expression newIndexOfFunction(Python_Expression string,
+			Python_Expression patt, Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		Python_Find_Function indexFn = new Python_Find_Function();
+		return indexFn.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
 	// ================ Terminals ================

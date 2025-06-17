@@ -59,6 +59,16 @@ public class Java_StatementBlock extends TokenSequence
 	public Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
 			AbstractToken source)
 	{
+		if (stmts.size() == 1)
+		{
+			Java_Statement first = stmts.get(0);
+			if (first.getWhich() instanceof Java_StatementBlock)
+			{
+				// Don't put a block inside a block if it is the only entry
+				return first;
+			}
+		}
+		
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.statements = new TokenList<Java_StatementOrComment>();

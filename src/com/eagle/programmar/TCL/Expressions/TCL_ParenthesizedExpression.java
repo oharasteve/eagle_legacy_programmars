@@ -3,14 +3,19 @@
 
 package com.eagle.programmar.TCL.Expressions;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class TCL_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) TCL_Expression expression;
@@ -20,5 +25,12 @@ public class TCL_ParenthesizedExpression extends PrimaryOperator implements Eagl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expression);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		return generator.newParenthesizedExpression(theExpr, this);
 	}
 }

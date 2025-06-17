@@ -13,7 +13,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_LogicalNotExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_LogicalNotExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @DOC("operators/logical-bitwise-operators") VB_Keyword NOT = new VB_Keyword("NOT");
 	public @S(20) VB_Expression expr;

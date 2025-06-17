@@ -27,6 +27,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_PreIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ShiftExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
+import com.eagle.programmar.CSharp.Functions.CSharp_IndexOfMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
@@ -593,6 +594,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc,
 				whichSC, whichEC, scOrnc, ncMightBeTooBig, source));
+	}
+
+	@Override
+	public CSharp_Expression newIndexOfFunction(CSharp_Expression string,
+			CSharp_Expression patt, CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		CSharp_IndexOfMethod indexMeth = new CSharp_IndexOfMethod();
+		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
 	// ================ Terminals ================

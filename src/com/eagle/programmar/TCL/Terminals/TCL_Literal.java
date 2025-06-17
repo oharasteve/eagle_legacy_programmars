@@ -3,13 +3,18 @@
 
 package com.eagle.programmar.TCL.Terminals;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.TCL.TCL_Format;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_Literal extends TerminalLiteralToken implements EagleRunnable
+public class TCL_Literal extends TerminalLiteralToken
+		implements EagleRunnable, EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -28,5 +33,11 @@ public class TCL_Literal extends TerminalLiteralToken implements EagleRunnable
 	{
 		String result = TCL_Format.format(interpreter, _txt);
 		interpreter.pushStr(result);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return TCL_Format.compile(generator, _txt, this);
 	}
 }

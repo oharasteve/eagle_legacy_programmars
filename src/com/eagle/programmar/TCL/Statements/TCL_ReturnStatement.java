@@ -3,15 +3,20 @@
 
 package com.eagle.programmar.TCL.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_ReturnStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class TCL_ReturnStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("TclCmd/return.html") TCL_Keyword RETURN = new TCL_Keyword("return");
 	public @S(20) TCL_Expression expr;
@@ -22,5 +27,17 @@ public class TCL_ReturnStatement extends TokenSequence implements AbstractStatem
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression retExpr = null;
+		if (expr != null && expr.isPresent())
+		{
+			retExpr = transformer.transformExpression(generator, expr);
+		}
+		return generator.newReturnStatement(retExpr, this);
 	}
 }

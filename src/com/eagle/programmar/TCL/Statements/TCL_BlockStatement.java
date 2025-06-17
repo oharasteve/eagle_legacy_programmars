@@ -3,9 +3,13 @@
 
 package com.eagle.programmar.TCL.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.TCL.TCL_Element;
+import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_EndOfLine;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
@@ -14,8 +18,11 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_BlockStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class TCL_BlockStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TCL_EndOfLine endOfLine;
@@ -34,11 +41,39 @@ public class TCL_BlockStatement extends TokenSequence implements EagleRunnableWi
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (TCL_Element stmt : statements._elements)
+		for (TCL_Element element : statements._elements)
 		{
-			result = interpreter.tryToInterpret(stmt);
+			result = interpreter.tryToInterpret(element);
 			if (result != Eagle_Statement_Result.NORMAL) break; 
 		}
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
+		if (statements != null && statements.isPresent())
+		{
+			for (TCL_Element element : statements._elements)
+			{
+				int nstmts = element.statements.getPrimaryCount();
+				for (int i = 0; i < nstmts; i++)
+				{
+					TCL_Statement stmt = element.statements.getPrimaryElement(i);
+					ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+					if (newStmts != null)
+					{
+						for (AbstractStatement newStmt : newStmts)
+						{
+							stmts.add(newStmt);
+						}
+					}
+				}
+			}
+		}
+
+		return generator.newBlockStatement(stmts, this);
 	}
 }

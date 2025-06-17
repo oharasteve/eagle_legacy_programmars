@@ -3,14 +3,19 @@
 
 package com.eagle.programmar.TCL.Statements;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_PutsStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class TCL_PutsStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("TclCmd/puts.html") TCL_Keyword PUTS = new TCL_Keyword("puts");
 	public @S(20) TCL_Expression expr;
@@ -20,5 +25,12 @@ public class TCL_PutsStatement extends TokenSequence implements EagleRunnable, A
 	{
 		String val = interpreter.getStrValue(expr);
 		System.out.println(val);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression line = transformer.transformExpression(generator, expr);
+		return generator.newPrintStatement1(line, true, this);
 	}
 }

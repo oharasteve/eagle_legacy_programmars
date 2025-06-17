@@ -13,7 +13,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_LogicalAndExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_LogicalAndExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @DOC("operators/logical-bitwise-operators") VB_KeywordChoice andOperator = new VB_KeywordChoice("and", "andalso");
