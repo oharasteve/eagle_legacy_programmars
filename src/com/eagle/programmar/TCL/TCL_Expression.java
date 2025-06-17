@@ -6,10 +6,10 @@ package com.eagle.programmar.TCL;
 import com.eagle.programmar.TCL.Expressions.TCL_AdditiveExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ArrayExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_BuiltIns;
-import com.eagle.programmar.TCL.Expressions.TCL_NotExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ConditionalAndExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ConditionalOrExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_MultiplicativeExpression;
+import com.eagle.programmar.TCL.Expressions.TCL_NotExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_ParenthesizedExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_RelationalExpression;
 import com.eagle.programmar.TCL.Expressions.TCL_SignedExpression;
@@ -17,6 +17,7 @@ import com.eagle.programmar.TCL.Expressions.TCL_VariableExpression;
 import com.eagle.programmar.TCL.Functions.TCL_BracketExpr;
 import com.eagle.programmar.TCL.Functions.TCL_BracketFunction;
 import com.eagle.programmar.TCL.Functions.TCL_BracketLindex;
+import com.eagle.programmar.TCL.Functions.TCL_BracketStringCat;
 import com.eagle.programmar.TCL.Functions.TCL_BracketStringFirst;
 import com.eagle.programmar.TCL.Functions.TCL_BracketStringLength;
 import com.eagle.programmar.TCL.Terminals.TCL_Literal;
@@ -64,7 +65,8 @@ public class TCL_Expression extends PrecedenceChooser implements AbstractExpress
 	public @P(170) TCL_BracketLindex lindexExpression;
 	public @P(180) TCL_BracketStringFirst stringFirstExpression;
 	public @P(190) TCL_BracketStringLength stringLengthExpression;
-	public @P(200) TCL_BracketFunction functionCall;
+	public @P(200) TCL_BracketStringCat stringCatExpression;
+	public @P(210) TCL_BracketFunction functionCall;
 
 	///////////////////////////////////////////////
 	// Binary expressions

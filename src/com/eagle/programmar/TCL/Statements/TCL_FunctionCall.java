@@ -5,6 +5,7 @@ package com.eagle.programmar.TCL.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -15,11 +16,17 @@ import com.eagle.programmar.TCL.Symbols.TCL_Variable_Definition;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
+public class TCL_FunctionCall extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) TCL_Function_Reference function;
-	public @S(20) TokenList<TCL_Expression> values;
+	public @S(20) TokenList<TCL_Expression> callArguments;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -35,7 +42,7 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 		TCL_Procedure proc = (TCL_Procedure) fn;
 
 		// Make sure the function args match up
-		int argCount = values.size();
+		int argCount = callArguments.size();
 		int paramCount = proc.vars.size();
 		if (argCount != paramCount)
 		{
@@ -47,7 +54,7 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			TCL_Expression expr = values._elements.get(i);
+			TCL_Expression expr = callArguments._elements.get(i);
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
@@ -59,7 +66,7 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 
 		// And transfer control to the method
 		interpreter.callingFunction(name, proc);
-		interpreter.tryToInterpret(proc.block);
+		interpreter.tryToInterpret(proc.body);
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
@@ -68,5 +75,27 @@ public class TCL_FunctionCall extends TokenSequence implements EagleRunnable
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, proc);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = function.getValue();
+		if (generator.isKnownMethod(name))
+		{
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			for (TCL_Expression arg : callArguments._elements)	
+			{
+				AbstractExpression newArg = transformer.transformExpression(generator, arg);
+				args.add(newArg);
+			}
+	
+			AbstractVariable var = generator.newVariable(name);
+			AbstractExpression expr = generator.newMethodInvocation(var, args, function);
+			return generator.newExpressionStatement(expr, callArguments);
+		}
+		
+		throw new RuntimeException("Unknown function: " + name);
 	}
 }

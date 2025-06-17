@@ -4,7 +4,6 @@
 package com.eagle.programmar.TCL;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.EagleGenerator.TypeEnum;
@@ -14,6 +13,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
+import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.Statements.TCL_BlockStatement;
 import com.eagle.programmar.TCL.Symbols.TCL_Function_Definition;
 import com.eagle.programmar.TCL.Symbols.TCL_Variable_Definition;
@@ -39,7 +39,7 @@ public class TCL_Procedure extends TokenSequence
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT TokenList<TCL_Variable_Definition> vars;
 	public @S(50) PunctuationRightBrace rightBrace;
-	public @S(60) TCL_BlockStatement block;
+	public @S(60) TCL_BlockStatement body;
 	
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
@@ -77,7 +77,10 @@ public class TCL_Procedure extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		generator.addMethod(null, name.getValue(), this);
+		TypeEnum metricRetType = transformer.findReturnMetric(name);
+		AbstractType newReturnType = generator.transformType(false, metricRetType, null, name);
+
+		generator.addMethod(newReturnType, name.getValue(), this);
 		generator.addMethodName(name.getValue());
 		
 		// Search metrics for arg types -- might not be any
@@ -88,7 +91,6 @@ public class TCL_Procedure extends TokenSequence
 			int i = 0;
 			for (TCL_Variable_Definition param : vars._elements)
 			{
-				i++;
 				AbstractType paramType = null;
 				if (argTypes != null && i < argTypes.size())
 				{
@@ -98,15 +100,24 @@ public class TCL_Procedure extends TokenSequence
 				}
 				
 				generator.addMethodParameter(paramType, param.getValue());
+				i++;
 			}
 		}
 		
-		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, block);
-		if (newStmts != null)
+		for (TCL_Element element : body.statements._elements)
 		{
-			for (AbstractStatement newStmt : newStmts)
+			int nStmts = element.statements.getPrimaryCount();
+			for (int i = 0; i < nStmts; i++)
 			{
-				generator.addStatement(newStmt, block);
+				TCL_Statement stmt = element.statements.getPrimaryElement(i);
+				ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, body);
+					}
+				}
 			}
 		}
 		

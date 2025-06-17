@@ -74,10 +74,10 @@ public class TCL_Program extends AbstractLanguage
 			int nstmts = element.statements.getPrimaryCount();
 			for (int i = 0; i < nstmts; i++)
 			{
-				TCL_Statement stmt = element.statements.getPrimaryElement(i);
-				if (stmt instanceof EagleTransformableFunction)
+				TCL_Statement base = element.statements.getPrimaryElement(i);
+				if (base.getWhich() instanceof EagleTransformableFunction)
 				{
-					EagleTransformableFunction transformable = (EagleTransformableFunction) stmt;
+					EagleTransformableFunction transformable = (EagleTransformableFunction) base.getWhich();
 					transformable.transformFunction(transformer, generator);
 				}
 			}

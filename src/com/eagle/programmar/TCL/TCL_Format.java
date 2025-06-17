@@ -80,49 +80,56 @@ public class TCL_Format
 		AbstractExpression result = null;
 
 		String txt = fmt.replaceAll("\"", "");
+		int nc = txt.length();
+		if (nc == 0)
+		{
+			return generator.newLiteralExpression("", null);
+		}
+		
 		if (txt.indexOf('[') >= 0)
 		{
 			throw new RuntimeException("Can't handle [] in TCL_Format.compile yet");
 		}
 
 		int sc = 0;
-		int nc = txt.length();
-		// Pull in first text string, if any
-		int firstDollar = txt.indexOf('$');
-		if (firstDollar >= 0)
-		{
-			AbstractExpression piece = generator.newLiteralExpression(txt.substring(0, firstDollar), null);
-			result = piece;
-			sc = firstDollar;
-		}
-		
 		while (sc < nc)
 		{
 			// Pull in a text string
-			firstDollar = txt.indexOf('$', sc);
-			if (firstDollar < 0)
+			int nextDollar = txt.indexOf('$', sc);
+			int ec = nextDollar;
+			if (nextDollar < 0)
 			{
-				AbstractExpression piece = generator.newLiteralExpression(txt.substring(sc, nc), null);
+				ec = nc;	// No more $, go all the way to the end
+			}
+			
+			if (ec > sc)
+			{
+				// Grab next literal piece
+				AbstractExpression piece1 = generator.newLiteralExpression(txt.substring(sc, ec), null);
 				if (result == null)
 				{
-					result = piece;
+					result = piece1;
 				}
 				else
 				{
-					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, piece, null);
+					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, piece1, null);
 				}
+			}
+
+			if (nextDollar < 0)
+			{
 				break; // Done -- no more $
 			}
 
 			// Pick out the variable name, like $ok
-			int endDollar = firstDollar + 1;
+			int endDollar = nextDollar + 1;
 			while (endDollar < nc)
 			{
 				// Stop on a space or comma or what?
 				if (" ,.".indexOf(txt.charAt(endDollar)) >= 0) break;
 				endDollar++;
 			}
-			String var = txt.substring(firstDollar + 1, endDollar);
+			String var = txt.substring(nextDollar + 1, endDollar);
 			AbstractExpression varExpr = generator.newVariableExpression(var,
 					SubscriptEnum.FIRST_IS_ZERO, null, null);
 			// Always wrap in a str() function for now
