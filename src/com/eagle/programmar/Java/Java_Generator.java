@@ -292,8 +292,7 @@ public class Java_Generator
 			Java_Statement ifTrue, Java_Statement ifFalse, AbstractToken source)
 	{
 		Java_IfStatement ifStmt = new Java_IfStatement();
-		return ifStmt.generateIfElse1(condition,
-				ifTrue, ifFalse, source);
+		return ifStmt.generateIfElse1(condition, ifTrue, ifFalse, source);
 	}
 	
 	@Override
@@ -321,8 +320,7 @@ public class Java_Generator
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForLoop(init, term,
-				incr, actions, source);
+		return forStmt.generateForLoop(init, term, incr, actions, source);
 	}
 
 	@Override

@@ -108,11 +108,6 @@ public class Python_Additive_Expression extends PrecedenceOperator
 				Python_Str_Function strFn = new Python_Str_Function();
 				this.right = strFn.generateString(rightExpr, rightExpr);
 			}
-//			else if (! types._type1.equals(EagleString.STRING) && types._type2.equals(EagleString.STRING))
-//			{
-//				Python_Str_Function strFn = new Python_Str_Function();
-//				this.left = strFn.generateString(leftExpr, leftExpr);
-//			}
 		}
 		
 		switch (oper)

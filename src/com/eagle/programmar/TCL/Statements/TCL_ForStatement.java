@@ -91,6 +91,7 @@ public class TCL_ForStatement extends TokenSequence
 		AbstractExpression incrExpr = increment.transformExpression(transformer, generator);
 		
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+
 		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, action.getWhich());
 		if (stmts != null)
 		{

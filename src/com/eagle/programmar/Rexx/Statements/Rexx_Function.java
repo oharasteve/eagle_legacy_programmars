@@ -11,6 +11,7 @@ import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
@@ -113,6 +114,22 @@ public class Rexx_Function extends TokenSequence
 				
 				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
 				generator.addMethodParameter(paramType, param.getValue());
+			}
+		}
+		
+		// Are there any local variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				// System.err.println("****** Found var " + met._symbolName);
+				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
+						typ, null, this);
+				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+				generator.addStatement(dataStmt, this);
 			}
 		}
 		

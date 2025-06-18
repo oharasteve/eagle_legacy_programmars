@@ -84,22 +84,6 @@ public class VB_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-//		PrivacyEnum privacy = PrivacyEnum.NONE;
-//		if (modifier != null && modifier.isPresent())
-//		{
-//			switch (modifier.getValue())
-//			{
-//			case "private":
-//				privacy = PrivacyEnum.PRIVATE;
-//				break;
-//			case "public":
-//				privacy = PrivacyEnum.PUBLIC;
-//				break;
-//			default:
-//				throw new RuntimeException("Unable to handle " + modifier.getValue());
-//			}
-//		}
-		
 		AbstractType newReturnType = null;
 		if (returnType != null && returnType.isPresent())
 		{

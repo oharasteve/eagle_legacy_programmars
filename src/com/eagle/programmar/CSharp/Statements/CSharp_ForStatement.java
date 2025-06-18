@@ -176,18 +176,9 @@ public class CSharp_ForStatement extends TokenSequence
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock block = new CSharp_StatementBlock();
-		block.leftBrace = new PunctuationLeftBrace();
-		block.rightBrace = new PunctuationRightBrace();
-		block.statements = new TokenList<CSharp_StatementOrComment>();
-		for (CSharp_Statement stmt : actions)
-		{
-			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			block.statements.addToken(stmtOrComment);
-		}
-		
+		CSharp_Statement stmt = block.generateBlock(actions, source);
 		return generateForLoop1(initExpression, condExpression, incrExpression,
-				CSharp_Generator.wrapStatement(block), source);
+				stmt, source);
 	}
 	
 	@Override

@@ -3,15 +3,19 @@
 
 package com.eagle.programmar.TCL;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
@@ -53,7 +57,7 @@ public class TCL_Program extends AbstractLanguage
 				if (base.getWhich() instanceof TCL_Procedure)
 				{
 					TCL_Procedure proc = (TCL_Procedure) base.getWhich();
-					interpreter.addFunction(proc.name.getValue(), proc);
+					interpreter.addFunction(proc.id.getValue(), proc);
 				}
 			}
 		}
@@ -83,6 +87,22 @@ public class TCL_Program extends AbstractLanguage
 			}
 		}
 
+		// Are there any global variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				// System.err.println("****** Found var " + met._symbolName);
+				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
+						typ, null, this);
+				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+				generator.addStatement(dataStmt, this);
+			}
+		}
+		
 		// Second pass, transform all the data and logic
 		for (TCL_Element element : statements._elements)
 		{

@@ -10,6 +10,7 @@ import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
@@ -35,7 +36,7 @@ public class TCL_Procedure extends TokenSequence
 				EagleTransformableFunction
 {
 	public @S(10) @DOC("TclCmd/proc.html") TCL_Keyword PROC = new TCL_Keyword("proc");
-	public @S(20) TCL_Function_Definition name;
+	public @S(20) TCL_Function_Definition id;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT TokenList<TCL_Variable_Definition> vars;
 	public @S(50) PunctuationRightBrace rightBrace;
@@ -58,15 +59,15 @@ public class TCL_Procedure extends TokenSequence
 	{
 		if (_callMetrics == null)
 		{
-			_callMetrics = new CallMetrics(interpreter._metrics, name.getValue(), name);
+			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
 		}
 		if (_argumentsMetrics == null)
 		{
-			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, name.getValue(), name);
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
 		if (_returnMetrics == null)
 		{
-			_returnMetrics = new ReturnMetrics(interpreter._metrics, name.getValue(), name);
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.
@@ -77,14 +78,14 @@ public class TCL_Procedure extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		TypeEnum metricRetType = transformer.findReturnMetric(name);
-		AbstractType newReturnType = generator.transformType(false, metricRetType, null, name);
+		TypeEnum metricRetType = transformer.findReturnMetric(id);
+		AbstractType newReturnType = generator.transformType(false, metricRetType, null, id);
 
-		generator.addMethod(newReturnType, name.getValue(), this);
-		generator.addMethodName(name.getValue());
+		generator.addMethod(newReturnType, id.getValue(), this);
+		generator.addMethodName(id.getValue());
 		
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(name);
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
 
 		if (vars != null && vars.isPresent())
 		{
@@ -104,6 +105,22 @@ public class TCL_Procedure extends TokenSequence
 			}
 		}
 		
+		// Are there any local variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				// System.err.println("****** Found var " + met._symbolName);
+				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
+						typ, null, this);
+				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+				generator.addStatement(dataStmt, this);
+			}
+		}
+
 		for (TCL_Element element : body.statements._elements)
 		{
 			int nStmts = element.statements.getPrimaryCount();

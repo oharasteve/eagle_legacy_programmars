@@ -232,18 +232,9 @@ public class Java_ForStatement extends TokenSequence
 			ArrayList<Java_Statement> acts, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
-		block.leftBrace = new PunctuationLeftBrace();
-		block.rightBrace = new PunctuationRightBrace();
-		block.statements = new TokenList<Java_StatementOrComment>();
-		for (Java_Statement stmt : acts)
-		{
-			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			block.statements.addToken(stmtOrComment);
-		}
-		
+		Java_Statement stmt = block.generateBlock(acts, source);
 		return generateForLoop1(initExpression, condExpression, incrExpression,
-				Java_Generator.wrapStatement(block), source);
+				stmt, source);
 	}
 
 	@Override

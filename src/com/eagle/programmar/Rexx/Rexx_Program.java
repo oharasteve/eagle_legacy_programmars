@@ -3,17 +3,21 @@
 
 package com.eagle.programmar.Rexx;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Rexx.Statements.Rexx_Function;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -77,6 +81,22 @@ public class Rexx_Program extends AbstractLanguage
 			}
 		}
 
+		// Are there any global variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				// System.err.println("****** Found var " + met._symbolName);
+				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
+						typ, null, this);
+				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+				generator.addStatement(dataStmt, this);
+			}
+		}
+		
 		// Second pass, transform all the data and logic
 		for (Rexx_TopElement stmt : elements._elements)
 		{
