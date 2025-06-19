@@ -392,7 +392,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
 		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
-	
+
+	@Override
+	public AbstractExpression newHashAssignment(String name, CSharp_Expression subscript,
+			CSharp_Expression expression, AbstractToken source)
+	{
+		return newAssignmentExpression(name, SubscriptEnum.FIRST_IS_ZERO, subscript,
+				AssignmentEnum.EQUALS, expression, source);	}
+
 	@Override
 	public CSharp_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
 			CSharp_Expression subscript, IncrementEnum oper, AbstractToken source)
