@@ -44,7 +44,7 @@ public class Rexx_VariableExpression extends PrimaryOperator
 			{
 				Rexx_Variable var = (Rexx_Variable) which;
 				subscrExpr = generator.newVariableExpression(var.var.getValue(),
-						SubscriptEnum.FIRST_IS_ZERO, null, variable.subscript.subscr);
+						SubscriptEnum.IT_IS_A_HASHMAP, null, variable.subscript.subscr);
 			}
 			else
 			{
@@ -52,6 +52,6 @@ public class Rexx_VariableExpression extends PrimaryOperator
 			}
 		}
 		return generator.newVariableExpression(variable.var.getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, this);
+				SubscriptEnum.IT_IS_A_HASHMAP, subscrExpr, this);
 	}
 }

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -60,11 +62,23 @@ public class Java_VariableExpression extends PrimaryOperator
 			Java_Expression subscrExpr, AbstractToken source)
 	{
 		this.variable = Java_Variable.newVariable(name);
+		this.setTransformationSource(source);
 
 		if (subscrExpr != null)
 		{
+			if (offset == SubscriptEnum.IT_IS_A_HASHMAP)
+			{	
+				Java_MethodInvocation invoke = new Java_MethodInvocation();
+				Java_Variable var = Java_Variable.newVariable(name + ".get");
+				ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
+				args.add(subscrExpr);
+				return invoke.generateInvocation(var, args, source);
+			}
+			
 			Java_Subscript subscript = new Java_Subscript();
+			subscript.expr.setPresent(true);
 			subscript.leftBracket = new PunctuationLeftBracket();
+			subscript.rightBracket = new PunctuationRightBracket();
 			
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
@@ -81,14 +95,10 @@ public class Java_VariableExpression extends PrimaryOperator
 				subscript.expr = subscrExpr;
 			}
 
-			subscript.expr.setPresent(true);
-			subscript.rightBracket = new PunctuationRightBracket();
-
 			this.variable.subscript = new TokenList<Java_Subscript>();
 			this.variable.subscript.addToken(subscript);
 		}
 
-		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}
 }
