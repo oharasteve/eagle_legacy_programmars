@@ -26,7 +26,7 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 		// Look up the label
 		String name = label.getValue().toUpperCase();
 		
-		interpreter.callingFunction(name, null);
+		interpreter.callingFunction(name, interpreter._lang);
 
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();

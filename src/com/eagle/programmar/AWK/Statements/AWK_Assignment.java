@@ -36,7 +36,7 @@ public class AWK_Assignment extends TokenSequence implements EagleRunnable, Abst
 				interpreter.setSymbol(variable, variable.id.getValue(), hash);
 			}
 			AWK_VarSubscript sub = variable.subscripts.first();
-			String key = interpreter.getStrValue(sub.expr);
+			Integer key = interpreter.getIntValue(sub.expr);
 			hash.putValue(key, val);
 		}
 		else

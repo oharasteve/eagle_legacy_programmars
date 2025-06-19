@@ -54,11 +54,12 @@ public class COBOL_PerformParagraph extends TokenSequence
 		}
 		COBOL_Paragraph paragraph = (COBOL_Paragraph) fn;
 
+		interpreter.callingFunction(startPara, interpreter._lang);
+
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
 		
 		// Evaluate the paragraph
-		interpreter.callingFunction(startPara, null);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
 		{

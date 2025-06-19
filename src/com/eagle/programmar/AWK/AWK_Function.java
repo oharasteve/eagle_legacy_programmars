@@ -24,16 +24,14 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
+public class AWK_Function extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Function_Definition id;
 	public @S(30) AWK_Function_ParameterDefs parameters;
 	public @S(40) @OPT TokenList<AWK_Comment> comments;
 	public @S(50) AWK_FunctionBody body;
-
-	public @SKIP CallMetrics _callMetrics = null;
-	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class AWK_Function_ParameterDefs extends TokenSequence
 	{
@@ -61,6 +59,9 @@ public class AWK_Function extends TokenSequence implements AbstractFunction, Eag
 		public @S(50) @OPT AWK_EndOfLine eoln2;
 	}
 	
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+
 	private @SKIP EagleScope _scope = new EagleScope(this, AWK_Syntax.IS_CASE_SENSITIVE);
 
 	@Override

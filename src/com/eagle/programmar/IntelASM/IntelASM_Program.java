@@ -12,13 +12,35 @@ import com.eagle.programmar.IntelASM.Instructions.IntelASM_DB;
 import com.eagle.programmar.IntelASM.Instructions.IntelASM_DQ;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_Comment;
 import com.eagle.programmar.IntelASM.Terminals.IntelASM_EndOfLine;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 
-public class IntelASM_Program extends AbstractLanguage implements EagleRunnable
+public class IntelASM_Program extends AbstractLanguage
+		implements EagleRunnable, EagleScopeInterface
 {
 	public static final String INTELASM = "IntelASM";
+	
+	public @S(10) TokenList<IntelASM_Line> lines;
+
+	public static class IntelASM_Line extends TokenChooser
+	{
+		public @CHOICE IntelASM_EndOfLine XXblankLine;
+		public @CHOICE IntelASM_Comment XXcomment;
+		public @CHOICE IntelASM_Directive XXdirective;
+		public @CHOICE IntelASM_Instruction XXinstruction;
+		public @CHOICE IntelASM_Label XXlabel;
+	}
+	
+	private @SKIP EagleScope _scope = new EagleScope(this, IntelASM_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 	
 	public IntelASM_Program()
 	{
@@ -31,17 +53,6 @@ public class IntelASM_Program extends AbstractLanguage implements EagleRunnable
 		return "TBD";
 	}
 
-	public @S(10) TokenList<IntelASM_Line> lines;
-
-	public static class IntelASM_Line extends TokenChooser
-	{
-		public @CHOICE IntelASM_EndOfLine XXblankLine;
-		public @CHOICE IntelASM_Comment XXcomment;
-		public @CHOICE IntelASM_Directive XXdirective;
-		public @CHOICE IntelASM_Instruction XXinstruction;
-		public @CHOICE IntelASM_Label XXlabel;
-	}
-	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

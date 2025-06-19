@@ -9,6 +9,7 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.PrecedenceOperator;
 
 public class Powershell_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
@@ -46,7 +47,11 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 
 			if (pVar.variable.scope != null && pVar.variable.scope.isPresent())
 			{
-				interpreter.setGlobalSymbol(var, pVar.variable.id.getValue(), newValue);
+				// Was calling SetGlobalSymbol()
+				EagleScope saveScope = interpreter._symbolTable.getScope();
+				interpreter._symbolTable.setScope(interpreter._lang.getScope());	// Smash it :)
+				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
+				interpreter._symbolTable.setScope(saveScope);
 			}
 			else
 			{

@@ -29,7 +29,8 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Powershell_FunctionStatement extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
+public class Powershell_FunctionStatement extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword(
 			"Function");
@@ -40,9 +41,6 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 	public @S(60) @OPT Powershell_EndOfLine eoln2;
 	public @S(70) @OPT TokenList<Powershell_Element> stmts;
 	public @S(80) PunctuationRightBrace rightBrace;
-
-	public @SKIP CallMetrics _callMetrics = null;
-	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Powershell_FunctionParams extends TokenSequence
 	{
@@ -63,6 +61,9 @@ public class Powershell_FunctionStatement extends TokenSequence implements Abstr
 			public @S(30) PunctuationRightBracket rightBracket;
 		}
 	}
+
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Powershell_Syntax.IS_CASE_SENSITIVE);
 

@@ -14,7 +14,7 @@ public class IntelASM_Identifier_Reference extends IntelASM_Identifier
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int val = interpreter.findSymbol(this.toString()).forceIntegerValue();
+		int val = interpreter.findSymbol(this.getValue()).forceIntegerValue();
 		interpreter.pushInt(val);
 	}	
 }

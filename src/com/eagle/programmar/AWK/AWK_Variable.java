@@ -5,8 +5,8 @@ package com.eagle.programmar.AWK;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.math.EagleHash;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.AWK.Symbols.AWK_Identifier_Reference;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -34,7 +34,7 @@ public class AWK_Variable extends TokenSequence implements AbstractVariable, Eag
 		{
 			EagleHash hash = (EagleHash) val;
 			AWK_VarSubscript sub = subscripts.first();
-			String key = interpreter.getStrValue(sub.expr);
+			Integer key = interpreter.getIntValue(sub.expr);
 			interpreter.pushEagleValue(hash.getValue(key));
 		}
 		else

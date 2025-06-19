@@ -84,6 +84,15 @@ public class Delphi_Function_Call extends PrimaryOperator
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		if (func != null)
+		{
+			interpreter.callingFunction(fnName, func);
+		}
+		else // (proc != null)
+		{
+			interpreter.callingFunction(fnName, proc);
+		}
+
 		// Now assign all the parameters
 		ArrayList<String> argTypes = new ArrayList<String>();
 		if (argCount > 0)
@@ -106,7 +115,6 @@ public class Delphi_Function_Call extends PrimaryOperator
 		long startTime = System.nanoTime();
 
 		// And transfer control to the procedure or function
-		interpreter.callingFunction(fnName, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		result = interpreter.tryToInterpret(body.statements.stmt);
 		if (result == Eagle_Statement_Result.NORMAL)
@@ -138,7 +146,14 @@ public class Delphi_Function_Call extends PrimaryOperator
 		argumentsMetrics.calledWith(argTypes);
 
 		// Now remove all those parameters
-		interpreter.completedFunction(fnName, func);
+		if (func != null)
+		{
+			interpreter.completedFunction(fnName, func);
+		}
+		else // (proc != null)
+		{
+			interpreter.completedFunction(fnName, proc);
+		}
 	}
 	
 	@Override

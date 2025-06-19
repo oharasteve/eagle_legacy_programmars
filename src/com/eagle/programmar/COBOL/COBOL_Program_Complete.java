@@ -11,6 +11,8 @@ import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_DataSection;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -18,13 +20,8 @@ import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
 public abstract class COBOL_Program_Complete extends COBOL_Program
-		implements EagleRunnable, EagleTransformableProgram
+		implements EagleRunnable, EagleTransformableProgram, EagleScopeInterface
 {
-	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
-	{
-		super(name, syntax);
-	}
-
 	// Components of a complete COBOL Program
 	public @S(10) @OPT TokenList<COBOL_Comment> comments1;
 	public @S(20) @OPT TokenList<COBOL_Directive> directives;
@@ -46,6 +43,19 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		public @S(20) COBOL_Keyword PROGRAM = new COBOL_Keyword("PROGRAM");
 		public @S(30) COBOL_Identifier_Reference programId;
 		public @S(40) PunctuationPeriod dot;
+	}
+
+	private @SKIP EagleScope _scope = new EagleScope(this, COBOL_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+	
+	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
+	{
+		super(name, syntax);
 	}
 
 	@Override

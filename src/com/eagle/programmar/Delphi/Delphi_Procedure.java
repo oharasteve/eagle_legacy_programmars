@@ -16,6 +16,8 @@ import com.eagle.programmar.Delphi.Symbols.Delphi_Procedure_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -24,16 +26,14 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Delphi_Procedure extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) Delphi_ProcedureForward forward;
 	public @S(20) @OPT TokenList<Delphi_Header> headers;
 	public @S(30) @OPT Delphi_BeginEnd body;
 	public @S(40) @OPT TokenList<Delphi_Comment> comments;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
-
-	public @SKIP CallMetrics _callMetrics = null;
-	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	public static class Delphi_ProcedureForward extends TokenSequence
 	{
@@ -56,6 +56,17 @@ public class Delphi_Procedure extends TokenSequence implements AbstractFunction,
 			public @S(10) Delphi_Keyword OVERRIDE = new Delphi_Keyword("Override");
 			public @S(20) PunctuationSemicolon semicolon;
 		}
+	}
+
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Delphi_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
 	}
 
 	@Override

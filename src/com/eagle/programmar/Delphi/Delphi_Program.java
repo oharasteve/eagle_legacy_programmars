@@ -7,6 +7,8 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -14,7 +16,7 @@ import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Program extends AbstractLanguage
-		implements EagleRunnable, EagleTransformableProgram
+		implements EagleRunnable, EagleTransformableProgram, EagleScopeInterface
 {
 	public static final String DELPHI = "Delphi";
 
@@ -22,6 +24,8 @@ public class Delphi_Program extends AbstractLanguage
 	{
 		super(DELPHI, new Delphi_Syntax());
 	}
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Delphi_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
 	public String booleanName(boolean flag)

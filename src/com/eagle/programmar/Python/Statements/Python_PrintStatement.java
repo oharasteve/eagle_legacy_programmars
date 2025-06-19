@@ -4,13 +4,12 @@
 package com.eagle.programmar.Python.Statements;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
-import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Print_Function;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
@@ -45,11 +44,9 @@ public class Python_PrintStatement extends TokenSequence
 		{
 			func.exprs.addSecondaryElement(new PunctuationComma());
 			Python_Expression emptyExpr1 = Python_Literal.generateLiteralExpression("", null);
-			Python_VariableExpression endVar = new Python_VariableExpression();
-			Python_Expression end = endVar.generateVarExpr("end",
-					SubscriptEnum.FIRST_IS_ZERO, null, null);
+			Python_Variable end = Python_Variable.newVariable("end");
 			Python_Assignment_Expression asg1 = new Python_Assignment_Expression();
-			Python_Expression asgExpr1 = asg1.generateAssignment(end,
+			Python_Expression asgExpr1 = asg1.generateAssignment(end, null,
 					AssignmentEnum.EQUALS, emptyExpr1, source);
 			func.exprs.addPrimaryElement(asgExpr1);
 		}

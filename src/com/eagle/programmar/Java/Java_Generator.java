@@ -396,10 +396,9 @@ public class Java_Generator
 	public Java_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Java_Expression subscript, AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
-		Java_VariableExpression varExp = new Java_VariableExpression();
-		Java_Expression var = varExp.generateVarExpr(name, offset, subscript, source);
+		Java_Variable var = Java_Variable.newVariable(name);
 		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-		return asgExpr.generateAssignment(var, oper, expression, source);
+		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
 	
 	@Override

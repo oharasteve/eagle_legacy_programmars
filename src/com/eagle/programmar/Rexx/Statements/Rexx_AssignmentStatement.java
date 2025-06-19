@@ -41,10 +41,11 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			if (hash == null)
 			{
 				hash = new EagleHash();
-				interpreter.setSymbol(variable, variable.var.getValue(), hash);
 			}
 			Rexx_Subscript sub = variable.subscript;
-			String key = interpreter.getStrValue(sub.subscr);
+			Integer key = interpreter.getIntValue(sub.subscr);
+			
+			interpreter.setSymbol(variable, variable.var.getValue(), key, hash);
 			hash.putValue(key, val);
 		}
 		else

@@ -4,6 +4,7 @@
 package com.eagle.programmar.CSharp.Expressions;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -11,16 +12,18 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.CSharp_Variable;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 
 public class CSharp_AssignmentExpression extends PrecedenceOperator
-		implements EagleRunnable, Eagle_Generate_Assignment<CSharp_Expression>
+		implements EagleRunnable, Eagle_Generate_Assignment<CSharp_Expression, CSharp_Variable>
 {
 	public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=",
+	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice(
+			"=", "*=", "/=", "%=", "+=", "-=",
 			"<<=", ">>=", ">>>=", "&=", "^=", "|=");
 	public @S(30) CSharp_Expression expr;
 
@@ -62,9 +65,9 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 	}
 	
 	@Override
-	public CSharp_Expression generateAssignment(CSharp_Expression varExpr,
-			AssignmentEnum oper, CSharp_Expression expression,
-			AbstractToken source)
+	public CSharp_Expression generateAssignment(CSharp_Variable variable,
+			CSharp_Expression subscript, AssignmentEnum oper,
+			CSharp_Expression expression, AbstractToken source)
 	{
 		String punct;
 		switch (oper)
@@ -81,7 +84,16 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		this.var = varExpr;
+		
+		AbstractToken which = variable.firstId.getWhich();
+		if (! (which instanceof CSharp_Identifier_Reference))
+		{
+			throw new RuntimeException("Unable to handle " + which);
+		}
+		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) which;
+
+		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
+		this.var = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
 		this.operator.setValue(punct);
 		this.expr = expression;
 		this.setTransformationSource(source);

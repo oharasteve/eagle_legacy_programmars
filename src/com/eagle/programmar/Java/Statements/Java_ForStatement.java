@@ -32,7 +32,6 @@ import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
-import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -242,28 +241,12 @@ public class Java_ForStatement extends TokenSequence
 			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
 			Java_Statement act, AbstractToken source)
 	{
-		Java_VariableExpression tempVar = new Java_VariableExpression();
-		tempVar.variable = var;
-		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
-		
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
 		forWhat.setPresent(true);
-		Java_ForWithType withType = new Java_ForWithType();
-		withType.equalsInit = new Java_ForTypeInit();
-		withType.equalsInit.setPresent(true);
-		withType.equalsInit.equals = new PunctuationEquals();
-		withType.equalsInit.initialExpr = fromExpression;
-		withType.variable = new Java_Variable_Definition();
-		AbstractToken which = var.firstId.getWhich();
-		if (! (which instanceof Java_Identifier_Reference))
-		{
-			throw new RuntimeException("Cannot loop over " + which);
-		}
-		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
-		withType.variable.setValue(id.getValue());
-		withType.varType = Java_Type.newPrimitiveType("int");
-		forWhat.setWhich(withType);
+		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
+		asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
+		forWhat.setWhich(Java_Generator.wrapExpression(asgExpr));
 		initializer.addPrimaryElement(forWhat);
 
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
@@ -289,10 +272,14 @@ public class Java_ForStatement extends TokenSequence
 			}
 			
 			Java_AssignmentExpression asgExp2 = new Java_AssignmentExpression();
-			loopIncr = asgExp2.generateAssignment(varExpr, AssignmentEnum.PLUS_EQUALS, delta, source);
+			loopIncr = asgExp2.generateAssignment(var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
 		loopIncrements.addPrimaryElement(loopIncr);
 
+		Java_VariableExpression tempVar = new Java_VariableExpression();
+		tempVar.variable = var;
+		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
+		
 		Java_RelationalExpression relExpr = new Java_RelationalExpression();
 		relExpr.generateRelational(new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER),
 				varExpr, relOp, toExpression, toExpression);

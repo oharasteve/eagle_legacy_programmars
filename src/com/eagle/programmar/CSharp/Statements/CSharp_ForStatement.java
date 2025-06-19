@@ -26,7 +26,6 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_PostIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
-import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
@@ -186,28 +185,12 @@ public class CSharp_ForStatement extends TokenSequence
 			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
 			CSharp_Statement act, AbstractToken source)
 	{
-		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
-		tempVar.variable = var;
-		CSharp_Expression varExpr = CSharp_Generator.wrapExpression(tempVar);
-		
 		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
 		CSharp_ForWhat forWhat = new CSharp_ForWhat();
 		forWhat.setPresent(true);
-		CSharp_ForWithType withType = new CSharp_ForWithType();
-		withType.equalsInit = new CSharp_ForTypeInit();
-		withType.equalsInit.setPresent(true);
-		withType.equalsInit.equals = new PunctuationEquals();
-		withType.equalsInit.initialExpr = fromExpression;
-		withType.variable = new CSharp_Variable_Definition();
-		AbstractToken which = var.firstId.getWhich();
-		if (! (which instanceof CSharp_Identifier_Reference))
-		{
-			throw new RuntimeException("Cannot loop over " + which);
-		}
-		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) which;
-		withType.variable.setValue(id.getValue());
-		withType.varType = CSharp_Type.newPrimitiveType("int");
-		forWhat.setWhich(withType);
+		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
+		asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
+		forWhat.setWhich(CSharp_Generator.wrapExpression(asgExpr));
 		initializer.addPrimaryElement(forWhat);
 
 		SeparatedList<CSharp_Expression, PunctuationComma> loopIncrements = new SeparatedList<CSharp_Expression, PunctuationComma>();
@@ -233,10 +216,14 @@ public class CSharp_ForStatement extends TokenSequence
 			}
 			
 			CSharp_AssignmentExpression asgExp2 = new CSharp_AssignmentExpression();
-			loopIncr = asgExp2.generateAssignment(varExpr, AssignmentEnum.PLUS_EQUALS, delta, source);
+			loopIncr = asgExp2.generateAssignment(var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
 		loopIncrements.addPrimaryElement(loopIncr);
 
+		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
+		tempVar.variable = var;
+		CSharp_Expression varExpr = CSharp_Generator.wrapExpression(tempVar);
+		
 		CSharp_RelationalExpression relExpr = new CSharp_RelationalExpression();
 		relExpr.generateRelational(null, varExpr, relOp, toExpression, toExpression);
 		CSharp_Expression untilCondition = CSharp_Generator.wrapExpression(relExpr);

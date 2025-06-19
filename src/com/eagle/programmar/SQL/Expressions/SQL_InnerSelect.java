@@ -77,7 +77,8 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 			{
 				EagleValue value = row._values.get(fld);
 				SQL_Field field = table._fields.get(fld);
-				interpreter._symbolTable.setSymbol(this, field._name, value);
+				// The -1 means no subscript
+				interpreter._symbolTable.setSymbol(this, field._name, -1, value);
 			}
 			
 			// Run the condition for this row. Done if it matches.

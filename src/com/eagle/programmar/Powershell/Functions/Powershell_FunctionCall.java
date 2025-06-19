@@ -66,6 +66,8 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		interpreter.callingFunction(name, func);
+
 		ArrayList<String> argTypes = new ArrayList<String>();
 
 		// Now assign all the parameters
@@ -82,7 +84,6 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		long startTime = System.nanoTime();
 
 		// And transfer control to the method
-		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (Powershell_Element stmt : func.stmts._elements)
 		{

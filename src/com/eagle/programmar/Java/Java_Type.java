@@ -4,6 +4,7 @@
 package com.eagle.programmar.Java;
 
 import com.eagle.generate.EagleGenerator.TypeEnum;
+import com.eagle.programmar.Java.Java_Type.Java_GenericType.Java_MoreTypes;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -132,6 +133,8 @@ public class Java_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("String");
 		case STRING_ARRAY:
 			return transformTypeArray(TypeEnum.STRING);
+		case STRING_HASH:
+			return transformTypeHash(TypeEnum.STRING);
 		case VOID:
 			return newPrimitiveType("void");
 		case OTHER:
@@ -150,6 +153,31 @@ public class Java_Type extends TokenSequence implements AbstractType
 		newType.arrayTypes = new TokenList<Java_ArrayType>();
 		newType.arrayTypes.addToken(array);
 		newType.arrayTypes.setPresent(true);
+		return newType;
+	}
+
+	public static Java_Type transformTypeHash(TypeEnum type)
+	{
+		Java_Type newType = new Java_Type();
+
+		Java_IdList idList = new Java_IdList();
+		idList.typeName = new Java_Identifier_Reference();
+		idList.typeName.setValue("java.util.HashMap");
+		newType.typeName = new Java_TypeName();
+		newType.typeName.setWhich(idList);
+		
+		newType.genericType = new Java_GenericType();
+		newType.genericType.setPresent(true);
+		newType.genericType.subType1 = newPrimitiveType("Integer");
+		newType.genericType.subType1.setPresent(true);
+		newType.genericType.moreType = new TokenList<Java_MoreTypes>();
+		newType.genericType.moreType.setPresent(true);
+		
+		Java_MoreTypes more = new Java_MoreTypes();
+		more.comma = new PunctuationComma();
+		more.subType2 = newPrimitiveType("String");
+		newType.genericType.moreType.addToken(more);
+		
 		return newType;
 	}
 }

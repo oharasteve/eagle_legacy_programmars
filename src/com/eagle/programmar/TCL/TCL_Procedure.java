@@ -105,21 +105,7 @@ public class TCL_Procedure extends TokenSequence
 			}
 		}
 		
-		// Are there any local variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typ = met.uniqueType();
-			if (typ != TypeEnum.VOID)
-			{
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
-						typ, null, this);
-				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
+		addLocalVars(transformer, generator);
 
 		for (TCL_Element element : body.statements._elements)
 		{
@@ -139,5 +125,39 @@ public class TCL_Procedure extends TokenSequence
 		}
 		
 		generator.doneMethod();
+	}
+
+	private boolean isFuncParam(String name)
+	{
+		for (TCL_Variable_Definition var : vars._elements)
+		{
+			if (var.getValue().equalsIgnoreCase(name))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// Are there any local variables we need to declare?
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				if (! isFuncParam(met._symbolName))
+				{
+					// System.err.println("****** Found var " + met._symbolName);
+					AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
+							typ, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+					generator.addStatement(dataStmt, this);
+				}
+			}
+		}
 	}
 }

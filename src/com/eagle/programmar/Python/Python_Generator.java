@@ -361,36 +361,34 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	
 	@Override
 	public Python_Expression newAssignmentExpression(String name, SubscriptEnum offset,
-			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression, AbstractToken source)
+			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression,
+			AbstractToken source)
 	{
-		Python_VariableExpression varExpr = new Python_VariableExpression();
-		Python_Expression var = varExpr.generateVarExpr(name, offset,
-				subscript, source);
+		Python_Variable var = Python_Variable.newVariable(name);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
-		return asgExpr.generateAssignment(var, oper, expression, source);
+		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
 	
 	@Override
 	public Python_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
-			Python_Expression subscript, IncrementEnum oper, AbstractToken source)
+			Python_Expression subscript, IncrementEnum incr, AbstractToken source)
 	{
-		Python_VariableExpression varExpr = new Python_VariableExpression();
-		Python_Expression var = varExpr.generateVarExpr(name, offset, subscript, source);
+		Python_Variable var = Python_Variable.newVariable(name);
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		Python_Expression one = newNumberExpression("1", null);
-		AssignmentEnum asg;
-		switch (oper)
+		AssignmentEnum oper;
+		switch (incr)
 		{
 		case INCREMENT:
-			asg = AssignmentEnum.PLUS_EQUALS;
+			oper = AssignmentEnum.PLUS_EQUALS;
 			break;
 		case DECREMENT:
-			asg = AssignmentEnum.MINUS_EQUALS;
+			oper = AssignmentEnum.MINUS_EQUALS;
 			break;
 		default:
-			throw new RuntimeException("Unexpected increment: " + oper);
+			throw new RuntimeException("Unexpected increment: " + incr);
 		}
-		return asgExpr.generateAssignment(var, asg, one, source);
+		return asgExpr.generateAssignment(var, subscript, oper, one, source);
 	}
 	
 	@Override

@@ -388,12 +388,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			CSharp_Expression subscript, AssignmentEnum oper, CSharp_Expression expression,
 			AbstractToken source)
 	{
-		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
-		CSharp_Expression var = varExpr.generateVarExpr(name, offset,
-				subscript, source);
+		CSharp_Variable var = CSharp_Variable.newVariable(name);
 		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
-		return asgExpr.generateAssignment(var, oper,
-				expression, source);
+		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
 	
 	@Override

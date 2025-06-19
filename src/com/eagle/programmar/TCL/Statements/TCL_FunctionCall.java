@@ -13,6 +13,7 @@ import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Procedure;
 import com.eagle.programmar.TCL.Symbols.TCL_Function_Reference;
 import com.eagle.programmar.TCL.Symbols.TCL_Variable_Definition;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -57,7 +58,13 @@ public class TCL_FunctionCall extends TokenSequence
 			TCL_Expression expr = callArguments._elements.get(i);
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(expr);
+			
+			// Make sure Scope is in the CALLED function, not the CALLER
+			EagleScope saveScope = interpreter._symbolTable.getScope();
+			interpreter._symbolTable.setScope(proc.getScope());
 			interpreter.setSymbol(param, param.getValue(), val);
+			interpreter._symbolTable.setScope(saveScope);
+			
 			argTypes.add(val.typeName());
 		}
 

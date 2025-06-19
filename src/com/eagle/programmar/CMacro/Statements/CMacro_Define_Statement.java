@@ -49,7 +49,8 @@ public class CMacro_Define_Statement extends TokenSequence implements CMacro_Pro
 		// System.out.println("#define " + macroName + " ...");
 		if (preprocessor._project == null || preprocessor._project.expandMacro(macroName))
 		{
-			preprocessor._symbolTable.setSymbol(var, macroName, new EagleToken(this));
+			// The -1 means no subscript
+			preprocessor._symbolTable.setSymbol(var, macroName, -1, new EagleToken(this));
 		}
 		return true; // No need to add these to the file
 	}

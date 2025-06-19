@@ -123,6 +123,8 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("string");
 		case STRING_ARRAY:
 			return transformTypeArray(TypeEnum.STRING);
+		case STRING_HASH:
+			return transformTypeHash(TypeEnum.STRING);
 		case VOID:
 			return newPrimitiveType("void");
 		case OTHER:
@@ -141,6 +143,26 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		newType.arrayTypes = new TokenList<CSharp_ArrayType>();
 		newType.arrayTypes.addToken(array);
 		newType.arrayTypes.setPresent(true);
+		return newType;
+	}
+	
+	public static CSharp_Type transformTypeHash(TypeEnum type)
+	{
+		CSharp_Type newType = new CSharp_Type();
+
+		CSharp_IdList idList = new CSharp_IdList();
+		idList.typeName = new CSharp_Identifier_Reference();
+		idList.typeName.setValue("CSharp.util.HashMap");
+		newType.typeName = new CSharp_TypeName();
+		newType.typeName.setWhich(idList);
+		
+		newType.genericType = new CSharp_GenericType();
+		newType.genericType.setPresent(true);
+		newType.genericType.subType = new SeparatedList<CSharp_Type, PunctuationComma>();
+		newType.genericType.subType.addPrimaryElement(newPrimitiveType("Integer"));
+		newType.genericType.subType.addSecondaryElement(new PunctuationComma());
+		newType.genericType.subType.addPrimaryElement(newPrimitiveType("String"));
+		
 		return newType;
 	}
 }

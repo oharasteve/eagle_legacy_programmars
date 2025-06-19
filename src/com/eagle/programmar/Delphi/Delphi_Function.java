@@ -26,7 +26,8 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleTransformer;
 
-public class Delphi_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
+public class Delphi_Function extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface
 {
 	public @S(10) Delphi_FunctionForward forward;
 	public @S(20) @OPT TokenList<Delphi_Header> headers;

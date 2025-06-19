@@ -4,16 +4,19 @@
 package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.generate.EagleGenerator.AssignmentEnum;
+import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Python_Variable;
+import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 
 public class Python_Assignment_Expression extends PrecedenceOperator
-		implements Eagle_Generate_Assignment<Python_Expression>
+		implements Eagle_Generate_Assignment<Python_Expression, Python_Variable>
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("=", "+=", "-=", ":=");
@@ -21,7 +24,7 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	
 	@Override
-	public Python_Expression generateAssignment(Python_Expression varExpr,
+	public Python_Expression generateAssignment(Python_Variable variable, Python_Expression subscript,
 			AssignmentEnum oper, Python_Expression expression, AbstractToken source)
 	{
 		String punct;
@@ -39,7 +42,16 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		this.left = varExpr;
+		
+		AbstractToken which = variable.var.getWhich();
+		if (! (which instanceof Python_Identifier_Reference))
+		{
+			throw new RuntimeException("Unable to handle " + which);
+		}
+		Python_Identifier_Reference id = (Python_Identifier_Reference) which;
+		
+		Python_VariableExpression varExpr = new Python_VariableExpression();
+		this.left = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
 		this.operator.setValue(punct);
 		this.right = expression;
 		this.setTransformationSource(source);
