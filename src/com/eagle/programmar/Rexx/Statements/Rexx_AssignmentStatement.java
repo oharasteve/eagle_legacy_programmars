@@ -58,6 +58,9 @@ public class Rexx_AssignmentStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		String name = variable.var.getValue();
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+
 		// Rexx doesn't have a Return statement. It assigns a value to the function name
 		AbstractToken parent = this.getParent();
 		while (parent != null)
@@ -65,7 +68,7 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			if (parent instanceof Rexx_Function)
 			{
 				Rexx_Function func = (Rexx_Function) parent;
-				if (variable.var.getValue().equals(func.id.getValue()))
+				if (name.equals(func.id.getValue()))
 				{
 					AbstractExpression retExpr = transformer.transformExpression(generator, expr);
 					return generator.newReturnStatement(retExpr, this);
@@ -75,10 +78,10 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			parent = parent.getParent();
 		}
 
-		// Normal assignment ...
-		AbstractExpression subscrExpr = null;
+		// Normal assignment ... maybe with a subscript
 		if (variable.subscript != null && variable.subscript.isPresent())
 		{
+			AbstractExpression subscrExpr = null;
 			AbstractToken which = variable.subscript.subscr.getWhich();
 			if (which instanceof Rexx_Number)
 			{
@@ -96,19 +99,20 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			{
 				throw new RuntimeException("Unexpected subscript: " + which);
 			}
+
+			AbstractExpression hashExpr = generator.newHashAssignment(name, subscrExpr, value, this);
+			return generator.newExpressionStatement(hashExpr, this);
 		}
 		
-		String name = variable.var.getValue();
 		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
 		{
 			// Sorry, cannot redefine true or false
 			return null;
 		}
 
-		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(name,
-				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
-		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
-		return exprStmt;
+		// No subscript given
+		AbstractExpression asgExpr1 = generator.newAssignmentExpression(name,
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, value, this);
+		return generator.newExpressionStatement(asgExpr1, this);
 	}
 }

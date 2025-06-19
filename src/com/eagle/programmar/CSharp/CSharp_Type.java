@@ -152,16 +152,16 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 
 		CSharp_IdList idList = new CSharp_IdList();
 		idList.typeName = new CSharp_Identifier_Reference();
-		idList.typeName.setValue("CSharp.util.HashMap");
+		idList.typeName.setValue("System.Collections.Generic.Dictionary");
 		newType.typeName = new CSharp_TypeName();
 		newType.typeName.setWhich(idList);
 		
 		newType.genericType = new CSharp_GenericType();
 		newType.genericType.setPresent(true);
 		newType.genericType.subType = new SeparatedList<CSharp_Type, PunctuationComma>();
-		newType.genericType.subType.addPrimaryElement(newPrimitiveType("Integer"));
+		newType.genericType.subType.addPrimaryElement(newPrimitiveType("int"));
 		newType.genericType.subType.addSecondaryElement(new PunctuationComma());
-		newType.genericType.subType.addPrimaryElement(newPrimitiveType("String"));
+		newType.genericType.subType.addPrimaryElement(newPrimitiveType("string"));
 		
 		return newType;
 	}

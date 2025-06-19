@@ -370,6 +370,14 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
+	public AbstractExpression newHashAssignment(String name, Python_Expression subscript,
+			Python_Expression expression, AbstractToken source)
+	{
+		return newAssignmentExpression(name, SubscriptEnum.FIRST_IS_ZERO, subscript,
+				AssignmentEnum.EQUALS, expression, source);
+	}
+
+	@Override
 	public Python_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
 			Python_Expression subscript, IncrementEnum incr, AbstractToken source)
 	{

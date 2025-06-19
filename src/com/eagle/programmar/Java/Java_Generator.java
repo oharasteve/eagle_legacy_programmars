@@ -402,6 +402,18 @@ public class Java_Generator
 	}
 	
 	@Override
+	public AbstractExpression newHashAssignment(String name, Java_Expression subscript,
+			Java_Expression expression, AbstractToken source)
+	{
+		Java_MethodInvocation invoke = new Java_MethodInvocation();
+		Java_Variable var = Java_Variable.newVariable(name + ".put");
+		ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
+		args.add(subscript);
+		args.add(expression);
+		return invoke.generateInvocation(var, args, source);
+	}
+
+	@Override
 	public Java_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
 			Java_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
