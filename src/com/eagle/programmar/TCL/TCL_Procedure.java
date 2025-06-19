@@ -79,7 +79,7 @@ public class TCL_Procedure extends TokenSequence
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
-		AbstractType newReturnType = generator.transformType(false, metricRetType, null, id);
+		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
 
 		generator.addMethod(newReturnType, id.getValue(), this);
 		generator.addMethodName(id.getValue());
@@ -97,7 +97,7 @@ public class TCL_Procedure extends TokenSequence
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
-					paramType = generator.transformType(false, metricArg, null, param);
+					paramType = generator.transformType(metricArg, null, param);
 				}
 				
 				generator.addMethodParameter(paramType, param.getValue());
@@ -152,8 +152,7 @@ public class TCL_Procedure extends TokenSequence
 				if (! isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
-					AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
-							typ, null, this);
+					AbstractType absType = generator.transformType(typ, null, this);
 					AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
 					generator.addStatement(dataStmt, this);
 				}

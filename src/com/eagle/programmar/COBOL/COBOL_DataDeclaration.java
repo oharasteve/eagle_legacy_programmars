@@ -42,9 +42,9 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationStar;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnable
 {
@@ -285,7 +285,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						String pic = picClause.picture.getValue().toUpperCase();
 						if (pic.startsWith("9") || pic.startsWith("X") || pic.startsWith("Z"))
 						{
-							newType = generator.transformType(false, TypeEnum.STRING, null, picClause);
+							newType = generator.transformType(TypeEnum.STRING, null, picClause);
 							// Will get replaced by INTEGER if USAGE COMP is present
 						}
 					}
@@ -295,7 +295,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						String redefWhat = redefClause.id.getValue();
 						AbstractExpression redef = generator.newVariableExpression(redefWhat,
 								SubscriptEnum.FIRST_IS_ONE, null, this);
-						newType = generator.transformType(true, TypeEnum.STRING_ARRAY, varName, this);
+						newType = generator.transformType(TypeEnum.STRING_ARRAY, varName, this);
 						AbstractStatement data = generator.newDataDeclaration(
 								varName, null, newType, redef, this);
 						generator.addStatement(data, this);
@@ -329,7 +329,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 			if (isComp) // COMP, COMP-1, etc.
 			{
-				newType = generator.transformType(false, TypeEnum.INTEGER, null, null);
+				newType = generator.transformType(TypeEnum.INTEGER, null, null);
 			}
 			if (newType != null)
 			{
@@ -355,7 +355,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					}
 
 					AbstractExpression arrayExpr = generator.newArrayExpression(newValues, this);
-					newType = generator.transformType(true, TypeEnum.STRING_ARRAY, varName, this);
+					newType = generator.transformType(TypeEnum.STRING_ARRAY, varName, this);
 					AbstractStatement data = generator.newDataDeclaration(
 							varName, null, newType, arrayExpr, this);
 					generator.addStatement(data, this);

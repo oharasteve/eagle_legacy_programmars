@@ -103,10 +103,10 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Type transformType(boolean isArray, TypeEnum type,
+	public CSharp_Type transformType(TypeEnum type,
 			String typeName, AbstractToken source)
 	{
-		return CSharp_Type.transformType(isArray, type, typeName, source);
+		return CSharp_Type.transformType(type, typeName, source);
 	}
 
 	// ================== Main program and class ==================

@@ -94,7 +94,7 @@ public class VB_Function extends TokenSequence
 		if (newReturnType == null)
 		{
 			TypeEnum metricRetType = transformer.findReturnMetric(id);
-			newReturnType = generator.transformType(false, metricRetType, null, id);
+			newReturnType = generator.transformType(metricRetType, null, id);
 		}
 		
 		generator.addMethod(newReturnType, id.getValue(), this);
@@ -119,7 +119,7 @@ public class VB_Function extends TokenSequence
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
-					paramType = generator.transformType(false, metricArg, null, param);
+					paramType = generator.transformType(metricArg, null, param);
 				}
 				
 				generator.addMethodParameter(paramType, param.var.getValue());

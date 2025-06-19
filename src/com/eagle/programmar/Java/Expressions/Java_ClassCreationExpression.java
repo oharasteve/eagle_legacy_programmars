@@ -56,7 +56,7 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 		{
 			Java_IdList ids = (Java_IdList) which;
 			String className = ids.typeName.getValue();
-			AbstractType type = generator.transformType(false, TypeEnum.OTHER,
+			AbstractType type = generator.transformType(TypeEnum.OTHER,
 					className, ids);
 
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();

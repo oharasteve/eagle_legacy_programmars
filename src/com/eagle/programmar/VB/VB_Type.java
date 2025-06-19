@@ -39,6 +39,6 @@ public class VB_Type extends TokenChooser
 			newType = TypeEnum.OTHER;
 			break;
 		}
-		return generator.transformType(false, newType, null, null);
+		return generator.transformType(newType, null, null);
 	}
 }

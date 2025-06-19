@@ -14,12 +14,13 @@ import com.eagle.programmar.Rexx.Statements.Rexx_Function;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rexx_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
@@ -86,13 +87,21 @@ public class Rexx_Program extends AbstractLanguage
 		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
 		for (AssignMetrics met : asgMetrics)
 		{
-			TypeEnum typ = met.uniqueType();
-			if (typ != TypeEnum.VOID)
+			TypeEnum typE = met.uniqueType();
+			if (typE != TypeEnum.VOID)
 			{
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
-						typ, null, this);
-				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+				AbstractType abstrType = generator.transformType(typE, null, this);
+
+				AbstractExpression initExpr = null;
+				if (typE == TypeEnum.STRING_HASH)
+				{
+					// Need to create an empty hashmap
+					initExpr = generator.newClassCreation(abstrType, null, this);
+				}
+				
+				//System.err.println("****** Found var " + met._symbolName);
+				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName,
+						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
 			}
 		}

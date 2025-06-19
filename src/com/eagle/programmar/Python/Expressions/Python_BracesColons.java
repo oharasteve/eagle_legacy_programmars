@@ -4,9 +4,11 @@
 package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -46,5 +48,13 @@ public class Python_BracesColons extends PrimaryOperator
 			public @S(20) @OPT TokenList<Python_Comment> comment;
 			public @S(30) Python_DictionaryElement element;
 		}
+	}
+	
+	public Python_Expression generateDictionary(AbstractToken source)
+	{
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
+		this.setTransformationSource(source);
+		return Python_Generator.wrapExpression(this);
 	}
 }

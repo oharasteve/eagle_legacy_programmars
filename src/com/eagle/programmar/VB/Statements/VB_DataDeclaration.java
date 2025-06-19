@@ -109,7 +109,7 @@ public class VB_DataDeclaration extends TokenSequence
 			// See if the Definition has some assignments in the metrics file
 			type = transformer.findAssignMetric(var);
 		}
-		AbstractType newType = generator.transformType(false, type, null, dataType);
+		AbstractType newType = generator.transformType(type, null, dataType);
 		
 		AbstractExpression size = null;
 		if (subscript != null && subscript.isPresent())
@@ -144,7 +144,7 @@ public class VB_DataDeclaration extends TokenSequence
 					// See if the Definition has some assignments in the metrics file
 					type = transformer.findAssignMetric(more.var);
 				}
-				newType = generator.transformType(false, type, null, dataType);
+				newType = generator.transformType(type, null, dataType);
 
 				stmt = generator.newDataDeclaration(name, size, newType, initial, more);
 				result.add(stmt);

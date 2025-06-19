@@ -96,7 +96,7 @@ public class Python_Type extends TokenChooser implements AbstractType
 		return type;
 	}
 
-	public static Python_Type transformType(boolean isArray, TypeEnum type,
+	public static Python_Type transformType(TypeEnum type,
 			String typeName, AbstractToken source)
 	{
 		if (type == null)

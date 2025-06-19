@@ -106,10 +106,10 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Type transformType(boolean isArray, TypeEnum type,
+	public Java_Type transformType(TypeEnum type,
 			String typeName, AbstractToken source)
 	{
-		return Java_Type.transformType(isArray, type, typeName, source);
+		return Java_Type.transformType(type, typeName, source);
 	}
 
 	// ================== Main program and class ==================

@@ -114,7 +114,7 @@ public class VB_Subroutine extends TokenSequence
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
-					paramType = generator.transformType(false, metricArg, null, param);
+					paramType = generator.transformType(metricArg, null, param);
 				}
 				
 				generator.addMethodParameter(paramType, param.var.getValue());

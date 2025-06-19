@@ -111,7 +111,6 @@ public class Delphi_Type extends TokenSequence
 	{
 		TypeEnum newType = null;
 		String userType = null;
-		boolean isArray = false;
 		AbstractToken which = this.baseType.getWhich();
 		if (which instanceof Delphi_KeywordChoice)
 		{
@@ -146,7 +145,6 @@ public class Delphi_Type extends TokenSequence
 				if (kw2.getValue().toLowerCase().equals("string"))
 				{
 					newType = TypeEnum.STRING_ARRAY;
-					isArray = true;
 				}
 			}
 		}
@@ -161,6 +159,6 @@ public class Delphi_Type extends TokenSequence
 		{
 			throw new RuntimeException("Can't handle type yet: " + which);
 		}
-		return generator.transformType(isArray, newType, userType, this);
+		return generator.transformType(newType, userType, this);
 	}
 }

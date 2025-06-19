@@ -96,8 +96,7 @@ public class TCL_Program extends AbstractLanguage
 			if (typ != TypeEnum.VOID)
 			{
 				// System.err.println("****** Found var " + met._symbolName);
-				AbstractType absType = generator.transformType(typ == TypeEnum.STRING_ARRAY,
-						typ, null, this);
+				AbstractType absType = generator.transformType(typ, null, this);
 				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
 				generator.addStatement(dataStmt, this);
 			}

@@ -11,6 +11,7 @@ import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
+import com.eagle.programmar.Python.Expressions.Python_BracesColons;
 import com.eagle.programmar.Python.Expressions.Python_Brackets;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
 import com.eagle.programmar.Python.Expressions.Python_Function_Call;
@@ -131,9 +132,9 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
-	public Python_Type transformType(boolean isArray, TypeEnum type, String typeName, AbstractToken source)
+	public Python_Type transformType(TypeEnum type, String typeName, AbstractToken source)
 	{
-		return Python_Type.transformType(isArray, type, typeName, source);
+		return Python_Type.transformType(type, typeName, source);
 	}
 
 	// ================== Main program and class ==================
@@ -541,7 +542,8 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public Python_Expression newClassCreation(Python_Type type,
 			ArrayList<Python_Expression> args, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		Python_BracesColons braces = new Python_BracesColons();
+		return braces.generateDictionary(source);
 	}
 	
 	@Override
