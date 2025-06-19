@@ -6,7 +6,6 @@ package com.eagle.programmar.CSharp;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_StaticStatement;
@@ -52,6 +51,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_Expression, CSharp_Variable, CSharp_Type>

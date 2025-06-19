@@ -6,8 +6,6 @@ package com.eagle.programmar.VB.Statements;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -31,8 +29,10 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class VB_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction

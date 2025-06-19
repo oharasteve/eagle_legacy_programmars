@@ -3,10 +3,6 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.AdditiveEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_VarExpr;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -23,12 +19,14 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Java_VariableExpression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_VarExpr<Java_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Variable variable;
 
@@ -58,7 +56,6 @@ public class Java_VariableExpression extends PrimaryOperator
 					SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 
-	@Override
 	public Java_Expression generateVarExpr(String name, SubscriptEnum offset,
 			Java_Expression subscrExpr, AbstractToken source)
 	{

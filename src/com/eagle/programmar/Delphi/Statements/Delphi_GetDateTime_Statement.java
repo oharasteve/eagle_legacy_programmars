@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.programmar.Delphi.Delphi_Variable;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
@@ -13,8 +10,11 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Delphi_GetDateTime_Statement extends TokenSequence
 		implements AbstractStatement, EagleTransformableStatement

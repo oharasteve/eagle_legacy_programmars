@@ -12,8 +12,6 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -75,8 +73,8 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		interpreter.tryToInterpret(dataBody);
 	}
 	
-	public static CSharp_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
-				AbstractExpression initial, AbstractToken source)
+	public static CSharp_Data newDataDeclaration(String name, CSharp_Expression size, CSharp_Type type,
+			CSharp_Expression initial, AbstractToken source)
 	{
 		if (type == null)
 		{
@@ -96,7 +94,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		// Set data name and type
 		data.dataBody.id = new CSharp_Variable_Definition();
 		data.dataBody.id.setValue(name);
-		data.dataBody.type = (CSharp_Type) type;
+		data.dataBody.type = type;
 
 		// Set the initial value, if any
 		if (initial != null)
@@ -104,7 +102,7 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 			CSharp_DataInitialValue init = new CSharp_DataInitialValue();
 			init.setPresent(true);
 			init.equals = new PunctuationEquals();
-			init.expression = (CSharp_Expression) initial;
+			init.expression = initial;
 			data.dataBody.initialValue = init;
 			data.dataBody.initialValue.setPresent(true);
 		}

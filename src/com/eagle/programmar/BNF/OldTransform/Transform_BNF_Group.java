@@ -1,11 +1,11 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Jun 9, 2016
 
-package com.eagle.programmar.BNF.Transform;
+package com.eagle.programmar.BNF.OldTransform;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.Old_Generate_Eagle_Statement.DATA_QUALIFIERS;
-import com.eagle.generate.Old_Generate_Eagle_Statement.PRIVACY;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Statement.DATA_QUALIFIERS;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Statement.PRIVACY;
 import com.eagle.programmar.BNF.Expressions.BNF_Group;
 import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.interfaces.AbstractExpression;

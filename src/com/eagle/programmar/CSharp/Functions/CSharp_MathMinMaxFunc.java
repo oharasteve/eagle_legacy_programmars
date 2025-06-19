@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Functions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Functions.EagleGenerateMinMax;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -19,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_MathMinMaxFunc extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateMinMax<CSharp_Expression>
+		implements EagleRunnable
 {
 	public @S(10) CSharp_KeywordChoice MINMAX = new CSharp_KeywordChoice("Min", "Max");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -57,8 +56,8 @@ public class CSharp_MathMinMaxFunc extends PrimaryOperator
 		interpreter.pushInt(result);
 	}
 	
-	@Override
-	public CSharp_Expression generateMinMax(boolean isMin, ArrayList<CSharp_Expression> exprs, AbstractToken source)
+	public CSharp_Expression generateMinMax(boolean isMin,
+			ArrayList<CSharp_Expression> exprs, AbstractToken source)
 	{
 		this.MINMAX.setValue(isMin ? "Min" : "Max");
 		this.leftParen = new PunctuationLeftParen();

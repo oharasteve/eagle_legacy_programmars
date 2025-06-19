@@ -5,11 +5,6 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.IncrementEnum;
-import com.eagle.generate.EagleGenerator.RelationalEnum;
-import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
-import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -44,11 +39,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class CSharp_ForStatement extends TokenSequence
-			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-					Eagle_Generate_ForLoop<CSharp_Statement, CSharp_Expression>,
-					Eagle_Generate_ForRange<CSharp_Variable, CSharp_Statement, CSharp_Expression>
+			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -140,7 +136,6 @@ public class CSharp_ForStatement extends TokenSequence
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
 	
-	@Override
 	public CSharp_Statement generateForLoop1(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			CSharp_Statement act, AbstractToken source)
@@ -169,7 +164,6 @@ public class CSharp_ForStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
 	
-	@Override
 	public CSharp_Statement generateForLoop(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
@@ -180,7 +174,6 @@ public class CSharp_ForStatement extends TokenSequence
 				stmt, source);
 	}
 	
-	@Override
 	public CSharp_Statement generateForRange1(CSharp_Variable var, CSharp_Expression fromExpression,
 			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
 			CSharp_Statement act, AbstractToken source)
@@ -244,7 +237,6 @@ public class CSharp_ForStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
 	
-	@Override
 	public CSharp_Statement generateForRange(CSharp_Variable var, CSharp_Expression fromExpression,
 			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)

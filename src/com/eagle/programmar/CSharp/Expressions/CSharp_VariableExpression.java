@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.generate.EagleGenerator.AdditiveEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_VarExpr;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -20,9 +17,11 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class CSharp_VariableExpression extends PrimaryOperator
-		implements EagleRunnable, Eagle_Generate_VarExpr<CSharp_Expression>
+		implements EagleRunnable
 {
 	public @S(10) CSharp_Variable variable;
 
@@ -32,7 +31,6 @@ public class CSharp_VariableExpression extends PrimaryOperator
 		interpreter.tryToInterpret(variable);
 	}
 	
-	@Override
 	public CSharp_Expression generateVarExpr(String name, SubscriptEnum offset,
 			CSharp_Expression subscrExpr, AbstractToken source)
 	{

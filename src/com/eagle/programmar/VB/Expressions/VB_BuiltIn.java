@@ -3,15 +3,15 @@
 
 package com.eagle.programmar.VB.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.BuiltInEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class VB_BuiltIn extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {

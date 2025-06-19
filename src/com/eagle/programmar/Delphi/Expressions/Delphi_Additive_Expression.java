@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Delphi.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.AdditiveEnum;
-import com.eagle.generate.EagleGenerator.LogicalOrEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -17,8 +14,11 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class Delphi_Additive_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression

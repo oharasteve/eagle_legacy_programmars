@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Section_Definition;
@@ -12,6 +11,7 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
 public class COBOL_Section extends TokenSequence implements EagleRunnable

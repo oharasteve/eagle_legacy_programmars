@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -17,9 +14,11 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class CSharp_AssignmentExpression extends PrecedenceOperator
-		implements EagleRunnable, Eagle_Generate_Assignment<CSharp_Expression, CSharp_Variable>
+		implements EagleRunnable
 {
 	public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice(
@@ -64,7 +63,6 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		}
 	}
 	
-	@Override
 	public CSharp_Expression generateAssignment(CSharp_Variable variable,
 			CSharp_Expression subscript, AssignmentEnum oper,
 			CSharp_Expression expression, AbstractToken source)

@@ -5,11 +5,11 @@ package com.eagle.programmar.COBOL;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 

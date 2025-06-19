@@ -6,7 +6,6 @@ package com.eagle.programmar.Java;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
@@ -54,6 +53,7 @@ import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 
 public class Java_Generator
 		extends EagleGenerator<Java_Statement, Java_Expression, Java_Variable, Java_Type>

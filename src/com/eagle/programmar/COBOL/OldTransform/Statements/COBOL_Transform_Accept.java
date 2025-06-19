@@ -1,11 +1,11 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Dec 28, 2010
 
-package com.eagle.programmar.COBOL.Transform.Statements;
+package com.eagle.programmar.COBOL.OldTransform.Statements;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL;
 import com.eagle.programmar.COBOL.Statements.COBOL_AcceptStatement;
-import com.eagle.programmar.COBOL.Transform.Transform_COBOL;
 import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractMethod;

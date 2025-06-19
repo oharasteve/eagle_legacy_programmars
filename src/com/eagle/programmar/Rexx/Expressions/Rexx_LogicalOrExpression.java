@@ -3,16 +3,16 @@
 
 package com.eagle.programmar.Rexx.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.LogicalOrEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class Rexx_LogicalOrExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
 {

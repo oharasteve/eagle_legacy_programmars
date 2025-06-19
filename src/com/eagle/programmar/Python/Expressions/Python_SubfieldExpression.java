@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.Expressions.Eagle_Generate_Subfield;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -14,7 +13,7 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Python_SubfieldExpression extends PrecedenceOperator
-		implements EagleRunnable, Eagle_Generate_Subfield<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -45,7 +44,6 @@ public class Python_SubfieldExpression extends PrecedenceOperator
 		throw new RuntimeException("Unable to handle " + left + " . " + right);
 	}
 
-	@Override
 	public Python_Expression generateSubfield(Python_Expression leftExpr,
 			Python_Expression rightExpr, AbstractToken source)
 	{

@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Rexx.Functions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.SubstringECEnum;
-import com.eagle.generate.EagleGenerator.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rexx.Rexx_Expression;
@@ -15,8 +12,11 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Rexx_SubstrFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {

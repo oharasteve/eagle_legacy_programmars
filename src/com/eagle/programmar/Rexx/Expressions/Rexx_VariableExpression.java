@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Rexx.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rexx.Rexx_Variable;
@@ -12,8 +10,10 @@ import com.eagle.programmar.Rexx.Terminals.Rexx_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Rexx_VariableExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression

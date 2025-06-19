@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Expressions.Eagle_Generate_Logical_And;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -15,12 +13,12 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Logical_And_Expression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Logical_And<Python_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Keyword AND = new Python_Keyword("and");
@@ -52,7 +50,6 @@ public class Python_Logical_And_Expression extends PrecedenceOperator
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 	
-	@Override
 	public Python_Expression generateLogicalAnd(Python_Expression leftExpr,
 			Python_Expression rightExpr, AbstractToken source)
 	{

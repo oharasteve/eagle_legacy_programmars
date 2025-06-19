@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Expressions.Eagle_Generate_Logical_And;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -13,12 +11,12 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class CSharp_LogicalAndExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Logical_And<CSharp_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_Punctuation andOperator = new CSharp_Punctuation("&&");
@@ -46,7 +44,6 @@ public class CSharp_LogicalAndExpression extends PrecedenceOperator
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 	
-	@Override
 	public CSharp_Expression generateLogicalAnd(CSharp_Expression leftExpr,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{

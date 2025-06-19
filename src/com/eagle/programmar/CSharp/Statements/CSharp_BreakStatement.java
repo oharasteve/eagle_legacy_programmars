@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
-import com.eagle.generate.Statements.Eagle_Generate_Break;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.CSharp.CSharp_Generator;
@@ -15,8 +14,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_BreakStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement,
-				Eagle_Generate_Break<CSharp_Statement>
+		implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
 	public @S(20) @DOC("statements/jump-statements#the-break-statement") CSharp_Keyword BREAK = new CSharp_Keyword("break");
@@ -28,7 +26,6 @@ public class CSharp_BreakStatement extends TokenSequence
 		return Eagle_Statement_Result.BREAK;
 	}
 	
-	@Override
 	public CSharp_Statement generateBreak(AbstractToken source)
 	{
 		this.semicolon = new PunctuationSemicolon();

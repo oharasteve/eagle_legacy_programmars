@@ -5,8 +5,6 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -27,12 +25,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_WhileStatement extends TokenSequence implements
-		AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement,
-				Eagle_Generate_While<Java_Statement, Java_Expression>
+		AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.12") Java_Keyword WHILE = new Java_Keyword("while");
@@ -92,7 +90,6 @@ public class Java_WhileStatement extends TokenSequence implements
 		return generator.newWhileStatement(cond, action, this);
 	}
 	
-	@Override
 	public Java_Statement generateWhile1(Java_Expression cond,
 			Java_Statement action, AbstractToken source)
 	{
@@ -106,7 +103,6 @@ public class Java_WhileStatement extends TokenSequence implements
 		return Java_Generator.wrapStatement(this);
 	}
 
-	@Override
 	public Java_Statement generateWhile(Java_Expression cond,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{

@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Expressions.Eagle_Generate_Parentheses;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -21,12 +19,12 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Parenthesized_Expression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Parentheses<Python_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT @SYNTAX(Python_Multiline_Syntax.class) TokenList<Python_CommentEoln> comments;
@@ -65,7 +63,6 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
 	
-	@Override
 	public Python_Expression generateParentheses(Python_Expression theExpr,
 			AbstractToken source)
 	{

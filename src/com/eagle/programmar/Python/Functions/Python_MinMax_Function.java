@@ -5,7 +5,6 @@ package com.eagle.programmar.Python.Functions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Functions.EagleGenerateMinMax;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -19,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_MinMax_Function extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateMinMax<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_KeywordChoice MINMAX = new Python_KeywordChoice("min", "max");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -57,8 +56,8 @@ public class Python_MinMax_Function extends PrimaryOperator
 		interpreter.pushInt(result);
 	}
 	
-	@Override
-	public Python_Expression generateMinMax(boolean isMin, ArrayList<Python_Expression> exprs, AbstractToken source)
+	public Python_Expression generateMinMax(boolean isMin,
+			ArrayList<Python_Expression> exprs, AbstractToken source)
 	{
 		this.MINMAX.setValue(isMin ? "min" : "max");
 		this.leftParen = new PunctuationLeftParen();

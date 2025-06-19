@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CSharp.Statements;
 
-import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -22,8 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_PrintStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable,
-				Eagle_Generate_Print<CSharp_Statement, CSharp_Expression>
+		implements AbstractStatement, EagleRunnable
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword SYSTEM = new CSharp_Keyword("System");
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
@@ -55,7 +53,6 @@ public class CSharp_PrintStatement extends TokenSequence
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
 
-	@Override
 	public CSharp_Statement generatePrint1(CSharp_Expression line, boolean newLine,
 			AbstractToken source)
 	{

@@ -6,8 +6,6 @@ package com.eagle.programmar.Rexx.Statements;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -32,8 +30,10 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rexx_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,

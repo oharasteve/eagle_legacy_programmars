@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Rexx.Terminals;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.interfaces.AbstractComment;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.terminals.TerminalCommentToken;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 

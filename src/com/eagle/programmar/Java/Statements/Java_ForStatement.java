@@ -5,13 +5,6 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.IncrementEnum;
-import com.eagle.generate.EagleGenerator.RelationalEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
-import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -52,14 +45,17 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-				EagleTransformableStatement,
-				Eagle_Generate_ForLoop<Java_Statement, Java_Expression>,
-				Eagle_Generate_ForRange<Java_Variable, Java_Statement, Java_Expression>
+				EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
@@ -191,7 +187,6 @@ public class Java_ForStatement extends TokenSequence
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 	
-	@Override
 	public Java_Statement generateForLoop1(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			Java_Statement act, AbstractToken source)
@@ -225,7 +220,6 @@ public class Java_ForStatement extends TokenSequence
 		return Java_Generator.wrapStatement(this);
 	}
 	
-	@Override
 	public Java_Statement generateForLoop(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			ArrayList<Java_Statement> acts, AbstractToken source)
@@ -236,7 +230,6 @@ public class Java_ForStatement extends TokenSequence
 				stmt, source);
 	}
 
-	@Override
 	public Java_Statement generateForRange1(Java_Variable var, Java_Expression fromExpression,
 			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
 			Java_Statement act, AbstractToken source)
@@ -302,7 +295,6 @@ public class Java_ForStatement extends TokenSequence
 		return Java_Generator.wrapStatement(this);
 	}
 	
-	@Override
 	public Java_Statement generateForRange(Java_Variable var, Java_Expression fromExpression,
 			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
 			ArrayList<Java_Statement> actions, AbstractToken source)

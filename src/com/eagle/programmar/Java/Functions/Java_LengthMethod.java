@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Java.Functions;
 
-import com.eagle.generate.Functions.EagleGenerateLength;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -16,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_LengthMethod extends PrecedenceOperator
-		implements EagleRunnable, EagleGenerateLength<Java_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Java_Expression expression = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -31,7 +30,6 @@ public class Java_LengthMethod extends PrecedenceOperator
 		interpreter.pushInt(leftStr.length());
 	}
 	
-	@Override
 	public Java_Expression generateLength(Java_Expression expr, AbstractToken source)
 	{
 		this.expression = expr;

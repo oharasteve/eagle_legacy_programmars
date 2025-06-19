@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.MultiplicativeEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Multiplicative;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -17,12 +14,13 @@ import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class Java_MultiplicativeExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Multiplicative<Java_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("*", "/", "%");
@@ -78,7 +76,6 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		}
 	}
 	
-	@Override
 	public Java_Expression generateMultiplicative(
 			Java_Expression leftExpr, MultiplicativeEnum oper,
 			Java_Expression rightExpr, AbstractToken source)

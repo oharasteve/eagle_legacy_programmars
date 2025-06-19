@@ -1,20 +1,20 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Dec 27, 2010
 
-package com.eagle.programmar.COBOL.Transform.Statements;
+package com.eagle.programmar.COBOL.OldTransform.Statements;
 
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
+import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformUntil;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformVarying;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformInline;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformParagraph;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement;
-import com.eagle.programmar.COBOL.Transform.Transform_COBOL;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.interfaces.AbstractExpression;

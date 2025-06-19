@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Delphi.Statements;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Delphi_Expression;
@@ -11,6 +10,7 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 

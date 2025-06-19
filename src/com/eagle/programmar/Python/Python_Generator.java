@@ -6,7 +6,6 @@ package com.eagle.programmar.Python;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
@@ -52,6 +51,7 @@ import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 
 public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Expression, Python_Variable, Python_Type>

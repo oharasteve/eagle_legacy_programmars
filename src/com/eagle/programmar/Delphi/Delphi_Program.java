@@ -4,7 +4,6 @@
 package com.eagle.programmar.Delphi;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.scope.EagleScope;
@@ -12,6 +11,7 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 

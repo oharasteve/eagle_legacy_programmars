@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -26,8 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_While<CSharp_Statement, CSharp_Expression>
+		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword WHILE = new CSharp_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -76,7 +74,6 @@ public class CSharp_WhileStatement extends TokenSequence
 		return result;
 	}
 
-	@Override
 	public CSharp_Statement generateWhile1(CSharp_Expression cond,
 			CSharp_Statement action, AbstractToken source)
 	{
@@ -90,7 +87,6 @@ public class CSharp_WhileStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(this);
 	}
 	
-	@Override
 	public CSharp_Statement generateWhile(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{

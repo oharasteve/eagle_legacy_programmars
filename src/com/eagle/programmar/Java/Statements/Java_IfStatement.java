@@ -5,8 +5,6 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
@@ -24,11 +22,11 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_IfStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement,
-				Eagle_Generate_IfElse<Java_Statement, Java_Expression>
+		implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
@@ -110,7 +108,6 @@ public class Java_IfStatement extends TokenSequence
 		return generator.newIfStatement1(cond, thenPart, elsePart, this);
 	}
 
-	@Override
 	public Java_Statement generateIfElse1(Java_Expression cond,
 			Java_Statement thenStmt, Java_Statement elseStmt, AbstractToken source)
 	{
@@ -143,7 +140,6 @@ public class Java_IfStatement extends TokenSequence
 		return Java_Generator.wrapStatement(this);
 	}
 	
-	@Override
 	public Java_Statement generateIfElse(Java_Expression cond,
 			ArrayList<Java_Statement> thenStatements,
 			ArrayList<Java_Statement> elseStatements, AbstractToken source)

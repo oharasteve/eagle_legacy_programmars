@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.CallMetrics;
@@ -16,6 +15,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
 public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, AbstractFunction

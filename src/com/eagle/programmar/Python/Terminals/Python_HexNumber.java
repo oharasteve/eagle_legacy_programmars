@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.generate.Terminals.Eagle_Generate_HexNumber;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Python_HexNumber extends TerminalHexNumberToken
-		implements Eagle_Generate_HexNumber
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -17,7 +15,6 @@ public class Python_HexNumber extends TerminalHexNumberToken
 		return genericHex(lines, "0x", "Ll");
 	}
 	
-	@Override
 	public Python_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
 		this.setValue(value);

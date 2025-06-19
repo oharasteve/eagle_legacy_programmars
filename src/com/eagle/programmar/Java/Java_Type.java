@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.generate.EagleGenerator.TypeEnum;
-import com.eagle.programmar.Java.Java_Type.Java_GenericType.Java_MoreTypes;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -19,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_Type extends TokenSequence implements AbstractType
 {
@@ -40,12 +39,12 @@ public class Java_Type extends TokenSequence implements AbstractType
 		public @S(30) @OPT Java_Punctuation emptySubscript = new Java_Punctuation("[]");
 		public @S(40) @OPT TokenList<Java_MoreTypes> moreType;
 		public @S(50) @NOSPACE Java_Punctuation greaterThan = new Java_Punctuation('>');
+	}
 
-		public static class Java_MoreTypes extends TokenSequence
-		{
-			public @S(10) PunctuationComma comma;
-			public @S(20) Java_Type subType2;
-		}
+	public static class Java_MoreTypes extends TokenSequence
+	{
+		public @S(10) PunctuationComma comma;
+		public @S(20) Java_Type subType2;
 	}
 
 	public static class Java_IdList extends TokenSequence

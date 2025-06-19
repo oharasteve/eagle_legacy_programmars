@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.TCL.Functions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -16,8 +14,10 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class TCL_BracketLindex extends PrimaryOperator
 		implements EagleRunnable,EagleTransformableExpression

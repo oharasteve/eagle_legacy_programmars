@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
@@ -23,8 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_IfStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement,
-				Eagle_Generate_IfElse<CSharp_Statement, CSharp_Expression>
+		implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @NEWLINE @DOC("statements/selection-statements") CSharp_Keyword IF = new CSharp_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -85,7 +83,6 @@ public class CSharp_IfStatement extends TokenSequence
 		return result;
 	}
 	
-	@Override
 	public CSharp_Statement generateIfElse1(CSharp_Expression cond,
 			CSharp_Statement thenStmt,
 			CSharp_Statement elseStmt, AbstractToken source)
@@ -119,7 +116,6 @@ public class CSharp_IfStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(this);
 	}
 	
-	@Override
 	public CSharp_Statement generateIfElse(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> thenStatements,
 			ArrayList<CSharp_Statement> elseStatements, AbstractToken source)

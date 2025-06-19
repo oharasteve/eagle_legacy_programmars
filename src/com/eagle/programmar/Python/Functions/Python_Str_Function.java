@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Functions;
 
-import com.eagle.generate.Functions.EagleGenerateString;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -16,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_Str_Function extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateString<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_Keyword STR = new Python_Keyword("str");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -30,7 +29,6 @@ public class Python_Str_Function extends PrimaryOperator
 		interpreter.pushStr(str);
 	}
 	
-	@Override
 	public Python_Expression generateString(Python_Expression expr, AbstractToken source)
 	{
 		Python_Str_Function str = new Python_Str_Function();

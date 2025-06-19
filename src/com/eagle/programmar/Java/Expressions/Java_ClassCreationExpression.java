@@ -5,9 +5,6 @@ package com.eagle.programmar.Java.Expressions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.TypeEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_ClassCreation;
 import com.eagle.programmar.Java.Java_ArgumentList;
 import com.eagle.programmar.Java.Java_ArgumentList.Java_MoreArguments;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
@@ -27,12 +24,13 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_ClassCreationExpression extends PrimaryOperator
-		implements EagleTransformableExpression,
-				Eagle_Generate_ClassCreation<Java_Expression, Java_Type>
+		implements EagleTransformableExpression
 {
 	public @S(10) Java_Keyword NEW = new Java_Keyword("new");
 	public @S(20) Java_Type jtype;
@@ -79,7 +77,6 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 		throw new RuntimeException("Can't handle: " + this);
 	}
 	
-	@Override
 	public Java_Expression generateCreation(Java_Type type,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{

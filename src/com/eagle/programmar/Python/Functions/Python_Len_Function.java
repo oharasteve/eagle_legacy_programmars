@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Functions;
 
-import com.eagle.generate.Functions.EagleGenerateLength;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -15,7 +14,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_Len_Function extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateLength<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_Keyword LEN = new Python_Keyword("len");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -29,7 +28,6 @@ public class Python_Len_Function extends PrimaryOperator
 		interpreter.pushInt(line.length());
 	}
 	
-	@Override
 	public Python_Expression generateLength(Python_Expression expr, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();

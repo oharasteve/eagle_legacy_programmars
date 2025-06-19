@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.CSharp.Terminals;
 
-import com.eagle.generate.Terminals.Eagle_Generate_Literal;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CSharp_Literal extends TerminalLiteralToken
-		implements Eagle_Generate_Literal
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -44,7 +42,6 @@ public class CSharp_Literal extends TerminalLiteralToken
 		return "C# literals may have @ or $";
 	}
 	
-	@Override
 	public CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
 		String val = value;

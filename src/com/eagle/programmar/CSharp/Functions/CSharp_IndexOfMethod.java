@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.CSharp.Functions;
 
-import com.eagle.generate.EagleGenerator.SubstringSCEnum;
-import com.eagle.generate.Functions.EagleGenerateIndexOf;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -18,9 +16,10 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class CSharp_IndexOfMethod extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateIndexOf<CSharp_Expression, CSharp_Variable>
+		implements EagleRunnable
 {
 	public @S(10) CSharp_Variable string;
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -52,7 +51,6 @@ public class CSharp_IndexOfMethod extends PrimaryOperator
 		}
 	}
 	
-	@Override
 	public CSharp_Expression generateIndexOf(CSharp_Variable str, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{

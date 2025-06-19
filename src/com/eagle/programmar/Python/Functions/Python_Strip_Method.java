@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Functions;
 
-import com.eagle.generate.Functions.EagleGenerateTrim;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -16,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Python_Strip_Method extends PrecedenceOperator
-		implements EagleRunnable, EagleGenerateTrim<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_Expression expression = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -31,7 +30,6 @@ public class Python_Strip_Method extends PrecedenceOperator
 		interpreter.pushInt(line.length());
 	}
 	
-	@Override
 	public Python_Expression generateTrim(Python_Expression expr, AbstractToken source)
 	{
 		this.dot = new PunctuationPeriod();

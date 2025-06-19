@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.BuiltInEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_BuiltIn;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -14,12 +11,13 @@ import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class Java_BuiltIn extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_BuiltIn<Java_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_KeywordChoice builtinConstant = new Java_KeywordChoice(
 			"false", "true", "null", "this", "super");
@@ -60,7 +58,6 @@ public class Java_BuiltIn extends PrimaryOperator
 		}
 	}
 
-	@Override
 	public Java_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{
 		switch (builtin)

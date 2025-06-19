@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Java.Statements;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Statements.Eagle_Generate_Return;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -17,12 +15,12 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_ReturnStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement,
-				Eagle_Generate_Return<Java_Statement, Java_Expression>
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.17") Java_Keyword RETURN = new Java_Keyword("return");
 	public @S(20) @OPT Java_Expression expression;
@@ -47,7 +45,6 @@ public class Java_ReturnStatement extends TokenSequence
 		return generator.newReturnStatement(expr, this);
 	}
 
-	@Override
 	public Java_Statement generateReturn(Java_Expression ret, AbstractToken source)
 	{
 		if (ret != null)

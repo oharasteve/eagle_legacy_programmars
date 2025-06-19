@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.generate.EagleGenerator.IncrementEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Post_Increment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -16,9 +14,10 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
 
 public class CSharp_PostIncrementExpression extends PrimaryOperator
-		implements EagleRunnable, Eagle_Generate_Post_Increment<CSharp_Expression, CSharp_Variable>
+		implements EagleRunnable
 {
 	public @S(10) CSharp_Variable var;
 	public @S(20) @NOSPACE CSharp_PunctuationChoice operator =
@@ -49,7 +48,6 @@ public class CSharp_PostIncrementExpression extends PrimaryOperator
 		}
 	}
 	
-	@Override
 	public CSharp_Expression generateIncrement(CSharp_Variable variable,
 			IncrementEnum oper, AbstractToken source)
 	{

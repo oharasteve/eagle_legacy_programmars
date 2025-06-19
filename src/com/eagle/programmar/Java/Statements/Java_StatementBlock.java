@@ -5,7 +5,6 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_Block;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Java.Java_Generator;
@@ -23,8 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_StatementBlock extends TokenSequence
-		implements EagleRunnableWithResult, EagleScopeInterface,
-				Eagle_Generate_Block<Java_Statement>
+		implements EagleRunnableWithResult, EagleScopeInterface
 {
 	public @S(10) @OPT Java_Label label;
 	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
@@ -55,7 +53,6 @@ public class Java_StatementBlock extends TokenSequence
 		return _scope;
 	}
 	
-	@Override
 	public Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
 			AbstractToken source)
 	{

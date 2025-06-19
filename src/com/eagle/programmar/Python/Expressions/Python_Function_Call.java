@@ -5,7 +5,6 @@ package com.eagle.programmar.Python.Expressions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -26,8 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Python_Function_Call extends PrimaryOperator implements EagleRunnable,
-		Eagle_Generate_MethodInvocation<Python_Expression, Python_Variable>
+public class Python_Function_Call extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Python_Variable fnName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -103,7 +101,6 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 		interpreter.completedFunction(name, func.header);
 	}
 	
-	@Override
 	public Python_Expression generateInvocation(Python_Variable var,
 			ArrayList<Python_Expression> args, AbstractToken source)
 	{

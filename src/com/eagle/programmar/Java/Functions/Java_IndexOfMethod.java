@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Java.Functions;
 
-import com.eagle.generate.EagleGenerator.SubstringSCEnum;
-import com.eagle.generate.Functions.EagleGenerateIndexOf;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -18,9 +16,10 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Java_IndexOfMethod extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateIndexOf<Java_Expression, Java_Variable>
+		implements EagleRunnable
 {
 	public @S(10) Java_Variable string;
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -52,7 +51,6 @@ public class Java_IndexOfMethod extends PrimaryOperator
 		}
 	}
 	
-	@Override
 	public Java_Expression generateIndexOf(Java_Variable str, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{

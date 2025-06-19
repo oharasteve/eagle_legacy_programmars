@@ -1,13 +1,12 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Dec 27, 2010
 
-package com.eagle.programmar.COBOL.Transform.Statements;
+package com.eagle.programmar.COBOL.OldTransform.Statements;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
 import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
+import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL;
 import com.eagle.programmar.COBOL.Statements.COBOL_MoveStatement;
-import com.eagle.programmar.COBOL.Transform.Transform_COBOL;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -15,6 +14,7 @@ import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class COBOL_Transform_Move<Lang extends AbstractLanguage,
 		Cls extends AbstractClass, Stmt extends AbstractStatement,

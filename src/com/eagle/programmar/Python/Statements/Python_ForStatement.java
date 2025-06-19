@@ -5,10 +5,6 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator.AdditiveEnum;
-import com.eagle.generate.EagleGenerator.RelationalEnum;
-import com.eagle.generate.Statements.Eagle_Generate_ForLoop;
-import com.eagle.generate.Statements.Eagle_Generate_ForRange;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -53,11 +49,11 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Python_ForStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_ForLoop<Python_ComplexStatement, Python_Expression>,
-				Eagle_Generate_ForRange<Python_Variable, Python_ComplexStatement, Python_Expression>
+		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -178,7 +174,6 @@ public class Python_ForStatement extends TokenSequence
 		return result;
 	}
 
-	@Override
 	public Python_ComplexStatement generateForLoop1(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			Python_ComplexStatement action, AbstractToken source)
@@ -189,7 +184,6 @@ public class Python_ForStatement extends TokenSequence
 				actions, source);
 	}
 	
-	@Override
 	public Python_ComplexStatement generateForLoop(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
@@ -336,7 +330,6 @@ public class Python_ForStatement extends TokenSequence
 		return generateForRange(initVarExp.variable, init.right, relOper, cond.right, deltaExp, actions, source);
 	}
 
-	@Override
 	public Python_ComplexStatement generateForRange1(Python_Variable var, Python_Expression fromExpression,
 			RelationalEnum relOp, Python_Expression toExpression, Python_Expression delta,
 			Python_ComplexStatement action, AbstractToken source)
@@ -346,7 +339,6 @@ public class Python_ForStatement extends TokenSequence
 		return generateForRange(var, fromExpression, relOp, toExpression, delta, actions, source);
 	}
 
-	@Override
 	public Python_ComplexStatement generateForRange(Python_Variable var, Python_Expression fromExpression,
 			RelationalEnum relOper, Python_Expression toExpression, Python_Expression delta,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)

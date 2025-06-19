@@ -13,9 +13,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -78,8 +76,8 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 		}
 	}
 	
-	public static Java_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
-				AbstractExpression initial, AbstractToken source)
+	public static Java_Data newDataDeclaration(String name, Java_Expression size, Java_Type type,
+			Java_Expression initial, AbstractToken source)
 	{
 		if (type == null)
 		{
@@ -98,7 +96,7 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 		// Set data name and type
 		data.id = new Java_Variable_Definition();
 		data.id.setValue(name);
-		data.jtype = (Java_Type) type;
+		data.jtype = type;
 
 		// Set the initial value, if any
 		if (initial != null)
@@ -106,7 +104,7 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 			Java_DataInitialValue init = new Java_DataInitialValue();
 			init.setPresent(true);
 			init.equals = new PunctuationEquals();
-			init.expression = (Java_Expression) initial;
+			init.expression = initial;
 			data.initialValue = init;
 			data.initialValue.setPresent(true);
 		}

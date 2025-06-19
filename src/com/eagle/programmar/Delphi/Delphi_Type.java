@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Identifier_Reference;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Variable_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
@@ -26,6 +24,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Delphi_Type extends TokenSequence
 {

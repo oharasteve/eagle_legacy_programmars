@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Type_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
@@ -12,6 +11,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Types extends TokenSequence

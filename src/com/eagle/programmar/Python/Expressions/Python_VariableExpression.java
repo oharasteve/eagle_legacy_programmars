@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.EagleGenerator.AdditiveEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_VarExpr;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -21,9 +18,11 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Python_VariableExpression extends PrimaryOperator
-		implements EagleRunnable, Eagle_Generate_VarExpr<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_Variable variable;
 	public @S(20) @OPT @NOSPACE Python_Subscript subscript;
@@ -41,7 +40,6 @@ public class Python_VariableExpression extends PrimaryOperator
 		interpreter.tryToInterpret(variable);
 	}
 	
-	@Override
 	public Python_Expression generateVarExpr(String name, SubscriptEnum offset,
 			Python_Expression subscrExpr, AbstractToken source)
 	{

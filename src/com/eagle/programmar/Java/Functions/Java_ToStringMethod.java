@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Java.Functions;
 
-import com.eagle.generate.Functions.EagleGenerateString;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -16,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_ToStringMethod extends PrecedenceOperator
-		implements EagleRunnable, EagleGenerateString<Java_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Java_Expression expression = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -31,7 +30,6 @@ public class Java_ToStringMethod extends PrecedenceOperator
 		interpreter.pushStr(val.toString());
 	}
 
-	@Override
 	public Java_Expression generateString(Java_Expression expr, AbstractToken source)
 	{
 		// Java does not like 'ok.toString()' where 'ok' is an int instead of an Integer.

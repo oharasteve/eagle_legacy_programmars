@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Symbols.Delphi_Variable_Definition;
@@ -17,6 +16,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Vars extends TokenSequence implements EagleRunnable

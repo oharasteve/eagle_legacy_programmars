@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.LogicalOrEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Logical_Or;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -18,12 +15,13 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class Python_Logical_Or_Expression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Logical_Or<Python_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Or_Operation operator;
@@ -83,7 +81,6 @@ public class Python_Logical_Or_Expression extends PrecedenceOperator
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
 	
-	@Override
 	public Python_Expression generateLogicalOr(Python_Expression leftExpr,
 			LogicalOrEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{

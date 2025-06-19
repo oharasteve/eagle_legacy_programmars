@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.CSharp.Functions;
 
-import com.eagle.generate.Functions.EagleGenerateString;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -17,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_ToStringMethod extends PrecedenceOperator
-		implements EagleRunnable, EagleGenerateString<CSharp_Expression>
+		implements EagleRunnable
 {
 	public @S(10) CSharp_Expression expression = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -32,7 +31,6 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 		interpreter.pushStr(val.toString());
 	}
 
-	@Override
 	public CSharp_Expression generateString(CSharp_Expression expr, AbstractToken source)
 	{
 		this.expression = expr;

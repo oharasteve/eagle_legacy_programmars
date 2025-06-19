@@ -5,7 +5,6 @@ package com.eagle.programmar.Java.Functions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Functions.EagleGenerateMinMax;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -19,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Java_MathMinMaxFunc extends PrimaryOperator
-		implements EagleRunnable, EagleGenerateMinMax<Java_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Java_KeywordChoice MINMAX = new Java_KeywordChoice("min", "max");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -57,8 +56,8 @@ public class Java_MathMinMaxFunc extends PrimaryOperator
 		interpreter.pushInt(result);
 	}
 	
-	@Override
-	public Java_Expression generateMinMax(boolean isMin, ArrayList<Java_Expression> exprs, AbstractToken source)
+	public Java_Expression generateMinMax(boolean isMin,
+			ArrayList<Java_Expression> exprs, AbstractToken source)
 	{
 		this.MINMAX.setValue(isMin ? "min" : "max");
 		this.leftParen = new PunctuationLeftParen();

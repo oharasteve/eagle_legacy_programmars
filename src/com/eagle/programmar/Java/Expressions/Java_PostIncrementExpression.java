@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.generate.EagleGenerator.IncrementEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Post_Increment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -16,9 +14,10 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
 
 public class Java_PostIncrementExpression extends PrimaryOperator
-		implements EagleRunnable, Eagle_Generate_Post_Increment<Java_Expression, Java_Variable>
+		implements EagleRunnable
 {
 	public @S(10) Java_Variable var;
 	public @S(20) @NOSPACE Java_PunctuationChoice operator =
@@ -49,7 +48,6 @@ public class Java_PostIncrementExpression extends PrimaryOperator
 		}
 	}
 
-	@Override
 	public Java_Expression generateIncrement(Java_Variable varName,
 			IncrementEnum oper, AbstractToken source)
 	{

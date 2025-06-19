@@ -5,7 +5,6 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_DoUntil;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
@@ -28,8 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_DoWhileStatement extends TokenSequence
-		implements AbstractStatement, EagleScopeInterface,
-				Eagle_Generate_DoUntil<Java_Statement, Java_Expression>
+		implements AbstractStatement, EagleScopeInterface
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.13") Java_Keyword DO = new Java_Keyword("do");
@@ -49,7 +47,6 @@ public class Java_DoWhileStatement extends TokenSequence
 		return _scope;
 	}
 
-	@Override
 	public Java_Statement generateDoUntil1(Java_Expression cond,
 			Java_Statement action, AbstractToken source)
 	{
@@ -72,7 +69,6 @@ public class Java_DoWhileStatement extends TokenSequence
 		return Java_Generator.wrapStatement(this);
 	}
 
-	@Override
 	public Java_Statement generateDoUntil(Java_Expression cond,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{

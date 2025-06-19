@@ -5,8 +5,6 @@ package com.eagle.programmar.Java.Expressions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Expressions.Eagle_Generate_MethodInvocation;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -27,12 +25,12 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_MethodInvocation extends PrimaryOperator
-		implements EagleRunnableWithResult, EagleTransformableExpression,
-				Eagle_Generate_MethodInvocation<Java_Expression, Java_Variable>
+		implements EagleRunnableWithResult, EagleTransformableExpression
 {
 	public @S(10) Java_Variable methodName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -151,7 +149,6 @@ public class Java_MethodInvocation extends PrimaryOperator
 		throw new RuntimeException("Can't handle: " + this);
 	}
 
-	@Override
 	public Java_Expression generateInvocation(Java_Variable var,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{

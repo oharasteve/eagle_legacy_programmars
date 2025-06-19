@@ -6,7 +6,6 @@ package com.eagle.programmar.VB;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Statements.VB_Function;
@@ -14,6 +13,7 @@ import com.eagle.programmar.VB.Statements.VB_Subroutine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;

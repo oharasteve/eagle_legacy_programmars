@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Expressions;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Expressions.Eagle_Generate_ClassCreation;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
@@ -18,8 +17,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class CSharp_ClassCreationExpression extends PrimaryOperator implements
-		Eagle_Generate_ClassCreation<CSharp_Expression, CSharp_Type>
+public class CSharp_ClassCreationExpression extends PrimaryOperator
 {
 	public @S(10) CSharp_Keyword NEW = new CSharp_Keyword("new");
 	public @S(20) CSharp_Type cstype;
@@ -28,7 +26,6 @@ public class CSharp_ClassCreationExpression extends PrimaryOperator implements
 	public @S(50) @OPT @NOSPACE CSharp_ArgumentList argList;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 	
-	@Override
 	public CSharp_Expression generateCreation(CSharp_Type type,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{

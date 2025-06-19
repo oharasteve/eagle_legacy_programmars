@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.LogicalOrEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Logical_Or;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -14,12 +11,13 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class CSharp_LogicalOrExpression extends PrecedenceOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Logical_Or<CSharp_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_PunctuationChoice orOperator = new CSharp_PunctuationChoice("||", "^");
@@ -74,7 +72,6 @@ public class CSharp_LogicalOrExpression extends PrecedenceOperator
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
 	
-	@Override
 	public CSharp_Expression generateLogicalOr(CSharp_Expression leftExpr,
 			LogicalOrEnum oper, CSharp_Expression rightExpr, AbstractToken source)
 	{

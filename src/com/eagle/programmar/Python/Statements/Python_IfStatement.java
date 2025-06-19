@@ -5,13 +5,12 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_IfElse;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
-import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_ElseStartOfLine;
@@ -24,8 +23,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class Python_IfStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_IfElse<Python_ComplexStatement, Python_Expression>
+		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;
@@ -126,7 +124,6 @@ public class Python_IfStatement extends TokenSequence
 		return result;
 	}
 
-	@Override
 	public Python_ComplexStatement generateIfElse1(Python_Expression cond,
 			Python_ComplexStatement thenStmt, Python_ComplexStatement elseStmt, AbstractToken source)
 	{
@@ -143,7 +140,6 @@ public class Python_IfStatement extends TokenSequence
 		return generateIfElse(cond, thens, elses, source);
 	}
 	
-	@Override
 	public Python_ComplexStatement generateIfElse(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> thenStmts, ArrayList<Python_ComplexStatement> elseSmts,
 			AbstractToken source)

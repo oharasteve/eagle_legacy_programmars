@@ -5,11 +5,6 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.BuiltInEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Statements.Eagle_Generate_DoUntil;
-import com.eagle.generate.Statements.Eagle_Generate_While;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -40,11 +35,12 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Python_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult,
-				Eagle_Generate_While<Python_ComplexStatement, Python_Expression>,
-				Eagle_Generate_DoUntil<Python_ComplexStatement, Python_Expression>
+		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");
@@ -106,7 +102,6 @@ public class Python_WhileStatement extends TokenSequence
 		return result;
 	}
 
-	@Override
 	public Python_ComplexStatement generateDoUntil1(Python_Expression cond,
 			Python_ComplexStatement action, AbstractToken source)
 	{
@@ -115,7 +110,6 @@ public class Python_WhileStatement extends TokenSequence
 		return generateDoUntil(cond, actions, source);
 	}
 	
-	@Override
 	public Python_ComplexStatement generateDoUntil(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
@@ -170,7 +164,6 @@ public class Python_WhileStatement extends TokenSequence
 		return generateWhile(whileCond, copyActions, source);
 	}
 	
-	@Override
 	public Python_ComplexStatement generateWhile1(Python_Expression cond,
 			Python_ComplexStatement action, AbstractToken source)
 	{
@@ -179,7 +172,6 @@ public class Python_WhileStatement extends TokenSequence
 		return generateWhile(cond, actions, source);
 	}
 
-	@Override
 	public Python_ComplexStatement generateWhile(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{

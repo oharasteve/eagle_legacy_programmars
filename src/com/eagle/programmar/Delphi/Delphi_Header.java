@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Delphi;
 
-import com.eagle.generate.EagleGenerator;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Comment;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Include;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
@@ -11,6 +10,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Header extends TokenChooser

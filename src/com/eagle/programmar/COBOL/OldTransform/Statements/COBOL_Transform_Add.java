@@ -1,20 +1,18 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jan 2, 2011
 
-package com.eagle.programmar.COBOL.Transform.Statements;
+package com.eagle.programmar.COBOL.OldTransform.Statements;
 
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.RelationalEnum;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
+import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL;
+import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL_Data;
 import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement.COBOL_AddNoGiving;
 import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement.COBOL_AddOnSizeError;
-import com.eagle.programmar.COBOL.Transform.Transform_COBOL;
-import com.eagle.programmar.COBOL.Transform.Transform_COBOL_Data;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -22,6 +20,8 @@ import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class COBOL_Transform_Add<Lang extends AbstractLanguage,
 		Cls extends AbstractClass, Stmt extends AbstractStatement,

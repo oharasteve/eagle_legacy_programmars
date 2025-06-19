@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.VB;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.EagleGenerator.TypeEnum;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class VB_Type extends TokenChooser
 {

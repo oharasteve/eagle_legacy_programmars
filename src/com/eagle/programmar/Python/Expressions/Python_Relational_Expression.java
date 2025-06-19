@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.EagleGenerator.RelationalEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Relational;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -18,9 +16,10 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Python_Relational_Expression extends PrecedenceOperator
-		implements EagleRunnable, Eagle_Generate_Relational<Python_Expression>
+		implements EagleRunnable
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Python_Relational_Operator operator;
@@ -105,7 +104,6 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		}
 	}
 
-	@Override
 	public Python_Expression generateRelational(Oper2Types types, Python_Expression leftExpr,
 			RelationalEnum relOp, Python_Expression rightExpr, AbstractToken source)
 	{

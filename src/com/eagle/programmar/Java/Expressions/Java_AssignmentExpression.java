@@ -3,9 +3,6 @@
 
 package com.eagle.programmar.Java.Expressions;
 
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.EagleGenerator.SubscriptEnum;
-import com.eagle.generate.Expressions.Eagle_Generate_Assignment;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -17,9 +14,11 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Java_AssignmentExpression extends PrecedenceOperator
-		implements EagleRunnable, Eagle_Generate_Assignment<Java_Expression, Java_Variable>
+		implements EagleRunnable
 {
 	public @S(10) Java_Expression var = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice(
@@ -64,7 +63,6 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		}
 	}
 	
-	@Override
 	public Java_Expression generateAssignment(Java_Variable variable, Java_Expression subscript,
 			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{

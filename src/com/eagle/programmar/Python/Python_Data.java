@@ -9,9 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Symbols.Python_Variable_Definition;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
@@ -35,8 +33,8 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 		interpreter.setSymbol(id, id.toString(), value);
 	}
 	
-	public static Python_Data newDataDeclaration(String name, AbstractExpression size, AbstractType type,
-				AbstractExpression initial, AbstractToken source)
+	public static Python_Data newDataDeclaration(String name, Python_Expression size, Python_Type type,
+			Python_Expression initial, AbstractToken source)
 	{
 		if (initial == null)
 		{
@@ -57,13 +55,13 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 		data.id = new Python_Variable_Definition();
 		data.id.setValue(name);
 		// data.colon = new PunctuationColon();
-		// data.type = (Python_Type) type;
+		// data.type = type;
 
 		// Set the initial value
 		Python_DataInitialValue init = new Python_DataInitialValue();
 		init.setPresent(true);
 		init.equals = new PunctuationEquals();
-		init.expression = (Python_Expression) initial;
+		init.expression = initial;
 		data.initialValue = init;
 		data.initialValue.setPresent(true);
 

@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Dec 23, 2010
 
-package com.eagle.programmar.COBOL.Transform;
+package com.eagle.programmar.COBOL.OldTransform;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.COBOL.COBOL_IdentificationDivision;

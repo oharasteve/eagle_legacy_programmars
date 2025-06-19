@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Python.Expressions;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Expressions.Eagle_Generate_Logical_Not;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -13,12 +11,12 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Logical_Not_Expression extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression,
-				Eagle_Generate_Logical_Not<Python_Expression>
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Keyword NOT = new Python_Keyword("not");
 	public @S(20) Python_Expression expr;
@@ -38,7 +36,6 @@ public class Python_Logical_Not_Expression extends PrimaryOperator
 		return generator.newNotExpression(theExpr, this);
 	}
 	
-	@Override
 	public Python_Expression generateLogicalNot(Python_Expression theExpr,
 			AbstractToken source)
 	{

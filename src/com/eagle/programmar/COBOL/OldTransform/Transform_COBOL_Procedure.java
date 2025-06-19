@@ -1,12 +1,12 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Dec 27, 2010
 
-package com.eagle.programmar.COBOL.Transform;
+package com.eagle.programmar.COBOL.OldTransform;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.generate.Old_Generate_Eagle_Expression.TYPES;
-import com.eagle.generate.Old_Generate_Eagle_Method.METHOD_QUALIFIERS;
-import com.eagle.generate.Old_Generate_Eagle_Statement.PRIVACY;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Expression.TYPES;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Method.METHOD_QUALIFIERS;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Statement.PRIVACY;
 import com.eagle.programmar.COBOL.COBOL_Paragraph;
 import com.eagle.programmar.COBOL.COBOL_Paragraph.COBOL_SentenceOrComment;
 import com.eagle.programmar.COBOL.COBOL_ProcedureDivision;

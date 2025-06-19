@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Python.Statements;
 
-import com.eagle.generate.EagleGenerator.AssignmentEnum;
-import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
@@ -21,17 +19,16 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class Python_PrintStatement extends TokenSequence
-		implements AbstractStatement,
-				Eagle_Generate_Print<Python_ComplexStatement, Python_Expression>
+		implements AbstractStatement
 {
 	public @S(10) @NOSPACE Python_Keyword PRINT = new Python_Keyword("print");
 	public @S(20) @OPT Python_Punctuation greaterGreater = new Python_Punctuation(">>");
 	public @S(30) @OPT SeparatedList<Python_Expression, PunctuationComma> exprs;
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
 
-	@Override
 	public Python_ComplexStatement generatePrint1(Python_Expression line,
 			boolean newLine, AbstractToken source)
 	{

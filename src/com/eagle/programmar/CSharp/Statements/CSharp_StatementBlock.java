@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_Block;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.CSharp.CSharp_Generator;
@@ -21,8 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
 public class CSharp_StatementBlock extends TokenSequence
-		implements EagleRunnableWithResult, EagleScopeInterface,
-				Eagle_Generate_Block<CSharp_Statement>
+		implements EagleRunnableWithResult, EagleScopeInterface
 {
 	public @S(10) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<CSharp_StatementOrComment> statements;
@@ -51,7 +49,6 @@ public class CSharp_StatementBlock extends TokenSequence
 		return _scope;
 	}
 	
-	@Override
 	public CSharp_Statement generateBlock(
 			ArrayList<CSharp_Statement> stmts, AbstractToken source)
 	{

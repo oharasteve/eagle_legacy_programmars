@@ -1,11 +1,20 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jan 2, 2011
 
-package com.eagle.programmar.COBOL.Transform;
+package com.eagle.programmar.COBOL.OldTransform;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Statement;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Accept;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Add;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Compute;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Display;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Evaluate;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Initialize;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Move;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Perform;
+import com.eagle.programmar.COBOL.OldTransform.Statements.COBOL_Transform_Stop;
 import com.eagle.programmar.COBOL.Statements.COBOL_AcceptStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_AddStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_ComputeStatement;
@@ -15,15 +24,6 @@ import com.eagle.programmar.COBOL.Statements.COBOL_InitializeStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_MoveStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformStatement;
 import com.eagle.programmar.COBOL.Statements.COBOL_StopStatement;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Accept;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Add;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Compute;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Display;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Evaluate;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Initialize;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Move;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Perform;
-import com.eagle.programmar.COBOL.Transform.Statements.COBOL_Transform_Stop;
 import com.eagle.tokens.interfaces.AbstractClass;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractMethod;

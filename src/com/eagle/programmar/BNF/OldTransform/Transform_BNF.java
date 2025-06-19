@@ -1,19 +1,19 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 19, 2015
 
-package com.eagle.programmar.BNF.Transform;
+package com.eagle.programmar.BNF.OldTransform;
 
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
-import com.eagle.generate.Old_Generate_Eagle;
-import com.eagle.generate.Old_Generate_Eagle_Class.CLASS_QUALIFIERS;
-import com.eagle.generate.Old_Generate_Eagle_Expression.TYPES;
-import com.eagle.generate.Old_Generate_Eagle_Method.METHOD_QUALIFIERS;
-import com.eagle.generate.Old_Generate_Eagle_Statement.DATA_QUALIFIERS;
-import com.eagle.generate.Old_Generate_Eagle_Statement.PRIVACY;
 import com.eagle.io.EaglePrinter;
+import com.eagle.oldGenerate.Old_Generate_Eagle;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Class.CLASS_QUALIFIERS;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Expression.TYPES;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Method.METHOD_QUALIFIERS;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Statement.DATA_QUALIFIERS;
+import com.eagle.oldGenerate.Old_Generate_Eagle_Statement.PRIVACY;
 import com.eagle.programmar.BNF.BNF_Expression;
 import com.eagle.programmar.BNF.BNF_Expression.BNF_ExpressionTerm;
 import com.eagle.programmar.BNF.BNF_Program;

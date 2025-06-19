@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.Statements.Eagle_Generate_DoUntil;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
@@ -23,8 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class CSharp_DoWhileStatement extends TokenSequence
-		implements AbstractStatement,
-				Eagle_Generate_DoUntil<CSharp_Statement, CSharp_Expression>
+		implements AbstractStatement
 {
 	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword DO = new CSharp_Keyword("do");
 	public @S(20) CSharp_Statement doStatement;
@@ -34,7 +32,6 @@ public class CSharp_DoWhileStatement extends TokenSequence
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
 
-	@Override
 	public CSharp_Statement generateDoUntil1(CSharp_Expression cond,
 			CSharp_Statement action, AbstractToken source)
 	{
@@ -52,7 +49,6 @@ public class CSharp_DoWhileStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(this);
 	}
 	
-	@Override
 	public CSharp_Statement generateDoUntil(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{

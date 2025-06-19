@@ -5,8 +5,6 @@ package com.eagle.programmar.Java.Statements;
 
 import java.io.PrintStream;
 
-import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.Statements.Eagle_Generate_Print;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -22,12 +20,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_PrintStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable, EagleTransformableStatement,
-				Eagle_Generate_Print<Java_Statement, Java_Expression>
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE Java_Keyword SYSTEM = new Java_Keyword("System");
 	public @S(20) @NOSPACE PunctuationPeriod dot1;
@@ -79,7 +77,6 @@ public class Java_PrintStatement extends TokenSequence
 		return generator.newPrintStatement1(value, newLine, this);
 	}
 
-	@Override
 	public Java_Statement generatePrint1(Java_Expression line, boolean newLine,
 			AbstractToken source)
 	{

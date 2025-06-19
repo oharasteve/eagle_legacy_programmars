@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.generate.Terminals.Eagle_Generate_Literal;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.Python.Python_Expression;
@@ -13,7 +12,6 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Python_Literal extends TerminalLiteralToken
-		implements Eagle_Generate_Literal
 {
 	private static final String PREFIXES = "bfru";
 
@@ -86,7 +84,6 @@ public class Python_Literal extends TerminalLiteralToken
 		return "python literal";
 	}
 		
-	@Override
 	public Python_Literal generateLiteral(String value, AbstractToken source)
 	{
 		this.setValue(value);
