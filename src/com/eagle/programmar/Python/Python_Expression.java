@@ -40,6 +40,7 @@ import com.eagle.programmar.Python.Functions.Python_Find_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_Locals_Function;
 import com.eagle.programmar.Python.Functions.Python_Print_Function;
+import com.eagle.programmar.Python.Functions.Python_StartsWith_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Functions.Python_Strip_Method;
 import com.eagle.programmar.Python.Functions.Python_Upper_Method;
@@ -95,15 +96,16 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(200) Python_Len_Function lenFunction;
 	public @P(210) Python_Str_Function strFunction;
 	public @P(220) Python_Find_Function findFunction;
-	public @P(230) Python_Locals_Function localsFunction;
-	public @P(240) Python_Print_Function printFunction;
-	public @P(250) Python_Function_Call functionCall;
-	public @P(260) Python_BuiltIn builtIn;
-	public @P(270) Python_VariableExpression variableExpression;
-	public @P(280) Python_Star_Expression starExpression;
-	public @P(290) Python_StarStar_Expression starStarExpression;
-	public @P(300) Python_Lambda_Expression lambdaExpression;
-	public @P(310) Python_Yield yield;
+	public @P(230) Python_StartsWith_Function startsWithFunction;
+	public @P(240) Python_Locals_Function localsFunction;
+	public @P(250) Python_Print_Function printFunction;
+	public @P(260) Python_Function_Call functionCall;
+	public @P(270) Python_BuiltIn builtIn;
+	public @P(280) Python_VariableExpression variableExpression;
+	public @P(290) Python_Star_Expression starExpression;
+	public @P(300) Python_StarStar_Expression starStarExpression;
+	public @P(310) Python_Lambda_Expression lambdaExpression;
+	public @P(320) Python_Yield yield;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

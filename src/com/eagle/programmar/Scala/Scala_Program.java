@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Scala;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -12,8 +14,14 @@ import com.eagle.programmar.Scala.Statements.Scala_Object;
 import com.eagle.programmar.Scala.Statements.Scala_Package;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_Program extends AbstractLanguage implements EagleRunnable
+public class Scala_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String SCALA = "Scala";
 
@@ -71,5 +79,48 @@ public class Scala_Program extends AbstractLanguage implements EagleRunnable
 				}
 			}
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, transform all the function definitions
+		for (Scala_Element elt : elements._elements)
+		{
+			if (elt.getWhich() instanceof Scala_Object)
+			{
+				Scala_Object obj = (Scala_Object) elt.getWhich();
+				for (Scala_Statement stmt : obj.statement.statements._elements)
+				{
+					if (stmt.getWhich() instanceof EagleTransformableFunction)
+					{
+						EagleTransformableFunction transformable = (EagleTransformableFunction) stmt.getWhich();
+						transformable.transformFunction(transformer, generator);
+					}
+				}
+			}
+		}
+
+		// Second pass, transform all the data and logic
+		for (Scala_Element elt : elements._elements)
+		{
+			if (elt.getWhich() instanceof Scala_Object)
+			{
+				Scala_Object obj = (Scala_Object) elt.getWhich();
+				for (Scala_Statement stmt : obj.statement.statements._elements)
+				{
+					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+					if (newStmts != null)
+					{
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmt);
+						}
+					}
+				}
+			}
+		}
+		
+		return generator.getTransfomedProgram();
 	}
 }

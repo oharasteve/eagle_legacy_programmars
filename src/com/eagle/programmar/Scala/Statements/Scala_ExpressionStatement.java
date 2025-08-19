@@ -9,9 +9,14 @@ import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_Comment;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Scala_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE Scala_Expression expr;
 	public @S(20) @OPT Scala_Comment comment;
@@ -21,5 +26,13 @@ public class Scala_ExpressionStatement extends TokenSequence implements EagleRun
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expr);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newExpressionStatement(newExpr, this);
 	}
 }

@@ -10,7 +10,8 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Ada_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Ada_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Ada_Expression expr;
 	public @S(20) PunctuationSemicolon semicolon;

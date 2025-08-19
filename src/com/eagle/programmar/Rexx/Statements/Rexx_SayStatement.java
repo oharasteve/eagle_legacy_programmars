@@ -31,6 +31,6 @@ public class Rexx_SayStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement1(line, true, this);
+		return generator.newPrintStatement(line, true, this);
 	}
 }

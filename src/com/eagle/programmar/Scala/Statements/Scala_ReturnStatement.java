@@ -10,9 +10,14 @@ import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_ReturnStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Scala_ReturnStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) Scala_Keyword RETURN = new Scala_Keyword("return");
 	public @S(20) Scala_Expression expr;
@@ -24,5 +29,17 @@ public class Scala_ReturnStatement extends TokenSequence implements AbstractStat
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression retExpr = null;
+		if (expr != null && expr.isPresent())
+		{
+			retExpr = transformer.transformExpression(generator, expr);
+		}
+		return generator.newReturnStatement(retExpr, this);
 	}
 }

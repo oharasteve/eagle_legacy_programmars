@@ -10,7 +10,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_Number extends TerminalNumberToken implements EagleTransformableExpression
+public class VB_Number extends TerminalNumberToken
+		implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)

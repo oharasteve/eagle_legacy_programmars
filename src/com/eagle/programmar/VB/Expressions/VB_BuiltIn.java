@@ -13,7 +13,8 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
-public class VB_BuiltIn extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_BuiltIn extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_KeywordChoice builtIns = new VB_KeywordChoice("false", "true", "nothing");
 

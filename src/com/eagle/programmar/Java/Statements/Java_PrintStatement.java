@@ -74,36 +74,36 @@ public class Java_PrintStatement extends TokenSequence
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement1(value, newLine, this);
+		return generator.newPrintStatement(value, newLine, this);
 	}
 
-	public Java_Statement generatePrint1(Java_Expression line, boolean newLine,
+	public Java_Statement generatePrintStmt(Java_Expression line, boolean newLine,
 			AbstractToken source)
 	{
-		Java_PrintStatement stmt = new Java_PrintStatement();
-		stmt.dot1 = new PunctuationPeriod();
-		stmt.dot1.setPresent(true);
-		stmt.OUT = new Java_KeywordChoice("out");
-		stmt.dot2 = new PunctuationPeriod();
-		stmt.dot2.setPresent(true);
+		Java_PrintStatement prt = new Java_PrintStatement();
+		prt.dot1 = new PunctuationPeriod();
+		prt.dot1.setPresent(true);
+		prt.OUT = new Java_KeywordChoice("out");
+		prt.dot2 = new PunctuationPeriod();
+		prt.dot2.setPresent(true);
 		
 		if (newLine)
 		{
-			stmt.PRINT = new Java_KeywordChoice("println");
+			prt.PRINT = new Java_KeywordChoice("println");
 		}
 		else
 		{
-			stmt.PRINT = new Java_KeywordChoice("print");
+			prt.PRINT = new Java_KeywordChoice("print");
 		}
 		
-		stmt.leftParen = new PunctuationLeftParen();
-		stmt.rightParen = new PunctuationRightParen();
+		prt.leftParen = new PunctuationLeftParen();
+		prt.rightParen = new PunctuationRightParen();
 
-		stmt.expr = line;
-		stmt.expr.setPresent(true);
-		stmt.semicolon = new PunctuationSemicolon();
+		prt.expr = line;
+		prt.expr.setPresent(true);
+		prt.semicolon = new PunctuationSemicolon();
 		
-		stmt.setTransformationSource(source);
-		return Java_Generator.wrapStatement(stmt);
+		prt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(prt);
 	}
 }

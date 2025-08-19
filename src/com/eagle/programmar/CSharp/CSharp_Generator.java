@@ -29,6 +29,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Functions.CSharp_IndexOfMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
+import com.eagle.programmar.CSharp.Functions.CSharp_StartsWithMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_ToStringMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_TrimMethod;
@@ -333,11 +334,11 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 	
 	@Override
-	public CSharp_Statement newPrintStatement1(CSharp_Expression line,
+	public CSharp_Statement newPrintStatement(CSharp_Expression line,
 			boolean newLine, AbstractToken source)
 	{
 		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
-		return prtStmt.generatePrint1(line, newLine, source);
+		return prtStmt.generatePrintStmt(line, newLine, source);
 	}
 
 	@Override
@@ -600,6 +601,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 				whichSC, whichEC, scOrnc, ncMightBeTooBig, source));
 	}
 
+	@Override
+	public CSharp_Expression newStartsWithFunction(CSharp_Expression expr, CSharp_Expression patt,
+			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		CSharp_StartsWithMethod startsMeth = new CSharp_StartsWithMethod();
+		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
+	}
+	
 	@Override
 	public CSharp_Expression newIndexOfFunction(CSharp_Variable string,
 			CSharp_Expression patt, CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)

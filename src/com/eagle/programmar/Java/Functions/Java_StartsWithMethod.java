@@ -6,14 +6,18 @@ package com.eagle.programmar.Java.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
-public class Java_StartsWithMethod extends PrecedenceOperator implements EagleRunnable
+public class Java_StartsWithMethod extends PrecedenceOperator
+		implements EagleRunnable
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
@@ -38,5 +42,23 @@ public class Java_StartsWithMethod extends PrecedenceOperator implements EagleRu
 		{
 			interpreter.pushBool(leftStr.startsWith(pattern));
 		}
+	}
+	
+	public Java_Expression generateStartsWith(Java_Expression expr, Java_Expression patt,
+			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		this.left = expr;
+		this.dot = new PunctuationPeriod();
+		this.leftParen = new PunctuationLeftParen();
+		this.patternExpr = patt;
+		if (sc != null)
+		{
+			this.comma = new PunctuationComma();
+			this.scExpr = sc;
+		}
+		this.rightParen = new PunctuationRightParen();
+		
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

@@ -29,6 +29,7 @@ import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Find_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
+import com.eagle.programmar.Python.Functions.Python_StartsWith_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Functions.Python_Strip_Method;
 import com.eagle.programmar.Python.Statements.Python_BreakStatement;
@@ -310,11 +311,11 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_ComplexStatement newPrintStatement1(Python_Expression line, boolean newLine,
+	public Python_ComplexStatement newPrintStatement(Python_Expression line, boolean newLine,
 			AbstractToken source)
 	{
 		Python_PrintStatement prtStmt = new Python_PrintStatement();
-		return prtStmt.generatePrint1(line, newLine, source);
+		return prtStmt.generatePrintStmt(line, newLine, source);
 	}
 	
 	@Override
@@ -592,6 +593,14 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 				whichEC, scOrnc, ncMightBeTooBig, source));
 	}
 
+	@Override
+	public Python_Expression newStartsWithFunction(Python_Expression expr, Python_Expression patt,
+			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		Python_StartsWith_Function startsFunc = new Python_StartsWith_Function();
+		return startsFunc.generateStartsWith(expr, patt, sc, whichSC, source);
+	}
+	
 	@Override
 	public Python_Expression newIndexOfFunction(Python_Variable string,
 			Python_Expression patt, Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)

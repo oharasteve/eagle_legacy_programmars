@@ -28,8 +28,8 @@ public class Python_PrintStatement extends TokenSequence
 	public @S(20) @OPT Python_Punctuation greaterGreater = new Python_Punctuation(">>");
 	public @S(30) @OPT SeparatedList<Python_Expression, PunctuationComma> exprs;
 	public @S(40) @OPT @NOSPACE @CURIOUS("Extra comma") PunctuationComma comma;
-
-	public Python_ComplexStatement generatePrint1(Python_Expression line,
+	
+	public Python_ComplexStatement generatePrintStmt(Python_Expression line,
 			boolean newLine, AbstractToken source)
 	{
 		Python_Print_Function func = new Python_Print_Function();
@@ -50,7 +50,6 @@ public class Python_PrintStatement extends TokenSequence
 		
 		func.rightParen = new PunctuationRightParen();
 		func.setTransformationSource(source);
-		
 		Python_ExpressionStatement stmt = new Python_ExpressionStatement();
 		stmt.expression = Python_Generator.wrapExpression(func);
 		

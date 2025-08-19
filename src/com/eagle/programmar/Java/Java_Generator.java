@@ -30,6 +30,7 @@ import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_IndexOfMethod;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
+import com.eagle.programmar.Java.Functions.Java_StartsWithMethod;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
 import com.eagle.programmar.Java.Functions.Java_ToStringMethod;
 import com.eagle.programmar.Java.Functions.Java_TrimMethod;
@@ -342,11 +343,11 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Statement newPrintStatement1(Java_Expression line, boolean newLine,
+	public Java_Statement newPrintStatement(Java_Expression line, boolean newLine,
 			AbstractToken source)
 	{
 		Java_PrintStatement prtStmt = new Java_PrintStatement();
-		return prtStmt.generatePrint1(line, newLine, source);
+		return prtStmt.generatePrintStmt(line, newLine, source);
 	}
 
 	@Override
@@ -577,7 +578,7 @@ public class Java_Generator
 		Java_MethodInvocation creat = new Java_MethodInvocation();
 		return creat.generateInvocation(var, args, source);
 	}
-		
+
 	@Override
 	public Java_Expression newCurrentDatetime()
 	{
@@ -616,6 +617,14 @@ public class Java_Generator
 				whichEC, scOrnc, ncMightBeTooBig, source));
 	}
 
+	@Override
+	public Java_Expression newStartsWithFunction(Java_Expression expr, Java_Expression patt,
+			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		Java_StartsWithMethod startsMeth = new Java_StartsWithMethod();
+		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
+	}
+	
 	@Override
 	public Java_Expression newIndexOfFunction(Java_Variable string,
 			Java_Expression patt, Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)

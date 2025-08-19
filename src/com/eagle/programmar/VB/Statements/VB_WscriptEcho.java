@@ -48,7 +48,7 @@ public class VB_WscriptEcho extends TokenSequence
 		{
 		case "echo":
 			AbstractExpression line = transformer.transformExpression(generator, expr);
-			return generator.newPrintStatement1(line, true, this);
+			return generator.newPrintStatement(line, true, this);
 		case "quit":
 			AbstractExpression code = transformer.transformExpression(generator, expr);
 			return generator.newExitStatement(code, this);

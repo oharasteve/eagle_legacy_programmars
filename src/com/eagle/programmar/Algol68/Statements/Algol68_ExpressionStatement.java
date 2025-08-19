@@ -10,7 +10,8 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
-public class Algol68_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Algol68_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Algol68_Expression expr;
 	public @S(20) @OPT PunctuationSemicolon semicolon;

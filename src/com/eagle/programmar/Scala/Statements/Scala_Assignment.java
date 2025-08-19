@@ -13,9 +13,16 @@ import com.eagle.programmar.Scala.Symbols.Scala_Identifier_Reference;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_Assignment extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Scala_Assignment extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) Scala_Variable var;
 	public @S(20) Scala_PunctuationChoice operator = new Scala_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
@@ -47,5 +54,37 @@ public class Scala_Assignment extends TokenSequence implements AbstractStatement
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		AbstractExpression subscrExpr = null;
+		if (var.subscript != null && var.subscript.isPresent())
+		{
+			subscrExpr = transformer.transformExpression(generator, var.subscript.expr);
+		}
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

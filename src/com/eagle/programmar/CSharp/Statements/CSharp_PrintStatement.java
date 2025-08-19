@@ -52,38 +52,38 @@ public class CSharp_PrintStatement extends TokenSequence
 		
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
-
-	public CSharp_Statement generatePrint1(CSharp_Expression line, boolean newLine,
+	
+	public CSharp_Statement generatePrintStmt(CSharp_Expression line, boolean newLine,
 			AbstractToken source)
 	{
-		CSharp_PrintStatement stmt = new CSharp_PrintStatement();
-		stmt.SYSTEM.setPresent(true);
-		stmt.dot1 = new PunctuationPeriod();
-		stmt.dot1.setPresent(true);
-		stmt.dot2 = new PunctuationPeriod();
-		stmt.dot2.setPresent(true);
-		stmt.OUT = new CSharp_KeywordChoice("Out");
-		stmt.OUT.setPresent(true);
+		CSharp_PrintStatement prt = new CSharp_PrintStatement();
+		prt.SYSTEM.setPresent(true);
+		prt.dot1 = new PunctuationPeriod();
+		prt.dot1.setPresent(true);
+		prt.dot2 = new PunctuationPeriod();
+		prt.dot2.setPresent(true);
+		prt.OUT = new CSharp_KeywordChoice("Out");
+		prt.OUT.setPresent(true);
 		
 		if (newLine)
 		{
-			stmt.WRITE = new CSharp_KeywordChoice("WriteLine");
+			prt.WRITE = new CSharp_KeywordChoice("WriteLine");
 		}
 		else
 		{
-			stmt.WRITE = new CSharp_KeywordChoice("Write");
+			prt.WRITE = new CSharp_KeywordChoice("Write");
 		}
 		
-		stmt.dot3 = new PunctuationPeriod();
-		stmt.dot3.setPresent(true);
-		stmt.leftParen = new PunctuationLeftParen();
-		stmt.rightParen = new PunctuationRightParen();
+		prt.dot3 = new PunctuationPeriod();
+		prt.dot3.setPresent(true);
+		prt.leftParen = new PunctuationLeftParen();
+		prt.rightParen = new PunctuationRightParen();
 		
-		stmt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
-		stmt.exprs.addPrimaryElement(line);
-		stmt.semicolon = new PunctuationSemicolon();
+		prt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
+		prt.exprs.addPrimaryElement(line);
+		prt.semicolon = new PunctuationSemicolon();
 		
-		stmt.setTransformationSource(source);
-		return CSharp_Generator.wrapStatement(stmt);
+		prt.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(prt);
 	}
 }

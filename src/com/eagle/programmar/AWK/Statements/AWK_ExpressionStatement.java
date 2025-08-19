@@ -9,7 +9,8 @@ import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class AWK_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class AWK_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) AWK_Expression expr;
 

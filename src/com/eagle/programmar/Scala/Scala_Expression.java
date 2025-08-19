@@ -24,7 +24,6 @@ import com.eagle.programmar.Scala.Expressions.Scala_VariableExpression;
 import com.eagle.programmar.Scala.Functions.Scala_EqualsMethod;
 import com.eagle.programmar.Scala.Functions.Scala_LengthMethod;
 import com.eagle.programmar.Scala.Functions.Scala_ListFunction;
-import com.eagle.programmar.Scala.Functions.Scala_PrintLnFunction;
 import com.eagle.programmar.Scala.Functions.Scala_ReverseMethod;
 import com.eagle.programmar.Scala.Functions.Scala_StartsWithMethod;
 import com.eagle.programmar.Scala.Terminals.Scala_Literal;
@@ -70,11 +69,10 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(150) Scala_NotExpression notExpression;
 	public @P(160) Scala_BuiltIn builtIn;
 	public @P(170) Scala_ListFunction listFunction;
-	public @P(180) Scala_PrintLnFunction printlnFunction;
-	public @P(190) Scala_VariableExpression variableExpression;
-	public @P(200) Scala_BracesExpression bracesExpression;
-	public @P(210) Scala_ReverseMethod rangeREversed;
-	public @P(220) Scala_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Scala_VariableExpression variableExpression;
+	public @P(190) Scala_BracesExpression bracesExpression;
+	public @P(200) Scala_ReverseMethod rangeREversed;
+	public @P(210) Scala_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
