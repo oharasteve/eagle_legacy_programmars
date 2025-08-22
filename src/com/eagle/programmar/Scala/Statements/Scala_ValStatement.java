@@ -12,11 +12,18 @@ import com.eagle.programmar.Scala.Symbols.Scala_Variable_Definition;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_ValStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Scala_ValStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAL = new Scala_Keyword(
 			"val");
@@ -35,5 +42,19 @@ public class Scala_ValStatement extends TokenSequence implements AbstractStateme
 			EagleValue val = interpreter.getEagleValue(initValue);
 			interpreter.setSymbol(id, id.getValue(), val);
 		}
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// See if the Definition has some assignments in the metrics file
+		TypeEnum metricType = transformer.findAssignMetric(id);
+		AbstractType newType = generator.transformType(metricType, null, null);
+		
+		AbstractExpression initial = transformer.transformExpression(generator, initValue);
+		
+		String name = id.getValue();
+		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+		return stmt;
 	}
 }

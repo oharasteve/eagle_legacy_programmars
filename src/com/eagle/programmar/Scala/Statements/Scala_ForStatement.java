@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Scala.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -18,16 +20,23 @@ import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.programmar.Scala.Terminals.Scala_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Scala_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("taste-control-structures.html#for-loops-and-expressions")
 			Scala_Keyword FOR = new Scala_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Scala_Variable var;
+	public @S(30) Scala_Variable variable;
 	public @S(40) Scala_Punctuation arrow = new Scala_Punctuation("<-");
 	public @S(50) Scala_Expression values;
 	public @S(60) PunctuationRightParen rightParen;
@@ -84,7 +93,7 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var, var.vars.first().getValue(), new EagleInteger(i));
+			interpreter.setSymbol(variable, variable.vars.first().getValue(), new EagleInteger(i));
 
 			result = interpreter.tryToInterpret(statement);
 
@@ -112,5 +121,55 @@ public class Scala_ForStatement extends TokenSequence implements EagleRunnableWi
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which = values.getWhich();
+		Scala_RangeExpression range = null;
+		AbstractExpression initExpr = null;
+		AbstractExpression termExpr = null;
+		AbstractExpression incrExpr = null;
+		if (which instanceof Scala_RangeExpression)
+		{
+			range = (Scala_RangeExpression) which;
+			initExpr = transformer.transformExpression(generator, range.left);
+			termExpr = transformer.transformExpression(generator, range.right);
+		}
+		if (which instanceof Scala_ReverseMethod)
+		{
+			Scala_ReverseMethod reversed = (Scala_ReverseMethod) which;
+			if (reversed.leftExpr.getWhich() instanceof Scala_ParenthesizedExpression)
+			{
+				Scala_ParenthesizedExpression parens = (Scala_ParenthesizedExpression) reversed.leftExpr.getWhich();
+				if (parens.expression.getWhich() instanceof Scala_RangeExpression)
+				{
+					range = (Scala_RangeExpression) parens.expression.getWhich();
+					initExpr = transformer.transformExpression(generator, range.right);
+					termExpr = transformer.transformExpression(generator, range.left);
+					incrExpr = generator.newNumberExpression("-1", null);
+				}
+			}
+		}
+		if (range == null)
+		{
+			throw new RuntimeException("FOR statement requires a Range of values");
+		}
+		
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+				statement.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt : stmts)
+			{
+				actionList.add(stmt);
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(variable.vars.first().getValue());
+		return generator.newForRangeStatement(var, initExpr,
+				RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
 	}
 }

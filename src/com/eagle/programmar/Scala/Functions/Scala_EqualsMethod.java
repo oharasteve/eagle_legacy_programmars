@@ -8,11 +8,17 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Scala_EqualsMethod extends PrecedenceOperator implements EagleRunnable
+public class Scala_EqualsMethod extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Scala_Expression leftExpr = new Scala_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) PunctuationPeriod dot;
@@ -27,5 +33,13 @@ public class Scala_EqualsMethod extends PrecedenceOperator implements EagleRunna
 		String left = interpreter.getStrValue(leftExpr);
 		String right = interpreter.getStrValue(rightExpr);
 		interpreter.pushBool(left.equals(right));
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression left = transformer.transformExpression(generator, leftExpr);
+		AbstractExpression right = transformer.transformExpression(generator, rightExpr);
+		return generator.newRelationalExpression(null, left, RelationalEnum.EQUALS, right, this);
 	}
 }
