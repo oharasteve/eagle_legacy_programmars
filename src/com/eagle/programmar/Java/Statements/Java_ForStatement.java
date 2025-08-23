@@ -237,17 +237,23 @@ public class Java_ForStatement extends TokenSequence
 	{
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
-		forWhat.setPresent(true);
-		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-		asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
 		if (type == TypeEnum.INTEGER)
 		{
 			Java_ForWithType withType = new Java_ForWithType();
-			//TBD
+			withType.varType = Java_Type.newPrimitiveType("int");
+			withType.variable = new Java_Variable_Definition();
+			String varName = var.firstId.getWhich().toString();
+			withType.variable.setValue(varName);
+			withType.equalsInit = new Java_ForTypeInit();
+			withType.equalsInit.equals = new PunctuationEquals();
+			withType.equalsInit.initialExpr = fromExpression;
+			withType.equalsInit.setPresent(true);
 			forWhat.setWhich(withType);
 		}
 		else
 		{
+			Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
+			asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
 			forWhat.setWhich(Java_Generator.wrapExpression(asgExpr));
 		}
 		initializer.addPrimaryElement(forWhat);

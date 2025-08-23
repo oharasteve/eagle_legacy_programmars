@@ -182,9 +182,25 @@ public class CSharp_ForStatement extends TokenSequence
 		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
 		CSharp_ForWhat forWhat = new CSharp_ForWhat();
 		forWhat.setPresent(true);
-		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
-		asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
-		forWhat.setWhich(CSharp_Generator.wrapExpression(asgExpr));
+		if (type == TypeEnum.INTEGER)
+		{
+			CSharp_ForWithType withType = new CSharp_ForWithType();
+			withType.varType = CSharp_Type.newPrimitiveType("int");
+			withType.variable = new CSharp_Variable_Definition();
+			String varName = var.firstId.getWhich().toString();
+			withType.variable.setValue(varName);
+			withType.equalsInit = new CSharp_ForTypeInit();
+			withType.equalsInit.equals = new PunctuationEquals();
+			withType.equalsInit.initialExpr = fromExpression;
+			withType.equalsInit.setPresent(true);
+			forWhat.setWhich(withType);
+		}
+		else
+		{
+			CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
+			asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
+			forWhat.setWhich(CSharp_Generator.wrapExpression(asgExpr));
+		}
 		initializer.addPrimaryElement(forWhat);
 
 		SeparatedList<CSharp_Expression, PunctuationComma> loopIncrements = new SeparatedList<CSharp_Expression, PunctuationComma>();

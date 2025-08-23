@@ -76,7 +76,6 @@ public class Java_VariableExpression extends PrimaryOperator
 			}
 			
 			Java_Subscript subscript = new Java_Subscript();
-			subscript.expr.setPresent(true);
 			subscript.leftBracket = new PunctuationLeftBracket();
 			subscript.rightBracket = new PunctuationRightBracket();
 			
@@ -94,6 +93,7 @@ public class Java_VariableExpression extends PrimaryOperator
 			{
 				subscript.expr = subscrExpr;
 			}
+			subscript.expr.setPresent(true);
 
 			this.variable.subscript = new TokenList<Java_Subscript>();
 			this.variable.subscript.addToken(subscript);
