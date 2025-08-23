@@ -10,7 +10,8 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Perl_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class Perl_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT Perl_ArgumentList valueList;

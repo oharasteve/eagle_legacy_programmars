@@ -14,7 +14,8 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
-public class Rexx_LogicalOrExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_LogicalOrExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_Expression left = new Rexx_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Rexx_Punctuation OR = new Rexx_Punctuation('|');

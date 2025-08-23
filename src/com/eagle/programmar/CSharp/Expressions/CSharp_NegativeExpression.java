@@ -14,9 +14,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.NegativeEnum;
 
 public class CSharp_NegativeExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -58,6 +58,8 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())
 		{
+		case "+":
+			return theExpr;
 		case "-":
 			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:

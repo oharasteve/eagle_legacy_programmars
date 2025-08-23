@@ -15,7 +15,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rexx_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Rexx_Expression expression;

@@ -19,8 +19,8 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 
-public class Java_AdditiveExpression extends PrecedenceOperator implements EagleRunnable,
-		EagleTransformableExpression
+public class Java_AdditiveExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice("+", "-");

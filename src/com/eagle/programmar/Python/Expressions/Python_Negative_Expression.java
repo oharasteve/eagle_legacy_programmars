@@ -59,6 +59,8 @@ public class Python_Negative_Expression extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())
 		{
+		case "+":
+			return theExpr;
 		case "-":
 			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:

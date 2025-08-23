@@ -14,7 +14,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Ada_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class Ada_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) SeparatedList<Ada_Expression, PunctuationComma> expressions;

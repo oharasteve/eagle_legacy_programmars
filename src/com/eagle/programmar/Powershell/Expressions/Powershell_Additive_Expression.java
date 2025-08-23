@@ -7,12 +7,19 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_RealEndOfLine;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_Additive_Expression extends PrecedenceOperator implements EagleRunnable
+public class Powershell_Additive_Expression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Powershell_Expression left = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("+", "-");
@@ -60,6 +67,24 @@ public class Powershell_Additive_Expression extends PrecedenceOperator implement
 			return;
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + oper);
+		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+
+		switch (operator.toString())
+		{
+		case "+":
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.PLUS, rightExpr, this);
+		case "-":
+			return generator.newAdditiveExpression(types, leftExpr, AdditiveEnum.MINUS, rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
 }

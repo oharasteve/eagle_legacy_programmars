@@ -8,7 +8,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_ParenthesizedExpression;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Javascript_Parenthesized_Expression extends PrimaryOperator implements EagleRunnable
+public class Javascript_Parenthesized_Expression extends PrimaryOperator
+		implements EagleRunnable
 {
 	public @S(10) Javascript_ParenthesizedExpression expr;
 

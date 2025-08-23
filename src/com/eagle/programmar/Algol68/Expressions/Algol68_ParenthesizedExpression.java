@@ -14,7 +14,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Algol68_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class Algol68_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) SeparatedList<Algol68_Expression, PunctuationComma> expressions;

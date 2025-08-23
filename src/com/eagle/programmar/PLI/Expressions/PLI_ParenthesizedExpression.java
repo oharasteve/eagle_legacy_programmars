@@ -10,11 +10,16 @@ import com.eagle.programmar.PLI.Symbols.PLI_Variable_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class PLI_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) PLI_Expression expr;
@@ -35,5 +40,12 @@ public class PLI_ParenthesizedExpression extends PrimaryOperator implements Eagl
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expr);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		return generator.newParenthesizedExpression(theExpr, this);
 	}
 }

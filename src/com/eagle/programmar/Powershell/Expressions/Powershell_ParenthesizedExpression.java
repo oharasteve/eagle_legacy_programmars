@@ -14,7 +14,8 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Powershell_ParenthesizedExpression extends PrimaryOperator implements EagleRunnable
+public class Powershell_ParenthesizedExpression extends PrimaryOperator
+		implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Powershell_ParenWhat what;

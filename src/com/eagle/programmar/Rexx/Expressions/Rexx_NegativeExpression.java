@@ -16,7 +16,8 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.NegativeEnum;
 
-public class Rexx_NegativeExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_NegativeExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_PunctuationChoice operator = new Rexx_PunctuationChoice("-", "+");
 	public @S(20) Rexx_Expression expr;
@@ -55,10 +56,12 @@ public class Rexx_NegativeExpression extends PrimaryOperator implements EagleRun
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())
 		{
+		case "+":
+			return theExpr;
 		case "-":
 			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:
-			throw new RuntimeException("Unexpected negative operator: " + operator);
+			throw new RuntimeException("Unexpected negation operator: " + operator);
 		}
 	}
 }

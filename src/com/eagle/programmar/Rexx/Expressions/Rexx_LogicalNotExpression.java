@@ -13,7 +13,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rexx_LogicalNotExpression extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_LogicalNotExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_Punctuation NOT = new Rexx_Punctuation('\\');
 	public @S(20) Rexx_Expression expr;

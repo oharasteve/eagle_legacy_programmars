@@ -8,8 +8,13 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Terminals.Bash_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Bash_LogicalAnd_Expression extends PrecedenceOperator implements EagleRunnable
+public class Bash_LogicalAnd_Expression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Bash_Punctuation operator = new Bash_Punctuation("&&");
@@ -29,5 +34,13 @@ public class Bash_LogicalAnd_Expression extends PrecedenceOperator implements Ea
 			// Short circuit, don't bother with RHS
 			interpreter.pushBool(false);
 		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 }

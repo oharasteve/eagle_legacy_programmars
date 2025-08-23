@@ -10,8 +10,14 @@ import com.eagle.metrics.Operator1Metrics;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.NegativeEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_NegativeExpression extends PrimaryOperator implements EagleRunnable
+public class PLI_NegativeExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PLI_PunctuationChoice operator = new PLI_PunctuationChoice("-", "+");
 	public @S(20) PLI_Expression expr;
@@ -41,6 +47,21 @@ public class PLI_NegativeExpression extends PrimaryOperator implements EagleRunn
 			break;
 		default:
 			throw new RuntimeException("Unexpected negation operator: " + oper);
+		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		switch (operator.toString())
+		{
+		case "+":
+			return theExpr;
+		case "-":
+			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
+		default:
+			throw new RuntimeException("Unexpected negation operator: " + operator);
 		}
 	}
 }

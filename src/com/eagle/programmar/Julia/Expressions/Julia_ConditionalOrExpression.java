@@ -8,8 +8,14 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Terminals.Julia_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
-public class Julia_ConditionalOrExpression extends PrecedenceOperator implements EagleRunnable
+public class Julia_ConditionalOrExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Julia_Expression left = new Julia_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Julia_Punctuation orOperator = new Julia_Punctuation("||");
@@ -29,5 +35,13 @@ public class Julia_ConditionalOrExpression extends PrecedenceOperator implements
 			boolean rightValue = interpreter.getBoolValue(right);
 			interpreter.pushBool(rightValue);
 		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
 	}
 }

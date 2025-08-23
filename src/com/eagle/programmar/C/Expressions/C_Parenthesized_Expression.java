@@ -7,8 +7,13 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.C.C_ParenthesizedExpressions;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class C_Parenthesized_Expression extends PrimaryOperator implements EagleRunnable
+public class C_Parenthesized_Expression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) C_ParenthesizedExpressions exprs;
 
@@ -16,5 +21,12 @@ public class C_Parenthesized_Expression extends PrimaryOperator implements Eagle
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(exprs.expression.first());
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, exprs.expression.first());
+		return generator.newParenthesizedExpression(theExpr, this);
 	}
 }
