@@ -16,9 +16,9 @@ import com.eagle.transform.EagleTransformer;
 public class C_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) C_Punctuation logicalNotOperator = new C_Punctuation('~');
+	public @S(10) C_Punctuation notOperator = new C_Punctuation('!');
 	public @S(20) C_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

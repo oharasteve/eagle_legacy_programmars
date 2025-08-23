@@ -4,7 +4,7 @@
 package com.eagle.programmar.SQL;
 
 import com.eagle.programmar.SQL.Expressions.SQL_AdditiveExpression;
-import com.eagle.programmar.SQL.Expressions.SQL_AndExpression;
+import com.eagle.programmar.SQL.Expressions.SQL_LogicalAndExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Builtin;
 import com.eagle.programmar.SQL.Expressions.SQL_CastExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_CurrentTimeStamp;
@@ -15,7 +15,7 @@ import com.eagle.programmar.SQL.Expressions.SQL_InnerWith;
 import com.eagle.programmar.SQL.Expressions.SQL_LogicalNotExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_MultiplicativeExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_NegativeExpression;
-import com.eagle.programmar.SQL.Expressions.SQL_OrExpression;
+import com.eagle.programmar.SQL.Expressions.SQL_LogicalOrExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Parentheses;
 import com.eagle.programmar.SQL.Expressions.SQL_RelationalExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Star;
@@ -85,6 +85,6 @@ public class SQL_Expression extends PrecedenceChooser
 	public @P(1000) SQL_MultiplicativeExpression multiplicativeExpression;
 	public @P(1010) SQL_AdditiveExpression additiveExpression;
 	public @P(1020) SQL_RelationalExpression relationalExpression;
-	public @P(1030) SQL_AndExpression andExpression;
-	public @P(1040) SQL_OrExpression orExpression;
+	public @P(1030) SQL_LogicalAndExpression andExpression;
+	public @P(1040) SQL_LogicalOrExpression orExpression;
 }

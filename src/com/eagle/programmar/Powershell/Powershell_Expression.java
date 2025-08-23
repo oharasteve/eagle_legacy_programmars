@@ -23,7 +23,7 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalOr_Expressi
 import com.eagle.programmar.Powershell.Expressions.Powershell_Match_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Multiplicative_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Negative;
-import com.eagle.programmar.Powershell.Expressions.Powershell_NotOperator;
+import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalNotOperator;
 import com.eagle.programmar.Powershell.Expressions.Powershell_ParenthesizedExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_PipeExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_PostDecrementExpression;
@@ -81,7 +81,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(140) Powershell_PreDecrementExpression preDecrementExpression;
 	public @P(150) Powershell_PostIncrementExpression postIncrementExpression;
 	public @P(160) Powershell_PostDecrementExpression postDecrementExpression;
-	public @P(170) Powershell_NotOperator notOp;
+	public @P(170) Powershell_LogicalNotOperator notOp;
 	public @P(180) Powershell_Negative negative;
 	public @P(190) Powershell_BangOperator bangOp;
 	public @P(200) Powershell_AmpersandOperator ampersandOp;

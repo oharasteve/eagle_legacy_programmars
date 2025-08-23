@@ -5,7 +5,7 @@ package com.eagle.programmar.COBOL;
 
 import com.eagle.programmar.COBOL.Expressions.COBOL_AdditiveExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_AddressExpression;
-import com.eagle.programmar.COBOL.Expressions.COBOL_AndCondition;
+import com.eagle.programmar.COBOL.Expressions.COBOL_LogicalAndCondition;
 import com.eagle.programmar.COBOL.Expressions.COBOL_BuiltIn;
 import com.eagle.programmar.COBOL.Expressions.COBOL_ClassCondition;
 import com.eagle.programmar.COBOL.Expressions.COBOL_ConcatenateExpression;
@@ -14,8 +14,8 @@ import com.eagle.programmar.COBOL.Expressions.COBOL_IsType;
 import com.eagle.programmar.COBOL.Expressions.COBOL_LengthExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_LinageCounterExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_MultiplicativeExpression;
-import com.eagle.programmar.COBOL.Expressions.COBOL_NotCondition;
-import com.eagle.programmar.COBOL.Expressions.COBOL_OrCondition;
+import com.eagle.programmar.COBOL.Expressions.COBOL_LogicalNotCondition;
+import com.eagle.programmar.COBOL.Expressions.COBOL_LogicalOrCondition;
 import com.eagle.programmar.COBOL.Expressions.COBOL_ParenthesizedExpression;
 import com.eagle.programmar.COBOL.Expressions.COBOL_RelationCondition;
 import com.eagle.programmar.COBOL.Expressions.COBOL_SignedExpression;
@@ -70,7 +70,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(160) COBOL_TrimFunction trimFunction;
 	public @P(170) COBOL_ExpressionFunction expressionFunction;
 	public @P(180) COBOL_SignedExpression signedExpression;
-	public @P(190) COBOL_NotCondition notCondition;
+	public @P(190) COBOL_LogicalNotCondition notCondition;
 	public @P(200) COBOL_VariableExpression variableExpression;
 
 	///////////////////////////////////////////////
@@ -83,7 +83,7 @@ public class COBOL_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(1040) COBOL_AdditiveExpression additiveExpression;
 	public @P(1050) COBOL_ClassCondition classCondition;
 	public @P(1060) COBOL_RelationCondition relationCondition;
-	public @P(1070) COBOL_AndCondition andCondition;
-	public @P(1080) COBOL_OrCondition orCondition;
+	public @P(1070) COBOL_LogicalAndCondition andCondition;
+	public @P(1080) COBOL_LogicalOrCondition orCondition;
 	public @P(1090) COBOL_IsType isType;
 }

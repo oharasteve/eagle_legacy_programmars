@@ -6,11 +6,11 @@ package com.eagle.programmar.Eaglish;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_AdditiveExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_BuiltInExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionStringMatch;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalAndExpression;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_ConditionalOrExpression;
+import com.eagle.programmar.Eaglish.Expressions.Eaglish_LogicalAndExpression;
+import com.eagle.programmar.Eaglish.Expressions.Eaglish_LogicalOrExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_MultiplicativeExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_NegativeExpression;
-import com.eagle.programmar.Eaglish.Expressions.Eaglish_NotExpresion;
+import com.eagle.programmar.Eaglish.Expressions.Eaglish_LogicalNotExpresion;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_ParenthesizedExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_RelationalExpression;
 import com.eagle.programmar.Eaglish.Expressions.Eaglish_SubscriptExpression;
@@ -55,7 +55,7 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(100) Eaglish_LengthFunction lengthFunction;
 	public @P(110) Eaglish_FunctionCall funcCall;
 	public @P(120) Eaglish_NegativeExpression negativeExpr;
-	public @P(130) Eaglish_NotExpresion notExpr;
+	public @P(130) Eaglish_LogicalNotExpresion notExpr;
 	public @P(140) Eaglish_ParenthesizedExpression parenExpr;
 	public @P(150) Eaglish_BuiltInExpression builtinExpr;
 	public @P(160) Eaglish_VariableExpression varExpr;
@@ -68,6 +68,6 @@ public class Eaglish_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(1020) Eaglish_AdditiveExpression addExpr;
 	public @P(1030) Eaglish_RelationalExpression relExpr;
 	public @P(1040) Eaglish_ConditionStringMatch matchExpr;
-	public @P(1050) Eaglish_ConditionalAndExpression andExpr;
-	public @P(1060) Eaglish_ConditionalOrExpression orExpr;
+	public @P(1050) Eaglish_LogicalAndExpression andExpr;
+	public @P(1060) Eaglish_LogicalOrExpression orExpr;
 }

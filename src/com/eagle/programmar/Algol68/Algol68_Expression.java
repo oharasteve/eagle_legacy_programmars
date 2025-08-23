@@ -8,8 +8,8 @@ import com.eagle.programmar.Algol68.Expressions.Algol68_ArrayInfo;
 import com.eagle.programmar.Algol68.Expressions.Algol68_AssignmentExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_BracketsExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_BuiltIn;
-import com.eagle.programmar.Algol68.Expressions.Algol68_ConditionalAndExpression;
-import com.eagle.programmar.Algol68.Expressions.Algol68_ConditionalOrExpression;
+import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalAndExpression;
+import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalOrExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalNotExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ProcedureCall;
 import com.eagle.programmar.Algol68.Expressions.Algol68_MultiplicativeExpression;
@@ -78,8 +78,8 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(1030) Algol68_MultiplicativeExpression multiplicativeExpression;
 	public @P(1040) Algol68_AdditiveExpression additiveExpression;
 	public @P(1050) Algol68_RelationalExpression relationalExpression;
-	public @P(1060) Algol68_ConditionalAndExpression conditionalAndExpression;
-	public @P(1070) Algol68_ConditionalOrExpression conditionalOrExpression;
+	public @P(1060) Algol68_LogicalAndExpression conditionalAndExpression;
+	public @P(1070) Algol68_LogicalOrExpression conditionalOrExpression;
 	public @P(1080) Algol68_AssignmentExpression assignmentExpression;
 	public @P(1090) Algol68_RangeExpression rangeExpression;
 }

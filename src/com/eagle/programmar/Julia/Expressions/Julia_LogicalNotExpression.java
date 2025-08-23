@@ -16,7 +16,7 @@ import com.eagle.transform.EagleTransformer;
 public class Julia_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Julia_Punctuation logicalNotOperator = new Julia_Punctuation('~');
+	public @S(10) Julia_Punctuation logicalNotOperator = new Julia_Punctuation('!');
 	public @S(20) Julia_Expression expr;
 	
 	@Override

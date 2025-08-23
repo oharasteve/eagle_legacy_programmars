@@ -4,7 +4,7 @@
 package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.Expressions.AWK_AdditiveExpression;
-import com.eagle.programmar.AWK.Expressions.AWK_AndExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_LogicalAndExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_AssignmentExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_ConcatenationExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_DollarParensExpression;
@@ -12,8 +12,8 @@ import com.eagle.programmar.AWK.Expressions.AWK_GetLine;
 import com.eagle.programmar.AWK.Expressions.AWK_InExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_MultiplicativeExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_NegativeExpression;
-import com.eagle.programmar.AWK.Expressions.AWK_NotExpression;
-import com.eagle.programmar.AWK.Expressions.AWK_OrExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_LogicalNotExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_LogicalOrExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_ParenthesizedExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_PatternExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_PostDecrementExpression;
@@ -72,7 +72,7 @@ public class AWK_Expression extends PrecedenceChooser
 	public @P(150) AWK_PostIncrementExpression postIncrementExpression;
 	public @P(160) AWK_PostDecrementExpression postDecrementExpression;
 	public @P(170) AWK_NegativeExpression negativeExpression;
-	public @P(180) AWK_NotExpression notExpression;
+	public @P(180) AWK_LogicalNotExpression notExpression;
 	public @P(190) AWK_ConcatenationExpression concateationExpression; // Has to precede vars and strings
 	public @P(200) AWK_VariableExpression variableExpression;
 	public @P(210) AWK_String string;
@@ -93,8 +93,8 @@ public class AWK_Expression extends PrecedenceChooser
 	public @P(1030) AWK_RelationalExpression relationalExpression;
 	public @P(1040) AWK_RegularExpression regularExpression;
 	public @P(1050) AWK_InExpression inExpression;
-	public @P(1060) AWK_AndExpression andExpression;
-	public @P(1070) AWK_OrExpression orExpression;
+	public @P(1060) AWK_LogicalAndExpression andExpression;
+	public @P(1070) AWK_LogicalOrExpression orExpression;
 	public @P(1080) AWK_TrueFalseExpression trueFalseExpression;
 	public @P(1090) AWK_AssignmentExpression assignmentExpression;
 }

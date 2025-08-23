@@ -16,7 +16,7 @@ import com.eagle.transform.EagleTransformer;
 public class Javascript_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Javascript_Punctuation logicalNotOperator = new Javascript_Punctuation('~');
+	public @S(10) Javascript_Punctuation notOperator = new Javascript_Punctuation('!');
 	public @S(20) Javascript_Expression expr;
 
 	@Override

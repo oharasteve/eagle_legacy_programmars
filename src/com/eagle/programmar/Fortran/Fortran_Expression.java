@@ -6,8 +6,8 @@ package com.eagle.programmar.Fortran;
 import com.eagle.programmar.Fortran.Expressions.Fortran_AdditiveExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_BracketExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_BuiltIn;
-import com.eagle.programmar.Fortran.Expressions.Fortran_ConditionalAndExpression;
-import com.eagle.programmar.Fortran.Expressions.Fortran_ConditionalOrExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_LogicalAndExpression;
+import com.eagle.programmar.Fortran.Expressions.Fortran_LogicalOrExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_EqualityExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_MultiplicativeExpression;
 import com.eagle.programmar.Fortran.Expressions.Fortran_NegativeExpression;
@@ -76,6 +76,6 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(1020) Fortran_StringConcatenation stringConcatenation;
 	public @P(1030) Fortran_RelationalExpression relationalExpression;
 	public @P(1040) Fortran_EqualityExpression equalityExpression;
-	public @P(1050) Fortran_ConditionalAndExpression conditionalAndExpression;
-	public @P(1060) Fortran_ConditionalOrExpression conditionalOrExpression;
+	public @P(1050) Fortran_LogicalAndExpression conditionalAndExpression;
+	public @P(1060) Fortran_LogicalOrExpression conditionalOrExpression;
 }

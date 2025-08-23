@@ -4,16 +4,16 @@
 package com.eagle.programmar.PLI;
 
 import com.eagle.programmar.PLI.Expressions.PLI_AdditiveExpression;
-import com.eagle.programmar.PLI.Expressions.PLI_AndExpression;
-import com.eagle.programmar.PLI.Expressions.PLI_AndThenExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_LogicalAndExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_LogicalAndThenExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_CommentExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_ExponentExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_FieldReference;
 import com.eagle.programmar.PLI.Expressions.PLI_MultiplicativeExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_NegativeExpression;
-import com.eagle.programmar.PLI.Expressions.PLI_NotExpression;
-import com.eagle.programmar.PLI.Expressions.PLI_OrElseExpression;
-import com.eagle.programmar.PLI.Expressions.PLI_OrExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_LogicalNotExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_LogicalOrElseExpression;
+import com.eagle.programmar.PLI.Expressions.PLI_LogicalOrExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_ParenthesizedExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_RelationalExpression;
 import com.eagle.programmar.PLI.Expressions.PLI_RepeatedBitLiteral;
@@ -68,7 +68,7 @@ public class PLI_Expression extends PrecedenceChooser
 	public @P(110) PLI_RepeatedHexLiteral repeatedHexLiteral;
 	public @P(120) PLI_RepeatedLiteral repeatedLiteral;
 	public @P(130) PLI_NegativeExpression negativeExpression;
-	public @P(140) PLI_NotExpression notExpression;
+	public @P(140) PLI_LogicalNotExpression notExpression;
 	public @P(150) PLI_FieldReference fieldReference;
 	public @P(160) PLI_LengthFunction lengthFunction;
 	public @P(170) PLI_ModFunction modFunction;
@@ -87,8 +87,8 @@ public class PLI_Expression extends PrecedenceChooser
 	public @P(1020) PLI_AdditiveExpression additiveExpression;
 	public @P(1030) PLI_StrCatExpression strCatExpression;
 	public @P(1040) PLI_RelationalExpression relationalExpression;
-	public @P(1050) PLI_AndExpression andExpression;
-	public @P(1060) PLI_OrExpression orExpression;
-	public @P(1070) PLI_AndThenExpression andThenExpression;
-	public @P(1080) PLI_OrElseExpression orElseExpression;
+	public @P(1050) PLI_LogicalAndExpression andExpression;
+	public @P(1060) PLI_LogicalOrExpression orExpression;
+	public @P(1070) PLI_LogicalAndThenExpression andThenExpression;
+	public @P(1080) PLI_LogicalOrElseExpression orElseExpression;
 }

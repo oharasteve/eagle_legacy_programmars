@@ -8,15 +8,14 @@ import com.eagle.programmar.Go.Expressions.Go_AmpersandExpression;
 import com.eagle.programmar.Go.Expressions.Go_AssignmentExpression;
 import com.eagle.programmar.Go.Expressions.Go_BracesExpression;
 import com.eagle.programmar.Go.Expressions.Go_BuiltIn;
-import com.eagle.programmar.Go.Expressions.Go_ConditionalAndExpression;
-import com.eagle.programmar.Go.Expressions.Go_ConditionalOrExpression;
 import com.eagle.programmar.Go.Expressions.Go_Constructor;
 import com.eagle.programmar.Go.Expressions.Go_EmptyArrayExpression;
 import com.eagle.programmar.Go.Expressions.Go_EqualityExpression;
+import com.eagle.programmar.Go.Expressions.Go_LogicalAndExpression;
 import com.eagle.programmar.Go.Expressions.Go_LogicalNotExpression;
+import com.eagle.programmar.Go.Expressions.Go_LogicalOrExpression;
 import com.eagle.programmar.Go.Expressions.Go_MultiplicativeExpression;
 import com.eagle.programmar.Go.Expressions.Go_NegativeExpression;
-import com.eagle.programmar.Go.Expressions.Go_NotExpression;
 import com.eagle.programmar.Go.Expressions.Go_ParenthesizedExpression;
 import com.eagle.programmar.Go.Expressions.Go_PostDecrementExpression;
 import com.eagle.programmar.Go.Expressions.Go_PostIncrementExpression;
@@ -73,15 +72,14 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	public @P(160) Go_PostDecrementExpression postDecrementExpression;
 	public @P(170) Go_NegativeExpression negativeExpression;
 	public @P(180) Go_LogicalNotExpression logicalNotExpression;
-	public @P(190) Go_NotExpression notExpression;
-	public @P(200) Go_BuiltIn builtIn;
-	public @P(210) Go_VariableExpression variableExpression;
-	public @P(220) Go_Constructor constructor;
-	public @P(230) Go_BracesExpression bracesExpression;
-	public @P(240) Go_ParenthesizedExpression parenthesizedExpression;
-	public @P(250) Go_EmptyArrayExpression emptyArrayExpression;
-	public @P(260) Go_StarExpression starExpression;
-	public @P(270) Go_AmpersandExpression ampersandExpression;
+	public @P(190) Go_BuiltIn builtIn;
+	public @P(200) Go_VariableExpression variableExpression;
+	public @P(210) Go_Constructor constructor;
+	public @P(220) Go_BracesExpression bracesExpression;
+	public @P(230) Go_ParenthesizedExpression parenthesizedExpression;
+	public @P(240) Go_EmptyArrayExpression emptyArrayExpression;
+	public @P(250) Go_StarExpression starExpression;
+	public @P(260) Go_AmpersandExpression ampersandExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
@@ -91,7 +89,7 @@ public class Go_Expression extends PrecedenceChooser implements AbstractExpressi
 	public @P(1020) Go_AdditiveExpression additiveExpression;
 	public @P(1030) Go_RelationalExpression relationalExpression;
 	public @P(1040) Go_EqualityExpression equalityExpression;
-	public @P(1050) Go_ConditionalAndExpression conditionalAndExpression;
-	public @P(1060) Go_ConditionalOrExpression conditionalOrExpression;
+	public @P(1050) Go_LogicalAndExpression conditionalAndExpression;
+	public @P(1060) Go_LogicalOrExpression conditionalOrExpression;
 	public @P(1070) Go_AssignmentExpression assignmentExpression;
 }

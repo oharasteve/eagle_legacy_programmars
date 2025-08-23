@@ -7,13 +7,12 @@ import com.eagle.programmar.Julia.Expressions.Julia_AdditiveExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_AssignmentExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_BracketsExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_BuiltIn;
-import com.eagle.programmar.Julia.Expressions.Julia_ConditionalAndExpression;
-import com.eagle.programmar.Julia.Expressions.Julia_ConditionalOrExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_LogicalAndExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_EqualityExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_LogicalNotExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_LogicalOrExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_MultiplicativeExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_NegativeExpression;
-import com.eagle.programmar.Julia.Expressions.Julia_NotExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_ParenthesizedExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_PostIncrementExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_PreIncrementExpression;
@@ -71,11 +70,10 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(160) Julia_PostIncrementExpression postIncrementExpression;
 	public @P(170) Julia_NegativeExpression negativeExpression;
 	public @P(180) Julia_LogicalNotExpression logicalNotExpression;
-	public @P(190) Julia_NotExpression notExpression;
-	public @P(200) Julia_BuiltIn builtIn;
-	public @P(210) Julia_VariableExpression variableExpression;
-	public @P(220) Julia_BracketsExpression bracketsExpression;
-	public @P(230) Julia_ParenthesizedExpression parenthesizedExpression;
+	public @P(190) Julia_BuiltIn builtIn;
+	public @P(200) Julia_VariableExpression variableExpression;
+	public @P(210) Julia_BracketsExpression bracketsExpression;
+	public @P(220) Julia_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
@@ -86,8 +84,8 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(1030) Julia_AdditiveExpression additiveExpression;
 	public @P(1040) Julia_RelationalExpression relationalExpression;
 	public @P(1050) Julia_EqualityExpression equalityExpression;
-	public @P(1060) Julia_ConditionalAndExpression conditionalAndExpression;
-	public @P(1070) Julia_ConditionalOrExpression conditionalOrExpression;
+	public @P(1060) Julia_LogicalAndExpression conditionalAndExpression;
+	public @P(1070) Julia_LogicalOrExpression conditionalOrExpression;
 	public @P(1080) Julia_AssignmentExpression assignmentExpression;
 	public @P(1090) Julia_RangeExpression rangeExpression;
 }

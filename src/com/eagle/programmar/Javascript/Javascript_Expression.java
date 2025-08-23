@@ -4,7 +4,7 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.programmar.Javascript.Expressions.Javascript_AdditiveExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_AndExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_BitwiseAndExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_AssignmentExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_BuiltInVar;
 import com.eagle.programmar.Javascript.Expressions.Javascript_CastExpression;
@@ -13,22 +13,22 @@ import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationWithI
 import com.eagle.programmar.Javascript.Expressions.Javascript_ClassCreationWithSubscript;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ClassExpr;
 import com.eagle.programmar.Javascript.Expressions.Javascript_CommentExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_ConditionalAndExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_ConditionalOrExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalAndExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalOrExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_DeleteExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_DotClass;
 import com.eagle.programmar.Javascript.Expressions.Javascript_EllipsisExpr;
 import com.eagle.programmar.Javascript.Expressions.Javascript_EqualityExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_ExclusiveOrExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalXorExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ExpressionList;
 import com.eagle.programmar.Javascript.Expressions.Javascript_InExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_InclusiveOrExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_BitwiseOrExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_InstanceOfExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalNotExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_BitwiseNotExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_MultiplicativeExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_NegativeExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_NewNoArgsExpression;
-import com.eagle.programmar.Javascript.Expressions.Javascript_NotExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalNotExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ObjectLiteral;
 import com.eagle.programmar.Javascript.Expressions.Javascript_Parenthesized_Expression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_PostDecrementExpression;
@@ -117,8 +117,8 @@ public class Javascript_Expression extends PrecedenceChooser
 	public @P(280) Javascript_PostIncrementExpression postIncrementExpression;
 	public @P(290) Javascript_PostDecrementExpression postDecrementExpression;
 	public @P(300) Javascript_NegativeExpression negativeExpression;
-	public @P(310) Javascript_LogicalNotExpression logicalNotExpression;
-	public @P(320) Javascript_NotExpression notExpression;
+	public @P(310) Javascript_BitwiseNotExpression logicalNotExpression;
+	public @P(320) Javascript_LogicalNotExpression notExpression;
 	public @P(330) Javascript_BuiltInVar builtInVar;
 	public @P(340) Javascript_TemplateExpr templateExpr;
 	public @P(350) Javascript_LambdaFunction lambdaFunction;
@@ -148,11 +148,11 @@ public class Javascript_Expression extends PrecedenceChooser
 	public @P(1070) Javascript_InstanceOfExpression instanceOfExpression;
 	public @P(1080) Javascript_InExpression inExpression;
 	public @P(1090) Javascript_EqualityExpression equalityExpression;
-	public @P(1100) Javascript_AndExpression andExpression;
-	public @P(1110) Javascript_ExclusiveOrExpression exclusiveOrExpression;
-	public @P(1120) Javascript_InclusiveOrExpression inclusiveOrExpression;
-	public @P(1130) Javascript_ConditionalAndExpression conditionalAndExpression;
-	public @P(1140) Javascript_ConditionalOrExpression conditionalOrExpression;
+	public @P(1100) Javascript_BitwiseAndExpression andExpression;
+	public @P(1110) Javascript_LogicalXorExpression exclusiveOrExpression;
+	public @P(1120) Javascript_BitwiseOrExpression inclusiveOrExpression;
+	public @P(1130) Javascript_LogicalAndExpression conditionalAndExpression;
+	public @P(1140) Javascript_LogicalOrExpression conditionalOrExpression;
 	public @P(1150) Javascript_TrueFalseExpression trueFalseExpression;
 	public @P(1160) Javascript_AssignmentExpression assignmentExpression;
 }

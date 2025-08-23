@@ -7,14 +7,14 @@ import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltinMethod;
-import com.eagle.programmar.Rust.Expressions.Rust_ConditionalAndExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_ConditionalOrExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_DotDotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_LogicalNotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
@@ -67,7 +67,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
-	public @P(120) Rust_NotExpression notExpression;
+	public @P(120) Rust_LogicalNotExpression notExpression;
 	public @P(130) Rust_BuiltIn builtIn;
 	public @P(140) Rust_VariableExpression variableExpression;
 	public @P(150) Rust_RangeExpression rangeExpression;
@@ -87,7 +87,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1050) Rust_ShiftExpression shiftExpression;
 	public @P(1060) Rust_RelationalExpression relationalExpression;
 	public @P(1070) Rust_EqualityExpression equalityExpression;
-	public @P(1080) Rust_ConditionalAndExpression conditionalAndExpression;
-	public @P(1090) Rust_ConditionalOrExpression conditionalOrExpression;
+	public @P(1080) Rust_LogicalAndExpression conditionalAndExpression;
+	public @P(1090) Rust_LogicalOrExpression conditionalOrExpression;
 	public @P(1100) Rust_DotDotExpression dotDotExpression;
 }
