@@ -52,6 +52,7 @@ import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
@@ -230,16 +231,25 @@ public class Java_ForStatement extends TokenSequence
 				stmt, source);
 	}
 
-	public Java_Statement generateForRange1(Java_Variable var, Java_Expression fromExpression,
-			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
-			Java_Statement act, AbstractToken source)
+	public Java_Statement generateForRange1(Java_Variable var, TypeEnum type,
+			Java_Expression fromExpression, RelationalEnum relOper, Java_Expression toExpression,
+			Java_Expression delta, Java_Statement act, AbstractToken source)
 	{
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
 		forWhat.setPresent(true);
 		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
 		asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
-		forWhat.setWhich(Java_Generator.wrapExpression(asgExpr));
+		if (type == TypeEnum.INTEGER)
+		{
+			Java_ForWithType withType = new Java_ForWithType();
+			//TBD
+			forWhat.setWhich(withType);
+		}
+		else
+		{
+			forWhat.setWhich(Java_Generator.wrapExpression(asgExpr));
+		}
 		initializer.addPrimaryElement(forWhat);
 
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
@@ -295,9 +305,9 @@ public class Java_ForStatement extends TokenSequence
 		return Java_Generator.wrapStatement(this);
 	}
 	
-	public Java_Statement generateForRange(Java_Variable var, Java_Expression fromExpression,
-			RelationalEnum relOper, Java_Expression toExpression, Java_Expression delta,
-			ArrayList<Java_Statement> actions, AbstractToken source)
+	public Java_Statement generateForRange(Java_Variable var, TypeEnum type,
+			Java_Expression fromExpression, RelationalEnum relOper, Java_Expression toExpression,
+			Java_Expression delta, ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_StatementBlock block = new Java_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
@@ -310,7 +320,7 @@ public class Java_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return generateForRange1(var, fromExpression, relOper, toExpression,
+		return generateForRange1(var, type, fromExpression, relOper, toExpression,
 				delta, Java_Generator.wrapStatement(block), source);
 	}
 }

@@ -20,13 +20,13 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 		implements EagleRunnable
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Java_Keyword STARTSWITH = new Java_Keyword("startsWith");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) Java_Expression patternExpr;
-	public @S(60) @OPT PunctuationComma comma;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Java_Keyword STARTSWITH = new Java_Keyword("startsWith");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE Java_Expression patternExpr;
+	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT Java_Expression scExpr;
-	public @S(80) PunctuationRightParen rightParen;
+	public @S(80) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -54,7 +54,9 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 		if (sc != null)
 		{
 			this.comma = new PunctuationComma();
+			this.comma.setPresent(true);
 			this.scExpr = sc;
+			this.scExpr.setPresent(true);
 		}
 		this.rightParen = new PunctuationRightParen();
 		

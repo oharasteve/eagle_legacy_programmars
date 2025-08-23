@@ -91,6 +91,25 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
+	public String mainName()
+	{
+		return "Main";
+	}
+
+	@Override
+	public void addCallToMain()
+	{
+		Python_Function_Call mainCall = new Python_Function_Call();
+		Python_Variable mainVar = newVariable(mainName());
+		ArrayList<Python_Expression> args = new ArrayList<Python_Expression>();
+		Python_Expression none = Python_BuiltIn.generateBuiltIn(BuiltInEnum.NULL, null);
+		args.add(none);
+		Python_Expression mainExpr = mainCall.generateInvocation(mainVar, args, null);
+		Python_ExpressionStatement mainStmt = Python_ExpressionStatement.newExpressionStatement(mainExpr, null);
+		addStatement(wrapStatement(mainStmt), null);
+	}
+
+	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
 		_program.entries = new TokenList<Python_ComplexStatement>();
@@ -293,18 +312,18 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_ComplexStatement newForRangeStatement1(Python_Variable var, Python_Expression first,
-			RelationalEnum relOp, Python_Expression last, Python_Expression step,
-			Python_ComplexStatement action, AbstractToken source)
+	public Python_ComplexStatement newForRangeStatement1(Python_Variable var, TypeEnum type,
+			Python_Expression first, RelationalEnum relOp, Python_Expression last,
+			Python_Expression step, Python_ComplexStatement action, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
 		return forStmt.generateForRange1(var, first, relOp, last, step, action, source);
 	}
 
 	@Override
-	public Python_ComplexStatement newForRangeStatement(Python_Variable var, Python_Expression first,
-			RelationalEnum relOp, Python_Expression last, Python_Expression step,
-			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
+	public Python_ComplexStatement newForRangeStatement(Python_Variable var, TypeEnum type,
+			Python_Expression first, RelationalEnum relOp, Python_Expression last,
+			Python_Expression step, ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		Python_ForStatement forStmt = new Python_ForStatement();
 		return forStmt.generateForRange(var, first, relOp, last, step, actions, source);
@@ -412,8 +431,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	@Override
 	public Python_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		Python_BuiltIn built = new Python_BuiltIn();
-		return built.generateBuiltIn(builtin, source);
+		return Python_BuiltIn.generateBuiltIn(builtin, source);
 	}
 	
 	@Override

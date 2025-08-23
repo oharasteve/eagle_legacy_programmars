@@ -27,6 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -157,19 +158,41 @@ public class Scala_ForStatement extends TokenSequence
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
 		
-		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
-		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
-				statement.getWhich());
-		if (stmts != null)
+		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
+		ArrayList<AbstractStatement> newStmts;
+		if (statement.getWhich() instanceof Scala_BlockStatement)
 		{
-			for (AbstractStatement stmt : stmts)
+			Scala_BlockStatement block = (Scala_BlockStatement) statement.getWhich();
+			newStmts = new ArrayList<AbstractStatement>();
+			for (Scala_Statement blockStmt : block.statements._elements)
+			{
+				ArrayList<AbstractStatement> oneStmt = transformer.transformStatement(generator, blockStmt.getWhich());
+				if (oneStmt != null)
+				{
+					for (AbstractStatement newStmt : oneStmt)
+					{
+						newStmts.add(newStmt);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Rare case I think, def fn = stmt, with no braces
+			newStmts = transformer.transformStatement(generator, statement.getWhich());
+		}
+
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		if (newStmts != null)
+		{
+			for (AbstractStatement stmt : newStmts)
 			{
 				actionList.add(stmt);
 			}
 		}
 		
 		AbstractVariable var = generator.newVariable(variable.vars.first().getValue());
-		return generator.newForRangeStatement(var, initExpr,
+		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
 				RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
 	}
 }

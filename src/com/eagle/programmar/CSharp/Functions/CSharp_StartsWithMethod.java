@@ -14,19 +14,20 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class CSharp_StartsWithMethod extends PrecedenceOperator
 		implements EagleRunnable
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) CSharp_Keyword STARTSWITH = new CSharp_Keyword("StartsWith");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) CSharp_Expression pattExpr;
-	public @S(60) @OPT PunctuationComma comma;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE CSharp_Keyword STARTSWITH = new CSharp_Keyword("StartsWith");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE CSharp_Expression pattExpr;
+	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT CSharp_Expression scExpr;
-	public @S(80) PunctuationRightParen rightParen;
+	public @S(80) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -53,8 +54,11 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 		this.pattExpr = patt;
 		if (sc != null)
 		{
-			this.comma = new PunctuationComma();
-			this.scExpr = sc;
+			// C# does not support str.StartsWith("patt",sc)
+			// Have to use Substring instead
+			CSharp_SubstringMethod substr = CSharp_SubstringMethod.generateExpression(
+					expr, sc, whichSC, SubstringECEnum.GIVEN_NEITHER, null, false, source);
+			this.left = CSharp_Generator.wrapExpression(substr);
 		}
 		this.rightParen = new PunctuationRightParen();
 		

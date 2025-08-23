@@ -82,6 +82,18 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
+	public String mainName()
+	{
+		return "Main";
+	}
+	
+	@Override
+	public void addCallToMain()
+	{
+		// Don't ever need this
+	}
+
+	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
 		return _program;
@@ -299,21 +311,21 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Statement newForRangeStatement1(CSharp_Variable var, CSharp_Expression first,
-			RelationalEnum relOper, CSharp_Expression last, CSharp_Expression step,
-			CSharp_Statement action, AbstractToken source)
+	public CSharp_Statement newForRangeStatement1(CSharp_Variable var, TypeEnum type,
+			CSharp_Expression first, RelationalEnum relOper, CSharp_Expression last,
+			CSharp_Expression step, CSharp_Statement action, AbstractToken source)
 	{
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.generateForRange1(var, first, relOper, last, step, action, source);
+		return forStmt.generateForRange1(var, type, first, relOper, last, step, action, source);
 	}
 
 	@Override
-	public CSharp_Statement newForRangeStatement(CSharp_Variable var, CSharp_Expression first,
-			RelationalEnum relOper, CSharp_Expression last, CSharp_Expression step,
-			ArrayList<CSharp_Statement> actions, AbstractToken source)
+	public CSharp_Statement newForRangeStatement(CSharp_Variable var, TypeEnum type,
+			CSharp_Expression first, RelationalEnum relOper, CSharp_Expression last,
+			CSharp_Expression step, ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.generateForRange(var, first, relOper, last, step, actions, source);
+		return forStmt.generateForRange(var, type, first, relOper, last, step, actions, source);
 	}
 
 	@Override

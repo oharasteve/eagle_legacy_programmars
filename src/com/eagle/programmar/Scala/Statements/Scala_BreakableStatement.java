@@ -10,11 +10,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Scala_BreakableStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnable, EagleTransformableStatement

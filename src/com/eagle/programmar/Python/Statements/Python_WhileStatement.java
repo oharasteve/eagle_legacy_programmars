@@ -148,8 +148,7 @@ public class Python_WhileStatement extends TokenSequence
 		
 		Python_Expression whileCond = Python_Generator.wrapExpression(orExpr);
 		
-		Python_BuiltIn built = new Python_BuiltIn();
-		Python_Expression trueExpr = built.generateBuiltIn(BuiltInEnum.TRUE, null);
+		Python_Expression trueExpr = Python_BuiltIn.generateBuiltIn(BuiltInEnum.TRUE, null);
 		Python_ExpressionStatement asgExprStmt = Python_Assignment.generateAssignment(
 				oddName, SubscriptEnum.FIRST_IS_ZERO, null,
 				AssignmentEnum.EQUALS, trueExpr, null, source);

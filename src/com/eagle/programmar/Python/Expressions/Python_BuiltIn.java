@@ -32,7 +32,7 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 		}
 	}
 
-	public Python_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
+	public static Python_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{
 		Python_BuiltIn expr = new Python_BuiltIn();
 		switch (builtin)
@@ -42,6 +42,9 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 			break;
 		case FALSE:
 			expr.builtins = new Python_KeywordChoice("False");
+			break;
+		case NULL:
+			expr.builtins = new Python_KeywordChoice("None");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin.toString());

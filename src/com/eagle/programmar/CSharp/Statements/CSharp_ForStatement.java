@@ -42,6 +42,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_ForStatement extends TokenSequence
 			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
@@ -174,9 +175,9 @@ public class CSharp_ForStatement extends TokenSequence
 				stmt, source);
 	}
 	
-	public CSharp_Statement generateForRange1(CSharp_Variable var, CSharp_Expression fromExpression,
-			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
-			CSharp_Statement act, AbstractToken source)
+	public CSharp_Statement generateForRange1(CSharp_Variable var, TypeEnum type,
+			CSharp_Expression fromExpression, RelationalEnum relOper, CSharp_Expression toExpression,
+			CSharp_Expression delta, CSharp_Statement act, AbstractToken source)
 	{
 		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
 		CSharp_ForWhat forWhat = new CSharp_ForWhat();
@@ -237,9 +238,9 @@ public class CSharp_ForStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
 	
-	public CSharp_Statement generateForRange(CSharp_Variable var, CSharp_Expression fromExpression,
-			RelationalEnum relOper, CSharp_Expression toExpression, CSharp_Expression delta,
-			ArrayList<CSharp_Statement> actions, AbstractToken source)
+	public CSharp_Statement generateForRange(CSharp_Variable var, TypeEnum type,
+			CSharp_Expression fromExpression, RelationalEnum relOper, CSharp_Expression toExpression,
+			CSharp_Expression delta, ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_StatementBlock block = new CSharp_StatementBlock();
 		block.leftBrace = new PunctuationLeftBrace();
@@ -252,7 +253,7 @@ public class CSharp_ForStatement extends TokenSequence
 			block.statements.addToken(stmtOrComment);
 		}
 		
-		return generateForRange1(var, fromExpression, relOper, toExpression,
+		return generateForRange1(var, type, fromExpression, relOper, toExpression,
 				delta, CSharp_Generator.wrapStatement(block), source);
 	}
 }

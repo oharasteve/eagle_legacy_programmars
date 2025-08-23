@@ -104,7 +104,12 @@ public class Scala_Function extends TokenSequence
 			newReturnType = Scala_Type.findType(generator, returns.returnType);
 		}
 
-		generator.addMethod(newReturnType, id.getValue(), this);
+		String newName = id.getValue();
+		if (newName.equals("main"))
+		{
+			newName = generator.mainName();
+		}
+		generator.addMethod(newReturnType, newName, this);
 		generator.addMethodName(id.getValue());
 		
 		if (params != null && params.isPresent())
@@ -118,7 +123,30 @@ public class Scala_Function extends TokenSequence
 			}
 		}
 		
-		ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
+		ArrayList<AbstractStatement> newStmts;
+		if (stmt.getWhich() instanceof Scala_BlockStatement)
+		{
+			Scala_BlockStatement block = (Scala_BlockStatement) stmt.getWhich();
+			newStmts = new ArrayList<AbstractStatement>();
+			for (Scala_Statement blockStmt : block.statements._elements)
+			{
+				ArrayList<AbstractStatement> oneStmt = transformer.transformStatement(generator, blockStmt.getWhich());
+				if (oneStmt != null)
+				{
+					for (AbstractStatement newStmt : oneStmt)
+					{
+						newStmts.add(newStmt);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Rare case I think, def fn = stmt, with no braces
+			newStmts = transformer.transformStatement(generator, stmt.getWhich());
+		}
+
 		if (newStmts != null)
 		{
 			for (AbstractStatement newStmt : newStmts)

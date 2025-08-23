@@ -22,9 +22,10 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Rexx_DoStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
@@ -191,7 +192,7 @@ public class Rexx_DoStatement extends TokenSequence
 			}
 			
 			AbstractVariable var = generator.newVariable(loop.var.getValue());
-			AbstractStatement stmt = generator.newForRangeStatement(var, initExpr,
+			AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
 					RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
 			return stmt;
 		}

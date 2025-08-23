@@ -84,6 +84,18 @@ public class Java_Generator
 	}
 
 	@Override
+	public String mainName()
+	{
+		return "main";
+	}
+
+	@Override
+	public void addCallToMain()
+	{
+		// Don't ever need this
+	}
+
+	@Override
 	public AbstractLanguage getTransfomedProgram()
 	{
 		return _program;
@@ -325,21 +337,21 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Statement newForRangeStatement1(Java_Variable var, Java_Expression first,
-			RelationalEnum relOp, Java_Expression last, Java_Expression step,
-			Java_Statement action, AbstractToken source)
+	public Java_Statement newForRangeStatement1(Java_Variable var, TypeEnum type,
+			Java_Expression first, RelationalEnum relOp, Java_Expression last,
+			Java_Expression step, Java_Statement action, AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForRange1(var, first, relOp, last, step, action, source);
+		return forStmt.generateForRange1(var, type, first, relOp, last, step, action, source);
 	}
 
 	@Override
-	public Java_Statement newForRangeStatement(Java_Variable var, Java_Expression first,
-			RelationalEnum relOp, Java_Expression last, Java_Expression step,
-			ArrayList<Java_Statement> actions, AbstractToken source)
+	public Java_Statement newForRangeStatement(Java_Variable var, TypeEnum type,
+			Java_Expression first, RelationalEnum relOp, Java_Expression last,
+			Java_Expression step, ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForRange(var, first, relOp, last, step, actions, source);
+		return forStmt.generateForRange(var, type, first, relOp, last, step, actions, source);
 	}
 
 	@Override
