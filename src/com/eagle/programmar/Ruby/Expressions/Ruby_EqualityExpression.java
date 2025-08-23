@@ -7,11 +7,18 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class Ruby_EqualityExpression extends PrecedenceOperator implements EagleRunnable
+public class Ruby_EqualityExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Ruby_Expression left = new Ruby_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("==", "!=");
@@ -93,5 +100,23 @@ public class Ruby_EqualityExpression extends PrecedenceOperator implements Eagle
 		}
 
 		throw new RuntimeException("Unable to handle " + oper);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+
+		switch (operator.toString())
+		{
+		case "==":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
+		case "!=":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected relational operator: " + operator);
+		}
 	}
 }

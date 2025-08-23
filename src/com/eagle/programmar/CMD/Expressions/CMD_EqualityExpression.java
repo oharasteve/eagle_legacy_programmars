@@ -7,14 +7,21 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Format;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class CMD_EqualityExpression extends PrecedenceOperator implements EagleRunnable
+public class CMD_EqualityExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CMD_Expression left = new CMD_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CMD_IfOperator operator;
@@ -55,6 +62,25 @@ public class CMD_EqualityExpression extends PrecedenceOperator implements EagleR
 			return;
 		default:
 			throw new RuntimeException("Cannot handle equality operator: " + oper);
+		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+		String oper = operator.getWhich().toString();
+
+		switch (oper.toLowerCase())
+		{
+		case "equ", "==":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
+		case "neq":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected relational operator: " + oper);
 		}
 	}
 }

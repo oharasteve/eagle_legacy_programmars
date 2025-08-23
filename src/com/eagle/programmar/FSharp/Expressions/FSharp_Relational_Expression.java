@@ -7,11 +7,18 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class FSharp_Relational_Expression extends PrecedenceOperator implements EagleRunnable
+public class FSharp_Relational_Expression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("=", "<>", "<=", ">=", "<", ">");
@@ -73,5 +80,31 @@ public class FSharp_Relational_Expression extends PrecedenceOperator implements 
 			}
 		}
 		throw new RuntimeException("Unable to handle operator: " + oper);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+
+		switch (operator.toString())
+		{
+		case "=":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
+		case "<>":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
+		case "<":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);
+		case "<=":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_EQUALS, rightExpr, this);
+		case ">":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_THAN, rightExpr, this);
+		case ">=":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected relational operator: " + operator);
+		}
 	}
 }

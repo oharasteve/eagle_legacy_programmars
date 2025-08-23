@@ -17,7 +17,8 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class Rexx_RelationalExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_RelationalExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_Expression left = new Rexx_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Rexx_PunctuationChoice operator = new Rexx_PunctuationChoice("=", "<=", ">=", "\\=", "<", ">");
@@ -104,7 +105,7 @@ public class Rexx_RelationalExpression extends PrecedenceOperator implements Eag
 		case ">=":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected additive operator: " + operator);
+			throw new RuntimeException("Unexpected relational operator: " + operator);
 		}
 	}
 }
