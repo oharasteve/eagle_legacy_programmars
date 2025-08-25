@@ -100,11 +100,24 @@ public class Rust_Function extends TokenSequence
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
 		
 		String fnName = id.getValue();
+		boolean isMain = false;
+		if (fnName.equals("main"))
+		{
+			fnName = generator.mainName();	// Change from 'main' to 'Main' for C#
+			isMain = true;
+		}
+
 		generator.addMethod(newReturnType, fnName, this);
 		generator.addMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Rust function " + fnName);
+		}
+		
+		if (isMain)
+		{
+			// Have to wait until addMethod is called
+			generator.addMainArgs();		// For java and C# but not for Python
 		}
 		
 		// Search metrics for arg types -- might not be any

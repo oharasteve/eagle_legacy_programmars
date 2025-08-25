@@ -88,6 +88,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 	
 	@Override
+	public void addMainArgs()
+	{
+		CSharp_Type paramType = transformType(TypeEnum.STRING_ARRAY, null, null);
+		addMethodParameter(paramType, "args");
+	}
+
+	@Override
 	public void addCallToMain()
 	{
 		// Don't ever need this

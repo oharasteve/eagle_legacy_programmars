@@ -6,9 +6,13 @@ package com.eagle.programmar.Rust.Terminals;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.interfaces.AbstractComment;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.terminals.TerminalCommentToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rust_Comment extends TerminalCommentToken implements AbstractComment
+public class Rust_Comment extends TerminalCommentToken implements AbstractComment, EagleTransformableStatement
 {
 	// Need a default constructor for the parser
 	public Rust_Comment()
@@ -51,5 +55,12 @@ public class Rust_Comment extends TerminalCommentToken implements AbstractCommen
 	public String description()
 	{
 		return "/* comment */ or // comment to end of line";
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return null;
 	}
 }

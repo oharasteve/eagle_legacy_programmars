@@ -57,4 +57,33 @@ public class Rust_Block_Statement extends TokenSequence
 		
 		return generator.newBlockStatement(result, this);
 	}
+	
+	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
+			EagleGenerator generator, Rust_Statement statement)
+	{
+		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
+		ArrayList<AbstractStatement> newStmts;
+		if (statement.getWhich() instanceof Rust_Block_Statement)
+		{
+			Rust_Block_Statement block = (Rust_Block_Statement) statement.getWhich();
+			newStmts = new ArrayList<AbstractStatement>();
+			for (Rust_Statement blockStmt : block.statements._elements)
+			{
+				ArrayList<AbstractStatement> oneStmt = transformer.transformStatement(generator, blockStmt.getWhich());
+				if (oneStmt != null)
+				{
+					for (AbstractStatement newStmt : oneStmt)
+					{
+						newStmts.add(newStmt);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Rare case I think, def fn = stmt, with no braces
+			newStmts = transformer.transformStatement(generator, statement.getWhich());
+		}
+		return newStmts;
+	}
 }

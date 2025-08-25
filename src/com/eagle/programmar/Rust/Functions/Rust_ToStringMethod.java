@@ -8,11 +8,16 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Rust_ToStringMethod extends PrecedenceOperator implements EagleRunnable
+public class Rust_ToStringMethod extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
@@ -25,5 +30,12 @@ public class Rust_ToStringMethod extends PrecedenceOperator implements EagleRunn
 	{
 		String val = interpreter.getStrValue(left);
 		interpreter.pushStr(val);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, left);
+		return theExpr;
 	}
 }

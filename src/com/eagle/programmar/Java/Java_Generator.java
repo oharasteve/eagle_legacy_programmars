@@ -90,6 +90,13 @@ public class Java_Generator
 	}
 
 	@Override
+	public void addMainArgs()
+	{
+		Java_Type paramType = transformType(TypeEnum.STRING_ARRAY, null, null);
+		addMethodParameter(paramType, "args");
+	}
+
+	@Override
 	public void addCallToMain()
 	{
 		// Don't ever need this

@@ -6,7 +6,6 @@ package com.eagle.programmar.Rust;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
-import com.eagle.programmar.Rust.Expressions.Rust_DotDotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
@@ -73,11 +72,10 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(120) Rust_LogicalNotExpression notExpression;
 	public @P(130) Rust_BuiltIn builtIn;
 	public @P(140) Rust_VariableExpression variableExpression;
-	public @P(150) Rust_RangeExpression rangeExpression;
-	public @P(160) Rust_FormatFunction builtinFunction;
-	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(180) Rust_ExpressionArray expressionArray;
-	public @P(190) Rust_BorrowExpression borrowExpression;
+	public @P(150) Rust_FormatFunction builtinFunction;
+	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(170) Rust_ExpressionArray expressionArray;
+	public @P(180) Rust_BorrowExpression borrowExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
@@ -95,5 +93,5 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1100) Rust_EqualityExpression equalityExpression;
 	public @P(1110) Rust_LogicalAndExpression conditionalAndExpression;
 	public @P(1120) Rust_LogicalOrExpression conditionalOrExpression;
-	public @P(1130) Rust_DotDotExpression dotDotExpression;
+	public @P(1130) Rust_RangeExpression rangeExpression;
 }

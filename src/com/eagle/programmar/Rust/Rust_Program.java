@@ -100,6 +100,9 @@ public class Rust_Program extends AbstractLanguage
 			}
 		}
 		
+		// Not needed for C# or Java, but Python needs this
+		generator.addCallToMain();
+		
 		return generator.getTransfomedProgram();
 	}
 }

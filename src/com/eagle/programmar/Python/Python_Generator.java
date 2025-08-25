@@ -9,6 +9,7 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
+import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_BracesColons;
@@ -54,6 +55,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Expression, Python_Variable, Python_Type>
@@ -94,6 +96,12 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public String mainName()
 	{
 		return "Main";
+	}
+
+	@Override
+	public void addMainArgs()
+	{
+		addMethodParameter(null, "args");
 	}
 
 	@Override
