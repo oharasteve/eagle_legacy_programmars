@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.programmar.Rust.Rust_Statement.Rust_Block_Statement;
+import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Module_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenChooser;

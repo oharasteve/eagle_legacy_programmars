@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Rust.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -12,10 +14,14 @@ import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Rust_WhileStatement extends TokenSequence implements
-		AbstractStatement, EagleRunnableWithResult
+		AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("expressions/loop-expr.html#predicate-loops") Rust_Keyword WHILE = new Rust_Keyword("while");
 	public @S(20) @NOSPACE Rust_Expression condition;
@@ -60,5 +66,20 @@ public class Rust_WhileStatement extends TokenSequence implements
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		for (AbstractStatement stmt : transformer.transformStatement(generator, whileStatement.getWhich()))
+		{
+			whileTrue.add(stmt);
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

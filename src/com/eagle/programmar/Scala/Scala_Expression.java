@@ -7,8 +7,8 @@ import com.eagle.programmar.Scala.Expressions.Scala_AdditiveExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_AssignmentExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_BracesExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_BuiltIn;
-import com.eagle.programmar.Scala.Expressions.Scala_ConditionalAndExpression;
-import com.eagle.programmar.Scala.Expressions.Scala_ConditionalOrExpression;
+import com.eagle.programmar.Scala.Expressions.Scala_LogicalAndExpression;
+import com.eagle.programmar.Scala.Expressions.Scala_LogicalOrExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_EqualityExpression;
 import com.eagle.programmar.Scala.Expressions.Scala_FunctionCall;
 import com.eagle.programmar.Scala.Expressions.Scala_LogicalNotExpression;
@@ -84,8 +84,8 @@ public class Scala_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(1040) Scala_AdditiveExpression additiveExpression;
 	public @P(1050) Scala_RelationalExpression relationalExpression;
 	public @P(1060) Scala_EqualityExpression equalityExpression;
-	public @P(1070) Scala_ConditionalAndExpression conditionalAndExpression;
-	public @P(1080) Scala_ConditionalOrExpression conditionalOrExpression;
+	public @P(1070) Scala_LogicalAndExpression conditionalAndExpression;
+	public @P(1080) Scala_LogicalOrExpression conditionalOrExpression;
 	public @P(1090) Scala_AssignmentExpression assignmentExpression;
 	public @P(1100) Scala_RangeExpression rangeExpression;
 }

@@ -12,13 +12,18 @@ import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Rust_IfStatement extends TokenSequence implements EagleRunnableWithResult
+public class Rust_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("expressions/if-expr.html") Rust_Keyword IF = new Rust_Keyword("if");
 	public @S(20) Rust_Expression condition;
-	public @S(30) Rust_Statement stmt;
+	public @S(30) Rust_Statement thenStatement;
 	public @S(40) @OPT Rust_IfElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
@@ -26,7 +31,7 @@ public class Rust_IfStatement extends TokenSequence implements EagleRunnableWith
 	public static class Rust_IfElseClause extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) Rust_Keyword ELSE = new Rust_Keyword("else");
-		public @S(20) Rust_Statement stmt;
+		public @S(20) Rust_Statement elseStatement;
 	}
 
 	@Override
@@ -50,12 +55,12 @@ public class Rust_IfStatement extends TokenSequence implements EagleRunnableWith
 		_metrics.get(0).completedIf(cond1);
 		if (cond1)
 		{
-			todo = stmt;
+			todo = thenStatement;
 		}
 		else if (elseClause != null && elseClause.isPresent())
 		{
 			_metrics.get(1).completedIf(true);
-			todo = elseClause.stmt;
+			todo = elseClause.elseStatement;
 		}
 
 		if (todo != null)
@@ -64,5 +69,32 @@ public class Rust_IfStatement extends TokenSequence implements EagleRunnableWith
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt : stmts)
+			{
+				ifTrue.add(stmt);
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			for (AbstractStatement stmt : transformer.transformStatement(generator, elseClause.elseStatement.getWhich()))
+			{
+				ifFalse.add(stmt);
+			}
+		}
+		
+		return generator.newIfStatement(cond, ifTrue, ifFalse, this);
 	}
 }

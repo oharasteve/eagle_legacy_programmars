@@ -9,8 +9,13 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Rust_BorrowExpression extends PrimaryOperator implements EagleRunnable
+public class Rust_BorrowExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Punctuation ampersand = new Rust_Punctuation('&');
 	public @S(20) Rust_Expression expr;
@@ -20,5 +25,11 @@ public class Rust_BorrowExpression extends PrimaryOperator implements EagleRunna
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(value);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return transformer.transformExpression(generator, expr);
 	}
 }
