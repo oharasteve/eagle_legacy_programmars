@@ -69,4 +69,33 @@ public class Scala_BlockStatement extends TokenSequence
 		
 		return generator.newBlockStatement(result, this);
 	}
+	
+	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
+			EagleGenerator generator, Scala_Statement statement)
+	{
+		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
+		ArrayList<AbstractStatement> newStmts;
+		if (statement.getWhich() instanceof Scala_BlockStatement)
+		{
+			Scala_BlockStatement block = (Scala_BlockStatement) statement.getWhich();
+			newStmts = new ArrayList<AbstractStatement>();
+			for (Scala_Statement blockStmt : block.statements._elements)
+			{
+				ArrayList<AbstractStatement> oneStmt = transformer.transformStatement(generator, blockStmt.getWhich());
+				if (oneStmt != null)
+				{
+					for (AbstractStatement newStmt : oneStmt)
+					{
+						newStmts.add(newStmt);
+					}
+				}
+			}
+		}
+		else
+		{
+			// Rare case I think, def fn = stmt, with no braces
+			newStmts = transformer.transformStatement(generator, statement.getWhich());
+		}
+		return newStmts;
+	}
 }

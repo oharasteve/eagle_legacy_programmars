@@ -29,9 +29,9 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class VB_Subroutine extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
@@ -92,8 +92,13 @@ public class VB_Subroutine extends TokenSequence
 //			}
 //		}
 		
-		generator.addMethod(null, id.getValue(), this);
-		generator.addMethodName(id.getValue());
+		String subName = id.getValue();
+		generator.addMethod(null, subName, this);
+		generator.addMethodName(subName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found VB subroutine " + subName);
+		}
 		
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);

@@ -81,8 +81,13 @@ public class TCL_Procedure extends TokenSequence
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
 
-		generator.addMethod(newReturnType, id.getValue(), this);
-		generator.addMethodName(id.getValue());
+		String fnName = id.getValue();
+		generator.addMethod(newReturnType, fnName, this);
+		generator.addMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found TCL procedure " + fnName);
+		}
 		
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);

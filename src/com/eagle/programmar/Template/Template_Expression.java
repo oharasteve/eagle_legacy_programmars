@@ -4,11 +4,11 @@
 package com.eagle.programmar.Template;
 
 import com.eagle.programmar.Template.Expressions.Template_AdditiveExpression;
-import com.eagle.programmar.Template.Expressions.Template_AndExpression;
+import com.eagle.programmar.Template.Expressions.Template_LogicalAndExpression;
 import com.eagle.programmar.Template.Expressions.Template_MultiplicativeExpression;
 import com.eagle.programmar.Template.Expressions.Template_NegativeExpression;
-import com.eagle.programmar.Template.Expressions.Template_NotExpression;
-import com.eagle.programmar.Template.Expressions.Template_OrExpression;
+import com.eagle.programmar.Template.Expressions.Template_LogicalNotExpression;
+import com.eagle.programmar.Template.Expressions.Template_LogicalOrExpression;
 import com.eagle.programmar.Template.Expressions.Template_ParenExpression;
 import com.eagle.programmar.Template.Expressions.Template_RelationalExpression;
 import com.eagle.programmar.Template.Symbols.Template_Identifier_Reference;
@@ -49,7 +49,7 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	// Primary Expressions
 
 	public @P(100) Template_NegativeExpression negativeExpression;
-	public @P(110) Template_NotExpression notExpression;
+	public @P(110) Template_LogicalNotExpression notExpression;
 	public @P(120) Template_ParenExpression parenExpression;
 
 	///////////////////////////////////////////////////////////////////////////
@@ -58,6 +58,6 @@ public class Template_Expression extends PrecedenceChooser implements AbstractEx
 	public @P(1000) Template_MultiplicativeExpression multiplicativeExpression;
 	public @P(1010) Template_AdditiveExpression additiveExpression;
 	public @P(1020) Template_RelationalExpression relationalExpression;
-	public @P(1030) Template_AndExpression andExpression;
-	public @P(1040) Template_OrExpression orExpression;
+	public @P(1030) Template_LogicalAndExpression andExpression;
+	public @P(1040) Template_LogicalOrExpression orExpression;
 }

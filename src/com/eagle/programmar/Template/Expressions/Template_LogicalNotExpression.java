@@ -9,7 +9,7 @@ import com.eagle.programmar.Template.Template_Expression;
 import com.eagle.programmar.Template.Terminals.Template_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Template_NotExpression extends PrimaryOperator implements EagleRunnable
+public class Template_LogicalNotExpression extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Template_Keyword NOT = new Template_Keyword("not");
 	public @S(20) Template_Expression expr;

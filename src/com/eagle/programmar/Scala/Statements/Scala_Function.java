@@ -111,6 +111,10 @@ public class Scala_Function extends TokenSequence
 		}
 		generator.addMethod(newReturnType, newName, this);
 		generator.addMethodName(id.getValue());
+		if (VERBOSE)
+		{
+			System.out.println("** Found Scala function " + id.getValue());
+		}
 		
 		if (params != null && params.isPresent())
 		{
@@ -123,30 +127,7 @@ public class Scala_Function extends TokenSequence
 			}
 		}
 		
-		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
-		ArrayList<AbstractStatement> newStmts;
-		if (stmt.getWhich() instanceof Scala_BlockStatement)
-		{
-			Scala_BlockStatement block = (Scala_BlockStatement) stmt.getWhich();
-			newStmts = new ArrayList<AbstractStatement>();
-			for (Scala_Statement blockStmt : block.statements._elements)
-			{
-				ArrayList<AbstractStatement> oneStmt = transformer.transformStatement(generator, blockStmt.getWhich());
-				if (oneStmt != null)
-				{
-					for (AbstractStatement newStmt : oneStmt)
-					{
-						newStmts.add(newStmt);
-					}
-				}
-			}
-		}
-		else
-		{
-			// Rare case I think, def fn = stmt, with no braces
-			newStmts = transformer.transformStatement(generator, stmt.getWhich());
-		}
-
+		ArrayList<AbstractStatement> newStmts = Scala_BlockStatement.collectStatements(transformer, generator, stmt);
 		if (newStmts != null)
 		{
 			for (AbstractStatement newStmt : newStmts)

@@ -97,8 +97,13 @@ public class VB_Function extends TokenSequence
 			newReturnType = generator.transformType(metricRetType, null, id);
 		}
 		
-		generator.addMethod(newReturnType, id.getValue(), this);
-		generator.addMethodName(id.getValue());
+		String fnName = id.getValue();
+		generator.addMethod(newReturnType, fnName, this);
+		generator.addMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found VB function " + fnName);
+		}
 		
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
