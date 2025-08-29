@@ -176,7 +176,7 @@ public class CSharp_ForStatement extends TokenSequence
 	}
 	
 	public CSharp_Statement generateForRange1(CSharp_Variable var, TypeEnum type,
-			CSharp_Expression fromExpression, RelationalEnum relOper, CSharp_Expression toExpression,
+			CSharp_Expression fromExpression, RelationalEnum relOp, CSharp_Expression toExpression,
 			CSharp_Expression delta, CSharp_Statement act, AbstractToken source)
 	{
 		SeparatedList<CSharp_ForWhat, PunctuationComma> initializer = new SeparatedList<CSharp_ForWhat, PunctuationComma>();
@@ -205,7 +205,6 @@ public class CSharp_ForStatement extends TokenSequence
 
 		SeparatedList<CSharp_Expression, PunctuationComma> loopIncrements = new SeparatedList<CSharp_Expression, PunctuationComma>();
 		CSharp_Expression loopIncr;
-		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 		if (delta == null)
 		{
 			CSharp_PostIncrementExpression postExpr = new CSharp_PostIncrementExpression();
@@ -217,12 +216,6 @@ public class CSharp_ForStatement extends TokenSequence
 			if (! (whichDelta instanceof CSharp_Number))
 			{
 				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
-			}
-			CSharp_Number del = (CSharp_Number) whichDelta;
-			int d = Integer.parseInt(del.getValue());
-			if (d < 0)
-			{
-				relOp = RelationalEnum.GREATER_EQUALS;  // Backwards!
 			}
 			
 			CSharp_AssignmentExpression asgExp2 = new CSharp_AssignmentExpression();

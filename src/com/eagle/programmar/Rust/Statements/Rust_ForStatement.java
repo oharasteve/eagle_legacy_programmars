@@ -24,6 +24,7 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
@@ -43,7 +44,7 @@ public class Rust_ForStatement extends TokenSequence
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		EagleRange range = interpreter.getRangeValue(statement);
+		EagleRange range = interpreter.getRangeValue(values);
 		int start = range._lowValue;
 		int stop = range._highValue;
 		int step = range._step;
@@ -107,6 +108,7 @@ public class Rust_ForStatement extends TokenSequence
 		AbstractExpression initExpr = null;
 		AbstractExpression termExpr = null;
 		AbstractExpression incrExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_THAN;
 		if (which instanceof Rust_RangeExpression)
 		{
 			range = (Rust_RangeExpression) which;
@@ -123,8 +125,11 @@ public class Rust_ForStatement extends TokenSequence
 				{
 					range = (Rust_RangeExpression) parens.expression.getWhich();
 					initExpr = transformer.transformExpression(generator, range.highExpression);
+					AbstractExpression oneExpr = generator.newNumberExpression("1", null);
+					initExpr = generator.newAdditiveExpression(null, initExpr, AdditiveEnum.MINUS, oneExpr, null);
 					termExpr = transformer.transformExpression(generator, range.lowExpression);
 					incrExpr = generator.newNumberExpression("-1", null);
+					relOp = RelationalEnum.GREATER_EQUALS;
 				}
 			}
 		}
@@ -145,6 +150,6 @@ public class Rust_ForStatement extends TokenSequence
 		
 		AbstractVariable var = generator.newVariable(variable.var.getValue());
 		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
-				RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
+				relOp, termExpr, incrExpr, actionList, this);
 	}
 }

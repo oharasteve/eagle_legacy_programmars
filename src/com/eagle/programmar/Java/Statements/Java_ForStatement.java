@@ -46,13 +46,13 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
-import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
@@ -232,7 +232,7 @@ public class Java_ForStatement extends TokenSequence
 	}
 
 	public Java_Statement generateForRange1(Java_Variable var, TypeEnum type,
-			Java_Expression fromExpression, RelationalEnum relOper, Java_Expression toExpression,
+			Java_Expression fromExpression, RelationalEnum relOp, Java_Expression toExpression,
 			Java_Expression delta, Java_Statement act, AbstractToken source)
 	{
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
@@ -260,7 +260,6 @@ public class Java_ForStatement extends TokenSequence
 
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
 		Java_Expression loopIncr;
-		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 		if (delta == null)
 		{
 			Java_PostIncrementExpression postExpr = new Java_PostIncrementExpression();
@@ -272,12 +271,6 @@ public class Java_ForStatement extends TokenSequence
 			if (! (whichDelta instanceof Java_Number))
 			{
 				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
-			}
-			Java_Number del = (Java_Number) whichDelta;
-			int d = Integer.parseInt(del.getValue());
-			if (d < 0)
-			{
-				relOp = RelationalEnum.GREATER_EQUALS;  // Backwards!
 			}
 			
 			Java_AssignmentExpression asgExp2 = new Java_AssignmentExpression();
