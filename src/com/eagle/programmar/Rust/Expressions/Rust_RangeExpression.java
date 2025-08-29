@@ -20,8 +20,14 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int lowValue = interpreter.getIntValue(lowExpression);
-		int highValue = interpreter.getIntValue(highExpression);
-		EagleRange range = new EagleRange(lowValue, highValue, 1);
+		int highValue = 0;
+		boolean hasHigh = false;
+		if (highExpression != null && highExpression.isPresent())
+		{
+			highValue = interpreter.getIntValue(highExpression);
+			hasHigh = true;
+		}
+		EagleRange range = new EagleRange(lowValue, highValue, hasHigh, 1);
 		interpreter.pushEagleValue(range);
 	}
 }

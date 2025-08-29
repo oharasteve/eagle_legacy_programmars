@@ -25,6 +25,6 @@ public class Rust_RevMethod extends PrecedenceOperator implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleRange range = interpreter.getRangeValue(left);
-		interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, -range._step));
+		interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, true, -range._step));
 	}
 }

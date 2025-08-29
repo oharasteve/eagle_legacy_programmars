@@ -35,12 +35,15 @@ public class Rust_SubscriptExpression extends PrecedenceOperator implements Eagl
 		{
 			EagleRange range = (EagleRange) low;
 			lowValue = range._lowValue;
-			highValue = range._highValue;
+			if (range._hasHigh)
+			{
+				highValue = range._highValue;
+			}
 		}
 		else
 		{
 			lowValue = low.forceIntegerValue();
-			if (highExpr.isPresent())
+			if (highExpr != null && highExpr.isPresent())
 			{
 				highValue = interpreter.getIntValue(highExpr);
 			}
