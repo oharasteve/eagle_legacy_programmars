@@ -11,6 +11,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
+import com.eagle.programmar.Rust.Rust_Type.Rust_TypePrimitive;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
@@ -58,15 +59,14 @@ public class Rust_Function extends TokenSequence
 	}
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Rust_Syntax.IS_CASE_SENSITIVE);
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	@Override
 	public EagleScope getScope()
 	{
 		return _scope;
 	}
-
-	public @SKIP CallMetrics _callMetrics = null;
-	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -96,8 +96,21 @@ public class Rust_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		TypeEnum metricRetType = transformer.findReturnMetric(id);
-		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
+		AbstractType newReturnType = null;
+		if (returns != null && returns.isPresent())
+		{
+			if (returns.returnType.getWhich() instanceof Rust_TypePrimitive)
+			{
+				Rust_TypePrimitive primitive = (Rust_TypePrimitive) returns.returnType.getWhich();
+				newReturnType = Rust_Type.findType(generator, primitive.PRIMITIVE.toString());
+			}
+		}
+		
+		if (newReturnType == null)
+		{
+			TypeEnum metricRetType = transformer.findReturnMetric(id);
+			newReturnType = generator.transformType(metricRetType, null, id);
+		}
 		
 		String fnName = id.getValue();
 		boolean isMain = false;

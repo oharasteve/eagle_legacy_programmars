@@ -16,11 +16,18 @@ import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunnableWithResult
+public class Rust_MethodInvocation extends PrimaryOperator
+		implements EagleRunnableWithResult, EagleTransformableExpression
 {
 	public @S(10) Rust_Variable methodName;
 	public @S(20) @OPT Rust_Punctuation bang = new Rust_Punctuation("!");
@@ -76,5 +83,32 @@ public class Rust_MethodInvocation extends PrimaryOperator implements EagleRunna
 		interpreter.completedFunction(name, func);
 
 		return result;
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = methodName.var.getValue();
+		if (generator.isKnownMethod(name))
+		{
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			int argCount = argList.getPrimaryCount();
+			for (int i = 0; i < argCount; i++)
+			{
+				Rust_Expression arg = argList.getPrimaryElement(i);
+				AbstractExpression newArg = transformer.transformExpression(generator, arg);
+				args.add(newArg);
+			}
+	
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, methodName);
+		}
+
+		// Dang. Scale uses () for both arrays and function calls
+		// It is not a function, so must be an array
+		AbstractExpression index = transformer.transformExpression(generator,
+				argList.first());
+		return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, index, this);
 	}
 }

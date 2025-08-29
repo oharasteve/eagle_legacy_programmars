@@ -13,6 +13,8 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rust_Type extends TokenChooser implements AbstractType
 {
@@ -20,8 +22,8 @@ public class Rust_Type extends TokenChooser implements AbstractType
 	{
 		public @S(10) @OPT Rust_Punctuation ampersand = new Rust_Punctuation("&");
 		public @S(20) @OPT Rust_TypePrimitiveStatic typeStatic;
-		public @S(30) Rust_KeywordChoice PRIMITIVE = new Rust_KeywordChoice("bool", "i32", "isize", "str", "String",
-				"usize", "u32");
+		public @S(30) Rust_KeywordChoice PRIMITIVE = new Rust_KeywordChoice(
+				"bool", "i32", "isize", "str", "String", "usize", "u32");
 
 		public static class Rust_TypePrimitiveStatic extends TokenSequence
 		{
@@ -45,5 +47,30 @@ public class Rust_Type extends TokenChooser implements AbstractType
 			public @S(10) Rust_Punctuation quote = new Rust_Punctuation("'");
 			public @S(20) Rust_Keyword STATIC = new Rust_Keyword("static");
 		}
+	}
+	
+	public static AbstractType findType(EagleGenerator generator, String typeName)
+	{
+		TypeEnum newType;
+		switch (typeName)
+		{
+		case "bool":
+			newType = TypeEnum.BOOLEAN;
+			break;
+		case "i32":
+		case "isize":
+		case "u32":
+		case "usize":
+			newType = TypeEnum.INTEGER;
+			break;
+		case "str":
+		case "String":
+			newType = TypeEnum.STRING;
+			break;
+		default:
+			newType = TypeEnum.OTHER;
+			break;
+		}
+		return generator.transformType(newType, null, null);
 	}
 }
