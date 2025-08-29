@@ -80,10 +80,13 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 		switch (whichEC)
 		{
 		case GIVEN_EC:
-			expr.comma = new PunctuationComma();
-			expr.comma.setPresent(true);
-			expr.ecExpr = (Java_Expression) ecOrnc;
-			expr.ecExpr.setPresent(true);
+			if (ecOrnc != null)
+			{
+				expr.comma = new PunctuationComma();
+				expr.comma.setPresent(true);
+				expr.ecExpr = (Java_Expression) ecOrnc;
+				expr.ecExpr.setPresent(true);
+			}
 			break;
 		case GIVEN_NC:
 			expr.comma = new PunctuationComma();

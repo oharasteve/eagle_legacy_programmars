@@ -118,8 +118,11 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop = new Python_ColonSubscript();
 			subscr.body.subscriptStop.colon = new PunctuationColon();
 			subscr.body.subscriptStop.setPresent(true);
-			subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
-			subscr.body.subscriptStop.expr.setPresent(true);
+			if (ecOrnc != null)
+			{
+				subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
+				subscr.body.subscriptStop.expr.setPresent(true);
+			}
 			break;
 		case GIVEN_NC:
 			subscr.body.subscriptStop = new Python_ColonSubscript();

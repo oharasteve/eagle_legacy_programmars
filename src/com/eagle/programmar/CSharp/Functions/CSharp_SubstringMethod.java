@@ -82,15 +82,18 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 		switch (whichEC)
 		{
 		case GIVEN_EC:
-			expr.comma = new PunctuationComma();
-			expr.comma.setPresent(true);
-			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			CSharp_Expression ecMinusSc = addExp.generateAdditive(types, (CSharp_Expression) ecOrnc,
-					AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
-			CSharp_Expression ncExpr = ecMinusSc;
-			expr.ncExpr = ncExpr;
-			expr.ncExpr.setPresent(true);
+			if (ecOrnc != null)
+			{
+				expr.comma = new PunctuationComma();
+				expr.comma.setPresent(true);
+				CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
+				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				CSharp_Expression ecMinusSc = addExp.generateAdditive(types, (CSharp_Expression) ecOrnc,
+						AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
+				CSharp_Expression ncExpr = ecMinusSc;
+				expr.ncExpr = ncExpr;
+				expr.ncExpr.setPresent(true);
+			}
 			break;
 		case GIVEN_NC:
 			expr.comma = new PunctuationComma();

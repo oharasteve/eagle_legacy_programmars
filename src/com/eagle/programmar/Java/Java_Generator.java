@@ -629,11 +629,11 @@ public class Java_Generator
 	
 	@Override
 	public Java_Expression newSubstringFunction(Java_Expression expr, Java_Expression sc,
-			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression scOrnc,
+			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression ecOrnc,
 			boolean ncMightBeTooBig, AbstractToken source)
 	{
 		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC,
-				whichEC, scOrnc, ncMightBeTooBig, source));
+				whichEC, ecOrnc, ncMightBeTooBig, source));
 	}
 
 	@Override

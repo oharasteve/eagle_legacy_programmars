@@ -614,10 +614,10 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	@Override
 	public CSharp_Expression newSubstringFunction(CSharp_Expression expr,
 			CSharp_Expression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
-			CSharp_Expression scOrnc, boolean ncMightBeTooBig, AbstractToken source)
+			CSharp_Expression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc,
-				whichSC, whichEC, scOrnc, ncMightBeTooBig, source));
+				whichSC, whichEC, ecOrnc, ncMightBeTooBig, source));
 	}
 
 	@Override
