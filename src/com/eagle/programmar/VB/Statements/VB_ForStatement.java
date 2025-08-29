@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
@@ -36,7 +37,7 @@ public class VB_ForStatement extends TokenSequence
 	public @S(40) VB_Expression from;
 	public @S(50) VB_Keyword TO = new VB_Keyword("to");
 	public @S(60) VB_Expression to;
-	public @S(70) @OPT VB_ForStep step;
+	public @S(70) @OPT VB_ForStep by;
 	public @S(80) VB_EndOfLine eoln;
 	public @S(90) TokenList<VB_Element> actions;
 	public @S(100) VB_Keyword NEXT = new VB_Keyword("next");
@@ -61,17 +62,17 @@ public class VB_ForStatement extends TokenSequence
 
 		int current = interpreter.getIntValue(from);
 		int stop = interpreter.getIntValue(to);
-		int by = 1;
+		int incr = 1;
 		
-		if (step != null && step.isPresent())
+		if (by != null && by.isPresent())
 		{
-			by = interpreter.getIntValue(step.step);
+			incr = interpreter.getIntValue(by.step);
 		}
 		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
-			if (by < 0)
+			if (incr < 0)
 			{
 				if (current < stop) break;
 			}
@@ -106,7 +107,7 @@ public class VB_ForStatement extends TokenSequence
 				break;
 			}
 
-			current += by;
+			current += incr;
 		}
 
 		_metrics.competedLoop(metric);
@@ -119,9 +120,23 @@ public class VB_ForStatement extends TokenSequence
 		AbstractExpression initExpr = transformer.transformExpression(generator, from);
 		AbstractExpression termExpr = transformer.transformExpression(generator, to);
 		AbstractExpression incrExpr = null;
-		if (step != null && step.isPresent())
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+		if (by != null && by.isPresent())
 		{
-			incrExpr = transformer.transformExpression(generator, step.step);
+			incrExpr = transformer.transformExpression(generator, by.step);
+			if (by.step != null && by.step.isPresent())
+			{
+				incrExpr = transformer.transformExpression(generator, by.step);
+				if (by.step.getWhich() instanceof VB_Number)
+				{
+					VB_Number number = (VB_Number) by.step.getWhich();
+					if (number.getValue().startsWith("-"))
+					{
+						// What it is a variable that happens to be negative? Yikes!
+						relOp = RelationalEnum.GREATER_EQUALS;
+					}
+				}
+			}
 		}
 		
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
@@ -140,7 +155,7 @@ public class VB_ForStatement extends TokenSequence
 		
 		AbstractVariable var = generator.newVariable(variable.getValue());
 		AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
-				RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
+				relOp, termExpr, incrExpr, actionList, this);
 		return stmt;
 	}
 }

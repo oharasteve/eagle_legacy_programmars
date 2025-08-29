@@ -15,6 +15,7 @@ import com.eagle.programmar.Rexx.Rexx_Expression;
 import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
 import com.eagle.programmar.Rexx.Terminals.Rexx_EndOfLine;
 import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
+import com.eagle.programmar.Rexx.Terminals.Rexx_Number;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -44,7 +45,7 @@ public class Rexx_DoStatement extends TokenSequence
 		public @S(30) Rexx_Expression from;
 		public @S(40) Rexx_Keyword TO = new Rexx_Keyword("TO");
 		public @S(50) Rexx_Expression to;
-		public @S(60) @OPT Rexx_DoBy step;
+		public @S(60) @OPT Rexx_DoBy by;
 
 		public static class Rexx_DoBy extends TokenSequence
 		{
@@ -97,9 +98,9 @@ public class Rexx_DoStatement extends TokenSequence
 			stop = interpreter.getIntValue(loop.to);
 			by = 1;
 			
-			if (loop.step != null && loop.step.isPresent())
+			if (loop.by != null && loop.by.isPresent())
 			{
-				by = interpreter.getIntValue(loop.step.step);
+				by = interpreter.getIntValue(loop.by.step);
 			}
 		}
 		
@@ -169,12 +170,22 @@ public class Rexx_DoStatement extends TokenSequence
 				throw new RuntimeException("Need to implement DO LOOP with WHILE");
 			}
 			
+			RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 			AbstractExpression initExpr = transformer.transformExpression(generator, loop.from);
 			AbstractExpression termExpr = transformer.transformExpression(generator, loop.to);
 			AbstractExpression incrExpr = null;
-			if (loop.step != null && loop.step.isPresent())
+			if (loop.by != null && loop.by.isPresent())
 			{
-				incrExpr = transformer.transformExpression(generator, loop.step.step);
+				incrExpr = transformer.transformExpression(generator, loop.by.step);
+				if (loop.by.step.getWhich() instanceof Rexx_Number)
+				{
+					Rexx_Number number = (Rexx_Number) loop.by.step.getWhich();
+					if (number.getValue().startsWith("-"))
+					{
+						// What it is a variable that happens to be negative? Yikes!
+						relOp = RelationalEnum.GREATER_EQUALS;
+					}
+				}
 			}
 			
 			ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
@@ -193,7 +204,7 @@ public class Rexx_DoStatement extends TokenSequence
 			
 			AbstractVariable var = generator.newVariable(loop.var.getValue());
 			AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
-					RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
+					relOp, termExpr, incrExpr, actionList, this);
 			return stmt;
 		}
 

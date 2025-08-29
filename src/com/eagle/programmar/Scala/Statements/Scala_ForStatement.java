@@ -132,6 +132,7 @@ public class Scala_ForStatement extends TokenSequence
 		AbstractExpression initExpr = null;
 		AbstractExpression termExpr = null;
 		AbstractExpression incrExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 		if (which instanceof Scala_RangeExpression)
 		{
 			range = (Scala_RangeExpression) which;
@@ -150,6 +151,7 @@ public class Scala_ForStatement extends TokenSequence
 					initExpr = transformer.transformExpression(generator, range.right);
 					termExpr = transformer.transformExpression(generator, range.left);
 					incrExpr = generator.newNumberExpression("-1", null);
+					relOp = RelationalEnum.GREATER_EQUALS;
 				}
 			}
 		}
@@ -170,6 +172,6 @@ public class Scala_ForStatement extends TokenSequence
 		
 		AbstractVariable var = generator.newVariable(variable.vars.first().getValue());
 		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
-				RelationalEnum.LESS_EQUALS, termExpr, incrExpr, actionList, this);
+				relOp, termExpr, incrExpr, actionList, this);
 	}
 }
