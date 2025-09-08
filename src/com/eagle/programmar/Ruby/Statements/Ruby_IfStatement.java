@@ -14,9 +14,14 @@ import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Ruby_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("control_expressions_rdoc.html#label-if+Expression") Ruby_Keyword IF = new Ruby_Keyword("if");
 	public @S(20) Ruby_Expression condition;
@@ -78,5 +83,39 @@ public class Ruby_IfStatement extends TokenSequence implements AbstractStatement
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		for (Ruby_Statement stmt : thenStatements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement newStmt : stmts)
+				{
+					ifTrue.add(newStmt);
+				}
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			for (Ruby_Statement stmt : elseClause.elseStatements._elements)
+			{
+				for (AbstractStatement newStmt : transformer.transformStatement(generator, stmt.getWhich()))
+				{
+					ifFalse.add(newStmt);
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

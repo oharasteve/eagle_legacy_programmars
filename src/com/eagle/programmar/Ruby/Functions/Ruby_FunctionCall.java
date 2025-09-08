@@ -44,7 +44,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// Make sure the function args match up
 		int argCount = arguments.getPrimaryCount();
-		int paramCount = func.params.parameters.getPrimaryCount();
+		int paramCount = func.funcParamDefs.parameters.getPrimaryCount();
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
@@ -56,7 +56,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 		for (int i = 0; i < argCount; i++)
 		{
 			Ruby_Expression expr = arguments.getPrimaryElement(i);
-			Ruby_Variable param = func.params.parameters.getPrimaryElement(i);
+			Ruby_Variable param = func.funcParamDefs.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.vars.first().getValue(), val);
 			argTypes.add(val.typeName());
@@ -68,7 +68,7 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 		// And transfer control to the method
 		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (Ruby_Statement stmt : func.stmts._elements)
+		for (Ruby_Statement stmt : func.statements._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break;

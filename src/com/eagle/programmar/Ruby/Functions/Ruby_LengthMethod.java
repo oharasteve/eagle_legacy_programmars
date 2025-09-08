@@ -8,9 +8,14 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_LengthMethod extends PrecedenceOperator implements EagleRunnable
+public class Ruby_LengthMethod extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Ruby_Expression expr = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) PunctuationPeriod dot;
@@ -21,5 +26,12 @@ public class Ruby_LengthMethod extends PrecedenceOperator implements EagleRunnab
 	{
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushInt(str.length());
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		return generator.newLengthFunction(theExpr, this);
 	}
 }

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Ruby.Statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -13,9 +16,14 @@ import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Ruby_WhileStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) Ruby_Keyword WHILE = new Ruby_Keyword("while");
 	public @S(20) Ruby_Expression condition;
@@ -70,5 +78,25 @@ public class Ruby_WhileStatement extends TokenSequence implements AbstractStatem
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		for (Ruby_Statement statement : statements._elements)
+		{
+			Collection<AbstractStatement> newStmts =
+					transformer.transformStatement(generator, statement.getWhich());
+			for (AbstractStatement stmt : newStmts)
+			{
+				whileTrue.add(stmt);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

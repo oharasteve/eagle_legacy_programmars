@@ -3,18 +3,21 @@
 
 package com.eagle.programmar.Ruby;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ruby.Statements.Ruby_Function;
-import com.eagle.programmar.Ruby.Terminals.Ruby_Comment;
-import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_Program extends AbstractLanguage implements EagleRunnable
+public class Ruby_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String RUBY = "Ruby";
 
@@ -29,54 +32,64 @@ public class Ruby_Program extends AbstractLanguage implements EagleRunnable
 		return "https://docs.ruby-lang.org/en/2.4.0/syntax/";
 	}
 
-	public @S(10) TokenList<Ruby_Element> elements;
-
-	public static class Ruby_Element extends TokenChooser
-	{
-		public @CHOICE Ruby_CommentEoln XXcomment;
-		public @CHOICE Ruby_Statement XXstmt;
-	}
-
-	public static class Ruby_CommentEoln extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) Ruby_Comment comment;
-		public @S(20) Ruby_EOLN eoln;
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			// Nothing to do here
-		}
-	}
+	public @S(10) TokenList<Ruby_Statement> elements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// First pass, just collect all the FUNCTION definitions
-		for (Ruby_Element elt : elements._elements)
+		for (Ruby_Statement stmt : elements._elements)
 		{
-			AbstractToken which = elt.getWhich();
-			if (which instanceof Ruby_Statement)
+			AbstractToken which = stmt.getWhich();
+			if (which instanceof Ruby_Function)
 			{
-				Ruby_Statement stmt = (Ruby_Statement) which;
-				which = stmt.getWhich();
-				if (which instanceof Ruby_Function)
-				{
-					Ruby_Function fn = (Ruby_Function) which;
-					interpreter.addFunction(fn.id.getValue(), fn);
-				}
+				Ruby_Function fn = (Ruby_Function) which;
+				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
 
 		// Second pass, execute the program
-		for (Ruby_Element elt : elements._elements)
+		for (Ruby_Statement stmt : elements._elements)
 		{
-			AbstractToken which = elt.getWhich();
-			if (which instanceof Ruby_Statement)
+			interpreter.tryToInterpret(stmt);
+		}
+	}
+
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, transform all the Function definitions
+		for (Ruby_Statement stmt : elements._elements)
+		{
+			AbstractToken which = stmt.getWhich();
+			if (which instanceof Ruby_Function)
 			{
-				Ruby_Statement stmt = (Ruby_Statement) which;
-				interpreter.tryToInterpret(stmt);
+				Ruby_Function func = (Ruby_Function) which;
+				func.transformFunction(transformer, generator);
 			}
 		}
+		
+		// Second pass, transform all the data and logic
+		for (Ruby_Statement stmt : elements._elements)
+		{
+			AbstractToken which = stmt.getWhich();
+			if (! (which instanceof Ruby_Function))
+			{
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(
+						generator, which);
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
+				}
+			}
+		}
+		
+		// Not needed for C# or Java, but Python needs this
+		generator.addCallToMain();
+		
+		return generator.getTransfomedProgram();
 	}
 }

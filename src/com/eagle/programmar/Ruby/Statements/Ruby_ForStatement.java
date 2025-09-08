@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Ruby.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -11,18 +13,24 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Ruby_Statement;
 import com.eagle.programmar.Ruby.Ruby_Variable;
-import com.eagle.programmar.Ruby.Expressions.Ruby_ParenthesizedExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_RangeExpression;
-import com.eagle.programmar.Ruby.Expressions.Ruby_Subfield;
-import com.eagle.programmar.Ruby.Functions.Ruby_FunctionCall;
+import com.eagle.programmar.Ruby.Functions.Ruby_DownToMethod;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Ruby_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("control_expressions_rdoc.html#label-for+Loop") Ruby_Keyword FOR = new Ruby_Keyword("for");
 	public @S(20) Ruby_Variable var;
@@ -42,39 +50,21 @@ public class Ruby_ForStatement extends TokenSequence implements AbstractStatemen
 		boolean backwards = false;
 		int start = 0;
 		int stop = 0;
-		boolean success = false;
 		if (which instanceof Ruby_RangeExpression)
 		{
 			Ruby_RangeExpression range = (Ruby_RangeExpression) which;
 			start = interpreter.getIntValue(range.left);
 			stop = interpreter.getIntValue(range.right);
-			success = true;
+		}
+		else if (which instanceof Ruby_DownToMethod)
+		{
+			// Could look like this: (3).downto(1)
+			Ruby_DownToMethod reversed = (Ruby_DownToMethod) which;
+			start = interpreter.getIntValue(reversed.init);
+			stop = interpreter.getIntValue(reversed.stop);
+			backwards = true;
 		}
 		else
-		{
-			// Could also look like this: (3).downto(1)
-			if (which instanceof Ruby_Subfield)
-			{
-				Ruby_Subfield sub = (Ruby_Subfield) which;
-				if (sub.left.getWhich() instanceof Ruby_ParenthesizedExpression)
-				{
-					Ruby_ParenthesizedExpression paren = (Ruby_ParenthesizedExpression) sub.left.getWhich();
-					start = interpreter.getIntValue(paren.expression);
-					if (sub.right.getWhich() instanceof Ruby_FunctionCall)
-					{
-						Ruby_FunctionCall func = (Ruby_FunctionCall) sub.right.getWhich();
-						if (func.funcName.vars.first().getValue().equals("downto"))
-						{
-							stop = interpreter.getIntValue(func.arguments.first());
-							backwards = true;
-							success = true;
-						}
-					}
-				}
-			}
-		}
-		
-		if (!success)
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
@@ -126,5 +116,51 @@ public class Ruby_ForStatement extends TokenSequence implements AbstractStatemen
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which = values.getWhich();
+		Ruby_RangeExpression range = null;
+		AbstractExpression initExpr = null;
+		AbstractExpression termExpr = null;
+		AbstractExpression incrExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+		if (which instanceof Ruby_RangeExpression)
+		{
+			range = (Ruby_RangeExpression) which;
+			initExpr = transformer.transformExpression(generator, range.left);
+			termExpr = transformer.transformExpression(generator, range.right);
+		}
+		else if (which instanceof Ruby_DownToMethod)
+		{
+			Ruby_DownToMethod reversed = (Ruby_DownToMethod) which;
+			initExpr = transformer.transformExpression(generator, reversed.init);
+			termExpr = transformer.transformExpression(generator, reversed.stop);
+			incrExpr = generator.newNumberExpression("-1", null);
+			relOp = RelationalEnum.GREATER_EQUALS;
+		}
+		else
+		{
+			throw new RuntimeException("FOR statement requires a Range of values");
+		}
+		
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		for (Ruby_Statement statement : statements._elements)
+		{
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, statement.getWhich());
+			if (newStmts != null)
+			{
+				for (AbstractStatement stmt : newStmts)
+				{
+					actionList.add(stmt);
+				}
+			}
+		}
+		
+		AbstractVariable varName = generator.newVariable(var.vars.first().getValue());
+		return generator.newForRangeStatement(varName, TypeEnum.INTEGER, initExpr,
+				relOp, termExpr, incrExpr, actionList, this);
 	}
 }

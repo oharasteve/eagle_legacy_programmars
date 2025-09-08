@@ -9,11 +9,17 @@ import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_StartWithMethod extends PrecedenceOperator implements EagleRunnable
+public class Ruby_StartWithMethod extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Ruby_Expression expr = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) PunctuationPeriod dot;
@@ -29,5 +35,14 @@ public class Ruby_StartWithMethod extends PrecedenceOperator implements EagleRun
 		String str = interpreter.getStrValue(expr);
 		String pattern = interpreter.getStrValue(patternExpr);
 		interpreter.pushBool(str.startsWith(pattern));
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
+		AbstractExpression thePattern = transformer.transformExpression(generator, patternExpr);
+		return generator.newStartsWithFunction(theExpr, thePattern, null,
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 }
