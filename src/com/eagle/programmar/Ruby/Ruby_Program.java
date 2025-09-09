@@ -13,13 +13,12 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Ruby.Statements.Ruby_Function;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Ruby_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
@@ -84,16 +83,9 @@ public class Ruby_Program extends AbstractLanguage
 			{
 				AbstractType abstrType = generator.transformType(typE, null, this);
 
-				AbstractExpression initExpr = null;
-//				if (typE == TypeEnum.STRING_HASH)
-//				{
-//					// Need to create an empty hashmap
-//					initExpr = generator.newClassCreation(abstrType, null, this);
-//				}
-				
-				System.err.println("****** Found var " + met._symbolName);
+				// System.err.println("****** Found var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName,
-						null, abstrType, initExpr, this);
+						null, abstrType, null, this);
 				generator.addStatement(dataStmt, this);
 			}
 		}

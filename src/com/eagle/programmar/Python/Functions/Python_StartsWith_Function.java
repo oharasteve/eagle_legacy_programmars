@@ -58,7 +58,7 @@ public class Python_StartsWith_Function extends PrimaryOperator
 		AbstractToken token = expr.getWhich();
 		if (! (token instanceof Python_VariableExpression))
 		{
-			throw new RuntimeException("Python startswith must be a variable");
+			throw new RuntimeException("Python startswith must be a variable, not " + token);
 		}
 		
 		Python_VariableExpression varExpr = (Python_VariableExpression) token;

@@ -10,7 +10,8 @@ import com.eagle.programmar.TCL.Terminals.TCL_Comment;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
-public class TCL_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class TCL_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) @NEWLINE TCL_Expression expr;
 	public @S(20) @OPT TCL_Comment comment;

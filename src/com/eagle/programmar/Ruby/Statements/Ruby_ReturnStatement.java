@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -27,6 +28,19 @@ public class Ruby_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
+		
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof Ruby_Function)
+			{
+				Ruby_Function func = (Ruby_Function) parent;
+				func._returnMetrics.returned(val.typeName());
+				break;
+			}
+			parent = parent.getParent();
+		}
+
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
 	}

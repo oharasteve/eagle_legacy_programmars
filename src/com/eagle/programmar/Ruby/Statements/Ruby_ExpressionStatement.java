@@ -9,9 +9,14 @@ import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Comment;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Ruby_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE Ruby_Expression expr;
 	public @S(20) @OPT Ruby_Comment comment;
@@ -21,5 +26,13 @@ public class Ruby_ExpressionStatement extends TokenSequence implements EagleRunn
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expr);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newExpressionStatement(newExpr, this);
 	}
 }

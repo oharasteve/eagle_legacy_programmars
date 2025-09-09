@@ -9,8 +9,12 @@ import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_BreakStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Ruby_BreakStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("control_expressions_rdoc.html#label-break+Statement") Ruby_Keyword BREAK = new Ruby_Keyword(
 			"break");
@@ -20,5 +24,11 @@ public class Ruby_BreakStatement extends TokenSequence implements EagleRunnableW
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		return Eagle_Statement_Result.BREAK;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newBreakStatement(BREAK);
 	}
 }

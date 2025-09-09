@@ -149,7 +149,8 @@ public class Ruby_ForStatement extends TokenSequence
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (Ruby_Statement statement : statements._elements)
 		{
-			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, statement.getWhich());
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(
+					generator, statement.getWhich());
 			if (newStmts != null)
 			{
 				for (AbstractStatement stmt : newStmts)
@@ -160,7 +161,7 @@ public class Ruby_ForStatement extends TokenSequence
 		}
 		
 		AbstractVariable varName = generator.newVariable(var.vars.first().getValue());
-		return generator.newForRangeStatement(varName, TypeEnum.INTEGER, initExpr,
+		return generator.newForRangeStatement(varName, null, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 }

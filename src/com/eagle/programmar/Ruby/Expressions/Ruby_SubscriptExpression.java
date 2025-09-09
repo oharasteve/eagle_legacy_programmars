@@ -16,6 +16,7 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
@@ -81,10 +82,13 @@ public class Ruby_SubscriptExpression extends PrecedenceOperator
 					SubstringECEnum.GIVEN_EC, ecExpr, false, this);
 		}
 
-//		if (type._type1.equals(EagleArray.ARRAY))
-//		{
-//			
-//		}
+		if (expr.getWhich() instanceof Ruby_VariableExpression)
+		{
+			Ruby_VariableExpression varExpr = (Ruby_VariableExpression) expr.getWhich();
+			String varName = varExpr.variable.vars.first().getValue();
+			AbstractExpression subExpr = transformer.transformExpression(generator, subscript);
+			return generator.newVariableExpression(varName, SubscriptEnum.FIRST_IS_ZERO, subExpr, expr);
+		}
 
 		throw new RuntimeException("Unable to handle subscript");
 	}

@@ -9,8 +9,10 @@ import java.util.Collection;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Ruby.Ruby_Statement;
 import com.eagle.programmar.Ruby.Ruby_Syntax;
 import com.eagle.programmar.Ruby.Ruby_Variable;
@@ -53,6 +55,7 @@ public class Ruby_Function extends TokenSequence
 
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, Ruby_Syntax.IS_CASE_SENSITIVE);
 
@@ -72,6 +75,10 @@ public class Ruby_Function extends TokenSequence
 		if (_argumentsMetrics == null)
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.
@@ -127,7 +134,7 @@ public class Ruby_Function extends TokenSequence
 			}
 		}
 		
-		///////// addLocalVars(transformer, generator);
+		addLocalVars(transformer, generator);
 		
 		for (Ruby_Statement stmt : statements._elements)
 		{
@@ -142,5 +149,40 @@ public class Ruby_Function extends TokenSequence
 		}
 		
 		generator.doneMethod();
+	}
+	
+	private boolean isFuncParam(String name)
+	{
+		int numParams = funcParamDefs.parameters.getPrimaryCount();
+		for (int i = 0; i < numParams; i++)
+		{
+			Ruby_Variable var = funcParamDefs.parameters.getPrimaryElement(i);
+			if (var.vars.first().getValue().equalsIgnoreCase(name))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// Are there any local variables we need to declare?
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				if (! isFuncParam(met._symbolName))
+				{
+					// System.err.println("****** Found local var " + met._symbolName);
+					AbstractType absType = generator.transformType(typ, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+					generator.addStatement(dataStmt, this);
+				}
+			}
+		}
 	}
 }

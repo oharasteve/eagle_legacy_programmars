@@ -17,11 +17,18 @@ import com.eagle.programmar.Ruby.Symbols.Ruby_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Ruby_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Ruby_Variable funcName;
 	public @S(20) PunctuationLeftParen leftParen;
@@ -81,5 +88,32 @@ public class Ruby_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = funcName.vars.first().getValue();
+		if (generator.isKnownMethod(name))
+		{
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			int argCount = arguments.getPrimaryCount();
+			for (int i = 0; i < argCount; i++)
+			{
+				Ruby_Expression arg = arguments.getPrimaryElement(i);
+				AbstractExpression newArg = transformer.transformExpression(generator, arg);
+				args.add(newArg);
+			}
+	
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, funcName);
+		}
+
+		// Dang. Scale uses () for both arrays and function calls
+		// It is not a function, so must be an array
+		AbstractExpression index = transformer.transformExpression(generator,
+				arguments.first());
+		return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, index, this);
 	}
 }
