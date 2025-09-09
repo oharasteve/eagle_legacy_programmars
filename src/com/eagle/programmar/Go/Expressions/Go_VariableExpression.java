@@ -28,7 +28,12 @@ public class Go_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		AbstractExpression subscr = null;
+		if (variable.subscript != null && variable.subscript.isPresent())
+		{
+			subscr = transformer.transformExpression(generator, variable.subscript.expr);
+		}
 		return generator.newVariableExpression(variable.vars.first().getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, null, this);
+				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
 	}
 }

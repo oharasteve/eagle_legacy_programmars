@@ -8,16 +8,17 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Type;
+import com.eagle.programmar.Go.Expressions.Go_BracesExpression;
 import com.eagle.programmar.Go.Symbols.Go_Variable_Definition;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -41,9 +42,15 @@ public class Go_Data extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression value = transformer.transformExpression(generator, initValue);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, value, this);
-		return generator.newExpressionStatement(asgExpr, this);
+		if (initValue.getWhich() instanceof Go_BracesExpression)
+		{
+			AbstractType dataType = generator.transformType(TypeEnum.STRING_ARRAY, null, this);
+			AbstractExpression value = transformer.transformExpression(generator, initValue);
+			AbstractStatement dataStmt = generator.newDataDeclaration(id.getValue(), null,
+					dataType, value, this);
+			return dataStmt;
+		}
+		
+		throw new RuntimeException("Can't handle data value: " + initValue);
 	}
 }

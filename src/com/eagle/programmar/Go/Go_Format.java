@@ -88,6 +88,10 @@ public class Go_Format
 		{
 			fmt = fmt.substring(1, fmt.length()-1);
 		}
+		if (fmt.endsWith("\\n"))
+		{
+			fmt = fmt.substring(0, fmt.length()-2);
+		}
 		int nc = fmt.length();
 		
 		int sc = fmt.indexOf("%");

@@ -151,7 +151,7 @@ public class Go_Function extends TokenSequence
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
 		
 		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());

@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -30,6 +31,18 @@ public class Go_ReturnStatement extends TokenSequence
 		{
 			EagleValue val = interpreter.getEagleValue(expression);
 			interpreter.pushEagleValue(val);
+
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof Go_Function)
+				{
+					Go_Function func = (Go_Function) parent;
+					func._returnMetrics.returned(val.typeName());
+					break;
+				}
+				parent = parent.getParent();
+			}
 		}
 		return Eagle_Statement_Result.RETURN;
 	}

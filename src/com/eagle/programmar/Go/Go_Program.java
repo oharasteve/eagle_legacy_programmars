@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.Go;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Go.Statements.Go_Data;
 import com.eagle.programmar.Go.Statements.Go_Function;
 import com.eagle.programmar.Go.Statements.Go_Import;
@@ -18,9 +16,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -76,7 +72,7 @@ public class Go_Program extends AbstractLanguage
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
-		// First pass, transform all the Function definitions
+		// Transform all the Function definitions and global data
 		for (Go_Element elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
@@ -85,30 +81,7 @@ public class Go_Program extends AbstractLanguage
 				Go_Function func = (Go_Function) which;
 				func.transformFunction(transformer, generator);
 			}
-		}
-		
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
-
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName,
-						null, abstrType, null, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
-
-		// Second pass, transform all the data and logic
-		for (Go_Element elt : elements._elements)
-		{
-			AbstractToken which = elt.getWhich();
-			if (! (which instanceof Go_Function))
+			else
 			{
 				Collection<AbstractStatement> newStmts = transformer.transformStatement(
 						generator, which);
