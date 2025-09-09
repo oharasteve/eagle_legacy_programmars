@@ -60,6 +60,7 @@ public class Rust_Format
 			// Look for the next piece
 			sc = nxt + 2;
 		}
+
 		metrics.calledWith(argTypes);
 		return sb.toString();
 	}

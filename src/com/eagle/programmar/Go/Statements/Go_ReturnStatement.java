@@ -10,9 +10,14 @@ import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Go_ReturnStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Go_ReturnStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("#Return_statements") Go_Keyword RETURN = new Go_Keyword("return");
 	public @S(20) Go_Expression expression;
@@ -21,11 +26,23 @@ public class Go_ReturnStatement extends TokenSequence implements AbstractStateme
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (expression != null)
+		if (expression != null && expression.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(expression);
 			interpreter.pushEagleValue(val);
 		}
 		return Eagle_Statement_Result.RETURN;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression retExpr = null;
+		if (expression != null && expression.isPresent())
+		{
+			retExpr = transformer.transformExpression(generator, expression);
+		}
+		return generator.newReturnStatement(retExpr, this);
 	}
 }

@@ -36,12 +36,11 @@ public class Go_Variable extends TokenSequence implements EagleRunnable
 		{
 			EagleArray array = (EagleArray) value;
 			int subscr = interpreter.getIntValue(subscript.expr);
-			EagleValue val = array.getValue(subscr);
-			interpreter.pushEagleValue(val);
+			EagleValue subval = array.getValue(subscr);
+			interpreter.pushEagleValue(subval);
 			return;
 		}
 
 		interpreter.pushEagleValue(value);
-		
 	}
 }

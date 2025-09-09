@@ -7,6 +7,7 @@ import com.eagle.programmar.Go.Statements.Go_BlockStatement;
 import com.eagle.programmar.Go.Statements.Go_BreakStatement;
 import com.eagle.programmar.Go.Statements.Go_ConstBlock;
 import com.eagle.programmar.Go.Statements.Go_ExpressionStatement;
+import com.eagle.programmar.Go.Statements.Go_FmtPrintfStatement;
 import com.eagle.programmar.Go.Statements.Go_ForStatement;
 import com.eagle.programmar.Go.Statements.Go_IfStatement;
 import com.eagle.programmar.Go.Statements.Go_ReturnStatement;
@@ -22,7 +23,7 @@ public class Go_Statement extends TokenChooser
 	public @CHOICE Go_BreakStatement XXbreakStatement;
 	public @CHOICE Go_CommentEoln XXcomment;
 	public @CHOICE Go_ConstBlock XXconstBlock;
-	public @CHOICE Go_ExpressionStatement XXexpressionStatement;
+	public @CHOICE Go_FmtPrintfStatement XXfmtPrintfStatement;
 	public @CHOICE Go_ForStatement XXforStatement;
 	public @CHOICE Go_IfStatement XXifStatement;
 	public @CHOICE Go_ReturnStatement XXreturnStatement;
@@ -30,4 +31,6 @@ public class Go_Statement extends TokenChooser
 	public @CHOICE Go_TypeDefinition XXtypeDefinition;
 	public @CHOICE Go_VarStatement XXvarStatement;
 	public @CHOICE Go_WhileStatement XXwhileStatement;
+
+	public @LAST Go_ExpressionStatement XXexpressionStatement;
 }

@@ -12,10 +12,15 @@ import com.eagle.programmar.Go.Terminals.Go_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Go_Import extends TokenSequence implements EagleRunnable
+public class Go_Import extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("#Import_declarations") Go_Keyword IMPORT = new Go_Keyword("import");
 	public @S(20) Go_ImportWhat what;
@@ -45,5 +50,12 @@ public class Go_Import extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Nothing to do here
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return null;		// Nothing to do here
 	}
 }

@@ -18,8 +18,12 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Go_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Go_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("#For_statements") Go_Keyword FOR = new Go_Keyword("for");
 	public @S(20) Go_Identifier_Reference var;
@@ -102,5 +106,11 @@ public class Go_ForStatement extends TokenSequence implements EagleRunnableWithR
 		}
 		
 		throw new RuntimeException("Cannot handle this type of for loop (yet): " + forWhat);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		throw new RuntimeException("Please implement");
 	}
 }

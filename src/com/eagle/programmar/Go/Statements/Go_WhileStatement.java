@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Go.Statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -11,9 +14,14 @@ import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Go_WhileStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Go_WhileStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Go_Keyword FOR = new Go_Keyword("for");
 	public @S(20) Go_Expression condition;
@@ -58,5 +66,22 @@ public class Go_WhileStatement extends TokenSequence implements EagleRunnableWit
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		Collection<AbstractStatement> newStmts =
+				transformer.transformStatement(generator, statement.getWhich());
+		for (AbstractStatement stmt : newStmts)
+		{
+			whileTrue.add(stmt);
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

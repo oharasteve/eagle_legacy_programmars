@@ -12,9 +12,14 @@ import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Go_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Go_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("#If_statements") Go_Keyword IF = new Go_Keyword("if");
 	public @S(20) Go_Expression condition;
@@ -68,5 +73,33 @@ public class Go_IfStatement extends TokenSequence implements AbstractStatement, 
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt : stmts)
+			{
+				ifTrue.add(stmt);
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			for (AbstractStatement stmt : transformer.transformStatement(generator, elseClause.elseStatement.getWhich()))
+			{
+				ifFalse.add(stmt);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }
