@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Go.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -16,9 +18,12 @@ import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.programmar.Go.Terminals.Go_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -111,6 +116,29 @@ public class Go_ForStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		throw new RuntimeException("Please implement");
+		if (forWhat.getWhich() instanceof Go_ForLoop)
+		{
+			Go_ForLoop forLoop = (Go_ForLoop) forWhat.getWhich();
+			AbstractExpression initExpr = transformer.transformExpression(generator, forLoop.initValue);
+			AbstractExpression asgExpr = generator.newAssignmentExpression(var.getValue(),
+					SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, initExpr, forLoop.initValue);
+			AbstractExpression termCond = transformer.transformExpression(generator, forLoop.condition);
+			AbstractExpression incrExpr = transformer.transformExpression(generator, forLoop.increment);
+			
+			ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+					forLoop.statement.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt : stmts)
+				{
+					whileTrue.add(stmt);
+				}
+			}
+			
+			return generator.newForLoopStatement(asgExpr, termCond, incrExpr, whileTrue, this);
+		}
+		
+		throw new RuntimeException("Cannot handle this type of for loop (yet): " + forWhat);
 	}
 }

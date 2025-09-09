@@ -12,10 +12,17 @@ import com.eagle.programmar.Go.Symbols.Go_Variable_Definition;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Go_Data extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Go_Data extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("#Variables") Go_Keyword VAR = new Go_Keyword("var");
 	public @S(20) Go_Variable_Definition id;
@@ -29,5 +36,14 @@ public class Go_Data extends TokenSequence implements AbstractStatement, EagleRu
 	{
 		EagleValue val = interpreter.getEagleValue(initValue);
 		interpreter.setSymbol(id, id.getValue(), val);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression value = transformer.transformExpression(generator, initValue);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, value, this);
+		return generator.newExpressionStatement(asgExpr, this);
 	}
 }

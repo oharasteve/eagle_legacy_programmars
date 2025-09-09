@@ -11,8 +11,15 @@ import com.eagle.programmar.Go.Go_Variable;
 import com.eagle.programmar.Go.Symbols.Go_Identifier_Reference;
 import com.eagle.programmar.Go.Terminals.Go_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
-public class Go_PostDecrementExpression extends PrimaryOperator implements EagleRunnable
+public class Go_PostDecrementExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Go_Variable var;
 	public @S(20) Go_Punctuation postDecrementOperator = new Go_Punctuation("--");
@@ -27,5 +34,14 @@ public class Go_PostDecrementExpression extends PrimaryOperator implements Eagle
 		EagleValue curr = new EagleInteger(prev - 1);
 		interpreter.setSymbol(var, id.getValue(), curr);
 		interpreter.pushInt(prev);
+	}
+		
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression one = generator.newNumberExpression("1", var);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.MINUS_EQUALS, one, this);
+		return asgExpr;
 	}
 }
