@@ -84,6 +84,21 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			{
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
+				Java_Number num = new Java_Number();
+				Java_Expression one = Java_Generator.wrapExpression(num.generateNumber("1", source));
+				Java_AdditiveExpression addExp = new Java_AdditiveExpression();
+				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Java_Expression ecPlusOne = addExp.generateAdditive(types, (Java_Expression) ecOrnc,
+						AdditiveEnum.PLUS, one, source);
+				expr.ecExpr = ecPlusOne;
+				expr.ecExpr.setPresent(true);
+			}
+			break;
+		case GIVEN_EC_PLUS_ONE:
+			if (ecOrnc != null)
+			{
+				expr.comma = new PunctuationComma();
+				expr.comma.setPresent(true);
 				expr.ecExpr = (Java_Expression) ecOrnc;
 				expr.ecExpr.setPresent(true);
 			}

@@ -86,6 +86,25 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 			{
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
+				CSharp_Number num = new CSharp_Number();
+				CSharp_Expression one = CSharp_Generator.wrapExpression(num.generateNumber("1", source));
+				CSharp_AdditiveExpression addExp1 = new CSharp_AdditiveExpression();
+				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				CSharp_Expression ecPlusOne = addExp1.generateAdditive(types, (CSharp_Expression) ecOrnc,
+						AdditiveEnum.PLUS, one, source);
+				CSharp_AdditiveExpression addExp2 = new CSharp_AdditiveExpression();
+				CSharp_Expression ecMinusSc = addExp2.generateAdditive(types, ecPlusOne,
+						AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
+				CSharp_Expression ncExpr = ecMinusSc;
+				expr.ncExpr = ncExpr;
+				expr.ncExpr.setPresent(true);
+			}
+			break;
+		case GIVEN_EC_PLUS_ONE:
+			if (ecOrnc != null)
+			{
+				expr.comma = new PunctuationComma();
+				expr.comma.setPresent(true);
 				CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
 				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
 				CSharp_Expression ecMinusSc = addExp.generateAdditive(types, (CSharp_Expression) ecOrnc,

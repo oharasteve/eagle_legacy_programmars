@@ -120,6 +120,22 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop.setPresent(true);
 			if (ecOrnc != null)
 			{
+				Python_Number num = new Python_Number();
+				Python_Expression one = Python_Generator.wrapExpression(num.generateNumber("1", source));
+				Python_Additive_Expression addExpr = new Python_Additive_Expression();
+				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Python_Expression ecPlusOne = addExpr.generateAdditive(types,
+						(Python_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
+				subscr.body.subscriptStop.expr = ecPlusOne;
+				subscr.body.subscriptStop.expr.setPresent(true);
+			}
+			break;
+		case GIVEN_EC_PLUS_ONE:
+			subscr.body.subscriptStop = new Python_ColonSubscript();
+			subscr.body.subscriptStop.colon = new PunctuationColon();
+			subscr.body.subscriptStop.setPresent(true);
+			if (ecOrnc != null)
+			{
 				subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
 				subscr.body.subscriptStop.expr.setPresent(true);
 			}

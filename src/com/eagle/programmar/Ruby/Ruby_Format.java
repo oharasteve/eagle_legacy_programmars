@@ -4,6 +4,11 @@
 package com.eagle.programmar.Ruby;
 
 import com.eagle.interpret.EagleInterpreter;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Ruby_Format
 {
@@ -50,5 +55,71 @@ public class Ruby_Format
 			sc = second + 1;
 		}
 		return sb.toString();
+	}
+	
+	public static AbstractExpression compile(EagleGenerator generator, String fmt, AbstractToken source)
+	{
+		AbstractExpression result = null;
+
+		String txt = fmt.replaceAll("\"", "");
+		int nc = txt.length();
+		if (nc == 0)
+		{
+			return generator.newLiteralExpression("", null);
+		}
+		
+		int sc = 0;
+		while (sc < nc)
+		{
+			// Pull in a text string
+			int nextInsertion = txt.indexOf("#{", sc);
+			int ec = nextInsertion;
+			if (nextInsertion < 0)
+			{
+				ec = nc;	// No more #{}, go all the way to the end
+			}
+			
+			if (ec > sc)
+			{
+				// Grab next literal piece
+				AbstractExpression piece1 = generator.newLiteralExpression(txt.substring(sc, ec), null);
+				if (result == null)
+				{
+					result = piece1;
+				}
+				else
+				{
+					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, piece1, null);
+				}
+			}
+
+			if (nextInsertion < 0)
+			{
+				break; // Done -- no more #{}
+			}
+
+			// Pick out the variable name, like #{ok}
+			int endInsertion = txt.indexOf("}", nextInsertion + 2);
+			if (endInsertion < 0)
+			{
+				throw new RuntimeException("Missing } following #{");
+			}
+			String var = txt.substring(nextInsertion + 2, endInsertion);
+			AbstractExpression varExpr = generator.newVariableExpression(var,
+					SubscriptEnum.FIRST_IS_ZERO, null, null);
+			// Always wrap in a str() function for now
+			AbstractExpression strExpr = generator.newStringFunction(varExpr, null);
+			if (result == null)
+			{
+				result = varExpr;
+			}
+			else
+			{
+				result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, strExpr, null);
+			}
+			sc = endInsertion + 1;
+		}
+		
+		return result;
 	}
 }

@@ -31,6 +31,7 @@ public class TCL_Format
 			String var = "";
 			
 			// Four cases:
+			
 			//   I: no more [] or $
 			if (firstBracket < 0 && firstDollar < 0)
 			{

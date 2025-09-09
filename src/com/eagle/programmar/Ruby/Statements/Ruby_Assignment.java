@@ -77,10 +77,10 @@ public class Ruby_Assignment extends TokenSequence
 		}
 
 		AbstractExpression subscrExpr = null;
-		if (var.subscript != null && var.subscript.isPresent())
-		{
-			subscrExpr = transformer.transformExpression(generator, var.subscript.expr);
-		}
+//		if (var.subscript != null && var.subscript.isPresent())
+//		{
+//			subscrExpr = transformer.transformExpression(generator, var.subscript.expr);
+//		}
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);

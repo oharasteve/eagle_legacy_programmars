@@ -21,7 +21,6 @@ import com.eagle.programmar.Ruby.Expressions.Ruby_RangeExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_RelationalExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_Subfield;
 import com.eagle.programmar.Ruby.Expressions.Ruby_SubscriptExpression;
-import com.eagle.programmar.Ruby.Expressions.Ruby_SubstringExpression;
 import com.eagle.programmar.Ruby.Expressions.Ruby_VariableExpression;
 import com.eagle.programmar.Ruby.Functions.Ruby_DownToMethod;
 import com.eagle.programmar.Ruby.Functions.Ruby_FunctionCall;
@@ -77,17 +76,16 @@ public class Ruby_Expression extends PrecedenceChooser implements AbstractExpres
 	// Binary expressions
 
 	public @P(1000) Ruby_SubscriptExpression subscriptExpression;
-	public @P(1010) Ruby_SubstringExpression substringExpression;
-	public @P(1020) Ruby_StartWithMethod startwithMethod;
-	public @P(1030) Ruby_LengthMethod lengthMethod;
-	public @P(1040) Ruby_DownToMethod downTo;
-	public @P(1050) Ruby_Subfield subfield;
-	public @P(1060) Ruby_MultiplicativeExpression multiplicativeExpression;
-	public @P(1070) Ruby_AdditiveExpression additiveExpression;
-	public @P(1080) Ruby_RelationalExpression relationalExpression;
-	public @P(1090) Ruby_EqualityExpression equalityExpression;
-	public @P(1100) Ruby_LogicalAndExpression conditionalAndExpression;
-	public @P(1110) Ruby_LogicalOrExpression conditionalOrExpression;
-	public @P(1120) Ruby_AssignmentExpression assignmentExpression;
-	public @P(1130) Ruby_RangeExpression rangeExpression;
+	public @P(1010) Ruby_StartWithMethod startwithMethod;
+	public @P(1020) Ruby_LengthMethod lengthMethod;
+	public @P(1030) Ruby_DownToMethod downTo;
+	public @P(1040) Ruby_Subfield subfield;
+	public @P(1050) Ruby_MultiplicativeExpression multiplicativeExpression;
+	public @P(1060) Ruby_AdditiveExpression additiveExpression;
+	public @P(1070) Ruby_RelationalExpression relationalExpression;
+	public @P(1080) Ruby_EqualityExpression equalityExpression;
+	public @P(1090) Ruby_LogicalAndExpression conditionalAndExpression;
+	public @P(1100) Ruby_LogicalOrExpression conditionalOrExpression;
+	public @P(1110) Ruby_AssignmentExpression assignmentExpression;
+	public @P(1120) Ruby_RangeExpression rangeExpression;
 }

@@ -5,10 +5,10 @@ package com.eagle.programmar.Ruby.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Ruby_Format;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
+import com.eagle.programmar.Ruby.Terminals.Ruby_Literal;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -20,14 +20,13 @@ public class Ruby_PutsStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ruby_Keyword PUTS = new Ruby_Keyword("puts");
-	public @S(20) Ruby_Expression expr;
+	public @S(20) Ruby_Literal format;
 	public @S(30) Ruby_EOLN eoln;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String val = interpreter.getStrValue(expr);
-		String formatted = Ruby_Format.format(interpreter, val);
+		String formatted = Ruby_Format.format(interpreter, format.getValue());
 		System.out.println(formatted);
 	}
 
@@ -35,7 +34,7 @@ public class Ruby_PutsStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(line, true, this);
+		AbstractExpression newLine = Ruby_Format.compile(generator, format.getValue(), this);
+		return generator.newPrintStatement(newLine, true, this);
 	}
 }

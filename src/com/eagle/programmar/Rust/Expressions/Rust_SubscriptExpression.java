@@ -101,7 +101,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 					newEc = transformer.transformExpression(generator, range.highExpression);
 				}
 				return generator.newSubstringFunction(newExpr, newSc,
-						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_EC,
+						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_EC_PLUS_ONE,
 						newEc, false, this);
 			}
 			

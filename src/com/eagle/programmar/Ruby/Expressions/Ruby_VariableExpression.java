@@ -29,10 +29,10 @@ public class Ruby_VariableExpression extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression subscript = null;
-		if (variable.subscript != null && variable.subscript.isPresent())
-		{
-			subscript = transformer.transformExpression(generator, variable.subscript.expr);
-		}
+//		if (variable.subscript != null && variable.subscript.isPresent())
+//		{
+//			subscript = transformer.transformExpression(generator, variable.subscript.expr);
+//		}
 		return generator.newVariableExpression(variable.vars.first().getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
