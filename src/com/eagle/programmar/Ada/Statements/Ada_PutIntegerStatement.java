@@ -11,14 +11,19 @@ import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.programmar.Ada.Terminals.Ada_Punctuation;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Ada_PutIntegerStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ada_Keyword INTEGER_IO = new Ada_Keyword("Integer_IO");
 	public @S(20) PunctuationPeriod dot;
@@ -37,5 +42,14 @@ public class Ada_PutIntegerStatement extends TokenSequence implements EagleRunna
 	{
 		EagleValue result = interpreter.getEagleValue(expr);
 		System.out.print(result.toString());
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
+		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
+		return generator.newPrintStatement(fullExpr, newLine, this);
 	}
 }

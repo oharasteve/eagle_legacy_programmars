@@ -9,10 +9,16 @@ import com.eagle.programmar.Ada.Symbols.Ada_Identifier_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_WithUseStatement extends TokenSequence implements EagleRunnable
+public class Ada_WithUseStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
+
 {
 	public @S(10) Ada_Keyword WITH = new Ada_Keyword("with");
 	public @S(20) SeparatedList<Ada_Identifier_Reference, PunctuationPeriod> withs;
@@ -25,5 +31,12 @@ public class Ada_WithUseStatement extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Nothing to do here. Ignore the 'with' commands
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return null;		// Ignore these, for now
 	}
 }

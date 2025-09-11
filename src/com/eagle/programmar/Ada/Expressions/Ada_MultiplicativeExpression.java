@@ -68,16 +68,18 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (operator.toString())
+		String oper = operator.getWhich().toString();
+
+		switch (oper)
 		{
 		case "*":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
-		case "%":
+		case "mod":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
+			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 		}
 	}
 }

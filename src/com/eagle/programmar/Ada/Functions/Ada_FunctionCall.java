@@ -68,7 +68,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		Ada_FunctionParams params;
 		TokenList<Ada_Statement> stmts1;
-		TokenList<Ada_Statement> stmts2;
+		TokenList<Ada_Statement> statements;
 		CallMetrics callMetrics;
 		ArgumentsMetrics argumentsMetrics;
 
@@ -77,21 +77,21 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (fn instanceof Ada_Function)
 		{
 			func = (Ada_Function) fn;
-			params = func.params;
+			params = func.funcParamDefs;
 			callMetrics = func._callMetrics;
 			argumentsMetrics = func._argumentsMetrics;
-			stmts1 = func.stmts1;
-			stmts2 = func.stmts2;
+			stmts1 = func.statements1;
+			statements = func.statements2;
 			interpreter.tryToInterpret(func); // Doesn't do much, just set metrics
 		}
 		else if (fn instanceof Ada_Procedure)
 		{
 			proc = (Ada_Procedure) fn;
-			params = proc.params;
+			params = proc.procParamDefs;
 			callMetrics = proc._callMetrics;
 			argumentsMetrics = proc._argumentsMetrics;
-			stmts1 = proc.stmts1;
-			stmts2 = proc.stmts2;
+			stmts1 = proc.statements1;
+			statements = proc.statements2;
 			interpreter.tryToInterpret(proc); // Doesn't do much, just set metrics
 		}
 		else
@@ -156,7 +156,7 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		}
 		if (result == Eagle_Statement_Result.NORMAL)
 		{
-			for (Ada_Statement stmt : stmts2._elements)
+			for (Ada_Statement stmt : statements._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;

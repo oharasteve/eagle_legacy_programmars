@@ -18,7 +18,8 @@ import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
-public class VB_MidFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_MidFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @DOC("functions/string-functions") VB_Keyword MID = new VB_Keyword("MID");
 	public @S(20) PunctuationLeftParen leftParen;

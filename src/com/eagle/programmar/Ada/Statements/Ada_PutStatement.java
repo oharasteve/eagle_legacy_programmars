@@ -5,17 +5,24 @@ package com.eagle.programmar.Ada.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator1Metrics;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_PutStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Ada_PutStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @OPT Ada_Put_Unbounded_IO io;
 	public @S(20) Ada_KeywordChoice PUT = new Ada_KeywordChoice("put", "put_line");
@@ -30,13 +37,23 @@ public class Ada_PutStatement extends TokenSequence implements EagleRunnable, Ab
 		public @S(20) PunctuationPeriod dot;
 	}
 
+	private @SKIP Operator1Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new Operator1Metrics(interpreter._metrics, PUT, PUT.getValue());
+		}
+
 		String val = null;
 		if (expr != null && expr.isPresent())
 		{
-			val = interpreter.getStrValue(expr);
+			EagleValue value = interpreter.getEagleValue(expr);
+			String argType = value.typeName();
+			val = value.forceStringValue();
+			_metrics.operated(argType);
 		}
 		
 		switch (PUT.getValue().toLowerCase())
@@ -59,5 +76,15 @@ public class Ada_PutStatement extends TokenSequence implements EagleRunnable, Ab
 			return;
 		}
 		throw new RuntimeException("Unexpected PUT command: " + PUT.getValue());
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		// Oper1Types metric = transformer.findOperator1Metric(PUT);
+		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
+		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
+		return generator.newPrintStatement(fullExpr, newLine, this);
 	}
 }

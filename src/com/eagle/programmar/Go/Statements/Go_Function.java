@@ -37,7 +37,8 @@ import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
 public class Go_Function extends TokenSequence
-		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @DOC("#Function_declarations") Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;

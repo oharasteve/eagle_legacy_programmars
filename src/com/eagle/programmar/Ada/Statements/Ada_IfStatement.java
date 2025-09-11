@@ -13,10 +13,15 @@ import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Ada_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ada_Keyword IF = new Ada_Keyword("if");
 	public @S(20) Ada_Expression condition;
@@ -79,5 +84,39 @@ public class Ada_IfStatement extends TokenSequence implements EagleRunnableWithR
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		for (Ada_Statement thenStatement : thenStatements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt : stmts)
+				{
+					ifTrue.add(stmt);
+				}
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			for (Ada_Statement elseStatement : elseClause.elseStatements._elements)
+			{
+				for (AbstractStatement stmt : transformer.transformStatement(generator, elseStatement.getWhich()))
+				{
+					ifFalse.add(stmt);
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }
