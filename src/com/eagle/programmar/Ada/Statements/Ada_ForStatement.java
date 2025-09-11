@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -15,10 +17,17 @@ import com.eagle.programmar.Ada.Expressions.Ada_RangeExpression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Ada_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ada_Keyword FOR = new Ada_Keyword("for");
 	public @S(20) Ada_Variable var;
@@ -93,5 +102,57 @@ public class Ada_ForStatement extends TokenSequence implements EagleRunnableWith
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		boolean reversed = false;
+		if (REVERSE != null && REVERSE.isPresent())
+		{
+			reversed = true;
+		}
+		
+		if (!(values.getWhich() instanceof Ada_RangeExpression))
+		{
+			throw new RuntimeException("FOR statement requires a Range of values");
+		}
+		Ada_RangeExpression range = (Ada_RangeExpression) values.getWhich();
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+		AbstractExpression initExpr = null;
+		AbstractExpression termExpr = null;
+		AbstractExpression incrExpr = null;
+		
+		if (reversed)
+		{
+			initExpr = transformer.transformExpression(generator, range.right);
+			termExpr = transformer.transformExpression(generator, range.left);
+			incrExpr = generator.newNumberExpression("-1", null);
+			relOp = RelationalEnum.GREATER_EQUALS;
+		}
+		else
+		{
+			initExpr = transformer.transformExpression(generator, range.left);
+			termExpr = transformer.transformExpression(generator, range.right);
+		}
+
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		for (Ada_Statement statement : statements._elements)
+		{
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(
+					generator, statement.getWhich());
+			if (newStmts != null)
+			{
+				for (AbstractStatement stmt : newStmts)
+				{
+					actionList.add(stmt);
+				}
+			}
+		}
+		
+		AbstractVariable varName = generator.newVariable(var.vars.first().getValue());
+		return generator.newForRangeStatement(varName, null, initExpr,
+				relOp, termExpr, incrExpr, actionList, this);
 	}
 }

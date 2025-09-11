@@ -7,11 +7,15 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Ada_ExpressionStatement extends TokenSequence
-		implements EagleRunnable, AbstractStatement
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ada_Expression expr;
 	public @S(20) PunctuationSemicolon semicolon;
@@ -20,5 +24,13 @@ public class Ada_ExpressionStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(expr);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newExpressionStatement(newExpr, this);
 	}
 }

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Ada.Statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -12,10 +15,15 @@ import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_WhileStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Ada_WhileStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ada_Keyword WHILE = new Ada_Keyword("while");
 	public @S(20) Ada_Expression condition;
@@ -68,5 +76,25 @@ public class Ada_WhileStatement extends TokenSequence implements EagleRunnableWi
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		for (Ada_Statement statement : statements._elements)
+		{
+			Collection<AbstractStatement> newStmts =
+					transformer.transformStatement(generator, statement.getWhich());
+			for (AbstractStatement stmt : newStmts)
+			{
+				whileTrue.add(stmt);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

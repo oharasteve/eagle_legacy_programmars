@@ -15,6 +15,7 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Variable;
+import com.eagle.programmar.Ada.Functions.Ada_FunctionCall.Ada_FunctionArg.Ada_FunctionSetArg;
 import com.eagle.programmar.Ada.Statements.Ada_Function;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_Parameter;
@@ -28,11 +29,17 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Ada_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Ada_Variable functionName;
 	public @S(20) @OPT Ada_Punctuation question = new Ada_Punctuation("?");
@@ -171,5 +178,39 @@ public class Ada_FunctionCall extends PrimaryOperator implements EagleRunnable
 		// Now remove all those parameters
 		if (func != null) interpreter.completedFunction(name, func);
 		if (proc != null) interpreter.completedFunction(name, proc);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = argList.arguments.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Ada_FunctionArg fnArg = argList.arguments.getPrimaryElement(i);
+			AbstractToken which = fnArg.getWhich();
+			if (which instanceof Ada_Expression)
+			{
+				Ada_Expression expr = (Ada_Expression) which;
+				AbstractExpression newArg = transformer.transformExpression(generator, expr);
+				args.add(newArg);
+			}
+			else if (which instanceof Ada_FunctionSetArg)
+			{
+				Ada_FunctionSetArg arg = (Ada_FunctionSetArg) which;
+				AbstractExpression newArg = generator.newVariableExpression(
+						arg.id.getValue(), null, null, arg);
+				args.add(newArg);
+			}
+			else
+			{
+				throw new RuntimeException("Unable to handle arg: " + which);
+			}
+		}
+
+		String name = functionName.vars.first().getValue();
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, functionName);
 	}
 }
