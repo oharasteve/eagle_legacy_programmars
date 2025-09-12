@@ -84,10 +84,6 @@ public class Ada_Assignment extends TokenSequence
 		}
 
 		AbstractExpression subscrExpr = null;
-		if (variable.subscript != null && variable.subscript.isPresent())
-		{
-			subscrExpr = transformer.transformExpression(generator, variable.subscript.expr);
-		}
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.vars.first().getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);

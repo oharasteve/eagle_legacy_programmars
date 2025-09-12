@@ -100,9 +100,18 @@ public class Ada_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		TypeEnum metricRetType = transformer.findReturnMetric(id);
-		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
+		AbstractType newReturnType = null;
+		if (returns != null && returns.isPresent())
+		{
+			newReturnType = returns.type.convertType(generator);
+		}
 		
+		if (newReturnType == null)
+		{
+			TypeEnum metricRetType = transformer.findReturnMetric(id);
+			newReturnType = generator.transformType(metricRetType, null, id);
+		}
+
 		String fnName = id.getValue();
 
 		generator.addMethod(newReturnType, fnName, this);

@@ -15,7 +15,6 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Variable;
-import com.eagle.programmar.Ada.Functions.Ada_FunctionCall.Ada_FunctionArg.Ada_FunctionSetArg;
 import com.eagle.programmar.Ada.Statements.Ada_Function;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_Parameter;
@@ -35,6 +34,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -56,7 +56,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 	{
 		public @CHOICE Ada_Expression XXexpr;
 
-		public @CHOICE static class Ada_FunctionSetArg extends TokenSequence
+		public @FIRST static class Ada_FunctionSetArg extends TokenSequence
 		{
 			public @S(10) Ada_Identifier_Reference id;
 			public @S(20) Ada_Punctuation arrow = new Ada_Punctuation("=>");
@@ -71,7 +71,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 		String name = id.getValue();
 
 		// Have to search for the FUNCTION definition
-		AbstractFunction fn = interpreter.findFunction(id.getValue());
+		AbstractFunction fn = interpreter.findFunction(name);
 
 		Ada_FunctionParams params;
 		TokenList<Ada_Statement> stmts1;
@@ -184,33 +184,49 @@ public class Ada_FunctionCall extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		Ada_Identifier_Reference id = functionName.vars.first();
+		String name = id.getValue();
 		int argCount = argList.arguments.getPrimaryCount();
-		for (int i = 0; i < argCount; i++)
+
+		// Have to search for the FUNCTION definition
+		boolean anyCalls = transformer.findCallTo(name);
+		if (anyCalls || argCount == 0 || argCount > 1)
 		{
-			Ada_FunctionArg fnArg = argList.arguments.getPrimaryElement(i);
-			AbstractToken which = fnArg.getWhich();
-			if (which instanceof Ada_Expression)
+			// There is a function or procedure with this name
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			for (int i = 0; i < argCount; i++)
 			{
-				Ada_Expression expr = (Ada_Expression) which;
-				AbstractExpression newArg = transformer.transformExpression(generator, expr);
-				args.add(newArg);
+				Ada_FunctionArg fnArg = argList.arguments.getPrimaryElement(i);
+				AbstractToken which = fnArg.getWhich();
+				if (which instanceof Ada_Expression)
+				{
+					Ada_Expression expr = (Ada_Expression) which;
+					AbstractExpression newArg = transformer.transformExpression(generator, expr);
+					args.add(newArg);
+				}
+				else
+				{
+					throw new RuntimeException("Unable to handle arg: " + which);
+				}
 			}
-			else if (which instanceof Ada_FunctionSetArg)
+	
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, functionName);
+		}
+		
+		// Hopefully, it is an array with a subscript
+		if (argCount == 1)
+		{
+			Ada_FunctionArg arg = argList.arguments.first();
+			if (arg.getWhich() instanceof Ada_Expression)
 			{
-				Ada_FunctionSetArg arg = (Ada_FunctionSetArg) which;
-				AbstractExpression newArg = generator.newVariableExpression(
-						arg.id.getValue(), null, null, arg);
-				args.add(newArg);
-			}
-			else
-			{
-				throw new RuntimeException("Unable to handle arg: " + which);
+				AbstractExpression subscr = transformer.transformExpression(
+						generator, (Ada_Expression) arg.getWhich());
+				return generator.newVariableExpression(name,
+						SubscriptEnum.FIRST_IS_ONE, subscr, this);
 			}
 		}
-
-		String name = functionName.vars.first().getValue();
-		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, functionName);
+		
+		throw new RuntimeException("Unable to handle " + name);
 	}
 }
