@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Ada;
 
-import java.util.Collection;
-
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -14,7 +12,6 @@ import com.eagle.programmar.Ada.Terminals.Ada_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
@@ -94,46 +91,24 @@ public class Ada_Program extends AbstractLanguage
 		for (Ada_Element elt : elements._elements)
 		{
 			AbstractToken whichElt = elt.getWhich();
-			if (whichElt instanceof Ada_Comment)
-			{
-				// Ignore comments for now
-			}
-			else if (whichElt instanceof Ada_Statement)
+			if (whichElt instanceof Ada_Statement)
 			{
 				Ada_Statement stmt = (Ada_Statement) whichElt;
 				AbstractToken whichStmt = stmt.getWhich();
-				if (whichStmt instanceof Ada_Function)
+				if (whichStmt instanceof Ada_Procedure)
 				{
-					Ada_Function func = (Ada_Function) whichStmt;
-					func.transformFunction(transformer, generator);
-				}
-				else if (whichStmt instanceof Ada_Procedure)
-				{
+					// Main procedure, skip headers and such.
+					// Just transform all the data & funcs & procs inside the main proc
 					Ada_Procedure proc = (Ada_Procedure) whichStmt;
-					proc.transformFunction(transformer, generator);
-				}
-				else	// Other statements
-				{
-					Collection<AbstractStatement> newStmts = transformer.transformStatement(
-							generator, whichStmt);
-					if (newStmts != null)
-					{
-						for (AbstractStatement newStmt : newStmts)
-						{
-							generator.addStatement(newStmt, elt);
-						}
-					}
+					proc.transformBody(transformer, generator);
 				}
 			}
 			else
 			{
-				throw new RuntimeException("Unable to handle " + whichElt);
+				// Ignore Comments and 'with' statementsOS
 			}
 		}
 		
-		// Not needed for C# or Java, but Python needs this
-		generator.addCallToMain();
-
 		return generator.getTransfomedProgram();
 	}
 }

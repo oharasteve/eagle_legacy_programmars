@@ -99,7 +99,7 @@ public class Java_Generator
 	@Override
 	public void addCallToMain()
 	{
-		// Don't ever need this
+		// Don't ever need this in Java
 	}
 
 	@Override

@@ -97,7 +97,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	@Override
 	public void addCallToMain()
 	{
-		// Don't ever need this
+		// Don't ever need this in C#
 	}
 
 	@Override

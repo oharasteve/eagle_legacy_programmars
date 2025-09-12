@@ -134,6 +134,13 @@ public class Ada_Procedure extends TokenSequence
 			}
 		}
 
+		transformBody(transformer, generator);
+		
+		generator.doneMethod();
+	}
+	
+	public void transformBody(EagleTransformer transformer, EagleGenerator generator)
+	{
 		for (Ada_Statement stmt1 : statements1._elements)
 		{
 			AbstractToken which1 = stmt1.getWhich();
@@ -172,7 +179,5 @@ public class Ada_Procedure extends TokenSequence
 				}
 			}
 		}
-		
-		generator.doneMethod();
 	}
 }
