@@ -9,10 +9,15 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Ada_ReturnStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Ada_ReturnStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
 	public @S(20) Ada_Expression expr;
@@ -24,5 +29,17 @@ public class Ada_ReturnStatement extends TokenSequence implements EagleRunnableW
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression retExpr = null;
+		if (expr != null && expr.isPresent())
+		{
+			retExpr = transformer.transformExpression(generator, expr);
+		}
+		return generator.newReturnStatement(retExpr, this);
 	}
 }

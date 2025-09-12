@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Ada.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -50,7 +52,21 @@ public class Ada_ParenthesizedExpression extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
-		return generator.newParenthesizedExpression(theExpr, this);
+		int numElts = expressions.getPrimaryCount();
+		if (numElts == 1)
+		{
+			AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
+			return generator.newParenthesizedExpression(theExpr, this);
+		}
+		
+		// Must be an array of values
+		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+		for (int i = 0; i < numElts; i++)
+		{
+			Ada_Expression expr = expressions.getPrimaryElement(i);
+			AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+			exprs.add(newExpr);
+		}
+		return generator.newArrayExpression(exprs, this);
 	}
 }

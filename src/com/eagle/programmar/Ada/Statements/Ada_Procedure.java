@@ -28,9 +28,9 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Ada_Procedure extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
@@ -75,13 +75,13 @@ public class Ada_Procedure extends TokenSequence
 		// ideone.com wants it named "test" for some reason
 		if (id.getValue().equals("main") || id.getValue().equals("test"))
 		{
-			for (Ada_Statement stmt : statements1._elements)
+			for (Ada_Statement stmt1 : statements1._elements)
 			{
-				interpreter.tryToInterpret(stmt);
+				interpreter.tryToInterpret(stmt1);
 			}
-			for (Ada_Statement stmt : statements2._elements)
+			for (Ada_Statement stmt2 : statements2._elements)
 			{
-				interpreter.tryToInterpret(stmt);
+				interpreter.tryToInterpret(stmt2);
 			}
 		}
 	}
@@ -134,31 +134,41 @@ public class Ada_Procedure extends TokenSequence
 			}
 		}
 
-		for (Ada_Statement stmt : statements1._elements)
+		for (Ada_Statement stmt1 : statements1._elements)
 		{
-			AbstractToken which = stmt.getWhich();
-			if (which instanceof Ada_Data)
+			AbstractToken which1 = stmt1.getWhich();
+			if (which1 instanceof Ada_Function)
 			{
-				Ada_Data data = (Ada_Data) which;
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, data);
-				if (newStmts != null)
+				Ada_Function func = (Ada_Function) which1;
+				func.transformFunction(transformer, generator);
+			}
+			else if (which1 instanceof Ada_Procedure)
+			{
+				Ada_Procedure proc = (Ada_Procedure) which1;
+				proc.transformFunction(transformer, generator);
+			}
+			else	// Other statements
+			{
+				Collection<AbstractStatement> newStmts1 = transformer.transformStatement(generator, which1);
+				if (newStmts1 != null)
 				{
-					for (AbstractStatement newStmt : newStmts)
+					for (AbstractStatement newStmt1 : newStmts1)
 					{
-						generator.addStatement(newStmt, data);
+						generator.addStatement(newStmt1, which1);
 					}
 				}
 			}
 		}
 		
-		for (Ada_Statement stmt : statements2._elements)
+		for (Ada_Statement stmt2 : statements2._elements)
 		{
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-			if (newStmts != null)
+			AbstractToken which2 = stmt2.getWhich();
+			Collection<AbstractStatement> newStmts2 = transformer.transformStatement(generator, which2);
+			if (newStmts2 != null)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				for (AbstractStatement newStmt2 : newStmts2)
 				{
-					generator.addStatement(newStmt, stmt.getWhich());
+					generator.addStatement(newStmt2, which2);
 				}
 			}
 		}

@@ -107,7 +107,7 @@ public class Ada_Program extends AbstractLanguage
 					Ada_Function func = (Ada_Function) whichStmt;
 					func.transformFunction(transformer, generator);
 				}
-				else if (stmt.getWhich() instanceof Ada_Procedure)
+				else if (whichStmt instanceof Ada_Procedure)
 				{
 					Ada_Procedure proc = (Ada_Procedure) whichStmt;
 					proc.transformFunction(transformer, generator);

@@ -136,6 +136,7 @@ public class Java_Generator
 	
 	private Java_Class _currentClass = null;
 	private Java_Method _currentMethod = null;
+	private Java_Method _previousMethod = null;
 
 	private void checkClass()
 	{
@@ -169,6 +170,7 @@ public class Java_Generator
 	{
 		checkClass();
 
+		_previousMethod = _currentMethod;
 		_currentMethod = new Java_Method();
 		_currentMethod.newJavaMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
 				returnType, name);
@@ -185,7 +187,7 @@ public class Java_Generator
 	@Override
 	public void doneMethod()
 	{
-		_currentMethod = null;
+		_currentMethod = _previousMethod;
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import com.eagle.programmar.Ada.Expressions.Ada_RangeExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_RelationalExpression;
 import com.eagle.programmar.Ada.Expressions.Ada_Subfield;
 import com.eagle.programmar.Ada.Expressions.Ada_VariableExpression;
-import com.eagle.programmar.Ada.Functions.Ada_AppendFunction;
 import com.eagle.programmar.Ada.Functions.Ada_FunctionCall;
 import com.eagle.programmar.Ada.Functions.Ada_LengthFunction;
 import com.eagle.programmar.Ada.Functions.Ada_SliceFunction;
@@ -60,19 +59,18 @@ public class Ada_Expression extends PrecedenceChooser implements AbstractExpress
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Ada_AppendFunction appendFunction;
-	public @P(110) Ada_SliceFunction sliceFunction;
-	public @P(120) Ada_LengthFunction lengthFunction;
-	public @P(130) Ada_UnboundFunction builtinFunction;
-	public @P(140) Ada_FunctionCall functionCall;
-	public @P(150) Ada_PreIncrementExpression preIncrementExpression;
-	public @P(160) Ada_PostIncrementExpression postIncrementExpression;
-	public @P(170) Ada_NegativeExpression negativeExpression;
-	public @P(180) Ada_LogicalNotExpression logicalNotExpression;
-	public @P(190) Ada_BuiltIn builtIn;
-	public @P(200) Ada_VariableExpression variableExpression;
-	public @P(210) Ada_BracketsExpression bracketsExpression;
-	public @P(220) Ada_ParenthesizedExpression parenthesizedExpression;
+	public @P(100) Ada_SliceFunction sliceFunction;
+	public @P(110) Ada_LengthFunction lengthFunction;
+	public @P(120) Ada_UnboundFunction builtinFunction;
+	public @P(130) Ada_FunctionCall functionCall;
+	public @P(140) Ada_PreIncrementExpression preIncrementExpression;
+	public @P(150) Ada_PostIncrementExpression postIncrementExpression;
+	public @P(160) Ada_NegativeExpression negativeExpression;
+	public @P(170) Ada_LogicalNotExpression logicalNotExpression;
+	public @P(180) Ada_BuiltIn builtIn;
+	public @P(190) Ada_VariableExpression variableExpression;
+	public @P(200) Ada_BracketsExpression bracketsExpression;
+	public @P(210) Ada_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

@@ -136,26 +136,26 @@ public class Ada_Function extends TokenSequence
 			}
 		}
 
-		for (Ada_Statement stmt : statements1._elements)
+		for (Ada_Statement stmt1 : statements1._elements)
 		{
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-			if (newStmts != null)
+			Collection<AbstractStatement> newStmts1 = transformer.transformStatement(generator, stmt1.getWhich());
+			if (newStmts1 != null)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				for (AbstractStatement newStmt1 : newStmts1)
 				{
-					generator.addStatement(newStmt, stmt.getWhich());
+					generator.addStatement(newStmt1, stmt1.getWhich());
 				}
 			}
 		}
 		
-		for (Ada_Statement stmt : statements2._elements)
+		for (Ada_Statement stmt2 : statements2._elements)
 		{
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-			if (newStmts != null)
+			Collection<AbstractStatement> newStmts2 = transformer.transformStatement(generator, stmt2.getWhich());
+			if (newStmts2 != null)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				for (AbstractStatement newStmt2 : newStmts2)
 				{
-					generator.addStatement(newStmt, stmt.getWhich());
+					generator.addStatement(newStmt2, stmt2.getWhich());
 				}
 			}
 		}

@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Ada;
 
+import com.eagle.programmar.Ada.Statements.Ada_AppendStatement;
 import com.eagle.programmar.Ada.Statements.Ada_Assignment;
 import com.eagle.programmar.Ada.Statements.Ada_Data;
 import com.eagle.programmar.Ada.Statements.Ada_ExitStatement;
@@ -21,6 +22,7 @@ import com.eagle.tokens.TokenChooser;
 
 public class Ada_Statement extends TokenChooser
 {
+	public @CHOICE Ada_AppendStatement XXappendStatement;
 	public @CHOICE Ada_Assignment XXassignment;
 	public @CHOICE Ada_ExitStatement XXbreakStatement;
 	public @CHOICE Ada_Comment XXcomment;

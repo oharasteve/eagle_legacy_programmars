@@ -34,6 +34,6 @@ public class Ada_VariableExpression extends PrimaryOperator
 			subscr = transformer.transformExpression(generator, variable.subscript.expr);
 		}
 		return generator.newVariableExpression(variable.vars.first().getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
+				SubscriptEnum.FIRST_IS_ONE, subscr, this);
 	}
 }
