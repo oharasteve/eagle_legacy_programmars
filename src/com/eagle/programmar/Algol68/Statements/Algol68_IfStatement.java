@@ -13,10 +13,15 @@ import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_IfStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Algol68_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Algol68_Keyword IF = new Algol68_Keyword("IF");
 	public @S(20) Algol68_Expression condition;
@@ -116,5 +121,39 @@ public class Algol68_IfStatement extends TokenSequence implements EagleRunnableW
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		for (Algol68_Statement thenStatement : thenStatements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt : stmts)
+				{
+					ifTrue.add(stmt);
+				}
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			for (Algol68_Statement elseStatement : elseClause.elseStatements._elements)
+			{
+				for (AbstractStatement stmt : transformer.transformStatement(generator, elseStatement.getWhich()))
+				{
+					ifFalse.add(stmt);
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

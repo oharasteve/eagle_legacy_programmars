@@ -11,12 +11,19 @@ import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Variable_Definition;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_Data extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Algol68_Data extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Algol68_Type type;
 	public @S(20) SeparatedList<Algol68_Variable_Definition, PunctuationComma> ids;
@@ -39,4 +46,24 @@ public class Algol68_Data extends TokenSequence implements EagleRunnable, Abstra
 			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// See if the Definition has some assignments in the metrics file
+		Algol68_Variable_Definition var = ids.first();
+		TypeEnum typ = transformer.findAssignMetric(var);
+		AbstractType newType = generator.transformType(typ, null, null);
+		
+		AbstractExpression initial = null;
+		if (init != null && init.isPresent())
+		{
+			initial = transformer.transformExpression(generator, init.value);
+		}
+		
+		String name = var.getValue();
+		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+		return stmt;
+	}
+
 }

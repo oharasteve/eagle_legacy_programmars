@@ -13,25 +13,32 @@ import com.eagle.programmar.Algol68.Algol68_Variable;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Identifier_Reference;
 import com.eagle.programmar.Algol68.Terminals.Algol68_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Algol68_Assignment extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @OPT Algol68_Type type;
 	public @S(20) Algol68_Variable var;
-	public @S(30) Algol68_PunctuationChoice equals = new Algol68_PunctuationChoice("=", "+=", ":=", "+:=");
-	public @S(40) Algol68_Expression value;
+	public @S(30) Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("=", "+=", ":=", "+:=");
+	public @S(40) Algol68_Expression expression;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(value);
+		EagleValue val = interpreter.getEagleValue(expression);
 		Algol68_Identifier_Reference id = var.vars.first();
 		
 		EagleValue v;
-		switch (equals.getValue())
+		switch (operator.getValue())
 		{
 		case "=", ":=":
 			v = val;
@@ -41,9 +48,36 @@ public class Algol68_Assignment extends TokenSequence implements EagleRunnable, 
 			v = new EagleInteger(var1.forceIntegerValue() + val.forceIntegerValue());
 			break;
 		default:
-			throw new RuntimeException("Unable to handle " + equals.getValue());
+			throw new RuntimeException("Unable to handle " + operator.getValue());
 		}
 
 		interpreter.setSymbol(var, id.getValue(), v);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=", ":=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=", "+:=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		AbstractExpression value = transformer.transformExpression(generator, expression);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, null, asg, value, this);
+		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
+		return exprStmt;
 	}
 }

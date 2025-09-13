@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Algol68.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -20,14 +22,21 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_Procedure extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
+public class Algol68_Procedure extends TokenSequence
+		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) Algol68_Keyword PROCEDURE = new Algol68_Keyword("PROC");
 	public @S(20) Algol68_Procedure_Definition id;
@@ -83,5 +92,52 @@ public class Algol68_Procedure extends TokenSequence implements EagleRunnable, A
 		}
 		
 		// Nothing to do here -- just defining the procedure
+	}
+	
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractType newReturnType = null;
+		if (returns != null && returns.isPresent())
+		{
+			newReturnType = Algol68_Type.findType(generator, returns.type);
+		}
+
+		String newName = id.getValue();
+		if (newName.equals("main"))
+		{
+			newName = generator.mainName();
+		}
+		generator.addMethod(newReturnType, newName, this);
+		generator.addMethodName(id.getValue());
+		if (VERBOSE)
+		{
+			System.out.println("** Found Algol68 function " + id.getValue());
+		}
+		
+		if (params != null && params.isPresent())
+		{
+			int nParams = params.parameters.getPrimaryCount();
+			for (int i = 0; i < nParams; i++)
+			{
+				Algol68_Parameter param = params.parameters.getPrimaryElement(i);
+				AbstractType paramType = Algol68_Type.findType(generator, param.type);
+				generator.addMethodParameter(paramType, param.param.getValue());
+			}
+		}
+		
+		for (Algol68_Statement stmt : statements._elements)
+		{
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt);
+			if (newStmts != null)
+			{
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt, statements);
+				}
+			}
+		}
+		
+		generator.doneMethod();
 	}
 }

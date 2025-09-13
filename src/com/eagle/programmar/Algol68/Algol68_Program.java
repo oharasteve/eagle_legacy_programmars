@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Algol68;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -12,11 +14,16 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_Program extends AbstractLanguage implements EagleRunnable
+public class Algol68_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String ALGOL68 = "Algol68";
 
@@ -38,18 +45,18 @@ public class Algol68_Program extends AbstractLanguage implements EagleRunnable
 		return "https://jmvdveer.home.xs4all.nl/learning-algol-68-genie.pdf";
 	}
 
-	public @S(10) TokenList<Algol68_Element> elements;
+	public @S(10) TokenList<Algol68_TopElement> elements;
 
 	public static class Algol68_Main extends TokenSequence
 	{
 		public @S(10) Algol68_Keyword MAIN = new Algol68_Keyword("MAIN");
 		public @S(20) PunctuationColon colon;
 		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) TokenList<Algol68_Element> elements;
+		public @S(40) TokenList<Algol68_Statement> statements;
 		public @S(50) PunctuationRightParen rightParen;
 	}
 
-	public static class Algol68_Element extends TokenChooser
+	public static class Algol68_TopElement extends TokenChooser
 	{
 		public @CHOICE Algol68_Statement XXstatement;
 		public @CHOICE Algol68_Main XXmain;
@@ -58,8 +65,8 @@ public class Algol68_Program extends AbstractLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// First pass, just collect all the FUNCTION definitions
-		for (Algol68_Element element : elements._elements)
+		// First pass, just collect all the Procedure definitions
+		for (Algol68_TopElement element : elements._elements)
 		{
 			AbstractToken which = element.getWhich();
 			if (which instanceof Algol68_Statement)
@@ -74,22 +81,69 @@ public class Algol68_Program extends AbstractLanguage implements EagleRunnable
 		}
 
 		// Second pass, execute the program
-		for (Algol68_Element element : elements._elements)
+		for (Algol68_TopElement element : elements._elements)
 		{
 			AbstractToken which = element.getWhich();
 			if (which instanceof Algol68_Main)
 			{
 				Algol68_Main main = (Algol68_Main) which;
-				for (Algol68_Element elt : main.elements._elements)
+				for (Algol68_Statement stmt1 : main.statements._elements)
 				{
-					interpreter.tryToInterpret(elt);
+					interpreter.tryToInterpret(stmt1);
 				}
 			}
 			else if (which instanceof Algol68_Statement)
 			{
-				Algol68_Statement stmt = (Algol68_Statement) which;
-				interpreter.tryToInterpret(stmt);
+				Algol68_Statement stmt2 = (Algol68_Statement) which;
+				interpreter.tryToInterpret(stmt2);
 			}
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		for (Algol68_TopElement elt : elements._elements)
+		{
+			AbstractToken whichElt = elt.getWhich();
+			if (whichElt instanceof Algol68_Main)
+			{
+				Algol68_Main main = (Algol68_Main) whichElt;
+				for (Algol68_Statement stmt : main.statements._elements)
+				{
+					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator,
+							stmt.getWhich());
+					if (newStmts != null)
+					{
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmt);
+						}
+					}
+				}
+			}
+			else if (whichElt instanceof Algol68_Statement)
+			{
+				Algol68_Statement stmt = (Algol68_Statement) whichElt;
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator,
+						stmt.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
+				}
+			}
+			else
+			{
+				throw new RuntimeException("Unable to handle: " + whichElt);
+			}
+		}
+		
+		// Not needed for C# or Java, but Python needs this
+		generator.addCallToMain();
+		
+		return generator.getTransfomedProgram();
 	}
 }

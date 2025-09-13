@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Scala.Scala_Statement;
+import com.eagle.programmar.Scala.Scala_Syntax;
 import com.eagle.programmar.Scala.Terminals.Scala_EOLN;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
@@ -31,7 +31,7 @@ public class Scala_BlockStatement extends TokenSequence
 	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) @OPT Scala_EOLN eoln2;
 
-	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
+	private @SKIP EagleScope _scope = new EagleScope(this, Scala_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
 	public EagleScope getScope()
