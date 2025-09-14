@@ -57,8 +57,27 @@ public class Algol68_PrintfStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		String fmt;							// ??????????????????? TBD ??????????????????????
-		AbstractExpression line = null;		// ??????????????????? TBD ??????????????????????
+		String fmt = format.getValue();
+		int width;
+		switch (fmt)
+		{
+		case "$d$":
+			width = 1;
+			break;
+		case "$dd$":
+			width = 2;
+			break;
+		case "$ddd$":
+			width = 3;
+			break;
+		case "$dddd$":
+			width = 4;
+			break;
+		default:
+			throw new RuntimeException("Unable to printf " + expr + " using " + fmt);
+		}
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		AbstractExpression line = generator.newFormatNumber(newExpr, width);
 		return generator.newPrintStatement(line, false, this);
 	}
 }

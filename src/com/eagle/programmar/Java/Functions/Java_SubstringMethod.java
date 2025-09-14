@@ -139,7 +139,7 @@ public class Java_SubstringMethod extends PrecedenceOperator implements EagleRun
 			Java_LengthMethod lenFn = new Java_LengthMethod();
 			minFn.expressions.addPrimaryElement(lenFn.generateLength((Java_Expression) theExpr, source));
 			
-			Java_MathFunction mathFn = Java_MathFunction.wrapFunction(minFn, source);
+			Java_MathFunction mathFn = Java_MathFunction.wrapMathFunction(minFn, source);
 			expr.ecExpr = Java_Generator.wrapExpression(mathFn);
 			expr.ecExpr.setPresent(true);
 		}

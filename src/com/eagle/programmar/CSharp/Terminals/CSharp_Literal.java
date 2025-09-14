@@ -5,6 +5,8 @@ package com.eagle.programmar.CSharp.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
@@ -52,5 +54,11 @@ public class CSharp_Literal extends TerminalLiteralToken
 		this.setValue(val);
 		this.setTransformationSource(source);
 		return this;
+	}
+
+	public static CSharp_Expression generateLiteralExpression(String value, AbstractToken source)
+	{
+		CSharp_Literal lit = new CSharp_Literal();
+		return CSharp_Generator.wrapExpression(lit.generateLiteral(value, source));
 	}
 }

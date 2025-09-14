@@ -40,6 +40,6 @@ public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
 		pow.power = (Java_Expression) power;
 		pow.rightParen = new PunctuationRightParen();
 		pow.setTransformationSource(source);
-		return Java_MathFunction.wrapFunction(pow, source);
+		return Java_MathFunction.wrapMathFunction(pow, source);
 	}
 }

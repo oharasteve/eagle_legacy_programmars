@@ -51,6 +51,7 @@ import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
+import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -654,6 +655,15 @@ public class Java_Generator
 		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 	
+	@Override
+	public AbstractExpression newFormatNumber(AbstractExpression expr, int width)
+	{
+		String fmt = "%" + width + "d";
+		// String.format("%5d", number);
+//		String fmt = "f'{{" + expr + "}:>{" + width + "}}'";
+//		return Java_Literal.generateLiteralExpression(fmt, null);
+	}
+
 	// ================ Terminals ================
 
 	@Override

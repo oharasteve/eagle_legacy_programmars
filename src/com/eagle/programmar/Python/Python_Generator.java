@@ -633,6 +633,13 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		return indexFn.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
+	@Override
+	public AbstractExpression newFormatNumber(AbstractExpression expr, int width)
+	{
+		String fmt = "f'{" + expr + ":{" + width + "}}'";
+		return Python_Literal.generateLiteralExpression(fmt, null);
+	}
+
 	// ================ Terminals ================
 
 	@Override

@@ -4,6 +4,8 @@
 package com.eagle.programmar.Java.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
@@ -31,5 +33,11 @@ public class Java_Literal extends TerminalLiteralToken
 		this.setValue(val);
 		this.setTransformationSource(source);
 		return this;
+	}
+
+	public static Java_Expression generateLiteralExpression(String value, AbstractToken source)
+	{
+		Java_Literal lit = new Java_Literal();
+		return Java_Generator.wrapExpression(lit.generateLiteral(value, source));
 	}
 }

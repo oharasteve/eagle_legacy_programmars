@@ -636,6 +636,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
+	@Override
+	public AbstractExpression newFormatNumber(AbstractExpression expr, int width)
+	{
+//		String fmt = "f'{{" + expr + "}:>{" + width + "}}'";
+//		return CSharp_Literal.generateLiteralExpression(fmt, null);
+	}
+	
 	// ================ Terminals ================
 
 	@Override
