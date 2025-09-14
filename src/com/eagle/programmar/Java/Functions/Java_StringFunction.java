@@ -5,6 +5,8 @@ package com.eagle.programmar.Java.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -21,20 +23,21 @@ public class Java_StringFunction extends PrimaryOperator implements EagleRunnabl
 	{
 		public @CHOICE Java_StringFormatFunc XXstringFormatFunction;
 	}
-	
-	public static Java_StringFunction wrapStringFunction(AbstractToken choice, AbstractToken source)
+		
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.tryToInterpret(choice);
+	}
+
+	public static Java_Expression wrapStringFunction(AbstractToken choice,
+			AbstractToken source)
 	{
 		Java_StringFunction func = new Java_StringFunction();
 		func.dot = new PunctuationPeriod();
 		func.choice = new Java_StringChoice();
 		func.choice.setWhich(choice);
 		func.setTransformationSource(source);
-		return func;
-	}
-	
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		interpreter.tryToInterpret(choice);
+		return Java_Generator.wrapExpression(func);
 	}
 }

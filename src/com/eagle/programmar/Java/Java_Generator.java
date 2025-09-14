@@ -10,6 +10,7 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
+import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
@@ -656,10 +657,12 @@ public class Java_Generator
 	}
 	
 	@Override
-	public Java_Expression newFormatNumber(Java_Expression expr, Java_Expression fmt)
+	public Java_Expression newFormatNumber(Java_Expression expr, int length,
+			AbstractToken source)
 	{
+		Java_Expression fmt = newLiteralExpression("%" + length + "d", null);
 		Java_StringFormatFunc func = new Java_StringFormatFunc();
-		return func.generateStringFormat(expr, fmt);
+		return func.generateStringFormat(expr, fmt, source);
 	}
 
 	// ================ Terminals ================

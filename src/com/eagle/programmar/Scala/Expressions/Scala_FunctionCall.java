@@ -121,7 +121,7 @@ public class Scala_FunctionCall extends PrimaryOperator
 			return generator.newMethodInvocation(var, args, methodName);
 		}
 
-		// Dang. Scale uses () for both arrays and function calls
+		// Dang. Scala uses () for both arrays and function calls
 		// It is not a function, so must be an array
 		AbstractExpression index = transformer.transformExpression(generator,
 				argList.first());

@@ -77,8 +77,7 @@ public class Algol68_PrintfStatement extends TokenSequence
 			throw new RuntimeException("Unable to printf " + expr + " using " + fmt);
 		}
 		AbstractExpression numExpr = transformer.transformExpression(generator, expr);
-		AbstractExpression fmtExpr = generator.newLiteralExpression("%" + width + "d", null);
-		AbstractExpression line = generator.newFormatNumber(numExpr, fmtExpr);
+		AbstractExpression line = generator.newFormatNumber(numExpr, width, this);
 		return generator.newPrintStatement(line, false, this);
 	}
 }

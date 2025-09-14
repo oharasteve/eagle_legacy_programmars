@@ -22,15 +22,21 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunnable
+public class Algol68_ProcedureCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Algol68_Variable procName;
 	public @S(20) @OPT Algol68_Punctuation question = new Algol68_Punctuation("?");
-	public @S(30) Algol68_FunctionArguments args;
+	public @S(30) Algol68_FunctionArguments argList;
 
 	public static class Algol68_FunctionArguments extends TokenSequence
 	{
@@ -66,7 +72,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		Algol68_Procedure proc = (Algol68_Procedure) fn;
 
 		// Make sure the function args match up
-		int argCount = args.arguments.getPrimaryCount();
+		int argCount = argList.arguments.getPrimaryCount();
 		int paramCount = proc.params.parameters.getPrimaryCount();
 		if (argCount != paramCount)
 		{
@@ -78,7 +84,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			Algol68_FunctionArg arg = args.arguments.getPrimaryElement(i);
+			Algol68_FunctionArg arg = argList.arguments.getPrimaryElement(i);
 			Algol68_Parameter param = proc.params.parameters.getPrimaryElement(i);
 			AbstractToken which = arg.getWhich();
 			if (which instanceof Algol68_Expression)
@@ -110,5 +116,28 @@ public class Algol68_ProcedureCall extends PrimaryOperator implements EagleRunna
 		// Now remove all those parameters
 		interpreter.completedFunction(name, proc);
 	}
-}
 
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = argList.arguments.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Algol68_FunctionArg arg = argList.arguments.getPrimaryElement(i);
+			if (! (arg.getWhich() instanceof Algol68_Expression))
+			{
+				throw new RuntimeException("Unable to handle: " + arg);
+			}
+			Algol68_Expression expr = (Algol68_Expression) arg.getWhich();
+			AbstractExpression newArg = transformer.transformExpression(generator, expr);
+			args.add(newArg);
+		}
+
+		Algol68_Identifier_Reference id = procName.vars.first();
+		String name = id.getValue();
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, procName);
+	}
+}

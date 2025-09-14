@@ -634,10 +634,12 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_Expression newFormatNumber(Python_Expression expr, Python_Expression fmt)
+	public Python_Expression newFormatNumber(Python_Expression expr, int length,
+			AbstractToken source)
 	{
+		Python_Expression fmt = newLiteralExpression("%" + length + "d", null);
 		Python_Multiplicative_Expression mult = new Python_Multiplicative_Expression();
-		return mult.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, null);
+		return mult.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, source);
 	}
 
 	// ================ Terminals ================

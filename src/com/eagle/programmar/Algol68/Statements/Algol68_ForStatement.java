@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Algol68.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -11,14 +13,26 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Algol68_Variable;
+import com.eagle.programmar.Algol68.Expressions.Algol68_NegativeExpression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.programmar.Algol68.Terminals.Algol68_KeywordChoice;
+import com.eagle.programmar.Algol68.Terminals.Algol68_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Algol68_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Algol68_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Algol68_Keyword FOR = new Algol68_Keyword("FOR");
 	public @S(20) Algol68_Variable var;
@@ -124,5 +138,88 @@ public class Algol68_ForStatement extends TokenSequence implements EagleRunnable
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression startExpr = null;
+		AbstractExpression endExpr = null;
+		AbstractExpression byExpr = null;
+		AbstractExpression whileExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+		
+		String varName = var.vars.first().getValue();
+		for (Algol68_ForClause clause : clauses._elements)
+		{
+			switch (clause.FROM.getValue())
+			{
+			case "BY":
+				AbstractToken which = clause.expr.getWhich();
+				if (which instanceof Algol68_NegativeExpression)
+				{
+					relOp = RelationalEnum.GREATER_EQUALS;
+				}
+				if (which instanceof Algol68_Number)
+				{
+					Algol68_Number num = (Algol68_Number) which;
+					if (num.getValue().startsWith("-"))
+					{
+						relOp = RelationalEnum.GREATER_EQUALS;
+					}
+				}
+				AbstractExpression incrExpr = transformer.transformExpression(generator, clause.expr);
+				byExpr = generator.newAssignmentExpression(varName,
+						SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.PLUS_EQUALS, incrExpr, clause.expr);
+				break;
+			case "FROM":
+				AbstractExpression initExpr = transformer.transformExpression(generator, clause.expr);
+				startExpr = generator.newAssignmentExpression(varName,
+						SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, initExpr, clause.expr);
+				break;
+			case "TO":
+				endExpr = transformer.transformExpression(generator, clause.expr);
+				break;
+			case "WHILE":
+				whileExpr = transformer.transformExpression(generator, clause.expr);
+				break;
+			}
+		}
+		
+		if (startExpr == null) throw new RuntimeException("FOR FROM is required");
+		if (endExpr == null) throw new RuntimeException("FOR TO is required");
+		
+		if (byExpr == null)
+		{
+			AbstractExpression oneExpr = generator.newNumberExpression("1", null);
+			byExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
+					SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.PLUS_EQUALS, oneExpr, null);
+		}
+		
+		AbstractExpression varExpr = generator.newVariableExpression(varName,
+				SubscriptEnum.FIRST_IS_ONE, null, null);
+		AbstractExpression stopExpr = generator.newRelationalExpression(null, varExpr,
+				relOp, endExpr, null);
+
+		if (whileExpr != null)
+		{
+			stopExpr = generator.newLogicalOrExpression(stopExpr, LogicalOrEnum.OR, whileExpr, null);
+		}
+
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		for (Algol68_Statement statement : statements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt : stmts)
+				{
+					whileTrue.add(stmt);
+				}
+			}
+		}
+		
+		return generator.newForLoopStatement(startExpr, stopExpr, byExpr, whileTrue, this);
 	}
 }

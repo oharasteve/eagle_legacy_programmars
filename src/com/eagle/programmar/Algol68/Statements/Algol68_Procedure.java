@@ -31,6 +31,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -100,7 +101,8 @@ public class Algol68_Procedure extends TokenSequence
 		AbstractType newReturnType = null;
 		if (returns != null && returns.isPresent())
 		{
-			newReturnType = Algol68_Type.findType(generator, returns.type);
+			TypeEnum typ = Algol68_Type.findType(returns.type);
+			newReturnType = generator.transformType(typ, null, null);
 		}
 
 		String newName = id.getValue();
@@ -121,7 +123,8 @@ public class Algol68_Procedure extends TokenSequence
 			for (int i = 0; i < nParams; i++)
 			{
 				Algol68_Parameter param = params.parameters.getPrimaryElement(i);
-				AbstractType paramType = Algol68_Type.findType(generator, param.type);
+				TypeEnum typ = Algol68_Type.findType(param.type);
+				AbstractType paramType = generator.transformType(typ, null, null);
 				generator.addMethodParameter(paramType, param.param.getValue());
 			}
 		}

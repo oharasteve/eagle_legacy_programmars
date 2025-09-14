@@ -638,10 +638,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Expression newFormatNumber(CSharp_Expression expr, CSharp_Expression fmt)
+	public CSharp_Expression newFormatNumber(CSharp_Expression expr, int length,
+			AbstractToken source)
 	{
+		CSharp_Expression fmt = newLiteralExpression("{0," + length + "}", null);
 		CSharp_StringFormatFunc func = new CSharp_StringFormatFunc();
-		return func.generateStringFormat(expr, fmt);
+		return func.generateStringFormat(expr, fmt, source);
 	}
 	
 	// ================ Terminals ================

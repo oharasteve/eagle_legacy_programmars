@@ -8,7 +8,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
-import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Algol68_Variable;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Identifier_Reference;
 import com.eagle.programmar.Algol68.Terminals.Algol68_PunctuationChoice;
@@ -25,11 +24,10 @@ import com.eagle.transform.EagleTransformer;
 public class Algol68_Assignment extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @OPT Algol68_Type type;
-	public @S(20) Algol68_Variable var;
-	public @S(30) Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("=", "+=", ":=", "+:=");
-	public @S(40) Algol68_Expression expression;
-	public @S(50) @OPT PunctuationSemicolon semicolon;
+	public @S(10) Algol68_Variable var;
+	public @S(20) Algol68_PunctuationChoice operator = new Algol68_PunctuationChoice("=", "+=", ":=", "+:=");
+	public @S(30) Algol68_Expression expression;
+	public @S(40) @OPT PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
