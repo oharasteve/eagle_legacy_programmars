@@ -626,18 +626,18 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 	
 	@Override
-	public Python_Expression newIndexOfFunction(Python_Variable string,
-			Python_Expression patt, Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	public Python_Expression newIndexOfFunction(Python_Variable string, Python_Expression patt,
+			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		Python_Find_Function indexFn = new Python_Find_Function();
 		return indexFn.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
 	@Override
-	public AbstractExpression newFormatNumber(AbstractExpression expr, int width)
+	public Python_Expression newFormatNumber(Python_Expression expr, Python_Expression fmt)
 	{
-		String fmt = "f'{" + expr + ":{" + width + "}}'";
-		return Python_Literal.generateLiteralExpression(fmt, null);
+		Python_Multiplicative_Expression mult = new Python_Multiplicative_Expression();
+		return mult.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, null);
 	}
 
 	// ================ Terminals ================

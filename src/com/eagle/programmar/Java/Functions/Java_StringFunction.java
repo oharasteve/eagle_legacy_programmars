@@ -1,5 +1,5 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Sep 4, 2024
+// Original author: Steven A. O'Hara, Sep 13, 2025
 
 package com.eagle.programmar.Java.Functions;
 

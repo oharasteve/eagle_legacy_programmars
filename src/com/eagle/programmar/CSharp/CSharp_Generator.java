@@ -30,6 +30,7 @@ import com.eagle.programmar.CSharp.Functions.CSharp_IndexOfMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_StartsWithMethod;
+import com.eagle.programmar.CSharp.Functions.CSharp_StringFormatFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_ToStringMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_TrimMethod;
@@ -629,18 +630,18 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 	
 	@Override
-	public CSharp_Expression newIndexOfFunction(CSharp_Variable string,
-			CSharp_Expression patt, CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	public CSharp_Expression newIndexOfFunction(CSharp_Variable string, CSharp_Expression patt,
+			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		CSharp_IndexOfMethod indexMeth = new CSharp_IndexOfMethod();
 		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
 	@Override
-	public AbstractExpression newFormatNumber(AbstractExpression expr, int width)
+	public CSharp_Expression newFormatNumber(CSharp_Expression expr, CSharp_Expression fmt)
 	{
-//		String fmt = "f'{{" + expr + "}:>{" + width + "}}'";
-//		return CSharp_Literal.generateLiteralExpression(fmt, null);
+		CSharp_StringFormatFunc func = new CSharp_StringFormatFunc();
+		return func.generateStringFormat(expr, fmt);
 	}
 	
 	// ================ Terminals ================

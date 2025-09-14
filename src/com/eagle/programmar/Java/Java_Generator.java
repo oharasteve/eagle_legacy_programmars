@@ -31,6 +31,7 @@ import com.eagle.programmar.Java.Functions.Java_IndexOfMethod;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_StartsWithMethod;
+import com.eagle.programmar.Java.Functions.Java_StringFormatFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
 import com.eagle.programmar.Java.Functions.Java_ToStringMethod;
 import com.eagle.programmar.Java.Functions.Java_TrimMethod;
@@ -51,7 +52,6 @@ import com.eagle.programmar.Java.Terminals.Java_HexNumber;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
-import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -648,20 +648,18 @@ public class Java_Generator
 	}
 	
 	@Override
-	public Java_Expression newIndexOfFunction(Java_Variable string,
-			Java_Expression patt, Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	public Java_Expression newIndexOfFunction(Java_Variable string, Java_Expression patt,
+			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		Java_IndexOfMethod indexMeth = new Java_IndexOfMethod();
 		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 	
 	@Override
-	public AbstractExpression newFormatNumber(AbstractExpression expr, int width)
+	public Java_Expression newFormatNumber(Java_Expression expr, Java_Expression fmt)
 	{
-		String fmt = "%" + width + "d";
-		// String.format("%5d", number);
-//		String fmt = "f'{{" + expr + "}:>{" + width + "}}'";
-//		return Java_Literal.generateLiteralExpression(fmt, null);
+		Java_StringFormatFunc func = new Java_StringFormatFunc();
+		return func.generateStringFormat(expr, fmt);
 	}
 
 	// ================ Terminals ================

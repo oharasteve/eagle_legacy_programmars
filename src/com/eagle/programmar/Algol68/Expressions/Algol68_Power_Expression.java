@@ -33,6 +33,7 @@ public class Algol68_Power_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newExponentExpression(leftExpr, rightExpr, this);
+		AbstractExpression expon = generator.newExponentExpression(leftExpr, rightExpr, this);
+		return generator.newParenthesizedExpression(expon, null);
 	}
 }
