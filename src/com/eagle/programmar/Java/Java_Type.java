@@ -17,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_Type extends TokenSequence implements AbstractType
@@ -178,5 +179,38 @@ public class Java_Type extends TokenSequence implements AbstractType
 		newType.genericType.moreType.addToken(more);
 		
 		return newType;
+	}
+
+	public static AbstractType findType(EagleGenerator generator, Java_Type type)
+	{
+		TypeEnum newType;
+		if (type.arrayTypes != null && type.arrayTypes.size() > 0)
+		{
+			newType = TypeEnum.STRING_ARRAY;
+		}
+		else
+		{
+			Java_KeywordChoice typeNameKW = (Java_KeywordChoice) type.typeName.getWhich();
+			switch (typeNameKW.getValue().toLowerCase())
+			{
+			case "boolean":
+				newType = TypeEnum.BOOLEAN;
+				break;
+			case "int":
+				newType = TypeEnum.INTEGER;
+				break;
+			case "string":
+				newType = TypeEnum.STRING;
+				break;
+			case "void":
+				newType = TypeEnum.VOID;
+				break;
+			default:
+				newType = TypeEnum.OTHER;
+				break;
+			}
+		}
+		
+		return generator.transformType(newType, null, null);
 	}
 }

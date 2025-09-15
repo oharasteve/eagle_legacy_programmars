@@ -10,12 +10,16 @@ import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_LengthMethod extends PrecedenceOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression expression = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -39,5 +43,12 @@ public class Java_LengthMethod extends PrecedenceOperator
 		
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		return generator.newLengthFunction(theExpr, this);
 	}
 }

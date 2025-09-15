@@ -23,10 +23,11 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_IfStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
@@ -83,26 +84,24 @@ public class Java_IfStatement extends TokenSequence
 
 		if (todo != null)
 		{
-			result = interpreter.tryToInterpret(todo);
+			result = interpreter.tryToInterpret(todo.getWhich());
 		}
 
 		return result;
 	}
-	
+
+	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator,
 				condition);
-		AbstractStatement thenPart = transformer.transformStatement1(generator,
-				thenStatement);
+		AbstractStatement thenPart = Java_StatementBlock.collectStatements(transformer, generator, thenStatement);
 
 		AbstractStatement elsePart = null;
-		Java_Statement stmtElse = null;
 		if (elseClause != null && elseClause.isPresent())
 		{
-			stmtElse = elseClause.elseStatement;
-			elsePart = transformer.transformStatement1(generator, stmtElse);
+			elsePart = Java_StatementBlock.collectStatements(transformer, generator, elseClause.elseStatement);
 		}
 
 		return generator.newIfStatement1(cond, thenPart, elsePart, this);
@@ -145,15 +144,15 @@ public class Java_IfStatement extends TokenSequence
 			ArrayList<Java_Statement> elseStatements, AbstractToken source)
 	{
 		Java_StatementBlock thenBlock = new Java_StatementBlock();
-		Java_Statement block1 = thenBlock.generateBlock(thenStatements, source);
+		Java_Statement blockTrue = thenBlock.generateBlock(thenStatements, source);
 				
-		Java_Statement block2 = null;
+		Java_Statement blockElse = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
 			Java_StatementBlock elseBlock = new Java_StatementBlock();
-			block2 = elseBlock.generateBlock(elseStatements, source);
+			blockElse = elseBlock.generateBlock(elseStatements, source);
 		}
 
-		return generateIfElse1(cond, block1, block2, source);
+		return generateIfElse1(cond, blockTrue, blockElse, source);
 	}
 }

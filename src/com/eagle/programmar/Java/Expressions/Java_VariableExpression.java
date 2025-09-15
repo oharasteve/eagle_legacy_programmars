@@ -43,7 +43,7 @@ public class Java_VariableExpression extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression subscript = null;
-		if (variable.subscript != null && variable.subscript.isPresent())
+		if (variable.subscript != null && variable.subscript.size() > 0)
 		{
 			Java_Subscript first = variable.subscript.first();
 			subscript = transformer.transformExpression(generator, first.expr);

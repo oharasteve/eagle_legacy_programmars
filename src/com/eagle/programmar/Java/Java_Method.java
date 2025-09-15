@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Java;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -25,6 +27,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -34,11 +37,15 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.PrivacyEnum;
 import com.eagle.transform.EagleGenerator.StaticEnum;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_Method extends TokenSequence
-		implements AbstractMethod, AbstractFunction, EagleRunnable, EagleScopeInterface
+		implements AbstractMethod, AbstractFunction, EagleRunnable,
+				EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT Java_Annotation annotation;
@@ -274,6 +281,71 @@ public class Java_Method extends TokenSequence
 		}
 	}
 	
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which1 = typeAndName.getWhich();
+		if (! (which1 instanceof Java_MethodType))
+		{
+			throw new RuntimeException("Can only handle simple methods now");
+		}
+
+		Java_MethodType methodType = (Java_MethodType) which1;
+		AbstractType newReturnType = Java_Type.findType(generator, methodType.jtype);
+		
+		String newName = methodType.methodName.getValue();
+		if (VERBOSE)
+		{
+			System.out.println("** Found Java method " + newName);
+		}
+		if (newName.equals("main"))
+		{
+			newName = generator.mainName();
+		}
+		
+		generator.addMethod(newReturnType, newName, this);
+		generator.addMethodName(newName);
+		
+		Java_ParameterList params = methodType.parameters;
+		if (params != null && params.isPresent())
+		{
+			int nParams = params.params.getPrimaryCount();
+			for (int i = 0; i < nParams; i++)
+			{
+				Java_MethodParameter param = params.params.getPrimaryElement(i);
+				AbstractType paramType = Java_Type.findType(generator, param.jtype);
+				generator.addMethodParameter(paramType, param.id.getValue());
+			}
+		}
+		
+		if (! (body.getWhich() instanceof Java_MethodImplementation))
+		{
+			throw new RuntimeException("Methods need an implementation");
+		}
+		
+		Java_MethodImplementation impl = (Java_MethodImplementation) body.getWhich();
+		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
+		for (Java_StatementOrComment javaStmt : impl.block.statements._elements)
+		{
+			if (javaStmt.getWhich() instanceof Java_Statement)
+			{
+				Java_Statement stmt1 = (Java_Statement) javaStmt.getWhich();
+				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
+				if (stmts2 != null)
+				{
+					for (AbstractStatement stmt2 : stmts2)
+					{
+						newStmts.add(stmt2);
+					}
+				}
+			}
+		}
+
+		AbstractStatement newBlock = generator.newBlockStatement(newStmts, impl);
+		generator.addStatement(newBlock, impl);
+		generator.doneMethod();
+	}
+
 	public void addComment(Java_Comment comm)
 	{
 		if (this.comments == null)

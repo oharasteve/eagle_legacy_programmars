@@ -276,8 +276,8 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Statement newDataDeclaration(String name, Java_Expression size, Java_Type type,
-			Java_Expression initial, AbstractToken source)
+	public Java_Statement newDataDeclaration(String name, Java_Expression size,
+			Java_Type type, Java_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Java_Data.newDataDeclaration(name, size, type, initial, source));
 	}

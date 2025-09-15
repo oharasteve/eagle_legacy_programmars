@@ -14,10 +14,15 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_PostIncrementExpression extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Variable var;
 	public @S(20) @NOSPACE Java_PunctuationChoice operator =
@@ -48,6 +53,13 @@ public class Java_PostIncrementExpression extends PrimaryOperator
 		}
 	}
 
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
+		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, IncrementEnum.INCREMENT, this);
+	}
+	
 	public Java_Expression generateIncrement(Java_Variable varName,
 			IncrementEnum oper, AbstractToken source)
 	{

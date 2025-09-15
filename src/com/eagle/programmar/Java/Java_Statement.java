@@ -3,7 +3,7 @@
 
 package com.eagle.programmar.Java;
 
-import com.eagle.programmar.Java.Java_Method.Java_MethodModifier;
+import com.eagle.programmar.Java.Statements.Java_AnnotationDefinition;
 import com.eagle.programmar.Java.Statements.Java_AssertStatement;
 import com.eagle.programmar.Java.Statements.Java_BreakStatement;
 import com.eagle.programmar.Java.Statements.Java_ContinueStatement;
@@ -22,18 +22,8 @@ import com.eagle.programmar.Java.Statements.Java_SynchronizedStatement;
 import com.eagle.programmar.Java.Statements.Java_ThrowStatement;
 import com.eagle.programmar.Java.Statements.Java_TryStatement;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
-import com.eagle.programmar.Java.Terminals.Java_Comment;
-import com.eagle.programmar.Java.Terminals.Java_Identifier;
-import com.eagle.programmar.Java.Terminals.Java_Keyword;
-import com.eagle.programmar.Java.Terminals.Java_Punctuation;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Java_Statement extends TokenChooser implements AbstractStatement
@@ -44,27 +34,7 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
  
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon XXemptyStatement;
 
-	public @CHOICE static class Java_AnnotationDefinition extends TokenSequence
-	{
-		public @S(10) @OPT Java_Annotation annotation;
-		public @S(20) TokenList<Java_MethodModifier> modifiers;
-		public @S(30) Java_Punctuation atSign = new Java_Punctuation('@');
-		public @S(40) Java_Keyword INTERFACE = new Java_Keyword("interface");
-		public @S(50) Java_Identifier id;
-		public @S(60) PunctuationLeftBrace leftBrace;
-		public @S(70) @OPT TokenList<Java_Comment> comments;
-		public @S(80) @OPT Java_AnnotationParameter parameter;
-		public @S(90) PunctuationRightBrace rightBrace;
-
-		public static class Java_AnnotationParameter extends TokenSequence
-		{
-			public @S(10) Java_Type type;
-			public @S(20) Java_Identifier id;
-			public @S(30) PunctuationLeftParen leftParen;
-			public @S(40) PunctuationRightParen rightParen;
-			public @S(50) PunctuationSemicolon semicolon;
-		}
-	}
+	public @CHOICE Java_AnnotationDefinition XXannotationDefinition;
 
 	public @CHOICE Java_AssertStatement XXassertStatement;
 	public @CHOICE Java_BreakStatement XXbreakStatement;

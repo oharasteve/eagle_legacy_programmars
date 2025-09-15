@@ -115,12 +115,11 @@ public class Java_WhileStatement extends TokenSequence implements
 
 		this.condition = cond;
 
-		for (AbstractStatement action : actions)
+		for (Java_Statement stmt : actions)
 		{
-			Java_Statement stmt = (Java_Statement) action;
-			Java_StatementOrComment wrapper = new Java_StatementOrComment();
-			wrapper.setWhich(stmt);
-			body.statements.addToken(wrapper);
+			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
+			stmtOrComment.setWhich(stmt);
+			body.statements.addToken(stmtOrComment);
 
 			// If the parent block gets the 'while' as the parent, line numbers in the
 			// side-by-side report will pick up the 'while', not the first statement.

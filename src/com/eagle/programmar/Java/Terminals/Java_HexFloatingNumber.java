@@ -8,14 +8,19 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.TerminalToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 /*
  * See https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.10.2
  * Examples: 0x1.0p-53 0x1.0p-126f
  */
 
-public class Java_HexFloatingNumber extends TerminalToken implements EagleRunnable
+public class Java_HexFloatingNumber extends TerminalToken
+		implements EagleRunnable, EagleTransformableExpression
 {
 	protected String _numberAsText;
 
@@ -142,5 +147,12 @@ public class Java_HexFloatingNumber extends TerminalToken implements EagleRunnab
 	{
 		double value = Double.parseDouble(_numberAsText);
 		interpreter.pushDouble(value);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		double value = Double.parseDouble(_numberAsText);
+		return generator.newNumberExpression(Double.toString(value), this);
 	}
 }

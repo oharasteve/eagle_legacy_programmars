@@ -13,14 +13,21 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_Data extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Java_Data extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotation1;
 	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;
@@ -74,6 +81,24 @@ public class Java_Data extends TokenSequence implements EagleRunnable, AbstractS
 			EagleValue value = interpreter.getEagleValue(initialValue);
 			interpreter.setSymbol(id, id.toString(), value);
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// See if the Definition has some assignments in the metrics file
+		TypeEnum type = transformer.findAssignMetric(id);
+		AbstractType newType = generator.transformType(type, null, null);
+		
+		AbstractExpression initial = null;
+		if (initialValue != null && initialValue.isPresent())
+		{
+			initial = transformer.transformExpression(generator, initialValue.expression);
+		}
+		
+		String name = id.getValue();
+		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+		return stmt;
 	}
 	
 	public static Java_Data newDataDeclaration(String name, Java_Expression size, Java_Type type,

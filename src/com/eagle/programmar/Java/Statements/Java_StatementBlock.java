@@ -17,9 +17,12 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_StatementBlock extends TokenSequence
 		implements EagleRunnableWithResult, EagleScopeInterface
@@ -56,27 +59,49 @@ public class Java_StatementBlock extends TokenSequence
 	public Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
 			AbstractToken source)
 	{
-		if (stmts.size() == 1)
-		{
-			Java_Statement first = stmts.get(0);
-			if (first.getWhich() instanceof Java_StatementBlock)
-			{
-				// Don't put a block inside a block if it is the only entry
-				return first;
-			}
-		}
-		
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.statements = new TokenList<Java_StatementOrComment>();
 		this.statements.setPresent(true);
 		for (Java_Statement stmt : stmts)
 		{
-			Java_StatementOrComment stmtComm = new Java_StatementOrComment();
-			stmtComm.setWhich(stmt);
-			stmtComm.setPresent(true);
-			this.statements.addToken(stmtComm);
+			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
+			stmtOrComment.setWhich(stmt);
+			this.statements.addToken(stmtOrComment);
 		}
 		return Java_Generator.wrapStatement(this);
+	}
+
+	public static AbstractStatement collectStatements(EagleTransformer transformer,
+			EagleGenerator generator, Java_Statement statement)
+	{
+		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
+
+		if (statement.getWhich() instanceof Java_StatementBlock)
+		{
+			Java_StatementBlock block = (Java_StatementBlock) statement.getWhich();
+			for (Java_StatementOrComment stmt1 : block.statements._elements)
+			{
+				if (stmt1.getWhich() instanceof Java_Statement)
+				{
+					Java_Statement stmt2 = (Java_Statement) stmt1.getWhich();
+					ArrayList<AbstractStatement> stmts3 = transformer.transformStatement(generator, stmt2.getWhich());
+					for (AbstractStatement stmt3 : stmts3)
+					{
+						newStmts.add(stmt3);
+					}
+				}
+			}
+		}
+		else
+		{
+			ArrayList<AbstractStatement> stmts4 = transformer.transformStatement(generator, statement.getWhich());
+			for (AbstractStatement stmt4 : stmts4)
+			{
+				newStmts.add(stmt4);
+			}
+		}
+		
+		return generator.newBlockStatement(newStmts, statement);
 	}
 }
