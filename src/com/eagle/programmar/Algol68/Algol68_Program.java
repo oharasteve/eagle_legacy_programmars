@@ -126,7 +126,7 @@ public class Algol68_Program extends AbstractLanguage
 			}
 		}
 
-		// Second pass, execute the program
+		// Second pass, collect the main procedure and other stuff
 		for (Algol68_TopElement elt : elements._elements)
 		{
 			AbstractToken whichElt = elt.getWhich();
