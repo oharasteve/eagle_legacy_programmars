@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Algol68.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -50,7 +52,22 @@ public class Algol68_ParenthesizedExpression extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
-		return generator.newParenthesizedExpression(theExpr, this);
+		int numArgs = expressions.getPrimaryCount();
+		if (numArgs == 1)
+		{
+			// Just regular parens
+			AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
+			return generator.newParenthesizedExpression(theExpr, this);
+		}
+		
+		// Must be a []STRING array
+		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+		for (int i = 0; i < numArgs; i++)
+		{
+			Algol68_Expression expr = expressions.getPrimaryElement(i);
+			AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+			exprs.add(newExpr);
+		}
+		return generator.newArrayExpression(exprs, this);
 	}
 }

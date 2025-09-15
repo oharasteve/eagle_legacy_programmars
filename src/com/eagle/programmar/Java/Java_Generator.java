@@ -10,10 +10,10 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
-import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
+import com.eagle.programmar.Java.Expressions.Java_CastExpression;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationWithInitializers;
 import com.eagle.programmar.Java.Expressions.Java_LogicalAndExpression;
@@ -510,6 +510,13 @@ public class Java_Generator
 		return negExpr.generateNegative(sign, expr, source);
 	}
 	
+	@Override
+	public Java_Expression newTruncateExpression(Java_Expression expr, AbstractToken source)
+	{
+		Java_Type type = Java_Type.newPrimitiveType("int");
+		return Java_CastExpression.newCastExpression(type, expr, source);
+	}
+
 	@Override
 	public Java_Expression newNotExpression(Java_Expression expr, AbstractToken source)
 	{

@@ -25,7 +25,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableStatement;
@@ -204,7 +203,7 @@ public class Algol68_ForStatement extends TokenSequence
 
 		if (whileExpr != null)
 		{
-			stopExpr = generator.newLogicalOrExpression(stopExpr, LogicalOrEnum.OR, whileExpr, null);
+			stopExpr = generator.newLogicalAndExpression(stopExpr, whileExpr, null);
 		}
 
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();

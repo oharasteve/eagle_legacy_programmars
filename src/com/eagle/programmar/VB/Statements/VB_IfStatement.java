@@ -200,7 +200,7 @@ public class VB_IfStatement extends TokenSequence
 			
 			if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent() && multiLiner.elseIfClause.size() > 0)
 			{
-				throw new RuntimeException("Can't handle VB elseif yet. Has to recurse here.");
+				throw new RuntimeException("Can't handle VB elseif yet");
 			}
 			
 			if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())

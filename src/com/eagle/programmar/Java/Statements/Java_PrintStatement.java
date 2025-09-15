@@ -100,7 +100,10 @@ public class Java_PrintStatement extends TokenSequence
 		prt.rightParen = new PunctuationRightParen();
 
 		prt.expr = line;
-		prt.expr.setPresent(true);
+		if (line != null)
+		{
+			prt.expr.setPresent(true);
+		}
 		prt.semicolon = new PunctuationSemicolon();
 		
 		prt.setTransformationSource(source);

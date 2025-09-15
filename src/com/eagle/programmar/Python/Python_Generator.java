@@ -28,6 +28,7 @@ import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Find_Function;
+import com.eagle.programmar.Python.Functions.Python_Int_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_StartsWith_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
@@ -487,6 +488,13 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		return negExp.generateNegative(sign, expr, source);
 	}
 	
+	@Override
+	public Python_Expression newTruncateExpression(Python_Expression expr, AbstractToken source)
+	{
+		Python_Int_Function intFn = new Python_Int_Function();
+		return intFn.generateInteger(expr, source);
+	}
+
 	@Override
 	public Python_Expression newNotExpression(Python_Expression expr, AbstractToken source)
 	{

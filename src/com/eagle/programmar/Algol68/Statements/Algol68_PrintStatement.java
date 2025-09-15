@@ -108,13 +108,13 @@ public class Algol68_PrintStatement extends TokenSequence
 			else if (whichPiece instanceof Algol68_Expression)
 			{
 				Algol68_Expression expr = (Algol68_Expression) whichPiece;
-				if (i == 0)
+				if (line == null)
 				{
 					line = transformer.transformExpression(generator, expr);
 				}
 				else
 				{
-					if (metrics != null)
+					if (metrics != null && i < metrics.size())
 					{
 						types._type1 = metrics.get(i-1);
 						types._type2 = metrics.get(i);

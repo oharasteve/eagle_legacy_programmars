@@ -15,9 +15,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -94,8 +94,7 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 		case DIVIDE_NO_TRUNCATE:
 			this.operator.setValue("/");
 			CSharp_Type type = CSharp_Type.newPrimitiveType("double");
-			CSharp_CastExpression cast = CSharp_CastExpression.newCastExpression(type, this.right);
-			this.right = CSharp_Generator.wrapExpression(cast);
+			this.right = CSharp_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
 		case REMAINDER:
 			this.operator.setValue("%");

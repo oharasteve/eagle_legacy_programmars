@@ -10,6 +10,8 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -32,9 +34,20 @@ public class Algol68_VariableExpression extends PrimaryOperator
 		if (variable.subscript != null && variable.subscript.isPresent())
 		{
 			subscript = transformer.transformExpression(generator, variable.subscript.expr);
+			if (variable.subscript.colonSub != null && variable.subscript.colonSub.isPresent())
+			{
+				AbstractExpression ecExpr = transformer.transformExpression(
+						generator, variable.subscript.colonSub.expr2);
+				AbstractExpression varExpr = generator.newVariableExpression(
+						variable.vars.first().getValue(), SubscriptEnum.FIRST_IS_ONE,
+						null, variable);
+				return generator.newSubstringFunction(varExpr,
+						subscript, SubstringSCEnum.FIRST_CHAR_IS_ONE,
+						SubstringECEnum.GIVEN_EC, ecExpr, false, this);
+			}
 		}
 		// Actually, this depends on how the array is defined: Array[0..9] of String
 		return generator.newVariableExpression(variable.vars.first().getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
+				SubscriptEnum.FIRST_IS_ONE, subscript, this);
 	}
 }

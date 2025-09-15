@@ -93,8 +93,10 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 				CSharp_Expression ecPlusOne = addExp1.generateAdditive(types, (CSharp_Expression) ecOrnc,
 						AdditiveEnum.PLUS, one, source);
 				CSharp_AdditiveExpression addExp2 = new CSharp_AdditiveExpression();
+				CSharp_ParenthesizedExpression scParens = new CSharp_ParenthesizedExpression();
+				CSharp_Expression scParensExpr = scParens.generateParentheses((CSharp_Expression) sc, null);
 				CSharp_Expression ecMinusSc = addExp2.generateAdditive(types, ecPlusOne,
-						AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
+						AdditiveEnum.MINUS, scParensExpr, source);
 				CSharp_Expression ncExpr = ecMinusSc;
 				expr.ncExpr = ncExpr;
 				expr.ncExpr.setPresent(true);
@@ -107,8 +109,10 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 				expr.comma.setPresent(true);
 				CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
 				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				CSharp_ParenthesizedExpression scParens = new CSharp_ParenthesizedExpression();
+				CSharp_Expression scParensExpr = scParens.generateParentheses((CSharp_Expression) sc, null);
 				CSharp_Expression ecMinusSc = addExp.generateAdditive(types, (CSharp_Expression) ecOrnc,
-						AdditiveEnum.MINUS, (CSharp_Expression) sc, source);
+						AdditiveEnum.MINUS, scParensExpr, source);
 				CSharp_Expression ncExpr = ecMinusSc;
 				expr.ncExpr = ncExpr;
 				expr.ncExpr.setPresent(true);

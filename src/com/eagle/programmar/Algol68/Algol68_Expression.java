@@ -8,21 +8,23 @@ import com.eagle.programmar.Algol68.Expressions.Algol68_ArrayInfo;
 import com.eagle.programmar.Algol68.Expressions.Algol68_AssignmentExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_BracketsExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_BuiltIn;
+import com.eagle.programmar.Algol68.Expressions.Algol68_EntierExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalAndExpression;
-import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalOrExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalNotExpression;
-import com.eagle.programmar.Algol68.Expressions.Algol68_ProcedureCall;
+import com.eagle.programmar.Algol68.Expressions.Algol68_LogicalOrExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_MultiplicativeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_NegativeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_ParenthesizedExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_PostIncrementExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_Power_Expression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_PreIncrementExpression;
+import com.eagle.programmar.Algol68.Expressions.Algol68_ProcedureCall;
 import com.eagle.programmar.Algol68.Expressions.Algol68_RangeExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_RelationalExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_Subfield;
 import com.eagle.programmar.Algol68.Expressions.Algol68_SubscriptExpression;
 import com.eagle.programmar.Algol68.Expressions.Algol68_VariableExpression;
+import com.eagle.programmar.Algol68.Expressions.Algol68_WholeExpression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Literal;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -59,15 +61,17 @@ public class Algol68_Expression extends PrecedenceChooser implements AbstractExp
 	// Primary expressions
 
 	public @P(100) Algol68_ArrayInfo arrayInfo;
-	public @P(110) Algol68_ProcedureCall methodInvocation;
-	public @P(120) Algol68_PreIncrementExpression preIncrementExpression;
-	public @P(130) Algol68_PostIncrementExpression postIncrementExpression;
-	public @P(140) Algol68_NegativeExpression negativeExpression;
-	public @P(150) Algol68_LogicalNotExpression logicalNotExpression;
-	public @P(160) Algol68_BuiltIn builtIn;
-	public @P(170) Algol68_VariableExpression variableExpression;
-	public @P(180) Algol68_BracketsExpression bracketsExpression;
-	public @P(190) Algol68_ParenthesizedExpression parenthesizedExpression;
+	public @P(110) Algol68_PreIncrementExpression preIncrementExpression;
+	public @P(120) Algol68_PostIncrementExpression postIncrementExpression;
+	public @P(130) Algol68_NegativeExpression negativeExpression;
+	public @P(140) Algol68_LogicalNotExpression logicalNotExpression;
+	public @P(150) Algol68_EntierExpression entierExpression;
+	public @P(160) Algol68_WholeExpression wholeExpression;
+	public @P(170) Algol68_BuiltIn builtIn;
+	public @P(180) Algol68_ProcedureCall methodInvocation;
+	public @P(190) Algol68_VariableExpression variableExpression;
+	public @P(200) Algol68_BracketsExpression bracketsExpression;
+	public @P(210) Algol68_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

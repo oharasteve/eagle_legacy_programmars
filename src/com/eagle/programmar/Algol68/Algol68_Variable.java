@@ -11,6 +11,7 @@ import com.eagle.programmar.Algol68.Symbols.Algol68_Identifier_Reference;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
@@ -24,9 +25,16 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) Algol68_Expression expr;
-		public @S(30) PunctuationRightBracket rightBracket;
+		public @S(30) @OPT Algol68_ColonSubscript colonSub; 
+		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
+	public static class Algol68_ColonSubscript extends TokenSequence
+	{
+		public @S(10) PunctuationColon colon;
+		public @S(20) Algol68_Expression expr2;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -43,7 +51,15 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 		{
 			String str = value.forceStringValue();
 			int sub = interpreter.getIntValue(subscript.expr);
-			interpreter.pushStr(str.substring(sub-1, sub));
+			if (subscript.colonSub != null && subscript.colonSub.isPresent())
+			{
+				int ec = interpreter.getIntValue(subscript.colonSub.expr2);
+				interpreter.pushStr(str.substring(sub-1, ec));
+			}
+			else
+			{
+				interpreter.pushStr(str.substring(sub-1, sub));
+			}
 		}
 		else
 		{

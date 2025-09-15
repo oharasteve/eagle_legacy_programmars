@@ -13,15 +13,18 @@ import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Algol68_Syntax;
 import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Algol68_Variable;
+import com.eagle.programmar.Algol68.Expressions.Algol68_VariableExpression;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Procedure_Definition;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Variable_Definition;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -98,12 +101,12 @@ public class Algol68_Procedure extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractType newReturnType = null;
+		TypeEnum typRet = TypeEnum.VOID;
 		if (returns != null && returns.isPresent())
 		{
-			TypeEnum typ = Algol68_Type.findType(returns.type);
-			newReturnType = generator.transformType(typ, null, null);
+			typRet = Algol68_Type.findType(returns.type);
 		}
+		AbstractType newReturnType = generator.transformType(typRet, null, null);
 
 		String newName = id.getValue();
 		if (newName.equals("main"))
@@ -123,20 +126,42 @@ public class Algol68_Procedure extends TokenSequence
 			for (int i = 0; i < nParams; i++)
 			{
 				Algol68_Parameter param = params.parameters.getPrimaryElement(i);
-				TypeEnum typ = Algol68_Type.findType(param.type);
-				AbstractType paramType = generator.transformType(typ, null, null);
+				TypeEnum typParam = Algol68_Type.findType(param.type);
+				AbstractType paramType = generator.transformType(typParam, null, null);
 				generator.addMethodParameter(paramType, param.param.getValue());
 			}
 		}
 		
+		int numElts = statements._elements.size();
+		int eltNum = 0;
 		for (Algol68_Statement stmt : statements._elements)
 		{
-			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt);
+			AbstractToken which = stmt.getWhich();
+
+			eltNum++;
+			if (eltNum == numElts)
+			{
+				// Last line in a procedure *might* be an implied RETURN
+				// If, and only if, it is just a variable name
+				if (which instanceof Algol68_ExpressionStatement)
+				{
+					Algol68_ExpressionStatement exprStmt = (Algol68_ExpressionStatement) which;
+					if (exprStmt.expr.getWhich() instanceof Algol68_VariableExpression)
+					{
+						AbstractExpression newExpr = transformer.transformExpression(generator, exprStmt.expr);
+						AbstractStatement retStmt = generator.newReturnStatement(newExpr, which);
+						generator.addStatement(retStmt, stmt);
+						break;	// Only gets here for the last statement in the PROC
+					}
+				}
+			}
+			
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
 			if (newStmts != null)
 			{
 				for (AbstractStatement newStmt : newStmts)
 				{
-					generator.addStatement(newStmt, statements);
+					generator.addStatement(newStmt, stmt);
 				}
 			}
 		}

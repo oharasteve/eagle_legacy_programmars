@@ -12,6 +12,7 @@ import com.eagle.programmar.CSharp.CSharp_Class.CSharp_StaticStatement;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
+import com.eagle.programmar.CSharp.Expressions.CSharp_CastExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationWithInitializers;
 import com.eagle.programmar.CSharp.Expressions.CSharp_LogicalAndExpression;
@@ -490,6 +491,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return negExp.generateNegative(sign, expr, source);
 	}
 	
+	@Override
+	public CSharp_Expression newTruncateExpression(CSharp_Expression expr, AbstractToken source)
+	{
+		CSharp_Type type = CSharp_Type.newPrimitiveType("int");
+		return CSharp_CastExpression.newCastExpression(type, expr, source);
+	}
+
 	@Override
 	public CSharp_Expression newNotExpression(CSharp_Expression expr, AbstractToken source)
 	{

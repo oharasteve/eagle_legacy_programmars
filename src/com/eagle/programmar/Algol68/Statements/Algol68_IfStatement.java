@@ -142,6 +142,11 @@ public class Algol68_IfStatement extends TokenSequence
 			}
 		}
 		
+		if (elifClause != null && elifClause.size() > 0)
+		{
+			throw new RuntimeException("Can't handle Algol68 ELIF yet.");
+		}
+		
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (Algol68_Statement elseStatement : elseClause.elseStatements._elements)

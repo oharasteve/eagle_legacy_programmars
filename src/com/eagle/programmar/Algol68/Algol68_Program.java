@@ -8,6 +8,7 @@ import java.util.Collection;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Algol68.Statements.Algol68_Data;
 import com.eagle.programmar.Algol68.Statements.Algol68_Procedure;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -19,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -68,14 +70,20 @@ public class Algol68_Program extends AbstractLanguage
 		// First pass, just collect all the Procedure definitions
 		for (Algol68_TopElement element : elements._elements)
 		{
-			AbstractToken which = element.getWhich();
-			if (which instanceof Algol68_Statement)
+			AbstractToken which1 = element.getWhich();
+			if (which1 instanceof Algol68_Statement)
 			{
-				Algol68_Statement stmt = (Algol68_Statement) which;
-				if (stmt.getWhich() instanceof Algol68_Procedure)
+				Algol68_Statement stmt = (Algol68_Statement) which1;
+				AbstractToken which2 = stmt.getWhich();
+				if (which2 instanceof Algol68_Procedure)
 				{
-					Algol68_Procedure fn = (Algol68_Procedure) stmt.getWhich();
+					Algol68_Procedure fn = (Algol68_Procedure) which2;
 					interpreter.addFunction(fn.id.getValue(), fn);
+				}
+				else if (which2 instanceof Algol68_Statement)
+				{
+					Algol68_Data stmt2 = (Algol68_Data) which2;
+					interpreter.tryToInterpret(stmt2);
 				}
 			}
 		}
@@ -103,6 +111,22 @@ public class Algol68_Program extends AbstractLanguage
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
+		// First pass, just collect all the Procedure definitions
+		for (Algol68_TopElement element : elements._elements)
+		{
+			AbstractToken which = element.getWhich();
+			if (which instanceof Algol68_Statement)
+			{
+				Algol68_Statement stmt = (Algol68_Statement) which;
+				if (stmt.getWhich() instanceof EagleTransformableFunction)
+				{
+					EagleTransformableFunction transformable = (EagleTransformableFunction) stmt.getWhich();
+					transformable.transformFunction(transformer, generator);
+				}
+			}
+		}
+
+		// Second pass, execute the program
 		for (Algol68_TopElement elt : elements._elements)
 		{
 			AbstractToken whichElt = elt.getWhich();

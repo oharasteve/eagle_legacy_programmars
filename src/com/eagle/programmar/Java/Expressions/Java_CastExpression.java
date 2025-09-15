@@ -4,7 +4,9 @@
 package com.eagle.programmar.Java.Expressions;
 
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Type;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
@@ -18,7 +20,8 @@ public class Java_CastExpression extends PrimaryOperator
 	public @S(30) @NOSPACE PunctuationRightParen rightParen;
 	public @S(40) Java_Expression expr;
 
-	public static Java_CastExpression newCastExpression(Java_Type type, Java_Expression expr)
+	public static Java_Expression newCastExpression(Java_Type type,
+			Java_Expression expr, AbstractToken source)
 	{
 		Java_CastExpression cast = new Java_CastExpression();
 		cast.leftParen = new PunctuationLeftParen();
@@ -26,6 +29,7 @@ public class Java_CastExpression extends PrimaryOperator
 		cast.types.addPrimaryElement(type);
 		cast.rightParen = new PunctuationRightParen();
 		cast.expr = expr;
-		return cast;
+		cast.setTransformationSource(source);
+		return Java_Generator.wrapExpression(cast);
 	}
 }

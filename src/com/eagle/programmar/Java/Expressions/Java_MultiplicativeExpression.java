@@ -93,8 +93,7 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		case DIVIDE_NO_TRUNCATE:
 			this.operator.setValue("/");
 			Java_Type type = Java_Type.newPrimitiveType("double");
-			Java_CastExpression cast = Java_CastExpression.newCastExpression(type, this.right);
-			this.right = Java_Generator.wrapExpression(cast);
+			this.right = Java_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
 		case REMAINDER:
 			this.operator.setValue("%");

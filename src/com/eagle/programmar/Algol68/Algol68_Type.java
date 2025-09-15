@@ -38,6 +38,8 @@ public class Algol68_Type extends TokenChooser
 			return TypeEnum.INTEGER;
 		case "STRING":
 			return TypeEnum.STRING;
+		case "VOID":
+			return TypeEnum.VOID;
 		default:
 			return TypeEnum.OTHER;
 		}
