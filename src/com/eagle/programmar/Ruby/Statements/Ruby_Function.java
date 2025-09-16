@@ -179,7 +179,7 @@ public class Ruby_Function extends TokenSequence
 				{
 					// System.err.println("****** Found local var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);
-					AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType, null, this);
 					generator.addStatement(dataStmt, this);
 				}
 			}

@@ -124,7 +124,7 @@ public class VB_DataDeclaration extends TokenSequence
 		}
 		
 		String name = var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(name, size, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(false, name, size, newType, initial, this);
 		result.add(stmt);
 		
 		if (moreVariables != null && moreVariables.isPresent())
@@ -146,7 +146,7 @@ public class VB_DataDeclaration extends TokenSequence
 				}
 				newType = generator.transformType(type, null, dataType);
 
-				stmt = generator.newDataDeclaration(name, size, newType, initial, more);
+				stmt = generator.newDataDeclaration(false, name, size, newType, initial, more);
 				result.add(stmt);
 			}
 		}

@@ -33,7 +33,7 @@ public class Delphi_Types extends TokenSequence
 		{
 			String varName = typeEntry.name.getValue();
 			AbstractType type = typeEntry.type.convertType(generator);
-			AbstractStatement data = generator.newDataDeclaration(varName, null,
+			AbstractStatement data = generator.newDataDeclaration(false, varName, null,
 					type, null, typeEntry);
 			generator.addStatement(data, typeEntry);
 		}

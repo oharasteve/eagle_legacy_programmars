@@ -45,12 +45,10 @@ import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_PrintStatement;
 import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
-import com.eagle.programmar.Java.Statements.Java_StaticStatement;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_HexNumber;
-import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
@@ -218,12 +216,8 @@ public class Java_Generator
 			if (saveInClass)
 			{
 				// Put it in top-level class, not the 'main' method
-				Java_StaticStatement staticStmt = new Java_StaticStatement();
-				staticStmt.STATIC = new Java_Keyword("static");
-				staticStmt.STATIC.setPresent(true);
-				staticStmt.statement = stmt;
 				Java_ClassElement element = new Java_ClassElement();
-				element.setWhich(staticStmt);
+				element.setWhich(stmt);
 				_currentClass.elements.addToken(element);
 				return;
 			}
@@ -276,10 +270,10 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Statement newDataDeclaration(String name, Java_Expression size,
+	public Java_Statement newDataDeclaration(boolean isStatic, String name, Java_Expression size,
 			Java_Type type, Java_Expression initial, AbstractToken source)
 	{
-		return wrapStatement(Java_Data.newDataDeclaration(name, size, type, initial, source));
+		return wrapStatement(Java_Data.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 
 	@Override

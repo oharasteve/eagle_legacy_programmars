@@ -74,7 +74,7 @@ public class Algol68_Data extends TokenSequence
 			AbstractType newType = generator.transformType(typ, null, null);
 
 			String name = var.getValue();
-			AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+			AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 			result.add(stmt);
 		}
 		

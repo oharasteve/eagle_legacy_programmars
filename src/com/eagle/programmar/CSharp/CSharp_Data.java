@@ -94,7 +94,7 @@ public class CSharp_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
 		}
-		result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+		result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 		
 		for (CSharp_MoreIdentifiers more : dataBody.moreIds._elements)
 		{
@@ -104,13 +104,13 @@ public class CSharp_Data extends TokenSequence
 			{
 				initial = transformer.transformExpression(generator, more.initialValue.expression);
 			}
-			result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 		}
 		
 		return result;
 	}
 
-	public static CSharp_Data newDataDeclaration(String name, CSharp_Expression size, CSharp_Type type,
+	public static CSharp_Data newDataDeclaration(boolean isStatic, String name, CSharp_Expression size, CSharp_Type type,
 			CSharp_Expression initial, AbstractToken source)
 	{
 		if (type == null)
@@ -133,6 +133,11 @@ public class CSharp_Data extends TokenSequence
 		data.dataBody.id.setValue(name);
 		data.dataBody.type = type;
 
+		if (isStatic)
+		{
+			data.addModifier("static");
+		}
+		
 		// Set the initial value, if any
 		if (initial != null)
 		{
@@ -146,5 +151,17 @@ public class CSharp_Data extends TokenSequence
 
 		data.setTransformationSource(source);
 		return data;
+	}
+	
+	private void addModifier(String which)
+	{
+		CSharp_DataModifier mod = new CSharp_DataModifier();
+		mod.modifier.setValue(which);
+		if (dataBody.modifiers == null)
+		{
+			dataBody.modifiers = new TokenList<CSharp_DataModifier>();
+			dataBody.modifiers.setPresent(true);
+		}
+		dataBody.modifiers.addToken(mod);
 	}
 }

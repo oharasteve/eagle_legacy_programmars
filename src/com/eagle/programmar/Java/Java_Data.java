@@ -12,7 +12,6 @@ import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -47,9 +46,9 @@ public class Java_Data extends TokenSequence
 		public @S(20) PunctuationRightBracket rightBracket;
 	}
 
-	public static class Java_DataModifier extends TokenChooser
+	public static class Java_DataModifier extends TokenSequence
 	{
-		public @CHOICE Java_KeywordChoice XXmodifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @S(10) Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
 	}
 
 	public static class Java_DataInitialValue extends TokenSequence implements EagleRunnable
@@ -96,7 +95,7 @@ public class Java_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, initialValue.expression);
 		}
-		result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+		result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 		
 		for (Java_MoreIdentifiers more : moreIds._elements)
 		{
@@ -106,13 +105,27 @@ public class Java_Data extends TokenSequence
 			{
 				initial = transformer.transformExpression(generator, more.initialValue.expression);
 			}
-			result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 		}
 		
 		return result;
 	}
 	
-	public static Java_Data newDataDeclaration(String name, Java_Expression size, Java_Type type,
+	// Called directly from Java_Program for static class-level data
+	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractType newType = Java_Type.findType(generator, jtype);
+		
+		String name = id.getValue();
+		AbstractExpression initial = null;
+		if (initialValue != null && initialValue.isPresent())
+		{
+			initial = transformer.transformExpression(generator, initialValue.expression);
+		}
+		return generator.newDataDeclaration(true, name, null, newType, initial, this);
+	}
+	
+	public static Java_Data newDataDeclaration(boolean isStatic, String name, Java_Expression size, Java_Type type,
 			Java_Expression initial, AbstractToken source)
 	{
 		if (type == null)
@@ -134,6 +147,11 @@ public class Java_Data extends TokenSequence
 		data.id.setValue(name);
 		data.jtype = type;
 
+		if (isStatic)
+		{
+			data.addModifier("static");
+		}
+		
 		// Set the initial value, if any
 		if (initial != null)
 		{
@@ -147,5 +165,17 @@ public class Java_Data extends TokenSequence
 
 		data.setTransformationSource(source);
 		return data;
+	}
+
+	private void addModifier(String which)
+	{
+		Java_DataModifier mod = new Java_DataModifier();
+		mod.modifier.setValue(which);
+		if (modifiers == null)
+		{
+			modifiers = new TokenList<Java_DataModifier>();
+			modifiers.setPresent(true);
+		}
+		modifiers.addToken(mod);
 	}
 }

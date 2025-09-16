@@ -297,7 +297,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 								SubscriptEnum.FIRST_IS_ONE, null, this);
 						newType = generator.transformType(TypeEnum.STRING_ARRAY, varName, this);
 						AbstractStatement data = generator.newDataDeclaration(
-								varName, null, newType, redef, this);
+								false, varName, null, newType, redef, this);
 						generator.addStatement(data, this);
 						return;
 					}
@@ -334,7 +334,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			if (newType != null)
 			{
 				AbstractStatement data = generator.newDataDeclaration(
-						varName, null, newType, expression, this);
+						false, varName, null, newType, expression, this);
 				generator.addStatement(data, this);
 				return;
 			}
@@ -357,7 +357,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					AbstractExpression arrayExpr = generator.newArrayExpression(newValues, this);
 					newType = generator.transformType(TypeEnum.STRING_ARRAY, varName, this);
 					AbstractStatement data = generator.newDataDeclaration(
-							varName, null, newType, arrayExpr, this);
+							false, varName, null, newType, arrayExpr, this);
 					generator.addStatement(data, this);
 					return;
 				}

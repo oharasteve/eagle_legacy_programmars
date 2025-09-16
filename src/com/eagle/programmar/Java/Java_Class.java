@@ -7,7 +7,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Method.Java_Constructor;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
-import com.eagle.programmar.Java.Statements.Java_StaticStatement;
 import com.eagle.programmar.Java.Symbols.Java_Class_Definition;
 import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
@@ -92,7 +91,7 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 		public @FIRST @NEWLINE Java_Constructor XXconstructor;
 		public @CHOICE @CURIOUS(value = "Extra semicolon") PunctuationSemicolon XXsemicolon;
 
-		public @CHOICE Java_StaticStatement XXstaticStatement;
+		public @LAST Java_Statement XXstatement;
 	}
 
 	@Override

@@ -14,10 +14,15 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_PreIncrementExpression extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_PunctuationChoice operator =
 			new Java_PunctuationChoice("++", "--");
@@ -46,6 +51,25 @@ public class Java_PreIncrementExpression extends PrimaryOperator
 			interpreter.setSymbol(var, id.getValue(), new EagleInteger(curr));
 			interpreter.pushInt(curr);
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		IncrementEnum whichDirection;
+		switch (operator.getValue())
+		{
+		case "++":
+			whichDirection = IncrementEnum.INCREMENT;
+			break;
+		case "--":
+			whichDirection = IncrementEnum.DECREMENT;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
+		Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
+		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
 	}
 
 	public Java_Expression generateIncrement(Java_Variable varName,

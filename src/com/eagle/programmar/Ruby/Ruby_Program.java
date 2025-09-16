@@ -84,7 +84,7 @@ public class Ruby_Program extends AbstractLanguage
 				AbstractType abstrType = generator.transformType(typE, null, this);
 
 				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName,
+				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, null, this);
 				generator.addStatement(dataStmt, this);
 			}

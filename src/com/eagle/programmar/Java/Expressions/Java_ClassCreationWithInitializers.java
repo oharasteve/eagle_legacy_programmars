@@ -26,8 +26,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_ClassCreationWithInitializers extends PrimaryOperator implements EagleRunnable
+public class Java_ClassCreationWithInitializers extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Keyword NEW = new Java_Keyword("new");
 	public @S(20) Java_Type jtype;
@@ -57,6 +61,27 @@ public class Java_ClassCreationWithInitializers extends PrimaryOperator implemen
 		interpreter.pushEagleValue(array);
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+		
+		if (valueList.arg.isPresent())
+		{
+			exprs.add(transformer.transformExpression(generator, valueList.arg));
+		}
+		
+		if (valueList.moreArgs.isPresent())
+		{
+			for (Java_MoreArguments more : valueList.moreArgs._elements)
+			{
+				exprs.add(transformer.transformExpression(generator, more.arg));
+			}
+		}
+
+		return generator.newArrayExpression(exprs, this);
+	}
+
 	public Java_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{

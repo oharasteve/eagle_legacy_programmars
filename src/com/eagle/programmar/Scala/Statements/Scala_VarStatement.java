@@ -47,7 +47,7 @@ public class Scala_VarStatement extends TokenSequence
 		AbstractExpression initial = transformer.transformExpression(generator, value);
 		
 		String name = id.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
 	}
 }

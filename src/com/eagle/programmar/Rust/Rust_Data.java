@@ -62,7 +62,7 @@ public class Rust_Data extends TokenSequence
 		}
 		
 		String name = var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
 	}
 }

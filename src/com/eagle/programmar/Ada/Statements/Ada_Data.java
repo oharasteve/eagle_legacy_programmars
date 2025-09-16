@@ -67,7 +67,7 @@ public class Ada_Data extends TokenSequence
 		{
 			Ada_Variable_Definition id = ids.getPrimaryElement(i);
 			String varName = id.getValue();
-			AbstractStatement data = generator.newDataDeclaration(varName, null,
+			AbstractStatement data = generator.newDataDeclaration(false, varName, null,
 					newType, newInit, this);
 			if (data != null)
 			{

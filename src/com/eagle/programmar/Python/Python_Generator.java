@@ -245,8 +245,8 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
-	public Python_ComplexStatement newDataDeclaration(String name, Python_Expression size, Python_Type type,
-			Python_Expression initial, AbstractToken source)
+	public Python_ComplexStatement newDataDeclaration(boolean isStatic, String name, Python_Expression size,
+			Python_Type type, Python_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Python_Data.newDataDeclaration(name,size, type, initial, source));
 	}

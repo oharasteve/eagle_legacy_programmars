@@ -55,7 +55,7 @@ public class Rust_LetStatement extends TokenSequence
 		AbstractExpression initial = transformer.transformExpression(generator, expr);
 		
 		String name = var.var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
 	}
 }

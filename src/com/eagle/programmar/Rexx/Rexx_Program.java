@@ -100,7 +100,7 @@ public class Rexx_Program extends AbstractLanguage
 				}
 				
 				//System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName,
+				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
 			}

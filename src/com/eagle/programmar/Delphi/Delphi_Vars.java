@@ -54,7 +54,7 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 			{
 				Delphi_Variable_Definition def = var.vars.getPrimaryElement(i);
 				String varName = def.getValue();
-				AbstractStatement data = generator.newDataDeclaration(varName, null,
+				AbstractStatement data = generator.newDataDeclaration(false, varName, null,
 						newType, null, def);
 				if (data != null)
 				{

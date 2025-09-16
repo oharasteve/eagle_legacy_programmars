@@ -13,6 +13,7 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
@@ -148,10 +149,35 @@ public class Java_Program extends AbstractLanguage
 				Java_Class cls = (Java_Class) which1;
 				for (Java_ClassElement elt2 : cls.elements._elements)
 				{
-					if (elt2.getWhich() instanceof EagleTransformableFunction)
+					AbstractToken which2 = elt2.getWhich();
+					if (which2 instanceof EagleTransformableFunction)
 					{
-						EagleTransformableFunction transformable = (EagleTransformableFunction) elt2.getWhich();
+						EagleTransformableFunction transformable = (EagleTransformableFunction) which2;
 						transformable.transformFunction(transformer, generator);
+					}
+					else
+					{
+						// Probably global (class-level) data
+						if (which2 instanceof Java_Statement)
+						{
+							Java_Statement stmt = (Java_Statement) which2;
+							AbstractToken which3 = stmt.getWhich();
+							if (which3 instanceof Java_Data)
+							{
+								Java_Data data = (Java_Data) which3;
+								AbstractStatement stmt3 = data.transformStaticData(transformer, generator);
+								generator.addStatement(stmt3, elt1);
+							}
+						}
+						
+//						ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, which2);
+//						if (stmts != null && stmts.size() > 0)
+//						{
+//							for (AbstractStatement stmt : stmts)
+//							{
+//								generator.addStatement(stmt, which2);
+//							}
+//						}
 					}
 				}
 			}

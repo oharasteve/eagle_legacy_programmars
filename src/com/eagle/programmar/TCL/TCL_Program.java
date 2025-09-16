@@ -97,7 +97,7 @@ public class TCL_Program extends AbstractLanguage
 			{
 				// System.err.println("****** Found var " + met._symbolName);
 				AbstractType absType = generator.transformType(typ, null, this);
-				AbstractStatement dataStmt = generator.newDataDeclaration(met._symbolName, null, absType, null, this);
+				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType, null, this);
 				generator.addStatement(dataStmt, this);
 			}
 		}
