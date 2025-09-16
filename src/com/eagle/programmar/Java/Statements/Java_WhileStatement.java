@@ -86,7 +86,7 @@ public class Java_WhileStatement extends TokenSequence implements
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> action = transformer.transformStatement(generator,
-				whileStatement);
+				whileStatement.getWhich());
 		return generator.newWhileStatement(cond, action, this);
 	}
 	

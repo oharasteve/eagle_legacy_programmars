@@ -14,11 +14,15 @@ import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_AssignmentExpression extends PrecedenceOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression var = new Java_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice(
@@ -95,5 +99,50 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		this.expr = expression;
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		if (! (var.getWhich() instanceof Java_VariableExpression))
+		{
+			throw new RuntimeException("Can only assign variables");
+		}
+		Java_VariableExpression variableExpr = (Java_VariableExpression) var.getWhich();
+		Java_Variable theVar = variableExpr.variable;
+
+		AbstractExpression subscrExpr = null;
+		if (theVar.subscript != null && theVar.subscript.size() > 0)
+		{
+			subscrExpr = transformer.transformExpression(generator, theVar.subscript.first().expr);
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractToken which = theVar.firstId.getWhich();
+		if (! (which instanceof Java_Identifier_Reference))
+		{
+			throw new RuntimeException("Have to assign to a regular variable");
+		}
+		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
+		
+		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+		return asgExpr;
 	}
 }

@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Java;
 
-import java.util.Collection;
-
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -15,7 +13,6 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;

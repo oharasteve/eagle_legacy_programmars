@@ -22,7 +22,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -86,10 +85,6 @@ public class Java_Data extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		// See if the Definition has some assignments in the metrics file
-		TypeEnum type = transformer.findAssignMetric(id);
-		AbstractType newType = generator.transformType(type, null, null);
-		
 		AbstractExpression initial = null;
 		if (initialValue != null && initialValue.isPresent())
 		{
@@ -97,6 +92,7 @@ public class Java_Data extends TokenSequence
 		}
 		
 		String name = id.getValue();
+		AbstractType newType = Java_Type.findType(generator, jtype);
 		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
 		return stmt;
 	}

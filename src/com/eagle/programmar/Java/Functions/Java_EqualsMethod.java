@@ -5,14 +5,22 @@ package com.eagle.programmar.Java.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_EqualsMethod extends PrecedenceOperator implements EagleRunnable
+public class Java_EqualsMethod extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -38,5 +46,16 @@ public class Java_EqualsMethod extends PrecedenceOperator implements EagleRunnab
 		equals.expr = rightExpr;
 		equals.rightParen = new PunctuationRightParen();
 		return equals;
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, expr);
+		Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
+		return generator.newRelationalExpression(types, leftExpr,	
+				RelationalEnum.EQUALS, rightExpr, this);
 	}
 }
