@@ -51,7 +51,6 @@ public class Java_Reserved_Words
 			"super",
 			"switch",
 			"synchronized",
-			"System",
 			"this",
 			"throw ",
 			"throws",
