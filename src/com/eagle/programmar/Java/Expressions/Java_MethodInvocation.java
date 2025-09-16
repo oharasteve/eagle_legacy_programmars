@@ -23,6 +23,7 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -143,7 +144,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 				}
 			}
 			
-			Java_Variable var = Java_Variable.newVariable(id.getValue());
+			AbstractVariable var = generator.newVariable(id.getValue());
 			return generator.newMethodInvocation(var, args, this);
 		}
 		throw new RuntimeException("Can't handle: " + this);
