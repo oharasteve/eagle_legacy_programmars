@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.CSharp;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -12,13 +14,20 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_Data extends TokenSequence implements EagleRunnable
+public class CSharp_Data extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) @NEWLINE CSharp_DataBeforeSemicolon dataBody;
 	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
@@ -73,6 +82,34 @@ public class CSharp_Data extends TokenSequence implements EagleRunnable
 		interpreter.tryToInterpret(dataBody);
 	}
 	
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+		AbstractType newType = CSharp_Type.findType(generator, dataBody.type);
+		
+		String name = dataBody.id.getValue();
+		AbstractExpression initial = null;
+		if (dataBody.initialValue != null && dataBody.initialValue.isPresent())
+		{
+			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
+		}
+		result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+		
+		for (CSharp_MoreIdentifiers more : dataBody.moreIds._elements)
+		{
+			name = more.id.getValue();
+			initial = null;
+			if (more.initialValue != null && more.initialValue.isPresent())
+			{
+				initial = transformer.transformExpression(generator, more.initialValue.expression);
+			}
+			result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+		}
+		
+		return result;
+	}
+
 	public static CSharp_Data newDataDeclaration(String name, CSharp_Expression size, CSharp_Type type,
 			CSharp_Expression initial, AbstractToken source)
 	{

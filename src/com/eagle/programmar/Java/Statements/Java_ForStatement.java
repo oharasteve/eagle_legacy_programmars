@@ -79,8 +79,9 @@ public class Java_ForStatement extends TokenSequence
 
 	public static class Java_ForWhat extends TokenChooser
 	{
-		public @CHOICE Java_Expression XXexpr;
-		public @FIRST Java_ForWithType XXforWithType;
+		public @CHOICE Java_ForWithType XXforWithType;
+		public @CHOICE Java_ForWithoutType XXforWithoutType;
+		public @LAST Java_Expression XXexpr;
 	}
 
 	public static class Java_ForWithType extends TokenSequence
@@ -88,6 +89,12 @@ public class Java_ForStatement extends TokenSequence
 		public @S(10) Java_Type varType;
 		public @S(20) Java_Variable_Definition variable;
 		public @S(30) @OPT Java_ForTypeInit equalsInit;
+	}
+
+	public static class Java_ForWithoutType extends TokenSequence
+	{
+		public @S(10) Java_Variable_Definition variable;
+		public @S(20) Java_ForTypeInit equalsInit;
 	}
 
 	public static class Java_ForTypeInit extends TokenSequence
@@ -113,48 +120,55 @@ public class Java_ForStatement extends TokenSequence
 		if (forWhat.getWhich() instanceof Java_ForWithType)
 		{
 			Java_ForWithType whatforWith = (Java_ForWithType) forWhat.getWhich();
-
 			EagleValue init = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
 			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), init);
+		}
+		else if (forWhat.getWhich() instanceof Java_ForWithoutType)
+		{
+			Java_ForWithoutType whatforWithout = (Java_ForWithoutType) forWhat.getWhich();
+			EagleValue init = interpreter.getEagleValue(whatforWithout.equalsInit.initialExpr);
+			interpreter.setSymbol(whatforWithout.variable, whatforWithout.variable.getValue(), init);
+		}
+		else
+		{
+			throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+		}
+		
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
+		}
+		ForLoopMetric metric = new ForLoopMetric();
 
-			if (_metrics == null)
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			boolean keepGoing = interpreter.getBoolValue(terminateCondition);
+			if (!keepGoing) break;
+
+			metric.iterate();
+			result = interpreter.tryToInterpret(action);
+			if (result == Eagle_Statement_Result.BREAK)
 			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
 			}
-			ForLoopMetric metric = new ForLoopMetric();
-
-			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			while (true)
+			else if (result == Eagle_Statement_Result.CONTINUE)
 			{
-				boolean keepGoing = interpreter.getBoolValue(terminateCondition);
-				if (!keepGoing) break;
-
-				metric.iterate();
-				result = interpreter.tryToInterpret(action);
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					result = Eagle_Statement_Result.NORMAL;
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-					result = Eagle_Statement_Result.NORMAL;
-				}
-				else if (result == Eagle_Statement_Result.RETURN)
-				{
-					break;
-				}
-
-				interpreter.tryToInterpret(increments.first());
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
 			}
 
-			_metrics.competedLoop(metric);
-			return result;
+			interpreter.tryToInterpret(increments.first());
 		}
 
-		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+		_metrics.competedLoop(metric);
+		return result;
 	}
 
 	@Override
@@ -163,24 +177,35 @@ public class Java_ForStatement extends TokenSequence
 	{
 		if (this.initial.what.getPrimaryCount() == 1)
 		{
-			Java_ForWhat what = this.initial.what.getPrimaryElement(0);
+			String varName = null;
+			Java_Expression forInit = null;
+			Java_ForWhat what = this.initial.what.first();
 			if (what.getWhich() instanceof Java_ForWithType)
 			{
 				Java_ForWithType withType = (Java_ForWithType) what.getWhich();
-				String varName = withType.variable.getValue();
-				AbstractExpression fromExpr = transformer.transformExpression(generator,
-						withType.equalsInit.initialExpr);
+				varName = withType.variable.getValue();
+				forInit = withType.equalsInit.initialExpr;
+			}
+			else if (what.getWhich() instanceof Java_ForWithoutType)
+			{
+				Java_ForWithoutType withoutType = (Java_ForWithoutType) what.getWhich();
+				varName = withoutType.variable.getValue();
+				forInit = withoutType.equalsInit.initialExpr;
+			}
+			
+			if (forInit != null)
+			{
+				AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
 				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
 				
 				if (this.increments.getPrimaryCount() == 1)
 				{
-					AbstractExpression toExpr = transformer.transformExpression(generator,
-							withType.equalsInit.initialExpr);
+					AbstractExpression termExpr = transformer.transformExpression(generator, terminateCondition);
 					AbstractExpression delta = transformer.transformExpression(generator,
 							increments.first());
 					AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
-					return generator.newForLoopStatement1(asgExpr, toExpr, delta, newAction, this);
+					return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
 				}
 			}
 		}

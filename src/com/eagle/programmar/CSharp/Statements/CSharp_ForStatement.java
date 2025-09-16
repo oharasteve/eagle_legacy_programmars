@@ -31,6 +31,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -39,17 +40,22 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_ForStatement extends TokenSequence
-			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
+			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
+					EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT @NOSPACE SeparatedList<CSharp_ForWhat, PunctuationComma> what;
+	public @S(30) @OPT @NOSPACE SeparatedList<CSharp_ForWhat, PunctuationComma> initial;
 	public @S(40) @NOSPACE PunctuationSemicolon semicolon1;
 	public @S(50) CSharp_Expression terminateCondition;
 	public @S(60) @NOSPACE PunctuationSemicolon semicolon2;
@@ -61,8 +67,9 @@ public class CSharp_ForStatement extends TokenSequence
 
 	public static class CSharp_ForWhat extends TokenChooser
 	{
-		public @FIRST CSharp_ForWithType XXwithType;
-		public @CHOICE CSharp_Expression XXexpr;
+		public @CHOICE CSharp_ForWithType XXwithType;
+		public @CHOICE CSharp_ForWithoutType XXwithoutType;
+		public @LAST CSharp_Expression XXexpr;
 	}
 
 	public static class CSharp_ForWithType extends TokenSequence
@@ -70,6 +77,12 @@ public class CSharp_ForStatement extends TokenSequence
 		public @S(10) CSharp_Type varType;
 		public @S(20) CSharp_Variable_Definition variable;
 		public @S(30) @OPT CSharp_ForTypeInit equalsInit;
+	}
+	
+	public static class CSharp_ForWithoutType extends TokenSequence
+	{
+		public @S(10) CSharp_Variable_Definition variable;
+		public @S(20) CSharp_ForTypeInit equalsInit;
 	}
 	
 	public static class CSharp_ForTypeInit extends TokenSequence
@@ -89,52 +102,101 @@ public class CSharp_ForStatement extends TokenSequence
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		CSharp_ForWhat forWhat = what.first();
+		CSharp_ForWhat forWhat = initial.first();
 		if (forWhat.getWhich() instanceof CSharp_ForWithType)
 		{
 			CSharp_ForWithType whatforWith = (CSharp_ForWithType) forWhat.getWhich();
-
-			EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
-			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
-
-			if (_metrics == null)
-			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
-			}
-			ForLoopMetric metric = new ForLoopMetric();
-
-			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			while (true)
-			{
-				boolean keepGoing = interpreter.getBoolValue(terminateCondition);
-				if (!keepGoing) break;
-
-				metric.iterate();
-				result = interpreter.tryToInterpret(action);
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					result = Eagle_Statement_Result.NORMAL;
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-					result = Eagle_Statement_Result.NORMAL;
-				}
-				else if (result == Eagle_Statement_Result.RETURN)
-				{
-					break;
-				}
-
-				interpreter.tryToInterpret(increments.first());
-			}
-
-			_metrics.competedLoop(metric);
-			return result;
+			EagleValue init = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
+			interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), init);
+		}
+		else if (forWhat.getWhich() instanceof CSharp_ForWithoutType)
+		{
+			CSharp_ForWithoutType whatforWithout = (CSharp_ForWithoutType) forWhat.getWhich();
+			EagleValue init = interpreter.getEagleValue(whatforWithout.equalsInit.initialExpr);
+			interpreter.setSymbol(whatforWithout.variable, whatforWithout.variable.getValue(), init);
+		}
+		else
+		{
+			throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 		}
 
-		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			boolean keepGoing = interpreter.getBoolValue(terminateCondition);
+			if (!keepGoing) break;
+
+			metric.iterate();
+			result = interpreter.tryToInterpret(action);
+			if (result == Eagle_Statement_Result.BREAK)
+			{
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
+			}
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+
+			interpreter.tryToInterpret(increments.first());
+		}
+
+		_metrics.competedLoop(metric);
+		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (this.initial.getPrimaryCount() == 1)
+		{
+			String varName = null;
+			CSharp_Expression forInit = null;
+			CSharp_ForWhat what = this.initial.first();
+			if (what.getWhich() instanceof CSharp_ForWithType)
+			{
+				CSharp_ForWithType withType = (CSharp_ForWithType) what.getWhich();
+				varName = withType.variable.getValue();
+				forInit = withType.equalsInit.initialExpr;
+			}
+			else if (what.getWhich() instanceof CSharp_ForWithoutType)
+			{
+				CSharp_ForWithoutType withoutType = (CSharp_ForWithoutType) what.getWhich();
+				varName = withoutType.variable.getValue();
+				forInit = withoutType.equalsInit.initialExpr;
+			}
+			
+			if (forInit != null)
+			{
+				AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
+				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
+				
+				if (this.increments.getPrimaryCount() == 1)
+				{
+					AbstractExpression termExpr = transformer.transformExpression(generator, terminateCondition);
+					AbstractExpression delta = transformer.transformExpression(generator,
+							increments.first());
+					AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
+					return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+				}
+			}
+		}
+		
+		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 	
 	public CSharp_Statement generateForLoop1(CSharp_Expression initExpression,
@@ -152,7 +214,7 @@ public class CSharp_ForStatement extends TokenSequence
 
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
-		forStmt.what = initializer;
+		forStmt.initial = initializer;
 		forStmt.semicolon1 = new PunctuationSemicolon();
 		forStmt.terminateCondition = condExpression;
 		forStmt.terminateCondition.setPresent(true);
@@ -234,7 +296,7 @@ public class CSharp_ForStatement extends TokenSequence
 				
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
-		forStmt.what = initializer;
+		forStmt.initial = initializer;
 		forStmt.semicolon1 = new PunctuationSemicolon();
 		forStmt.terminateCondition = loopTest;
 		forStmt.terminateCondition.setPresent(true);

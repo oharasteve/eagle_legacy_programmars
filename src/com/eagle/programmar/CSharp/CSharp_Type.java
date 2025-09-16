@@ -17,6 +17,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_Type extends TokenSequence implements AbstractType
@@ -164,5 +165,38 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		newType.genericType.subType.addPrimaryElement(newPrimitiveType("string"));
 		
 		return newType;
+	}
+
+	public static AbstractType findType(EagleGenerator generator, CSharp_Type type)
+	{
+		TypeEnum newType;
+		if (type.arrayTypes != null && type.arrayTypes.size() > 0)
+		{
+			newType = TypeEnum.STRING_ARRAY;
+		}
+		else
+		{
+			CSharp_KeywordChoice typeNameKW = (CSharp_KeywordChoice) type.typeName.getWhich();
+			switch (typeNameKW.getValue().toLowerCase())
+			{
+			case "bool":
+				newType = TypeEnum.BOOLEAN;
+				break;
+			case "int":
+				newType = TypeEnum.INTEGER;
+				break;
+			case "string":
+				newType = TypeEnum.STRING;
+				break;
+			case "void":
+				newType = TypeEnum.VOID;
+				break;
+			default:
+				newType = TypeEnum.OTHER;
+				break;
+			}
+		}
+		
+		return generator.transformType(newType, null, null);
 	}
 }

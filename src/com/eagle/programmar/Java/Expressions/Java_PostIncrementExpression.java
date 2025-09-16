@@ -56,8 +56,20 @@ public class Java_PostIncrementExpression extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
+		IncrementEnum whichDirection;
+		switch (operator.getValue())
+		{
+		case "++":
+			whichDirection = IncrementEnum.INCREMENT;
+			break;
+		case "--":
+			whichDirection = IncrementEnum.DECREMENT;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
-		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, IncrementEnum.INCREMENT, this);
+		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
 	}
 	
 	public Java_Expression generateIncrement(Java_Variable varName,

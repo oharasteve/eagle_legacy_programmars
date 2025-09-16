@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Java;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -22,11 +24,11 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_Data extends TokenSequence
-		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
 {
 	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotation1;
 	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;
@@ -83,18 +85,31 @@ public class Java_Data extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+		AbstractType newType = Java_Type.findType(generator, jtype);
+		
+		String name = id.getValue();
 		AbstractExpression initial = null;
 		if (initialValue != null && initialValue.isPresent())
 		{
 			initial = transformer.transformExpression(generator, initialValue.expression);
 		}
+		result.add(generator.newDataDeclaration(name, null, newType, initial, this));
 		
-		String name = id.getValue();
-		AbstractType newType = Java_Type.findType(generator, jtype);
-		AbstractStatement stmt = generator.newDataDeclaration(name, null, newType, initial, this);
-		return stmt;
+		for (Java_MoreIdentifiers more : moreIds._elements)
+		{
+			name = more.id.getValue();
+			initial = null;
+			if (more.initialValue != null && more.initialValue.isPresent())
+			{
+				initial = transformer.transformExpression(generator, more.initialValue.expression);
+			}
+			result.add(generator.newDataDeclaration(name, null, newType, initial, this));
+		}
+		
+		return result;
 	}
 	
 	public static Java_Data newDataDeclaration(String name, Java_Expression size, Java_Type type,
