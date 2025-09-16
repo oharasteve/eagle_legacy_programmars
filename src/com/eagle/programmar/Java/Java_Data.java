@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.CSharp.CSharp_Data.CSharp_DataModifier;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
@@ -167,7 +168,22 @@ public class Java_Data extends TokenSequence
 		return data;
 	}
 
-	private void addModifier(String which)
+	private boolean hasModifier(String which)
+	{
+		if (modifiers != null)
+		{
+			for (Java_DataModifier mod : modifiers._elements)
+			{
+				if (which.equals(mod.modifier.getValue()))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public void addModifier(String which)
 	{
 		Java_DataModifier mod = new Java_DataModifier();
 		mod.modifier.setValue(which);
@@ -176,6 +192,9 @@ public class Java_Data extends TokenSequence
 			modifiers = new TokenList<Java_DataModifier>();
 			modifiers.setPresent(true);
 		}
-		modifiers.addToken(mod);
+		if (! hasModifier(which))
+		{
+			modifiers.addToken(mod);
+		}
 	}
 }

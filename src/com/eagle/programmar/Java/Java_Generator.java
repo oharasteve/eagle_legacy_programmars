@@ -215,6 +215,9 @@ public class Java_Generator
 			
 			if (saveInClass)
 			{
+				Java_Data data = (Java_Data) stmt.getWhich();
+				data.addModifier("static");
+				
 				// Put it in top-level class, not the 'main' method
 				Java_ClassElement element = new Java_ClassElement();
 				element.setWhich(stmt);

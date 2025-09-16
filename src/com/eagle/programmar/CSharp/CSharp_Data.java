@@ -153,7 +153,22 @@ public class CSharp_Data extends TokenSequence
 		return data;
 	}
 	
-	private void addModifier(String which)
+	private boolean hasModifier(String which)
+	{
+		if (dataBody.modifiers != null)
+		{
+			for (CSharp_DataModifier mod : dataBody.modifiers._elements)
+			{
+				if (which.equals(mod.modifier.getValue()))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public void addModifier(String which)
 	{
 		CSharp_DataModifier mod = new CSharp_DataModifier();
 		mod.modifier.setValue(which);
@@ -162,6 +177,9 @@ public class CSharp_Data extends TokenSequence
 			dataBody.modifiers = new TokenList<CSharp_DataModifier>();
 			dataBody.modifiers.setPresent(true);
 		}
-		dataBody.modifiers.addToken(mod);
+		if (! hasModifier(which))
+		{
+			dataBody.modifiers.addToken(mod);
+		}
 	}
 }

@@ -206,6 +206,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			
 			if (saveInClass)
 			{
+				CSharp_Data data = (CSharp_Data) stmt.getWhich();
+				data.addModifier("static");
+				
 				// Put it in top-level class, not the 'main' method
 				CSharp_ClassElement element = new CSharp_ClassElement();
 				element.setWhich(stmt);
