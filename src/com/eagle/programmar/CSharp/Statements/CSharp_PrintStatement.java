@@ -71,7 +71,7 @@ public class CSharp_PrintStatement extends TokenSequence
 			newLine = true;
 			break;
 		default:
-			throw new RuntimeException("Unexpected PRINT value: " + WRITE.getValue());
+			throw new RuntimeException("Unexpected WRITE value: " + WRITE.getValue());
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, exprs.first());

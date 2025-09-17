@@ -12,6 +12,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Argument;
 import com.eagle.programmar.CSharp.CSharp_Argument.CSharp_ArgumentOut;
 import com.eagle.programmar.CSharp.CSharp_ArgumentList;
+import com.eagle.programmar.CSharp.CSharp_ArgumentList.CSharp_MoreArguments;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Method;
@@ -24,11 +25,16 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_MethodInvocation extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Variable methodName;
 	public @S(20) @OPT CSharp_GenericType generic;
@@ -118,6 +124,35 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 		}
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		CSharp_Variable variable = this.methodName;
+		if (variable.firstId.getWhich() instanceof CSharp_Identifier_Reference)
+		{
+			CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) variable.firstId.getWhich();
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			if (this.argList != null && this.argList.isPresent())
+			{
+				CSharp_Expression expr1 = argList.arg.getExpression();
+				args.add(transformer.transformExpression(generator, expr1));
+				if (this.argList.moreArgs != null && this.argList.moreArgs.isPresent())
+				{
+					for (CSharp_MoreArguments arg : this.argList.moreArgs._elements)
+					{
+						CSharp_Expression expr2 = arg.arg.getExpression();
+						args.add(transformer.transformExpression(generator, expr2));
+					}
+				}
+			}
+			
+			AbstractVariable var = generator.newVariable(id.getValue());
+			return generator.newMethodInvocation(var, args, this);
+		}
+		throw new RuntimeException("Can't handle: " + this);
+	}
+
 	public CSharp_Expression generateInvocation(CSharp_Variable var,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{

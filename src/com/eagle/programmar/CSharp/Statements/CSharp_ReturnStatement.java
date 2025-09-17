@@ -12,11 +12,15 @@ import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_ReturnStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
 	public @S(20) @DOC("statements/jump-statements#the-return-statement") CSharp_Keyword RETURN = new CSharp_Keyword("return");
@@ -31,6 +35,14 @@ public class CSharp_ReturnStatement extends TokenSequence
 		return Eagle_Statement_Result.RETURN;
 	}
 	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression expr = transformer.transformExpression(generator, expression);
+		return generator.newReturnStatement(expr, this);
+	}
+
 	public CSharp_Statement generateReturn(CSharp_Expression ret, AbstractToken source)
 	{
 		if (ret != null)

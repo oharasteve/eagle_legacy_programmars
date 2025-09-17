@@ -26,8 +26,12 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_ClassCreationWithInitializers extends PrimaryOperator implements EagleRunnable
+public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Keyword NEW = new CSharp_Keyword("new");
 	public @S(20) CSharp_Type cstype;
@@ -64,6 +68,29 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator implem
 		}
 		
 		interpreter.pushEagleValue(array);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+		
+		if (valueList.arg.isPresent())
+		{
+			CSharp_Expression expr1 = valueList.arg.getExpression();
+			exprs.add(transformer.transformExpression(generator, expr1));
+		}
+		
+		if (valueList.moreArgs.isPresent())
+		{
+			for (CSharp_MoreArguments more : valueList.moreArgs._elements)
+			{
+				CSharp_Expression expr2 = more.arg.getExpression();
+				exprs.add(transformer.transformExpression(generator, expr2));
+			}
+		}
+
+		return generator.newArrayExpression(exprs, this);
 	}
 
 	public CSharp_Expression generateArray(ArrayList<AbstractExpression> exprs,

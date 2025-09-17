@@ -12,9 +12,13 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_BreakStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
 	public @S(20) @DOC("statements/jump-statements#the-break-statement") CSharp_Keyword BREAK = new CSharp_Keyword("break");
@@ -26,6 +30,13 @@ public class CSharp_BreakStatement extends TokenSequence
 		return Eagle_Statement_Result.BREAK;
 	}
 	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return generator.newBreakStatement(this);
+	}
+
 	public CSharp_Statement generateBreak(AbstractToken source)
 	{
 		this.semicolon = new PunctuationSemicolon();

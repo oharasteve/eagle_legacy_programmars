@@ -4,6 +4,7 @@
 package com.eagle.programmar.CSharp;
 
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 
@@ -26,5 +27,26 @@ public class CSharp_Argument extends TokenChooser
 	{
 		public @S(10) @OPT CSharp_Keyword OUT = new CSharp_Keyword("out");
 		public @S(20) CSharp_Expression arg;
+	}
+	
+	public CSharp_Expression getExpression()
+	{
+		AbstractToken which = this.getWhich();
+		if (which instanceof CSharp_ArgumentOut)
+		{
+			CSharp_ArgumentOut arg1 = (CSharp_ArgumentOut) which;
+			return arg1.arg;
+		}
+		if (which instanceof CSharp_ArgumentOutType)
+		{
+			CSharp_ArgumentOutType arg2 = (CSharp_ArgumentOutType) which;
+			return arg2.arg;
+		}
+		if (which instanceof CSharp_ArgumentRef)
+		{
+			CSharp_ArgumentRef arg3 = (CSharp_ArgumentRef) which;
+			return arg3.arg;
+		}
+		throw new RuntimeException("Unable to process: " + which);
 	}
 }
