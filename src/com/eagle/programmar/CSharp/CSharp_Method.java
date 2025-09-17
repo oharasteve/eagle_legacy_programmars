@@ -164,7 +164,7 @@ public class CSharp_Method extends TokenSequence
 		{
 			System.out.println("** Found CSharp method " + newName);
 		}
-		if (newName.equals("main"))
+		if (newName.equals("Main"))
 		{
 			newName = generator.mainName();
 		}

@@ -10,15 +10,19 @@ import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_StartsWithMethod extends PrecedenceOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -43,6 +47,21 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 		{
 			interpreter.pushBool(leftStr.startsWith(pattern));
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, left);
+		AbstractExpression thePattern = transformer.transformExpression(generator, pattExpr);
+		AbstractExpression theSC = null;
+		if (scExpr != null && scExpr.isPresent())
+		{
+			theSC = transformer.transformExpression(generator, scExpr);
+		}
+		
+		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 
 	public CSharp_Expression generateStartsWith(CSharp_Expression expr, CSharp_Expression patt,

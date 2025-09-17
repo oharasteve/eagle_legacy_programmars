@@ -112,12 +112,12 @@ public class Python_Subscript extends TokenSequence
 			break;
 		}
 
+		subscr.body.subscriptStop = new Python_ColonSubscript();
+		subscr.body.subscriptStop.setPresent(true);
+		subscr.body.subscriptStop.colon = new PunctuationColon();
 		switch (whichEC)
 		{
 		case GIVEN_EC:
-			subscr.body.subscriptStop = new Python_ColonSubscript();
-			subscr.body.subscriptStop.colon = new PunctuationColon();
-			subscr.body.subscriptStop.setPresent(true);
 			if (ecOrnc != null)
 			{
 				switch (whichSC)
@@ -139,9 +139,6 @@ public class Python_Subscript extends TokenSequence
 			}
 			break;
 		case GIVEN_EC_PLUS_ONE:
-			subscr.body.subscriptStop = new Python_ColonSubscript();
-			subscr.body.subscriptStop.colon = new PunctuationColon();
-			subscr.body.subscriptStop.setPresent(true);
 			if (ecOrnc != null)
 			{
 				subscr.body.subscriptStop.expr = (Python_Expression) ecOrnc;
@@ -149,9 +146,6 @@ public class Python_Subscript extends TokenSequence
 			}
 			break;
 		case GIVEN_NC:
-			subscr.body.subscriptStop = new Python_ColonSubscript();
-			subscr.body.subscriptStop.colon = new PunctuationColon();
-			subscr.body.subscriptStop.setPresent(true);
 			Python_Additive_Expression addExpr = new Python_Additive_Expression();
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
 			Python_Expression scPlusNc = addExpr.generateAdditive(types,
@@ -160,7 +154,6 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop.expr.setPresent(true);
 			break;
 		case GIVEN_NEITHER:
-			subscr.body.subscriptStop = null;
 			break;
 		}
 		subscr.setTransformationSource(source);

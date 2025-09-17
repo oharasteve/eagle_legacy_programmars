@@ -61,9 +61,15 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, left);
 		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
-		AbstractExpression nc = transformer.transformExpression(generator, ncExpr);
+		AbstractExpression nc = null;
+		SubstringECEnum given = SubstringECEnum.GIVEN_NEITHER;
+		if (ncExpr != null && ncExpr.isPresent())
+		{
+			nc = transformer.transformExpression(generator, ncExpr);
+			given = SubstringECEnum.GIVEN_NC;
+		}
 		return generator.newSubstringFunction(theExpr, sc, SubstringSCEnum.FIRST_CHAR_IS_ZERO,
-				SubstringECEnum.GIVEN_NC, nc, true, this);
+				given, nc, true, this);
 	}
 	
 	public static CSharp_SubstringMethod generateExpression(AbstractExpression theExpr,
@@ -133,10 +139,13 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			}
 			break;
 		case GIVEN_NC:
-			expr.comma = new PunctuationComma();
-			expr.comma.setPresent(true);
-			expr.ncExpr = (CSharp_Expression) ecOrnc;
-			expr.ncExpr.setPresent(true);
+			if (ecOrnc != null)
+			{
+				expr.comma = new PunctuationComma();
+				expr.comma.setPresent(true);
+				expr.ncExpr = (CSharp_Expression) ecOrnc;
+				expr.ncExpr.setPresent(true);
+			}
 			break;
 		case GIVEN_NEITHER:
 			expr.ncExpr = null;

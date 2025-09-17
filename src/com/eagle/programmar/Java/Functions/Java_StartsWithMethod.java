@@ -47,6 +47,21 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 			interpreter.pushBool(leftStr.startsWith(pattern));
 		}
 	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		AbstractExpression thePattern = transformer.transformExpression(generator, patternExpr);
+		AbstractExpression theSC = null;
+		if (scExpr != null && scExpr.isPresent())
+		{
+			theSC = transformer.transformExpression(generator, scExpr);
+		}
+		
+		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
+	}
 	
 	public Java_Expression generateStartsWith(Java_Expression expr, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
@@ -66,20 +81,5 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 		
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		AbstractExpression thePattern = transformer.transformExpression(generator, patternExpr);
-		AbstractExpression theSC = null;
-		if (scExpr != null && scExpr.isPresent())
-		{
-			theSC = transformer.transformExpression(generator, scExpr);
-		}
-		
-		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
-				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 }
