@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.CSharp.CSharp_Data.CSharp_DataModifier;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;

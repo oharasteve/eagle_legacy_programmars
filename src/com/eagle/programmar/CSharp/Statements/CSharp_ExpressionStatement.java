@@ -12,8 +12,12 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class CSharp_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE CSharp_Expression expr;
 	public @S(20) @NOSPACE PunctuationSemicolon semicolon;
@@ -32,5 +36,13 @@ public class CSharp_ExpressionStatement extends TokenSequence implements EagleRu
 		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
 		return stmt;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newExpressionStatement(newExpr, this);
 	}
 }

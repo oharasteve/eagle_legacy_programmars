@@ -123,19 +123,6 @@ public class Java_Program extends AbstractLanguage
 		return prog;
 	}
 	
-	public void addClass(Java_Class cls)
-	{
-		Java_ClassOrEnum entry = new Java_ClassOrEnum();
-		entry.setWhich(cls);
-	
-		if (this.classOrEnumList == null)
-		{
-			this.classOrEnumList = new TokenList<Java_ClassOrEnum>();
-			this.classOrEnumList.setPresent(true);
-		}
-		this.classOrEnumList.addToken(entry);
-	}
-	
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -169,15 +156,6 @@ public class Java_Program extends AbstractLanguage
 								generator.addStatement(stmt3, elt1);
 							}
 						}
-						
-//						ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, which2);
-//						if (stmts != null && stmts.size() > 0)
-//						{
-//							for (AbstractStatement stmt : stmts)
-//							{
-//								generator.addStatement(stmt, which2);
-//							}
-//						}
 					}
 				}
 			}
@@ -187,6 +165,19 @@ public class Java_Program extends AbstractLanguage
 		generator.addCallToMain();
 		
 		return generator.getTransfomedProgram();
+	}
+	
+	public void addClass(Java_Class cls)
+	{
+		Java_ClassOrEnum entry = new Java_ClassOrEnum();
+		entry.setWhich(cls);
+	
+		if (this.classOrEnumList == null)
+		{
+			this.classOrEnumList = new TokenList<Java_ClassOrEnum>();
+			this.classOrEnumList.setPresent(true);
+		}
+		this.classOrEnumList.addToken(entry);
 	}
 	
 	public void addComment(Java_Comment comment)

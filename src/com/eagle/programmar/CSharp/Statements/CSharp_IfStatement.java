@@ -17,12 +17,17 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_IfStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements/selection-statements") CSharp_Keyword IF = new CSharp_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -83,6 +88,24 @@ public class CSharp_IfStatement extends TokenSequence
 		return result;
 	}
 	
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator,
+				condition);
+		AbstractStatement thenPart = CSharp_StatementBlock.collectStatements(transformer, generator, thenStatement);
+
+		AbstractStatement elsePart = null;
+		if (elseClause != null && elseClause.isPresent())
+		{
+			elsePart = CSharp_StatementBlock.collectStatements(transformer, generator, elseClause.elseStatement);
+		}
+
+		return generator.newIfStatement1(cond, thenPart, elsePart, this);
+	}
+
 	public CSharp_Statement generateIfElse1(CSharp_Expression cond,
 			CSharp_Statement thenStmt,
 			CSharp_Statement elseStmt, AbstractToken source)

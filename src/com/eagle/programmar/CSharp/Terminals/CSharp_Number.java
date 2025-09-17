@@ -5,9 +5,14 @@ package com.eagle.programmar.CSharp.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_Number extends TerminalNumberToken
+		implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -26,5 +31,11 @@ public class CSharp_Number extends TerminalNumberToken
 		this.setValue(value);
 		this.setTransformationSource(source);
 		return this;
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newNumberExpression(_numberAsText, this);
 	}
 }

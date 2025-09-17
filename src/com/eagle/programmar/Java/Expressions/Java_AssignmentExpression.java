@@ -66,40 +66,6 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 			}
 		}
 	}
-	
-	public Java_Expression generateAssignment(Java_Variable variable, Java_Expression subscript,
-			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
-	{
-		String punct;
-		switch (oper)
-		{
-		case EQUALS:
-			punct = "=";
-			break;
-		case PLUS_EQUALS:
-			punct = "+=";
-			break;
-		case MINUS_EQUALS:
-			punct = "-=";
-			break;
-		default:
-			throw new RuntimeException("Unexpected assignment operator: " + oper);
-		}
-		
-		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof Java_Identifier_Reference))
-		{
-			throw new RuntimeException("Unable to handle " + which);
-		}
-		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
-		
-		Java_VariableExpression varExpr = new Java_VariableExpression();
-		this.var = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
-		this.operator.setValue(punct);
-		this.expr = expression;
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
-	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
@@ -144,5 +110,39 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return asgExpr;
+	}
+	
+	public Java_Expression generateAssignment(Java_Variable variable, Java_Expression subscript,
+			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
+	{
+		String punct;
+		switch (oper)
+		{
+		case EQUALS:
+			punct = "=";
+			break;
+		case PLUS_EQUALS:
+			punct = "+=";
+			break;
+		case MINUS_EQUALS:
+			punct = "-=";
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + oper);
+		}
+		
+		AbstractToken which = variable.firstId.getWhich();
+		if (! (which instanceof Java_Identifier_Reference))
+		{
+			throw new RuntimeException("Unable to handle " + which);
+		}
+		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
+		
+		Java_VariableExpression varExpr = new Java_VariableExpression();
+		this.var = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
+		this.operator.setValue(punct);
+		this.expr = expression;
+		this.setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

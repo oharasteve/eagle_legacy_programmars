@@ -9,10 +9,17 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_Program extends AbstractLanguage implements EagleRunnable
+public class CSharp_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String CSHARP = "CSharp";
 
@@ -94,6 +101,50 @@ public class CSharp_Program extends AbstractLanguage implements EagleRunnable
 		}
 	}
 	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		// First (and only) pass, transform the main method
+		for (CSharp_NamespaceOrClassEntry nsClass : myClasses._elements)
+		{
+			AbstractToken which1 = nsClass.getWhich();
+			if (which1 instanceof CSharp_Class)
+			{
+				CSharp_Class cls = (CSharp_Class) which1;
+				for (CSharp_ClassElement elt2 : cls.elements._elements)
+				{
+					AbstractToken which2 = elt2.getWhich();
+					if (which2 instanceof EagleTransformableFunction)
+					{
+						EagleTransformableFunction transformable = (EagleTransformableFunction) which2;
+						transformable.transformFunction(transformer, generator);
+					}
+					else
+					{
+						// Probably global (class-level) data
+						if (which2 instanceof CSharp_Statement)
+						{
+							CSharp_Statement stmt = (CSharp_Statement) which2;
+							AbstractToken which3 = stmt.getWhich();
+							if (which3 instanceof CSharp_Data)
+							{
+								CSharp_Data data = (CSharp_Data) which3;
+								AbstractStatement stmt3 = data.transformStaticData(transformer, generator);
+								generator.addStatement(stmt3, nsClass);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// Not needed for C# or CSharp, but Python needs this
+		generator.addCallToMain();
+		
+		return generator.getTransfomedProgram();
+	}
+
 	public void addClass(CSharp_Class cls)
 	{
 		CSharp_NamespaceOrClassEntry entry = new CSharp_NamespaceOrClassEntry();

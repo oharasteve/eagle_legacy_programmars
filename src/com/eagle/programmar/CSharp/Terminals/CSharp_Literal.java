@@ -8,9 +8,14 @@ import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_Literal extends TerminalLiteralToken
+		implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -44,6 +49,12 @@ public class CSharp_Literal extends TerminalLiteralToken
 		return "C# literals may have @ or $";
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
+	}
+
 	public CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
 		String val = value;

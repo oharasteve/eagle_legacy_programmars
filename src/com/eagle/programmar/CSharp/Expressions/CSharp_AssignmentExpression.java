@@ -14,11 +14,15 @@ import com.eagle.programmar.CSharp.Symbols.CSharp_Identifier_Reference;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_AssignmentExpression extends PrecedenceOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression var = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice(
@@ -63,6 +67,51 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		}
 	}
 	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		if (! (var.getWhich() instanceof CSharp_VariableExpression))
+		{
+			throw new RuntimeException("Can only assign variables");
+		}
+		CSharp_VariableExpression variableExpr = (CSharp_VariableExpression) var.getWhich();
+		CSharp_Variable theVar = variableExpr.variable;
+
+		AbstractExpression subscrExpr = null;
+		if (theVar.subscript != null && theVar.subscript.size() > 0)
+		{
+			subscrExpr = transformer.transformExpression(generator, theVar.subscript.first().expr);
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractToken which = theVar.firstId.getWhich();
+		if (! (which instanceof CSharp_Identifier_Reference))
+		{
+			throw new RuntimeException("Have to assign to a regular variable");
+		}
+		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) which;
+		
+		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+		return asgExpr;
+	}
+
 	public CSharp_Expression generateAssignment(CSharp_Variable variable,
 			CSharp_Expression subscript, AssignmentEnum oper,
 			CSharp_Expression expression, AbstractToken source)

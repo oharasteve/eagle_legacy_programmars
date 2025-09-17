@@ -56,6 +56,29 @@ public class Java_StatementBlock extends TokenSequence
 	{
 		return _scope;
 	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		for (Java_StatementOrComment stmtOrComment : statements._elements)
+		{
+			if (stmtOrComment.getWhich() instanceof Java_Statement)
+			{
+				Java_Statement stmt1 = (Java_Statement) stmtOrComment.getWhich();
+				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
+				if (stmts2 != null)
+				{
+					for (AbstractStatement stmt2 : stmts2)
+					{
+						result.add(stmt2);
+					}
+				}
+			}
+		}
+		
+		return generator.newBlockStatement(result, this);
+	}
 	
 	public Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
 			AbstractToken source)
@@ -104,28 +127,5 @@ public class Java_StatementBlock extends TokenSequence
 		}
 		
 		return generator.newBlockStatement(newStmts, statement);
-	}
-
-	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
-	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
-		for (Java_StatementOrComment stmtOrComment : statements._elements)
-		{
-			if (stmtOrComment.getWhich() instanceof Java_Statement)
-			{
-				Java_Statement stmt1 = (Java_Statement) stmtOrComment.getWhich();
-				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
-				if (stmts2 != null)
-				{
-					for (AbstractStatement stmt2 : stmts2)
-					{
-						result.add(stmt2);
-					}
-				}
-			}
-		}
-		
-		return generator.newBlockStatement(result, this);
 	}
 }

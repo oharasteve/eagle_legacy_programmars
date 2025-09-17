@@ -33,6 +33,13 @@ public class Java_LengthMethod extends PrecedenceOperator
 		String leftStr = interpreter.getStrValue(expression);
 		interpreter.pushInt(leftStr.length());
 	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		return generator.newLengthFunction(theExpr, this);
+	}
 	
 	public Java_Expression generateLength(Java_Expression expr, AbstractToken source)
 	{
@@ -43,12 +50,5 @@ public class Java_LengthMethod extends PrecedenceOperator
 		
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		return generator.newLengthFunction(theExpr, this);
 	}
 }

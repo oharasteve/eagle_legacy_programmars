@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.CSharp;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -25,6 +27,7 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractMethod;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -34,12 +37,15 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.PrivacyEnum;
 import com.eagle.transform.EagleGenerator.StaticEnum;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_Method extends TokenSequence
 		implements AbstractMethod, AbstractFunction, EagleRunnable,
-				EagleScopeInterface
+				EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT @NEWLINE TokenList<CSharp_Comment> comments;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
@@ -148,6 +154,63 @@ public class CSharp_Method extends TokenSequence
 		}
 	}
 	
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractType newReturnType = CSharp_Type.findType(generator, returnType);
+		
+		String newName = id.getValue();
+		if (VERBOSE)
+		{
+			System.out.println("** Found CSharp method " + newName);
+		}
+		if (newName.equals("main"))
+		{
+			newName = generator.mainName();
+		}
+		
+		generator.addMethod(newReturnType, newName, this);
+		generator.addMethodName(newName);
+		
+		if (parameters != null && parameters.isPresent())
+		{
+			int nParams = parameters.params.getPrimaryCount();
+			for (int i = 0; i < nParams; i++)
+			{
+				CSharp_MethodParameter param = parameters.params.getPrimaryElement(i);
+				AbstractType paramType = CSharp_Type.findType(generator, param.cstype);
+				generator.addMethodParameter(paramType, param.id.getValue());
+			}
+		}
+		
+		if (! (body.getWhich() instanceof CSharp_MethodImplementation))
+		{
+			throw new RuntimeException("Methods need an implementation");
+		}
+		
+		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) body.getWhich();
+		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
+		for (CSharp_StatementOrComment javaStmt : impl.block.statements._elements)
+		{
+			if (javaStmt.getWhich() instanceof CSharp_Statement)
+			{
+				CSharp_Statement stmt1 = (CSharp_Statement) javaStmt.getWhich();
+				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
+				if (stmts2 != null)
+				{
+					for (AbstractStatement stmt2 : stmts2)
+					{
+						newStmts.add(stmt2);
+					}
+				}
+			}
+		}
+
+		AbstractStatement newBlock = generator.newBlockStatement(newStmts, impl);
+		generator.addStatement(newBlock, impl);
+		generator.doneMethod();
+	}
+
 	public void newCSharpMethod(PrivacyEnum privacy,
 			StaticEnum isStatic, CSharp_Type retType, String mName)
 	{

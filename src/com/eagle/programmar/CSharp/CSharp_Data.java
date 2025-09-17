@@ -110,6 +110,20 @@ public class CSharp_Data extends TokenSequence
 		return result;
 	}
 
+	// Called directly from CSharp_Program for static class-level data
+	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractType newType = CSharp_Type.findType(generator, dataBody.type);
+		
+		String name = dataBody.id.getValue();
+		AbstractExpression initial = null;
+		if (dataBody.initialValue != null && dataBody.initialValue.isPresent())
+		{
+			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
+		}
+		return generator.newDataDeclaration(true, name, null, newType, initial, dataBody);
+	}
+	
 	public static CSharp_Data newDataDeclaration(boolean isStatic, String name, CSharp_Expression size, CSharp_Type type,
 			CSharp_Expression initial, AbstractToken source)
 	{

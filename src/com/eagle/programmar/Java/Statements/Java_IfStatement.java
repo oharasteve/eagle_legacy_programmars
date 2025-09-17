@@ -27,7 +27,8 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Java_IfStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");

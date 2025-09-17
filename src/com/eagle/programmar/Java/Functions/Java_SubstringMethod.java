@@ -24,7 +24,8 @@ import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
-public class Java_SubstringMethod extends PrecedenceOperator implements EagleRunnable
+public class Java_SubstringMethod extends PrecedenceOperator
+		implements EagleRunnable
 {
 	public @S(10) Java_Expression left = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;

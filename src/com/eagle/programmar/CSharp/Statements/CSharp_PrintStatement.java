@@ -13,15 +13,19 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class CSharp_PrintStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword SYSTEM = new CSharp_Keyword("System");
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
@@ -53,6 +57,27 @@ public class CSharp_PrintStatement extends TokenSequence
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
 	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		boolean newLine;
+		switch (WRITE.getValue())
+		{
+		case "Write":
+			newLine = false;
+			break;
+		case "WriteLine":
+			newLine = true;
+			break;
+		default:
+			throw new RuntimeException("Unexpected PRINT value: " + WRITE.getValue());
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, exprs.first());
+		return generator.newPrintStatement(value, newLine, this);
+	}
+
 	public CSharp_Statement generatePrintStmt(CSharp_Expression line, boolean newLine,
 			AbstractToken source)
 	{

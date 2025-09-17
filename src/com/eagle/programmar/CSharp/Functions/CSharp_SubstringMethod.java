@@ -21,11 +21,15 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleRunnable
+public class CSharp_SubstringMethod extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -50,6 +54,16 @@ public class CSharp_SubstringMethod extends PrecedenceOperator implements EagleR
 		{
 			interpreter.pushStr(leftStr.substring(sc));
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, left);
+		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
+		AbstractExpression nc = transformer.transformExpression(generator, ncExpr);
+		return generator.newSubstringFunction(theExpr, sc, SubstringSCEnum.FIRST_CHAR_IS_ZERO,
+				SubstringECEnum.GIVEN_NC, nc, true, this);
 	}
 	
 	public static CSharp_SubstringMethod generateExpression(AbstractExpression theExpr,

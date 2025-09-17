@@ -11,9 +11,14 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class CSharp_PragmaDirective extends TokenSequence implements EagleRunnable
+public class CSharp_PragmaDirective extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) CSharp_Punctuation pound1 = new CSharp_Punctuation('#');
 	public @S(20) CSharp_Keyword PRAGMA = new CSharp_Keyword("pragma");
@@ -25,5 +30,12 @@ public class CSharp_PragmaDirective extends TokenSequence implements EagleRunnab
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Nothing important here
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Nothing important here
+		return null;
 	}
 }
