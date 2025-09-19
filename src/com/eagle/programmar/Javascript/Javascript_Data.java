@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Javascript;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -50,21 +52,53 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 			EagleValue value = interpreter.getEagleValue(init.expr);
 			interpreter.setSymbol(var, var.toString(), value);
 		}
+		
+		if (moreVars != null && moreVars.size() > 0)
+		{
+			for (Javascript_More_Variables more : moreVars._elements)
+			{
+				if (more.init != null && more.init.isPresent())
+				{
+					EagleValue value = interpreter.getEagleValue(more.init.expr);
+					interpreter.setSymbol(more.var, more.var.toString(), value);
+				}
+			}
+		}
 	}
 
 	// Called directly from Javascript_Program for static class-level data
-	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStaticData(EagleTransformer transformer, EagleGenerator generator)
 	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+		
 		// See if the Declaration has some assignments in the metrics file
 		TypeEnum typeEnum = transformer.findAssignMetric(var);
 		AbstractType newType = generator.transformType(typeEnum, null, this);
-		
-		String name = var.getValue();
-		AbstractExpression initial = null;
+
+		String name1 = var.getValue();
+		AbstractExpression initial1 = null;
 		if (init != null && init.isPresent())
 		{
-			initial = transformer.transformExpression(generator, init.expr);
+			initial1 = transformer.transformExpression(generator, init.expr);
 		}
-		return generator.newDataDeclaration(true, name, null, newType, initial, this);
+		AbstractStatement newData = generator.newDataDeclaration(true, name1, null, newType, initial1, this);
+		result.add(newData);
+
+		if (moreVars != null && moreVars.size() > 0)
+		{
+			for (Javascript_More_Variables more : moreVars._elements)
+			{
+				String name2 = more.var.getValue();
+				AbstractExpression initial2 = null;
+				if (more.init != null && more.init.isPresent())
+				{
+					initial2 = transformer.transformExpression(generator, more.init.expr);
+				}
+				AbstractStatement newData2 = generator.newDataDeclaration(true, name2, null, newType, initial2, this);
+				result.add(newData2);
+			}
+		}
+
+		return result;
 	}
 }

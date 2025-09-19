@@ -24,7 +24,7 @@ public class Javascript_Element extends TokenSequence implements EagleRunnableWi
 
 	public static class Javascript_StatementOrComment extends TokenChooser
 	{
-		public @CHOICE Javascript_Element XXstatement;
+		public @CHOICE Javascript_Statement XXstatement;
 		public @CHOICE Javascript_Comment XXcomment;
 	}
 

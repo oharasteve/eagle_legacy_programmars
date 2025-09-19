@@ -14,6 +14,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -28,6 +29,7 @@ public class Javascript_DocumentWriteln extends PrimaryOperator
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) Javascript_Expression expr;
 	public @S(60) PunctuationRightParen rightParen;
+	public @S(70) PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

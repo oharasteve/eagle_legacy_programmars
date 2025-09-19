@@ -8,6 +8,7 @@ import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DocumentWriteln;
 import com.eagle.programmar.Javascript.Statements.Javascript_ExpressionStmt;
+import com.eagle.programmar.Javascript.Statements.Javascript_ForEachStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ForStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_IfStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ImportStatement;
@@ -31,6 +32,7 @@ public class Javascript_Statement extends TokenChooser
 	public @CHOICE Javascript_DoStatement XXdoStatement;
 	public @CHOICE Javascript_DocumentWriteln XXdocumentWriteln;
 	public @CHOICE Javascript_ForStatement XXforStatement;
+	public @CHOICE Javascript_ForEachStatement XXforEachStatement;
 	public @CHOICE Javascript_Function XXfunction;
 	public @CHOICE Javascript_IfStatement XXifStatement;
 	public @CHOICE Javascript_ImportStatement XXimportStatement;

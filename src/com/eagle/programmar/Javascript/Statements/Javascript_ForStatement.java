@@ -14,42 +14,37 @@ import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Type;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
-import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
-import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Javascript_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("js_loop_for.asp") Javascript_Keyword FOR = new Javascript_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Javascript_ForWhat forWhat;
+	public @S(30) Javascript_ForLoopStatement forLoop;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT TokenList<Javascript_Comment> comments;
 	public @S(60) Javascript_Element action;
 	
 	private @SKIP ForLoopMetrics _metrics = null;
 
-	public static class  Javascript_ForWhat extends TokenChooser
-	{
-		public @CHOICE Javascript_ForLoopStatement XXforLoop;
-		public @CHOICE Javascript_ForCollectionStatement XXforCollection;
-	}
-	
 	public static class Javascript_ForLoopStatement extends TokenSequence
 	{
 		public @S(10) @OPT Javascript_ForLoopVariable loopVar;
@@ -81,91 +76,99 @@ public class Javascript_ForStatement extends TokenSequence implements EagleRunna
 		public @S(10) Javascript_Variable forVar;
 	}
 
-	public static class Javascript_ForCollectionStatement extends TokenSequence
-	{
-		public @S(10) @OPT Javascript_Type varType;
-		public @S(20) @OPT Javascript_Variable forVar; // The Javascript_Type steals it ...
-		public @S(30) @OPT Javascript_ForVariables forVars;
-		public @S(40) Javascript_InOrColon inOrColon;
-		public @S(50) Javascript_Expression collection;
-
-		public static class Javascript_ForVariables extends TokenSequence
-		{
-			public @S(10) PunctuationLeftBracket leftBracket;
-			public @S(20) SeparatedList<Javascript_Variable_Definition, PunctuationComma> vars;
-			public @S(30) PunctuationRightBracket rightBracket;
-		}
-
-		public static class Javascript_InOrColon extends TokenChooser
-		{
-			public @CHOICE PunctuationColon XXcolon;
-			public @CHOICE Javascript_KeywordChoice XXIN = new Javascript_KeywordChoice("in", "of");
-		}
-	}
-	
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (forWhat.getWhich() instanceof Javascript_ForLoopStatement)
+		AbstractToken which = forLoop.loopVar.getWhich();
+		Javascript_Variable forVar;
+		if (which instanceof Javascript_ForLoopVariableWithType)
 		{
-			Javascript_ForLoopStatement forLoop = (Javascript_ForLoopStatement) forWhat.getWhich();
-
-			AbstractToken which = forLoop.loopVar.getWhich();
-			
-			Javascript_Variable forVar;
-			if (which instanceof Javascript_ForLoopVariableWithType)
-			{
-				forVar = ((Javascript_ForLoopVariableWithType) which).forVar;
-			}
-			else
-			{
-				forVar = ((Javascript_ForLoopVariableNoType) which).forVar;
-			}
-			
-			if (forVar.firstId.getWhich() instanceof Javascript_Identifier_Reference)
-			{
-				Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) forVar.firstId.getWhich();
-				EagleValue init = interpreter.getEagleValue(forLoop.initialize);
-				interpreter.setSymbol(this, id.getValue(), init);
-			}
-
-			if (_metrics == null)
-			{
-				_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
-			}
-			ForLoopMetric metric = new ForLoopMetric();
-
-			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			while (true)
-			{
-				boolean keepGoing = interpreter.getBoolValue(forLoop.terminateCondition);
-				if (!keepGoing) break;
-
-				metric.iterate();
-				result = interpreter.tryToInterpret(action);
-				if (result == Eagle_Statement_Result.BREAK)
-				{
-					metric.broke();
-					result = Eagle_Statement_Result.NORMAL;
-					break;
-				}
-				else if (result == Eagle_Statement_Result.CONTINUE)
-				{
-					metric.continued();
-					result = Eagle_Statement_Result.NORMAL;
-				}
-				else if (result == Eagle_Statement_Result.RETURN)
-				{
-					break;
-				}
-
-				interpreter.tryToInterpret(forLoop.increment);
-			}
-
-			_metrics.competedLoop(metric);
-			return result;
+			Javascript_ForLoopVariableWithType withType = (Javascript_ForLoopVariableWithType) which;
+			forVar = withType.forVar;
+		}
+		else
+		{
+			Javascript_ForLoopVariableNoType noType = (Javascript_ForLoopVariableNoType) which;
+			forVar = noType.forVar;
+		}
+		
+		if (forVar.firstId.getWhich() instanceof Javascript_Identifier_Reference)
+		{
+			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) forVar.firstId.getWhich();
+			EagleValue init = interpreter.getEagleValue(forLoop.initialize);
+			interpreter.setSymbol(this, id.getValue(), init);
 		}
 
-		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+		if (_metrics == null)
+		{
+			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
+		}
+		ForLoopMetric metric = new ForLoopMetric();
+
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			boolean keepGoing = interpreter.getBoolValue(forLoop.terminateCondition);
+			if (!keepGoing) break;
+
+			metric.iterate();
+			result = interpreter.tryToInterpret(action);
+			if (result == Eagle_Statement_Result.BREAK)
+			{
+				metric.broke();
+				result = Eagle_Statement_Result.NORMAL;
+				break;
+			}
+			else if (result == Eagle_Statement_Result.CONTINUE)
+			{
+				metric.continued();
+				result = Eagle_Statement_Result.NORMAL;
+			}
+			else if (result == Eagle_Statement_Result.RETURN)
+			{
+				break;
+			}
+
+			interpreter.tryToInterpret(forLoop.increment);
+		}
+
+		_metrics.competedLoop(metric);
+		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractToken which1 = forLoop.loopVar.getWhich();
+		Javascript_Variable forVar;
+		if (which1 instanceof Javascript_ForLoopVariableWithType)
+		{
+			Javascript_ForLoopVariableWithType withType = (Javascript_ForLoopVariableWithType) which1;
+			forVar = withType.forVar;
+		}
+		else
+		{
+			Javascript_ForLoopVariableNoType noType = (Javascript_ForLoopVariableNoType) which1;
+			forVar = noType.forVar;
+		}
+		
+		AbstractToken whichName = forVar.firstId.getWhich();
+		if (! (whichName instanceof Javascript_Identifier_Reference))
+		{
+			throw new RuntimeException("Javascript FOR must use a variable");
+		}
+		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) whichName;
+		String varName = id.getValue();
+
+		AbstractExpression fromExpr = transformer.transformExpression(generator, forLoop.initialize);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
+		
+		AbstractExpression termExpr = transformer.transformExpression(generator, forLoop.terminateCondition);
+		AbstractExpression delta = transformer.transformExpression(generator,
+				forLoop.increment);
+		AbstractStatement newAction = transformer.transformStatement1(generator, this.action.statement);
+		return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
 	}
 }

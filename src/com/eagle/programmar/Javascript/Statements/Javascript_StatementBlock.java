@@ -17,9 +17,11 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Javascript_StatementBlock extends TokenSequence implements EagleRunnableWithResult
+public class Javascript_StatementBlock extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @OPT Javascript_Label label;
 	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
@@ -73,5 +75,28 @@ public class Javascript_StatementBlock extends TokenSequence implements EagleRun
 		}
 		
 		return generator.newBlockStatement(newStmts, statement);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		for (Javascript_StatementOrComment stmtOrComment : statements._elements)
+		{
+			if (stmtOrComment.getWhich() instanceof Javascript_Statement)
+			{
+				Javascript_Statement stmt1 = (Javascript_Statement) stmtOrComment.getWhich();
+				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
+				if (stmts2 != null)
+				{
+					for (AbstractStatement stmt2 : stmts2)
+					{
+						result.add(stmt2);
+					}
+				}
+			}
+		}
+		
+		return generator.newBlockStatement(result, this);
 	}
 }
