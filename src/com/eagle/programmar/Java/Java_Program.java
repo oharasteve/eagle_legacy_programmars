@@ -107,22 +107,6 @@ public class Java_Program extends AbstractLanguage
 		}
 	}
 
-	public static Java_Program newJavaProgram(Java_Class cls, String pkg)
-	{
-		Java_ClassOrEnum entry = new Java_ClassOrEnum();
-		entry.setWhich(cls);
-	
-		Java_Program prog = new Java_Program();
-		prog.classOrEnumList = new TokenList<Java_ClassOrEnum>();
-		prog.classOrEnumList.setPresent(true);
-		prog.classOrEnumList.addToken(entry);
-
-		prog.jpackage = Java_Package.newPackage(pkg);
-		prog.jpackage.setPresent(true);
-		
-		return prog;
-	}
-	
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -165,6 +149,22 @@ public class Java_Program extends AbstractLanguage
 		generator.addCallToMain();
 		
 		return generator.getTransfomedProgram();
+	}
+
+	public static Java_Program newJavaProgram(Java_Class cls, String pkg)
+	{
+		Java_ClassOrEnum entry = new Java_ClassOrEnum();
+		entry.setWhich(cls);
+	
+		Java_Program prog = new Java_Program();
+		prog.classOrEnumList = new TokenList<Java_ClassOrEnum>();
+		prog.classOrEnumList.setPresent(true);
+		prog.classOrEnumList.addToken(entry);
+
+		prog.jpackage = Java_Package.newPackage(pkg);
+		prog.jpackage.setPresent(true);
+		
+		return prog;
 	}
 	
 	public void addClass(Java_Class cls)

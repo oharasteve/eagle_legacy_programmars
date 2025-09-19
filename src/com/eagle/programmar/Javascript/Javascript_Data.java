@@ -10,9 +10,15 @@ import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformer;
 
 public class Javascript_Data extends TokenSequence implements EagleRunnable
 {
@@ -44,5 +50,21 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 			EagleValue value = interpreter.getEagleValue(init.expr);
 			interpreter.setSymbol(var, var.toString(), value);
 		}
+	}
+
+	// Called directly from Javascript_Program for static class-level data
+	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// See if the Declaration has some assignments in the metrics file
+		TypeEnum typeEnum = transformer.findAssignMetric(var);
+		AbstractType newType = generator.transformType(typeEnum, null, this);
+		
+		String name = var.getValue();
+		AbstractExpression initial = null;
+		if (init != null && init.isPresent())
+		{
+			initial = transformer.transformExpression(generator, init.expr);
+		}
+		return generator.newDataDeclaration(true, name, null, newType, initial, this);
 	}
 }

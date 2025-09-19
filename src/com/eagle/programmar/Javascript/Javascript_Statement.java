@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.Javascript;
 
-import com.eagle.interpret.EagleInterpreter;
-import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Statements.Javascript_BreakStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;
+import com.eagle.programmar.Javascript.Statements.Javascript_DocumentWriteln;
+import com.eagle.programmar.Javascript.Statements.Javascript_ExpressionStmt;
 import com.eagle.programmar.Javascript.Statements.Javascript_ForStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_IfStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ImportStatement;
@@ -18,9 +18,6 @@ import com.eagle.programmar.Javascript.Statements.Javascript_ThrowStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_TryStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_WhileStatement;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class Javascript_Statement extends TokenChooser
@@ -29,28 +26,10 @@ public class Javascript_Statement extends TokenChooser
 	public @CHOICE Javascript_Data XXdata;
 	public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon XXsemicolon;
 
-	public @LAST static class Javascript_ExpressionStmt extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) Javascript_Expression expression;
-		public @S(20) @OPT TokenList<Javascript_MoreStatements> moreStatements;
-		public @S(30) @OPT PunctuationSemicolon semicolon;
-
-		public static class Javascript_MoreStatements extends TokenSequence
-		{
-			public @S(10) PunctuationComma comma;
-			public @S(20) Javascript_Statement statement;
-		}
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			interpreter.tryToInterpret(expression);
-		}
-	}
-
 	public @CHOICE Javascript_BreakStatement XXbreakStatement;
 	public @CHOICE Javascript_ContinueStatement XXcontinueStatement;
 	public @CHOICE Javascript_DoStatement XXdoStatement;
+	public @CHOICE Javascript_DocumentWriteln XXdocumentWriteln;
 	public @CHOICE Javascript_ForStatement XXforStatement;
 	public @CHOICE Javascript_Function XXfunction;
 	public @CHOICE Javascript_IfStatement XXifStatement;
@@ -61,5 +40,6 @@ public class Javascript_Statement extends TokenChooser
 	public @CHOICE Javascript_TryStatement XXtryStatement;
 	public @CHOICE Javascript_WhileStatement XXwhileStatement;
 
+	public @LAST Javascript_ExpressionStmt XXexpressionStmt;
 	// public @LAST Javascript_UnparsedStatement XXunparsedStatement;
 }

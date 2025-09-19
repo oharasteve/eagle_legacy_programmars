@@ -9,13 +9,21 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
-import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
+import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_PostIncrementExpression extends PrimaryOperator implements EagleRunnable
+public class Javascript_PostIncrementExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_Variable var;
-	public @S(20) Javascript_Punctuation postIncrementOperator = new Javascript_Punctuation("++");
+	public @S(20) @NOSPACE Javascript_PunctuationChoice operator =
+			new Javascript_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -25,9 +33,40 @@ public class Javascript_PostIncrementExpression extends PrimaryOperator implemen
 			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) var.firstId.getWhich();
 			EagleValue val = interpreter.findSymbol(id.getValue());
 			int prev = val.forceIntegerValue();
-			EagleValue curr = new EagleInteger(prev + 1);
-			interpreter.setSymbol(var, id.getValue(), curr);
+			int curr;
+			switch (operator.getValue())
+			{
+			case "++":
+				curr = prev + 1;
+				break;
+			case "--":
+				curr = prev - 1;
+				break;
+			default:
+				throw new RuntimeException("Unexpected operator: " + operator);
+			}
+			interpreter.setSymbol(var, id.getValue(), new EagleInteger(curr));
 			interpreter.pushInt(prev);
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		IncrementEnum whichDirection;
+		switch (operator.getValue())
+		{
+		case "++":
+			whichDirection = IncrementEnum.INCREMENT;
+			break;
+		case "--":
+			whichDirection = IncrementEnum.DECREMENT;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
+		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) var.firstId.getWhich();
+		return generator.newPostIncrementExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
 	}
 }

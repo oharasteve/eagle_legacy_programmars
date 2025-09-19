@@ -26,10 +26,10 @@ public class Python_Find_Function extends PrimaryOperator
 	public @S(30) @NOSPACE Python_Keyword FIND = new Python_Keyword("find");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Python_Expression pattern;
-	public @S(60) @OPT @NOSPACE Python_Index_SC scExpr;
+	public @S(60) @OPT @NOSPACE Python_Find_SC scExpr;
 	public @S(70) @NOSPACE PunctuationRightParen rightParen;
 
-	public static class Python_Index_SC extends TokenSequence
+	public static class Python_Find_SC extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) Python_Expression start;
@@ -60,7 +60,7 @@ public class Python_Find_Function extends PrimaryOperator
 		this.pattern = patt;
 		if (sc != null)
 		{
-			this.scExpr = new Python_Index_SC();
+			this.scExpr = new Python_Find_SC();
 			this.scExpr.setPresent(true);
 			this.scExpr.comma = new PunctuationComma();
 			this.scExpr.start = sc;

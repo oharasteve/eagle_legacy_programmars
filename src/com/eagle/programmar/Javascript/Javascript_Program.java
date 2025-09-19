@@ -8,10 +8,17 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_Program extends AbstractLanguage implements EagleRunnable
+public class Javascript_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String JAVASCRIPT = "Javascript";
 
@@ -58,5 +65,38 @@ public class Javascript_Program extends AbstractLanguage implements EagleRunnabl
 		{
 			interpreter.tryToInterpret(element);
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		// First (and only) pass, transform the main method
+		for (Javascript_TopElement elt1 : elements._elements)
+		{
+			AbstractToken which1 = elt1.getWhich();
+			if (which1 instanceof EagleTransformableFunction)
+			{
+				EagleTransformableFunction transformable = (EagleTransformableFunction) which1;
+				transformable.transformFunction(transformer, generator);
+			}
+			else if (which1 instanceof Javascript_Statement)
+			{
+				Javascript_Statement stmt1 = (Javascript_Statement) which1;
+				AbstractToken which2 = stmt1.getWhich();
+				if (which2 instanceof Javascript_Data)
+				{
+					Javascript_Data data = (Javascript_Data) which2;
+					AbstractStatement stmt3 = data.transformStaticData(transformer, generator);
+					generator.addStatement(stmt3, elt1);
+				}
+				else
+				{
+					transformer.transformStatement(generator, stmt1.getWhich());
+				}
+			}
+		}
+
+		return generator.getTransfomedProgram();
 	}
 }

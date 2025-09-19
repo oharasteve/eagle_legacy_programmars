@@ -7,8 +7,14 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_BuiltInVar extends PrimaryOperator implements EagleRunnable
+public class Javascript_BuiltInVar extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_KeywordChoice builtinConstant = new Javascript_KeywordChoice("arguments", "false", "null",
 			"String", "super", "this", "true");
@@ -26,5 +32,20 @@ public class Javascript_BuiltInVar extends PrimaryOperator implements EagleRunna
 			return;
 		}
 		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		switch (builtinConstant.toString().toLowerCase())
+		{
+		case "false":
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		case "true":
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		default:
+			throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
+		}
 	}
 }
