@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Javascript;
 
+import java.util.ArrayList;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -92,7 +94,14 @@ public class Javascript_Program extends AbstractLanguage
 				}
 				else
 				{
-					transformer.transformStatement(generator, stmt1.getWhich());
+					ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt1.getWhich());
+					if (stmts != null)
+					{
+						for (AbstractStatement stmt4 : stmts)
+						{
+							generator.addStatement(stmt4, which2);
+						}
+					}
 				}
 			}
 		}
