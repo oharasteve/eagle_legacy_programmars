@@ -8,11 +8,17 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
-public class Julia_DivFunction extends PrimaryOperator implements EagleRunnable
+public class Julia_DivFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Julia_Keyword DIV = new Julia_Keyword("div");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -27,5 +33,13 @@ public class Julia_DivFunction extends PrimaryOperator implements EagleRunnable
 		int numer = interpreter.getIntValue(numerExpr);
 		int denom = interpreter.getIntValue(denomExpr);
 		interpreter.pushInt(numer / denom);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression numer = transformer.transformExpression(generator, numerExpr);
+		AbstractExpression denom = transformer.transformExpression(generator, denomExpr);
+		return generator.newMultiplicativeExpression(numer, MultiplicativeEnum.DIVIDE_TRUNCATE, denom, this);
 	}
 }

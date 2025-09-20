@@ -14,9 +14,14 @@ import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Julia_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Julia_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("manual/control-flow/#man-conditional-evaluation") Julia_Keyword IF = new Julia_Keyword("if");
 	public @S(20) Julia_Expression condition;
@@ -78,5 +83,40 @@ public class Julia_IfStatement extends TokenSequence implements AbstractStatemen
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		for (Julia_Statement stmt1 : thenStatements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt1.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt2 : stmts)
+				{
+					ifTrue.add(stmt2);
+				}
+			}
+		}
+		
+		if (this.elseClause != null && this.elseClause.isPresent())
+		{
+			for (Julia_Statement stmt3 : elseClause.elseStatements._elements)
+			{
+				for (AbstractStatement stmt4 : transformer.transformStatement(generator, stmt3.getWhich()))
+				{
+					ifFalse.add(stmt4);
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

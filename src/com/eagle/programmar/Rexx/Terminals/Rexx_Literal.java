@@ -10,7 +10,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rexx_Literal extends TerminalLiteralToken implements EagleTransformableExpression
+public class Rexx_Literal extends TerminalLiteralToken
+		implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)

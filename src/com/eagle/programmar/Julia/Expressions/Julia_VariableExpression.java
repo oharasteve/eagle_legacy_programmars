@@ -6,9 +6,17 @@ package com.eagle.programmar.Julia.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Variable;
+import com.eagle.programmar.Julia.Terminals.Julia_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Julia_VariableExpression extends PrimaryOperator implements EagleRunnable
+public class Julia_VariableExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Julia_Variable variable;
 
@@ -16,5 +24,34 @@ public class Julia_VariableExpression extends PrimaryOperator implements EagleRu
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(variable);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscrExpr = null;
+		if (variable.subscript != null && variable.subscript.isPresent())
+		{
+			AbstractToken which = variable.subscript.expr.getWhich();
+			if (which instanceof Julia_Number)
+			{
+				Julia_Number number = (Julia_Number) which;
+				subscrExpr = generator.newNumberExpression(number.getValue(),
+						variable.subscript.expr);
+			}
+			else if (which instanceof Julia_Variable)
+			{
+				Julia_Variable var = (Julia_Variable) which;
+				subscrExpr = generator.newVariableExpression(var.vars.first().getValue(),
+						SubscriptEnum.FIRST_IS_ZERO, null, variable.subscript.expr);
+			}
+			else
+			{
+				throw new RuntimeException("Unexpected subscript: " + which);
+			}
+		}
+		return generator.newVariableExpression(variable.vars.first().getValue(),
+				SubscriptEnum.IT_IS_A_HASHMAP, subscrExpr, this);
 	}
 }

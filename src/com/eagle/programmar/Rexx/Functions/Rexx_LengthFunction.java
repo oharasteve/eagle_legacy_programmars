@@ -15,7 +15,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rexx_LengthFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
+public class Rexx_LengthFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_Keyword LENGTH = new Rexx_Keyword("LENGTH");
 	public @S(20) PunctuationLeftParen leftParen;

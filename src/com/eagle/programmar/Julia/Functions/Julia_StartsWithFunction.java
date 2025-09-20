@@ -8,11 +8,17 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Julia_StartsWithFunction extends PrimaryOperator implements EagleRunnable
+public class Julia_StartsWithFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Julia_Keyword STARTSWITH = new Julia_Keyword("startswith");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -27,5 +33,15 @@ public class Julia_StartsWithFunction extends PrimaryOperator implements EagleRu
 		String str = interpreter.getStrValue(strExpr);
 		String patt = interpreter.getStrValue(pattExpr);
 		interpreter.pushBool(str.startsWith(patt));
+	}
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, strExpr);
+		AbstractExpression thePattern = transformer.transformExpression(generator, pattExpr);
+		AbstractExpression theSC = null;
+		
+		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 }
