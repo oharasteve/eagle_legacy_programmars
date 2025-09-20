@@ -20,9 +20,11 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
-public class Javascript_Data extends TokenSequence implements EagleRunnable
+public class Javascript_Data extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) Javascript_Type type;
 	public @S(20) Javascript_Variable_Definition var;
@@ -66,8 +68,15 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 		}
 	}
 
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return transformStaticData(false, transformer, generator);
+	}
+	
 	// Called directly from Javascript_Program for static class-level data
-	public ArrayList<AbstractStatement> transformStaticData(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStaticData(boolean isStatic,
+			EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		
@@ -81,7 +90,7 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 		{
 			initial1 = transformer.transformExpression(generator, init.expr);
 		}
-		AbstractStatement newData = generator.newDataDeclaration(true, name1, null, newType, initial1, this);
+		AbstractStatement newData = generator.newDataDeclaration(isStatic, name1, null, newType, initial1, this);
 		result.add(newData);
 
 		if (moreVars != null && moreVars.size() > 0)
@@ -94,7 +103,7 @@ public class Javascript_Data extends TokenSequence implements EagleRunnable
 				{
 					initial2 = transformer.transformExpression(generator, more.init.expr);
 				}
-				AbstractStatement newData2 = generator.newDataDeclaration(true, name2, null, newType, initial2, this);
+				AbstractStatement newData2 = generator.newDataDeclaration(isStatic, name2, null, newType, initial2, this);
 				result.add(newData2);
 			}
 		}

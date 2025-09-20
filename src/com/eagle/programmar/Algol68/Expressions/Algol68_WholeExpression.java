@@ -32,7 +32,7 @@ public class Algol68_WholeExpression extends PrimaryOperator
 	{
 		if (! size.getValue().equals("0"))
 		{
-			throw new RuntimeException("Only supporting field with of 0 for now");
+			throw new RuntimeException("Only supporting field width of 0 for now");
 			// If size is positive, the number will be right-justified and padded with spaces to the left. If the number is too large for the specified width, it will be represented by asterisks (*) to indicate an overflow.
 			// If size is negative, the absolute value is used for the width, and a sign will be printed even if the number is positive (e.g., +99).
 		}
@@ -45,7 +45,7 @@ public class Algol68_WholeExpression extends PrimaryOperator
 	{
 		if (! size.getValue().equals("0"))
 		{
-			throw new RuntimeException("Only supporting field with of 0 for now");
+			throw new RuntimeException("Only supporting field width of 0 for now");
 		}
 		return transformer.transformExpression(generator, expr);
 	}

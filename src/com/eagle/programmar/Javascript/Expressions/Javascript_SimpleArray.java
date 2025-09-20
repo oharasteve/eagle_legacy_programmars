@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Javascript.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -11,11 +13,16 @@ import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_SimpleArray extends PrimaryOperator implements EagleRunnable
+public class Javascript_SimpleArray extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
 	public @S(20) @OPT Javascript_Expression expr;
@@ -43,5 +50,19 @@ public class Javascript_SimpleArray extends PrimaryOperator implements EagleRunn
 			}
 		}
 		interpreter.pushEagleValue(array);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+		AbstractExpression newExpr1 = transformer.transformExpression(generator, expr);
+		exprs.add(newExpr1);
+		for (Javascript_MoreArray next : more._elements)
+		{
+			AbstractExpression newExpr2 = transformer.transformExpression(generator, next.expr);
+			exprs.add(newExpr2);
+		}
+		return generator.newArrayExpression(exprs, this);
 	}
 }

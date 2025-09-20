@@ -8,11 +8,16 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_MathFloor extends PrimaryOperator implements EagleRunnable
+public class Javascript_MathFloor extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_Keyword MATH = new Javascript_Keyword("Math");
 	public @S(20) PunctuationPeriod dot;
@@ -26,5 +31,12 @@ public class Javascript_MathFloor extends PrimaryOperator implements EagleRunnab
 	{
 		double val = interpreter.getDoubleValue(expr);
 		interpreter.pushInt((int) val);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newTruncateExpression(newExpr, this);
 	}
 }

@@ -22,8 +22,14 @@ import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Javascript_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Javascript_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_Variable functionName;
 	public @S(20) Javascript_ParenthesizedExpression arguments;
@@ -110,5 +116,27 @@ public class Javascript_FunctionCall extends PrimaryOperator implements EagleRun
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		Javascript_Variable variable = this.functionName;
+		if (variable.firstId.getWhich() instanceof Javascript_Identifier_Reference)
+		{
+			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) variable.firstId.getWhich();
+			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			int numArgs = arguments.expressions.getPrimaryCount();
+			for (int i = 0; i < numArgs; i++)
+			{
+				Javascript_Expression expr = arguments.expressions.getPrimaryElement(i);
+				args.add(transformer.transformExpression(generator, expr));
+			}
+			
+			AbstractVariable var = generator.newVariable(id.getValue());
+			return generator.newMethodInvocation(var, args, this);
+		}
+		throw new RuntimeException("Can't handle: " + this);
 	}
 }
