@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Julia.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -11,14 +13,25 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Julia.Julia_Expression;
 import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.programmar.Julia.Julia_Variable;
+import com.eagle.programmar.Julia.Expressions.Julia_NegativeExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_RangeExpression;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
+import com.eagle.programmar.Julia.Terminals.Julia_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Julia_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Julia_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("manual/control-flow/#man-loops") Julia_Keyword FOR = new Julia_Keyword("for");
 	public @S(20) Julia_Variable var;
@@ -93,5 +106,63 @@ public class Julia_ForStatement extends TokenSequence implements AbstractStateme
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which = values.getWhich();
+		Julia_RangeExpression range = null;
+		AbstractExpression initExpr = null;
+		AbstractExpression termExpr = null;
+		AbstractExpression incrExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+
+		if (! (which instanceof Julia_RangeExpression))
+		{
+			throw new RuntimeException("FOR statement requires a Range of values, not " + which);
+		}
+		range = (Julia_RangeExpression) which;
+
+		initExpr = transformer.transformExpression(generator, range.first);
+		if (range.hasIncr != null && range.hasIncr.isPresent())
+		{
+			AbstractToken which2 = range.lastOrIncrement.getWhich();
+			if (which2 instanceof Julia_NegativeExpression)
+			{
+				relOp = RelationalEnum.GREATER_EQUALS;
+			}
+			else if (which2 instanceof Julia_Number)
+			{
+				Julia_Number num = (Julia_Number) which2;
+				if (num.getValue().startsWith("-"))
+				{
+					relOp = RelationalEnum.GREATER_EQUALS;
+				}
+			}
+			incrExpr = transformer.transformExpression(generator, range.lastOrIncrement);
+			termExpr = transformer.transformExpression(generator, range.hasIncr.last);
+		}
+		else
+		{
+			termExpr = transformer.transformExpression(generator, range.lastOrIncrement);
+		}
+		
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		for (Julia_Statement stmt1 : statements._elements)
+		{
+			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt1);
+			if (newStmts != null)
+			{
+				for (AbstractStatement stmt2 : newStmts)
+				{
+					actionList.add(stmt2);
+				}
+			}
+		}
+		
+		AbstractVariable newVar = generator.newVariable(var.vars.first().getValue());
+		return generator.newForRangeStatement(newVar, TypeEnum.INTEGER, initExpr,
+				relOp, termExpr, incrExpr, actionList, this);
 	}
 }

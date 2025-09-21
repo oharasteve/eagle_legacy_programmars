@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Julia.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -13,9 +15,15 @@ import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Julia_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Julia_WhileStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) Julia_Keyword WHILE = new Julia_Keyword("while");
 	public @S(20) Julia_Expression condition;
@@ -69,5 +77,22 @@ public class Julia_WhileStatement extends TokenSequence implements AbstractState
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		for (Julia_Statement stmt1 : statements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt1.getWhich());
+			for (AbstractStatement stmt2 : stmts)
+			{
+				actions.add(stmt2);
+			}
+		}
+		return generator.newWhileStatement(cond, actions, this);
 	}
 }

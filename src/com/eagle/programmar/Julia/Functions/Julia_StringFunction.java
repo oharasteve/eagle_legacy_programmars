@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -72,6 +73,12 @@ public class Julia_StringFunction extends PrimaryOperator
 		int numPieces = argList.getPrimaryCount();
 		for (int i = 0; i < numPieces; i++)
 		{
+			if (metrics != null)
+			{
+				types._type1 = EagleString.STRING;
+				types._type2 = metrics.get(i);
+			}
+			
 			Julia_Expression piece = argList.getPrimaryElement(i);
 			if (i == 0)
 			{
@@ -79,12 +86,6 @@ public class Julia_StringFunction extends PrimaryOperator
 			}
 			else
 			{
-				if (metrics != null)
-				{
-					types._type1 = metrics.get(i-1);
-					types._type2 = metrics.get(i);
-				}
-				
 				AbstractExpression next = transformer.transformExpression(generator, piece);
 				line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 			}
