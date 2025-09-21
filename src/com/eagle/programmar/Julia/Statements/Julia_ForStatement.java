@@ -162,7 +162,7 @@ public class Julia_ForStatement extends TokenSequence
 		}
 		
 		AbstractVariable newVar = generator.newVariable(var.vars.first().getValue());
-		return generator.newForRangeStatement(newVar, TypeEnum.INTEGER, initExpr,
+		return generator.newForRangeStatement(newVar, TypeEnum.VOID, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 }

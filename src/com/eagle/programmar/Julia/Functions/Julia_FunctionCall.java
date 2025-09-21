@@ -17,11 +17,17 @@ import com.eagle.programmar.Julia.Symbols.Julia_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Julia_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Julia_Variable variable;
 	public @S(20) PunctuationLeftParen leftParen;
@@ -121,5 +127,24 @@ public class Julia_FunctionCall extends PrimaryOperator implements EagleRunnable
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		Julia_Identifier_Reference id = variable.vars.first();
+		String name = id.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = argList.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Julia_Expression arg = argList.getPrimaryElement(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, id);
 	}
 }

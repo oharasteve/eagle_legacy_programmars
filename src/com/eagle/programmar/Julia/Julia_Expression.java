@@ -7,8 +7,8 @@ import com.eagle.programmar.Julia.Expressions.Julia_AdditiveExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_AssignmentExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_BracketsExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_BuiltIn;
-import com.eagle.programmar.Julia.Expressions.Julia_LogicalAndExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_EqualityExpression;
+import com.eagle.programmar.Julia.Expressions.Julia_LogicalAndExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_LogicalNotExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_LogicalOrExpression;
 import com.eagle.programmar.Julia.Expressions.Julia_MultiplicativeExpression;
@@ -26,6 +26,7 @@ import com.eagle.programmar.Julia.Functions.Julia_FunctionCall;
 import com.eagle.programmar.Julia.Functions.Julia_LengthFunction;
 import com.eagle.programmar.Julia.Functions.Julia_StartsWithFunction;
 import com.eagle.programmar.Julia.Functions.Julia_StringFunction;
+import com.eagle.programmar.Julia.Functions.Julia_SubStringFunction;
 import com.eagle.programmar.Julia.Terminals.Julia_Literal;
 import com.eagle.programmar.Julia.Terminals.Julia_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -65,15 +66,16 @@ public class Julia_Expression extends PrecedenceChooser implements AbstractExpre
 	public @P(110) Julia_LengthFunction lengthFunction;
 	public @P(120) Julia_StartsWithFunction startswithFunction;
 	public @P(130) Julia_StringFunction stringFunction;
-	public @P(140) Julia_FunctionCall functionCall;
-	public @P(150) Julia_PreIncrementExpression preIncrementExpression;
-	public @P(160) Julia_PostIncrementExpression postIncrementExpression;
-	public @P(170) Julia_NegativeExpression negativeExpression;
-	public @P(180) Julia_LogicalNotExpression logicalNotExpression;
-	public @P(190) Julia_BuiltIn builtIn;
-	public @P(200) Julia_VariableExpression variableExpression;
-	public @P(210) Julia_BracketsExpression bracketsExpression;
-	public @P(220) Julia_ParenthesizedExpression parenthesizedExpression;
+	public @P(140) Julia_SubStringFunction subStringFunction;
+	public @P(150) Julia_FunctionCall functionCall;
+	public @P(160) Julia_PreIncrementExpression preIncrementExpression;
+	public @P(170) Julia_PostIncrementExpression postIncrementExpression;
+	public @P(180) Julia_NegativeExpression negativeExpression;
+	public @P(190) Julia_LogicalNotExpression logicalNotExpression;
+	public @P(200) Julia_BuiltIn builtIn;
+	public @P(210) Julia_VariableExpression variableExpression;
+	public @P(220) Julia_BracketsExpression bracketsExpression;
+	public @P(230) Julia_ParenthesizedExpression parenthesizedExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

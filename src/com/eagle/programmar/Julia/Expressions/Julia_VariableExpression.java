@@ -6,8 +6,6 @@ package com.eagle.programmar.Julia.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Julia.Julia_Variable;
-import com.eagle.programmar.Julia.Terminals.Julia_Number;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -33,25 +31,9 @@ public class Julia_VariableExpression extends PrimaryOperator
 		AbstractExpression subscrExpr = null;
 		if (variable.subscript != null && variable.subscript.isPresent())
 		{
-			AbstractToken which = variable.subscript.expr.getWhich();
-			if (which instanceof Julia_Number)
-			{
-				Julia_Number number = (Julia_Number) which;
-				subscrExpr = generator.newNumberExpression(number.getValue(),
-						variable.subscript.expr);
-			}
-			else if (which instanceof Julia_Variable)
-			{
-				Julia_Variable var = (Julia_Variable) which;
-				subscrExpr = generator.newVariableExpression(var.vars.first().getValue(),
-						SubscriptEnum.FIRST_IS_ZERO, null, variable.subscript.expr);
-			}
-			else
-			{
-				throw new RuntimeException("Unexpected subscript: " + which);
-			}
+			subscrExpr = transformer.transformExpression(generator, variable.subscript.expr);
 		}
 		return generator.newVariableExpression(variable.vars.first().getValue(),
-				SubscriptEnum.IT_IS_A_HASHMAP, subscrExpr, this);
+				SubscriptEnum.FIRST_IS_ONE, subscrExpr, this);
 	}
 }

@@ -23,6 +23,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Julia_Program extends AbstractLanguage
@@ -50,7 +51,7 @@ public class Julia_Program extends AbstractLanguage
 	}
 
 	public static class Julia_CommentEoln extends TokenSequence
-			implements EagleRunnable
+			implements EagleRunnable, EagleTransformableStatement
 	{
 		public @S(10) Julia_Comment comment;
 		public @S(20) Julia_EOLN eoln;
@@ -60,6 +61,13 @@ public class Julia_Program extends AbstractLanguage
 		{
 			// Nothing to do here
 		}
+
+		@Override
+		public AbstractStatement transformStatement(EagleTransformer transformer,
+				EagleGenerator generator)
+		{
+			return null;		// Might want to keep comment statements somehow.
+		}
 	}
 
 	@Override
@@ -68,14 +76,14 @@ public class Julia_Program extends AbstractLanguage
 		// First pass, just collect all the FUNCTION definitions
 		for (Julia_Element elt : elements._elements)
 		{
-			AbstractToken which = elt.getWhich();
-			if (which instanceof Julia_Statement)
+			AbstractToken which1 = elt.getWhich();
+			if (which1 instanceof Julia_Statement)
 			{
-				Julia_Statement stmt = (Julia_Statement) which;
-				which = stmt.getWhich();
-				if (which instanceof Julia_Function)
+				Julia_Statement stmt = (Julia_Statement) which1;
+				AbstractToken which2 = stmt.getWhich();
+				if (which2 instanceof Julia_Function)
 				{
-					Julia_Function fn = (Julia_Function) which;
+					Julia_Function fn = (Julia_Function) which2;
 					interpreter.addFunction(fn.id.getValue(), fn);
 				}
 			}
@@ -97,13 +105,18 @@ public class Julia_Program extends AbstractLanguage
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// First pass, transform all the Function definitions
-		for (Julia_Element stmt : elements._elements)
+		for (Julia_Element elt : elements._elements)
 		{
-			AbstractToken which1 = stmt.getWhich();
-			if (which1 instanceof Julia_Function)
+			AbstractToken which1 = elt.getWhich();
+			if (which1 instanceof Julia_Statement)
 			{
-				Julia_Function func = (Julia_Function) which1;
-				func.transformFunction(transformer, generator);
+				Julia_Statement stmt = (Julia_Statement) which1;
+				AbstractToken which2 = stmt.getWhich();
+				if (which2 instanceof Julia_Function)
+				{
+					Julia_Function func = (Julia_Function) which2;
+					func.transformFunction(transformer, generator);
+				}
 			}
 		}
 
