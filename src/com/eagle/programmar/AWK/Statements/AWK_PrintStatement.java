@@ -3,21 +3,32 @@
 
 package com.eagle.programmar.AWK.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
+public class AWK_PrintStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("#print") AWK_KeywordChoice PRINT = new AWK_KeywordChoice("print", "printf");
-	public @S(20) AWK_PrintParameters param;
+	public @S(20) AWK_PrintParameters params;
 
 	public static class AWK_PrintParameters extends TokenChooser implements AbstractStatement
 	{
@@ -41,16 +52,16 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AWK_ArgumentList args;
-		if (param.getWhich() instanceof AWK_Print_WithParens)
+		if (params.getWhich() instanceof AWK_Print_WithParens)
 		{
-			args = ((AWK_Print_WithParens) param.getWhich()).argList;
+			args = ((AWK_Print_WithParens) params.getWhich()).argList;
 		}
-		else if (param.getWhich() instanceof AWK_Print_NoParens)
+		else if (params.getWhich() instanceof AWK_Print_NoParens)
 		{
-			args = ((AWK_Print_NoParens) param.getWhich()).argList;
+			args = ((AWK_Print_NoParens) params.getWhich()).argList;
 		}
 		else
-			throw new RuntimeException("Unexpected print argument: " + param.toString());
+			throw new RuntimeException("Unexpected print argument: " + params.toString());
 
 		String result = interpreter.getStrValue(args.expr);
 		System.out.print(result);
@@ -63,5 +74,52 @@ public class AWK_PrintStatement extends TokenSequence implements EagleRunnable
 			}
 		}
 		System.out.println();
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression line = null;
+		Oper2Types types = null;
+		// Pick up metrics, if known
+		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINT);
+		if (metrics != null)
+		{
+			types = new Oper2Types();
+		}
+		
+		AWK_ArgumentList argList;
+		AbstractToken which1 = params.getWhich();
+		if (which1 instanceof AWK_Print_WithParens)
+		{
+			AWK_Print_WithParens with = (AWK_Print_WithParens) which1;
+			argList = with.argList;
+		}
+		else if (which1 instanceof AWK_Print_NoParens)
+		{
+			AWK_Print_NoParens without = (AWK_Print_NoParens) which1;
+			argList = without.argList;
+		}
+		else
+		{
+			throw new RuntimeException("Unable to handle " + which1);
+		}
+		
+		line = transformer.transformExpression(generator, argList.expr);
+		int i = 0;
+		for (AWK_MoreArguments more : argList.more._elements)
+		{
+			i++;
+			if (metrics != null && i < metrics.size())
+			{
+				types._type1 = EagleString.STRING;
+				types._type2 = metrics.get(i);
+			}
+			
+			AbstractExpression next = transformer.transformExpression(generator, more.expr);
+			line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, this);
+		}
+		return generator.newPrintStatement(line, true, this);
 	}
 }

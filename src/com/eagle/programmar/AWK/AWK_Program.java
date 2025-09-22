@@ -3,17 +3,28 @@
 
 package com.eagle.programmar.AWK;
 
+import java.util.ArrayList;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class AWK_Program extends AbstractLanguage implements EagleRunnable
+public class AWK_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String AWK = "AWK";
 
@@ -67,5 +78,56 @@ public class AWK_Program extends AbstractLanguage implements EagleRunnable
 				interpreter.tryToInterpret(cmd.action);
 			}
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, transform all the Function definitions
+		for (AWK_Element elt : elements._elements)
+		{
+			AbstractToken which = elt.getWhich();
+			if (which instanceof AWK_Function)
+			{
+				AWK_Function func = (AWK_Function) which;
+				// System.err.println("****** Found func " + func.id.getValue());
+				func.transformFunction(transformer, generator);
+			}
+		}
+
+		// Are there any global variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typE = met.uniqueType();
+			if (typE != TypeEnum.VOID)
+			{
+				AbstractType abstrType = generator.transformType(typE, null, this);
+				AbstractExpression initExpr = null;
+				
+				// System.err.println("****** Found var " + met._symbolName);
+				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+						null, abstrType, initExpr, this);
+				generator.addStatement(dataStmt, this);
+			}
+		}
+		
+		// Second pass, transform all the data and logic
+		for (AWK_Element elt : elements._elements)
+		{
+			AbstractToken which2 = elt.getWhich();
+			if (which2 instanceof AWK_Command)
+			{
+				AWK_Command cmd = (AWK_Command) which2;
+				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, cmd.action);
+				for (AbstractStatement stmt2 : stmts2)
+				{
+					generator.addStatement(stmt2, cmd);
+				}
+			}
+		}
+		
+		return generator.getTransfomedProgram();
 	}
 }

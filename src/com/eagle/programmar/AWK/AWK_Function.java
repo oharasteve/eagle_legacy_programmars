@@ -3,29 +3,44 @@
 
 package com.eagle.programmar.AWK;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.EagleMetrics;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
+import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.Symbols.AWK_Function_Definition;
+import com.eagle.programmar.AWK.Symbols.AWK_Parameter_Definition;
 import com.eagle.programmar.AWK.Terminals.AWK_Comment;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
-import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
 public class AWK_Function extends TokenSequence
-		implements AbstractFunction, EagleRunnable, EagleScopeInterface
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Function_Definition id;
@@ -37,17 +52,8 @@ public class AWK_Function extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
 		public @S(20) @OPT AWK_Comment comment1;
-		public @S(30) @OPT AWK_Identifier param;
-		public @S(40) @OPT AWK_Comment comment2;
-		public @S(50) @OPT TokenList<AWK_MoreParameterDefs> moreParams;
-		public @S(60) PunctuationRightParen rightParen;
-	}
-
-	public static class AWK_MoreParameterDefs extends TokenSequence
-	{
-		public @S(10) PunctuationComma comma;
-		public @S(20) @OPT AWK_Comment comment;
-		public @S(30) AWK_Identifier param;
+		public @S(30) @OPT SeparatedList<AWK_Parameter_Definition, PunctuationComma> params;
+		public @S(40) PunctuationRightParen rightParen;
 	}
 
 	public static class AWK_FunctionBody extends TokenSequence
@@ -85,5 +91,102 @@ public class AWK_Function extends TokenSequence
 		// Don't do anything here.
 		// We searched for all the function in a preliminary pass
 		// And we only evaluate when it is called
+	}
+	
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		TypeEnum metricRetType = transformer.findReturnMetric(id);
+		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
+		
+		String fnName = id.getValue();
+		generator.addMethod(newReturnType, fnName, this);
+		generator.addMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found AWK function " + fnName);
+		}
+		
+		// Search metrics for arg types -- might not be any
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		
+		if (parameters.params != null && parameters.params.isPresent())
+		{
+			for (int i = 0; i < parameters.params.getPrimaryCount(); i++)
+			{
+				AWK_Parameter_Definition paramVar = parameters.params.getPrimaryElement(i);
+				AbstractType paramType = null;
+				
+				if (argTypes != null && i < argTypes.size())
+				{
+					String metricArgType = argTypes.get(i);
+					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					paramType = generator.transformType(metricArg, null, paramVar);
+				}
+				
+				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+				generator.addMethodParameter(paramType, paramVar.getValue());
+			}
+		}
+		
+		addLocalVars(transformer, generator);
+		
+		for (AWK_StatementOrComment stmtOrComment : body.elements._elements)
+		{
+			AbstractToken which = stmtOrComment.getWhich();
+			if (which instanceof AWK_Statement)
+			{
+				AWK_Statement stmt = (AWK_Statement) which;
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmtOrComment);
+					}
+				}
+			}
+		}
+		
+		generator.doneMethod();
+	}
+
+	private boolean isFuncParam(String name)
+	{
+		if (parameters != null && parameters.isPresent())
+		{
+			int numParams = parameters.params.getPrimaryCount();
+			for (int i = 0; i < numParams; i++)
+			{
+				AWK_Parameter_Definition var = parameters.params.getPrimaryElement(i);
+				if (var.getValue().equalsIgnoreCase(name))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Are there any local variables we need to declare?
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				if (! isFuncParam(met._symbolName))
+				{
+					// System.err.println("****** Found var " + met._symbolName);
+					AbstractType absType = generator.transformType(typ, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false,
+							met._symbolName, null, absType, null, this);
+					generator.addStatement(dataStmt, this);
+				}
+			}
+		}
 	}
 }

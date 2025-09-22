@@ -13,13 +13,14 @@ import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Function;
+import com.eagle.programmar.AWK.Symbols.AWK_Parameter_Definition;
 import com.eagle.programmar.AWK.Terminals.AWK_Identifier;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class AWK_UserFunction extends PrimaryOperator implements EagleRunnable
+public class AWK_CallFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) AWK_Identifier functionName;
 	public @S(20) PunctuationLeftParen leftParen;
@@ -48,8 +49,7 @@ public class AWK_UserFunction extends PrimaryOperator implements EagleRunnable
 		{
 			argCount = 1;
 			if (argList.more != null) argCount += argList.more.size();
-			int paramCount = 1;
-			if (func.parameters.moreParams != null) paramCount += func.parameters.moreParams.size();
+			int paramCount = func.parameters.params.getPrimaryCount();
 			if (argCount != paramCount)
 			{
 				throw new RuntimeException(
@@ -58,17 +58,16 @@ public class AWK_UserFunction extends PrimaryOperator implements EagleRunnable
 
 			// Now assign all the parameters
 			AWK_Expression arg = argList.expr;
-			AWK_Identifier param = func.parameters.param;
 			for (int i = 0; i < argCount; i++)
 			{
-				if (i > 0)
-				{
-					arg = argList.more._elements.get(i - 1).expr;
-					param = func.parameters.moreParams._elements.get(i - 1).param;
-				}
+				AWK_Parameter_Definition param = func.parameters.params.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter.setSymbol(param, param.getValue(), val);
 				argTypes.add(val.typeName());
+				if (i < argCount - 1)
+				{
+					arg = argList.more._elements.get(i).expr;
+				}
 			}
 		}
 
