@@ -131,7 +131,9 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		
 		if (doStrings)
 		{
-			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod(leftExpr, rightExpr);
+			Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
+			Java_Expression parenExpr = parens.generateParentheses(leftExpr, null);
+			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod(parenExpr, rightExpr);
 			equals.setTransformationSource(source);
 			Java_Expression equalsExpr = Java_Generator.wrapExpression(equals);
 			switch (relOp)

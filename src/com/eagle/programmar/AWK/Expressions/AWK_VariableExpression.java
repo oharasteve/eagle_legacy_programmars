@@ -9,6 +9,7 @@ import com.eagle.programmar.AWK.AWK_Variable;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -28,7 +29,16 @@ public class AWK_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return generator.newVariableExpression(variable.id.getValue(),
+		String name = variable.id.getValue();
+		if (name.equalsIgnoreCase("true"))
+		{
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		}	
+		if (name.equalsIgnoreCase("false"))
+		{
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		}	
+		return generator.newVariableExpression(name,
 				SubscriptEnum.FIRST_IS_ZERO, null, this);
 	}
 }

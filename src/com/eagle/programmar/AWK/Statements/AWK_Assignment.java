@@ -93,9 +93,16 @@ public class AWK_Assignment extends TokenSequence
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());
 		}
 
+		String varName = variable.id.getValue();
+		if (varName.equals("true") || varName.equals("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+		
 		AbstractExpression subscrExpr = null;
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.id.getValue(),
+		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return generator.newExpressionStatement(asgExpr, this);
 	}
