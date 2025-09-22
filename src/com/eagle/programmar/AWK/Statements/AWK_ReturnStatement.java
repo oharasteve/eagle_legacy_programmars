@@ -9,10 +9,15 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class AWK_ReturnStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) AWK_Keyword RETURN = new AWK_Keyword("RETURN");
 	public @S(20) @OPT AWK_Expression expr;
@@ -23,5 +28,17 @@ public class AWK_ReturnStatement extends TokenSequence
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression retExpr = null;
+		if (expr != null && expr.isPresent())
+		{
+			retExpr = transformer.transformExpression(generator, expr);
+		}
+		return generator.newReturnStatement(retExpr, this);
 	}
 }

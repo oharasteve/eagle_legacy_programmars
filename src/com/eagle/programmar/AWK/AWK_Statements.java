@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.AWK;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.AWK.Statements.AWK_Assignment;
@@ -26,9 +28,14 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
-public class AWK_Statements extends TokenSequence implements EagleRunnableWithResult
+public class AWK_Statements extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatementList
 {
 	public @S(10) SeparatedList<AWK_Statement, PunctuationSemicolon> statements;
 	public @S(20) @OPT PunctuationSemicolon semicolon;
@@ -70,6 +77,21 @@ public class AWK_Statements extends TokenSequence implements EagleRunnableWithRe
 				break;
 			}
 		}
+		return result;
+	}
+
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+
+		for (int i = 0; i < statements.getPrimaryCount(); i++)
+		{
+			AWK_Statement stmt = statements.getPrimaryElement(i);
+			result.add(transformer.transformStatement1(generator, stmt));
+		}
+		
 		return result;
 	}
 }

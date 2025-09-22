@@ -5,9 +5,14 @@ package com.eagle.programmar.AWK.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.terminals.TerminalCommentToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class AWK_Comment extends TerminalCommentToken
+		implements EagleTransformableStatement
 {
 	// Need a default constructor for the parser
 	public AWK_Comment()
@@ -39,5 +44,11 @@ public class AWK_Comment extends TerminalCommentToken
 	public String description()
 	{
 		return "# comment";
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return null;		// Nothing to do here
 	}
 }

@@ -4,7 +4,6 @@
 package com.eagle.programmar.AWK;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -134,15 +133,36 @@ public class AWK_Function extends TokenSequence
 		for (AWK_StatementOrComment stmtOrComment : body.elements._elements)
 		{
 			AbstractToken which = stmtOrComment.getWhich();
-			if (which instanceof AWK_Statement)
+			if (which instanceof AWK_Action)
 			{
-				AWK_Statement stmt = (AWK_Statement) which;
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-				if (newStmts != null)
+				AWK_Action action = (AWK_Action) which;
+				for (AWK_StatementOrComment stmt : action.statements._elements)
 				{
-					for (AbstractStatement newStmt : newStmts)
+					ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+					if (newStmts != null)
 					{
-						generator.addStatement(newStmt, stmtOrComment);
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmtOrComment);
+						}
+					}
+				}
+			}
+			else if (which instanceof AWK_Statements)
+			{
+				AWK_Statements stmts = (AWK_Statements) which;
+				int numStmts = stmts.statements.getPrimaryCount();
+				for (int i = 0; i < numStmts; i++)
+				{
+					AWK_Statement stmt = stmts.statements.getPrimaryElement(i);
+					ArrayList<AbstractStatement> newStmts =
+							transformer.transformStatement(generator, stmt.getWhich());
+					if (newStmts != null)
+					{
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmtOrComment);
+						}
 					}
 				}
 			}

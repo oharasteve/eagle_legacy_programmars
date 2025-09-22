@@ -101,6 +101,12 @@ public class AWK_Assignment extends TokenSequence
 		}
 		
 		AbstractExpression subscrExpr = null;
+		if (variable.subscripts != null && variable.subscripts.size() == 1)
+		{
+			AWK_VarSubscript varSub = variable.subscripts.first();
+			subscrExpr = transformer.transformExpression(generator, varSub.expr);
+		}
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
