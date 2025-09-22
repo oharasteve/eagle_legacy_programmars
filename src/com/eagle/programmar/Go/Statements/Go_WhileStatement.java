@@ -21,7 +21,8 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Go_WhileStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) Go_Keyword FOR = new Go_Keyword("for");
 	public @S(20) Go_Expression condition;

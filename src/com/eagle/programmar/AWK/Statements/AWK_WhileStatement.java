@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.AWK.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -13,12 +15,16 @@ import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class AWK_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("#index-while-statement-1") AWK_Keyword WHILE = new AWK_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -70,5 +76,24 @@ public class AWK_WhileStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator, whileStatement.getWhich());
+		if (stmts1 != null)
+		{
+			for (AbstractStatement stmt1 : stmts1)
+			{
+				whileTrue.add(stmt1);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

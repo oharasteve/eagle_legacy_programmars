@@ -79,6 +79,7 @@ public class Algol68_PrintStatement extends TokenSequence
 				throw new RuntimeException("Unable to print " + pieces);
 			}
 		}
+		
 		_metrics.calledWith(argTypes);
 	}
 	

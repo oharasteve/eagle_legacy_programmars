@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
@@ -48,9 +50,17 @@ public class AWK_PrintStatement extends TokenSequence
 		public @S(10) @OPT AWK_ArgumentList argList;
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINT.getValue(), PRINT);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		AWK_ArgumentList args;
 		if (params.getWhich() instanceof AWK_Print_WithParens)
 		{
@@ -61,18 +71,27 @@ public class AWK_PrintStatement extends TokenSequence
 			args = ((AWK_Print_NoParens) params.getWhich()).argList;
 		}
 		else
+		{
 			throw new RuntimeException("Unexpected print argument: " + params.toString());
+		}
 
-		String result = interpreter.getStrValue(args.expr);
+		EagleValue val = interpreter.getEagleValue(args.expr);
+		String result = val.forceStringValue();
+		argTypes.add(val.typeName());
 		System.out.print(result);
+		
 		if (args.more != null)
 		{
 			for (AWK_MoreArguments nxt : args.more._elements)
 			{
-				result = interpreter.getStrValue(nxt.expr);
+				val = interpreter.getEagleValue(nxt.expr);
+				result = val.forceStringValue();
+				argTypes.add(val.typeName());
 				System.out.print(result);
 			}
 		}
+
+		_metrics.calledWith(argTypes);
 		System.out.println();
 	}
 	
