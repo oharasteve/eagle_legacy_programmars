@@ -14,7 +14,8 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
-public class AWK_Variable extends TokenSequence implements AbstractVariable, EagleRunnable
+public class AWK_Variable extends TokenSequence
+		implements AbstractVariable, EagleRunnable
 {
 	public @S(10) AWK_Identifier_Reference id;
 	public @S(20) @OPT TokenList<AWK_VarSubscript> subscripts;
@@ -29,17 +30,29 @@ public class AWK_Variable extends TokenSequence implements AbstractVariable, Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.findSymbol(id.toString());
-		if (subscripts != null && subscripts.isPresent() && subscripts.size() == 1)
+		String name = id.toString();
+		if (name.equalsIgnoreCase("true"))
 		{
-			EagleHash hash = (EagleHash) val;
-			AWK_VarSubscript sub = subscripts.first();
-			Integer key = interpreter.getIntValue(sub.expr);
-			interpreter.pushEagleValue(hash.getValue(key));
+			interpreter.pushBool(true);
+		}
+		else if (name.equalsIgnoreCase("false"))
+		{
+			interpreter.pushBool(false);
 		}
 		else
 		{
-			interpreter.pushEagleValue(val);
+			EagleValue val = interpreter.findSymbol(name);
+			if (subscripts != null && subscripts.isPresent() && subscripts.size() == 1)
+			{
+				EagleHash hash = (EagleHash) val;
+				AWK_VarSubscript sub = subscripts.first();
+				Integer key = interpreter.getIntValue(sub.expr);
+				interpreter.pushEagleValue(hash.getValue(key));
+			}
+			else
+			{
+				interpreter.pushEagleValue(val);
+			}
 		}
 	}
 }

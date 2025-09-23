@@ -6,6 +6,9 @@ package com.eagle.programmar.AWK.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.AWK.AWK_Variable;
+import com.eagle.programmar.AWK.AWK_Variable.AWK_VarSubscript;
+import com.eagle.programmar.AWK.Terminals.AWK_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -29,16 +32,38 @@ public class AWK_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		AbstractExpression subscrExpr = null;
+		if (variable.subscripts != null && variable.subscripts.size() == 1)
+		{
+			AWK_VarSubscript varSub = variable.subscripts.first();
+			AbstractToken which = varSub.expr.getWhich();
+			if (which instanceof AWK_Number)
+			{
+				AWK_Number number = (AWK_Number) which;
+				subscrExpr = generator.newNumberExpression(number.getValue(), varSub);
+			}
+			else if (which instanceof AWK_VariableExpression)
+			{
+				AWK_VariableExpression varExpr = (AWK_VariableExpression) which;
+				subscrExpr = generator.newVariableExpression(varExpr.variable.id.getValue(),
+						SubscriptEnum.IT_IS_A_HASHMAP, null, varSub);
+			}
+			else
+			{
+				throw new RuntimeException("Unexpected subscript: " + which);
+			}
+		}
+
 		String name = variable.id.getValue();
 		if (name.equalsIgnoreCase("true"))
 		{
-			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
-		}	
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, variable);
+		}
 		if (name.equalsIgnoreCase("false"))
 		{
-			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
-		}	
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, variable);
+		}
 		return generator.newVariableExpression(name,
-				SubscriptEnum.FIRST_IS_ZERO, null, this);
+				SubscriptEnum.IT_IS_A_HASHMAP, subscrExpr, this);
 	}
 }

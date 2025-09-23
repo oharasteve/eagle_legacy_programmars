@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.AWK.AWK_Expression;
+import com.eagle.programmar.AWK.AWK_Function;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -25,8 +27,24 @@ public class AWK_ReturnStatement extends TokenSequence
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.pushEagleValue(val);
+		if (expr != null && expr.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(expr);
+
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof AWK_Function)
+				{
+					AWK_Function func = (AWK_Function) parent;
+					func._returnMetrics.returned(val.typeName());
+					break;
+				}
+				parent = parent.getParent();
+			}
+
+			interpreter.pushEagleValue(val);
+		}
 		return Eagle_Statement_Result.RETURN;
 	}
 

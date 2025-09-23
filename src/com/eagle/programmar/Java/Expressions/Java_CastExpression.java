@@ -28,7 +28,17 @@ public class Java_CastExpression extends PrimaryOperator
 		cast.types = new SeparatedList<Java_Type, PunctuationAmpersand>();
 		cast.types.addPrimaryElement(type);
 		cast.rightParen = new PunctuationRightParen();
-		cast.expr = expr;
+
+		if (expr.getWhich() instanceof Java_ParenthesizedExpression)
+		{
+			cast.expr = expr;
+		}
+		else
+		{
+			Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
+			cast.expr = parens.generateParentheses(expr, expr);
+		}
+
 		cast.setTransformationSource(source);
 		return Java_Generator.wrapExpression(cast);
 	}

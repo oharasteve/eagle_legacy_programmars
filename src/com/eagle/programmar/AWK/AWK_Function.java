@@ -11,6 +11,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.Symbols.AWK_Function_Definition;
@@ -66,6 +67,7 @@ public class AWK_Function extends TokenSequence
 	
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, AWK_Syntax.IS_CASE_SENSITIVE);
 
@@ -85,6 +87,10 @@ public class AWK_Function extends TokenSequence
 		if (_argumentsMetrics == null)
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.

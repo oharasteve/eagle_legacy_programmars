@@ -104,9 +104,15 @@ public class AWK_Program extends AbstractLanguage
 			if (typE != TypeEnum.VOID)
 			{
 				AbstractType abstrType = generator.transformType(typE, null, this);
+
 				AbstractExpression initExpr = null;
+				if (typE == TypeEnum.STRING_HASH)
+				{
+					// Need to create an empty hashmap
+					initExpr = generator.newClassCreation(abstrType, null, this);
+				}
 				
-				// System.err.println("****** Found var " + met._symbolName);
+				//System.err.println("****** Found var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
