@@ -100,16 +100,17 @@ public class AWK_Assignment extends TokenSequence
 			return null;
 		}
 		
-		AbstractExpression subscrExpr = null;
+		AbstractExpression value = transformer.transformExpression(generator, expr);
 		if (variable.subscripts != null && variable.subscripts.size() == 1)
 		{
 			AWK_VarSubscript varSub = variable.subscripts.first();
-			subscrExpr = transformer.transformExpression(generator, varSub.expr);
+			AbstractExpression subscrExpr = transformer.transformExpression(generator, varSub.expr);
+			AbstractExpression hashExpr = generator.newHashAssignment(varName, subscrExpr, value, this);
+			return generator.newExpressionStatement(hashExpr, this);
 		}
 
-		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
-				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+				SubscriptEnum.FIRST_IS_ZERO, null, asg, value, this);
 		return generator.newExpressionStatement(asgExpr, this);
 	}
 }
