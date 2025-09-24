@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.C;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.Symbols.C_Function_Definition;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
@@ -24,6 +27,8 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -32,8 +37,14 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
-public class C_Function extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
+public class C_Function extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @OPT C_Extern_C externC;
 	public @S(20) @OPT C_FunctionDeclspec declspec;
@@ -173,6 +184,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 	
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
 
@@ -196,6 +208,7 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 				fname = id.getValue();
 				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
 				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+				_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 			}
 
 			// Don't do anything here, unless the function name is 'main'
@@ -216,5 +229,99 @@ public class C_Function extends TokenSequence implements AbstractFunction, Eagle
 				interpreter.completedFunction("main", this);
 			}
 		}
+	}
+	
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which1 = typeName.getWhich();
+		if (! (which1 instanceof C_Function_TypeAndName))
+		{
+			throw new RuntimeException("Unable to handle: " + which1);
+		}
+		C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which1;
+		TypeEnum retType = typeAndName.ctype.findType();
+		C_Function_Definition id = typeAndName.functionName;
+		AbstractType newReturnType = generator.transformType(retType, null, id);
+		
+		String fnName = id.getValue();
+		generator.addMethod(newReturnType, fnName, this);
+		generator.addMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.err.println("*** Found C function " + fnName);
+		}
+
+		// First parameter is kept separately from remainder, unfortunately
+		if (parameters.param != null && parameters.param.isPresent())
+		{
+			AbstractToken which2 = parameters.param.getWhich();
+			if (which2 instanceof C_FunctionRegularParameter)
+			{
+				C_FunctionRegularParameter regParam1 = (C_FunctionRegularParameter) which2;
+				if (VERBOSE)
+				{
+					System.err.println("****** First Parameter " + regParam1.id.getValue());
+				}
+				TypeEnum argType1 = regParam1.ctype.findType();
+				AbstractType newArgType1 = generator.transformType(argType1, null, regParam1);
+				generator.addMethodParameter(newArgType1, regParam1.id.getValue());
+			}
+		}
+		if (parameters.moreParams != null && parameters.moreParams.size() > 0)
+		{
+			for (C_MoreParameterDefs nextParam : parameters.moreParams._elements)
+			{
+				AbstractToken which3 = nextParam.param.getWhich();
+				if (which3 instanceof C_FunctionRegularParameter)
+				{
+					C_FunctionRegularParameter regParam2 = (C_FunctionRegularParameter) which3;
+					if (VERBOSE)
+					{
+						System.err.println("******  Next Parameter " + regParam2.id.getValue());
+					}
+					TypeEnum argType2 = regParam2.ctype.findType();
+					AbstractType newArgType2 = generator.transformType(argType2, null, regParam2);
+					generator.addMethodParameter(newArgType2, regParam2.id.getValue());
+				}
+			}
+		}
+		
+		AbstractToken which4 = body.getWhich();
+		if (which4 instanceof C_FunctionImplementation)
+		{
+			C_FunctionImplementation impl = (C_FunctionImplementation) which4;
+			
+			for (C_StatementOrComment stmtOrComment : impl.elements._elements)
+			{
+				AbstractToken which5 = stmtOrComment.getWhich();
+				if (which5 instanceof C_Statement)
+				{
+					C_Statement stmt = (C_Statement) which5;
+					ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+					if (newStmts != null)
+					{
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmt);
+						}
+					}
+				}
+				else if (which5 instanceof C_Data)
+				{
+					C_Data data = (C_Data) which5;
+					ArrayList<AbstractStatement> newData = transformer.transformStatement(generator, data.getWhich());
+					if (newData != null)
+					{
+						for (AbstractStatement newDatum : newData)
+						{
+							generator.addStatement(newDatum, data.getWhich());
+						}
+					}
+				}
+			}
+		}
+		
+		generator.doneMethod();
 	}
 }

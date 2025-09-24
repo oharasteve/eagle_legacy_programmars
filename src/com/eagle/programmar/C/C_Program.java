@@ -3,10 +3,14 @@
 
 package com.eagle.programmar.C;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.core.EagleSyntax;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.C.C_Function.C_Function_TypeAndName;
 import com.eagle.programmar.C.Statements.C_AsmVolatile;
 import com.eagle.programmar.C.Terminals.C_Comment;
@@ -15,8 +19,16 @@ import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class C_Program extends AbstractLanguage implements EagleRunnable
+public class C_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String C = "C";
 
@@ -112,7 +124,7 @@ public class C_Program extends AbstractLanguage implements EagleRunnable
 		public @LAST C_Data XXdata;
 		public @CHOICE C_Function XXfunction;
 		public @LAST C_Statement XXstatement;
-		public @CHOICE C_Enum XXcenum;
+		public @CHOICE C_Enum XXenum;
 		public @CHOICE C_AsmVolatile XXasmVolatile;
 		public @CHOICE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 
@@ -123,7 +135,7 @@ public class C_Program extends AbstractLanguage implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// First pass, just collect all the functions definitions
+		// First pass, just collect all the function definitions
 		for (C_StatementOrComment elt : elements._elements)
 		{
 			AbstractToken which = elt.getWhich();
@@ -146,5 +158,59 @@ public class C_Program extends AbstractLanguage implements EagleRunnable
 		{
 			interpreter.tryToInterpret(element);
 		}
+	}
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, transform all the Function definitions
+		for (C_StatementOrComment elt : elements._elements)
+		{
+			AbstractToken which1 = elt.getWhich();
+			if (which1 instanceof C_Function)
+			{
+				C_Function func = (C_Function) which1;
+				func.transformFunction(transformer, generator);
+			}
+		}
+		
+		// Are there any global variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typE = met.uniqueType();
+			if (typE != TypeEnum.VOID)
+			{
+				AbstractType abstrType = generator.transformType(typE, null, this);
+
+				AbstractExpression initExpr = null;
+				
+				//System.err.println("****** Found var " + met._symbolName);
+				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+						null, abstrType, initExpr, this);
+				generator.addStatement(dataStmt, this);
+			}
+		}
+		
+		// Second pass, transform all the data and logic
+		for (C_StatementOrComment element : elements._elements)
+		{
+			AbstractToken which3 = element.getWhich();
+			if (which3 instanceof C_Statement)
+			{
+				C_Statement stmt = (C_Statement) which3;
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(
+						generator, stmt.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
+				}
+			}
+		}
+		
+		return generator.getTransfomedProgram();
 	}
 }

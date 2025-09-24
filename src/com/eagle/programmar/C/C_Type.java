@@ -16,6 +16,7 @@ import com.eagle.programmar.C.Types.C_TypeSimpleUnion;
 import com.eagle.programmar.C.Types.C_TypeStruct;
 import com.eagle.programmar.C.Types.C_TypeUnion;
 import com.eagle.programmar.C.Types.C_TypeUserDefined;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -23,6 +24,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class C_Type extends TokenSequence implements AbstractType
 {
@@ -66,5 +68,49 @@ public class C_Type extends TokenSequence implements AbstractType
 		public @S(20) PunctuationStar star;
 		public @S(30) PunctuationRightParen rightParen;
 		public @S(40) C_Function_ParameterDefs params;
+	}
+
+	// Return TypeEnum.STRING for "char *" for example
+	public TypeEnum findType()
+	{
+		int numStars = 0;
+		if (stars != null && stars.size() > 0)
+		{
+			for (C_TypeStar nextStar : stars._elements)
+			{
+				if (nextStar.starAmpersand.getValue().equals("*"))
+				{
+					numStars++;
+				}
+			}
+		}
+		
+		AbstractToken which1 = base.getWhich();
+		if (which1 instanceof C_TypePrimitive)
+		{
+			C_TypePrimitive prim = (C_TypePrimitive) which1;
+			String whichPrim = prim.primitive.getValue();
+			if (numStars == 0)
+			{
+				switch (whichPrim)
+				{
+				case "int":
+					return TypeEnum.INTEGER;
+				case "double":
+					return TypeEnum.DOUBLE;
+				case "void":
+					return TypeEnum.VOID;
+				}
+			}
+			if (numStars == 1)
+			{
+				switch (whichPrim)
+				{
+				case "char":
+					return TypeEnum.STRING;
+				}
+			}
+		}
+		return TypeEnum.OTHER;
 	}
 }

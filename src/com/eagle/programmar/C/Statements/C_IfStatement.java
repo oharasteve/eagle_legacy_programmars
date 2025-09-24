@@ -14,11 +14,16 @@ import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class C_IfStatement extends TokenSequence implements EagleRunnableWithResult
+public class C_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("#The-if-Statement") C_Keyword IF = new C_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -78,5 +83,34 @@ public class C_IfStatement extends TokenSequence implements EagleRunnableWithRes
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt2 : stmts)
+			{
+				ifTrue.add(stmt2);
+			}
+		}
+		
+		if (this.elseClause != null && this.elseClause.isPresent())
+		{
+			for (AbstractStatement stmt4 : transformer.transformStatement(generator, elseClause.elseStatement.getWhich()))
+			{
+				ifFalse.add(stmt4);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

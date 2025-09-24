@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.C;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -13,15 +15,23 @@ import com.eagle.programmar.C.Types.C_TypePrimitive.C_TypeStar;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class C_Data extends TokenChooser
 {
 	public @CHOICE C_FunctionPointer XXfunctionPointer;
 
-	public @CHOICE static class C_RegularData extends TokenSequence implements EagleRunnable, AbstractStatement
+	public @CHOICE static class C_RegularData extends TokenSequence
+			implements EagleRunnable, AbstractStatement,
+					EagleTransformableStatementList
 	{
 		public @S(10) @OPT TokenList<C_DataModifiers> modifiers1;
 		public @S(20) C_Type ctype;
@@ -51,6 +61,35 @@ public class C_Data extends TokenChooser
 				EagleValue value = interpreter.getEagleValue(initialValue.expression);
 				interpreter.setSymbol(id, id.toString(), value);
 			}
+		}
+
+		@Override
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		{
+			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+			TypeEnum argType2 = ctype.findType();
+			AbstractType newType = generator.transformType(argType2, null, this);
+			
+			String name = id.getValue();
+			AbstractExpression initial = null;
+			if (initialValue != null && initialValue.isPresent())
+			{
+				initial = transformer.transformExpression(generator, initialValue.expression);
+			}
+			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
+			
+			for (C_MoreIdentifiers more : moreIds._elements)
+			{
+				name = more.id.getValue();
+				initial = null;
+				if (more.initialValue != null && more.initialValue.isPresent())
+				{
+					initial = transformer.transformExpression(generator, more.initialValue.expression);
+				}
+				result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
+			}
+			
+			return result;
 		}
 	}
 }

@@ -7,8 +7,14 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class C_BuiltIn extends PrimaryOperator implements EagleRunnable
+public class C_BuiltIn extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) C_KeywordChoice builtinConstant = new C_KeywordChoice("false", "true", "NULL", "default");
 
@@ -25,6 +31,21 @@ public class C_BuiltIn extends PrimaryOperator implements EagleRunnable
 			break;
 		default:
 			throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
+		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		switch (builtinConstant.toString().toLowerCase())
+		{
+		case "false":
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		case "true":
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		default:
+			throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
 		}
 	}
 }

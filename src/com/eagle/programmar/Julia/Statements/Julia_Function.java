@@ -48,10 +48,6 @@ public class Julia_Function extends TokenSequence
 	public @S(60) Julia_Keyword END = new Julia_Keyword("end");
 	public @S(70) Julia_EOLN eoln2;
 
-	public @SKIP CallMetrics _callMetrics = null;
-	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
-	public @SKIP ReturnMetrics _returnMetrics = null;
-
 	public static class Julia_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -59,6 +55,10 @@ public class Julia_Function extends TokenSequence
 		public @S(30) PunctuationRightParen rightParen;
 	}
 	
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Julia_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
