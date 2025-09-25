@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jun 23, 2024
 
-package com.eagle.programmar.C.Functions;
+package com.eagle.programmar.C.Statements;
 
 import java.util.ArrayList;
 
@@ -14,15 +14,17 @@ import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class C_FprintfFunction extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression
+public class C_FprintfStatement extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) C_Keyword FPRINTF = new C_Keyword("fprintf");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -30,6 +32,7 @@ public class C_FprintfFunction extends PrimaryOperator
 	public @S(40) PunctuationComma comma;
 	public @S(50) SeparatedList<C_Expression, PunctuationComma> args;
 	public @S(60) PunctuationRightParen rightParen;
+	public @S(70) PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -47,9 +50,24 @@ public class C_FprintfFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
 	{
+		boolean toErr;
+		switch (STDOUT.getValue())
+		{
+		case "stdout":
+			toErr = false;
+			break;
+		case "stderr":
+			toErr = true;
+			break;
+		default:
+			throw new RuntimeException("Unexpected value: " + STDOUT.getValue());
+		}
+
 		ArrayList<String> metrics = transformer.findArgumentsMetric(FPRINTF);
-		return C_Format.transform(transformer, generator, args, metrics);
+		AbstractExpression line = C_Format.transform(transformer, generator, args, metrics);
+		return generator.newPrintStatement(line, true, toErr, this);
 	}
 }

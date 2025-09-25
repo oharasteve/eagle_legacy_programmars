@@ -59,6 +59,6 @@ public class Go_FmtPrintfStatement extends TokenSequence
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTF);
 		AbstractExpression fullExpr = Go_Format.transform(transformer, generator, arguments, metrics);
-		return generator.newPrintStatement(fullExpr, true, this);
+		return generator.newPrintStatement(fullExpr, true, false, this);
 	}
 }

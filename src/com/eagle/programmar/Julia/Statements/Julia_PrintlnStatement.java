@@ -33,6 +33,6 @@ public class Julia_PrintlnStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(line, true, this);
+		return generator.newPrintStatement(line, true, false, this);
 	}
 }

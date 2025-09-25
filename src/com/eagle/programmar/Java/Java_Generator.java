@@ -364,10 +364,10 @@ public class Java_Generator
 
 	@Override
 	public Java_Statement newPrintStatement(Java_Expression line, boolean newLine,
-			AbstractToken source)
+			boolean toErr, AbstractToken source)
 	{
 		Java_PrintStatement prtStmt = new Java_PrintStatement();
-		return prtStmt.generatePrintStmt(line, newLine, source);
+		return prtStmt.generatePrintStmt(line, newLine, toErr, source);
 	}
 
 	@Override

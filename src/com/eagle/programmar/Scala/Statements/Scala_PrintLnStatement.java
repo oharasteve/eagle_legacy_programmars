@@ -38,6 +38,6 @@ public class Scala_PrintLnStatement extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(line, true, this);
+		return generator.newPrintStatement(line, true, false, this);
 	}
 }

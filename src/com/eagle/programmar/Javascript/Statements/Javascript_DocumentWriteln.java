@@ -77,6 +77,6 @@ public class Javascript_DocumentWriteln extends PrimaryOperator
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(value, newLine, this);
+		return generator.newPrintStatement(value, newLine, false, this);
 	}
 }

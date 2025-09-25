@@ -353,10 +353,10 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	
 	@Override
 	public CSharp_Statement newPrintStatement(CSharp_Expression line,
-			boolean newLine, AbstractToken source)
+			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
-		return prtStmt.generatePrintStmt(line, newLine, source);
+		return prtStmt.generatePrintStmt(line, newLine, toErr, source);
 	}
 
 	@Override

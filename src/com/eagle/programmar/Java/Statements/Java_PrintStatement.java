@@ -74,16 +74,23 @@ public class Java_PrintStatement extends TokenSequence
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(value, newLine, this);
+		return generator.newPrintStatement(value, newLine, false, this);
 	}
 
 	public Java_Statement generatePrintStmt(Java_Expression line, boolean newLine,
-			AbstractToken source)
+			boolean toErr, AbstractToken source)
 	{
 		Java_PrintStatement prt = new Java_PrintStatement();
 		prt.dot1 = new PunctuationPeriod();
 		prt.dot1.setPresent(true);
-		prt.OUT = new Java_KeywordChoice("out");
+		if (toErr)
+		{
+			prt.OUT = new Java_KeywordChoice("err");
+		}
+		else
+		{
+			prt.OUT = new Java_KeywordChoice("out");
+		}
 		prt.dot2 = new PunctuationPeriod();
 		prt.dot2.setPresent(true);
 		

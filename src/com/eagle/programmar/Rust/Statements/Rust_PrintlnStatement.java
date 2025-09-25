@@ -53,6 +53,6 @@ public class Rust_PrintlnStatement extends TokenSequence
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTLN);
 		AbstractExpression fullExpr = Rust_Format.transform(transformer, generator, argList, metrics);
-		return generator.newPrintStatement(fullExpr, true, this);
+		return generator.newPrintStatement(fullExpr, true, false, this);
 	}
 }

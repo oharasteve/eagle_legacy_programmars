@@ -85,6 +85,6 @@ public class Ada_PutStatement extends TokenSequence
 		// Oper1Types metric = transformer.findOperator1Metric(PUT);
 		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
 		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
-		return generator.newPrintStatement(fullExpr, newLine, this);
+		return generator.newPrintStatement(fullExpr, newLine, false, this);
 	}
 }

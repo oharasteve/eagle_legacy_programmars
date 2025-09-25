@@ -75,11 +75,11 @@ public class CSharp_PrintStatement extends TokenSequence
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, exprs.first());
-		return generator.newPrintStatement(value, newLine, this);
+		return generator.newPrintStatement(value, newLine, false, this);
 	}
 
 	public CSharp_Statement generatePrintStmt(CSharp_Expression line, boolean newLine,
-			AbstractToken source)
+			boolean toErr, AbstractToken source)
 	{
 		CSharp_PrintStatement prt = new CSharp_PrintStatement();
 		prt.SYSTEM.setPresent(true);
@@ -87,7 +87,14 @@ public class CSharp_PrintStatement extends TokenSequence
 		prt.dot1.setPresent(true);
 		prt.dot2 = new PunctuationPeriod();
 		prt.dot2.setPresent(true);
-		prt.OUT = new CSharp_KeywordChoice("Out");
+		if (toErr)
+		{
+			prt.OUT = new CSharp_KeywordChoice("Error");
+		}
+		else
+		{
+			prt.OUT = new CSharp_KeywordChoice("OUT");
+		}
 		prt.OUT.setPresent(true);
 		
 		if (newLine)

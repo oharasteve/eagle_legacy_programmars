@@ -78,6 +78,6 @@ public class Algol68_PrintfStatement extends TokenSequence
 		}
 		AbstractExpression numExpr = transformer.transformExpression(generator, expr);
 		AbstractExpression line = generator.newFormatNumber(numExpr, width, this);
-		return generator.newPrintStatement(line, false, this);
+		return generator.newPrintStatement(line, false, false, this);
 	}
 }

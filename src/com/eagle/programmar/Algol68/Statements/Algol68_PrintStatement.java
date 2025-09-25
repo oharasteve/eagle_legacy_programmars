@@ -130,6 +130,6 @@ public class Algol68_PrintStatement extends TokenSequence
 				throw new RuntimeException("Unable to handle: " + whichPiece);
 			}
 		}
-		return generator.newPrintStatement(line, newLine, this);
+		return generator.newPrintStatement(line, newLine, false, this);
 	}
 }
