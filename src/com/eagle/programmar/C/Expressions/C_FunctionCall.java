@@ -10,6 +10,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_ArgumentList;
+import com.eagle.programmar.C.C_ArgumentList.C_MoreArgument;
+import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Function;
 import com.eagle.programmar.C.C_Function.C_FunctionImplementation;
 import com.eagle.programmar.C.C_Function.C_FunctionRegularParameter;
@@ -22,10 +24,16 @@ import com.eagle.programmar.CPlus.CPlus_Namespace.CPlus_NamespaceList;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class C_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @OPT CPlus_NamespaceList namespace;
 	public @S(20) C_Variable functionName;
@@ -121,5 +129,47 @@ public class C_FunctionCall extends PrimaryOperator implements EagleRunnable
 			// Remove all the parameters
 			interpreter.completedFunction(fnName, func);
 		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractToken which0 = functionName.firstId.getWhich();
+		if (! (which0 instanceof C_Identifier_Reference))
+		{
+			throw new RuntimeException("Unable to handle " + which0);
+		}
+		C_Identifier_Reference id = (C_Identifier_Reference) which0;
+		String name = id.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		
+		if (argList != null && argList.isPresent())
+		{
+			AbstractToken which1 = argList.arg.getWhich();
+			if (which1 instanceof C_Expression)
+			{
+				C_Expression arg1 = (C_Expression) which1;
+				AbstractExpression newArg1 = transformer.transformExpression(generator, arg1);
+				args.add(newArg1);
+	
+				if (argList.moreArgs != null)
+				{
+					for (C_MoreArgument more : argList.moreArgs._elements)
+					{
+						AbstractToken which2 = more.arg.getWhich();
+						if (which2 instanceof C_Expression)
+						{
+							C_Expression arg2 = (C_Expression) which2;
+							AbstractExpression newArg2 = transformer.transformExpression(generator, arg2);
+							args.add(newArg2);
+						}
+					}
+				}
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, id);
 	}
 }

@@ -15,19 +15,26 @@ import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
 import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class C_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
+public class C_AssignmentExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) C_Expression var = new C_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) C_PunctuationChoice equals = new C_PunctuationChoice("=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=",
-			">>>=", "&=", "^=", "|=");
+	public @S(20) C_PunctuationChoice operator = new C_PunctuationChoice(
+			"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 	public @S(30) @OPT @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment macro; // What the ...
-	public @S(40) C_Expression rightAsg = new C_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(40) C_Expression expr = new C_Expression(this, AllowedPrecedence.ATLEAST);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(rightAsg);
+		EagleValue val = interpreter.getEagleValue(expr);
 		if (!(var.getWhich() instanceof C_VariableExpression))
 		{
 			throw new RuntimeException("Can only handle simple assignments, not  " + var.getWhich());
@@ -41,7 +48,7 @@ public class C_AssignmentExpression extends PrecedenceOperator implements EagleR
 		}
 		C_Identifier_Reference id = (C_Identifier_Reference) which;
 
-		switch (equals.getValue())
+		switch (operator.getValue())
 		{
 		case "=":
 			interpreter.setSymbol(var, id.getValue(), val);
@@ -59,5 +66,50 @@ public class C_AssignmentExpression extends PrecedenceOperator implements EagleR
 		default:
 			throw new RuntimeException("Can only handle = and += right now");
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		if (! (var.getWhich() instanceof C_VariableExpression))
+		{
+			throw new RuntimeException("Can only assign variables");
+		}
+		C_VariableExpression variableExpr = (C_VariableExpression) var.getWhich();
+		C_Variable theVar = variableExpr.variable;
+
+		AbstractExpression subscrExpr = null;
+		if (theVar.subscript != null && theVar.subscript.size() > 0)
+		{
+			subscrExpr = transformer.transformExpression(generator, theVar.subscript.first().expr);
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractToken which = theVar.firstId.getWhich();
+		if (! (which instanceof C_Identifier_Reference))
+		{
+			throw new RuntimeException("Have to assign to a regular variable");
+		}
+		C_Identifier_Reference id = (C_Identifier_Reference) which;
+		
+		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+		return asgExpr;
 	}
 }

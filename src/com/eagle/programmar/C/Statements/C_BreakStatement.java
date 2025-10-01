@@ -9,9 +9,12 @@ import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class C_BreakStatement extends TokenSequence
-		implements EagleRunnableWithResult, AbstractStatement
+		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("#The-break-Statement") C_Keyword BREAK = new C_Keyword("break");
 	public @S(20) PunctuationSemicolon semicolon;
@@ -20,5 +23,12 @@ public class C_BreakStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		return Eagle_Statement_Result.BREAK;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return generator.newBreakStatement(this);
 	}
 }

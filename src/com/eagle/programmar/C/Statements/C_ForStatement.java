@@ -8,7 +8,6 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.C.C_Assignment;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.C_Syntax;
@@ -24,6 +23,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -31,8 +31,15 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class C_ForStatement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface
+public class C_ForStatement extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
 	public @S(20) C_ForLoopBody body;
@@ -61,8 +68,8 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 
 		public static class C_ForLoopVariable extends TokenChooser
 		{
-			public @CHOICE C_Expression XXexpr;
 			public @FIRST C_ForWithType XXforWithType;
+			public @CHOICE C_ForWithoutType XXforWithoutType;
 		}
 
 		public static class C_MoreLoopIncrements extends TokenSequence
@@ -96,9 +103,11 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 		}
 	}
 
-	public static class C_ForLoopVariableNoType extends TokenSequence
+	public static class C_ForWithoutType extends TokenSequence
 	{
-		public @S(10) C_Assignment assignment;
+		public @S(10) C_Variable_Definition variable;
+		public @S(20) PunctuationEquals equals;
+		public @S(30) C_Expression initialExpr;
 	}
 
 	private @SKIP ForLoopMetrics _metrics = null;
@@ -116,21 +125,20 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 	{
 		if (body.getWhich() instanceof C_ForLoopStatement)
 		{
-			C_ForLoopStatement what = (C_ForLoopStatement) body.getWhich();
+			C_ForLoopStatement loop = (C_ForLoopStatement) body.getWhich();
 
-			AbstractToken which = what.loopVar.first().getWhich();
-			C_Assignment asg;
+			AbstractToken which = loop.loopVar.first().getWhich();
 			if (which instanceof C_ForWithType)
 			{
 				C_ForWithType whatforWith = (C_ForWithType) which;
 				EagleValue initial = interpreter.getEagleValue(whatforWith.equalsInit.initialExpr);
 				interpreter.setSymbol(whatforWith.variable, whatforWith.variable.getValue(), initial);
 			}
-			else if (which instanceof C_ForLoopVariableNoType)
+			else if (which instanceof C_ForWithoutType)
 			{
-				C_ForLoopVariableNoType token = (C_ForLoopVariableNoType) which;
-				asg = token.assignment;
-				interpreter.tryToInterpret(asg);
+				C_ForWithoutType noType = (C_ForWithoutType) which;
+				EagleValue initial = interpreter.getEagleValue(noType.initialExpr);
+				interpreter.setSymbol(noType.variable, noType.variable.getValue(), initial);
 			}
 			else
 			{
@@ -146,7 +154,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			while (true)
 			{
-				boolean keepGoing = interpreter.getBoolValue(what.terminateCondition);
+				boolean keepGoing = interpreter.getBoolValue(loop.terminateCondition);
 				if (!keepGoing) break;
 
 				metric.iterate();
@@ -169,7 +177,7 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 					break;
 				}
 
-				interpreter.tryToInterpret(what.increment);
+				interpreter.tryToInterpret(loop.increment);
 			}
 
 			_metrics.competedLoop(metric);
@@ -177,5 +185,44 @@ public class C_ForStatement extends TokenSequence implements EagleRunnableWithRe
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + body.getWhich());
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (body.getWhich() instanceof C_ForLoopStatement)
+		{
+			C_ForLoopStatement loop = (C_ForLoopStatement) body.getWhich();
+			String varName = null;
+			C_Expression forInit = null;
+			AbstractToken which = loop.loopVar.first().getWhich();
+			if (which instanceof C_ForWithType)
+			{
+				C_ForWithType withType = (C_ForWithType) which;
+				varName = withType.variable.getValue();
+				forInit = withType.equalsInit.initialExpr;
+			}
+			else if (which instanceof C_ForWithoutType)
+			{
+				C_ForWithoutType noType = (C_ForWithoutType) which;
+				varName = noType.variable.getValue();
+				forInit = noType.initialExpr;
+			}
+			
+			if (forInit != null)
+			{
+				AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
+				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
+				
+				AbstractExpression termExpr = transformer.transformExpression(generator, loop.terminateCondition);
+				AbstractExpression delta = transformer.transformExpression(generator, loop.increment);
+				AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
+				return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+			}
+		}
+		
+		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 }

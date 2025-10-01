@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.C.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -12,11 +14,16 @@ import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class C_WhileStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class C_WhileStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("#The-while-Statement") C_Keyword WHILE = new C_Keyword("while");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -63,5 +70,15 @@ public class C_WhileStatement extends TokenSequence implements AbstractStatement
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> action = transformer.transformStatement(generator,
+				whileStatement.getWhich());
+		return generator.newWhileStatement(cond, action, this);
 	}
 }
