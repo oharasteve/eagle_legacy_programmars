@@ -108,7 +108,23 @@ public class AWK_RelationalExpression extends PrecedenceOperator
 			}
 		}
 
-		throw new RuntimeException("Unexpected additive operator: " + oper);
+		if (leftValue.isBoolean() && rightValue.isBoolean())
+		{
+			boolean leftBool = leftValue.forceBooleanValue();
+			boolean rightBool = rightValue.forceBooleanValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftBool == rightBool);
+				return;
+			case "!=":
+				interpreter.pushBool(leftBool != rightBool);
+				return;
+			}
+		}
+
+		throw new RuntimeException("Unexpected relational operator: " +
+				leftValue + " " + oper + " " + rightValue);
 	}
 	
 	@Override

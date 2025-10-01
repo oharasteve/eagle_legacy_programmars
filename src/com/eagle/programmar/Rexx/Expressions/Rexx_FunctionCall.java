@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
-// Original author: Steven A. O'Hara, Apr 1, 2024
+// Original author: Steven A. O'Hara, Feb 18, 2025
 
-package com.eagle.programmar.VB.Functions;
+package com.eagle.programmar.Rexx.Expressions;
 
 import java.util.ArrayList;
 
@@ -10,12 +10,11 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.VB.VB_Element;
-import com.eagle.programmar.VB.VB_Expression;
-import com.eagle.programmar.VB.Statements.VB_Function;
-import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
-import com.eagle.programmar.VB.Symbols.VB_Variable_Definition;
-import com.eagle.tokens.AbstractFunction;
+import com.eagle.programmar.Rexx.Rexx_Element;
+import com.eagle.programmar.Rexx.Rexx_Expression;
+import com.eagle.programmar.Rexx.Statements.Rexx_Function;
+import com.eagle.programmar.Rexx.Symbols.Rexx_Identifier_Reference;
+import com.eagle.programmar.Rexx.Symbols.Rexx_Variable_Definition;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
@@ -29,16 +28,16 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
-public class VB_FunctionCall extends PrimaryOperator
+public class Rexx_FunctionCall extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) VB_Identifier_Reference fnName;
-	public @S(20) VB_FnCallArguments callArguments;
+	public @S(10) Rexx_Identifier_Reference fnName;
+	public @S(20) Rexx_FnCallArguments callArguments;
 
-	public static class VB_FnCallArguments extends TokenSequence
+	public static class Rexx_FnCallArguments extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<VB_Expression, PunctuationComma> arguments;
+		public @S(20) @OPT SeparatedList<Rexx_Expression, PunctuationComma> arguments;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
@@ -58,12 +57,11 @@ public class VB_FunctionCall extends PrimaryOperator
 		}
 		
 		// Look up the function
-		AbstractFunction fn = interpreter.findFunction(name);
-		if (fn == null || !(fn instanceof VB_Function))
+		Rexx_Function func = (Rexx_Function) interpreter.findFunction(name);
+		if (func == null)
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
-		VB_Function func = (VB_Function) fn;
 
 		// Make sure the function args match up
 		int argCount = callArguments.arguments.getPrimaryCount();
@@ -80,9 +78,8 @@ public class VB_FunctionCall extends PrimaryOperator
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			VB_Expression expr = callArguments.arguments.getPrimaryElement(i);
-			VB_Variable_Definition param = func.params.params.getPrimaryElement(i).var;
-
+			Rexx_Expression expr = callArguments.arguments.getPrimaryElement(i);
+			Rexx_Variable_Definition param = func.params.params.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
 			argTypes.add(val.typeName());
@@ -93,14 +90,14 @@ public class VB_FunctionCall extends PrimaryOperator
 
 		// And transfer control to the method
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		for (VB_Element stmt : func.stmts._elements)
+		for (Rexx_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL) break; 
 		}
 		
 		// Need to put the result on the runtime stack
-		// VB uses the function name for the return value
+		// Rexx uses the function name for the return value
 		// Sort-of like this: Function sqrt(x) ; sqrt = x*x ; End Function
 		EagleValue val = interpreter.findSymbol(name);
 		if (val != null)
@@ -116,7 +113,7 @@ public class VB_FunctionCall extends PrimaryOperator
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -128,7 +125,7 @@ public class VB_FunctionCall extends PrimaryOperator
 			int argCount = callArguments.arguments.getPrimaryCount();
 			for (int i = 0; i < argCount; i++)
 			{
-				VB_Expression arg = callArguments.arguments.getPrimaryElement(i);
+				Rexx_Expression arg = callArguments.arguments.getPrimaryElement(i);
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
@@ -137,7 +134,7 @@ public class VB_FunctionCall extends PrimaryOperator
 			return generator.newMethodInvocation(var, args, fnName);
 		}
 
-		// Dang. VB uses () for both arrays and function calls
+		// Dang. Rexx uses () for both arrays and function calls
 		// It is not a function, so must be an array
 		AbstractExpression index = transformer.transformExpression(generator,
 				callArguments.arguments.first());

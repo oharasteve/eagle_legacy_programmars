@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Jul 9, 2022
 
-package com.eagle.programmar.Julia.Functions;
+package com.eagle.programmar.Julia.Expressions;
 
 import java.util.ArrayList;
 

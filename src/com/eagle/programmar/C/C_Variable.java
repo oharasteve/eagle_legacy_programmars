@@ -34,7 +34,7 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	public static class C_VariableIdentifier extends TokenChooser
 	{
 		public @CHOICE C_CastedVariable XXcastedVariable;
-		public @CHOICE C_SubscriptedVariable XXsubscriptedVariable;
+//		public @CHOICE C_SubscriptedVariable XXsubscriptedVariable;
 		public @LAST C_Identifier_Reference XXid;
 	}
 
@@ -48,11 +48,11 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 		public @S(60) PunctuationRightParen rightParen2;
 	}
 
-	public static class C_SubscriptedVariable extends TokenSequence
-	{
-		public @S(10) C_Identifier_Reference id;
-		public @S(20) TokenList<C_Subscript> subscripts;
-	}
+//	public static class C_SubscriptedVariable extends TokenSequence
+//	{
+//		public @S(10) C_Identifier_Reference id;
+//		public @S(20) TokenList<C_Subscript> subscripts;
+//	}
 
 	public static class C_ExtendedIdentifier extends TokenChooser
 	{
@@ -80,19 +80,23 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AbstractToken which = firstId.getWhich();
-		if (which instanceof C_Identifier_Reference)
+		if (! (which instanceof C_Identifier_Reference))
 		{
-			C_Identifier_Reference id = (C_Identifier_Reference) which;
+			throw new RuntimeException("Unable to handle " + which);
+		}
+		C_Identifier_Reference id = (C_Identifier_Reference) which;
+		
+		if (subscript != null && subscript.size() > 0)
+		{
+			EagleArray arry = (EagleArray) interpreter.findSymbol(id.getValue());
+			C_Subscript subscr = subscript._elements.get(0);
+			int sub = interpreter.getIntValue(subscr.expr);
+			interpreter.pushEagleValue(arry.getValue(sub));
+		}
+		else
+		{
 			EagleValue value = interpreter.findSymbol(id.getValue());
 			interpreter.pushEagleValue(value);
-		}
-		else if (which instanceof C_SubscriptedVariable)
-		{
-			C_SubscriptedVariable id = (C_SubscriptedVariable) which;
-			EagleArray value = (EagleArray) interpreter.findSymbol(id.id.getValue());
-			C_Subscript subscr = id.subscripts._elements.get(0);
-			int sub = interpreter.getIntValue(subscr.expr);
-			interpreter.pushEagleValue(value.getValue(sub));
 		}
 	}
 }

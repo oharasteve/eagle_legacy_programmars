@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Apr 1, 2024
 
-package com.eagle.programmar.Powershell.Functions;
+package com.eagle.programmar.Powershell.Expressions;
 
 import java.util.ArrayList;
 

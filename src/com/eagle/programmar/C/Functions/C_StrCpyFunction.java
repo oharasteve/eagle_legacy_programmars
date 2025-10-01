@@ -11,12 +11,20 @@ import com.eagle.programmar.C.C_Variable;
 import com.eagle.programmar.C.Expressions.C_VariableExpression;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class C_StrCpyFunction extends PrimaryOperator implements EagleRunnable
+public class C_StrCpyFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) C_Keyword STRCPY = new C_Keyword("strcpy");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -34,5 +42,19 @@ public class C_StrCpyFunction extends PrimaryOperator implements EagleRunnable
 		String str = interpreter.getStrValue(expr);
 		EagleString val = new EagleString(str);
 		interpreter.setSymbol(var, varName, val);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which = varExpr.variable.firstId.getWhich();
+		if (! (which instanceof C_Identifier_Reference))
+		{
+			throw new RuntimeException("Must be a regular variable");
+		}
+		C_Identifier_Reference id = (C_Identifier_Reference) which;
+		AbstractExpression newValue = transformer.transformExpression(generator, expr);
+		return generator.newAssignmentExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null,
+				AssignmentEnum.EQUALS, newValue, STRCPY);
 	}
 }

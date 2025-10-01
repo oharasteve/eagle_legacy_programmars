@@ -5,6 +5,7 @@ package com.eagle.programmar.AWK;
 
 import com.eagle.programmar.AWK.Expressions.AWK_AdditiveExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_AssignmentExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_CallFunction;
 import com.eagle.programmar.AWK.Expressions.AWK_ConcatenationExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_DollarParensExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_GetLine;
@@ -25,7 +26,6 @@ import com.eagle.programmar.AWK.Expressions.AWK_SubscriptExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_TrueFalseExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_VariableExpression;
 import com.eagle.programmar.AWK.Functions.AWK_BuiltinFunction;
-import com.eagle.programmar.AWK.Functions.AWK_CallFunction;
 import com.eagle.programmar.AWK.Functions.AWK_IntFunction;
 import com.eagle.programmar.AWK.Functions.AWK_LengthFunction;
 import com.eagle.programmar.AWK.Functions.AWK_SprintfFunction;

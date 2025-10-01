@@ -20,6 +20,7 @@ import com.eagle.programmar.Javascript.Expressions.Javascript_DotClass;
 import com.eagle.programmar.Javascript.Expressions.Javascript_EllipsisExpr;
 import com.eagle.programmar.Javascript.Expressions.Javascript_EqualityExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ExpressionList;
+import com.eagle.programmar.Javascript.Expressions.Javascript_FunctionCall;
 import com.eagle.programmar.Javascript.Expressions.Javascript_InExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_InstanceOfExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalAndExpression;
@@ -46,7 +47,6 @@ import com.eagle.programmar.Javascript.Expressions.Javascript_VariableExpression
 import com.eagle.programmar.Javascript.Expressions.Javascript_VoidExpr;
 import com.eagle.programmar.Javascript.Functions.Javascript_AwaitFunctionCall;
 import com.eagle.programmar.Javascript.Functions.Javascript_EvalFunction;
-import com.eagle.programmar.Javascript.Functions.Javascript_FunctionCall;
 import com.eagle.programmar.Javascript.Functions.Javascript_FunctionExpr;
 import com.eagle.programmar.Javascript.Functions.Javascript_LambdaFunction;
 import com.eagle.programmar.Javascript.Functions.Javascript_Length;

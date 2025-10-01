@@ -5,7 +5,7 @@ package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Rust.Functions.Rust_MethodInvocation;
+import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;

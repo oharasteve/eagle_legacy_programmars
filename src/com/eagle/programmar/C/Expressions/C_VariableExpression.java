@@ -36,16 +36,12 @@ public class C_VariableExpression extends PrimaryOperator
 			subscrExpr = transformer.transformExpression(generator, variable.subscript.first().expr);
 		}
 		AbstractToken which = variable.firstId.getWhich();
-		String varName;
-		if (which instanceof C_Identifier_Reference)
-		{
-			C_Identifier_Reference idRef = (C_Identifier_Reference) which;
-			varName = idRef.getValue();
-		}
-		else
+		if (! (which instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}
+		C_Identifier_Reference idRef = (C_Identifier_Reference) which;
+		String varName = idRef.getValue();
 		return generator.newVariableExpression(varName,
 				SubscriptEnum.FIRST_IS_ONE, subscrExpr, this);
 	}

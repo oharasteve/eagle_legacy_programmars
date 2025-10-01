@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Mar 22, 2024
 
-package com.eagle.programmar.Eaglish.Functions;
+package com.eagle.programmar.Eaglish.Expressions;
 
 import java.util.ArrayList;
 
