@@ -242,9 +242,17 @@ public class C_Function extends TokenSequence
 		C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which1;
 		TypeEnum retType = typeAndName.ctype.findType();
 		C_Function_Definition id = typeAndName.functionName;
-		AbstractType newReturnType = generator.transformType(retType, null, id);
 		
 		String fnName = id.getValue();
+		boolean isMain = false;
+		if (fnName.equals("main"))
+		{
+			fnName = generator.mainName();
+			retType = TypeEnum.VOID;
+			isMain = true;
+		}
+		
+		AbstractType newReturnType = generator.transformType(retType, null, id);
 		generator.addMethod(newReturnType, fnName, this);
 		generator.addMethodName(fnName);
 		if (VERBOSE)
@@ -252,37 +260,49 @@ public class C_Function extends TokenSequence
 			System.err.println("*** Found C function " + fnName);
 		}
 
-		// First parameter is kept separately from remainder, unfortunately
-		if (parameters.param != null && parameters.param.isPresent())
+		if (isMain)
 		{
-			AbstractToken which2 = parameters.param.getWhich();
-			if (which2 instanceof C_FunctionRegularParameter)
-			{
-				C_FunctionRegularParameter regParam1 = (C_FunctionRegularParameter) which2;
-				if (VERBOSE)
-				{
-					System.err.println("****** First Parameter " + regParam1.id.getValue());
-				}
-				TypeEnum argType1 = regParam1.ctype.findType();
-				AbstractType newArgType1 = generator.transformType(argType1, null, regParam1);
-				generator.addMethodParameter(newArgType1, regParam1.id.getValue());
-			}
+			generator.addMainArgs();
 		}
-		if (parameters.moreParams != null && parameters.moreParams.size() > 0)
+		else
 		{
-			for (C_MoreParameterDefs nextParam : parameters.moreParams._elements)
+			// First parameter is kept separately from remainder, unfortunately
+			if (parameters.param != null && parameters.param.isPresent())
 			{
-				AbstractToken which3 = nextParam.param.getWhich();
-				if (which3 instanceof C_FunctionRegularParameter)
+				AbstractToken which2 = parameters.param.getWhich();
+				if (which2 instanceof C_FunctionRegularParameter)
 				{
-					C_FunctionRegularParameter regParam2 = (C_FunctionRegularParameter) which3;
-					if (VERBOSE)
+					C_FunctionRegularParameter regParam1 = (C_FunctionRegularParameter) which2;
+					String firstName = regParam1.id.getValue();
+					if (firstName != null)
 					{
-						System.err.println("******  Next Parameter " + regParam2.id.getValue());
+						// if firstName is null means the parameter list is just 'void'
+						if (VERBOSE)
+						{
+							System.err.println("****** First Parameter " + firstName);
+						}
+						TypeEnum argType1 = regParam1.ctype.findType();
+						AbstractType newArgType1 = generator.transformType(argType1, null, regParam1);
+						generator.addMethodParameter(newArgType1, regParam1.id.getValue());
 					}
-					TypeEnum argType2 = regParam2.ctype.findType();
-					AbstractType newArgType2 = generator.transformType(argType2, null, regParam2);
-					generator.addMethodParameter(newArgType2, regParam2.id.getValue());
+				}
+			}
+			if (parameters.moreParams != null && parameters.moreParams.size() > 0)
+			{
+				for (C_MoreParameterDefs nextParam : parameters.moreParams._elements)
+				{
+					AbstractToken which3 = nextParam.param.getWhich();
+					if (which3 instanceof C_FunctionRegularParameter)
+					{
+						C_FunctionRegularParameter regParam2 = (C_FunctionRegularParameter) which3;
+						if (VERBOSE)
+						{
+							System.err.println("******  Next Parameter " + regParam2.id.getValue());
+						}
+						TypeEnum argType2 = regParam2.ctype.findType();
+						AbstractType newArgType2 = generator.transformType(argType2, null, regParam2);
+						generator.addMethodParameter(newArgType2, regParam2.id.getValue());
+					}
 				}
 			}
 		}

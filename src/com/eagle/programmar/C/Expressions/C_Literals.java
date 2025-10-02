@@ -36,6 +36,6 @@ public class C_Literals extends PrimaryOperator
 		{
 			throw new RuntimeException("Cannot handle multiple literals");
 		}
-		return generator.newLiteralExpression(literals.first().getValue(), this);
+		return literals.first().transformExpression(transformer, generator);
 	}
 }

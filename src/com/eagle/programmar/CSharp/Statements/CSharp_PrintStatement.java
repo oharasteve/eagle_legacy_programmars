@@ -93,7 +93,7 @@ public class CSharp_PrintStatement extends TokenSequence
 		}
 		else
 		{
-			prt.OUT = new CSharp_KeywordChoice("OUT");
+			prt.OUT = new CSharp_KeywordChoice("Out");
 		}
 		prt.OUT.setPresent(true);
 		

@@ -82,7 +82,7 @@ public class AWK_Format
 
 		if (! (fmtExpr.getWhich() instanceof AWK_String))
 		{
-			throw new RuntimeException("Format must be a literal for Sprintf");
+			throw new RuntimeException("Format must be a literal, not " + fmtExpr.getWhich());
 		}
 		AWK_String str = (AWK_String) fmtExpr.getWhich();
 		AWK_Literal lit = str.literal;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleString;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.Expressions.C_Literals;
 import com.eagle.tokens.SeparatedList;
@@ -18,7 +19,9 @@ import com.eagle.transform.EagleTransformer;
 public class C_Format
 {
 	// Handle %d and %s. Super simple ones only for now
-	public static String format(EagleInterpreter interpreter, SeparatedList<C_Expression, PunctuationComma> args)
+	public static String format(EagleInterpreter interpreter,
+			SeparatedList<C_Expression, PunctuationComma> args,
+			ArrayList<String> argTypes)
 	{
 		String fmt = interpreter.getStrValue(args.first());
 		fmt = fmt.replaceAll("\\\\n", "");
@@ -48,8 +51,10 @@ public class C_Format
 			if (index < numArgs)
 			{
 				C_Expression expr = args.getPrimaryElement(index);
-				String val = interpreter.getStrValue(expr);
-				sb.append(val);
+				EagleValue val = interpreter.getEagleValue(expr);
+				String piece = val.forceStringValue();
+				argTypes.add(val.typeName());
+				sb.append(piece);
 			}
 
 			// Look for the next piece
@@ -124,7 +129,7 @@ public class C_Format
 			
 			if (metrics != null)
 			{
-				types._type2 = metrics.get(i);
+				types._type2 = metrics.get(i - 1);
 			}
 			
 			C_Expression nextArg = args.getPrimaryElement(i);

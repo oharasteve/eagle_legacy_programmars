@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Format;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -31,10 +32,20 @@ public class C_PrintfStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) PunctuationSemicolon semicolon;
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String formatted = C_Format.format(interpreter, args);
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTF.getValue(), PRINTF);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
+		String formatted = C_Format.format(interpreter, args, argTypes);
+
+		_metrics.calledWith(argTypes);
 		System.out.println(formatted);
 	}
 

@@ -50,7 +50,7 @@ public class C_Program extends AbstractLanguage
 	}
 
 	private static String[] primitives = new String[] {
-			"auto", "char", "double", "float", "int", "long", "short", "void"
+			"auto", "bool", "char", "double", "float", "int", "long", "short", "void"
 	};
 
 	// Careful, this gets added to in some projects
@@ -185,7 +185,7 @@ public class C_Program extends AbstractLanguage
 
 				AbstractExpression initExpr = null;
 				
-				//System.err.println("****** Found var " + met._symbolName);
+//				System.err.println("****** Found global var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
@@ -211,6 +211,9 @@ public class C_Program extends AbstractLanguage
 			}
 		}
 		
+		// Not needed for C# or CSharp, but Python needs this
+		generator.addCallToMain();
+
 		return generator.getTransfomedProgram();
 	}
 }

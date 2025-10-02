@@ -98,11 +98,13 @@ public class C_Type extends TokenSequence implements AbstractType
 					return TypeEnum.INTEGER;
 				case "double":
 					return TypeEnum.DOUBLE;
+				case "bool":
+					return TypeEnum.BOOLEAN;
 				case "void":
 					return TypeEnum.VOID;
 				}
 			}
-			if (numStars == 1)
+			if (numStars <= 1)
 			{
 				switch (whichPrim)
 				{

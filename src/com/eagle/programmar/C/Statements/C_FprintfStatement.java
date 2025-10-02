@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.C_Format;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -34,10 +35,19 @@ public class C_FprintfStatement extends PrimaryOperator
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) PunctuationSemicolon semicolon;
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String formatted = C_Format.format(interpreter, args);
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, FPRINTF.getValue(), FPRINTF);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
+		String formatted = C_Format.format(interpreter, args, argTypes);
+		_metrics.calledWith(argTypes);
 		switch (STDOUT.toString())
 		{
 		case "stdout":
