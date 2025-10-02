@@ -34,7 +34,7 @@ public class C_Type extends TokenSequence implements AbstractType
 	public @S(40) @OPT C_Generic generic;
 	public @S(50) @OPT C_TypeFunction function;
 	public @S(60) @OPT C_Keyword CONST = new C_Keyword("const");
-	public @S(70) @OPT TokenList<C_TypeStar> stars;
+	public @S(70) @OPT TokenList<C_TypeStar> afterStars;
 
 	public static class C_TypeModifier extends TokenChooser
 	{
@@ -73,22 +73,23 @@ public class C_Type extends TokenSequence implements AbstractType
 	// Return TypeEnum.STRING for "char *" for example
 	public TypeEnum findType()
 	{
-		int numStars = 0;
-		if (stars != null && stars.size() > 0)
-		{
-			for (C_TypeStar nextStar : stars._elements)
-			{
-				if (nextStar.starAmpersand.getValue().equals("*"))
-				{
-					numStars++;
-				}
-			}
-		}
-		
 		AbstractToken which1 = base.getWhich();
 		if (which1 instanceof C_TypePrimitive)
 		{
 			C_TypePrimitive prim = (C_TypePrimitive) which1;
+
+			int numStars = 0;
+			if (prim.stars != null && prim.stars.size() > 0)
+			{
+				for (C_TypeStar nextStar : prim.stars._elements)
+				{
+					if (nextStar.starAmpersand.getValue().equals("*"))
+					{
+						numStars++;
+					}
+				}
+			}
+			
 			String whichPrim = prim.primitive.getValue();
 			if (numStars == 0)
 			{
@@ -102,9 +103,11 @@ public class C_Type extends TokenSequence implements AbstractType
 					return TypeEnum.BOOLEAN;
 				case "void":
 					return TypeEnum.VOID;
+				case "char":
+					return TypeEnum.CHAR;
 				}
 			}
-			if (numStars <= 1)
+			if (numStars == 1)
 			{
 				switch (whichPrim)
 				{

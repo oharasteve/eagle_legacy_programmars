@@ -5,6 +5,8 @@ package com.eagle.programmar.C.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -14,6 +16,8 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -76,6 +80,18 @@ public class C_AdditiveExpression extends PrecedenceOperator
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		Oper2Types types = transformer.findOperator2Metric(operator);
 
+		if (types != null)
+		{
+			if (types._type1.equals(EagleString.STRING) && types._type2.equals(EagleInteger.INTEGER))
+			{
+				// str+sc in C means substring(str, sc)
+				AbstractExpression zero = generator.newNumberExpression("0", null);
+				return generator.newSubstringFunction(leftExpr, rightExpr,
+						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NEITHER,
+						null, false, left);
+			}
+		}
+		
 		switch (operator.toString())
 		{
 		case "+":

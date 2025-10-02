@@ -129,6 +129,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("int");
 		case DOUBLE:
 			return newPrimitiveType("double");
+		case CHAR:
 		case STRING:
 			return newPrimitiveType("String");
 		case STRING_ARRAY:

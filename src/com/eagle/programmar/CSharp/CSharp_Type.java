@@ -120,6 +120,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			return newPrimitiveType("int");
 		case DOUBLE:
 			return newPrimitiveType("double");
+		case CHAR:
 		case STRING:
 			return newPrimitiveType("string");
 		case STRING_ARRAY:

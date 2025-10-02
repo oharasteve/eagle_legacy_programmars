@@ -106,7 +106,7 @@ public class C_Format
 		int prev = 0;
 		AbstractExpression fullExpr = null;
 		int numArgs = args.getPrimaryCount();
-		for (int i = 1; i < numArgs; i++)
+		for (int i = 1; i <= numArgs; i++)
 		{
 			String nextString = fmt.substring(prev, sc);
 			if (nextString.length() > 0)
@@ -147,8 +147,6 @@ public class C_Format
 			sc = fmt.indexOf("%", prev);
 			pctLen = check(fmt, sc, nc);
 			if (sc < 0 || pctLen == 0) break; // Ran out of % insertion points
-			
-			i++;
 		}
 		String lastString = fmt.substring(prev);
 		if (lastString.length() > 0)

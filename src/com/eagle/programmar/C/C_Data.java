@@ -21,9 +21,9 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class C_Data extends TokenChooser
 {
@@ -68,10 +68,21 @@ public class C_Data extends TokenChooser
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			TypeEnum argType2 = ctype.findType();
-			if (argType2 == TypeEnum.STRING && subscripts != null && subscripts.size() == 1)
+			
+			if (subscripts != null && subscripts.size() == 1)
 			{
-				argType2 = TypeEnum.STRING_ARRAY;
+				if (argType2 == TypeEnum.CHAR)
+				{
+					// If we have char xx[] then it is a string
+					argType2 = TypeEnum.STRING;
+				}
+				else if (argType2 == TypeEnum.STRING)
+				{
+					// If we have char *xx[] then it is a string array
+					argType2 = TypeEnum.STRING_ARRAY;
+				}
 			}
+
 			AbstractType newType = generator.transformType(argType2, null, this);
 			
 			String name = id.getValue();

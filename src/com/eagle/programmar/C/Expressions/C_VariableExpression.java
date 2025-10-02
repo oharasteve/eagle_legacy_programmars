@@ -43,6 +43,6 @@ public class C_VariableExpression extends PrimaryOperator
 		C_Identifier_Reference idRef = (C_Identifier_Reference) which;
 		String varName = idRef.getValue();
 		return generator.newVariableExpression(varName,
-				SubscriptEnum.FIRST_IS_ONE, subscrExpr, this);
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, this);
 	}
 }

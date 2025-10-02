@@ -112,6 +112,7 @@ public class Python_Type extends TokenChooser implements AbstractType
 			return newPrimitiveType("int");
 		case DOUBLE:
 			return newPrimitiveType("float");
+		case CHAR:
 		case STRING:
 			return newPrimitiveType("str");
 		case STRING_ARRAY:
