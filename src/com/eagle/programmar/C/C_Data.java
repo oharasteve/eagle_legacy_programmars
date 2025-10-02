@@ -68,6 +68,10 @@ public class C_Data extends TokenChooser
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			TypeEnum argType2 = ctype.findType();
+			if (argType2 == TypeEnum.STRING && subscripts != null && subscripts.size() == 1)
+			{
+				argType2 = TypeEnum.STRING_ARRAY;
+			}
 			AbstractType newType = generator.transformType(argType2, null, this);
 			
 			String name = id.getValue();

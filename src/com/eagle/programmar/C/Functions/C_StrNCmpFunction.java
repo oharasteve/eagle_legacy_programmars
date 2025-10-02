@@ -9,6 +9,7 @@ import com.eagle.math.EagleString;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -32,6 +33,8 @@ public class C_StrNCmpFunction extends PrimaryOperator
 	public @S(60) PunctuationComma comma2;
 	public @S(70) C_Expression ncExpr;
 	public @S(80) PunctuationRightParen rightParen;
+	public @S(90) C_PunctuationChoice operator = new C_PunctuationChoice("==", "!=", "<", ">=");
+	public @S(100) C_Keyword ZERO = new C_Keyword("0");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -41,7 +44,19 @@ public class C_StrNCmpFunction extends PrimaryOperator
 		int nc = interpreter.getIntValue(ncExpr);
 		if (left.length() > nc) left = left.substring(0, nc);
 		if (right.length() > nc) right = right.substring(0, nc);
-		interpreter.pushInt(left.compareTo(right));
+		int compare = left.compareTo(right);
+		
+		switch (operator.getValue())
+		{
+		case "==", ">=":
+			interpreter.pushBool(compare == 0);
+			return;
+		case "!=", "<":
+			interpreter.pushBool(compare != 0);
+			return;
+		}
+
+		throw new RuntimeException("Unexpected operator: " + operator.getValue());
 	}
 
 	@Override
@@ -56,6 +71,15 @@ public class C_StrNCmpFunction extends PrimaryOperator
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NC, newNc, true, str1);
 		AbstractExpression substr2 = generator.newSubstringFunction(newStr2, zero,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NC, newNc, true, str2);
-		return generator.newRelationalExpression(types, substr1, RelationalEnum.EQUALS, substr2, this);
+
+		switch (operator.getValue())
+		{
+		case "==", ">=":
+			return generator.newRelationalExpression(types, substr1, RelationalEnum.EQUALS, substr2, this);
+		case "!=", "<":
+			return generator.newRelationalExpression(types, substr1, RelationalEnum.NOT_EQUALS, substr2, this);
+		}
+		
+		throw new RuntimeException("Unexpected operator: " + operator.getValue());
 	}
 }

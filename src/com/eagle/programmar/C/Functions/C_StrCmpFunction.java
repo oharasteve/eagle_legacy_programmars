@@ -8,7 +8,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.C_Expression;
+import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
+import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -28,22 +30,38 @@ public class C_StrCmpFunction extends PrimaryOperator
 	public @S(40) PunctuationComma comma;
 	public @S(50) C_Expression str2;
 	public @S(60) PunctuationRightParen rightParen;
+	public @S(70) C_PunctuationChoice operator = new C_PunctuationChoice("==", "!=", "<", ">=");
+	public @S(80) C_Keyword ZERO = new C_Keyword("0");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String left = interpreter.getStrValue(str1);
 		String right = interpreter.getStrValue(str2);
-		switch (STRCMP.toString())
+		int compare = -1;
+		switch (STRCMP.getValue())
 		{
 		case "strcmp":
-			interpreter.pushInt(left.compareTo(right));
-			return;
+			default:
+			compare = left.compareTo(right);
+			break;
 		case "strcasecmp":
 		case "stricmp":
-			interpreter.pushInt(left.compareToIgnoreCase(right));
+			compare = left.compareToIgnoreCase(right);
+			break;
+		}
+		
+		switch (operator.getValue())
+		{
+		case "==", ">=":
+			interpreter.pushBool(compare == 0);
+			return;
+		case "!=", "<":
+			interpreter.pushBool(compare != 0);
 			return;
 		}
+
+		throw new RuntimeException("Unexpected operator: " + operator.getValue());
 	}
 
 	@Override
@@ -52,6 +70,15 @@ public class C_StrCmpFunction extends PrimaryOperator
 		Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
 		AbstractExpression newStr1 = transformer.transformExpression(generator, str1);
 		AbstractExpression newStr2 = transformer.transformExpression(generator, str2);
-		return generator.newRelationalExpression(types, newStr1, RelationalEnum.EQUALS, newStr2, this);
+
+		switch (operator.getValue())
+		{
+		case "==", ">=":
+			return generator.newRelationalExpression(types, newStr1, RelationalEnum.EQUALS, newStr2, this);
+		case "!=", "<":
+			return generator.newRelationalExpression(types, newStr1, RelationalEnum.NOT_EQUALS, newStr2, this);
+		}
+		
+		throw new RuntimeException("Unexpected operator: " + operator.getValue());
 	}
 }
