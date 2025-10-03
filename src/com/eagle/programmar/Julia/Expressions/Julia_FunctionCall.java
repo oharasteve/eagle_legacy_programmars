@@ -40,45 +40,6 @@ public class Julia_FunctionCall extends PrimaryOperator
 		Julia_Identifier_Reference id = variable.vars.first();
 		String name = id.getValue();
 		
-		// See if it is builtin function
-		if (name.equals("div") && argList.getPrimaryCount() == 2)
-		{
-			Julia_Expression numerExpr = argList.getPrimaryElement(0);
-			Julia_Expression denomExpr = argList.getPrimaryElement(1);
-			int numer = interpreter.getIntValue(numerExpr);
-			int denom = interpreter.getIntValue(denomExpr);
-			interpreter.pushInt(numer / denom);
-			return;
-		}
-		if (name.equals("string"))
-		{
-			StringBuffer buff = new StringBuffer();
-			for (int i = 0; i < argList.getPrimaryCount(); i++)
-			{
-				Julia_Expression expr = argList.getPrimaryElement(i);
-				String val = interpreter.getStrValue(expr);
-				buff.append(val);
-			}
-			interpreter.pushStr(buff.toString());
-			return;
-		}
-		if (name.equals("startswith") && argList.getPrimaryCount() == 2)
-		{
-			Julia_Expression strExpr = argList.getPrimaryElement(0);
-			Julia_Expression pattExpr = argList.getPrimaryElement(1);
-			String str = interpreter.getStrValue(strExpr);
-			String patt = interpreter.getStrValue(pattExpr);
-			interpreter.pushBool(str.startsWith(patt));
-			return;
-		}
-		if (name.equals("length") && argList.getPrimaryCount() == 1)
-		{
-			Julia_Expression strExpr = argList.getPrimaryElement(0);
-			String str = interpreter.getStrValue(strExpr);
-			interpreter.pushInt(str.length());
-			return;
-		}
-
 		// Look up the function in our function list
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
