@@ -61,6 +61,8 @@ public class Go_FunctionCall extends PrimaryOperator
 					"Function " + fnName + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		interpreter.callingFunction(fnName, func);
+
 		// Now assign all the parameters
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
@@ -76,7 +78,6 @@ public class Go_FunctionCall extends PrimaryOperator
 		long startTime = System.nanoTime();
 
 		// And transfer control to the function
-		interpreter.callingFunction(fnName, func);
 		interpreter.tryToInterpret(func.stmt);
 
 		long elapsedTime = System.nanoTime() - startTime;

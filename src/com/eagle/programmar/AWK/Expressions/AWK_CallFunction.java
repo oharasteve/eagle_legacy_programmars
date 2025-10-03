@@ -63,6 +63,8 @@ public class AWK_CallFunction extends PrimaryOperator
 						"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 			}
 
+			interpreter.callingFunction(name, func);
+
 			// Now assign all the parameters
 			AWK_Expression arg = argList.expr;
 			for (int i = 0; i < argCount; i++)
@@ -82,7 +84,6 @@ public class AWK_CallFunction extends PrimaryOperator
 		long startTime = System.nanoTime();
 
 		// And transfer control to the function
-		interpreter.callingFunction(name, func);
 		for (AWK_StatementOrComment stmt : func.body.elements._elements)
 		{
 			Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);

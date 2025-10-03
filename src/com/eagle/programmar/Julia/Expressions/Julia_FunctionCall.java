@@ -57,6 +57,8 @@ public class Julia_FunctionCall extends PrimaryOperator
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
+		interpreter.callingFunction(name, func);
+
 		// Now assign all the parameters
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
@@ -73,7 +75,6 @@ public class Julia_FunctionCall extends PrimaryOperator
 		long startTime = System.nanoTime();
 
 		// And transfer control to the method
-		interpreter.callingFunction(name, func);
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (Julia_Statement stmt : func.stmts._elements)
 		{
