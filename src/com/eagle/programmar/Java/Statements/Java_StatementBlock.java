@@ -12,6 +12,7 @@ import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
+import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
@@ -29,10 +30,11 @@ public class Java_StatementBlock extends TokenSequence
 		implements EagleRunnableWithResult, EagleScopeInterface, EagleTransformableStatement
 {
 	public @S(10) @OPT Java_Label label;
-	public @S(20) @INDENT PunctuationLeftBrace leftBrace;
-	public @S(30) @OPT TokenList<Java_StatementOrComment> statements;
-	public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
-	public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
+	public @S(20) @OPT Java_Keyword STATIC = new Java_Keyword("static");
+	public @S(30) @INDENT PunctuationLeftBrace leftBrace;
+	public @S(40) @OPT TokenList<Java_StatementOrComment> statements;
+	public @S(50) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon1;
+	public @S(60) @OUTDENT PunctuationRightBrace rightBrace;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
