@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Java.Java_ParameterList.Java_MethodParameter;
 import com.eagle.programmar.Java.Java_Type.Java_GenericType;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
@@ -59,6 +60,7 @@ public class Java_Method extends TokenSequence
 
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	public static class Java_MethodTypeAndName extends TokenChooser
 	{
@@ -163,7 +165,11 @@ public class Java_Method extends TokenSequence
 			{
 				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 			}
-	
+			if (_returnMetrics == null)
+			{
+				_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
+			}
+
 			// Nothing to do here. Only run methods when they are called / invoked.
 			// Exception is 'main'
 			if (id.getValue().equals("main"))

@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 
@@ -22,7 +23,19 @@ public class Eaglish_Return_Statement extends TokenSequence implements EagleRunn
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.pushEagleValue(val);
+
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof Eaglish_Function)
+			{
+				Eaglish_Function func = (Eaglish_Function) parent;
+				func._returnMetrics.returned(val.typeName());
+				break;
+			}
+			parent = parent.getParent();
+		}
+
 		return Eagle_Statement_Result.RETURN;
 	}
 }

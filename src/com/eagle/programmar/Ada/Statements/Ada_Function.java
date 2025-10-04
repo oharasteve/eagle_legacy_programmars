@@ -11,6 +11,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Syntax;
 import com.eagle.programmar.Ada.Ada_Type;
@@ -51,9 +52,6 @@ public class Ada_Function extends TokenSequence
 	public @S(100) @OPT Ada_Identifier_Reference id2;
 	public @S(110) PunctuationSemicolon semicolon;
 
-	public @SKIP CallMetrics _callMetrics = null;
-	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
-
 	public static class Ada_FunctionParams extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -74,6 +72,10 @@ public class Ada_Function extends TokenSequence
 		public @S(20) Ada_Type type;
 	}
 
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Ada_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -92,6 +94,10 @@ public class Ada_Function extends TokenSequence
 		if (_argumentsMetrics == null)
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Nothing to do here. Ignore the function definitions

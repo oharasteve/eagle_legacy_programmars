@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.CSharp_Method;
 import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -31,7 +32,19 @@ public class CSharp_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expression);
-		interpreter.pushEagleValue(val);
+
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof CSharp_Method)
+			{
+				CSharp_Method meth = (CSharp_Method) parent;
+				meth._returnMetrics.returned(val.typeName());
+				break;
+			}
+			parent = parent.getParent();
+		}
+
 		return Eagle_Statement_Result.RETURN;
 	}
 	

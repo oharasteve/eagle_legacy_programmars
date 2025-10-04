@@ -85,7 +85,6 @@ public class C_AdditiveExpression extends PrecedenceOperator
 			if (types._type1.equals(EagleString.STRING) && types._type2.equals(EagleInteger.INTEGER))
 			{
 				// str+sc in C means substring(str, sc)
-				AbstractExpression zero = generator.newNumberExpression("0", null);
 				return generator.newSubstringFunction(leftExpr, rightExpr,
 						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NEITHER,
 						null, false, left);

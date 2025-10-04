@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -29,6 +30,19 @@ public class Ada_ReturnStatement extends TokenSequence
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
+		
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof Ada_Function)
+			{
+				Ada_Function func = (Ada_Function) parent;
+				func._returnMetrics.returned(val.typeName());
+				break;
+			}
+			parent = parent.getParent();
+		}
+		
 		return Eagle_Statement_Result.RETURN;
 	}
 

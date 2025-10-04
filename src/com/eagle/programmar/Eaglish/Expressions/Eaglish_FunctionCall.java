@@ -11,7 +11,7 @@ import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
-import com.eagle.programmar.Eaglish.Statements.Eaglish_Function_Block;
+import com.eagle.programmar.Eaglish.Statements.Eaglish_Function;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Parameter_Statement;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
@@ -38,7 +38,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
-		Eaglish_Function_Block func = (Eaglish_Function_Block) fn;
+		Eaglish_Function func = (Eaglish_Function) fn;
 
 		// Make sure the function args match up
 		if (!func.returnsStatement.isPresent())

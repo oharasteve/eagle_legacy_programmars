@@ -44,7 +44,7 @@ public class Eaglish_Call_Statement extends TokenSequence implements EagleRunnab
 		{
 			throw new RuntimeException("Unable to find a function named " + name.getValue());
 		}
-		Eaglish_Function_Block func = (Eaglish_Function_Block) fn;
+		Eaglish_Function func = (Eaglish_Function) fn;
 
 		// Count the parameters
 		int expected = func.parameterStatements.size();

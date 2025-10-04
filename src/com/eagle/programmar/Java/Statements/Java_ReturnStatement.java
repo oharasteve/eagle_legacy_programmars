@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Java_Method;
 import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -32,6 +33,19 @@ public class Java_ReturnStatement extends TokenSequence
 		if (expression != null && expression.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(expression);
+
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof Java_Method)
+				{
+					Java_Method meth = (Java_Method) parent;
+					meth._returnMetrics.returned(val.typeName());
+					break;
+				}
+				parent = parent.getParent();
+			}
+
 			interpreter.pushEagleValue(val);
 		}
 		return Eagle_Statement_Result.RETURN;

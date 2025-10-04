@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.C.C_Expression;
+import com.eagle.programmar.C.C_Function;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -30,6 +32,19 @@ public class C_ReturnStatement extends TokenSequence
 		if (expression != null && expression.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(expression);
+
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof C_Function)
+				{
+					C_Function func = (C_Function) parent;
+					func._returnMetrics.returned(val.typeName());
+					break;
+				}
+				parent = parent.getParent();
+			}
+
 			interpreter.pushEagleValue(val);
 		}
 		return Eagle_Statement_Result.RETURN;
