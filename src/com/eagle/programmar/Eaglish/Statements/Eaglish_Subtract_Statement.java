@@ -13,9 +13,16 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Subtract_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Eaglish_Subtract_Statement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword SUBTRACT = new Eaglish_Keyword("SUBTRACT");
 	public @S(20) Eaglish_Expression expr;
@@ -38,5 +45,23 @@ public class Eaglish_Subtract_Statement extends TokenSequence implements EagleRu
 			return;
 		}
 		throw new RuntimeException("Unable to process " + which);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractToken which = var.var.getWhich();
+		if (! (which instanceof Eaglish_Identifier_Reference))
+		{
+			throw new RuntimeException("Can only subtract from variables");
+		}
+		Eaglish_Identifier_Reference id = (Eaglish_Identifier_Reference) which;
+		
+		AbstractExpression subscr = null;
+		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscr, AssignmentEnum.MINUS_EQUALS, value, this);
+		return generator.newExpressionStatement(asgExpr, this);
 	}
 }

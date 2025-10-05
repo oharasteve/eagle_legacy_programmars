@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -16,13 +18,22 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Eaglish_For_Block extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword FOR = new Eaglish_Keyword("FOR");
-	public @S(20) Eaglish_Variable_Definition var;
+	public @S(20) Eaglish_Variable_Definition variable;
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Eaglish_Expression startValue;
 	public @S(50) Eaglish_KeywordChoice TO = new Eaglish_KeywordChoice("TO", "DOWN_TO");
@@ -59,7 +70,7 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 			if (backwards && i < stop) break;
 
 			metric.iterate();
-			interpreter.setSymbol(var, var.toString(), new EagleInteger(i));
+			interpreter.setSymbol(variable, variable.toString(), new EagleInteger(i));
 
 			for (Eaglish_Statement stmt : statements._elements)
 			{
@@ -91,5 +102,46 @@ public class Eaglish_For_Block extends TokenSequence implements EagleRunnableWit
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression initExpr = transformer.transformExpression(generator, startValue);
+		AbstractExpression termExpr = transformer.transformExpression(generator, stopValue);
+		AbstractExpression incrExpr;
+		RelationalEnum relOp;
+
+		switch (TO.getValue())
+		{
+		case "TO":
+			incrExpr = generator.newNumberExpression("1", TO);
+			relOp = RelationalEnum.LESS_EQUALS;
+			break;
+		case "DOWN_TO":
+			incrExpr = generator.newNumberExpression("-1", TO);
+			relOp = RelationalEnum.GREATER_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected direction: " + TO.getValue());
+		}
+		
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		for (Eaglish_Statement statement : statements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+					statement.getWhich());
+			if (stmts != null)
+			{
+				for (AbstractStatement stmt : stmts)
+				{
+					actionList.add(stmt);
+				}
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(variable.getValue());
+		AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
+				relOp, termExpr, incrExpr, actionList, this);
+		return stmt;
 	}
 }

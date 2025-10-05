@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -11,11 +13,18 @@ import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.programmar.Julia.Julia_Statement;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_While_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Eaglish_While_Block extends TokenSequence 
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword WHILE = new Eaglish_Keyword("WHILE");
 	public @S(20) Eaglish_Expression condition;
@@ -70,5 +79,22 @@ public class Eaglish_While_Block extends TokenSequence implements EagleRunnableW
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		for (Eaglish_Statement stmt1 : statements._elements)
+		{
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt1.getWhich());
+			for (AbstractStatement stmt2 : stmts)
+			{
+				actions.add(stmt2);
+			}
+		}
+		return generator.newWhileStatement(cond, actions, this);
 	}
 }
