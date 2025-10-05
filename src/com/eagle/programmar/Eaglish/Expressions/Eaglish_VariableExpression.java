@@ -6,9 +6,17 @@ package com.eagle.programmar.Eaglish.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Eaglish.Eaglish_Variable;
+import com.eagle.programmar.Eaglish.Symbols.Eaglish_Identifier_Reference;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_VariableExpression extends PrimaryOperator implements EagleRunnable
+public class Eaglish_VariableExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Eaglish_Variable variable;
 
@@ -16,5 +24,20 @@ public class Eaglish_VariableExpression extends PrimaryOperator implements Eagle
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(variable);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscript = null;
+		AbstractToken which = variable.var.getWhich();
+		if (! (which instanceof Eaglish_Identifier_Reference))
+		{
+			throw new RuntimeException("Can only handle variables");
+		}
+		Eaglish_Identifier_Reference id = (Eaglish_Identifier_Reference) which;
+		return generator.newVariableExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 }

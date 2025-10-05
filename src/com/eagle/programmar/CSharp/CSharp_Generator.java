@@ -26,6 +26,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_PreIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ShiftExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
+import com.eagle.programmar.CSharp.Functions.CSharp_EndsWithMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_IndexOfMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
@@ -624,6 +625,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc,
 				whichSC, whichEC, ecOrnc, ncMightBeTooBig, source));
+	}
+
+	@Override
+	public AbstractExpression newEndsWithFunction(CSharp_Expression expr, CSharp_Expression patt,
+			AbstractToken source)
+	{
+		CSharp_EndsWithMethod endsMeth = new CSharp_EndsWithMethod();
+		return endsMeth.generateEndsWith(expr, patt, source);
 	}
 
 	@Override

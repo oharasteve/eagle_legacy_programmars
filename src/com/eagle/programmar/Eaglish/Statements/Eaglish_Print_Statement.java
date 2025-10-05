@@ -7,12 +7,19 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
+import com.eagle.programmar.Eaglish.Eaglish_Format;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
+import com.eagle.programmar.Eaglish.Terminals.Eaglish_Literal;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Print_Statement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Eaglish_Print_Statement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword PRINT = new Eaglish_Keyword("PRINT");
 	public @S(20) Eaglish_Expression expr;
@@ -23,5 +30,20 @@ public class Eaglish_Print_Statement extends TokenSequence implements EagleRunna
 	{
 		EagleValue result = interpreter.getEagleValue(expr);
 		System.out.println(result.toString());
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (expr.getWhich() instanceof Eaglish_Literal)
+		{
+			Eaglish_Literal format = (Eaglish_Literal) expr.getWhich();
+			AbstractExpression newLine = Eaglish_Format.compile(generator, format.getValue(), this);
+			return generator.newPrintStatement(newLine, true, false, this);
+		}
+		
+		AbstractExpression line = transformer.transformExpression(generator, expr);
+		return generator.newPrintStatement(line, true, false, this);
 	}
 }

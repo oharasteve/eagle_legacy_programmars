@@ -10,8 +10,14 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_KeywordChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements EagleRunnable
+public class Eaglish_ConditionStringMatch extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Eaglish_Expression left = new Eaglish_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Eaglish_KeywordChoice matchOperator = new Eaglish_KeywordChoice("ENDS_WITH", "STARTS_WITH");
@@ -45,6 +51,30 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator implements 
 		case "STARTS_WITH":
 			interpreter.pushBool(leftStr.startsWith(rightStr, sc));
 			return;
+		default:
+			throw new RuntimeException("Unable to handle " + oper);
+		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		String oper = matchOperator.toString();
+
+		AbstractExpression scExpr = null;
+		if (atClause != null && atClause.isPresent())
+		{
+			scExpr = transformer.transformExpression(generator, atClause.position);
+		}
+
+		switch (oper.toUpperCase())
+		{
+		case "ENDS_WITH":
+			return generator.newEndsWithFunction(leftExpr, rightExpr, this);
+		case "STARTS_WITH":
+			return generator.newStartsWithFunction(leftExpr, rightExpr, scExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}

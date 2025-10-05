@@ -27,6 +27,7 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
+import com.eagle.programmar.Python.Functions.Python_EndsWith_Function;
 import com.eagle.programmar.Python.Functions.Python_Find_Function;
 import com.eagle.programmar.Python.Functions.Python_Int_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
@@ -623,6 +624,14 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	{
 		return wrapExpression(Python_SubscriptExpression.generateExpression(expr, sc, whichSC,
 				whichEC, ecOrnc, ncMightBeTooBig, source));
+	}
+
+	@Override
+	public AbstractExpression newEndsWithFunction(Python_Expression expr, Python_Expression patt,
+			AbstractToken source)
+	{
+		Python_EndsWith_Function endsFunc = new Python_EndsWith_Function();
+		return endsFunc.generateEndsWith(expr, patt, source);
 	}
 
 	@Override

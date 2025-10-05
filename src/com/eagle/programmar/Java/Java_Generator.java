@@ -28,6 +28,7 @@ import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_ShiftExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Functions.Java_EndsWithMethod;
 import com.eagle.programmar.Java.Functions.Java_IndexOfMethod;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
@@ -642,6 +643,14 @@ public class Java_Generator
 	{
 		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC,
 				whichEC, ecOrnc, ncMightBeTooBig, source));
+	}
+
+	@Override
+	public AbstractExpression newEndsWithFunction(Java_Expression expr, Java_Expression patt,
+			AbstractToken source)
+	{
+		Java_EndsWithMethod endsMeth = new Java_EndsWithMethod();
+		return endsMeth.generateEndsWith(expr, patt, source);
 	}
 
 	@Override
