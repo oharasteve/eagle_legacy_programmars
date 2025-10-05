@@ -5,9 +5,14 @@ package com.eagle.programmar.Eaglish.Terminals;
 
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Number extends TerminalNumberToken implements EagleRunnable
+public class Eaglish_Number extends TerminalNumberToken
+		implements EagleRunnable, EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -19,5 +24,11 @@ public class Eaglish_Number extends TerminalNumberToken implements EagleRunnable
 	public String description()
 	{
 		return super.genericDescription(null, null, true, false, '?');
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newNumberExpression(_numberAsText, this);
 	}
 }

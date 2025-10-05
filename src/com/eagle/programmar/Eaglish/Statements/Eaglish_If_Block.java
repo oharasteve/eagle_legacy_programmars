@@ -14,9 +14,15 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Eaglish_If_Block extends TokenSequence
+		implements EagleRunnableWithResult, AbstractStatement,
+				EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword IF = new Eaglish_Keyword("IF");
 	public @S(20) Eaglish_Expression condition;
@@ -117,5 +123,32 @@ public class Eaglish_If_Block extends TokenSequence implements EagleRunnableWith
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		
+		ArrayList<AbstractStatement> thenParts = new ArrayList<AbstractStatement>();
+		for (Eaglish_Statement thenStmt : statements._elements)
+		{
+			AbstractStatement thenPiece = transformer.transformStatement1(generator, thenStmt.getWhich());
+			thenParts.add(thenPiece);
+		}
+
+		ArrayList<AbstractStatement> elseParts = null;
+		if (elseBlock != null && elseBlock.isPresent())
+		{
+			elseParts = new ArrayList<AbstractStatement>();
+			for (Eaglish_Statement elseStmt : elseBlock.statements._elements)
+			{
+				AbstractStatement elsePiece = transformer.transformStatement1(generator, elseStmt.getWhich());
+				elseParts.add(elsePiece);
+			}
+		}
+
+		return generator.newIfStatement(cond, thenParts, elseParts, this);
 	}
 }

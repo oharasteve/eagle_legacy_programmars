@@ -11,10 +11,17 @@ import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Integer_Data extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Eaglish_Integer_Data extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword INTEGER = new Eaglish_Keyword("INTEGER");
 	public @S(20) Eaglish_Variable_Definition var;
@@ -24,17 +31,30 @@ public class Eaglish_Integer_Data extends TokenSequence implements EagleRunnable
 	public static class Eaglish_Integer_InitialValue extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
-		public @S(20) Eaglish_Expression value;
+		public @S(20) Eaglish_Expression expression;
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (init.isPresent())
+		if (init != null && init.isPresent())
 		{
-			int x = interpreter.getIntValue(init.value);
+			int x = interpreter.getIntValue(init.expression);
 			EagleInteger val = new EagleInteger(x);
 			interpreter.setSymbol(var, var.getValue(), val);
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractType newType = generator.transformType(TypeEnum.INTEGER, null, INTEGER);
+		String name = var.getValue();
+		AbstractExpression initial = null;
+		if (init != null && init.isPresent())
+		{
+			initial = transformer.transformExpression(generator, init.expression);
+		}
+		return generator.newDataDeclaration(false, name, null, newType, initial, this);
 	}
 }
