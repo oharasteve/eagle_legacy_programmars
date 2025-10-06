@@ -11,22 +11,40 @@ import com.eagle.programmar.FSharp.FSharp_Variable;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class FSharp_LetStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class FSharp_LetStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("functions/let-bindings") FSharp_Keyword LET = new FSharp_Keyword("let");
 	public @S(20) @OPT FSharp_Keyword MUTABLE = new FSharp_Keyword("mutable");
-	public @S(30) FSharp_Variable var;
+	public @S(30) FSharp_Variable variable;
 	public @S(40) PunctuationEquals equals;
-	public @S(50) FSharp_Expression expr;
+	public @S(50) FSharp_Expression expression;
 	public @S(60) FSharp_EndOfLine eoln;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var, var.id.getValue(), value);
+		EagleValue value = interpreter.getEagleValue(expression);
+		interpreter.setSymbol(variable, variable.id.getValue(), value);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscrExpr = null;
+		AbstractExpression value = transformer.transformExpression(generator, expression);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
+		return generator.newExpressionStatement(asgExpr, this);
 	}
 }

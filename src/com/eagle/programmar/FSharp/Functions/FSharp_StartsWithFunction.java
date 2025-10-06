@@ -8,13 +8,19 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class FSharp_StartsWithFunction extends PrecedenceOperator implements EagleRunnable
+public class FSharp_StartsWithFunction extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(10) FSharp_Expression expression = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) FSharp_Keyword STARTSWITH = new FSharp_Keyword("StartsWith");
 	public @S(40) PunctuationLeftParen leftParen;
@@ -24,8 +30,17 @@ public class FSharp_StartsWithFunction extends PrecedenceOperator implements Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String str = interpreter.getStrValue(left);
+		String str = interpreter.getStrValue(expression);
 		String patt = interpreter.getStrValue(pattExpr);
 		interpreter.pushBool(str.startsWith(patt));
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		AbstractExpression thePattern = transformer.transformExpression(generator, pattExpr);
+		return generator.newStartsWithFunction(theExpr, thePattern, null,
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 }

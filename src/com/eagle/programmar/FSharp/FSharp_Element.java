@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.FSharp;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult;
@@ -24,6 +26,9 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
 public class FSharp_Element extends TokenSequence implements AbstractStatement
 {
@@ -36,7 +41,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 
 	public static class FSharp_StatementOrComment extends TokenChooser
 	{
-		public @SKIP FSharp_MultilineStatement XXmultiStatement; // Only needed for Transformation
+//		public @SKIP FSharp_MultilineStatement XXmultiStatement; // Only needed for Transformation
 
 		public @CHOICE FSharp_Statement_List XXstatements;
 		public @CHOICE FSharp_EndOfLine XXeoln;
@@ -53,7 +58,8 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		}
 	}
 
-	public static class FSharp_Statement_List extends TokenSequence implements EagleRunnable
+	public static class FSharp_Statement_List extends TokenSequence
+			implements EagleRunnable, EagleTransformableStatementList
 	{
 		public @S(10) FSharp_StartOfLine soln = new FSharp_StartOfLine();
 		public @S(20) SeparatedList<FSharp_Statement, FSharp_Statement_Separator> statements;
@@ -66,6 +72,18 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 				FSharp_Statement stmt = statements.getPrimaryElement(i);
 				interpreter.tryToInterpret(stmt);
 			}
+		}
+
+		@Override
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		{
+			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+			for (int i = 0; i < statements.getPrimaryCount(); i++)
+			{
+				FSharp_Statement stmt = statements.getPrimaryElement(i);
+				result.add(transformer.transformStatement1(generator, stmt.getWhich()));
+			}
+			return result;
 		}
 	}
 
@@ -88,26 +106,44 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		public @LAST FSharp_Expression XXreturnValue;
 	}
 
-	public static class FSharp_MultilineStatement extends TokenSequence implements EagleRunnableWithResult
+	public static class FSharp_MultilineStatement extends TokenSequence
+			implements EagleRunnableWithResult, EagleTransformableStatementList
 	{
 		public @S(10) @OPT FSharp_Comment comment;
 		public @S(20) FSharp_EndOfLine eoln;
-		public @S(30) TokenList<FSharp_Element> statements;
+		public @S(30) TokenList<FSharp_Element> elements;
 		
 		@Override
 		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-			for (FSharp_Element stmt : statements._elements)
+			for (FSharp_Element stmt : elements._elements)
 			{
 				result = interpreter.tryToInterpret(stmt.statementOrComment);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			return result;
 		}
+
+		@Override
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		{
+			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+			for (FSharp_Element elt : elements._elements)
+			{
+				ArrayList<AbstractStatement> batch = transformer.transformStatement(generator,
+							elt.statementOrComment.getWhich());
+				for (AbstractStatement stmt : batch)
+				{
+					result.add(stmt);
+				}
+			}
+			return result;
+		}
 	}
 
-	public static class FSharp_SingleLineStatement extends TokenSequence implements EagleRunnableWithResult
+	public static class FSharp_SingleLineStatement extends TokenSequence
+			implements EagleRunnableWithResult, EagleTransformableStatementList
 	{
 		public @S(10) SeparatedList<FSharp_Statement, PunctuationSemicolon> statements;
 		public @S(20) @OPT FSharp_Comment comment;
@@ -121,6 +157,18 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 			{
 				result = interpreter.tryToInterpret(statements.getPrimaryElement(i));
 				if (result != Eagle_Statement_Result.NORMAL) break;
+			}
+			return result;
+		}
+
+		@Override
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		{
+			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+			for (int i = 0; i < statements.getPrimaryCount(); i++)
+			{
+				FSharp_Statement stmt = statements.getPrimaryElement(i);
+				result.add(transformer.transformStatement1(generator, stmt.getWhich()));
 			}
 			return result;
 		}
