@@ -45,6 +45,7 @@ public class CSharp_ReturnStatement extends TokenSequence
 			parent = parent.getParent();
 		}
 
+		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
 	}
 	
