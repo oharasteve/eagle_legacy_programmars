@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
+import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
@@ -64,8 +65,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	private CSharp_Program _program;
 	private String _className;
 	
-	public CSharp_Generator(String className)
+	public CSharp_Generator(ParserManager parser, String className)
 	{
+		super(parser);
 		_program = new CSharp_Program();
 		_className = className;
 	}

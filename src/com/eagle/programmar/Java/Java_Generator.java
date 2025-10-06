@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
+import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
@@ -66,8 +67,9 @@ public class Java_Generator
 	private Java_Program _program;
 	private String _className;
 	
-	public Java_Generator(String className)
+	public Java_Generator(ParserManager parser, String className)
 	{
+		super(parser);
 		_program = new Java_Program();
 		_className = className;
 	}

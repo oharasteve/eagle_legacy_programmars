@@ -6,8 +6,13 @@ package com.eagle.programmar.Eaglish.Terminals;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_CommentEoln extends TokenSequence implements EagleRunnable
+public class Eaglish_CommentEoln extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Comment comment;
 	public @S(20) @OPT Eaglish_EndOfLine eoln;
@@ -16,5 +21,12 @@ public class Eaglish_CommentEoln extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Nothing to do
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		return null;	// Nothing to do
 	}
 }

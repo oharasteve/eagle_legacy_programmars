@@ -16,11 +16,18 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Eaglish_Array_Data extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword ARRAY = new Eaglish_Keyword("ARRAY");
 	public @S(20) Eaglish_Variable_Definition var;
@@ -51,5 +58,26 @@ public class Eaglish_Array_Data extends TokenSequence implements EagleRunnable, 
 		EagleArray array = new EagleArray();
 		array.setValues(vals);
 		interpreter.setSymbol(var, var.toString(), array);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractType newType = generator.transformType(TypeEnum.STRING_ARRAY, null, ARRAY);
+		String name = var.getValue();
+		AbstractExpression initial = null;
+		if (init != null && init.isPresent())
+		{
+			ArrayList<AbstractExpression> vals = new ArrayList<AbstractExpression>();
+			int numVals = init.values.getPrimaryCount();
+			for (int i = 0; i < numVals; i++)
+			{
+				Eaglish_Expression expr = init.values.getPrimaryElement(i);
+				AbstractExpression next = transformer.transformExpression(generator, expr);
+				vals.add(next);
+			}
+			initial = generator.newArrayExpression(vals, ARRAY);
+		}
+		return generator.newDataDeclaration(false, name, null, newType, initial, this);
 	}
 }

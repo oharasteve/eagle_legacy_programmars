@@ -38,6 +38,10 @@ public class Eaglish_Literal extends TerminalLiteralToken
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
+		if (_txt.indexOf('^') >= 0)
+		{
+			return Eaglish_Format.compile(transformer, generator, _txt, this);
+		}
 		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
 	}
 }

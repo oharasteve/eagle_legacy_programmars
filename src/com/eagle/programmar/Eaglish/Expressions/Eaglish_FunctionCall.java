@@ -17,15 +17,21 @@ import com.eagle.programmar.Eaglish.Symbols.Eaglish_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Eaglish_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Eaglish_Identifier_Reference fnName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT SeparatedList<Eaglish_Expression, PunctuationComma> args;
+	public @S(30) @OPT SeparatedList<Eaglish_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override
@@ -45,7 +51,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		{
 			throw new RuntimeException("Function " + name + " doesn't return any value");
 		}
-		int argCount = args.getPrimaryCount();
+		int argCount = arguments.getPrimaryCount();
 		int paramCount = func.parameterStatements.size();
 		if (argCount != paramCount)
 		{
@@ -57,7 +63,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			Eaglish_Expression arg = args.getPrimaryElement(i);
+			Eaglish_Expression arg = arguments.getPrimaryElement(i);
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter.setSymbol(param, param.param.getValue(), val);
@@ -82,5 +88,23 @@ public class Eaglish_FunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = fnName.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = arguments.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Eaglish_Expression arg = arguments.getPrimaryElement(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, this);
 	}
 }

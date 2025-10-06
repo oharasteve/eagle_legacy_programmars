@@ -42,6 +42,7 @@ public class Eaglish_Return_Statement extends TokenSequence
 			parent = parent.getParent();
 		}
 
+		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
 	}
 

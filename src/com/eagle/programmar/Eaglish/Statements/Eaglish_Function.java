@@ -3,12 +3,14 @@
 
 package com.eagle.programmar.Eaglish.Statements;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Eaglish.Eaglish_Statement;
 import com.eagle.programmar.Eaglish.Eaglish_Syntax;
@@ -18,11 +20,12 @@ import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -77,17 +80,53 @@ public class Eaglish_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
+		TypeEnum metricRetType = transformer.findReturnMetric(id);
+		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
+		
+		String fnName = id.getValue();
+		generator.addMethod(newReturnType, fnName, this);
+		generator.addMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found Eaglish function " + fnName);
+		}
+		
+		// Search metrics for arg types -- might not be any
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		
+		if (parameterStatements != null && parameterStatements.isPresent())
+		{
+			int i = 0;
+			for (Eaglish_Parameter_Statement param : parameterStatements._elements)
+			{
+				AbstractType paramType = null;
+				
+				if (argTypes != null && i < argTypes.size())
+				{
+					String metricArgType = argTypes.get(i);
+					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					paramType = generator.transformType(metricArg, null, param);
+				}
+				
+				generator.addMethodParameter(paramType, param.param.getValue());
+				i++;
+			}
+		}
+
+		// addLocalVars(transformer, generator);
+		
 		for (Eaglish_Statement stmt : statements._elements)
 		{
-			AbstractToken which = stmt.getWhich();
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
 			if (newStmts != null)
 			{
 				for (AbstractStatement newStmt : newStmts)
 				{
-					generator.addStatement(newStmt, which);
+					generator.addStatement(newStmt, stmt.getWhich());
 				}
 			}
 		}
+		
+		generator.doneMethod();
 	}
 }

@@ -8,7 +8,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_Format
 {
@@ -55,7 +55,8 @@ public class Eaglish_Format
 		return sb.toString();
 	}
 	
-	public static AbstractExpression compile(EagleGenerator generator, String fmt, AbstractToken source)
+	public static AbstractExpression compile(EagleTransformer transformer,
+			EagleGenerator generator, String fmt, AbstractToken source)
 	{
 		AbstractExpression result = null;
 
@@ -100,16 +101,20 @@ public class Eaglish_Format
 			int endInsertion = txt.indexOf("^", nextInsertion + 1);
 			if (endInsertion < 0)
 			{
-				throw new RuntimeException("Missing ^ following ^");
+				throw new RuntimeException("Missing second ^ following ^");
 			}
-			String var = txt.substring(nextInsertion + 1, endInsertion);
-			AbstractExpression varExpr = generator.newVariableExpression(var,
-					SubscriptEnum.FIRST_IS_ZERO, null, null);
+			String text = txt.substring(nextInsertion + 1, endInsertion);
+			Eaglish_Expression expr = new Eaglish_Expression();
+			if (! generator._parser.parseLine(text, generator._parser._parser.getLanguage(), expr))
+			{
+				throw new RuntimeException("Unable to parse expression " + expr);
+			}
+			AbstractExpression newExpr = transformer.transformExpression(generator, expr);
 			// Always wrap in a str() function for now
-			AbstractExpression strExpr = generator.newStringFunction(varExpr, null);
+			AbstractExpression strExpr = generator.newStringFunction(newExpr, null);
 			if (result == null)
 			{
-				result = varExpr;
+				result = strExpr;
 			}
 			else
 			{

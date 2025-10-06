@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
+import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
@@ -75,8 +76,9 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	private ArrayList<Python_ComplexStatement> _allFunctions = new ArrayList<Python_ComplexStatement>();
 	private ArrayList<Python_ComplexStatement> _mainLogic = new ArrayList<Python_ComplexStatement>();
 	
-	public Python_Generator(String mainName)
+	public Python_Generator(ParserManager parser, String mainName)
 	{
+		super(parser);
 		_program = new Python3_Program();
 	}
 	
