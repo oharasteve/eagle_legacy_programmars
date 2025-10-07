@@ -136,6 +136,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	
 	private CSharp_Class _currentClass = null;
 	private CSharp_Method _currentMethod = null;
+	private CSharp_Method _previousMethod = null;
 
 	private void checkClass()
 	{
@@ -169,6 +170,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		checkClass();
 
+		_previousMethod = _currentMethod;
 		_currentMethod = new CSharp_Method();
 		_currentMethod.newCSharpMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
 				returnType, name);
@@ -185,7 +187,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	@Override
 	public void doneMethod()
 	{
-		_currentMethod = null;
+		_currentMethod = _previousMethod;
 	}
 	
 	@Override

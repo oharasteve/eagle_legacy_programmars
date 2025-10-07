@@ -38,9 +38,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Python_Function extends TokenSequence
 			implements AbstractMethod, AbstractFunction, EagleRunnable
 {
-	public @S(10) @OPT Python_Decorators decorators;
+	public @S(10) @OPT @BLANKLINE Python_Decorators decorators;
 	public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
-	public @S(30) @NOSPACE @DOC("compound_stmts.html#function-definitions")
+	public @S(30) @DOC("compound_stmts.html#function-definitions")
 						Python_Keyword DEF = new Python_Keyword("def");
 	public @S(40) Python_FunctionName fnName;
 	public @S(50) Python_FunctionHeader header;

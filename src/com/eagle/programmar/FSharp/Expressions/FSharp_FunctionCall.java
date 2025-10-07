@@ -17,11 +17,17 @@ import com.eagle.programmar.FSharp.Statements.FSharp_Function.FSharp_FunctionPar
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class FSharp_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) FSharp_Variable functionName;
 	public @S(20) PunctuationLeftParen leftParen;
@@ -79,5 +85,26 @@ public class FSharp_FunctionCall extends PrimaryOperator implements EagleRunnabl
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = functionName.id.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		
+		if (argList != null && argList.size() > 0)
+		{
+			for (int i = 0; i < argList.getPrimaryCount(); i++)
+			{
+				FSharp_Expression expr = argList.getPrimaryElement(i);
+				AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+				args.add(newExpr);
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, functionName.id);
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Collection;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
@@ -28,6 +29,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
@@ -49,9 +51,10 @@ public class FSharp_Function extends TokenSequence
 	public @S(30) PunctuationLeftParen leftParen;
 	public @S(40) @OPT SeparatedList<FSharp_FunctionParam, PunctuationComma> params;
 	public @S(50) PunctuationRightParen rightParen;
-	public @S(60) PunctuationEquals equals;
-	public @S(70) FSharp_EndOfLine eoln;
-	public @S(80) TokenList<FSharp_Element> statements;
+	public @S(60) @OPT FSharp_ReturnType returnType;
+	public @S(70) PunctuationEquals equals;
+	public @S(80) FSharp_EndOfLine eoln;
+	public @S(90) TokenList<FSharp_Element> statements;
 
 	public static class FSharp_FunctionParam extends TokenSequence
 	{
@@ -60,6 +63,12 @@ public class FSharp_Function extends TokenSequence
 		public @S(30) FSharp_Type type;
 	}
 	
+	public static class FSharp_ReturnType extends TokenSequence
+	{
+		public @S(10) PunctuationColon colon;
+		public @S(20) FSharp_Type type;
+	}
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -96,8 +105,16 @@ public class FSharp_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		TypeEnum metricRetType = transformer.findReturnMetric(id);
-		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
+		TypeEnum typRet = TypeEnum.VOID;
+		if (returnType != null && returnType.isPresent())
+		{
+			typRet = FSharp_Type.findType(returnType.type);
+		}
+		if (typRet == TypeEnum.VOID)
+		{
+			typRet = transformer.findReturnMetric(id);
+		}
+		AbstractType newReturnType = generator.transformType(typRet, null, id);
 		
 		String fnName = id.getValue();
 
@@ -129,16 +146,34 @@ public class FSharp_Function extends TokenSequence
 			}
 		}
 
+		addLocalVars(transformer, generator);
+
 		for (FSharp_Element elt : statements._elements)
 		{
-			AbstractToken which = elt.statementOrComment.getWhich();
-			if (which instanceof FSharp_Statement_List)
+			AbstractToken which1 = elt.statementOrComment.getWhich();
+			if (which1 instanceof FSharp_Statement_List)
 			{
-				FSharp_Statement_List stmtList = (FSharp_Statement_List) which;
-				for (int i = 0; i < stmtList.statements.getPrimaryCount(); i++)
+				FSharp_Statement_List stmtList = (FSharp_Statement_List) which1;
+				int numStmts = stmtList.statements.getPrimaryCount();
+				for (int i = 0; i < numStmts; i++)
 				{
 					FSharp_Statement stmt = stmtList.statements.getPrimaryElement(i);
-					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+					AbstractToken which2 = stmt.getWhich();
+					
+					if (i == numStmts - 1)
+					{
+						// Last line in a function *might* be an implied RETURN
+						if (which2 instanceof FSharp_ExpressionStatement)
+						{
+							FSharp_ExpressionStatement exprStmt = (FSharp_ExpressionStatement) which2;
+							AbstractExpression newExpr = transformer.transformExpression(generator, exprStmt.expression);
+							AbstractStatement retStmt = generator.newReturnStatement(newExpr, which2);
+							generator.addStatement(retStmt, stmt);
+							break;	// Only gets here for the last statement in the Function
+						}
+					}
+					
+					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which2);
 					if (newStmts != null)
 					{
 						for (AbstractStatement newStmt : newStmts)
@@ -151,5 +186,44 @@ public class FSharp_Function extends TokenSequence
 		}
 		
 		generator.doneMethod();
+	}
+
+	private boolean isFuncParam(String name)
+	{
+		if (params != null && params.isPresent())
+		{
+			int numParams = params.getPrimaryCount();
+			for (int i = 0; i < numParams; i++)
+			{
+				FSharp_FunctionParam param = params.getPrimaryElement(i);
+				if (param.var.getValue().equalsIgnoreCase(name))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Are there any local variables we need to declare?
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				if (! isFuncParam(met._symbolName))
+				{
+					// System.err.println("****** Found var " + met._symbolName);
+					AbstractType absType = generator.transformType(typ, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false,
+							met._symbolName, null, absType, null, this);
+					generator.addStatement(dataStmt, this);
+				}
+			}
+		}
 	}
 }

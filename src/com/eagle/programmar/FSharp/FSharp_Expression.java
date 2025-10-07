@@ -41,8 +41,8 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	}
 
 	//
-	// Note: All fields should stay in @P(#) order. The # determines operator
-	// precedence.
+	// Note: All fields should stay in @P(#) order.
+	// The # determines operator precedence.
 	//
 
 	///////////////////////////////////////////////

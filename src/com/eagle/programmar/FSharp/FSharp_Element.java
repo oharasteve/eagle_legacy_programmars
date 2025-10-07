@@ -9,6 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.FSharp.Statements.FSharp_Assignment;
+import com.eagle.programmar.FSharp.Statements.FSharp_ExpressionStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_ForStatement;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
 import com.eagle.programmar.FSharp.Statements.FSharp_IfStatement;
@@ -27,6 +28,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
@@ -46,7 +48,8 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		public @CHOICE FSharp_Statement_List XXstatements;
 		public @CHOICE FSharp_EndOfLine XXeoln;
 
-		public @FIRST static class FSharp_CommentList extends TokenSequence implements EagleRunnable
+		public @FIRST static class FSharp_CommentList extends TokenSequence
+				implements EagleRunnable, EagleTransformableStatement
 		{
 			public @S(10) SeparatedList<FSharp_Comment, FSharp_EndOfLine> comments;
 			
@@ -54,6 +57,13 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 			public void interpret(EagleInterpreter interpreter)
 			{
 				// Nothing to do
+			}
+
+			@Override
+			public AbstractStatement transformStatement(EagleTransformer transformer,
+					EagleGenerator generator)
+			{
+				return null; // Nothing to do
 			}
 		}
 	}
@@ -103,7 +113,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		public @CHOICE FSharp_PrintfnStatement XXprintfnStatement;
 		public @CHOICE FSharp_WhileStatement XXwhileStatement;
 
-		public @LAST FSharp_Expression XXreturnValue;
+		public @LAST FSharp_ExpressionStatement XXreturnValue;
 	}
 
 	public static class FSharp_MultilineStatement extends TokenSequence
@@ -133,9 +143,12 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 			{
 				ArrayList<AbstractStatement> batch = transformer.transformStatement(generator,
 							elt.statementOrComment.getWhich());
-				for (AbstractStatement stmt : batch)
+				if (batch != null)
 				{
-					result.add(stmt);
+					for (AbstractStatement stmt : batch)
+					{
+						result.add(stmt);
+					}
 				}
 			}
 			return result;

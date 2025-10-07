@@ -13,7 +13,6 @@ import com.eagle.programmar.Algol68.Algol68_Statement;
 import com.eagle.programmar.Algol68.Algol68_Syntax;
 import com.eagle.programmar.Algol68.Algol68_Type;
 import com.eagle.programmar.Algol68.Algol68_Variable;
-import com.eagle.programmar.Algol68.Expressions.Algol68_VariableExpression;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Procedure_Definition;
 import com.eagle.programmar.Algol68.Symbols.Algol68_Variable_Definition;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
@@ -142,17 +141,13 @@ public class Algol68_Procedure extends TokenSequence
 			if (eltNum == numElts)
 			{
 				// Last line in a procedure *might* be an implied RETURN
-				// If, and only if, it is just a variable name
 				if (which instanceof Algol68_ExpressionStatement)
 				{
 					Algol68_ExpressionStatement exprStmt = (Algol68_ExpressionStatement) which;
-					if (exprStmt.expr.getWhich() instanceof Algol68_VariableExpression)
-					{
-						AbstractExpression newExpr = transformer.transformExpression(generator, exprStmt.expr);
-						AbstractStatement retStmt = generator.newReturnStatement(newExpr, which);
-						generator.addStatement(retStmt, stmt);
-						break;	// Only gets here for the last statement in the PROC
-					}
+					AbstractExpression newExpr = transformer.transformExpression(generator, exprStmt.expr);
+					AbstractStatement retStmt = generator.newReturnStatement(newExpr, which);
+					generator.addStatement(retStmt, stmt);
+					break;	// Only gets here for the last statement in the PROC
 				}
 			}
 			
