@@ -103,6 +103,7 @@ public class Eaglish_For_Block extends TokenSequence
 		_metrics.competedLoop(metric);
 		return result;
 	}
+	
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

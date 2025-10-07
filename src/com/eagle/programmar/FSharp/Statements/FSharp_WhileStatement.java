@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.FSharp.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
@@ -11,15 +13,20 @@ import com.eagle.programmar.FSharp.FSharp_Element.FSharp_SingleOrMultiLineStatem
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class FSharp_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("loops-while-do-expression") FSharp_Keyword WHILE = new FSharp_Keyword("while");
 	public @S(20) FSharp_Expression condition;
 	public @S(30) FSharp_Keyword DO = new FSharp_Keyword("do");
-	public @S(40) FSharp_SingleOrMultiLineStatement forActions;
+	public @S(40) FSharp_SingleOrMultiLineStatement whileActions;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
@@ -41,7 +48,7 @@ public class FSharp_WhileStatement extends TokenSequence
 
 			metric.iterate();
 
-			result = interpreter.tryToInterpret(forActions);
+			result = interpreter.tryToInterpret(whileActions);
 
 			if (result == Eagle_Statement_Result.BREAK)
 			{
@@ -62,5 +69,20 @@ public class FSharp_WhileStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+				whileActions.getWhich());
+		for (AbstractStatement stmt : stmts)
+		{
+			actions.add(stmt);
+		}
+		return generator.newWhileStatement(cond, actions, this);
 	}
 }

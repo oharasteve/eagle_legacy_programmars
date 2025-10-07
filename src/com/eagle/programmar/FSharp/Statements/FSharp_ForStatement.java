@@ -3,22 +3,32 @@
 
 package com.eagle.programmar.FSharp.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_SingleOrMultiLineStatement;
+import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Variable;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.programmar.FSharp.Terminals.FSharp_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class FSharp_ForStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("loops-for-to-expression") FSharp_Keyword FOR = new FSharp_Keyword("for");
 	public @S(20) FSharp_Variable var;
@@ -82,5 +92,44 @@ public class FSharp_ForStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression initExpr = transformer.transformExpression(generator, startValue);
+		AbstractExpression termExpr = transformer.transformExpression(generator, stopValue);
+		AbstractExpression incrExpr;
+		RelationalEnum relOp;
+
+		switch (TO.getValue())
+		{
+		case "to":
+			incrExpr = generator.newNumberExpression("1", TO);
+			relOp = RelationalEnum.LESS_EQUALS;
+			break;
+		case "downto":
+			incrExpr = generator.newNumberExpression("-1", TO);
+			relOp = RelationalEnum.GREATER_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected direction: " + TO.getValue());
+		}
+		
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+				forActions.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt : stmts)
+			{
+				actionList.add(stmt);
+			}
+		}
+		
+		AbstractVariable newVar = generator.newVariable(var.id.getValue());
+		AbstractStatement stmt = generator.newForRangeStatement(newVar, TypeEnum.VOID, initExpr,
+				relOp, termExpr, incrExpr, actionList, this);
+		return stmt;
 	}
 }

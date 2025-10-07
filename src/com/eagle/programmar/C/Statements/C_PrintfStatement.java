@@ -44,7 +44,6 @@ public class C_PrintfStatement extends TokenSequence
 		ArrayList<String> argTypes = new ArrayList<String>();
 
 		String formatted = C_Format.format(interpreter, args, argTypes);
-
 		_metrics.calledWith(argTypes);
 		System.out.println(formatted);
 	}

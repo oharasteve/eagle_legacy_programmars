@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleString;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Literal;
 import com.eagle.tokens.TokenList;
@@ -17,7 +18,8 @@ import com.eagle.transform.EagleTransformer;
 public class FSharp_Format
 {
 	// Handle %d and %s. Super simple ones only for now
-	public static String format(EagleInterpreter interpreter, TokenList<FSharp_Expression> args)
+	public static String format(EagleInterpreter interpreter, TokenList<FSharp_Expression> args,
+			ArrayList<String> argTypes)
 	{
 		String fmt = interpreter.getStrValue(args.first());
 		fmt = fmt.replaceAll("\\\\n", "");
@@ -47,8 +49,10 @@ public class FSharp_Format
 			if (index < numArgs)
 			{
 				FSharp_Expression expr = args._elements.get(index);
-				String val = interpreter.getStrValue(expr);
-				sb.append(val);
+				EagleValue val = interpreter.getEagleValue(expr);
+				String piece = val.forceStringValue();
+				argTypes.add(val.typeName());
+				sb.append(piece);
 			}
 
 			// Look for the next piece

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.FSharp.FSharp_Expression;
 import com.eagle.programmar.FSharp.FSharp_Format;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
@@ -26,10 +27,19 @@ public class FSharp_PrintfnStatement extends TokenSequence
 	public @S(20) TokenList<FSharp_Expression> arguments;
 	public @S(30) FSharp_EndOfLine eoln;
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String formatted = FSharp_Format.format(interpreter, arguments);
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTFN.getValue(), PRINTFN);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
+		String formatted = FSharp_Format.format(interpreter, arguments, argTypes);
+		_metrics.calledWith(argTypes);
 		System.out.println(formatted);
 	}
 	
