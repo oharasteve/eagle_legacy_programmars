@@ -4,11 +4,11 @@
 package com.eagle.programmar.Perl.Expressions;
 
 import com.eagle.programmar.Perl.Perl_Variable;
-import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
+import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 
 public class Perl_PreIncrementExpression extends PrimaryOperator
 {
-	public @S(10) Perl_Punctuation preIncrementOperator = new Perl_Punctuation("++");
+	public @S(10) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("++", "--");
 	public @S(20) Perl_Variable var;
 }

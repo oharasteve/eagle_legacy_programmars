@@ -5,50 +5,60 @@ package com.eagle.programmar.Perl.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleValue;
-import com.eagle.metrics.Operator2Metrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Perl.Perl_Expression;
+import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BitwiseEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Perl_DotExpression extends PrecedenceOperator
+public class Perl_BitwiseExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Perl_Expression left = new Perl_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
+	public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("&", "|", "^");
 	public @S(30) Perl_Expression right = new Perl_Expression(this, AllowedPrecedence.HIGHER);
-
-	private @SKIP Operator2Metrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue leftValue = interpreter.getEagleValue(left);
-		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = dot.toString();
-		
-		if (_metrics == null)
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		int result;
+		switch (operator.toString())
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, dot, oper);
+		case "&":
+			result = leftValue & rightValue;
+			break;
+		case "|":
+			result = leftValue | rightValue;
+			break;
+		case "^":
+			result = leftValue ^ rightValue;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-
-		String leftStr = leftValue.forceStringValue();
-		String rightStr = rightValue.forceStringValue();
-		interpreter.pushStr(leftStr + rightStr);
+		interpreter.pushInt(result);
 	}
-
+	
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		Oper2Types types = transformer.findOperator2Metric(dot);
-		return generator.newAppendExpression(types, leftExpr, rightExpr, this);
+		switch (operator.toString())
+		{
+		case "&":
+			return generator.newBitwiseExpression(leftExpr, BitwiseEnum.AND, rightExpr, this);
+		case "|":
+			return generator.newBitwiseExpression(leftExpr, BitwiseEnum.OR, rightExpr, this);
+		case "^":
+			return generator.newBitwiseExpression(leftExpr, BitwiseEnum.XOR, rightExpr, this);
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
 	}
 }

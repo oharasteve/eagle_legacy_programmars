@@ -31,11 +31,6 @@ public class FSharp_ExpressionStatement extends TokenSequence
 			EagleGenerator generator)
 	{
 		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
-//		boolean isReturn = false;
-//		if (isReturn)
-//		{
-//			return generator.newReturnStatement(newExpr, this);
-//		}
 		return generator.newExpressionStatement(newExpr, this);
 	}
 }

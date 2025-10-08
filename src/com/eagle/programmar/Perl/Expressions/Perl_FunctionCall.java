@@ -12,6 +12,7 @@ import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariable;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable;
+import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -72,8 +73,10 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 		if (argument != null && argument.isPresent()) argCount++;
 		if (moreArgs != null && moreArgs.isPresent()) argCount += moreArgs.size();
 		int paramCount = 0;
-		if (func.params.param != null && func.params.param.isPresent()) paramCount++;
-		if (func.params.moreParams != null && func.params.moreParams.isPresent()) paramCount += func.params.moreParams.size();
+		if (func.params.parameters != null && func.params.parameters.isPresent())
+		{
+			paramCount = func.params.parameters.getPrimaryCount();
+		}
 		
 		if (argCount != paramCount)
 		{
@@ -84,21 +87,26 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 		// Now assign all the parameters
 		ArrayList<String> argTypes = new ArrayList<String>();
 		Perl_Expression arg = argument;
-		Perl_FunctionVariableOrTypeVariable param = func.params.param;
 		for (int i = 0; i < argCount; i++)
 		{
 			if (i > 0)
 			{
 				arg = moreArgs._elements.get(i-1).argument;
-				param = func.params.moreParams._elements.get(i-1).var;
 			}
+			Perl_FunctionVariableOrTypeVariable param = func.params.parameters.getPrimaryElement(i);
+			Perl_FunctionVariable fnVar;
 			if (param.getWhich() instanceof Perl_FunctionVariable)
 			{
-				Perl_FunctionVariable fnVar = (Perl_FunctionVariable) param.getWhich();
-				EagleValue val = interpreter.getEagleValue(arg);
-				interpreter.setSymbol(param, fnVar.param.getValue(), val);
-				argTypes.add(val.typeName());
+				fnVar = (Perl_FunctionVariable) param.getWhich();
 			}
+			else
+			{
+				Perl_FunctionTypeAndVariable typedVar = (Perl_FunctionTypeAndVariable) param.getWhich();
+				fnVar = typedVar.var;
+			}
+			EagleValue val = interpreter.getEagleValue(arg);
+			interpreter.setSymbol(param, fnVar.param.getValue(), val);
+			argTypes.add(val.typeName());
 		}
 	
 		// Prepare to evaluate the method

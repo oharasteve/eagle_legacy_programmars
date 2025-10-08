@@ -6,9 +6,8 @@ package com.eagle.programmar.Java;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AnnotationInvocation;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
-import com.eagle.programmar.Java.Expressions.Java_BitwiseAndExpression;
+import com.eagle.programmar.Java.Expressions.Java_BitwiseExpression;
 import com.eagle.programmar.Java.Expressions.Java_BitwiseNotExpression;
-import com.eagle.programmar.Java.Expressions.Java_BitwiseOrExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
 import com.eagle.programmar.Java.Expressions.Java_CastExpression;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
@@ -137,10 +136,9 @@ public class Java_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1150) Java_ShiftExpression shiftExpression;
 	public @P(1160) Java_InstanceOfExpression instanceOfExpression;
 	public @P(1170) Java_RelationalExpression relationalExpression;
-	public @P(1180) Java_BitwiseAndExpression andExpression;
-	public @P(1190) Java_BitwiseOrExpression inclusiveOrExpression;
-	public @P(1200) Java_LogicalAndExpression conditionalAndExpression;
-	public @P(1210) Java_LogicalOrExpression conditionalOrExpression;
-	public @P(1220) Java_AssignmentExpression assignmentExpression;
-	public @P(1230) Java_TrueFalseExpression trueFalseExpression;
+	public @P(1180) Java_BitwiseExpression bitwiseExpression;
+	public @P(1190) Java_LogicalAndExpression logicalAndExpression;
+	public @P(1200) Java_LogicalOrExpression logicalOrExpression;
+	public @P(1210) Java_AssignmentExpression assignmentExpression;
+	public @P(1220) Java_TrueFalseExpression trueFalseExpression;
 }

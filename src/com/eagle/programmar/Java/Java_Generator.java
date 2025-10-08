@@ -13,6 +13,8 @@ import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
+import com.eagle.programmar.Java.Expressions.Java_BitwiseExpression;
+import com.eagle.programmar.Java.Expressions.Java_BitwiseNotExpression;
 import com.eagle.programmar.Java.Expressions.Java_BuiltIn;
 import com.eagle.programmar.Java.Expressions.Java_CastExpression;
 import com.eagle.programmar.Java.Expressions.Java_ClassCreationExpression;
@@ -480,8 +482,7 @@ public class Java_Generator
 			Java_Expression right, AbstractToken source)
 	{
 		Java_LogicalAndExpression andExpr = new Java_LogicalAndExpression();
-		return andExpr.generateLogicalAnd(left,
-				right, source);
+		return andExpr.generateLogicalAnd(left, right, source);
 	}
 	
 	@Override
@@ -489,8 +490,23 @@ public class Java_Generator
 			LogicalOrEnum oper, Java_Expression right, AbstractToken source)
 	{
 		Java_LogicalOrExpression orExpr = new Java_LogicalOrExpression();
-		return orExpr.generateLogicalOr(left, oper,
-				right, source);
+		return orExpr.generateLogicalOr(left, oper, right, source);
+	}
+	
+	@Override
+	public AbstractExpression newBitwiseExpression(Java_Expression left,
+			BitwiseEnum oper, Java_Expression right, AbstractToken source)
+	{
+		Java_BitwiseExpression bitExpr = new Java_BitwiseExpression();
+		return bitExpr.generateBitwise(left, oper, right, source);
+	}
+	
+	@Override
+	public AbstractExpression newBitwiseNotExpression(Java_Expression expr,
+			AbstractToken source)
+	{
+		Java_BitwiseNotExpression bitExpr = new Java_BitwiseNotExpression();
+		return bitExpr.generateBitwiseNot(expr, source);
 	}
 	
 	@Override

@@ -27,7 +27,8 @@ public class Perl_Variable extends TokenChooser
 {
 	public @CHOICE Perl_Identifier_Reference XXvariable;
 
-	public @CHOICE static class Perl_UserVariable extends TokenSequence implements EagleRunnable
+	public @CHOICE static class Perl_UserVariable extends TokenSequence
+			implements EagleRunnable
 	{
 		public @S(10) Perl_Identifier_Reference id;
 		public @S(20) @OPT TokenList<Perl_Subscript> subscript;

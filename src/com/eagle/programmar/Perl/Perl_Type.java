@@ -9,6 +9,7 @@ import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Perl_Type extends TokenChooser
 {
@@ -25,6 +26,22 @@ public class Perl_Type extends TokenChooser
 		{
 			public @S(10) Perl_Punctuation backSlash = new Perl_Punctuation('\\');
 			public @S(20) Perl_Variable_Definition type;
+		}
+	}
+
+	public static TypeEnum findType(Perl_Type type)
+	{
+		Perl_KeywordChoice typeName = (Perl_KeywordChoice) type.getWhich();
+		switch (typeName.getValue())
+		{
+		case "bool":
+			return TypeEnum.BOOLEAN;
+		case "int":
+			return TypeEnum.INTEGER;
+		case "string":
+			return TypeEnum.STRING;
+		default:
+			return TypeEnum.VOID;
 		}
 	}
 }

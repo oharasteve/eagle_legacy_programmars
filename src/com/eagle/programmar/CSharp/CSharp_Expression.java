@@ -5,9 +5,8 @@ package com.eagle.programmar.CSharp;
 
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
-import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseAndExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseNotExpression;
-import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseOrExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
 import com.eagle.programmar.CSharp.Expressions.CSharp_CastAsExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_CastExpression;
@@ -142,12 +141,11 @@ public class CSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(1140) CSharp_InstanceOfExpression instanceOfExpression;
 	public @P(1150) CSharp_CastAsExpression castAsExpression;
 	public @P(1160) CSharp_EqualityExpression equalityExpression;
-	public @P(1170) CSharp_BitwiseAndExpression andExpression;
-	public @P(1180) CSharp_BitwiseOrExpression inclusiveOrExpression;
-	public @P(1190) CSharp_LogicalAndExpression conditionalAndExpression;
-	public @P(1200) CSharp_LogicalOrExpression conditionalOrExpression;
-	public @P(1210) CSharp_TrueFalseExpression trueFalseExpression;
-	public @P(1220) CSharp_AssignmentExpression assignmentExpression;
-	public @P(1230) CSharp_LambdaFunction lambdaFunction;
-	public @P(1240) CSharp_LambdaExpression lambdaExpression;
+	public @P(1170) CSharp_BitwiseExpression andExpression;
+	public @P(1180) CSharp_LogicalAndExpression conditionalAndExpression;
+	public @P(1190) CSharp_LogicalOrExpression conditionalOrExpression;
+	public @P(1200) CSharp_TrueFalseExpression trueFalseExpression;
+	public @P(1210) CSharp_AssignmentExpression assignmentExpression;
+	public @P(1220) CSharp_LambdaFunction lambdaFunction;
+	public @P(1230) CSharp_LambdaExpression lambdaExpression;
 }

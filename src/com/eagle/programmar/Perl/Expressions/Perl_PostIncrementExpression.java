@@ -9,13 +9,20 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Perl_Variable.Perl_UserVariable;
-import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
+import com.eagle.programmar.Perl.Terminals.Perl_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Perl_PostIncrementExpression extends PrimaryOperator implements EagleRunnable
+public class Perl_PostIncrementExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Perl_Variable var;
-	public @S(20) Perl_Punctuation postIncrementOperator = new Perl_Punctuation("++");
+	public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -25,9 +32,45 @@ public class Perl_PostIncrementExpression extends PrimaryOperator implements Eag
 			Perl_UserVariable variable = (Perl_UserVariable) var.getWhich();
 			EagleValue val = interpreter.findSymbol(variable.id.getValue());
 			int prev = val.forceIntegerValue();
-			EagleValue curr = new EagleInteger(prev + 1);
+			EagleValue curr;
+			switch (operator.toString())
+			{
+			case "++":
+				curr = new EagleInteger(prev + 1);
+				break;
+			case "--":
+				curr = new EagleInteger(prev - 1);
+				break;
+			default:
+				throw new RuntimeException("Unexpected operator: " + operator);
+			}
 			interpreter.setSymbol(var, variable.id.getValue(), curr);
 			interpreter.pushInt(prev);
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		IncrementEnum whichDirection;
+		switch (operator.getValue())
+		{
+		case "++":
+			whichDirection = IncrementEnum.INCREMENT;
+			break;
+		case "--":
+			whichDirection = IncrementEnum.DECREMENT;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
+		
+		if (var.getWhich() instanceof Perl_UserVariable)
+		{
+			Perl_UserVariable variable = (Perl_UserVariable) var.getWhich();
+			return generator.newPostIncrementExpression(variable.id.getValue(),
+					SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
+		}
+		throw new RuntimeException("Cannot handle variable: " + var);
 	}
 }

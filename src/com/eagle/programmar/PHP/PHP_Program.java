@@ -3,9 +3,13 @@
 
 package com.eagle.programmar.PHP;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.HTML.HTML_DocType;
 import com.eagle.programmar.HTML.HTML_Program;
 import com.eagle.programmar.HTML.HTML_Program.HTML_Element;
@@ -19,8 +23,16 @@ import com.eagle.programmar.Perl.Perl_StatementOrComment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class PHP_Program extends AbstractLanguage implements EagleRunnable
+public class PHP_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String PHP = "PHP";
 
@@ -119,5 +131,89 @@ public class PHP_Program extends AbstractLanguage implements EagleRunnable
 				}
 			}
 		}
+	}
+
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Are there any global variables we need to declare?
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typE = met.uniqueType();
+			if (typE != TypeEnum.VOID)
+			{
+				AbstractType abstrType = generator.transformType(typE, null, this);
+				AbstractExpression initExpr = null;
+				System.err.println("****** Found var " + met._symbolName);
+				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+						null, abstrType, initExpr, this);
+				generator.addStatement(dataStmt, this);
+			}
+		}
+
+		// First pass, just collect all the function definitions, buried deep inside the PHP
+		for (PHP_Entry entry : entries._elements)
+		{
+			if (entry.getWhich() instanceof HTML_Program)
+			{
+				HTML_Program prog = (HTML_Program) entry.getWhich();
+				for (HTML_Element html : prog.elements._elements)
+				{
+					if (html.getWhich() instanceof PHP_Section)
+					{
+						PHP_Section section = (PHP_Section) html.getWhich();
+						if (section.body.getWhich() instanceof PHP_NormalBlock)
+						{
+							PHP_NormalBlock block = (PHP_NormalBlock) section.body.getWhich();
+							for (PHP_Element element : block.elements._elements)
+							{
+								if (element.getWhich() instanceof Perl_StatementOrComment)
+								{
+									Perl_StatementOrComment stmtComm = (Perl_StatementOrComment) element.getWhich();
+									if (stmtComm.getWhich() instanceof Perl_Statement)
+									{
+										Perl_Statement stmt = (Perl_Statement) stmtComm.getWhich();
+										if (stmt.getWhich() instanceof Perl_FunctionDefinition)
+										{
+											Perl_FunctionDefinition func = (Perl_FunctionDefinition) stmt.getWhich();
+											func.transformFunction(transformer, generator);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, run any stuff in the outermost PHP
+		for (PHP_Entry entry : entries._elements)
+		{
+			if (entry.getWhich() instanceof HTML_Program)
+			{
+				HTML_Program prog = (HTML_Program) entry.getWhich();
+				for (HTML_Element html : prog.elements._elements)
+				{
+					if (html.getWhich() instanceof PHP_Section)
+					{
+						PHP_Section section = (PHP_Section) html.getWhich();
+						Collection<AbstractStatement> newStmts = transformer.transformStatement(
+								generator, section.body.getWhich());
+						if (newStmts != null)
+						{
+							for (AbstractStatement newStmt : newStmts)
+							{
+								generator.addStatement(newStmt, entry);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return generator.getTransfomedProgram();
 	}
 }

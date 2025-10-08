@@ -16,7 +16,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_ConcatExpression extends PrecedenceOperator implements EagleRunnable, EagleTransformableExpression
+public class VB_ConcatExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) VB_Expression left = new VB_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @DOC("operators/concatenation-operators") VB_Punctuation operator = new VB_Punctuation('&');

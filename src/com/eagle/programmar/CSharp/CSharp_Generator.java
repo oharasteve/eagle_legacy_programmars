@@ -11,6 +11,8 @@ import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseNotExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BuiltIn;
 import com.eagle.programmar.CSharp.Expressions.CSharp_CastExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ClassCreationExpression;
@@ -463,23 +465,40 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	@Override
-	public CSharp_Expression newLogicalAndExpression(CSharp_Expression left, CSharp_Expression right, AbstractToken source)
+	public CSharp_Expression newLogicalAndExpression(CSharp_Expression left,
+			CSharp_Expression right, AbstractToken source)
 	{
 		CSharp_LogicalAndExpression andExpr = new CSharp_LogicalAndExpression();
-		return andExpr.generateLogicalAnd(left,
-				right, source);
+		return andExpr.generateLogicalAnd(left, right, source);
 	}
 	
 	@Override
-	public CSharp_Expression newLogicalOrExpression(CSharp_Expression left, LogicalOrEnum oper, CSharp_Expression right, AbstractToken source)
+	public CSharp_Expression newLogicalOrExpression(CSharp_Expression left,
+			LogicalOrEnum oper, CSharp_Expression right, AbstractToken source)
 	{
 		CSharp_LogicalOrExpression orExpr = new CSharp_LogicalOrExpression();
-		return orExpr.generateLogicalOr(left, oper,
-				right, source);
+		return orExpr.generateLogicalOr(left, oper, right, source);
+	}
+
+	@Override
+	public AbstractExpression newBitwiseExpression(CSharp_Expression left,
+			BitwiseEnum oper, CSharp_Expression right, AbstractToken source)
+	{
+		CSharp_BitwiseExpression bitExpr = new CSharp_BitwiseExpression();
+		return bitExpr.generateBitwise(left, oper, right, source);
 	}
 	
 	@Override
-	public CSharp_Expression newMultiplicativeExpression(CSharp_Expression left, MultiplicativeEnum oper, CSharp_Expression right, AbstractToken source)
+	public AbstractExpression newBitwiseNotExpression(CSharp_Expression expr,
+			AbstractToken source)
+	{
+		CSharp_BitwiseNotExpression bitExpr = new CSharp_BitwiseNotExpression();
+		return bitExpr.generateBitwiseNot(expr, source);
+	}
+	
+	@Override
+	public CSharp_Expression newMultiplicativeExpression(CSharp_Expression left,
+			MultiplicativeEnum oper, CSharp_Expression right, AbstractToken source)
 	{
 		CSharp_MultiplicativeExpression multExp = new CSharp_MultiplicativeExpression();
 		return multExp.generateMultiplicative(left, oper,

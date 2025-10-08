@@ -1,25 +1,25 @@
-// Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Apr 1, 2024
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Oct 8, 2025
 
-package com.eagle.programmar.CSharp.Expressions;
+package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.CSharp_Generator;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Punctuation;
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class CSharp_BitwiseNotExpression extends PrimaryOperator
+public class Python_Bitwise_Not_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) CSharp_Punctuation operator = new CSharp_Punctuation('~');
-	public @S(20) CSharp_Expression expr;
+	public @S(10) Python_Punctuation operator = new Python_Punctuation('~');
+	public @S(20) Python_Expression expr = new Python_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -35,10 +35,10 @@ public class CSharp_BitwiseNotExpression extends PrimaryOperator
 		return generator.newBitwiseNotExpression(value, this);
 	}
 
-	public CSharp_Expression generateBitwiseNot(CSharp_Expression value, AbstractToken source)
+	public Python_Expression generateBitwiseNot(Python_Expression value, AbstractToken source)
 	{
 		this.expr = value;
 		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		return Python_Generator.wrapExpression(this);
 	}
 }

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Perl;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
@@ -25,7 +27,11 @@ import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
 public class Perl_Statement extends TokenChooser
 {
@@ -54,7 +60,8 @@ public class Perl_Statement extends TokenChooser
 		}
 	}
 
-	public @CHOICE static class Perl_SimpleStatement extends TokenSequence implements EagleRunnableWithResult
+	public @CHOICE static class Perl_SimpleStatement extends TokenSequence
+			implements EagleRunnableWithResult, EagleTransformableStatementList
 	{
 		public @S(10) Perl_StatementList statement;
 		public @S(20) @OPT Perl_StatementSuffixModifier modifier;
@@ -65,6 +72,12 @@ public class Perl_Statement extends TokenChooser
 		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
 			return interpreter.tryToInterpret(statement);
+		}
+
+		@Override
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		{
+			return transformer.transformStatement(generator, statement.getWhich());
 		}
 	}
 

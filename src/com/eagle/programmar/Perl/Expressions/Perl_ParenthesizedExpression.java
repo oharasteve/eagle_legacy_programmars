@@ -7,11 +7,15 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_ArgumentList;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Perl_ParenthesizedExpression extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT Perl_ArgumentList valueList;
@@ -21,5 +25,20 @@ public class Perl_ParenthesizedExpression extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(valueList.arg);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (valueList != null && valueList.isPresent())
+		{
+			if (valueList.moreArgs != null && valueList.moreArgs.size() > 0)
+			{
+				throw new RuntimeException("Can only handle simple parentheses");
+			}
+			AbstractExpression theExpr = transformer.transformExpression(generator, valueList.arg);
+			return generator.newParenthesizedExpression(theExpr, this);
+		}
+		return null;
 	}
 }

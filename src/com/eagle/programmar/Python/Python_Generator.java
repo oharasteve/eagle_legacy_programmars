@@ -12,6 +12,8 @@ import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_StatementOrComment;
 import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Bitwise_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Bitwise_Not_Expression;
 import com.eagle.programmar.Python.Expressions.Python_BracesColons;
 import com.eagle.programmar.Python.Expressions.Python_Brackets;
 import com.eagle.programmar.Python.Expressions.Python_BuiltIn;
@@ -461,8 +463,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 			Python_Expression right, AbstractToken source)
 	{
 		Python_Logical_And_Expression andExpr = new Python_Logical_And_Expression();
-		return andExpr.generateLogicalAnd(left,
-				right, source);
+		return andExpr.generateLogicalAnd(left, right, source);
 	}
 	
 	@Override
@@ -470,10 +471,25 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 			LogicalOrEnum oper, Python_Expression right, AbstractToken source)
 	{
 		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
-		return orExpr.generateLogicalOr(left,
-				oper, right, source);
+		return orExpr.generateLogicalOr(left, oper, right, source);
 	}
 	
+	@Override
+	public AbstractExpression newBitwiseExpression(Python_Expression left,
+			BitwiseEnum oper, Python_Expression right, AbstractToken source)
+	{
+		Python_Bitwise_Expression bitExpr = new Python_Bitwise_Expression();
+		return bitExpr.generateBitwise(left, oper, right, source);
+	}
+
+	@Override
+	public AbstractExpression newBitwiseNotExpression(Python_Expression expr,
+			AbstractToken source)
+	{
+		Python_Bitwise_Not_Expression bitExpr = new Python_Bitwise_Not_Expression();
+		return bitExpr.generateBitwiseNot(expr, source);
+	}
+
 	@Override
 	public Python_Expression newMultiplicativeExpression(Python_Expression left,
 			MultiplicativeEnum oper, Python_Expression right, AbstractToken source)

@@ -16,12 +16,18 @@ import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationHyphen;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Perl_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Perl_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("control-structures.if.php") Perl_Keyword IF = new Perl_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -136,5 +142,34 @@ public class Perl_IfStatement extends TokenSequence implements AbstractStatement
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (! (condition.getWhich() instanceof Perl_Expression))
+		{
+			throw new RuntimeException("Can only handle simple conditions");
+		}
+		Perl_Expression cond = (Perl_Expression) condition.getWhich();
+		AbstractExpression newCond = transformer.transformExpression(generator, cond);
+		
+		if (elseIfClauses != null && elseIfClauses.size() > 0)
+		{
+			throw new RuntimeException("if/elif is not yet implemented in Perl");
+		}
+		
+		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
+				thenStatement.getWhich());
+
+		ArrayList<AbstractStatement> elseParts = null;
+		if (elseClause != null && elseClause.isPresent())
+		{
+			elseParts = transformer.transformStatement(generator,
+					elseClause.elseStatement.getWhich());
+		}
+
+		return generator.newIfStatement(newCond, thenParts, elseParts, this);
 	}
 }
