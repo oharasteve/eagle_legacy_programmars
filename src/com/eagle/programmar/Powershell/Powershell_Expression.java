@@ -31,11 +31,13 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_PostIncrementExpre
 import com.eagle.programmar.Powershell.Expressions.Powershell_PreIncrementExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_RangeExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_Relational_Expression;
-import com.eagle.programmar.Powershell.Expressions.Powershell_SubfieldExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_SubscriptExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_VariableExpression;
 import com.eagle.programmar.Powershell.Functions.Powershell_FloorFunction;
 import com.eagle.programmar.Powershell.Functions.Powershell_TruncateFunction;
+import com.eagle.programmar.Powershell.Methods.Powershell_LengthMethod;
+import com.eagle.programmar.Powershell.Methods.Powershell_StartsWithMethod;
+import com.eagle.programmar.Powershell.Methods.Powershell_SubStringMethod;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Literal;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Number;
 import com.eagle.tokens.PrecedenceChooser;
@@ -98,16 +100,18 @@ public class Powershell_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(1000) Powershell_SubfieldExpression subfieldExpression;
-	public @P(1010) Powershell_SubscriptExpression subscriptExpression;
-	public @P(1020) Powershell_Multiplicative_Expression multiplicative_Expression;
-	public @P(1030) Powershell_Additive_Expression additive_Expression;
-	public @P(1040) Powershell_Relational_Expression relational_Expression;
-	public @P(1050) Powershell_LogicalAnd_Expression logicalAnd_Expression;
-	public @P(1060) Powershell_LogicalOr_Expression logicalOr_Expression;
-	public @P(1070) Powershell_Match_Expression match_Expression;
-	public @P(1080) Powershell_IsExpression isExpression;
-	public @P(1090) Powershell_AssignmentExpression assignmentExpression;
-	public @P(1100) Powershell_PipeExpression pipeExpression;
-	public @P(1110) Powershell_RangeExpression rangeExpression;
+	public @P(1000) Powershell_LengthMethod subfieldExpression;
+	public @P(1010) Powershell_StartsWithMethod startsWithExpression;
+	public @P(1020) Powershell_SubStringMethod subStringExpression;
+	public @P(1030) Powershell_SubscriptExpression subscriptExpression;
+	public @P(1040) Powershell_Multiplicative_Expression multiplicative_Expression;
+	public @P(1050) Powershell_Additive_Expression additive_Expression;
+	public @P(1060) Powershell_Relational_Expression relational_Expression;
+	public @P(1070) Powershell_LogicalAnd_Expression logicalAnd_Expression;
+	public @P(1080) Powershell_LogicalOr_Expression logicalOr_Expression;
+	public @P(1090) Powershell_Match_Expression match_Expression;
+	public @P(1100) Powershell_IsExpression isExpression;
+	public @P(1110) Powershell_AssignmentExpression assignmentExpression;
+	public @P(1120) Powershell_PipeExpression pipeExpression;
+	public @P(1130) Powershell_RangeExpression rangeExpression;
 }
