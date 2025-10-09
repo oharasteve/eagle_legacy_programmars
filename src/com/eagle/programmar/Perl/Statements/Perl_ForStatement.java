@@ -139,7 +139,6 @@ public class Perl_ForStatement extends TokenSequence
 		Perl_UserVariable userVar = (Perl_UserVariable) which;
 		String newName = Perl_Variable.repairName(userVar.id.getValue());
 
-		
 		Perl_Expression forInit = forLikeC.initExpr;
 		AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,

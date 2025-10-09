@@ -3,18 +3,21 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
@@ -22,8 +25,15 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Powershell_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#843-the-for-statement") Powershell_Keyword FOR =
 			new Powershell_Keyword("For");
@@ -90,5 +100,27 @@ public class Powershell_ForStatement extends TokenSequence implements AbstractSt
 		
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String newName = Powershell_Variable.repairName(var.id.getValue());
+		
+		AbstractExpression fromExpr = transformer.transformExpression(generator, init);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
+		
+		AbstractExpression termExpr = transformer.transformExpression(generator, stopCondition);
+		AbstractExpression delta = transformer.transformExpression(generator, iterate);
+		
+		ArrayList<AbstractStatement> newActions = new ArrayList<AbstractStatement>();
+		for (Powershell_Element stmt : stmts._elements)
+		{
+			AbstractStatement newAction = transformer.transformStatement1(generator,
+					stmt.element.getWhich());
+			newActions.add(newAction);
+		}
+		return generator.newForLoopStatement(asgExpr, termExpr, delta, newActions, this);
 	}
 }

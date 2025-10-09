@@ -5,9 +5,14 @@ package com.eagle.programmar.Powershell.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.terminals.TerminalCommentToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Powershell_Comment extends TerminalCommentToken
+		implements EagleTransformableStatement
 {
 	// Need a default constructor for the parser
 	public Powershell_Comment()
@@ -66,5 +71,11 @@ public class Powershell_Comment extends TerminalCommentToken
 	public String description()
 	{
 		return "/* comment */ or # or // comment to end of line";
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return null;	// Suppose we could save it ...
 	}
 }

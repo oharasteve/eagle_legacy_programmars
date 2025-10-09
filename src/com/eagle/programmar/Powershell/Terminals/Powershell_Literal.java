@@ -28,6 +28,6 @@ public class Powershell_Literal extends TerminalLiteralToken
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
+		return generator.newLiteralExpression(_txt.replaceAll("[\"']", ""), this);
 	}
 }

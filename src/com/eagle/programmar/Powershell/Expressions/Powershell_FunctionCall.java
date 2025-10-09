@@ -20,11 +20,17 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Powershell_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @OPT Powershell_DiscardResult discardResult;
 	public @S(20) @OPT Powershell_Library library;
@@ -98,5 +104,22 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		if (arguments != null && arguments.isPresent())
+		{
+			for (Powershell_FunctionArg arg : arguments._elements)
+			{
+				args.add(transformer.transformExpression(generator, arg.expr));
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(funcRef.getValue());
+		return generator.newMethodInvocation(var, args, this);
 	}
 }

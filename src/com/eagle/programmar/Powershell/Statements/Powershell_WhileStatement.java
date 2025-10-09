@@ -90,7 +90,8 @@ public class Powershell_WhileStatement extends TokenSequence
 		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
 		for (Powershell_Element stmt1 : statements._elements)
 		{
-			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt1);
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+					stmt1.element.getWhich());
 			for (AbstractStatement stmt2 : stmts)
 			{
 				actions.add(stmt2);
