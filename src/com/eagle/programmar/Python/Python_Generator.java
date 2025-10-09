@@ -388,8 +388,8 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public Python_Expression newAppendExpression(Oper2Types types,
 			Python_Expression left, Python_Expression right, AbstractToken source)
 	{
-		Python_Additive_Expression appendExpr = new Python_Additive_Expression();
-		return appendExpr.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
+		Python_Additive_Expression addExpr = new Python_Additive_Expression();
+		return addExpr.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 	
 	@Override

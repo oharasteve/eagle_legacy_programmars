@@ -71,7 +71,7 @@ public class Perl_PrintStatement extends TokenSequence
 			{
 				Perl_Expression expr = prt.strings.getPrimaryElement(i);
 				AbstractExpression line = transformer.transformExpression(generator, expr);
-				AbstractStatement stmt = generator.newPrintStatement(line, true, false, this);
+				AbstractStatement stmt = generator.newPrintStatement(line, false, false, this);
 				result.add(stmt);
 			}
 		}

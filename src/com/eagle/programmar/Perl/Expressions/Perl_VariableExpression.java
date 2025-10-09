@@ -35,7 +35,8 @@ public class Perl_VariableExpression extends PrimaryOperator
 			throw new RuntimeException("Can only handle simple variables");
 		}
 		Perl_UserVariable userVar = (Perl_UserVariable) variable.getWhich();
-		return generator.newVariableExpression(userVar.id.getValue(),
+		String newName = Perl_Variable.repairName(userVar.id.getValue());
+		return generator.newVariableExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
 	}
 }

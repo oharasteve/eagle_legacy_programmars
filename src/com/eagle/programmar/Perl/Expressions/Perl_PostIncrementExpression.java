@@ -68,7 +68,8 @@ public class Perl_PostIncrementExpression extends PrimaryOperator
 		if (var.getWhich() instanceof Perl_UserVariable)
 		{
 			Perl_UserVariable variable = (Perl_UserVariable) var.getWhich();
-			return generator.newPostIncrementExpression(variable.id.getValue(),
+			String newName = Perl_Variable.repairName(variable.id.getValue());
+			return generator.newPostIncrementExpression(newName,
 					SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
 		}
 		throw new RuntimeException("Cannot handle variable: " + var);

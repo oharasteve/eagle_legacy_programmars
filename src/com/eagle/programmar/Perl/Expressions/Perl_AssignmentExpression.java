@@ -105,8 +105,9 @@ public class Perl_AssignmentExpression extends PrecedenceOperator
 		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		Perl_Identifier_Reference id = userVar.id;
+		String newName = Perl_Variable.repairName(id.getValue());
 		
-		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return asgExpr;
 	}
