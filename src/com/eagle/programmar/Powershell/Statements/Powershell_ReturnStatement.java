@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -19,8 +20,8 @@ public class Powershell_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
 				EagleTransformableStatement
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#854-the-return-statement") Powershell_Keyword RETURN = new Powershell_Keyword(
-			"Return");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#854-the-return-statement") Powershell_Keyword RETURN =
+			new Powershell_Keyword("Return");
 	public @S(20) @OPT Powershell_Expression expression;
 
 	@Override
@@ -29,6 +30,19 @@ public class Powershell_ReturnStatement extends TokenSequence
 		if (expression != null && expression.isPresent())
 		{
 			EagleValue val = interpreter.getEagleValue(expression);
+
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof Powershell_Function)
+				{
+					Powershell_Function func = (Powershell_Function) parent;
+					func._returnMetrics.returned(val.typeName());
+					break;
+				}
+				parent = parent.getParent();
+			}
+
 			interpreter.pushEagleValue(val);
 		}
 		return Eagle_Statement_Result.RETURN;

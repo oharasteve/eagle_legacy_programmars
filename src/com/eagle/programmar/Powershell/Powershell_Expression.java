@@ -18,7 +18,7 @@ import com.eagle.programmar.Powershell.Expressions.Powershell_EvaluateExpression
 import com.eagle.programmar.Powershell.Expressions.Powershell_FunctionCall;
 import com.eagle.programmar.Powershell.Expressions.Powershell_IsExpression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LibraryVariable;
-import com.eagle.programmar.Powershell.Expressions.Powershell_Lists;
+import com.eagle.programmar.Powershell.Expressions.Powershell_List;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalAnd_Expression;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalNotOperator;
 import com.eagle.programmar.Powershell.Expressions.Powershell_LogicalOr_Expression;
@@ -84,7 +84,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(170) Powershell_BangOperator bangOp;
 	public @P(180) Powershell_AmpersandOperator ampersandOp;
 	public @P(190) Powershell_ParenthesizedExpression parenthesizedExpression;
-	public @P(200) Powershell_Lists lists;
+	public @P(200) Powershell_List lists;
 	public @P(210) Powershell_Dictionary dictionary;
 	public @P(220) Powershell_FloorFunction floorFunction;
 	public @P(230) Powershell_TruncateFunction truncateFunction;

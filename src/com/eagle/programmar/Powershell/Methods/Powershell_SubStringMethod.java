@@ -58,12 +58,14 @@ public class Powershell_SubStringMethod extends PrecedenceOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, strExpr);
 		AbstractExpression theSC = transformer.transformExpression(generator, scExpr);
 		AbstractExpression theNC = null;
+		SubstringECEnum whichEC = SubstringECEnum.GIVEN_NEITHER;
 		if (ncGiven != null && ncGiven.isPresent())
 		{
 			theNC = transformer.transformExpression(generator, ncGiven.ncExpr);
+			whichEC = SubstringECEnum.GIVEN_NC;
 		}
 		
 		return generator.newSubstringFunction(theExpr, theSC,
-				SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NC, theNC, false, this);
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, whichEC, theNC, false, this);
 	}
 }

@@ -20,18 +20,25 @@ import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.programmar.Powershell.Terminals.Powershell_VerbNoun;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Word;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationAmpersand;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_Command extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Powershell_Command extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
-	public @S(10) Powershell_WhichCommand which; // Like Get-Content or javac
+	public @S(10) Powershell_WhichCommand whichCommand; // Like Get-Content or javac
 	public @S(20) @OPT TokenList<Powershell_CommandArg> argList;
 
 	public @SKIP CallMetrics _callMetrics = null;
@@ -63,9 +70,9 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (which.getWhich() instanceof Powershell_Function_Reference)
+		if (whichCommand.getWhich() instanceof Powershell_Function_Reference)
 		{
-			Powershell_Function_Reference fnName = (Powershell_Function_Reference) which.getWhich();
+			Powershell_Function_Reference fnName = (Powershell_Function_Reference) whichCommand.getWhich();
 			
 			// Is it one of the defined Functions?
 			AbstractFunction fn = interpreter.findFunction(fnName.getValue());
@@ -132,5 +139,33 @@ public class Powershell_Command extends TokenSequence implements AbstractStateme
 			// Now remove all those parameters
 			interpreter.completedFunction(name, func);
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (! (whichCommand.getWhich() instanceof Powershell_Function_Reference))
+		{
+			throw new RuntimeException("Can only transform user functions");
+		}
+		Powershell_Function_Reference fnName = (Powershell_Function_Reference) whichCommand.getWhich();
+		ArrayList<AbstractExpression> newArgs = new ArrayList<AbstractExpression>();
+		if (argList != null && argList.isPresent())
+		{
+			for (Powershell_CommandArg arg : argList._elements)
+			{
+				AbstractToken which = arg.arg.getWhich();
+				if (! (which instanceof Powershell_Expression))
+				{
+					throw new RuntimeException("Can only transform expression arguments");
+				}
+				Powershell_Expression expr = (Powershell_Expression) which;
+				newArgs.add(transformer.transformExpression(generator, expr));
+			}
+		}
+		
+		AbstractVariable var = generator.newVariable(fnName.getValue());
+		AbstractExpression fnCall = generator.newMethodInvocation(var, newArgs, this);
+		return generator.newExpressionStatement(fnCall, this);
 	}
 }
