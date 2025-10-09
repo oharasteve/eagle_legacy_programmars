@@ -30,13 +30,13 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
-import com.eagle.programmar.Python.Functions.Python_EndsWith_Function;
-import com.eagle.programmar.Python.Functions.Python_Find_Function;
 import com.eagle.programmar.Python.Functions.Python_Int_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
-import com.eagle.programmar.Python.Functions.Python_StartsWith_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
-import com.eagle.programmar.Python.Functions.Python_Strip_Method;
+import com.eagle.programmar.Python.Methods.Python_EndsWith_Method;
+import com.eagle.programmar.Python.Methods.Python_Find_Method;
+import com.eagle.programmar.Python.Methods.Python_StartsWith_Method;
+import com.eagle.programmar.Python.Methods.Python_Strip_Method;
 import com.eagle.programmar.Python.Statements.Python_BreakStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
@@ -648,7 +648,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public AbstractExpression newEndsWithFunction(Python_Expression expr, Python_Expression patt,
 			AbstractToken source)
 	{
-		Python_EndsWith_Function endsFunc = new Python_EndsWith_Function();
+		Python_EndsWith_Method endsFunc = new Python_EndsWith_Method();
 		return endsFunc.generateEndsWith(expr, patt, source);
 	}
 
@@ -656,7 +656,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public Python_Expression newStartsWithFunction(Python_Expression expr, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		Python_StartsWith_Function startsFunc = new Python_StartsWith_Function();
+		Python_StartsWith_Method startsFunc = new Python_StartsWith_Method();
 		return startsFunc.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
 	
@@ -664,7 +664,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public Python_Expression newIndexOfFunction(Python_Variable string, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		Python_Find_Function indexFn = new Python_Find_Function();
+		Python_Find_Method indexFn = new Python_Find_Method();
 		return indexFn.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
