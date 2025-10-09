@@ -29,10 +29,6 @@ import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
-import com.eagle.transform.EagleTransformer;
 
 public class Powershell_Element extends TokenSequence
 {
