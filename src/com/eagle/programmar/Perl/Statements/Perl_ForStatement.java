@@ -5,20 +5,31 @@ package com.eagle.programmar.Perl.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_Statement;
 import com.eagle.programmar.Perl.Perl_Variable;
+import com.eagle.programmar.Perl.Perl_Variable.Perl_UserVariable;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Perl_ForStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Perl_ForStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("control-structures.for.php") Perl_Keyword FOR = new Perl_Keyword("for");
 	public @S(20) Perl_ForWhat forWhat;
@@ -44,12 +55,14 @@ public class Perl_ForStatement extends TokenSequence implements AbstractStatemen
 	public static class Perl_ForLikeC extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT Perl_Expression initExpr;
-		public @S(30) @OPT PunctuationSemicolon semicolon1;
-		public @S(40) @OPT Perl_Expression testExpr;
-		public @S(50) @OPT PunctuationSemicolon semicolon2;
-		public @S(60) @OPT Perl_Expression incrExpr;
-		public @S(70) PunctuationRightParen rightParen;
+		public @S(20) Perl_Variable variable;
+		public @S(30) PunctuationEquals equals;
+		public @S(40) Perl_Expression initExpr;
+		public @S(50) PunctuationSemicolon semicolon1;
+		public @S(60) @OPT Perl_Expression testExpr;
+		public @S(70) PunctuationSemicolon semicolon2;
+		public @S(80) @OPT Perl_Expression incrExpr;
+		public @S(90) PunctuationRightParen rightParen;
 	}
 
 	@Override
@@ -59,7 +72,14 @@ public class Perl_ForStatement extends TokenSequence implements AbstractStatemen
 		{
 			Perl_ForLikeC forLikeC = (Perl_ForLikeC) forWhat.getWhich();
 
-			interpreter.tryToInterpret(forLikeC.initExpr);
+			AbstractToken which = forLikeC.variable.getWhich();
+			if (! (which instanceof Perl_UserVariable))
+			{
+				throw new RuntimeException("Must be a simple variable");
+			}
+			Perl_UserVariable userVar = (Perl_UserVariable) which;
+			EagleValue initial = interpreter.getEagleValue(forLikeC.initExpr);
+			interpreter.setSymbol(forLikeC.variable, userVar.id.getValue(), initial);
 
 			if (_metrics == null)
 			{
@@ -99,5 +119,35 @@ public class Perl_ForStatement extends TokenSequence implements AbstractStatemen
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (! (forWhat.getWhich() instanceof Perl_ForLikeC))
+		{
+			throw new RuntimeException("Can only handle regular for loops");
+		}
+		Perl_ForLikeC forLikeC = (Perl_ForLikeC) forWhat.getWhich();
+		
+		AbstractToken which = forLikeC.variable.getWhich();
+		if (! (which instanceof Perl_UserVariable))
+		{
+			throw new RuntimeException("Must be a simple variable");
+		}
+		Perl_UserVariable userVar = (Perl_UserVariable) which;
+		String newName = Perl_Variable.repairName(userVar.id.getValue());
+
+		
+		Perl_Expression forInit = forLikeC.initExpr;
+		AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
+				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
+		
+		AbstractExpression termExpr = transformer.transformExpression(generator, forLikeC.testExpr);
+		AbstractExpression delta = transformer.transformExpression(generator, forLikeC.incrExpr);
+		AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
+		return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
 	}
 }

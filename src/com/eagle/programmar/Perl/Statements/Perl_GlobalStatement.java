@@ -10,10 +10,15 @@ import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Perl_GlobalStatement extends TokenSequence implements EagleRunnable
+public class Perl_GlobalStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) Perl_KeywordChoice GLOBAL = new Perl_KeywordChoice("global", "local", "our");
 	public @S(20) SeparatedList<Perl_Variable, PunctuationComma> vars;
@@ -32,5 +37,15 @@ public class Perl_GlobalStatement extends TokenSequence implements EagleRunnable
 		{
 			throw new RuntimeException("Need to implement");
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (init != null && init.isPresent())
+		{
+			throw new RuntimeException("Need to implement");
+		}
+		return null;	// Nothing to do here
 	}
 }

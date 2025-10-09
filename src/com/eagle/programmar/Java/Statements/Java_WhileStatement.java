@@ -29,8 +29,8 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Java_WhileStatement extends TokenSequence implements
-		AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
+public class Java_WhileStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.12") Java_Keyword WHILE = new Java_Keyword("while");
