@@ -51,7 +51,7 @@ import com.eagle.programmar.Perl.Expressions.Perl_SubscriptExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_TrueFalseExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_VariableExpression;
 import com.eagle.programmar.Perl.Functions.Perl_ArrayFunction;
-import com.eagle.programmar.Perl.Functions.Perl_IntFunction;
+import com.eagle.programmar.Perl.Functions.Perl_IntValFunction;
 import com.eagle.programmar.Perl.Functions.Perl_StrLenFunction;
 import com.eagle.programmar.Perl.Functions.Perl_SubstrFunction;
 import com.eagle.programmar.Perl.Terminals.Perl_HexNumber;
@@ -111,7 +111,7 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(260) Perl_BuiltIn builtIn;
 	public @P(270) Perl_RegExExpression regExExpression;
 	public @P(280) Perl_ArrayFunction arrayFunction;
-	public @P(290) Perl_IntFunction intFunction;
+	public @P(290) Perl_IntValFunction intFunction;
 	public @P(300) Perl_StrLenFunction strlenFunction;
 	public @P(310) Perl_SubstrFunction substrFunction;
 	public @P(320) Perl_FunctionCall functionCall;

@@ -15,10 +15,10 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Perl_IntFunction extends PrimaryOperator
+public class Perl_IntValFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Perl_Keyword INT = new Perl_Keyword("int");
+	public @S(10) Perl_Keyword INTVAL = new Perl_Keyword("intval");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Perl_Expression expression;
 	public @S(40) PunctuationRightParen rightParen;
