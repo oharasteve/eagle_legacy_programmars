@@ -8,15 +8,23 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Expression;
+import com.eagle.programmar.Powershell.Powershell_Variable;
 import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.scope.EagleScope;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_AssignmentExpression extends PrecedenceOperator implements EagleRunnable
+public class Powershell_AssignmentExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Powershell_Expression var = new Powershell_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) Powershell_PunctuationChoice equals = new Powershell_PunctuationChoice("=", "*=", "/=", "%=", "+=",
-			"-=");
+	public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice(
+			"=", "*=", "/=", "%=", "+=", "-=");
 	public @S(30) Powershell_Expression expr = new Powershell_Expression(this, AllowedPrecedence.ATLEAST);
 
 	@Override
@@ -26,7 +34,7 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 		{
 			Powershell_VariableExpression pVar = (Powershell_VariableExpression) var.getWhich();
 			EagleValue newValue;
-			switch (equals.getValue())
+			switch (operator.getValue())
 			{
 			case "=":
 				newValue = interpreter.getEagleValue(expr);
@@ -42,7 +50,7 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 				newValue = new EagleInteger(oldVar2.forceIntegerValue() - newVal2);
 				break;
 			default:
-				throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());
+				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 			}
 
 			if (pVar.variable.scope != null && pVar.variable.scope.isPresent())
@@ -58,5 +66,44 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator implemen
 				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
 			}
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		if (! (var.getWhich() instanceof Powershell_VariableExpression))
+		{
+			throw new RuntimeException("Can only assign variables");
+		}
+		Powershell_VariableExpression variableExpr = (Powershell_VariableExpression) var.getWhich();
+		Powershell_Variable theVar = variableExpr.variable;
+
+		AbstractExpression subscrExpr = null;
+		if (theVar.subscript != null && theVar.subscript.isPresent())
+		{
+			subscrExpr = transformer.transformExpression(generator, theVar.subscript.subscr);
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		String newName = Powershell_Variable.repairName(theVar.id.getValue());
+		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+		return asgExpr;
 	}
 }

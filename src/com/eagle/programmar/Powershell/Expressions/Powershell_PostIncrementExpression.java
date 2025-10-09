@@ -8,21 +8,61 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Variable;
-import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
+import com.eagle.programmar.Powershell.Terminals.Powershell_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.IncrementEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_PostIncrementExpression extends PrimaryOperator implements EagleRunnable
+public class Powershell_PostIncrementExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Powershell_Variable var;
-	public @S(20) Powershell_Punctuation postIncrementOperator = new Powershell_Punctuation("++");
+	public @S(20) Powershell_PunctuationChoice operator =
+			new Powershell_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.findSymbol(var.id.getValue());
 		int prev = val.forceIntegerValue();
-		EagleValue curr = new EagleInteger(prev + 1);
+		EagleValue curr;
+		switch (operator.getValue())
+		{
+		case "++":
+			curr = new EagleInteger(prev + 1);
+			break;
+		case "--":
+			curr = new EagleInteger(prev - 1);
+			break;
+		default:
+			throw new RuntimeException("Unable to handle: " + operator);
+		}
 		interpreter.setSymbol(var, var.id.getValue(), curr);
 		interpreter.pushInt(prev);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		IncrementEnum whichDirection;
+		switch (operator.getValue())
+		{
+		case "++":
+			whichDirection = IncrementEnum.INCREMENT;
+			break;
+		case "--":
+			whichDirection = IncrementEnum.DECREMENT;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
+		
+		String newName = Powershell_Variable.repairName(var.id.getValue());
+		return generator.newPostIncrementExpression(newName,
+				SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
 	}
 }

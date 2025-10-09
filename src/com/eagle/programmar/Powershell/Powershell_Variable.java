@@ -51,4 +51,9 @@ public class Powershell_Variable extends TokenSequence implements EagleRunnable
 			interpreter.pushEagleValue(value);
 		}
 	}
+
+	public static String repairName(String powershellVariable)
+	{
+		return powershellVariable.replaceAll("\\$", "");
+	}
 }

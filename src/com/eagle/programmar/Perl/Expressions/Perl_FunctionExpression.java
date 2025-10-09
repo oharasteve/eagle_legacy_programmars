@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Perl.Expressions;
 
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionBlock;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
+import com.eagle.programmar.Perl.Perl_Function.Perl_FunctionBlock;
+import com.eagle.programmar.Perl.Perl_Function.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;

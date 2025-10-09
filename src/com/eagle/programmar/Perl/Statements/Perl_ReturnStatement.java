@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Perl_Expression;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition;
+import com.eagle.programmar.Perl.Perl_Function;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
@@ -35,9 +35,9 @@ public class Perl_ReturnStatement extends TokenSequence
 			AbstractToken parent = this.getParent();
 			while (parent != null)
 			{
-				if (parent instanceof Perl_FunctionDefinition)
+				if (parent instanceof Perl_Function)
 				{
-					Perl_FunctionDefinition func = (Perl_FunctionDefinition) parent;
+					Perl_Function func = (Perl_Function) parent;
 					func._returnMetrics.returned(val.typeName());
 					break;
 				}

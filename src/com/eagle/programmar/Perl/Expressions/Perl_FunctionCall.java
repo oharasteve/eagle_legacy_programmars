@@ -9,10 +9,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Perl.Perl_Expression;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariable;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
+import com.eagle.programmar.Perl.Perl_Function;
+import com.eagle.programmar.Perl.Perl_Function.Perl_FunctionVariable;
+import com.eagle.programmar.Perl.Perl_Function.Perl_FunctionVariableOrTypeVariable;
+import com.eagle.programmar.Perl.Perl_Function.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
 import com.eagle.programmar.Perl.Symbols.Perl_Identifier_Reference;
 import com.eagle.programmar.Perl.Terminals.Perl_Comment;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
@@ -72,7 +72,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 		{
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
-		Perl_FunctionDefinition func = (Perl_FunctionDefinition) fn;
+		Perl_Function func = (Perl_Function) fn;
 	
 		// Make sure the function args match up
 		int argCount = 0;

@@ -17,7 +17,7 @@ import com.eagle.programmar.HTML.HTML_Syntax;
 import com.eagle.programmar.HTML.Terminals.HTML_Keyword;
 import com.eagle.programmar.HTML.Terminals.HTML_Punctuation;
 import com.eagle.programmar.PHP.PHP_Body.PHP_NormalBlock;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition;
+import com.eagle.programmar.Perl.Perl_Function;
 import com.eagle.programmar.Perl.Perl_Statement;
 import com.eagle.programmar.Perl.Perl_StatementOrComment;
 import com.eagle.tokens.TokenChooser;
@@ -99,9 +99,9 @@ public class PHP_Program extends AbstractLanguage
 									if (stmtComm.getWhich() instanceof Perl_Statement)
 									{
 										Perl_Statement stmt = (Perl_Statement) stmtComm.getWhich();
-										if (stmt.getWhich() instanceof Perl_FunctionDefinition)
+										if (stmt.getWhich() instanceof Perl_Function)
 										{
-											Perl_FunctionDefinition func = (Perl_FunctionDefinition) stmt.getWhich();
+											Perl_Function func = (Perl_Function) stmt.getWhich();
 											interpreter.addFunction(func.id.getValue(), func);
 										}
 									}
@@ -175,9 +175,9 @@ public class PHP_Program extends AbstractLanguage
 									if (stmtComm.getWhich() instanceof Perl_Statement)
 									{
 										Perl_Statement stmt = (Perl_Statement) stmtComm.getWhich();
-										if (stmt.getWhich() instanceof Perl_FunctionDefinition)
+										if (stmt.getWhich() instanceof Perl_Function)
 										{
-											Perl_FunctionDefinition func = (Perl_FunctionDefinition) stmt.getWhich();
+											Perl_Function func = (Perl_Function) stmt.getWhich();
 											func.transformFunction(transformer, generator);
 										}
 									}

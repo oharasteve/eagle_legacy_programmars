@@ -8,22 +8,28 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
+import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
-import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Powershell_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword IF = new Powershell_Keyword(
-			"If");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword IF =
+			new Powershell_Keyword("If");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Powershell_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;
@@ -133,5 +139,43 @@ public class Powershell_IfStatement extends TokenSequence implements AbstractSta
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newCond = transformer.transformExpression(generator, condition);
+		
+		if (elseIfStmts != null && elseIfStmts.size() > 0)
+		{
+			throw new RuntimeException("if/elif is not yet implemented in Powershell");
+		}
+		
+		ArrayList<AbstractStatement> thenParts = new ArrayList<AbstractStatement>();
+		for (Powershell_Element stmt1 : statements._elements)
+		{
+			for (AbstractStatement stmt2 : transformer.transformStatement(generator,
+					stmt1.element.getWhich()))
+			{
+				thenParts.add(stmt2);
+			}
+		}
+
+		ArrayList<AbstractStatement> elseParts = null;
+		if (elseStmt != null && elseStmt.isPresent())
+		{
+			elseParts = new ArrayList<AbstractStatement>();
+			for (Powershell_Element stmt3 : elseStmt.statements._elements)
+			{
+				for (AbstractStatement stmt4 : transformer.transformStatement(generator,
+						stmt3.element.getWhich()))
+				{
+					elseParts.add(stmt4);
+				}
+			}
+		}
+
+		return generator.newIfStatement(newCond, thenParts, elseParts, this);
 	}
 }

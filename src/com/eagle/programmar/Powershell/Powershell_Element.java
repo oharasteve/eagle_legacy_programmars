@@ -12,9 +12,10 @@ import com.eagle.programmar.Powershell.Statements.Powershell_Command;
 import com.eagle.programmar.Powershell.Statements.Powershell_ContinueStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_DoStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ExitStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_ExpressionStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForEachStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ForStatement;
-import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_Function;
 import com.eagle.programmar.Powershell.Statements.Powershell_IfStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_ProcessBlock;
 import com.eagle.programmar.Powershell.Statements.Powershell_ReturnStatement;
@@ -28,6 +29,10 @@ import com.eagle.programmar.Powershell.Statements.Powershell_WriteStatement;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Powershell_Element extends TokenSequence
 {
@@ -47,7 +52,7 @@ public class Powershell_Element extends TokenSequence
 		public @CHOICE Powershell_IfStatement XXifStatement;
 		public @CHOICE Powershell_ForEachStatement XXforeachStatement;
 		public @CHOICE Powershell_ForStatement XXforStatement;
-		public @CHOICE Powershell_FunctionStatement XXfunctionDefinition;
+		public @CHOICE Powershell_Function XXfunctionDefinition;
 		public @CHOICE Powershell_ProcessBlock XXprocessBlock;
 		public @CHOICE Powershell_ReturnStatement XXreturnStatement;
 		public @CHOICE Powershell_StartJob XXstartJob;
@@ -62,6 +67,6 @@ public class Powershell_Element extends TokenSequence
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement XXfindstrStatement;
 
 		public @CHOICE Powershell_Command XXcommand;
-		public @LAST Powershell_Expression XXexpressionStatement;
+		public @LAST Powershell_ExpressionStatement XXexpressionStatement;
 	}
 }

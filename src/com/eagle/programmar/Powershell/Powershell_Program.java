@@ -3,13 +3,21 @@
 
 package com.eagle.programmar.Powershell;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
+import com.eagle.programmar.Powershell.Statements.Powershell_Function;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Powershell_Program extends AbstractLanguage implements EagleRunnable
+public class Powershell_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String POWERHSELL = "Powershell";
 
@@ -21,7 +29,10 @@ public class Powershell_Program extends AbstractLanguage implements EagleRunnabl
 	@Override
 	public String booleanName(boolean flag)
 	{
-		if (flag) return "$True";
+		if (flag)
+		{
+			return "$True";
+		}
 		return "$False";
 	}
 
@@ -44,9 +55,9 @@ public class Powershell_Program extends AbstractLanguage implements EagleRunnabl
 		// First pass, just collect all the FUNCTION definitions
 		for (Powershell_Element stmt : statements._elements)
 		{
-			if (stmt.element.getWhich() instanceof Powershell_FunctionStatement)
+			if (stmt.element.getWhich() instanceof Powershell_Function)
 			{
-				Powershell_FunctionStatement fn = (Powershell_FunctionStatement) stmt.element.getWhich();
+				Powershell_Function fn = (Powershell_Function) stmt.element.getWhich();
 				interpreter.addFunction(fn.id.getValue(), fn);
 			}
 		}
@@ -56,5 +67,36 @@ public class Powershell_Program extends AbstractLanguage implements EagleRunnabl
 		{
 			interpreter.tryToInterpret(stmt.element);
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Transform all the Function definitions first
+		for (Powershell_Element stmt : statements._elements)
+		{
+			AbstractToken whichStmt = stmt.element.getWhich();
+			if (whichStmt instanceof Powershell_Function)
+			{
+				Powershell_Function func = (Powershell_Function) whichStmt;
+				func.transformFunction(transformer, generator);
+			}
+		}
+
+		// Transform all the global data and logic, etc.
+		for (Powershell_Element stmt : statements._elements)
+		{
+			AbstractToken whichStmt = stmt.element.getWhich();
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, whichStmt);
+			if (newStmts != null)
+			{
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt, whichStmt);
+				}
+			}
+		}
+		
+		return generator.getTransfomedProgram();
 	}
 }

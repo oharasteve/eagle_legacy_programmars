@@ -6,16 +6,20 @@ package com.eagle.programmar.Powershell.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Element;
+import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Powershell_ParenthesizedExpression extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Powershell_ParenWhat what;
@@ -49,5 +53,17 @@ public class Powershell_ParenthesizedExpression extends PrimaryOperator
 			EagleValue value = interpreter.getEagleValue(expr.expression);
 			interpreter.pushEagleValue(value);
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (what.getWhich() instanceof Powershell_ParenExpression)
+		{
+			Powershell_ParenExpression expr = (Powershell_ParenExpression) what.getWhich();
+			AbstractExpression theExpr = transformer.transformExpression(generator, expr.expression);
+			return generator.newParenthesizedExpression(theExpr, this);
+		}
+		return null;
 	}
 }

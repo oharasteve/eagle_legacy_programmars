@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_Function_Parameters;
+import com.eagle.programmar.Perl.Perl_Function.Perl_Function_Parameters;
 import com.eagle.programmar.Perl.Statements.Perl_ClassStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ExpressionStatement;
 import com.eagle.programmar.Perl.Statements.Perl_ForEachStatement;
@@ -37,7 +37,7 @@ public class Perl_Statement extends TokenChooser
 {
 	public @FIRST Perl_Comment XXcomment;
 	public @CHOICE Perl_Include XXinclude;
-	public @CHOICE Perl_FunctionDefinition XXfunction;
+	public @CHOICE Perl_Function XXfunction;
 	public @CHOICE Perl_NamespaceStatement XXnamespaceStatement;
 	public @CHOICE Perl_ClassStatement XXclassStatement;
 	public @CHOICE Perl_Label XXlabel;

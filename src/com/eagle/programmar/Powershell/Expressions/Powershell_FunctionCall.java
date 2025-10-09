@@ -12,8 +12,8 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Library;
-import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement;
-import com.eagle.programmar.Powershell.Statements.Powershell_FunctionStatement.Powershell_FunctionParam;
+import com.eagle.programmar.Powershell.Statements.Powershell_Function;
+import com.eagle.programmar.Powershell.Statements.Powershell_Function.Powershell_FunctionParam;
 import com.eagle.programmar.Powershell.Symbols.Powershell_Function_Reference;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
 import com.eagle.tokens.AbstractFunction;
@@ -53,7 +53,7 @@ public class Powershell_FunctionCall extends PrimaryOperator implements EagleRun
 		{
 			throw new RuntimeException("Unable to find a function named " + funcRef.getValue());
 		}
-		Powershell_FunctionStatement func = (Powershell_FunctionStatement) fn;
+		Powershell_Function func = (Powershell_Function) fn;
 		String name = func.id.getValue();
 
 		// Call the function

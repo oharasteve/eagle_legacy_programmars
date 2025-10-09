@@ -13,7 +13,7 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
-import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
+import com.eagle.programmar.Perl.Perl_Function.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
 import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
 import com.eagle.programmar.Perl.Symbols.Perl_Variable_Definition;
@@ -41,7 +41,7 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
-public class Perl_FunctionDefinition extends TokenSequence
+public class Perl_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
 				EagleTransformableFunction
 {
