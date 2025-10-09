@@ -20,11 +20,17 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Perl_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Perl_Identifier_Reference fnName;
 	public @S(20) @OPT TokenList<Perl_MoreFunctionName> moreName;
@@ -123,5 +129,33 @@ public class Perl_FunctionCall extends PrimaryOperator implements EagleRunnable
 	
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = fnName.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = 0;
+		if (argument != null && argument.isPresent()) argCount++;
+		if (moreArgs != null && moreArgs.isPresent()) argCount += moreArgs.size();
+		for (int i = 0; i < argCount; i++)
+		{
+			Perl_Expression arg;
+			if (i == 0)
+			{
+				arg = argument;
+			}
+			else
+			{
+				arg = moreArgs._elements.get(i-1).argument;
+			}
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, fnName);
 	}
 }

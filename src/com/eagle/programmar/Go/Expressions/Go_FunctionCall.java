@@ -108,7 +108,7 @@ public class Go_FunctionCall extends PrimaryOperator
 			return generator.newMethodInvocation(var, args, funcName);
 		}
 
-		// Dang. Scale uses () for both arrays and function calls
+		// Dang. Go uses () for both arrays and function calls
 		// It is not a function, so must be an array
 		AbstractExpression index = transformer.transformExpression(generator,
 				arguments.first());

@@ -13,7 +13,7 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Perl_Type extends TokenChooser
 {
-	public @CHOICE Perl_KeywordChoice XXbase = new Perl_KeywordChoice("array", "int", "string");
+	public @CHOICE Perl_KeywordChoice XXbase = new Perl_KeywordChoice("array", "bool", "int", "string");
 	public @CHOICE Perl_Variable_Definition XXtype;
 
 	public @CHOICE static class Perl_CompoundType extends TokenSequence
@@ -31,17 +31,21 @@ public class Perl_Type extends TokenChooser
 
 	public static TypeEnum findType(Perl_Type type)
 	{
-		Perl_KeywordChoice typeName = (Perl_KeywordChoice) type.getWhich();
-		switch (typeName.getValue())
+		if (type.getWhich() instanceof Perl_KeywordChoice)
 		{
-		case "bool":
-			return TypeEnum.BOOLEAN;
-		case "int":
-			return TypeEnum.INTEGER;
-		case "string":
-			return TypeEnum.STRING;
-		default:
-			return TypeEnum.VOID;
+			Perl_KeywordChoice typeName = (Perl_KeywordChoice) type.getWhich();
+			switch (typeName.getValue())
+			{
+			case "array":
+				return TypeEnum.STRING_ARRAY;
+			case "bool":
+				return TypeEnum.BOOLEAN;
+			case "int":
+				return TypeEnum.INTEGER;
+			case "string":
+				return TypeEnum.STRING;
+			}
 		}
+		return TypeEnum.VOID;
 	}
 }

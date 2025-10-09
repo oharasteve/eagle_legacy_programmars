@@ -51,6 +51,7 @@ import com.eagle.programmar.Perl.Expressions.Perl_SubscriptExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_TrueFalseExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_VariableExpression;
 import com.eagle.programmar.Perl.Functions.Perl_ArrayFunction;
+import com.eagle.programmar.Perl.Functions.Perl_IntFunction;
 import com.eagle.programmar.Perl.Functions.Perl_StrLenFunction;
 import com.eagle.programmar.Perl.Functions.Perl_SubstrFunction;
 import com.eagle.programmar.Perl.Terminals.Perl_HexNumber;
@@ -110,19 +111,20 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(260) Perl_BuiltIn builtIn;
 	public @P(270) Perl_RegExExpression regExExpression;
 	public @P(280) Perl_ArrayFunction arrayFunction;
-	public @P(290) Perl_StrLenFunction strlenFunction;
-	public @P(300) Perl_SubstrFunction substrFunction;
-	public @P(310) Perl_FunctionCall functionCall;
-	public @P(320) Perl_VariableExpression variableExpression;
-	public @P(330) Perl_ParenthesizedExpression parenthesizedExpression;
-	public @P(340) Perl_BracketedExpression bracketedExpression;
-	public @P(350) Perl_EachExpression eachExpression;
-	public @P(360) Perl_DieExpression dieExpression;
-	public @P(370) Perl_AddressOfExpression addressOfExpression;
-	public @P(380) Perl_FunctionExpression functionExpression;
-	public @P(390) Perl_FileIO fileIO;
-	public @P(400) Perl_PercentExpression percentExpression;
-	public @P(410) Perl_JoinExpression joinExpression;
+	public @P(290) Perl_IntFunction intFunction;
+	public @P(300) Perl_StrLenFunction strlenFunction;
+	public @P(310) Perl_SubstrFunction substrFunction;
+	public @P(320) Perl_FunctionCall functionCall;
+	public @P(330) Perl_VariableExpression variableExpression;
+	public @P(340) Perl_ParenthesizedExpression parenthesizedExpression;
+	public @P(350) Perl_BracketedExpression bracketedExpression;
+	public @P(360) Perl_EachExpression eachExpression;
+	public @P(370) Perl_DieExpression dieExpression;
+	public @P(380) Perl_AddressOfExpression addressOfExpression;
+	public @P(390) Perl_FunctionExpression functionExpression;
+	public @P(400) Perl_FileIO fileIO;
+	public @P(410) Perl_PercentExpression percentExpression;
+	public @P(420) Perl_JoinExpression joinExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

@@ -12,6 +12,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Perl.Perl_FunctionDefinition.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
 import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
@@ -109,6 +110,7 @@ public class Perl_FunctionDefinition extends TokenSequence
 
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -120,6 +122,10 @@ public class Perl_FunctionDefinition extends TokenSequence
 		if (_argumentsMetrics == null)
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
 		// Don't do anything here.
@@ -169,7 +175,8 @@ public class Perl_FunctionDefinition extends TokenSequence
 				}
 				
 				AbstractType newParamType = generator.transformType(type, null, param);
-				generator.addMethodParameter(newParamType, paramVar.param.getValue());
+				String paramName = Perl_Variable.repairName(paramVar.param.getValue());
+				generator.addMethodParameter(newParamType, paramName);
 			}
 		}
 

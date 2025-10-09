@@ -29,12 +29,18 @@ public class Perl_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		AbstractExpression subscr = null;
 		if (! (variable.getWhich() instanceof Perl_UserVariable))
 		{
 			throw new RuntimeException("Can only handle simple variables");
 		}
 		Perl_UserVariable userVar = (Perl_UserVariable) variable.getWhich();
+
+		AbstractExpression subscr = null;
+		if (userVar.subscript != null && userVar.subscript.size() > 0)
+		{
+			subscr = transformer.transformExpression(generator, userVar.subscript.first().expr);
+		}
+		
 		String newName = Perl_Variable.repairName(userVar.id.getValue());
 		return generator.newVariableExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
