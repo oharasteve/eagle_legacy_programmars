@@ -23,13 +23,18 @@ import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Python_Assignment extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Python_Assignment extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NOSPACE Python_VariableList varList;
 	public @S(20) @OPT TokenList<Python_Subscript> subscripts;
@@ -37,7 +42,7 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 	public @S(40) Python_PunctuationChoice operator = new Python_PunctuationChoice(
 			"=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=", "**=", "//=");
 	public @S(50) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
-	public @S(60) Python_Expression expr;
+	public @S(60) Python_Expression expression;
 	public @S(70) @OPT TokenList<Python_MoreAsgExpressions> moreExpressions;
 	public @S(80) @OPT Python_Comment comment;
 
@@ -70,17 +75,17 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 			switch (operator.getValue())
 			{
 			case "=":
-				EagleValue val = interpreter.getEagleValue(expr);
+				EagleValue val = interpreter.getEagleValue(expression);
 				interpreter.setSymbol(var, id.getValue(), val);
 				break;
 			case "+=":
-				int newVal1 = interpreter.getIntValue(expr);
+				int newVal1 = interpreter.getIntValue(expression);
 				EagleValue oldVar1 = interpreter.findSymbol(id.toString());
 				EagleInteger newValue1 = new EagleInteger(oldVar1.forceIntegerValue() + newVal1);
 				interpreter.setSymbol(var, id.getValue(), newValue1);
 				break;
 			case "-=":
-				int newVal2 = interpreter.getIntValue(expr);
+				int newVal2 = interpreter.getIntValue(expression);
 				EagleValue oldVar2 = interpreter.findSymbol(id.toString());
 				EagleInteger newValue2 = new EagleInteger(oldVar2.forceIntegerValue() - newVal2);
 				interpreter.setSymbol(var, id.getValue(), newValue2);
@@ -89,6 +94,46 @@ public class Python_Assignment extends TokenSequence implements EagleRunnable, A
 				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 			}
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		Python_VariableOrList vars = varList.vars.first();
+		if (!(vars.getWhich() instanceof Python_Just_Var))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + vars.getWhich());
+		}
+		Python_Just_Var justVar = (Python_Just_Var) vars.getWhich();
+		Python_VariableAndSubscript var = justVar.variable.first();
+
+		if (! (var.variable.var.getWhich() instanceof Python_Identifier_Reference))
+		{
+			throw new RuntimeException("Assigment must be to a variable");
+		}
+		Python_Identifier_Reference id = (Python_Identifier_Reference) var.variable.var.getWhich();
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "=":
+			asg = AssignmentEnum.EQUALS;
+			break;
+		case "+=":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "-=":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
+		}
+
+		AbstractExpression subscrExpr = null;
+		AbstractExpression value = transformer.transformExpression(generator, expression);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
+		return generator.newExpressionStatement(asgExpr, this);
 	}
 	
 	public static Python_ExpressionStatement generateAssignment(String name, SubscriptEnum offset,

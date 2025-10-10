@@ -10,16 +10,21 @@ import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
+public class Python_BuiltIn extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Python_KeywordChoice builtins = new Python_KeywordChoice("None", "False", "True");
+	public @S(10) Python_KeywordChoice builtIn = new Python_KeywordChoice("None", "False", "True");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		switch (builtins.toString())
+		switch (builtIn.toString())
 		{
 		case "False":
 			interpreter.pushBool(false);
@@ -28,7 +33,22 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 			interpreter.pushBool(true);
 			break;
 		default:
-			throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtins);
+			throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtIn);
+		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		switch (builtIn.toString())
+		{
+		case "False":
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		case "True":
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		default:
+			throw new RuntimeException("Can't handle BuiltIn: " + builtIn);
 		}
 	}
 
@@ -38,13 +58,13 @@ public class Python_BuiltIn extends PrimaryOperator implements EagleRunnable
 		switch (builtin)
 		{
 		case TRUE:
-			expr.builtins = new Python_KeywordChoice("True");
+			expr.builtIn = new Python_KeywordChoice("True");
 			break;
 		case FALSE:
-			expr.builtins = new Python_KeywordChoice("False");
+			expr.builtIn = new Python_KeywordChoice("False");
 			break;
 		case NULL:
-			expr.builtins = new Python_KeywordChoice("None");
+			expr.builtIn = new Python_KeywordChoice("None");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin.toString());

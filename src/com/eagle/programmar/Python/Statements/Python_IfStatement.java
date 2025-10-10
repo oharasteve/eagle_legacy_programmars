@@ -19,11 +19,16 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_IfStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;
@@ -124,6 +129,31 @@ public class Python_IfStatement extends TokenSequence
 		return result;
 	}
 
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		
+		if (ifElif != null && ifElif.size() > 0)
+		{
+			throw new RuntimeException("if/elif is not yet implemented in Python");
+		}
+		
+		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
+				ifThenStatements);
+
+		ArrayList<AbstractStatement> elseParts = null;
+		if (ifElse != null && ifElse.isPresent())
+		{
+			elseParts = transformer.transformStatement(generator,
+					ifElse.ifElseStatements);
+		}
+
+		return generator.newIfStatement(cond, thenParts, elseParts, this);
+	}
+	
+
 	public Python_ComplexStatement generateIfElse1(Python_Expression cond,
 			Python_ComplexStatement thenStmt, Python_ComplexStatement elseStmt, AbstractToken source)
 	{
@@ -139,7 +169,6 @@ public class Python_IfStatement extends TokenSequence
 
 		return generateIfElse(cond, thens, elses, source);
 	}
-	
 	public Python_ComplexStatement generateIfElse(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> thenStmts, ArrayList<Python_ComplexStatement> elseSmts,
 			AbstractToken source)

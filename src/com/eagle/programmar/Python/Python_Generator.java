@@ -533,7 +533,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
 	{
 		Python_BuiltIn builtin = new Python_BuiltIn();
-		builtin.builtins.setValue(bool ? "True" : "False");
+		builtin.builtIn.setValue(bool ? "True" : "False");
 		return wrapExpression(builtin);
 	}
 

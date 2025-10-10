@@ -9,15 +9,20 @@ import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Python_Literals extends PrimaryOperator implements EagleRunnable
+public class Python_Literals extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) TokenList<Python_Literal> literals;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (literals._elements.size() == 1) 
+		if (literals._elements.size() == 1)
 		{
 			Python_Literal literal = literals._elements.get(0);
 			interpreter.pushStr(literal.getValue());
@@ -31,6 +36,17 @@ public class Python_Literals extends PrimaryOperator implements EagleRunnable
 			}
 			interpreter.pushStr(sb.toString());
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (literals._elements.size() != 1)
+		{
+			throw new RuntimeException("Cannot handle multiple literals yet");
+		}
+		Python_Literal literal = literals._elements.get(0);
+		return generator.newLiteralExpression(literal.getValue().replaceAll("\"", ""), this);
 	}
 	
 	public static Python_Literals generateLiterals(String txt, AbstractToken source)
