@@ -31,16 +31,21 @@ import com.eagle.programmar.Python.Terminals.Python_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");
@@ -100,6 +105,19 @@ public class Python_WhileStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> actions = new ArrayList<AbstractStatement>();
+		for (AbstractStatement stmt : statements.transformStatement(transformer, generator))
+		{
+			actions.add(stmt);
+		}
+		return generator.newWhileStatement(cond, actions, this);
 	}
 
 	public Python_ComplexStatement generateDoUntil1(Python_Expression cond,

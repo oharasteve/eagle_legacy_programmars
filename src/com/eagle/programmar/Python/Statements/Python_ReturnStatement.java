@@ -15,11 +15,16 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_ReturnStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN =
 			new Python_Keyword("return");
@@ -33,6 +38,23 @@ public class Python_ReturnStatement extends TokenSequence
 		EagleValue val = interpreter.getEagleValue(expressionList.expressions.first());
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression retExpr = null;
+		if (expressionList != null && expressionList.isPresent())
+		{
+			if (expressionList.expressions.size() > 1)
+			{
+				throw new RuntimeException("Can't handle multi-value Returns yet");
+			}
+			Python_Expression expr = expressionList.expressions.first();
+			retExpr = transformer.transformExpression(generator, expr);
+		}
+		return generator.newReturnStatement(retExpr, this);
 	}
 	
 	public Python_ComplexStatement generateReturn(Python_Expression ret, AbstractToken source)

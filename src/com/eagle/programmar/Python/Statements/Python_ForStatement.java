@@ -41,7 +41,9 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -49,11 +51,16 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_ForStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -172,6 +179,73 @@ public class Python_ForStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		Python_RangeExpression rangeExpr = null;
+		if (expressionList.expressions.getPrimaryCount() == 1)
+		{
+			Python_Expression expr = expressionList.expressions.first();
+			if (expr.getWhich() instanceof Python_RangeExpression)
+			{
+				rangeExpr = (Python_RangeExpression) expr.getWhich();
+			}
+		}
+		
+		if (rangeExpr == null)
+		{
+			throw new RuntimeException("Python FOR statement requires a Range of values");
+		}
+
+		AbstractExpression initExpr = null;
+		AbstractExpression termExpr = null;
+		AbstractExpression incrExpr = null;
+		RelationalEnum relOp;
+		if (rangeExpr.increment != null && rangeExpr.increment.isPresent())
+		{
+			incrExpr = transformer.transformExpression(generator, rangeExpr.increment.incr);
+		}
+		boolean reversed = false;
+
+		if (reversed)
+		{
+			relOp = RelationalEnum.GREATER_THAN;
+			initExpr = transformer.transformExpression(generator, rangeExpr.stop);
+			termExpr = transformer.transformExpression(generator, rangeExpr.start);
+		}
+		else
+		{
+			relOp = RelationalEnum.LESS_THAN;
+			initExpr = transformer.transformExpression(generator, rangeExpr.start);
+			termExpr = transformer.transformExpression(generator, rangeExpr.stop);
+		}
+
+		ArrayList<AbstractStatement> newStmts = forBlock.transformStatement(transformer, generator);
+		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+		if (newStmts != null)
+		{
+			for (AbstractStatement stmt : newStmts)
+			{
+				actionList.add(stmt);
+			}
+		}
+		
+		AbstractVariable var = null;
+		if (what.getWhich() instanceof Python_VariableList)
+		{
+			Python_VariableList varList = (Python_VariableList) what.getWhich();
+			Python_VariableOrList varOrList = varList.vars.first();
+			if (varOrList.getWhich() instanceof Python_Just_Var)
+			{
+				Python_Just_Var justVar = (Python_Just_Var) varOrList.getWhich();
+				var = justVar.variable.first().variable;
+			}
+		}
+
+		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
+				relOp, termExpr, incrExpr, actionList, this);
 	}
 
 	public Python_ComplexStatement generateForLoop1(Python_Expression initExpression,

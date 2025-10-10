@@ -21,11 +21,17 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Python_Function_Call extends PrimaryOperator implements EagleRunnable
+public class Python_Function_Call extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Variable fnName;
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -99,6 +105,29 @@ public class Python_Function_Call extends PrimaryOperator implements EagleRunnab
 
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func.header);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		if (! (fnName.var.getWhich() instanceof Python_Identifier_Reference))
+		{
+			throw new RuntimeException("Must be a simple function call");
+		}
+		Python_Identifier_Reference id = (Python_Identifier_Reference) fnName.var.getWhich();
+		String name = id.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = argList.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Python_Expression arg = argList.getPrimaryElement(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, id);
 	}
 	
 	public Python_Expression generateInvocation(Python_Variable var,
