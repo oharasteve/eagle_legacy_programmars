@@ -23,7 +23,7 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		Python_Subscript.evaluateSubscript(interpreter, value, subscr);
+		Python_Subscript.evaluateSubscript(interpreter, value, subscr.body);
 	}
 	
 	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr,

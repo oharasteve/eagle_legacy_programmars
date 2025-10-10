@@ -18,9 +18,12 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_Subscript extends TokenSequence
 {
@@ -43,9 +46,8 @@ public class Python_Subscript extends TokenSequence
 		public @S(30) @OPT Python_Expression expr;
 	}
 	
-	public static void evaluateSubscript(EagleInterpreter interpreter, EagleValue value, Python_Subscript subscr)
+	public static void evaluateSubscript(EagleInterpreter interpreter, EagleValue value, Python_SubscrExpr body)
 	{
-		Python_SubscrExpr body = subscr.body;
 		if (body.subscriptStep != null && body.subscriptStep.isPresent())
 		{
 			throw new RuntimeException("Cannot handle range increments yet");
@@ -82,6 +84,58 @@ public class Python_Subscript extends TokenSequence
 			}
 			interpreter.pushStr(str.substring(start, stop));
 		}
+	}
+	
+	public static AbstractExpression transformSubscript(EagleTransformer transformer,
+			EagleGenerator generator, Python_Variable var, Python_SubscrExpr body)
+	{
+		if (body.subscriptStep != null && body.subscriptStep.isPresent())
+		{
+			throw new RuntimeException("Cannot handle subscripts with steps: " + body.subscriptStep);
+		}
+		AbstractExpression theStr = generator.newVariableExpression(var.var.getWhich().toString(),
+				SubscriptEnum.FIRST_IS_ZERO, null, body);
+		
+		boolean hasStart = body.subscr != null && body.subscr.isPresent();
+		boolean hasColon = body.subscriptStop != null && body.subscriptStop.isPresent();
+		boolean hasStop = hasColon && body.subscriptStop.expr != null && body.subscriptStop.expr.isPresent();
+		
+		AbstractExpression startExpr = null;
+		AbstractExpression stopExpr = null;
+		SubstringECEnum whichEC = SubstringECEnum.GIVEN_EC_PLUS_ONE;
+		if (hasStart)
+		{
+			startExpr = transformer.transformExpression(generator, body.subscr);
+			if (hasStop)
+			{
+				// Case I: a[1:2]
+				stopExpr = transformer.transformExpression(generator, body.subscriptStop.expr);
+			}
+			else if (hasColon)
+			{
+				// Case II: a[1:]
+				stopExpr = generator.newLengthFunction(theStr, null);
+			}
+			else
+			{
+				// Case III: a[1]
+				stopExpr = generator.newNumberExpression("1", null);
+				whichEC = SubstringECEnum.GIVEN_NC;
+			}
+		}
+		else if (hasStop)
+		{
+			// Case IV: a[:2]
+			startExpr = generator.newNumberExpression("0", null);
+			stopExpr = transformer.transformExpression(generator, body.subscriptStop.expr);
+		}
+		else
+		{
+			throw new RuntimeException("Subscripts need either a start or stop (or both): " + body);
+		}
+		
+		return generator.newSubstringFunction(theStr, startExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO,
+				whichEC, stopExpr, true, body);
 	}
 	
 	public static Python_Subscript generateExpression(AbstractExpression sc,

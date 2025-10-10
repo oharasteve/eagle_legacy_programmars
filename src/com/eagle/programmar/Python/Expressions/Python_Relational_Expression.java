@@ -114,7 +114,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		Oper2Types types = transformer.findOperator2Metric(operator);
+		Oper2Types types = transformer.findOperator2Metric(operator.getWhich());
 
 		switch (operator.getWhich().toString())
 		{

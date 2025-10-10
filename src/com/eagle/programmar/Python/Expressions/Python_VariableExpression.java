@@ -37,7 +37,7 @@ public class Python_VariableExpression extends PrimaryOperator
 		if (subscript != null && subscript.isPresent())
 		{
 			EagleValue value = interpreter.findSymbol(variable.var.getWhich().toString());
-			Python_Subscript.evaluateSubscript(interpreter, value, subscript);
+			Python_Subscript.evaluateSubscript(interpreter, value, subscript.body);
 			return;
 		}
 		
@@ -48,9 +48,13 @@ public class Python_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		AbstractExpression subscr = null;
-		return generator.newVariableExpression(variable.var.getWhich().toString(),
-				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
+		String name = variable.var.getWhich().toString();
+		if (subscript != null && subscript.isPresent())
+		{
+			return Python_Subscript.transformSubscript(transformer, generator, variable, subscript.body);
+		}
+		return generator.newVariableExpression(name,
+				SubscriptEnum.FIRST_IS_ZERO, null, this);
 	}
 	
 	public Python_Expression generateVarExpr(String name, SubscriptEnum offset,
