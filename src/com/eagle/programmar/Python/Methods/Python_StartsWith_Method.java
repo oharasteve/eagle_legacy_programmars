@@ -13,14 +13,19 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_StartsWith_Method extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Variable string;
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -50,6 +55,22 @@ public class Python_StartsWith_Method extends PrimaryOperator
 		{
 			interpreter.pushBool(str.startsWith(patt));
 		}
+	}
+	
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = generator.newVariableExpression(string.var.getWhich().toString(),
+				SubscriptEnum.FIRST_IS_ZERO, null, this);
+		AbstractExpression thePattern = transformer.transformExpression(generator, pattern);
+		AbstractExpression theSC = null;
+		if (scExpr != null && scExpr.isPresent())
+		{
+			theSC = transformer.transformExpression(generator, scExpr.start);
+		}
+		
+		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 	
 	public Python_Expression generateStartsWith(Python_Expression expr, Python_Expression patt,

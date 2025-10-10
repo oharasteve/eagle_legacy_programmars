@@ -11,11 +11,15 @@ import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_Str_Function extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Keyword STR = new Python_Keyword("str");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -27,6 +31,13 @@ public class Python_Str_Function extends PrimaryOperator
 	{
 		String str = interpreter.getStrValue(expression);
 		interpreter.pushStr(str);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		return generator.newStringFunction(theExpr, this);
 	}
 	
 	public Python_Expression generateString(Python_Expression expr, AbstractToken source)

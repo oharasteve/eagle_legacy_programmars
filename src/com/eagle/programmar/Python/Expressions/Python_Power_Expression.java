@@ -10,8 +10,12 @@ import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Python_Power_Expression extends PrecedenceOperator implements EagleRunnable
+public class Python_Power_Expression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Expression left = new Python_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Python_Punctuation stars = new Python_Punctuation("**");
@@ -23,6 +27,14 @@ public class Python_Power_Expression extends PrecedenceOperator implements Eagle
 		int leftValue = interpreter.getIntValue(left);
 		int rightValue = interpreter.getIntValue(right);
 		interpreter.pushInt((int) Math.round(Math.pow(leftValue, rightValue)));
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		return generator.newExponentExpression(leftExpr, rightExpr, this);
 	}
 	
 	public static Python_Power_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr, AbstractToken source)

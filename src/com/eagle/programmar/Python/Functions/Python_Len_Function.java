@@ -10,11 +10,15 @@ import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_Len_Function extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Keyword LEN = new Python_Keyword("len");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -26,6 +30,13 @@ public class Python_Len_Function extends PrimaryOperator
 	{
 		String line = interpreter.getStrValue(expression);
 		interpreter.pushInt(line.length());
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
+		return generator.newLengthFunction(theExpr, this);
 	}
 	
 	public Python_Expression generateLength(Python_Expression expr, AbstractToken source)

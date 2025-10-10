@@ -54,6 +54,7 @@ public class Python_ComplexStatement extends TokenSequence
 	public static class Python_StatementOrComment extends TokenChooser
 	{
 		// Only needed for Transformation. Look at Python_StatementBlock.java
+		// Why? This is needed by addStatements() but there must be a better way.
 		public @SKIP Python_MultilineStatement XXmultiStatement;
 
 		public @FIRST Python_Comment XXcomment;

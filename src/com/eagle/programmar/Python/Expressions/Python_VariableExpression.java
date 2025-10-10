@@ -16,13 +16,17 @@ import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Python_VariableExpression extends PrimaryOperator
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Python_Variable variable;
 	public @S(20) @OPT @NOSPACE Python_Subscript subscript;
@@ -38,6 +42,15 @@ public class Python_VariableExpression extends PrimaryOperator
 		}
 		
 		interpreter.tryToInterpret(variable);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscr = null;
+		return generator.newVariableExpression(variable.var.getWhich().toString(),
+				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
 	}
 	
 	public Python_Expression generateVarExpr(String name, SubscriptEnum offset,
