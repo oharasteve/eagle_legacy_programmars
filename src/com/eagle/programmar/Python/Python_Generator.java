@@ -32,6 +32,7 @@ import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
 import com.eagle.programmar.Python.Functions.Python_Int_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
+import com.eagle.programmar.Python.Functions.Python_Print_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Methods.Python_EndsWith_Method;
 import com.eagle.programmar.Python.Methods.Python_Find_Method;
@@ -42,7 +43,6 @@ import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
-import com.eagle.programmar.Python.Statements.Python_PrintStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock;
@@ -342,11 +342,19 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	@Override
+	public Python_Expression newPrintFunction(Python_Expression line, boolean newLine,
+			boolean toErr, AbstractToken source)
+	{
+		Python_Print_Function prtFunc = new Python_Print_Function();
+		return prtFunc.generatePrintFunc(line, newLine, source);
+	}
+	
+	@Override
 	public Python_ComplexStatement newPrintStatement(Python_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		Python_PrintStatement prtStmt = new Python_PrintStatement();
-		return prtStmt.generatePrintStmt(line, newLine, source);
+		Python_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
+		return newExpressionStatement(prtExpr, source);
 	}
 	
 	@Override

@@ -35,6 +35,7 @@ import com.eagle.programmar.Java.Functions.Java_EndsWithMethod;
 import com.eagle.programmar.Java.Functions.Java_IndexOfMethod;
 import com.eagle.programmar.Java.Functions.Java_LengthMethod;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
+import com.eagle.programmar.Java.Functions.Java_PrintFunction;
 import com.eagle.programmar.Java.Functions.Java_StartsWithMethod;
 import com.eagle.programmar.Java.Functions.Java_StringFormatFunc;
 import com.eagle.programmar.Java.Functions.Java_SubstringMethod;
@@ -46,7 +47,6 @@ import com.eagle.programmar.Java.Statements.Java_ExitStatement;
 import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_ForStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
-import com.eagle.programmar.Java.Statements.Java_PrintStatement;
 import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
@@ -368,11 +368,19 @@ public class Java_Generator
 	}
 
 	@Override
+	public Java_Expression newPrintFunction(Java_Expression line, boolean newLine,
+			boolean toErr, AbstractToken source)
+	{
+		Java_PrintFunction prtFunc = new Java_PrintFunction();
+		return prtFunc.generatePrintFunc(line, newLine, toErr, source);
+	}
+
+	@Override
 	public Java_Statement newPrintStatement(Java_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		Java_PrintStatement prtStmt = new Java_PrintStatement();
-		return prtStmt.generatePrintStmt(line, newLine, toErr, source);
+		Java_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
+		return newExpressionStatement(prtExpr, source);
 	}
 
 	@Override

@@ -13,8 +13,12 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Python_ExpressionStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Python_ExpressionStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NOSPACE Python_Expression expression;
 	public @S(20) @OPT Python_ExpressionType type;
@@ -38,5 +42,13 @@ public class Python_ExpressionStatement extends TokenSequence implements EagleRu
 		stmt.expression = (Python_Expression) expr;
 		stmt.setTransformationSource(source);
 		return stmt;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
+		return generator.newExpressionStatement(newExpr, this);
 	}
 }

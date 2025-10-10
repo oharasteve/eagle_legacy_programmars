@@ -33,6 +33,7 @@ import com.eagle.programmar.CSharp.Functions.CSharp_EndsWithMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_IndexOfMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_LengthMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
+import com.eagle.programmar.CSharp.Functions.CSharp_PrintFunction;
 import com.eagle.programmar.CSharp.Functions.CSharp_StartsWithMethod;
 import com.eagle.programmar.CSharp.Functions.CSharp_StringFormatFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_SubstringMethod;
@@ -44,7 +45,6 @@ import com.eagle.programmar.CSharp.Statements.CSharp_ExitStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ExpressionStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
-import com.eagle.programmar.CSharp.Statements.CSharp_PrintStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ReturnStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
@@ -359,11 +359,19 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 	
 	@Override
+	public CSharp_Expression newPrintFunction(CSharp_Expression line,
+			boolean newLine, boolean toErr, AbstractToken source)
+	{
+		CSharp_PrintFunction prtFunc = new CSharp_PrintFunction();
+		return prtFunc.generatePrintFunc(line, newLine, toErr, source);
+	}
+
+	@Override
 	public CSharp_Statement newPrintStatement(CSharp_Expression line,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		CSharp_PrintStatement prtStmt = new CSharp_PrintStatement();
-		return prtStmt.generatePrintStmt(line, newLine, toErr, source);
+		CSharp_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
+		return newExpressionStatement(prtExpr, source);
 	}
 
 	@Override

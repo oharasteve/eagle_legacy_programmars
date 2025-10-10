@@ -13,7 +13,6 @@ import com.eagle.programmar.Java.Statements.Java_ExpressionStatement;
 import com.eagle.programmar.Java.Statements.Java_ForEachStatement;
 import com.eagle.programmar.Java.Statements.Java_ForStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
-import com.eagle.programmar.Java.Statements.Java_PrintStatement;
 import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
 import com.eagle.programmar.Java.Statements.Java_SuperStatement;
@@ -44,7 +43,6 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Java_ForStatement XXforStatement;
 	public @CHOICE Java_ForEachStatement XXforEachStatement;
 	public @CHOICE Java_IfStatement XXifStatement;
-	public @CHOICE Java_PrintStatement XXprintStatement;
 	public @CHOICE Java_ReturnStatement XXreturnStatement;
 	public @CHOICE Java_StatementBlock XXstatementBlock;
 	public @CHOICE Java_SuperStatement XXsuperStatement;

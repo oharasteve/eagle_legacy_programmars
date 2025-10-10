@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 4, 2024
 
-package com.eagle.programmar.Java.Statements;
+package com.eagle.programmar.Java.Functions;
 
 import java.io.PrintStream;
 
@@ -9,23 +9,20 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
-import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Java_PrintStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
+public class Java_PrintFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @NEWLINE Java_Keyword SYSTEM = new Java_Keyword("System");
 	public @S(20) @NOSPACE PunctuationPeriod dot1;
@@ -35,7 +32,6 @@ public class Java_PrintStatement extends TokenSequence
 	public @S(60) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(70) @NOSPACE @OPT Java_Expression expr;
 	public @S(80) @NOSPACE PunctuationRightParen rightParen;
-	public @S(90) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -57,7 +53,7 @@ public class Java_PrintStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer,
+	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		boolean newLine;
@@ -74,46 +70,44 @@ public class Java_PrintStatement extends TokenSequence
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(value, newLine, false, this);
+		return generator.newPrintFunction(value, newLine, false, this);
 	}
 
-	public Java_Statement generatePrintStmt(Java_Expression line, boolean newLine,
+	public Java_Expression generatePrintFunc(Java_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		Java_PrintStatement prt = new Java_PrintStatement();
-		prt.dot1 = new PunctuationPeriod();
-		prt.dot1.setPresent(true);
+		dot1 = new PunctuationPeriod();
+		dot1.setPresent(true);
 		if (toErr)
 		{
-			prt.OUT = new Java_KeywordChoice("err");
+			OUT = new Java_KeywordChoice("err");
 		}
 		else
 		{
-			prt.OUT = new Java_KeywordChoice("out");
+			OUT = new Java_KeywordChoice("out");
 		}
-		prt.dot2 = new PunctuationPeriod();
-		prt.dot2.setPresent(true);
+		dot2 = new PunctuationPeriod();
+		dot2.setPresent(true);
 		
 		if (newLine)
 		{
-			prt.PRINT = new Java_KeywordChoice("println");
+			PRINT = new Java_KeywordChoice("println");
 		}
 		else
 		{
-			prt.PRINT = new Java_KeywordChoice("print");
+			PRINT = new Java_KeywordChoice("print");
 		}
 		
-		prt.leftParen = new PunctuationLeftParen();
-		prt.rightParen = new PunctuationRightParen();
+		leftParen = new PunctuationLeftParen();
+		rightParen = new PunctuationRightParen();
 
-		prt.expr = line;
+		expr = line;
 		if (line != null)
 		{
-			prt.expr.setPresent(true);
+			expr.setPresent(true);
 		}
-		prt.semicolon = new PunctuationSemicolon();
 		
-		prt.setTransformationSource(source);
-		return Java_Generator.wrapStatement(prt);
+		setTransformationSource(source);
+		return Java_Generator.wrapExpression(this);
 	}
 }

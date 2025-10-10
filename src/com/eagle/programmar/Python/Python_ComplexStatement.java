@@ -24,6 +24,7 @@ import com.eagle.programmar.Python.Statements.Python_PassStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_RaiseStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
+import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Statements.Python_TryStatement;
 import com.eagle.programmar.Python.Statements.Python_TypeDeclaration;
@@ -53,7 +54,7 @@ public class Python_ComplexStatement extends TokenSequence
 	public static class Python_StatementOrComment extends TokenChooser
 	{
 		// Only needed for Transformation. Look at Python_StatementBlock.java
-		// public @SKIP Python_MultilineStatement XXmultiStatement;
+		public @SKIP Python_MultilineStatement XXmultiStatement;
 
 		public @FIRST Python_Comment XXcomment;
 		public @CHOICE Python_SameLineStatement XXstatements;

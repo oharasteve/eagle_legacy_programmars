@@ -1,31 +1,28 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 4, 2024
 
-package com.eagle.programmar.CSharp.Statements;
+package com.eagle.programmar.CSharp.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
-import com.eagle.programmar.CSharp.CSharp_Statement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class CSharp_PrintStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
+public class CSharp_PrintFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword SYSTEM = new CSharp_Keyword("System");
 	public @S(20) @NOSPACE @OPT PunctuationPeriod dot1;
@@ -38,7 +35,6 @@ public class CSharp_PrintStatement extends TokenSequence
 	public @S(80) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(90) @NOSPACE @OPT SeparatedList<CSharp_Expression,PunctuationComma> exprs;
 	public @S(100) @NOSPACE PunctuationRightParen rightParen;
-	public @S(110) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -58,7 +54,7 @@ public class CSharp_PrintStatement extends TokenSequence
 	}
 	
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer,
+	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		boolean newLine;
@@ -75,47 +71,45 @@ public class CSharp_PrintStatement extends TokenSequence
 		}
 		
 		AbstractExpression value = transformer.transformExpression(generator, exprs.first());
-		return generator.newPrintStatement(value, newLine, false, this);
+		return generator.newPrintFunction(value, newLine, false, this);
 	}
 
-	public CSharp_Statement generatePrintStmt(CSharp_Expression line, boolean newLine,
+	public CSharp_Expression generatePrintFunc(CSharp_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		CSharp_PrintStatement prt = new CSharp_PrintStatement();
-		prt.SYSTEM.setPresent(true);
-		prt.dot1 = new PunctuationPeriod();
-		prt.dot1.setPresent(true);
-		prt.dot2 = new PunctuationPeriod();
-		prt.dot2.setPresent(true);
+		SYSTEM.setPresent(true);
+		dot1 = new PunctuationPeriod();
+		dot1.setPresent(true);
+		dot2 = new PunctuationPeriod();
+		dot2.setPresent(true);
 		if (toErr)
 		{
-			prt.OUT = new CSharp_KeywordChoice("Error");
+			OUT = new CSharp_KeywordChoice("Error");
 		}
 		else
 		{
-			prt.OUT = new CSharp_KeywordChoice("Out");
+			OUT = new CSharp_KeywordChoice("Out");
 		}
-		prt.OUT.setPresent(true);
+		OUT.setPresent(true);
 		
 		if (newLine)
 		{
-			prt.WRITE = new CSharp_KeywordChoice("WriteLine");
+			WRITE = new CSharp_KeywordChoice("WriteLine");
 		}
 		else
 		{
-			prt.WRITE = new CSharp_KeywordChoice("Write");
+			WRITE = new CSharp_KeywordChoice("Write");
 		}
 		
-		prt.dot3 = new PunctuationPeriod();
-		prt.dot3.setPresent(true);
-		prt.leftParen = new PunctuationLeftParen();
-		prt.rightParen = new PunctuationRightParen();
+		dot3 = new PunctuationPeriod();
+		dot3.setPresent(true);
+		leftParen = new PunctuationLeftParen();
+		rightParen = new PunctuationRightParen();
 		
-		prt.exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
-		prt.exprs.addPrimaryElement(line);
-		prt.semicolon = new PunctuationSemicolon();
+		exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
+		exprs.addPrimaryElement(line);
 		
-		prt.setTransformationSource(source);
-		return CSharp_Generator.wrapStatement(prt);
+		setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(this);
 	}
 }
