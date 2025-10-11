@@ -146,7 +146,7 @@ public class PHP_Program extends AbstractLanguage
 			{
 				AbstractType abstrType = generator.transformType(typE, null, this);
 				AbstractExpression initExpr = null;
-				System.err.println("****** Found var " + met._symbolName);
+				// System.err.println("****** Found var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);

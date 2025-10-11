@@ -112,7 +112,7 @@ public class AWK_Program extends AbstractLanguage
 					initExpr = generator.newClassCreation(abstrType, null, this);
 				}
 				
-				//System.err.println("****** Found var " + met._symbolName);
+				// System.err.println("****** Found var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
