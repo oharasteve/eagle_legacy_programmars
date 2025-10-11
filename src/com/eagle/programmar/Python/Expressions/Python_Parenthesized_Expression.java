@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -59,6 +61,20 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		if (list.moreItems != null && list.moreItems.isPresent() && list.moreItems._elements.size() > 0)
+		{
+			// It is an array declaration
+			ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+			exprs.add(transformer.transformExpression(generator, list.expr));
+
+			for (Python_MoreListItem more : list.moreItems._elements)
+			{
+				exprs.add(transformer.transformExpression(generator, more.expr));
+			}
+			return generator.newArrayExpression(exprs, this);
+		}
+		
+		// Just plain parens, like (1+2)
 		AbstractExpression theExpr = transformer.transformExpression(generator, list.expr);
 		return generator.newParenthesizedExpression(theExpr, this);
 	}

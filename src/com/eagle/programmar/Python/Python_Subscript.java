@@ -89,11 +89,20 @@ public class Python_Subscript extends TokenSequence
 	public static AbstractExpression transformSubscript(EagleTransformer transformer,
 			EagleGenerator generator, Python_Variable var, Python_SubscrExpr body)
 	{
+		String name = var.var.getWhich().toString();
+		
+		if (body.subscriptStop == null || ! body.subscriptStop.isPresent())
+		{
+			// Just a regular array access
+			AbstractExpression subExpr = transformer.transformExpression(generator, body.subscr);
+			return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, subExpr, body);
+		}
+		
 		if (body.subscriptStep != null && body.subscriptStep.isPresent())
 		{
 			throw new RuntimeException("Cannot handle subscripts with steps: " + body.subscriptStep);
 		}
-		AbstractExpression theStr = generator.newVariableExpression(var.var.getWhich().toString(),
+		AbstractExpression theStr = generator.newVariableExpression(name,
 				SubscriptEnum.FIRST_IS_ZERO, null, body);
 		
 		boolean hasStart = body.subscr != null && body.subscr.isPresent();
@@ -116,12 +125,12 @@ public class Python_Subscript extends TokenSequence
 				// Case II: a[1:]
 				stopExpr = generator.newLengthFunction(theStr, null);
 			}
-			else
-			{
-				// Case III: a[1]
-				stopExpr = generator.newNumberExpression("1", null);
-				whichEC = SubstringECEnum.GIVEN_NC;
-			}
+//			else
+//			{
+//				// Case III: a[1]
+//				stopExpr = generator.newNumberExpression("1", null);
+//				whichEC = SubstringECEnum.GIVEN_NC;
+//			}
 		}
 		else if (hasStop)
 		{

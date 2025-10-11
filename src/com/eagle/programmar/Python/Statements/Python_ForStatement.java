@@ -250,7 +250,7 @@ public class Python_ForStatement extends TokenSequence
 			}
 		}
 
-		return generator.newForRangeStatement(newVar, TypeEnum.INTEGER, initExpr,
+		return generator.newForRangeStatement(newVar, TypeEnum.VOID, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 

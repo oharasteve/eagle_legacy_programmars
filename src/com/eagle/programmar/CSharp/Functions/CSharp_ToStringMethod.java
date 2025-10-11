@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -33,12 +33,14 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 
 	public CSharp_Expression generateString(CSharp_Expression expr, AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
-		
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
+		return parens.generateParentheses(expr, source);
+//		this.expression = expr;
+//		this.dot = new PunctuationPeriod();
+//		this.leftParen = new PunctuationLeftParen();
+//		this.rightParen = new PunctuationRightParen();
+//		
+//		this.setTransformationSource(source);
+//		return CSharp_Generator.wrapExpression(this);
 	}
 }

@@ -36,6 +36,19 @@ public class Python_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expressionList.expressions.first());
+		
+		AbstractToken parent = this.getParent();
+		while (parent != null)
+		{
+			if (parent instanceof Python_Function)
+			{
+				Python_Function func = (Python_Function) parent;
+				func._returnMetrics.returned(val.typeName());
+				break;
+			}
+			parent = parent.getParent();
+		}
+
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
 	}
