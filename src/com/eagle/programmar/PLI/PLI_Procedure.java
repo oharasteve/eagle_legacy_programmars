@@ -3,10 +3,14 @@
 
 package com.eagle.programmar.PLI;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.EagleMetrics;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
@@ -17,18 +21,26 @@ import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_Procedure extends TokenSequence implements AbstractFunction, EagleRunnable, EagleScopeInterface
+public class PLI_Procedure extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT PLI_Signals signals;
 	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
@@ -55,7 +67,7 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @CHOICE PLI_ProcedureReturns XXreturns;
 		public @CHOICE PLI_ProcedureExternal XXexternal;
 	}
-	
+
 	public static class PLI_Procedure_Parameters extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -70,7 +82,7 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT PLI_Keyword MAIN = new PLI_Keyword("MAIN");
 		public @S(40) @OPT PunctuationComma comma;
-		public @S(50) @OPT PLI_KeywordChoice order = new PLI_KeywordChoice("ORDER","REENTRANT", "REORDER");
+		public @S(50) @OPT PLI_KeywordChoice order = new PLI_KeywordChoice("ORDER", "REENTRANT", "REORDER");
 		public @S(60) PunctuationRightParen rightParen;
 	}
 
@@ -154,5 +166,64 @@ public class PLI_Procedure extends TokenSequence implements AbstractFunction, Ea
 				}
 			}
 		}
+	}
+
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		TypeEnum metricRetType = transformer.findReturnMetric(id1);
+		AbstractType newReturnType = generator.transformType(metricRetType, null, id1);
+
+		String fnName = id1.getValue();
+		generator.addMethod(newReturnType, fnName, this);
+		generator.addMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found PLI function " + fnName);
+		}
+
+		// Search metrics for arg types -- might not be any
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id1);
+
+		if (params != null && params.isPresent())
+		{
+			for (int i = 0; i < params.params.getPrimaryCount(); i++)
+			{
+				PLI_Identifier_Reference paramVar = params.params.getPrimaryElement(i);
+				AbstractType paramType = null;
+
+				if (argTypes != null && i < argTypes.size())
+				{
+					String metricArgType = argTypes.get(i);
+					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					paramType = generator.transformType(metricArg, null, paramVar);
+				}
+
+				// System.err.println("****** paramType = " + paramType + " value = " +
+				// param.getValue());
+				generator.addMethodParameter(paramType, paramVar.getValue());
+			}
+		}
+
+//		addLocalVars(transformer, generator);
+
+		for (PLI_StatementOrComment stmtOrComment : statements._elements)
+		{
+			AbstractToken which = stmtOrComment.getWhich();
+			if (which instanceof PLI_Statement)
+			{
+				PLI_Statement stmt = (PLI_Statement) which;
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt);
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
+				}
+			}
+		}
+
+		generator.doneMethod();
 	}
 }
