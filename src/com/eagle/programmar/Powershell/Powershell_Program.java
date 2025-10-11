@@ -98,7 +98,7 @@ public class Powershell_Program extends AbstractLanguage
 			{
 				AbstractType abstrType = generator.transformType(typE, null, this);
 
-				//System.err.println("****** Found var " + met._symbolName);
+				// System.err.println("****** Found var " + met._symbolName);
 				AbstractExpression initExpr = null;
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
