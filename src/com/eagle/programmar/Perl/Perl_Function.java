@@ -13,7 +13,6 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
-import com.eagle.programmar.Perl.Perl_Function.Perl_FunctionVariableOrTypeVariable.Perl_FunctionTypeAndVariable;
 import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
 import com.eagle.programmar.Perl.Symbols.Perl_Variable_Definition;
@@ -73,14 +72,15 @@ public class Perl_Function extends TokenSequence
 	public static class Perl_FunctionVariableOrTypeVariable extends TokenChooser
 	{
 		public @LAST Perl_FunctionVariable XXvar;
-
-		public @CHOICE static class Perl_FunctionTypeAndVariable extends TokenSequence
-		{
-			public @S(10) Perl_Type type;
-			public @S(20) Perl_FunctionVariable var;
-		}
+		public @CHOICE Perl_FunctionTypeAndVariable XXtypeAndVar;
 	}
 
+	public static class Perl_FunctionTypeAndVariable extends TokenSequence
+	{
+		public @S(10) Perl_Type type;
+		public @S(20) Perl_FunctionVariable var;
+	}
+	
 	public static class Perl_FunctionVariable extends TokenSequence
 	{
 		public @S(10) @OPT Perl_Punctuation amp = new Perl_Punctuation('&');

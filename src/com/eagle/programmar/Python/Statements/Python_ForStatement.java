@@ -24,6 +24,7 @@ import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Function_Call;
 import com.eagle.programmar.Python.Expressions.Python_Logical_Not_Expression;
+import com.eagle.programmar.Python.Expressions.Python_Negative_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Expressions.Python_RangeExpression;
 import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
@@ -199,27 +200,26 @@ public class Python_ForStatement extends TokenSequence
 			throw new RuntimeException("Python FOR statement requires a Range of values");
 		}
 
-		AbstractExpression initExpr = null;
-		AbstractExpression termExpr = null;
+		AbstractExpression initExpr = transformer.transformExpression(generator, rangeExpr.start);
+		AbstractExpression termExpr = transformer.transformExpression(generator, rangeExpr.stop);
 		AbstractExpression incrExpr = null;
-		RelationalEnum relOp;
+		RelationalEnum relOp = RelationalEnum.LESS_THAN;
 		if (rangeExpr.increment != null && rangeExpr.increment.isPresent())
 		{
 			incrExpr = transformer.transformExpression(generator, rangeExpr.increment.incr);
-		}
-		boolean reversed = false;
-
-		if (reversed)
-		{
-			relOp = RelationalEnum.GREATER_THAN;
-			initExpr = transformer.transformExpression(generator, rangeExpr.stop);
-			termExpr = transformer.transformExpression(generator, rangeExpr.start);
-		}
-		else
-		{
-			relOp = RelationalEnum.LESS_THAN;
-			initExpr = transformer.transformExpression(generator, rangeExpr.start);
-			termExpr = transformer.transformExpression(generator, rangeExpr.stop);
+			AbstractToken whichIncr = rangeExpr.increment.incr.getWhich();
+			if (whichIncr instanceof Python_Negative_Expression)
+			{
+				relOp = RelationalEnum.GREATER_THAN;
+			}
+			else if (whichIncr instanceof Python_Number)
+			{
+				Python_Number num = (Python_Number) whichIncr;
+				if (num.getValue().startsWith("-"))
+				{
+					relOp = RelationalEnum.GREATER_THAN;
+				}
+			}
 		}
 
 		ArrayList<AbstractStatement> newStmts = forBlock.transformStatement(transformer, generator);
@@ -232,7 +232,7 @@ public class Python_ForStatement extends TokenSequence
 			}
 		}
 		
-		AbstractVariable var = null;
+		AbstractVariable newVar = null;
 		if (what.getWhich() instanceof Python_VariableList)
 		{
 			Python_VariableList varList = (Python_VariableList) what.getWhich();
@@ -240,11 +240,17 @@ public class Python_ForStatement extends TokenSequence
 			if (varOrList.getWhich() instanceof Python_Just_Var)
 			{
 				Python_Just_Var justVar = (Python_Just_Var) varOrList.getWhich();
-				var = justVar.variable.first().variable;
+				Python_Variable pyVar = justVar.variable.first().variable;
+				AbstractToken whichVar = pyVar.var.getWhich();
+				if (whichVar instanceof Python_Identifier_Reference)
+				{
+					Python_Identifier_Reference id = (Python_Identifier_Reference) whichVar;
+					newVar = generator.newVariable(id.getValue());
+				}
 			}
 		}
 
-		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
+		return generator.newForRangeStatement(newVar, TypeEnum.INTEGER, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 
