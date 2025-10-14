@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.PLI.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -11,15 +13,28 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Label;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
+import com.eagle.programmar.PLI.PLI_Statement;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
+import com.eagle.programmar.PLI.Terminals.PLI_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_DoStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class PLI_DoStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @OPT PLI_Label label1;
 	public @S(20) @DOC("7.15") PLI_Keyword DO = new PLI_Keyword("DO");
@@ -35,7 +50,7 @@ public class PLI_DoStatement extends TokenSequence implements AbstractStatement,
 
 	public static class PLI_DoLoop extends TokenSequence
 	{
-		public @S(10) PLI_Identifier_Reference var;
+		public @S(10) PLI_Identifier_Reference id;
 		public @S(20) PunctuationEquals equals;
 		public @S(30) PLI_Expression fromExpr;
 		public @S(40) PLI_Keyword TO = new PLI_Keyword("TO");
@@ -78,7 +93,7 @@ public class PLI_DoStatement extends TokenSequence implements AbstractStatement,
 		if (doLoop != null && doLoop.isPresent())
 		{
 			hasLoop = true;
-			loopVar = doLoop.var;
+			loopVar = doLoop.id;
 			start = interpreter.getIntValue(doLoop.fromExpr);
 			stop = interpreter.getIntValue(doLoop.toExpr);
 			if (doLoop.by != null && doLoop.by.isPresent())
@@ -162,5 +177,83 @@ public class PLI_DoStatement extends TokenSequence implements AbstractStatement,
 		_metrics.competedLoop(metric);
 		
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression whileCond = null;
+		AbstractVariable loopVar = null;
+		AbstractExpression startExpr = null;
+		AbstractExpression stopExpr = null;
+		AbstractExpression byExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+
+		// Pick up options in the DO command
+		if (doLoop != null && doLoop.isPresent())
+		{
+			loopVar = generator.newVariable(doLoop.id.getValue());
+			startExpr = transformer.transformExpression(generator, doLoop.fromExpr);
+			stopExpr = transformer.transformExpression(generator, doLoop.toExpr);
+			if (doLoop.by != null && doLoop.by.isPresent())
+			{
+				byExpr = transformer.transformExpression(generator, doLoop.by.byExpr);
+				if (doLoop.by.byExpr.getWhich() instanceof PLI_Number)
+				{
+					PLI_Number number = (PLI_Number) doLoop.by.byExpr.getWhich();
+					if (number.getValue().startsWith("-"))
+					{
+						// What if it is a variable that happens to be negative? Yikes!
+						relOp = RelationalEnum.GREATER_EQUALS;
+					}
+				}
+			}
+		}
+		if (doWhile != null && doWhile.isPresent())
+		{
+			whileCond = transformer.transformExpression(generator, doWhile.condition);
+		}
+		if (doUntil != null && doUntil.isPresent())
+		{
+			AbstractExpression untilCond = transformer.transformExpression(generator, doUntil.condition);
+			whileCond = generator.newNotExpression(untilCond, doUntil);
+		}
+		if (FOREVER != null && FOREVER.isPresent())
+		{
+			whileCond = generator.newBuiltInExpression(BuiltInEnum.TRUE, FOREVER);
+		}
+		
+		// Body is the same for all types of 'DO'
+		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
+		for (PLI_StatementOrComment stmtComm : statements._elements)
+		{
+			AbstractToken which = stmtComm.getWhich();
+			if (which instanceof PLI_Statement)
+			{
+				PLI_Statement stmt = (PLI_Statement) which;
+				AbstractStatement newStmt = transformer.transformStatement1(generator, stmt);
+				newStmts.add(newStmt);
+			}
+		}
+
+		// And now generate the output code
+		if (loopVar != null)
+		{
+			if (whileCond != null)
+			{
+				throw new RuntimeException("Can't handle both DO loop and while");
+			}
+			return generator.newForRangeStatement(loopVar, TypeEnum.VOID, startExpr,
+					relOp, stopExpr, byExpr, newStmts, this);
+		}
+		else if (whileCond != null)
+		{
+			return generator.newWhileStatement(whileCond, newStmts, DO);
+		}
+		else
+		{
+			// Simple DO / END block
+			return generator.newBlockStatement(newStmts, DO);
+		}
 	}
 }

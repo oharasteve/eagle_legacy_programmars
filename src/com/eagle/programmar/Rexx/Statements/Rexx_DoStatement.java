@@ -182,7 +182,7 @@ public class Rexx_DoStatement extends TokenSequence
 					Rexx_Number number = (Rexx_Number) loop.by.step.getWhich();
 					if (number.getValue().startsWith("-"))
 					{
-						// What it is a variable that happens to be negative? Yikes!
+						// What if it is a variable that happens to be negative? Yikes!
 						relOp = RelationalEnum.GREATER_EQUALS;
 					}
 				}

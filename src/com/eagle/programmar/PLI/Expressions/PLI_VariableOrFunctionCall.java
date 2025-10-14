@@ -142,7 +142,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 			int argCount = subscript.args.getPrimaryCount();
 			
 			// Case II: Calling a Procedure
-			if (generator.isKnownMethod(name))
+			if (generator.isKnownMethod(name) || argCount > 1)
 			{
 				ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 				for (int i = 0; i < argCount; i++)

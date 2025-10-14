@@ -7,9 +7,15 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_BitLiteral extends TerminalLiteralToken implements EagleRunnable
+public class PLI_BitLiteral extends TerminalLiteralToken
+		implements EagleRunnable, EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -53,8 +59,31 @@ public class PLI_BitLiteral extends TerminalLiteralToken implements EagleRunnabl
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_txt.equalsIgnoreCase("'1'B")) interpreter.pushBool(true);
-		else if (_txt.equalsIgnoreCase("'0'B")) interpreter.pushBool(false);
-		else throw new RuntimeException("Unexpected BIT value: " + _txt);
+		if (_txt.equalsIgnoreCase("'1'B"))
+		{
+			interpreter.pushBool(true);
+		}
+		else if (_txt.equalsIgnoreCase("'0'B")) 
+		{
+			interpreter.pushBool(false);
+		}
+		else
+		{
+			throw new RuntimeException("Unexpected BIT value: " + _txt);
+		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (_txt.equalsIgnoreCase("'1'B"))
+		{
+			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+		}
+		if (_txt.equalsIgnoreCase("'0'B")) 
+		{
+			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+		}
+		throw new RuntimeException("Unexpected BIT value: " + _txt);
 	}
 }
