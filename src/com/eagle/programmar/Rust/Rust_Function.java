@@ -121,7 +121,7 @@ public class Rust_Function extends TokenSequence
 		}
 
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Rust function " + fnName);

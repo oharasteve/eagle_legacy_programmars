@@ -310,7 +310,7 @@ public class Java_Method extends TokenSequence
 		}
 		
 		generator.addMethod(newReturnType, newName, this);
-		generator.addMethodName(newName);
+		generator.setMethodName(newName);
 		
 		Java_ParameterList params = methodType.parameters;
 		if (params != null && params.isPresent())

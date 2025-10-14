@@ -94,7 +94,7 @@ public class VB_Subroutine extends TokenSequence
 		
 		String subName = id.getValue();
 		generator.addMethod(null, subName, this);
-		generator.addMethodName(subName);
+		generator.setMethodName(subName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found VB subroutine " + subName);

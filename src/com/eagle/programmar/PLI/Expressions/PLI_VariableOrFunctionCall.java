@@ -18,8 +18,16 @@ import com.eagle.programmar.PLI.PLI_Subscript.PLI_ExpressionOrStar;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_VariableOrFunctionCall extends PrimaryOperator implements EagleRunnable
+public class PLI_VariableOrFunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PLI_Identifier_Reference id;
 	public @S(20) @OPT PLI_Subscript subscript;
@@ -27,9 +35,9 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		String name = id.getValue();
 		if (subscript != null && subscript.isPresent())
 		{
-			String name = id.getValue();
 			int argCount = subscript.args.getPrimaryCount();
 			
 			// First: search user variables
@@ -93,8 +101,78 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator implements Eagle
 		else
 		{
 			// Just a variable
-			EagleValue value = interpreter.findSymbol(id.toString());
-			interpreter.pushEagleValue(value);
+			if (name.equalsIgnoreCase("true"))
+			{
+				interpreter.pushBool(true);
+			}
+			else if (name.equalsIgnoreCase("false"))
+			{
+				interpreter.pushBool(false);
+			}
+			else
+			{
+				EagleValue value = interpreter.findSymbol(name);
+				interpreter.pushEagleValue(value);
+			}
 		}
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		String name = id.getValue();
+
+		if (subscript == null || ! subscript.isPresent())
+		{
+			// Case I: Just a variable with no subscript, and can't be a function call
+			if (name.equalsIgnoreCase("true"))
+			{
+				return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
+			}
+			if (name.equalsIgnoreCase("false"))
+			{
+				return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
+			}
+			return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, null, id);
+		}
+		
+		if (subscript.args != null)
+		{
+			int argCount = subscript.args.getPrimaryCount();
+			
+			// Case II: Calling a Procedure
+			if (generator.isKnownMethod(name))
+			{
+				ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+				for (int i = 0; i < argCount; i++)
+				{
+					PLI_ExpressionOrStar arg = subscript.args.getPrimaryElement(i);
+					if (arg.getWhich() instanceof PLI_Expression)
+					{
+						PLI_Expression expr = (PLI_Expression) arg.getWhich();
+						AbstractExpression newArg = transformer.transformExpression(generator, expr);
+						args.add(newArg);
+					}
+				}
+		
+				AbstractVariable var = generator.newVariable(name);
+				return generator.newMethodInvocation(var, args, id);
+			}
+	
+			// Case III: an array variable, with a subscript
+			// Dang. PL/I uses () for both arrays and function calls
+			PLI_ExpressionOrStar arg = subscript.args.first();
+			if (arg.getWhich() instanceof PLI_Expression)
+			{
+				PLI_Expression expr = (PLI_Expression) arg.getWhich();
+				AbstractExpression index = transformer.transformExpression(generator,
+						expr);
+				return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO,
+						index, this);
+			}
+		}
+		
+		return null;
 	}
 }

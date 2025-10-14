@@ -134,7 +134,7 @@ public class TCL_Format
 			AbstractExpression varExpr = generator.newVariableExpression(var,
 					SubscriptEnum.FIRST_IS_ZERO, null, null);
 			// Always wrap in a str() function for now
-			AbstractExpression strExpr = generator.newStringFunction(varExpr, null);
+			AbstractExpression strExpr = generator.newStringFunction(null, varExpr, null);
 			if (result == null)
 			{
 				result = varExpr;

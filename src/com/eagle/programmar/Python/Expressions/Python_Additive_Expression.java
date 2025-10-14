@@ -17,9 +17,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 
 public class Python_Additive_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -103,7 +103,7 @@ public class Python_Additive_Expression extends PrecedenceOperator
 			if (types._type1.equals(EagleString.STRING) && ! types._type2.equals(EagleString.STRING))
 			{
 				Python_Str_Function strFn = new Python_Str_Function();
-				this.right = strFn.generateString(rightExpr, rightExpr);
+				this.right = strFn.generateString(null, rightExpr, rightExpr);
 			}
 		}
 		

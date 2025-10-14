@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.PLI;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -19,14 +21,22 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_Declaration extends TokenSequence implements EagleRunnable
+public class PLI_Declaration extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @OPT TokenList<PLI_Comment> commentList;
 
@@ -173,5 +183,51 @@ public class PLI_Declaration extends TokenSequence implements EagleRunnable
 				}
 			}
 		}
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		for (int i = 0; i < items.getPrimaryCount(); i++)
+		{
+			PLI_Declare_Item item = items.getPrimaryElement(i);
+			AbstractToken token = item.declareVariables.getWhich();
+			if (token instanceof PLI_Variable_Definition)
+			{
+				PLI_Variable_Definition id = (PLI_Variable_Definition) token;
+				String varName = id.getValue();
+				if (varName.equals("true") || varName.equals("false"))
+				{
+					// Sorry, cannot redefine true or false
+					continue;
+				}
+				AbstractExpression newVal;
+				if (item.initial != null && item.initial.isPresent())
+				{
+					int numValues = item.initial.exprs.getPrimaryCount();
+					if (numValues > 1)
+					{
+						ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+						for (int j = 0; j < numValues; j++)
+						{
+							exprs.add(transformer.transformExpression(generator,
+									item.initial.exprs.getPrimaryElement(i)));
+						}
+						newVal = generator.newArrayExpression(exprs, item.initial);
+					}
+					else
+					{
+						newVal = transformer.transformExpression(generator,
+								item.initial.exprs.first());
+					}
+
+					AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+							SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, newVal, item.initial);
+					return generator.newExpressionStatement(asgExpr, item.initial);
+				}
+			}
+		}
+		
+		return null;
 	}
 }

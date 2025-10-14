@@ -98,7 +98,7 @@ public class Ada_Procedure extends TokenSequence
 		}
 
 		generator.addMethod(null, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Ada function " + fnName);

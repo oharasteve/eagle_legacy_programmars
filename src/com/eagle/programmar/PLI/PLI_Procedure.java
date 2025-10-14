@@ -11,6 +11,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
+import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
@@ -40,7 +41,8 @@ import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
 public class PLI_Procedure extends TokenSequence
-		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @OPT PLI_Signals signals;
 	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
@@ -125,6 +127,7 @@ public class PLI_Procedure extends TokenSequence
 
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	public @SKIP ReturnMetrics _returnMetrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, PLI_Syntax.IS_CASE_SENSITIVE);
 
@@ -144,6 +147,10 @@ public class PLI_Procedure extends TokenSequence
 		if (_argumentsMetrics == null)
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id1.getValue(), id1);
+		}
+		if (_returnMetrics == null)
+		{
+			_returnMetrics = new ReturnMetrics(interpreter._metrics, id1.getValue(), id1);
 		}
 
 		// Only run the Procedure if it has OPTIONS(MAIN)
@@ -176,10 +183,10 @@ public class PLI_Procedure extends TokenSequence
 
 		String fnName = id1.getValue();
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
-			System.out.println("** Found PLI function " + fnName);
+			System.out.println("*** Found PLI procedure " + fnName);
 		}
 
 		// Search metrics for arg types -- might not be any
@@ -210,16 +217,12 @@ public class PLI_Procedure extends TokenSequence
 		for (PLI_StatementOrComment stmtOrComment : statements._elements)
 		{
 			AbstractToken which = stmtOrComment.getWhich();
-			if (which instanceof PLI_Statement)
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+			if (newStmts != null)
 			{
-				PLI_Statement stmt = (PLI_Statement) which;
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt);
-				if (newStmts != null)
+				for (AbstractStatement newStmt : newStmts)
 				{
-					for (AbstractStatement newStmt : newStmts)
-					{
-						generator.addStatement(newStmt, stmt);
-					}
+					generator.addStatement(newStmt, stmtOrComment);
 				}
 			}
 		}

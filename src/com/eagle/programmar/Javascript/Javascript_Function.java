@@ -107,7 +107,7 @@ public class Javascript_Function extends TokenSequence
 		}
 		
 		generator.addMethod(newReturnType, newName, this);
-		generator.addMethodName(newName);
+		generator.setMethodName(newName);
 		
 		// Pick up metrics, if known
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(implementation.id);

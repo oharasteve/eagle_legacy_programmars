@@ -137,8 +137,7 @@ public abstract class Python_Program extends AbstractLanguage
 			}
 		}
 
-		// Transform all the global data and logic, etc.
-		// Transform all the Function definitions first
+		// Transform all the logic, etc.
 		for (Python_ComplexStatement stmt4 : entries._elements)
 		{
 			AbstractToken which4 = stmt4.statementOrComment.getWhich();

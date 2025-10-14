@@ -35,6 +35,6 @@ public class VB_CStrFunction extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newStringFunction(theExpr, this);
+		return generator.newStringFunction(null, theExpr, this);
 	}
 }

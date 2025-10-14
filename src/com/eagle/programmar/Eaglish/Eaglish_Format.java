@@ -111,7 +111,7 @@ public class Eaglish_Format
 			}
 			AbstractExpression newExpr = transformer.transformExpression(generator, expr);
 			// Always wrap in a str() function for now
-			AbstractExpression strExpr = generator.newStringFunction(newExpr, null);
+			AbstractExpression strExpr = generator.newStringFunction(null, newExpr, null);
 			if (result == null)
 			{
 				result = strExpr;

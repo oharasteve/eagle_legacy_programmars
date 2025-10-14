@@ -94,7 +94,7 @@ public class Rexx_Function extends TokenSequence
 		
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Rexx function " + fnName);

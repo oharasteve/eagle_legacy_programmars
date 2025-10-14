@@ -113,7 +113,7 @@ public class Algol68_Procedure extends TokenSequence
 			newName = generator.mainName();
 		}
 		generator.addMethod(newReturnType, newName, this);
-		generator.addMethodName(id.getValue());
+		generator.setMethodName(id.getValue());
 		if (VERBOSE)
 		{
 			System.out.println("** Found Algol68 function " + id.getValue());

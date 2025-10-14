@@ -15,9 +15,15 @@ import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class PLI_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) @DOC("7.27") PLI_Keyword IF = new PLI_Keyword("IF");
@@ -79,5 +85,34 @@ public class PLI_IfStatement extends TokenSequence implements AbstractStatement,
 			result = interpreter.tryToInterpret(todo);
 		}
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+		if (stmts != null)
+		{
+			for (AbstractStatement stmt2 : stmts)
+			{
+				ifTrue.add(stmt2);
+			}
+		}
+		
+		if (this.elseClause != null && this.elseClause.isPresent())
+		{
+			for (AbstractStatement stmt4 : transformer.transformStatement(generator, elseClause.elseStatement.getWhich()))
+			{
+				ifFalse.add(stmt4);
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

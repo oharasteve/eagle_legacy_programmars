@@ -176,7 +176,7 @@ public class CSharp_Method extends TokenSequence
 		}
 		
 		generator.addMethod(newReturnType, newName, this);
-		generator.addMethodName(newName);
+		generator.setMethodName(newName);
 		
 		if (parameters != null && parameters.isPresent())
 		{

@@ -12,17 +12,24 @@ import com.eagle.programmar.PLI.PLI_Subscript;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_AssignmentStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class PLI_AssignmentStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) PLI_Identifier_Reference var;
-	public @S(30) @OPT PLI_Subscript params;
+	public @S(30) @OPT PLI_Subscript subscript;
 	public @S(40) PunctuationEquals equals;
-	public @S(50) PLI_Expression expr;
+	public @S(50) PLI_Expression expression;
 	public @S(60) @OPT PLI_Comment comment;
 	public @S(70) PunctuationSemicolon semicolon;
 	
@@ -30,12 +37,28 @@ public class PLI_AssignmentStatement extends TokenSequence implements AbstractSt
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (params != null && params.isPresent())
+		if (subscript != null && subscript.isPresent())
 		{
 			throw new RuntimeException("Can't handle subscripts yet");
 		}
 		
-		EagleValue val = interpreter.getEagleValue(expr);
+		EagleValue val = interpreter.getEagleValue(expression);
 		interpreter.setSymbol(var, var.getValue(), val);
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression subscrExpr = null;
+		if (subscript != null && subscript.isPresent())
+		{
+			throw new RuntimeException("Can't handle subscripts yet");
+		}
+		
+		AbstractExpression value = transformer.transformExpression(generator, expression);
+		AbstractExpression asgExpr = generator.newAssignmentExpression(var.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
+		return generator.newExpressionStatement(asgExpr, this);
 	}
 }

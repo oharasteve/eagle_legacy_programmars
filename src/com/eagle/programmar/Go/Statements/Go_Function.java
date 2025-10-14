@@ -120,7 +120,7 @@ public class Go_Function extends TokenSequence
 		}
 
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Go function " + fnName);

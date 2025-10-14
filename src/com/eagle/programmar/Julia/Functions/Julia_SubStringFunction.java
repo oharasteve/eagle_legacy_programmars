@@ -51,6 +51,7 @@ public class Julia_SubStringFunction extends PrimaryOperator
 			interpreter.pushStr(str.substring(sc - 1));
 		}
 	}
+	
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

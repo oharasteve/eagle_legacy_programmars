@@ -101,7 +101,7 @@ public class Ruby_Function extends TokenSequence
 		}
 
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Ruby function " + fnName);

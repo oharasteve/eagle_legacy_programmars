@@ -6,6 +6,7 @@ package com.eagle.programmar.Java;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
@@ -656,10 +657,10 @@ public class Java_Generator
 	}
 	
 	@Override
-	public Java_Expression newStringFunction(Java_Expression expr, AbstractToken source)
+	public Java_Expression newStringFunction(Oper1Types types, Java_Expression expr, AbstractToken source)
 	{
 		Java_ToStringMethod strMeth = new Java_ToStringMethod();
-		return strMeth.generateString(expr, source);
+		return strMeth.generateString(types, expr, source);
 	}
 	
 	@Override

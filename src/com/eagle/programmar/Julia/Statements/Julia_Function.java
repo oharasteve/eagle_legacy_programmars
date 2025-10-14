@@ -96,7 +96,7 @@ public class Julia_Function extends TokenSequence
 		
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Julia function " + fnName);

@@ -176,7 +176,7 @@ public class Python_Function extends TokenSequence
 		
 		String name = id.getValue();
 		generator.addMethod(newReturnType, name, this);
-		generator.addMethodName(name);
+		generator.setMethodName(name);
 		if (VERBOSE)
 		{
 			System.out.println("** Found Python function " + name);

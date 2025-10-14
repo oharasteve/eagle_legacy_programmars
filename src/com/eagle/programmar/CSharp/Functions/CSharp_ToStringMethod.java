@@ -5,8 +5,11 @@ package com.eagle.programmar.CSharp.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -31,16 +34,18 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 		interpreter.pushStr(val.toString());
 	}
 
-	public CSharp_Expression generateString(CSharp_Expression expr, AbstractToken source)
+	public CSharp_Expression generateString(Oper1Types types, CSharp_Expression expr, AbstractToken source)
 	{
+		if (types != null && types._type1.equals(EagleInteger.INTEGER))
+		{
+			expression = expr;
+			dot = new PunctuationPeriod();
+			leftParen = new PunctuationLeftParen();
+			rightParen = new PunctuationRightParen();
+			return CSharp_Generator.wrapExpression(this);
+		}
+
 		CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
 		return parens.generateParentheses(expr, source);
-//		this.expression = expr;
-//		this.dot = new PunctuationPeriod();
-//		this.leftParen = new PunctuationLeftParen();
-//		this.rightParen = new PunctuationRightParen();
-//		
-//		this.setTransformationSource(source);
-//		return CSharp_Generator.wrapExpression(this);
 	}
 }

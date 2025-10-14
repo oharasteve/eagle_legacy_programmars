@@ -3,8 +3,14 @@
 
 package com.eagle.programmar.PLI.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Label;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
@@ -16,13 +22,18 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_PutStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class PLI_PutStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @OPT PLI_Label label;
 	public @S(20) @DOC("7.45") PLI_Keyword PUT = new PLI_Keyword("PUT");
@@ -31,11 +42,8 @@ public class PLI_PutStatement extends TokenSequence implements EagleRunnable, Ab
 	public @S(50) @OPT PLI_PutFormat_Count count;
 	public @S(60) @OPT PLI_PutString string;
 	public @S(70) @OPT PLI_KeywordChoice dataOrEditOrList = new PLI_KeywordChoice("DATA", "EDIT", "LIST");
-
 	public @S(80) @OPT PLI_PutValues values;
-
 	public @S(90) @OPT PLI_PutFormat putFormat;
-
 	public @S(100) PunctuationSemicolon semicolon;
 
 	public static class PLI_PutFile extends TokenSequence
@@ -137,19 +145,57 @@ public class PLI_PutStatement extends TokenSequence implements EagleRunnable, Ab
 		}
 	}
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, PUT.getValue(), PUT);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		if (values.isPresent())
 		{
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < values.exprs.getPrimaryCount(); i++)
 			{
-				PLI_Expression expr = values.exprs.getPrimaryElement(i);
-				String val = interpreter.getStrValue(expr);
-				sb.append(val);
+				EagleValue piece = interpreter.getEagleValue(values.exprs.getPrimaryElement(i));
+				argTypes.add(piece.typeName());
+				sb.append(piece.forceStringValue());
 			}
+
+			_metrics.calledWith(argTypes);
 			System.out.println(sb);
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<String> metrics = transformer.findArgumentsMetric(PUT);
+		Oper2Types types = new Oper2Types();
+		types._type1 = EagleString.STRING;
+
+		int numExpr = values.exprs.getPrimaryCount();
+		AbstractExpression result = null;
+		for (int i = 0; i < numExpr; i++)
+		{
+			AbstractExpression piece = transformer.transformExpression(generator,
+					values.exprs.getPrimaryElement(i));
+			
+			if (i == 0)
+			{
+				result = piece;
+			}
+			else
+			{
+				types._type2 = metrics.get(i);
+				result = generator.newAppendExpression(types, result, piece, PUT);
+			}
+		}
+		
+		return generator.newPrintStatement(result, true, false, this);
 	}
 }

@@ -254,7 +254,7 @@ public class C_Function extends TokenSequence
 		
 		AbstractType newReturnType = generator.transformType(retType, null, id);
 		generator.addMethod(newReturnType, fnName, this);
-		generator.addMethodName(fnName);
+		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.err.println("*** Found C function " + fnName);

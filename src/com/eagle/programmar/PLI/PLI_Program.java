@@ -16,7 +16,6 @@ import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
@@ -92,65 +91,74 @@ public class PLI_Program extends AbstractLanguage
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
-		// First pass, transform all the Function definitions
+		// First pass, transform the MAIN Function definition
 		for (PLI_Element elt : elements._elements)
 		{
 			AbstractToken which1 = elt.getWhich();
-			if (which1 instanceof PLI_Statement)
+			if (which1 instanceof PLI_Procedure)
 			{
-				PLI_Statement stmt = (PLI_Statement) which1;
-				AbstractToken which2 = stmt.getWhich();
-				if (which2 instanceof PLI_Procedure)
-				{
-					PLI_Procedure proc = (PLI_Procedure) which2;
-					proc.transformFunction(transformer, generator);
-				}
-			}
-		}
+				PLI_Procedure proc = (PLI_Procedure) which1;
+				// System.err.println("*** Found Main Procedure " + proc.id1.getValue());
+				String mainName = generator.mainName();
+				generator.addMethod(null, mainName, this);
+				generator.addMainArgs();
 
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
-
-				AbstractExpression initExpr = null;
-				if (typE == TypeEnum.STRING_HASH)
+				// Are there any global variables we need to declare?
+				String scopeStr = proc.getScope().getScopeName();
+				ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+				for (AssignMetrics met : asgMetrics)
 				{
-					// Need to create an empty hashmap
-					initExpr = generator.newClassCreation(abstrType, null, this);
-				}
-				
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
-						null, abstrType, initExpr, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
-		
-		// Second pass, transform all the data and logic
-		for (PLI_Element elt : elements._elements)
-		{
-			AbstractToken which2 = elt.getWhich();
-			if (which2 instanceof PLI_Statement)
-			{
-				PLI_Statement stmt = (PLI_Statement) which2;
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(
-						generator, stmt.getWhich());
-				if (newStmts != null)
-				{
-					for (AbstractStatement newStmt : newStmts)
+					TypeEnum typE = met.uniqueType();
+					if (typE != TypeEnum.VOID)
 					{
-						generator.addStatement(newStmt, stmt);
+						AbstractType abstrType = generator.transformType(typE, null, this);
+
+						// System.err.println("****** Found var " + met._symbolName);
+						AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+								null, abstrType, null, this);
+						generator.addStatement(dataStmt, this);
 					}
 				}
+
+				for (PLI_StatementOrComment stmtOrComment : proc.statements._elements)
+				{
+					AbstractToken which = stmtOrComment.getWhich();
+					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+					if (newStmts != null)
+					{
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmtOrComment);
+						}
+					}
+				}
+
+				generator.doneMethod();
 			}
 		}
+
+//		// Second pass, transform all the data and logic
+//		for (PLI_Element elt : elements._elements)
+//		{
+//			AbstractToken which2 = elt.getWhich();
+//			if (which2 instanceof PLI_Statement)
+//			{
+//				PLI_Statement stmt = (PLI_Statement) which2;
+//				Collection<AbstractStatement> newStmts = transformer.transformStatement(
+//						generator, stmt.getWhich());
+//				if (newStmts != null)
+//				{
+//					for (AbstractStatement newStmt : newStmts)
+//					{
+//						generator.addStatement(newStmt, stmt);
+//					}
+//				}
+//			}
+//		}
 		
+		// Not needed for C# or CSharp, but Python needs this
+		generator.addCallToMain();
+
 		return generator.getTransfomedProgram();
 	}
 }
