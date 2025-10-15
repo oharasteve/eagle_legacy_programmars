@@ -152,10 +152,6 @@ public class PLI_Program extends AbstractLanguage
 			{
 				PLI_Procedure proc = (PLI_Procedure) which1;
 				// System.err.println("*** Found Main Procedure " + proc.id1.getValue());
-				String mainName = generator.mainName();
-				generator.addMethod(null, mainName, this);
-				generator.addMainArgs();
-
 				for (PLI_StatementOrComment stmtOrComment : proc.statements._elements)
 				{
 					AbstractToken which2 = stmtOrComment.getWhich();
@@ -168,14 +164,9 @@ public class PLI_Program extends AbstractLanguage
 						}
 					}
 				}
-
-				generator.doneMethod();
 			}
 		}
 		
-		// Not needed for C# or CSharp, but Python needs this
-		generator.addCallToMain();
-
 		return generator.getTransfomedProgram();
 	}
 }
