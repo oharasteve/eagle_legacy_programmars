@@ -28,7 +28,7 @@ public class Java_ToStringMethod extends PrecedenceOperator
 	public @S(30) @NOSPACE Java_Keyword TOSTRING = new Java_Keyword("toString");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @OPT @NOSPACE Java_Expression value;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
