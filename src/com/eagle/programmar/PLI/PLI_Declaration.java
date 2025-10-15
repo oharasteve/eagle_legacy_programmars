@@ -211,7 +211,7 @@ public class PLI_Declaration extends TokenSequence
 						for (int j = 0; j < numValues; j++)
 						{
 							exprs.add(transformer.transformExpression(generator,
-									item.initial.exprs.getPrimaryElement(i)));
+									item.initial.exprs.getPrimaryElement(j)));
 						}
 						newVal = generator.newArrayExpression(exprs, item.initial);
 					}

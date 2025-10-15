@@ -231,7 +231,7 @@ public class PLI_DoStatement extends TokenSequence
 			if (which instanceof PLI_Statement)
 			{
 				PLI_Statement stmt = (PLI_Statement) which;
-				AbstractStatement newStmt = transformer.transformStatement1(generator, stmt);
+				AbstractStatement newStmt = transformer.transformStatement1(generator, stmt.getWhich());
 				newStmts.add(newStmt);
 			}
 		}
@@ -241,7 +241,9 @@ public class PLI_DoStatement extends TokenSequence
 		{
 			if (whileCond != null)
 			{
-				throw new RuntimeException("Can't handle both DO loop and while");
+				AbstractStatement newIfStmt = generator.newIfStatement(whileCond, newStmts, null, this);
+				return generator.newForRangeStatement1(loopVar, TypeEnum.VOID, startExpr,
+						relOp, stopExpr, byExpr, newIfStmt, this);
 			}
 			return generator.newForRangeStatement(loopVar, TypeEnum.VOID, startExpr,
 					relOp, stopExpr, byExpr, newStmts, this);

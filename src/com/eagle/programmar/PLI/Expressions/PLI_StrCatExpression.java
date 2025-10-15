@@ -5,21 +5,49 @@ package com.eagle.programmar.PLI.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator2Metrics;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_StrCatExpression extends PrecedenceOperator implements EagleRunnable
+public class PLI_StrCatExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PLI_Expression left = new PLI_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PLI_Punctuation catOper = new PLI_Punctuation("||");
+	public @S(20) PLI_Punctuation operator = new PLI_Punctuation("||");
 	public @S(30) PLI_Expression right = new PLI_Expression(this, AllowedPrecedence.HIGHER);
+
+	private @SKIP Operator2Metrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String leftStr = interpreter.getStrValue(left);
-		String rightStr = interpreter.getStrValue(right);
+		EagleValue leftValue = interpreter.getEagleValue(left);
+		EagleValue rightValue = interpreter.getEagleValue(right);
+
+		if (_metrics == null)
+		{
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, operator.getValue());
+		}
+		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+
+		String leftStr = leftValue.forceStringValue();
+		String rightStr = rightValue.forceStringValue();
 		interpreter.pushStr(leftStr + rightStr);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
+		Oper2Types types = transformer.findOperator2Metric(operator);
+		return generator.newAppendExpression(types, leftExpr, rightExpr, this);
 	}
 }

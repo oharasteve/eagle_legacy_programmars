@@ -8,10 +8,15 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class PLI_TruncFunction extends PrimaryOperator implements EagleRunnable
+public class PLI_TruncFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PLI_Keyword TRUNC = new PLI_Keyword("TRUNC");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -23,5 +28,12 @@ public class PLI_TruncFunction extends PrimaryOperator implements EagleRunnable
 	{
 		double x = interpreter.getDoubleValue(expr);
 		interpreter.pushInt((int) x);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+		return generator.newTruncateExpression(newExpr, this);
 	}
 }

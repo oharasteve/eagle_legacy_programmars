@@ -9,6 +9,7 @@ import java.util.Collection;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
@@ -153,7 +154,8 @@ public class PLI_Procedure extends TokenSequence
 			_returnMetrics = new ReturnMetrics(interpreter._metrics, id1.getValue(), id1);
 		}
 
-		// Only run the Procedure if it has OPTIONS(MAIN)
+		// Only auto-run the Procedure if it has OPTIONS(MAIN)
+		// Otherwise, let PLI_CallStatement or PLI_VariableOrFunctionCall run it
 		if (options != null && options.isPresent())
 		{
 			for (PLI_ProcedureOption opt : options._elements)
@@ -212,7 +214,7 @@ public class PLI_Procedure extends TokenSequence
 			}
 		}
 
-//		addLocalVars(transformer, generator);
+		addLocalVars(transformer, generator);
 
 		for (PLI_StatementOrComment stmtOrComment : statements._elements)
 		{
@@ -228,5 +230,44 @@ public class PLI_Procedure extends TokenSequence
 		}
 
 		generator.doneMethod();
+	}
+
+	private boolean isFuncParam(String name)
+	{
+		if (params != null && params.isPresent())
+		{
+			int numParams = params.params.getPrimaryCount();
+			for (int i = 0; i < numParams; i++)
+			{
+				PLI_Identifier_Reference param = params.params.getPrimaryElement(i);
+				if (param.getValue().equalsIgnoreCase(name))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Are there any local variables we need to declare?
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String scopeStr = this._currentLine + "-" + this._endLine;
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+		for (AssignMetrics met : asgMetrics)
+		{
+			TypeEnum typ = met.uniqueType();
+			if (typ != TypeEnum.VOID)
+			{
+				if (! isFuncParam(met._symbolName))
+				{
+					// System.err.println("****** Found var " + met._symbolName);
+					AbstractType absType = generator.transformType(typ, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false,
+							met._symbolName, null, absType, null, this);
+					generator.addStatement(dataStmt, this);
+				}
+			}
+		}
 	}
 }

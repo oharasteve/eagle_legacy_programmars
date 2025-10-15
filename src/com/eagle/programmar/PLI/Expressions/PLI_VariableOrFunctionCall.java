@@ -67,9 +67,10 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 						"Function " + name + ", expected params = " + paramCount + ", but actual args = " + argCount);
 			}
 
-			ArrayList<String> argTypes = new ArrayList<String>();
+			interpreter.callingFunction(name, proc);
 
 			// Assign all the parameters
+			ArrayList<String> argTypes = new ArrayList<String>();
 			for (int i = 0; i < argCount; i++)
 			{
 				PLI_Identifier_Reference param = proc.params.params.getPrimaryElement(i);
@@ -83,7 +84,6 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 			// Evaluate the function
 			long startTime = System.nanoTime();
 
-			interpreter.callingFunction(name, proc);
 			Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 			for (PLI_StatementOrComment stmt : proc.statements._elements)
 			{
@@ -142,7 +142,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 			int argCount = subscript.args.getPrimaryCount();
 			
 			// Case II: Calling a Procedure
-			if (generator.isKnownMethod(name) || argCount > 1)
+			if (generator.isKnownMethod(name))
 			{
 				ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 				for (int i = 0; i < argCount; i++)

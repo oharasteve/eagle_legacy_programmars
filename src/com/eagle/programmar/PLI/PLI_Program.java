@@ -91,17 +91,39 @@ public class PLI_Program extends AbstractLanguage
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
-		// First pass, transform the MAIN Function definition
-		for (PLI_Element elt : elements._elements)
+		// First pass, transform all the inner procedures
+		for (PLI_Element element : elements._elements)
 		{
-			AbstractToken which1 = elt.getWhich();
+			AbstractToken which3 = element.getWhich();
+			if (which3 instanceof PLI_Procedure)
+			{
+				PLI_Procedure mainProc = (PLI_Procedure) which3;
+				
+				// Look for procs inside the outer proc
+				for (PLI_StatementOrComment stmt2 : mainProc.statements._elements)
+				{
+					AbstractToken which4 = stmt2.getWhich();
+					if (which4 instanceof PLI_Statement)
+					{
+						PLI_Statement stmt4 = (PLI_Statement) which4;
+						AbstractToken which5 = stmt4.getWhich();
+						if (which5 instanceof PLI_Procedure)
+						{
+							PLI_Procedure proc5 = (PLI_Procedure) which5;
+							proc5.transformFunction(transformer, generator);
+						}
+					}
+				}
+			}
+		}
+
+		// Second pass, collect global variables
+		for (PLI_Element element : elements._elements)
+		{
+			AbstractToken which1 = element.getWhich();
 			if (which1 instanceof PLI_Procedure)
 			{
 				PLI_Procedure proc = (PLI_Procedure) which1;
-				// System.err.println("*** Found Main Procedure " + proc.id1.getValue());
-				String mainName = generator.mainName();
-				generator.addMethod(null, mainName, this);
-				generator.addMainArgs();
 
 				// Are there any global variables we need to declare?
 				String scopeStr = proc.getScope().getScopeName();
@@ -119,11 +141,25 @@ public class PLI_Program extends AbstractLanguage
 						generator.addStatement(dataStmt, this);
 					}
 				}
+			}
+		}
+		
+		// Third pass, transform the MAIN Function definition
+		for (PLI_Element element : elements._elements)
+		{
+			AbstractToken which1 = element.getWhich();
+			if (which1 instanceof PLI_Procedure)
+			{
+				PLI_Procedure proc = (PLI_Procedure) which1;
+				// System.err.println("*** Found Main Procedure " + proc.id1.getValue());
+				String mainName = generator.mainName();
+				generator.addMethod(null, mainName, this);
+				generator.addMainArgs();
 
 				for (PLI_StatementOrComment stmtOrComment : proc.statements._elements)
 				{
-					AbstractToken which = stmtOrComment.getWhich();
-					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+					AbstractToken which2 = stmtOrComment.getWhich();
+					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which2);
 					if (newStmts != null)
 					{
 						for (AbstractStatement newStmt : newStmts)
@@ -136,25 +172,6 @@ public class PLI_Program extends AbstractLanguage
 				generator.doneMethod();
 			}
 		}
-
-//		// Second pass, transform all the data and logic
-//		for (PLI_Element elt : elements._elements)
-//		{
-//			AbstractToken which2 = elt.getWhich();
-//			if (which2 instanceof PLI_Statement)
-//			{
-//				PLI_Statement stmt = (PLI_Statement) which2;
-//				Collection<AbstractStatement> newStmts = transformer.transformStatement(
-//						generator, stmt.getWhich());
-//				if (newStmts != null)
-//				{
-//					for (AbstractStatement newStmt : newStmts)
-//					{
-//						generator.addStatement(newStmt, stmt);
-//					}
-//				}
-//			}
-//		}
 		
 		// Not needed for C# or CSharp, but Python needs this
 		generator.addCallToMain();
