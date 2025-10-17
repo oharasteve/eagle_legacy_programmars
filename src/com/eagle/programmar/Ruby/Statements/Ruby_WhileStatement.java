@@ -23,7 +23,8 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Ruby_WhileStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) Ruby_Keyword WHILE = new Ruby_Keyword("while");
 	public @S(20) Ruby_Expression condition;

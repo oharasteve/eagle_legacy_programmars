@@ -3,21 +3,31 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
+import com.eagle.programmar.SQL.SQL_Statement;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Symbols.SQL_Label_Definition;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_WhileStatement extends TokenSequence implements EagleRunnableWithResult
+public class SQL_WhileStatement extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @OPT SQL_WhileLabel label1;
 	public @S(20) SQL_Keyword WHILE1 = new SQL_Keyword("WHILE");
@@ -81,5 +91,32 @@ public class SQL_WhileStatement extends TokenSequence implements EagleRunnableWi
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
+		
+		for (SQL_StatementOrComment stmtComm : statements._elements)
+		{
+			if (stmtComm.getWhich() instanceof SQL_Statement)
+			{
+				SQL_Statement statement = (SQL_Statement) stmtComm.getWhich();
+				Collection<AbstractStatement> newStmts =
+						transformer.transformStatement(generator, statement.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement stmt : newStmts)
+					{
+						whileTrue.add(stmt);
+					}
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
+		return stmt;
 	}
 }

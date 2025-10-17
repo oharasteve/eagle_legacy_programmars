@@ -3,25 +3,20 @@
 
 package com.eagle.programmar.SQL;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.SQL.Statements.SQL_CreateProcedureStatement;
 import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
