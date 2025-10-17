@@ -60,33 +60,27 @@ public class SQL_Type extends TokenChooser
 	
 	public static AbstractType findType(EagleGenerator generator, SQL_Type type)
 	{
-		TypeEnum newType;
+		TypeEnum newType = TypeEnum.OTHER;
 		
-//		if (type.getWhich() instanceof SQL_TypeArray)
-//		{
-//			newType = TypeEnum.STRING_ARRAY;
-//		}
-//		else
-
-		SQL_KeywordChoice typeName = (SQL_KeywordChoice) type.getWhich();
-		switch (typeName.getValue().toLowerCase())
+		if (type.getWhich() instanceof SQL_BaseType)
 		{
-		case "BOOL":
-		case "BOOLEAN":
-		case "TINYINT":
-			newType = TypeEnum.BOOLEAN;
-			break;
-		case "INT":
-		case "INTEGER":
-			newType = TypeEnum.INTEGER;
-			break;
-		case "VARCHAR":
-		case "VARCHAR2":
-			newType = TypeEnum.STRING;
-			break;
-		default:
-			newType = TypeEnum.OTHER;
-			break;
+			SQL_BaseType base = (SQL_BaseType) type.getWhich();
+			switch (base.baseType.getValue().toLowerCase())
+			{
+			case "BOOL":
+			case "BOOLEAN":
+			case "TINYINT":
+				newType = TypeEnum.BOOLEAN;
+				break;
+			case "INT":
+			case "INTEGER":
+				newType = TypeEnum.INTEGER;
+				break;
+			case "VARCHAR":
+			case "VARCHAR2":
+				newType = TypeEnum.STRING;
+				break;
+			}
 		}
 		
 		return generator.transformType(newType, null, null);
