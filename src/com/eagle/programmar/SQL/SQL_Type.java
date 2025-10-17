@@ -9,9 +9,12 @@ import com.eagle.programmar.SQL.Terminals.SQL_Number;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_Type extends TokenChooser
 {
@@ -53,5 +56,39 @@ public class SQL_Type extends TokenChooser
 		public @S(30) @OPT PunctuationComma comma;
 		public @S(40) @OPT SQL_Number size2;
 		public @S(50) PunctuationRightParen rightParen;
+	}
+	
+	public static AbstractType findType(EagleGenerator generator, SQL_Type type)
+	{
+		TypeEnum newType;
+		
+//		if (type.getWhich() instanceof SQL_TypeArray)
+//		{
+//			newType = TypeEnum.STRING_ARRAY;
+//		}
+//		else
+
+		SQL_KeywordChoice typeName = (SQL_KeywordChoice) type.getWhich();
+		switch (typeName.getValue().toLowerCase())
+		{
+		case "BOOL":
+		case "BOOLEAN":
+		case "TINYINT":
+			newType = TypeEnum.BOOLEAN;
+			break;
+		case "INT":
+		case "INTEGER":
+			newType = TypeEnum.INTEGER;
+			break;
+		case "VARCHAR":
+		case "VARCHAR2":
+			newType = TypeEnum.STRING;
+			break;
+		default:
+			newType = TypeEnum.OTHER;
+			break;
+		}
+		
+		return generator.transformType(newType, null, null);
 	}
 }

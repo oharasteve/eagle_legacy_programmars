@@ -104,7 +104,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 		String oper = operator.getWhich().toString();
 		switch (oper.toUpperCase())
 		{
-		case "=":
+		case "=", "IS":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
 		case "!=":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);

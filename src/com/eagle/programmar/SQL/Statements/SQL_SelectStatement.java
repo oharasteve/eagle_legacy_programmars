@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -12,10 +14,16 @@ import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_SelectStatement extends TokenSequence implements EagleRunnable
+public class SQL_SelectStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) SQL_SelectStmt selectStatement;
 	public @S(20) @OPT TokenList<SQL_SelectUnion> more;
@@ -67,5 +75,29 @@ public class SQL_SelectStatement extends TokenSequence implements EagleRunnable
 			EagleValue val = interpreter.getEagleValue(what.expr);
 			System.out.print(val); // It should have its own newline '\n'
 		}
+	}
+
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Just treat it like a PRINT statement for now
+		if (more != null && more.size() > 0)
+		{
+			throw new RuntimeException("Cannot handle SELECT / UNION yet");
+		}
+		
+		if (selectStatement.clauses != null && selectStatement.clauses.size() > 0)
+		{
+			throw new RuntimeException("Cannot handle SELECT clauses yet");
+		}
+		
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+		for (int i = 0; i < selectStatement.what.getPrimaryCount(); i++)
+		{
+			SQL_SelectWhat what = selectStatement.what.getPrimaryElement(i);
+			AbstractExpression line = transformer.transformExpression(generator, what.expr);
+			result.add(generator.newPrintStatement(line, false, false, this));
+		}
+		return result;
 	}
 }

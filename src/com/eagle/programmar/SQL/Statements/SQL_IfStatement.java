@@ -13,9 +13,15 @@ import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_IfStatement extends TokenSequence implements EagleRunnableWithResult
+public class SQL_IfStatement extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) SQL_Keyword IF1 = new SQL_Keyword("IF");
 	public @S(20) SQL_Expression condition;
@@ -81,5 +87,45 @@ public class SQL_IfStatement extends TokenSequence implements EagleRunnableWithR
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		for (SQL_StatementOrComment thenStatement : statements._elements)
+		{
+			ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator,
+					thenStatement.getWhich());
+			if (stmts1 != null)
+			{
+				for (AbstractStatement stmt1 : stmts1)
+				{
+					ifTrue.add(stmt1);
+				}
+			}
+		}
+		
+		if (elseClause != null && elseClause.isPresent())
+		{
+			for (SQL_StatementOrComment elseStatement : elseClause.statements._elements)
+			{
+				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator,
+						elseStatement.getWhich());
+				if (stmts2 != null)
+				{
+					for (AbstractStatement stmt2 : stmts2)
+					{
+						ifFalse.add(stmt2);
+					}
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

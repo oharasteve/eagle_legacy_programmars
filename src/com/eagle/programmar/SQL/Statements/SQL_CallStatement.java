@@ -20,11 +20,20 @@ import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_CallStatement extends TokenSequence implements EagleRunnable
+public class SQL_CallStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) SQL_Keyword CALL = new SQL_Keyword("CALL");
 	public @S(20) SQL_BuiltinFunction func;
+	public @S(30) PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -90,7 +99,7 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 			long startTime = System.nanoTime();
 
 			// And transfer control to the Stored Procedure
-			for (SQL_StatementOrComment stmt : proc.stmts._elements)
+			for (SQL_StatementOrComment stmt : proc.statements._elements)
 			{
 				Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
@@ -133,5 +142,39 @@ public class SQL_CallStatement extends TokenSequence implements EagleRunnable
 		{
 			throw new RuntimeException("Unable to call Stored Procedure " + token);
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken token = func.funcName.getWhich();
+		if (! (token instanceof SQL_Variable))
+		{
+			throw new RuntimeException("Unable to call procedure " + this);
+		}
+		
+		SQL_Variable var = (SQL_Variable) token;
+		String name = var.ids.first().getValue();
+
+		int argCount = 0;
+		if (func.args != null)
+		{
+			argCount = func.args.getPrimaryCount();
+		}
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		for (int i = 0; i < argCount; i++)
+		{
+			SQL_FunctionArg arg = func.args.getPrimaryElement(i);
+			if (arg.getWhich() instanceof SQL_Expression)
+			{
+				SQL_Expression expr = (SQL_Expression) arg.getWhich();
+				AbstractExpression newArg = transformer.transformExpression(generator, expr);
+				args.add(newArg);
+			}
+		}
+
+		AbstractVariable newName = generator.newVariable(name);
+		AbstractExpression newExpr = generator.newMethodInvocation(newName, args, this);
+		return generator.newExpressionStatement(newExpr, CALL);
 	}
 }
