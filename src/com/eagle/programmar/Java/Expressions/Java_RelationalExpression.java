@@ -11,7 +11,7 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
-import com.eagle.programmar.Java.Functions.Java_EqualsMethod;
+import com.eagle.programmar.Java.Methods.Java_EqualsMethod;
 import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;

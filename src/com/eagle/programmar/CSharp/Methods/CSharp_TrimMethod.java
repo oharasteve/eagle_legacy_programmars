@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jun 8, 2025
 
-package com.eagle.programmar.CSharp.Functions;
+package com.eagle.programmar.CSharp.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;

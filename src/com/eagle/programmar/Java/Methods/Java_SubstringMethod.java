@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 2, 2024
 
-package com.eagle.programmar.Java.Functions;
+package com.eagle.programmar.Java.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -10,6 +10,8 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
+import com.eagle.programmar.Java.Functions.Java_MathFunction;
+import com.eagle.programmar.Java.Functions.Java_MathMinMaxFunc;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;

@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 2, 2024
 
-package com.eagle.programmar.CSharp.Functions;
+package com.eagle.programmar.CSharp.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -11,6 +11,8 @@ import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ParenthesizedExpression;
+import com.eagle.programmar.CSharp.Functions.CSharp_MathFunction;
+import com.eagle.programmar.CSharp.Functions.CSharp_MathMinMaxFunc;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;

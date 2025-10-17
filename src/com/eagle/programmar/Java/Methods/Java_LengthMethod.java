@@ -1,28 +1,32 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 2, 2024
 
-package com.eagle.programmar.CSharp.Functions;
+package com.eagle.programmar.Java.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.CSharp_Generator;
-import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class CSharp_LengthMethod extends PrecedenceOperator
+public class Java_LengthMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) CSharp_Expression expression = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(10) Java_Expression expression = new Java_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NOSPACE CSharp_Keyword LENGTH = new CSharp_Keyword("Length");
-
+	public @S(30) @NOSPACE Java_Keyword LENGTH = new Java_Keyword("length");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -37,11 +41,14 @@ public class CSharp_LengthMethod extends PrecedenceOperator
 		return generator.newLengthFunction(theExpr, this);
 	}
 	
-	public CSharp_Expression generateLength(CSharp_Expression expr, AbstractToken source)
+	public Java_Expression generateLength(Java_Expression expr, AbstractToken source)
 	{
-		this.dot = new PunctuationPeriod();
 		this.expression = expr;
+		this.dot = new PunctuationPeriod();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
+		
 		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		return Java_Generator.wrapExpression(this);
 	}
 }
