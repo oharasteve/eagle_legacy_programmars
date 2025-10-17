@@ -8,8 +8,13 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_PunctuationChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_DelimiterStatement extends TokenSequence implements EagleRunnable
+public class SQL_DelimiterStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) SQL_Keyword DELIMITER = new SQL_Keyword("DELIMITER");
 	public @S(20) SQL_PunctuationChoice what = new SQL_PunctuationChoice(";", "//");
@@ -20,5 +25,11 @@ public class SQL_DelimiterStatement extends TokenSequence implements EagleRunnab
 		// Need some sort of State variable to store the delimiter
 		// And it needs to be processed DURING the Parse phase.
 		// We don't have anything like this, yet.
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return null;	// Ignore for now
 	}
 }

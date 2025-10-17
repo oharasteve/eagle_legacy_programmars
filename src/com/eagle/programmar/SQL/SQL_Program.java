@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.SQL;
 
+import java.util.Collection;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -10,8 +12,13 @@ import com.eagle.programmar.SQL.Statements.SQL_CreateProcedureStatement;
 import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_Program extends AbstractLanguage implements EagleRunnable
+public class SQL_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String SQL = "SQL";
 
@@ -63,5 +70,48 @@ public class SQL_Program extends AbstractLanguage implements EagleRunnable
 				interpreter.tryToInterpret(stmt);
 			}
 		}
+	}
+	
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+//		// First pass, transform all the function definitions
+//		for (SQL_Element elt : elements._elements)
+//		{
+//			if (elt.getWhich() instanceof SQL_Object)
+//			{
+//				SQL_Object obj = (SQL_Object) elt.getWhich();
+//				for (SQL_Statement stmt : obj.statement.statements._elements)
+//				{
+//					if (stmt.getWhich() instanceof EagleTransformableFunction)
+//					{
+//						EagleTransformableFunction transformable = (EagleTransformableFunction) stmt.getWhich();
+//						transformable.transformFunction(transformer, generator);
+//					}
+//				}
+//			}
+//		}
+
+		// Second pass, transform all the data and logic
+		for (SQL_StatementOrComment elt : statements._elements)
+		{
+			if (elt.getWhich() instanceof SQL_Statement)
+			{
+				SQL_Statement stmt = (SQL_Statement) elt.getWhich();
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+				if (newStmts != null)
+				{
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
+				}
+			}
+		}
+		
+//		// Not needed for C# or Java, but Python needs this
+//		generator.addCallToMain();
+		
+		return generator.getTransfomedProgram();
 	}
 }

@@ -9,9 +9,14 @@ import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_DropStatement extends TokenSequence implements EagleRunnable
+public class SQL_DropStatement extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) SQL_Keyword DROP = new SQL_Keyword("DROP");
 	public @S(20) @OPT SQL_Keyword PUBLIC = new SQL_Keyword("PUBLIC");
@@ -38,5 +43,11 @@ public class SQL_DropStatement extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Not currently creating real tables ... so ignore the DROP statements for now
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return null;	// Ignore for now
 	}
 }
