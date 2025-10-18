@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Fortran.Fortran_Format;
 import com.eagle.programmar.Fortran.Fortran_Variable;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
@@ -41,13 +42,23 @@ public class Fortran_WriteStatement extends TokenSequence
 	public @S(80) @OPT Fortran_Comment comment;
 	public @S(90) Fortran_EOLN eoln;
 
+	private @SKIP ArgumentsMetrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new ArgumentsMetrics(interpreter._metrics, WRITE.getValue(), WRITE);
+		}
+		ArrayList<String> argTypes = new ArrayList<String>();
+
 		// Example: WRITE(numStr, '(I5)') numb
 		// puts the number 'numb' into the string 'numStr' with format I5
-		String formatted = Fortran_Format.format(interpreter, format.getValue(), parameters);
+		String formatted = Fortran_Format.format(interpreter, format.getValue(), parameters, argTypes);
 		EagleString val = new EagleString(formatted);
+		
+		_metrics.calledWith(argTypes);
 		interpreter.setSymbol(this, var.var.getValue(), val);
 	}
 
