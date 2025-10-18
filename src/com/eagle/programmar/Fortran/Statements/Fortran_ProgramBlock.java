@@ -59,8 +59,8 @@ public class Fortran_ProgramBlock extends TokenSequence
 	{
 		String fnName = id.getValue();
 
-		generator.addMethod(null, fnName, this);
-		generator.setMethodName(fnName);
+		generator.addMethod(null, generator.mainName(), this);
+		generator.addMainArgs();
 		if (VERBOSE)
 		{
 			System.out.println("** Found Fortran program " + fnName);

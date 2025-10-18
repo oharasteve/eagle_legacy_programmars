@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
@@ -13,14 +15,23 @@ import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
+import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Fortran_DoStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult
+		implements AbstractStatement, EagleRunnableWithResult,
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("6j4m0vn8c/index.html") Fortran_Keyword DO1 = new Fortran_Keyword("DO");
 	public @S(20) Fortran_Variable_Reference var;
@@ -98,5 +109,43 @@ public class Fortran_DoStatement extends TokenSequence
 
 		_metrics.competedLoop(metric);
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractVariable loopVar = null;
+		AbstractExpression startExpr = null;
+		AbstractExpression stopExpr = null;
+		AbstractExpression incrExpr = null;
+		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
+
+		loopVar = generator.newVariable(var.getValue());
+		startExpr = transformer.transformExpression(generator, startValue);
+		stopExpr = transformer.transformExpression(generator, stopValue);
+		if (incrValue != null && incrValue.isPresent())
+		{
+			incrExpr = transformer.transformExpression(generator, incrValue.incr);
+			if (incrValue.incr.getWhich() instanceof Fortran_Number)
+			{
+				Fortran_Number number = (Fortran_Number) incrValue.incr.getWhich();
+				if (number.getValue().startsWith("-"))
+				{
+					// What if it is a variable that happens to be negative? Yikes!
+					relOp = RelationalEnum.GREATER_EQUALS;
+				}
+			}
+		}
+		
+		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
+		for (Fortran_Statement stmt : statements._elements)
+		{
+			AbstractStatement newStmt = transformer.transformStatement1(generator, stmt.getWhich());
+			newStmts.add(newStmt);
+		}
+
+		// And now generate the output code
+		return generator.newForRangeStatement(loopVar, TypeEnum.VOID, startExpr,
+				relOp, stopExpr, incrExpr, newStmts, this);
 	}
 }

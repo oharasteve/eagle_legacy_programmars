@@ -12,11 +12,16 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Literal;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationStar;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_PrintStatement extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Fortran_PrintStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("6j4m0vnap/index.html") Fortran_Keyword PRINT = new Fortran_Keyword("PRINT");
 	public @S(20) Fortran_PrintFormat format;
@@ -35,5 +40,12 @@ public class Fortran_PrintStatement extends TokenSequence implements EagleRunnab
 	{
 		EagleValue result = interpreter.getEagleValue(expression);
 		System.out.println(result.toString());
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression line = transformer.transformExpression(generator, expression);
+		return generator.newPrintStatement(line, true, false, this);
 	}
 }

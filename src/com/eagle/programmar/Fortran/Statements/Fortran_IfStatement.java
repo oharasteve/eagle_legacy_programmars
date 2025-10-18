@@ -14,16 +14,21 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Fortran_IfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("6j4m0vn9r/index.html") Fortran_Keyword IF1 = new Fortran_Keyword("IF");
 	public @S(20) Fortran_Expression condition;
 	public @S(30) Fortran_Keyword THEN = new Fortran_Keyword("THEN");
 	public @S(40) Fortran_EOLN eoln1;
-	public @S(50) TokenList<Fortran_Statement> statements;
-	public @S(60) @OPT Fortran_IfElseBlock ifElse;
+	public @S(50) TokenList<Fortran_Statement> thenStatements;
+	public @S(60) @OPT Fortran_IfElseBlock elseClause;
 	public @S(70) Fortran_Keyword END = new Fortran_Keyword("END");
 	public @S(80) Fortran_Keyword IF2 = new Fortran_Keyword("IF");
 	public @S(90) Fortran_EOLN eoln2;
@@ -32,7 +37,7 @@ public class Fortran_IfStatement extends TokenSequence implements AbstractStatem
 	{
 		public @S(10) Fortran_Keyword ELSE = new Fortran_Keyword("ELSE");
 		public @S(20) Fortran_EOLN eoln;
-		public @S(30) TokenList<Fortran_Statement> statements;
+		public @S(30) TokenList<Fortran_Statement> elseStatements;
 	}
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
@@ -48,9 +53,9 @@ public class Fortran_IfStatement extends TokenSequence implements AbstractStatem
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF1));
-			if (ifElse != null && ifElse.isPresent())
+			if (elseClause != null && elseClause.isPresent())
 			{
-				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse.ELSE));
+				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
 			}
 		}
 
@@ -58,17 +63,17 @@ public class Fortran_IfStatement extends TokenSequence implements AbstractStatem
 		_metrics.get(0).completedIf(cond1);
 		if (cond1)
 		{
-			todo = statements;
+			todo = thenStatements;
 		}
 		else
 		{
 			todo = null;
 
 			// Check for 'else'
-			if (ifElse != null && ifElse.isPresent())
+			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.get(1).completedIf(true);
-				todo = ifElse.statements;
+				todo = elseClause.elseStatements;
 			}
 		}
 
@@ -83,5 +88,44 @@ public class Fortran_IfStatement extends TokenSequence implements AbstractStatem
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		AbstractExpression cond = transformer.transformExpression(generator, condition);
+		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
+		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
+		
+		for (Fortran_Statement stmt1 : thenStatements._elements)
+		{
+			ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
+			if (stmts2 != null)
+			{
+				for (AbstractStatement stmt3 : stmts2)
+				{
+					ifTrue.add(stmt3);
+				}
+			}
+		}
+		
+		if (this.elseClause != null && this.elseClause.isPresent())
+		{
+			for (Fortran_Statement stmt4 : elseClause.elseStatements._elements)
+			{
+				ArrayList<AbstractStatement> stmts5 = transformer.transformStatement(generator, stmt4.getWhich());
+				if (stmts5 != null)
+				{
+					for (AbstractStatement stmt6 : stmts5)
+					{
+						ifFalse.add(stmt6);
+					}
+				}
+			}
+		}
+		
+		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		return stmt;
 	}
 }

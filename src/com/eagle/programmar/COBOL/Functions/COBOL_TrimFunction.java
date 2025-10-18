@@ -47,7 +47,6 @@ public class COBOL_TrimFunction extends PrimaryOperator
 		interpreter.pushStr(trimmed);
 	}
 
-	
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

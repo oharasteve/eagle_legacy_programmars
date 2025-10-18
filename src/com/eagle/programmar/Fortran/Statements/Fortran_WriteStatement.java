@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
@@ -15,12 +17,19 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Literal;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_WriteStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Fortran_WriteStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("6j4m0vnbs/index.html") Fortran_Keyword WRITE = new Fortran_Keyword("WRITE");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -40,5 +49,17 @@ public class Fortran_WriteStatement extends TokenSequence implements AbstractSta
 		String formatted = Fortran_Format.format(interpreter, format.getValue(), parameters);
 		EagleString val = new EagleString(formatted);
 		interpreter.setSymbol(this, var.var.getValue(), val);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator generator)
+	{
+		ArrayList<String> metrics = transformer.findArgumentsMetric(WRITE);
+		AbstractExpression line = Fortran_Format.transform(transformer, generator,
+				format.getValue(), parameters, metrics);
+		AbstractExpression newValue = generator.newAssignmentExpression(var.var.getValue(),
+				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, line, WRITE);
+		return generator.newExpressionStatement(newValue, WRITE);
 	}
 }

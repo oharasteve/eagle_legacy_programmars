@@ -3,15 +3,20 @@
 
 package com.eagle.programmar.Fortran;
 
+import com.eagle.programmar.Fortran.Fortran_Type.Fortran_DataType.Fortran_CharacterType;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Fortran_Type extends TokenSequence
 {
@@ -43,5 +48,31 @@ public class Fortran_Type extends TokenSequence
 		public @S(30) PunctuationLeftParen leftParen;
 		public @S(40) Fortran_Number len;
 		public @S(50) PunctuationRightParen rightParen;
+	}
+	
+	public static AbstractType findType(EagleGenerator generator, Fortran_Type type)
+	{
+		TypeEnum newType = TypeEnum.OTHER;
+		
+		AbstractToken which = type.dataType.getWhich();
+		if (which instanceof Fortran_CharacterType)
+		{
+			newType = TypeEnum.STRING;
+		}
+		else if (which instanceof Fortran_KeywordChoice)
+		{
+			Fortran_KeywordChoice base = (Fortran_KeywordChoice) which;
+			switch (base.getValue().toUpperCase())
+			{
+			case "LOGICAL":
+				newType = TypeEnum.BOOLEAN;
+				break;
+			case "INTEGER":
+				newType = TypeEnum.INTEGER;
+				break;
+			}
+		}
+		
+		return generator.transformType(newType, null, null);
 	}
 }
