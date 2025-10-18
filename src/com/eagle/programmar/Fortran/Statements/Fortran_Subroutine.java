@@ -3,30 +3,45 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
+import com.eagle.metrics.EagleMetrics;
 import com.eagle.programmar.Fortran.Fortran_Statement;
+import com.eagle.programmar.Fortran.Fortran_Syntax;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Definition;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Reference;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
-public class Fortran_Subroutine extends TokenSequence implements AbstractFunction, EagleRunnable
+public class Fortran_Subroutine extends TokenSequence
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @DOC("6j4m0vnbg/index.html") Fortran_Keyword SUBROUTINE1 = new Fortran_Keyword("SUBROUTINE");
 	public @S(20) Fortran_Function_Definition id;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
+	public @S(40) @OPT SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) Fortran_EOLN eoln1;
 
@@ -39,6 +54,14 @@ public class Fortran_Subroutine extends TokenSequence implements AbstractFunctio
 
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+
+	private @SKIP EagleScope _scope = new EagleScope(this, Fortran_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -53,5 +76,53 @@ public class Fortran_Subroutine extends TokenSequence implements AbstractFunctio
 		}
 
 		// Nothing to do here -- only act when it is called
+	}
+
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String fnName = id.getValue();
+
+		generator.addMethod(null, fnName, this);
+		generator.setMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found Fortran subroutine " + fnName);
+		}
+		
+		// Search metrics for arg types -- might not be any
+		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		
+		if (parameters != null && parameters.isPresent())
+		{
+			for (int i = 0; i < parameters.getPrimaryCount(); i++)
+			{
+				Fortran_Variable_Reference param = parameters.getPrimaryElement(i);
+				AbstractType paramType = null;
+				
+				if (argTypes != null && i < argTypes.size())
+				{
+					String metricArgType = argTypes.get(i);
+					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					paramType = generator.transformType(metricArg, null, param);
+				}
+				
+				generator.addMethodParameter(paramType, param.getValue());
+			}
+		}
+		
+		for (Fortran_Statement stmt : statements._elements)
+		{
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+			if (newStmts != null)
+			{
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt, stmt.getWhich());
+				}
+			}
+		}
+		
+		generator.doneMethod();
 	}
 }

@@ -3,21 +3,31 @@
 
 package com.eagle.programmar.Fortran.Statements;
 
+import java.util.Collection;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Statement;
+import com.eagle.programmar.Fortran.Fortran_Syntax;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Definition;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Fortran_ProgramBlock extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @DOC("6j4m0vnar/index.html") Fortran_Keyword PROGRAM1 = new Fortran_Keyword("PROGRAM");
-	public @S(20) Fortran_Function_Definition fnName1;
+	public @S(20) Fortran_Function_Definition id;
 	public @S(30) Fortran_EOLN eoln1;
 
 	public @S(40) TokenList<Fortran_Statement> statements;
@@ -27,6 +37,14 @@ public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable
 	public @S(70) Fortran_Function_Reference fnName2;
 	public @S(80) Fortran_EOLN eoln2;
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Fortran_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -34,5 +52,32 @@ public class Fortran_ProgramBlock extends TokenSequence implements EagleRunnable
 		{
 			interpreter.tryToInterpret(stmt);
 		}
+	}
+
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String fnName = id.getValue();
+
+		generator.addMethod(null, fnName, this);
+		generator.setMethodName(fnName);
+		if (VERBOSE)
+		{
+			System.out.println("** Found Fortran program " + fnName);
+		}
+		
+		for (Fortran_Statement stmt : statements._elements)
+		{
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+			if (newStmts != null)
+			{
+				for (AbstractStatement newStmt : newStmts)
+				{
+					generator.addStatement(newStmt, stmt.getWhich());
+				}
+			}
+		}
+		
+		generator.doneMethod();
 	}
 }

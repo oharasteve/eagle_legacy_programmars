@@ -36,7 +36,8 @@ import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
 public class Ruby_Function extends TokenSequence
-		implements EagleRunnable, AbstractFunction, EagleScopeInterface, EagleTransformableFunction
+		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) Ruby_Keyword DEF = new Ruby_Keyword("def");
 	public @S(20) Ruby_Function_Definition id;

@@ -7,11 +7,16 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Statements.Fortran_Function;
+import com.eagle.programmar.Fortran.Statements.Fortran_ProgramBlock;
 import com.eagle.programmar.Fortran.Statements.Fortran_Subroutine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_Program extends AbstractLanguage implements EagleRunnable
+public class Fortran_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String FORTRAN = "Fortran";
 
@@ -52,5 +57,34 @@ public class Fortran_Program extends AbstractLanguage implements EagleRunnable
 		{
 			interpreter.tryToInterpret(stmt);
 		}
+	}
+
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, just collect all the FUNCTION, SUBROUTINE and PROGRAM definitions
+		for (Fortran_Statement stmt : statements._elements)
+		{
+			AbstractToken which = stmt.getWhich();
+			if (which instanceof Fortran_Function)
+			{
+				Fortran_Function fn = (Fortran_Function) which;
+				fn.transformFunction(transformer, generator);
+			}
+			else if (which instanceof Fortran_Subroutine)
+			{
+				Fortran_Subroutine sub = (Fortran_Subroutine) which;
+				sub.transformFunction(transformer, generator);
+			}
+			else if (which instanceof Fortran_ProgramBlock)
+			{
+				Fortran_ProgramBlock prog = (Fortran_ProgramBlock) which;
+				prog.transformFunction(transformer, generator);
+			}
+		}
+
+		generator.addCallToMain();
+
+		return generator.getTransfomedProgram();
 	}
 }
