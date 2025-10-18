@@ -11,6 +11,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
+import com.eagle.programmar.SQL.Terminals.SQL_Number;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -27,12 +28,19 @@ public class SQL_SelectStatement extends TokenSequence
 {
 	public @S(10) SQL_SelectStmt selectStatement;
 	public @S(20) @OPT TokenList<SQL_SelectUnion> more;
+	public @S(30) @OPT SelectLimit selectLimit;
 
 	public static class SQL_SelectUnion extends TokenSequence
 	{
 		public @S(10) SQL_Keyword UNION = new SQL_Keyword("UNION");
 		public @S(20) @OPT SQL_Keyword ALL = new SQL_Keyword("ALL");
 		public @S(30) SQL_SelectStmt selectStatement;
+	}
+	
+	public static class SelectLimit extends TokenSequence
+	{
+		public @S(10) SQL_Keyword LIMIT = new SQL_Keyword("LIMIT");
+		public @S(20) SQL_Number number;
 	}
 
 	public static class SQL_SelectStmt extends TokenSequence
