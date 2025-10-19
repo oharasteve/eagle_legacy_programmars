@@ -136,6 +136,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
+		boolean backwards = false;
 
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
@@ -180,6 +181,11 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 			int i = interpreter.getIntValue(forL.start);
 			int incr = interpreter.getIntValue(forL.incr);
 			int stop = interpreter.getIntValue(forL.stop);
+			if (incr < 0)
+			{
+				backwards = true;
+			}
+
 			while (true)
 			{
 				if (incr < 0 && i < stop) break;
@@ -196,7 +202,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 		}
 		else throw new RuntimeException("Unable to handle " + whichFor);
 		
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 }

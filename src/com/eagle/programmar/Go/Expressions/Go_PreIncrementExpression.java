@@ -4,11 +4,11 @@
 package com.eagle.programmar.Go.Expressions;
 
 import com.eagle.programmar.Go.Go_Variable;
-import com.eagle.programmar.Go.Terminals.Go_Punctuation;
+import com.eagle.programmar.Go.Terminals.Go_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 
 public class Go_PreIncrementExpression extends PrimaryOperator
 {
-	public @S(10) Go_Punctuation preIncrementOperator = new Go_Punctuation("++");
+	public @S(10) Go_PunctuationChoice operator = new Go_PunctuationChoice("++", "--");
 	public @S(20) Go_Variable var;
 }

@@ -7,9 +7,6 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
-import com.eagle.programmar.Lisp.Functions.Lisp_DoFunction;
-import com.eagle.programmar.Lisp.Functions.Lisp_FormatFunction;
-import com.eagle.programmar.Lisp.Functions.Lisp_SetfFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.transform.EagleGenerator;
@@ -67,24 +64,9 @@ public class Lisp_Program extends AbstractLanguage
 					Lisp_DefunFunction defineFunc = (Lisp_DefunFunction) which2;
 					defineFunc.transformFunction(transformer, generator);
 				}
-				else if (which2 instanceof Lisp_SetfFunction)
-				{
-					Lisp_SetfFunction setFunc = (Lisp_SetfFunction) which2;
-					setFunc.transformStatement(transformer, generator);
-				}
-				else if (which2 instanceof Lisp_DoFunction)
-				{
-					Lisp_DoFunction doFunc = (Lisp_DoFunction) which2;
-					doFunc.transformStatement(transformer, generator);
-				}
-				else if (which2 instanceof Lisp_FormatFunction)
-				{
-					Lisp_FormatFunction fmtFunc = (Lisp_FormatFunction) which2;
-					fmtFunc.transformStatement(transformer, generator);
-				}
 				else
 				{
-					// Hopefully, it is a user-defined function
+					
 				}
 			}
 		}

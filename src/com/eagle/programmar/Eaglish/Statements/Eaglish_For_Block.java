@@ -100,7 +100,7 @@ public class Eaglish_For_Block extends TokenSequence
 				i++;
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 	

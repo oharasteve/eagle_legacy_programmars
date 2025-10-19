@@ -113,7 +113,7 @@ public class Ruby_ForStatement extends TokenSequence
 				i++;
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 

@@ -90,7 +90,7 @@ public class VB_DoStatement extends TokenSequence implements AbstractStatement, 
 			}
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, false);
 		return result;
 	}
 }

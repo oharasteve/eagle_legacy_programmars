@@ -155,7 +155,7 @@ public class Rexx_DoStatement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, by < 0);
 		return result;
 	}
 

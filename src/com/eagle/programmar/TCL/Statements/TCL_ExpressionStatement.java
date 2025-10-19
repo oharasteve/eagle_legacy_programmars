@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Jul 22, 2024
 
-package com.eagle.programmar.TCL.Expressions;
+package com.eagle.programmar.TCL.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;

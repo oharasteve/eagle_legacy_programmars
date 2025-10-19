@@ -23,6 +23,7 @@ import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Java_Variable;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
+import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
@@ -140,6 +141,8 @@ public class Java_ForStatement extends TokenSequence
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
+		Java_Expression increment = increments.first();
+		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -164,11 +167,42 @@ public class Java_ForStatement extends TokenSequence
 				break;
 			}
 
-			interpreter.tryToInterpret(increments.first());
+			interpreter.tryToInterpret(increment);
 		}
 
-		_metrics.competedLoop(metric);
+		// Have to guess to see if it was backwards
+		boolean backwards = guessDirection(terminateCondition, increment);
+		
+		_metrics.competedLoop(metric, backwards);
 		return result;
+	}
+	
+	private static boolean guessDirection(Java_Expression testExpr, Java_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof Java_PostIncrementExpression)
+		{
+			Java_PostIncrementExpression post = (Java_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof Java_PreIncrementExpression)
+		{
+			Java_PreIncrementExpression pre = (Java_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof Java_RelationalExpression)
+		{
+			Java_RelationalExpression rel = (Java_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
 	}
 
 	@Override

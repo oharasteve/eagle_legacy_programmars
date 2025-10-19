@@ -11,7 +11,10 @@ import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Expression;
+import com.eagle.programmar.TCL.Expressions.TCL_RelationalExpression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
+import com.eagle.programmar.TCL.Terminals.TCL_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -78,10 +81,39 @@ public class TCL_ForStatement extends TokenSequence
 			interpreter.tryToInterpret(increment);
 		}
 
-		_metrics.competedLoop(metric);
+		// Have to guess to see if it was backwards
+		boolean backwards = guessDirection(condition, increment);
+
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 	
+	private static boolean guessDirection(TCL_Expression testExpr, TCL_IncrStatement incrStmt)
+	{
+		AbstractToken which1 = incrStmt.amount.getWhich();
+		if (which1 instanceof TCL_Number)
+		{
+			TCL_Number num = (TCL_Number) which1;
+			if (num.getValue().startsWith("-"))
+			{
+				return true;
+			}
+		}
+
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof TCL_RelationalExpression)
+		{
+			TCL_RelationalExpression rel = (TCL_RelationalExpression) which2;
+			String oper = rel.operator.getWhich().toString().toLowerCase();
+			if (oper.equals(">") || oper.equals(">=") || oper.equals("gt") || oper.equals("ge"))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
+	}
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

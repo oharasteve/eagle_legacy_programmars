@@ -20,8 +20,13 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableFunction;
+import com.eagle.transform.EagleTransformer;
 
-public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, AbstractFunction, EagleScopeInterface
+public class Lisp_DefunFunction extends TokenSequence
+		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");
@@ -63,5 +68,11 @@ public class Lisp_DefunFunction extends TokenSequence implements EagleRunnable, 
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
+	}
+
+	@Override
+	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// TODO Auto-generated method stub
 	}
 }

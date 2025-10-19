@@ -12,6 +12,9 @@ import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_Statement;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Perl_Variable.Perl_UserVariable;
+import com.eagle.programmar.Perl.Expressions.Perl_PostIncrementExpression;
+import com.eagle.programmar.Perl.Expressions.Perl_PreIncrementExpression;
+import com.eagle.programmar.Perl.Expressions.Perl_RelationalExpression;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -114,13 +117,44 @@ public class Perl_ForStatement extends TokenSequence
 				interpreter.tryToInterpret(forLikeC.incrExpr);
 			}
 
-			_metrics.competedLoop(metric);
+			// Have to guess to see if it was backwards
+			boolean backwards = guessDirection(forLikeC.testExpr, forLikeC.incrExpr);
+			
+			_metrics.competedLoop(metric, backwards);
 			return result;
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
 	
+	private static boolean guessDirection(Perl_Expression testExpr, Perl_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof Perl_PostIncrementExpression)
+		{
+			Perl_PostIncrementExpression post = (Perl_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof Perl_PreIncrementExpression)
+		{
+			Perl_PreIncrementExpression pre = (Perl_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof Perl_RelationalExpression)
+		{
+			Perl_RelationalExpression rel = (Perl_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
+	}
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

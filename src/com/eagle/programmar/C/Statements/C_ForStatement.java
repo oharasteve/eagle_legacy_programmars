@@ -13,6 +13,9 @@ import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.C_Syntax;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.C_Variable;
+import com.eagle.programmar.C.Expressions.C_PostIncrementVariable;
+import com.eagle.programmar.C.Expressions.C_PreIncrementExpression;
+import com.eagle.programmar.C.Expressions.C_RelationalExpression;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -180,13 +183,44 @@ public class C_ForStatement extends TokenSequence
 				interpreter.tryToInterpret(loop.increment);
 			}
 
-			_metrics.competedLoop(metric);
+			// Have to guess to see if it was backwards
+			boolean backwards = guessDirection(loop.terminateCondition, loop.increment);
+
+			_metrics.competedLoop(metric, backwards);
 			return result;
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + body.getWhich());
 	}
 	
+	private static boolean guessDirection(C_Expression testExpr, C_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof C_PostIncrementVariable)
+		{
+			C_PostIncrementVariable post = (C_PostIncrementVariable) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof C_PreIncrementExpression)
+		{
+			C_PreIncrementExpression pre = (C_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof C_RelationalExpression)
+		{
+			C_RelationalExpression rel = (C_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
+	}
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

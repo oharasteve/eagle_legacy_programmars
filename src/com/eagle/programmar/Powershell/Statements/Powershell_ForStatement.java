@@ -14,7 +14,11 @@ import com.eagle.programmar.Powershell.Powershell_Element;
 import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Variable;
+import com.eagle.programmar.Powershell.Expressions.Powershell_PostIncrementExpression;
+import com.eagle.programmar.Powershell.Expressions.Powershell_PreIncrementExpression;
+import com.eagle.programmar.Powershell.Expressions.Powershell_Relational_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -97,10 +101,42 @@ public class Powershell_ForStatement extends TokenSequence
 	
 			interpreter.tryToInterpret(iterate);
 		}
+
+		// Have to guess to see if it was backwards
+		boolean backwards = guessDirection(stopCondition, iterate);
 		
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
+	
+	private static boolean guessDirection(Powershell_Expression testExpr, Powershell_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof Powershell_PostIncrementExpression)
+		{
+			Powershell_PostIncrementExpression post = (Powershell_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof Powershell_PreIncrementExpression)
+		{
+			Powershell_PreIncrementExpression pre = (Powershell_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof Powershell_Relational_Expression)
+		{
+			Powershell_Relational_Expression rel = (Powershell_Relational_Expression) which2;
+			String oper = rel.operator.getValue().toLowerCase();
+			if (oper.equals("-gt") || oper.equals("-ge"))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
+	}
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

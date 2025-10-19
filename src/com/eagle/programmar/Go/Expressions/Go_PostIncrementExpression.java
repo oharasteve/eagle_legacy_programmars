@@ -9,20 +9,20 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Go.Go_Variable;
 import com.eagle.programmar.Go.Symbols.Go_Identifier_Reference;
-import com.eagle.programmar.Go.Terminals.Go_Punctuation;
+import com.eagle.programmar.Go.Terminals.Go_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
-import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Go_PostIncrementExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Go_Variable var;
-	public @S(20) Go_Punctuation postIncrementOperator = new Go_Punctuation("++");
+	public @S(20) Go_PunctuationChoice operator = new Go_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -31,7 +31,21 @@ public class Go_PostIncrementExpression extends PrimaryOperator
 
 		EagleValue val = interpreter.findSymbol(id.getValue());
 		int prev = val.forceIntegerValue();
-		EagleValue curr = new EagleInteger(prev + 1);
+		
+		int newVal;
+		switch (operator.getValue())
+		{
+		case "++":
+			newVal = prev + 1;
+			break;
+		case "--":
+			newVal = prev - 1;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
+		
+		EagleValue curr = new EagleInteger(newVal);
 		interpreter.setSymbol(var, id.getValue(), curr);
 		interpreter.pushInt(prev);
 	}
@@ -39,9 +53,22 @@ public class Go_PostIncrementExpression extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
+		AssignmentEnum asg;
+		switch (operator.getValue())
+		{
+		case "++":
+			asg = AssignmentEnum.PLUS_EQUALS;
+			break;
+		case "--":
+			asg = AssignmentEnum.MINUS_EQUALS;
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + operator);
+		}
+
 		AbstractExpression one = generator.newNumberExpression("1", var);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.PLUS_EQUALS, one, this);
+				SubscriptEnum.FIRST_IS_ZERO, null, asg, one, this);
 		return asgExpr;
 	}
 }

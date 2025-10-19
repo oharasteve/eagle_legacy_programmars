@@ -10,12 +10,12 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
-import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.programmar.VB.VB_Element;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
+import com.eagle.programmar.VB.Terminals.VB_Number;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -110,7 +110,7 @@ public class VB_ForStatement extends TokenSequence
 			current += incr;
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, incr < 0);
 		return result;
 	}
 

@@ -8,9 +8,9 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Expression;
-import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Expressions.Bash_RangeExpression;
 import com.eagle.programmar.Bash.Symbols.Bash_Identifier_Reference;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
@@ -86,7 +86,7 @@ public class Bash_ForStatement extends TokenSequence implements AbstractStatemen
 			if (start > stop) i--;
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, start > stop);
 		return result;
 	}
 }

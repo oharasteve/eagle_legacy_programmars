@@ -62,7 +62,7 @@ public class Delphi_While_Statement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, false);
 		return result;
 	}
 

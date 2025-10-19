@@ -19,6 +19,7 @@ import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.CSharp_Variable;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_PostIncrementExpression;
+import com.eagle.programmar.CSharp.Expressions.CSharp_PreIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
 import com.eagle.programmar.CSharp.Symbols.CSharp_Variable_Definition;
@@ -126,6 +127,8 @@ public class CSharp_ForStatement extends TokenSequence
 		}
 		ForLoopMetric metric = new ForLoopMetric();
 
+		CSharp_Expression increment = increments.first();
+		
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -150,11 +153,42 @@ public class CSharp_ForStatement extends TokenSequence
 				break;
 			}
 
-			interpreter.tryToInterpret(increments.first());
+			interpreter.tryToInterpret(increment);
 		}
 
-		_metrics.competedLoop(metric);
+		// Have to guess to see if it was backwards
+		boolean backwards = guessDirection(terminateCondition, increment);
+		
+		_metrics.competedLoop(metric, backwards);
 		return result;
+	}
+	
+	private static boolean guessDirection(CSharp_Expression testExpr, CSharp_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof CSharp_PostIncrementExpression)
+		{
+			CSharp_PostIncrementExpression post = (CSharp_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof CSharp_PreIncrementExpression)
+		{
+			CSharp_PreIncrementExpression pre = (CSharp_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof CSharp_RelationalExpression)
+		{
+			CSharp_RelationalExpression rel = (CSharp_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
 	}
 	
 	@Override

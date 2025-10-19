@@ -15,9 +15,13 @@ import com.eagle.programmar.AWK.AWK_Action.AWK_StatementOrComment;
 import com.eagle.programmar.AWK.AWK_Expression;
 import com.eagle.programmar.AWK.AWK_Statements.AWK_Statement;
 import com.eagle.programmar.AWK.AWK_Variable;
+import com.eagle.programmar.AWK.Expressions.AWK_PostIncrementExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_PreIncrementExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_RelationalExpression;
 import com.eagle.programmar.AWK.Terminals.AWK_EndOfLine;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.programmar.AWK.Terminals.AWK_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -107,8 +111,39 @@ public class AWK_ForStatement extends TokenSequence
 			interpreter.tryToInterpret(increment);
 		}
 
-		_metrics.competedLoop(metric);
+		// Have to guess to see if it was backwards
+		boolean backwards = guessDirection(test, increment);
+		
+		_metrics.competedLoop(metric, backwards);
 		return result;
+	}
+	
+	private static boolean guessDirection(AWK_Expression testExpr, AWK_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof AWK_PostIncrementExpression)
+		{
+			AWK_PostIncrementExpression post = (AWK_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof AWK_PreIncrementExpression)
+		{
+			AWK_PreIncrementExpression pre = (AWK_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof AWK_RelationalExpression)
+		{
+			AWK_RelationalExpression rel = (AWK_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
 	}
 	
 	@Override

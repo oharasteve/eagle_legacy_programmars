@@ -105,6 +105,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 		EagleValue current = interpreter.getEagleValue(from);
 		EagleValue stop = interpreter.getEagleValue(to);
 		EagleValue by = null;
+		boolean backwards = false;
 		
 		if (step != null && step.isPresent())
 		{
@@ -119,6 +120,10 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 			if (by != null)
 			{
 				byDbl = by.forceDoubleValue();
+				if (byDbl < 0)
+				{
+					backwards = true;
+				}
 			}
 		}
 		else
@@ -129,6 +134,10 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 			if (by != null)
 			{
 				byInt = by.forceIntegerValue();
+				if (byInt < 0)
+				{
+					backwards = true;
+				}
 			}
 		}
 		
@@ -231,7 +240,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 			}
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 }

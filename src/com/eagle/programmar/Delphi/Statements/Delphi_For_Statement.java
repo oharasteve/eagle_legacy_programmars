@@ -21,12 +21,12 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
-import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_For_Statement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
@@ -100,7 +100,7 @@ public class Delphi_For_Statement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, reverse);
 		return result;
 	}
 	

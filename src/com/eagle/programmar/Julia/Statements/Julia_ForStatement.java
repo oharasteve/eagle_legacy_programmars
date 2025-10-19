@@ -104,7 +104,7 @@ public class Julia_ForStatement extends TokenSequence
 			i += incr;
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, incr < 0);
 		return result;
 	}
 

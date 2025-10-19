@@ -13,9 +13,13 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Statement;
 import com.eagle.programmar.Go.Go_Variable;
+import com.eagle.programmar.Go.Expressions.Go_PostIncrementExpression;
+import com.eagle.programmar.Go.Expressions.Go_PreIncrementExpression;
+import com.eagle.programmar.Go.Expressions.Go_RelationalExpression;
 import com.eagle.programmar.Go.Symbols.Go_Identifier_Reference;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.programmar.Go.Terminals.Go_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -106,13 +110,44 @@ public class Go_ForStatement extends TokenSequence
 				interpreter.tryToInterpret(forLoop.increment);
 			}
 	
-			_metrics.competedLoop(metric);
+			// Have to guess to see if it was backwards
+			boolean backwards = guessDirection(forLoop.condition, forLoop.increment);
+			
+			_metrics.competedLoop(metric, backwards);
 			return result;
 		}
 		
 		throw new RuntimeException("Cannot handle this type of for loop (yet): " + forWhat);
 	}
 
+	private static boolean guessDirection(Go_Expression testExpr, Go_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof Go_PostIncrementExpression)
+		{
+			Go_PostIncrementExpression post = (Go_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof Go_PreIncrementExpression)
+		{
+			Go_PreIncrementExpression pre = (Go_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof Go_RelationalExpression)
+		{
+			Go_RelationalExpression rel = (Go_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
+	}
+	
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

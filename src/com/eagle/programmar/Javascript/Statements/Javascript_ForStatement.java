@@ -13,6 +13,9 @@ import com.eagle.programmar.Javascript.Javascript_Element;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_Type;
 import com.eagle.programmar.Javascript.Javascript_Variable;
+import com.eagle.programmar.Javascript.Expressions.Javascript_PostIncrementExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_PreIncrementExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_RelationalExpression;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
@@ -132,10 +135,41 @@ public class Javascript_ForStatement extends TokenSequence
 			interpreter.tryToInterpret(forLoop.increment);
 		}
 
-		_metrics.competedLoop(metric);
+		// Have to guess to see if it was backwards
+		boolean backwards = guessDirection(forLoop.terminateCondition, forLoop.increment);
+		
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 	
+	private static boolean guessDirection(Javascript_Expression testExpr, Javascript_Expression incrExpr)
+	{
+		AbstractToken which1 = incrExpr.getWhich();
+		if (which1 instanceof Javascript_PostIncrementExpression)
+		{
+			Javascript_PostIncrementExpression post = (Javascript_PostIncrementExpression) which1;
+			return post.operator.getValue().equals("--");
+		}
+		if (which1 instanceof Javascript_PreIncrementExpression)
+		{
+			Javascript_PreIncrementExpression pre = (Javascript_PreIncrementExpression) which1;
+			return pre.operator.getValue().equals("--");
+		}
+		
+		AbstractToken which2 = testExpr.getWhich();
+		if (which2 instanceof Javascript_RelationalExpression)
+		{
+			Javascript_RelationalExpression rel = (Javascript_RelationalExpression) which2;
+			String oper = rel.operator.getValue();
+			if (oper.equals(">") || oper.equals(">="))
+			{
+				return true;
+			}
+		}
+		
+		return false;	// Just don't know :(
+	}
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

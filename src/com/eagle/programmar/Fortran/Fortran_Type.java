@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Fortran;
 
-import com.eagle.programmar.Fortran.Fortran_Type.Fortran_DataType.Fortran_CharacterType;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
@@ -27,17 +26,18 @@ public class Fortran_Type extends TokenSequence
 	{
 		public @CHOICE Fortran_KeywordChoice XXINTEGER = new Fortran_KeywordChoice(
 				"INTEGER", "LOGICAL");
+		public @CHOICE Fortran_CharacterType XXcharType;
+	}
 
-		public @CHOICE static class Fortran_CharacterType extends TokenSequence
-		{
-			public @S(10) @DOC("6j4m0vn7r/index.html") Fortran_Keyword CHARACTER = 
-					new Fortran_Keyword("CHARACTER");
-			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) Fortran_Keyword LEN = new Fortran_Keyword("LEN");
-			public @S(40) PunctuationEquals equals;
-			public @S(50) Fortran_Number len;
-			public @S(60) PunctuationRightParen rightParen;
-		}
+	public static class Fortran_CharacterType extends TokenSequence
+	{
+		public @S(10) @DOC("6j4m0vn7r/index.html") Fortran_Keyword CHARACTER = 
+				new Fortran_Keyword("CHARACTER");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) Fortran_Keyword LEN = new Fortran_Keyword("LEN");
+		public @S(40) PunctuationEquals equals;
+		public @S(50) Fortran_Number len;
+		public @S(60) PunctuationRightParen rightParen;
 	}
 
 	public static class Fortran_Dimension extends TokenSequence

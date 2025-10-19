@@ -96,7 +96,7 @@ public class Rust_ForStatement extends TokenSequence
 			i += step; // Might be negative
 		}
 
-		_metrics.competedLoop(metric);
+		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 	

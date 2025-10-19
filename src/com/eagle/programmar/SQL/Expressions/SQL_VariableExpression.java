@@ -6,7 +6,6 @@ package com.eagle.programmar.SQL.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Variable;
-import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -29,7 +28,7 @@ public class SQL_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		Scala_Expression subscript = null;
+		AbstractExpression subscript = null;
 		return generator.newVariableExpression(variable.ids.first().getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
