@@ -6,9 +6,18 @@ package com.eagle.programmar.Lisp;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_DoFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_FormatFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_SetfFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableProgram;
+import com.eagle.transform.EagleTransformer;
 
-public class Lisp_Program extends AbstractLanguage implements EagleRunnable
+public class Lisp_Program extends AbstractLanguage
+		implements EagleRunnable, EagleTransformableProgram
 {
 	public static final String LISP = "Lisp";
 
@@ -40,5 +49,46 @@ public class Lisp_Program extends AbstractLanguage implements EagleRunnable
 		{
 			interpreter.tryToInterpret(elt);
 		}
+	}
+
+	@Override
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// First pass, just collect all the FUNCTION, SUBROUTINE and PROGRAM definitions
+		for (Lisp_SExprOrComment stmt : elements._elements)
+		{
+			AbstractToken which1 = stmt.getWhich();
+			if (which1 instanceof Lisp_Expression)
+			{
+				Lisp_Expression fn = (Lisp_Expression) which1;
+				AbstractToken which2 = fn.getWhich();
+				if (which2 instanceof Lisp_DefunFunction)
+				{
+					Lisp_DefunFunction defineFunc = (Lisp_DefunFunction) which2;
+					defineFunc.transformFunction(transformer, generator);
+				}
+				else if (which2 instanceof Lisp_SetfFunction)
+				{
+					Lisp_SetfFunction setFunc = (Lisp_SetfFunction) which2;
+					setFunc.transformStatement(transformer, generator);
+				}
+				else if (which2 instanceof Lisp_DoFunction)
+				{
+					Lisp_DoFunction doFunc = (Lisp_DoFunction) which2;
+					doFunc.transformStatement(transformer, generator);
+				}
+				else if (which2 instanceof Lisp_FormatFunction)
+				{
+					Lisp_FormatFunction fmtFunc = (Lisp_FormatFunction) which2;
+					fmtFunc.transformStatement(transformer, generator);
+				}
+				else
+				{
+					// Hopefully, it is a user-defined function
+				}
+			}
+		}
+
+		return generator.getTransfomedProgram();
 	}
 }
