@@ -44,6 +44,7 @@ import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
+import com.eagle.programmar.Python.Statements.Python_MatchStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock;
@@ -364,6 +365,15 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	{
 		Python_ReturnStatement retStmt = new Python_ReturnStatement();
 		return retStmt.generateReturn(ret, source);
+	}
+
+	@Override
+	public Python_ComplexStatement newSwitchStatement(Python_Expression expr,
+			ArrayList<Python_Expression> values, ArrayList<ArrayList<Python_ComplexStatement>> cases,
+			ArrayList<Python_ComplexStatement> defaultCase, AbstractToken source)
+	{
+		Python_MatchStatement matchStmt = new Python_MatchStatement();
+		return matchStmt.generateMatch(expr, values, cases, defaultCase, source);
 	}
 
 	@Override

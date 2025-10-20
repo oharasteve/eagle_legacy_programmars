@@ -20,6 +20,7 @@ import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_GlobalStatement;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_ImportStatement;
+import com.eagle.programmar.Python.Statements.Python_MatchStatement;
 import com.eagle.programmar.Python.Statements.Python_PassStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_RaiseStatement;
@@ -78,6 +79,7 @@ public class Python_ComplexStatement extends TokenSequence
 		public @CHOICE Python_GlobalStatement XXglobalStatement;
 		public @CHOICE Python_IfStatement XXifStatement;
 		public @CHOICE Python_ImportStatement XXimportStatement;
+		public @CHOICE Python_MatchStatement XXmatchStatement;
 		public @CHOICE Python_PassStatement XXpassStatement;
 		// public @CHOICE Python_PrintStatement XXprintStatement;  // Added in by Python2_Program
 		public @CHOICE Python_QuitStatement XXquitStatement;

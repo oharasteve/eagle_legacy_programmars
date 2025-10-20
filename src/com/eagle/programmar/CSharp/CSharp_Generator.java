@@ -48,6 +48,7 @@ import com.eagle.programmar.CSharp.Statements.CSharp_ForStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_IfStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_ReturnStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_StatementBlock;
+import com.eagle.programmar.CSharp.Statements.CSharp_SwitchStatement;
 import com.eagle.programmar.CSharp.Statements.CSharp_WhileStatement;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Character_Literal;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
@@ -383,6 +384,15 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return retStmt.generateReturn(ret, source);
 	}
 
+	@Override
+	public CSharp_Statement newSwitchStatement(CSharp_Expression expr,
+			ArrayList<CSharp_Expression> values, ArrayList<ArrayList<CSharp_Statement>> cases,
+			ArrayList<CSharp_Statement> defaultCase, AbstractToken source)
+	{
+		CSharp_SwitchStatement switchStmt = new CSharp_SwitchStatement();
+		return switchStmt.generateSwitch(expr, values, cases, defaultCase, source);
+	}
+	
 	@Override
 	public CSharp_Statement newWhileStatement1(CSharp_Expression condition,
 			CSharp_Statement action, AbstractToken source)

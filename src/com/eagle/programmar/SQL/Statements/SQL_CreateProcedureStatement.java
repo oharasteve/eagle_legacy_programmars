@@ -141,27 +141,29 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 	{
 		// Are there any global variables we need to declare?
 		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
+		if (transformer._metrics != null)
 		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
+			ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+			for (AssignMetrics met : asgMetrics)
 			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
-
-				AbstractExpression initExpr = null;
-				if (typE == TypeEnum.STRING_HASH)
+				TypeEnum typE = met.uniqueType();
+				if (typE != TypeEnum.VOID)
 				{
-					// Need to create an empty hashmap
-					initExpr = generator.newClassCreation(abstrType, null, this);
+					AbstractType abstrType = generator.transformType(typE, null, this);
+	
+					AbstractExpression initExpr = null;
+					if (typE == TypeEnum.STRING_HASH)
+					{
+						// Need to create an empty hashmap
+						initExpr = generator.newClassCreation(abstrType, null, this);
+					}
+					
+					// System.err.println("****** Found local var " + met._symbolName);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+							null, abstrType, initExpr, this);
+					generator.addStatement(dataStmt, this);
 				}
-				
-				// System.err.println("****** Found local var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
-						null, abstrType, initExpr, this);
-				generator.addStatement(dataStmt, this);
 			}
 		}
-
 	}
 }

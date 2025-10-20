@@ -12,13 +12,6 @@ import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Java.Java_Class.Java_ClassElement;
 import com.eagle.programmar.Java.Java_Method.Java_MethodImplementation;
 import com.eagle.programmar.Java.Java_Method.Java_MethodType;
-import com.eagle.programmar.Java.Methods.Java_EndsWithMethod;
-import com.eagle.programmar.Java.Methods.Java_IndexOfMethod;
-import com.eagle.programmar.Java.Methods.Java_LengthMethod;
-import com.eagle.programmar.Java.Methods.Java_StartsWithMethod;
-import com.eagle.programmar.Java.Methods.Java_SubstringMethod;
-import com.eagle.programmar.Java.Methods.Java_ToStringMethod;
-import com.eagle.programmar.Java.Methods.Java_TrimMethod;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Expressions.Java_AssignmentExpression;
 import com.eagle.programmar.Java.Expressions.Java_BitwiseExpression;
@@ -42,6 +35,13 @@ import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_PrintFunction;
 import com.eagle.programmar.Java.Functions.Java_StringFormatFunc;
+import com.eagle.programmar.Java.Methods.Java_EndsWithMethod;
+import com.eagle.programmar.Java.Methods.Java_IndexOfMethod;
+import com.eagle.programmar.Java.Methods.Java_LengthMethod;
+import com.eagle.programmar.Java.Methods.Java_StartsWithMethod;
+import com.eagle.programmar.Java.Methods.Java_SubstringMethod;
+import com.eagle.programmar.Java.Methods.Java_ToStringMethod;
+import com.eagle.programmar.Java.Methods.Java_TrimMethod;
 import com.eagle.programmar.Java.Statements.Java_BreakStatement;
 import com.eagle.programmar.Java.Statements.Java_DoWhileStatement;
 import com.eagle.programmar.Java.Statements.Java_ExitStatement;
@@ -50,6 +50,7 @@ import com.eagle.programmar.Java.Statements.Java_ForStatement;
 import com.eagle.programmar.Java.Statements.Java_IfStatement;
 import com.eagle.programmar.Java.Statements.Java_ReturnStatement;
 import com.eagle.programmar.Java.Statements.Java_StatementBlock;
+import com.eagle.programmar.Java.Statements.Java_SwitchStatement;
 import com.eagle.programmar.Java.Statements.Java_WhileStatement;
 import com.eagle.programmar.Java.Terminals.Java_Character_Literal;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
@@ -390,6 +391,15 @@ public class Java_Generator
 	{
 		Java_ReturnStatement retStmt = new Java_ReturnStatement();
 		return retStmt.generateReturn(ret, source);
+	}
+
+	@Override
+	public Java_Statement newSwitchStatement(Java_Expression expr,
+			ArrayList<Java_Expression> values, ArrayList<ArrayList<Java_Statement>> cases,
+			ArrayList<Java_Statement> defaultCase, AbstractToken source)
+	{
+		Java_SwitchStatement switchStmt = new Java_SwitchStatement();
+		return switchStmt.generateSwitch(expr, values, cases, defaultCase, source);
 	}
 
 	@Override

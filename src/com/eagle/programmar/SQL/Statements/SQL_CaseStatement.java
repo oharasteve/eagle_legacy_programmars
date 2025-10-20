@@ -15,10 +15,13 @@ import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -102,42 +105,36 @@ public class SQL_CaseStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null; // TODO
+		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
+		SQL_Identifier_Reference id = var.variable.ids.first();
+
+		ArrayList<AbstractExpression> values = new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> cases = new ArrayList<ArrayList<AbstractStatement>>();
+		for (int i = 0; i < whenThens.size(); i++)
+		{
+			SQL_CaseWhenClause when = whenThens._elements.get(i);
+			ArrayList<AbstractStatement> thisCase = new ArrayList<AbstractStatement>();
+			values.add(transformer.transformExpression(generator, when.whenExpression));
+			
+			AbstractExpression thisValue = transformer.transformExpression(generator, when.thenExpression);
+			AbstractExpression thisAsgExpr = generator.newAssignmentExpression(id.getValue(),
+					SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, thisValue, when);
+			thisCase.add(generator.newExpressionStatement(thisAsgExpr, when));
+			
+			cases.add(thisCase);
+		}
 		
-//		AbstractExpression cond = transformer.transformExpression(generator, condition);
-//		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
-//		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-//		
-//		for (SQL_StatementOrComment thenStatement : statements._elements)
-//		{
-//			ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator,
-//					thenStatement.getWhich());
-//			if (stmts1 != null)
-//			{
-//				for (AbstractStatement stmt1 : stmts1)
-//				{
-//					ifTrue.add(stmt1);
-//				}
-//			}
-//		}
-//		
-//		if (elseClause != null && elseClause.isPresent())
-//		{
-//			for (SQL_StatementOrComment elseStatement : elseClause.statements._elements)
-//			{
-//				ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator,
-//						elseStatement.getWhich());
-//				if (stmts2 != null)
-//				{
-//					for (AbstractStatement stmt2 : stmts2)
-//					{
-//						ifFalse.add(stmt2);
-//					}
-//				}
-//			}
-//		}
-//		
-//		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-//		return stmt;
+		ArrayList<AbstractStatement> defaultCase = null;
+		if (elseClause != null && elseClause.isPresent())
+		{
+			defaultCase = new ArrayList<AbstractStatement>();
+			AbstractExpression defaultValue = transformer.transformExpression(generator, elseClause.elseExpression);
+			AbstractExpression defaultAsgExpr = generator.newAssignmentExpression(id.getValue(),
+					SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, defaultValue, elseClause);
+			defaultCase.add(generator.newExpressionStatement(defaultAsgExpr, elseClause));
+		}
+		
+		AbstractStatement stmt = generator.newSwitchStatement(newExpr, values, cases, defaultCase, this);
+		return stmt;
 	}
 }
