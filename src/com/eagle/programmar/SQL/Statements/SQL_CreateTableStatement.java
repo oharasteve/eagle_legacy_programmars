@@ -5,7 +5,7 @@ package com.eagle.programmar.SQL.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleTable;
+import com.eagle.programmar.SQL.SQL_Table;
 import com.eagle.programmar.SQL.SQL_Type;
 import com.eagle.programmar.SQL.Statements.SQL_CreateTableField.SQL_CreateFieldKey;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
@@ -115,7 +115,7 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 		}
 		SQL_TableNormal normal = (SQL_TableNormal) type.getWhich();
 
-		EagleTable table = new EagleTable();
+		SQL_Table table = new SQL_Table();
 		
 		int numFields = normal.createFields.getPrimaryCount();
 		for (int i = 0; i < numFields; i++)

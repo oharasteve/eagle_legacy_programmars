@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleTable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
+import com.eagle.programmar.SQL.SQL_Table;
 import com.eagle.programmar.SQL.Statements.SQL_SelectClause;
 import com.eagle.programmar.SQL.Statements.SQL_SelectClause.SQL_SelectFrom;
 import com.eagle.programmar.SQL.Statements.SQL_SelectClause.SQL_SelectWhere;
@@ -61,11 +61,11 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 		
 		// what, from and where are now all set
 		EagleValue val = interpreter.findSymbol(from.table.getValue());
-		if (! val.isTable())
+		if (! (val instanceof SQL_Table))
 		{
 			throw new RuntimeException("Can only select from a Table");
 		}
-		EagleTable stable = (EagleTable) val;
+		SQL_Table stable = (SQL_Table) val;
 		
 		for (int row = 0; row < stable.getNumberRows(); row++)
 		{

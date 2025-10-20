@@ -9,9 +9,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
-import com.eagle.math.EagleTable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
+import com.eagle.programmar.SQL.SQL_Table;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.SeparatedList;
@@ -80,11 +80,11 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 		// Find the right table
 		String tableName = table.getValue().toUpperCase();
 		EagleValue val = interpreter.findSymbol(tableName);
-		if (! val.isTable())
+		if (! (val instanceof SQL_Table))
 		{
 			throw new RuntimeException("Can only insert values into a Table");
 		}
-		EagleTable stable = (EagleTable) val;
+		SQL_Table stable = (SQL_Table) val;
 		
 		if (! (clause.getWhich() instanceof SQL_InsertValues))
 		{
