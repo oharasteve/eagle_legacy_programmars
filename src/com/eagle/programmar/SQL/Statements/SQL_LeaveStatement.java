@@ -8,9 +8,14 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class SQL_LeaveStatement extends TokenSequence implements EagleRunnableWithResult
+public class SQL_LeaveStatement extends TokenSequence
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) SQL_Keyword LEAVE = new SQL_Keyword("LEAVE");
 	public @S(20) SQL_Identifier_Reference label;
@@ -20,5 +25,11 @@ public class SQL_LeaveStatement extends TokenSequence implements EagleRunnableWi
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		return Eagle_Statement_Result.BREAK;
+	}
+	
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newBreakStatement(LEAVE);
 	}
 }
