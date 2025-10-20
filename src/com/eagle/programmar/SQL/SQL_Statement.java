@@ -10,6 +10,7 @@ import com.eagle.programmar.SQL.Statements.SQL_AlterStatement;
 import com.eagle.programmar.SQL.Statements.SQL_AtAtStatement;
 import com.eagle.programmar.SQL.Statements.SQL_BeginStatement;
 import com.eagle.programmar.SQL.Statements.SQL_CallStatement;
+import com.eagle.programmar.SQL.Statements.SQL_CaseStatement;
 import com.eagle.programmar.SQL.Statements.SQL_ColumnStatement;
 import com.eagle.programmar.SQL.Statements.SQL_CreateIndexStatement;
 import com.eagle.programmar.SQL.Statements.SQL_CreateProcedureStatement;
@@ -46,6 +47,7 @@ public class SQL_Statement extends TokenChooser
 	public @CHOICE SQL_AtAtStatement XXatAtStmt;
 	public @CHOICE SQL_BeginStatement XXbeginStmt;
 	public @CHOICE SQL_CallStatement XXcallStmt;
+	public @CHOICE SQL_CaseStatement XXcaseStmt;
 	public @CHOICE SQL_ColumnStatement XXcolumnStmt;
 	public @CHOICE SQL_CreateIndexStatement XXcreateIndexStmt;
 	public @CHOICE SQL_CreateProcedureStatement XXcreateProcedureStmt;
