@@ -3,14 +3,13 @@
 
 package com.eagle.programmar.SQL.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleTable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
-import com.eagle.programmar.SQL.SQL_StateMachine;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Field;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Row;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Table;
 import com.eagle.programmar.SQL.Statements.SQL_SelectClause;
 import com.eagle.programmar.SQL.Statements.SQL_SelectClause.SQL_SelectFrom;
 import com.eagle.programmar.SQL.Statements.SQL_SelectClause.SQL_SelectWhere;
@@ -28,8 +27,6 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		SQL_StateMachine state = (SQL_StateMachine) interpreter._state;
-		
 		SQL_Expression what = innerSelect.selectStatement.what.first().expr;
 		SQL_SelectFrom from = null;
 		SQL_Expression where = null;
@@ -63,22 +60,22 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 		}
 		
 		// what, from and where are now all set
-		String tableName = from.table.getValue().toUpperCase();
-		if (! (state._tables.containsKey(tableName)))
+		EagleValue val = interpreter.findSymbol(from.table.getValue());
+		if (! val.isTable())
 		{
-			throw new RuntimeException("Unable to find a table named " + tableName);
+			throw new RuntimeException("Can only select from a Table");
 		}
-		SQL_Table table = state._tables.get(tableName);
+		EagleTable stable = (EagleTable) val;
 		
-		for (SQL_Row row : table._rows)
+		for (int row = 0; row < stable.getNumberRows(); row++)
 		{
-			int numFields = table._fields.size();
-			for (int fld = 0; fld < numFields; fld++)
+			ArrayList<EagleValue> values = stable.getRow(row);
+			for (int col = 0; col < stable.getNumberColumns(); col++)
 			{
-				EagleValue value = row._values.get(fld);
-				SQL_Field field = table._fields.get(fld);
+				EagleValue value = values.get(col);
+				String columnName = stable.getColumnName(col);
 				// The -1 means no subscript
-				interpreter._symbolTable.setSymbol(this, field._name, -1, value);
+				interpreter._symbolTable.setSymbol(this, columnName, -1, value);
 			}
 			
 			// Run the condition for this row. Done if it matches.
@@ -87,10 +84,11 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 				EagleValue result = interpreter.getEagleValue(what);
 				interpreter.pushEagleValue(result);
 				
-				// Remove all the fields that we added
-				for (SQL_Field field : table._fields)
+				// Remove all the symbols that we added
+				for (int col = 0; col < stable.getNumberColumns(); col++)
 				{
-					interpreter._symbolTable.removeSymbol(field._name);
+					String columnName = stable.getColumnName(col);
+					interpreter._symbolTable.removeSymbol(columnName);
 				}
 				return;
 			}

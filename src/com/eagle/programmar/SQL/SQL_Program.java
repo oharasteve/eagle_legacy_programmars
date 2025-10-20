@@ -45,9 +45,6 @@ public class SQL_Program extends AbstractLanguage
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		SQL_StateMachine state = new SQL_StateMachine();
-		interpreter._state = state;
-
 		// First pass, just collect all the CREATE PROCEDURE calls
 		for (SQL_StatementOrComment elt : statements._elements)
 		{

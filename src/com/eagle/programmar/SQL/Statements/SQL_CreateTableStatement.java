@@ -3,16 +3,10 @@
 
 package com.eagle.programmar.SQL.Statements;
 
-import java.util.ArrayList;
-
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.SQL.SQL_StateMachine;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Field;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_FieldEnum;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Row;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Table;
-import com.eagle.programmar.SQL.SQL_Type.SQL_BaseType;
+import com.eagle.math.EagleTable;
+import com.eagle.programmar.SQL.SQL_Type;
 import com.eagle.programmar.SQL.Statements.SQL_CreateTableField.SQL_CreateFieldKey;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Symbols.SQL_Table_Definition;
@@ -28,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_CreateTableStatement extends TokenSequence implements EagleRunnable
 {
@@ -114,46 +109,23 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		SQL_StateMachine state = (SQL_StateMachine) interpreter._state;
-		
 		if (! (type.getWhich() instanceof SQL_TableNormal))
 		{
 			throw new RuntimeException("Can only Create simple Tables");
 		}
 		SQL_TableNormal normal = (SQL_TableNormal) type.getWhich();
 
-		SQL_Table table = new SQL_Table();
-		table._rows = new ArrayList<SQL_Row>();
-		table._fields = new ArrayList<SQL_Field>();
+		EagleTable table = new EagleTable();
 		
 		int numFields = normal.createFields.getPrimaryCount();
 		for (int i = 0; i < numFields; i++)
 		{
 			SQL_CreateTableField fieldDef = normal.createFields.getPrimaryElement(i);
-			if (! (fieldDef.fieldType.getWhich() instanceof SQL_BaseType))
-			{
-				throw new RuntimeException("Can't handle field type: " + fieldDef.fieldType.toString());
-			}
-			SQL_BaseType baseType = (SQL_BaseType) fieldDef.fieldType.getWhich();
-					
-			SQL_Field field = new SQL_Field();
-			field._name = fieldDef.fieldName.getValue().toUpperCase();
-			switch (baseType.baseType.toString())
-			{
-			case "INT":
-			case "INTEGER":
-				field._type = SQL_FieldEnum.SQL_FieldInteger;
-				break;
-			case "VARCHAR":
-				field._type = SQL_FieldEnum.SQL_FieldString;
-				break;
-			default:
-				throw new RuntimeException("Can't handle field type: " + baseType.baseType);
-			}
-			
-			table._fields.add(field);
+			String colName = fieldDef.fieldName.getValue().toUpperCase();
+			TypeEnum colType = SQL_Type.findTypeEnum(fieldDef.fieldType);
+			table.addColumn(colName, colType);
 		}
 		
-		state._tables.put(tableName.getValue().toUpperCase(), table);
+		interpreter.setSymbol(normal, tableName.getValue().toUpperCase(), table);
 	}
 }

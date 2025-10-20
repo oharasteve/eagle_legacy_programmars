@@ -58,31 +58,32 @@ public class SQL_Type extends TokenChooser
 		public @S(50) PunctuationRightParen rightParen;
 	}
 	
-	public static AbstractType findType(EagleGenerator generator, SQL_Type type)
+	public static TypeEnum findTypeEnum(SQL_Type type)
 	{
-		TypeEnum newType = TypeEnum.OTHER;
-		
 		if (type.getWhich() instanceof SQL_BaseType)
 		{
 			SQL_BaseType base = (SQL_BaseType) type.getWhich();
-			switch (base.baseType.getValue().toLowerCase())
+			switch (base.baseType.getValue().toUpperCase())
 			{
 			case "BOOL":
 			case "BOOLEAN":
 			case "TINYINT":
-				newType = TypeEnum.BOOLEAN;
-				break;
+				return TypeEnum.BOOLEAN;
 			case "INT":
 			case "INTEGER":
-				newType = TypeEnum.INTEGER;
-				break;
+				return TypeEnum.INTEGER;
 			case "VARCHAR":
 			case "VARCHAR2":
-				newType = TypeEnum.STRING;
-				break;
+				return TypeEnum.STRING;
 			}
 		}
 		
+		return TypeEnum.OTHER;
+	}
+	
+	public static AbstractType findAbstractType(EagleGenerator generator, SQL_Type type)
+	{
+		TypeEnum newType = findTypeEnum(type);
 		return generator.transformType(newType, null, null);
 	}
 }

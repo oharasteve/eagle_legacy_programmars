@@ -110,7 +110,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 			for (int i = 0; i < nParams; i++)
 			{
 				SQL_ProcedureParameter param = params.getPrimaryElement(i);
-				AbstractType paramType = SQL_Type.findType(generator, param.type);
+				AbstractType paramType = SQL_Type.findAbstractType(generator, param.type);
 				generator.addMethodParameter(paramType, param.param.getValue());
 			}
 		}

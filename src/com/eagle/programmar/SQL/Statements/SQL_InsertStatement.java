@@ -9,12 +9,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
+import com.eagle.math.EagleTable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.SQL.SQL_Expression;
-import com.eagle.programmar.SQL.SQL_StateMachine;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_FieldEnum;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Row;
-import com.eagle.programmar.SQL.SQL_StateMachine.SQL_Table;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.SeparatedList;
@@ -25,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 {
@@ -79,15 +77,14 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		SQL_StateMachine state = (SQL_StateMachine) interpreter._state;
-		
 		// Find the right table
 		String tableName = table.getValue().toUpperCase();
-		if (! state._tables.containsKey(tableName))
+		EagleValue val = interpreter.findSymbol(tableName);
+		if (! val.isTable())
 		{
-			throw new RuntimeException("Unable to find table " + tableName);
+			throw new RuntimeException("Can only insert values into a Table");
 		}
-		SQL_Table stable = state._tables.get(tableName);
+		EagleTable stable = (EagleTable) val;
 		
 		if (! (clause.getWhich() instanceof SQL_InsertValues))
 		{
@@ -95,33 +92,32 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 		}
 		SQL_InsertValues insert = (SQL_InsertValues) clause.getWhich();
 		int numValues = insert.values.getPrimaryCount();
-		int numFields = stable._fields.size();
-		if (numValues != numFields)
+		int numColumns = stable.getNumberColumns();
+		if (numValues != numColumns)
 		{
 			throw new RuntimeException("Number of fields to Insert is " + numValues +
-					", but should be " + numFields);
+					", but should be " + numColumns);
 		}
 		
-		SQL_Row row = new SQL_Row();
-		row._values = new ArrayList<EagleValue>();
-		stable._rows.add(row);
-		for (int i = 0; i < numValues; i++)
+		ArrayList<EagleValue> values = new ArrayList<EagleValue>();
+		for (int col = 0; col < numValues; col++)
 		{
-			SQL_Expression expr = insert.values.getPrimaryElement(i);
-			SQL_FieldEnum type = stable._fields.get(i)._type;
+			SQL_Expression expr = insert.values.getPrimaryElement(col);
+			TypeEnum type = stable.getColumnType(col);
 			switch (type)
 			{
-			case SQL_FieldInteger:
-				int val = interpreter.getIntValue(expr);
-				row._values.add(new EagleInteger(val));
+			case INTEGER:
+				int intVal = interpreter.getIntValue(expr);
+				values.add(new EagleInteger(intVal));
 				break;
-			case SQL_FieldString:
-				String str = interpreter.getStrValue(expr);
-				row._values.add(new EagleString(str));
+			case STRING:
+				String strVal = interpreter.getStrValue(expr);
+				values.add(new EagleString(strVal));
 				break;
 			default:
 				throw new RuntimeException("Unexpected field type: " + type.toString());
 			}
 		}
+		stable.addRow(values);
 	}
 }
