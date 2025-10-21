@@ -78,17 +78,6 @@ public class SQL_CallStatement extends TokenSequence
 				for (int i = 0; i < argCount; i++)
 				{
 					SQL_ProcedureParameter param = proc.params.getPrimaryElement(i);
-
-//					// Skip any OUT parameters that don't have a value
-//					if (param.OUT != null && param.OUT.isPresent() &&
-//							param.OUT.getValue().toUpperCase().equals("OUT"))
-//					{
-//						if (interpreter.findSymbol(name) == null)
-//						{
-//							continue;
-//						}
-//					}
-					
 					EagleValue val = interpreter.getEagleValue(func.args.getPrimaryElement(i));
 					interpreter.setSymbol(param.param, param.param.getValue(), val);
 					argTypes.add(val.typeName());
@@ -161,6 +150,25 @@ public class SQL_CallStatement extends TokenSequence
 		{
 			argCount = func.args.getPrimaryCount();
 		}
+
+//		// Are any parameters defined as OUT? Can only be one, and it must be returned not passed in
+//		SQL_ProcedureParameter outParam = null;
+//		for (int i = 0; i < argCount; i++)
+//		{
+//			SQL_ProcedureParameter param = proc.params.getPrimaryElement(i);
+//			if (param.OUT != null && param.OUT.isPresent())
+//			{
+//				if (param.OUT.toString().toUpperCase().equals("OUT"))
+//				{
+//					if (outParam != null)
+//					{
+//						throw new RuntimeException("Can only handle one OUT parameter at a time");
+//					}
+//					outParam = param;
+//				}
+//			}
+//		}
+		
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 		for (int i = 0; i < argCount; i++)
 		{
