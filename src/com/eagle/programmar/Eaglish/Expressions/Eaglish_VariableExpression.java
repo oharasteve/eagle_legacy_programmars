@@ -32,7 +32,7 @@ public class Eaglish_VariableExpression extends PrimaryOperator
 	{
 		AbstractExpression subscript = null;
 		AbstractToken which = variable.var.getWhich();
-		if (! (which instanceof Eaglish_Identifier_Reference))
+		if (!(which instanceof Eaglish_Identifier_Reference))
 		{
 			throw new RuntimeException("Can only handle variables");
 		}

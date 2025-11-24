@@ -19,7 +19,7 @@ public class Java_ToUpperCaseMethod extends PrecedenceOperator implements EagleR
 	public @S(30) Java_KeywordChoice TOUPPER = new Java_KeywordChoice("toLowerCase", "toUpperCase");
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

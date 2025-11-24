@@ -83,7 +83,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		public @S(10) CSharp_Keyword EXTENDS = new CSharp_Keyword("extends");
 		public @S(20) CSharp_Identifier_Reference typeName;
 	}
-	
+
 	// Convert "double" to a CSharp_Type representing a double
 	public static CSharp_Type newPrimitiveType(String name)
 	{
@@ -92,7 +92,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		type.typeName.setWhich(new CSharp_KeywordChoice(name));
 		return type;
 	}
-	
+
 	// Convert "foo" to a CSharp_Type representing the user class foo
 	public static CSharp_Type newIdentifierType(String name)
 	{
@@ -104,14 +104,14 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		type.typeName.setWhich(ids);
 		return type;
 	}
-	
+
 	public static CSharp_Type transformType(TypeEnum type, String typeName, AbstractToken source)
 	{
 		if (type == null)
 		{
 			return null;
 		}
-		
+
 		switch (type)
 		{
 		case BOOLEAN:
@@ -135,7 +135,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 			throw new RuntimeException("Can't transform type: " + type);
 		}
 	}
-	
+
 	public static CSharp_Type transformTypeArray(TypeEnum type)
 	{
 		CSharp_ArrayType array = new CSharp_ArrayType();
@@ -147,7 +147,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		newType.arrayTypes.setPresent(true);
 		return newType;
 	}
-	
+
 	public static CSharp_Type transformTypeHash(TypeEnum type)
 	{
 		CSharp_Type newType = new CSharp_Type();
@@ -157,14 +157,14 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 		idList.typeName.setValue("System.Collections.Generic.Dictionary");
 		newType.typeName = new CSharp_TypeName();
 		newType.typeName.setWhich(idList);
-		
+
 		newType.genericType = new CSharp_GenericType();
 		newType.genericType.setPresent(true);
 		newType.genericType.subType = new SeparatedList<CSharp_Type, PunctuationComma>();
 		newType.genericType.subType.addPrimaryElement(newPrimitiveType("int"));
 		newType.genericType.subType.addSecondaryElement(new PunctuationComma());
 		newType.genericType.subType.addPrimaryElement(newPrimitiveType("string"));
-		
+
 		return newType;
 	}
 
@@ -197,7 +197,7 @@ public class CSharp_Type extends TokenSequence implements AbstractType
 				break;
 			}
 		}
-		
+
 		return generator.transformType(newType, null, null);
 	}
 }

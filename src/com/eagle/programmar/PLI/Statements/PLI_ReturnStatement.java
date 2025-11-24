@@ -20,7 +20,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class PLI_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("7.48") PLI_Keyword RETURN = new PLI_Keyword("RETURN");
 	public @S(20) @OPT PLI_Expression expression;
@@ -30,7 +30,7 @@ public class PLI_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expression);
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{

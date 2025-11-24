@@ -58,7 +58,7 @@ public class Javascript_StartsWith extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof Javascript_Identifier_Reference))
+		if (!(which instanceof Javascript_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}
@@ -71,7 +71,7 @@ public class Javascript_StartsWith extends PrimaryOperator
 		{
 			theSC = transformer.transformExpression(generator, scExpr);
 		}
-		
+
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}

@@ -28,7 +28,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Python_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-if-statement") @NOSPACE Python_Keyword IF = new Python_Keyword("if");
 	public @S(20) Python_Expression condition;
@@ -58,7 +58,7 @@ public class Python_IfStatement extends TokenSequence
 		public @S(40) @NOSPACE PunctuationColon colon;
 		public @S(50) @PYDENT Python_StatementBlock ifElseStatements;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
@@ -70,7 +70,7 @@ public class Python_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (ifElif != null)
 			{
 				for (Python_IfElif elif : ifElif._elements)
@@ -78,7 +78,7 @@ public class Python_IfStatement extends TokenSequence
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELIF));
 				}
 			}
-			
+
 			if (ifElse != null && ifElse.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElse.ELSE));
@@ -134,12 +134,12 @@ public class Python_IfStatement extends TokenSequence
 			EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
-		
+
 		if (ifElif != null && ifElif.size() > 0)
 		{
 			throw new RuntimeException("if/elif is not yet implemented in Python");
 		}
-		
+
 		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
 				ifThenStatements);
 
@@ -152,14 +152,13 @@ public class Python_IfStatement extends TokenSequence
 
 		return generator.newIfStatement(cond, thenParts, elseParts, this);
 	}
-	
 
 	public Python_ComplexStatement generateIfElse1(Python_Expression cond,
 			Python_ComplexStatement thenStmt, Python_ComplexStatement elseStmt, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> thens = new ArrayList<Python_ComplexStatement>();
 		thens.add(thenStmt);
-		
+
 		ArrayList<Python_ComplexStatement> elses = null;
 		if (elseStmt != null)
 		{
@@ -169,6 +168,7 @@ public class Python_IfStatement extends TokenSequence
 
 		return generateIfElse(cond, thens, elses, source);
 	}
+
 	public Python_ComplexStatement generateIfElse(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> thenStmts, ArrayList<Python_ComplexStatement> elseSmts,
 			AbstractToken source)
@@ -184,7 +184,7 @@ public class Python_IfStatement extends TokenSequence
 		{
 			thenMulti.statements.addToken(stmt);
 		}
-				
+
 		if (elseSmts != null && elseSmts.size() > 0)
 		{
 			this.ifElse = new Python_IfElse();

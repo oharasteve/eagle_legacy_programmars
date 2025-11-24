@@ -51,8 +51,8 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class CSharp_ForStatement extends TokenSequence
-			implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-					EagleTransformableStatement
+		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
+		EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOR = new CSharp_Keyword("for");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -79,13 +79,13 @@ public class CSharp_ForStatement extends TokenSequence
 		public @S(20) CSharp_Variable_Definition variable;
 		public @S(30) @OPT CSharp_ForTypeInit equalsInit;
 	}
-	
+
 	public static class CSharp_ForWithoutType extends TokenSequence
 	{
 		public @S(10) CSharp_Variable_Definition variable;
 		public @S(20) CSharp_ForTypeInit equalsInit;
 	}
-	
+
 	public static class CSharp_ForTypeInit extends TokenSequence
 	{
 		public @S(10) PunctuationEquals equals;
@@ -128,7 +128,7 @@ public class CSharp_ForStatement extends TokenSequence
 		ForLoopMetric metric = new ForLoopMetric();
 
 		CSharp_Expression increment = increments.first();
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -158,11 +158,11 @@ public class CSharp_ForStatement extends TokenSequence
 
 		// Have to guess to see if it was backwards
 		boolean backwards = guessDirection(terminateCondition, increment);
-		
+
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	private static boolean guessDirection(CSharp_Expression testExpr, CSharp_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -176,7 +176,7 @@ public class CSharp_ForStatement extends TokenSequence
 			CSharp_PreIncrementExpression pre = (CSharp_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof CSharp_RelationalExpression)
 		{
@@ -187,10 +187,10 @@ public class CSharp_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -212,13 +212,13 @@ public class CSharp_ForStatement extends TokenSequence
 				varName = withoutType.variable.getValue();
 				forInit = withoutType.equalsInit.initialExpr;
 			}
-			
+
 			if (forInit != null)
 			{
 				AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
 				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-				
+
 				if (this.increments.getPrimaryCount() == 1)
 				{
 					AbstractExpression termExpr = transformer.transformExpression(generator, terminateCondition);
@@ -229,10 +229,10 @@ public class CSharp_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
-	
+
 	public CSharp_Statement generateForLoop1(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			CSharp_Statement act, AbstractToken source)
@@ -256,11 +256,11 @@ public class CSharp_ForStatement extends TokenSequence
 		forStmt.increments = loopIncrements;
 		forStmt.rightParen = new PunctuationRightParen();
 		forStmt.action = act;
-		
+
 		forStmt.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
-	
+
 	public CSharp_Statement generateForLoop(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
@@ -270,7 +270,7 @@ public class CSharp_ForStatement extends TokenSequence
 		return generateForLoop1(initExpression, condExpression, incrExpression,
 				stmt, source);
 	}
-	
+
 	public CSharp_Statement generateForRange1(CSharp_Variable var, TypeEnum type,
 			CSharp_Expression fromExpression, RelationalEnum relOp, CSharp_Expression toExpression,
 			CSharp_Expression delta, CSharp_Statement act, AbstractToken source)
@@ -309,11 +309,11 @@ public class CSharp_ForStatement extends TokenSequence
 		else
 		{
 			AbstractToken whichDelta = delta.getWhich();
-			if (! (whichDelta instanceof CSharp_Number))
+			if (!(whichDelta instanceof CSharp_Number))
 			{
 				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
 			}
-			
+
 			CSharp_AssignmentExpression asgExp2 = new CSharp_AssignmentExpression();
 			loopIncr = asgExp2.generateAssignment(var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
@@ -322,12 +322,12 @@ public class CSharp_ForStatement extends TokenSequence
 		CSharp_VariableExpression tempVar = new CSharp_VariableExpression();
 		tempVar.variable = var;
 		CSharp_Expression varExpr = CSharp_Generator.wrapExpression(tempVar);
-		
+
 		CSharp_RelationalExpression relExpr = new CSharp_RelationalExpression();
 		relExpr.generateRelational(null, varExpr, relOp, toExpression, toExpression);
 		CSharp_Expression untilCondition = CSharp_Generator.wrapExpression(relExpr);
 		CSharp_Expression loopTest = untilCondition;
-				
+
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
 		forStmt.initial = initializer;
@@ -338,11 +338,11 @@ public class CSharp_ForStatement extends TokenSequence
 		forStmt.increments = loopIncrements;
 		forStmt.rightParen = new PunctuationRightParen();
 		forStmt.action = act;
-		
+
 		forStmt.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
-	
+
 	public CSharp_Statement generateForRange(CSharp_Variable var, TypeEnum type,
 			CSharp_Expression fromExpression, RelationalEnum relOper, CSharp_Expression toExpression,
 			CSharp_Expression delta, ArrayList<CSharp_Statement> actions, AbstractToken source)
@@ -357,7 +357,7 @@ public class CSharp_ForStatement extends TokenSequence
 			stmtOrComment.setWhich(stmt);
 			block.statements.addToken(stmtOrComment);
 		}
-		
+
 		return generateForRange1(var, type, fromExpression, relOper, toExpression,
 				delta, CSharp_Generator.wrapStatement(block), source);
 	}

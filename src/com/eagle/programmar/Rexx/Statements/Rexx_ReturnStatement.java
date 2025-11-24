@@ -18,7 +18,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Rexx_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("instructions-return") Rexx_Keyword RETURN = new Rexx_Keyword("RETURN");
 	public @S(20) @OPT Rexx_Expression expr;

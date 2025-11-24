@@ -17,7 +17,7 @@ public class RPGFree_Control extends TokenSequence
 	public @S(10) RPGFree_Keyword CTLOPT = new RPGFree_Keyword("ctl-opt");
 	public @S(20) TokenList<RPGFree_ControlOption> options;
 	public @S(30) PunctuationSemicolon semicolon;
-	
+
 	public static class RPGFree_ControlOption extends TokenChooser
 	{
 		public @CHOICE static class RPGFree_ControlDft extends TokenSequence
@@ -28,7 +28,7 @@ public class RPGFree_Control extends TokenSequence
 			public @S(40) RPGFree_Keyword NO = new RPGFree_Keyword("no");
 			public @S(50) PunctuationRightParen rightParen;
 		}
-		
+
 		public @CHOICE static class RPGFree_ControlAct extends TokenSequence
 		{
 			public @S(10) RPGFree_Keyword ACTGRP = new RPGFree_Keyword("actgrp");

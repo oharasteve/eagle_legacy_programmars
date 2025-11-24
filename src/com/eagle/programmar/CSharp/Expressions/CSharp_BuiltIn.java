@@ -37,7 +37,7 @@ public class CSharp_BuiltIn extends PrimaryOperator
 			throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

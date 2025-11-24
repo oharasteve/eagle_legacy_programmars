@@ -87,7 +87,7 @@ public class TCL_ForStatement extends TokenSequence
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	private static boolean guessDirection(TCL_Expression testExpr, TCL_IncrStatement incrStmt)
 	{
 		AbstractToken which1 = incrStmt.amount.getWhich();
@@ -110,8 +110,8 @@ public class TCL_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class TCL_ForStatement extends TokenSequence
 		AbstractExpression initExpr = initialize.transformExpression(transformer, generator);
 		AbstractExpression termCond = transformer.transformExpression(generator, condition);
 		AbstractExpression incrExpr = increment.transformExpression(transformer, generator);
-		
+
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
 
 		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, action.getWhich());
@@ -132,7 +132,7 @@ public class TCL_ForStatement extends TokenSequence
 				whileTrue.add(stmt);
 			}
 		}
-		
+
 		return generator.newForLoopStatement(initExpr, termCond, incrExpr, whileTrue, this);
 	}
 }

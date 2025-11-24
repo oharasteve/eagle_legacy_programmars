@@ -42,7 +42,7 @@ public class Perl_Statement extends TokenChooser
 	public @CHOICE Perl_ClassStatement XXclassStatement;
 	public @CHOICE Perl_Label XXlabel;
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon XXsemicolon;
-	public @LAST Perl_ExpressionStatement XXexpressionStatement; 
+	public @LAST Perl_ExpressionStatement XXexpressionStatement;
 	public @CHOICE Perl_StatementBlock XXstatementBlock;
 
 	public @CHOICE static class Perl_SubDeclaration extends TokenSequence

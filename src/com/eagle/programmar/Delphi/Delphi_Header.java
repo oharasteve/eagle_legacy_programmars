@@ -34,7 +34,7 @@ public class Delphi_Header extends TokenChooser
 		public @S(20) Delphi_Statement stmt;
 		public @S(30) PunctuationSemicolon semicolon;
 	}
-	
+
 	public void processHeader(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken which = this.getWhich();

@@ -1,7 +1,6 @@
 // Copyright Eagle Legacy Modernization, 2010-date
 // Original author: Steven A. O'Hara, Feb 18, 2025
 
-
 package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.programmar.Rust.Rust_Expression;

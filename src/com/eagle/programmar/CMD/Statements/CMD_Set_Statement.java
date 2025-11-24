@@ -57,7 +57,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 		public @CHOICE CMD_Set_Assigment XXsetAssignment;
 		public @CHOICE CMD_Set_Prompt XXsetPrompt;
 	}
-	
+
 	private static String getName(EagleInterpreter interpreter, CMD_Variable var)
 	{
 		String name = var.id.getValue();

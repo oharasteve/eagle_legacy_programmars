@@ -36,7 +36,7 @@ public class SQL_SelectStatement extends TokenSequence
 		public @S(20) @OPT SQL_Keyword ALL = new SQL_Keyword("ALL");
 		public @S(30) SQL_SelectStmt selectStatement;
 	}
-	
+
 	public static class SelectLimit extends TokenSequence
 	{
 		public @S(10) SQL_Keyword LIMIT = new SQL_Keyword("LIMIT");
@@ -50,7 +50,7 @@ public class SQL_SelectStatement extends TokenSequence
 		public @S(30) @OPT TokenList<SQL_SelectClause> clauses;
 		public @S(40) @OPT PunctuationSemicolon semicolon;
 	}
-	
+
 	public static class SQL_SelectWhat extends TokenSequence
 	{
 		public @S(10) SQL_Expression expr;
@@ -71,12 +71,12 @@ public class SQL_SelectStatement extends TokenSequence
 		{
 			throw new RuntimeException("Cannot handle SELECT / UNION yet");
 		}
-		
+
 		if (selectStatement.clauses != null && selectStatement.clauses.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle SELECT clauses yet");
 		}
-		
+
 		for (int i = 0; i < selectStatement.what.getPrimaryCount(); i++)
 		{
 			SQL_SelectWhat what = selectStatement.what.getPrimaryElement(i);
@@ -93,12 +93,12 @@ public class SQL_SelectStatement extends TokenSequence
 		{
 			throw new RuntimeException("Cannot handle SELECT / UNION yet");
 		}
-		
+
 		if (selectStatement.clauses != null && selectStatement.clauses.size() > 0)
 		{
 			throw new RuntimeException("Cannot handle SELECT clauses yet");
 		}
-		
+
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (int i = 0; i < selectStatement.what.getPrimaryCount(); i++)
 		{

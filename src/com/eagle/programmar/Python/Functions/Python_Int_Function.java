@@ -28,7 +28,7 @@ public class Python_Int_Function extends PrimaryOperator
 		double x = interpreter.getDoubleValue(expression);
 		interpreter.pushInt((int) x);
 	}
-	
+
 	public Python_Expression generateInteger(Python_Expression expr, AbstractToken source)
 	{
 		Python_Int_Function integer = new Python_Int_Function();
@@ -44,7 +44,7 @@ public class Python_Int_Function extends PrimaryOperator
 		{
 			integer.expression = expr;
 		}
-		
+
 		integer.setTransformationSource(source);
 		return Python_Generator.wrapExpression(integer);
 	}

@@ -33,7 +33,7 @@ public class TCL_FunctionCall extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = function.getValue();
-		
+
 		// Look up the function
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
@@ -58,13 +58,13 @@ public class TCL_FunctionCall extends TokenSequence
 			TCL_Expression expr = callArguments._elements.get(i);
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(expr);
-			
+
 			// Make sure Scope is in the CALLED function, not the CALLER
 			EagleScope saveScope = interpreter._symbolTable.getScope();
 			interpreter._symbolTable.setScope(proc.getScope());
 			interpreter.setSymbol(param, param.getValue(), val);
 			interpreter._symbolTable.setScope(saveScope);
-			
+
 			argTypes.add(val.typeName());
 		}
 
@@ -92,17 +92,17 @@ public class TCL_FunctionCall extends TokenSequence
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-			for (TCL_Expression arg : callArguments._elements)	
+			for (TCL_Expression arg : callArguments._elements)
 			{
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			AbstractExpression expr = generator.newMethodInvocation(var, args, function);
 			return generator.newExpressionStatement(expr, callArguments);
 		}
-		
+
 		throw new RuntimeException("Unknown function: " + name);
 	}
 }

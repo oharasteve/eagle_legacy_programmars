@@ -30,7 +30,7 @@ public class Fortran_AdjustLFunction extends PrimaryOperator
 		String trimmedStr = str.stripLeading();
 		int lengthDifference = str.length() - trimmedStr.length();
 		String newStr = trimmedStr + str.substring(0, lengthDifference);
-		interpreter.pushStr(newStr);	// Left justifies a string, but keeps length same
+		interpreter.pushStr(newStr); // Left justifies a string, but keeps length same
 	}
 
 	@Override

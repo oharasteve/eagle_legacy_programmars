@@ -63,14 +63,14 @@ public class Go_ForStatement extends TokenSequence
 		public @S(20) Go_Variable variable;
 		public @S(30) Go_Statement statement;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		if (forWhat.getWhich() instanceof Go_ForLoop)
 		{
 			Go_ForLoop forLoop = (Go_ForLoop) forWhat.getWhich();
-			
+
 			if (_metrics == null)
 			{
 				_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
@@ -78,7 +78,7 @@ public class Go_ForStatement extends TokenSequence
 			ForLoopMetric metric = new ForLoopMetric();
 
 			int current = interpreter.getIntValue(forLoop.initValue);
-			
+
 			String loopVar = var.getValue();
 			interpreter.setSymbol(this, loopVar, new EagleInteger(current));
 
@@ -89,7 +89,7 @@ public class Go_ForStatement extends TokenSequence
 				if (!cond) break;
 
 				metric.iterate();
-	
+
 				result = interpreter.tryToInterpret(forLoop.statement);
 				if (result == Eagle_Statement_Result.BREAK)
 				{
@@ -106,17 +106,17 @@ public class Go_ForStatement extends TokenSequence
 				{
 					break;
 				}
-	
+
 				interpreter.tryToInterpret(forLoop.increment);
 			}
-	
+
 			// Have to guess to see if it was backwards
 			boolean backwards = guessDirection(forLoop.condition, forLoop.increment);
-			
+
 			_metrics.competedLoop(metric, backwards);
 			return result;
 		}
-		
+
 		throw new RuntimeException("Cannot handle this type of for loop (yet): " + forWhat);
 	}
 
@@ -133,7 +133,7 @@ public class Go_ForStatement extends TokenSequence
 			Go_PreIncrementExpression pre = (Go_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof Go_RelationalExpression)
 		{
@@ -144,10 +144,10 @@ public class Go_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -159,7 +159,7 @@ public class Go_ForStatement extends TokenSequence
 					SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, initExpr, forLoop.initValue);
 			AbstractExpression termCond = transformer.transformExpression(generator, forLoop.condition);
 			AbstractExpression incrExpr = transformer.transformExpression(generator, forLoop.increment);
-			
+
 			ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
 					forLoop.statement.getWhich());
@@ -170,10 +170,10 @@ public class Go_ForStatement extends TokenSequence
 					whileTrue.add(stmt);
 				}
 			}
-			
+
 			return generator.newForLoopStatement(asgExpr, termCond, incrExpr, whileTrue, this);
 		}
-		
+
 		throw new RuntimeException("Cannot handle this type of for loop (yet): " + forWhat);
 	}
 }

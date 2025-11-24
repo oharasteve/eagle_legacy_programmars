@@ -53,7 +53,7 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
 				array.addValue(interpreter.getEagleValue(arg.arg));
 			}
 		}
-		
+
 		if (valueList.moreArgs.isPresent())
 		{
 			for (CSharp_MoreArguments more : valueList.moreArgs._elements)
@@ -66,7 +66,7 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
 				}
 			}
 		}
-		
+
 		interpreter.pushEagleValue(array);
 	}
 
@@ -74,13 +74,13 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
-		
+
 		if (valueList.arg.isPresent())
 		{
 			CSharp_Expression expr1 = valueList.arg.getExpression();
 			exprs.add(transformer.transformExpression(generator, expr1));
 		}
-		
+
 		if (valueList.moreArgs.isPresent())
 		{
 			for (CSharp_MoreArguments more : valueList.moreArgs._elements)
@@ -98,27 +98,27 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
 	{
 		// Want to end up with: new string[] {"abc", "def"}
 		this.cstype = CSharp_Type.newPrimitiveType("string");
-		
+
 		CSharp_ArrayType array = new CSharp_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
-		
+
 		this.cstype.arrayTypes = new TokenList<CSharp_ArrayType>();
 		this.cstype.arrayTypes.setPresent(true);
 		this.cstype.arrayTypes.addToken(array);
-		
+
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.valueList = new CSharp_ArgumentList();
 		this.valueList.setPresent(true);
-		
+
 		for (int i = 0; i < exprs.size(); i++)
 		{
 			CSharp_ArgumentOut argOut = new CSharp_ArgumentOut();
 			argOut.arg = (CSharp_Expression) exprs.get(i);
 			CSharp_Argument arg = new CSharp_Argument();
 			arg.setWhich(argOut);
-			
+
 			if (i == 0)
 			{
 				this.valueList.arg = arg;

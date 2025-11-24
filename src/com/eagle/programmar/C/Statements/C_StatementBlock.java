@@ -23,7 +23,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class C_StatementBlock extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleScopeInterface, EagleTransformableStatement
+		EagleScopeInterface, EagleTransformableStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<C_StatementOrComment> statements;
@@ -40,7 +40,7 @@ public class C_StatementBlock extends TokenSequence
 		}
 		return result;
 	}
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -52,7 +52,7 @@ public class C_StatementBlock extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (C_StatementOrComment statement : statements._elements)
 		{
 			if (statement.getWhich() instanceof C_Statement)
@@ -68,7 +68,7 @@ public class C_StatementBlock extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
 }

@@ -15,7 +15,7 @@ public class VB_Type extends TokenChooser
 			"boolean", "byte", "sbyte", "char", "date",
 			"short", "integer", "long", "ushort", "uinteger", "ulong",
 			"single", "double", "decimal", "range", "string", "worksheet");
-	
+
 	public static AbstractType findType(EagleGenerator generator, String typeName)
 	{
 		TypeEnum newType;

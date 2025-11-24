@@ -18,7 +18,7 @@ public class AWK_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'\"", true, '\\', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

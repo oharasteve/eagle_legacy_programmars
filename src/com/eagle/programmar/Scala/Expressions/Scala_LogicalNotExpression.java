@@ -18,7 +18,7 @@ public class Scala_LogicalNotExpression extends PrimaryOperator
 {
 	public @S(10) Scala_Punctuation logicalNotOperator = new Scala_Punctuation('~');
 	public @S(20) Scala_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

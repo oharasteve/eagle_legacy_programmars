@@ -38,7 +38,7 @@ public class Go_Data extends TokenSequence
 		EagleValue val = interpreter.getEagleValue(initValue);
 		interpreter.setSymbol(id, id.getValue(), val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -50,7 +50,7 @@ public class Go_Data extends TokenSequence
 					dataType, value, this);
 			return dataStmt;
 		}
-		
+
 		throw new RuntimeException("Can't handle data value: " + initValue);
 	}
 }

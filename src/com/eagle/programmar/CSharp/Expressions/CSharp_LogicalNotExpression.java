@@ -18,7 +18,8 @@ import com.eagle.transform.EagleTransformer;
 public class CSharp_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) @DOC("operators/boolean-logical-operators") CSharp_Punctuation notOperator = new CSharp_Punctuation('!');
+	public @S(10) @DOC("operators/boolean-logical-operators") CSharp_Punctuation notOperator = new CSharp_Punctuation(
+			'!');
 	public @S(20) CSharp_Expression expr;
 
 	@Override
@@ -27,7 +28,7 @@ public class CSharp_LogicalNotExpression extends PrimaryOperator
 		boolean value = interpreter.getBoolValue(expr);
 		interpreter.pushBool(!value);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -35,7 +36,7 @@ public class CSharp_LogicalNotExpression extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		return generator.newNotExpression(theExpr, this);
 	}
-	
+
 	public CSharp_Expression generateLogicalNot(CSharp_Expression theExpr,
 			AbstractToken source)
 	{

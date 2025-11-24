@@ -23,7 +23,7 @@ public class CSharp_ArgumentList extends TokenSequence
 		public @S(20) @OPT CSharp_Argument arg;
 		public @S(30) @OPT TokenList<CSharp_Comment> comments;
 	}
-	
+
 	public static CSharp_ArgumentList createArgumentList(ArrayList<CSharp_Expression> args)
 	{
 		if (args == null || args.size() == 0) return null;

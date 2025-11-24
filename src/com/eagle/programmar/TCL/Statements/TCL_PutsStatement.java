@@ -26,7 +26,7 @@ public class TCL_PutsStatement extends TokenSequence
 		String val = interpreter.getStrValue(expr);
 		System.out.println(val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

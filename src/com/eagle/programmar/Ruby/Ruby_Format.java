@@ -56,7 +56,7 @@ public class Ruby_Format
 		}
 		return sb.toString();
 	}
-	
+
 	public static AbstractExpression compile(EagleGenerator generator, String fmt, AbstractToken source)
 	{
 		AbstractExpression result = null;
@@ -67,7 +67,7 @@ public class Ruby_Format
 		{
 			return generator.newLiteralExpression("", null);
 		}
-		
+
 		int sc = 0;
 		while (sc < nc)
 		{
@@ -76,9 +76,9 @@ public class Ruby_Format
 			int ec = nextInsertion;
 			if (nextInsertion < 0)
 			{
-				ec = nc;	// No more #{}, go all the way to the end
+				ec = nc; // No more #{}, go all the way to the end
 			}
-			
+
 			if (ec > sc)
 			{
 				// Grab next literal piece
@@ -119,7 +119,7 @@ public class Ruby_Format
 			}
 			sc = endInsertion + 1;
 		}
-		
+
 		return result;
 	}
 }

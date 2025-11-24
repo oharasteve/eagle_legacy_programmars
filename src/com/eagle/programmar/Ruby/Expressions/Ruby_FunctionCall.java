@@ -34,13 +34,13 @@ public class Ruby_FunctionCall extends PrimaryOperator
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) SeparatedList<Ruby_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Ruby_Identifier_Reference id = funcName.vars.first();
 		String name = id.getValue();
-		
+
 		// Look up the function
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
@@ -106,7 +106,7 @@ public class Ruby_FunctionCall extends PrimaryOperator
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, funcName);
 		}

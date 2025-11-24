@@ -38,14 +38,14 @@ public class FSharp_LetStatement extends TokenSequence
 		public @S(10) PunctuationColon colon;
 		public @S(20) FSharp_Type type;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expression);
 		interpreter.setSymbol(variable, variable.id.getValue(), value);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

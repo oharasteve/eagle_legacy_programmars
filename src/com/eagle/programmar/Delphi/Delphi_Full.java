@@ -35,7 +35,7 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 	{
 		super();
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -72,7 +72,7 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 		{
 			header.processHeader(transformer, generator);
 		}
-		
+
 		this.beginEnd.statements.transformRemoveBeginEnd(transformer, generator);
 	}
 }

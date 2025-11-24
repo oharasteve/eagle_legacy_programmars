@@ -32,13 +32,13 @@ public class Go_EqualityExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -49,7 +49,7 @@ public class Go_EqualityExpression extends PrecedenceOperator
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
 		}
@@ -67,10 +67,10 @@ public class Go_EqualityExpression extends PrecedenceOperator
 				return;
 			}
 		}
-		
+
 		throw new RuntimeException("Unexpected equality operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

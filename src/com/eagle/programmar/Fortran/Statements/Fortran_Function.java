@@ -38,7 +38,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Fortran_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) Fortran_Type type;
 	public @S(20) @DOC("6j4m0vn9h/index.html") Fortran_Keyword FUNCTION1 = new Fortran_Keyword("FUNCTION");
@@ -58,7 +58,7 @@ public class Fortran_Function extends TokenSequence
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Fortran_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -91,7 +91,7 @@ public class Fortran_Function extends TokenSequence
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 
 		generator.addMethod(newReturnType, fnName, this);
@@ -100,28 +100,28 @@ public class Fortran_Function extends TokenSequence
 		{
 			System.out.println("** Found Fortran function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (parameters != null && parameters.isPresent())
 		{
 			for (int i = 0; i < parameters.getPrimaryCount(); i++)
 			{
 				Fortran_Variable_Reference param = parameters.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.getValue());
 			}
 		}
-		
+
 		for (Fortran_Statement stmt : statements._elements)
 		{
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
@@ -133,7 +133,7 @@ public class Fortran_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

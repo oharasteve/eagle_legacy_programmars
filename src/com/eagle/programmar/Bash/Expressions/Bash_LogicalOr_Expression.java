@@ -36,7 +36,7 @@ public class Bash_LogicalOr_Expression extends PrecedenceOperator
 			interpreter.pushBool(rightValue);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

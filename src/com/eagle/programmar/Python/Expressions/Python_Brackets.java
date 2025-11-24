@@ -36,7 +36,7 @@ public class Python_Brackets extends PrimaryOperator
 		this.rightBracket = new PunctuationRightBracket();
 		this.list = new Python_List();
 		this.list.setPresent(true);
-		
+
 		for (int i = 0; i < exprs.size(); i++)
 		{
 			if (i == 0)

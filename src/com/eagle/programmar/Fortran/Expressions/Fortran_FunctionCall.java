@@ -34,7 +34,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 	{
 		String fnName = variable.getValue().toUpperCase();
 		int argCount = args.getPrimaryCount();
-		
+
 		// Check for subscripts
 		EagleValue var = interpreter.findSymbol(fnName);
 		if (var != null && var.isArray() && argCount == 1)
@@ -45,7 +45,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 			interpreter.pushEagleValue(val);
 			return;
 		}
-		
+
 		// Check for user functions
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null || !(fn instanceof Fortran_Function))
@@ -93,7 +93,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		{
 			interpreter.pushEagleValue(val);
 		}
-		
+
 		long elapsedTime = System.nanoTime() - startTime;
 		func._callMetrics.addCallFrom(this, elapsedTime);
 		func._argumentsMetrics.calledWith(argTypes);

@@ -38,7 +38,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Ada_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) Ada_Keyword FUNCTION = new Ada_Keyword("function");
 	public @S(20) Ada_Function_Definition id;
@@ -83,7 +83,7 @@ public class Ada_Function extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -111,7 +111,7 @@ public class Ada_Function extends TokenSequence
 		{
 			newReturnType = returns.type.convertType(generator);
 		}
-		
+
 		if (newReturnType == null)
 		{
 			TypeEnum metricRetType = transformer.findReturnMetric(id);
@@ -126,10 +126,10 @@ public class Ada_Function extends TokenSequence
 		{
 			System.out.println("** Found Ada function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (funcParamDefs != null && funcParamDefs.isPresent())
 		{
 			if (funcParamDefs.parameters != null && funcParamDefs.parameters.isPresent())
@@ -138,14 +138,14 @@ public class Ada_Function extends TokenSequence
 				{
 					Ada_Parameter param = funcParamDefs.parameters.getPrimaryElement(i);
 					AbstractType paramType = null;
-					
+
 					if (argTypes != null && i < argTypes.size())
 					{
 						String metricArgType = argTypes.get(i);
 						TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 						paramType = generator.transformType(metricArg, null, param);
 					}
-					
+
 					generator.addMethodParameter(paramType, param.param.getValue());
 				}
 			}
@@ -162,7 +162,7 @@ public class Ada_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		for (Ada_Statement stmt2 : statements2._elements)
 		{
 			Collection<AbstractStatement> newStmts2 = transformer.transformStatement(generator, stmt2.getWhich());
@@ -174,7 +174,7 @@ public class Ada_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

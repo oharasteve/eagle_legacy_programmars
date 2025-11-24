@@ -16,5 +16,5 @@ public class IntelASM_Identifier_Reference extends IntelASM_Identifier
 	{
 		int val = interpreter.findSymbol(this.getValue()).forceIntegerValue();
 		interpreter.pushInt(val);
-	}	
+	}
 }

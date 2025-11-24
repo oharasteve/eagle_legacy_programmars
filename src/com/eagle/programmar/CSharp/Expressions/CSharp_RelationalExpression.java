@@ -23,7 +23,8 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("operators/comparison-operators") CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
+	public @S(20) @DOC("operators/comparison-operators") CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice(
+			"==", "!=", "<", ">", "<=", ">=");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -34,13 +35,13 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -51,7 +52,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
 		}
@@ -83,7 +84,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		}
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -95,7 +96,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		switch (operator.toString())
 		{
 		case "==":
-			return generator.newRelationalExpression(types, leftExpr,	
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.EQUALS, rightExpr, this);
 		case "!=":
 			return generator.newRelationalExpression(types, leftExpr,
@@ -121,7 +122,7 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 	{
 		this.left = leftExpr;
 		this.right = rightExpr;
-		
+
 		switch (relOp)
 		{
 		case EQUALS:

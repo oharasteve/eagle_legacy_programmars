@@ -44,7 +44,7 @@ public class TCL_BlockStatement extends TokenSequence
 		for (TCL_Element element : statements._elements)
 		{
 			result = interpreter.tryToInterpret(element);
-			if (result != Eagle_Statement_Result.NORMAL) break; 
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
 		return result;
 	}

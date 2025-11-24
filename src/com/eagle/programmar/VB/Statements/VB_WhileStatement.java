@@ -31,9 +31,9 @@ public class VB_WhileStatement extends TokenSequence
 	public @S(40) TokenList<VB_Element> actions;
 	public @S(50) VB_KeywordChoice WEND = new VB_KeywordChoice("Wend", "End");
 	public @S(60) @OPT VB_Keyword WHILE2 = new VB_Keyword("While");
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
@@ -50,7 +50,7 @@ public class VB_WhileStatement extends TokenSequence
 			if (!cond) break;
 
 			metric.iterate();
-			
+
 			for (VB_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
@@ -77,13 +77,13 @@ public class VB_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (VB_Element statement : actions._elements)
 		{
 			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
@@ -91,7 +91,7 @@ public class VB_WhileStatement extends TokenSequence
 				whileTrue.add(stmt);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

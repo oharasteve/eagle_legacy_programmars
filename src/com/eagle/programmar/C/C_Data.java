@@ -31,7 +31,7 @@ public class C_Data extends TokenChooser
 
 	public @CHOICE static class C_RegularData extends TokenSequence
 			implements EagleRunnable, AbstractStatement,
-					EagleTransformableStatementList
+			EagleTransformableStatementList
 	{
 		public @S(10) @OPT TokenList<C_DataModifiers> modifiers1;
 		public @S(20) C_Type ctype;
@@ -68,7 +68,7 @@ public class C_Data extends TokenChooser
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			TypeEnum argType2 = ctype.findType();
-			
+
 			if (subscripts != null && subscripts.size() == 1)
 			{
 				if (argType2 == TypeEnum.CHAR)
@@ -84,7 +84,7 @@ public class C_Data extends TokenChooser
 			}
 
 			AbstractType newType = generator.transformType(argType2, null, this);
-			
+
 			String name = id.getValue();
 			AbstractExpression initial = null;
 			if (initialValue != null && initialValue.isPresent())
@@ -92,7 +92,7 @@ public class C_Data extends TokenChooser
 				initial = transformer.transformExpression(generator, initialValue.expression);
 			}
 			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
-			
+
 			for (C_MoreIdentifiers more : moreIds._elements)
 			{
 				name = more.id.getValue();
@@ -103,7 +103,7 @@ public class C_Data extends TokenChooser
 				}
 				result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 			}
-			
+
 			return result;
 		}
 	}

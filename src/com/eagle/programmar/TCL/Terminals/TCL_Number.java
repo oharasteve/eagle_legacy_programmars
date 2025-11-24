@@ -18,7 +18,7 @@ public class TCL_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", "Ll", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

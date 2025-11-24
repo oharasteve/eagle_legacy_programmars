@@ -57,7 +57,7 @@ public class Julia_Assignment extends TokenSequence
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -83,7 +83,7 @@ public class Julia_Assignment extends TokenSequence
 		{
 			subscrExpr = transformer.transformExpression(generator, variable.subscript.expr);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expression);
 		Julia_Identifier_Reference id = variable.vars.first();
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),

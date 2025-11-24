@@ -36,7 +36,7 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Fortran_Subroutine extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("6j4m0vnbg/index.html") Fortran_Keyword SUBROUTINE1 = new Fortran_Keyword("SUBROUTINE");
 	public @S(20) Fortran_Function_Definition id;
@@ -89,28 +89,28 @@ public class Fortran_Subroutine extends TokenSequence
 		{
 			System.out.println("** Found Fortran subroutine " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (parameters != null && parameters.isPresent())
 		{
 			for (int i = 0; i < parameters.getPrimaryCount(); i++)
 			{
 				Fortran_Variable_Reference param = parameters.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.getValue());
 			}
 		}
-		
+
 		for (Fortran_Statement stmt : statements._elements)
 		{
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
@@ -122,7 +122,7 @@ public class Fortran_Subroutine extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

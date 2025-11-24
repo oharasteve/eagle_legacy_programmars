@@ -53,7 +53,7 @@ public class JavaP_PublicClass extends TokenSequence
 			public @S(30) JavaP_Punctuation greaterThan = new JavaP_Punctuation('>');
 		}
 	}
-	
+
 	public static class JavaP_ClassExtends extends TokenSequence
 	{
 		public @S(10) JavaP_Keyword EXTENDS = new JavaP_Keyword("extends");

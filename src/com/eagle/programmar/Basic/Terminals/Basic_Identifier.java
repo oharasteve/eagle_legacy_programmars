@@ -11,7 +11,7 @@ public class Basic_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		boolean ok = genericIdentifier(lines, ALPHAS, DIGITS+"$", true, false);
+		boolean ok = genericIdentifier(lines, ALPHAS, DIGITS + "$", true, false);
 		if (ok)
 		{
 			if (_id.length() > 2)

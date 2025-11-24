@@ -37,10 +37,10 @@ public class Ada_Comment extends TerminalCommentToken
 	{
 		return "-- comment";
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null;	// Might want to carry over comments at some point
+		return null; // Might want to carry over comments at some point
 	}
 }

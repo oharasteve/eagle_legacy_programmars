@@ -37,7 +37,7 @@ public class SQL_CaseStatement extends TokenSequence
 	public @S(70) @OPT SQL_CaseElseClause elseClause;
 	public @S(80) SQL_Keyword END = new SQL_Keyword("END");
 	public @S(90) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_CaseWhenClause extends TokenSequence
 	{
 		public @S(10) SQL_Keyword WHEN = new SQL_Keyword("WHEN");
@@ -45,13 +45,13 @@ public class SQL_CaseStatement extends TokenSequence
 		public @S(30) SQL_Keyword THEN = new SQL_Keyword("THEN");
 		public @S(40) SQL_Expression thenExpression;
 	}
-	
+
 	public static class SQL_CaseElseClause extends TokenSequence
 	{
 		public @S(10) SQL_Keyword ELSE = new SQL_Keyword("ELSE");
 		public @S(20) SQL_Expression elseExpression;
 	}
-	
+
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	@Override
@@ -62,13 +62,13 @@ public class SQL_CaseStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, CASE));
-			
+
 			for (int i = 0; i < whenThens.size(); i++)
 			{
 				SQL_CaseWhenClause when = whenThens._elements.get(i);
 				_metrics.add(new IfCondMetrics(interpreter._metrics, when.WHEN));
 			}
-			
+
 			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
@@ -83,14 +83,14 @@ public class SQL_CaseStatement extends TokenSequence
 			int whenValue = interpreter.getIntValue(when.whenExpression);
 			boolean matches = value == whenValue;
 			_metrics.get(i).completedIf(matches);
-			
+
 			if (matches)
 			{
 				newValue = interpreter.getEagleValue(when.thenExpression);
 				break;
 			}
 		}
-		
+
 		if (newValue == null && elseClause != null && elseClause.isPresent())
 		{
 			_metrics.get(whenThens.size()).completedIf(true);
@@ -115,15 +115,15 @@ public class SQL_CaseStatement extends TokenSequence
 			SQL_CaseWhenClause when = whenThens._elements.get(i);
 			ArrayList<AbstractStatement> thisCase = new ArrayList<AbstractStatement>();
 			values.add(transformer.transformExpression(generator, when.whenExpression));
-			
+
 			AbstractExpression thisValue = transformer.transformExpression(generator, when.thenExpression);
 			AbstractExpression thisAsgExpr = generator.newAssignmentExpression(id.getValue(),
 					SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, thisValue, when);
 			thisCase.add(generator.newExpressionStatement(thisAsgExpr, when));
-			
+
 			cases.add(thisCase);
 		}
-		
+
 		ArrayList<AbstractStatement> defaultCase = null;
 		if (elseClause != null && elseClause.isPresent())
 		{
@@ -133,7 +133,7 @@ public class SQL_CaseStatement extends TokenSequence
 					SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, defaultValue, elseClause);
 			defaultCase.add(generator.newExpressionStatement(defaultAsgExpr, elseClause));
 		}
-		
+
 		AbstractStatement stmt = generator.newSwitchStatement(newExpr, values, cases, defaultCase, this);
 		return stmt;
 	}

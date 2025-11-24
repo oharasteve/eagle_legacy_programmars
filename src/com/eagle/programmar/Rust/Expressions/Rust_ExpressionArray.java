@@ -42,7 +42,7 @@ public class Rust_ExpressionArray extends PrimaryOperator
 
 		interpreter.pushEagleValue(vals);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

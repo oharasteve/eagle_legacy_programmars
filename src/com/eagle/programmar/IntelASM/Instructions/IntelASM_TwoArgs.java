@@ -20,7 +20,7 @@ public class IntelASM_TwoArgs extends TokenSequence implements EagleRunnable
 	public @S(20) IntelASM_Variable var;
 	public @S(30) @NOSPACE PunctuationComma comma;
 	public @S(40) IntelASM_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

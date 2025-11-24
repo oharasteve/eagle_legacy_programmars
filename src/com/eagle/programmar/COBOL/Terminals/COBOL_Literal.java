@@ -17,7 +17,7 @@ public class COBOL_Literal extends TerminalLiteralToken implements EagleTransfor
 	{
 		return genericLiteral(lines, "'\"", false, '?', true, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -20,7 +20,7 @@ public class Python_RangeExpression extends PrimaryOperator
 	public @S(50) Python_Expression stop;
 	public @S(60) @NOSPACE @OPT Python_RangeIncr increment;
 	public @S(70) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	public static class Python_RangeIncr extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

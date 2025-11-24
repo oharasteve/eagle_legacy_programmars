@@ -31,7 +31,7 @@ public class AWK_MultiplicativeExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
@@ -71,7 +71,8 @@ public class AWK_MultiplicativeExpression extends PrecedenceOperator
 		case "*":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
+					this);
 		case "%":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:

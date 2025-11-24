@@ -31,7 +31,7 @@ public class C_WhileStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT C_Comment comment;
 	public @S(60) C_Statement whileStatement;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -71,7 +71,7 @@ public class C_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

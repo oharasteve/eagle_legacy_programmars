@@ -16,10 +16,10 @@ public class IntelASM_Label extends TokenSequence implements EagleRunnable
 {
 	public @S(10) IntelASM_Label_Definition label;
 	public @S(20) @NOSPACE PunctuationColon colon;
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP JumpMetrics _jumpMetrics = null;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -29,7 +29,7 @@ public class IntelASM_Label extends TokenSequence implements EagleRunnable
 		{
 			throw new RuntimeException("Duplicate label: " + lbl);
 		}
-		
+
 		switch (state._section)
 		{
 		case RODATA:
@@ -38,7 +38,8 @@ public class IntelASM_Label extends TokenSequence implements EagleRunnable
 			interpreter.setSymbol(label, lbl, val);
 			break;
 		default:
-			// System.out.println("******** Setting label " + lbl + " to " + state._currentLine);
+			// System.out.println("******** Setting label " + lbl + " to " +
+			// state._currentLine);
 			state._labels.put(lbl, Integer.valueOf(state._currentLine));
 			break;
 		}

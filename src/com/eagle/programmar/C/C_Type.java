@@ -89,7 +89,7 @@ public class C_Type extends TokenSequence implements AbstractType
 					}
 				}
 			}
-			
+
 			String whichPrim = prim.primitive.getValue();
 			if (numStars == 0)
 			{

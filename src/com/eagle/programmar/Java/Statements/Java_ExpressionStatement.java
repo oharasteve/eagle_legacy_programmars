@@ -28,7 +28,7 @@ public class Java_ExpressionStatement extends TokenSequence
 	{
 		interpreter.tryToInterpret(expr);
 	}
-	
+
 	public static Java_ExpressionStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
 		Java_ExpressionStatement stmt = new Java_ExpressionStatement();

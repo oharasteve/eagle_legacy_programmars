@@ -15,7 +15,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class TCL_BracketStringLength  extends PrimaryOperator
+public class TCL_BracketStringLength extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
@@ -23,14 +23,14 @@ public class TCL_BracketStringLength  extends PrimaryOperator
 	public @S(30) TCL_Keyword LENGTH = new TCL_Keyword("length");
 	public @S(40) TCL_Expression expr;
 	public @S(50) PunctuationRightBracket rightBracket;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushInt(str.length());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

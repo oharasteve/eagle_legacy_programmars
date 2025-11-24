@@ -154,6 +154,7 @@ public class C_Program extends AbstractLanguage
 			interpreter.tryToInterpret(element);
 		}
 	}
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -167,7 +168,7 @@ public class C_Program extends AbstractLanguage
 				func.transformFunction(transformer, generator);
 			}
 		}
-		
+
 		// Second pass, transform all the data and logic
 		for (C_StatementOrComment element : elements._elements)
 		{
@@ -199,7 +200,7 @@ public class C_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		// Not needed for C# or CSharp, but Python needs this
 		generator.addCallToMain();
 

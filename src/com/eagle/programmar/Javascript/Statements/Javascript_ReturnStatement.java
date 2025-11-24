@@ -29,7 +29,7 @@ public class Javascript_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expression);
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
@@ -45,7 +45,7 @@ public class Javascript_ReturnStatement extends TokenSequence
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

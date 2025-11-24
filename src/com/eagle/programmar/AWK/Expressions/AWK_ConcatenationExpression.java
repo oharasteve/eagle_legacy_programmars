@@ -54,7 +54,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		sb.append(str1);
 
 		EagleValue val2 = interpreter.getEagleValue(piece2.getWhich());
-		String str2= val2.forceStringValue();
+		String str2 = val2.forceStringValue();
 		argTypes.add(val2.typeName());
 		sb.append(str2);
 
@@ -71,7 +71,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		interpreter.pushStr(sb.toString());
 		_metrics.calledWith(argTypes);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -98,10 +98,10 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 				i++;
 			}
 		}
-			
+
 		return line;
 	}
-	
+
 	private static AbstractExpression addPiece(EagleGenerator generator, ArrayList<String> metrics,
 			Oper2Types types, int i, AWK_ConcatPiece piece)
 	{
@@ -110,7 +110,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 			types._type1 = EagleString.STRING;
 			types._type2 = metrics.get(i);
 		}
-		
+
 		AbstractToken which1 = piece.getWhich();
 		if (which1 instanceof AWK_String)
 		{

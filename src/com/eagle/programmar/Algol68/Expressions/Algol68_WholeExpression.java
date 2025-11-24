@@ -30,11 +30,14 @@ public class Algol68_WholeExpression extends PrimaryOperator
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (! size.getValue().equals("0"))
+		if (!size.getValue().equals("0"))
 		{
 			throw new RuntimeException("Only supporting field width of 0 for now");
-			// If size is positive, the number will be right-justified and padded with spaces to the left. If the number is too large for the specified width, it will be represented by asterisks (*) to indicate an overflow.
-			// If size is negative, the absolute value is used for the width, and a sign will be printed even if the number is positive (e.g., +99).
+			// If size is positive, the number will be right-justified and padded with
+			// spaces to the left. If the number is too large for the specified width, it
+			// will be represented by asterisks (*) to indicate an overflow.
+			// If size is negative, the absolute value is used for the width, and a sign
+			// will be printed even if the number is positive (e.g., +99).
 		}
 		int value = interpreter.getIntValue(expr);
 		interpreter.pushStr(Integer.toString(value));
@@ -43,7 +46,7 @@ public class Algol68_WholeExpression extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! size.getValue().equals("0"))
+		if (!size.getValue().equals("0"))
 		{
 			throw new RuntimeException("Only supporting field width of 0 for now");
 		}

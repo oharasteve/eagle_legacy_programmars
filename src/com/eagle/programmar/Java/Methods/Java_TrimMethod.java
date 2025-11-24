@@ -22,21 +22,21 @@ public class Java_TrimMethod extends PrecedenceOperator
 	public @S(30) @NOSPACE Java_Keyword TRIM = new Java_Keyword("trim");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String leftStr = interpreter.getStrValue(expression);
 		interpreter.pushStr(leftStr.trim());
 	}
-	
+
 	public Java_Expression generateTrim(Java_Expression expr, AbstractToken source)
 	{
 		this.expression = expr;
 		this.dot = new PunctuationPeriod();
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

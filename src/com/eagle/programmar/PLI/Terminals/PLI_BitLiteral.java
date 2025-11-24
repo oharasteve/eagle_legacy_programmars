@@ -63,7 +63,7 @@ public class PLI_BitLiteral extends TerminalLiteralToken
 		{
 			interpreter.pushBool(true);
 		}
-		else if (_txt.equalsIgnoreCase("'0'B")) 
+		else if (_txt.equalsIgnoreCase("'0'B"))
 		{
 			interpreter.pushBool(false);
 		}
@@ -80,7 +80,7 @@ public class PLI_BitLiteral extends TerminalLiteralToken
 		{
 			return generator.newBuiltInExpression(BuiltInEnum.TRUE, this);
 		}
-		if (_txt.equalsIgnoreCase("'0'B")) 
+		if (_txt.equalsIgnoreCase("'0'B"))
 		{
 			return generator.newBuiltInExpression(BuiltInEnum.FALSE, this);
 		}

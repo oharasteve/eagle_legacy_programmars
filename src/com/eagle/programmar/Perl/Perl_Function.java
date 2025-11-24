@@ -42,7 +42,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Perl_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @OPT TokenList<Perl_FunctionPrefix> modifiers;
 	public @S(20) Perl_Keyword FUNCTION = new Perl_Keyword("function");
@@ -80,7 +80,7 @@ public class Perl_Function extends TokenSequence
 		public @S(10) Perl_Type type;
 		public @S(20) Perl_FunctionVariable var;
 	}
-	
+
 	public static class Perl_FunctionVariable extends TokenSequence
 	{
 		public @S(10) @OPT Perl_Punctuation amp = new Perl_Punctuation('&');
@@ -99,7 +99,7 @@ public class Perl_Function extends TokenSequence
 		public @S(10) PunctuationColon colon;
 		public @S(20) Perl_Type returnType;
 	}
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Perl_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -138,7 +138,7 @@ public class Perl_Function extends TokenSequence
 	{
 		TypeEnum typRet = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(typRet, null, id);
-		
+
 		String fnName = id.getValue();
 
 		generator.addMethod(newReturnType, fnName, this);
@@ -147,10 +147,10 @@ public class Perl_Function extends TokenSequence
 		{
 			System.out.println("** Found F# function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (params != null && params.isPresent())
 		{
 			for (int i = 0; i < params.parameters.getPrimaryCount(); i++)
@@ -171,9 +171,9 @@ public class Perl_Function extends TokenSequence
 				{
 					Perl_FunctionTypeAndVariable typedParam = (Perl_FunctionTypeAndVariable) param.getWhich();
 					paramVar = typedParam.var;
-					type  = Perl_Type.findType(typedParam.type);
+					type = Perl_Type.findType(typedParam.type);
 				}
-				
+
 				AbstractType newParamType = generator.transformType(type, null, param);
 				String paramName = Perl_Variable.repairName(paramVar.param.getValue());
 				generator.addMethodParameter(newParamType, paramName);
@@ -192,7 +192,8 @@ public class Perl_Function extends TokenSequence
 					if (stmtOrComment.getWhich() instanceof Perl_Statement)
 					{
 						Perl_Statement stmt = (Perl_Statement) stmtOrComment.getWhich();
-						Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+						Collection<AbstractStatement> newStmts = transformer.transformStatement(generator,
+								stmt.getWhich());
 						if (newStmts != null)
 						{
 							for (AbstractStatement newStmt : newStmts)
@@ -204,7 +205,7 @@ public class Perl_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 
@@ -246,7 +247,7 @@ public class Perl_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

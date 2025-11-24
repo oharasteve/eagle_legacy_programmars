@@ -33,7 +33,7 @@ public class Fortran_Assignment extends TokenSequence
 		EagleValue val = interpreter.getEagleValue(expression);
 		interpreter.setSymbol(variable, variable.var.toString(), val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

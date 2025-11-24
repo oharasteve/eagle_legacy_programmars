@@ -46,7 +46,7 @@ public class Eaglish_LogicalOrExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle " + oper + " in Eaglish_ConditionalOrExpression");
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

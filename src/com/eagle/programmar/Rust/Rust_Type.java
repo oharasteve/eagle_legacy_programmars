@@ -48,7 +48,7 @@ public class Rust_Type extends TokenChooser implements AbstractType
 			public @S(20) Rust_Keyword STATIC = new Rust_Keyword("static");
 		}
 	}
-	
+
 	public static AbstractType findType(EagleGenerator generator, String typeName)
 	{
 		TypeEnum newType;

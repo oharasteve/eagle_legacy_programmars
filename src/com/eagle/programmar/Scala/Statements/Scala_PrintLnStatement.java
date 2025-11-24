@@ -25,14 +25,14 @@ public class Scala_PrintLnStatement extends PrimaryOperator
 	public @S(30) Scala_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) Scala_EOLN eoln;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String line = interpreter.getStrValue(expr);
 		System.out.println(line);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

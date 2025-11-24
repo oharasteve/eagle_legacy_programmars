@@ -58,7 +58,7 @@ public class Algol68_ForStatement extends TokenSequence
 		int stop = 0;
 		int by = 1;
 		Algol68_Expression whileExpr = null;
-		
+
 		for (Algol68_ForClause clause : clauses._elements)
 		{
 			switch (clause.FROM.getValue())
@@ -79,10 +79,10 @@ public class Algol68_ForStatement extends TokenSequence
 				break;
 			}
 		}
-		
+
 		if (!haveFrom) throw new RuntimeException("FOR FROM is required");
 		if (!haveTo) throw new RuntimeException("FOR TO is required");
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
@@ -138,7 +138,7 @@ public class Algol68_ForStatement extends TokenSequence
 		_metrics.competedLoop(metric, by < 0);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -148,7 +148,7 @@ public class Algol68_ForStatement extends TokenSequence
 		AbstractExpression byExpr = null;
 		AbstractExpression whileExpr = null;
 		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
-		
+
 		String varName = var.vars.first().getValue();
 		for (Algol68_ForClause clause : clauses._elements)
 		{
@@ -185,17 +185,17 @@ public class Algol68_ForStatement extends TokenSequence
 				break;
 			}
 		}
-		
+
 		if (startExpr == null) throw new RuntimeException("FOR FROM is required");
 		if (endExpr == null) throw new RuntimeException("FOR TO is required");
-		
+
 		if (byExpr == null)
 		{
 			AbstractExpression oneExpr = generator.newNumberExpression("1", null);
 			byExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
 					SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.PLUS_EQUALS, oneExpr, null);
 		}
-		
+
 		AbstractExpression varExpr = generator.newVariableExpression(varName,
 				SubscriptEnum.FIRST_IS_ONE, null, null);
 		AbstractExpression stopExpr = generator.newRelationalExpression(null, varExpr,
@@ -218,7 +218,7 @@ public class Algol68_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newForLoopStatement(startExpr, stopExpr, byExpr, whileTrue, this);
 	}
 }

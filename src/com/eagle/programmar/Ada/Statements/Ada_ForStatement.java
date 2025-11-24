@@ -103,7 +103,7 @@ public class Ada_ForStatement extends TokenSequence
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -113,7 +113,7 @@ public class Ada_ForStatement extends TokenSequence
 		{
 			reversed = true;
 		}
-		
+
 		if (!(values.getWhich() instanceof Ada_RangeExpression))
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
@@ -123,7 +123,7 @@ public class Ada_ForStatement extends TokenSequence
 		AbstractExpression initExpr = null;
 		AbstractExpression termExpr = null;
 		AbstractExpression incrExpr = null;
-		
+
 		if (reversed)
 		{
 			initExpr = transformer.transformExpression(generator, range.right);
@@ -150,7 +150,7 @@ public class Ada_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractVariable varName = generator.newVariable(var.vars.first().getValue());
 		return generator.newForRangeStatement(varName, null, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

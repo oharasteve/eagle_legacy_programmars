@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Ada_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Ada_Keyword RETURN = new Ada_Keyword("return");
 	public @S(20) Ada_Expression expr;
@@ -30,7 +30,7 @@ public class Ada_ReturnStatement extends TokenSequence
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
@@ -42,7 +42,7 @@ public class Ada_ReturnStatement extends TokenSequence
 			}
 			parent = parent.getParent();
 		}
-		
+
 		return Eagle_Statement_Result.RETURN;
 	}
 

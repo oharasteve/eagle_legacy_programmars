@@ -22,8 +22,7 @@ public class Javascript_PostIncrementExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_Variable var;
-	public @S(20) @NOSPACE Javascript_PunctuationChoice operator =
-			new Javascript_PunctuationChoice("++", "--");
+	public @S(20) @NOSPACE Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -30,7 +30,7 @@ public class Fortran_Format
 			EagleValue val = interpreter.findSymbol(var.getValue());
 			argTypes.add(EagleInteger.INTEGER);
 			int num = val.forceIntegerValue();
-			sb.append(String.format("%5d", Integer.valueOf(num)));	// Boxing stinks in Java
+			sb.append(String.format("%5d", Integer.valueOf(num))); // Boxing stinks in Java
 		}
 		else
 		{
@@ -42,7 +42,7 @@ public class Fortran_Format
 	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator generator,
 			String format, SeparatedList<Fortran_Variable_Reference, PunctuationComma> args, ArrayList<String> metrics)
 	{
-		if (! format.equals("'(I5)'"))
+		if (!format.equals("'(I5)'"))
 		{
 			throw new RuntimeException("Need to implement Fortran format: " + format);
 		}
@@ -53,7 +53,7 @@ public class Fortran_Format
 			valType = new Oper1Types();
 			valType._type1 = metrics.get(0);
 		}
-		
+
 		AbstractExpression newExpr = generator.newVariableExpression(args.first().getValue(),
 				SubscriptEnum.FIRST_IS_ONE, null, args);
 		return generator.newStringFunction(valType, newExpr, null);

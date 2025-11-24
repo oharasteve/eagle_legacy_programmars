@@ -68,7 +68,7 @@ public class Javascript_Program extends AbstractLanguage
 			interpreter.tryToInterpret(element);
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)

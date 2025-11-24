@@ -42,7 +42,7 @@ public class C_StrCmpFunction extends PrimaryOperator
 		switch (STRCMP.getValue())
 		{
 		case "strcmp":
-			default:
+		default:
 			compare = left.compareTo(right);
 			break;
 		case "strcasecmp":
@@ -50,7 +50,7 @@ public class C_StrCmpFunction extends PrimaryOperator
 			compare = left.compareToIgnoreCase(right);
 			break;
 		}
-		
+
 		switch (operator.getValue())
 		{
 		case "==", ">=":
@@ -78,7 +78,7 @@ public class C_StrCmpFunction extends PrimaryOperator
 		case "!=", "<":
 			return generator.newRelationalExpression(types, newStr1, RelationalEnum.NOT_EQUALS, newStr2, this);
 		}
-		
+
 		throw new RuntimeException("Unexpected operator: " + operator.getValue());
 	}
 }

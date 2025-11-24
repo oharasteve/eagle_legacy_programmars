@@ -20,12 +20,12 @@ public class IntelASM_JMP extends TokenSequence implements EagleRunnable
 			"JC", "JE", "JG", "JGE", "JL", "JLE",
 			"JMP", "JNE", "JNZ", "JZ");
 	public @S(20) IntelASM_Label_Reference label;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
-		
+
 		boolean jump;
 		switch (JMP.getValue().toUpperCase())
 		{
@@ -53,12 +53,12 @@ public class IntelASM_JMP extends TokenSequence implements EagleRunnable
 		default:
 			throw new RuntimeException("Unable to handle " + JMP.getValue() + " yet.");
 		}
-		
+
 		if (jump)
 		{
 			// Look up the label
 			String name = label.getValue().toUpperCase();
-			
+
 			// And transfer control to the label
 			state._nextInstruction = state._labels.get(name);
 
@@ -66,7 +66,7 @@ public class IntelASM_JMP extends TokenSequence implements EagleRunnable
 			IntelASM_Program lang = (IntelASM_Program) interpreter._lang;
 			IntelASM_Line line = lang.lines._elements.get(state._nextInstruction);
 			IntelASM_Label fn = (IntelASM_Label) line.getWhich();
-			
+
 			if (fn._jumpMetrics == null)
 			{
 				fn._jumpMetrics = new JumpMetrics(interpreter._metrics, name, fn);

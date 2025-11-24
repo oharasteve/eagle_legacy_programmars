@@ -27,7 +27,7 @@ public class Powershell_WriteStatement extends TokenSequence
 	public @S(10) Powershell_KeywordChoice WRITE = new Powershell_KeywordChoice(
 			"Write-Error", "Write-Host", "Write-Output");
 	public @S(20) @OPT TokenList<Powershell_WriteOption> options1;
-	public @S(30) SeparatedList<Powershell_Expression,PunctuationComma> exprs;
+	public @S(30) SeparatedList<Powershell_Expression, PunctuationComma> exprs;
 	public @S(40) @OPT TokenList<Powershell_WriteOption> options2;
 
 	public static class Powershell_WriteOption extends TokenChooser

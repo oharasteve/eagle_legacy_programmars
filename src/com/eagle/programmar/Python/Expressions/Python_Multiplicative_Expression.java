@@ -33,13 +33,13 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
 		switch (oper)
@@ -48,7 +48,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 			interpreter.pushInt(leftInt * rightInt);
 			break;
 		case "/":
-			interpreter.pushDouble((double)leftInt / rightInt);
+			interpreter.pushDouble((double) leftInt / rightInt);
 			break;
 		case "//":
 			interpreter.pushInt(leftInt / rightInt);
@@ -60,7 +60,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -72,7 +72,8 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		case "*":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
+					this);
 		case "//":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "%":
@@ -81,7 +82,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
-	
+
 	public Python_Expression generateMultiplicative(Python_Expression leftExpr,
 			MultiplicativeEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{

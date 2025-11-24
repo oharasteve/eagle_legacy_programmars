@@ -83,7 +83,7 @@ public abstract class RPG_Program extends AbstractLanguage
 		public @S(10) RPG_Comment comment;
 		public @S(20) RPG_EndOfLine eoln;
 	}
-	
+
 	public static class RPG_III_Program extends RPG_Program
 	{
 		public static final String RPGIII = "RPG_III";

@@ -48,11 +48,11 @@ public class Go_FmtPrintfStatement extends TokenSequence
 		String formatted = Go_Format.format(interpreter, arguments, _metrics);
 		if (formatted.endsWith("\\n"))
 		{
-			formatted = formatted.substring(0, formatted.length()-2);
+			formatted = formatted.substring(0, formatted.length() - 2);
 		}
 		System.out.println(formatted);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

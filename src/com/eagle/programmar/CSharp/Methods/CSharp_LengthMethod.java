@@ -36,7 +36,7 @@ public class CSharp_LengthMethod extends PrecedenceOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
 		return generator.newLengthFunction(theExpr, this);
 	}
-	
+
 	public CSharp_Expression generateLength(CSharp_Expression expr, AbstractToken source)
 	{
 		this.dot = new PunctuationPeriod();

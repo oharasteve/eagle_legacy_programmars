@@ -45,8 +45,9 @@ public class Delphi_Assignment extends TokenSequence
 		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
 
 		String varName = var.var.getValue();
-		
-		// Delphi doesn't have a Return statement. It assigns a value to the function name
+
+		// Delphi doesn't have a Return statement. It assigns a value to the function
+		// name
 		AbstractToken parent = var.var;
 		while (parent != null)
 		{

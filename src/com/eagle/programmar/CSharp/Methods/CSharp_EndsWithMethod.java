@@ -27,7 +27,7 @@ public class CSharp_EndsWithMethod extends PrecedenceOperator
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE CSharp_Expression pattExpr;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

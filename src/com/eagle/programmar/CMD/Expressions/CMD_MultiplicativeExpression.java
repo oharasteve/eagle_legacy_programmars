@@ -31,7 +31,7 @@ public class CMD_MultiplicativeExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);

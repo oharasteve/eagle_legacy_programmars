@@ -41,7 +41,7 @@ public class Delphi_BeginEnd extends TokenSequence
 		}
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -53,7 +53,7 @@ public class Delphi_BeginEnd extends TokenSequence
 		{
 			stmts.add(newStmt);
 		}
-		
+
 		if (this.statements.stmts != null)
 		{
 			for (Delphi_NextStatement more : this.statements.stmts._elements)

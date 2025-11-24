@@ -32,7 +32,7 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 		EagleValue value = interpreter.getEagleValue(initialValue);
 		interpreter.setSymbol(id, id.toString(), value);
 	}
-	
+
 	public static Python_Data newDataDeclaration(String name, Python_Expression size, Python_Type type,
 			Python_Expression initial, AbstractToken source)
 	{
@@ -42,15 +42,15 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 			// Python ignores them at runtime anyways
 			return null;
 		}
-		
+
 		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
 		{
 			// Sorry, cannot redefine true or false
 			return null;
 		}
-		
+
 		Python_Data data = new Python_Data();
-		
+
 		// Set data name and type
 		data.id = new Python_Variable_Definition();
 		data.id.setValue(name);

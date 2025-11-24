@@ -28,7 +28,7 @@ public class Javascript_LogicalXorExpression extends PrecedenceOperator
 		boolean rightValue = interpreter.getBoolValue(right);
 		interpreter.pushBool(leftValue ^ rightValue);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

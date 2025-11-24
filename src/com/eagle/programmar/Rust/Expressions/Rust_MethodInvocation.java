@@ -100,7 +100,7 @@ public class Rust_MethodInvocation extends PrimaryOperator
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, methodName);
 		}

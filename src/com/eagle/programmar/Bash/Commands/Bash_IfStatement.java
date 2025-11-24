@@ -58,7 +58,7 @@ public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (elseIfBlock != null)
 			{
 				for (Bash_If_Elif elif : elseIfBlock._elements)
@@ -66,7 +66,7 @@ public class Bash_IfStatement extends TokenSequence implements AbstractStatement
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELIF));
 				}
 			}
-			
+
 			if (elseBlock != null && elseBlock.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock.ELSE));

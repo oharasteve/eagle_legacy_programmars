@@ -55,7 +55,7 @@ public class Ada_PutStatement extends TokenSequence
 			val = value.forceStringValue();
 			_metrics.operated(argType);
 		}
-		
+
 		switch (PUT.getValue().toLowerCase())
 		{
 		case "put":
@@ -77,7 +77,7 @@ public class Ada_PutStatement extends TokenSequence
 		}
 		throw new RuntimeException("Unexpected PUT command: " + PUT.getValue());
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

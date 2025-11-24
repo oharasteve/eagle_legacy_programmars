@@ -57,7 +57,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Java_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.14") Java_Keyword FOR = new Java_Keyword("for");
@@ -134,7 +134,7 @@ public class Java_ForStatement extends TokenSequence
 		{
 			throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 		}
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
@@ -142,7 +142,7 @@ public class Java_ForStatement extends TokenSequence
 		ForLoopMetric metric = new ForLoopMetric();
 
 		Java_Expression increment = increments.first();
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -172,11 +172,11 @@ public class Java_ForStatement extends TokenSequence
 
 		// Have to guess to see if it was backwards
 		boolean backwards = guessDirection(terminateCondition, increment);
-		
+
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	private static boolean guessDirection(Java_Expression testExpr, Java_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -190,7 +190,7 @@ public class Java_ForStatement extends TokenSequence
 			Java_PreIncrementExpression pre = (Java_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof Java_RelationalExpression)
 		{
@@ -201,8 +201,8 @@ public class Java_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
 
 	@Override
@@ -226,13 +226,13 @@ public class Java_ForStatement extends TokenSequence
 				varName = withoutType.variable.getValue();
 				forInit = withoutType.equalsInit.initialExpr;
 			}
-			
+
 			if (forInit != null)
 			{
 				AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
 				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-				
+
 				if (this.increments.getPrimaryCount() == 1)
 				{
 					AbstractExpression termExpr = transformer.transformExpression(generator, terminateCondition);
@@ -243,10 +243,10 @@ public class Java_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
-	
+
 	public Java_Statement generateForLoop1(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			Java_Statement act, AbstractToken source)
@@ -267,7 +267,7 @@ public class Java_ForStatement extends TokenSequence
 		Java_ForWhat what = new Java_ForWhat();
 		what.setWhich(initExpression);
 		this.initial.what.addPrimaryElement(what);
-		
+
 		this.semicolon1 = new PunctuationSemicolon();
 		this.terminateCondition = condExpression;
 		this.terminateCondition.setPresent(true);
@@ -275,11 +275,11 @@ public class Java_ForStatement extends TokenSequence
 		this.increments = loopIncrements;
 		this.rightParen = new PunctuationRightParen();
 		this.action = act;
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapStatement(this);
 	}
-	
+
 	public Java_Statement generateForLoop(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			ArrayList<Java_Statement> acts, AbstractToken source)
@@ -327,11 +327,11 @@ public class Java_ForStatement extends TokenSequence
 		else
 		{
 			AbstractToken whichDelta = delta.getWhich();
-			if (! (whichDelta instanceof Java_Number))
+			if (!(whichDelta instanceof Java_Number))
 			{
 				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
 			}
-			
+
 			Java_AssignmentExpression asgExp2 = new Java_AssignmentExpression();
 			loopIncr = asgExp2.generateAssignment(var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
@@ -340,7 +340,7 @@ public class Java_ForStatement extends TokenSequence
 		Java_VariableExpression tempVar = new Java_VariableExpression();
 		tempVar.variable = var;
 		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
-		
+
 		Java_RelationalExpression relExpr = new Java_RelationalExpression();
 		relExpr.generateRelational(new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER),
 				varExpr, relOp, toExpression, toExpression);
@@ -358,11 +358,11 @@ public class Java_ForStatement extends TokenSequence
 		this.increments = loopIncrements;
 		this.rightParen = new PunctuationRightParen();
 		this.action = act;
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapStatement(this);
 	}
-	
+
 	public Java_Statement generateForRange(Java_Variable var, TypeEnum type,
 			Java_Expression fromExpression, RelationalEnum relOper, Java_Expression toExpression,
 			Java_Expression delta, ArrayList<Java_Statement> actions, AbstractToken source)
@@ -377,7 +377,7 @@ public class Java_ForStatement extends TokenSequence
 			stmtOrComment.setWhich(stmt);
 			block.statements.addToken(stmtOrComment);
 		}
-		
+
 		return generateForRange1(var, type, fromExpression, relOper, toExpression,
 				delta, Java_Generator.wrapStatement(block), source);
 	}

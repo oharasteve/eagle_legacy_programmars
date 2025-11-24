@@ -13,7 +13,7 @@ public class Lisp_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"", true, '\\', false, true);
 	}
-	
+
 	@Override
 	public String description()
 	{

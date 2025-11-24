@@ -49,7 +49,7 @@ public class Python_BracesColons extends PrimaryOperator
 			public @S(30) Python_DictionaryElement element;
 		}
 	}
-	
+
 	public Python_Expression generateDictionary(AbstractToken source)
 	{
 		this.leftBrace = new PunctuationLeftBrace();

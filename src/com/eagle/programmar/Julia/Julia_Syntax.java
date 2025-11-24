@@ -7,8 +7,8 @@ import com.eagle.core.EagleSyntax;
 
 public class Julia_Syntax extends EagleSyntax
 {
-	public static final boolean IS_CASE_SENSITIVE= false;
-	
+	public static final boolean IS_CASE_SENSITIVE = false;
+
 	@Override
 	public String syntaxId()
 	{

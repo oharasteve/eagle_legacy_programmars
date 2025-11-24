@@ -97,7 +97,7 @@ public class Fortran_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		for (Fortran_Statement stmt1 : thenStatements._elements)
 		{
 			ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, stmt1.getWhich());
@@ -109,7 +109,7 @@ public class Fortran_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		if (this.elseClause != null && this.elseClause.isPresent())
 		{
 			for (Fortran_Statement stmt4 : elseClause.elseStatements._elements)
@@ -124,7 +124,7 @@ public class Fortran_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

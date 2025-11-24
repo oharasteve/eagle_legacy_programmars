@@ -50,7 +50,7 @@ public class IntelASM_Expression extends PrecedenceChooser
 	public @P(130) IntelASM_BytePtr bytePtr;
 	public @P(140) IntelASM_DwordPtr dwordPtr;
 	public @P(150) IntelASM_Dollar dollar;
-	
+
 	///////////////////////////////////////////////
 	// Binary expressions
 

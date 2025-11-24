@@ -9,7 +9,7 @@ import com.eagle.programmar.JSON.Terminals.JSON_Comment;
 public class JSON_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

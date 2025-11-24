@@ -27,10 +27,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.utils.EaglePath;
 
-public class EagleTransformMain<Lang extends AbstractLanguage,
-		Cls extends AbstractClass, Stmt extends AbstractStatement,
-		Meth extends AbstractMethod, Expr extends AbstractExpression,
-		Var extends AbstractVariable, Type extends AbstractType>
+public class EagleTransformMain<Lang extends AbstractLanguage, Cls extends AbstractClass, Stmt extends AbstractStatement, Meth extends AbstractMethod, Expr extends AbstractExpression, Var extends AbstractVariable, Type extends AbstractType>
 {
 	@SuppressWarnings("unused")
 	private Date _forceDate = null;

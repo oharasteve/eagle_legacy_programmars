@@ -33,7 +33,8 @@ public class IntelASM_OneArg extends TokenSequence implements EagleRunnable
 			int divisor = reg.getValue(state);
 			int quotient = state._RAX / divisor;
 			int remainder = state._RAX % divisor;
-			// System.out.println("*** " + state._RAX + " / " + divisor + " = " + quotient + " rem " + remainder);
+			// System.out.println("*** " + state._RAX + " / " + divisor + " = " + quotient +
+			// " rem " + remainder);
 			state._RAX = quotient;
 			state._RDX = remainder;
 			break;

@@ -62,7 +62,7 @@ public class CSharp_Variable extends TokenSequence implements EagleRunnable, Abs
 			interpreter.pushEagleValue(value);
 		}
 	}
-	
+
 	public static CSharp_Variable newVariable(String name)
 	{
 		CSharp_Variable var = new CSharp_Variable();

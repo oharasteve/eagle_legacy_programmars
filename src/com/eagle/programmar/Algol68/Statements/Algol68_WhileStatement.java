@@ -81,13 +81,13 @@ public class Algol68_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (Algol68_Statement statement : statements._elements)
 		{
 			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.getWhich()))
@@ -95,7 +95,7 @@ public class Algol68_WhileStatement extends TokenSequence
 				whileTrue.add(stmt);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

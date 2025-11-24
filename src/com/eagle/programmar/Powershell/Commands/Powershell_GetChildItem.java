@@ -19,7 +19,7 @@ public class Powershell_GetChildItem extends PrimaryOperator
 {
 	public @S(10) Powershell_KeywordChoice GETCHILDITEM = new Powershell_KeywordChoice("Get-ChildItem", "GCI");
 	public @S(20) @OPT TokenList<Powershell_GCIparam> params;
-	
+
 	public static class Powershell_GCIparam extends TokenChooser
 	{
 		public @CHOICE Powershell_Literal XXliteral;
@@ -35,11 +35,11 @@ public class Powershell_GetChildItem extends PrimaryOperator
 				"-Recurse");
 		public @CHOICE Powershell_StandardOption XXstandard;
 		public @LAST Powershell_Word XXword;
-		
+
 		public @CHOICE static class Powershell_GCExclude extends TokenSequence
 		{
 			public @S(10) Powershell_KeywordChoice EXCLUDE = new Powershell_KeywordChoice("-Exclude", "-Include");
-			public @S(20) SeparatedList<Powershell_GCIparam,PunctuationComma> fileList;
+			public @S(20) SeparatedList<Powershell_GCIparam, PunctuationComma> fileList;
 		}
 	}
 }

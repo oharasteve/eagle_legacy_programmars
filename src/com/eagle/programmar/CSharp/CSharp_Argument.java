@@ -28,7 +28,7 @@ public class CSharp_Argument extends TokenChooser
 		public @S(10) @OPT CSharp_Keyword OUT = new CSharp_Keyword("out");
 		public @S(20) CSharp_Expression arg;
 	}
-	
+
 	public CSharp_Expression getExpression()
 	{
 		AbstractToken which = this.getWhich();

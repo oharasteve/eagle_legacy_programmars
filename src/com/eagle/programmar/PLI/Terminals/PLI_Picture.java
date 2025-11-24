@@ -20,7 +20,7 @@ public class PLI_Picture extends TerminalPictureToken
 		{
 			return false;
 		}
-		
+
 		_endChar = _currentChar + 1;
 		while (_endChar < recLen)
 		{

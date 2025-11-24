@@ -59,7 +59,7 @@ public class C_ExpressionList extends PrimaryOperator
 				AbstractExpression newExpr1 = transformer.transformExpression(generator, expr1);
 				exprs.add(newExpr1);
 			}
-			
+
 			// Remaining args
 			if (valueList.moreArgs != null && valueList.moreArgs.size() > 0)
 			{

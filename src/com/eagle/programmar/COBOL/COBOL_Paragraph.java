@@ -51,7 +51,7 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 			interpreter.tryToInterpret(sentence);
 		}
 	}
-	
+
 	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
 		String paraName = "paragraph_with_no_name";
@@ -59,11 +59,11 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 		{
 			paraName = COBOL_Variable.repairName(header.paragraphName.getValue());
 		}
-		if (! paraName.equals("main"))
+		if (!paraName.equals("main"))
 		{
 			generator.addMethod(null, paraName, paragraphHeaders);
 		}
-		
+
 		for (COBOL_SentenceOrComment sentOrComm : sentences._elements)
 		{
 			if (sentOrComm.getWhich() instanceof COBOL_Sentence)
@@ -72,8 +72,8 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 				sent.transform(transformer, generator);
 			}
 		}
-		
-		if (! paraName.equals("main"))
+
+		if (!paraName.equals("main"))
 		{
 			generator.doneMethod();
 		}

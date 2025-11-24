@@ -15,13 +15,13 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 public class IntelASM_DQ extends TokenSequence implements EagleRunnable
 {
 	public @S(10) IntelASM_Keyword DQ = new IntelASM_Keyword("DQ");
-	public @S(20) SeparatedList<IntelASM_Expression,PunctuationComma> args;
-	
+	public @S(20) SeparatedList<IntelASM_Expression, PunctuationComma> args;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
-		
+
 		int numArgs = args.getPrimaryCount();
 		for (int j = 0; j < numArgs; j++)
 		{

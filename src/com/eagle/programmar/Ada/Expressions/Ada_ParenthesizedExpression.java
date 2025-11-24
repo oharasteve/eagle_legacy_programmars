@@ -58,7 +58,7 @@ public class Ada_ParenthesizedExpression extends PrimaryOperator
 			AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
 			return generator.newParenthesizedExpression(theExpr, this);
 		}
-		
+
 		// Must be an array of values
 		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
 		for (int i = 0; i < numElts; i++)

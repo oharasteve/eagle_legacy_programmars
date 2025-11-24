@@ -47,20 +47,20 @@ public class Rust_Data extends TokenSequence
 			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// See if the Definition has some assignments in the metrics file
 		TypeEnum typ = transformer.findAssignMetric(var);
 		AbstractType newType = generator.transformType(typ, null, null);
-		
+
 		AbstractExpression initial = null;
 		if (init != null && init.isPresent())
 		{
 			initial = transformer.transformExpression(generator, init.expr);
 		}
-		
+
 		String name = var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;

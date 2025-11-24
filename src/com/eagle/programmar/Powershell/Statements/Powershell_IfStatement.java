@@ -26,10 +26,10 @@ import com.eagle.transform.EagleTransformer;
 
 public class Powershell_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword IF =
-			new Powershell_Keyword("If");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#83-the-if-statement") Powershell_Keyword IF = new Powershell_Keyword(
+			"If");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Powershell_Expression condition;
 	public @S(40) PunctuationRightParen rightParen;
@@ -77,7 +77,7 @@ public class Powershell_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (elseIfStmts != null)
 			{
 				for (Powershell_IfElseIfStatement elif : elseIfStmts._elements)
@@ -85,7 +85,7 @@ public class Powershell_IfStatement extends TokenSequence
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELSEIF));
 				}
 			}
-			
+
 			if (elseStmt != null && elseStmt.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseStmt.ELSE));
@@ -146,12 +146,12 @@ public class Powershell_IfStatement extends TokenSequence
 			EagleGenerator generator)
 	{
 		AbstractExpression newCond = transformer.transformExpression(generator, condition);
-		
+
 		if (elseIfStmts != null && elseIfStmts.size() > 0)
 		{
 			throw new RuntimeException("if/elif is not yet implemented in Powershell");
 		}
-		
+
 		ArrayList<AbstractStatement> thenParts = new ArrayList<AbstractStatement>();
 		for (Powershell_Element stmt1 : statements._elements)
 		{

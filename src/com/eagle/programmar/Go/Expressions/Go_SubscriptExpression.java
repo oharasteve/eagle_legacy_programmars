@@ -36,7 +36,7 @@ public class Go_SubscriptExpression extends PrecedenceOperator
 		int ec = interpreter.getIntValue(subscr2);
 		interpreter.pushStr(val.substring(sc, ec));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

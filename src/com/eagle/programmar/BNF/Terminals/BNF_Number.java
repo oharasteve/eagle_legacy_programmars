@@ -13,7 +13,7 @@ public class BNF_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", "Lf", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

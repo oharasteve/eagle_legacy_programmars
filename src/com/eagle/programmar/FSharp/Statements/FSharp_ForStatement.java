@@ -28,7 +28,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class FSharp_ForStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("loops-for-to-expression") FSharp_Keyword FOR = new FSharp_Keyword("for");
 	public @S(20) FSharp_Variable var;
@@ -93,7 +93,7 @@ public class FSharp_ForStatement extends TokenSequence
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -115,7 +115,7 @@ public class FSharp_ForStatement extends TokenSequence
 		default:
 			throw new RuntimeException("Unexpected direction: " + TO.getValue());
 		}
-		
+
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
 				forActions.getWhich());
@@ -126,7 +126,7 @@ public class FSharp_ForStatement extends TokenSequence
 				actionList.add(stmt);
 			}
 		}
-		
+
 		AbstractVariable newVar = generator.newVariable(var.id.getValue());
 		AbstractStatement stmt = generator.newForRangeStatement(newVar, TypeEnum.VOID, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

@@ -57,7 +57,7 @@ public class Rexx_Program extends AbstractLanguage
 			{
 				Rexx_Function func = (Rexx_Function) which;
 				interpreter.addFunction(func.id.getValue(), func);
-				interpreter.tryToInterpret(func);	// Initialize metrics because functions *follow* main()
+				interpreter.tryToInterpret(func); // Initialize metrics because functions *follow* main()
 			}
 		}
 
@@ -67,7 +67,7 @@ public class Rexx_Program extends AbstractLanguage
 			interpreter.tryToInterpret(elt);
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -98,14 +98,14 @@ public class Rexx_Program extends AbstractLanguage
 					// Need to create an empty hashmap
 					initExpr = generator.newClassCreation(abstrType, null, this);
 				}
-				
+
 				// System.err.println("****** Found var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
 			}
 		}
-		
+
 		// Second pass, transform all the data and logic
 		for (Rexx_TopElement stmt : elements._elements)
 		{
@@ -124,7 +124,7 @@ public class Rexx_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

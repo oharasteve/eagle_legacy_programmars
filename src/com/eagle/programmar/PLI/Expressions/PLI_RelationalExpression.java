@@ -33,7 +33,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
@@ -54,7 +54,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator
 				return;
 			}
 		}
-		
+
 		if (leftValue.isDouble() || rightValue.isDouble())
 		{
 			double leftDbl = leftValue.forceDoubleValue();
@@ -108,7 +108,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator
 				return;
 			}
 		}
-		
+
 		if (leftValue.isBoolean() || rightValue.isBoolean())
 		{
 			boolean leftBool = leftValue.forceBooleanValue();
@@ -125,7 +125,7 @@ public class PLI_RelationalExpression extends PrecedenceOperator
 		}
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

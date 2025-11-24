@@ -33,7 +33,6 @@ public class Bash_GrepCommand extends TokenSequence implements AbstractStatement
 				"--extended-regex",
 				"--line-regex",
 				"--silent",
-				"--text"
-				);
+				"--text");
 	}
 }

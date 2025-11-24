@@ -13,7 +13,7 @@ public class JSON_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "e", null, true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

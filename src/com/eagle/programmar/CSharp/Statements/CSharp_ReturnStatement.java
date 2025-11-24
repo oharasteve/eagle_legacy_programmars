@@ -24,7 +24,8 @@ public class CSharp_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
-	public @S(20) @DOC("statements/jump-statements#the-return-statement") CSharp_Keyword RETURN = new CSharp_Keyword("return");
+	public @S(20) @DOC("statements/jump-statements#the-return-statement") CSharp_Keyword RETURN = new CSharp_Keyword(
+			"return");
 	public @S(30) @OPT CSharp_Expression expression;
 	public @S(40) @NOSPACE PunctuationSemicolon semicolon;
 
@@ -48,7 +49,7 @@ public class CSharp_ReturnStatement extends TokenSequence
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -42,7 +42,7 @@ public class Algol68_RelationalExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
@@ -59,7 +59,7 @@ public class Algol68_RelationalExpression extends PrecedenceOperator
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "~=", "/=", "NE":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
 		}
@@ -91,7 +91,7 @@ public class Algol68_RelationalExpression extends PrecedenceOperator
 		}
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

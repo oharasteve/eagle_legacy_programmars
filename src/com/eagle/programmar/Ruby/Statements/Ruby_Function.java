@@ -37,7 +37,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Ruby_Function extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) Ruby_Keyword DEF = new Ruby_Keyword("def");
 	public @S(20) Ruby_Function_Definition id;
@@ -65,7 +65,7 @@ public class Ruby_Function extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -92,12 +92,12 @@ public class Ruby_Function extends TokenSequence
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		boolean isMain = false;
 		if (fnName.equals("main"))
 		{
-			fnName = generator.mainName();	// Change from 'main' to 'Main' for C#
+			fnName = generator.mainName(); // Change from 'main' to 'Main' for C#
 			isMain = true;
 		}
 
@@ -107,36 +107,36 @@ public class Ruby_Function extends TokenSequence
 		{
 			System.out.println("** Found Ruby function " + fnName);
 		}
-		
+
 		if (isMain)
 		{
 			// Have to wait until addMethod is called
-			generator.addMainArgs();		// For java and C# but not for Python
+			generator.addMainArgs(); // For java and C# but not for Python
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (funcParamDefs != null && funcParamDefs.isPresent())
 		{
 			for (int i = 0; i < funcParamDefs.parameters.getPrimaryCount(); i++)
 			{
 				Ruby_Variable param = funcParamDefs.parameters.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.vars.first().getValue());
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
-		
+
 		for (Ruby_Statement stmt : statements._elements)
 		{
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
@@ -148,10 +148,10 @@ public class Ruby_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
-	
+
 	private boolean isFuncParam(String name)
 	{
 		int numParams = funcParamDefs.parameters.getPrimaryCount();
@@ -165,7 +165,7 @@ public class Ruby_Function extends TokenSequence
 		}
 		return false;
 	}
-	
+
 	// Are there any local variables we need to declare?
 	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -176,11 +176,12 @@ public class Ruby_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found local var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);
-					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType,
+							null, this);
 					generator.addStatement(dataStmt, this);
 				}
 			}

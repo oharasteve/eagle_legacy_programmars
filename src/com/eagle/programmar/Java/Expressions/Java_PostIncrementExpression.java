@@ -25,8 +25,7 @@ public class Java_PostIncrementExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Variable var;
-	public @S(20) @NOSPACE Java_PunctuationChoice operator =
-			new Java_PunctuationChoice("++", "--");
+	public @S(20) @NOSPACE Java_PunctuationChoice operator = new Java_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -69,9 +68,10 @@ public class Java_PostIncrementExpression extends PrimaryOperator
 			throw new RuntimeException("Unexpected operator: " + operator);
 		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
-		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
+		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, whichDirection,
+				this);
 	}
-	
+
 	public Java_Expression generateIncrement(Java_Variable varName,
 			IncrementEnum oper, AbstractToken source)
 	{

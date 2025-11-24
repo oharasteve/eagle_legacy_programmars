@@ -36,7 +36,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = function.getValue();
-		
+
 		// Look up the function
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
@@ -62,13 +62,13 @@ public class TCL_BracketFunction extends PrimaryOperator
 			TCL_Variable_Definition param = proc.vars._elements.get(i);
 
 			EagleValue val = interpreter.getEagleValue(expr);
-			
+
 			// Make sure Scope is in the CALLED function, not the CALLER
 			EagleScope saveScope = interpreter._symbolTable.getScope();
 			interpreter._symbolTable.setScope(proc.getScope());
 			interpreter.setSymbol(param, param.getValue(), val);
 			interpreter._symbolTable.setScope(saveScope);
-			
+
 			argTypes.add(val.typeName());
 		}
 
@@ -87,7 +87,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 		// Now remove all those parameters
 		interpreter.completedFunction(name, proc);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -95,16 +95,16 @@ public class TCL_BracketFunction extends PrimaryOperator
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-			for (TCL_Expression arg : callArguments._elements)	
+			for (TCL_Expression arg : callArguments._elements)
 			{
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, function);
 		}
-		
+
 		throw new RuntimeException("Unknown function: " + name);
 	}
 }

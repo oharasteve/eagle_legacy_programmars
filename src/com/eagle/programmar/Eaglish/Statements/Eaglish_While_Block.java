@@ -21,9 +21,9 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_While_Block extends TokenSequence 
+public class Eaglish_While_Block extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword WHILE = new Eaglish_Keyword("WHILE");
 	public @S(20) Eaglish_Expression condition;

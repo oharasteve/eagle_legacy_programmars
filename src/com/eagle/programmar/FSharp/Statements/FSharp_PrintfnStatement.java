@@ -42,7 +42,7 @@ public class FSharp_PrintfnStatement extends TokenSequence
 		_metrics.calledWith(argTypes);
 		System.out.println(formatted);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

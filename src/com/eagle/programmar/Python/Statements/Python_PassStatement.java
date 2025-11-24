@@ -9,6 +9,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 
 public class Python_PassStatement extends TokenSequence implements AbstractStatement
 {
-	public @S(10) @DOC("simple_stmts.html#the-pass-statement")
-				@NOSPACE Python_Keyword PASS = new Python_Keyword("pass");
+	public @S(10) @DOC("simple_stmts.html#the-pass-statement") @NOSPACE Python_Keyword PASS = new Python_Keyword(
+			"pass");
 }

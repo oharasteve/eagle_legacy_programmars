@@ -23,10 +23,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 
-public class COBOL_Transform_Add<Lang extends AbstractLanguage,
-		Cls extends AbstractClass, Stmt extends AbstractStatement,
-		Meth extends AbstractMethod, Expr extends AbstractExpression,
-		Var extends AbstractVariable, Type extends AbstractType>
+public class COBOL_Transform_Add<Lang extends AbstractLanguage, Cls extends AbstractClass, Stmt extends AbstractStatement, Meth extends AbstractMethod, Expr extends AbstractExpression, Var extends AbstractVariable, Type extends AbstractType>
 {
 	public Stmt transform(Transform_COBOL<Lang, Cls, Stmt, Meth, Expr, Var, Type> trans,
 			COBOL_AddStatement addStatement)
@@ -75,15 +72,19 @@ public class COBOL_Transform_Add<Lang extends AbstractLanguage,
 		if (err.NOT.isPresent())
 		{
 			// (targetName > -max && targetName < max)
-			Expr left = trans._target._createExpression.createRelational(targetVar, RelationalEnum.GREATER_THAN, minVar, variable);
-			Expr right = trans._target._createExpression.createRelational(targetVar, RelationalEnum.LESS_THAN, maxVar, variable);
+			Expr left = trans._target._createExpression.createRelational(targetVar, RelationalEnum.GREATER_THAN, minVar,
+					variable);
+			Expr right = trans._target._createExpression.createRelational(targetVar, RelationalEnum.LESS_THAN, maxVar,
+					variable);
 			ifCondition = trans._target._createExpression.createAnd(left, right, null);
 		}
 		else
 		{
 			// (targetName <= -max || targetName >= max)
-			Expr left = trans._target._createExpression.createRelational(targetVar, RelationalEnum.LESS_EQUALS, minVar, variable);
-			Expr right = trans._target._createExpression.createRelational(targetVar, RelationalEnum.GREATER_EQUALS, maxVar, variable);
+			Expr left = trans._target._createExpression.createRelational(targetVar, RelationalEnum.LESS_EQUALS, minVar,
+					variable);
+			Expr right = trans._target._createExpression.createRelational(targetVar, RelationalEnum.GREATER_EQUALS,
+					maxVar, variable);
 			ifCondition = trans._target._createExpression.createOr(left, right, null);
 		}
 

@@ -33,7 +33,7 @@ public class CSharp_PrintFunction extends PrimaryOperator
 	public @S(70) @NOSPACE CSharp_KeywordChoice WRITE = new CSharp_KeywordChoice(
 			"Flush", "ReadLine", "SetOut", "Write", "WriteLine");
 	public @S(80) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(90) @NOSPACE @OPT SeparatedList<CSharp_Expression,PunctuationComma> exprs;
+	public @S(90) @NOSPACE @OPT SeparatedList<CSharp_Expression, PunctuationComma> exprs;
 	public @S(100) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
@@ -49,10 +49,10 @@ public class CSharp_PrintFunction extends PrimaryOperator
 			System.out.println(val);
 			return;
 		}
-		
+
 		throw new RuntimeException("Unexpected keyword: " + WRITE.getValue());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -69,7 +69,7 @@ public class CSharp_PrintFunction extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected WRITE value: " + WRITE.getValue());
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, exprs.first());
 		return generator.newPrintFunction(value, newLine, false, this);
 	}
@@ -91,7 +91,7 @@ public class CSharp_PrintFunction extends PrimaryOperator
 			OUT = new CSharp_KeywordChoice("Out");
 		}
 		OUT.setPresent(true);
-		
+
 		if (newLine)
 		{
 			WRITE = new CSharp_KeywordChoice("WriteLine");
@@ -100,15 +100,15 @@ public class CSharp_PrintFunction extends PrimaryOperator
 		{
 			WRITE = new CSharp_KeywordChoice("Write");
 		}
-		
+
 		dot3 = new PunctuationPeriod();
 		dot3.setPresent(true);
 		leftParen = new PunctuationLeftParen();
 		rightParen = new PunctuationRightParen();
-		
-		exprs = new SeparatedList<CSharp_Expression,PunctuationComma>();
+
+		exprs = new SeparatedList<CSharp_Expression, PunctuationComma>();
 		exprs.addPrimaryElement(line);
-		
+
 		setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
 	}

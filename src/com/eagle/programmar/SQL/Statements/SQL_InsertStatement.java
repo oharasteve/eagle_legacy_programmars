@@ -44,7 +44,7 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 		public @CHOICE SQL_InsertSet XXinsertSet;
 		public @CHOICE SQL_InsertValues XXinsertValues;
 	}
-	
+
 	public static class SQL_InsertSet extends TokenSequence
 	{
 		public @S(10) SQL_Keyword SET = new SQL_Keyword("SET");
@@ -80,13 +80,13 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 		// Find the right table
 		String tableName = table.getValue().toUpperCase();
 		EagleValue val = interpreter.findSymbol(tableName);
-		if (! (val instanceof SQL_Table))
+		if (!(val instanceof SQL_Table))
 		{
 			throw new RuntimeException("Can only insert values into a Table");
 		}
 		SQL_Table stable = (SQL_Table) val;
-		
-		if (! (clause.getWhich() instanceof SQL_InsertValues))
+
+		if (!(clause.getWhich() instanceof SQL_InsertValues))
 		{
 			throw new RuntimeException("Can only handle Insert values");
 		}
@@ -98,7 +98,7 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 			throw new RuntimeException("Number of fields to Insert is " + numValues +
 					", but should be " + numColumns);
 		}
-		
+
 		ArrayList<EagleValue> values = new ArrayList<EagleValue>();
 		for (int col = 0; col < numValues; col++)
 		{

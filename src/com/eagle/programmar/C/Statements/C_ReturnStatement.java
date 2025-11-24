@@ -20,7 +20,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class C_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement		
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("#The-return-Statement") C_Keyword RETURN = new C_Keyword("return");
 	public @S(20) @OPT C_Expression expression;

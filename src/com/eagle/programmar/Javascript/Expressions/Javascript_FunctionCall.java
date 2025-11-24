@@ -44,7 +44,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 			// Look it up
 			name = ((Javascript_Identifier_Reference) first).getValue();
 		}
-		
+
 		// Make sure the function args match up
 		int argCount = 0;
 		if (arguments.expressions != null && arguments.expressions.isPresent())
@@ -66,7 +66,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 		{
 			paramCount += parameters.moreParams.size();
 		}
-		
+
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
@@ -83,7 +83,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 				Javascript_Expression expr = arguments.expressions.getPrimaryElement(i);
 				if (i > 0)
 				{
-					param = parameters.moreParams._elements.get(i-1).param;
+					param = parameters.moreParams._elements.get(i - 1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(expr);
 				AbstractToken which = param.paramName.getWhich();
@@ -133,7 +133,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 				Javascript_Expression expr = arguments.expressions.getPrimaryElement(i);
 				args.add(transformer.transformExpression(generator, expr));
 			}
-			
+
 			AbstractVariable var = generator.newVariable(id.getValue());
 			return generator.newMethodInvocation(var, args, this);
 		}

@@ -13,7 +13,7 @@ public class MSSolution_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"", false, ' ', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

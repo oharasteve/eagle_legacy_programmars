@@ -33,6 +33,6 @@ public class Scala_Statement extends TokenChooser
 	public @CHOICE Scala_PrintLnStatement XXprintStatement;
 	public @CHOICE Scala_ReturnStatement XXreturnStatement;
 	public @CHOICE Scala_WhileStatement XXwhileStatement;
-	
+
 	public @LAST Scala_ExpressionStatement XXexpressionStatement;
 }

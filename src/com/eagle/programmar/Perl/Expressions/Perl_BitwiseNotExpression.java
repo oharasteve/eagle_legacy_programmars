@@ -23,7 +23,7 @@ public class Perl_BitwiseNotExpression extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int value = interpreter.getIntValue(expr);
-		interpreter.pushInt(~ value);
+		interpreter.pushInt(~value);
 	}
 
 	@Override

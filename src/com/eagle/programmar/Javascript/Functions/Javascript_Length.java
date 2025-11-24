@@ -34,13 +34,13 @@ public class Javascript_Length extends PrimaryOperator
 		String str = val.forceStringValue();
 		interpreter.pushInt(str.length());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		AbstractToken which = variableName.firstId.getWhich();
-		if (! (which instanceof Javascript_Identifier_Reference))
+		if (!(which instanceof Javascript_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}

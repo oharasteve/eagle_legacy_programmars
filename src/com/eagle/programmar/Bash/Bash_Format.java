@@ -32,7 +32,7 @@ public class Bash_Format
 			{
 				sb.append(txt.substring(sc, first));
 			}
-			if (first+1 < nc && txt.charAt(first+1) == '{')
+			if (first + 1 < nc && txt.charAt(first + 1) == '{')
 			{
 				// Extract an expression
 				int second = txt.indexOf("}", first + 2);
@@ -56,7 +56,7 @@ public class Bash_Format
 				while (second < nc)
 				{
 					char ch = txt.charAt(second);
-					if (! Character.isLetterOrDigit(ch)) break;
+					if (!Character.isLetterOrDigit(ch)) break;
 					second++;
 				}
 				if (first + 1 == second)

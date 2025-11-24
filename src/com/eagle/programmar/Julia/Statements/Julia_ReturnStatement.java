@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Julia_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("manual/functions/#The-return-Keyword") Julia_Keyword RETURN = new Julia_Keyword("return");
 	public @S(20) Julia_Expression expression;
@@ -29,7 +29,7 @@ public class Julia_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expression);
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{

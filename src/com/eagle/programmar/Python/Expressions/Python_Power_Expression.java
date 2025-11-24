@@ -36,8 +36,9 @@ public class Python_Power_Expression extends PrecedenceOperator
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		return generator.newExponentExpression(leftExpr, rightExpr, this);
 	}
-	
-	public static Python_Power_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr, AbstractToken source)
+
+	public static Python_Power_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr,
+			AbstractToken source)
 	{
 		Python_Power_Expression expr = new Python_Power_Expression();
 		expr.left = (Python_Expression) leftExpr;

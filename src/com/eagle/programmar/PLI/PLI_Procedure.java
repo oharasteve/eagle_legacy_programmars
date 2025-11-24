@@ -43,7 +43,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class PLI_Procedure extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @OPT PLI_Signals signals;
 	public @S(20) @OPT PLI_Punctuation percent1 = new PLI_Punctuation('%');
@@ -259,7 +259,7 @@ public class PLI_Procedure extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

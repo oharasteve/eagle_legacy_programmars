@@ -74,7 +74,7 @@ public class Eaglish_Program extends AbstractLanguage
 			interpreter.tryToInterpret(stmt);
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -102,7 +102,7 @@ public class Eaglish_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

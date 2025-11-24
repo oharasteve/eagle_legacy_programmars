@@ -48,7 +48,7 @@ public class Javascript_DocumentWriteln extends PrimaryOperator
 		}
 
 		String val = interpreter.getStrValue(expr);
-		if (val.startsWith("<br>")) val = val.substring(4);	// Toss leading <br> if present
+		if (val.startsWith("<br>")) val = val.substring(4); // Toss leading <br> if present
 		if (newLine)
 		{
 			System.out.println(val);
@@ -75,7 +75,7 @@ public class Javascript_DocumentWriteln extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected WRITE value: " + WRITELN.getValue());
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		return generator.newPrintStatement(value, newLine, false, this);
 	}

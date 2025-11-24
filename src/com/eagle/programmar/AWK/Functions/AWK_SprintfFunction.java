@@ -50,7 +50,7 @@ public class AWK_SprintfFunction extends PrimaryOperator
 			sb.append(result);
 		}
 		interpreter.pushStr(sb.toString());
-		
+
 		_metrics.calledWith(argTypes);
 	}
 

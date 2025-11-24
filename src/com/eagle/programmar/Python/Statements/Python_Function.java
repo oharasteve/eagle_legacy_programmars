@@ -46,16 +46,15 @@ import com.eagle.transform.EagleTransformer;
 
 // Why does this implement AbstractMethod ?? Transformation needs / uses it, but why ??
 public class Python_Function extends TokenSequence
-			implements AbstractMethod, AbstractFunction, EagleRunnable,
-					EagleTransformableFunction
+		implements AbstractMethod, AbstractFunction, EagleRunnable,
+		EagleTransformableFunction
 {
 	public @S(10) @OPT @BLANKLINE Python_Decorators decorators;
 	public @S(20) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
-	public @S(30) @DOC("compound_stmts.html#function-definitions")
-						Python_Keyword DEF = new Python_Keyword("def");
+	public @S(30) @DOC("compound_stmts.html#function-definitions") Python_Keyword DEF = new Python_Keyword("def");
 	public @S(40) Python_FunctionName fnName;
 	public @S(50) Python_FunctionHeader header;
-	
+
 	public static class Python_FunctionHeader extends TokenSequence implements EagleScopeInterface
 	{
 		public @S(10) Python_Parameter_List params;
@@ -84,7 +83,7 @@ public class Python_Function extends TokenSequence
 		public @S(10) Python_Punctuation arrow = new Python_Punctuation("->");
 		public @S(20) Python_Type type;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -113,7 +112,7 @@ public class Python_Function extends TokenSequence
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	public static Python_Function newPythonFunction(String name)
 	{
 		Python_Function_Definition funcDef = new Python_Function_Definition();
@@ -121,7 +120,7 @@ public class Python_Function extends TokenSequence
 		Python_Function func = new Python_Function();
 		func.fnName = new Python_FunctionName();
 		func.fnName.setWhich(funcDef);
-		
+
 		func.header = new Python_FunctionHeader();
 		func.header.colon = new PunctuationColon();
 
@@ -130,22 +129,22 @@ public class Python_Function extends TokenSequence
 		func.header.params.params = new Python_Params();
 		func.header.params.params.setPresent(true);
 		func.header.params.rightParen = new PunctuationRightParen();
-		
+
 		func.header.defBody = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_ComplexStatement>();
 		func.header.defBody.setWhich(multi);
-		
+
 		return func;
 	}
-	
+
 	public void addFunctionParameter(AbstractType type, String name)
 	{
 		Python_Variable_Definition var = new Python_Variable_Definition();
 		var.setValue(name);
 		Python_Parameter newParam = new Python_Parameter();
 		newParam.setWhich(var);
-		
+
 		if (header.params.params.param == null)
 		{
 			header.params.params.param = newParam;
@@ -162,18 +161,18 @@ public class Python_Function extends TokenSequence
 			header.params.params.moreParams.addToken(more);
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! (fnName.getWhich() instanceof Python_Function_Definition))
+		if (!(fnName.getWhich() instanceof Python_Function_Definition))
 		{
 			throw new RuntimeException("Can only handle regular function definitions");
 		}
 		Python_Function_Definition id = (Python_Function_Definition) fnName.getWhich();
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String name = id.getValue();
 		generator.addMethod(newReturnType, name, this);
 		generator.setMethodName(name);
@@ -181,10 +180,10 @@ public class Python_Function extends TokenSequence
 		{
 			System.out.println("** Found Python function " + name);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (header.params != null && header.params.isPresent())
 		{
 			Python_Parameter paramVar1 = header.params.params.param;
@@ -195,14 +194,14 @@ public class Python_Function extends TokenSequence
 				TypeEnum metricArg1 = EagleMetrics.convertType(metricArgType1);
 				paramType1 = generator.transformType(metricArg1, null, paramVar1);
 			}
-			if (! (paramVar1.getWhich() instanceof Python_Variable_Definition))
+			if (!(paramVar1.getWhich() instanceof Python_Variable_Definition))
 			{
 				throw new RuntimeException("Unable to handle " + paramVar1.getWhich());
 			}
 			Python_Variable_Definition varDef1 = (Python_Variable_Definition) paramVar1.getWhich();
 			System.err.println("****** paramType = " + paramType1 + " value = " + varDef1.getValue());
 			generator.addMethodParameter(paramType1, varDef1.getValue());
-			
+
 			if (header.params.params.moreParams != null)
 			{
 				int i = 1;
@@ -216,7 +215,7 @@ public class Python_Function extends TokenSequence
 						TypeEnum metricArg2 = EagleMetrics.convertType(metricArgType2);
 						paramType2 = generator.transformType(metricArg2, null, paramVar2);
 					}
-					if (! (paramVar2.getWhich() instanceof Python_Variable_Definition))
+					if (!(paramVar2.getWhich() instanceof Python_Variable_Definition))
 					{
 						throw new RuntimeException("Unable to handle " + paramVar2.getWhich());
 					}
@@ -227,17 +226,17 @@ public class Python_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
-		
+
 		for (AbstractStatement stmt1 : header.defBody.transformStatement(transformer, generator))
 		{
 			generator.addStatement(stmt1, header.defBody);
 		}
-		
+
 		generator.doneMethod();
 	}
-	
+
 	private boolean isFuncParam(String name)
 	{
 		if (header.params != null && header.params.isPresent())
@@ -281,7 +280,7 @@ public class Python_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

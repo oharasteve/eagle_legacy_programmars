@@ -16,7 +16,8 @@ public class Python_ElseStartOfLine extends Python_StartOfLine
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 
-		if (DBG) System.out.println("******* ElseStartOfLine: Checking " + (_currentLine+1) + "/" + (_currentChar+1));
+		if (DBG)
+			System.out.println("******* ElseStartOfLine: Checking " + (_currentLine + 1) + "/" + (_currentChar + 1));
 		AbstractToken parent = this;
 		while (parent != null)
 		{
@@ -24,19 +25,21 @@ public class Python_ElseStartOfLine extends Python_StartOfLine
 			if (parent instanceof AbstractStatement) break;
 			parent = parent.getParent();
 		}
-		
+
 		/////// The KEY Line ///////
 		if (_currentChar != parent.getStartChar())
 		{
-			if (DBG) System.out.println("******* IF FAIL: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
+			if (DBG) System.out.println("******* IF FAIL: Comparing " + (_currentLine + 1) + "/" + (_currentChar + 1)
+					+ " to " + (parent.getStartLine() + 1) + "/" + (parent.getStartChar() + 1));
 			return false;
 		}
 
-		if (DBG) System.out.println("******* IF MATCH: Comparing " + (_currentLine+1) + "/" + (_currentChar+1) + " to " + (parent.getStartLine()+1) + "/" + (parent.getStartChar()+1));
+		if (DBG) System.out.println("******* IF MATCH: Comparing " + (_currentLine + 1) + "/" + (_currentChar + 1)
+				+ " to " + (parent.getStartLine() + 1) + "/" + (parent.getStartChar() + 1));
 		foundIt(_currentLine, _currentChar - 1);
 		return true;
 	}
-	
+
 //	@Override
 //	public String toString()
 //	{

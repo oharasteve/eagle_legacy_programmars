@@ -24,13 +24,13 @@ public class SQL_MultiplicativeExpression extends PrecedenceOperator
 	public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) SQL_MultOperator operator;
 	public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class SQL_MultOperator extends TokenChooser
 	{
 		public @CHOICE SQL_PunctuationChoice XXop = new SQL_PunctuationChoice("*", "/", "%");
 		public @CHOICE SQL_Keyword XXDIV = new SQL_Keyword("DIV");
 	}
-	
+
 	private @SKIP Operator2Metrics _metrics = null;
 
 	@Override
@@ -39,13 +39,13 @@ public class SQL_MultiplicativeExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
 		switch (oper.toUpperCase())
@@ -57,7 +57,7 @@ public class SQL_MultiplicativeExpression extends PrecedenceOperator
 			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "/":
-			interpreter.pushDouble((double)leftInt / rightInt);
+			interpreter.pushDouble((double) leftInt / rightInt);
 			return;
 		case "%":
 			interpreter.pushInt(leftInt % rightInt);
@@ -79,7 +79,8 @@ public class SQL_MultiplicativeExpression extends PrecedenceOperator
 		case "DIV":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "/":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
+					this);
 		case "%":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:

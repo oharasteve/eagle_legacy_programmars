@@ -17,7 +17,6 @@ public class Bash_Assignment_Expression extends PrecedenceOperator implements Ea
 	public @S(20) Bash_PunctuationChoice equals = new Bash_PunctuationChoice("=");
 	public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

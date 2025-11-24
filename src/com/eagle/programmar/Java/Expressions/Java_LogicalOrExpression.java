@@ -50,7 +50,7 @@ public class Java_LogicalOrExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle " + orOperator);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -71,7 +71,7 @@ public class Java_LogicalOrExpression extends PrecedenceOperator
 		}
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
-	
+
 	public Java_Expression generateLogicalOr(Java_Expression leftExpr,
 			LogicalOrEnum oper, Java_Expression rightExpr, AbstractToken source)
 	{

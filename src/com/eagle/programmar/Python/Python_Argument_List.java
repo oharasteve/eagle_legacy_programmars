@@ -14,15 +14,14 @@ public class Python_Argument_List
 	public static SeparatedList<Python_Expression, PunctuationComma> createArgumentList(
 			ArrayList<Python_Expression> args)
 	{
-		SeparatedList<Python_Expression, PunctuationComma> argList =
-				new SeparatedList<Python_Expression, PunctuationComma>();
+		SeparatedList<Python_Expression, PunctuationComma> argList = new SeparatedList<Python_Expression, PunctuationComma>();
 
 		if (args != null)
 		{
 			boolean first = true;
 			for (AbstractExpression arg0 : args)
 			{
-				if (! first)
+				if (!first)
 				{
 					argList.addSecondaryElement(new PunctuationComma());
 				}
@@ -30,7 +29,7 @@ public class Python_Argument_List
 				argList.addPrimaryElement((Python_Expression) arg0);
 			}
 		}
-		
+
 		return argList;
 	}
 }

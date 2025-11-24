@@ -23,7 +23,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Scala_BlockStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleScopeInterface, EagleTransformableStatement
+		EagleScopeInterface, EagleTransformableStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Scala_EOLN eoln1;
@@ -46,15 +46,15 @@ public class Scala_BlockStatement extends TokenSequence
 		for (Scala_Statement stmt : statements._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL) break; 
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Scala_Statement statement : statements._elements)
 		{
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.getWhich());
@@ -66,10 +66,10 @@ public class Scala_BlockStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
-	
+
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
 			EagleGenerator generator, Scala_Statement statement)
 	{

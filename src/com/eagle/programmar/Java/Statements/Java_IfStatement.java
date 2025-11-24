@@ -28,7 +28,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Java_IfStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @OPT @NEWLINE Java_Label label;
 	public @S(20) @DOC("statements.html#14.9") Java_Keyword IF = new Java_Keyword("if");
@@ -127,7 +127,7 @@ public class Java_IfStatement extends TokenSequence
 		}
 
 		this.thenStatement = thenStmt;
-				
+
 		if (elseStmt != null)
 		{
 			this.elseClause = new Java_IfElseClause();
@@ -139,14 +139,14 @@ public class Java_IfStatement extends TokenSequence
 		this.setTransformationSource(source);
 		return Java_Generator.wrapStatement(this);
 	}
-	
+
 	public Java_Statement generateIfElse(Java_Expression cond,
 			ArrayList<Java_Statement> thenStatements,
 			ArrayList<Java_Statement> elseStatements, AbstractToken source)
 	{
 		Java_StatementBlock thenBlock = new Java_StatementBlock();
 		Java_Statement blockTrue = thenBlock.generateBlock(thenStatements, source);
-				
+
 		Java_Statement blockElse = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{

@@ -46,7 +46,7 @@ public class Rust_PrintlnStatement extends TokenSequence
 		String result = Rust_Format.format(interpreter, argList, _metrics);
 		System.out.println(result);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -22,7 +22,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Go_WhileStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Go_Keyword FOR = new Go_Keyword("for");
 	public @S(20) Go_Expression condition;
@@ -68,20 +68,19 @@ public class Go_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
-		Collection<AbstractStatement> newStmts =
-				transformer.transformStatement(generator, statement.getWhich());
+
+		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, statement.getWhich());
 		for (AbstractStatement stmt : newStmts)
 		{
 			whileTrue.add(stmt);
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

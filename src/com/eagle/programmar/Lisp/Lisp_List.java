@@ -28,7 +28,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 	{
 		Lisp_Expression first = exprs.first();
 		String name = first.showText();
-		
+
 		// See if it is one of the user defun's
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
@@ -37,9 +37,9 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		}
 		Lisp_DefunFunction func = (Lisp_DefunFunction) fn;
 
-		int argCount = exprs.size() - 1;	// Minus 1 for the function name
+		int argCount = exprs.size() - 1; // Minus 1 for the function name
 		int paramCount = func.parameters.size();
-		
+
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(

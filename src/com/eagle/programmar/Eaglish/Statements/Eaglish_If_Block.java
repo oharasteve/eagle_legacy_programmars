@@ -22,7 +22,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_If_Block extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword IF = new Eaglish_Keyword("IF");
 	public @S(20) Eaglish_Expression condition;
@@ -61,7 +61,7 @@ public class Eaglish_If_Block extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (elseifBlocks != null)
 			{
 				for (Eaglish_If_ElseIf_Block elif : elseifBlocks._elements)
@@ -69,7 +69,7 @@ public class Eaglish_If_Block extends TokenSequence
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELSE_IF));
 				}
 			}
-			
+
 			if (elseBlock != null && elseBlock.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseBlock.ELSE));
@@ -130,7 +130,7 @@ public class Eaglish_If_Block extends TokenSequence
 			EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
-		
+
 		ArrayList<AbstractStatement> thenParts = new ArrayList<AbstractStatement>();
 		for (Eaglish_Statement thenStmt : statements._elements)
 		{

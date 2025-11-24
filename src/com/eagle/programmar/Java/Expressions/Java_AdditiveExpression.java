@@ -34,13 +34,13 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -71,7 +71,7 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -90,7 +90,7 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
-	
+
 	public Java_Expression generateAdditive(Oper2Types types, Java_Expression leftExpr, AdditiveEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{

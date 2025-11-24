@@ -24,15 +24,15 @@ public class VB_DoStatement extends TokenSequence implements AbstractStatement, 
 	public @S(40) TokenList<VB_Element> actions;
 	public @S(50) VB_Keyword LOOP = new VB_Keyword("Loop");
 	public @S(60) @OPT VB_DoCondition cond2;
-	
+
 	public static class VB_DoCondition extends TokenSequence
 	{
 		public @S(10) VB_KeywordChoice WHILE = new VB_KeywordChoice("While", "Until");
 		public @S(20) VB_Expression condition;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
@@ -56,7 +56,7 @@ public class VB_DoStatement extends TokenSequence implements AbstractStatement, 
 			}
 
 			metric.iterate();
-			
+
 			for (VB_Element stmt : actions._elements)
 			{
 				result = interpreter.tryToInterpret(stmt);
@@ -78,7 +78,7 @@ public class VB_DoStatement extends TokenSequence implements AbstractStatement, 
 			{
 				break;
 			}
-			
+
 			if (cond2 != null && cond2.isPresent())
 			{
 				boolean cond = interpreter.getBoolValue(cond2.condition);

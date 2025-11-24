@@ -28,7 +28,7 @@ public class TCL_ReturnStatement extends TokenSequence
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.pushEagleValue(val);
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{

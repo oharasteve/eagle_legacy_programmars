@@ -32,7 +32,7 @@ public class Java_ExitStatement extends TokenSequence implements EagleRunnableWi
 		interpreter._exitCode = interpreter.getIntValue(code);
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	public static Java_ExitStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		Java_ExitStatement stmt = new Java_ExitStatement();

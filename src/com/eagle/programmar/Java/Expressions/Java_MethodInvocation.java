@@ -52,7 +52,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 			{
 				throw new RuntimeException("Unable to find a method named " + name);
 			}
-			
+
 			Java_Method meth = (Java_Method) fn;
 			Java_ParameterList parameters = null;
 			AbstractToken which = meth.typeAndName.getWhich();
@@ -88,7 +88,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 				{
 					if (i > 0)
 					{
-						expr = argList.moreArgs._elements.get(i-1).arg;
+						expr = argList.moreArgs._elements.get(i - 1).arg;
 					}
 					Java_MethodParameter param = parameters.params.getPrimaryElement(i);
 					EagleValue val = interpreter.getEagleValue(expr);
@@ -122,7 +122,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 		}
 		return result;
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -143,7 +143,7 @@ public class Java_MethodInvocation extends PrimaryOperator
 					}
 				}
 			}
-			
+
 			AbstractVariable var = generator.newVariable(id.getValue());
 			return generator.newMethodInvocation(var, args, this);
 		}

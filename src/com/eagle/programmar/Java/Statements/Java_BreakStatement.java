@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Java_BreakStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.15") Java_Keyword BREAK = new Java_Keyword("break");
 	public @S(20) @OPT Java_Identifier_Reference label;
@@ -30,14 +30,14 @@ public class Java_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		return generator.newBreakStatement(this);
 	}
-	
+
 	public Java_Statement generateBreak(AbstractToken source)
 	{
 		this.semicolon = new PunctuationSemicolon();

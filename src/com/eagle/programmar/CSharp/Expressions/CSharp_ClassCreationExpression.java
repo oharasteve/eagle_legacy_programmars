@@ -25,7 +25,7 @@ public class CSharp_ClassCreationExpression extends PrimaryOperator
 	public @S(40) @OPT TokenList<CSharp_Comment> comments;
 	public @S(50) @OPT @NOSPACE CSharp_ArgumentList argList;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	public CSharp_Expression generateCreation(CSharp_Type type,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{

@@ -14,7 +14,7 @@ public class CMD_Literal extends TerminalLiteralToken
 		if (findStart(lines) == FOUND.EOF) return false;
 		return genericLiteral(lines, "'\"", false, '?', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

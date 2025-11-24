@@ -9,7 +9,7 @@ import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 public class SQL_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

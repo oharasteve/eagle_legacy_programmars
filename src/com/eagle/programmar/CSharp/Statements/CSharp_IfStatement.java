@@ -27,7 +27,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class CSharp_IfStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements/selection-statements") CSharp_Keyword IF = new CSharp_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -87,7 +87,7 @@ public class CSharp_IfStatement extends TokenSequence
 
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -125,7 +125,7 @@ public class CSharp_IfStatement extends TokenSequence
 		}
 
 		this.thenStatement = thenStmt;
-				
+
 		if (elseStmt != null)
 		{
 			this.elseClause = new CSharp_IfElseClause();
@@ -137,14 +137,14 @@ public class CSharp_IfStatement extends TokenSequence
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(this);
 	}
-	
+
 	public CSharp_Statement generateIfElse(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> thenStatements,
 			ArrayList<CSharp_Statement> elseStatements, AbstractToken source)
 	{
 		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
 		CSharp_Statement block1 = thenBlock.generateBlock(thenStatements, source);
-				
+
 		CSharp_Statement block2 = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{

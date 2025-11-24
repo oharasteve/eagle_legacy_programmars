@@ -26,7 +26,7 @@ public class Java_LengthMethod extends PrecedenceOperator
 	public @S(30) @NOSPACE Java_Keyword LENGTH = new Java_Keyword("length");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -40,14 +40,14 @@ public class Java_LengthMethod extends PrecedenceOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
 		return generator.newLengthFunction(theExpr, this);
 	}
-	
+
 	public Java_Expression generateLength(Java_Expression expr, AbstractToken source)
 	{
 		this.expression = expr;
 		this.dot = new PunctuationPeriod();
 		this.leftParen = new PunctuationLeftParen();
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

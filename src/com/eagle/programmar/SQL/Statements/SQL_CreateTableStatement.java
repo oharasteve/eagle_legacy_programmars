@@ -105,18 +105,18 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 			public @S(20) SQL_Keyword ROWID = new SQL_Keyword("ROWID");
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (! (type.getWhich() instanceof SQL_TableNormal))
+		if (!(type.getWhich() instanceof SQL_TableNormal))
 		{
 			throw new RuntimeException("Can only Create simple Tables");
 		}
 		SQL_TableNormal normal = (SQL_TableNormal) type.getWhich();
 
 		SQL_Table table = new SQL_Table();
-		
+
 		int numFields = normal.createFields.getPrimaryCount();
 		for (int i = 0; i < numFields; i++)
 		{
@@ -125,7 +125,7 @@ public class SQL_CreateTableStatement extends TokenSequence implements EagleRunn
 			TypeEnum colType = SQL_Type.findTypeEnum(fieldDef.fieldType);
 			table.addColumn(colName, colType);
 		}
-		
+
 		interpreter.setSymbol(normal, tableName.getValue().toUpperCase(), table);
 	}
 }

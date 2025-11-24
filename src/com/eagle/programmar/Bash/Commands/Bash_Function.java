@@ -26,7 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Bash_Function extends TokenChooser
 {
 	public @CHOICE static class Bash_Function_Explicit extends TokenSequence
-				implements AbstractFunction, EagleRunnable, EagleScopeInterface
+			implements AbstractFunction, EagleRunnable, EagleScopeInterface
 	{
 		public @S(10) @DOC("#index-functions_002c-shell") Bash_Keyword FUNCTION = new Bash_Keyword("function");
 		public @S(20) Bash_Function_Definition id;
@@ -42,10 +42,10 @@ public class Bash_Function extends TokenChooser
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) PunctuationRightParen rightParen;
 		}
-		
+
 		public @SKIP CallMetrics _callMetrics = null;
 		public @SKIP ArgumentsMetrics _argumentsMetrics = null;
-		
+
 		// Bash has a strange way of returning values
 		public @SKIP int _exitStatus = 0;
 		public @SKIP String _echoOutputs = null;
@@ -57,7 +57,7 @@ public class Bash_Function extends TokenChooser
 		{
 			return _scope;
 		}
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{

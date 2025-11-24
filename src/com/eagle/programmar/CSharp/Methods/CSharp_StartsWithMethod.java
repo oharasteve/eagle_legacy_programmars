@@ -32,7 +32,7 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT CSharp_Expression scExpr;
 	public @S(80) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -59,7 +59,7 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 		{
 			theSC = transformer.transformExpression(generator, scExpr);
 		}
-		
+
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
@@ -80,7 +80,7 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 			this.left = CSharp_Generator.wrapExpression(substr);
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
 	}

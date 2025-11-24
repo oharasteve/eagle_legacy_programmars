@@ -30,7 +30,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_For_Block extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword FOR = new Eaglish_Keyword("FOR");
 	public @S(20) Eaglish_Variable_Definition variable;
@@ -103,7 +103,7 @@ public class Eaglish_For_Block extends TokenSequence
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -125,7 +125,7 @@ public class Eaglish_For_Block extends TokenSequence
 		default:
 			throw new RuntimeException("Unexpected direction: " + TO.getValue());
 		}
-		
+
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (Eaglish_Statement statement : statements._elements)
 		{
@@ -139,7 +139,7 @@ public class Eaglish_For_Block extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(variable.getValue());
 		AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

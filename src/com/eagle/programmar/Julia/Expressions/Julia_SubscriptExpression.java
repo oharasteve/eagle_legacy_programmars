@@ -27,7 +27,7 @@ public class Julia_SubscriptExpression extends PrecedenceOperator implements Eag
 		public @CHOICE Julia_Keyword XXEND = new Julia_Keyword("end");
 		public @CHOICE Julia_Expression XXsubscr;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

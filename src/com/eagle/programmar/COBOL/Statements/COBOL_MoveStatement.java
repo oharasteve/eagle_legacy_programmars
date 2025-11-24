@@ -48,7 +48,7 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (ALL.isPresent()) throw new RuntimeException("Can't handle MOVE ALL yet");
-		if (more != null && more.isPresent() && more.size() > 0) 
+		if (more != null && more.isPresent() && more.size() > 0)
 		{
 			throw new RuntimeException("Can't handle multiple MOVEs yet");
 		}
@@ -62,7 +62,7 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 		COBOL_UserVariable variable = (COBOL_UserVariable) which;
 		interpreter.setSymbol(variable, variable.id.getValue(), val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -74,7 +74,7 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can't handle MOVE TO many variables: " + this);
 		}
-		if (! (var.getWhich() instanceof COBOL_UserVariable))
+		if (!(var.getWhich() instanceof COBOL_UserVariable))
 		{
 			throw new RuntimeException("Can only ADD to a Variable: " + this);
 		}

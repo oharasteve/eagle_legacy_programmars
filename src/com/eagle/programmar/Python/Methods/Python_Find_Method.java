@@ -34,7 +34,7 @@ public class Python_Find_Method extends PrimaryOperator
 		public @S(10) PunctuationComma comma;
 		public @S(20) Python_Expression start;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -50,7 +50,7 @@ public class Python_Find_Method extends PrimaryOperator
 			interpreter.pushInt(str.indexOf(patt));
 		}
 	}
-	
+
 	public Python_Expression generateIndexOf(Python_Variable str, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
@@ -66,7 +66,7 @@ public class Python_Find_Method extends PrimaryOperator
 			this.scExpr.start = sc;
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

@@ -88,7 +88,7 @@ public class Java_Data extends TokenSequence
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = Java_Type.findType(generator, jtype);
-		
+
 		String name = id.getValue();
 		AbstractExpression initial = null;
 		if (initialValue != null && initialValue.isPresent())
@@ -96,7 +96,7 @@ public class Java_Data extends TokenSequence
 			initial = transformer.transformExpression(generator, initialValue.expression);
 		}
 		result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
-		
+
 		for (Java_MoreIdentifiers more : moreIds._elements)
 		{
 			name = more.id.getValue();
@@ -107,15 +107,15 @@ public class Java_Data extends TokenSequence
 			}
 			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 		}
-		
+
 		return result;
 	}
-	
+
 	// Called directly from Java_Program for static class-level data
 	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractType newType = Java_Type.findType(generator, jtype);
-		
+
 		String name = id.getValue();
 		AbstractExpression initial = null;
 		if (initialValue != null && initialValue.isPresent())
@@ -124,7 +124,7 @@ public class Java_Data extends TokenSequence
 		}
 		return generator.newDataDeclaration(true, name, null, newType, initial, this);
 	}
-	
+
 	public static Java_Data newDataDeclaration(boolean isStatic, String name, Java_Expression size, Java_Type type,
 			Java_Expression initial, AbstractToken source)
 	{
@@ -132,16 +132,16 @@ public class Java_Data extends TokenSequence
 		{
 			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
-		
+
 		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
 		{
 			// Sorry, cannot redefine true or false
 			return null;
 		}
-		
+
 		Java_Data data = new Java_Data();
 		data.semicolon = new PunctuationSemicolon();
-		
+
 		// Set data name and type
 		data.id = new Java_Variable_Definition();
 		data.id.setValue(name);
@@ -151,7 +151,7 @@ public class Java_Data extends TokenSequence
 		{
 			data.addModifier("static");
 		}
-		
+
 		// Set the initial value, if any
 		if (initial != null)
 		{
@@ -191,7 +191,7 @@ public class Java_Data extends TokenSequence
 			modifiers = new TokenList<Java_DataModifier>();
 			modifiers.setPresent(true);
 		}
-		if (! hasModifier(which))
+		if (!hasModifier(which))
 		{
 			modifiers.addToken(mod);
 		}

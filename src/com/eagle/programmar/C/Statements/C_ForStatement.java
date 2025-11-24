@@ -42,7 +42,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class C_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleScopeInterface,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("#The-for-Statement") C_Keyword FOR = new C_Keyword("for");
 	public @S(20) C_ForLoopBody body;
@@ -57,7 +57,7 @@ public class C_ForStatement extends TokenSequence
 	public static class C_ForLoopStatement extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) @OPT SeparatedList<C_ForLoopVariable,PunctuationComma> loopVar;
+		public @S(20) @OPT SeparatedList<C_ForLoopVariable, PunctuationComma> loopVar;
 		public @S(30) @OPT C_Comment comment1;
 		public @S(40) PunctuationSemicolon semicolon1;
 		public @S(50) @OPT C_Expression terminateCondition;
@@ -98,7 +98,7 @@ public class C_ForStatement extends TokenSequence
 		public @S(10) C_Type varType;
 		public @S(20) C_Variable_Definition variable;
 		public @S(30) @OPT C_ForTypeInit equalsInit;
-		
+
 		public static class C_ForTypeInit extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
@@ -192,7 +192,7 @@ public class C_ForStatement extends TokenSequence
 
 		throw new RuntimeException("Unexpected for loop construct: " + body.getWhich());
 	}
-	
+
 	private static boolean guessDirection(C_Expression testExpr, C_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -206,7 +206,7 @@ public class C_ForStatement extends TokenSequence
 			C_PreIncrementExpression pre = (C_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof C_RelationalExpression)
 		{
@@ -217,8 +217,8 @@ public class C_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
 
 	@Override
@@ -243,20 +243,20 @@ public class C_ForStatement extends TokenSequence
 				varName = noType.variable.getValue();
 				forInit = noType.initialExpr;
 			}
-			
+
 			if (forInit != null)
 			{
 				AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
 				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-				
+
 				AbstractExpression termExpr = transformer.transformExpression(generator, loop.terminateCondition);
 				AbstractExpression delta = transformer.transformExpression(generator, loop.increment);
 				AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
 				return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
 			}
 		}
-		
+
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 }

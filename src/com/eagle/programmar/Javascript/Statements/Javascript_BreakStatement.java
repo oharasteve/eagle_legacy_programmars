@@ -16,7 +16,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Javascript_BreakStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("js_break.asp") Javascript_Keyword BREAK = new Javascript_Keyword("break");
 	public @S(20) @OPT Javascript_Identifier_Reference label;

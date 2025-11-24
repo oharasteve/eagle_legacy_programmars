@@ -34,7 +34,7 @@ public class VB_BuiltIn extends PrimaryOperator
 			throw new RuntimeException("Unable to handle " + builtIn);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

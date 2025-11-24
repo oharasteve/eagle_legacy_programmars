@@ -22,7 +22,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Delphi_If_Statement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#If_Statements") Delphi_Keyword IF = new Delphi_Keyword(
 			"If");
@@ -82,7 +82,7 @@ public class Delphi_If_Statement extends TokenSequence
 
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

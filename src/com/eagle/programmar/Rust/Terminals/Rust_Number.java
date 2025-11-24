@@ -20,7 +20,7 @@ public class Rust_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", "LlFfDd", true, true, '_');
 	}
-	
+
 	@Override
 	public String description()
 	{

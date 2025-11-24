@@ -116,7 +116,7 @@ public class COBOL_VariableExpression extends PrimaryOperator
 				if (sub.type.getWhich() instanceof COBOL_RegularSubscript)
 				{
 					COBOL_RegularSubscript regular = (COBOL_RegularSubscript) sub.type.getWhich();
-					
+
 					// This is actually a subscript range
 					if (regular.range != null && regular.range.isPresent())
 					{
@@ -130,13 +130,13 @@ public class COBOL_VariableExpression extends PrimaryOperator
 								SubstringECEnum.GIVEN_NC, nc, true, this);
 						return subscrExpr;
 					}
-					
+
 					AbstractExpression newSub = transformer.transformExpression(generator, regular.expr);
 					return generator.newVariableExpression(variable.id.getValue(),
 							SubscriptEnum.FIRST_IS_ONE, newSub, this);
 				}
 			}
-			
+
 			throw new RuntimeException("Can't handle this subscript: " + variable.subscripts);
 		}
 

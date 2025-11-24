@@ -23,7 +23,7 @@ public class Rexx_ExitStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.RETURN;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

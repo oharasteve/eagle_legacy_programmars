@@ -46,7 +46,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class CSharp_Method extends TokenSequence
 		implements AbstractMethod, AbstractFunction, EagleRunnable,
-				EagleScopeInterface, EagleTransformableFunction
+		EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT @BLANKLINE TokenList<CSharp_Comment> comments;
 	public @S(20) @OPT TokenList<CSharp_Annotation> annotation;
@@ -159,12 +159,12 @@ public class CSharp_Method extends TokenSequence
 			interpreter.completedFunction("main", this);
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractType newReturnType = CSharp_Type.findType(generator, returnType);
-		
+
 		String newName = id.getValue();
 		if (VERBOSE)
 		{
@@ -174,10 +174,10 @@ public class CSharp_Method extends TokenSequence
 		{
 			newName = generator.mainName();
 		}
-		
+
 		generator.addMethod(newReturnType, newName, this);
 		generator.setMethodName(newName);
-		
+
 		if (parameters != null && parameters.isPresent())
 		{
 			int nParams = parameters.params.getPrimaryCount();
@@ -188,12 +188,12 @@ public class CSharp_Method extends TokenSequence
 				generator.addMethodParameter(paramType, param.id.getValue());
 			}
 		}
-		
-		if (! (body.getWhich() instanceof CSharp_MethodImplementation))
+
+		if (!(body.getWhich() instanceof CSharp_MethodImplementation))
 		{
 			throw new RuntimeException("Methods need an implementation");
 		}
-		
+
 		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) body.getWhich();
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 		for (CSharp_StatementOrComment javaStmt : impl.block.statements._elements)
@@ -221,7 +221,7 @@ public class CSharp_Method extends TokenSequence
 			StaticEnum isStatic, CSharp_Type retType, String mName)
 	{
 		this.modifiers = new TokenList<CSharp_MethodModifier>();
-		
+
 		CSharp_MethodModifier modifier1 = new CSharp_MethodModifier();
 		switch (privacy)
 		{
@@ -249,7 +249,7 @@ public class CSharp_Method extends TokenSequence
 		default:
 			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
-		
+
 		if (retType == null)
 		{
 			this.returnType = CSharp_Type.newPrimitiveType("void");
@@ -258,13 +258,13 @@ public class CSharp_Method extends TokenSequence
 		{
 			this.returnType = retType;
 		}
-		
+
 		this.parameters = new CSharp_MethodParameters();
 		this.parameters.setPresent(true);
 		this.parameters.leftParen = new PunctuationLeftParen();
 		this.parameters.params = new SeparatedList<CSharp_MethodParameter, PunctuationComma>();
 		this.parameters.rightParen = new PunctuationRightParen();
-		
+
 		this.body = new CSharp_MethodBody();
 		CSharp_MethodImplementation impl = new CSharp_MethodImplementation();
 		impl.block = new CSharp_StatementBlock();
@@ -272,11 +272,11 @@ public class CSharp_Method extends TokenSequence
 		impl.block.statements = new TokenList<CSharp_StatementOrComment>();
 		impl.block.rightBrace = new PunctuationRightBrace();
 		this.body.setWhich(impl);
-		
+
 		this.id = new CSharp_Method_Definition();
 		this.id.setValue(mName);
 	}
-	
+
 	public void addMethodParameter(AbstractType type, String name)
 	{
 		CSharp_MethodParameter param = new CSharp_MethodParameter();
@@ -284,14 +284,14 @@ public class CSharp_Method extends TokenSequence
 		param.id = new CSharp_Variable_Definition();
 		param.id.setValue(name);
 		param.cstype = (CSharp_Type) type;
-		
+
 		if (this.parameters.params.size() > 0)
 		{
 			this.parameters.params.addSecondaryElement(new PunctuationComma());
 		}
 		this.parameters.params.addPrimaryElement(param);
 	}
-	
+
 	public void addComment(CSharp_Comment comment)
 	{
 		if (this.comments == null)

@@ -74,7 +74,8 @@ public class Eaglish_ConditionStringMatch extends PrecedenceOperator
 		case "ENDS_WITH":
 			return generator.newEndsWithFunction(leftExpr, rightExpr, this);
 		case "STARTS_WITH":
-			return generator.newStartsWithFunction(leftExpr, rightExpr, scExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
+			return generator.newStartsWithFunction(leftExpr, rightExpr, scExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO,
+					this);
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}

@@ -68,7 +68,7 @@ public class Java_SwitchStatement extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	public Java_Statement generateSwitch(Java_Expression expr,
 			ArrayList<Java_Expression> values, ArrayList<ArrayList<Java_Statement>> cases,
 			ArrayList<Java_Statement> defaultCase, AbstractToken source)
@@ -78,7 +78,7 @@ public class Java_SwitchStatement extends TokenSequence
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.val = expr;
-		
+
 		int numCases = values.size();
 		caseClauses = new TokenList<Java_SwitchCase>();
 		for (int i = 0; i < numCases; i++)
@@ -90,7 +90,7 @@ public class Java_SwitchStatement extends TokenSequence
 			caseClause.colon = new PunctuationColon();
 			caseClause.statements = new TokenList<Java_StatementOrComment>();
 			caseClause.statements.setPresent(true);
-			
+
 			for (Java_Statement stmt1 : cases.get(i))
 			{
 				Java_StatementOrComment stmtComm1 = new Java_StatementOrComment();
@@ -101,19 +101,19 @@ public class Java_SwitchStatement extends TokenSequence
 			Java_StatementOrComment stmtComm1 = new Java_StatementOrComment();
 			stmtComm1.setWhich(brk1.generateBreak(this));
 			caseClause.statements.addToken(stmtComm1);
-			
+
 			Java_SwitchCase switchCase1 = new Java_SwitchCase();
 			switchCase1.setWhich(caseClause);
 			caseClauses.addToken(switchCase1);
 		}
-		
+
 		if (defaultCase != null && defaultCase.size() > 0)
 		{
 			Java_DefaultClause defaultClause = new Java_DefaultClause();
 			defaultClause.colon = new PunctuationColon();
 			defaultClause.statements = new TokenList<Java_StatementOrComment>();
 			defaultClause.statements.setPresent(true);
-			
+
 			for (Java_Statement stmt2 : defaultCase)
 			{
 				Java_StatementOrComment stmtComm2 = new Java_StatementOrComment();
@@ -124,12 +124,12 @@ public class Java_SwitchStatement extends TokenSequence
 			Java_StatementOrComment stmtComm2 = new Java_StatementOrComment();
 			stmtComm2.setWhich(brk2.generateBreak(this));
 			defaultClause.statements.addToken(stmtComm2);
-			
+
 			Java_SwitchCase switchCase2 = new Java_SwitchCase();
 			switchCase2.setWhich(defaultClause);
 			caseClauses.addToken(switchCase2);
 		}
-		
+
 		return Java_Generator.wrapStatement(this);
 	}
 }

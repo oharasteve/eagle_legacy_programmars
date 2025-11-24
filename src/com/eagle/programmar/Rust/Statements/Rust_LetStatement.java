@@ -44,16 +44,16 @@ public class Rust_LetStatement extends TokenSequence
 		EagleValue val = interpreter.getEagleValue(expr);
 		interpreter.setSymbol(var, var.var.getValue(), val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// See if the Definition has some assignments in the metrics file
 		TypeEnum type = transformer.findAssignMetric(var.var);
 		AbstractType newType = generator.transformType(type, null, null);
-		
+
 		AbstractExpression initial = transformer.transformExpression(generator, expr);
-		
+
 		String name = var.var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;

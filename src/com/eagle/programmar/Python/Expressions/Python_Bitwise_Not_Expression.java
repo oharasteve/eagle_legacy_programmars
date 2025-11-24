@@ -25,7 +25,7 @@ public class Python_Bitwise_Not_Expression extends PrecedenceOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int value = interpreter.getIntValue(expr);
-		interpreter.pushInt(~ value);
+		interpreter.pushInt(~value);
 	}
 
 	@Override

@@ -79,7 +79,7 @@ public class AWK_Program extends AbstractLanguage
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -111,14 +111,14 @@ public class AWK_Program extends AbstractLanguage
 					// Need to create an empty hashmap
 					initExpr = generator.newClassCreation(abstrType, null, this);
 				}
-				
+
 				// System.err.println("****** Found var " + met._symbolName);
 				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
 			}
 		}
-		
+
 		// Second pass, transform all the data and logic
 		for (AWK_Element elt : elements._elements)
 		{
@@ -133,7 +133,7 @@ public class AWK_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

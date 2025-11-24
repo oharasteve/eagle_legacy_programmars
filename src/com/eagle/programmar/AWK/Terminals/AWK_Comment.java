@@ -49,6 +49,6 @@ public class AWK_Comment extends TerminalCommentToken
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null;		// Nothing to do here
+		return null; // Nothing to do here
 	}
 }

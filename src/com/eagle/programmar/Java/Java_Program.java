@@ -144,10 +144,10 @@ public class Java_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		// Not needed for C# or Java, but Python needs this
 		generator.addCallToMain();
-		
+
 		return generator.getTransfomedProgram();
 	}
 
@@ -155,7 +155,7 @@ public class Java_Program extends AbstractLanguage
 	{
 		Java_ClassOrEnum entry = new Java_ClassOrEnum();
 		entry.setWhich(cls);
-	
+
 		Java_Program prog = new Java_Program();
 		prog.classOrEnumList = new TokenList<Java_ClassOrEnum>();
 		prog.classOrEnumList.setPresent(true);
@@ -163,15 +163,15 @@ public class Java_Program extends AbstractLanguage
 
 		prog.jpackage = Java_Package.newPackage(pkg);
 		prog.jpackage.setPresent(true);
-		
+
 		return prog;
 	}
-	
+
 	public void addClass(Java_Class cls)
 	{
 		Java_ClassOrEnum entry = new Java_ClassOrEnum();
 		entry.setWhich(cls);
-	
+
 		if (this.classOrEnumList == null)
 		{
 			this.classOrEnumList = new TokenList<Java_ClassOrEnum>();
@@ -179,7 +179,7 @@ public class Java_Program extends AbstractLanguage
 		}
 		this.classOrEnumList.addToken(entry);
 	}
-	
+
 	public void addComment(Java_Comment comment)
 	{
 		if (this.comments1 == null)

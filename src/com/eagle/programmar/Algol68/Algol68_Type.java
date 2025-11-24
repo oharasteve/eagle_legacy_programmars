@@ -21,7 +21,7 @@ public class Algol68_Type extends TokenChooser
 		public @S(20) PunctuationRightBracket rightBracket;
 		public @S(30) Algol68_Type type;
 	}
-	
+
 	public static TypeEnum findType(Algol68_Type type)
 	{
 		if (type.getWhich() instanceof Algol68_ArrayType)

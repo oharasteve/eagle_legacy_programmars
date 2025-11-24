@@ -57,7 +57,7 @@ public class SQL_Type extends TokenChooser
 		public @S(40) @OPT SQL_Number size2;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	public static TypeEnum findTypeEnum(SQL_Type type)
 	{
 		if (type.getWhich() instanceof SQL_BaseType)
@@ -77,10 +77,10 @@ public class SQL_Type extends TokenChooser
 				return TypeEnum.STRING;
 			}
 		}
-		
+
 		return TypeEnum.OTHER;
 	}
-	
+
 	public static AbstractType findAbstractType(EagleGenerator generator, SQL_Type type)
 	{
 		TypeEnum newType = findTypeEnum(type);

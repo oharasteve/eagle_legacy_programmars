@@ -35,7 +35,7 @@ public class Rexx_CallStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = subName.getValue();
-		
+
 		// Look up the subroutine
 		Rexx_Function func = (Rexx_Function) interpreter.findFunction(name);
 		if (func == null)
@@ -78,9 +78,9 @@ public class Rexx_CallStatement extends TokenSequence
 		for (Rexx_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL) break; 
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
-		
+
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
 		func._callMetrics.addCallFrom(this, elapsedTime);

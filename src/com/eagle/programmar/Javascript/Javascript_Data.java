@@ -54,7 +54,7 @@ public class Javascript_Data extends TokenSequence
 			EagleValue value = interpreter.getEagleValue(init.expr);
 			interpreter.setSymbol(var, var.toString(), value);
 		}
-		
+
 		if (moreVars != null && moreVars.size() > 0)
 		{
 			for (Javascript_More_Variables more : moreVars._elements)
@@ -73,13 +73,13 @@ public class Javascript_Data extends TokenSequence
 	{
 		return transformStaticData(false, transformer, generator);
 	}
-	
+
 	// Called directly from Javascript_Program for static class-level data
 	public ArrayList<AbstractStatement> transformStaticData(boolean isStatic,
 			EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
-		
+
 		// See if the Declaration has some assignments in the metrics file
 		TypeEnum typeEnum = transformer.findAssignMetric(var);
 		AbstractType newType = generator.transformType(typeEnum, null, this);
@@ -103,7 +103,8 @@ public class Javascript_Data extends TokenSequence
 				{
 					initial2 = transformer.transformExpression(generator, more.init.expr);
 				}
-				AbstractStatement newData2 = generator.newDataDeclaration(isStatic, name2, null, newType, initial2, this);
+				AbstractStatement newData2 = generator.newDataDeclaration(isStatic, name2, null, newType, initial2,
+						this);
 				result.add(newData2);
 			}
 		}

@@ -15,12 +15,12 @@ public class Powershell_GetContent extends PrimaryOperator
 {
 	public @S(10) Powershell_Keyword GETCONTENT = new Powershell_Keyword("Get-Content");
 	public @S(20) Powershell_GCParam param;
-	
+
 	public static class Powershell_GCParam extends TokenChooser
 	{
 		public @CHOICE Powershell_Literal XXliteral;
 		public @CHOICE Powershell_Filename XXfileName;
-		
+
 		public @CHOICE static class Power_GCEncoding extends TokenSequence
 		{
 			public @S(10) Powershell_Keyword ENCODING = new Powershell_Keyword("-Encoding");

@@ -27,7 +27,7 @@ public class Python_Logical_Or_Expression extends PrecedenceOperator
 	public @S(20) Python_Or_Operation operator;
 	public @S(30) @OPT TokenList<Python_Comment> comment;
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class Python_Or_Operation extends TokenChooser
 	{
 		public @CHOICE Python_Keyword XXOR = new Python_Keyword("or");
@@ -54,12 +54,12 @@ public class Python_Logical_Or_Expression extends PrecedenceOperator
 			return;
 		case "^":
 			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(leftValue ^ rightValue);	// Exclusive or, XOR
+			interpreter.pushBool(leftValue ^ rightValue); // Exclusive or, XOR
 			return;
 		}
 		throw new RuntimeException("Unexpected OR operator: " + operator);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -80,7 +80,7 @@ public class Python_Logical_Or_Expression extends PrecedenceOperator
 		}
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
-	
+
 	public Python_Expression generateLogicalOr(Python_Expression leftExpr,
 			LogicalOrEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{

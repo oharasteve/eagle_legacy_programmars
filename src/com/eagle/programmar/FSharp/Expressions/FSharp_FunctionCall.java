@@ -86,14 +86,14 @@ public class FSharp_FunctionCall extends PrimaryOperator
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		String name = functionName.id.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-		
+
 		if (argList != null && argList.size() > 0)
 		{
 			for (int i = 0; i < argList.getPrimaryCount(); i++)
@@ -103,7 +103,7 @@ public class FSharp_FunctionCall extends PrimaryOperator
 				args.add(newExpr);
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(name);
 		return generator.newMethodInvocation(var, args, functionName.id);
 	}

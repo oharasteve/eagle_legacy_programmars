@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_Return_Statement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword RETURN = new Eaglish_Keyword("RETURN");
 	public @S(20) Eaglish_Expression expression;

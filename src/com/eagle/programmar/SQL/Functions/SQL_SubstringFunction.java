@@ -34,12 +34,12 @@ public class SQL_SubstringFunction extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String strArg = interpreter.getStrValue(expr);
-		int sc = interpreter.getIntValue(scExpr) - 1;		// In SQL, first char is 1
+		int sc = interpreter.getIntValue(scExpr) - 1; // In SQL, first char is 1
 		int nc = interpreter.getIntValue(ncExpr);
 		if (sc + nc > strArg.length()) nc = strArg.length() - sc;
 		interpreter.pushStr(strArg.substring(sc, sc + nc));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

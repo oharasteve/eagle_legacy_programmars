@@ -61,7 +61,7 @@ public class VB_Program extends AbstractLanguage
 			interpreter.tryToInterpret(stmt.baseStatement);
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -89,7 +89,7 @@ public class VB_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

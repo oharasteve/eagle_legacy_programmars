@@ -105,18 +105,18 @@ public class Rust_Function extends TokenSequence
 				newReturnType = Rust_Type.findType(generator, primitive.PRIMITIVE.toString());
 			}
 		}
-		
+
 		if (newReturnType == null)
 		{
 			TypeEnum metricRetType = transformer.findReturnMetric(id);
 			newReturnType = generator.transformType(metricRetType, null, id);
 		}
-		
+
 		String fnName = id.getValue();
 		boolean isMain = false;
 		if (fnName.equals("main"))
 		{
-			fnName = generator.mainName();	// Change from 'main' to 'Main' for C#
+			fnName = generator.mainName(); // Change from 'main' to 'Main' for C#
 			isMain = true;
 		}
 
@@ -126,37 +126,38 @@ public class Rust_Function extends TokenSequence
 		{
 			System.out.println("** Found Rust function " + fnName);
 		}
-		
+
 		if (isMain)
 		{
 			// Have to wait until addMethod is called
-			generator.addMainArgs();		// For java and C# but not for Python
+			generator.addMainArgs(); // For java and C# but not for Python
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (funcParamDefs != null && funcParamDefs.isPresent())
 		{
 			for (int i = 0; i < funcParamDefs.getPrimaryCount(); i++)
 			{
 				Rust_Parameter param = funcParamDefs.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
-				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+
+				// System.err.println("****** paramType = " + paramType + " value = " +
+				// param.getValue());
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-		
+
 		///////// addLocalVars(transformer, generator);
-		
+
 		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt);
 		if (newStmts != null)
 		{
@@ -165,7 +166,7 @@ public class Rust_Function extends TokenSequence
 				generator.addStatement(newStmt, stmt);
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

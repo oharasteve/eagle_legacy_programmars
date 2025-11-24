@@ -67,7 +67,7 @@ public class Python_Literal extends TerminalLiteralToken
 		{
 			ok = false;
 		}
-		
+
 		if (ok)
 		{
 			if (prefixLen == 1)
@@ -77,20 +77,20 @@ public class Python_Literal extends TerminalLiteralToken
 		_currentChar -= prefixLen;
 		return ok;
 	}
-	
+
 	@Override
 	public String description()
 	{
 		return "python literal";
 	}
-		
+
 	public Python_Literal generateLiteral(String value, AbstractToken source)
 	{
 		this.setValue(value);
 		this.setTransformationSource(source);
 		return this;
 	}
-	
+
 	public static Python_Expression generateLiteralExpression(String value, AbstractToken source)
 	{
 		Python_Literals literals = Python_Literals.generateLiterals(value, source);

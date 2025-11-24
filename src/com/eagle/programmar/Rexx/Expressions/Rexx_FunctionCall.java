@@ -45,7 +45,7 @@ public class Rexx_FunctionCall extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = fnName.getValue();
-		
+
 		// See if it is a subscripted variable first
 		EagleValue value = interpreter.findSymbol(name);
 		if (value != null && value.isArray())
@@ -55,7 +55,7 @@ public class Rexx_FunctionCall extends PrimaryOperator
 			interpreter.pushEagleValue(array.getValue(index));
 			return;
 		}
-		
+
 		// Look up the function
 		Rexx_Function func = (Rexx_Function) interpreter.findFunction(name);
 		if (func == null)
@@ -93,9 +93,9 @@ public class Rexx_FunctionCall extends PrimaryOperator
 		for (Rexx_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL) break; 
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
-		
+
 		// Need to put the result on the runtime stack
 		// Rexx uses the function name for the return value
 		// Sort-of like this: Function sqrt(x) ; sqrt = x*x ; End Function
@@ -129,7 +129,7 @@ public class Rexx_FunctionCall extends PrimaryOperator
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, fnName);
 		}

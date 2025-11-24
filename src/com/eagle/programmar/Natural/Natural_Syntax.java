@@ -9,7 +9,7 @@ import com.eagle.programmar.Natural.Natural_Option.Natural_OptionChoice;
 public class Natural_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = true;
-	
+
 	@Override
 	public String syntaxId()
 	{

@@ -34,7 +34,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Ada_Procedure extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) Ada_Keyword PROCEDURE = new Ada_Keyword("procedure");
 	public @S(20) Ada_Function_Definition id;
@@ -85,7 +85,7 @@ public class Ada_Procedure extends TokenSequence
 			}
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -93,7 +93,7 @@ public class Ada_Procedure extends TokenSequence
 		boolean isMain = false;
 		if (fnName.equals("main"))
 		{
-			fnName = generator.mainName();	// Change from 'main' to 'Main' for C#
+			fnName = generator.mainName(); // Change from 'main' to 'Main' for C#
 			isMain = true;
 		}
 
@@ -103,16 +103,16 @@ public class Ada_Procedure extends TokenSequence
 		{
 			System.out.println("** Found Ada function " + fnName);
 		}
-		
+
 		if (isMain)
 		{
 			// Have to wait until addMethod is called
-			generator.addMainArgs();		// For java and C# but not for Python
+			generator.addMainArgs(); // For java and C# but not for Python
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (procParamDefs != null && procParamDefs.isPresent())
 		{
 			if (procParamDefs.parameters != null && procParamDefs.parameters.isPresent())
@@ -121,24 +121,24 @@ public class Ada_Procedure extends TokenSequence
 				{
 					Ada_Parameter param = procParamDefs.parameters.getPrimaryElement(i);
 					AbstractType paramType = null;
-					
+
 					if (argTypes != null && i < argTypes.size())
 					{
 						String metricArgType = argTypes.get(i);
 						TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 						paramType = generator.transformType(metricArg, null, param);
 					}
-					
+
 					generator.addMethodParameter(paramType, param.param.getValue());
 				}
 			}
 		}
 
 		transformBody(transformer, generator);
-		
+
 		generator.doneMethod();
 	}
-	
+
 	public void transformBody(EagleTransformer transformer, EagleGenerator generator)
 	{
 		for (Ada_Statement stmt1 : statements1._elements)
@@ -154,7 +154,7 @@ public class Ada_Procedure extends TokenSequence
 				Ada_Procedure proc = (Ada_Procedure) which1;
 				proc.transformFunction(transformer, generator);
 			}
-			else	// Other statements
+			else // Other statements
 			{
 				Collection<AbstractStatement> newStmts1 = transformer.transformStatement(generator, which1);
 				if (newStmts1 != null)
@@ -166,7 +166,7 @@ public class Ada_Procedure extends TokenSequence
 				}
 			}
 		}
-		
+
 		for (Ada_Statement stmt2 : statements2._elements)
 		{
 			AbstractToken which2 = stmt2.getWhich();

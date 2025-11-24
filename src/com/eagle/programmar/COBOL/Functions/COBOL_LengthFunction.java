@@ -30,7 +30,7 @@ public class COBOL_LengthFunction extends PrimaryOperator
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushInt(str.length());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

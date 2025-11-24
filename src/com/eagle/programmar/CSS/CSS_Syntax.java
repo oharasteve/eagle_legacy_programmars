@@ -9,7 +9,7 @@ import com.eagle.programmar.CSS.Terminals.CSS_Comment;
 public class CSS_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

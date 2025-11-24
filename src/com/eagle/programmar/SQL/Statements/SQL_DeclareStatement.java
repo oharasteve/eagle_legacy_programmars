@@ -39,7 +39,7 @@ public class SQL_DeclareStatement extends TokenSequence
 		public @S(40) @OPT SQL_Expression initialValue;
 		public @S(50) PunctuationSemicolon semicolon;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -53,11 +53,12 @@ public class SQL_DeclareStatement extends TokenSequence
 			interpreter.setSymbol(decl.id, decl.id.toString(), value);
 		}
 	}
+
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
-		
+
 		for (SQL_Declaration decl : declarations._elements)
 		{
 			String varName = decl.id.getValue();
@@ -70,7 +71,7 @@ public class SQL_DeclareStatement extends TokenSequence
 				result.add(generator.newExpressionStatement(asgExpr, decl.initialValue));
 			}
 		}
-		
+
 		return result;
 	}
 }

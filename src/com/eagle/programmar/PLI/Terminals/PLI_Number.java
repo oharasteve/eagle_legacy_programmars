@@ -18,7 +18,7 @@ public class PLI_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", null, false, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

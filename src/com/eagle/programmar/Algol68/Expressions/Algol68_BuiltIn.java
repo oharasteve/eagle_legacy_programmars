@@ -33,7 +33,7 @@ public class Algol68_BuiltIn extends PrimaryOperator
 			throw new RuntimeException("Can't handle BuiltIn's other than TRUE/FALSE: " + builtinConstant);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -13,7 +13,7 @@ public class Powershell_TestPath extends PrimaryOperator
 {
 	public @S(10) Powershell_Keyword TESTPATH = new Powershell_Keyword("Test-Path");
 	public @S(20) Powershell_TPParam param;
-	
+
 	public static class Powershell_TPParam extends TokenChooser
 	{
 		public @CHOICE Powershell_Literal XXliteral;

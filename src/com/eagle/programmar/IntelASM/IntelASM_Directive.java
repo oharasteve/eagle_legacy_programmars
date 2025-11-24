@@ -35,7 +35,7 @@ public class IntelASM_Directive extends TokenSequence implements EagleRunnable
 		public @CHOICE IntelASM_SectionDirective XXsectionDirective;
 		public @CHOICE IntelASM_TitleDirective XXtitleInstruction;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

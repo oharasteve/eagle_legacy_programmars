@@ -37,7 +37,7 @@ public class Rexx_DoStatement extends TokenSequence
 	public @S(40) Rexx_EndOfLine eoln1;
 	public @S(50) TokenList<Rexx_Element> actions;
 	public @S(60) Rexx_Keyword END = new Rexx_Keyword("END");
-	
+
 	public static class Rexx_DoLoop extends TokenSequence
 	{
 		public @S(10) Rexx_Identifier_Reference var;
@@ -53,13 +53,13 @@ public class Rexx_DoStatement extends TokenSequence
 			public @S(20) Rexx_Expression step;
 		}
 	}
-	
+
 	public static class Rexx_DoWhile extends TokenSequence
 	{
 		public @S(10) Rexx_Keyword WHILE = new Rexx_Keyword("WHILE");
 		public @S(20) Rexx_Expression condition;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -68,7 +68,7 @@ public class Rexx_DoStatement extends TokenSequence
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
 		// Just a DO ... END block, no iteration
-		if ((loop == null || ! loop.isPresent()) && (doWhile == null || ! doWhile.isPresent()))
+		if ((loop == null || !loop.isPresent()) && (doWhile == null || !doWhile.isPresent()))
 		{
 			for (Rexx_Element stmt : actions._elements)
 			{
@@ -88,22 +88,22 @@ public class Rexx_DoStatement extends TokenSequence
 		int stop = 0;
 		int by = 0;
 		int current = 0;
-		
+
 		if (loop != null && loop.isPresent())
 		{
 			start = interpreter.getIntValue(loop.from);
 			interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(start));
-			
+
 			current = interpreter.getIntValue(loop.from);
 			stop = interpreter.getIntValue(loop.to);
 			by = 1;
-			
+
 			if (loop.by != null && loop.by.isPresent())
 			{
 				by = interpreter.getIntValue(loop.by.step);
 			}
 		}
-		
+
 		while (true)
 		{
 			if (doWhile != null && doWhile.isPresent())
@@ -132,7 +132,7 @@ public class Rexx_DoStatement extends TokenSequence
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -169,7 +169,7 @@ public class Rexx_DoStatement extends TokenSequence
 			{
 				throw new RuntimeException("Need to implement DO LOOP with WHILE");
 			}
-			
+
 			RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 			AbstractExpression initExpr = transformer.transformExpression(generator, loop.from);
 			AbstractExpression termExpr = transformer.transformExpression(generator, loop.to);
@@ -187,7 +187,7 @@ public class Rexx_DoStatement extends TokenSequence
 					}
 				}
 			}
-			
+
 			ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 			for (Rexx_Element statement : actions._elements)
 			{
@@ -201,7 +201,7 @@ public class Rexx_DoStatement extends TokenSequence
 					}
 				}
 			}
-			
+
 			AbstractVariable var = generator.newVariable(loop.var.getValue());
 			AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
 					relOp, termExpr, incrExpr, actionList, this);
@@ -212,15 +212,16 @@ public class Rexx_DoStatement extends TokenSequence
 		{
 			AbstractExpression cond = transformer.transformExpression(generator, doWhile.condition);
 			ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-			
+
 			for (Rexx_Element statement : actions._elements)
 			{
-				for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+				for (AbstractStatement stmt : transformer.transformStatement(generator,
+						statement.baseStatement.getWhich()))
 				{
 					whileTrue.add(stmt);
 				}
 			}
-			
+
 			AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 			return stmt;
 		}

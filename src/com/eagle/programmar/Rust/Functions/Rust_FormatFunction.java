@@ -44,7 +44,7 @@ public class Rust_FormatFunction extends PrimaryOperator
 		String result = Rust_Format.format(interpreter, argList, _metrics);
 		interpreter.pushStr(result);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

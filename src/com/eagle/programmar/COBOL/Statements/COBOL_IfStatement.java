@@ -51,7 +51,7 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
 			}
 		}
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 
 		boolean cond = interpreter.getBoolValue(condition);
@@ -83,7 +83,7 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		for (COBOL_StatementOrComment stmtOrComm : thenActions._elements)
 		{
 			ArrayList<AbstractStatement> thenStmts = stmtOrComm.transformStatement(transformer, generator);
@@ -95,7 +95,7 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement
 				}
 			}
 		}
-		
+
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (COBOL_StatementOrComment stmtOrComm : elseClause.elseActions._elements)
@@ -110,7 +110,7 @@ public class COBOL_IfStatement extends COBOL_AbstractStatement
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

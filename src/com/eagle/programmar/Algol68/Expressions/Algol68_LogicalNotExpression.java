@@ -25,7 +25,7 @@ public class Algol68_LogicalNotExpression extends PrimaryOperator
 		boolean value = interpreter.getBoolValue(expr);
 		interpreter.pushBool(!value);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

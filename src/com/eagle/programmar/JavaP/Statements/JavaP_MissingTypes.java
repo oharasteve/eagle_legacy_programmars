@@ -24,7 +24,7 @@ public class JavaP_MissingTypes extends TokenSequence
 	public @S(50) JavaP_HexNumber number;
 	public @S(60) @OPT JavaP_MissingReason reason;
 	public @S(70) JavaP_EndOfLine eoln;
-	
+
 	public static class JavaP_MissingReason extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

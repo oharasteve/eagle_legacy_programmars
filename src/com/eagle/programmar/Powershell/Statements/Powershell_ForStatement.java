@@ -37,10 +37,10 @@ import com.eagle.transform.EagleTransformer;
 
 public class Powershell_ForStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#843-the-for-statement") Powershell_Keyword FOR =
-			new Powershell_Keyword("For");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#843-the-for-statement") Powershell_Keyword FOR = new Powershell_Keyword(
+			"For");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Powershell_Variable var;
 	public @S(40) PunctuationEquals equals;
@@ -55,7 +55,7 @@ public class Powershell_ForStatement extends TokenSequence
 	public @S(120) @OPT Powershell_EndOfLine eoln;
 	public @S(130) TokenList<Powershell_Element> stmts;
 	public @S(140) PunctuationRightBrace rightBrace;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -98,17 +98,17 @@ public class Powershell_ForStatement extends TokenSequence
 			{
 				break;
 			}
-	
+
 			interpreter.tryToInterpret(iterate);
 		}
 
 		// Have to guess to see if it was backwards
 		boolean backwards = guessDirection(stopCondition, iterate);
-		
+
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	private static boolean guessDirection(Powershell_Expression testExpr, Powershell_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -122,7 +122,7 @@ public class Powershell_ForStatement extends TokenSequence
 			Powershell_PreIncrementExpression pre = (Powershell_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof Powershell_Relational_Expression)
 		{
@@ -133,8 +133,8 @@ public class Powershell_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
 
 	@Override
@@ -142,14 +142,14 @@ public class Powershell_ForStatement extends TokenSequence
 			EagleGenerator generator)
 	{
 		String newName = Powershell_Variable.repairName(var.id.getValue());
-		
+
 		AbstractExpression fromExpr = transformer.transformExpression(generator, init);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-		
+
 		AbstractExpression termExpr = transformer.transformExpression(generator, stopCondition);
 		AbstractExpression delta = transformer.transformExpression(generator, iterate);
-		
+
 		ArrayList<AbstractStatement> newActions = new ArrayList<AbstractStatement>();
 		for (Powershell_Element stmt : stmts._elements)
 		{

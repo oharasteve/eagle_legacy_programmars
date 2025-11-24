@@ -77,7 +77,7 @@ public class SQL_Statement extends TokenChooser
 
 	public @LAST SQL_BuiltinFunction XXfunctionCall;
 	// public @LAST SQL_ExpressionStatement XXexpressionStmt;
-	
+
 	public @CHOICE static class SQL_Semicolon extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) PunctuationSemicolon semicolon;

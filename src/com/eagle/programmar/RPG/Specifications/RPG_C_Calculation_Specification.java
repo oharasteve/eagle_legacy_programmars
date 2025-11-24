@@ -23,11 +23,11 @@ public abstract class RPG_C_Calculation_Specification extends TokenSequence
 	public @S(80) @OPT RPG_Literal indicator3;
 
 	public @S(90) @OPT RPG_Literal factor1;
-	public @S(100) @OPT RPG_Literal operation;			// Operations 'eval' and 'if' are very different!
-	public @S(110) @OPT RPG_Literal factor2;			// Rest of line is free format for them, and possibly continued
+	public @S(100) @OPT RPG_Literal operation; // Operations 'eval' and 'if' are very different!
+	public @S(110) @OPT RPG_Literal factor2; // Rest of line is free format for them, and possibly continued
 	public @S(120) @OPT RPG_Literal result;
-	public @S(130) @OPT RPG_Literal length;		        // Really should be RPG_Number
-	public @S(140) @OPT RPG_Literal decimalPositions;   // Really should be RPG_Number
+	public @S(130) @OPT RPG_Literal length; // Really should be RPG_Number
+	public @S(140) @OPT RPG_Literal decimalPositions; // Really should be RPG_Number
 	public @S(150) @OPT RPG_KeywordChoice operationExtender;
 
 	public @S(160) @OPT RPG_Literal resultIndicator1;

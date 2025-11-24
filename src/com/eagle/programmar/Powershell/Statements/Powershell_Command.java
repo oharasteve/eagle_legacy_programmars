@@ -73,7 +73,7 @@ public class Powershell_Command extends TokenSequence
 		if (whichCommand.getWhich() instanceof Powershell_Function_Reference)
 		{
 			Powershell_Function_Reference fnName = (Powershell_Function_Reference) whichCommand.getWhich();
-			
+
 			// Is it one of the defined Functions?
 			AbstractFunction fn = interpreter.findFunction(fnName.getValue());
 			if (fn == null)
@@ -91,7 +91,7 @@ public class Powershell_Command extends TokenSequence
 			{
 				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, name, func.id);
 			}
-			
+
 			// Call the function
 			// Make sure the function args match up
 			int argCount = argList.size();
@@ -103,7 +103,7 @@ public class Powershell_Command extends TokenSequence
 			}
 
 			interpreter.callingFunction(name, func);
-			
+
 			// Now assign all the parameters
 			ArrayList<String> argTypes = new ArrayList<String>();
 			for (int i = 0; i < argCount; i++)
@@ -144,7 +144,7 @@ public class Powershell_Command extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! (whichCommand.getWhich() instanceof Powershell_Function_Reference))
+		if (!(whichCommand.getWhich() instanceof Powershell_Function_Reference))
 		{
 			throw new RuntimeException("Can only transform user functions");
 		}
@@ -155,7 +155,7 @@ public class Powershell_Command extends TokenSequence
 			for (Powershell_CommandArg arg : argList._elements)
 			{
 				AbstractToken which = arg.arg.getWhich();
-				if (! (which instanceof Powershell_Expression))
+				if (!(which instanceof Powershell_Expression))
 				{
 					throw new RuntimeException("Can only transform expression arguments");
 				}
@@ -163,7 +163,7 @@ public class Powershell_Command extends TokenSequence
 				newArgs.add(transformer.transformExpression(generator, expr));
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(fnName.getValue());
 		AbstractExpression fnCall = generator.newMethodInvocation(var, newArgs, this);
 		return generator.newExpressionStatement(fnCall, this);

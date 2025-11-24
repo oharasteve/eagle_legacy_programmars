@@ -198,7 +198,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 							initString = new EagleString(lit.literal.getValue());
 						}
 					}
-	
+
 				}
 			}
 
@@ -264,7 +264,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		}
 		return array;
 	}
-	
+
 	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
 		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
@@ -338,7 +338,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				generator.addStatement(data, this);
 				return;
 			}
-			
+
 			// Maybe it is an array definition
 			EagleArray array = this.collectArrayValues();
 			if (array != null)
@@ -363,7 +363,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				}
 			}
 		}
-		
+
 		throw new RuntimeException("Unable to process: " + this);
 	}
 }

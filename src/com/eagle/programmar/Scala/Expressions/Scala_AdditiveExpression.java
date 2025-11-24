@@ -32,13 +32,13 @@ public class Scala_AdditiveExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -75,7 +75,7 @@ public class Scala_AdditiveExpression extends PrecedenceOperator
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		Oper2Types types = transformer.findOperator2Metric(operator);
-		
+
 		switch (operator.toString())
 		{
 		case "+":

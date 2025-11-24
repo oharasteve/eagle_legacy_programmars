@@ -24,7 +24,7 @@ public class COBOL_StopStatement extends COBOL_AbstractStatement
 	{
 		// Not sure what to do here, if anything
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

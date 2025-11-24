@@ -88,7 +88,7 @@ public class Ruby_ForStatement extends TokenSequence
 			for (Ruby_Statement statement : statements._elements)
 			{
 				result = interpreter.tryToInterpret(statement);
-				if (result != Eagle_Statement_Result.NORMAL) break; 
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 
 			if (result == Eagle_Statement_Result.BREAK)
@@ -144,7 +144,7 @@ public class Ruby_ForStatement extends TokenSequence
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
-		
+
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (Ruby_Statement statement : statements._elements)
 		{
@@ -158,7 +158,7 @@ public class Ruby_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractVariable varName = generator.newVariable(var.vars.first().getValue());
 		return generator.newForRangeStatement(varName, null, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

@@ -62,7 +62,7 @@ public class Java_DoWhileStatement extends TokenSequence
 		this.doStatement = action;
 
 		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
-		Java_Expression notExpr = not.generateLogicalNot(cond, source); 
+		Java_Expression notExpr = not.generateLogicalNot(cond, source);
 		this.condition = notExpr;
 
 		this.setTransformationSource(source);

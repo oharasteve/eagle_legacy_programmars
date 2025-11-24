@@ -40,13 +40,13 @@ public class Scala_FunctionCall extends PrimaryOperator
 	{
 		Scala_Identifier_Reference id = methodName.vars.first();
 		String name = id.getValue();
-		
+
 		// See if it is a subscript reference first
 		EagleValue symb = interpreter.findSymbol(name);
 		if (symb != null)
 		{
 			// Look up the variable
-			if (! symb.isArray())
+			if (!symb.isArray())
 			{
 				throw new RuntimeException("Can only use subscripts on arrays");
 			}
@@ -63,7 +63,7 @@ public class Scala_FunctionCall extends PrimaryOperator
 				throw new RuntimeException("Unable to find a function named " + name);
 			}
 			Scala_Function func = (Scala_Function) fn;
-	
+
 			// Make sure the function args match up
 			int argCount = argList.getPrimaryCount();
 			int paramCount = func.params.parameters.getPrimaryCount();
@@ -83,19 +83,19 @@ public class Scala_FunctionCall extends PrimaryOperator
 				interpreter.setSymbol(param, param.var.getValue(), val);
 				argTypes.add(val.typeName());
 			}
-	
+
 			// Prepare to evaluate the method
 			long startTime = System.nanoTime();
-	
+
 			// And transfer control to the method
 			interpreter.callingFunction(name, func);
 			interpreter.tryToInterpret(func.stmt);
-	
+
 			// The result was already put on the runtime stack
 			long elapsedTime = System.nanoTime() - startTime;
 			func._callMetrics.addCallFrom(this, elapsedTime);
 			func._argumentsMetrics.calledWith(argTypes);
-	
+
 			// Now remove all those parameters
 			interpreter.completedFunction(name, func);
 		}
@@ -116,7 +116,7 @@ public class Scala_FunctionCall extends PrimaryOperator
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, methodName);
 		}

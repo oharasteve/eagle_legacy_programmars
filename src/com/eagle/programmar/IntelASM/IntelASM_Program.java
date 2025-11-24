@@ -22,7 +22,7 @@ public class IntelASM_Program extends AbstractLanguage
 		implements EagleRunnable, EagleScopeInterface
 {
 	public static final String INTELASM = "IntelASM";
-	
+
 	public @S(10) TokenList<IntelASM_Line> lines;
 
 	public static class IntelASM_Line extends TokenChooser
@@ -33,7 +33,7 @@ public class IntelASM_Program extends AbstractLanguage
 		public @CHOICE IntelASM_Instruction XXinstruction;
 		public @CHOICE IntelASM_Label XXlabel;
 	}
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, IntelASM_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -41,7 +41,7 @@ public class IntelASM_Program extends AbstractLanguage
 	{
 		return _scope;
 	}
-	
+
 	public IntelASM_Program()
 	{
 		super(INTELASM, new IntelASM_Syntax());
@@ -70,8 +70,8 @@ public class IntelASM_Program extends AbstractLanguage
 				AbstractToken which = instr.instruction.getWhich();
 				if (which instanceof IntelASM_DB || which instanceof IntelASM_DQ)
 				{
-					state._dollarLine = state._memoryUsed;	// Beginning of the line
-					interpreter.tryToInterpret(which);		// Data only (DB or DQ)
+					state._dollarLine = state._memoryUsed; // Beginning of the line
+					interpreter.tryToInterpret(which); // Data only (DB or DQ)
 				}
 			}
 			else if (line.getWhich() instanceof IntelASM_Directive)
@@ -80,8 +80,8 @@ public class IntelASM_Program extends AbstractLanguage
 				AbstractToken which = direct.directive.getWhich();
 				if (which instanceof IntelASM_EquDirective)
 				{
-					state._dollarLine = state._memoryUsed;	// Beginning of the line
-					interpreter.tryToInterpret(which);		// EQU only
+					state._dollarLine = state._memoryUsed; // Beginning of the line
+					interpreter.tryToInterpret(which); // EQU only
 				}
 				else
 				{
@@ -94,7 +94,7 @@ public class IntelASM_Program extends AbstractLanguage
 				{
 					String nxt = state._prt.writeToken(line); // Usually includes a newline
 					System.out.print("**** Label " + state._currentLine + ": " + nxt);
-					if (! nxt.endsWith("\n"))
+					if (!nxt.endsWith("\n"))
 					{
 						System.out.println();
 					}
@@ -103,36 +103,36 @@ public class IntelASM_Program extends AbstractLanguage
 			}
 			state._currentLine++;
 		}
-		
+
 		// Find the "GLOBAL _start" entry
 		if (state._startLabel == null)
 		{
 			throw new RuntimeException("Unable to find a start label");
 		}
-		if (! state._labels.containsKey(state._startLabel))
+		if (!state._labels.containsKey(state._startLabel))
 		{
 			throw new RuntimeException("Unable to find start label: " + state._startLabel);
 		}
 		state._nextInstruction = state._labels.get(state._startLabel);
-		
+
 		// Second pass to run logic
 		while (state._nextInstruction < numLines)
 		{
 			IntelASM_Line line = lines._elements.get(state._nextInstruction);
-			
+
 			if (state._TRACE)
 			{
 				String nxt = state._prt.writeToken(line); // Usually includes a newline
 				System.out.print("**** Line " + state._nextInstruction + ": " + nxt);
-				if (! nxt.endsWith("\n"))
+				if (!nxt.endsWith("\n"))
 				{
 					System.out.println();
 				}
 			}
-			
+
 			// Default is to run the next instruction
 			// Might get changed by a GOTO / CALL / RET etc.
-			state._nextInstruction ++;
+			state._nextInstruction++;
 
 			AbstractToken which = line.getWhich();
 			if (which instanceof IntelASM_Label ||
@@ -142,13 +142,13 @@ public class IntelASM_Program extends AbstractLanguage
 				// Already processed labels above
 				continue;
 			}
-			if (! (which instanceof IntelASM_Instruction))
+			if (!(which instanceof IntelASM_Instruction))
 			{
 				// Should not try to execute data!
 				throw new RuntimeException("Line should be an instruction, not " +
 						which.getClass().getCanonicalName());
 			}
-						
+
 			Eagle_Statement_Result result = interpreter.tryToInterpret(line);
 			if (result != Eagle_Statement_Result.NORMAL)
 			{

@@ -25,7 +25,7 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 
 		// Look up the label
 		String name = label.getValue().toUpperCase();
-		
+
 		interpreter.callingFunction(name, interpreter._lang);
 
 		// Prepare to evaluate the method
@@ -36,11 +36,11 @@ public class IntelASM_CALL extends TokenSequence implements EagleRunnable
 		state._nextInstruction = state._labels.get(name).intValue();
 		IntelASM_Program lang = (IntelASM_Program) interpreter._lang;
 		IntelASM_Label fn = (IntelASM_Label) lang.lines._elements.get(state._nextInstruction).getWhich();
-		
+
 		// There is no direct result from a CALL in assembler.
 		// Usually stored in some register or another.
 		long elapsedTime = System.nanoTime() - startTime;
-		
+
 		if (fn._callMetrics == null)
 		{
 			fn._callMetrics = new CallMetrics(interpreter._metrics, name, fn.label);

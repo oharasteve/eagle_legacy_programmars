@@ -36,13 +36,13 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -73,7 +73,7 @@ public class Python_Additive_Expression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -81,7 +81,7 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		Oper2Types types = transformer.findOperator2Metric(operator);
-		
+
 		switch (operator.toString())
 		{
 		case "+":
@@ -92,7 +92,7 @@ public class Python_Additive_Expression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
-	
+
 	public Python_Expression generateAdditive(Oper2Types types, Python_Expression leftExpr,
 			AdditiveEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
@@ -100,13 +100,13 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		this.right = rightExpr;
 		if (types != null)
 		{
-			if (types._type1.equals(EagleString.STRING) && ! types._type2.equals(EagleString.STRING))
+			if (types._type1.equals(EagleString.STRING) && !types._type2.equals(EagleString.STRING))
 			{
 				Python_Str_Function strFn = new Python_Str_Function();
 				this.right = strFn.generateString(null, rightExpr, rightExpr);
 			}
 		}
-		
+
 		switch (oper)
 		{
 		case PLUS:

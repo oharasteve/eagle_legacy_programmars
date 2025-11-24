@@ -114,7 +114,7 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 			interpreter.tryToInterpret(element);
 		}
 	}
-	
+
 	public void newCSharpClass(PrivacyEnum privacy, String cName)
 	{
 		this.modifiers = new TokenList<CSharp_ClassModifier>();
@@ -131,25 +131,24 @@ public class CSharp_Class extends TokenSequence implements EagleRunnable, Abstra
 			throw new RuntimeException("Can't handle privacy: " + privacy);
 		}
 		this.modifiers.addToken(modifier);
-		
+
 		this.className = new CSharp_Class_Definition();
 		this.className.setValue(cName);
-		
+
 		this.classOrInterface = new CSharp_KeywordChoice("class");
 		this.elements = new TokenList<CSharp_ClassElement>();
 		this.elements.setPresent(true);
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 	}
-	
+
 	public void addMethod(CSharp_Method method)
 	{
 		CSharp_ClassElement element = new CSharp_ClassElement();
 		element.setWhich(method);
 		this.elements.addToken(element);
 	}
-	
-	
+
 	public void addComment(CSharp_Comment comment)
 	{
 		if (this.annotationsOrComments == null)

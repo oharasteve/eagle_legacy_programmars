@@ -66,7 +66,7 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -86,7 +86,7 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 
-		if (! (var.getWhich() instanceof CSharp_VariableExpression))
+		if (!(var.getWhich() instanceof CSharp_VariableExpression))
 		{
 			throw new RuntimeException("Can only assign variables");
 		}
@@ -98,15 +98,15 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		{
 			subscrExpr = transformer.transformExpression(generator, theVar.subscript.first().expr);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractToken which = theVar.firstId.getWhich();
-		if (! (which instanceof CSharp_Identifier_Reference))
+		if (!(which instanceof CSharp_Identifier_Reference))
 		{
 			throw new RuntimeException("Have to assign to a regular variable");
 		}
 		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) which;
-		
+
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return asgExpr;
@@ -131,9 +131,9 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		
+
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof CSharp_Identifier_Reference))
+		if (!(which instanceof CSharp_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}

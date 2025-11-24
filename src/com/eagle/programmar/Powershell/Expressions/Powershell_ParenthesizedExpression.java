@@ -32,14 +32,16 @@ public class Powershell_ParenthesizedExpression extends PrimaryOperator
 
 	public static class Powershell_ParenStatement extends TokenSequence
 	{
-		// Don't share right paren because expression might stop early, causing a failure
+		// Don't share right paren because expression might stop early, causing a
+		// failure
 		public @S(10) Powershell_Element statement;
 		public @S(20) PunctuationRightParen rightParen;
 	}
 
 	public static class Powershell_ParenExpression extends TokenSequence
 	{
-		// Don't share right paren because expression might stop early, causing a failure
+		// Don't share right paren because expression might stop early, causing a
+		// failure
 		public @S(10) Powershell_Expression expression;
 		public @S(20) PunctuationRightParen rightParen;
 	}

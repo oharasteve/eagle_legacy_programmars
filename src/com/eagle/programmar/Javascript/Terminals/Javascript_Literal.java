@@ -28,13 +28,13 @@ public class Javascript_Literal extends TerminalLiteralToken
 
 		return genericLiteral(lines, "\"'", true, '\\', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{
 		return "literal, depends on back tick (`)";
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

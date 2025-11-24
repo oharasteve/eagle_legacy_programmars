@@ -76,12 +76,12 @@ public class VB_DataDeclaration extends TokenSequence
 			}
 		}
 	}
-	
+
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
-		
+
 		TypeEnum givenType = null;
 		if (dataType != null && dataType.isPresent())
 		{
@@ -102,31 +102,31 @@ public class VB_DataDeclaration extends TokenSequence
 				break;
 			}
 		}
-		
-		TypeEnum type = givenType;	// Usually not given
+
+		TypeEnum type = givenType; // Usually not given
 		if (type == null)
 		{
 			// See if the Definition has some assignments in the metrics file
 			type = transformer.findAssignMetric(var);
 		}
 		AbstractType newType = generator.transformType(type, null, dataType);
-		
+
 		AbstractExpression size = null;
 		if (subscript != null && subscript.isPresent())
 		{
 			size = transformer.transformExpression(generator, subscript.exprs.first());
 		}
-		
+
 		AbstractExpression initial = null;
 		if (initializer != null && initializer.isPresent())
 		{
 			initial = transformer.transformExpression(generator, initializer.expr);
 		}
-		
+
 		String name = var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, size, newType, initial, this);
 		result.add(stmt);
-		
+
 		if (moreVariables != null && moreVariables.isPresent())
 		{
 			for (VB_MoreVariables more : moreVariables._elements)
@@ -137,8 +137,8 @@ public class VB_DataDeclaration extends TokenSequence
 					size = transformer.transformExpression(generator, more.subscript.exprs.first());
 				}
 				name = more.var.getValue();
-				
-				type = givenType;	// Usually not given
+
+				type = givenType; // Usually not given
 				if (type == null)
 				{
 					// See if the Definition has some assignments in the metrics file

@@ -26,13 +26,13 @@ public class CMD_Format
 					sb.append(txt.substring(sc, nc));
 					break; // Done -- no more %
 				}
-				
+
 				// Copy over plain text between %vars%
 				if (firstPct > sc)
 				{
 					sb.append(txt.substring(sc, firstPct));
 				}
-	
+
 				// Check for %%I
 				if (firstPct + 2 < nc)
 				{
@@ -48,7 +48,7 @@ public class CMD_Format
 						}
 					}
 				}
-				
+
 				// Check for %~2
 				if (firstPct + 2 < nc)
 				{
@@ -64,7 +64,7 @@ public class CMD_Format
 						}
 					}
 				}
-				
+
 				// Extract a variable name (or expression) and value, like %abc%
 				int secondPct = txt.indexOf('%', firstPct + 1);
 				if (secondPct < 0) throw new RuntimeException("Missing % in " + txt);
@@ -75,13 +75,13 @@ public class CMD_Format
 					throw new RuntimeException("Unable to find variable '" + var + "'");
 				}
 				sb.append(val.forceStringValue());
-	
+
 				// Look for the next piece
 				sc = secondPct + 1;
 			}
 			txt = sb.toString();
 		}
-		
+
 		if (txt.indexOf('!') >= 0)
 		{
 			StringBuffer sb = new StringBuffer();
@@ -96,18 +96,18 @@ public class CMD_Format
 					sb.append(txt.substring(sc, nc));
 					break; // Done -- no more !
 				}
-				
+
 				// Copy over plain text between !vars!
 				if (firstBang > sc)
 				{
 					sb.append(txt.substring(sc, firstBang));
 				}
-	
+
 				// Extract a variable name (or expression) and value, like !abc!
 				int secondBang = txt.indexOf('!', firstBang + 1);
 				if (secondBang < 0) throw new RuntimeException("Missing ! in " + txt);
 				String name = txt.substring(firstBang + 1, secondBang);
-				
+
 				int colon = name.indexOf(":~");
 				int comma = name.indexOf(',');
 				int subSC = 0;
@@ -118,7 +118,7 @@ public class CMD_Format
 					subNC = Integer.parseInt(name.substring(comma + 1));
 					name = name.substring(0, colon);
 				}
-				
+
 				EagleValue val = interpreter.findSymbol(name);
 				String piece = val.forceStringValue();
 
@@ -138,9 +138,9 @@ public class CMD_Format
 						piece = piece.substring(subSC, subEC);
 					}
 				}
-				
+
 				sb.append(piece);
-	
+
 				// Look for the next piece
 				sc = secondBang + 1;
 			}

@@ -26,7 +26,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Lisp_DefunFunction extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");
@@ -54,12 +54,12 @@ public class Lisp_DefunFunction extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.addFunction(id.getValue(), this);
-		
+
 		if (_callMetrics == null)
 		{
 			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);

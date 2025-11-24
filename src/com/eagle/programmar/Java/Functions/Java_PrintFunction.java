@@ -48,7 +48,7 @@ public class Java_PrintFunction extends PrimaryOperator
 			prt.println(val);
 			return;
 		}
-		
+
 		throw new RuntimeException("Unexpected keyword: " + PRINT.getValue());
 	}
 
@@ -68,7 +68,7 @@ public class Java_PrintFunction extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected PRINT value: " + PRINT.getValue());
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		return generator.newPrintFunction(value, newLine, false, this);
 	}
@@ -88,7 +88,7 @@ public class Java_PrintFunction extends PrimaryOperator
 		}
 		dot2 = new PunctuationPeriod();
 		dot2.setPresent(true);
-		
+
 		if (newLine)
 		{
 			PRINT = new Java_KeywordChoice("println");
@@ -97,7 +97,7 @@ public class Java_PrintFunction extends PrimaryOperator
 		{
 			PRINT = new Java_KeywordChoice("print");
 		}
-		
+
 		leftParen = new PunctuationLeftParen();
 		rightParen = new PunctuationRightParen();
 
@@ -106,7 +106,7 @@ public class Java_PrintFunction extends PrimaryOperator
 		{
 			expr.setPresent(true);
 		}
-		
+
 		setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

@@ -28,7 +28,7 @@ public class RPGFree_NegativeExpression extends PrimaryOperator implements Eagle
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		String oper = operator.getValue();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
@@ -48,7 +48,7 @@ public class RPGFree_NegativeExpression extends PrimaryOperator implements Eagle
 			throw new RuntimeException("Unexpected negation operator: " + oper);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

@@ -178,7 +178,7 @@ public class Perl_Variable extends TokenChooser
 		public @S(40) SeparatedList<Perl_Expression, PunctuationComma> args;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	public static String repairName(String perlVariable)
 	{
 		return perlVariable.replaceAll("\\$", "");

@@ -56,7 +56,7 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 			interpreter.tryToInterpret(list.expr);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -73,12 +73,12 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 			}
 			return generator.newArrayExpression(exprs, this);
 		}
-		
+
 		// Just plain parens, like (1+2)
 		AbstractExpression theExpr = transformer.transformExpression(generator, list.expr);
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
-	
+
 	public Python_Expression generateParentheses(Python_Expression theExpr,
 			AbstractToken source)
 	{

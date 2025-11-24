@@ -67,23 +67,23 @@ public class Java_Generator
 {
 	public static String NAME = "Java";
 	public static String SUFFIX = ".java";
-	
+
 	private Java_Program _program;
 	private String _className;
-	
+
 	public Java_Generator(ParserManager parser, String className)
 	{
 		super(parser);
 		_program = new Java_Program();
 		_className = className;
 	}
-	
+
 	@Override
 	public String getName()
 	{
 		return NAME;
 	}
-	
+
 	@Override
 	public String getSuffix()
 	{
@@ -114,14 +114,14 @@ public class Java_Generator
 	{
 		return _program;
 	}
-	
+
 	public static Java_Expression wrapExpression(AbstractToken token)
 	{
 		Java_Expression wrapper = new Java_Expression();
 		wrapper.setWhich(token);
 		return wrapper;
 	}
-	
+
 	public static Java_Statement wrapStatement(AbstractToken token)
 	{
 		if (token == null) return null;
@@ -140,7 +140,7 @@ public class Java_Generator
 	}
 
 	// ================== Main program and class ==================
-	
+
 	private Java_Class _currentClass = null;
 	private Java_Method _currentMethod = null;
 	private Java_Method _previousMethod = null;
@@ -154,11 +154,11 @@ public class Java_Generator
 			_program.addClass(_currentClass);
 		}
 	}
-	
+
 	private void checkMethod()
 	{
 		checkClass();
-		
+
 		if (_currentMethod == null)
 		{
 			Java_Type mainType = Java_Type.newPrimitiveType("void");
@@ -166,12 +166,12 @@ public class Java_Generator
 			_currentMethod.newJavaMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
 					mainType, "main");
 			_currentClass.addMethod(_currentMethod);
-			
+
 			Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
 			_currentMethod.addMethodParameter(paramType, "args");
 		}
 	}
-	
+
 	@Override
 	public void addMethod(Java_Type returnType, String name, AbstractToken source)
 	{
@@ -184,7 +184,7 @@ public class Java_Generator
 		_currentMethod.setTransformationSource(source);
 		_currentClass.addMethod(_currentMethod);
 	}
-	
+
 	@Override
 	public void addMethodParameter(Java_Type type, String name)
 	{
@@ -202,7 +202,7 @@ public class Java_Generator
 	{
 		if (stmt == null) return;
 		checkClass();
-		
+
 		// Cannot put data into the 'main' method when it was declared in a global area
 		if (stmt.getWhich() instanceof Java_Data)
 		{
@@ -219,12 +219,12 @@ public class Java_Generator
 					saveInClass = true;
 				}
 			}
-			
+
 			if (saveInClass)
 			{
 				Java_Data data = (Java_Data) stmt.getWhich();
 				data.addModifier("static");
-				
+
 				// Put it in top-level class, not the 'main' method
 				Java_ClassElement element = new Java_ClassElement();
 				element.setWhich(stmt);
@@ -232,7 +232,7 @@ public class Java_Generator
 				return;
 			}
 		}
-		
+
 		checkMethod();
 
 		Java_MethodImplementation impl = (Java_MethodImplementation) _currentMethod.body.getWhich();
@@ -242,7 +242,7 @@ public class Java_Generator
 		stmtOrComment.setPresent(true);
 		impl.block.statements.addToken(stmtOrComment);
 	}
-	
+
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
@@ -261,7 +261,7 @@ public class Java_Generator
 			_program.addComment(comm);
 		}
 	}
-	
+
 	// ================ Statements ================
 
 	@Override
@@ -294,7 +294,7 @@ public class Java_Generator
 		return doStmt.generateDoUntil1(condition,
 				action, source);
 	}
-	
+
 	@Override
 	public Java_Statement newDoUntilStatement(Java_Expression condition,
 			ArrayList<Java_Statement> actions, AbstractToken source)
@@ -308,13 +308,13 @@ public class Java_Generator
 	{
 		return wrapStatement(Java_ExitStatement.newExitStatement(code, source));
 	}
-	
+
 	@Override
 	public Java_Statement newExpressionStatement(Java_Expression expr, AbstractToken source)
 	{
 		return wrapStatement(Java_ExpressionStatement.newExpressionStatement(expr, source));
 	}
-	
+
 	@Override
 	public Java_Statement newIfStatement1(Java_Expression condition,
 			Java_Statement ifTrue, Java_Statement ifFalse, AbstractToken source)
@@ -322,7 +322,7 @@ public class Java_Generator
 		Java_IfStatement ifStmt = new Java_IfStatement();
 		return ifStmt.generateIfElse1(condition, ifTrue, ifFalse, source);
 	}
-	
+
 	@Override
 	public Java_Statement newIfStatement(Java_Expression condition,
 			ArrayList<Java_Statement> ifTrue,
@@ -331,7 +331,7 @@ public class Java_Generator
 		Java_IfStatement ifStmt = new Java_IfStatement();
 		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
 	}
-	
+
 	@Override
 	public Java_Statement newForLoopStatement1(Java_Expression init,
 			Java_Expression term, Java_Expression incr, Java_Statement action,
@@ -410,7 +410,7 @@ public class Java_Generator
 		return whileStmt.generateWhile1(condition,
 				action, source);
 	}
-	
+
 	@Override
 	public Java_Statement newWhileStatement(Java_Expression condition,
 			ArrayList<Java_Statement> actions, AbstractToken source)
@@ -420,7 +420,7 @@ public class Java_Generator
 	}
 
 	// ================ Expressions ================
-	
+
 	@Override
 	public Java_Expression newAdditiveExpression(Oper2Types types, Java_Expression left,
 			AdditiveEnum oper, Java_Expression right, AbstractToken source)
@@ -436,7 +436,7 @@ public class Java_Generator
 		Java_AdditiveExpression appendExp = new Java_AdditiveExpression();
 		return appendExp.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
-	
+
 	@Override
 	public Java_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Java_Expression subscript, AssignmentEnum oper, Java_Expression expression, AbstractToken source)
@@ -445,7 +445,7 @@ public class Java_Generator
 		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
 		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
-	
+
 	@Override
 	public AbstractExpression newHashAssignment(String name, Java_Expression subscript,
 			Java_Expression expression, AbstractToken source)
@@ -466,7 +466,7 @@ public class Java_Generator
 		Java_PostIncrementExpression incrExpr = new Java_PostIncrementExpression();
 		return incrExpr.generateIncrement(var, oper, source);
 	}
-	
+
 	@Override
 	public Java_Expression newPreIncrementExpression(String name, SubscriptEnum offset,
 			Java_Expression subscript, IncrementEnum oper, AbstractToken source)
@@ -475,20 +475,20 @@ public class Java_Generator
 		Java_PreIncrementExpression incrExpr = new Java_PreIncrementExpression();
 		return incrExpr.generateIncrement(var, oper, source);
 	}
-	
+
 	@Override
 	public Java_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
 		Java_BuiltIn built = new Java_BuiltIn();
 		return built.generateBuiltIn(builtin, source);
 	}
-	
+
 	@Override
 	public Java_Expression newExponentExpression(Java_Expression left, Java_Expression right, AbstractToken source)
 	{
 		return wrapExpression(Java_MathPowFunc.generateExpression(left, right, source));
 	}
-	
+
 	@Override
 	public Java_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
@@ -503,7 +503,7 @@ public class Java_Generator
 		Java_LogicalAndExpression andExpr = new Java_LogicalAndExpression();
 		return andExpr.generateLogicalAnd(left, right, source);
 	}
-	
+
 	@Override
 	public Java_Expression newLogicalOrExpression(Java_Expression left,
 			LogicalOrEnum oper, Java_Expression right, AbstractToken source)
@@ -511,7 +511,7 @@ public class Java_Generator
 		Java_LogicalOrExpression orExpr = new Java_LogicalOrExpression();
 		return orExpr.generateLogicalOr(left, oper, right, source);
 	}
-	
+
 	@Override
 	public AbstractExpression newBitwiseExpression(Java_Expression left,
 			BitwiseEnum oper, Java_Expression right, AbstractToken source)
@@ -519,7 +519,7 @@ public class Java_Generator
 		Java_BitwiseExpression bitExpr = new Java_BitwiseExpression();
 		return bitExpr.generateBitwise(left, oper, right, source);
 	}
-	
+
 	@Override
 	public AbstractExpression newBitwiseNotExpression(Java_Expression expr,
 			AbstractToken source)
@@ -527,7 +527,7 @@ public class Java_Generator
 		Java_BitwiseNotExpression bitExpr = new Java_BitwiseNotExpression();
 		return bitExpr.generateBitwiseNot(expr, source);
 	}
-	
+
 	@Override
 	public Java_Expression newMultiplicativeExpression(Java_Expression left,
 			MultiplicativeEnum oper, Java_Expression right, AbstractToken source)
@@ -544,7 +544,7 @@ public class Java_Generator
 		Java_NegativeExpression negExpr = new Java_NegativeExpression();
 		return negExpr.generateNegative(sign, expr, source);
 	}
-	
+
 	@Override
 	public Java_Expression newTruncateExpression(Java_Expression expr, AbstractToken source)
 	{
@@ -596,7 +596,7 @@ public class Java_Generator
 		Java_RelationalExpression relExp = new Java_RelationalExpression();
 		return relExp.generateRelational(types, left, relOp, right, source);
 	}
-	
+
 	@Override
 	public Java_Expression newShiftExpression(Java_Expression left,
 			ShiftEnum shift, Java_Expression right, AbstractToken source)
@@ -621,13 +621,13 @@ public class Java_Generator
 		Java_VariableExpression varExp = new Java_VariableExpression();
 		return varExp.generateVarExpr(name, offset, subscript, source);
 	}
-	
+
 	@Override
 	public Java_Variable newVariable(String name)
 	{
 		return Java_Variable.newVariable(name);
 	}
-	
+
 	@Override
 	public Java_Expression newClassCreation(Java_Type type,
 			ArrayList<Java_Expression> args, AbstractToken source)
@@ -635,7 +635,7 @@ public class Java_Generator
 		Java_ClassCreationExpression creat = new Java_ClassCreationExpression();
 		return creat.generateCreation(type, args, source);
 	}
-	
+
 	@Override
 	public Java_Expression newMethodInvocation(Java_Variable var,
 			ArrayList<Java_Expression> args, AbstractToken source)
@@ -658,21 +658,21 @@ public class Java_Generator
 		Java_LengthMethod lenMeth = new Java_LengthMethod();
 		return lenMeth.generateLength(expr, source);
 	}
-	
+
 	@Override
 	public Java_Expression newTrimFunction(Java_Expression expr, AbstractToken source)
 	{
 		Java_TrimMethod trimMeth = new Java_TrimMethod();
 		return trimMeth.generateTrim(expr, source);
 	}
-	
+
 	@Override
 	public Java_Expression newStringFunction(Oper1Types types, Java_Expression expr, AbstractToken source)
 	{
 		Java_ToStringMethod strMeth = new Java_ToStringMethod();
 		return strMeth.generateString(types, expr, source);
 	}
-	
+
 	@Override
 	public Java_Expression newSubstringFunction(Java_Expression expr, Java_Expression sc,
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression ecOrnc,
@@ -697,7 +697,7 @@ public class Java_Generator
 		Java_StartsWithMethod startsMeth = new Java_StartsWithMethod();
 		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
-	
+
 	@Override
 	public Java_Expression newIndexOfFunction(Java_Variable string, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
@@ -705,7 +705,7 @@ public class Java_Generator
 		Java_IndexOfMethod indexMeth = new Java_IndexOfMethod();
 		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
 	}
-	
+
 	@Override
 	public Java_Expression newFormatNumber(Java_Expression expr, int length,
 			AbstractToken source)

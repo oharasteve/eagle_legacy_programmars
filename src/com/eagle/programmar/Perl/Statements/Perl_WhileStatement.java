@@ -73,7 +73,7 @@ public class Perl_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -44,7 +44,7 @@ public class VB_Subroutine extends TokenSequence
 	public @S(60) @OPT TokenList<VB_Element> stmts;
 	public @S(70) VB_Keyword END = new VB_Keyword("end");
 	public @S(80) VB_Keyword SUB2 = new VB_Keyword("sub");
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, VB_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -52,7 +52,7 @@ public class VB_Subroutine extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
@@ -72,7 +72,7 @@ public class VB_Subroutine extends TokenSequence
 		// We searched for all the subs in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -91,7 +91,7 @@ public class VB_Subroutine extends TokenSequence
 //				throw new RuntimeException("Unable to handle " + modifier.getValue());
 //			}
 //		}
-		
+
 		String subName = id.getValue();
 		generator.addMethod(null, subName, this);
 		generator.setMethodName(subName);
@@ -99,7 +99,7 @@ public class VB_Subroutine extends TokenSequence
 		{
 			System.out.println("** Found VB subroutine " + subName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
 
@@ -121,11 +121,11 @@ public class VB_Subroutine extends TokenSequence
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-		
+
 		for (VB_Element stmt : stmts._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
@@ -138,7 +138,7 @@ public class VB_Subroutine extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

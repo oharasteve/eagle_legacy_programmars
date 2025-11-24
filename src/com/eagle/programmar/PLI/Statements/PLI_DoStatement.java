@@ -34,7 +34,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class PLI_DoStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @OPT PLI_Label label1;
 	public @S(20) @DOC("7.15") PLI_Keyword DO = new PLI_Keyword("DO");
@@ -75,7 +75,7 @@ public class PLI_DoStatement extends TokenSequence
 		public @S(10) PLI_Keyword WHILE = new PLI_Keyword("WHILE");
 		public @S(20) PLI_Expression condition;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -89,7 +89,7 @@ public class PLI_DoStatement extends TokenSequence
 		int stop = 0;
 		int step = 1;
 		boolean hasLoop = false;
-		
+
 		if (doLoop != null && doLoop.isPresent())
 		{
 			hasLoop = true;
@@ -117,7 +117,7 @@ public class PLI_DoStatement extends TokenSequence
 			simpleDo = false;
 		}
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		
+
 		if (simpleDo)
 		{
 			// No iteration, no metrics, no logic, just a groups of statements
@@ -128,13 +128,13 @@ public class PLI_DoStatement extends TokenSequence
 			}
 			return result;
 		}
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new ForLoopMetrics(interpreter._metrics, DO);
 		}
 		ForLoopMetric metric = new ForLoopMetric();
-		
+
 		int i = start;
 		while (true)
 		{
@@ -175,7 +175,7 @@ public class PLI_DoStatement extends TokenSequence
 		}
 
 		_metrics.competedLoop(metric, step < 0);
-		
+
 		return result;
 	}
 
@@ -222,7 +222,7 @@ public class PLI_DoStatement extends TokenSequence
 		{
 			whileCond = generator.newBuiltInExpression(BuiltInEnum.TRUE, FOREVER);
 		}
-		
+
 		// Body is the same for all types of 'DO'
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 		for (PLI_StatementOrComment stmtComm : statements._elements)

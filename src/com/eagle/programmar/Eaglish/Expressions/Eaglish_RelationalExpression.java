@@ -28,7 +28,8 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator
 
 	public static class Eaglish_RelationalOperator extends TokenChooser
 	{
-		public @CHOICE Eaglish_PunctuationChoice XXoperSymbol = new Eaglish_PunctuationChoice("=", "<", ">", "<=", ">=");
+		public @CHOICE Eaglish_PunctuationChoice XXoperSymbol = new Eaglish_PunctuationChoice("=", "<", ">", "<=",
+				">=");
 		public @CHOICE Eaglish_KeywordChoice XXoperWord = new Eaglish_KeywordChoice("EQUALS", "NOT_EQUALS");
 	}
 
@@ -40,13 +41,13 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = interpreter.getStrValue(left);
@@ -63,7 +64,7 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator
 				throw new RuntimeException("Unable to handle " + oper + " with strings");
 			}
 		}
-		
+
 		if (leftValue.isInteger() || rightValue.isInteger())
 		{
 			int leftInt = interpreter.getIntValue(left);
@@ -92,7 +93,7 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator
 				throw new RuntimeException("Unable to handle " + oper + " with integers");
 			}
 		}
-		
+
 		if (leftValue.isBoolean() || rightValue.isBoolean())
 		{
 			boolean leftBool = interpreter.getBoolValue(left);
@@ -107,10 +108,10 @@ public class Eaglish_RelationalExpression extends PrecedenceOperator
 				return;
 			}
 		}
-		
+
 		throw new RuntimeException("Unexpected operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

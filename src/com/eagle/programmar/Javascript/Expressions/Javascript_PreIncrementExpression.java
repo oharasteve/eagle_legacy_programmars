@@ -21,8 +21,7 @@ import com.eagle.transform.EagleTransformer;
 public class Javascript_PreIncrementExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) @NOSPACE Javascript_PunctuationChoice operator =
-			new Javascript_PunctuationChoice("++", "--");
+	public @S(10) @NOSPACE Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("++", "--");
 	public @S(20) @NOSPACE Javascript_Variable var;
 
 	@Override
@@ -49,7 +48,7 @@ public class Javascript_PreIncrementExpression extends PrimaryOperator
 			interpreter.pushInt(curr);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

@@ -32,12 +32,12 @@ public class RPGFree_Program extends AbstractLanguage
 
 	public @S(10) RPGFree_Free free;
 	public @S(20) TokenList<RPGFree_Item> items;
-	
+
 	public static class RPGFree_Free extends TokenSequence
 	{
 		public @S(10) RPGFree_Keyword FREE = new RPGFree_Keyword("**FREE");
 	}
-	
+
 	public static class RPGFree_Item extends TokenChooser
 	{
 		public @CHOICE RPGFree_Comment XXcomment;

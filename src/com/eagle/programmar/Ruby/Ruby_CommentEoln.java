@@ -18,7 +18,7 @@ public class Ruby_CommentEoln extends TokenSequence
 {
 	public @S(10) Ruby_Comment comment;
 	public @S(20) Ruby_EOLN eoln;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -28,6 +28,6 @@ public class Ruby_CommentEoln extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;		// Might want to keep comment statements somehow.
+		return null; // Might want to keep comment statements somehow.
 	}
 }

@@ -47,7 +47,7 @@ public class VB_Function extends TokenSequence
 	public @S(80) @OPT TokenList<VB_Element> stmts;
 	public @S(90) VB_Keyword END = new VB_Keyword("end");
 	public @S(100) VB_Keyword FUNCTION2 = new VB_Keyword("function");
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, VB_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -55,7 +55,7 @@ public class VB_Function extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -80,7 +80,7 @@ public class VB_Function extends TokenSequence
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -90,13 +90,13 @@ public class VB_Function extends TokenSequence
 			VB_KeywordChoice kw = (VB_KeywordChoice) returnType.getWhich();
 			newReturnType = VB_Type.findType(generator, kw.getValue());
 		}
-		
+
 		if (newReturnType == null)
 		{
 			TypeEnum metricRetType = transformer.findReturnMetric(id);
 			newReturnType = generator.transformType(metricRetType, null, id);
 		}
-		
+
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -104,10 +104,10 @@ public class VB_Function extends TokenSequence
 		{
 			System.out.println("** Found VB function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (params.params != null && params.params.isPresent())
 		{
 			for (int i = 0; i < params.params.getPrimaryCount(); i++)
@@ -119,18 +119,18 @@ public class VB_Function extends TokenSequence
 					VB_KeywordChoice kw = (VB_KeywordChoice) param.as.type.getWhich();
 					paramType = VB_Type.findType(generator, kw.getValue());
 				}
-				
+
 				if (paramType == null && argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-		
+
 		for (VB_Element stmt : stmts._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
@@ -144,7 +144,7 @@ public class VB_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

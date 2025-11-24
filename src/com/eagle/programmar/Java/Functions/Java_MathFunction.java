@@ -16,7 +16,7 @@ public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
 	public @S(10) Java_Keyword MATH = new Java_Keyword("Math");
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE Java_MathChoice choice;
-	
+
 	public static class Java_MathChoice extends TokenChooser
 	{
 		public @CHOICE Java_MathPowFunc XXmathPowFunction;
@@ -25,7 +25,7 @@ public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
 		public @CHOICE Java_MathAbsFunc XXmathAbsFunction;
 		public @CHOICE Java_MathMinMaxFunc XXmathMinMaxFunction;
 	}
-	
+
 	public static Java_MathFunction wrapMathFunction(AbstractToken choice, AbstractToken source)
 	{
 		Java_MathFunction func = new Java_MathFunction();
@@ -35,7 +35,7 @@ public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
 		func.setTransformationSource(source);
 		return func;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

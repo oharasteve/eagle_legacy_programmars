@@ -37,7 +37,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT Java_Expression ecExpr;
 	public @S(80) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -53,7 +53,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			interpreter.pushStr(leftStr.substring(sc));
 		}
 	}
-	
+
 	public static Java_SubstringMethod generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
@@ -79,7 +79,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			expr.scExpr = scMinusOne;
 			break;
 		}
-		
+
 		switch (whichEC)
 		{
 		case GIVEN_EC:
@@ -128,7 +128,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			expr.ecExpr = null;
 			break;
 		}
-		
+
 		// Need to handle ncMightBeTooBig. Can't let ec go past len(left)
 		if (ncMightBeTooBig && expr.ecExpr != null)
 		{
@@ -138,15 +138,15 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			minFn.expressions.addPrimaryElement(expr.ecExpr);
 			minFn.expressions.addSecondaryElement(new PunctuationComma());
 			minFn.rightParen = new PunctuationRightParen();
-			
+
 			Java_LengthMethod lenFn = new Java_LengthMethod();
 			minFn.expressions.addPrimaryElement(lenFn.generateLength((Java_Expression) theExpr, source));
-			
+
 			Java_MathFunction mathFn = Java_MathFunction.wrapMathFunction(minFn, source);
 			expr.ecExpr = Java_Generator.wrapExpression(mathFn);
 			expr.ecExpr.setPresent(true);
 		}
-		
+
 		expr.setTransformationSource(source);
 		return expr;
 	}

@@ -19,7 +19,7 @@ public class IntelASM_EquDirective extends TokenSequence implements EagleRunnabl
 	public @S(20) @OPT @CURIOUS("Extra colon") PunctuationColon colon;
 	public @S(30) IntelASM_Keyword EQU = new IntelASM_Keyword("EQU");
 	public @S(40) IntelASM_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -29,7 +29,7 @@ public class IntelASM_EquDirective extends TokenSequence implements EagleRunnabl
 		{
 			throw new RuntimeException("Duplicate label: " + lbl);
 		}
-		
+
 		int k = interpreter.getIntValue(expr);
 		EagleInteger val = new EagleInteger(k);
 		interpreter.setSymbol(label, lbl, val);

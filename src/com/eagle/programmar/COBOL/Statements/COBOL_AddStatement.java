@@ -122,7 +122,8 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 					COBOL_UserVariable variable = (COBOL_UserVariable) which3;
 					EagleValue oldValue = interpreter.findSymbol(variable.id.getValue());
 					interpreter.setSymbol(variable, variable.id.getValue(),
-							new EagleInteger(oldValue.forceIntegerValue() + newVal));				}
+							new EagleInteger(oldValue.forceIntegerValue() + newVal));
+				}
 			}
 		}
 	}
@@ -130,7 +131,7 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! (type.getWhich() instanceof COBOL_AddNoGiving))
+		if (!(type.getWhich() instanceof COBOL_AddNoGiving))
 		{
 			throw new RuntimeException("Can't handle ADD with GIVING: " + this);
 		}
@@ -139,13 +140,13 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can't handle multiple arguments to ADD: " + this);
 		}
-		if (addNoGiving.addTo == null || ! addNoGiving.addTo.isPresent())
+		if (addNoGiving.addTo == null || !addNoGiving.addTo.isPresent())
 		{
 			throw new RuntimeException("ADD value TO var is required: " + this);
 		}
-		
+
 		COBOL_Variable var = addNoGiving.addTo.var;
-		if (! (var.getWhich() instanceof COBOL_UserVariable))
+		if (!(var.getWhich() instanceof COBOL_UserVariable))
 		{
 			throw new RuntimeException("Can only ADD to a Variable: " + this);
 		}
@@ -158,9 +159,9 @@ public class COBOL_AddStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can't handle field OF variable: " + this);
 		}
-		
+
 		ArrayList<AbstractStatement> results = new ArrayList<AbstractStatement>();
-		
+
 		// ADD 1 TO X
 		AbstractExpression value = transformer.transformExpression(generator, addNoGiving.expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(

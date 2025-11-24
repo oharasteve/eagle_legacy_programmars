@@ -27,7 +27,7 @@ public class COBOL_Variable extends TokenChooser
 			public @S(20) COBOL_Identifier_Reference id;
 		}
 	}
-	
+
 	public static String repairName(String cobolVariable)
 	{
 		return cobolVariable.replaceAll("-", "_");

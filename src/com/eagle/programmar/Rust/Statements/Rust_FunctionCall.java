@@ -25,7 +25,7 @@ public class Rust_FunctionCall extends TokenSequence
 	{
 		interpreter.tryToInterpret(method);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

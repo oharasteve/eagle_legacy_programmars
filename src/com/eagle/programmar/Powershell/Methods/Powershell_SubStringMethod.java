@@ -52,6 +52,7 @@ public class Powershell_SubStringMethod extends PrecedenceOperator
 			interpreter.pushStr(str.substring(sc));
 		}
 	}
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -64,7 +65,7 @@ public class Powershell_SubStringMethod extends PrecedenceOperator
 			theNC = transformer.transformExpression(generator, ncGiven.ncExpr);
 			whichEC = SubstringECEnum.GIVEN_NC;
 		}
-		
+
 		return generator.newSubstringFunction(theExpr, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, whichEC, theNC, false, this);
 	}

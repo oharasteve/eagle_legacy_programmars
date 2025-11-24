@@ -48,7 +48,7 @@ public class Delphi_Variable extends TokenSequence implements EagleRunnable, Abs
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.findSymbol(var.getValue());
-		
+
 		if (extensions != null)
 		{
 			for (Delphi_Extended_Variable ext : extensions._elements)

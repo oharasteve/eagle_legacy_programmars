@@ -36,7 +36,7 @@ public class SQL_LeftFunction extends PrimaryOperator
 		if (nc > strArg.length()) nc = strArg.length();
 		interpreter.pushStr(strArg.substring(0, nc));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

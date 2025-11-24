@@ -16,7 +16,7 @@ public class Basic_DataStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Basic_KeywordChoice DATA = new Basic_KeywordChoice("DATA", "DAT");
-	public @S(20) SeparatedList<Basic_Number,PunctuationComma> values;
+	public @S(20) SeparatedList<Basic_Number, PunctuationComma> values;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

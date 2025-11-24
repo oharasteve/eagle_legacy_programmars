@@ -108,7 +108,7 @@ public class Python_Assignment extends TokenSequence
 		Python_Just_Var justVar = (Python_Just_Var) vars.getWhich();
 		Python_VariableAndSubscript var = justVar.variable.first();
 
-		if (! (var.variable.var.getWhich() instanceof Python_Identifier_Reference))
+		if (!(var.variable.var.getWhich() instanceof Python_Identifier_Reference))
 		{
 			throw new RuntimeException("Assigment must be to a variable");
 		}
@@ -135,7 +135,7 @@ public class Python_Assignment extends TokenSequence
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return generator.newExpressionStatement(asgExpr, this);
 	}
-	
+
 	public static Python_ExpressionStatement generateAssignment(String name, SubscriptEnum offset,
 			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression,
 			String comment, AbstractToken source)
@@ -156,7 +156,7 @@ public class Python_Assignment extends TokenSequence
 		expr.setWhich(asgExpr);
 		exprStmt.expression = expr;
 		if (comment != null) exprStmt.comment = new Python_Comment(comment);
-		
+
 		return exprStmt;
 	}
 }

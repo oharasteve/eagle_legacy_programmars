@@ -19,13 +19,13 @@ public class CSharp_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", "LlFfDdUuMm", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{
 		return super.genericDescription("Ee", "LlFfDdUuMm", true, false, '?');
 	}
-	
+
 	public CSharp_Number generateNumber(String value, AbstractToken source)
 	{
 		this.setValue(value);

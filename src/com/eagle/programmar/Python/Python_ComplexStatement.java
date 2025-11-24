@@ -51,7 +51,7 @@ public class Python_ComplexStatement extends TokenSequence
 	public @S(40) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	public @S(50) @OPT Python_Comment comment;
 	public @S(60) @OPT TokenList<Python_EndOfLine> eoln;
- 
+
 	public static class Python_StatementOrComment extends TokenChooser
 	{
 		// Only needed for Transformation. Look at Python_StatementBlock.java
@@ -61,7 +61,7 @@ public class Python_ComplexStatement extends TokenSequence
 		public @FIRST Python_Comment XXcomment;
 		public @CHOICE Python_SameLineStatement XXstatements;
 	}
-	
+
 	public static class Python_Statement extends TokenChooser
 	{
 		public @CHOICE Python_Assignment XXassignment;
@@ -81,7 +81,8 @@ public class Python_ComplexStatement extends TokenSequence
 		public @CHOICE Python_ImportStatement XXimportStatement;
 		public @CHOICE Python_MatchStatement XXmatchStatement;
 		public @CHOICE Python_PassStatement XXpassStatement;
-		// public @CHOICE Python_PrintStatement XXprintStatement;  // Added in by Python2_Program
+		// public @CHOICE Python_PrintStatement XXprintStatement; // Added in by
+		// Python2_Program
 		public @CHOICE Python_QuitStatement XXquitStatement;
 		public @CHOICE Python_RaiseStatement XXraiseStatement;
 		public @CHOICE Python_ReturnStatement XXreturnStatement;

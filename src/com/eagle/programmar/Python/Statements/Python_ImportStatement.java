@@ -58,9 +58,9 @@ public class Python_ImportStatement extends TokenSequence
 
 	public @CHOICE static class Python_ImportFile extends TokenSequence
 	{
-		public @S(10) SeparatedList<Python_Variable,PunctuationPeriod> importName;
+		public @S(10) SeparatedList<Python_Variable, PunctuationPeriod> importName;
 	}
-	
+
 	public static class Python_MoreImports extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;

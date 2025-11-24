@@ -29,13 +29,13 @@ public class Algol68_NegativeExpression extends PrimaryOperator
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		String oper = operator.getValue();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(value.typeName());
-		
+
 		int val = value.forceIntegerValue();
 		switch (oper)
 		{
@@ -46,7 +46,7 @@ public class Algol68_NegativeExpression extends PrimaryOperator
 			throw new RuntimeException("Unexpected negation operator: " + oper);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

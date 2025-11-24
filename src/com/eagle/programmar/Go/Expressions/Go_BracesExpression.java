@@ -38,7 +38,7 @@ public class Go_BracesExpression extends PrimaryOperator
 		}
 		interpreter.pushEagleValue(array);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -17,7 +17,7 @@ public class IntelASM_SysCall extends TokenSequence implements EagleRunnableWith
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
-		
+
 		int rax = state._RAX;
 		switch (rax)
 		{

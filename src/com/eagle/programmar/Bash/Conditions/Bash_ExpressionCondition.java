@@ -11,7 +11,7 @@ import com.eagle.tokens.PrimaryOperator;
 public class Bash_ExpressionCondition extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Bash_Expression expression;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

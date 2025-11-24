@@ -60,6 +60,7 @@ public class Delphi_Readln_Statement extends TokenSequence
 			String var2 = fromFile.var.getValue();
 			return generator.newFileReadStatement(id, var2, this);
 		}
-		else throw new RuntimeException("Unable to handle: " + what.getWhich());
+		else
+			throw new RuntimeException("Unable to handle: " + what.getWhich());
 	}
 }

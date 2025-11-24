@@ -22,7 +22,7 @@ public class CSharp_MathPowFunc extends TokenSequence implements EagleRunnable
 	public @S(40) @NOSPACE PunctuationComma comma;
 	public @S(50) CSharp_Expression power;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -30,8 +30,9 @@ public class CSharp_MathPowFunc extends TokenSequence implements EagleRunnable
 		double pow = interpreter.getDoubleValue(power);
 		interpreter.pushDouble(Math.pow(num, pow));
 	}
-	
-	public static CSharp_MathFunction generateExpression(AbstractExpression number, AbstractExpression power, AbstractToken source)
+
+	public static CSharp_MathFunction generateExpression(AbstractExpression number, AbstractExpression power,
+			AbstractToken source)
 	{
 		CSharp_MathPowFunc pow = new CSharp_MathPowFunc();
 		pow.leftParen = new PunctuationLeftParen();

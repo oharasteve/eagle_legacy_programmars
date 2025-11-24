@@ -17,7 +17,7 @@ public class Java_StatementOrComment extends TokenChooser
 {
 	public @FIRST @NEWLINE Java_Comment XXcomment;
 	public @CHOICE @NEWLINE Java_Statement XXstatement;
-	
+
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -26,6 +26,6 @@ public class Java_StatementOrComment extends TokenChooser
 			Java_Statement stmt = (Java_Statement) this.getWhich();
 			return transformer.transformStatement(generator, stmt.getWhich());
 		}
-		return null;	// Must be a comment -- toss it
+		return null; // Must be a comment -- toss it
 	}
 }

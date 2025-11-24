@@ -50,7 +50,7 @@ public class Delphi_Procedure extends TokenSequence
 			public @S(10) Delphi_Identifier_Reference clsRef;
 			public @S(20) PunctuationPeriod dot;
 		}
-		
+
 		public static class Delphi_Override extends TokenSequence
 		{
 			public @S(10) Delphi_Keyword OVERRIDE = new Delphi_Keyword("Override");
@@ -94,7 +94,7 @@ public class Delphi_Procedure extends TokenSequence
 			AbstractType paramType1 = param.type.convertType(generator);
 			String paramName1 = param.names.first().var.getValue();
 			generator.addMethodParameter(paramType1, paramName1);
-			
+
 			for (Delphi_MoreParameters more : this.forward.args.moreParams._elements)
 			{
 				AbstractType paramType2 = more.param.type.convertType(generator);
@@ -112,7 +112,7 @@ public class Delphi_Procedure extends TokenSequence
 		}
 
 		this.body.statements.transformRemoveBeginEnd(transformer, generator);
-		
+
 		generator.doneMethod();
 	}
 }

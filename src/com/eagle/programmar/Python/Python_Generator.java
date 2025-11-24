@@ -62,14 +62,14 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 
-public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
-		Python_Expression, Python_Variable, Python_Type>
+public class Python_Generator
+		extends EagleGenerator<Python_ComplexStatement, Python_Expression, Python_Variable, Python_Type>
 {
 	public static String NAME = "Python";
 	public static String SUFFIX = ".py";
-	
+
 	private Python_Program _program;
-	
+
 	// Python requires functions to be declared (visible) before usage.
 	// Also, you cannot access variables inside another function.
 	// So, we split everything up into three groups and collect them separately.
@@ -79,25 +79,25 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	private ArrayList<Python_ComplexStatement> _globalData = new ArrayList<Python_ComplexStatement>();
 	private ArrayList<Python_ComplexStatement> _allFunctions = new ArrayList<Python_ComplexStatement>();
 	private ArrayList<Python_ComplexStatement> _mainLogic = new ArrayList<Python_ComplexStatement>();
-	
+
 	public Python_Generator(ParserManager parser, String mainName)
 	{
 		super(parser);
 		_program = new Python3_Program();
 	}
-	
+
 	@Override
 	public String getName()
 	{
 		return NAME;
 	}
-	
+
 	@Override
 	public String getSuffix()
 	{
 		return SUFFIX;
 	}
-	
+
 	@Override
 	public String mainName()
 	{
@@ -142,7 +142,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		}
 		return _program;
 	}
-	
+
 	public static Python_Expression wrapExpression(AbstractToken token)
 	{
 		if (token == null) return null;
@@ -150,7 +150,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		wrapper.setWhich(token);
 		return wrapper;
 	}
-	
+
 	public static Python_ComplexStatement wrapStatement(AbstractToken token)
 	{
 		if (token == null) return null;
@@ -164,7 +164,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		wrapper.statementOrComment.setWhich(sameLine);
 		return wrapper;
 	}
-	
+
 	@Override
 	public Python_Type transformType(TypeEnum type, String typeName, AbstractToken source)
 	{
@@ -172,7 +172,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	// ================== Main program and class ==================
-	
+
 	private Python_Function _currentFunction = null;
 
 	@Override
@@ -181,13 +181,13 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		_currentFunction = Python_Function.newPythonFunction(name);
 		_allFunctions.add(wrapStatement(_currentFunction));
 	}
-	
+
 	@Override
 	public void addMethodParameter(Python_Type type, String name)
 	{
 		_currentFunction.addFunctionParameter(type, name);
 	}
-	
+
 	@Override
 	public void doneMethod()
 	{
@@ -198,16 +198,15 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public void addStatement(Python_ComplexStatement stmt, AbstractToken source)
 	{
 		if (stmt == null) return;
-		
+
 		if (_currentFunction != null)
 		{
 			// Save everything inside the function, both data and logic
-			Python_MultilineStatement multi =
-					(Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
+			Python_MultilineStatement multi = (Python_MultilineStatement) _currentFunction.header.defBody.getWhich();
 			multi.statements.addToken(stmt);
 			return;
 		}
-		
+
 		// Cannot put data into the 'main' method when it was declared in a global area
 		AbstractToken which = stmt.statementOrComment.getWhich();
 		if (which instanceof Python_SameLineStatement)
@@ -223,7 +222,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 				}
 			}
 		}
-		
+
 		// Must be global logic (i.e., "main")
 		_mainLogic.add(stmt);
 	}
@@ -255,7 +254,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	public Python_ComplexStatement newDataDeclaration(boolean isStatic, String name, Python_Expression size,
 			Python_Type type, Python_Expression initial, AbstractToken source)
 	{
-		return wrapStatement(Python_Data.newDataDeclaration(name,size, type, initial, source));
+		return wrapStatement(Python_Data.newDataDeclaration(name, size, type, initial, source));
 	}
 
 	@Override
@@ -266,7 +265,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		return doStmt.generateDoUntil1(condition,
 				action, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newDoUntilStatement(Python_Expression condition,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
@@ -274,7 +273,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_WhileStatement doStmt = new Python_WhileStatement();
 		return doStmt.generateDoUntil(condition, actions, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newExitStatement(Python_Expression code, AbstractToken source)
 	{
@@ -286,16 +285,16 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	{
 		return wrapStatement(Python_ExpressionStatement.newExpressionStatement(expr, source));
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newIfStatement1(Python_Expression condition, Python_ComplexStatement ifTrue,
 			Python_ComplexStatement ifFalse, AbstractToken source)
 	{
 		Python_IfStatement ifStmt = new Python_IfStatement();
 		return ifStmt.generateIfElse1(condition,
-				ifTrue,ifFalse, source);
+				ifTrue, ifFalse, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newIfStatement(Python_Expression condition,
 			ArrayList<Python_ComplexStatement> ifTrue,
@@ -304,7 +303,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_IfStatement ifStmt = new Python_IfStatement();
 		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newForLoopStatement1(Python_Expression init,
 			Python_Expression term, Python_Expression incr, Python_ComplexStatement action,
@@ -350,7 +349,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Print_Function prtFunc = new Python_Print_Function();
 		return prtFunc.generatePrintFunc(line, newLine, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newPrintStatement(Python_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
@@ -358,7 +357,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newReturnStatement(Python_Expression ret,
 			AbstractToken source)
@@ -384,7 +383,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		return whileStmt.generateWhile1(condition,
 				action, source);
 	}
-	
+
 	@Override
 	public Python_ComplexStatement newWhileStatement(Python_Expression condition,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
@@ -394,7 +393,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 	}
 
 	// ================ Expressions ================
-	
+
 	@Override
 	public Python_Expression newAdditiveExpression(Oper2Types types, Python_Expression left,
 			AdditiveEnum oper, Python_Expression right, AbstractToken source)
@@ -410,7 +409,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Additive_Expression addExpr = new Python_Additive_Expression();
 		return addExpr.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
-	
+
 	@Override
 	public Python_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression,
@@ -420,7 +419,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
-	
+
 	@Override
 	public AbstractExpression newHashAssignment(String name, Python_Expression subscript,
 			Python_Expression expression, AbstractToken source)
@@ -450,7 +449,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		}
 		return asgExpr.generateAssignment(var, subscript, oper, one, source);
 	}
-	
+
 	@Override
 	public Python_Expression newPreIncrementExpression(String name, SubscriptEnum offset,
 			Python_Expression subscript, IncrementEnum oper, AbstractToken source)
@@ -458,19 +457,20 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		// ++i and i++ are really the same in Python. Both map to i += 1
 		return newPostIncrementExpression(name, offset, subscript, oper, source);
 	}
-	
+
 	@Override
 	public Python_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
 		return Python_BuiltIn.generateBuiltIn(builtin, source);
 	}
-	
+
 	@Override
-	public Python_Expression newExponentExpression(Python_Expression left, Python_Expression right, AbstractToken source)
+	public Python_Expression newExponentExpression(Python_Expression left, Python_Expression right,
+			AbstractToken source)
 	{
 		return wrapExpression(Python_Power_Expression.generateExpression(left, right, source));
 	}
-	
+
 	@Override
 	public Python_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
@@ -484,7 +484,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Logical_And_Expression andExpr = new Python_Logical_And_Expression();
 		return andExpr.generateLogicalAnd(left, right, source);
 	}
-	
+
 	@Override
 	public Python_Expression newLogicalOrExpression(Python_Expression left,
 			LogicalOrEnum oper, Python_Expression right, AbstractToken source)
@@ -492,7 +492,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
 		return orExpr.generateLogicalOr(left, oper, right, source);
 	}
-	
+
 	@Override
 	public AbstractExpression newBitwiseExpression(Python_Expression left,
 			BitwiseEnum oper, Python_Expression right, AbstractToken source)
@@ -525,7 +525,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Negative_Expression negExp = new Python_Negative_Expression();
 		return negExp.generateNegative(sign, expr, source);
 	}
-	
+
 	@Override
 	public Python_Expression newTruncateExpression(Python_Expression expr, AbstractToken source)
 	{
@@ -547,7 +547,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		parens.generateParentheses(expr, source);
 		return notExp.generateLogicalNot(Python_Generator.wrapExpression(parens), source);
 	}
-	
+
 	@Override
 	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
 	{
@@ -562,7 +562,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Number num = new Python_Number();
 		return wrapExpression(num.generateNumber(number, source));
 	}
-	
+
 	@Override
 	public Python_Expression newParenthesizedExpression(Python_Expression expr, AbstractToken source)
 	{
@@ -577,7 +577,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Relational_Expression relExp = new Python_Relational_Expression();
 		return relExp.generateRelational(types, left, relOp, right, source);
 	}
-	
+
 	@Override
 	public Python_Expression newShiftExpression(Python_Expression left,
 			ShiftEnum shift, Python_Expression right, AbstractToken source)
@@ -602,13 +602,13 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_VariableExpression varExp = new Python_VariableExpression();
 		return varExp.generateVarExpr(name, offset, subscript, source);
 	}
-	
+
 	@Override
 	public Python_Variable newVariable(String name)
 	{
 		return Python_Variable.newVariable(name);
 	}
-	
+
 	@Override
 	public Python_Expression newClassCreation(Python_Type type,
 			ArrayList<Python_Expression> args, AbstractToken source)
@@ -616,7 +616,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_BracesColons braces = new Python_BracesColons();
 		return braces.generateDictionary(source);
 	}
-	
+
 	@Override
 	public Python_Expression newMethodInvocation(Python_Variable var,
 			ArrayList<Python_Expression> args, AbstractToken source)
@@ -624,13 +624,13 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Function_Call creat = new Python_Function_Call();
 		return creat.generateInvocation(var, args, source);
 	}
-	
+
 	@Override
 	public Python_Expression newCurrentDatetime()
 	{
 		throw new RuntimeException("Need to implement");
 	}
-	
+
 	// ================ Functions ================
 
 	@Override
@@ -639,7 +639,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Len_Function lenFn = new Python_Len_Function();
 		return lenFn.generateLength(expr, source);
 	}
-	
+
 	@Override
 	public Python_Expression newTrimFunction(Python_Expression expr, AbstractToken source)
 	{
@@ -653,7 +653,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_Str_Function strFn = new Python_Str_Function();
 		return strFn.generateString(types, expr, source);
 	}
-	
+
 	@Override
 	public Python_Expression newSubstringFunction(Python_Expression expr, Python_Expression sc,
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, Python_Expression ecOrnc,
@@ -678,7 +678,7 @@ public class Python_Generator extends EagleGenerator<Python_ComplexStatement,
 		Python_StartsWith_Method startsFunc = new Python_StartsWith_Method();
 		return startsFunc.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
-	
+
 	@Override
 	public Python_Expression newIndexOfFunction(Python_Variable string, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)

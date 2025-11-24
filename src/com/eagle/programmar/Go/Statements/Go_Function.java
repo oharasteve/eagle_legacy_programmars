@@ -38,7 +38,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Go_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("#Function_declarations") Go_Keyword FUNC = new Go_Keyword("func");
 	public @S(20) Go_Function_Definition id;
@@ -95,7 +95,7 @@ public class Go_Function extends TokenSequence
 		{
 			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
-		
+
 		// Unless the name is 'main'
 		if (id.getValue().equals("main"))
 		{
@@ -110,12 +110,12 @@ public class Go_Function extends TokenSequence
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		boolean isMain = false;
 		if (fnName.equals("main"))
 		{
-			fnName = generator.mainName();	// Change from 'main' to 'Main' for C#
+			fnName = generator.mainName(); // Change from 'main' to 'Main' for C#
 			isMain = true;
 		}
 
@@ -125,36 +125,36 @@ public class Go_Function extends TokenSequence
 		{
 			System.out.println("** Found Go function " + fnName);
 		}
-		
+
 		if (isMain)
 		{
 			// Have to wait until addMethod is called
-			generator.addMainArgs();		// For java and C# but not for Python
+			generator.addMainArgs(); // For java and C# but not for Python
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (funcParamDefs != null && funcParamDefs.isPresent())
 		{
 			for (int i = 0; i < funcParamDefs.getPrimaryCount(); i++)
 			{
 				Go_FunctionParameter param = funcParamDefs.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
 
 		addLocalVars(transformer, generator);
-		
+
 		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
 		if (newStmts != null)
 		{
@@ -163,10 +163,10 @@ public class Go_Function extends TokenSequence
 				generator.addStatement(newStmt, stmt.getWhich());
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
-	
+
 	private boolean isFuncParam(String name)
 	{
 		int numParams = funcParamDefs.getPrimaryCount();
@@ -180,7 +180,7 @@ public class Go_Function extends TokenSequence
 		}
 		return false;
 	}
-	
+
 	// Are there any local variables we need to declare?
 	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -191,11 +191,12 @@ public class Go_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found local var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);
-					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType, null, this);
+					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType,
+							null, this);
 					generator.addStatement(dataStmt, this);
 				}
 			}

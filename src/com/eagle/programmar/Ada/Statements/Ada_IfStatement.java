@@ -92,7 +92,7 @@ public class Ada_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		for (Ada_Statement thenStatement : thenStatements._elements)
 		{
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
@@ -104,7 +104,7 @@ public class Ada_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (Ada_Statement elseStatement : elseClause.elseStatements._elements)
@@ -115,7 +115,7 @@ public class Ada_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

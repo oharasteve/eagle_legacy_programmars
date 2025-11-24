@@ -23,11 +23,11 @@ public class Basic_GoSubStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		Basic_StateMachine state = (Basic_StateMachine) interpreter._state;
-		
+
 		int label = Integer.parseInt(lbl.getValue());
 		int save = state.getCurrentStatement();
 		state.gotoStatement(label); // Gosub this label
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -36,7 +36,7 @@ public class Basic_GoSubStatement extends TokenSequence
 			{
 				break;
 			}
-			
+
 			// Recursive ... goes away for a while
 			result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL)
@@ -44,7 +44,7 @@ public class Basic_GoSubStatement extends TokenSequence
 				break;
 			}
 		}
-		
+
 		if (result == Eagle_Statement_Result.RETURN)
 		{
 			state.setCurrentStatement(save);

@@ -20,7 +20,8 @@ public class CSharp_LogicalOrExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_PunctuationChoice orOperator = new CSharp_PunctuationChoice("||", "^");
+	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_PunctuationChoice orOperator = new CSharp_PunctuationChoice(
+			"||", "^");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
@@ -50,7 +51,7 @@ public class CSharp_LogicalOrExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle " + orOperator);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -71,7 +72,7 @@ public class CSharp_LogicalOrExpression extends PrecedenceOperator
 		}
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
-	
+
 	public CSharp_Expression generateLogicalOr(CSharp_Expression leftExpr,
 			LogicalOrEnum oper, CSharp_Expression rightExpr, AbstractToken source)
 	{

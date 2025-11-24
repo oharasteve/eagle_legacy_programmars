@@ -105,7 +105,7 @@ public class C_FunctionCall extends PrimaryOperator
 						arg = argList.moreArgs._elements.get(i - 1).arg;
 						param = (C_FunctionRegularParameter) params.moreParams._elements.get(i - 1).param.getWhich();
 					}
-	
+
 					EagleValue val = interpreter.getEagleValue(arg);
 					interpreter.setSymbol(param.id, param.id.getValue(), val);
 					argTypes.add(val.typeName());
@@ -114,14 +114,14 @@ public class C_FunctionCall extends PrimaryOperator
 
 			// Evaluate the function
 			long startTime = System.nanoTime();
-			
+
 			C_FunctionImplementation impl = (C_FunctionImplementation) func.body.getWhich();
 			for (C_StatementOrComment stmt : impl.elements._elements)
 			{
 				Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			long elapsedTime = System.nanoTime() - startTime;
 			func._callMetrics.addCallFrom(this, elapsedTime);
 			func._argumentsMetrics.calledWith(argTypes);
@@ -130,20 +130,20 @@ public class C_FunctionCall extends PrimaryOperator
 			interpreter.completedFunction(fnName, func);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		AbstractToken which0 = functionName.firstId.getWhich();
-		if (! (which0 instanceof C_Identifier_Reference))
+		if (!(which0 instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which0);
 		}
 		C_Identifier_Reference id = (C_Identifier_Reference) which0;
 		String name = id.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-		
+
 		if (argList != null && argList.isPresent())
 		{
 			AbstractToken which1 = argList.arg.getWhich();
@@ -152,7 +152,7 @@ public class C_FunctionCall extends PrimaryOperator
 				C_Expression arg1 = (C_Expression) which1;
 				AbstractExpression newArg1 = transformer.transformExpression(generator, arg1);
 				args.add(newArg1);
-	
+
 				if (argList.moreArgs != null)
 				{
 					for (C_MoreArgument more : argList.moreArgs._elements)
@@ -168,7 +168,7 @@ public class C_FunctionCall extends PrimaryOperator
 				}
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(name);
 		return generator.newMethodInvocation(var, args, id);
 	}

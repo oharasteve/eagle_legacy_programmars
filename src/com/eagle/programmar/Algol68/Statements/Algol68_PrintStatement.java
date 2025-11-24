@@ -79,10 +79,10 @@ public class Algol68_PrintStatement extends TokenSequence
 				throw new RuntimeException("Unable to print " + pieces);
 			}
 		}
-		
+
 		_metrics.calledWith(argTypes);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -95,7 +95,7 @@ public class Algol68_PrintStatement extends TokenSequence
 		{
 			types = new Oper2Types();
 		}
-		
+
 		int numPieces = pieces.getPrimaryCount();
 		boolean newLine = false;
 		for (int i = 0; i < numPieces; i++)
@@ -117,10 +117,10 @@ public class Algol68_PrintStatement extends TokenSequence
 				{
 					if (metrics != null && i < metrics.size())
 					{
-						types._type1 = metrics.get(i-1);
+						types._type1 = metrics.get(i - 1);
 						types._type2 = metrics.get(i);
 					}
-					
+
 					AbstractExpression next = transformer.transformExpression(generator, expr);
 					line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 				}

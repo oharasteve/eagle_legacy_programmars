@@ -46,7 +46,7 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 		public @S(20) @OPT TokenList<Java_ClassElement> elementList;
 		public @S(30) PunctuationRightBrace rightBrace;
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -71,12 +71,12 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 					}
 				}
 			}
-			
+
 			return generator.newClassCreation(type, args, this);
 		}
 		throw new RuntimeException("Can't handle: " + this);
 	}
-	
+
 	public Java_Expression generateCreation(Java_Type type,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{

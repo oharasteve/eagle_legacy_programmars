@@ -45,7 +45,7 @@ public class Fortran_Statement extends TokenChooser
 	{
 		public @S(10) Fortran_Comment comment;
 		public @S(20) Fortran_EOLN eoln;
-		
+
 		@Override
 		public void interpret(EagleInterpreter interpreter)
 		{

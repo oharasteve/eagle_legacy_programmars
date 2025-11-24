@@ -36,7 +36,7 @@ public class C_AdditiveExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
@@ -72,7 +72,7 @@ public class C_AdditiveExpression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -90,7 +90,7 @@ public class C_AdditiveExpression extends PrecedenceOperator
 						null, false, left);
 			}
 		}
-		
+
 		switch (operator.toString())
 		{
 		case "+":

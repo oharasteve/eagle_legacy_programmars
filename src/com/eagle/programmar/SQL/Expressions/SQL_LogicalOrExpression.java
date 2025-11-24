@@ -22,7 +22,7 @@ public class SQL_LogicalOrExpression extends PrecedenceOperator
 	public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) SQL_OrOperator oper;
 	public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class SQL_OrOperator extends TokenChooser
 	{
 		public @CHOICE SQL_Punctuation XXbars = new SQL_Punctuation("||");
@@ -44,7 +44,7 @@ public class SQL_LogicalOrExpression extends PrecedenceOperator
 			interpreter.pushBool(rightValue);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

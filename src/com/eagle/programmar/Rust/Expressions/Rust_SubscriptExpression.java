@@ -81,13 +81,13 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle " + value.toString());
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
 		Oper2Types types = transformer.findOperator2Metric(leftBracket);
-		
+
 		if (types._type1.equals(EagleString.STRING))
 		{
 			if (subscrExpr.getWhich() instanceof Rust_RangeExpression)
@@ -104,7 +104,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_EC_PLUS_ONE,
 						newEc, false, this);
 			}
-			
+
 			// string with a single subscript, not a range
 			AbstractExpression newSubscr = transformer.transformExpression(generator, subscrExpr);
 			AbstractExpression one = generator.newNumberExpression("1", null);
@@ -112,7 +112,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 					SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NC,
 					one, false, this);
 		}
-		
+
 		// Assume it must be an array
 		if (expr.getWhich() instanceof Rust_VariableExpression)
 		{
@@ -121,7 +121,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 			return generator.newVariableExpression(varExpr.variable.var.getValue(),
 					SubscriptEnum.FIRST_IS_ZERO, newSubscr, expr);
 		}
-		
+
 		throw new RuntimeException("Unable to handle " + expr);
 	}
 }

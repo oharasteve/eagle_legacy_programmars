@@ -18,7 +18,7 @@ public class Delphi_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'", false, '?', true, false);
 	}
-	
+
 	@Override
 	public String description()
 	{
@@ -32,7 +32,7 @@ public class Delphi_Literal extends TerminalLiteralToken
 		String txt = _txt;
 		if (txt.startsWith("'") && txt.endsWith("'"))
 		{
-			txt = txt.substring(1, txt.length()-1);
+			txt = txt.substring(1, txt.length() - 1);
 		}
 		return generator.newLiteralExpression(txt, this);
 	}

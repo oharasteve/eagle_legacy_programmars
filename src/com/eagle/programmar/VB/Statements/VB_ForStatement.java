@@ -48,7 +48,7 @@ public class VB_ForStatement extends TokenSequence
 		public @S(10) VB_Keyword STEP = new VB_Keyword("step");
 		public @S(20) VB_Expression step;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -63,12 +63,12 @@ public class VB_ForStatement extends TokenSequence
 		int current = interpreter.getIntValue(from);
 		int stop = interpreter.getIntValue(to);
 		int incr = 1;
-		
+
 		if (by != null && by.isPresent())
 		{
 			incr = interpreter.getIntValue(by.step);
 		}
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -82,7 +82,7 @@ public class VB_ForStatement extends TokenSequence
 			}
 
 			metric.iterate();
-			
+
 			interpreter.setSymbol(variable, variable.getValue(), new EagleInteger(current));
 
 			for (VB_Element stmt : actions._elements)
@@ -90,7 +90,7 @@ public class VB_ForStatement extends TokenSequence
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -138,7 +138,7 @@ public class VB_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (VB_Element statement : actions._elements)
 		{
@@ -152,7 +152,7 @@ public class VB_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(variable.getValue());
 		AbstractStatement stmt = generator.newForRangeStatement(var, TypeEnum.VOID, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

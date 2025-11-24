@@ -16,7 +16,7 @@ public class RPG_CTDATA extends TokenSequence
 	public @S(20) RPG_Literal array = new RPG_Literal(11, 16);
 	public @S(30) RPG_EndOfLine eoln;
 	public @S(40) TokenList<RPG_CTDATA_item> items;
-	
+
 	public static class RPG_CTDATA_item extends TokenSequence
 	{
 		public @S(10) RPG_Number number = new RPG_Number(1, 10);

@@ -37,7 +37,7 @@ public class Powershell_LogicalAnd_Expression extends PrecedenceOperator
 			interpreter.pushBool(false);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

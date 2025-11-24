@@ -28,7 +28,7 @@ public class Rexx_Element extends TokenSequence implements AbstractStatement, Ea
 	public static class Rexx_Statement extends TokenChooser
 	{
 		public @CHOICE Rexx_Comment XXcomment;
-	
+
 		public @CHOICE Rexx_AssignmentStatement XXassignmentStatement;
 		public @CHOICE Rexx_CallStatement XXcallStatement;
 		public @CHOICE Rexx_DoStatement XXdoStatement;
@@ -38,7 +38,7 @@ public class Rexx_Element extends TokenSequence implements AbstractStatement, Ea
 		public @CHOICE Rexx_ReturnStatement XXreturnStatement;
 		public @CHOICE Rexx_SayStatement XXsayStatement;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

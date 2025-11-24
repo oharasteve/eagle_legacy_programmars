@@ -34,7 +34,7 @@ public class CSS_Base64 extends TerminalLiteralToken
 		foundIt(_currentLine, endChar - 1);
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -30,7 +30,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Delphi_For_Statement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("Declarations_and_Statements_(Delphi)#For_Statements") Delphi_Keyword FOR = new Delphi_Keyword(
 			"For");
@@ -42,7 +42,7 @@ public class Delphi_For_Statement extends TokenSequence
 	public @S(70) Delphi_Keyword DO = new Delphi_Keyword("Do");
 	public @S(80) @OPT TokenList<Delphi_Comment> comments;
 	public @S(90) Delphi_Statement stmt;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -57,7 +57,7 @@ public class Delphi_For_Statement extends TokenSequence
 		int current = interpreter.getIntValue(from);
 		int stop = interpreter.getIntValue(to);
 		boolean reverse = TO_DOWNTO.getValue().equals("DownTo");
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -103,7 +103,7 @@ public class Delphi_For_Statement extends TokenSequence
 		_metrics.competedLoop(metric, reverse);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

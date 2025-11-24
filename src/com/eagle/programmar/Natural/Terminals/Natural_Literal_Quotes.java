@@ -13,7 +13,7 @@ public class Natural_Literal_Quotes extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'", false, '?', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

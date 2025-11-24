@@ -28,7 +28,7 @@ public class Ruby_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expr);
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{

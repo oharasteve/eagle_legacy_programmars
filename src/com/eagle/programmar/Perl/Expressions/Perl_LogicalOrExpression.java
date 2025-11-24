@@ -52,7 +52,7 @@ public class Perl_LogicalOrExpression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

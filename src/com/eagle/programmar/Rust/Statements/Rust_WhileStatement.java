@@ -73,12 +73,12 @@ public class Rust_WhileStatement extends TokenSequence implements
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (AbstractStatement stmt : transformer.transformStatement(generator, whileStatement.getWhich()))
 		{
 			whileTrue.add(stmt);
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

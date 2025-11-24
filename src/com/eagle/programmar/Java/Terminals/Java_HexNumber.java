@@ -14,7 +14,7 @@ public class Java_HexNumber extends TerminalHexNumberToken
 	{
 		return genericHex(lines, "0x", "Ll", true);
 	}
-	
+
 	public Java_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
 		this.setValue(value);

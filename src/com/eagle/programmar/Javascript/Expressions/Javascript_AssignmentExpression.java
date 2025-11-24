@@ -86,7 +86,7 @@ public class Javascript_AssignmentExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 
-		if (! (var.getWhich() instanceof Javascript_VariableExpression))
+		if (!(var.getWhich() instanceof Javascript_VariableExpression))
 		{
 			throw new RuntimeException("Can only assign variables");
 		}
@@ -103,15 +103,15 @@ public class Javascript_AssignmentExpression extends PrecedenceOperator
 				newSub = transformer.transformExpression(generator, sub.expr);
 			}
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractToken which = theVar.firstId.getWhich();
-		if (! (which instanceof Javascript_Identifier_Reference))
+		if (!(which instanceof Javascript_Identifier_Reference))
 		{
 			throw new RuntimeException("Have to assign to a regular variable");
 		}
 		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) which;
-		
+
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, newSub, asg, value, this);
 		return asgExpr;

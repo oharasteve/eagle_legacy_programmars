@@ -27,7 +27,7 @@ public class Java_EndsWithMethod extends PrecedenceOperator
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Java_Expression patternExpr;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -43,7 +43,7 @@ public class Java_EndsWithMethod extends PrecedenceOperator
 		AbstractExpression thePattern = transformer.transformExpression(generator, patternExpr);
 		return generator.newEndsWithFunction(theExpr, thePattern, this);
 	}
-	
+
 	public Java_Expression generateEndsWith(Java_Expression expr, Java_Expression patt,
 			AbstractToken source)
 	{
@@ -52,7 +52,7 @@ public class Java_EndsWithMethod extends PrecedenceOperator
 		this.leftParen = new PunctuationLeftParen();
 		this.patternExpr = patt;
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

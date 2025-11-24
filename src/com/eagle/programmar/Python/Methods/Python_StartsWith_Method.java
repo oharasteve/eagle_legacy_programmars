@@ -40,7 +40,7 @@ public class Python_StartsWith_Method extends PrimaryOperator
 		public @S(10) PunctuationComma comma;
 		public @S(20) Python_Expression start;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -56,7 +56,7 @@ public class Python_StartsWith_Method extends PrimaryOperator
 			interpreter.pushBool(str.startsWith(patt));
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -68,20 +68,20 @@ public class Python_StartsWith_Method extends PrimaryOperator
 		{
 			theSC = transformer.transformExpression(generator, scExpr.start);
 		}
-		
+
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
-	
+
 	public Python_Expression generateStartsWith(Python_Expression expr, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		AbstractToken token = expr.getWhich();
-		if (! (token instanceof Python_VariableExpression))
+		if (!(token instanceof Python_VariableExpression))
 		{
 			throw new RuntimeException("Python startswith must be a variable, not " + token);
 		}
-		
+
 		Python_VariableExpression varExpr = (Python_VariableExpression) token;
 		this.string = varExpr.variable;
 		this.dot = new PunctuationPeriod();
@@ -95,7 +95,7 @@ public class Python_StartsWith_Method extends PrimaryOperator
 			this.scExpr.start = sc;
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

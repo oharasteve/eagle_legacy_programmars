@@ -29,7 +29,7 @@ public class TCL_BracketStringCat extends PrimaryOperator
 	public @S(30) TCL_Keyword CAT = new TCL_Keyword("cat");
 	public @S(40) TokenList<TCL_Expression> strings;
 	public @S(50) PunctuationRightBracket rightBracket;
-	
+
 	private @SKIP ArgumentsMetrics _metrics = null;
 
 	@Override
@@ -52,7 +52,7 @@ public class TCL_BracketStringCat extends PrimaryOperator
 		_metrics.calledWith(argTypes);
 		interpreter.pushStr(sb.toString());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -78,7 +78,7 @@ public class TCL_BracketStringCat extends PrimaryOperator
 			{
 				if (metrics != null)
 				{
-					types._type1 = metrics.get(i-1);
+					types._type1 = metrics.get(i - 1);
 					types._type2 = metrics.get(i);
 				}
 

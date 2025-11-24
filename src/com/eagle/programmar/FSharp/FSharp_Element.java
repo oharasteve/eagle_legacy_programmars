@@ -52,7 +52,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 				implements EagleRunnable, EagleTransformableStatement
 		{
 			public @S(10) SeparatedList<FSharp_Comment, FSharp_EndOfLine> comments;
-			
+
 			@Override
 			public void interpret(EagleInterpreter interpreter)
 			{
@@ -122,7 +122,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		public @S(10) @OPT FSharp_Comment comment;
 		public @S(20) FSharp_EndOfLine eoln;
 		public @S(30) TokenList<FSharp_Element> elements;
-		
+
 		@Override
 		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 		{
@@ -142,7 +142,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 			for (FSharp_Element elt : elements._elements)
 			{
 				ArrayList<AbstractStatement> batch = transformer.transformStatement(generator,
-							elt.statementOrComment.getWhich());
+						elt.statementOrComment.getWhich());
 				if (batch != null)
 				{
 					for (AbstractStatement stmt : batch)

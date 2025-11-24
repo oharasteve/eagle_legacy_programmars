@@ -49,7 +49,7 @@ public class Java_ClassCreationWithInitializers extends PrimaryOperator
 			Java_Expression expr = valueList.arg;
 			array.addValue(interpreter.getEagleValue(expr));
 		}
-		
+
 		if (valueList.moreArgs.isPresent())
 		{
 			for (Java_MoreArguments more : valueList.moreArgs._elements)
@@ -57,20 +57,20 @@ public class Java_ClassCreationWithInitializers extends PrimaryOperator
 				array.addValue(interpreter.getEagleValue(more.arg));
 			}
 		}
-		
+
 		interpreter.pushEagleValue(array);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
-		
+
 		if (valueList.arg.isPresent())
 		{
 			exprs.add(transformer.transformExpression(generator, valueList.arg));
 		}
-		
+
 		if (valueList.moreArgs.isPresent())
 		{
 			for (Java_MoreArguments more : valueList.moreArgs._elements)
@@ -90,20 +90,20 @@ public class Java_ClassCreationWithInitializers extends PrimaryOperator
 		Java_KeywordChoice str = new Java_KeywordChoice("String");
 		this.jtype.typeName = new Java_TypeName();
 		this.jtype.typeName.setWhich(str);
-		
+
 		Java_ArrayType array = new Java_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
-		
+
 		this.jtype.arrayTypes = new TokenList<Java_ArrayType>();
 		this.jtype.arrayTypes.setPresent(true);
 		this.jtype.arrayTypes.addToken(array);
-		
+
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.valueList = new Java_ArgumentList();
 		this.valueList.setPresent(true);
-		
+
 		for (int i = 0; i < exprs.size(); i++)
 		{
 			if (i == 0)

@@ -12,7 +12,7 @@ public class Rexx_Subscript extends TokenSequence
 {
 	public @S(10) PunctuationPeriod dot;
 	public @S(20) Rexx_Subscr subscr;
-	
+
 	public static class Rexx_Subscr extends TokenChooser
 	{
 		public @CHOICE Rexx_Number XXnumericSubscr;

@@ -27,7 +27,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Perl_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("control-structures.if.php") Perl_Keyword IF = new Perl_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;
@@ -84,7 +84,7 @@ public class Perl_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (elseIfClauses != null)
 			{
 				for (Perl_IfElseIfClause elif : elseIfClauses._elements)
@@ -98,7 +98,7 @@ public class Perl_IfStatement extends TokenSequence
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
 			}
 		}
-	
+
 		boolean cond1 = interpreter.getBoolValue(condition);
 		_metrics.get(0).completedIf(cond1);
 
@@ -148,18 +148,18 @@ public class Perl_IfStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		if (! (condition.getWhich() instanceof Perl_Expression))
+		if (!(condition.getWhich() instanceof Perl_Expression))
 		{
 			throw new RuntimeException("Can only handle simple conditions");
 		}
 		Perl_Expression cond = (Perl_Expression) condition.getWhich();
 		AbstractExpression newCond = transformer.transformExpression(generator, cond);
-		
+
 		if (elseIfClauses != null && elseIfClauses.size() > 0)
 		{
 			throw new RuntimeException("if/elif is not yet implemented in Perl");
 		}
-		
+
 		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
 				thenStatement.getWhich());
 

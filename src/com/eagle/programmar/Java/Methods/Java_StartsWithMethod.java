@@ -31,7 +31,7 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT Java_Expression scExpr;
 	public @S(80) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -58,11 +58,11 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 		{
 			theSC = transformer.transformExpression(generator, scExpr);
 		}
-		
+
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
-	
+
 	public Java_Expression generateStartsWith(Java_Expression expr, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
@@ -78,7 +78,7 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 			this.scExpr.setPresent(true);
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

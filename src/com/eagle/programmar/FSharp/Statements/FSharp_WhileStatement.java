@@ -21,7 +21,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class FSharp_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("loops-while-do-expression") FSharp_Keyword WHILE = new FSharp_Keyword("while");
 	public @S(20) FSharp_Expression condition;

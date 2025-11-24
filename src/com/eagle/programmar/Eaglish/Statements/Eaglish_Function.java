@@ -31,7 +31,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_Function extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) Eaglish_Keyword FUNCTION = new Eaglish_Keyword("FUNCTION");
 	public @S(20) Eaglish_Function_Definition id;
@@ -55,7 +55,7 @@ public class Eaglish_Function extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -76,13 +76,13 @@ public class Eaglish_Function extends TokenSequence
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -90,31 +90,31 @@ public class Eaglish_Function extends TokenSequence
 		{
 			System.out.println("** Found Eaglish function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (parameterStatements != null && parameterStatements.isPresent())
 		{
 			int i = 0;
 			for (Eaglish_Parameter_Statement param : parameterStatements._elements)
 			{
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.param.getValue());
 				i++;
 			}
 		}
 
 		// addLocalVars(transformer, generator);
-		
+
 		for (Eaglish_Statement stmt : statements._elements)
 		{
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
@@ -126,7 +126,7 @@ public class Eaglish_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

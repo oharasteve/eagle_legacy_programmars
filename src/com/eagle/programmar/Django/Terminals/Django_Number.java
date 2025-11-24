@@ -13,7 +13,7 @@ public class Django_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, null, null, false, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

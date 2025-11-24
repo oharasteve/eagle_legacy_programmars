@@ -21,7 +21,7 @@ public class Java_AnnotationInvocation extends PrimaryOperator
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE @OPT Java_ArgumentList argList;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	public static class Java_AnnotationDotName extends TokenSequence
 	{
 		public @S(10) PunctuationPeriod dot;

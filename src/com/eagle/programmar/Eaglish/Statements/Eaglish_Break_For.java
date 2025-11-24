@@ -24,7 +24,7 @@ public class Eaglish_Break_For extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

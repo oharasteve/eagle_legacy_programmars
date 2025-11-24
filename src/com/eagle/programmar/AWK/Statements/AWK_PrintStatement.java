@@ -79,7 +79,7 @@ public class AWK_PrintStatement extends TokenSequence
 		String result = val.forceStringValue();
 		argTypes.add(val.typeName());
 		System.out.print(result);
-		
+
 		if (args.more != null)
 		{
 			for (AWK_MoreArguments nxt : args.more._elements)
@@ -94,7 +94,7 @@ public class AWK_PrintStatement extends TokenSequence
 		_metrics.calledWith(argTypes);
 		System.out.println();
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -107,7 +107,7 @@ public class AWK_PrintStatement extends TokenSequence
 		{
 			types = new Oper2Types();
 		}
-		
+
 		AWK_ArgumentList argList;
 		AbstractToken which1 = params.getWhich();
 		if (which1 instanceof AWK_Print_WithParens)
@@ -124,7 +124,7 @@ public class AWK_PrintStatement extends TokenSequence
 		{
 			throw new RuntimeException("Unable to handle " + which1);
 		}
-		
+
 		line = transformer.transformExpression(generator, argList.expr);
 		int i = 0;
 		for (AWK_MoreArguments more : argList.more._elements)
@@ -135,7 +135,7 @@ public class AWK_PrintStatement extends TokenSequence
 				types._type1 = EagleString.STRING;
 				types._type2 = metrics.get(i);
 			}
-			
+
 			AbstractExpression next = transformer.transformExpression(generator, more.expr);
 			line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, this);
 		}

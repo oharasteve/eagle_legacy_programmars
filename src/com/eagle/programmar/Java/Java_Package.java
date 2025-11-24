@@ -22,14 +22,14 @@ public class Java_Package extends TokenSequence
 		public @S(10) @NOSPACE PunctuationPeriod dot;
 		public @S(20) @NOSPACE Java_Identifier id;
 	}
-	
+
 	public static Java_Package newPackage(String pkgName)
 	{
 		Java_Package pkg = new Java_Package();
 		String[] pieces = pkgName.split("\\.");
 		pkg.id = new Java_Identifier();
 		pkg.id.setValue(pieces[0]);
-		
+
 		if (pieces.length > 1)
 		{
 			pkg.moreIds = new TokenList<Java_MorePackageIds>();
@@ -43,7 +43,7 @@ public class Java_Package extends TokenSequence
 					skip = false;
 					continue;
 				}
-				
+
 				Java_MorePackageIds more = new Java_MorePackageIds();
 				more.dot = new PunctuationPeriod();
 				more.id = new Java_Identifier();
@@ -51,7 +51,7 @@ public class Java_Package extends TokenSequence
 				pkg.moreIds.addToken(more);
 			}
 		}
-		
+
 		pkg.semicolon = new PunctuationSemicolon();
 		return pkg;
 	}

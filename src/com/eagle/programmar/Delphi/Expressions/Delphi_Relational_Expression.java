@@ -43,7 +43,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
@@ -60,7 +60,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "<>":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
 		}
@@ -100,7 +100,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		Oper2Types types = transformer.findOperator2Metric(operator);
-		
+
 		switch (operator.getWhich().toString())
 		{
 		case "<":
@@ -110,7 +110,7 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.LESS_EQUALS, rightExpr, this);
 		case "=":
-			return generator.newRelationalExpression(types, leftExpr,	
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.EQUALS, rightExpr, this);
 		case "<>":
 			return generator.newRelationalExpression(types, leftExpr,

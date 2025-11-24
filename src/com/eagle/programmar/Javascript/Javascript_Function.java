@@ -36,7 +36,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Javascript_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @OPT Javascript_KeywordChoice STATIC = new Javascript_KeywordChoice("static", "async");
 	public @S(20) @OPT Javascript_Keyword EXPORT = new Javascript_Keyword("export");
@@ -54,7 +54,7 @@ public class Javascript_Function extends TokenSequence
 		public @S(60) @OPT TokenList<Javascript_Comment> comments2;
 		public @S(70) Javascript_FunctionBody body;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -76,7 +76,8 @@ public class Javascript_Function extends TokenSequence
 		}
 		if (_argumentsMetrics == null)
 		{
-			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, implementation.id.getValue(), implementation.id);
+			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, implementation.id.getValue(),
+					implementation.id);
 		}
 		if (_returnMetrics == null)
 		{
@@ -95,7 +96,7 @@ public class Javascript_Function extends TokenSequence
 		{
 			newReturnType = generator.transformType(metricRetType, null, implementation);
 		}
-		
+
 		String newName = implementation.id.getValue();
 		if (VERBOSE)
 		{
@@ -105,13 +106,13 @@ public class Javascript_Function extends TokenSequence
 		{
 			newName = generator.mainName();
 		}
-		
+
 		generator.addMethod(newReturnType, newName, this);
 		generator.setMethodName(newName);
-		
+
 		// Pick up metrics, if known
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(implementation.id);
-		
+
 		Javascript_FunctionParameter param1 = implementation.params.param;
 		AbstractToken which1 = param1.paramName.getWhich();
 		AbstractType type = null;
@@ -143,7 +144,7 @@ public class Javascript_Function extends TokenSequence
 			}
 			argNumber++;
 		}
-		
+
 		Javascript_FunctionBody impl = implementation.body;
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 		for (Javascript_StatementOrComment javaStmt : impl.statements._elements)

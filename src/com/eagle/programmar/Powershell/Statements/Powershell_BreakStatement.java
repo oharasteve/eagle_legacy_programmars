@@ -14,7 +14,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Powershell_BreakStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("chapter-08?view=powershell-5.1#851-the-break-statement") Powershell_Keyword BREAK = new Powershell_Keyword(
 			"Break");
@@ -24,7 +24,7 @@ public class Powershell_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

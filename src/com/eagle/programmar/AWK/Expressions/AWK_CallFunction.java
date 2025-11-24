@@ -112,7 +112,7 @@ public class AWK_CallFunction extends PrimaryOperator
 				args.add(transformer.transformExpression(generator, more.expr));
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(functionName.getValue());
 		return generator.newMethodInvocation(var, args, this);
 	}

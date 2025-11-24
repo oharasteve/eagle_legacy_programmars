@@ -14,7 +14,7 @@ public class Bash_Literal extends TerminalLiteralToken
 		if (findStart(lines) == FOUND.EOF) return false;
 		return genericLiteral(lines, "'\"`", true, '\\', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

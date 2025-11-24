@@ -47,7 +47,7 @@ public class Python_StatementBlock extends TokenChooser
 			}
 			return result;
 		}
-		
+
 		@Override
 		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
 				EagleGenerator generator)
@@ -88,7 +88,7 @@ public class Python_StatementBlock extends TokenChooser
 			}
 			return result;
 		}
-		
+
 		@Override
 		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
 				EagleGenerator generator)
@@ -110,7 +110,7 @@ public class Python_StatementBlock extends TokenChooser
 			return result;
 		}
 	}
-	
+
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -129,7 +129,7 @@ public class Python_StatementBlock extends TokenChooser
 
 		throw new RuntimeException("Unable to handle " + which);
 	}
-	
+
 	public Python_ComplexStatement addStatements(ArrayList<? extends AbstractStatement> statements)
 	{
 		Python_MultilineStatement multi = new Python_MultilineStatement();

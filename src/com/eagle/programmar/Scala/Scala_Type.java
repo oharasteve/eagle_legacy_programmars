@@ -24,7 +24,7 @@ public class Scala_Type extends TokenChooser
 		public @S(30) Scala_Type subtype;
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
-	
+
 	public static AbstractType findType(EagleGenerator generator, Scala_Type type)
 	{
 		TypeEnum newType;
@@ -52,7 +52,7 @@ public class Scala_Type extends TokenChooser
 				break;
 			}
 		}
-		
+
 		return generator.transformType(newType, null, null);
 	}
 }

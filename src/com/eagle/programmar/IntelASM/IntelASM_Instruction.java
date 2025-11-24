@@ -39,7 +39,7 @@ public class IntelASM_Instruction extends TokenSequence implements EagleRunnable
 		public @CHOICE IntelASM_REPNE XXrepneInstruction;
 		public @CHOICE IntelASM_SysCall XXsyscallInstruction;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

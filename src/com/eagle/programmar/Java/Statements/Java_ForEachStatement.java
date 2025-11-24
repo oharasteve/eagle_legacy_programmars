@@ -34,7 +34,7 @@ public class Java_ForEachStatement extends TokenSequence implements AbstractStat
 	public @S(100) PunctuationRightParen rightParen;
 	public @S(110) @OPT Java_Comment comment;
 	public @S(120) Java_Statement action;
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
 
 	@Override

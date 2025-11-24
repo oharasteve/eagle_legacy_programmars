@@ -15,25 +15,25 @@ public class IntelASM_Variable extends TokenChooser
 {
 	public @CHOICE IntelASM_Register XXreg;
 	public @LAST IntelASM_Identifier_Reference XXvar;
-	
+
 	public @CHOICE static class IntelASM_Brackets_Register extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) @NOSPACE IntelASM_Register register;
 		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 	}
-	
+
 	public @CHOICE static class IntelASM_Brackets_Address extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) @NOSPACE IntelASM_Identifier_Reference id;
 		public @S(30) @NOSPACE PunctuationRightBracket rightBracket;
 	}
-	
+
 	public int getValue(EagleInterpreter interpreter)
 	{
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
-		
+
 		AbstractToken which = this.getWhich();
 		if (which instanceof IntelASM_Register)
 		{
@@ -42,11 +42,11 @@ public class IntelASM_Variable extends TokenChooser
 		}
 		throw new RuntimeException("Unexpected variable: " + which.getClass().getCanonicalName());
 	}
-	
+
 	public void setValue(EagleInterpreter interpreter, int value)
 	{
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
-		
+
 		AbstractToken which = this.getWhich();
 		if (which instanceof IntelASM_Register)
 		{

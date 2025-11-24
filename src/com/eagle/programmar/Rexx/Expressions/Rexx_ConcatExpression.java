@@ -29,7 +29,7 @@ public class Rexx_ConcatExpression extends PrecedenceOperator implements EagleRu
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, operator.getValue());

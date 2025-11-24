@@ -13,7 +13,7 @@ public class Rust_Character_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'", true, '\\', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

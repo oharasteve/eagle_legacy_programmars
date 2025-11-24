@@ -37,7 +37,7 @@ public class JavaP_QualifiedName extends TerminalLiteralToken
 		_txt = rec.substring(_currentChar, endChar);
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{

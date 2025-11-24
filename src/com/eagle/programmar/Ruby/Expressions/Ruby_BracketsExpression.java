@@ -40,7 +40,7 @@ public class Ruby_BracketsExpression extends PrimaryOperator
 
 		interpreter.pushEagleValue(vals);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

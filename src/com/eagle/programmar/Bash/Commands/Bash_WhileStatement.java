@@ -25,7 +25,7 @@ public class Bash_WhileStatement extends TokenSequence
 	public @S(50) @OPT Bash_EndOfLine eoln2;
 	public @S(60) TokenList<Bash_Element> statements;
 	public @S(70) Bash_Keyword DONE = new Bash_Keyword("done");
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -52,7 +52,7 @@ public class Bash_WhileStatement extends TokenSequence
 					break;
 				}
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();

@@ -55,7 +55,7 @@ public class Go_AssignmentExpression extends PrecedenceOperator
 		}
 		throw new RuntimeException("Unable to handle assignment operator: " + equals.getValue());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

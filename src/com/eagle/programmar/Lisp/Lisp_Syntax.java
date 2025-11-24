@@ -25,7 +25,7 @@ public class Lisp_Syntax extends EagleSyntax
 		_punctuationExceptions = new String[] {
 				"<=", ">=", "/=", "++", "+++", "**", "***"
 		};
-		
+
 		// addReservedWords(RESERVED_WORDS); // None needed!
 	}
 }

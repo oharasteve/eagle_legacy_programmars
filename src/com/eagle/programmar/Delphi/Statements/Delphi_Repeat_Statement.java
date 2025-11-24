@@ -23,7 +23,7 @@ public class Delphi_Repeat_Statement extends TokenSequence
 	public @S(20) Delphi_Statement_List statements;
 	public @S(30) Delphi_Keyword UNTIL = new Delphi_Keyword("Until");
 	public @S(40) Delphi_Expression condition;
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

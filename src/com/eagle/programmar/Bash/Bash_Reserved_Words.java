@@ -32,7 +32,7 @@ public class Bash_Reserved_Words
 			"wc",
 			"while",
 	};
-	
+
 	public static final String[] HYPHEN_WORDS = new String[] {
 			"eq", "ne", "gt", "ge", "lt", "le"
 	};

@@ -29,6 +29,6 @@ public class Fortran_Implicit extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null;	// Nothing to do here
+		return null; // Nothing to do here
 	}
 }

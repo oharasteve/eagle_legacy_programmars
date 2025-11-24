@@ -70,7 +70,7 @@ public class Lisp_Expression extends TokenChooser
 	public @CHOICE Lisp_PrintFunction XXprintFunction;
 	public @CHOICE Lisp_SetfFunction XXsetfFunction;
 	public @CHOICE Lisp_ReturnFunction XXreturnFunction;
-	
+
 	// There are just computations / calculations
 	public @CHOICE Lisp_AdditionOperator XXadditionOperator;
 	public @CHOICE Lisp_AndOperator XXandOperator;
@@ -85,7 +85,7 @@ public class Lisp_Expression extends TokenChooser
 	public @CHOICE Lisp_RelationalOperator XXrelationalOperator;
 	public @CHOICE Lisp_RemainderOperator XXmodulusOperator;
 	public @CHOICE Lisp_SubseqOperator XXsubseqOperator;
-	public @CHOICE Lisp_TruncateOperator XXtruncateOperator;	
+	public @CHOICE Lisp_TruncateOperator XXtruncateOperator;
 
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{
@@ -129,7 +129,7 @@ public class Lisp_Expression extends TokenChooser
 					String value = item.showText();
 					array.addValue(new EagleString(value));
 				}
-				
+
 				interpreter.pushEagleValue(array);
 			}
 		}

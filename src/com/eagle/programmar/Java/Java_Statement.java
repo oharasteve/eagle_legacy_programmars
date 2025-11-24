@@ -30,7 +30,7 @@ public class Java_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Java_Data XXdata;
 	public @CHOICE Java_Class XXclass;
 	public @CHOICE Java_Enum XXenum;
- 
+
 	public @CHOICE @CURIOUS("Empty statement") PunctuationSemicolon XXemptyStatement;
 
 	public @CHOICE Java_AnnotationDefinition XXannotationDefinition;

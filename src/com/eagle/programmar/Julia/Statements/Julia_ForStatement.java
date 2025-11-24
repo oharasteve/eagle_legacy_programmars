@@ -51,7 +51,7 @@ public class Julia_ForStatement extends TokenSequence
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
-		
+
 		Julia_RangeExpression range = (Julia_RangeExpression) values.getWhich();
 		int start = interpreter.getIntValue(range.first);
 		int stop = interpreter.getIntValue(range.lastOrIncrement);
@@ -118,7 +118,7 @@ public class Julia_ForStatement extends TokenSequence
 		AbstractExpression incrExpr = null;
 		RelationalEnum relOp = RelationalEnum.LESS_EQUALS;
 
-		if (! (which instanceof Julia_RangeExpression))
+		if (!(which instanceof Julia_RangeExpression))
 		{
 			throw new RuntimeException("FOR statement requires a Range of values, not " + which);
 		}
@@ -147,7 +147,7 @@ public class Julia_ForStatement extends TokenSequence
 		{
 			termExpr = transformer.transformExpression(generator, range.lastOrIncrement);
 		}
-		
+
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (Julia_Statement stmt1 : statements._elements)
 		{
@@ -160,7 +160,7 @@ public class Julia_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractVariable newVar = generator.newVariable(var.vars.first().getValue());
 		return generator.newForRangeStatement(newVar, TypeEnum.VOID, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

@@ -28,7 +28,7 @@ public class CSharp_ParenthesizedExpression extends PrimaryOperator
 	{
 		interpreter.tryToInterpret(expression);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -36,7 +36,7 @@ public class CSharp_ParenthesizedExpression extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
-	
+
 	public CSharp_Expression generateParentheses(CSharp_Expression theExpr,
 			AbstractToken source)
 	{

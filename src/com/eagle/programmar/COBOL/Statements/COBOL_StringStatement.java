@@ -165,7 +165,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 			{
 				throw new RuntimeException("Can't handle DELIMITED BY yet: " + this);
 			}
-			
+
 			AbstractExpression nextExpr = transformer.transformExpression(generator, what.expr);
 			if (newExpr == null)
 			{
@@ -175,16 +175,16 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 			{
 				if (metrics != null)
 				{
-					types._type1 = metrics.get(i-1);
+					types._type1 = metrics.get(i - 1);
 					types._type2 = metrics.get(i);
 				}
 
 				newExpr = generator.newAdditiveExpression(types, newExpr, AdditiveEnum.PLUS, nextExpr, what);
 			}
-			
+
 			i++;
 		}
-		
+
 		COBOL_StringPiece piece = pieces._elements.get(0);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(
 				COBOL_Variable.repairName(piece.intoVar.getValue()),
@@ -193,4 +193,3 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 		return exprStmt;
 	}
 }
-	

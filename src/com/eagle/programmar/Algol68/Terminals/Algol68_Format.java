@@ -13,7 +13,7 @@ public class Algol68_Format extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "$", false, ' ', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -19,7 +19,7 @@ public class Rexx_SayStatement extends TokenSequence
 {
 	public @S(10) @DOC("instructions-say") Rexx_Keyword SAY = new Rexx_Keyword("SAY");
 	public @S(20) Rexx_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

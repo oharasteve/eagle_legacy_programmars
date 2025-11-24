@@ -42,7 +42,7 @@ public class Rust_Block_Statement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Rust_Statement statement : statements._elements)
 		{
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.getWhich());
@@ -54,10 +54,10 @@ public class Rust_Block_Statement extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
-	
+
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
 			EagleGenerator generator, Rust_Statement statement)
 	{

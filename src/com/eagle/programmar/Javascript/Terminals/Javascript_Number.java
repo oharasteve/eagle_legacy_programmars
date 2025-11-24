@@ -18,7 +18,7 @@ public class Javascript_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "eE", null, true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -18,12 +18,12 @@ public class Java_StringFunction extends PrimaryOperator implements EagleRunnabl
 	public @S(10) Java_Keyword STRING = new Java_Keyword("String");
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE Java_StringChoice choice;
-	
+
 	public static class Java_StringChoice extends TokenChooser
 	{
 		public @CHOICE Java_StringFormatFunc XXstringFormatFunction;
 	}
-		
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -77,7 +77,7 @@ public class Python_Type extends TokenChooser implements AbstractType
 			public @CHOICE Python_Identifier_Reference XXid;
 		}
 	}
-	
+
 	// Convert "double" to a Python_Type representing a double
 	public static Python_Type newPrimitiveType(String name)
 	{
@@ -103,7 +103,7 @@ public class Python_Type extends TokenChooser implements AbstractType
 		{
 			return null;
 		}
-		
+
 		switch (type)
 		{
 		case BOOLEAN:

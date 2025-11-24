@@ -46,7 +46,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Java_Method extends TokenSequence
 		implements AbstractMethod, AbstractFunction, EagleRunnable,
-				EagleScopeInterface, EagleTransformableFunction
+		EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT Java_Annotation annotation;
@@ -121,7 +121,7 @@ public class Java_Method extends TokenSequence
 		public @CHOICE PunctuationSemicolon XXsemicolon;
 		public @CHOICE Java_MethodImplementation XXmethodImplementation;
 	}
-	
+
 	public static class Java_MethodImplementation extends TokenSequence
 	{
 		public @S(10) @OPT @NEWLINE TokenList<Java_Comment> comment1;
@@ -156,7 +156,7 @@ public class Java_Method extends TokenSequence
 		if (which instanceof Java_MethodType)
 		{
 			Java_Method_Definition id = ((Java_MethodType) which).methodName;
-		
+
 			if (_callMetrics == null)
 			{
 				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
@@ -188,13 +188,13 @@ public class Java_Method extends TokenSequence
 			}
 		}
 	}
-	
+
 	public void newJavaMethod(PrivacyEnum privacy, StaticEnum isStatic,
 			Java_Type returnType, String methodName)
 	{
 		this.setPresent(true);
 		this.modifiers = new TokenList<Java_MethodModifier>();
-		
+
 		Java_MethodModifier modifier1 = null;
 		switch (privacy)
 		{
@@ -228,7 +228,7 @@ public class Java_Method extends TokenSequence
 		default:
 			throw new RuntimeException("Can't handle static: " + isStatic);
 		}
-		
+
 		this.typeAndName = new Java_MethodTypeAndName();
 		Java_MethodType methodType = new Java_MethodType();
 		this.typeAndName.setWhich(methodType);
@@ -240,12 +240,12 @@ public class Java_Method extends TokenSequence
 		{
 			methodType.jtype = returnType;
 		}
-		
+
 		methodType.parameters = new Java_ParameterList();
 		methodType.parameters.setPresent(true);
 		methodType.parameters.leftParen = new PunctuationLeftParen();
 		methodType.parameters.rightParen = new PunctuationRightParen();
-		
+
 		this.body = new Java_MethodBody();
 		Java_MethodImplementation impl = new Java_MethodImplementation();
 		impl.block = new Java_StatementBlock();
@@ -253,11 +253,11 @@ public class Java_Method extends TokenSequence
 		impl.block.statements = new TokenList<Java_StatementOrComment>();
 		impl.block.rightBrace = new PunctuationRightBrace();
 		this.body.setWhich(impl);
-		
+
 		methodType.methodName = new Java_Method_Definition();
 		methodType.methodName.setValue(methodName);
 	}
-	
+
 	public void addMethodParameter(AbstractType type, String name)
 	{
 		Java_MethodParameter param = new Java_MethodParameter();
@@ -265,15 +265,14 @@ public class Java_Method extends TokenSequence
 		param.id = new Java_Variable_Definition();
 		param.id.setValue(name);
 		param.jtype = (Java_Type) type;
-		
+
 		AbstractToken which = this.typeAndName.getWhich();
 		if (which instanceof Java_MethodType)
 		{
 			Java_MethodType methType = (Java_MethodType) which;
 			if (methType.parameters.params == null)
 			{
-				methType.parameters.params =
-						new SeparatedList<Java_MethodParameter, PunctuationComma>();
+				methType.parameters.params = new SeparatedList<Java_MethodParameter, PunctuationComma>();
 			}
 			if (methType.parameters.params.size() > 0)
 			{
@@ -286,19 +285,19 @@ public class Java_Method extends TokenSequence
 			throw new RuntimeException("Can't handle: " + which);
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken which1 = typeAndName.getWhich();
-		if (! (which1 instanceof Java_MethodType))
+		if (!(which1 instanceof Java_MethodType))
 		{
 			throw new RuntimeException("Can only handle simple methods now");
 		}
 
 		Java_MethodType methodType = (Java_MethodType) which1;
 		AbstractType newReturnType = Java_Type.findType(generator, methodType.jtype);
-		
+
 		String newName = methodType.methodName.getValue();
 		if (VERBOSE)
 		{
@@ -308,10 +307,10 @@ public class Java_Method extends TokenSequence
 		{
 			newName = generator.mainName();
 		}
-		
+
 		generator.addMethod(newReturnType, newName, this);
 		generator.setMethodName(newName);
-		
+
 		Java_ParameterList params = methodType.parameters;
 		if (params != null && params.isPresent())
 		{
@@ -323,12 +322,12 @@ public class Java_Method extends TokenSequence
 				generator.addMethodParameter(paramType, param.id.getValue());
 			}
 		}
-		
-		if (! (body.getWhich() instanceof Java_MethodImplementation))
+
+		if (!(body.getWhich() instanceof Java_MethodImplementation))
 		{
 			throw new RuntimeException("Methods need an implementation");
 		}
-		
+
 		Java_MethodImplementation impl = (Java_MethodImplementation) body.getWhich();
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 		for (Java_StatementOrComment javaStmt : impl.block.statements._elements)

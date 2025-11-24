@@ -33,15 +33,16 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 	public @S(50) Basic_Keyword TO = new Basic_Keyword("TO");
 	public @S(60) Basic_Expression to;
 	public @S(70) @OPT Basic_ForStep step;
-	
-	// What a mess! rest of this line, some lines, start of line with NEXT on it. Ooof.
+
+	// What a mess! rest of this line, some lines, start of line with NEXT on it.
+	// Ooof.
 	public @S(80) @OPT Basic_For_PostFor block1;
 	public @S(90) @OPT Basic_EndOfLine eoln;
 	public @S(100) @OPT TokenList<Basic_Statement> statements2;
 	public @S(110) @OPT Basic_Number label;
 	public @S(120) @OPT Basic_For_PreNext block3;
 	public @S(130) @OPT PunctuationBackSlash backSlash;
-	
+
 	public @S(140) @OPT Basic_For_IfThenNext ifNext;
 	public @S(150) Basic_KeywordChoice NEXT = new Basic_KeywordChoice("NEXT", "NEX");
 	public @S(160) Basic_Identifier_Reference var2;
@@ -51,36 +52,36 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 		public @S(10) Basic_Keyword STEP = new Basic_Keyword("STEP");
 		public @S(20) Basic_Expression step;
 	}
-	
+
 	public static class Basic_For_PostFor extends TokenSequence
 	{
 		public @S(10) TokenList<Basic_For_PostPair> pairs;
 	}
-	
+
 	public static class Basic_For_PostPair extends TokenSequence
 	{
 		public @S(10) PunctuationBackSlash backSlash;
 		public @S(20) Basic_BaseStatement statement;
 	}
-	
+
 	public static class Basic_For_PreNext extends TokenSequence
 	{
 		public @S(10) TokenList<Basic_For_PreNextPair> pairs;
 	}
-	
+
 	public static class Basic_For_PreNextPair extends TokenSequence
 	{
 		public @S(10) Basic_BaseStatement statement;
 		public @S(20) PunctuationBackSlash backSlash;
 	}
-	
+
 	public static class Basic_For_IfThenNext extends TokenSequence
 	{
 		public @S(10) Basic_Keyword IF = new Basic_Keyword("IF");
 		public @S(20) Basic_Expression condition;
 		public @S(30) Basic_KeywordChoice THEN = new Basic_KeywordChoice("THEN", "THE");
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -94,19 +95,19 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 
 		// Have to decide whether to loop over Integers or Doubles
 		boolean useDoubles;
-		
+
 		int currentInt = 0;
 		int stopInt = 0;
 		int byInt = 1;
 		double currentDbl = 0.0;
 		double stopDbl = 0.0;
 		double byDbl = 1.0;
-		
+
 		EagleValue current = interpreter.getEagleValue(from);
 		EagleValue stop = interpreter.getEagleValue(to);
 		EagleValue by = null;
 		boolean backwards = false;
-		
+
 		if (step != null && step.isPresent())
 		{
 			by = interpreter.getEagleValue(step.step);
@@ -140,7 +141,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 				}
 			}
 		}
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
@@ -192,7 +193,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 			{
 				if (statements2 != null && statements2.size() > 0)
 				{
-					
+
 					for (Basic_Statement stmt : statements2._elements)
 					{
 						result = interpreter.tryToInterpret(stmt);
@@ -200,7 +201,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 					}
 				}
 			}
-			
+
 			// Partial lines leading up to the NEXT
 			if (result == Eagle_Statement_Result.NORMAL)
 			{
@@ -213,7 +214,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 					}
 				}
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();

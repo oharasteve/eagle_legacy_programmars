@@ -25,7 +25,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Fortran_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Fortran_Keyword DO1 = new Fortran_Keyword("DO");
 	public @S(20) Fortran_Keyword WHILE = new Fortran_Keyword("WHILE");

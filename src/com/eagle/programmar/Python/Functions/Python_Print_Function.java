@@ -34,7 +34,7 @@ public class Python_Print_Function extends PrimaryOperator
 {
 	public @S(10) Python_Keyword PRINT = new Python_Keyword("print");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE SeparatedList<Python_Expression,PunctuationComma> exprs;
+	public @S(30) @NOSPACE SeparatedList<Python_Expression, PunctuationComma> exprs;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 
 	private @SKIP ArgumentsMetrics _metrics = null;
@@ -82,7 +82,7 @@ public class Python_Print_Function extends PrimaryOperator
 		for (int i = 0; i < numExpr; i++)
 		{
 			AbstractExpression piece = transformer.transformExpression(generator, exprs.getPrimaryElement(i));
-			
+
 			if (i == 0)
 			{
 				result = piece;
@@ -95,7 +95,7 @@ public class Python_Print_Function extends PrimaryOperator
 				result = generator.newAppendExpression(types, result, piece, PRINT);
 			}
 		}
-		
+
 		return generator.newPrintFunction(result, true, false, this);
 	}
 
@@ -105,8 +105,8 @@ public class Python_Print_Function extends PrimaryOperator
 		leftParen = new PunctuationLeftParen();
 		exprs = new SeparatedList<Python_Expression, PunctuationComma>();
 		exprs.addPrimaryElement(line);
-		
-		if (! newLine)
+
+		if (!newLine)
 		{
 			exprs.addSecondaryElement(new PunctuationComma());
 			Python_Expression emptyExpr1 = Python_Literal.generateLiteralExpression("", null);
@@ -116,7 +116,7 @@ public class Python_Print_Function extends PrimaryOperator
 					AssignmentEnum.EQUALS, emptyExpr1, source);
 			exprs.addPrimaryElement(asgExpr1);
 		}
-		
+
 		rightParen = new PunctuationRightParen();
 		setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);

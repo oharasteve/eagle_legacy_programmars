@@ -23,7 +23,8 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("operators/arithmetic-operators") CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("+", "-");
+	public @S(20) @DOC("operators/arithmetic-operators") CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice(
+			"+", "-");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -34,13 +35,13 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -71,7 +72,7 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -79,7 +80,7 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		Oper2Types types = transformer.findOperator2Metric(operator);
-				
+
 		switch (operator.toString())
 		{
 		case "+":
@@ -90,7 +91,7 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
 	}
-	
+
 	public CSharp_Expression generateAdditive(Oper2Types types,
 			CSharp_Expression leftExpr, AdditiveEnum oper,
 			CSharp_Expression rightExpr, AbstractToken source)

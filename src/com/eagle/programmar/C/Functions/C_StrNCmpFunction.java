@@ -45,7 +45,7 @@ public class C_StrNCmpFunction extends PrimaryOperator
 		if (left.length() > nc) left = left.substring(0, nc);
 		if (right.length() > nc) right = right.substring(0, nc);
 		int compare = left.compareTo(right);
-		
+
 		switch (operator.getValue())
 		{
 		case "==", ">=":
@@ -79,7 +79,7 @@ public class C_StrNCmpFunction extends PrimaryOperator
 		case "!=", "<":
 			return generator.newRelationalExpression(types, substr1, RelationalEnum.NOT_EQUALS, substr2, this);
 		}
-		
+
 		throw new RuntimeException("Unexpected operator: " + operator.getValue());
 	}
 }

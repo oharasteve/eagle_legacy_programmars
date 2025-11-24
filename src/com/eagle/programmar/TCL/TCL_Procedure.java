@@ -33,7 +33,7 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class TCL_Procedure extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("TclCmd/proc.html") TCL_Keyword PROC = new TCL_Keyword("proc");
 	public @S(20) TCL_Function_Definition id;
@@ -41,7 +41,7 @@ public class TCL_Procedure extends TokenSequence
 	public @S(40) @OPT TokenList<TCL_Variable_Definition> vars;
 	public @S(50) PunctuationRightBrace rightBrace;
 	public @S(60) TCL_BlockStatement body;
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -88,7 +88,7 @@ public class TCL_Procedure extends TokenSequence
 		{
 			System.out.println("** Found TCL procedure " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
 
@@ -104,12 +104,12 @@ public class TCL_Procedure extends TokenSequence
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.getValue());
 				i++;
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
 
 		for (TCL_Element element : body.statements._elements)
@@ -128,7 +128,7 @@ public class TCL_Procedure extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 
@@ -143,7 +143,7 @@ public class TCL_Procedure extends TokenSequence
 		}
 		return false;
 	}
-	
+
 	// Are there any local variables we need to declare?
 	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -154,7 +154,7 @@ public class TCL_Procedure extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

@@ -34,7 +34,7 @@ public class COBOL_StatementOrComment extends TokenChooser
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt.getWhich());
 			return stmts;
 		}
-		
-		return null;	// Toss comments for now
+
+		return null; // Toss comments for now
 	}
 }

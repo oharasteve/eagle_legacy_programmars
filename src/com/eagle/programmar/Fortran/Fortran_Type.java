@@ -31,8 +31,7 @@ public class Fortran_Type extends TokenSequence
 
 	public static class Fortran_CharacterType extends TokenSequence
 	{
-		public @S(10) @DOC("6j4m0vn7r/index.html") Fortran_Keyword CHARACTER = 
-				new Fortran_Keyword("CHARACTER");
+		public @S(10) @DOC("6j4m0vn7r/index.html") Fortran_Keyword CHARACTER = new Fortran_Keyword("CHARACTER");
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) Fortran_Keyword LEN = new Fortran_Keyword("LEN");
 		public @S(40) PunctuationEquals equals;
@@ -43,17 +42,16 @@ public class Fortran_Type extends TokenSequence
 	public static class Fortran_Dimension extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
-		public @S(20) @DOC("6j4m0vn8a/index.html") Fortran_Keyword DIMENSION =
-				new Fortran_Keyword("DIMENSION");
+		public @S(20) @DOC("6j4m0vn8a/index.html") Fortran_Keyword DIMENSION = new Fortran_Keyword("DIMENSION");
 		public @S(30) PunctuationLeftParen leftParen;
 		public @S(40) Fortran_Number len;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	public static AbstractType findType(EagleGenerator generator, Fortran_Type type)
 	{
 		TypeEnum newType = TypeEnum.OTHER;
-		
+
 		AbstractToken which = type.dataType.getWhich();
 		if (which instanceof Fortran_CharacterType)
 		{
@@ -72,7 +70,7 @@ public class Fortran_Type extends TokenSequence
 				break;
 			}
 		}
-		
+
 		return generator.transformType(newType, null, null);
 	}
 }

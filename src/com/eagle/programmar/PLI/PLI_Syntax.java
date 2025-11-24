@@ -9,7 +9,7 @@ import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 public class PLI_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

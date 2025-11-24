@@ -18,7 +18,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class PLI_CallStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnable,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("7.6") PLI_Keyword CALL = new PLI_Keyword("CALL");
 	public @S(20) PLI_Expression arguments;

@@ -99,7 +99,7 @@ public class AWK_Assignment extends TokenSequence
 			// Sorry, cannot redefine true or false
 			return null;
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		if (variable.subscripts != null && variable.subscripts.size() == 1)
 		{

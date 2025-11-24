@@ -29,14 +29,14 @@ public class Ruby_SubscriptExpression extends PrecedenceOperator
 	public @S(20) PunctuationLeftBracket leftBracket;
 	public @S(30) Ruby_Expression subscript;
 	public @S(40) PunctuationRightBracket rightBracket;
-	
+
 	private @SKIP Operator1Metrics _metrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, this, leftBracket.getValue());
@@ -65,7 +65,7 @@ public class Ruby_SubscriptExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle subscript");
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

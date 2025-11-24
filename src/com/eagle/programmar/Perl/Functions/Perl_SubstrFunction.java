@@ -29,7 +29,7 @@ public class Perl_SubstrFunction extends PrimaryOperator
 	public @S(60) PunctuationComma comma2;
 	public @S(70) Perl_Expression ncExpr;
 	public @S(80) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -37,7 +37,7 @@ public class Perl_SubstrFunction extends PrimaryOperator
 		int sc = interpreter.getIntValue(scExpr);
 		int nc = interpreter.getIntValue(ncExpr);
 		int len = str.length();
-		if (sc + nc > len) nc = len - sc;	// Don't go past the end of the string
+		if (sc + nc > len) nc = len - sc; // Don't go past the end of the string
 		interpreter.pushStr(str.substring(sc, sc + nc));
 	}
 

@@ -20,7 +20,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Perl_StatementBlock extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) @OPT TokenList<Perl_StatementOrComment> statements;
@@ -41,7 +41,7 @@ public class Perl_StatementBlock extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Perl_StatementOrComment stmtOrComment : statements._elements)
 		{
 			if (stmtOrComment.getWhich() instanceof Perl_Statement)
@@ -57,7 +57,7 @@ public class Perl_StatementBlock extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
 }

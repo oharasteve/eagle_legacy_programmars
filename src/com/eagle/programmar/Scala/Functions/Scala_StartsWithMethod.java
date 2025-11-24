@@ -56,7 +56,7 @@ public class Scala_StartsWithMethod extends PrecedenceOperator
 		{
 			theSC = transformer.transformExpression(generator, scExpr);
 		}
-		
+
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}

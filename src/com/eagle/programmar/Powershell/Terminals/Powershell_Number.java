@@ -18,7 +18,7 @@ public class Powershell_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", null, true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

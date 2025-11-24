@@ -39,7 +39,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 		public @S(30) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
 		public @S(40) CMD_Statement elseStatement;
 	}
-	
+
 	public static class CMD_IfWhat extends TokenChooser
 	{
 		public @LAST CMD_Expression XXexpr;
@@ -79,7 +79,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
 			}
 		}
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		boolean passTest = false;
 		if (what.getWhich() instanceof CMD_IfErrorLevel)

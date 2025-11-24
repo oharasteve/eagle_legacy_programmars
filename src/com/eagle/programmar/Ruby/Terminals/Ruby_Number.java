@@ -18,7 +18,7 @@ public class Ruby_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "Ee", "LlFfDd", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -79,7 +79,7 @@ public class Bash_ChmodCommand extends TokenSequence implements AbstractStatemen
 			_txt += rec.substring(_currentChar, endChar);
 			return true;
 		}
-		
+
 		@Override
 		public String description()
 		{

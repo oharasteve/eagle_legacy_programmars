@@ -108,7 +108,7 @@ public class Ada_Program extends AbstractLanguage
 				// Ignore Comments and 'with' statementsOS
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

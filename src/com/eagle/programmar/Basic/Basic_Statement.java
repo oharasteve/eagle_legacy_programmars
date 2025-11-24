@@ -30,7 +30,7 @@ import com.eagle.tokens.punctuation.PunctuationBackSlash;
 public class Basic_Statement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) Basic_Number label;
-	public @S(20) SeparatedList<Basic_BaseStatement,PunctuationBackSlash> statements;
+	public @S(20) SeparatedList<Basic_BaseStatement, PunctuationBackSlash> statements;
 	public @S(30) Basic_EndOfLine eoln;
 
 	public static class Basic_BaseStatement extends TokenChooser
@@ -49,9 +49,9 @@ public class Basic_Statement extends TokenSequence implements AbstractStatement,
 		public @CHOICE Basic_RemStatement XXremStatement;
 		public @CHOICE Basic_ReturnStatement XXreturnStatement;
 
-		public @LAST  Basic_AssignmentStatement XXassignmentStatement;
+		public @LAST Basic_AssignmentStatement XXassignmentStatement;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

@@ -41,10 +41,9 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 		public static class COBOL_ProcedureUsingBy extends TokenSequence
 		{
 			public @S(10) COBOL_Keyword BY = new COBOL_Keyword("BY");
-			public @S(20) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice
-					("CONTENT", "REFERENCE", "VALUE");
+			public @S(20) COBOL_KeywordChoice VALUE = new COBOL_KeywordChoice("CONTENT", "REFERENCE", "VALUE");
 		}
-		
+
 		public static class COBOL_ProcedureUsingWhat extends TokenSequence
 		{
 			public @S(10) @OPT PunctuationComma comma;
@@ -81,7 +80,7 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 	{
 		interpreter.tryToInterpret(sections.first());
 	}
-	
+
 	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
 		for (COBOL_Section section : sections._elements)

@@ -20,7 +20,7 @@ public class BNF_Expression extends TokenSequence
 	public static class BNF_ExpressionTerm extends TokenChooser
 	{
 		public @CHOICE BNF_Literal XXliteral;
-		public @CHOICE BNF_Rulename XXrulename; 
+		public @CHOICE BNF_Rulename XXrulename;
 		public @CHOICE BNF_Group XXgroup;
 		public @CHOICE BNF_Optional XXoptional;
 	}

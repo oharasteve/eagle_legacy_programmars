@@ -15,15 +15,15 @@ public class C_ExitFunction extends PrimaryOperator implements EagleRunnableWith
 {
 	public @S(10) C_Keyword EXIT = new C_Keyword("exit");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) C_Expression code;	// 0 = ok, else error code number
+	public @S(30) C_Expression code; // 0 = ok, else error code number
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		int ret = interpreter.getIntValue(code);
 		interpreter._exitCode = ret;
 		// Can't really System.exit(ret) here or it messes up junit tests
-		return Eagle_Statement_Result.THROW;	// Good as any
+		return Eagle_Statement_Result.THROW; // Good as any
 	}
 }

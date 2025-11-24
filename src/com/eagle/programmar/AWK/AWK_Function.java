@@ -40,7 +40,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class AWK_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) AWK_Keyword FUNCTION = new AWK_Keyword("function");
 	public @S(20) AWK_Function_Definition id;
@@ -64,7 +64,7 @@ public class AWK_Function extends TokenSequence
 		public @S(40) PunctuationRightBrace rightBrace;
 		public @S(50) @OPT AWK_EndOfLine eoln2;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -97,13 +97,13 @@ public class AWK_Function extends TokenSequence
 		// We searched for all the function in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -111,31 +111,32 @@ public class AWK_Function extends TokenSequence
 		{
 			System.out.println("** Found AWK function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (parameters.params != null && parameters.params.isPresent())
 		{
 			for (int i = 0; i < parameters.params.getPrimaryCount(); i++)
 			{
 				AWK_Parameter_Definition paramVar = parameters.params.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, paramVar);
 				}
-				
-				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+
+				// System.err.println("****** paramType = " + paramType + " value = " +
+				// param.getValue());
 				generator.addMethodParameter(paramType, paramVar.getValue());
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
-		
+
 		for (AWK_StatementOrComment stmtOrComment : body.elements._elements)
 		{
 			AbstractToken which = stmtOrComment.getWhich();
@@ -161,8 +162,7 @@ public class AWK_Function extends TokenSequence
 				for (int i = 0; i < numStmts; i++)
 				{
 					AWK_Statement stmt = stmts.statements.getPrimaryElement(i);
-					ArrayList<AbstractStatement> newStmts =
-							transformer.transformStatement(generator, stmt.getWhich());
+					ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
 					if (newStmts != null)
 					{
 						for (AbstractStatement newStmt : newStmts)
@@ -173,7 +173,7 @@ public class AWK_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 
@@ -204,7 +204,7 @@ public class AWK_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

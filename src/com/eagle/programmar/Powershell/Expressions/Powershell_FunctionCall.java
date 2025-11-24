@@ -49,7 +49,7 @@ public class Powershell_FunctionCall extends PrimaryOperator
 		public @S(10) Powershell_Expression expr;
 		public @S(20) @OPT PunctuationComma comma;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -118,7 +118,7 @@ public class Powershell_FunctionCall extends PrimaryOperator
 				args.add(transformer.transformExpression(generator, arg.expr));
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(funcRef.getValue());
 		return generator.newMethodInvocation(var, args, this);
 	}

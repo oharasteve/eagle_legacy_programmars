@@ -27,8 +27,7 @@ public class SQL_DropStatement extends TokenSequence
 			"ROLE",
 			"SYNONYM",
 			"TABLE",
-			"VIEW"
-		);
+			"VIEW");
 	public @S(40) @OPT SQL_DropCondition condition;
 	public @S(50) SQL_Identifier_Reference id;
 	public @S(60) PunctuationSemicolon semicolon;
@@ -38,7 +37,7 @@ public class SQL_DropStatement extends TokenSequence
 		public @S(10) SQL_Keyword IF = new SQL_Keyword("IF");
 		public @S(20) SQL_Keyword EXISTS = new SQL_Keyword("EXISTS");
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -48,6 +47,6 @@ public class SQL_DropStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null;	// Ignore for now
+		return null; // Ignore for now
 	}
 }

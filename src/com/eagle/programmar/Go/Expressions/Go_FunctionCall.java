@@ -38,7 +38,7 @@ public class Go_FunctionCall extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String fnName = funcName.vars.first().getValue();
-		
+
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
 		{
@@ -54,7 +54,7 @@ public class Go_FunctionCall extends PrimaryOperator
 		{
 			paramCount = func.funcParamDefs.getPrimaryCount();
 		}
-		
+
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
@@ -103,7 +103,7 @@ public class Go_FunctionCall extends PrimaryOperator
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, funcName);
 		}

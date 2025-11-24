@@ -44,7 +44,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class C_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @OPT C_Extern_C externC;
 	public @S(20) @OPT C_FunctionDeclspec declspec;
@@ -173,7 +173,7 @@ public class C_Function extends TokenSequence
 		public @S(30) PunctuationRightBrace rightBrace;
 		public @S(40) @OPT @CURIOUS("Extra semicolon") PunctuationSemicolon semicolon;
 	}
-	
+
 	public static class C_FunctionDeclspec extends TokenSequence
 	{
 		public @S(10) C_KeywordChoice DECLSPEC = new C_KeywordChoice("_declspec", "__declspec");
@@ -181,7 +181,7 @@ public class C_Function extends TokenSequence
 		public @S(30) C_Keyword DLLEXPORT = new C_Keyword("dllexport");
 		public @S(40) PunctuationRightParen rightParen;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -230,19 +230,19 @@ public class C_Function extends TokenSequence
 			}
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken which1 = typeName.getWhich();
-		if (! (which1 instanceof C_Function_TypeAndName))
+		if (!(which1 instanceof C_Function_TypeAndName))
 		{
 			throw new RuntimeException("Unable to handle: " + which1);
 		}
 		C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which1;
 		TypeEnum retType = typeAndName.ctype.findType();
 		C_Function_Definition id = typeAndName.functionName;
-		
+
 		String fnName = id.getValue();
 		boolean isMain = false;
 		if (fnName.equals("main"))
@@ -251,7 +251,7 @@ public class C_Function extends TokenSequence
 			retType = TypeEnum.VOID;
 			isMain = true;
 		}
-		
+
 		AbstractType newReturnType = generator.transformType(retType, null, id);
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -306,12 +306,12 @@ public class C_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractToken which4 = body.getWhich();
 		if (which4 instanceof C_FunctionImplementation)
 		{
 			C_FunctionImplementation impl = (C_FunctionImplementation) which4;
-			
+
 			for (C_StatementOrComment stmtOrComment : impl.elements._elements)
 			{
 				AbstractToken which5 = stmtOrComment.getWhich();
@@ -341,7 +341,7 @@ public class C_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

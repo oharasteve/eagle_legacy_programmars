@@ -34,12 +34,12 @@ public class Basic_Program extends AbstractLanguage implements EagleRunnable
 	{
 		Basic_StateMachine state = new Basic_StateMachine();
 		interpreter._state = state;
-		
+
 		for (Basic_Statement statement : statements._elements)
 		{
 			// Collect every statement in a list, with their labels
 			state.addStatement(statement);
-			
+
 			// Pull out all the DATA lines and put them in the State Machine
 			int numStmt = statement.statements.getPrimaryCount();
 			for (int i = 0; i < numStmt; i++)
@@ -66,7 +66,7 @@ public class Basic_Program extends AbstractLanguage implements EagleRunnable
 			{
 				break;
 			}
-			
+
 			Eagle_Statement_Result result = interpreter.tryToInterpret(stmt);
 			if (result != Eagle_Statement_Result.NORMAL)
 			{

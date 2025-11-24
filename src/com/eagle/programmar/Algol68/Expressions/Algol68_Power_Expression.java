@@ -27,7 +27,7 @@ public class Algol68_Power_Expression extends PrecedenceOperator
 		int rightValue = interpreter.getIntValue(right);
 		interpreter.pushDouble(Math.pow(leftValue, rightValue));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

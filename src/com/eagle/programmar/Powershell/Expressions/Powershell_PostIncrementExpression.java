@@ -21,8 +21,7 @@ public class Powershell_PostIncrementExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Powershell_Variable var;
-	public @S(20) Powershell_PunctuationChoice operator =
-			new Powershell_PunctuationChoice("++", "--");
+	public @S(20) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -60,7 +59,7 @@ public class Powershell_PostIncrementExpression extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected operator: " + operator);
 		}
-		
+
 		String newName = Powershell_Variable.repairName(var.id.getValue());
 		return generator.newPostIncrementExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);

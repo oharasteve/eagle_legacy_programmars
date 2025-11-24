@@ -26,7 +26,7 @@ public class Perl_ArrayFunction extends PrimaryOperator
 {
 	public @S(10) Perl_Keyword ARRAY = new Perl_Keyword("array");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Perl_Expression,PunctuationComma> arguments;
+	public @S(30) SeparatedList<Perl_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override

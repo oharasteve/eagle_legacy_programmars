@@ -43,13 +43,13 @@ public class PLI_TrimFunction extends PrimaryOperator
 		String str = value.forceStringValue();
 		interpreter.pushStr(str.trim());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		Oper1Types types = transformer.findOperator1Metric(TRIM);
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		if (! types._type1.equals(EagleString.STRING))
+		if (!types._type1.equals(EagleString.STRING))
 		{
 			theExpr = generator.newStringFunction(types, theExpr, this);
 		}

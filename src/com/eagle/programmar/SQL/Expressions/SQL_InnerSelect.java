@@ -23,7 +23,7 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) SQL_SelectStatement innerSelect;
 	public @S(30) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -58,15 +58,15 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 		{
 			throw new RuntimeException("Missing WHERE clause on SELECT");
 		}
-		
+
 		// what, from and where are now all set
 		EagleValue val = interpreter.findSymbol(from.table.getValue());
-		if (! (val instanceof SQL_Table))
+		if (!(val instanceof SQL_Table))
 		{
 			throw new RuntimeException("Can only select from a Table");
 		}
 		SQL_Table stable = (SQL_Table) val;
-		
+
 		for (int row = 0; row < stable.getNumberRows(); row++)
 		{
 			ArrayList<EagleValue> values = stable.getRow(row);
@@ -77,13 +77,13 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 				// The -1 means no subscript
 				interpreter._symbolTable.setSymbol(this, columnName, -1, value);
 			}
-			
+
 			// Run the condition for this row. Done if it matches.
 			if (interpreter.getBoolValue(where))
 			{
 				EagleValue result = interpreter.getEagleValue(what);
 				interpreter.pushEagleValue(result);
-				
+
 				// Remove all the symbols that we added
 				for (int col = 0; col < stable.getNumberColumns(); col++)
 				{
@@ -93,7 +93,7 @@ public class SQL_InnerSelect extends PrimaryOperator implements EagleRunnable
 				return;
 			}
 		}
-		
+
 		throw new RuntimeException("SELECT returned no values");
 	}
 }

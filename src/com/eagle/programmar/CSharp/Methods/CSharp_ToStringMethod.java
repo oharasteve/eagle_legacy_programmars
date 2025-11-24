@@ -26,7 +26,7 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 	public @S(30) @NOSPACE CSharp_Keyword TOSTRING = new CSharp_Keyword("ToString");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

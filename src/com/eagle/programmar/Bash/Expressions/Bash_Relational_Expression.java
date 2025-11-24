@@ -40,7 +40,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
@@ -103,7 +103,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator
 
 		throw new RuntimeException("Unable to handle " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

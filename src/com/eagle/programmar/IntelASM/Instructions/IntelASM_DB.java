@@ -19,25 +19,25 @@ public class IntelASM_DB extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT IntelASM_DBtimes times;
 	public @S(20) IntelASM_Keyword DB = new IntelASM_Keyword("DB");
-	public @S(30) SeparatedList<IntelASM_Expression,PunctuationComma> args;
-	
+	public @S(30) SeparatedList<IntelASM_Expression, PunctuationComma> args;
+
 	public static class IntelASM_DBtimes extends TokenSequence
 	{
 		public @S(10) IntelASM_Keyword TIMES = new IntelASM_Keyword("TIMES");
 		public @S(20) IntelASM_Number num;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
-		
+
 		int numTimes = 1;
 		if (times != null && times.isPresent())
 		{
 			numTimes = Integer.parseInt(times.num.getValue());
 		}
-		
+
 		for (int i = 0; i < numTimes; i++)
 		{
 			int numArgs = args.getPrimaryCount();

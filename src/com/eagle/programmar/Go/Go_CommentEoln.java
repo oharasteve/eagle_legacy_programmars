@@ -29,6 +29,6 @@ public class Go_CommentEoln extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;		// Might want to keep comment statements somehow.
+		return null; // Might want to keep comment statements somehow.
 	}
 }

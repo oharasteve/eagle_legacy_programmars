@@ -21,7 +21,8 @@ public class FSharp_Additive_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("symbol-and-operator-reference/arithmetic-operators") FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice("+", "-");
+	public @S(20) @DOC("symbol-and-operator-reference/arithmetic-operators") FSharp_PunctuationChoice operator = new FSharp_PunctuationChoice(
+			"+", "-");
 	public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -32,13 +33,13 @@ public class FSharp_Additive_Expression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -64,10 +65,10 @@ public class FSharp_Additive_Expression extends PrecedenceOperator
 				return;
 			}
 		}
-			
+
 		throw new RuntimeException("Unexpected additive operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

@@ -24,10 +24,10 @@ import com.eagle.transform.EagleTransformer;
 
 public class Python_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
-	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN =
-			new Python_Keyword("return");
+	public @S(10) @DOC("compound_stmts.html#function-definitions") @NOSPACE Python_Keyword RETURN = new Python_Keyword(
+			"return");
 	public @S(20) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(30) @OPT Python_ExpressionList expressionList;
 	public @S(40) @OPT Python_Comment comment;
@@ -36,7 +36,7 @@ public class Python_ReturnStatement extends TokenSequence
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expressionList.expressions.first());
-		
+
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
@@ -69,14 +69,13 @@ public class Python_ReturnStatement extends TokenSequence
 		}
 		return generator.newReturnStatement(retExpr, this);
 	}
-	
+
 	public Python_ComplexStatement generateReturn(Python_Expression ret, AbstractToken source)
 	{
 		if (ret != null)
 		{
 			this.expressionList = new Python_ExpressionList();
-			this.expressionList.expressions =
-					new SeparatedList<Python_Expression, PunctuationComma>();
+			this.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
 			this.expressionList.expressions.addPrimaryElement(ret);
 			this.expressionList.setPresent(true);
 		}

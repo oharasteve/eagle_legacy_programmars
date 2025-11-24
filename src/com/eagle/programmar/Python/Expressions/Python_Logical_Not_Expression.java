@@ -27,7 +27,7 @@ public class Python_Logical_Not_Expression extends PrimaryOperator
 		boolean value = interpreter.getBoolValue(expr);
 		interpreter.pushBool(!value);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -35,7 +35,7 @@ public class Python_Logical_Not_Expression extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		return generator.newNotExpression(theExpr, this);
 	}
-	
+
 	public Python_Expression generateLogicalNot(Python_Expression theExpr,
 			AbstractToken source)
 	{

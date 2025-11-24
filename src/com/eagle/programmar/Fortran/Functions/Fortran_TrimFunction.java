@@ -27,7 +27,7 @@ public class Fortran_TrimFunction extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String str = interpreter.getStrValue(expr);
-		interpreter.pushStr(str.stripTrailing());	// Only removes trailing spaces
+		interpreter.pushStr(str.stripTrailing()); // Only removes trailing spaces
 	}
 
 	@Override

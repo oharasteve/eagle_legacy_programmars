@@ -53,12 +53,12 @@ public class Eaglish_Subtract_Statement extends TokenSequence
 	{
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractToken which = var.var.getWhich();
-		if (! (which instanceof Eaglish_Identifier_Reference))
+		if (!(which instanceof Eaglish_Identifier_Reference))
 		{
 			throw new RuntimeException("Can only subtract from variables");
 		}
 		Eaglish_Identifier_Reference id = (Eaglish_Identifier_Reference) which;
-		
+
 		AbstractExpression subscr = null;
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscr, AssignmentEnum.MINUS_EQUALS, value, this);

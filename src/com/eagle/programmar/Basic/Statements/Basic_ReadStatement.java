@@ -18,7 +18,7 @@ public class Basic_ReadStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement
 {
 	public @S(10) Basic_Keyword READ = new Basic_Keyword("READ");
-	public @S(20) SeparatedList<Basic_Variable,PunctuationComma> variables;
+	public @S(20) SeparatedList<Basic_Variable, PunctuationComma> variables;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

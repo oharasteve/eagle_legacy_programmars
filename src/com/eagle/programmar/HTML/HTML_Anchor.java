@@ -19,7 +19,7 @@ public class HTML_Anchor extends TokenChooser
 	{
 		public @S(10) @INDENT HTML_StartAnchor startTagA;
 		public @S(20) @OPT TokenList<PHP_Entry> contents;
-		public @S(30) @OPT @OUTDENT HTML_EndAnchor endAnchor;	// Optional in case there is never a closing </a>
+		public @S(30) @OPT @OUTDENT HTML_EndAnchor endAnchor; // Optional in case there is never a closing </a>
 
 		public static class HTML_StartAnchor extends TokenSequence
 		{

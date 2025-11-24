@@ -23,6 +23,6 @@ public class Basic_AssignmentStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
-		var.assignValue(interpreter, value);	// Might be subscript(s)
+		var.assignValue(interpreter, value); // Might be subscript(s)
 	}
 }

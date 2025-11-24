@@ -34,7 +34,7 @@ public class Algol68_Assignment extends TokenSequence
 	{
 		EagleValue val = interpreter.getEagleValue(expression);
 		Algol68_Identifier_Reference id = var.vars.first();
-		
+
 		EagleValue v;
 		switch (operator.getValue())
 		{
@@ -51,7 +51,7 @@ public class Algol68_Assignment extends TokenSequence
 
 		interpreter.setSymbol(var, id.getValue(), v);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

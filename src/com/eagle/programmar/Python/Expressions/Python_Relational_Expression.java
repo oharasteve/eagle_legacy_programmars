@@ -43,8 +43,8 @@ public class Python_Relational_Expression extends PrecedenceOperator
 
 	public static class Python_Relational_Operator extends TokenChooser
 	{
-		public @CHOICE Python_PunctuationChoice XXoperatorSymbol =
-				new Python_PunctuationChoice("==", "!=", "<>", "<=", ">=", "<", ">");
+		public @CHOICE Python_PunctuationChoice XXoperatorSymbol = new Python_PunctuationChoice("==", "!=", "<>", "<=",
+				">=", "<", ">");
 		public @CHOICE Python_IN_Operator XXinOperator;
 		public @CHOICE Python_IS_Operator XXisOperator;
 	}
@@ -57,13 +57,13 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.getWhich().toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isString() || rightValue.isString())
 		{
 			String leftStr = leftValue.forceStringValue();
@@ -74,7 +74,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":
-				interpreter.pushBool(! leftStr.equals(rightStr));
+				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
 		}
@@ -107,7 +107,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -119,7 +119,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		switch (operator.getWhich().toString())
 		{
 		case "==":
-			return generator.newRelationalExpression(types, leftExpr,	
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.EQUALS, rightExpr, this);
 		case "!=", "<>":
 			return generator.newRelationalExpression(types, leftExpr,
@@ -145,7 +145,7 @@ public class Python_Relational_Expression extends PrecedenceOperator
 	{
 		this.left = leftExpr;
 		this.right = rightExpr;
-		
+
 		Python_PunctuationChoice oper = null;
 		switch (relOp)
 		{

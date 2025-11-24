@@ -31,22 +31,22 @@ public class Delphi_Type extends TokenSequence
 {
 	public @S(10) @OPT Delphi_Punctuation caret = new Delphi_Punctuation('^');
 	public @S(20) Delphi_BaseType baseType;
-	
+
 	public static class Delphi_BaseType extends TokenChooser
 	{
 		public @CHOICE Delphi_KeywordChoice XXbase = new Delphi_KeywordChoice(
 				"Boolean", "Byte", "Integer", "LongInt", "Int64", "String", "Text");
-	
+
 		public @CHOICE Delphi_Identifier_Reference XXuserType;
 		public @CHOICE Delphi_Class XXclassDefinition;
 		public @CHOICE Delphi_Enum XXenumType;
 		public @CHOICE Delphi_Array XXarrayType;
 		public @CHOICE Delphi_Range XXrangeType;
 		public @CHOICE Delphi_Type_Record XXrecordType;
-		
+
 		public @FIRST Delphi_String XXstringType;
 	}
-	
+
 	public static class Delphi_Enum extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
@@ -154,7 +154,7 @@ public class Delphi_Type extends TokenSequence
 			newType = TypeEnum.OTHER;
 			userType = id.getValue();
 		}
-		
+
 		if (newType == null)
 		{
 			throw new RuntimeException("Can't handle type yet: " + which);

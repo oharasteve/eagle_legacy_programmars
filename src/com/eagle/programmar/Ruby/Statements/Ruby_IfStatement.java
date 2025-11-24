@@ -91,7 +91,7 @@ public class Ruby_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		for (Ruby_Statement stmt : thenStatements._elements)
 		{
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt.getWhich());
@@ -103,7 +103,7 @@ public class Ruby_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (Ruby_Statement stmt : elseClause.elseStatements._elements)
@@ -114,7 +114,7 @@ public class Ruby_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

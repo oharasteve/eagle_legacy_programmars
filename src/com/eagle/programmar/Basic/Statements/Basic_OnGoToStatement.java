@@ -20,7 +20,7 @@ public class Basic_OnGoToStatement extends TokenSequence
 	public @S(10) Basic_Keyword ON = new Basic_Keyword("ON");
 	public @S(20) Basic_Expression expr;
 	public @S(30) Basic_Keyword GOTO = new Basic_Keyword("GOTO");
-	public @S(40) SeparatedList<Basic_Number,PunctuationComma> labels;
+	public @S(40) SeparatedList<Basic_Number, PunctuationComma> labels;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -56,12 +56,12 @@ public class Ada_Data extends TokenSequence
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = type.convertType(generator);
 		AbstractExpression newInit = null;
-		
+
 		if (initial != null && initial.isPresent())
 		{
 			newInit = transformer.transformExpression(generator, initial.value);
 		}
-		
+
 		int numIds = ids.getPrimaryCount();
 		for (int i = 0; i < numIds; i++)
 		{

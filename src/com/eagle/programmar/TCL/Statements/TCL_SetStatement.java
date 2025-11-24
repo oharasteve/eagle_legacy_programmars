@@ -40,7 +40,7 @@ public class TCL_SetStatement extends TokenSequence
 		return generator.newAssignmentExpression(var.id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

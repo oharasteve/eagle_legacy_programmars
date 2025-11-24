@@ -18,13 +18,13 @@ public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnabl
 	public @S(30) @NOSPACE CSharp_Keyword MATH = new CSharp_Keyword("Math");
 	public @S(40) @NOSPACE PunctuationPeriod dot2;
 	public @S(50) @NOSPACE CSharp_MathChoice choice;
-	
+
 	public static class CSharp_MathChoice extends TokenChooser
 	{
 		public @CHOICE CSharp_MathPowFunc XXmathPowFunction;
 		public @CHOICE CSharp_MathMinMaxFunc XXmathMinMaxFunction;
 	}
-	
+
 	public static CSharp_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)
 	{
 		CSharp_MathFunction func = new CSharp_MathFunction();
@@ -37,7 +37,7 @@ public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnabl
 		func.setTransformationSource(source);
 		return func;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

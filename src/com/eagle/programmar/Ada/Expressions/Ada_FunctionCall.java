@@ -179,7 +179,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 		if (func != null) interpreter.completedFunction(name, func);
 		if (proc != null) interpreter.completedFunction(name, proc);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -209,11 +209,11 @@ public class Ada_FunctionCall extends PrimaryOperator
 					throw new RuntimeException("Unable to handle arg: " + which);
 				}
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, functionName);
 		}
-		
+
 		// Hopefully, it is an array with a subscript
 		if (argCount == 1)
 		{
@@ -226,7 +226,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 						SubscriptEnum.FIRST_IS_ONE, subscr, this);
 			}
 		}
-		
+
 		throw new RuntimeException("Unable to handle " + name);
 	}
 }

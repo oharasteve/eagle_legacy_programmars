@@ -34,7 +34,7 @@ public class Delphi_Builtins extends PrimaryOperator
 			throw new RuntimeException("Can't handle BuiltIn: " + builtinConstant);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

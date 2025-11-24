@@ -18,10 +18,11 @@ import com.eagle.transform.EagleTransformer;
 
 public class CSharp_BreakStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @OPT CSharp_Keyword YIELD = new CSharp_Keyword("yield");
-	public @S(20) @DOC("statements/jump-statements#the-break-statement") CSharp_Keyword BREAK = new CSharp_Keyword("break");
+	public @S(20) @DOC("statements/jump-statements#the-break-statement") CSharp_Keyword BREAK = new CSharp_Keyword(
+			"break");
 	public @S(30) @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
@@ -29,7 +30,7 @@ public class CSharp_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -31,15 +31,13 @@ public class PLI_Type extends TokenChooser
 			public @S(10) PLI_Keyword PTR = new PLI_Keyword("PTR");
 			public @S(20) @OPT PLI_Keyword BASED = new PLI_Keyword("BASED");
 		}
-		
+
 		public @CHOICE static class PLI_TypeCharacter extends TokenSequence
 		{
 			public @S(10) @OPT PLI_TypeSize size1;
-			public @S(20) PLI_KeywordChoice CHARACTER =
-					new PLI_KeywordChoice("CHAR", "CHARACTER", "WIDECHAR");
+			public @S(20) PLI_KeywordChoice CHARACTER = new PLI_KeywordChoice("CHAR", "CHARACTER", "WIDECHAR");
 			public @S(30) @OPT PLI_TypeSize size2;
-			public @S(40) @OPT PLI_KeywordChoice varyingOrStatic =
-					new PLI_KeywordChoice("BASED", "STATIC", "VARYING");
+			public @S(40) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice("BASED", "STATIC", "VARYING");
 			public @S(50) @OPT PLI_CharInitial initialValue;
 
 			public static class PLI_CharInitial extends TokenSequence
@@ -56,7 +54,7 @@ public class PLI_Type extends TokenChooser
 			public @S(10) PLI_Keyword PIC = new PLI_Keyword("PIC");
 			public @S(20) PLI_Picture picture;
 		}
-		
+
 		public @CHOICE static class PLI_TypeFixedBinary extends TokenSequence
 		{
 			public @S(10) PLI_KeywordChoice FIXED = new PLI_KeywordChoice("FIXED", "FLOAT");
@@ -97,12 +95,12 @@ public class PLI_Type extends TokenChooser
 			public @S(20) @OPT PLI_TypeSize size;
 			public @S(30) @OPT PLI_KeywordChoice varyingOrStatic = new PLI_KeywordChoice("VARYING");
 		}
-		
+
 		public @CHOICE static class PLI_TypeEntry extends TokenSequence
 		{
 			public @S(10) PLI_Keyword ENTRY = new PLI_Keyword("ENTRY");
 			public @S(20) @OPT TokenList<PLI_TypeEntryDetail> details;
-			
+
 			public static class PLI_TypeEntryDetail extends TokenChooser
 			{
 				public @CHOICE static class PLI_TypeEntryPtr extends TokenSequence
@@ -111,7 +109,7 @@ public class PLI_Type extends TokenChooser
 					public @S(20) PLI_Keyword PTR = new PLI_Keyword("PTR");
 					public @S(30) PunctuationRightParen rightParen;
 				}
-				
+
 				public @CHOICE static class PLI_TypeEntryReturns extends TokenSequence
 				{
 					public @S(10) PLI_Keyword RETURNS = new PLI_Keyword("RETURNS");
@@ -119,7 +117,7 @@ public class PLI_Type extends TokenChooser
 					public @S(30) PLI_Type type;
 					public @S(40) PunctuationRightParen rightParen;
 				}
-				
+
 				public @CHOICE static class PLI_TypeEntryOptionss extends TokenSequence
 				{
 					public @S(10) PLI_Keyword OPTIONS = new PLI_Keyword("OPTIONS");
@@ -131,14 +129,14 @@ public class PLI_Type extends TokenChooser
 					public @S(70) PunctuationRightParen rightParen2;
 					public @S(80) PunctuationRightParen rightParen1;
 				}
-				
+
 				public @CHOICE static class PLI_TypeEntryExternal extends TokenSequence
 				{
 					public @S(10) PLI_Keyword EXTERNAL = new PLI_Keyword("EXTERNAL");
 					public @S(20) PunctuationLeftParen leftParen;
 					public @S(30) PLI_Literal literal;
 					public @S(40) PunctuationRightParen rightParen;
-					
+
 				}
 			}
 		}

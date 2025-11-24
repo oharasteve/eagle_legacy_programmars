@@ -29,7 +29,7 @@ public class Python_Variable extends TokenSequence implements AbstractVariable, 
 		EagleValue value = interpreter.findSymbol(which.toString());
 		interpreter.pushEagleValue(value);
 	}
-	
+
 	public static Python_Variable newVariable(String name)
 	{
 		Python_Variable var = new Python_Variable();

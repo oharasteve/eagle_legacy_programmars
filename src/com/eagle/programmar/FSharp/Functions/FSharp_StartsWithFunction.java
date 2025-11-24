@@ -34,7 +34,7 @@ public class FSharp_StartsWithFunction extends PrecedenceOperator
 		String patt = interpreter.getStrValue(pattExpr);
 		interpreter.pushBool(str.startsWith(patt));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

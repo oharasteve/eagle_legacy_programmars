@@ -38,13 +38,13 @@ public class Python_Len_Function extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
 		return generator.newLengthFunction(theExpr, this);
 	}
-	
+
 	public Python_Expression generateLength(Python_Expression expr, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();
 		this.expression = expr;
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

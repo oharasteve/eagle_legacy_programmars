@@ -45,7 +45,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Python_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");
@@ -78,11 +78,11 @@ public class Python_WhileStatement extends TokenSequence
 
 		while (true)
 		{
-			if (! interpreter.getBoolValue(condition))
+			if (!interpreter.getBoolValue(condition))
 			{
 				break;
 			}
-			
+
 			metric.iterate();
 
 			result = interpreter.tryToInterpret(statements);
@@ -127,22 +127,22 @@ public class Python_WhileStatement extends TokenSequence
 		actions.add(action);
 		return generateDoUntil(cond, actions, source);
 	}
-	
+
 	public Python_ComplexStatement generateDoUntil(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
-		
+
 		Python_Parenthesized_Expression parensExpr = new Python_Parenthesized_Expression();
 		parensExpr.leftParen = new PunctuationLeftParen();
 		parensExpr.list = new Python_List();
 		parensExpr.list.expr = cond;
 		parensExpr.rightParen = new PunctuationRightParen();
-		
+
 		Python_Logical_Not_Expression notExpr = new Python_Logical_Not_Expression();
 		notExpr.expr = Python_Generator.wrapExpression(parensExpr);
 		notExpr.NOT = new Python_Keyword("not");
-		
+
 		Python_Literals lits = Python_Literals.generateLiterals(oddName, null);
 		Python_Locals_Function localsFn = new Python_Locals_Function();
 		localsFn.LOCALS = new Python_KeywordChoice("locals");
@@ -150,28 +150,28 @@ public class Python_WhileStatement extends TokenSequence
 		inOper.NOT = new Python_Keyword("not");
 		inOper.NOT.setPresent(true);
 		inOper.IN = new Python_Keyword("in");
-		
+
 		Python_Relational_Expression inExpr = new Python_Relational_Expression();
 		inExpr.left = Python_Generator.wrapExpression(lits);
 		inExpr.right = Python_Generator.wrapExpression(localsFn);
 		inExpr.operator = new Python_Relational_Operator();
 		inExpr.operator.setWhich(inOper);
-		
+
 		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
 		orExpr.left = Python_Generator.wrapExpression(inExpr);
 		Python_Keyword OR = new Python_Keyword("or");
 		orExpr.operator = new Python_Or_Operation();
 		orExpr.operator.setWhich(OR);
 		orExpr.right = Python_Generator.wrapExpression(notExpr);
-		
+
 		Python_Expression whileCond = Python_Generator.wrapExpression(orExpr);
-		
+
 		Python_Expression trueExpr = Python_BuiltIn.generateBuiltIn(BuiltInEnum.TRUE, null);
 		Python_ExpressionStatement asgExprStmt = Python_Assignment.generateAssignment(
 				oddName, SubscriptEnum.FIRST_IS_ZERO, null,
 				AssignmentEnum.EQUALS, trueExpr, null, source);
 		Python_ComplexStatement asgStmt = Python_Generator.wrapStatement(asgExprStmt);
-		
+
 		ArrayList<Python_ComplexStatement> copyActions = new ArrayList<Python_ComplexStatement>();
 		copyActions.add(asgStmt);
 		for (AbstractStatement act : actions)
@@ -180,7 +180,7 @@ public class Python_WhileStatement extends TokenSequence
 		}
 		return generateWhile(whileCond, copyActions, source);
 	}
-	
+
 	public Python_ComplexStatement generateWhile1(Python_Expression cond,
 			Python_ComplexStatement action, AbstractToken source)
 	{
@@ -194,7 +194,7 @@ public class Python_WhileStatement extends TokenSequence
 	{
 		this.condition = cond;
 		this.colon = new PunctuationColon();
-		
+
 		this.statements = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_ComplexStatement>();

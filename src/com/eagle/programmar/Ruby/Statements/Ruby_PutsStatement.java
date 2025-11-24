@@ -50,7 +50,7 @@ public class Ruby_PutsStatement extends TokenSequence
 			AbstractExpression newLine = Ruby_Format.compile(generator, format.getValue(), this);
 			return generator.newPrintStatement(newLine, true, false, this);
 		}
-		
+
 		AbstractExpression line = transformer.transformExpression(generator, expr);
 		return generator.newPrintStatement(line, true, false, this);
 	}

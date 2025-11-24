@@ -25,8 +25,7 @@ public class CSharp_PostIncrementExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Variable var;
-	public @S(20) @NOSPACE CSharp_PunctuationChoice operator =
-			new CSharp_PunctuationChoice("++", "--");
+	public @S(20) @NOSPACE CSharp_PunctuationChoice operator = new CSharp_PunctuationChoice("++", "--");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -52,7 +51,7 @@ public class CSharp_PostIncrementExpression extends PrimaryOperator
 			interpreter.pushInt(prev);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -69,7 +68,8 @@ public class CSharp_PostIncrementExpression extends PrimaryOperator
 			throw new RuntimeException("Unexpected operator: " + operator);
 		}
 		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) var.firstId.getWhich();
-		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
+		return generator.newPostIncrementExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, null, whichDirection,
+				this);
 	}
 
 	public CSharp_Expression generateIncrement(CSharp_Variable variable,

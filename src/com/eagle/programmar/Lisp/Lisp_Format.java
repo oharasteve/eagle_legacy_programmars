@@ -12,7 +12,7 @@ public class Lisp_Format
 	public static String format(EagleInterpreter interpreter, TokenList<Lisp_Expression> exprs)
 	{
 		String fmt = interpreter.getStrValue(exprs._elements.get(0));
-		fmt = fmt.replaceAll("~%", "");	// Remove newlines from format
+		fmt = fmt.replaceAll("~%", ""); // Remove newlines from format
 		if (fmt.indexOf('~') < 0) return fmt;
 
 		StringBuffer sb = new StringBuffer();

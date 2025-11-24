@@ -31,7 +31,7 @@ public class Go_PostIncrementExpression extends PrimaryOperator
 
 		EagleValue val = interpreter.findSymbol(id.getValue());
 		int prev = val.forceIntegerValue();
-		
+
 		int newVal;
 		switch (operator.getValue())
 		{
@@ -44,12 +44,12 @@ public class Go_PostIncrementExpression extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected operator: " + operator);
 		}
-		
+
 		EagleValue curr = new EagleInteger(newVal);
 		interpreter.setSymbol(var, id.getValue(), curr);
 		interpreter.pushInt(prev);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

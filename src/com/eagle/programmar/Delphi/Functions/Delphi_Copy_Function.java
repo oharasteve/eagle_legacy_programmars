@@ -29,7 +29,7 @@ public class Delphi_Copy_Function extends PrimaryOperator
 	public @S(60) PunctuationComma comma2;
 	public @S(70) Delphi_Expression ecExpr;
 	public @S(80) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -37,7 +37,7 @@ public class Delphi_Copy_Function extends PrimaryOperator
 		int sc = interpreter.getIntValue(scExpr) - 1;
 		int ec = interpreter.getIntValue(ecExpr) + sc;
 		int nc = str.length();
-		if (ec > nc) ec = nc; 
+		if (ec > nc) ec = nc;
 		interpreter.pushStr(str.substring(sc, ec));
 	}
 

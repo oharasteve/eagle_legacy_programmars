@@ -79,7 +79,7 @@ public class Java_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -89,7 +89,7 @@ public class Java_WhileStatement extends TokenSequence
 				whileStatement.getWhich());
 		return generator.newWhileStatement(cond, action, this);
 	}
-	
+
 	public Java_Statement generateWhile1(Java_Expression cond,
 			Java_Statement action, AbstractToken source)
 	{

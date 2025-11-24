@@ -43,16 +43,16 @@ public class Scala_ValStatement extends TokenSequence
 			interpreter.setSymbol(id, id.getValue(), val);
 		}
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// See if the Definition has some assignments in the metrics file
 		TypeEnum metricType = transformer.findAssignMetric(id);
 		AbstractType newType = generator.transformType(metricType, null, null);
-		
+
 		AbstractExpression initial = transformer.transformExpression(generator, initValue);
-		
+
 		String name = id.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;

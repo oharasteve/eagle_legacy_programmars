@@ -146,7 +146,7 @@ public class PLI_PutStatement extends TokenSequence
 	}
 
 	private @SKIP ArgumentsMetrics _metrics = null;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -184,7 +184,7 @@ public class PLI_PutStatement extends TokenSequence
 		{
 			AbstractExpression piece = transformer.transformExpression(generator,
 					values.exprs.getPrimaryElement(i));
-			
+
 			if (i == 0)
 			{
 				result = piece;
@@ -195,7 +195,7 @@ public class PLI_PutStatement extends TokenSequence
 				result = generator.newAppendExpression(types, result, piece, PUT);
 			}
 		}
-		
+
 		return generator.newPrintStatement(result, true, false, this);
 	}
 }

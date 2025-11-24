@@ -42,7 +42,7 @@ public class Rust_Program extends AbstractLanguage
 		public @CHOICE Rust_Module XXmodule;
 		public @CHOICE Rust_Data XXdata;
 		public @CHOICE Rust_Use XXuse;
-		
+
 		public @LAST Rust_Statement XXstatement;
 	}
 
@@ -81,12 +81,12 @@ public class Rust_Program extends AbstractLanguage
 				func.transformFunction(transformer, generator);
 			}
 		}
-		
+
 		// Second pass, transform all the data and logic
 		for (Rust_TopElement topElt : elements._elements)
 		{
 			AbstractToken which = topElt.getWhich();
-			if (! (which instanceof Rust_Function))
+			if (!(which instanceof Rust_Function))
 			{
 				Collection<AbstractStatement> newStmts = transformer.transformStatement(
 						generator, which);
@@ -99,10 +99,10 @@ public class Rust_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		// Not needed for C# or Java, but Python needs this
 		generator.addCallToMain();
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

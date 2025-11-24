@@ -19,7 +19,8 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_ForEachStatement extends TokenSequence implements AbstractStatement, EagleScopeInterface
 {
-	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOREACH = new CSharp_Keyword("foreach");
+	public @S(10) @NEWLINE @DOC("statements/iteration-statements") CSharp_Keyword FOREACH = new CSharp_Keyword(
+			"foreach");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) CSharp_Type varType;
 	public @S(40) CSharp_Variable forVar;

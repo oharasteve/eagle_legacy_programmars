@@ -43,7 +43,7 @@ public class HTML_Text extends TerminalLiteralToken
 		_txt += rec.substring(_currentChar, endChar);
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{

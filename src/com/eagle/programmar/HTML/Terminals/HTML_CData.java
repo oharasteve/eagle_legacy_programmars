@@ -52,7 +52,7 @@ public class HTML_CData extends TerminalLiteralToken
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String description()
 	{

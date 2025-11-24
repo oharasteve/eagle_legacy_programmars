@@ -39,11 +39,11 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 			public @S(60) PunctuationRightParen rightParen2;
 		}
 	}
-	
+
 	public static class Javascript_VariableQualifier extends TokenChooser
 	{
 		public @CHOICE Javascript_Subscript XXsubscript;
-		
+
 		public @CHOICE static class Javascript_VarField extends TokenSequence
 		{
 			public @S(10) PunctuationPeriod dot;
@@ -55,7 +55,7 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.findSymbol(firstId.getWhich().toString());
-		
+
 		if (qualifiers != null && qualifiers.isPresent() && qualifiers.size() == 1)
 		{
 			AbstractToken which = qualifiers._elements.get(0).getWhich();

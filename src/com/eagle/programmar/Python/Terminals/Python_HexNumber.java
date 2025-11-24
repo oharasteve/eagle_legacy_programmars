@@ -14,7 +14,7 @@ public class Python_HexNumber extends TerminalHexNumberToken
 	{
 		return genericHex(lines, "0x", "Ll");
 	}
-	
+
 	public Python_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
 		this.setValue(value);

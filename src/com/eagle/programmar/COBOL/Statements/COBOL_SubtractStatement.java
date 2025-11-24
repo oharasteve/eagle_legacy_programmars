@@ -66,7 +66,7 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 			public @S(20) COBOL_Expression expr;
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -93,11 +93,10 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 		}
 	}
 
-
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! (type.getWhich() instanceof COBOL_SubtractNoGiving))
+		if (!(type.getWhich() instanceof COBOL_SubtractNoGiving))
 		{
 			throw new RuntimeException("Can't handle SUBTRACT with GIVING: " + this);
 		}
@@ -106,9 +105,9 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can't handle multiple arguments to SUBTRACT: " + this);
 		}
-		
+
 		COBOL_Variable var = subtractNoGiving.var;
-		if (! (var.getWhich() instanceof COBOL_UserVariable))
+		if (!(var.getWhich() instanceof COBOL_UserVariable))
 		{
 			throw new RuntimeException("Can only SUBTRACT from a Variable: " + this);
 		}
@@ -121,7 +120,7 @@ public class COBOL_SubtractStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can't handle field OF variable: " + this);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(userVar.id.getValue(),
 				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.MINUS_EQUALS, value, this);

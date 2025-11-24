@@ -35,7 +35,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.canonicalForm(); // Returns "<", "=", etc.
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
@@ -90,7 +90,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 		if (not) result = !result;
 		interpreter.pushBool(result);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -101,7 +101,7 @@ public class COBOL_RelationCondition extends PrecedenceOperator
 
 		String oper = operator.canonicalForm(); // Returns "<", "=", etc.
 		RelationalEnum newOper;
-		
+
 		if (NOT.isPresent())
 		{
 			switch (oper)

@@ -21,12 +21,11 @@ import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
-public class Ruby_Assignment extends TokenSequence	
+public class Ruby_Assignment extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Ruby_Variable var;
-	public @S(20) Ruby_PunctuationChoice operator =
-				new Ruby_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
+	public @S(20) Ruby_PunctuationChoice operator = new Ruby_PunctuationChoice("=", "+=", "-=", "*=", "/=", ":=");
 	public @S(30) Ruby_Expression expr;
 	public @S(40) Ruby_EOLN eoln;
 

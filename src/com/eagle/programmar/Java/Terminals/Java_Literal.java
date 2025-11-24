@@ -21,7 +21,7 @@ public class Java_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{
@@ -37,7 +37,7 @@ public class Java_Literal extends TerminalLiteralToken
 	public Java_Literal generateLiteral(String value, AbstractToken source)
 	{
 		String val = value;
-		if (! val.startsWith("\""))
+		if (!val.startsWith("\""))
 		{
 			val = '"' + val + '"';
 		}

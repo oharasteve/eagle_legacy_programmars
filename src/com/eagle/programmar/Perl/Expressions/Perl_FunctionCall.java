@@ -60,12 +60,12 @@ public class Perl_FunctionCall extends PrimaryOperator
 		public @S(30) @OPT Perl_Punctuation at = new Perl_Punctuation('@');
 		public @S(40) Perl_Expression argument;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = fnName.getValue();
-		
+
 		// Look up the function
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
@@ -73,7 +73,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 			throw new RuntimeException("Unable to find a function named " + name);
 		}
 		Perl_Function func = (Perl_Function) fn;
-	
+
 		// Make sure the function args match up
 		int argCount = 0;
 		if (argument != null && argument.isPresent()) argCount++;
@@ -83,13 +83,13 @@ public class Perl_FunctionCall extends PrimaryOperator
 		{
 			paramCount = func.params.parameters.getPrimaryCount();
 		}
-		
+
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
-	
+
 		// Now assign all the parameters
 		ArrayList<String> argTypes = new ArrayList<String>();
 		Perl_Expression arg = argument;
@@ -97,7 +97,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 		{
 			if (i > 0)
 			{
-				arg = moreArgs._elements.get(i-1).argument;
+				arg = moreArgs._elements.get(i - 1).argument;
 			}
 			Perl_FunctionVariableOrTypeVariable param = func.params.parameters.getPrimaryElement(i);
 			Perl_FunctionVariable fnVar;
@@ -114,19 +114,19 @@ public class Perl_FunctionCall extends PrimaryOperator
 			interpreter.setSymbol(param, fnVar.param.getValue(), val);
 			argTypes.add(val.typeName());
 		}
-	
+
 		// Prepare to evaluate the method
 		long startTime = System.nanoTime();
-	
+
 		// And transfer control to the method
 		interpreter.callingFunction(name, func);
 		interpreter.tryToInterpret(func.block);
-	
+
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
 		func._callMetrics.addCallFrom(this, elapsedTime);
 		func._argumentsMetrics.calledWith(argTypes);
-	
+
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
 	}
@@ -149,7 +149,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 			}
 			else
 			{
-				arg = moreArgs._elements.get(i-1).argument;
+				arg = moreArgs._elements.get(i - 1).argument;
 			}
 			AbstractExpression newArg = transformer.transformExpression(generator, arg);
 			args.add(newArg);

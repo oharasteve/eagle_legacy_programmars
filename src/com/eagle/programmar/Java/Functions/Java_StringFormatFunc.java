@@ -21,7 +21,7 @@ public class Java_StringFormatFunc extends TokenSequence implements EagleRunnabl
 	public @S(40) @NOSPACE PunctuationComma comma;
 	public @S(50) Java_Expression number;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

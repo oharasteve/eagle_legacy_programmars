@@ -15,7 +15,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Scala_BreakStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Scala_Keyword BREAK = new Scala_Keyword("break");
 	public @S(20) Scala_EOLN eoln;
@@ -25,7 +25,7 @@ public class Scala_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

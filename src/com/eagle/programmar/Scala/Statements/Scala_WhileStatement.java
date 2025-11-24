@@ -78,12 +78,12 @@ public class Scala_WhileStatement extends TokenSequence
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (AbstractStatement stmt : transformer.transformStatement(generator, statement.getWhich()))
 		{
 			whileTrue.add(stmt);
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

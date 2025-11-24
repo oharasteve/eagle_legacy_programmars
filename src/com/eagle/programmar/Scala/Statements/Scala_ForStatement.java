@@ -34,8 +34,8 @@ import com.eagle.transform.EagleTransformer;
 public class Scala_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("taste-control-structures.html#for-loops-and-expressions")
-			Scala_Keyword FOR = new Scala_Keyword("for");
+	public @S(10) @DOC("taste-control-structures.html#for-loops-and-expressions") Scala_Keyword FOR = new Scala_Keyword(
+			"for");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Scala_Variable variable;
 	public @S(40) Scala_Punctuation arrow = new Scala_Punctuation("<-");
@@ -159,8 +159,9 @@ public class Scala_ForStatement extends TokenSequence
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
-		
-		ArrayList<AbstractStatement> newStmts = Scala_BlockStatement.collectStatements(transformer, generator, statement);
+
+		ArrayList<AbstractStatement> newStmts = Scala_BlockStatement.collectStatements(transformer, generator,
+				statement);
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		if (newStmts != null)
 		{
@@ -169,7 +170,7 @@ public class Scala_ForStatement extends TokenSequence
 				actionList.add(stmt);
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(variable.vars.first().getValue());
 		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

@@ -32,7 +32,7 @@ public class COBOL_AdditiveExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
@@ -53,7 +53,7 @@ public class COBOL_AdditiveExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

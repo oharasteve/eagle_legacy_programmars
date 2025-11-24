@@ -24,7 +24,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Ruby_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) Ruby_Keyword WHILE = new Ruby_Keyword("while");
 	public @S(20) Ruby_Expression condition;
@@ -57,7 +57,7 @@ public class Ruby_WhileStatement extends TokenSequence
 			for (Ruby_Statement statement : statements._elements)
 			{
 				result = interpreter.tryToInterpret(statement);
-				if (result != Eagle_Statement_Result.NORMAL) break; 
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 
 			if (result == Eagle_Statement_Result.BREAK)
@@ -86,17 +86,16 @@ public class Ruby_WhileStatement extends TokenSequence
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (Ruby_Statement statement : statements._elements)
 		{
-			Collection<AbstractStatement> newStmts =
-					transformer.transformStatement(generator, statement.getWhich());
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, statement.getWhich());
 			for (AbstractStatement stmt : newStmts)
 			{
 				whileTrue.add(stmt);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

@@ -46,7 +46,7 @@ public class VB_FunctionCall extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = fnName.getValue();
-		
+
 		// See if it is a subscripted variable first
 		EagleValue value = interpreter.findSymbol(name);
 		if (value != null && value.isArray())
@@ -56,7 +56,7 @@ public class VB_FunctionCall extends PrimaryOperator
 			interpreter.pushEagleValue(array.getValue(index));
 			return;
 		}
-		
+
 		// Look up the function
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null || !(fn instanceof VB_Function))
@@ -96,9 +96,9 @@ public class VB_FunctionCall extends PrimaryOperator
 		for (VB_Element stmt : func.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL) break; 
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
-		
+
 		// Need to put the result on the runtime stack
 		// VB uses the function name for the return value
 		// Sort-of like this: Function sqrt(x) ; sqrt = x*x ; End Function
@@ -116,7 +116,7 @@ public class VB_FunctionCall extends PrimaryOperator
 		// Now remove all those parameters
 		interpreter.completedFunction(name, func);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -132,7 +132,7 @@ public class VB_FunctionCall extends PrimaryOperator
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
 				args.add(newArg);
 			}
-	
+
 			AbstractVariable var = generator.newVariable(name);
 			return generator.newMethodInvocation(var, args, fnName);
 		}

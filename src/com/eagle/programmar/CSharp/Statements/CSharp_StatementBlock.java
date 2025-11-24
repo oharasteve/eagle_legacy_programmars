@@ -44,7 +44,7 @@ public class CSharp_StatementBlock extends TokenSequence
 		}
 		return result;
 	}
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, CSharp_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -56,7 +56,7 @@ public class CSharp_StatementBlock extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (CSharp_StatementOrComment stmtOrComment : statements._elements)
 		{
 			if (stmtOrComment.getWhich() instanceof CSharp_Statement)
@@ -72,10 +72,10 @@ public class CSharp_StatementBlock extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
-	
+
 	public CSharp_Statement generateBlock(
 			ArrayList<CSharp_Statement> stmts, AbstractToken source)
 	{
@@ -91,7 +91,7 @@ public class CSharp_StatementBlock extends TokenSequence
 		}
 		return CSharp_Generator.wrapStatement(this);
 	}
-	
+
 	public static AbstractStatement collectStatements(EagleTransformer transformer,
 			EagleGenerator generator, CSharp_Statement statement)
 	{
@@ -121,7 +121,7 @@ public class CSharp_StatementBlock extends TokenSequence
 				newStmts.add(stmt4);
 			}
 		}
-		
+
 		return generator.newBlockStatement(newStmts, statement);
 	}
 }

@@ -62,7 +62,7 @@ public class PLI_Program extends AbstractLanguage
 			{
 				PLI_Procedure proc = (PLI_Procedure) which;
 				interpreter.addFunction(proc.id1.getValue(), proc);
-				
+
 				// Look for procs inside the outer proc
 				for (PLI_StatementOrComment stmt1 : proc.statements._elements)
 				{
@@ -87,7 +87,7 @@ public class PLI_Program extends AbstractLanguage
 			interpreter.tryToInterpret(element);
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -98,7 +98,7 @@ public class PLI_Program extends AbstractLanguage
 			if (which3 instanceof PLI_Procedure)
 			{
 				PLI_Procedure mainProc = (PLI_Procedure) which3;
-				
+
 				// Look for procs inside the outer proc
 				for (PLI_StatementOrComment stmt2 : mainProc.statements._elements)
 				{
@@ -143,7 +143,7 @@ public class PLI_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		// Third pass, transform the MAIN Function definition
 		for (PLI_Element element : elements._elements)
 		{
@@ -166,7 +166,7 @@ public class PLI_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

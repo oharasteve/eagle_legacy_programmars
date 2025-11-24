@@ -26,16 +26,16 @@ public class Basic_InputStatement extends TokenSequence
 	public @S(10) Basic_KeywordChoice INPUT = new Basic_KeywordChoice("INPUT", "INP");
 	public @S(20) @OPT Basic_Literal prompt;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
-	public @S(40) SeparatedList<Basic_Variable,PunctuationComma> vars;
+	public @S(40) SeparatedList<Basic_Variable, PunctuationComma> vars;
 
 	public static @SKIP BufferedReader _br = null;
-	
+
 	// Force it to start reading fom stdin again
 	public static void resetReader()
 	{
 		_br = null;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -54,13 +54,13 @@ public class Basic_InputStatement extends TokenSequence
 		String line = null;
 		try
 		{
-            line = _br.readLine();
-        }
+			line = _br.readLine();
+		}
 		catch (IOException ex)
 		{
-            throw new RuntimeException("Error reading from stdin", ex);
-        }
-		
+			throw new RuntimeException("Error reading from stdin", ex);
+		}
+
 		if (line == null)
 		{
 			throw new RuntimeException("No input given to INPUT");
@@ -75,7 +75,7 @@ public class Basic_InputStatement extends TokenSequence
 			throw new RuntimeException("Expected line with #pieces=" + piecesExpected +
 					" but got " + piecesGot);
 		}
-		
+
 		for (int i = 0; i < piecesGot; i++)
 		{
 			Basic_Variable var = vars.getPrimaryElement(i);

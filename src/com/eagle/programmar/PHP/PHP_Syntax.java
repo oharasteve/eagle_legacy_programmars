@@ -9,7 +9,7 @@ import com.eagle.programmar.HTML.HTML_Syntax;
 public class PHP_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = true;
-	
+
 	@Override
 	public String syntaxId()
 	{

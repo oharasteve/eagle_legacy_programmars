@@ -33,7 +33,7 @@ public class Basic_IfStatement extends TokenSequence
 		public @FIRST Basic_Number XXlabel;
 		public @CHOICE Basic_BaseStatement XXstatement;
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
@@ -45,7 +45,7 @@ public class Basic_IfStatement extends TokenSequence
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
 		}
-	
+
 		boolean cond1 = interpreter.getBoolValue(condition);
 		_metrics.get(0).completedIf(cond1);
 

@@ -18,7 +18,7 @@ public class SQL_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'`\"", true, '\\', true, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -18,7 +18,7 @@ public class Julia_LogicalNotExpression extends PrimaryOperator
 {
 	public @S(10) Julia_Punctuation logicalNotOperator = new Julia_Punctuation('!');
 	public @S(20) Julia_Expression expr;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

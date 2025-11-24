@@ -24,11 +24,10 @@ public class COBOL_ExitStatement extends COBOL_AbstractStatement
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newBreakStatement(this);
 	}
 }
-

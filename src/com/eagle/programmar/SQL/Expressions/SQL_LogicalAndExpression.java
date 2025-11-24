@@ -21,7 +21,7 @@ public class SQL_LogicalAndExpression extends PrecedenceOperator
 	public @S(10) SQL_Expression left = new SQL_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) SQL_AndOperator oper;
 	public @S(30) SQL_Expression right = new SQL_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public static class SQL_AndOperator extends TokenChooser
 	{
 		public @CHOICE SQL_Punctuation XXamp = new SQL_Punctuation("&&");
@@ -43,7 +43,7 @@ public class SQL_LogicalAndExpression extends PrecedenceOperator
 			interpreter.pushBool(false);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

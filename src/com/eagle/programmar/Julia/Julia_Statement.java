@@ -30,6 +30,6 @@ public class Julia_Statement extends TokenChooser
 	public @CHOICE Julia_PrintlnStatement XXputsStatement;
 	public @CHOICE Julia_ReturnStatement XXreturnStatement;
 	public @CHOICE Julia_WhileStatement XXwhileStatement;
-	
+
 	public @LAST Julia_ExpressionStatement XXexpressionStatement;
 }

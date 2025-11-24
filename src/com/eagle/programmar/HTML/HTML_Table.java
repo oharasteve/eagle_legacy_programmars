@@ -18,8 +18,7 @@ public class HTML_Table extends TokenSequence
 {
 	public @S(10) @INDENT HTML_StartTable startTable;
 	public @S(20) @OPT TokenList<HTML_TableBodyElement> elements;
-	public @S(30) @OPT @OUTDENT HTML_EndTable endTable;		// Optional in case there is never a closing </table>
-
+	public @S(30) @OPT @OUTDENT HTML_EndTable endTable; // Optional in case there is never a closing </table>
 
 	public static class HTML_TableBodyElement extends TokenChooser
 	{

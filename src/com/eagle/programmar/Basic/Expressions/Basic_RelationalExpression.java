@@ -25,13 +25,13 @@ public class Basic_RelationalExpression extends PrecedenceOperator implements Ea
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		if (leftValue.isDouble() || rightValue.isDouble())
 		{
 			double leftDbl = leftValue.forceDoubleValue();
@@ -84,7 +84,7 @@ public class Basic_RelationalExpression extends PrecedenceOperator implements Ea
 				return;
 			}
 		}
-		
+
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 }

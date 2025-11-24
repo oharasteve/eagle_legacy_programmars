@@ -35,7 +35,7 @@ public class Eaglish_Set_Statement extends TokenSequence
 		EagleValue val = interpreter.getEagleValue(expression);
 		interpreter.setSymbol(var, var.getValue(), val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

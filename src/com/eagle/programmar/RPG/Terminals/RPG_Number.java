@@ -33,7 +33,7 @@ public class RPG_Number extends TerminalNumberToken
 		if (_endChar > fixedEc) _endChar = fixedEc;
 		_numberAsText = rec.substring(fixedSc, _endChar).trim();
 		if (_numberAsText.length() == 0) return false; // No number there
-		
+
 		// Make sure it looks like a number
 		boolean foundDigit = false;
 		boolean foundDecimalPoint = false;
@@ -59,15 +59,15 @@ public class RPG_Number extends TerminalNumberToken
 			}
 			foundDigit = true;
 		}
-		if (! foundDigit)
+		if (!foundDigit)
 		{
 			return false;
 		}
-		
+
 		foundIt(_currentLine, _endChar - 1);
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{

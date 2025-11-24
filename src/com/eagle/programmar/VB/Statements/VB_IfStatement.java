@@ -84,7 +84,7 @@ public class VB_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF1));
-			
+
 			if (ifType.getWhich() instanceof VB_IfMultiLiner)
 			{
 				VB_IfMultiLiner multi = (VB_IfMultiLiner) ifType.getWhich();
@@ -95,14 +95,14 @@ public class VB_IfStatement extends TokenSequence
 						_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELSEIF));
 					}
 				}
-	
+
 				if (multi.elseClause != null && multi.elseClause.isPresent())
 				{
 					_metrics.add(new IfCondMetrics(interpreter._metrics, multi.elseClause.ELSE));
 				}
 			}
 		}
-	
+
 		boolean cond1 = interpreter.getBoolValue(condition);
 		_metrics.get(0).completedIf(cond1);
 
@@ -139,7 +139,7 @@ public class VB_IfStatement extends TokenSequence
 						}
 					}
 				}
-	
+
 				// Check for 'else'
 				if (todo == null)
 				{
@@ -150,7 +150,7 @@ public class VB_IfStatement extends TokenSequence
 					}
 				}
 			}
-	
+
 			if (todo != null)
 			{
 				result = Eagle_Statement_Result.NORMAL;
@@ -171,14 +171,14 @@ public class VB_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		AbstractToken which = ifType.getWhich();
 		if (which instanceof VB_IfOneLiner)
 		{
 			VB_IfOneLiner oneLiner = (VB_IfOneLiner) which;
 			VB_Element statement = new VB_Element();
 			statement.baseStatement = oneLiner.thenStatement;
-			for (AbstractStatement stmt: transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
 			{
 				ifTrue.add(stmt);
 			}
@@ -188,7 +188,8 @@ public class VB_IfStatement extends TokenSequence
 			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
 			for (VB_Element statement : multiLiner.thenStatement._elements)
 			{
-				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.baseStatement.getWhich());
+				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+						statement.baseStatement.getWhich());
 				if (stmts != null)
 				{
 					for (AbstractStatement stmt : stmts)
@@ -197,24 +198,26 @@ public class VB_IfStatement extends TokenSequence
 					}
 				}
 			}
-			
-			if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent() && multiLiner.elseIfClause.size() > 0)
+
+			if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent()
+					&& multiLiner.elseIfClause.size() > 0)
 			{
 				throw new RuntimeException("Can't handle VB elseif yet");
 			}
-			
+
 			if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())
 			{
 				for (VB_Element statement : multiLiner.elseClause.elseStatement._elements)
 				{
-					for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+					for (AbstractStatement stmt : transformer.transformStatement(generator,
+							statement.baseStatement.getWhich()))
 					{
 						ifFalse.add(stmt);
 					}
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

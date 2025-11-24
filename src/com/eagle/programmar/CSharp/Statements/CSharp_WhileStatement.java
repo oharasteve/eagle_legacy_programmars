@@ -77,7 +77,7 @@ public class CSharp_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -100,7 +100,7 @@ public class CSharp_WhileStatement extends TokenSequence
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(this);
 	}
-	
+
 	public CSharp_Statement generateWhile(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{

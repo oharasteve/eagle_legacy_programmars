@@ -19,7 +19,7 @@ public class Eaglish_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, null, null, true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

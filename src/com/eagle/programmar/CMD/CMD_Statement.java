@@ -37,7 +37,7 @@ public class CMD_Statement extends TokenChooser
 {
 	public @CHOICE CMD_Comment XXcomment;
 
-	public @CHOICE CMD_BlockStatement XXblockStatement; 
+	public @CHOICE CMD_BlockStatement XXblockStatement;
 
 	public @CHOICE CMD_Awk_Statement XXawkCommand;
 	public @CHOICE CMD_Call_Statement XXcallCommand;

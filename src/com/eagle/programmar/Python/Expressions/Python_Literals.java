@@ -48,15 +48,15 @@ public class Python_Literals extends PrimaryOperator
 		Python_Literal literal = literals._elements.get(0);
 		return generator.newLiteralExpression(literal.getValue().replaceAll("['\"]", ""), this);
 	}
-	
+
 	public static Python_Literals generateLiterals(String txt, AbstractToken source)
 	{
 		String val = txt;
-		if (! val.startsWith("'"))
+		if (!val.startsWith("'"))
 		{
 			val = "'" + val + "'";
 		}
-		
+
 		Python_Literal lit = new Python_Literal();
 		Python_Literal lit1 = lit.generateLiteral(val, source);
 		Python_Literals lits = new Python_Literals();

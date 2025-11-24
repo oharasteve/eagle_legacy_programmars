@@ -24,7 +24,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Fortran_ProgramBlock extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("6j4m0vnar/index.html") Fortran_Keyword PROGRAM1 = new Fortran_Keyword("PROGRAM");
 	public @S(20) Fortran_Function_Definition id;
@@ -65,7 +65,7 @@ public class Fortran_ProgramBlock extends TokenSequence
 		{
 			System.out.println("** Found Fortran program " + fnName);
 		}
-		
+
 		for (Fortran_Statement stmt : statements._elements)
 		{
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
@@ -77,7 +77,7 @@ public class Fortran_ProgramBlock extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

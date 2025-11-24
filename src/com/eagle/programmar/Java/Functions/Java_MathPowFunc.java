@@ -22,7 +22,7 @@ public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
 	public @S(40) @NOSPACE PunctuationComma comma;
 	public @S(50) Java_Expression power;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -30,8 +30,9 @@ public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
 		double pow = interpreter.getDoubleValue(power);
 		interpreter.pushDouble(Math.pow(num, pow));
 	}
-	
-	public static Java_MathFunction generateExpression(AbstractExpression number, AbstractExpression power, AbstractToken source)
+
+	public static Java_MathFunction generateExpression(AbstractExpression number, AbstractExpression power,
+			AbstractToken source)
 	{
 		Java_MathPowFunc pow = new Java_MathPowFunc();
 		pow.leftParen = new PunctuationLeftParen();

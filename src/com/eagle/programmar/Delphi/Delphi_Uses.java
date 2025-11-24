@@ -42,13 +42,13 @@ public class Delphi_Uses extends TokenSequence implements EagleRunnable
 			}
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Nothing to do here
 	}
-	
+
 	public void transformUses(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// Nothing to do here either

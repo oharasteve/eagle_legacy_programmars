@@ -22,7 +22,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class FSharp_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("conditional-expressions-if-then-else") FSharp_Keyword IF = new FSharp_Keyword("if");
 	public @S(20) FSharp_Expression condition;
@@ -59,7 +59,7 @@ public class FSharp_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (ifElifs != null)
 			{
 				for (FSharp_IfElif elif : ifElifs._elements)
@@ -67,7 +67,7 @@ public class FSharp_IfStatement extends TokenSequence
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELIF));
 				}
 			}
-			
+
 			if (ifElseBlock != null && ifElseBlock.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, ifElseBlock.ELSE));
@@ -123,12 +123,12 @@ public class FSharp_IfStatement extends TokenSequence
 			EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
-		
+
 		if (ifElifs != null && ifElifs.size() > 0)
 		{
 			throw new RuntimeException("if/elif is not yet implemented in F#");
 		}
-		
+
 		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
 				ifThenStatement.getWhich());
 

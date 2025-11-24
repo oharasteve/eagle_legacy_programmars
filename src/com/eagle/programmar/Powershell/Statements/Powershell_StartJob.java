@@ -19,7 +19,7 @@ public class Powershell_StartJob extends TokenSequence implements AbstractStatem
 	public @S(10) Powershell_Keyword START_JOB = new Powershell_Keyword("Start-Job");
 	public @S(20) @OPT Powershell_EndOfLine eoln;
 	public @S(30) TokenList<Powershell_StartJobOption> options;
-	
+
 	public static class Powershell_StartJobOption extends TokenChooser
 	{
 		public @CHOICE static class PowerShell_StartJobCredential extends TokenSequence

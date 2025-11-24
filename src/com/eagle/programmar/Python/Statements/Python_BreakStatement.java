@@ -17,7 +17,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Python_BreakStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("simple_stmts.html#the-break-statement") Python_Keyword BREAK = new Python_Keyword("break");
 
@@ -26,13 +26,13 @@ public class Python_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newBreakStatement(BREAK);
 	}
-	
+
 	public Python_ComplexStatement generateBreak(AbstractToken source)
 	{
 		this.setTransformationSource(source);

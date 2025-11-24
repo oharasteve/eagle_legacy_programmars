@@ -31,7 +31,7 @@ public class VB_ExitStatement extends TokenSequence
 		case "sub":
 			return Eagle_Statement_Result.RETURN;
 		}
-		
+
 		throw new RuntimeException("Cannot handle exit " + FOR + " yet.");
 	}
 

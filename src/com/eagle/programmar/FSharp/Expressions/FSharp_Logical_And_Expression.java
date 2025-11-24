@@ -17,7 +17,8 @@ public class FSharp_Logical_And_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) FSharp_Expression left = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("symbol-and-operator-reference/boolean-operators") FSharp_Punctuation AND = new FSharp_Punctuation("&&");
+	public @S(20) @DOC("symbol-and-operator-reference/boolean-operators") FSharp_Punctuation AND = new FSharp_Punctuation(
+			"&&");
 	public @S(30) FSharp_Expression right = new FSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
@@ -32,7 +33,7 @@ public class FSharp_Logical_And_Expression extends PrecedenceOperator
 		}
 		interpreter.pushBool(false);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

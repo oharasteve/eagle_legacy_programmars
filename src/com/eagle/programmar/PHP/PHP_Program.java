@@ -77,7 +77,8 @@ public class PHP_Program extends AbstractLanguage
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// First pass, just collect all the function definitions, buried deep inside the PHP
+		// First pass, just collect all the function definitions, buried deep inside the
+		// PHP
 		for (PHP_Entry entry : entries._elements)
 		{
 			if (entry.getWhich() instanceof HTML_Program)
@@ -153,7 +154,8 @@ public class PHP_Program extends AbstractLanguage
 			}
 		}
 
-		// First pass, just collect all the function definitions, buried deep inside the PHP
+		// First pass, just collect all the function definitions, buried deep inside the
+		// PHP
 		for (PHP_Entry entry : entries._elements)
 		{
 			if (entry.getWhich() instanceof HTML_Program)
@@ -213,7 +215,7 @@ public class PHP_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

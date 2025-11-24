@@ -88,7 +88,7 @@ public class CMacro_Program extends AbstractLanguage
 			_txt = rec.substring(_currentChar, recLen);
 			return true;
 		}
-		
+
 		@Override
 		public String description()
 		{

@@ -13,7 +13,7 @@ public class JavaP_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, "E", "ld", false, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

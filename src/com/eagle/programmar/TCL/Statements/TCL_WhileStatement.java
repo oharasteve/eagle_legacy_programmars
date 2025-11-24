@@ -76,7 +76,7 @@ public class TCL_WhileStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
-		
+
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, action.getWhich());
 		if (stmts != null)
@@ -86,7 +86,7 @@ public class TCL_WhileStatement extends TokenSequence
 				whileTrue.add(stmt);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

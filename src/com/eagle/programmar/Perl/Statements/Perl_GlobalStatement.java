@@ -46,6 +46,6 @@ public class Perl_GlobalStatement extends TokenSequence
 		{
 			throw new RuntimeException("Need to implement");
 		}
-		return null;	// Nothing to do here
+		return null; // Nothing to do here
 	}
 }

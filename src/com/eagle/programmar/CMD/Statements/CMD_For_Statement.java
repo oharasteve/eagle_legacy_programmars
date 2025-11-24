@@ -56,7 +56,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 		public @S(40) @OPT TokenList<CMD_For_More_Args> moreArgs;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	public static class CMD_Simple_For_Type extends TokenChooser
 	{
 		public @CHOICE CMD_For_No_Options XXnoOptions;
@@ -65,13 +65,13 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 		public @CHOICE CMD_For_R_Filename XXforR_filename;
 		public @CHOICE CMD_For_R_no_Filename XXforR_noFilename;
 	}
-	
+
 	public static class CMD_For_No_Options extends TokenSequence
 	{
 		public @S(10) CMD_PctPctVariable var;
 		public @S(20) CMD_Keyword IN = new CMD_Keyword("in");
 	}
-	
+
 	public static class CMD_For_D extends TokenSequence
 	{
 		public @S(10) CMD_Option_D optD;
@@ -90,7 +90,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 
 	public static class CMD_For_R_Filename extends TokenSequence
 	{
-		public @S(10) @OPT CMD_Option_D forD; 
+		public @S(10) @OPT CMD_Option_D forD;
 		public @S(20) PunctuationSlash slash;
 		public @S(30) CMD_Keyword R = new CMD_Keyword("r");
 		public @S(40) CMD_BasicExpression fileName;
@@ -100,13 +100,13 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 
 	public static class CMD_For_R_no_Filename extends TokenSequence
 	{
-		public @S(10) @OPT CMD_Option_D optD; 
+		public @S(10) @OPT CMD_Option_D optD;
 		public @S(20) PunctuationSlash slash;
 		public @S(30) CMD_Keyword R = new CMD_Keyword("r");
 		public @S(40) CMD_PctPctVariable var;
 		public @S(50) CMD_Keyword IN = new CMD_Keyword("in");
 	}
-	
+
 	public static class CMD_Option_D extends TokenSequence
 	{
 		public @S(10) PunctuationSlash slash;
@@ -148,31 +148,31 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 				throw new RuntimeException("FOR statement cannot have options");
 			}
 			CMD_For_No_Options simple = (CMD_For_No_Options) simpleFor.type.getWhich();
-			
+
 			int numArgs = 1;
 			if (simpleFor.moreArgs != null && simpleFor.moreArgs.isPresent())
 			{
 				numArgs += simpleFor.moreArgs.size();
 			}
-			
+
 			for (int i = 0; i < numArgs; i++)
 			{
 				CMD_RawArgument nextArg;
-				if (i == 0) 
+				if (i == 0)
 				{
 					nextArg = simpleFor.arg;
 				}
 				else
 				{
-					nextArg = simpleFor.moreArgs._elements.get(i-1).arg;
+					nextArg = simpleFor.moreArgs._elements.get(i - 1).arg;
 				}
-	
+
 				metric.iterate();
 				String val = interpreter.getStrValue(nextArg);
 				interpreter.setSymbol(simple.var, simple.var.getValue(), new EagleString(val));
-	
+
 				result = interpreter.tryToInterpret(stmt);
-				if (result != Eagle_Statement_Result.NORMAL) break; 
+				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 		}
 		else if (whichFor.getWhich() instanceof CMD_For_L)
@@ -190,20 +190,20 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 			{
 				if (incr < 0 && i < stop) break;
 				if (incr > 0 && i > stop) break;
-				
+
 				metric.iterate();
 				interpreter.setSymbol(forL.var, forL.var.getValue(), new EagleInteger(i));
-	
+
 				result = interpreter.tryToInterpret(stmt);
-				if (result != Eagle_Statement_Result.NORMAL) break;				
+				if (result != Eagle_Statement_Result.NORMAL) break;
 
 				i += incr;
 			}
 		}
-		else throw new RuntimeException("Unable to handle " + whichFor);
-		
+		else
+			throw new RuntimeException("Unable to handle " + whichFor);
+
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
 }
-

@@ -40,7 +40,7 @@ public class Python_VariableExpression extends PrimaryOperator
 			Python_Subscript.evaluateSubscript(interpreter, value, subscript.body);
 			return;
 		}
-		
+
 		interpreter.tryToInterpret(variable);
 	}
 
@@ -56,7 +56,7 @@ public class Python_VariableExpression extends PrimaryOperator
 		return generator.newVariableExpression(name,
 				SubscriptEnum.FIRST_IS_ZERO, null, this);
 	}
-	
+
 	public Python_Expression generateVarExpr(String name, SubscriptEnum offset,
 			Python_Expression subscrExpr, AbstractToken source)
 	{
@@ -69,7 +69,7 @@ public class Python_VariableExpression extends PrimaryOperator
 			this.subscript.leftBracket = new PunctuationLeftBracket();
 			this.subscript.rightBracket = new PunctuationRightBracket();
 			this.subscript.body = new Python_SubscrExpr();
-			
+
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
 				Python_Number num = new Python_Number();

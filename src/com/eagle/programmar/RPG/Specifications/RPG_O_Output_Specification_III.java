@@ -15,7 +15,7 @@ public class RPG_O_Output_Specification_III extends RPG_O_Output_Specification
 	{
 		spec = new RPG_O_Output_Spec_III();
 	}
-	
+
 	public static class RPG_O_Output_Spec_III extends RPG_O_Output_Spec
 	{
 		public RPG_O_Output_Spec_III()

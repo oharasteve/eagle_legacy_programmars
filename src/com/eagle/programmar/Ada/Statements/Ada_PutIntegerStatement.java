@@ -43,7 +43,7 @@ public class Ada_PutIntegerStatement extends TokenSequence
 		EagleValue result = interpreter.getEagleValue(expr);
 		System.out.print(result.toString());
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

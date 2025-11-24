@@ -27,7 +27,7 @@ public class Lisp_RelationalOperator extends TokenSequence implements EagleRunna
 		public @CHOICE Lisp_PunctuationChoice XXLESS = new Lisp_PunctuationChoice(">", ">=", "=", "/=", "<", "<=");
 		public @CHOICE Lisp_KeywordChoice XXEQUAL = new Lisp_KeywordChoice("EQ", "EQUAL");
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -65,7 +65,7 @@ public class Lisp_RelationalOperator extends TokenSequence implements EagleRunna
 			interpreter.pushBool(true);
 			return;
 		}
-		
+
 		// Integer compare
 		int previous = firstValue.forceIntegerValue();
 		for (Lisp_Expression expr : exprs._elements)

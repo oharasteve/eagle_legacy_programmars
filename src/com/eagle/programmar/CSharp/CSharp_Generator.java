@@ -60,15 +60,14 @@ import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 
-public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
-		CSharp_Expression, CSharp_Variable, CSharp_Type>
+public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Expression, CSharp_Variable, CSharp_Type>
 {
 	public static String NAME = "C#";
 	public static String SUFFIX = ".cs";
-	
+
 	private CSharp_Program _program;
 	private String _className;
-	
+
 	public CSharp_Generator(ParserManager parser, String className)
 	{
 		super(parser);
@@ -81,7 +80,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		return NAME;
 	}
-	
+
 	@Override
 	public String getSuffix()
 	{
@@ -93,7 +92,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		return "Main";
 	}
-	
+
 	@Override
 	public void addMainArgs()
 	{
@@ -112,7 +111,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		return _program;
 	}
-	
+
 	public static CSharp_Expression wrapExpression(AbstractToken token)
 	{
 		if (token == null) return null;
@@ -120,7 +119,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		wrapper.setWhich(token);
 		return wrapper;
 	}
-	
+
 	public static CSharp_Statement wrapStatement(AbstractToken token)
 	{
 		if (token == null) return null;
@@ -137,7 +136,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	// ================== Main program and class ==================
-	
+
 	private CSharp_Class _currentClass = null;
 	private CSharp_Method _currentMethod = null;
 	private CSharp_Method _previousMethod = null;
@@ -151,11 +150,11 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			_program.addClass(_currentClass);
 		}
 	}
-	
+
 	private void checkMethod()
 	{
 		checkClass();
-		
+
 		if (_currentMethod == null)
 		{
 			CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
@@ -163,12 +162,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			_currentMethod.newCSharpMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
 					mainType, "Main");
 			_currentClass.addMethod(_currentMethod);
-			
+
 			CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
 			_currentMethod.addMethodParameter(paramType, "args");
 		}
 	}
-	
+
 	@Override
 	public void addMethod(CSharp_Type returnType, String name, AbstractToken source)
 	{
@@ -181,7 +180,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		_currentMethod.setTransformationSource(source);
 		_currentClass.addMethod(_currentMethod);
 	}
-	
+
 	@Override
 	public void addMethodParameter(CSharp_Type type, String name)
 	{
@@ -193,13 +192,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		_currentMethod = _previousMethod;
 	}
-	
+
 	@Override
 	public void addStatement(CSharp_Statement stmt, AbstractToken source)
 	{
 		if (stmt == null) return;
 		checkClass();
-		
+
 		// Cannot put data into the 'main' method when it was declared in a global area
 		if (stmt.getWhich() instanceof CSharp_Data)
 		{
@@ -212,12 +211,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			{
 				saveInClass = true;
 			}
-			
+
 			if (saveInClass)
 			{
 				CSharp_Data data = (CSharp_Data) stmt.getWhich();
 				data.addModifier("static");
-				
+
 				// Put it in top-level class, not the 'main' method
 				CSharp_ClassElement element = new CSharp_ClassElement();
 				element.setWhich(stmt);
@@ -225,7 +224,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 				return;
 			}
 		}
-		
+
 		checkMethod();
 
 		CSharp_MethodImplementation impl = (CSharp_MethodImplementation) _currentMethod.body.getWhich();
@@ -234,7 +233,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		stmtOrComment.setTransformationSource(source);
 		impl.block.statements.addToken(stmtOrComment);
 	}
-	
+
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
@@ -253,9 +252,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			_program.addComment(comm);
 		}
 	}
-	
+
 	// ================ Statements ================
-	
+
 	@Override
 	public CSharp_Statement newBlockStatement(
 			ArrayList<CSharp_Statement> statements, AbstractToken source)
@@ -299,7 +298,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	{
 		return wrapStatement(CSharp_ExpressionStatement.newExpressionStatement(expr, source));
 	}
-	
+
 	@Override
 	public CSharp_Statement newExitStatement(CSharp_Expression code, AbstractToken source)
 	{
@@ -350,7 +349,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
 		return ifStmt.generateIfElse1(condition, ifTrue, ifFalse, source);
 	}
-	
+
 	@Override
 	public CSharp_Statement newIfStatement(CSharp_Expression condition,
 			ArrayList<CSharp_Statement> ifTrue,
@@ -359,7 +358,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
 		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newPrintFunction(CSharp_Expression line,
 			boolean newLine, boolean toErr, AbstractToken source)
@@ -392,7 +391,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_SwitchStatement switchStmt = new CSharp_SwitchStatement();
 		return switchStmt.generateSwitch(expr, values, cases, defaultCase, source);
 	}
-	
+
 	@Override
 	public CSharp_Statement newWhileStatement1(CSharp_Expression condition,
 			CSharp_Statement action, AbstractToken source)
@@ -408,9 +407,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
 		return whileStmt.generateWhile(condition, actions, source);
 	}
-	
+
 	// ================ Expressions ================
-	
+
 	@Override
 	public CSharp_Expression newAdditiveExpression(Oper2Types types,
 			CSharp_Expression left, AdditiveEnum oper, CSharp_Expression right, AbstractToken source)
@@ -419,7 +418,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return addExp.generateAdditive(types, left,
 				oper, right, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newAppendExpression(Oper2Types types,
 			CSharp_Expression left, CSharp_Expression right, AbstractToken source)
@@ -443,7 +442,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 			CSharp_Expression expression, AbstractToken source)
 	{
 		return newAssignmentExpression(name, SubscriptEnum.FIRST_IS_ZERO, subscript,
-				AssignmentEnum.EQUALS, expression, source);	}
+				AssignmentEnum.EQUALS, expression, source);
+	}
 
 	@Override
 	public CSharp_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
@@ -453,7 +453,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_PostIncrementExpression incrExpr = new CSharp_PostIncrementExpression();
 		return incrExpr.generateIncrement(var, oper, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newPreIncrementExpression(String name, SubscriptEnum offset,
 			CSharp_Expression subscript, IncrementEnum oper, AbstractToken source)
@@ -462,20 +462,21 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_PreIncrementExpression incrExpr = new CSharp_PreIncrementExpression();
 		return incrExpr.generateIncrement(var, oper, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
 		CSharp_BuiltIn built = new CSharp_BuiltIn();
 		return built.generateBuiltIn(builtin, source);
 	}
-	
+
 	@Override
-	public CSharp_Expression newExponentExpression(CSharp_Expression left, CSharp_Expression right, AbstractToken source)
+	public CSharp_Expression newExponentExpression(CSharp_Expression left, CSharp_Expression right,
+			AbstractToken source)
 	{
 		return wrapExpression(CSharp_MathPowFunc.generateExpression(left, right, source));
 	}
-	
+
 	@Override
 	public CSharp_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
@@ -490,7 +491,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_LogicalAndExpression andExpr = new CSharp_LogicalAndExpression();
 		return andExpr.generateLogicalAnd(left, right, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newLogicalOrExpression(CSharp_Expression left,
 			LogicalOrEnum oper, CSharp_Expression right, AbstractToken source)
@@ -506,7 +507,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_BitwiseExpression bitExpr = new CSharp_BitwiseExpression();
 		return bitExpr.generateBitwise(left, oper, right, source);
 	}
-	
+
 	@Override
 	public AbstractExpression newBitwiseNotExpression(CSharp_Expression expr,
 			AbstractToken source)
@@ -514,7 +515,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_BitwiseNotExpression bitExpr = new CSharp_BitwiseNotExpression();
 		return bitExpr.generateBitwiseNot(expr, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newMultiplicativeExpression(CSharp_Expression left,
 			MultiplicativeEnum oper, CSharp_Expression right, AbstractToken source)
@@ -530,7 +531,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_NegativeExpression negExp = new CSharp_NegativeExpression();
 		return negExp.generateNegative(sign, expr, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newTruncateExpression(CSharp_Expression expr, AbstractToken source)
 	{
@@ -552,7 +553,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		parens.generateParentheses(expr, source);
 		return notExp.generateLogicalNot(CSharp_Generator.wrapExpression(parens), source);
 	}
-	
+
 	@Override
 	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
 	{
@@ -560,14 +561,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		builtin.builtinConstant.setValue(bool ? "true" : "false");
 		return wrapExpression(builtin);
 	}
-	
+
 	@Override
 	public CSharp_Expression newNumberExpression(String number, AbstractToken source)
 	{
 		CSharp_Number num = new CSharp_Number();
 		return wrapExpression(num.generateNumber(number, source));
 	}
-	
+
 	@Override
 	public CSharp_Expression newParenthesizedExpression(CSharp_Expression expr, AbstractToken source)
 	{
@@ -583,7 +584,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return relExp.generateRelational(types, left, relOp,
 				right, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newShiftExpression(CSharp_Expression left,
 			ShiftEnum shift, CSharp_Expression right, AbstractToken source)
@@ -600,7 +601,6 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		return creat.generateArray(exprs, source);
 	}
 
-
 	@Override
 	public CSharp_Expression newVariableExpression(String name, SubscriptEnum offset,
 			CSharp_Expression subscript, AbstractToken source)
@@ -608,13 +608,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
 		return varExp.generateVarExpr(name, offset, subscript, source);
 	}
-	
+
 	@Override
 	public CSharp_Variable newVariable(String name)
 	{
 		return CSharp_Variable.newVariable(name);
 	}
-	
+
 	@Override
 	public CSharp_Expression newClassCreation(CSharp_Type type,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
@@ -622,7 +622,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
 		return creat.generateCreation(type, args, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newMethodInvocation(CSharp_Variable var,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
@@ -630,7 +630,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_MethodInvocation creat = new CSharp_MethodInvocation();
 		return creat.generateInvocation(var, args, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newCurrentDatetime()
 	{
@@ -638,14 +638,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 	}
 
 	// ================ Functions ================
-	
+
 	@Override
 	public CSharp_Expression newLengthFunction(CSharp_Expression expr, AbstractToken source)
 	{
 		CSharp_LengthMethod lenMeth = new CSharp_LengthMethod();
 		return lenMeth.generateLength(expr, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newTrimFunction(CSharp_Expression expr, AbstractToken source)
 	{
@@ -659,7 +659,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_ToStringMethod strMeth = new CSharp_ToStringMethod();
 		return strMeth.generateString(types, expr, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newSubstringFunction(CSharp_Expression expr,
 			CSharp_Expression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
@@ -684,7 +684,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_StartsWithMethod startsMeth = new CSharp_StartsWithMethod();
 		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
-	
+
 	@Override
 	public CSharp_Expression newIndexOfFunction(CSharp_Variable string, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
@@ -701,7 +701,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement,
 		CSharp_StringFormatFunc func = new CSharp_StringFormatFunc();
 		return func.generateStringFormat(expr, fmt, source);
 	}
-	
+
 	// ================ Terminals ================
 
 	@Override

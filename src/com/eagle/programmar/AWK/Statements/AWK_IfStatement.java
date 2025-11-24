@@ -119,7 +119,7 @@ public class AWK_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator, blockThen.getWhich());
 		if (stmts1 != null)
 		{
@@ -128,10 +128,11 @@ public class AWK_IfStatement extends TokenSequence
 				ifTrue.add(stmt1);
 			}
 		}
-		
+
 		if (ifelse != null && ifelse.isPresent())
 		{
-			ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator, ifelse.blockElse.getWhich());
+			ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator,
+					ifelse.blockElse.getWhich());
 			if (stmts2 != null)
 			{
 				for (AbstractStatement stmt2 : stmts2)
@@ -140,7 +141,7 @@ public class AWK_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

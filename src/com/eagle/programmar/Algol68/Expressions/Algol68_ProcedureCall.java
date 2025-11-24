@@ -126,7 +126,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator
 		for (int i = 0; i < argCount; i++)
 		{
 			Algol68_FunctionArg arg = argList.arguments.getPrimaryElement(i);
-			if (! (arg.getWhich() instanceof Algol68_Expression))
+			if (!(arg.getWhich() instanceof Algol68_Expression))
 			{
 				throw new RuntimeException("Unable to handle: " + arg);
 			}

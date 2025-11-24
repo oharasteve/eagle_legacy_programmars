@@ -50,7 +50,7 @@ public class Java_StatementBlock extends TokenSequence
 		}
 		return result;
 	}
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -62,7 +62,7 @@ public class Java_StatementBlock extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Java_StatementOrComment stmtOrComment : statements._elements)
 		{
 			if (stmtOrComment.getWhich() instanceof Java_Statement)
@@ -78,10 +78,10 @@ public class Java_StatementBlock extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
-	
+
 	public Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
 			AbstractToken source)
 	{
@@ -127,7 +127,7 @@ public class Java_StatementBlock extends TokenSequence
 				newStmts.add(stmt4);
 			}
 		}
-		
+
 		return generator.newBlockStatement(newStmts, statement);
 	}
 }

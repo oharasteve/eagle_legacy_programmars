@@ -84,7 +84,7 @@ public abstract class Python_Program extends AbstractLanguage
 			interpreter.tryToInterpret(stmt);
 		}
 	}
-	
+
 	public void addComment(Python_Comment comment)
 	{
 		if (this.comments == null)
@@ -95,7 +95,7 @@ public abstract class Python_Program extends AbstractLanguage
 		eol.comment = comment;
 		this.comments.addToken(eol);
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -159,7 +159,7 @@ public abstract class Python_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

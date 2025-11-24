@@ -21,7 +21,7 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Perl_AssignmentExpression extends PrecedenceOperator
-	implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Perl_Expression var = new Perl_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Perl_PunctuationChoice operator = new Perl_PunctuationChoice(
@@ -85,13 +85,13 @@ public class Perl_AssignmentExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 
-		if (! (var.getWhich() instanceof Perl_VariableExpression))
+		if (!(var.getWhich() instanceof Perl_VariableExpression))
 		{
 			throw new RuntimeException("Can only assign variables");
 		}
 		Perl_VariableExpression variableExpr = (Perl_VariableExpression) var.getWhich();
 		Perl_Variable theVar = variableExpr.variable;
-		if (! (theVar.getWhich() instanceof Perl_UserVariable))
+		if (!(theVar.getWhich() instanceof Perl_UserVariable))
 		{
 			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
 		}
@@ -102,11 +102,11 @@ public class Perl_AssignmentExpression extends PrecedenceOperator
 		{
 			subscrExpr = transformer.transformExpression(generator, userVar.subscript.first().expr);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		Perl_Identifier_Reference id = userVar.id;
 		String newName = Perl_Variable.repairName(id.getValue());
-		
+
 		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return asgExpr;

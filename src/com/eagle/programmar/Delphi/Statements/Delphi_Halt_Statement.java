@@ -15,7 +15,7 @@ public class Delphi_Halt_Statement extends TokenSequence
 		implements AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Delphi_Keyword HALT = new Delphi_Keyword("Halt");
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Perl_ReturnStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("function.return.php") Perl_Keyword RETURN = new Perl_Keyword("return");
 	public @S(20) @OPT Perl_Expression expression;

@@ -28,14 +28,14 @@ public class Java_ParenthesizedExpression extends PrimaryOperator
 	{
 		interpreter.tryToInterpret(expression);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
-	
+
 	public Java_Expression generateParentheses(Java_Expression theExpr, AbstractToken source)
 	{
 		this.leftParen = new PunctuationLeftParen();

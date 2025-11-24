@@ -42,14 +42,14 @@ public class Javascript_VariableExpression extends PrimaryOperator
 				newSub = transformer.transformExpression(generator, sub.expr);
 			}
 		}
-		
+
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof Javascript_Identifier_Reference))
+		if (!(which instanceof Javascript_Identifier_Reference))
 		{
 			throw new RuntimeException("Cannot handle variable: " + which);
 		}
 		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) which;
-			return generator.newVariableExpression(id.getValue(),
-					SubscriptEnum.FIRST_IS_ZERO, newSub, this);
+		return generator.newVariableExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, newSub, this);
 	}
 }

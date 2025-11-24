@@ -28,7 +28,7 @@ public class TCL_BracketStringFirst extends PrimaryOperator
 	public @S(50) TCL_Variable string;
 	public @S(60) @OPT TCL_Expression start;
 	public @S(70) PunctuationRightBracket rightBracket;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -44,7 +44,7 @@ public class TCL_BracketStringFirst extends PrimaryOperator
 			interpreter.pushInt(str.indexOf(patt));
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

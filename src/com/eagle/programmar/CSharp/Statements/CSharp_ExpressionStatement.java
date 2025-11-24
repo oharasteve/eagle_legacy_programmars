@@ -28,7 +28,7 @@ public class CSharp_ExpressionStatement extends TokenSequence
 	{
 		interpreter.tryToInterpret(expr);
 	}
-	
+
 	public static CSharp_ExpressionStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
 		CSharp_ExpressionStatement stmt = new CSharp_ExpressionStatement();

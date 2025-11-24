@@ -39,7 +39,7 @@ public class COBOL_PerformInline extends TokenSequence
 		COBOL_PerformUntil untilClause = null;
 		int i = 0;
 		int incr = 0;
-		
+
 		for (COBOL_PerformClause clause : clauseList._elements)
 		{
 			AbstractToken which = clause.getWhich();
@@ -74,7 +74,7 @@ public class COBOL_PerformInline extends TokenSequence
 				boolean stop = interpreter.getBoolValue(untilClause.condition);
 				if (stop) break;
 			}
-			
+
 			metric.iterate();
 
 			for (COBOL_StatementOrComment sentence : statements._elements)
@@ -82,7 +82,7 @@ public class COBOL_PerformInline extends TokenSequence
 				result = interpreter.tryToInterpret(sentence.getWhich());
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -98,13 +98,13 @@ public class COBOL_PerformInline extends TokenSequence
 			{
 				break;
 			}
-			
-			if (varyingClause != null)	// Don't need this test really
+
+			if (varyingClause != null) // Don't need this test really
 			{
 				i += incr;
 			}
 		}
-		
+
 		_metrics.competedLoop(metric, incr < 0);
 		return result;
 	}
@@ -116,7 +116,7 @@ public class COBOL_PerformInline extends TokenSequence
 		AbstractExpression initExpr = null;
 		AbstractExpression incrExpr = null;
 		AbstractExpression whileExpr = null;
-		
+
 		TokenList<COBOL_PerformClause> clauses = this.clauseList;
 		if (clauses != null)
 		{
@@ -142,7 +142,7 @@ public class COBOL_PerformInline extends TokenSequence
 				}
 			}
 		}
-		
+
 		ArrayList<AbstractStatement> stmts = new ArrayList<AbstractStatement>();
 		for (COBOL_StatementOrComment stmtOrComm : statements._elements)
 		{
@@ -153,7 +153,7 @@ public class COBOL_PerformInline extends TokenSequence
 				stmts.add(stmt);
 			}
 		}
-		
+
 		// Four cases: both varying and while; just varying; just while; neither
 		if (initExpr != null)
 		{

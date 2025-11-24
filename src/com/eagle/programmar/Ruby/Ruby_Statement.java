@@ -29,6 +29,6 @@ public class Ruby_Statement extends TokenChooser
 	public @CHOICE Ruby_PutsStatement XXputsStatement;
 	public @CHOICE Ruby_ReturnStatement XXreturnStatement;
 	public @CHOICE Ruby_WhileStatement XXwhileStatement;
-	
+
 	public @LAST Ruby_ExpressionStatement XXexpressionStatement;
 }

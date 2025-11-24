@@ -43,12 +43,12 @@ public class C_StrCpyFunction extends PrimaryOperator
 		EagleString val = new EagleString(str);
 		interpreter.setSymbol(var, varName, val);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken which = varExpr.variable.firstId.getWhich();
-		if (! (which instanceof C_Identifier_Reference))
+		if (!(which instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Must be a regular variable");
 		}

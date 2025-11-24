@@ -64,7 +64,7 @@ public class Perl_PostIncrementExpression extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected operator: " + operator);
 		}
-		
+
 		if (var.getWhich() instanceof Perl_UserVariable)
 		{
 			Perl_UserVariable variable = (Perl_UserVariable) var.getWhich();

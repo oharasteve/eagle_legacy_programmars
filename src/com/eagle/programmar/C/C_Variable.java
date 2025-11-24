@@ -80,12 +80,12 @@ public class C_Variable extends TokenSequence implements EagleRunnable, Abstract
 	public void interpret(EagleInterpreter interpreter)
 	{
 		AbstractToken which = firstId.getWhich();
-		if (! (which instanceof C_Identifier_Reference))
+		if (!(which instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		C_Identifier_Reference id = (C_Identifier_Reference) which;
-		
+
 		if (subscript != null && subscript.size() > 0)
 		{
 			EagleArray arry = (EagleArray) interpreter.findSymbol(id.getValue());

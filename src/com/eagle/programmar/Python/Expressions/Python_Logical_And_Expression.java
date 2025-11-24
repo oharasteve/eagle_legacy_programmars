@@ -40,7 +40,7 @@ public class Python_Logical_And_Expression extends PrecedenceOperator
 			interpreter.pushBool(false);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -49,7 +49,7 @@ public class Python_Logical_And_Expression extends PrecedenceOperator
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
-	
+
 	public Python_Expression generateLogicalAnd(Python_Expression leftExpr,
 			Python_Expression rightExpr, AbstractToken source)
 	{

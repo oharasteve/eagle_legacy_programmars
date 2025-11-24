@@ -31,7 +31,7 @@ public class Python_Negative_Expression extends PrimaryOperator
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		String oper = operator.getValue();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
@@ -51,7 +51,7 @@ public class Python_Negative_Expression extends PrimaryOperator
 			throw new RuntimeException("Unexpected negation operator: " + oper);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -67,7 +67,7 @@ public class Python_Negative_Expression extends PrimaryOperator
 			throw new RuntimeException("Unexpected negative operator: " + operator);
 		}
 	}
-	
+
 	public Python_Expression generateNegative(NegativeEnum sign,
 			Python_Expression theExpr, AbstractToken source)
 	{

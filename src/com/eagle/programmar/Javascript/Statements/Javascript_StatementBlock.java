@@ -73,14 +73,14 @@ public class Javascript_StatementBlock extends TokenSequence
 				newStmts.add(stmt4);
 			}
 		}
-		
+
 		return generator.newBlockStatement(newStmts, statement);
 	}
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Javascript_StatementOrComment stmtOrComment : statements._elements)
 		{
 			if (stmtOrComment.getWhich() instanceof Javascript_Statement)
@@ -96,7 +96,7 @@ public class Javascript_StatementBlock extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
 }

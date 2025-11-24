@@ -14,7 +14,7 @@ public class IntelASM_GlobalDirective extends TokenSequence implements EagleRunn
 {
 	public @S(10) IntelASM_Keyword GLOBAL = new IntelASM_Keyword("GLOBAL");
 	public @S(20) IntelASM_Identifier_Reference id;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

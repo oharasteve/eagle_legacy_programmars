@@ -43,7 +43,7 @@ public class Perl_BitwiseExpression extends PrecedenceOperator
 		}
 		interpreter.pushInt(result);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

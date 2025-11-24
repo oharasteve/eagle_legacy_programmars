@@ -12,7 +12,7 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Perl_Literal extends TerminalLiteralToken
-		 implements EagleTransformableExpression
+		implements EagleTransformableExpression
 {
 	@Override
 	public boolean parse(EagleFileReader lines)
@@ -26,7 +26,7 @@ public class Perl_Literal extends TerminalLiteralToken
 
 		return genericLiteral(lines, "\"'`", true, '\\', false, true);
 	}
-	
+
 	@Override
 	public String description()
 	{

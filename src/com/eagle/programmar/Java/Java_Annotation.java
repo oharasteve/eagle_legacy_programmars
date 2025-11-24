@@ -53,7 +53,7 @@ public class Java_Annotation extends TokenChooser
 		public @S(10) Java_Punctuation atSign = new Java_Punctuation('@');
 		public @S(20) @NOSPACE Java_Variable var;
 	}
-	
+
 	public static void translate(Java_Annotation annotation)
 	{
 		throw new RuntimeException("Need to implement");

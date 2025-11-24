@@ -48,12 +48,12 @@ public class Algol68_Data extends TokenSequence
 			interpreter.setSymbol(var, var.getValue(), val);
 		}
 	}
-	
+
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		TypeEnum typ = Algol68_Type.findType(type);
-	
+
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		int numVars = ids.getPrimaryCount();
 		for (int i = 0; i < numVars; i++)
@@ -65,7 +65,7 @@ public class Algol68_Data extends TokenSequence
 			{
 				initial = transformer.transformExpression(generator, init.value);
 			}
-			
+
 			if (typ == TypeEnum.OTHER)
 			{
 				// See if the Definition has some assignments in the metrics file
@@ -77,7 +77,7 @@ public class Algol68_Data extends TokenSequence
 			AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 			result.add(stmt);
 		}
-		
+
 		return result;
 	}
 

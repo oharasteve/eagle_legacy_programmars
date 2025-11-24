@@ -34,13 +34,13 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
 		switch (oper)
@@ -57,7 +57,7 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		}
 		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -75,14 +75,14 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
-	
+
 	public Java_Expression generateMultiplicative(
 			Java_Expression leftExpr, MultiplicativeEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{
 		this.left = leftExpr;
 		this.right = rightExpr;
-		switch(oper)
+		switch (oper)
 		{
 		case TIMES:
 			this.operator.setValue("*");

@@ -52,7 +52,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 	{
 		return _scope;
 	}
-	
+
 	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
 	{
 		super(name, syntax);
@@ -97,7 +97,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)

@@ -18,18 +18,18 @@ public class CSharp_StringFunction extends PrimaryOperator implements EagleRunna
 	public @S(10) CSharp_Keyword STRING = new CSharp_Keyword("string");
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE CSharp_StringChoice choice;
-	
+
 	public static class CSharp_StringChoice extends TokenChooser
 	{
 		public @CHOICE CSharp_StringFormatFunc XXstringFormatFunction;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(choice);
 	}
-	
+
 	public static CSharp_Expression wrapStringFunction(AbstractToken choice, AbstractToken source)
 	{
 		CSharp_StringFunction func = new CSharp_StringFunction();

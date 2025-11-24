@@ -37,7 +37,7 @@ public class Java_LogicalAndExpression extends PrecedenceOperator
 			interpreter.pushBool(false);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -45,7 +45,7 @@ public class Java_LogicalAndExpression extends PrecedenceOperator
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
-	
+
 	public Java_Expression generateLogicalAnd(Java_Expression leftExpr, Java_Expression rightExpr, AbstractToken source)
 	{
 		this.left = leftExpr;

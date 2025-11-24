@@ -16,7 +16,8 @@ import com.eagle.transform.EagleTransformer;
 public class FSharp_Logical_Not_Expresion extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) @DOC("symbol-and-operator-reference/boolean-operators") FSharp_Keyword NOT = new FSharp_Keyword("Not");
+	public @S(10) @DOC("symbol-and-operator-reference/boolean-operators") FSharp_Keyword NOT = new FSharp_Keyword(
+			"Not");
 	public @S(20) FSharp_Expression expr;
 
 	@Override
@@ -25,7 +26,7 @@ public class FSharp_Logical_Not_Expresion extends PrimaryOperator
 		boolean value = interpreter.getBoolValue(expr);
 		interpreter.pushBool(!value);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

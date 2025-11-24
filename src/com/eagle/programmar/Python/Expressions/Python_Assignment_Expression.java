@@ -20,7 +20,7 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("=", "+=", "-=", ":=");
 	public @S(30) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
-	
+
 	public Python_Expression generateAssignment(Python_Variable variable, Python_Expression subscript,
 			AssignmentEnum oper, Python_Expression expression, AbstractToken source)
 	{
@@ -39,14 +39,14 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		
+
 		AbstractToken which = variable.var.getWhich();
-		if (! (which instanceof Python_Identifier_Reference))
+		if (!(which instanceof Python_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		Python_Identifier_Reference id = (Python_Identifier_Reference) which;
-		
+
 		Python_VariableExpression varExpr = new Python_VariableExpression();
 		this.left = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
 		this.operator.setValue(punct);

@@ -45,7 +45,7 @@ public class Delphi_Program extends AbstractLanguage
 	public static class Delphi_Full_or_Partial extends TokenChooser
 	{
 		public @FIRST Delphi_Full XXfull;
-		
+
 		public @CHOICE static class Delphi_Partial extends TokenSequence
 		{
 			public @S(10) TokenList<Delphi_Header> headers;
@@ -62,7 +62,7 @@ public class Delphi_Program extends AbstractLanguage
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		if (! (fullOrPartial.getWhich() instanceof Delphi_Full))
+		if (!(fullOrPartial.getWhich() instanceof Delphi_Full))
 		{
 			throw new RuntimeException("Can only handle complete Delphi programs");
 		}

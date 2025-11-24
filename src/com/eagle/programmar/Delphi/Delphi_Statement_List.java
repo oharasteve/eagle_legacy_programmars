@@ -28,7 +28,8 @@ public class Delphi_Statement_List extends TokenSequence
 		public @S(40) @OPT TokenList<Delphi_Comment> comments5;
 	}
 
-	// It looks odd to leave extra { } around the program / function / procedure implementation
+	// It looks odd to leave extra { } around the program / function / procedure
+	// implementation
 	public void transformRemoveBeginEnd(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractStatement newStmt = transformer.transformStatement1(generator, this.stmt.getWhich());

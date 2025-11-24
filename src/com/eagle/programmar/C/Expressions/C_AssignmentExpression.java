@@ -87,7 +87,7 @@ public class C_AssignmentExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 
-		if (! (var.getWhich() instanceof C_VariableExpression))
+		if (!(var.getWhich() instanceof C_VariableExpression))
 		{
 			throw new RuntimeException("Can only assign variables");
 		}
@@ -99,15 +99,15 @@ public class C_AssignmentExpression extends PrecedenceOperator
 		{
 			subscrExpr = transformer.transformExpression(generator, theVar.subscript.first().expr);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractToken which = theVar.firstId.getWhich();
-		if (! (which instanceof C_Identifier_Reference))
+		if (!(which instanceof C_Identifier_Reference))
 		{
 			throw new RuntimeException("Have to assign to a regular variable");
 		}
 		C_Identifier_Reference id = (C_Identifier_Reference) which;
-		
+
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return asgExpr;

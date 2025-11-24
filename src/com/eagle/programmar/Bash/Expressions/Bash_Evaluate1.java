@@ -17,7 +17,7 @@ public class Bash_Evaluate1 extends PrimaryOperator implements EagleRunnable
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Bash_Element stmt;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

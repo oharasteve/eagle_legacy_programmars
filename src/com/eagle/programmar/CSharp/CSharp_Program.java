@@ -100,7 +100,7 @@ public class CSharp_Program extends AbstractLanguage
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -138,10 +138,10 @@ public class CSharp_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		// Not needed for C# or CSharp, but Python needs this
 		generator.addCallToMain();
-		
+
 		return generator.getTransfomedProgram();
 	}
 
@@ -149,7 +149,7 @@ public class CSharp_Program extends AbstractLanguage
 	{
 		CSharp_NamespaceOrClassEntry entry = new CSharp_NamespaceOrClassEntry();
 		entry.setWhich(cls);
-	
+
 		if (this.myClasses == null)
 		{
 			this.myClasses = new TokenList<CSharp_NamespaceOrClassEntry>();
@@ -157,7 +157,7 @@ public class CSharp_Program extends AbstractLanguage
 		}
 		this.myClasses.addToken(entry);
 	}
-	
+
 	public void addComment(CSharp_Comment comment)
 	{
 		if (this.comments1 == null)

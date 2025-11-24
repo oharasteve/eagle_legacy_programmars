@@ -15,7 +15,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Perl_BreakStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("control-structures.break.php") Perl_Keyword BREAK = new Perl_Keyword("break");
 	public @S(20) @OPT Perl_Expression count;
@@ -25,7 +25,7 @@ public class Perl_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

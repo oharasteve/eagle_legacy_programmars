@@ -48,7 +48,7 @@ public class CSharp_DoWhileStatement extends TokenSequence
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapStatement(this);
 	}
-	
+
 	public CSharp_Statement generateDoUntil(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{

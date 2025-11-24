@@ -39,7 +39,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 		if (subscript != null && subscript.isPresent())
 		{
 			int argCount = subscript.args.getPrimaryCount();
-			
+
 			// First: search user variables
 			EagleValue var = interpreter.findSymbol(name);
 			if (var != null && var.isArray() && argCount == 1)
@@ -90,7 +90,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 				result = interpreter.tryToInterpret(stmt);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			
+
 			long elapsedTime = System.nanoTime() - startTime;
 			proc._callMetrics.addCallFrom(this, elapsedTime);
 			proc._argumentsMetrics.calledWith(argTypes);
@@ -123,7 +123,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 	{
 		String name = id.getValue();
 
-		if (subscript == null || ! subscript.isPresent())
+		if (subscript == null || !subscript.isPresent())
 		{
 			// Case I: Just a variable with no subscript, and can't be a function call
 			if (name.equalsIgnoreCase("true"))
@@ -136,11 +136,11 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 			}
 			return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, null, id);
 		}
-		
+
 		if (subscript.args != null)
 		{
 			int argCount = subscript.args.getPrimaryCount();
-			
+
 			// Case II: Calling a Procedure
 			if (generator.isKnownMethod(name))
 			{
@@ -155,11 +155,11 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 						args.add(newArg);
 					}
 				}
-		
+
 				AbstractVariable var = generator.newVariable(name);
 				return generator.newMethodInvocation(var, args, id);
 			}
-	
+
 			// Case III: an array variable, with a subscript
 			// Dang. PL/I uses () for both arrays and function calls
 			PLI_ExpressionOrStar arg = subscript.args.first();
@@ -172,7 +172,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 						index, this);
 			}
 		}
-		
+
 		return null;
 	}
 }

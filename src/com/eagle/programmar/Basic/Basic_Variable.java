@@ -23,7 +23,7 @@ public class Basic_Variable extends TokenSequence implements EagleRunnable
 	public static class Basic_Subscript extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) SeparatedList<Basic_Expression,PunctuationComma> subs;
+		public @S(20) SeparatedList<Basic_Expression, PunctuationComma> subs;
 		public @S(30) PunctuationRightParen rightParen;
 	}
 
@@ -42,7 +42,7 @@ public class Basic_Variable extends TokenSequence implements EagleRunnable
 				EagleArray array = (EagleArray) val;
 				Basic_Expression sub = subscripts.subs.first();
 				int indx = interpreter.getIntValue(sub);
-				interpreter.pushEagleValue(array.getValue(indx-1));
+				interpreter.pushEagleValue(array.getValue(indx - 1));
 			}
 			else if (dims == 2 && val.isMatrix())
 			{
@@ -63,20 +63,20 @@ public class Basic_Variable extends TokenSequence implements EagleRunnable
 			interpreter.pushEagleValue(val);
 		}
 	}
-	
+
 	// Called from Basic_Assignment.java
 	// Handles subscripts here instead of there
 	public void assignValue(EagleInterpreter interpreter, EagleValue value)
 	{
 		String varName = var.getValue();
-		
+
 		if (subscripts != null && subscripts.isPresent())
 		{
 			int dims = subscripts.subs.getPrimaryCount();
 			if (dims == 1)
 			{
 				EagleValue arr = interpreter.findSymbol(varName);
-				if (arr == null || ! arr.isArray())
+				if (arr == null || !arr.isArray())
 				{
 					throw new RuntimeException("Can only have subscripts on an array: " + varName);
 				}
@@ -87,7 +87,7 @@ public class Basic_Variable extends TokenSequence implements EagleRunnable
 			else if (dims == 2)
 			{
 				EagleValue mat = interpreter.findSymbol(varName);
-				if (mat == null || ! mat.isMatrix())
+				if (mat == null || !mat.isMatrix())
 				{
 					throw new RuntimeException("Can only have subscripts on a matrix: " + varName);
 				}

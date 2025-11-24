@@ -34,7 +34,7 @@ public class CSharp_IndexOfMethod extends PrimaryOperator
 		public @S(10) PunctuationComma comma;
 		public @S(20) CSharp_Expression start;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -50,7 +50,7 @@ public class CSharp_IndexOfMethod extends PrimaryOperator
 			interpreter.pushInt(str.indexOf(patt));
 		}
 	}
-	
+
 	public CSharp_Expression generateIndexOf(CSharp_Variable str, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
@@ -66,7 +66,7 @@ public class CSharp_IndexOfMethod extends PrimaryOperator
 			this.scExpr.start = sc;
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);
 	}

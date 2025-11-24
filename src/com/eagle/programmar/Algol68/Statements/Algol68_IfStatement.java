@@ -59,7 +59,7 @@ public class Algol68_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
-			
+
 			if (elifClause != null)
 			{
 				for (Algol68_IfElifClause elif : elifClause._elements)
@@ -129,7 +129,7 @@ public class Algol68_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		for (Algol68_Statement thenStatement : thenStatements._elements)
 		{
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
@@ -141,12 +141,12 @@ public class Algol68_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		if (elifClause != null && elifClause.size() > 0)
 		{
 			throw new RuntimeException("Can't handle Algol68 ELIF yet.");
 		}
-		
+
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (Algol68_Statement elseStatement : elseClause.elseStatements._elements)
@@ -157,7 +157,7 @@ public class Algol68_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

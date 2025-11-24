@@ -26,7 +26,7 @@ public class COBOL_WorkingStorage extends TokenSequence implements EagleRunnable
 		public @CHOICE COBOL_Copy_Directive XXcopyBook;
 		public @CHOICE COBOL_DataDeclaration XXdeclaration;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -35,7 +35,7 @@ public class COBOL_WorkingStorage extends TokenSequence implements EagleRunnable
 			interpreter.tryToInterpret(decl);
 		}
 	}
-	
+
 	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
 		for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)

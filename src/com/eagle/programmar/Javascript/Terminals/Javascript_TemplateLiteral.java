@@ -14,7 +14,7 @@ public class Javascript_TemplateLiteral extends TerminalLiteralToken
 		// backticks can span multiple lines, and can inject values with $(x) inside
 		return genericLiteral(lines, "`", true, '\\', false, true);
 	}
-	
+
 	@Override
 	public String description()
 	{

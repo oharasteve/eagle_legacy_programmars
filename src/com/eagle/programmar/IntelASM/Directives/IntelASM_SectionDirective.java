@@ -14,7 +14,7 @@ public class IntelASM_SectionDirective extends TokenSequence implements EagleRun
 {
 	public @S(10) IntelASM_KeywordChoice SECTION = new IntelASM_KeywordChoice("SECTION", "SECTION_TEXT");
 	public @S(20) @OPT IntelASM_KeywordChoice DOTDATA = new IntelASM_KeywordChoice(".data", ".rodata", ".text");
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -31,7 +31,7 @@ public class IntelASM_SectionDirective extends TokenSequence implements EagleRun
 			sect = IntelASM_Sections.TEXT;
 			break;
 		default:
-			throw new RuntimeException("Unexpected Section: " + DOTDATA.toString());	
+			throw new RuntimeException("Unexpected Section: " + DOTDATA.toString());
 		}
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
 		state._section = sect;

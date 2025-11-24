@@ -46,7 +46,7 @@ public class Delphi_Parentheses extends PrimaryOperator
 			interpreter.pushEagleValue(array);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

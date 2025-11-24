@@ -9,7 +9,7 @@ import com.eagle.programmar.Gupta.Declarations.Gupta_Global_Declarations;
 public class Gupta_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

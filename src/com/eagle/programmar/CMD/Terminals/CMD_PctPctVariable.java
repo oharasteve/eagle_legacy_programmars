@@ -39,7 +39,7 @@ public class CMD_PctPctVariable extends TerminalIdentifierToken implements Eagle
 		{
 			return false;
 		}
-		
+
 		_id = rec.substring(_currentChar, endChar + 1);
 		foundIt(_currentLine, endChar);
 		return true;

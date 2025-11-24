@@ -54,7 +54,7 @@ public class Eaglish_Format
 		}
 		return sb.toString();
 	}
-	
+
 	public static AbstractExpression compile(EagleTransformer transformer,
 			EagleGenerator generator, String fmt, AbstractToken source)
 	{
@@ -66,7 +66,7 @@ public class Eaglish_Format
 		{
 			return generator.newLiteralExpression("", null);
 		}
-		
+
 		int sc = 0;
 		while (sc < nc)
 		{
@@ -75,9 +75,9 @@ public class Eaglish_Format
 			int ec = nextInsertion;
 			if (nextInsertion < 0)
 			{
-				ec = nc;	// No more ^, go all the way to the end
+				ec = nc; // No more ^, go all the way to the end
 			}
-			
+
 			if (ec > sc)
 			{
 				// Grab next literal piece
@@ -105,7 +105,7 @@ public class Eaglish_Format
 			}
 			String text = txt.substring(nextInsertion + 1, endInsertion);
 			Eaglish_Expression expr = new Eaglish_Expression();
-			if (! generator._parser.parseLine(text, generator._parser._parser.getLanguage(), expr))
+			if (!generator._parser.parseLine(text, generator._parser._parser.getLanguage(), expr))
 			{
 				throw new RuntimeException("Unable to parse expression " + expr);
 			}
@@ -122,7 +122,7 @@ public class Eaglish_Format
 			}
 			sc = endInsertion + 1;
 		}
-		
+
 		return result;
 	}
 }

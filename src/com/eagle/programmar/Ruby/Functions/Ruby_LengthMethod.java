@@ -20,7 +20,7 @@ public class Ruby_LengthMethod extends PrecedenceOperator
 	public @S(10) Ruby_Expression expr = new Ruby_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) Ruby_Keyword LENGTH = new Ruby_Keyword("length");
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

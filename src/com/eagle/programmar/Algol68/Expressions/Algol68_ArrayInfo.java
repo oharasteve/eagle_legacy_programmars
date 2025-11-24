@@ -43,7 +43,7 @@ public class Algol68_ArrayInfo extends PrimaryOperator
 			}
 		}
 
-		throw new RuntimeException("Unable to handle "  + UPB.getValue());
+		throw new RuntimeException("Unable to handle " + UPB.getValue());
 	}
 
 	@Override

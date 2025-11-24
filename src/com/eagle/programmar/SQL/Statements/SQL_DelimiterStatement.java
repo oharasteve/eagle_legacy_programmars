@@ -30,6 +30,6 @@ public class SQL_DelimiterStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null;	// Ignore for now
+		return null; // Ignore for now
 	}
 }

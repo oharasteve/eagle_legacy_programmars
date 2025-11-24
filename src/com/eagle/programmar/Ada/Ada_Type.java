@@ -25,7 +25,7 @@ public class Ada_Type extends TokenSequence
 				"Boolean", "Integer", "Unbounded_String");
 		public @CHOICE Ada_ArrayType XXarrayType;
 	}
-	
+
 	public static class Ada_ArrayType extends TokenSequence
 	{
 		public @S(10) Ada_Keyword ARRAY = new Ada_Keyword("array");
@@ -71,7 +71,7 @@ public class Ada_Type extends TokenSequence
 				}
 			}
 		}
-		
+
 		if (newType == null)
 		{
 			throw new RuntimeException("Can't handle type yet: " + whichType);

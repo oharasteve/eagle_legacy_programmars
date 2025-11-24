@@ -42,13 +42,13 @@ public class CSharp_Literal extends TerminalLiteralToken
 
 		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
-	
+
 	@Override
 	public String description()
 	{
 		return "C# literals may have @ or $";
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -58,7 +58,7 @@ public class CSharp_Literal extends TerminalLiteralToken
 	public CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
 		String val = value;
-		if (! val.startsWith("\""))
+		if (!val.startsWith("\""))
 		{
 			val = '"' + val + '"';
 		}

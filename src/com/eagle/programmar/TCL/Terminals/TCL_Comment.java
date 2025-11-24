@@ -48,6 +48,6 @@ public class TCL_Comment extends TerminalCommentToken
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;		// Might want to keep comment statements somehow.
+		return null; // Might want to keep comment statements somehow.
 	}
 }

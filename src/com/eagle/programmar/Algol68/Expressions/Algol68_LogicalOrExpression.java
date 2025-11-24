@@ -44,7 +44,7 @@ public class Algol68_LogicalOrExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected logical or operator: " + orOperator.toString());
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

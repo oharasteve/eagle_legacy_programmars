@@ -91,7 +91,7 @@ public class AWK_Statements extends TokenSequence
 			AWK_Statement stmt = statements.getPrimaryElement(i);
 			result.add(transformer.transformStatement1(generator, stmt));
 		}
-		
+
 		return result;
 	}
 }

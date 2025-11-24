@@ -29,7 +29,7 @@ public class Delphi_Length_Function extends PrimaryOperator
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushInt(str.length());
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

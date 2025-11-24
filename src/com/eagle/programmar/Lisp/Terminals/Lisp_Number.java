@@ -13,7 +13,7 @@ public class Lisp_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, null, null, true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

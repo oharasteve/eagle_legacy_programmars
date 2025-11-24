@@ -26,8 +26,8 @@ import com.eagle.transform.EagleTransformer;
 public class Powershell_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#841-the-while-statement") Powershell_Keyword WHILE =
-			new Powershell_Keyword("While");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#841-the-while-statement") Powershell_Keyword WHILE = new Powershell_Keyword(
+			"While");
 	public @S(20) Powershell_Expression condition;
 	public @S(30) PunctuationLeftBrace leftBrace;
 	public @S(40) @OPT Powershell_EndOfLine eoln;
@@ -49,11 +49,11 @@ public class Powershell_WhileStatement extends TokenSequence
 
 		while (true)
 		{
-			if (! interpreter.getBoolValue(condition))
+			if (!interpreter.getBoolValue(condition))
 			{
 				break;
 			}
-			
+
 			metric.iterate();
 
 			for (Powershell_Element stmt : statements._elements)

@@ -22,7 +22,7 @@ public class TCL_BracketExpr extends PrimaryOperator
 	public @S(20) TCL_Keyword EXPR = new TCL_Keyword("expr");
 	public @S(30) TCL_Expression expression;
 	public @S(40) PunctuationRightBracket rightBracket;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

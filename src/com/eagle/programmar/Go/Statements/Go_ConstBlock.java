@@ -24,7 +24,7 @@ public class Go_ConstBlock extends TokenSequence implements AbstractStatement
 	public @S(40) TokenList<Go_ConstAssignment> constLine;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) Go_EOLN eoln2;
-	
+
 	public static class Go_ConstAssignment extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) SeparatedList<Go_Variable, PunctuationComma> vars;

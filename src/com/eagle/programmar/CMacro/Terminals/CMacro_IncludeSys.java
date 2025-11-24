@@ -13,7 +13,7 @@ public class CMacro_IncludeSys extends TerminalLiteralToken
 	{
 		return quotePair(lines, '<', '>');
 	}
-	
+
 	@Override
 	public String description()
 	{

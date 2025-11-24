@@ -13,7 +13,7 @@ public class HTML_Number extends TerminalNumberToken
 	{
 		return genericNumber(lines, null, "%", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

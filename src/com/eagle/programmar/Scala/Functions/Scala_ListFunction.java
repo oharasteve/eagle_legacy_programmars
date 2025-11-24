@@ -26,9 +26,9 @@ public class Scala_ListFunction extends PrimaryOperator
 {
 	public @S(10) Scala_Keyword LIST = new Scala_Keyword("List");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Scala_Expression,PunctuationComma> parameters;
+	public @S(30) SeparatedList<Scala_Expression, PunctuationComma> parameters;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -40,7 +40,7 @@ public class Scala_ListFunction extends PrimaryOperator
 		}
 		interpreter.pushEagleValue(array);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

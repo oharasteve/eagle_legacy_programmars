@@ -19,7 +19,7 @@ public class Python_Upper_Method extends PrecedenceOperator implements EagleRunn
 	public @S(30) @NOSPACE Python_KeywordChoice UPPER = new Python_KeywordChoice("lower", "upper");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

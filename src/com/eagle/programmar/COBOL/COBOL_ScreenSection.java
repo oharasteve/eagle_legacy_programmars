@@ -72,7 +72,8 @@ public class COBOL_ScreenSection extends TokenSequence
 			public @CHOICE COBOL_Comment XXcomment;
 			public @CHOICE COBOL_Literal XXliteral;
 
-			public @CHOICE COBOL_KeywordChoice XXoption = new COBOL_KeywordChoice("AUTO", "BLINK", "HIGHLIGHT", "NO-ECHO",
+			public @CHOICE COBOL_KeywordChoice XXoption = new COBOL_KeywordChoice("AUTO", "BLINK", "HIGHLIGHT",
+					"NO-ECHO",
 					"REVERSE-VIDEO", "SECURE");
 
 			public @CHOICE COBOL_ScreenBlankScreen XXblankScreen;

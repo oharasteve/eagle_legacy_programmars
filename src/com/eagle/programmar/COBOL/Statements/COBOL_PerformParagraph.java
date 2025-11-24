@@ -58,7 +58,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 
 		// Prepare to evaluate the function
 		long startTime = System.nanoTime();
-		
+
 		// Evaluate the paragraph
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		for (COBOL_SentenceOrComment sentence : paragraph.sentences._elements)
@@ -66,7 +66,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 			result = interpreter.tryToInterpret(sentence);
 			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
-		
+
 		long elapsedTime = System.nanoTime() - startTime;
 
 		if (paragraph._callMetrics == null)
@@ -75,7 +75,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 					paragraph.paragraphHeaders.first().paragraphName);
 		}
 		paragraph._callMetrics.addCallFrom(this, elapsedTime);
-		
+
 		// Remove parameter values (none really)
 		interpreter.completedFunction(startPara, null);
 
@@ -89,12 +89,12 @@ public class COBOL_PerformParagraph extends TokenSequence
 		{
 			throw new RuntimeException("Cannot handle PERFORM multiple paragraphs yet " + this);
 		}
-		
+
 		String indexVar = null;
 		AbstractExpression initExpr = null;
 		AbstractExpression incrExpr = null;
 		AbstractExpression whileExpr = null;
-		
+
 		TokenList<COBOL_PerformClause> clauses = this.clauseList;
 		if (clauses != null)
 		{
@@ -124,7 +124,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 		AbstractVariable para = generator.newVariable(COBOL_Variable.repairName(performStartParagraph.getValue()));
 		AbstractExpression expr = generator.newMethodInvocation(para, null, this);
 		AbstractStatement stmt = generator.newExpressionStatement(expr, this);
-		
+
 		// Four cases: both varying and while; just varying; just while; neither
 		if (initExpr != null)
 		{

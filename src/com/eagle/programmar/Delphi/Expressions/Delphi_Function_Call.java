@@ -45,7 +45,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		CallMetrics callMetrics = null;
 		ArgumentsMetrics argumentsMetrics = null;
 		Delphi_BeginEnd body = null;
-		
+
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null)
 		{
@@ -77,7 +77,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		{
 			paramCount += paramList.moreParams.size();
 		}
-		
+
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
@@ -103,7 +103,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 				Delphi_Expression expr = argList.exprs.getPrimaryElement(i);
 				if (i > 0)
 				{
-					param = paramList.moreParams._elements.get(i-1).param;
+					param = paramList.moreParams._elements.get(i - 1).param;
 				}
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.names.first().var.getValue(), val);
@@ -140,7 +140,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 				interpreter.pushEagleValue(val);
 			}
 		}
-		
+
 		long elapsedTime = System.nanoTime() - startTime;
 		callMetrics.addCallFrom(this, elapsedTime);
 		argumentsMetrics.calledWith(argTypes);
@@ -155,7 +155,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 			interpreter.completedFunction(fnName, proc);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -172,7 +172,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 				args.add(transformer.transformExpression(generator, expr));
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(id.getValue());
 		return generator.newMethodInvocation(var, args, this);
 	}

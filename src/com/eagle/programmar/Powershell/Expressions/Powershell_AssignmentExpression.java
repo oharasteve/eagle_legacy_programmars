@@ -57,7 +57,7 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator
 			{
 				// Was calling SetGlobalSymbol()
 				EagleScope saveScope = interpreter._symbolTable.getScope();
-				interpreter._symbolTable.setScope(interpreter._lang.getScope());	// Smash it :)
+				interpreter._symbolTable.setScope(interpreter._lang.getScope()); // Smash it :)
 				interpreter.setSymbol(var, pVar.variable.id.getValue(), newValue);
 				interpreter._symbolTable.setScope(saveScope);
 			}
@@ -87,7 +87,7 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 
-		if (! (var.getWhich() instanceof Powershell_VariableExpression))
+		if (!(var.getWhich() instanceof Powershell_VariableExpression))
 		{
 			throw new RuntimeException("Can only assign variables");
 		}
@@ -99,7 +99,7 @@ public class Powershell_AssignmentExpression extends PrecedenceOperator
 		{
 			subscrExpr = transformer.transformExpression(generator, theVar.subscript.subscr);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		String newName = Powershell_Variable.repairName(theVar.id.getValue());
 		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,

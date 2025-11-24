@@ -19,7 +19,7 @@ public class FSharp_Number extends TerminalNumberToken
 		// J is for complex ...
 		return genericNumber(lines, "Ee", "JjLl", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

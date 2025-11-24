@@ -24,7 +24,7 @@ public class COBOL_LogicalNotCondition extends PrimaryOperator
 	{
 		interpreter.pushBool(!interpreter.getBoolValue(cond));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

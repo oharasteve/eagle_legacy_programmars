@@ -38,7 +38,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Julia_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("manual/functions/") Julia_Keyword FUNCTION = new Julia_Keyword("function");
 	public @S(20) Julia_Function_Definition id;
@@ -54,7 +54,7 @@ public class Julia_Function extends TokenSequence
 		public @S(20) @OPT SeparatedList<Julia_Variable, PunctuationComma> parameters;
 		public @S(30) PunctuationRightParen rightParen;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -87,13 +87,13 @@ public class Julia_Function extends TokenSequence
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -101,31 +101,32 @@ public class Julia_Function extends TokenSequence
 		{
 			System.out.println("** Found Julia function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (params != null && params.isPresent())
 		{
 			for (int i = 0; i < params.parameters.getPrimaryCount(); i++)
 			{
 				Julia_Variable paramVar = params.parameters.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, paramVar);
 				}
-				
-				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+
+				// System.err.println("****** paramType = " + paramType + " value = " +
+				// param.getValue());
 				generator.addMethodParameter(paramType, paramVar.vars.first().getValue());
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
-		
+
 		for (Julia_Statement stmt : stmts._elements)
 		{
 			AbstractToken which = stmt.getWhich();
@@ -139,7 +140,7 @@ public class Julia_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 
@@ -170,7 +171,7 @@ public class Julia_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

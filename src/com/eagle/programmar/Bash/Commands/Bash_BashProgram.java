@@ -34,8 +34,7 @@ public class Bash_BashProgram extends TokenSequence implements AbstractStatement
 				"-p",
 				"-v",
 				"-x",
-				"-xe"
-				);
+				"-xe");
 	}
 
 	@Override

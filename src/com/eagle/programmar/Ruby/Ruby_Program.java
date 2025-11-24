@@ -72,7 +72,7 @@ public class Ruby_Program extends AbstractLanguage
 				func.transformFunction(transformer, generator);
 			}
 		}
-		
+
 		// Are there any global variables we need to declare?
 		String scopeStr = this._currentLine + "-" + this._endLine;
 		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
@@ -94,7 +94,7 @@ public class Ruby_Program extends AbstractLanguage
 		for (Ruby_Statement stmt : elements._elements)
 		{
 			AbstractToken which = stmt.getWhich();
-			if (! (which instanceof Ruby_Function))
+			if (!(which instanceof Ruby_Function))
 			{
 				Collection<AbstractStatement> newStmts = transformer.transformStatement(
 						generator, which);
@@ -107,7 +107,7 @@ public class Ruby_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

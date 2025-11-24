@@ -50,8 +50,8 @@ public class PLI_Declaration extends TokenSequence
 		public @S(20) PLI_Declare_Variables declareVariables;
 		public @S(30) @OPT PLI_Declare_Size declareSize;
 		public @S(40) @OPT PLI_Type type1;
-		public @S(50) @OPT PLI_KeywordChoice options =
-				new PLI_KeywordChoice("BUILTIN", "CONTROLLED", "EXTERNAL", "NONASSIGNABLE", "OPTIONAL");
+		public @S(50) @OPT PLI_KeywordChoice options = new PLI_KeywordChoice("BUILTIN", "CONTROLLED", "EXTERNAL",
+				"NONASSIGNABLE", "OPTIONAL");
 		public @S(60) @OPT PLI_Declare_Character character1;
 		public @S(70) @OPT PLI_Keyword STATIC = new PLI_Keyword("STATIC");
 		public @S(80) @OPT PLI_Type type2;
@@ -167,7 +167,7 @@ public class PLI_Declaration extends TokenSequence
 					PLI_Variable_Definition id = (PLI_Variable_Definition) token;
 					if (item.initial.exprs.getPrimaryCount() > 1)
 					{
-						EagleArray array =  new EagleArray();
+						EagleArray array = new EagleArray();
 						for (int j = 0; j < item.initial.exprs.getPrimaryCount(); j++)
 						{
 							EagleValue val = interpreter.getEagleValue(item.initial.exprs.getPrimaryElement(j));
@@ -184,7 +184,7 @@ public class PLI_Declaration extends TokenSequence
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -227,7 +227,7 @@ public class PLI_Declaration extends TokenSequence
 				}
 			}
 		}
-		
+
 		return null;
 	}
 }

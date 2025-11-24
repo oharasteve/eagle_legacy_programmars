@@ -81,7 +81,7 @@ public class Python_Function_Call extends PrimaryOperator
 			Python_Expression expr = argList.getPrimaryElement(i);
 			if (i > 0)
 			{
-				param = func.header.params.params.moreParams._elements.get(i-1).param;
+				param = func.header.params.params.moreParams._elements.get(i - 1).param;
 			}
 			if (param.getWhich() instanceof Python_Variable_Definition)
 			{
@@ -111,7 +111,7 @@ public class Python_Function_Call extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		if (! (fnName.var.getWhich() instanceof Python_Identifier_Reference))
+		if (!(fnName.var.getWhich() instanceof Python_Identifier_Reference))
 		{
 			throw new RuntimeException("Must be a simple function call");
 		}
@@ -129,7 +129,7 @@ public class Python_Function_Call extends PrimaryOperator
 		AbstractVariable var = generator.newVariable(name);
 		return generator.newMethodInvocation(var, args, id);
 	}
-	
+
 	public Python_Expression generateInvocation(Python_Variable var,
 			ArrayList<Python_Expression> args, AbstractToken source)
 	{

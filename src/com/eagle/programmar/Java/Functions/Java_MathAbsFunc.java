@@ -17,7 +17,7 @@ public class Java_MathAbsFunc extends TokenSequence implements EagleRunnable
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Java_Expression number;
 	public @S(40) PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

@@ -107,7 +107,7 @@ public class Algol68_Program extends AbstractLanguage
 			}
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -164,7 +164,7 @@ public class Algol68_Program extends AbstractLanguage
 				throw new RuntimeException("Unable to handle: " + whichElt);
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

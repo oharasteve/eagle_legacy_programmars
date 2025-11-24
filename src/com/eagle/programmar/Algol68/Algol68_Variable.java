@@ -25,7 +25,7 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
 		public @S(20) Algol68_Expression expr;
-		public @S(30) @OPT Algol68_ColonSubscript colonSub; 
+		public @S(30) @OPT Algol68_ColonSubscript colonSub;
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
@@ -34,7 +34,7 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 		public @S(10) PunctuationColon colon;
 		public @S(20) Algol68_Expression expr2;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -54,11 +54,11 @@ public class Algol68_Variable extends TokenSequence implements EagleRunnable, Ab
 			if (subscript.colonSub != null && subscript.colonSub.isPresent())
 			{
 				int ec = interpreter.getIntValue(subscript.colonSub.expr2);
-				interpreter.pushStr(str.substring(sub-1, ec));
+				interpreter.pushStr(str.substring(sub - 1, ec));
 			}
 			else
 			{
-				interpreter.pushStr(str.substring(sub-1, sub));
+				interpreter.pushStr(str.substring(sub - 1, sub));
 			}
 		}
 		else

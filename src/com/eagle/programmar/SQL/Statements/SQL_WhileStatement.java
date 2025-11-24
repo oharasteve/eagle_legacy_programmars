@@ -38,13 +38,13 @@ public class SQL_WhileStatement extends TokenSequence
 	public @S(70) SQL_Keyword WHILE2 = new SQL_Keyword("WHILE");
 	public @S(80) @OPT SQL_Identifier_Reference label2;
 	public @S(90) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_WhileLabel extends TokenSequence
 	{
 		public @S(10) SQL_Label_Definition label1;
 		public @S(20) PunctuationColon colon;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -71,7 +71,7 @@ public class SQL_WhileStatement extends TokenSequence
 					break;
 				}
 			}
-			
+
 			if (result == Eagle_Statement_Result.BREAK)
 			{
 				metric.broke();
@@ -98,14 +98,14 @@ public class SQL_WhileStatement extends TokenSequence
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (SQL_StatementOrComment stmtComm : statements._elements)
 		{
 			if (stmtComm.getWhich() instanceof SQL_Statement)
 			{
 				SQL_Statement statement = (SQL_Statement) stmtComm.getWhich();
-				Collection<AbstractStatement> newStmts =
-						transformer.transformStatement(generator, statement.getWhich());
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator,
+						statement.getWhich());
 				if (newStmts != null)
 				{
 					for (AbstractStatement stmt : newStmts)
@@ -115,7 +115,7 @@ public class SQL_WhileStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

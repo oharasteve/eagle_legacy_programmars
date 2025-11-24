@@ -32,7 +32,6 @@ public class PLI_AssignmentStatement extends TokenSequence
 	public @S(50) PLI_Expression expression;
 	public @S(60) @OPT PLI_Comment comment;
 	public @S(70) PunctuationSemicolon semicolon;
-	
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -41,11 +40,11 @@ public class PLI_AssignmentStatement extends TokenSequence
 		{
 			throw new RuntimeException("Can't handle subscripts yet");
 		}
-		
+
 		EagleValue val = interpreter.getEagleValue(expression);
 		interpreter.setSymbol(var, var.getValue(), val);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -55,7 +54,7 @@ public class PLI_AssignmentStatement extends TokenSequence
 		{
 			throw new RuntimeException("Can't handle subscripts yet");
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expression);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(var.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);

@@ -22,7 +22,7 @@ public class Java_MathMinMaxFunc extends PrimaryOperator
 {
 	public @S(10) Java_KeywordChoice MINMAX = new Java_KeywordChoice("min", "max");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE SeparatedList<Java_Expression,PunctuationComma> expressions;
+	public @S(30) @NOSPACE SeparatedList<Java_Expression, PunctuationComma> expressions;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
@@ -34,7 +34,7 @@ public class Java_MathMinMaxFunc extends PrimaryOperator
 		{
 			isMin = false;
 		}
-		
+
 		for (int i = 1; i < expressions.getPrimaryCount(); i++)
 		{
 			int next = interpreter.getIntValue(expressions.getPrimaryElement(i));
@@ -55,7 +55,7 @@ public class Java_MathMinMaxFunc extends PrimaryOperator
 		}
 		interpreter.pushInt(result);
 	}
-	
+
 	public Java_Expression generateMinMax(boolean isMin,
 			ArrayList<Java_Expression> exprs, AbstractToken source)
 	{
@@ -69,7 +69,7 @@ public class Java_MathMinMaxFunc extends PrimaryOperator
 			this.expressions.addPrimaryElement(exprs.get(i));
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

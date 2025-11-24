@@ -21,7 +21,8 @@ public class COBOL_Transform_Compute<Lang extends AbstractLanguage, Cls extends 
 	{
 		Expr expr = trans._transCobolExpr.transformExpression(computeStatement.expr);
 		String targetName = trans._transCobolData.getFullVariableName(computeStatement.var, null);
-		Stmt asgStatement = trans._target._createStatement.createAssignment(targetName, null, AssignmentEnum.EQUALS, expr,
+		Stmt asgStatement = trans._target._createStatement.createAssignment(targetName, null, AssignmentEnum.EQUALS,
+				expr,
 				null, computeStatement);
 		return asgStatement;
 	}

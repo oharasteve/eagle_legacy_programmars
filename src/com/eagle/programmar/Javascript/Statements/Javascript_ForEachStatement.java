@@ -31,7 +31,7 @@ public class Javascript_ForEachStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT TokenList<Javascript_Comment> comments;
 	public @S(60) Javascript_Element action;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	public static class Javascript_ForCollectionStatement extends TokenSequence

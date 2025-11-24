@@ -40,7 +40,7 @@ public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWit
 		{
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
-			
+
 			for (int i = 0; i < pairs.size(); i++)
 			{
 				Lisp_CondPair pair = pairs._elements.get(i);

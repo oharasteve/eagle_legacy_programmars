@@ -107,7 +107,7 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 			{
 				types = new Oper2Types();
 			}
-			
+
 			int numPieces = clause.what.exprs.getPrimaryCount();
 			for (int i = 0; i < numPieces; i++)
 			{
@@ -120,10 +120,10 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 				{
 					if (metrics != null)
 					{
-						types._type1 = metrics.get(i-1);
+						types._type1 = metrics.get(i - 1);
 						types._type2 = metrics.get(i);
 					}
-					
+
 					AbstractExpression next = transformer.transformExpression(generator, expr);
 					line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, expr);
 				}

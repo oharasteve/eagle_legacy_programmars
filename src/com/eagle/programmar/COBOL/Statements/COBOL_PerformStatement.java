@@ -70,7 +70,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		if (testWhen != null && testWhen.isPresent()) 
+		if (testWhen != null && testWhen.isPresent())
 		{
 			throw new RuntimeException("Can't handle PERFORM TEST yet");
 		}
@@ -90,7 +90,7 @@ public class COBOL_PerformStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can only handle simple PERFORMs right now, not: " + what.getWhich());
 		}
-		
+
 		return result;
 	}
 

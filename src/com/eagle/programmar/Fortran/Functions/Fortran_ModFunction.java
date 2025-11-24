@@ -40,7 +40,8 @@ public class Fortran_ModFunction extends PrimaryOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, numerExpr);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, denomExpr);
-		AbstractExpression newExpr = generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+		AbstractExpression newExpr = generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER,
+				rightExpr, this);
 		return generator.newParenthesizedExpression(newExpr, this);
 	}
 }

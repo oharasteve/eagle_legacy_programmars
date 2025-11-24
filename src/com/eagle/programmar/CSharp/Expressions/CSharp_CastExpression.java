@@ -25,7 +25,7 @@ public class CSharp_CastExpression extends PrimaryOperator
 		cast.leftParen = new PunctuationLeftParen();
 		cast.type = type;
 		cast.rightParen = new PunctuationRightParen();
-		
+
 		if (expr.getWhich() instanceof CSharp_ParenthesizedExpression)
 		{
 			cast.expr = expr;
@@ -35,7 +35,7 @@ public class CSharp_CastExpression extends PrimaryOperator
 			CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
 			cast.expr = parens.generateParentheses(expr, expr);
 		}
-		
+
 		cast.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(cast);
 	}

@@ -8,17 +8,50 @@ import com.eagle.tokens.TokenSequence;
 
 public class IntelASM_Register extends TokenSequence
 {
-	public static String[] _REGISTERS = new String[]
-	{
-		"EAX", "EBX", "ECX", "EDX", "ESI", "EDI", "EBP", "ESP",
-		"RAX", "RBX", "RCX", "RDX", "R8", "R9", "R10",
-		"CS", "DS", "SS", "ES", "FS", "GS",
-		"AH", "AL", "BH", "BL", "CH", "CL", "DH", "DL", "AX",
-		"BX", "CX", "DX", "BP", "SI", "DI", "SP", "RDI", "RSI"
+	public static String[] _REGISTERS = new String[] {
+			"EAX",
+			"EBX",
+			"ECX",
+			"EDX",
+			"ESI",
+			"EDI",
+			"EBP",
+			"ESP",
+			"RAX",
+			"RBX",
+			"RCX",
+			"RDX",
+			"R8",
+			"R9",
+			"R10",
+			"CS",
+			"DS",
+			"SS",
+			"ES",
+			"FS",
+			"GS",
+			"AH",
+			"AL",
+			"BH",
+			"BL",
+			"CH",
+			"CL",
+			"DH",
+			"DL",
+			"AX",
+			"BX",
+			"CX",
+			"DX",
+			"BP",
+			"SI",
+			"DI",
+			"SP",
+			"RDI",
+			"RSI"
 	};
-	
+
 	public @S(10) IntelASM_KeywordChoice REG = new IntelASM_KeywordChoice(_REGISTERS);
-	
+
 	public int getValue(IntelASM_StateMachine state)
 	{
 		switch (REG.toString().toUpperCase())
@@ -51,7 +84,7 @@ public class IntelASM_Register extends TokenSequence
 			throw new RuntimeException("Can't get register " + REG + " yet");
 		}
 	}
-	
+
 	public void setValue(IntelASM_StateMachine state, int value)
 	{
 		int val = value;
@@ -99,13 +132,13 @@ public class IntelASM_Register extends TokenSequence
 		default:
 			throw new RuntimeException("Can't set register " + REG + " yet");
 		}
-		
+
 		if (state._TRACE)
 		{
 			System.out.println("     Setting " + REG + " = " + val);
 		}
 	}
-	
+
 	public int compValue(IntelASM_StateMachine state, int value)
 	{
 		int val;
@@ -122,13 +155,13 @@ public class IntelASM_Register extends TokenSequence
 			val = value;
 			break;
 		}
-		
+
 		int myVal = getValue(state);
 		if (state._TRACE)
 		{
 			System.out.println("**** CMP " + myVal + " to " + val);
 		}
-		
+
 		return myVal - val;
 	}
 }

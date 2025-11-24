@@ -29,7 +29,7 @@ public class C_StrDupFunction extends PrimaryOperator
 		String str = interpreter.getStrValue(expr);
 		interpreter.pushStr(str);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

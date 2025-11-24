@@ -23,8 +23,9 @@ public class IntelASM_Brackets extends PrimaryOperator implements EagleRunnable
 		IntelASM_StateMachine state = (IntelASM_StateMachine) interpreter._state;
 
 		int index = interpreter.getIntValue(expr);
-		int value = state.getMemory4(index); 
-		// System.out.println("******* brackets index = " + index + " value = " + value);
+		int value = state.getMemory4(index);
+		// System.out.println("******* brackets index = " + index + " value = " +
+		// value);
 		interpreter.pushInt(value);
 	}
 }

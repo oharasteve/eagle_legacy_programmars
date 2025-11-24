@@ -37,13 +37,13 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
-		
+
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
 		switch (oper)
@@ -69,14 +69,14 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		}
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
-	
+
 	private static boolean isString(AbstractExpression expression)
 	{
 		Java_Expression expr = (Java_Expression) expression;
 		if (expr.getWhich() instanceof Java_Literal) return true;
 		return false;
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -88,7 +88,7 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		switch (operator.toString())
 		{
 		case "==":
-			return generator.newRelationalExpression(types, leftExpr,	
+			return generator.newRelationalExpression(types, leftExpr,
 					RelationalEnum.EQUALS, rightExpr, this);
 		case "!=":
 			return generator.newRelationalExpression(types, leftExpr,
@@ -120,15 +120,15 @@ public class Java_RelationalExpression extends PrecedenceOperator
 				doStrings = true;
 			}
 		}
-		
-		if (! doStrings)
+
+		if (!doStrings)
 		{
 			if (isString(leftExpr) || isString(rightExpr))
 			{
 				doStrings = true;
 			}
 		}
-		
+
 		if (doStrings)
 		{
 			Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();

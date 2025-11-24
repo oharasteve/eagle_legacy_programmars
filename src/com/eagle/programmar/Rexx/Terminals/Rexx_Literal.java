@@ -18,7 +18,7 @@ public class Rexx_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"", false, '?', true, false);
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -45,7 +45,7 @@ public class VB_CallStatement extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = subName.getValue();
-		
+
 		// Look up the subroutine
 		AbstractFunction func = interpreter.findFunction(name);
 		if (func == null || !(func instanceof VB_Subroutine))
@@ -89,9 +89,9 @@ public class VB_CallStatement extends TokenSequence
 		for (VB_Element stmt : subr.stmts._elements)
 		{
 			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL) break; 
+			if (result != Eagle_Statement_Result.NORMAL) break;
 		}
-		
+
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;
 		subr._callMetrics.addCallFrom(CALL, elapsedTime);

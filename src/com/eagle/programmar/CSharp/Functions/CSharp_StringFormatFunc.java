@@ -21,7 +21,7 @@ public class CSharp_StringFormatFunc extends TokenSequence implements EagleRunna
 	public @S(40) @NOSPACE PunctuationComma comma;
 	public @S(50) CSharp_Expression number;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -38,7 +38,7 @@ public class CSharp_StringFormatFunc extends TokenSequence implements EagleRunna
 		this.comma = new PunctuationComma();
 		this.number = num;
 		this.rightParen = new PunctuationRightParen();
-		
+
 		return CSharp_StringFunction.wrapStringFunction(this, source);
 	}
 }

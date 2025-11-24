@@ -14,10 +14,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
-public class COBOL_Transform_Initialize<Lang extends AbstractLanguage,
-		Cls extends AbstractClass, Stmt extends AbstractStatement,
-		Meth extends AbstractMethod, Expr extends AbstractExpression,
-		Var extends AbstractVariable, Type extends AbstractType>
+public class COBOL_Transform_Initialize<Lang extends AbstractLanguage, Cls extends AbstractClass, Stmt extends AbstractStatement, Meth extends AbstractMethod, Expr extends AbstractExpression, Var extends AbstractVariable, Type extends AbstractType>
 {
 	public Stmt transform(Transform_COBOL<Lang, Cls, Stmt, Meth, Expr, Var, Type> trans,
 			COBOL_InitializeStatement initializeStatement)

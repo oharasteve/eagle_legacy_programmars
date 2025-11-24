@@ -37,7 +37,7 @@ public class Perl_ForStatement extends TokenSequence
 	public @S(10) @DOC("control-structures.for.php") Perl_Keyword FOR = new Perl_Keyword("for");
 	public @S(20) Perl_ForWhat forWhat;
 	public @S(30) Perl_Statement action;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	public static class Perl_ForWhat extends TokenChooser
@@ -45,7 +45,7 @@ public class Perl_ForStatement extends TokenSequence
 		public @CHOICE Perl_ForVarInSet XXvarInSet;
 		public @CHOICE Perl_ForLikeC XXlikeC;
 	}
-	
+
 	public static class Perl_ForVarInSet extends TokenSequence
 	{
 		public @S(10) Perl_Keyword MY = new Perl_Keyword("my");
@@ -76,7 +76,7 @@ public class Perl_ForStatement extends TokenSequence
 			Perl_ForLikeC forLikeC = (Perl_ForLikeC) forWhat.getWhich();
 
 			AbstractToken which = forLikeC.variable.getWhich();
-			if (! (which instanceof Perl_UserVariable))
+			if (!(which instanceof Perl_UserVariable))
 			{
 				throw new RuntimeException("Must be a simple variable");
 			}
@@ -119,14 +119,14 @@ public class Perl_ForStatement extends TokenSequence
 
 			// Have to guess to see if it was backwards
 			boolean backwards = guessDirection(forLikeC.testExpr, forLikeC.incrExpr);
-			
+
 			_metrics.competedLoop(metric, backwards);
 			return result;
 		}
 
 		throw new RuntimeException("Unexpected for loop construct: " + forWhat.getWhich());
 	}
-	
+
 	private static boolean guessDirection(Perl_Expression testExpr, Perl_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -140,7 +140,7 @@ public class Perl_ForStatement extends TokenSequence
 			Perl_PreIncrementExpression pre = (Perl_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof Perl_RelationalExpression)
 		{
@@ -151,22 +151,22 @@ public class Perl_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		if (! (forWhat.getWhich() instanceof Perl_ForLikeC))
+		if (!(forWhat.getWhich() instanceof Perl_ForLikeC))
 		{
 			throw new RuntimeException("Can only handle regular for loops");
 		}
 		Perl_ForLikeC forLikeC = (Perl_ForLikeC) forWhat.getWhich();
-		
+
 		AbstractToken which = forLikeC.variable.getWhich();
-		if (! (which instanceof Perl_UserVariable))
+		if (!(which instanceof Perl_UserVariable))
 		{
 			throw new RuntimeException("Must be a simple variable");
 		}
@@ -177,7 +177,7 @@ public class Perl_ForStatement extends TokenSequence
 		AbstractExpression fromExpr = transformer.transformExpression(generator, forInit);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(newName,
 				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-		
+
 		AbstractExpression termExpr = transformer.transformExpression(generator, forLikeC.testExpr);
 		AbstractExpression delta = transformer.transformExpression(generator, forLikeC.incrExpr);
 		AbstractStatement newAction = transformer.transformStatement1(generator, this.action);

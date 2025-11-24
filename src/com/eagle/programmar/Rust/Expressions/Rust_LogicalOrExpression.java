@@ -36,7 +36,7 @@ public class Rust_LogicalOrExpression extends PrecedenceOperator
 			interpreter.pushBool(rightValue);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

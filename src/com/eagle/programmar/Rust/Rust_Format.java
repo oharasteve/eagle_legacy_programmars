@@ -64,7 +64,7 @@ public class Rust_Format
 		metrics.calledWith(argTypes);
 		return sb.toString();
 	}
-	
+
 	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator generator,
 			SeparatedList<Rust_Expression, PunctuationComma> argList, ArrayList<String> metrics)
 	{
@@ -76,7 +76,7 @@ public class Rust_Format
 		}
 
 		Rust_Expression fmtExpr = argList.first();
-		if (! (fmtExpr.getWhich() instanceof Rust_Literal))
+		if (!(fmtExpr.getWhich() instanceof Rust_Literal))
 		{
 			throw new RuntimeException("Format must be a literal for print!");
 		}
@@ -84,9 +84,9 @@ public class Rust_Format
 		String fmt = lit.getValue();
 		if (fmt.startsWith("\""))
 		{
-			fmt = fmt.substring(1, fmt.length()-1);
+			fmt = fmt.substring(1, fmt.length() - 1);
 		}
-		
+
 		int sc = fmt.indexOf("{}");
 		if (sc < 0)
 		{
@@ -117,12 +117,12 @@ public class Rust_Format
 					fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
 				}
 			}
-			
+
 			if (metrics != null)
 			{
 				types._type2 = metrics.get(i - 1);
 			}
-			
+
 			Rust_Expression nextArg = argList.getPrimaryElement(i);
 			AbstractExpression nextExpr = transformer.transformExpression(generator, nextArg);
 			if (fullExpr == null)
@@ -133,7 +133,7 @@ public class Rust_Format
 			{
 				fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
 			}
-			
+
 			prev = sc + 2;
 			sc = fmt.indexOf("{}", prev);
 			if (sc < 0) break; // Ran out of {} insertion points

@@ -92,7 +92,7 @@ public class C_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
 		if (stmts != null)
 		{
@@ -101,15 +101,16 @@ public class C_IfStatement extends TokenSequence
 				ifTrue.add(stmt2);
 			}
 		}
-		
+
 		if (this.elseClause != null && this.elseClause.isPresent())
 		{
-			for (AbstractStatement stmt4 : transformer.transformStatement(generator, elseClause.elseStatement.getWhich()))
+			for (AbstractStatement stmt4 : transformer.transformStatement(generator,
+					elseClause.elseStatement.getWhich()))
 			{
 				ifFalse.add(stmt4);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

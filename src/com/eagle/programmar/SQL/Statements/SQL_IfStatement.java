@@ -31,13 +31,13 @@ public class SQL_IfStatement extends TokenSequence
 	public @S(60) SQL_Keyword END = new SQL_Keyword("END");
 	public @S(70) SQL_Keyword IF2 = new SQL_Keyword("IF");
 	public @S(80) PunctuationSemicolon semicolon;
-	
+
 	public static class SQL_IfElseClause extends TokenSequence
 	{
 		public @S(10) SQL_Keyword ELSE = new SQL_Keyword("ELSE");
 		public @S(20) TokenList<SQL_StatementOrComment> statements;
 	}
-	
+
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	@Override
@@ -95,7 +95,7 @@ public class SQL_IfStatement extends TokenSequence
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
-		
+
 		for (SQL_StatementOrComment thenStatement : statements._elements)
 		{
 			ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator,
@@ -108,7 +108,7 @@ public class SQL_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (SQL_StatementOrComment elseStatement : elseClause.statements._elements)
@@ -124,7 +124,7 @@ public class SQL_IfStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		return stmt;
 	}

@@ -21,14 +21,14 @@ public class Basic_PrintStatement extends TokenSequence
 {
 	public @S(10) Basic_KeywordChoice PRINT = new Basic_KeywordChoice("PRINT", "PRI");
 	public @S(20) @OPT TokenList<Basic_PrintItem> items;
-	
+
 	public static class Basic_PrintItem extends TokenChooser
 	{
 		public @CHOICE Basic_Expression XXexpr;
 		public @CHOICE PunctuationSemicolon XXsemicolon;
 		public @CHOICE PunctuationComma XXcomma;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -73,7 +73,7 @@ public class Basic_PrintStatement extends TokenSequence
 				previous = which;
 			}
 
-			if (! (previous instanceof PunctuationSemicolon))
+			if (!(previous instanceof PunctuationSemicolon))
 			{
 				System.out.println();
 			}

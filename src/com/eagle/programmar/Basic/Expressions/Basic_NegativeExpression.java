@@ -24,7 +24,7 @@ public class Basic_NegativeExpression extends PrimaryOperator
 	{
 		EagleValue value = interpreter.getEagleValue(expr);
 		String oper = operator.getValue();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);

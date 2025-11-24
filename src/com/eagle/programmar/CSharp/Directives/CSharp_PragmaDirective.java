@@ -25,7 +25,7 @@ public class CSharp_PragmaDirective extends TokenSequence
 	public @S(30) CSharp_Keyword WARNING = new CSharp_Keyword("warning");
 	public @S(40) CSharp_KeywordChoice DISABLE = new CSharp_KeywordChoice("disable", "restore");
 	public @S(50) SeparatedList<CSharp_Expression, PunctuationComma> numbers;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

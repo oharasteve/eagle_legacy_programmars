@@ -57,7 +57,7 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 		foundIt(endLine, -1);
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{

@@ -57,7 +57,7 @@ public class Fortran_WriteStatement extends TokenSequence
 		// puts the number 'numb' into the string 'numStr' with format I5
 		String formatted = Fortran_Format.format(interpreter, format.getValue(), parameters, argTypes);
 		EagleString val = new EagleString(formatted);
-		
+
 		_metrics.calledWith(argTypes);
 		interpreter.setSymbol(this, var.var.getValue(), val);
 	}

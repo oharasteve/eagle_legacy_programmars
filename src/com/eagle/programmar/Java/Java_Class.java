@@ -122,24 +122,24 @@ public class Java_Class extends TokenSequence implements EagleRunnable, Abstract
 			throw new RuntimeException("Can't handle privacy: " + privacy);
 		}
 		this.modifierList.modifiers.addToken(modifier);
-		
+
 		this.className = new Java_Class_Definition();
 		this.className.setValue(cName);
-		
+
 		this.classOrInterface = new Java_KeywordChoice("class");
 		this.elements = new TokenList<Java_ClassElement>();
 		this.elements.setPresent(true);
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 	}
-	
+
 	public void addMethod(Java_Method method)
 	{
 		Java_ClassElement element = new Java_ClassElement();
 		element.setWhich(method);
 		this.elements.addToken(element);
 	}
-	
+
 	public void addComment(Java_Comment comment)
 	{
 		if (this.comments3 == null)

@@ -79,7 +79,7 @@ public class VB_Element extends TokenSequence implements AbstractStatement, Eagl
 			public @S(20) PunctuationColon colon;
 		}
 	}
-	
+
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{

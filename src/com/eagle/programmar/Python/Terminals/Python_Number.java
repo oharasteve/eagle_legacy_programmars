@@ -20,7 +20,7 @@ public class Python_Number extends TerminalNumberToken
 		// J is for complex ...
 		return genericNumber(lines, "Ee", "JjLl", true, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{
@@ -33,7 +33,7 @@ public class Python_Number extends TerminalNumberToken
 		this.setTransformationSource(source);
 		return this;
 	}
-	
+
 	public static Python_Number createNumber(int value)
 	{
 		Python_Number num = new Python_Number();

@@ -55,7 +55,7 @@ public class Julia_StringFunction extends PrimaryOperator
 		interpreter.pushStr(buff.toString());
 		_metrics.calledWith(argTypes);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -69,7 +69,7 @@ public class Julia_StringFunction extends PrimaryOperator
 		{
 			types = new Oper2Types();
 		}
-		
+
 		int numPieces = argList.getPrimaryCount();
 		for (int i = 0; i < numPieces; i++)
 		{
@@ -78,7 +78,7 @@ public class Julia_StringFunction extends PrimaryOperator
 				types._type1 = EagleString.STRING;
 				types._type2 = metrics.get(i);
 			}
-			
+
 			Julia_Expression piece = argList.getPrimaryElement(i);
 			if (i == 0)
 			{
@@ -90,7 +90,7 @@ public class Julia_StringFunction extends PrimaryOperator
 				line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 			}
 		}
-			
+
 		return line;
 	}
 }

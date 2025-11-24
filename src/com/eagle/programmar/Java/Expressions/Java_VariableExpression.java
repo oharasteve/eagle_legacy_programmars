@@ -49,13 +49,13 @@ public class Java_VariableExpression extends PrimaryOperator
 			subscript = transformer.transformExpression(generator, first.expr);
 		}
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof Java_Identifier_Reference))
+		if (!(which instanceof Java_Identifier_Reference))
 		{
 			throw new RuntimeException("Cannot handle variable: " + which);
 		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
-			return generator.newVariableExpression(id.getValue(),
-					SubscriptEnum.FIRST_IS_ZERO, subscript, this);
+		return generator.newVariableExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 
 	public Java_Expression generateVarExpr(String name, SubscriptEnum offset,
@@ -67,18 +67,18 @@ public class Java_VariableExpression extends PrimaryOperator
 		if (subscrExpr != null)
 		{
 			if (offset == SubscriptEnum.IT_IS_A_HASHMAP)
-			{	
+			{
 				Java_MethodInvocation invoke = new Java_MethodInvocation();
 				Java_Variable var = Java_Variable.newVariable(name + ".get");
 				ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
 				args.add(subscrExpr);
 				return invoke.generateInvocation(var, args, source);
 			}
-			
+
 			Java_Subscript subscript = new Java_Subscript();
 			subscript.leftBracket = new PunctuationLeftBracket();
 			subscript.rightBracket = new PunctuationRightBracket();
-			
+
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
 				Java_Number num = new Java_Number();

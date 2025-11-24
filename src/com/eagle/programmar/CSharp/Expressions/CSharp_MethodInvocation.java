@@ -80,7 +80,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 				{
 					if (i > 0)
 					{
-						arg = argList.moreArgs._elements.get(i-1).arg;
+						arg = argList.moreArgs._elements.get(i - 1).arg;
 					}
 					CSharp_MethodParameter param = meth.parameters.params.getPrimaryElement(i);
 					AbstractToken which = arg.getWhich();
@@ -123,7 +123,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 			throw new RuntimeException("Unable to call method " + methodName);
 		}
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -146,7 +146,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 					}
 				}
 			}
-			
+
 			AbstractVariable var = generator.newVariable(id.getValue());
 			return generator.newMethodInvocation(var, args, this);
 		}

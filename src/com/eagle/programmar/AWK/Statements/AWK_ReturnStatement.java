@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class AWK_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) AWK_Keyword RETURN = new AWK_Keyword("RETURN");
 	public @S(20) @OPT AWK_Expression expr;

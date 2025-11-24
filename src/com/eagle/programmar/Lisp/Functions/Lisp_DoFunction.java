@@ -38,7 +38,7 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 		public @S(40) @OPT Lisp_Expression increment;
 		public @S(50) PunctuationRightParen rightParen;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -56,19 +56,19 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 			val = interpreter.getEagleValue(variables.initialValue);
 			interpreter.setSymbol(variables.var, variables.var.getValue(), val);
 		}
-		
+
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
 			boolean done = interpreter.getBoolValue(terminateCondition);
 			if (done) break;
-			
+
 			metric.iterate();
 
 			for (Lisp_Expression action : actions._elements)
 			{
 				result = interpreter.tryToInterpret(action);
-				
+
 				if (result == Eagle_Statement_Result.RETURN)
 				{
 					metric.broke();
@@ -77,22 +77,22 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
 			if (result != Eagle_Statement_Result.NORMAL) break;
-			
+
 			if (variables.initialValue != null && variables.increment != null)
 			{
 				val = interpreter.getEagleValue(variables.increment);
 				interpreter.setSymbol(variables.increment, variables.var.getValue(), val);
 			}
 		}
-		
-		boolean backwards = false;	// TODO -- this might be true in some cases
+
+		boolean backwards = false; // TODO -- this might be true in some cases
 		_metrics.competedLoop(metric, backwards);
 
 		if (variables != null && variables.var != null)
 		{
 			interpreter.removeSymbol(variables.var.getValue());
 		}
-		
+
 		return Eagle_Statement_Result.NORMAL;
 	}
 }

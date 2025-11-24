@@ -33,7 +33,7 @@ public class Delphi_Odd_Function extends PrimaryOperator
 		int num = interpreter.getIntValue(expr);
 		interpreter.pushBool((num % 2) == 1);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

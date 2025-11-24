@@ -68,7 +68,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 		{
 			types = new Oper2Types();
 		}
-		
+
 		int numPieces = exprs.getPrimaryCount();
 		for (int i = 0; i < numPieces; i++)
 		{
@@ -77,7 +77,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 				types._type1 = EagleString.STRING;
 				types._type2 = metrics.get(i);
 			}
-			
+
 			SQL_Expression piece = exprs.getPrimaryElement(i);
 			if (i == 0)
 			{
@@ -89,7 +89,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 				line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 			}
 		}
-			
+
 		return line;
 	}
 }

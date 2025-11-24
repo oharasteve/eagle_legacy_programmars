@@ -75,7 +75,7 @@ public class AWK_ForStatement extends TokenSequence
 		while (true)
 		{
 			boolean keepGoing = interpreter.getBoolValue(test);
-			if (! keepGoing)
+			if (!keepGoing)
 			{
 				break;
 			}
@@ -113,11 +113,11 @@ public class AWK_ForStatement extends TokenSequence
 
 		// Have to guess to see if it was backwards
 		boolean backwards = guessDirection(test, increment);
-		
+
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	private static boolean guessDirection(AWK_Expression testExpr, AWK_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -131,7 +131,7 @@ public class AWK_ForStatement extends TokenSequence
 			AWK_PreIncrementExpression pre = (AWK_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof AWK_RelationalExpression)
 		{
@@ -142,10 +142,10 @@ public class AWK_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -155,7 +155,7 @@ public class AWK_ForStatement extends TokenSequence
 		AbstractExpression fromExpr = transformer.transformExpression(generator, initialize);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-		
+
 		AbstractExpression termExpr = transformer.transformExpression(generator, test);
 		AbstractExpression delta = transformer.transformExpression(generator, increment);
 		ArrayList<AbstractStatement> newActions = transformer.transformStatement(generator, block);

@@ -27,7 +27,7 @@ public class Bash_CaseCommand extends TokenSequence implements AbstractStatement
 	public @S(60) @OPT Bash_CaseDefault defaultClause;
 	public @S(70) Bash_Keyword ESAC = new Bash_Keyword("esac");
 	public @S(80) Bash_EndOfLine eoln2;
-	
+
 	public static class Bash_CaseClause extends TokenSequence
 	{
 		public @S(10) PunctuationLeftBracket leftBracket;
@@ -39,7 +39,7 @@ public class Bash_CaseCommand extends TokenSequence implements AbstractStatement
 		public @S(70) @OPT PunctuationSemicolon semicolon2;
 		public @S(80) Bash_EndOfLine eoln;
 	}
-	
+
 	public static class Bash_CaseDefault extends TokenSequence
 	{
 		public @S(10) PunctuationStar star;

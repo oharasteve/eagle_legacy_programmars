@@ -61,7 +61,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Python_ForStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @OPT Python_Keyword ASYNC = new Python_Keyword("async");
 	public @S(20) @DOC("compound_stmts.html#the-for-statement") @NOSPACE Python_Keyword FOR = new Python_Keyword("for");
@@ -108,12 +108,12 @@ public class Python_ForStatement extends TokenSequence
 				rangeExpr = (Python_RangeExpression) expr.getWhich();
 			}
 		}
-		
+
 		if (rangeExpr == null)
 		{
 			throw new RuntimeException("FOR statement requires a Range of values");
 		}
-		
+
 		int start = interpreter.getIntValue(rangeExpr.start);
 		int stop = interpreter.getIntValue(rangeExpr.stop);
 		int incr = 1;
@@ -153,7 +153,7 @@ public class Python_ForStatement extends TokenSequence
 					}
 				}
 			}
-			
+
 			metric.iterate();
 			interpreter.setSymbol(var, varName, new EagleInteger(i));
 
@@ -181,7 +181,7 @@ public class Python_ForStatement extends TokenSequence
 		_metrics.competedLoop(metric, incr < 0);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -194,7 +194,7 @@ public class Python_ForStatement extends TokenSequence
 				rangeExpr = (Python_RangeExpression) expr.getWhich();
 			}
 		}
-		
+
 		if (rangeExpr == null)
 		{
 			throw new RuntimeException("Python FOR statement requires a Range of values");
@@ -231,7 +231,7 @@ public class Python_ForStatement extends TokenSequence
 				actionList.add(stmt);
 			}
 		}
-		
+
 		AbstractVariable newVar = null;
 		if (what.getWhich() instanceof Python_VariableList)
 		{
@@ -263,7 +263,7 @@ public class Python_ForStatement extends TokenSequence
 		return generateForLoop(initExpression, condExpression, incrExpression,
 				actions, source);
 	}
-	
+
 	public Python_ComplexStatement generateForLoop(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
@@ -312,25 +312,25 @@ public class Python_ForStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		// Let's just deal with easy case: for (i=0; i<10; i++) etc.
-		if (! (initExpression.getWhich() instanceof Python_Assignment_Expression) ||
-				! (condition.getWhich() instanceof Python_Relational_Expression) ||
-				! (incrExpression.getWhich() instanceof Python_Assignment_Expression))
+		if (!(initExpression.getWhich() instanceof Python_Assignment_Expression) ||
+				!(condition.getWhich() instanceof Python_Relational_Expression) ||
+				!(incrExpression.getWhich() instanceof Python_Assignment_Expression))
 		{
 			throw new RuntimeException("Need to implement");
 		}
-		
+
 		Python_Assignment_Expression init = (Python_Assignment_Expression) initExpression.getWhich();
-		if (! init.operator.getValue().equals("=") ||
-				! (init.left.getWhich() instanceof Python_VariableExpression))
+		if (!init.operator.getValue().equals("=") ||
+				!(init.left.getWhich() instanceof Python_VariableExpression))
 		{
 			throw new RuntimeException("Assignment part too complicated for now.");
 		}
-		
+
 		Python_Assignment_Expression incr = (Python_Assignment_Expression) incrExpression.getWhich();
-		if (! (incr.left.getWhich() instanceof Python_VariableExpression) ||
-				! (incr.right.getWhich() instanceof Python_Number))
+		if (!(incr.left.getWhich() instanceof Python_VariableExpression) ||
+				!(incr.right.getWhich() instanceof Python_Number))
 		{
 			throw new RuntimeException("Increment part too complicated for now.");
 		}
@@ -342,15 +342,15 @@ public class Python_ForStatement extends TokenSequence
 		case "+=":
 			break;
 		case "-=":
-			delta = - delta;
+			delta = -delta;
 			break;
 		default:
 			throw new RuntimeException("Unexpected operator: " + incrOper);
 		}
-		
+
 		Python_Relational_Expression cond = (Python_Relational_Expression) condition.getWhich();
-		if (! (cond.operator.getWhich() instanceof Python_PunctuationChoice) ||
-				! (cond.left.getWhich() instanceof Python_VariableExpression))
+		if (!(cond.operator.getWhich() instanceof Python_PunctuationChoice) ||
+				!(cond.left.getWhich() instanceof Python_VariableExpression))
 		{
 			throw new RuntimeException("Condition part too complicated for now.");
 		}
@@ -379,30 +379,30 @@ public class Python_ForStatement extends TokenSequence
 		default:
 			throw new RuntimeException("Unexpected operator: " + condOper.getValue());
 		}
-		
+
 		Python_VariableExpression initVarExp = (Python_VariableExpression) init.left.getWhich();
 		Python_VariableExpression condVarExp = (Python_VariableExpression) cond.left.getWhich();
 		Python_VariableExpression incrVarExp = (Python_VariableExpression) incr.left.getWhich();
-		
+
 		AbstractToken initWhich = initVarExp.variable.var.getWhich();
 		AbstractToken condWhich = condVarExp.variable.var.getWhich();
 		AbstractToken incrWhich = incrVarExp.variable.var.getWhich();
-		if (! (initWhich instanceof Python_Identifier_Reference) ||
-				! (condWhich instanceof Python_Identifier_Reference) ||
-				! (incrWhich instanceof Python_Identifier_Reference))
+		if (!(initWhich instanceof Python_Identifier_Reference) ||
+				!(condWhich instanceof Python_Identifier_Reference) ||
+				!(incrWhich instanceof Python_Identifier_Reference))
 		{
 			throw new RuntimeException("Must use variables in all parts");
 		}
-		
+
 		Python_Identifier_Reference initId = (Python_Identifier_Reference) initWhich;
 		Python_Identifier_Reference condId = (Python_Identifier_Reference) condWhich;
 		Python_Identifier_Reference incrId = (Python_Identifier_Reference) incrWhich;
 		String id = initId.getValue();
-		if (! condId.getValue().equals(id) || ! incrId.getValue().equals(id))
+		if (!condId.getValue().equals(id) || !incrId.getValue().equals(id))
 		{
 			throw new RuntimeException("Must use the same variable in all parts");
 		}
-		
+
 		// Ok, made it through the gauntlet ....
 		Python_Number numb = Python_Number.createNumber(delta);
 		Python_Expression deltaExp = new Python_Expression();
@@ -428,7 +428,7 @@ public class Python_ForStatement extends TokenSequence
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_ComplexStatement>();
 		this.forBlock.setWhich(multi);
-		
+
 		this.what = new Python_ForWhat();
 		Python_VariableList varList = new Python_VariableList();
 		varList.vars = new SeparatedList<Python_VariableOrList, PunctuationComma>();
@@ -454,10 +454,9 @@ public class Python_ForStatement extends TokenSequence
 			}
 		}
 
-		SeparatedList<Python_Expression, PunctuationComma> argList =
-				new SeparatedList<Python_Expression, PunctuationComma>();
+		SeparatedList<Python_Expression, PunctuationComma> argList = new SeparatedList<Python_Expression, PunctuationComma>();
 		argList.addPrimaryElement(fromExpression);
-		
+
 		// range(3,6,1) generates 3,4,5
 		// range(6,3,-1) generates 6,5,4
 		// Need to add 1 if delta > 0 or delta = null, subtract 1 if delta < 0
@@ -484,10 +483,10 @@ public class Python_ForStatement extends TokenSequence
 
 			Python_Number one = new Python_Number();
 			Python_Expression oneExpr = Python_Generator.wrapExpression(one.generateNumber("1", null));
-		
+
 			Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
 			Python_Expression parenExpr = parens.generateParentheses(toExpression, null);
-			
+
 			Python_Additive_Expression add = new Python_Additive_Expression();
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
 			high = add.generateAdditive(types, parenExpr, oper, oneExpr, null);

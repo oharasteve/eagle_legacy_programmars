@@ -41,7 +41,7 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 		public @CHOICE FSharp_RangeExpr_high XXjustHigh;
 		public @LAST FSharp_RangeJustOne XXjustOne;
 	}
-	
+
 	public static class FSharp_RangeExpr_low_high extends TokenSequence
 	{
 		public @S(10) FSharp_Expression low;
@@ -79,7 +79,8 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 				int sub = interpreter.getIntValue(justOne.subscr);
 				interpreter.pushEagleValue(array.getValue(sub));
 			}
-			else throw new RuntimeException("Unable to use subscript for " + expr);
+			else
+				throw new RuntimeException("Unable to use subscript for " + expr);
 		}
 		else
 		{
@@ -102,7 +103,7 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 				FSharp_RangeExpr_high range = (FSharp_RangeExpr_high) subscr.getWhich();
 				ec = interpreter.getIntValue(range.high) + 1;
 			}
-			
+
 			interpreter.pushStr(str.substring(sc, ec));
 		}
 	}

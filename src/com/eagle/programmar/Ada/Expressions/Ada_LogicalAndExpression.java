@@ -32,7 +32,7 @@ public class Ada_LogicalAndExpression extends PrecedenceOperator
 		}
 		interpreter.pushBool(false);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

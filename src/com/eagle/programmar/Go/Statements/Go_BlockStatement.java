@@ -20,7 +20,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Go_BlockStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Go_EOLN eoln1;
@@ -39,10 +39,11 @@ public class Go_BlockStatement extends TokenSequence
 		}
 		return result;
 	}
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>(); 
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Go_Statement statement : statements._elements)
 		{
 			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, statement.getWhich());
@@ -54,10 +55,10 @@ public class Go_BlockStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		return generator.newBlockStatement(result, this);
 	}
-	
+
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
 			EagleGenerator generator, Go_Statement statement)
 	{

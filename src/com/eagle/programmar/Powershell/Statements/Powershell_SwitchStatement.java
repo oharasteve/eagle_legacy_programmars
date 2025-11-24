@@ -28,7 +28,7 @@ public class Powershell_SwitchStatement extends TokenSequence implements Abstrac
 	public @S(80) @OPT TokenList<Powershell_SwitchCases> cases;
 	public @S(90) PunctuationRightBrace rightBrace;
 	public @S(100) @OPT Powershell_EndOfLine eoln3;
-	
+
 	public static class Powershell_SwitchCases extends TokenSequence
 	{
 		public @S(10) Powershell_SwitchCondition switchCondition;

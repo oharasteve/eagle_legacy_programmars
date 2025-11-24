@@ -51,17 +51,17 @@ public class Rexx_Comment extends TerminalCommentToken
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String description()
 	{
 		return "/* comment */ or // comment to end of line";
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;		// Might want to keep comment statements somehow.
+		return null; // Might want to keep comment statements somehow.
 	}
 }

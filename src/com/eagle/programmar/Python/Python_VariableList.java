@@ -25,7 +25,7 @@ public class Python_VariableList extends TokenSequence
 
 	public static class Python_Just_Var extends TokenSequence
 	{
-		public @S(10) SeparatedList<Python_VariableAndSubscript,PunctuationPeriod> variable;
+		public @S(10) SeparatedList<Python_VariableAndSubscript, PunctuationPeriod> variable;
 	}
 
 	public static class Python_VariableAndSubscript extends TokenSequence
@@ -33,7 +33,7 @@ public class Python_VariableList extends TokenSequence
 		public @S(10) Python_Variable variable;
 		public @S(20) @OPT Python_Subscript subscript;
 	}
-	
+
 	public static class Python_Var_List extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;

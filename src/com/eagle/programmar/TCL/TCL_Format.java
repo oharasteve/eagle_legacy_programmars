@@ -29,26 +29,26 @@ public class TCL_Format
 			int firstBracket = txt.indexOf('[', sc);
 			int firstDollar = txt.indexOf('$', sc);
 			String var = "";
-			
+
 			// Four cases:
-			
-			//   I: no more [] or $
+
+			// I: no more [] or $
 			if (firstBracket < 0 && firstDollar < 0)
 			{
 				sb.append(txt.substring(sc, nc));
 				break; // Done -- no more [
 			}
-			
-			//  II: just [] or IV: [] before $
+
+			// II: just [] or IV: [] before $
 			if (firstDollar < 0 || (firstBracket >= 0 && firstBracket < firstDollar))
 			{
 				int secondBracket = txt.indexOf(']', firstBracket + 1);
 				if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + txt);
-				var = txt.substring(firstBracket, secondBracket + 1);	// Leave in the brackets
+				var = txt.substring(firstBracket, secondBracket + 1); // Leave in the brackets
 				if (firstBracket > sc) sb.append(txt.substring(sc, firstBracket));
 				sc = secondBracket + 1;
 			}
-			
+
 			// III: just $ or IV: $ before []
 			if (firstBracket < 0 || (firstDollar >= 0 && firstDollar < firstBracket))
 			{
@@ -75,7 +75,7 @@ public class TCL_Format
 		}
 		return sb.toString();
 	}
-	
+
 	public static AbstractExpression compile(EagleGenerator generator, String fmt, AbstractToken source)
 	{
 		AbstractExpression result = null;
@@ -86,7 +86,7 @@ public class TCL_Format
 		{
 			return generator.newLiteralExpression("", null);
 		}
-		
+
 		if (txt.indexOf('[') >= 0)
 		{
 			throw new RuntimeException("Can't handle [] in TCL_Format.compile yet");
@@ -100,9 +100,9 @@ public class TCL_Format
 			int ec = nextDollar;
 			if (nextDollar < 0)
 			{
-				ec = nc;	// No more $, go all the way to the end
+				ec = nc; // No more $, go all the way to the end
 			}
-			
+
 			if (ec > sc)
 			{
 				// Grab next literal piece
@@ -145,7 +145,7 @@ public class TCL_Format
 			}
 			sc = endDollar;
 		}
-		
+
 		return result;
 	}
 }

@@ -31,7 +31,7 @@ public class C_TypeAttributes extends TokenSequence
 			public @S(30) C_Keyword WORD = new C_Keyword("__word__");
 			public @S(40) PunctuationRightParen rightParen;
 		}
-		
+
 		public @CHOICE static class C_TypedefAttributeAligned extends TokenSequence
 		{
 			public @S(10) C_Keyword ALIGNED = new C_Keyword("__aligned__");

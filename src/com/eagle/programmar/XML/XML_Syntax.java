@@ -9,7 +9,7 @@ import com.eagle.programmar.HTML.HTML_Syntax;
 public class XML_Syntax extends EagleSyntax
 {
 	public static final boolean IS_CASE_SENSITIVE = false;
-	
+
 	@Override
 	public String syntaxId()
 	{

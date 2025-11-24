@@ -42,7 +42,7 @@ public class VB_ArrayExpression extends PrimaryOperator
 
 		interpreter.pushEagleValue(vals);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)

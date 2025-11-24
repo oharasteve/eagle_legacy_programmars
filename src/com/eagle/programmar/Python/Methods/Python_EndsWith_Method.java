@@ -33,23 +33,23 @@ public class Python_EndsWith_Method extends PrimaryOperator
 		String patt = interpreter.getStrValue(pattern);
 		interpreter.pushBool(str.endsWith(patt));
 	}
-	
+
 	public Python_Expression generateEndsWith(Python_Expression expr, Python_Expression patt,
 			AbstractToken source)
 	{
 		AbstractToken token = expr.getWhich();
-		if (! (token instanceof Python_VariableExpression))
+		if (!(token instanceof Python_VariableExpression))
 		{
 			throw new RuntimeException("Python endswith must be a variable, not " + token);
 		}
-		
+
 		Python_VariableExpression varExpr = (Python_VariableExpression) token;
 		this.string = varExpr.variable;
 		this.dot = new PunctuationPeriod();
 		this.leftParen = new PunctuationLeftParen();
 		this.pattern = patt;
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Python_Generator.wrapExpression(this);
 	}

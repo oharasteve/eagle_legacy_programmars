@@ -33,7 +33,7 @@ public class Eaglish_LogicalAndExpression extends PrecedenceOperator
 		boolean rightValue = interpreter.getBoolValue(right);
 		interpreter.pushBool(rightValue);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

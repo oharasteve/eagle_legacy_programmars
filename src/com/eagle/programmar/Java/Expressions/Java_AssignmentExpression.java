@@ -86,7 +86,7 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
 		}
 
-		if (! (var.getWhich() instanceof Java_VariableExpression))
+		if (!(var.getWhich() instanceof Java_VariableExpression))
 		{
 			throw new RuntimeException("Can only assign variables");
 		}
@@ -98,20 +98,20 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		{
 			subscrExpr = transformer.transformExpression(generator, theVar.subscript.first().expr);
 		}
-		
+
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractToken which = theVar.firstId.getWhich();
-		if (! (which instanceof Java_Identifier_Reference))
+		if (!(which instanceof Java_Identifier_Reference))
 		{
 			throw new RuntimeException("Have to assign to a regular variable");
 		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
-		
+
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
 		return asgExpr;
 	}
-	
+
 	public Java_Expression generateAssignment(Java_Variable variable, Java_Expression subscript,
 			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
@@ -130,14 +130,14 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + oper);
 		}
-		
+
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof Java_Identifier_Reference))
+		if (!(which instanceof Java_Identifier_Reference))
 		{
 			throw new RuntimeException("Unable to handle " + which);
 		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
-		
+
 		Java_VariableExpression varExpr = new Java_VariableExpression();
 		this.var = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
 		this.operator.setValue(punct);

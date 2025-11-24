@@ -37,14 +37,14 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rexx_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("reference-functions") Rexx_Function_Definition id;
 	public @S(20) PunctuationColon colon;
 	public @S(30) Rexx_EndOfLine eoln;
 	public @S(40) @OPT Rexx_Parameters params;
 	public @S(50) TokenList<Rexx_Element> stmts;
-	
+
 	public static class Rexx_Parameters extends TokenSequence
 	{
 		public @S(10) Rexx_Keyword PARSE = new Rexx_Keyword("PARSE");
@@ -52,7 +52,7 @@ public class Rexx_Function extends TokenSequence
 		public @S(30) SeparatedList<Rexx_Variable_Definition, PunctuationComma> params;
 		public @S(40) Rexx_EndOfLine eoln;
 	}
-	
+
 	private @SKIP EagleScope _scope = new EagleScope(this, Rexx_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -60,7 +60,7 @@ public class Rexx_Function extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
@@ -80,7 +80,7 @@ public class Rexx_Function extends TokenSequence
 		{
 			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
-		
+
 		// Don't do anything here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called
@@ -91,7 +91,7 @@ public class Rexx_Function extends TokenSequence
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -99,31 +99,32 @@ public class Rexx_Function extends TokenSequence
 		{
 			System.out.println("** Found Rexx function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (params != null && params.isPresent())
 		{
 			for (int i = 0; i < params.params.getPrimaryCount(); i++)
 			{
 				Rexx_Variable_Definition param = params.params.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
-				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+
+				// System.err.println("****** paramType = " + paramType + " value = " +
+				// param.getValue());
 				generator.addMethodParameter(paramType, param.getValue());
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
-		
+
 		for (Rexx_Element stmt : stmts._elements)
 		{
 			AbstractToken which = stmt.baseStatement.getWhich();
@@ -137,7 +138,7 @@ public class Rexx_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 
@@ -168,7 +169,7 @@ public class Rexx_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

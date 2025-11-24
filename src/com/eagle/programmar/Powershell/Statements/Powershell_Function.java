@@ -44,10 +44,10 @@ import com.eagle.transform.EagleTransformer;
 
 public class Powershell_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
-	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION =
-			new Powershell_Keyword("Function");
+	public @S(10) @DOC("chapter-08?view=powershell-5.1#810-function-definitions") Powershell_Keyword FUNCTION = new Powershell_Keyword(
+			"Function");
 	public @S(20) Powershell_Function_Definition id;
 	public @S(30) @OPT Powershell_FunctionParams params;
 	public @S(40) @OPT Powershell_EndOfLine eoln1;
@@ -108,13 +108,13 @@ public class Powershell_Function extends TokenSequence
 		// We searched for all the function in a preliminary pass
 		// And we only evaluate when it is called
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-		
+
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -122,31 +122,32 @@ public class Powershell_Function extends TokenSequence
 		{
 			System.out.println("** Found Powershell function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (params != null && params.isPresent())
 		{
 			for (int i = 0; i < params.params.getPrimaryCount(); i++)
 			{
 				Powershell_FunctionParam paramVar = params.params.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, paramVar);
 				}
-				
-				// System.err.println("****** paramType = " + paramType + " value = " + param.getValue());
+
+				// System.err.println("****** paramType = " + paramType + " value = " +
+				// param.getValue());
 				generator.addMethodParameter(paramType, paramVar.var.id.getValue());
 			}
 		}
-		
+
 		addLocalVars(transformer, generator);
-		
+
 		for (Powershell_Element stmt : stmts._elements)
 		{
 			AbstractToken which = stmt.element.getWhich();
@@ -160,10 +161,10 @@ public class Powershell_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
-	
+
 	private boolean isFuncParam(String name)
 	{
 		if (params != null && params.isPresent())
@@ -191,7 +192,7 @@ public class Powershell_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

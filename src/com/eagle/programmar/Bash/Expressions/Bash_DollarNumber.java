@@ -14,7 +14,7 @@ public class Bash_DollarNumber extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Bash_Punctuation dollar = new Bash_Punctuation("$");
 	public @S(20) Bash_Number number;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

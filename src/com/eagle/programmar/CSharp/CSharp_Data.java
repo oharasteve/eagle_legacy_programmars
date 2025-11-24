@@ -81,13 +81,13 @@ public class CSharp_Data extends TokenSequence
 	{
 		interpreter.tryToInterpret(dataBody);
 	}
-	
+
 	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = CSharp_Type.findType(generator, dataBody.type);
-		
+
 		String name = dataBody.id.getValue();
 		AbstractExpression initial = null;
 		if (dataBody.initialValue != null && dataBody.initialValue.isPresent())
@@ -95,7 +95,7 @@ public class CSharp_Data extends TokenSequence
 			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
 		}
 		result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
-		
+
 		for (CSharp_MoreIdentifiers more : dataBody.moreIds._elements)
 		{
 			name = more.id.getValue();
@@ -106,7 +106,7 @@ public class CSharp_Data extends TokenSequence
 			}
 			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
 		}
-		
+
 		return result;
 	}
 
@@ -114,7 +114,7 @@ public class CSharp_Data extends TokenSequence
 	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractType newType = CSharp_Type.findType(generator, dataBody.type);
-		
+
 		String name = dataBody.id.getValue();
 		AbstractExpression initial = null;
 		if (dataBody.initialValue != null && dataBody.initialValue.isPresent())
@@ -123,25 +123,26 @@ public class CSharp_Data extends TokenSequence
 		}
 		return generator.newDataDeclaration(true, name, null, newType, initial, dataBody);
 	}
-	
-	public static CSharp_Data newDataDeclaration(boolean isStatic, String name, CSharp_Expression size, CSharp_Type type,
+
+	public static CSharp_Data newDataDeclaration(boolean isStatic, String name, CSharp_Expression size,
+			CSharp_Type type,
 			CSharp_Expression initial, AbstractToken source)
 	{
 		if (type == null)
 		{
 			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
-		
+
 		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
 		{
 			// Sorry, cannot redefine true or false
 			return null;
 		}
-		
+
 		CSharp_Data data = new CSharp_Data();
 		data.dataBody = new CSharp_DataBeforeSemicolon();
 		data.semicolon = new PunctuationSemicolon();
-		
+
 		// Set data name and type
 		data.dataBody.id = new CSharp_Variable_Definition();
 		data.dataBody.id.setValue(name);
@@ -151,7 +152,7 @@ public class CSharp_Data extends TokenSequence
 		{
 			data.addModifier("static");
 		}
-		
+
 		// Set the initial value, if any
 		if (initial != null)
 		{
@@ -166,7 +167,7 @@ public class CSharp_Data extends TokenSequence
 		data.setTransformationSource(source);
 		return data;
 	}
-	
+
 	private boolean hasModifier(String which)
 	{
 		if (dataBody.modifiers != null)
@@ -181,7 +182,7 @@ public class CSharp_Data extends TokenSequence
 		}
 		return false;
 	}
-	
+
 	public void addModifier(String which)
 	{
 		CSharp_DataModifier mod = new CSharp_DataModifier();
@@ -191,7 +192,7 @@ public class CSharp_Data extends TokenSequence
 			dataBody.modifiers = new TokenList<CSharp_DataModifier>();
 			dataBody.modifiers.setPresent(true);
 		}
-		if (! hasModifier(which))
+		if (!hasModifier(which))
 		{
 			dataBody.modifiers.addToken(mod);
 		}

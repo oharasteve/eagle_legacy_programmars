@@ -65,28 +65,27 @@ public class Java_CSharp
 				String xmlFile = xmlDir + base + "_java.xml";
 				String htmlFile = htmlDir + base + ".html";
 				String csFile = csDir + base + ".cs";
-				
+
 				System.out.println(_count + ". Converting " + javaFile +
 						"\n    to " + csFile);
 
 				try
 				{
 					File csDirFile = new File(csDir);
-					if (! csDirFile.exists())
+					if (!csDirFile.exists())
 					{
 						System.out.println("Creating directory " + csDirFile.getCanonicalPath());
 						csDirFile.mkdirs();
 					}
 
 					File htmlDirFile = new File(htmlDir);
-					if (! htmlDirFile.exists())
+					if (!htmlDirFile.exists())
 					{
 						System.out.println("Creating directory " + htmlDirFile.getCanonicalPath());
 						htmlDirFile.mkdirs();
 					}
 
-					EagleTransformMain<Java_Program, Java_Class, Java_Statement, Java_Method, Java_Expression, Java_Variable, Java_Type> etm =
-							new EagleTransformMain<Java_Program, Java_Class, Java_Statement, Java_Method, Java_Expression, Java_Variable, Java_Type>();
+					EagleTransformMain<Java_Program, Java_Class, Java_Statement, Java_Method, Java_Expression, Java_Variable, Java_Type> etm = new EagleTransformMain<Java_Program, Java_Class, Java_Statement, Java_Method, Java_Expression, Java_Variable, Java_Type>();
 					etm.doTransform(xmlFile, javaFile, csFile, htmlFile);
 				}
 				catch (Exception ex)

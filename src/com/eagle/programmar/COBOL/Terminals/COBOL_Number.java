@@ -17,7 +17,7 @@ public class COBOL_Number extends TerminalNumberToken implements EagleTransforma
 	{
 		return genericNumber(lines, null, null, false, false, '?');
 	}
-	
+
 	@Override
 	public String description()
 	{

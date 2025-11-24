@@ -15,11 +15,11 @@ public class Perl_StatementOrComment extends TokenChooser
 {
 	public @CHOICE Perl_Statement XXstatement;
 	public @CHOICE Perl_Comment XXcomment;
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! (getWhich() instanceof Perl_Statement))
+		if (!(getWhich() instanceof Perl_Statement))
 		{
 			return null;
 		}

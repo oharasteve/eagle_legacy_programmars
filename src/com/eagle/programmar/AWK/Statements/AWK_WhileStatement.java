@@ -37,7 +37,7 @@ public class AWK_WhileStatement extends TokenSequence
 		public @CHOICE AWK_Statement XXstmt;
 		public @CHOICE AWK_Action XXactions;
 	}
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	@Override
@@ -77,13 +77,13 @@ public class AWK_WhileStatement extends TokenSequence
 		_metrics.competedLoop(metric, false);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator, whileStatement.getWhich());
 		if (stmts1 != null)
 		{
@@ -92,7 +92,7 @@ public class AWK_WhileStatement extends TokenSequence
 				whileTrue.add(stmt1);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

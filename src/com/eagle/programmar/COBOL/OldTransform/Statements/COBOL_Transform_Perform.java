@@ -71,7 +71,8 @@ public class COBOL_Transform_Perform<Lang extends AbstractLanguage, Cls extends 
 
 			if (stopVal != null)
 			{
-				Stmt forStatement = trans._target._createStatement.createForRangeStatement(loopVar, initVal, stopVal, incrVal, action, varying);
+				Stmt forStatement = trans._target._createStatement.createForRangeStatement(loopVar, initVal, stopVal,
+						incrVal, action, varying);
 				return forStatement;
 			}
 		}
@@ -131,7 +132,8 @@ public class COBOL_Transform_Perform<Lang extends AbstractLanguage, Cls extends 
 					Expr incrVal = trans.transformExpression(varying.by);
 					Expr stopVal = findStopValue(trans, varying);
 					// if (stopVal == null) return null;
-					Stmt forStatement = trans._target._createStatement.createForRangeStatement(loopVar, initVal, stopVal, incrVal, action, varying);
+					Stmt forStatement = trans._target._createStatement.createForRangeStatement(loopVar, initVal,
+							stopVal, incrVal, action, varying);
 					action = forStatement;
 				}
 				else if (which instanceof COBOL_PerformUntil)

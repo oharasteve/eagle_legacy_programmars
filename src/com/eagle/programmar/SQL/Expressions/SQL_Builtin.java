@@ -33,7 +33,7 @@ public class SQL_Builtin extends PrimaryOperator
 		}
 		throw new RuntimeException("Can't handle BuiltIn: " + builtIn);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

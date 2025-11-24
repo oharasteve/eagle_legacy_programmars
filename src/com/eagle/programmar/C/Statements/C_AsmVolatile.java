@@ -19,8 +19,8 @@ public class C_AsmVolatile extends TokenSequence
 	// __asm__ __volatile__ ("inb %w1,%0":"=a" (_v):"Nd" (__port));
 	// __asm__ __volatile__ ("cld ; rep ; insb":"=D" (__addr), "=c" (__count)
 	// __asm__ __volatile__ ("cld ; rep ; insb":"=D" (__addr), "=c" (__count)
-	//                       :"d" (__port), "0" (__addr), "1" (__count));
-	
+	// :"d" (__port), "0" (__addr), "1" (__count));
+
 	public @S(10) C_Keyword ASM = new C_Keyword("__asm__");
 	public @S(20) C_Keyword VOLATILE = new C_Keyword("__volatile__");
 	public @S(30) PunctuationLeftParen leftParen;

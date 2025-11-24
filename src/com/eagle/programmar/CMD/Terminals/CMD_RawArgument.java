@@ -94,7 +94,7 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 		foundIt(_currentLine, _endChar - offset);
 		return true;
 	}
-	
+
 	@Override
 	public String description()
 	{
@@ -133,12 +133,12 @@ public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnab
 			int ec;
 			if (first + 2 < nc && txt.charAt(first + 1) == '~' && Character.isDigit(txt.charAt(first + 2)))
 			{
-				var = txt.substring(first, first + 3);   // Treat %~2 special
+				var = txt.substring(first, first + 3); // Treat %~2 special
 				ec = first + 2;
 			}
 			else if (first + 2 < nc && txt.charAt(first + 1) == '%' && Character.isLetter(txt.charAt(first + 2)))
 			{
-				var = txt.substring(first, first + 3);	// Treat %%A special
+				var = txt.substring(first, first + 3); // Treat %%A special
 				ec = first + 2;
 			}
 			else

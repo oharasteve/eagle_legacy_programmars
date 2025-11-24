@@ -41,7 +41,7 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 			public @S(20) Delphi_Type type;
 		}
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -51,7 +51,7 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 			interpreter.setSymbol(con, con.constant.getValue(), val);
 		}
 	}
-	
+
 	public void transformConsts(EagleTransformer transformer, EagleGenerator generator)
 	{
 		for (Delphi_Const constant : this.constants._elements)

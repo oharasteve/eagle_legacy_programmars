@@ -9,7 +9,6 @@ import com.eagle.tokens.PrimaryOperator;
 
 public class Powershell_PreIncrementExpression extends PrimaryOperator
 {
-	public @S(10) Powershell_PunctuationChoice operator =
-			new Powershell_PunctuationChoice("++", "--");
+	public @S(10) Powershell_PunctuationChoice operator = new Powershell_PunctuationChoice("++", "--");
 	public @S(20) Powershell_Variable var;
 }

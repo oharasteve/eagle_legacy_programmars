@@ -29,7 +29,7 @@ public class Java_ToStringMethod extends PrecedenceOperator
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @OPT @NOSPACE Java_Expression value;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -41,7 +41,8 @@ public class Java_ToStringMethod extends PrecedenceOperator
 	{
 		if (types != null && types._type1.equals(EagleInteger.INTEGER))
 		{
-			// Java does not like 'ok.toString()' where 'ok' is an int instead of an Integer.
+			// Java does not like 'ok.toString()' where 'ok' is an int instead of an
+			// Integer.
 			Java_VariableExpression varExpr = new Java_VariableExpression();
 			varExpr.variable = Java_Variable.newVariable("Integer");
 			expression = Java_Generator.wrapExpression(varExpr);
@@ -52,7 +53,7 @@ public class Java_ToStringMethod extends PrecedenceOperator
 			rightParen = new PunctuationRightParen();
 			return Java_Generator.wrapExpression(this);
 		}
-		
+
 		Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
 		return parens.generateParentheses(expr, source);
 	}

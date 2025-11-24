@@ -48,7 +48,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 		public @S(10) CMD_PunctuationChoice minus = new CMD_PunctuationChoice("-", "/");
 		public @S(20) CMD_BasicExpression option;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -60,7 +60,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 			throw new RuntimeException("Unable to find a label named " + name);
 		}
 		CMD_Label func = (CMD_Label) fn;
-		// AbstractFunction saveFunc = interpreter._currentFunction;	// Often null
+		// AbstractFunction saveFunc = interpreter._currentFunction; // Often null
 		interpreter.setCurrentFunction(func);
 
 		// Now assign all the parameters (%1 %2 etc)
@@ -95,12 +95,12 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 				result = interpreter.tryToInterpret(cmdOr);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			else   // Have to search for our label (aka function)
+			else // Have to search for our label (aka function)
 			{
 				if (cmdOr.getWhich() instanceof CMD_Label)
 				{
 					CMD_Label lbl = (CMD_Label) cmdOr.getWhich();
-					if (lbl == func)    // Careful, comparing Objects here
+					if (lbl == func) // Careful, comparing Objects here
 					{
 						foundLabel = true;
 					}

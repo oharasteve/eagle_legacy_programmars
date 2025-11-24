@@ -53,7 +53,7 @@ public class PLI_Literal extends TerminalLiteralToken
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String description()
 	{

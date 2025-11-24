@@ -39,7 +39,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class SQL_CreateProcedureStatement extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("sql_create_procedure.asp") SQL_Keyword CREATE = new SQL_Keyword("CREATE");
 	public @S(20) @OPT SQL_OrReplaceProcedure replace;
@@ -52,20 +52,20 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 	public @S(90) TokenList<SQL_StatementOrComment> statements;
 	public @S(100) SQL_Keyword END = new SQL_Keyword("END");
 	public @S(110) SQL_PunctuationChoice semicolon = new SQL_PunctuationChoice(";", "//");
-	
+
 	public static class SQL_OrReplaceProcedure extends TokenSequence
 	{
 		public @S(10) SQL_Keyword OR = new SQL_Keyword("OR");
 		public @S(20) SQL_Keyword REPLACE = new SQL_Keyword("REPLACE");
 	}
-	
+
 	public static class SQL_ProcedureParameter extends TokenSequence
 	{
 		public @S(10) @OPT SQL_KeywordChoice OUT = new SQL_KeywordChoice("IN", "OUT");
 		public @S(20) SQL_Parameter_Definition param;
 		public @S(30) SQL_Type type;
 	}
-	
+
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 
@@ -92,7 +92,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, procName.getValue(), procName);
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -103,7 +103,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		{
 			System.out.println("** Found SQL procedure " + newName);
 		}
-		
+
 		if (params != null && params.isPresent())
 		{
 			int nParams = params.getPrimaryCount();
@@ -116,7 +116,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		}
 
 		createLocalVariables(transformer, generator);
-		
+
 		for (SQL_StatementOrComment stmtComm : statements._elements)
 		{
 			AbstractToken which = stmtComm.getWhich();
@@ -133,10 +133,10 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
-	
+
 	private void createLocalVariables(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// Are there any global variables we need to declare?
@@ -150,14 +150,14 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 				if (typE != TypeEnum.VOID)
 				{
 					AbstractType abstrType = generator.transformType(typE, null, this);
-	
+
 					AbstractExpression initExpr = null;
 					if (typE == TypeEnum.STRING_HASH)
 					{
 						// Need to create an empty hashmap
 						initExpr = generator.newClassCreation(abstrType, null, this);
 					}
-					
+
 					// System.err.println("****** Found local var " + met._symbolName);
 					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
 							null, abstrType, initExpr, this);

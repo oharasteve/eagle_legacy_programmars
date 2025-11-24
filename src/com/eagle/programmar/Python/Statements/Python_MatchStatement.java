@@ -35,14 +35,14 @@ public class Python_MatchStatement extends TokenSequence
 		public @S(50) @NOSPACE PunctuationColon colon;
 		public @S(60) @PYDENT Python_StatementBlock statements;
 	}
-	
+
 	public Python_ComplexStatement generateMatch(Python_Expression expr,
 			ArrayList<Python_Expression> values, ArrayList<ArrayList<Python_ComplexStatement>> cases,
 			ArrayList<Python_ComplexStatement> defaultCase, AbstractToken source)
 	{
 		this.colon = new PunctuationColon();
 		this.expression = expr;
-		
+
 		int numCases = values.size();
 		matchCases = new TokenList<Python_MatchCase>();
 		for (int i = 0; i < numCases; i++)
@@ -51,7 +51,7 @@ public class Python_MatchStatement extends TokenSequence
 			caseClause1.value = values.get(i);
 			caseClause1.colon = new PunctuationColon();
 			caseClause1.statements = new Python_StatementBlock();
-			
+
 			Python_MultilineStatement multi1 = new Python_MultilineStatement();
 			caseClause1.statements.setWhich(multi1);
 			multi1.statements = new TokenList<Python_ComplexStatement>();
@@ -59,10 +59,10 @@ public class Python_MatchStatement extends TokenSequence
 			{
 				multi1.statements.addToken(stmt1);
 			}
-			
+
 			matchCases.addToken(caseClause1);
 		}
-		
+
 		if (defaultCase != null && defaultCase.size() > 0)
 		{
 			Python_MatchCase caseClause2 = new Python_MatchCase();
@@ -70,7 +70,7 @@ public class Python_MatchStatement extends TokenSequence
 			caseClause2.value = varExp.generateVarExpr("_", SubscriptEnum.FIRST_IS_ZERO, null, this);
 			caseClause2.colon = new PunctuationColon();
 			caseClause2.statements = new Python_StatementBlock();
-			
+
 			Python_MultilineStatement multi2 = new Python_MultilineStatement();
 			caseClause2.statements.setWhich(multi2);
 			multi2.statements = new TokenList<Python_ComplexStatement>();
@@ -78,10 +78,10 @@ public class Python_MatchStatement extends TokenSequence
 			{
 				multi2.statements.addToken(stmt2);
 			}
-			
+
 			matchCases.addToken(caseClause2);
 		}
-		
+
 		return Python_Generator.wrapStatement(this);
 	}
 }

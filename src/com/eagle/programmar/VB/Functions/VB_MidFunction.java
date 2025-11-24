@@ -37,7 +37,7 @@ public class VB_MidFunction extends PrimaryOperator
 		int sc = interpreter.getIntValue(scExpr) - 1;
 		int nc = interpreter.getIntValue(ncExpr);
 		int len = str.length();
-		if (sc + nc > len) nc = len - sc;	// Don't go past the end of the string
+		if (sc + nc > len) nc = len - sc; // Don't go past the end of the string
 		interpreter.pushStr(str.substring(sc, sc + nc));
 	}
 

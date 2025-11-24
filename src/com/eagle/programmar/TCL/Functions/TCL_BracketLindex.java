@@ -20,14 +20,14 @@ import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class TCL_BracketLindex extends PrimaryOperator
-		implements EagleRunnable,EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
 	public @S(20) TCL_Keyword LINDEX = new TCL_Keyword("lindex");
 	public @S(30) TCL_Variable arrayVar;
 	public @S(40) TCL_Expression index;
 	public @S(50) PunctuationRightBracket rightBracket;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -36,7 +36,7 @@ public class TCL_BracketLindex extends PrimaryOperator
 		int i = interpreter.getIntValue(index);
 		interpreter.pushEagleValue(array.getValue(i));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

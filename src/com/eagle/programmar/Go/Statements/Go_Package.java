@@ -31,6 +31,6 @@ public class Go_Package extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;		// Nothing to do here
+		return null; // Nothing to do here
 	}
 }

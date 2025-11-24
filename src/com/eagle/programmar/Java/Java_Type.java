@@ -91,7 +91,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		public @S(10) Java_KeywordChoice EXTENDS = new Java_KeywordChoice("extends", "super");
 		public @S(20) SeparatedList<Java_Identifier_Reference, PunctuationPeriod> typeName;
 	}
-	
+
 	// Convert "double" to a Java_Type representing a double
 	public static Java_Type newPrimitiveType(String name)
 	{
@@ -100,7 +100,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		type.typeName.setWhich(new Java_KeywordChoice(name));
 		return type;
 	}
-	
+
 	// Convert "foo" to a Java_Type representing the user class foo
 	public static Java_Type newIdentifierType(String name)
 	{
@@ -120,7 +120,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		{
 			return null;
 		}
-		
+
 		switch (type)
 		{
 		case BOOLEAN:
@@ -166,19 +166,19 @@ public class Java_Type extends TokenSequence implements AbstractType
 		idList.typeName.setValue("java.util.HashMap");
 		newType.typeName = new Java_TypeName();
 		newType.typeName.setWhich(idList);
-		
+
 		newType.genericType = new Java_GenericType();
 		newType.genericType.setPresent(true);
 		newType.genericType.subType1 = newPrimitiveType("Integer");
 		newType.genericType.subType1.setPresent(true);
 		newType.genericType.moreType = new TokenList<Java_MoreTypes>();
 		newType.genericType.moreType.setPresent(true);
-		
+
 		Java_MoreTypes more = new Java_MoreTypes();
 		more.comma = new PunctuationComma();
 		more.subType2 = newPrimitiveType("String");
 		newType.genericType.moreType.addToken(more);
-		
+
 		return newType;
 	}
 
@@ -211,7 +211,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 				break;
 			}
 		}
-		
+
 		return generator.transformType(newType, null, null);
 	}
 }

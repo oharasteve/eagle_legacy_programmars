@@ -44,7 +44,7 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			}
 			Rexx_Subscript sub = variable.subscript;
 			Integer key = interpreter.getIntValue(sub.subscr);
-			
+
 			interpreter.setSymbol(variable, variable.var.getValue(), key, hash);
 			hash.putValue(key, val);
 		}
@@ -53,7 +53,7 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			interpreter.setSymbol(variable, variable.var.getValue(), val);
 		}
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -103,7 +103,7 @@ public class Rexx_AssignmentStatement extends TokenSequence
 			AbstractExpression hashExpr = generator.newHashAssignment(name, subscrExpr, value, this);
 			return generator.newExpressionStatement(hashExpr, this);
 		}
-		
+
 		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
 		{
 			// Sorry, cannot redefine true or false

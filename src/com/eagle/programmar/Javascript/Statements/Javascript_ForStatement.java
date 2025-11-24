@@ -45,7 +45,7 @@ public class Javascript_ForStatement extends TokenSequence
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) @OPT TokenList<Javascript_Comment> comments;
 	public @S(60) Javascript_Element action;
-	
+
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	public static class Javascript_ForLoopStatement extends TokenSequence
@@ -60,7 +60,7 @@ public class Javascript_ForStatement extends TokenSequence
 		public @S(80) @OPT Javascript_Expression increment;
 		public @S(90) @OPT PunctuationComma comma;
 		public @S(100) @OPT Javascript_Expression extraIncrement;
-		
+
 		public static class Javascript_ForLoopVariable extends TokenChooser
 		{
 			public @FIRST Javascript_ForLoopVariableWithType XXwithType;
@@ -94,7 +94,7 @@ public class Javascript_ForStatement extends TokenSequence
 			Javascript_ForLoopVariableNoType noType = (Javascript_ForLoopVariableNoType) which;
 			forVar = noType.forVar;
 		}
-		
+
 		if (forVar.firstId.getWhich() instanceof Javascript_Identifier_Reference)
 		{
 			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) forVar.firstId.getWhich();
@@ -137,11 +137,11 @@ public class Javascript_ForStatement extends TokenSequence
 
 		// Have to guess to see if it was backwards
 		boolean backwards = guessDirection(forLoop.terminateCondition, forLoop.increment);
-		
+
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	private static boolean guessDirection(Javascript_Expression testExpr, Javascript_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -155,7 +155,7 @@ public class Javascript_ForStatement extends TokenSequence
 			Javascript_PreIncrementExpression pre = (Javascript_PreIncrementExpression) which1;
 			return pre.operator.getValue().equals("--");
 		}
-		
+
 		AbstractToken which2 = testExpr.getWhich();
 		if (which2 instanceof Javascript_RelationalExpression)
 		{
@@ -166,8 +166,8 @@ public class Javascript_ForStatement extends TokenSequence
 				return true;
 			}
 		}
-		
-		return false;	// Just don't know :(
+
+		return false; // Just don't know :(
 	}
 
 	@Override
@@ -186,9 +186,9 @@ public class Javascript_ForStatement extends TokenSequence
 			Javascript_ForLoopVariableNoType noType = (Javascript_ForLoopVariableNoType) which1;
 			forVar = noType.forVar;
 		}
-		
+
 		AbstractToken whichName = forVar.firstId.getWhich();
-		if (! (whichName instanceof Javascript_Identifier_Reference))
+		if (!(whichName instanceof Javascript_Identifier_Reference))
 		{
 			throw new RuntimeException("Javascript FOR must use a variable");
 		}
@@ -198,7 +198,7 @@ public class Javascript_ForStatement extends TokenSequence
 		AbstractExpression fromExpr = transformer.transformExpression(generator, forLoop.initialize);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 				SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, fromExpr, null);
-		
+
 		AbstractExpression termExpr = transformer.transformExpression(generator, forLoop.terminateCondition);
 		AbstractExpression delta = transformer.transformExpression(generator,
 				forLoop.increment);

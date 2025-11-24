@@ -29,7 +29,7 @@ public class CSharp_TrimMethod extends PrecedenceOperator
 		String leftStr = interpreter.getStrValue(expression);
 		interpreter.pushInt(leftStr.length());
 	}
-	
+
 	public CSharp_Expression generateTrim(CSharp_Expression expr, AbstractToken source)
 	{
 		this.expression = expr;

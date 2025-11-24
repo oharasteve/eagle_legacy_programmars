@@ -35,10 +35,10 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 		{
 			// GOTO :EOF
 			CMD_Label func = (CMD_Label) interpreter.getCurrentFunction();
-			func._exitStatus = 0;	// Meaning Success
+			func._exitStatus = 0; // Meaning Success
 			return Eagle_Statement_Result.RETURN;
 		}
-		
+
 		CMD_Identifier_Reference label = (CMD_Identifier_Reference) gotoWhat.getWhich();
 		// Look it up
 		String name = label.getValue();
@@ -61,12 +61,12 @@ public class CMD_Goto_Statement extends TokenSequence implements AbstractStateme
 				result = interpreter.tryToInterpret(cmdOr);
 				if (result != Eagle_Statement_Result.NORMAL) break;
 			}
-			else   // Have to search for our label (aka function)
+			else // Have to search for our label (aka function)
 			{
 				if (cmdOr.getWhich() instanceof CMD_Label)
 				{
 					CMD_Label lbl = (CMD_Label) cmdOr.getWhich();
-					if (lbl == func)    // Careful, comparing Objects here
+					if (lbl == func) // Careful, comparing Objects here
 					{
 						foundLabel = true;
 					}

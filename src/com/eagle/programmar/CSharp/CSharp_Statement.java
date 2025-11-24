@@ -38,7 +38,7 @@ public class CSharp_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE CSharp_Enum XXenumeration;
 	public @CHOICE @NEWLINE CSharp_PragmaDirective XXpragmaDirective;
 	public @CHOICE CSharp_StatementBlock XXstatementBlock;
-	
+
 	public @CHOICE CSharp_BreakStatement XXbreakStatement;
 	public @CHOICE CSharp_ContinueStatement XXcontinueStatement;
 	public @CHOICE CSharp_CheckedStatement XXcheckedStatement;

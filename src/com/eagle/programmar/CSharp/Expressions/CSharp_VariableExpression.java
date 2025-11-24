@@ -35,7 +35,7 @@ public class CSharp_VariableExpression extends PrimaryOperator
 	{
 		interpreter.tryToInterpret(variable);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -47,13 +47,13 @@ public class CSharp_VariableExpression extends PrimaryOperator
 			subscript = transformer.transformExpression(generator, first.expr);
 		}
 		AbstractToken which = variable.firstId.getWhich();
-		if (! (which instanceof CSharp_Identifier_Reference))
+		if (!(which instanceof CSharp_Identifier_Reference))
 		{
 			throw new RuntimeException("Cannot handle variable: " + which);
 		}
 		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) which;
-			return generator.newVariableExpression(id.getValue(),
-					SubscriptEnum.FIRST_IS_ZERO, subscript, this);
+		return generator.newVariableExpression(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 
 	public CSharp_Expression generateVarExpr(String name, SubscriptEnum offset,
@@ -65,7 +65,7 @@ public class CSharp_VariableExpression extends PrimaryOperator
 		{
 			CSharp_Subscript subscript = new CSharp_Subscript();
 			subscript.leftBracket = new PunctuationLeftBracket();
-			
+
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
 				CSharp_Number num = new CSharp_Number();

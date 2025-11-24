@@ -25,7 +25,7 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 		EagleValue value = interpreter.getEagleValue(expr);
 		Python_Subscript.evaluateSubscript(interpreter, value, subscr.body);
 	}
-	
+
 	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)

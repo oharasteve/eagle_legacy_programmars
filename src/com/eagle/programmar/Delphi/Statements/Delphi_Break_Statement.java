@@ -14,7 +14,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Break_Statement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("Break") Delphi_Keyword BREAK = new Delphi_Keyword("Break");
 
@@ -23,7 +23,7 @@ public class Delphi_Break_Statement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

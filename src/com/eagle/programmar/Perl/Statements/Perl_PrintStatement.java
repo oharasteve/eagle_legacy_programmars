@@ -26,7 +26,7 @@ public class Perl_PrintStatement extends TokenSequence
 {
 	public @S(10) Perl_KeywordChoice PRINT = new Perl_KeywordChoice("print", "printf");
 	public @S(20) Perl_PrintWhat what;
-	
+
 	public static class Perl_PrintWhat extends TokenChooser
 	{
 		public @FIRST Perl_PrintRedirectInput XXredirectInput;
@@ -36,7 +36,7 @@ public class Perl_PrintStatement extends TokenSequence
 	public static class Perl_PrintRedirectInput extends TokenSequence
 	{
 		public @S(10) Perl_Variable_Definition id;
-		public @S(20) Perl_Literal multiline;   // With << or <<< to redirect stdin
+		public @S(20) Perl_Literal multiline; // With << or <<< to redirect stdin
 	}
 
 	public static class Perl_PrintNormal extends TokenSequence
@@ -44,7 +44,7 @@ public class Perl_PrintStatement extends TokenSequence
 		public @S(10) SeparatedList<Perl_Expression, PunctuationComma> strings;
 		public @S(20) @OPT @CURIOUS("Extra comma") PunctuationComma comma;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

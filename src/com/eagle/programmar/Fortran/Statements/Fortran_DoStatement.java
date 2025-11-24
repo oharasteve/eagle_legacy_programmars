@@ -31,7 +31,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Fortran_DoStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("6j4m0vn8c/index.html") Fortran_Keyword DO1 = new Fortran_Keyword("DO");
 	public @S(20) Fortran_Variable_Reference var;
@@ -136,7 +136,7 @@ public class Fortran_DoStatement extends TokenSequence
 				}
 			}
 		}
-		
+
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 		for (Fortran_Statement stmt : statements._elements)
 		{

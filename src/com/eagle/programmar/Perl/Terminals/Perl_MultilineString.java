@@ -21,7 +21,7 @@ public class Perl_MultilineString extends TerminalLiteralToken
 
 		return genericLiteral(lines, "\"'`", true, '\\', false, true);
 	}
-	
+
 	@Override
 	public String description()
 	{

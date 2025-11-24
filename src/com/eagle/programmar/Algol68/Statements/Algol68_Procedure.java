@@ -39,7 +39,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Algol68_Procedure extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) Algol68_Keyword PROCEDURE = new Algol68_Keyword("PROC");
 	public @S(20) Algol68_Procedure_Definition id;
@@ -81,7 +81,7 @@ public class Algol68_Procedure extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -93,10 +93,10 @@ public class Algol68_Procedure extends TokenSequence
 		{
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 		}
-		
+
 		// Nothing to do here -- just defining the procedure
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -118,7 +118,7 @@ public class Algol68_Procedure extends TokenSequence
 		{
 			System.out.println("** Found Algol68 function " + id.getValue());
 		}
-		
+
 		if (params != null && params.isPresent())
 		{
 			int nParams = params.parameters.getPrimaryCount();
@@ -130,7 +130,7 @@ public class Algol68_Procedure extends TokenSequence
 				generator.addMethodParameter(paramType, param.param.getValue());
 			}
 		}
-		
+
 		int numElts = statements._elements.size();
 		int eltNum = 0;
 		for (Algol68_Statement stmt : statements._elements)
@@ -147,10 +147,10 @@ public class Algol68_Procedure extends TokenSequence
 					AbstractExpression newExpr = transformer.transformExpression(generator, exprStmt.expr);
 					AbstractStatement retStmt = generator.newReturnStatement(newExpr, which);
 					generator.addStatement(retStmt, stmt);
-					break;	// Only gets here for the last statement in the PROC
+					break; // Only gets here for the last statement in the PROC
 				}
 			}
-			
+
 			ArrayList<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
 			if (newStmts != null)
 			{
@@ -160,7 +160,7 @@ public class Algol68_Procedure extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

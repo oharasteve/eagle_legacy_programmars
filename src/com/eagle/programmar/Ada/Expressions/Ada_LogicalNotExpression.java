@@ -20,7 +20,7 @@ public class Ada_LogicalNotExpression extends PrimaryOperator
 {
 	public @S(10) Ada_NotOperator operator;
 	public @S(20) Ada_Expression expr;
-	
+
 	public static class Ada_NotOperator extends TokenChooser
 	{
 		public @CHOICE Ada_Punctuation XXnotOper = new Ada_Punctuation('~');
@@ -33,7 +33,7 @@ public class Ada_LogicalNotExpression extends PrimaryOperator
 		boolean value = interpreter.getBoolValue(expr);
 		interpreter.pushBool(!value);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

@@ -27,6 +27,6 @@ public class Eaglish_CommentEoln extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;	// Nothing to do
+		return null; // Nothing to do
 	}
 }

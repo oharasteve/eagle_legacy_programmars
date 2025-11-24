@@ -37,6 +37,6 @@ public class Ada_WithUseStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		return null;		// Ignore these, for now
+		return null; // Ignore these, for now
 	}
 }

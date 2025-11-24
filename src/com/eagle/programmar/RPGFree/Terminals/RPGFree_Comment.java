@@ -40,7 +40,7 @@ public class RPGFree_Comment extends TerminalCommentToken implements AbstractCom
 		if (ch != '*') return false;
 		return super.possibleCommentPair2(lines, rec, "/*", "*/");
 	}
-	
+
 	@Override
 	public String description()
 	{

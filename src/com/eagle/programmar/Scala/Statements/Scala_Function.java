@@ -33,7 +33,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Scala_Function extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @OPT Scala_Keyword OVERRIDE = new Scala_Keyword("override");
 	public @S(20) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");
@@ -94,7 +94,7 @@ public class Scala_Function extends TokenSequence
 			interpreter.completedFunction("main", this);
 		}
 	}
-	
+
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -115,7 +115,7 @@ public class Scala_Function extends TokenSequence
 		{
 			System.out.println("** Found Scala function " + id.getValue());
 		}
-		
+
 		if (params != null && params.isPresent())
 		{
 			int nParams = params.parameters.getPrimaryCount();
@@ -126,7 +126,7 @@ public class Scala_Function extends TokenSequence
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-		
+
 		ArrayList<AbstractStatement> newStmts = Scala_BlockStatement.collectStatements(transformer, generator, stmt);
 		if (newStmts != null)
 		{
@@ -135,7 +135,7 @@ public class Scala_Function extends TokenSequence
 				generator.addStatement(newStmt, stmt);
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 }

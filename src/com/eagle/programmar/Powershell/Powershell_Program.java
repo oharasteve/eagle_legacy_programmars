@@ -73,7 +73,7 @@ public class Powershell_Program extends AbstractLanguage
 			interpreter.tryToInterpret(stmt.element);
 		}
 	}
-	
+
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -119,7 +119,7 @@ public class Powershell_Program extends AbstractLanguage
 				}
 			}
 		}
-		
+
 		return generator.getTransfomedProgram();
 	}
 }

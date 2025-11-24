@@ -20,7 +20,7 @@ public class Delphi_Configuration extends AbstractLanguage
 	public static class Delphi_Config_Syntax extends EagleSyntax
 	{
 		public static final boolean IS_CASE_SENSITIVE = false;
-		
+
 		@Override
 		public String syntaxId()
 		{
@@ -108,7 +108,7 @@ public class Delphi_Configuration extends AbstractLanguage
 			foundIt(_currentLine, _endChar - 1);
 			return true;
 		}
-		
+
 		@Override
 		public String description()
 		{

@@ -27,7 +27,7 @@ public class COBOL_Sentence extends TokenSequence implements EagleRunnable
 			interpreter.tryToInterpret(statement);
 		}
 	}
-	
+
 	public void transform(EagleTransformer transformer, EagleGenerator generator)
 	{
 		for (COBOL_StatementOrComment stmtOrComm : statements._elements)

@@ -49,7 +49,7 @@ public class Delphi_Function extends TokenSequence
 		public @S(60) Delphi_Type type;
 		public @S(70) PunctuationSemicolon semicolon1;
 	}
-	
+
 	public static class Delphi_FunctionClass extends TokenSequence
 	{
 		public @S(10) Delphi_Identifier_Reference clsRef;
@@ -68,7 +68,7 @@ public class Delphi_Function extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Don't run it here. Wait until it is called.
-		
+
 		if (_callMetrics == null)
 		{
 			_callMetrics = new CallMetrics(interpreter._metrics, forward.id.getValue(), forward.id);
@@ -78,20 +78,20 @@ public class Delphi_Function extends TokenSequence
 			_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, forward.id.getValue(), forward.id);
 		}
 	}
-	
+
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
 		String funcName = this.forward.id.getValue();
 		AbstractType type = this.forward.type.convertType(generator);
 		generator.addMethod(type, funcName, this);
-		
+
 		Delphi_Parameter param = this.forward.args.firstParam;
 		if (param != null && param.isPresent())
 		{
 			AbstractType paramType1 = param.type.convertType(generator);
 			String paramName1 = param.names.first().var.getValue();
 			generator.addMethodParameter(paramType1, paramName1);
-			
+
 			for (Delphi_MoreParameters more : this.forward.args.moreParams._elements)
 			{
 				AbstractType paramType2 = more.param.type.convertType(generator);

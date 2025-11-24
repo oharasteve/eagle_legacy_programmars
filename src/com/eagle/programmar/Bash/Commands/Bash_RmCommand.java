@@ -28,7 +28,7 @@ public class Bash_RmCommand extends TokenSequence implements AbstractStatement
 				"-r",
 				"-rf");
 	}
-	
+
 	public static class Bash_RmBin extends TokenSequence
 	{
 		public @S(10) PunctuationSlash slash1;

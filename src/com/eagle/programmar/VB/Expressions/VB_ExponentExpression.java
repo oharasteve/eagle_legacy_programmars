@@ -15,7 +15,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class VB_ExponentExpression extends PrecedenceOperator 
+public class VB_ExponentExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	// Note: VB does these left-to-right. Most languages do right-to-left
@@ -31,7 +31,7 @@ public class VB_ExponentExpression extends PrecedenceOperator
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
 		String oper = operator.toString();
-		
+
 		if (_metrics == null)
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
@@ -42,7 +42,7 @@ public class VB_ExponentExpression extends PrecedenceOperator
 		int rightInt = rightValue.forceIntegerValue();
 		interpreter.pushDouble(Math.pow(leftDbl, rightInt));
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{

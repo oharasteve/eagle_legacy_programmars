@@ -61,16 +61,16 @@ public class Rust_ForStatement extends TokenSequence
 		if (step < 0)
 		{
 			// Careful!
-			//   1..4           does 1, 2, 3
-			//  (1..4).rev()    does 3, 2, 1
+			// 1..4 does 1, 2, 3
+			// (1..4).rev() does 3, 2, 1
 			backwards = true;
-			i = stop + step;	// Careful!
+			i = stop + step; // Careful!
 		}
 
 		while (true)
 		{
 			if (backwards && i < start) break;
-			if (! backwards && i >= stop) break;
+			if (!backwards && i >= stop) break;
 
 			metric.iterate();
 			interpreter.setSymbol(variable, variable.var.toString(), new EagleInteger(i));
@@ -99,7 +99,7 @@ public class Rust_ForStatement extends TokenSequence
 		_metrics.competedLoop(metric, backwards);
 		return result;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
@@ -137,8 +137,9 @@ public class Rust_ForStatement extends TokenSequence
 		{
 			throw new RuntimeException("FOR statement requires a Range of values, not " + which);
 		}
-		
-		ArrayList<AbstractStatement> newStmts = Rust_Block_Statement.collectStatements(transformer, generator, statement);
+
+		ArrayList<AbstractStatement> newStmts = Rust_Block_Statement.collectStatements(transformer, generator,
+				statement);
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		if (newStmts != null)
 		{
@@ -147,7 +148,7 @@ public class Rust_ForStatement extends TokenSequence
 				actionList.add(stmt);
 			}
 		}
-		
+
 		AbstractVariable var = generator.newVariable(variable.var.getValue());
 		return generator.newForRangeStatement(var, TypeEnum.INTEGER, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);

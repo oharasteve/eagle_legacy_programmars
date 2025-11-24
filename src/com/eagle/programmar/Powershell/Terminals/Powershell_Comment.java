@@ -76,6 +76,6 @@ public class Powershell_Comment extends TerminalCommentToken
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return null;	// Suppose we could save it ...
+		return null; // Suppose we could save it ...
 	}
 }

@@ -34,13 +34,14 @@ public class Julia_StartsWithFunction extends PrimaryOperator
 		String patt = interpreter.getStrValue(pattExpr);
 		interpreter.pushBool(str.startsWith(patt));
 	}
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, strExpr);
 		AbstractExpression thePattern = transformer.transformExpression(generator, pattExpr);
 		AbstractExpression theSC = null;
-		
+
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}

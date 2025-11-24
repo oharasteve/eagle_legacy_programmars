@@ -34,7 +34,7 @@ public class CSharp_ExitStatement extends TokenSequence implements AbstractState
 		interpreter._exitCode = interpreter.getIntValue(code);
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	public static CSharp_ExitStatement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		CSharp_ExitStatement stmt = new CSharp_ExitStatement();

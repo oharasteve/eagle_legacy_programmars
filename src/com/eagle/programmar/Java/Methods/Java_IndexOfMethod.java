@@ -34,7 +34,7 @@ public class Java_IndexOfMethod extends PrimaryOperator
 		public @S(10) PunctuationComma comma;
 		public @S(20) Java_Expression start;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -50,7 +50,7 @@ public class Java_IndexOfMethod extends PrimaryOperator
 			interpreter.pushInt(str.indexOf(patt));
 		}
 	}
-	
+
 	public Java_Expression generateIndexOf(Java_Variable str, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
@@ -66,7 +66,7 @@ public class Java_IndexOfMethod extends PrimaryOperator
 			this.scExpr.start = sc;
 		}
 		this.rightParen = new PunctuationRightParen();
-		
+
 		this.setTransformationSource(source);
 		return Java_Generator.wrapExpression(this);
 	}

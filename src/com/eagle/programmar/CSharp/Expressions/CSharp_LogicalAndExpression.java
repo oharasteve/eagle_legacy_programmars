@@ -19,7 +19,8 @@ public class CSharp_LogicalAndExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) CSharp_Expression left = new CSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_Punctuation andOperator = new CSharp_Punctuation("&&");
+	public @S(20) @DOC("operators/boolean-logical-operators") CSharp_Punctuation andOperator = new CSharp_Punctuation(
+			"&&");
 	public @S(30) CSharp_Expression right = new CSharp_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
@@ -34,7 +35,7 @@ public class CSharp_LogicalAndExpression extends PrecedenceOperator
 		}
 		interpreter.pushBool(false);
 	}
-	
+
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -43,7 +44,7 @@ public class CSharp_LogicalAndExpression extends PrecedenceOperator
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
-	
+
 	public CSharp_Expression generateLogicalAnd(CSharp_Expression leftExpr,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{

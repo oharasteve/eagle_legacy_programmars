@@ -28,8 +28,7 @@ import com.eagle.transform.EagleGenerator.AdditiveEnum;
 public class Delphi_Writeln_Statement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("System.Writeln") Delphi_KeywordChoice WRITELN =
-			new Delphi_KeywordChoice("Write", "WriteLn");
+	public @S(10) @DOC("System.Writeln") Delphi_KeywordChoice WRITELN = new Delphi_KeywordChoice("Write", "WriteLn");
 	public @S(20) @OPT Delphi_WriteLn_Something something;
 
 	public static class Delphi_WriteLn_Piece extends TokenSequence
@@ -78,7 +77,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 		_metrics.calledWith(argTypes);
 		System.out.println();
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -93,7 +92,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			{
 				types = new Oper2Types();
 			}
-			
+
 			int numPieces = something.pieces.getPrimaryCount();
 			for (int i = 0; i < numPieces; i++)
 			{
@@ -110,16 +109,16 @@ public class Delphi_Writeln_Statement extends TokenSequence
 				{
 					if (metrics != null)
 					{
-						types._type1 = metrics.get(i-1);
+						types._type1 = metrics.get(i - 1);
 						types._type2 = metrics.get(i);
 					}
-					
+
 					AbstractExpression next = transformer.transformExpression(generator, piece.expr);
 					line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 				}
 			}
 		}
-		
+
 		boolean newLine;
 		switch (WRITELN.getValue().toLowerCase())
 		{
@@ -132,7 +131,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 		default:
 			throw new RuntimeException("Unexpected write command: " + WRITELN.getValue());
 		}
-		
+
 		return generator.newPrintStatement(line, newLine, false, this);
 	}
 }

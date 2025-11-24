@@ -44,7 +44,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class FSharp_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		EagleTransformableFunction
 {
 	public @S(10) @DOC("functions/") FSharp_Keyword LET = new FSharp_Keyword("let");
 	public @S(20) FSharp_Function_Definition id;
@@ -62,7 +62,7 @@ public class FSharp_Function extends TokenSequence
 		public @S(20) PunctuationColon colon;
 		public @S(30) FSharp_Type type;
 	}
-	
+
 	public static class FSharp_ReturnType extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
@@ -80,7 +80,7 @@ public class FSharp_Function extends TokenSequence
 	{
 		return _scope;
 	}
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -115,7 +115,7 @@ public class FSharp_Function extends TokenSequence
 			typRet = transformer.findReturnMetric(id);
 		}
 		AbstractType newReturnType = generator.transformType(typRet, null, id);
-		
+
 		String fnName = id.getValue();
 
 		generator.addMethod(newReturnType, fnName, this);
@@ -124,24 +124,24 @@ public class FSharp_Function extends TokenSequence
 		{
 			System.out.println("** Found F# function " + fnName);
 		}
-		
+
 		// Search metrics for arg types -- might not be any
 		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
-		
+
 		if (params != null && params.isPresent())
 		{
 			for (int i = 0; i < params.getPrimaryCount(); i++)
 			{
 				FSharp_FunctionParam param = params.getPrimaryElement(i);
 				AbstractType paramType = null;
-				
+
 				if (argTypes != null && i < argTypes.size())
 				{
 					String metricArgType = argTypes.get(i);
 					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
 					paramType = generator.transformType(metricArg, null, param);
 				}
-				
+
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
@@ -159,20 +159,21 @@ public class FSharp_Function extends TokenSequence
 				{
 					FSharp_Statement stmt = stmtList.statements.getPrimaryElement(i);
 					AbstractToken which2 = stmt.getWhich();
-					
+
 					if (i == numStmts - 1)
 					{
 						// Last line in a function *might* be an implied RETURN
 						if (which2 instanceof FSharp_ExpressionStatement)
 						{
 							FSharp_ExpressionStatement exprStmt = (FSharp_ExpressionStatement) which2;
-							AbstractExpression newExpr = transformer.transformExpression(generator, exprStmt.expression);
+							AbstractExpression newExpr = transformer.transformExpression(generator,
+									exprStmt.expression);
 							AbstractStatement retStmt = generator.newReturnStatement(newExpr, which2);
 							generator.addStatement(retStmt, stmt);
-							break;	// Only gets here for the last statement in the Function
+							break; // Only gets here for the last statement in the Function
 						}
 					}
-					
+
 					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which2);
 					if (newStmts != null)
 					{
@@ -184,7 +185,7 @@ public class FSharp_Function extends TokenSequence
 				}
 			}
 		}
-		
+
 		generator.doneMethod();
 	}
 
@@ -215,7 +216,7 @@ public class FSharp_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (! isFuncParam(met._symbolName))
+				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);

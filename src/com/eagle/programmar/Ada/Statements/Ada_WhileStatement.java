@@ -83,17 +83,16 @@ public class Ada_WhileStatement extends TokenSequence
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> whileTrue = new ArrayList<AbstractStatement>();
-		
+
 		for (Ada_Statement statement : statements._elements)
 		{
-			Collection<AbstractStatement> newStmts =
-					transformer.transformStatement(generator, statement.getWhich());
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, statement.getWhich());
 			for (AbstractStatement stmt : newStmts)
 			{
 				whileTrue.add(stmt);
 			}
 		}
-		
+
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
 	}

@@ -46,7 +46,7 @@ public class CMD_NMake_Statement extends TokenSequence implements AbstractStatem
 			public @S(20) CMD_Keyword F = new CMD_Keyword("f");
 			public @S(30) CMD_Expression makefile;
 		}
-		
+
 		public @CHOICE static class CMD_NMake_Assignment extends TokenSequence
 		{
 			public @S(10) CMD_Variable_Definition var;

@@ -70,7 +70,6 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(10) Powershell_Number number;
 	public @P(20) Powershell_Literal literal;
 
-
 	///////////////////////////////////////////////////////////////////////////
 	// Primary Expressions
 
@@ -97,7 +96,6 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(290) Powershell_VariableExpression variableExpression;
 	public @P(300) Powershell_LibraryVariable libraryVariable;
 
-	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 

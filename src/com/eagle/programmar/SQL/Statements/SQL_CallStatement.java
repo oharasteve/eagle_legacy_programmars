@@ -49,7 +49,7 @@ public class SQL_CallStatement extends TokenSequence
 				throw new RuntimeException("Unable to find a Stored Procedure named " + name);
 			}
 			SQL_CreateProcedureStatement proc = (SQL_CreateProcedureStatement) fn;
-			
+
 			// Make sure the function args match up
 			int argCount = 0;
 			if (func.args != null)
@@ -62,7 +62,7 @@ public class SQL_CallStatement extends TokenSequence
 			{
 				paramCount = proc.params.getPrimaryCount();
 			}
-			
+
 			if (argCount != paramCount)
 			{
 				throw new RuntimeException(
@@ -108,12 +108,12 @@ public class SQL_CallStatement extends TokenSequence
 				{
 					EagleValue val = interpreter.findSymbol(param.param.getValue());
 					SQL_FunctionArg arg = func.args.getPrimaryElement(i);
-					if (! (arg.getWhich() instanceof SQL_Expression))
+					if (!(arg.getWhich() instanceof SQL_Expression))
 					{
 						throw new RuntimeException("OUT parameter must be an Expression");
 					}
 					SQL_Expression expr = (SQL_Expression) arg.getWhich();
-					if (! (expr.getWhich() instanceof SQL_VariableExpression))
+					if (!(expr.getWhich() instanceof SQL_VariableExpression))
 					{
 						throw new RuntimeException("OUT parameter must be a Variable");
 					}
@@ -137,11 +137,11 @@ public class SQL_CallStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractToken token = func.funcName.getWhich();
-		if (! (token instanceof SQL_Variable))
+		if (!(token instanceof SQL_Variable))
 		{
 			throw new RuntimeException("Unable to call procedure " + this);
 		}
-		
+
 		SQL_Variable var = (SQL_Variable) token;
 		String name = var.ids.first().getValue();
 
@@ -168,7 +168,7 @@ public class SQL_CallStatement extends TokenSequence
 //				}
 //			}
 //		}
-		
+
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 		for (int i = 0; i < argCount; i++)
 		{

@@ -13,7 +13,7 @@ public class HTML_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "'\"", false, '?', false, true);
 	}
-	
+
 	@Override
 	public String description()
 	{

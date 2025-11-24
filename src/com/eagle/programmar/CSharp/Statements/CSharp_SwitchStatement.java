@@ -78,7 +78,7 @@ public class CSharp_SwitchStatement extends TokenSequence
 		this.leftBrace = new PunctuationLeftBrace();
 		this.rightBrace = new PunctuationRightBrace();
 		this.val = expr;
-		
+
 		int numCases = values.size();
 		caseClauses = new TokenList<CSharp_SwitchCase>();
 		for (int i = 0; i < numCases; i++)
@@ -90,7 +90,7 @@ public class CSharp_SwitchStatement extends TokenSequence
 			caseClause.colon = new PunctuationColon();
 			caseClause.statements = new TokenList<CSharp_StatementOrComment>();
 			caseClause.statements.setPresent(true);
-			
+
 			for (CSharp_Statement stmt1 : cases.get(i))
 			{
 				CSharp_StatementOrComment stmtComm1 = new CSharp_StatementOrComment();
@@ -101,19 +101,19 @@ public class CSharp_SwitchStatement extends TokenSequence
 			CSharp_StatementOrComment stmtComm1 = new CSharp_StatementOrComment();
 			stmtComm1.setWhich(brk1.generateBreak(this));
 			caseClause.statements.addToken(stmtComm1);
-			
+
 			CSharp_SwitchCase switchCase1 = new CSharp_SwitchCase();
 			switchCase1.setWhich(caseClause);
 			caseClauses.addToken(switchCase1);
 		}
-		
+
 		if (defaultCase != null && defaultCase.size() > 0)
 		{
 			CSharp_DefaultClause defaultClause = new CSharp_DefaultClause();
 			defaultClause.colon = new PunctuationColon();
 			defaultClause.statements = new TokenList<CSharp_StatementOrComment>();
 			defaultClause.statements.setPresent(true);
-			
+
 			for (CSharp_Statement stmt2 : defaultCase)
 			{
 				CSharp_StatementOrComment stmtComm2 = new CSharp_StatementOrComment();
@@ -124,12 +124,12 @@ public class CSharp_SwitchStatement extends TokenSequence
 			CSharp_StatementOrComment stmtComm2 = new CSharp_StatementOrComment();
 			stmtComm2.setWhich(brk2.generateBreak(this));
 			defaultClause.statements.addToken(stmtComm2);
-			
+
 			CSharp_SwitchCase switchCase2 = new CSharp_SwitchCase();
 			switchCase2.setWhich(defaultClause);
 			caseClauses.addToken(switchCase2);
 		}
-		
+
 		return CSharp_Generator.wrapStatement(this);
 	}
 }

@@ -55,7 +55,7 @@ public class Python_BackQuote extends TerminalLiteralToken
 		_currentChar -= prefixLen;
 		return ok;
 	}
-	
+
 	@Override
 	public String description()
 	{

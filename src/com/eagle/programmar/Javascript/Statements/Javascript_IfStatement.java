@@ -26,7 +26,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Javascript_IfStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("js_if_else.asp") Javascript_Keyword IF = new Javascript_Keyword("if");
 	public @S(20) PunctuationLeftParen leftParen;

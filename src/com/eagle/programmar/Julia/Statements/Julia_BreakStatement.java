@@ -15,7 +15,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Julia_BreakStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-				EagleTransformableStatement
+		EagleTransformableStatement
 {
 	public @S(10) @DOC("base/base/#break") Julia_Keyword BREAK = new Julia_Keyword("break");
 	public @S(20) Julia_EOLN eoln;
@@ -25,7 +25,7 @@ public class Julia_BreakStatement extends TokenSequence
 	{
 		return Eagle_Statement_Result.BREAK;
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{

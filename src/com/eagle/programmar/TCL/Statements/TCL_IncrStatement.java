@@ -33,7 +33,7 @@ public class TCL_IncrStatement extends TokenSequence
 		{
 			x = interpreter.getIntValue(amount);
 		}
-		
+
 		int prev = interpreter.getIntValue(var);
 		int newV = prev + x;
 		EagleInteger val = new EagleInteger(newV);
@@ -56,7 +56,7 @@ public class TCL_IncrStatement extends TokenSequence
 		return generator.newAssignmentExpression(var.id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.PLUS_EQUALS, value, this);
 	}
-	
+
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)

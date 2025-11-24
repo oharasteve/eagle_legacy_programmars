@@ -28,7 +28,7 @@ public class Java_EqualsMethod extends PrecedenceOperator
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Java_Expression expr;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
-	
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -36,7 +36,7 @@ public class Java_EqualsMethod extends PrecedenceOperator
 		String other = interpreter.getStrValue(expr);
 		interpreter.pushBool(leftStr.equals(other));
 	}
-	
+
 	public static Java_EqualsMethod newEqualsMethod(Java_Expression leftExpr, Java_Expression rightExpr)
 	{
 		Java_EqualsMethod equals = new Java_EqualsMethod();
@@ -55,7 +55,7 @@ public class Java_EqualsMethod extends PrecedenceOperator
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, expr);
 		Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
-		return generator.newRelationalExpression(types, leftExpr,	
+		return generator.newRelationalExpression(types, leftExpr,
 				RelationalEnum.EQUALS, rightExpr, this);
 	}
 }

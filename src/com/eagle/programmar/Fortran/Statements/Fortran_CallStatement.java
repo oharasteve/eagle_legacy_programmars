@@ -36,7 +36,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String fnName = variable.getValue();
-		
+
 		AbstractFunction fn = interpreter.findFunction(fnName);
 		if (fn == null || !(fn instanceof Fortran_Subroutine))
 		{
