@@ -17,7 +17,6 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenChooser.CHOICE;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -46,7 +45,7 @@ public class CSharp_SwitchStatement extends TokenSequence
 		public @CHOICE CSharp_DefaultClause XXdefaultClause;
 	}
 
-	public @CHOICE static class CSharp_CaseClause extends TokenSequence
+	public static class CSharp_CaseClause extends TokenSequence
 	{
 		public @S(10) @NEWLINE CSharp_Keyword CASE = new CSharp_Keyword("case");
 		public @S(20) SeparatedList<CSharp_Expression, PunctuationComma> exprList;
@@ -54,7 +53,7 @@ public class CSharp_SwitchStatement extends TokenSequence
 		public @S(40) @OPT @PYDENT TokenList<CSharp_StatementOrComment> statements;
 	}
 
-	public @CHOICE static class CSharp_DefaultClause extends TokenSequence
+	public static class CSharp_DefaultClause extends TokenSequence
 	{
 		public @S(10) @NEWLINE CSharp_Keyword DEFAULT = new CSharp_Keyword("default");
 		public @S(20) @NOSPACE PunctuationColon colon;

@@ -17,7 +17,6 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenChooser.CHOICE;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -46,7 +45,7 @@ public class Java_SwitchStatement extends TokenSequence
 		public @CHOICE Java_DefaultClause XXdefaultClause;
 	}
 
-	public @CHOICE static class Java_CaseClause extends TokenSequence
+	public static class Java_CaseClause extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword CASE = new Java_Keyword("case");
 		public @S(20) SeparatedList<Java_Expression, PunctuationComma> exprList;
@@ -54,7 +53,7 @@ public class Java_SwitchStatement extends TokenSequence
 		public @S(40) @OPT @PYDENT TokenList<Java_StatementOrComment> statements;
 	}
 
-	public @CHOICE static class Java_DefaultClause extends TokenSequence
+	public static class Java_DefaultClause extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword DEFAULT = new Java_Keyword("default");
 		public @S(20) @NOSPACE PunctuationColon colon;
