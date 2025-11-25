@@ -90,13 +90,16 @@ public class TCL_ForStatement extends TokenSequence
 
 	private static boolean guessDirection(TCL_Expression testExpr, TCL_IncrStatement incrStmt)
 	{
-		AbstractToken which1 = incrStmt.amount.getWhich();
-		if (which1 instanceof TCL_Number)
+		if (incrStmt.amount != null && incrStmt.amount.isPresent())
 		{
-			TCL_Number num = (TCL_Number) which1;
-			if (num.getValue().startsWith("-"))
+			AbstractToken which1 = incrStmt.amount.getWhich();
+			if (which1 instanceof TCL_Number)
 			{
-				return true;
+				TCL_Number num = (TCL_Number) which1;
+				if (num.getValue().startsWith("-"))
+				{
+					return true;
+				}
 			}
 		}
 
