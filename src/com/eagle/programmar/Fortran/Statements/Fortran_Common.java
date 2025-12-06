@@ -11,10 +11,15 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSlash;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_Common extends TokenSequence implements EagleRunnable
+public class Fortran_Common extends TokenSequence
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) @DOC("6j4m0vn7v/index.html") Fortran_Keyword COMMON = new Fortran_Keyword("COMMON");
 	public @S(20) PunctuationSlash slash1;
@@ -27,5 +32,12 @@ public class Fortran_Common extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// Nothing to do here
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Nothing to do here (yet)
+		return null;
 	}
 }

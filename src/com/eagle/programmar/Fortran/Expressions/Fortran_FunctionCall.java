@@ -18,29 +18,35 @@ import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnable
+public class Fortran_FunctionCall extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Fortran_Identifier_Reference variable;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Fortran_Expression, PunctuationComma> args;
+	public @S(30) SeparatedList<Fortran_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String fnName = variable.getValue().toUpperCase();
-		int argCount = args.getPrimaryCount();
+		int argCount = argList.getPrimaryCount();
 
 		// Check for subscripts
 		EagleValue var = interpreter.findSymbol(fnName);
 		if (var != null && var.isArray() && argCount == 1)
 		{
 			EagleArray array = (EagleArray) var;
-			int subscr = interpreter.getIntValue(args.getPrimaryElement(0));
+			int subscr = interpreter.getIntValue(argList.getPrimaryElement(0));
 			EagleValue val = array.getValue(subscr - 1);
 			interpreter.pushEagleValue(val);
 			return;
@@ -66,7 +72,7 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			Fortran_Expression expr = args.getPrimaryElement(i);
+			Fortran_Expression expr = argList.getPrimaryElement(i);
 			Fortran_Variable_Reference param = func.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
@@ -100,5 +106,25 @@ public class Fortran_FunctionCall extends PrimaryOperator implements EagleRunnab
 
 		// Now remove all those parameters
 		interpreter.completedFunction(fnName, func);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		String name = variable.getValue();
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+
+		if (argList != null && argList.isPresent())
+		{
+			for (int i = 0; i < argList.getPrimaryCount(); i++)
+			{
+				Fortran_Expression expr = argList.getPrimaryElement(i);
+				AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+				args.add(newExpr);
+			}
+		}
+
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, this);
 	}
 }
