@@ -5,17 +5,13 @@ package com.eagle.programmar.SQL.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.SQL.SQL_Expression;
-import com.eagle.programmar.SQL.SQL_Variable;
-import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
+import com.eagle.programmar.SQL.SQL_FunctionArg;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
-import com.eagle.programmar.SQL.Terminals.SQL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -28,31 +24,16 @@ public class SQL_BuiltinFunction extends PrimaryOperator implements EagleRunnabl
 	public @S(30) @OPT SeparatedList<SQL_FunctionArg, PunctuationComma> args;
 	public @S(40) PunctuationRightParen rightParen;
 
-	public static class SQL_FunctionArg extends TokenChooser
-	{
-		public @CHOICE SQL_Expression XXarg;
-
-		public @CHOICE static class SQL_FunctionColonParam extends TokenSequence
-		{
-			public @S(10) PunctuationColon colon;
-			public @S(20) SQL_Expression arg;
-		}
-
-		public @FIRST static class SQL_FunctionNamedArg extends TokenSequence
-		{
-			public @S(10) SQL_Identifier_Reference parameterName;
-			public @S(20) SQL_Punctuation equalsGreater = new SQL_Punctuation("=>");
-			public @S(30) SQL_Expression arg;
-		}
-	}
-
 	public static class SQL_FunctionName extends TokenChooser
 	{
-		public @LAST SQL_Variable XXvar;
-
 		public @FIRST SQL_KeywordChoice XXfnName = new SQL_KeywordChoice(
-				"COALESCE", "COUNT", "CURRENT_TIMESTAMP", "MIN",
-				"RUN_METRIC", "SYS_EXTRACT_UTC", "SYS_GUID");
+				"COALESCE",
+				"COUNT",
+				"CURRENT_TIMESTAMP",
+				"MIN",
+				"RUN_METRIC",
+				"SYS_EXTRACT_UTC",
+				"SYS_GUID");
 
 		public @CHOICE static class SQL_FunctionSCHEDULER extends TokenSequence
 		{

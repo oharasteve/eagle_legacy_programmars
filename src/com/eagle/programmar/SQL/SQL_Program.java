@@ -8,6 +8,7 @@ import java.util.Collection;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.SQL.Statements.SQL_CreateFunctionStatement;
 import com.eagle.programmar.SQL.Statements.SQL_CreateProcedureStatement;
 import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 import com.eagle.tokens.TokenChooser;
@@ -55,6 +56,11 @@ public class SQL_Program extends AbstractLanguage
 				{
 					SQL_CreateProcedureStatement proc = (SQL_CreateProcedureStatement) stmt.getWhich();
 					interpreter.addFunction(proc.procName.getValue(), proc);
+				}
+				else if (stmt.getWhich() instanceof SQL_CreateFunctionStatement)
+				{
+					SQL_CreateFunctionStatement func = (SQL_CreateFunctionStatement) stmt.getWhich();
+					interpreter.addFunction(func.funcName.getValue(), func);
 				}
 			}
 		}

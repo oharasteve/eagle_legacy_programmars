@@ -18,6 +18,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
@@ -69,6 +70,12 @@ public class SQL_DeclareStatement extends TokenSequence
 				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, newVal, decl.initialValue);
 				result.add(generator.newExpressionStatement(asgExpr, decl.initialValue));
+			}
+			else
+			{
+				AbstractType varType = SQL_Type.findAbstractType(generator, decl.type);
+				AbstractStatement varDecl = generator.newDataDeclaration(false, varName, null, varType, null, null);
+				generator.addStatement(varDecl, null);
 			}
 		}
 
