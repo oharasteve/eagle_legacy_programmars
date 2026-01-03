@@ -11,6 +11,7 @@ import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Element.VB_Statement;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
@@ -142,13 +143,17 @@ public class VB_ForStatement extends TokenSequence
 		ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
 		for (VB_Element statement : actions._elements)
 		{
-			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
-					statement.baseStatement.getWhich());
-			if (stmts != null)
+			for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
 			{
-				for (AbstractStatement stmt : stmts)
+				VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
+				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+						baseStatement.getWhich());
+				if (stmts != null)
 				{
-					actionList.add(stmt);
+					for (AbstractStatement stmt : stmts)
+					{
+						actionList.add(stmt);
+					}
 				}
 			}
 		}

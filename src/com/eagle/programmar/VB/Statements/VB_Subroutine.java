@@ -12,6 +12,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Element.VB_Statement;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
 import com.eagle.programmar.VB.VB_Syntax;
@@ -128,13 +129,17 @@ public class VB_Subroutine extends TokenSequence
 
 		for (VB_Element stmt : stmts._elements)
 		{
-			AbstractToken which = stmt.baseStatement.getWhich();
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
-			if (newStmts != null)
+			for (int i = 0; i < stmt.baseStatements.getPrimaryCount(); i++)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				VB_Statement baseStatement = stmt.baseStatements.getPrimaryElement(i);
+				AbstractToken which = baseStatement.getWhich();
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+				if (newStmts != null)
 				{
-					generator.addStatement(newStmt, stmt);
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
 				}
 			}
 		}

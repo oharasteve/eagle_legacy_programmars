@@ -121,9 +121,9 @@ public class Rust_ForStatement extends TokenSequence
 			if (reversed.left.getWhich() instanceof Rust_ParenthesizedExpression)
 			{
 				Rust_ParenthesizedExpression parens = (Rust_ParenthesizedExpression) reversed.left.getWhich();
-				if (parens.expression.getWhich() instanceof Rust_RangeExpression)
+				if (parens.expressions.first().getWhich() instanceof Rust_RangeExpression)
 				{
-					range = (Rust_RangeExpression) parens.expression.getWhich();
+					range = (Rust_RangeExpression) parens.expressions.first().getWhich();
 					initExpr = transformer.transformExpression(generator, range.highExpression);
 					AbstractExpression oneExpr = generator.newNumberExpression("1", null);
 					initExpr = generator.newAdditiveExpression(null, initExpr, AdditiveEnum.MINUS, oneExpr, null);

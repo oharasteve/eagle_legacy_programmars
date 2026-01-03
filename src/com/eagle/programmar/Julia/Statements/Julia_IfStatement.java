@@ -27,9 +27,10 @@ public class Julia_IfStatement extends TokenSequence
 	public @S(20) Julia_Expression condition;
 	public @S(30) Julia_EOLN eoln1;
 	public @S(40) TokenList<Julia_Statement> thenStatements;
-	public @S(50) @OPT Julia_IfElseClause elseClause;
-	public @S(60) Julia_Keyword END = new Julia_Keyword("end");
-	public @S(70) Julia_EOLN eoln2;
+	public @S(50) TokenList<Julia_ElseIfClause> elseIfClauses;
+	public @S(60) @OPT Julia_IfElseClause elseClause;
+	public @S(70) Julia_Keyword END = new Julia_Keyword("end");
+	public @S(80) Julia_EOLN eoln2;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
@@ -38,6 +39,14 @@ public class Julia_IfStatement extends TokenSequence
 		public @S(10) Julia_Keyword ELSE = new Julia_Keyword("else");
 		public @S(20) @OPT Julia_EOLN eoln2;
 		public @S(30) TokenList<Julia_Statement> elseStatements;
+	}
+
+	public static class Julia_ElseIfClause extends TokenSequence
+	{
+		public @S(10) Julia_Keyword ELSEIF = new Julia_Keyword("elseif");
+		public @S(20) Julia_Expression condition;
+		public @S(30) @OPT Julia_EOLN eoln2;
+		public @S(40) TokenList<Julia_Statement> elseIfStatements;
 	}
 
 	@Override

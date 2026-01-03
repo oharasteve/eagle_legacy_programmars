@@ -19,11 +19,13 @@ import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
 import com.eagle.programmar.Julia.Terminals.Julia_Keyword;
 import com.eagle.programmar.Julia.Terminals.Julia_Number;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
@@ -35,12 +37,18 @@ public class Julia_ForStatement extends TokenSequence
 {
 	public @S(10) @DOC("manual/control-flow/#man-loops") Julia_Keyword FOR = new Julia_Keyword("for");
 	public @S(20) Julia_Variable var;
-	public @S(30) Julia_Keyword IN = new Julia_Keyword("in");
+	public @S(30) Julia_ForOperator oper;
 	public @S(40) Julia_Expression values;
 	public @S(50) Julia_EOLN eoln1;
 	public @S(60) TokenList<Julia_Statement> statements;
 	public @S(70) Julia_Keyword END = new Julia_Keyword("end");
 	public @S(80) Julia_EOLN eoln2;
+	
+	public static class Julia_ForOperator extends TokenChooser
+	{
+		public @CHOICE Julia_Keyword XXIN = new Julia_Keyword("in");
+		public @CHOICE PunctuationEquals XXequals;
+	}
 
 	private @SKIP ForLoopMetrics _metrics = null;
 

@@ -8,6 +8,7 @@ import java.util.Collection;
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.VB.VB_Element.VB_Statement;
 import com.eagle.programmar.VB.Statements.VB_Function;
 import com.eagle.programmar.VB.Statements.VB_Subroutine;
 import com.eagle.tokens.AbstractToken;
@@ -42,23 +43,31 @@ public class VB_Program extends AbstractLanguage
 		// First pass, just collect all the Function and Sub definitions
 		for (VB_Element stmt : statements._elements)
 		{
-			AbstractToken which = stmt.baseStatement.getWhich();
-			if (which instanceof VB_Function)
+			for (int i = 0; i < stmt.baseStatements.getPrimaryCount(); i++)
 			{
-				VB_Function func = (VB_Function) which;
-				interpreter.addFunction(func.id.getValue(), func);
-			}
-			if (which instanceof VB_Subroutine)
-			{
-				VB_Subroutine sub = (VB_Subroutine) which;
-				interpreter.addFunction(sub.id.getValue(), sub);
+				VB_Statement baseStatement = stmt.baseStatements.getPrimaryElement(i);
+				AbstractToken which = baseStatement.getWhich();
+				if (which instanceof VB_Function)
+				{
+					VB_Function func = (VB_Function) which;
+					interpreter.addFunction(func.id.getValue(), func);
+				}
+				if (which instanceof VB_Subroutine)
+				{
+					VB_Subroutine sub = (VB_Subroutine) which;
+					interpreter.addFunction(sub.id.getValue(), sub);
+				}
 			}
 		}
 
 		// Second pass, run any stuff in the outermost 'object'
 		for (VB_Element stmt : statements._elements)
 		{
-			interpreter.tryToInterpret(stmt.baseStatement);
+			for (int i = 0; i < stmt.baseStatements.getPrimaryCount(); i++)
+			{
+				VB_Statement baseStatement = stmt.baseStatements.getPrimaryElement(i);
+				interpreter.tryToInterpret(baseStatement);
+			}
 		}
 	}
 
@@ -68,24 +77,32 @@ public class VB_Program extends AbstractLanguage
 		// First pass, transform all the Function and Sub definitions
 		for (VB_Element stmt : statements._elements)
 		{
-			AbstractToken which = stmt.baseStatement.getWhich();
-			if (which instanceof EagleTransformableFunction)
+			for (int i = 0; i < stmt.baseStatements.getPrimaryCount(); i++)
 			{
-				EagleTransformableFunction transformable = (EagleTransformableFunction) which;
-				transformable.transformFunction(transformer, generator);
+				VB_Statement baseStatement = stmt.baseStatements.getPrimaryElement(i);
+				AbstractToken which = baseStatement.getWhich();
+				if (which instanceof EagleTransformableFunction)
+				{
+					EagleTransformableFunction transformable = (EagleTransformableFunction) which;
+					transformable.transformFunction(transformer, generator);
+				}
 			}
 		}
 
 		// Second pass, transform all the data and logic
 		for (VB_Element stmt : statements._elements)
 		{
-			AbstractToken which = stmt.baseStatement.getWhich();
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
-			if (newStmts != null)
+			for (int i = 0; i < stmt.baseStatements.getPrimaryCount(); i++)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				VB_Statement baseStatement = stmt.baseStatements.getPrimaryElement(i);
+				AbstractToken which = baseStatement.getWhich();
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+				if (newStmts != null)
 				{
-					generator.addStatement(newStmt, stmt);
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
 				}
 			}
 		}

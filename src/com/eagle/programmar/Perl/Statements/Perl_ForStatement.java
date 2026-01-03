@@ -12,6 +12,7 @@ import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Perl_Statement;
 import com.eagle.programmar.Perl.Perl_Variable;
 import com.eagle.programmar.Perl.Perl_Variable.Perl_UserVariable;
+import com.eagle.programmar.Perl.Expressions.Perl_ParenthesizedExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_PostIncrementExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_PreIncrementExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_RelationalExpression;
@@ -44,6 +45,7 @@ public class Perl_ForStatement extends TokenSequence
 	{
 		public @CHOICE Perl_ForVarInSet XXvarInSet;
 		public @CHOICE Perl_ForLikeC XXlikeC;
+		public @FIRST Perl_ParenthesizedExpression XXexpr;
 	}
 
 	public static class Perl_ForVarInSet extends TokenSequence

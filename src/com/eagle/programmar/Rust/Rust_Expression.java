@@ -4,6 +4,7 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
@@ -20,6 +21,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_Subfield;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_Underscore;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
@@ -63,19 +65,21 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(30) Rust_Number number;
 	public @P(40) Rust_Literal literal;
 	public @P(50) Rust_Character_Literal characters;
+	public @P(60) Rust_Underscore underscore;
 
 	///////////////////////////////////////////////
 	// Primary expressions
 
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
-	public @P(120) Rust_LogicalNotExpression notExpression;
-	public @P(130) Rust_BuiltIn builtIn;
-	public @P(140) Rust_VariableExpression variableExpression;
-	public @P(150) Rust_FormatFunction builtinFunction;
-	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(170) Rust_ExpressionArray expressionArray;
-	public @P(180) Rust_BorrowExpression borrowExpression;
+	public @P(120) Rust_BitwiseExpression bitwiseExpression;
+	public @P(130) Rust_LogicalNotExpression notExpression;
+	public @P(140) Rust_BuiltIn builtIn;
+	public @P(150) Rust_VariableExpression variableExpression;
+	public @P(160) Rust_FormatFunction builtinFunction;
+	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Rust_ExpressionArray expressionArray;
+	public @P(190) Rust_BorrowExpression borrowExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

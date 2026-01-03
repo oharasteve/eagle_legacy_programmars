@@ -13,6 +13,7 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Element.VB_Statement;
 import com.eagle.programmar.VB.VB_Parameters;
 import com.eagle.programmar.VB.VB_Parameters.VB_Parameter;
 import com.eagle.programmar.VB.VB_Syntax;
@@ -30,9 +31,9 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class VB_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface, EagleTransformableFunction
@@ -133,14 +134,18 @@ public class VB_Function extends TokenSequence
 
 		for (VB_Element stmt : stmts._elements)
 		{
-			AbstractToken which = stmt.baseStatement.getWhich();
-
-			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
-			if (newStmts != null)
+			for (int i = 0; i < stmt.baseStatements.getPrimaryCount(); i++)
 			{
-				for (AbstractStatement newStmt : newStmts)
+				VB_Statement baseStatement = stmt.baseStatements.getPrimaryElement(i);
+				AbstractToken which = baseStatement.getWhich();
+	
+				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+				if (newStmts != null)
 				{
-					generator.addStatement(newStmt, stmt);
+					for (AbstractStatement newStmt : newStmts)
+					{
+						generator.addStatement(newStmt, stmt);
+					}
 				}
 			}
 		}

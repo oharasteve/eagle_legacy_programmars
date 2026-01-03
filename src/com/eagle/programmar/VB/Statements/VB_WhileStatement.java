@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Element.VB_Statement;
 import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
@@ -86,9 +87,13 @@ public class VB_WhileStatement extends TokenSequence
 
 		for (VB_Element statement : actions._elements)
 		{
-			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+			for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
 			{
-				whileTrue.add(stmt);
+				VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
+				for (AbstractStatement stmt : transformer.transformStatement(generator, baseStatement.getWhich()))
+				{
+					whileTrue.add(stmt);
+				}
 			}
 		}
 

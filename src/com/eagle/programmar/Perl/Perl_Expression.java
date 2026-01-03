@@ -41,6 +41,7 @@ import com.eagle.programmar.Perl.Expressions.Perl_PercentExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_PostIncrementExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_PowerExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_PreIncrementExpression;
+import com.eagle.programmar.Perl.Expressions.Perl_RangeExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_ReadExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_RegExExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_RegExTest;
@@ -146,5 +147,6 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(1140) Perl_LogicalAndExpression logicalAndExpression;
 	public @P(1150) Perl_LogicalOrExpression logicalOrExpression;
 	public @P(1160) Perl_TrueFalseExpression trueFalseExpression;
-	public @P(1170) Perl_AssignmentExpression assignmentExpression;
+	public @P(1170) Perl_RangeExpression rangeExpression;
+	public @P(1180) Perl_AssignmentExpression assignmentExpression;
 }

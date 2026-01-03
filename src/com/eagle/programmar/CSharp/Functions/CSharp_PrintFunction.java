@@ -12,6 +12,7 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -32,14 +33,19 @@ public class CSharp_PrintFunction extends PrimaryOperator
 	public @S(60) @NOSPACE @OPT PunctuationPeriod dot3;
 	public @S(70) @NOSPACE CSharp_KeywordChoice WRITE = new CSharp_KeywordChoice(
 			"Flush", "ReadLine", "SetOut", "Write", "WriteLine");
-	public @S(80) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(90) @NOSPACE @OPT SeparatedList<CSharp_Expression, PunctuationComma> exprs;
-	public @S(100) @NOSPACE PunctuationRightParen rightParen;
+	public @S(80) @NOSPACE @OPT CSharp_ConsoleWriteArgs args;
+	
+	public static class CSharp_ConsoleWriteArgs extends TokenSequence
+	{
+		public @S(10) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(20) @NOSPACE @OPT SeparatedList<CSharp_Expression, PunctuationComma> exprs;
+		public @S(30) @NOSPACE PunctuationRightParen rightParen;
+	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String val = interpreter.getStrValue(exprs.first());
+		String val = interpreter.getStrValue(args.exprs.first());
 		switch (WRITE.getValue())
 		{
 		case "Write":
@@ -70,7 +76,7 @@ public class CSharp_PrintFunction extends PrimaryOperator
 			throw new RuntimeException("Unexpected WRITE value: " + WRITE.getValue());
 		}
 
-		AbstractExpression value = transformer.transformExpression(generator, exprs.first());
+		AbstractExpression value = transformer.transformExpression(generator, args.exprs.first());
 		return generator.newPrintFunction(value, newLine, false, this);
 	}
 
@@ -103,11 +109,13 @@ public class CSharp_PrintFunction extends PrimaryOperator
 
 		dot3 = new PunctuationPeriod();
 		dot3.setPresent(true);
-		leftParen = new PunctuationLeftParen();
-		rightParen = new PunctuationRightParen();
+		args = new CSharp_ConsoleWriteArgs();
+		args.setPresent(true);
+		args.leftParen = new PunctuationLeftParen();
+		args.rightParen = new PunctuationRightParen();
 
-		exprs = new SeparatedList<CSharp_Expression, PunctuationComma>();
-		exprs.addPrimaryElement(line);
+		args.exprs = new SeparatedList<CSharp_Expression, PunctuationComma>();
+		args.exprs.addPrimaryElement(line);
 
 		setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(this);

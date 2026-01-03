@@ -15,11 +15,13 @@ import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -177,8 +179,9 @@ public class VB_IfStatement extends TokenSequence
 		{
 			VB_IfOneLiner oneLiner = (VB_IfOneLiner) which;
 			VB_Element statement = new VB_Element();
-			statement.baseStatement = oneLiner.thenStatement;
-			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatement.getWhich()))
+			statement.baseStatements = new SeparatedList<VB_Statement, PunctuationColon>();
+			statement.baseStatements.addPrimaryElement(oneLiner.thenStatement);
+			for (AbstractStatement stmt : transformer.transformStatement(generator, statement.baseStatements.first().getWhich()))
 			{
 				ifTrue.add(stmt);
 			}
@@ -188,13 +191,17 @@ public class VB_IfStatement extends TokenSequence
 			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
 			for (VB_Element statement : multiLiner.thenStatement._elements)
 			{
-				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
-						statement.baseStatement.getWhich());
-				if (stmts != null)
+				for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
 				{
-					for (AbstractStatement stmt : stmts)
+					VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
+					ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+							baseStatement.getWhich());
+					if (stmts != null)
 					{
-						ifTrue.add(stmt);
+						for (AbstractStatement stmt : stmts)
+						{
+							ifTrue.add(stmt);
+						}
 					}
 				}
 			}
@@ -209,10 +216,14 @@ public class VB_IfStatement extends TokenSequence
 			{
 				for (VB_Element statement : multiLiner.elseClause.elseStatement._elements)
 				{
-					for (AbstractStatement stmt : transformer.transformStatement(generator,
-							statement.baseStatement.getWhich()))
+					for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
 					{
-						ifFalse.add(stmt);
+						VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
+						for (AbstractStatement stmt : transformer.transformStatement(generator,
+								baseStatement.getWhich()))
+						{
+							ifFalse.add(stmt);
+						}
 					}
 				}
 			}

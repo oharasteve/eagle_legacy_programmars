@@ -40,7 +40,7 @@ public class Scala_Function extends TokenSequence
 	public @S(30) Scala_Function_Definition id;
 	public @S(40) @OPT Scala_FunctionParams params;
 	public @S(50) @OPT Scala_FunctionReturns returns;
-	public @S(60) PunctuationEquals equals;
+	public @S(60) @OPT PunctuationEquals equals;
 	public @S(70) Scala_Statement stmt;
 
 	public static class Scala_FunctionReturns extends TokenSequence

@@ -32,6 +32,7 @@ import com.eagle.programmar.VB.Statements.VB_WscriptEcho;
 import com.eagle.programmar.VB.Symbols.VB_Label_Definition;
 import com.eagle.programmar.VB.Terminals.VB_Comment;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -39,7 +40,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 
 public class VB_Element extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
-	public @S(10) VB_Statement baseStatement;
+	public @S(10) SeparatedList<VB_Statement,PunctuationColon> baseStatements;
 	public @S(20) @OPT VB_Comment comment;
 	public @S(30) VB_EndOfLine eoln;
 
@@ -83,6 +84,16 @@ public class VB_Element extends TokenSequence implements AbstractStatement, Eagl
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		return interpreter.tryToInterpret(baseStatement);
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		for (int i = 0; i < baseStatements.getPrimaryCount(); i++)
+		{
+			VB_Statement baseStatement = baseStatements.getPrimaryElement(i);
+			result = interpreter.tryToInterpret(baseStatement);
+			if (result != Eagle_Statement_Result.NORMAL)
+			{
+				break;
+			}
+		}
+		return result;
 	}
 }
