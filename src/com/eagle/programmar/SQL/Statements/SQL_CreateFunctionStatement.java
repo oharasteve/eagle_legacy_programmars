@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.SQL.SQL_Program.SQL_StatementOrComment;
@@ -26,14 +25,12 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -122,7 +119,7 @@ public class SQL_CreateFunctionStatement extends TokenSequence
 			}
 		}
 
-		createLocalVariables(transformer, generator);
+		// createLocalVariables(transformer, generator);
 
 		for (SQL_StatementOrComment stmtComm : statements._elements)
 		{
@@ -144,33 +141,33 @@ public class SQL_CreateFunctionStatement extends TokenSequence
 		generator.doneMethod();
 	}
 
-	private void createLocalVariables(EagleTransformer transformer, EagleGenerator generator)
-	{
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		if (transformer._metrics != null)
-		{
-			ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-			for (AssignMetrics met : asgMetrics)
-			{
-				TypeEnum typE = met.uniqueType();
-				if (typE != TypeEnum.VOID)
-				{
-					AbstractType abstrType = generator.transformType(typE, null, this);
-
-					AbstractExpression initExpr = null;
-					if (typE == TypeEnum.STRING_HASH)
-					{
-						// Need to create an empty hashmap
-						initExpr = generator.newClassCreation(abstrType, null, this);
-					}
-
-					// System.err.println("****** Found local var " + met._symbolName);
-					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
-							null, abstrType, initExpr, this);
-					generator.addStatement(dataStmt, this);
-				}
-			}
-		}
-	}
+//	private void createLocalVariables(EagleTransformer transformer, EagleGenerator generator)
+//	{
+//		// Are there any global variables we need to declare?
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		if (transformer._metrics != null)
+//		{
+//			ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//			for (AssignMetrics met : asgMetrics)
+//			{
+//				TypeEnum typE = met.uniqueType();
+//				if (typE != TypeEnum.VOID)
+//				{
+//					AbstractType abstrType = generator.transformType(typE, null, this);
+//
+//					AbstractExpression initExpr = null;
+//					if (typE == TypeEnum.STRING_HASH)
+//					{
+//						// Need to create an empty hashmap
+//						initExpr = generator.newClassCreation(abstrType, null, this);
+//					}
+//
+//					// System.err.println("****** Found local var " + met._symbolName);
+//					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+//							null, abstrType, initExpr, this);
+//					generator.addStatement(dataStmt, this);
+//				}
+//			}
+//		}
+//	}
 }
