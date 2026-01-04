@@ -27,11 +27,13 @@ public class FSharp_LetStatement extends TokenSequence
 {
 	public @S(10) @DOC("functions/let-bindings") FSharp_Keyword LET = new FSharp_Keyword("let");
 	public @S(20) @OPT FSharp_Keyword MUTABLE = new FSharp_Keyword("mutable");
-	public @S(30) FSharp_Variable variable;
-	public @S(40) @OPT FSharp_VariableType varType;
-	public @S(50) PunctuationEquals equals;
-	public @S(60) FSharp_Expression expression;
-	public @S(70) FSharp_EndOfLine eoln;
+	public @S(30) @OPT FSharp_Keyword MAIN = new FSharp_Keyword("main");
+	public @S(40) FSharp_Variable variable;
+	public @S(50) @OPT FSharp_VariableType varType;
+	public @S(60) PunctuationEquals equals;
+	public @S(70) @OPT FSharp_EndOfLine eoln1;
+	public @S(80) FSharp_Expression expression;
+	public @S(90) FSharp_EndOfLine eoln2;
 
 	public static class FSharp_VariableType extends TokenSequence
 	{

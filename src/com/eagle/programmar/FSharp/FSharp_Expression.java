@@ -4,14 +4,15 @@
 package com.eagle.programmar.FSharp;
 
 import com.eagle.programmar.FSharp.Expressions.FSharp_Additive_Expression;
-import com.eagle.programmar.FSharp.Expressions.FSharp_Logical_And_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_BracketBars;
 import com.eagle.programmar.FSharp.Expressions.FSharp_BuiltIn;
 import com.eagle.programmar.FSharp.Expressions.FSharp_FunctionCall;
-import com.eagle.programmar.FSharp.Expressions.FSharp_Multiplicative_Expression;
+import com.eagle.programmar.FSharp.Expressions.FSharp_Logical_And_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Logical_Not_Expresion;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Logical_Or_Expression;
+import com.eagle.programmar.FSharp.Expressions.FSharp_Multiplicative_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Parens;
+import com.eagle.programmar.FSharp.Expressions.FSharp_Range_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Relational_Expression;
 import com.eagle.programmar.FSharp.Expressions.FSharp_Subfield;
 import com.eagle.programmar.FSharp.Expressions.FSharp_SubscriptExpression;
@@ -61,7 +62,8 @@ public class FSharp_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(140) FSharp_Logical_Not_Expresion notOper;
 	public @P(150) FSharp_BuiltIn builtIn;
 	public @P(160) FSharp_VariableExpression variableExpression;
-
+	public @P(170) FSharp_Range_Expression rangeExpression;
+	
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 

@@ -27,10 +27,11 @@ public class Ada_IfStatement extends TokenSequence
 	public @S(20) Ada_Expression condition;
 	public @S(30) Ada_Keyword THEN = new Ada_Keyword("then");
 	public @S(40) TokenList<Ada_Statement> thenStatements;
-	public @S(50) @OPT Ada_IfElseClause elseClause;
-	public @S(60) Ada_Keyword END = new Ada_Keyword("end");
-	public @S(70) Ada_Keyword IF2 = new Ada_Keyword("if");
-	public @S(80) PunctuationSemicolon semicolon;
+	public @S(50) @OPT TokenList<Ada_ElseIfClause> elseIfClauses;
+	public @S(60) @OPT Ada_IfElseClause elseClause;
+	public @S(70) Ada_Keyword END = new Ada_Keyword("end");
+	public @S(80) Ada_Keyword IF2 = new Ada_Keyword("if");
+	public @S(90) PunctuationSemicolon semicolon;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
@@ -38,6 +39,14 @@ public class Ada_IfStatement extends TokenSequence
 	{
 		public @S(10) Ada_Keyword ELSE = new Ada_Keyword("else");
 		public @S(20) TokenList<Ada_Statement> elseStatements;
+	}
+
+	public static class Ada_ElseIfClause extends TokenSequence
+	{
+		public @S(10) Ada_Keyword ELSIF = new Ada_Keyword("elsif");
+		public @S(20) Ada_Expression condition;
+		public @S(30) Ada_Keyword THEN = new Ada_Keyword("then");
+		public @S(40) TokenList<Ada_Statement> elseStatements;
 	}
 
 	@Override

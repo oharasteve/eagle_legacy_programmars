@@ -19,9 +19,9 @@ public class Bash_LogicalAndCondition extends PrecedenceOperator
 	
 	public static class Bash_AndOperator extends TokenChooser
 	{
-		public Bash_Punctuation XXampersands = new Bash_Punctuation("&&");
+		public @CHOICE Bash_Punctuation XXampersands = new Bash_Punctuation("&&");
 		
-		public static class Bash_AndOperatorLiteral extends TokenSequence
+		public @CHOICE static class Bash_AndOperatorLiteral extends TokenSequence
 		{
 			public @S(10) PunctuationHyphen dash;
 			public @S(20) Bash_Keyword AND = new Bash_Keyword("and");

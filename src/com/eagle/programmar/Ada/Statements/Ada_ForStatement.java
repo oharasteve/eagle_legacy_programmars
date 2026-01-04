@@ -11,9 +11,11 @@ import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Ada.Ada_Expression;
+import com.eagle.programmar.Ada.Ada_Label;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Variable;
 import com.eagle.programmar.Ada.Expressions.Ada_RangeExpression;
+import com.eagle.programmar.Ada.Symbols.Ada_Label_Reference;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -29,16 +31,20 @@ import com.eagle.transform.EagleTransformer;
 public class Ada_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) Ada_Keyword FOR = new Ada_Keyword("for");
-	public @S(20) Ada_Variable var;
-	public @S(30) Ada_Keyword IN = new Ada_Keyword("in");
-	public @S(40) @OPT Ada_Keyword REVERSE = new Ada_Keyword("reverse");
-	public @S(50) Ada_Expression values;
-	public @S(60) Ada_Keyword LOOP = new Ada_Keyword("loop");
-	public @S(70) TokenList<Ada_Statement> statements;
-	public @S(80) Ada_Keyword END = new Ada_Keyword("end");
-	public @S(90) Ada_Keyword LOOP2 = new Ada_Keyword("loop");
-	public @S(100) PunctuationSemicolon semicolon;
+	public @S(10) @OPT Ada_Label label1;
+	public @S(20) Ada_Keyword FOR = new Ada_Keyword("for");
+	public @S(30) Ada_Variable var;
+	public @S(40) Ada_Keyword IN = new Ada_Keyword("in");
+	public @S(50) @OPT Ada_Keyword INTEGER = new Ada_Keyword("Integer");
+	public @S(60) @OPT Ada_Keyword RANGE = new Ada_Keyword("range");
+	public @S(70) @OPT Ada_Keyword REVERSE = new Ada_Keyword("reverse");
+	public @S(80) Ada_Expression values;
+	public @S(90) Ada_Keyword LOOP = new Ada_Keyword("loop");
+	public @S(100) TokenList<Ada_Statement> statements;
+	public @S(110) Ada_Keyword END = new Ada_Keyword("end");
+	public @S(120) Ada_Keyword LOOP2 = new Ada_Keyword("loop");
+	public @S(130) @OPT Ada_Label_Reference label2;
+	public @S(140) PunctuationSemicolon semicolon;
 
 	private @SKIP ForLoopMetrics _metrics = null;
 

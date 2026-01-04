@@ -13,15 +13,21 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
+import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
+import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
+import com.eagle.programmar.FSharp.Terminals.FSharp_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class FSharp_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
@@ -39,8 +45,27 @@ public class FSharp_Program extends AbstractLanguage
 		return "https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/";
 	}
 
-	public @S(10) TokenList<FSharp_Element> elements;
+	public @S(10) @OPT FSharp_OpenDeclaration open;
+	public @S(20) @OPT FSharp_EntryPoint entryPoint;
+	public @S(30) TokenList<FSharp_Element> elements;
 
+	public static class FSharp_OpenDeclaration extends TokenSequence
+	{
+		public @S(10) FSharp_Keyword OPEN = new FSharp_Keyword("open");
+		public @S(20) FSharp_Keyword SYSTEM = new FSharp_Keyword("System");
+		public @S(30) FSharp_EndOfLine eoln;
+	}
+	
+	public static class FSharp_EntryPoint extends TokenSequence
+	{
+		public @S(10) PunctuationLeftBracket leftBracket;
+		public @S(20) FSharp_Punctuation lessThan = new FSharp_Punctuation("<");
+		public @S(30) FSharp_Keyword ENTRYPOINT = new FSharp_Keyword("EntryPoint");
+		public @S(40) FSharp_Punctuation greaterThan = new FSharp_Punctuation(">");
+		public @S(50) PunctuationRightBracket rightBracket;
+		public @S(60) FSharp_EndOfLine eoln;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
