@@ -10,6 +10,7 @@ import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Expressions.SQL_VariableExpression;
 import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
+import com.eagle.scope.EagleScope;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -35,7 +36,19 @@ public class SQL_SetStatement extends TokenSequence
 	{
 		SQL_Identifier_Reference id = var.variable.ids.first();
 		EagleValue val = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var, id.getValue(), val);
+		
+		if (var.variable.AT != null && var.variable.AT.isPresent())
+		{
+			// Session variables (like @result) need to have global scope
+			EagleScope saveScope = interpreter._symbolTable.getScope();
+			interpreter._symbolTable.setScope(interpreter._lang.getScope());
+			interpreter.setSymbol(var, id.getValue(), val);
+			interpreter._symbolTable.setScope(saveScope);
+		}
+		else
+		{
+			interpreter.setSymbol(var, id.getValue(), val);
+		}
 	}
 
 	@Override

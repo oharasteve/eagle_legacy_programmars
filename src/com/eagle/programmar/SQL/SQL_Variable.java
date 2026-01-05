@@ -21,6 +21,7 @@ public class SQL_Variable extends TokenSequence implements EagleRunnable
 	public void interpret(EagleInterpreter interpreter)
 	{
 		SQL_Identifier_Reference id = ids.first();
+		
 		EagleValue value = interpreter.findSymbol(id.toString());
 		if (value == null)
 		{
