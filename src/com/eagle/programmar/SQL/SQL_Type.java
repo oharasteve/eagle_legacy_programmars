@@ -3,9 +3,14 @@
 
 package com.eagle.programmar.SQL;
 
+import com.eagle.programmar.Java.Java_Type;
+import com.eagle.programmar.Java.Java_Type.Java_TypeName;
+import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.programmar.SQL.SQL_Type;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.programmar.SQL.Terminals.SQL_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -56,6 +61,16 @@ public class SQL_Type extends TokenChooser
 		public @S(30) @OPT PunctuationComma comma;
 		public @S(40) @OPT SQL_Number size2;
 		public @S(50) PunctuationRightParen rightParen;
+	}
+
+	// Convert "double" to a SQL_Type representing a double
+	public static SQL_Type newPrimitiveType(String name)
+	{
+		SQL_Type type = new SQL_Type();
+		SQL_BaseType base = new SQL_BaseType();
+		base.baseType = new SQL_KeywordChoice(name);
+		type.setWhich(base);
+		return type;
 	}
 
 	public static TypeEnum findTypeEnum(SQL_Type type)
