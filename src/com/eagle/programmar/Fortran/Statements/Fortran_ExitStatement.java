@@ -9,8 +9,12 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_ExitStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Fortran_ExitStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) Fortran_Keyword EXIT = new Fortran_Keyword("EXIT");
 	public @S(20) Fortran_EOLN eoln;
@@ -19,5 +23,11 @@ public class Fortran_ExitStatement extends TokenSequence implements AbstractStat
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		return Eagle_Statement_Result.BREAK;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newBreakStatement(EXIT);
 	}
 }

@@ -6,7 +6,6 @@ package com.eagle.programmar.SQL.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Java.Java_Method;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -35,7 +34,7 @@ public class SQL_ReturnStatement extends TokenSequence
 			AbstractToken parent = this.getParent();
 			while (parent != null)
 			{
-				if (parent instanceof Java_Method)
+				if (parent instanceof SQL_CreateFunctionStatement)
 				{
 					SQL_CreateFunctionStatement func = (SQL_CreateFunctionStatement) parent;
 					func._returnMetrics.returned(val.typeName());

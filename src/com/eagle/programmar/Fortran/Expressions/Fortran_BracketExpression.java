@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Fortran.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -10,14 +12,19 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_BracketExpression extends PrimaryOperator implements EagleRunnable
+public class Fortran_BracketExpression extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
-	public @S(20) SeparatedList<Fortran_Expression, PunctuationComma> expressions;
+	public @S(20) @OPT SeparatedList<Fortran_Expression, PunctuationComma> expressions;
 	public @S(30) PunctuationRightBracket rightBracket;
 
 	@Override
@@ -31,5 +38,21 @@ public class Fortran_BracketExpression extends PrimaryOperator implements EagleR
 			array.addValue(val);
 		}
 		interpreter.pushEagleValue(array);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		if (expressions != null && expressions.isPresent())
+		{
+			ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
+			for (int i = 0; i < expressions.getPrimaryCount(); i++)
+			{
+				Fortran_Expression expr = expressions.getPrimaryElement(i);
+				exprs.add(transformer.transformExpression(generator, expr));
+			}
+			return generator.newArrayExpression(exprs, this);
+		}
+		return null;
 	}
 }

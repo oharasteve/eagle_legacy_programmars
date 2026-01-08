@@ -18,17 +18,23 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
-public class Fortran_CallStatement extends TokenSequence implements AbstractStatement, EagleRunnable
+public class Fortran_CallStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @DOC("6j4m0vn7p/index.html") @S(10) Fortran_Keyword CALL = new Fortran_Keyword("CALL");
 	public @S(20) Fortran_Function_Reference variable;
 	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Fortran_Expression, PunctuationComma> args;
+	public @S(40) SeparatedList<Fortran_Expression, PunctuationComma> arguments;
 	public @S(50) PunctuationRightParen rightParen;
 	public @S(60) Fortran_EOLN eoln;
 
@@ -45,7 +51,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		Fortran_Subroutine sub = (Fortran_Subroutine) fn;
 
 		// Make sure the function args match up
-		int argCount = args.getPrimaryCount();
+		int argCount = arguments.getPrimaryCount();
 		int paramCount = sub.parameters.getPrimaryCount();
 		if (argCount != paramCount)
 		{
@@ -57,7 +63,7 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 		ArrayList<String> argTypes = new ArrayList<String>();
 		for (int i = 0; i < argCount; i++)
 		{
-			Fortran_Expression expr = args.getPrimaryElement(i);
+			Fortran_Expression expr = arguments.getPrimaryElement(i);
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
@@ -85,5 +91,22 @@ public class Fortran_CallStatement extends TokenSequence implements AbstractStat
 			Fortran_Variable_Reference param = sub.parameters.getPrimaryElement(i);
 			interpreter.removeSymbol(param.getValue());
 		}
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		int argCount = arguments.getPrimaryCount();
+		for (int i = 0; i < argCount; i++)
+		{
+			Fortran_Expression arg = arguments.getPrimaryElement(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(variable.getValue());
+		AbstractExpression expr = generator.newMethodInvocation(var, args, variable);
+		return generator.newExpressionStatement(expr, variable);
 	}
 }
