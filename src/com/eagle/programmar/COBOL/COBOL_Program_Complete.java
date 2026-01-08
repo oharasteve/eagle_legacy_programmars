@@ -11,7 +11,6 @@ import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.scope.EagleScope;
-import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -20,7 +19,7 @@ import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
 public abstract class COBOL_Program_Complete extends COBOL_Program
-		implements EagleRunnable, EagleTransformableProgram, EagleScopeInterface
+		implements EagleRunnable, EagleTransformableProgram
 {
 	// Components of a complete COBOL Program
 	public @S(10) @OPT TokenList<COBOL_Comment> comments1;

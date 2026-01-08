@@ -3,27 +3,31 @@
 
 package com.eagle.programmar.COBOL;
 
+import java.util.HashSet;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
-public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, AbstractFunction
+public class COBOL_Paragraph extends TokenSequence
+		implements EagleRunnable, AbstractFunction
 {
 	public @S(10) @OPT TokenList<COBOL_ParagraphHeader> paragraphHeaders;
 	public @S(20) TokenList<COBOL_SentenceOrComment> sentences;
-
-	public @SKIP CallMetrics _callMetrics = null;
 
 	public static class COBOL_SentenceOrComment extends TokenChooser
 	{
@@ -42,6 +46,8 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 		public @S(10) COBOL_Paragraph_Definition paragraphName;
 		public @S(20) PunctuationPeriod dot;
 	}
+
+	public @SKIP CallMetrics _callMetrics = null;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -64,6 +70,8 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 			generator.addMethod(null, paraName, paragraphHeaders);
 		}
 
+		findGlobalVariables(transformer, generator);
+		
 		for (COBOL_SentenceOrComment sentOrComm : sentences._elements)
 		{
 			if (sentOrComm.getWhich() instanceof COBOL_Sentence)
@@ -77,5 +85,76 @@ public class COBOL_Paragraph extends TokenSequence implements EagleRunnable, Abs
 		{
 			generator.doneMethod();
 		}
+	}
+
+	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Why isn't there a pointer up to the COBOL_Program at the top of the tree?
+		AbstractToken parent = this.getParent();
+		COBOL_Program_Complete prog = null;
+		while (parent != null)
+		{
+			if (parent instanceof COBOL_Program_Complete)
+			{
+				prog = (COBOL_Program_Complete) parent;
+				break;
+			}
+			parent = parent.getParent();
+		}
+		if (prog == null) return;
+		
+		HashSet<String> added = new HashSet<String>();
+		for (AssignMetrics var : transformer._metrics.findAllAssignments())
+		{
+			int line = var._startingLine;
+			// System.err.println("****** " + line + " " + this._currentLine + "-" + this._endLine);
+			if (line >= this._currentLine && line <= this._endLine)
+			{
+				String varName = var._symbolName;
+				if (! added.contains(varName))
+				{
+					AbstractStatement newStmt = generator.newGlobalVariable(varName, null);
+					generator.addStatement(newStmt, null);
+					added.add(varName);
+				}
+			}
+		}
+		
+//		// Find all the variables that areassigned values in this paragraph AND
+//		// are referenced inside another paragraph
+//		AbstractToken token = null;
+//		TypeEnum typ = transformer.findAssignMetric(token);
+//		if (typ != TypeEnum.VOID)
+//		{
+//			
+//		}
+		
+//		// Why isn't there a pointer up to the COBOL_Program at the top of the tree?
+//		AbstractToken parent = this.getParent();
+//		COBOL_Program_Complete prog = null;
+//		while (parent != null)
+//		{
+//			if (parent instanceof COBOL_Program_Complete)
+//			{
+//				prog = (COBOL_Program_Complete) parent;
+//				break;
+//			}
+//			parent = parent.getParent();
+//		}
+//		if (prog == null) return;
+//		
+//		// Are there any 'global' variables we need to declare?
+//		Collection<String> externals =  prog.getScope().allExternalReferences();
+//		if (externals != null && externals.size() > 0)
+//		{
+//			for (String varName : externals)
+//			{
+//				if (! generator.isKnownMethod(varName))
+//				{
+//					AbstractStatement newStmt = generator.newGlobalVariable(varName, null);
+//					generator.addStatement(newStmt, null);
+//				}
+//			}
+//		}
 	}
 }
