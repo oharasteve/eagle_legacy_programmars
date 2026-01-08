@@ -316,6 +316,12 @@ public class Java_Generator
 	}
 
 	@Override
+	public Java_Statement newGlobalVariable(String variableName, AbstractToken source)
+	{
+		return null;	// Don't need to declare variables as 'global'
+	}
+
+	@Override
 	public Java_Statement newIfStatement1(Java_Expression condition,
 			Java_Statement ifTrue, Java_Statement ifFalse, AbstractToken source)
 	{

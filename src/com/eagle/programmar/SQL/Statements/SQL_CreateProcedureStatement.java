@@ -4,6 +4,7 @@
 package com.eagle.programmar.SQL.Statements;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -112,7 +113,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 			}
 		}
 
-		// createLocalVariables(transformer, generator);
+		findGlobalVariables(transformer, generator);
 
 		for (SQL_StatementOrComment stmtComm : statements._elements)
 		{
@@ -134,33 +135,20 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		generator.doneMethod();
 	}
 
-//	private void createLocalVariables(EagleTransformer transformer, EagleGenerator generator)
-//	{
-//		// Are there any global variables we need to declare?
-//		String scopeStr = this._currentLine + "-" + this._endLine;
-//		if (transformer._metrics != null)
-//		{
-//			ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-//			for (AssignMetrics met : asgMetrics)
-//			{
-//				TypeEnum typE = met.uniqueType();
-//				if (typE != TypeEnum.VOID)
-//				{
-//					AbstractType abstrType = generator.transformType(typE, null, this);
-//
-//					AbstractExpression initExpr = null;
-//					if (typE == TypeEnum.STRING_HASH)
-//					{
-//						// Need to create an empty hashmap
-//						initExpr = generator.newClassCreation(abstrType, null, this);
-//					}
-//
-//					// System.err.println("****** Found local var " + met._symbolName);
-//					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
-//							null, abstrType, initExpr, this);
-//					generator.addStatement(dataStmt, this);
-//				}
-//			}
-//		}
-//	}
+	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator generator)
+	{
+		// Are there any 'global' variables we need to declare?
+		Collection<String> externals = this.getScope().allExternalReferences();
+		if (externals != null && externals.size() > 0)
+		{
+			for (String varName : externals)
+			{
+				if (! generator.isKnownMethod(varName))
+				{
+					AbstractStatement newStmt = generator.newGlobalVariable(varName, null);
+					generator.addStatement(newStmt, null);
+				}
+			}
+		}
+	}
 }

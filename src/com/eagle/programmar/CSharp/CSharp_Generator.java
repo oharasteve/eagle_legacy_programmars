@@ -306,6 +306,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
+	public CSharp_Statement newGlobalVariable(String variableName, AbstractToken source)
+	{
+		return null;	// Don't need to declare variables as 'global'
+	}
+
+	@Override
 	public CSharp_Statement newForLoopStatement1(CSharp_Expression init,
 			CSharp_Expression term, CSharp_Expression incr, CSharp_Statement action,
 			AbstractToken source)

@@ -43,6 +43,7 @@ import com.eagle.programmar.Python.Statements.Python_BreakStatement;
 import com.eagle.programmar.Python.Statements.Python_ExpressionStatement;
 import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
+import com.eagle.programmar.Python.Statements.Python_GlobalStatement;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
 import com.eagle.programmar.Python.Statements.Python_MatchStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
@@ -284,6 +285,13 @@ public class Python_Generator
 	public Python_ComplexStatement newExpressionStatement(Python_Expression expr, AbstractToken source)
 	{
 		return wrapStatement(Python_ExpressionStatement.newExpressionStatement(expr, source));
+	}
+
+	@Override
+	public Python_ComplexStatement newGlobalVariable(String variableName, AbstractToken source)
+	{
+		Python_GlobalStatement globStmt = new Python_GlobalStatement();
+		return globStmt.generateGlobal(variableName, source);
 	}
 
 	@Override
