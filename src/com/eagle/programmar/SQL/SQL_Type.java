@@ -3,14 +3,9 @@
 
 package com.eagle.programmar.SQL;
 
-import com.eagle.programmar.Java.Java_Type;
-import com.eagle.programmar.Java.Java_Type.Java_TypeName;
-import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
-import com.eagle.programmar.SQL.SQL_Type;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.programmar.SQL.Terminals.SQL_Number;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
