@@ -101,7 +101,7 @@ public class SQL_Program extends AbstractLanguage
 		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
 		for (AssignMetrics met : asgMetrics)
 		{
-			System.err.println("****** Found var " + met._symbolName);
+			// System.err.println("****** Found var " + met._symbolName);
 			SQL_Type type = SQL_Type.newPrimitiveType("VARCHAR");
 			AbstractType abstrType = SQL_Type.findAbstractType(generator, type);
 			AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
