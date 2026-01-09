@@ -9,8 +9,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Type;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Definition;
+import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -43,9 +45,58 @@ public class Fortran_Data extends TokenSequence
 		{
 			// No initial values on data lines like INTEGER and CHARACTER
 			Fortran_Variable_Definition varDef = variables.getPrimaryElement(i);
-			AbstractStatement stmt = generator.newDataDeclaration(false, varDef.getValue(),
-					null, newType, null, varDef);
-			result.add(stmt);
+			
+			// Skip declaration of function/subroutine parameters
+			// Fortran puts the parameters in the middle of the local variables
+			boolean skipVariable = false;
+			AbstractToken parent = this.getParent();
+			while (parent != null)
+			{
+				if (parent instanceof Fortran_Function)
+				{
+					Fortran_Function func = (Fortran_Function) parent;
+					if (func.parameters != null && func.parameters.isPresent())
+					{
+						int numParams = func.parameters.getPrimaryCount();
+						for (int j = 0; j < numParams; j++)
+						{
+							Fortran_Variable_Reference ref = func.parameters.getPrimaryElement(j);
+							if (ref.getValue().equals(varDef.getValue()))
+							{
+								skipVariable = true;
+								break;
+							}
+						}
+					}
+					break;
+				}
+				else if (parent instanceof Fortran_Subroutine)
+				{
+					Fortran_Subroutine sub = (Fortran_Subroutine) parent;
+					if (sub.parameters != null && sub.parameters.isPresent())
+					{
+						int numParams = sub.parameters.getPrimaryCount();
+						for (int j = 0; j < numParams; j++)
+						{
+							Fortran_Variable_Reference ref = sub.parameters.getPrimaryElement(j);
+							if (ref.getValue().equals(varDef.getValue()))
+							{
+								skipVariable = true;
+								break;
+							}
+						}
+					}
+					break;
+				}
+				parent = parent.getParent();
+			}
+			
+			if (! skipVariable)
+			{
+				AbstractStatement stmt = generator.newDataDeclaration(false, varDef.getValue(),
+						null, newType, null, varDef);
+				result.add(stmt);
+			}
 		}
 		return result;
 	}
