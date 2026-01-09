@@ -53,7 +53,7 @@ public class SQL_BuiltinFunction extends PrimaryOperator implements EagleRunnabl
 		{
 			public @S(10) SQL_Keyword DBMSJOB = new SQL_Keyword("DBMS_JOB");
 			public @S(20) PunctuationPeriod dot;
-			public @S(30) SQL_Keyword REMOVE = new SQL_Keyword("REMOVE");
+			public @S(30) SQL_KeywordChoice REMOVE = new SQL_KeywordChoice("REMOVE", "SUBMIT");
 		}
 	}
 
