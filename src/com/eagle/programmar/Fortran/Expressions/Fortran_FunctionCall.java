@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -32,7 +33,7 @@ public class Fortran_FunctionCall extends PrimaryOperator
 {
 	public @S(10) Fortran_Identifier_Reference variable;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Fortran_Expression, PunctuationComma> argList;
+	public @S(30) @OPT SeparatedList<Fortran_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override
@@ -113,7 +114,6 @@ public class Fortran_FunctionCall extends PrimaryOperator
 	{
 		String name = variable.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-
 		if (argList != null && argList.isPresent())
 		{
 			for (int i = 0; i < argList.getPrimaryCount(); i++)
@@ -124,6 +124,13 @@ public class Fortran_FunctionCall extends PrimaryOperator
 			}
 		}
 
+		// Check for subscripts
+		if (! generator.isKnownMethod(name) && args.size() == 1)
+		{
+			return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ONE, args.get(0), argList);
+		}
+
+		// Must be a function call
 		AbstractVariable var = generator.newVariable(name);
 		return generator.newMethodInvocation(var, args, this);
 	}

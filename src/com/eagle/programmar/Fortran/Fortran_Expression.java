@@ -19,6 +19,7 @@ import com.eagle.programmar.Fortran.Expressions.Fortran_StringConcatenation;
 import com.eagle.programmar.Fortran.Expressions.Fortran_Subscript;
 import com.eagle.programmar.Fortran.Expressions.Fortran_VariableExpression;
 import com.eagle.programmar.Fortran.Functions.Fortran_AdjustLFunction;
+import com.eagle.programmar.Fortran.Functions.Fortran_IndexFunction;
 import com.eagle.programmar.Fortran.Functions.Fortran_LenFunction;
 import com.eagle.programmar.Fortran.Functions.Fortran_ModFunction;
 import com.eagle.programmar.Fortran.Functions.Fortran_TrimFunction;
@@ -62,13 +63,14 @@ public class Fortran_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(120) Fortran_LenFunction lenFunction;
 	public @P(130) Fortran_ModFunction modFunction;
 	public @P(140) Fortran_TrimFunction trimFunction;
-	public @P(150) Fortran_FunctionCall functionCall;
-	public @P(160) Fortran_Subscript subscript;
-	public @P(170) Fortran_LogicalNotExpression notExpression;
-	public @P(180) Fortran_BuiltIn builtIn;
-	public @P(190) Fortran_VariableExpression variableExpression;
-	public @P(200) Fortran_ParenthesizedExpression parenthesizedExpression;
-	public @P(210) Fortran_BracketExpression bracketExpression;
+	public @P(150) Fortran_IndexFunction indexFunction;
+	public @P(160) Fortran_FunctionCall functionCall;
+	public @P(170) Fortran_Subscript subscript;
+	public @P(180) Fortran_LogicalNotExpression notExpression;
+	public @P(190) Fortran_BuiltIn builtIn;
+	public @P(200) Fortran_VariableExpression variableExpression;
+	public @P(210) Fortran_ParenthesizedExpression parenthesizedExpression;
+	public @P(220) Fortran_BracketExpression bracketExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

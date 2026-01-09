@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Variable;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -38,6 +39,29 @@ public class Fortran_Assignment extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		// Fortran doesn't have a Return statement for Functions.
+		// It assigns a value to the function name
+		// Returns are allowed in Subroutines.
+
+		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
+		String varName = variable.var.getValue();
+		
+		AbstractToken parent = variable;
+		while (parent != null)
+		{
+			if (parent instanceof Fortran_Function)
+			{
+				Fortran_Function fn = (Fortran_Function) parent;
+				if (fn.id.getValue().equals(varName))
+				{
+					// It is a function return: function cube(a) begin cube := a*a*a end
+					return generator.newReturnStatement(newExpr, this);
+				}
+				break;
+			}
+			parent = parent.getParent();
+		}
+
 		AbstractExpression subscrExpr = null;
 		AbstractExpression value = transformer.transformExpression(generator, expression);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.var.getValue(),
