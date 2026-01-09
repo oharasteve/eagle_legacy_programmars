@@ -125,8 +125,7 @@ public class CSharp_Data extends TokenSequence
 	}
 
 	public static CSharp_Data newDataDeclaration(boolean isStatic, String name, CSharp_Expression size,
-			CSharp_Type type,
-			CSharp_Expression initial, AbstractToken source)
+			CSharp_Type type, CSharp_Expression initial, AbstractToken source)
 	{
 		if (type == null)
 		{

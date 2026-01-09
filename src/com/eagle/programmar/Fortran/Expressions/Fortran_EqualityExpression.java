@@ -15,9 +15,9 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Fortran_EqualityExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -83,7 +83,8 @@ public class Fortran_EqualityExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		Oper2Types types = transformer.findOperator2Metric(operator);
+		// Fortran_EqOper is 41/25 (it's a space) and Fortran_PunctuationChoice is at 41/26 which is right
+		Oper2Types types = transformer.findOperator2Metric(operator.getWhich());
 		String oper = operator.getWhich().toString();
 
 		switch (oper.toUpperCase())

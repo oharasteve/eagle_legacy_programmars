@@ -9,14 +9,12 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Fortran_Syntax;
-import com.eagle.programmar.Fortran.Expressions.Fortran_BracketExpression;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Definition;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Function_Reference;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -56,19 +54,19 @@ public class Fortran_ProgramBlock extends TokenSequence
 		}
 	}
 
-	private static boolean firstPass(Fortran_Statement stmt)
-	{
-		if (stmt.getWhich() instanceof Fortran_Assignment)
-		{
-			Fortran_Assignment asg = (Fortran_Assignment) stmt.getWhich();
-			AbstractToken token = asg.expression.getWhich();
-			if (token instanceof Fortran_BracketExpression)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+//	private static boolean firstPass(Fortran_Statement stmt)
+//	{
+//		if (stmt.getWhich() instanceof Fortran_Assignment)
+//		{
+//			Fortran_Assignment asg = (Fortran_Assignment) stmt.getWhich();
+//			AbstractToken token = asg.expression.getWhich();
+//			if (token instanceof Fortran_BracketExpression)
+//			{
+//				return true;
+//			}
+//		}
+////		return false;
+//	}
 	
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
@@ -79,22 +77,6 @@ public class Fortran_ProgramBlock extends TokenSequence
 			System.out.println("** Found Fortran program " + fnName);
 		}
 
-		// First pass - global variables
-		for (Fortran_Statement stmt : statements._elements)
-		{
-			if (firstPass(stmt))
-			{
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-				if (newStmts != null)
-				{
-					for (AbstractStatement newStmt : newStmts)
-					{
-						generator.addStatement(newStmt, stmt.getWhich());
-					}
-				}
-			}
-		}
-
 		// Set up the main program
 		generator.addMethod(null, generator.mainName(), this);
 		generator.addMainArgs();
@@ -102,15 +84,12 @@ public class Fortran_ProgramBlock extends TokenSequence
 		// Second pass - everything else
 		for (Fortran_Statement stmt : statements._elements)
 		{
-			if (!firstPass(stmt))
+			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
+			if (newStmts != null)
 			{
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-				if (newStmts != null)
+				for (AbstractStatement newStmt : newStmts)
 				{
-					for (AbstractStatement newStmt : newStmts)
-					{
-						generator.addStatement(newStmt, stmt.getWhich());
-					}
+					generator.addStatement(newStmt, stmt.getWhich());
 				}
 			}
 		}

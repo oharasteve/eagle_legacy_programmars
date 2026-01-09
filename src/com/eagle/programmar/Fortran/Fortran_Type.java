@@ -55,7 +55,14 @@ public class Fortran_Type extends TokenSequence
 		AbstractToken which = type.dataType.getWhich();
 		if (which instanceof Fortran_CharacterType)
 		{
-			newType = TypeEnum.STRING;
+			if (type.dimension != null && type.dimension.isPresent())
+			{
+				newType = TypeEnum.STRING_ARRAY;
+			}
+			else
+			{
+				newType = TypeEnum.STRING;
+			}
 		}
 		else if (which instanceof Fortran_KeywordChoice)
 		{

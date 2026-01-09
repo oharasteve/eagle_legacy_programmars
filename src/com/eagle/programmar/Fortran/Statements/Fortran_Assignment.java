@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Variable;
 import com.eagle.programmar.Fortran.Terminals.Fortran_EOLN;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -32,7 +33,17 @@ public class Fortran_Assignment extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue val = interpreter.getEagleValue(expression);
-		interpreter.setSymbol(variable, variable.var.toString(), val);
+		String varName = variable.var.toString();
+		
+		AbstractFunction abstractFunc = interpreter.findFunction(varName);
+		if (abstractFunc != null && abstractFunc instanceof Fortran_Function)
+		{
+			// Return value from a function
+			Fortran_Function func = (Fortran_Function) abstractFunc;
+			func._returnMetrics.returned(val.typeName());
+		}
+
+		interpreter.setSymbol(variable, varName, val);
 	}
 
 	@Override

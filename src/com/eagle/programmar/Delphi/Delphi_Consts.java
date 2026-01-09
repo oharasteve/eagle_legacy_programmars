@@ -66,7 +66,7 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 			AbstractExpression expression = transformer.transformExpression(generator,
 					constant.expr);
 			AbstractStatement data = generator.newDataDeclaration(
-					false, varName, null, newType, expression, this);
+					false, varName, null, newType, expression, constant);
 			generator.addStatement(data, constant);
 		}
 	}
