@@ -81,7 +81,6 @@ public class Fortran_ProgramBlock extends TokenSequence
 		generator.addMethod(null, generator.mainName(), this);
 		generator.addMainArgs();
 
-		// Second pass - everything else
 		for (Fortran_Statement stmt : statements._elements)
 		{
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());

@@ -41,10 +41,17 @@ public class Fortran_Data extends TokenSequence
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = Fortran_Type.findType(generator, type);
+		
 		for (int i = 0; i < variables.getPrimaryCount(); i++)
 		{
 			// No initial values on data lines like INTEGER and CHARACTER
 			Fortran_Variable_Definition varDef = variables.getPrimaryElement(i);
+			
+			// Skip declarations of Functions
+			if (transformer.findCallTo(varDef.getValue()))
+			{
+				continue;
+			}
 			
 			// Skip declaration of function/subroutine parameters
 			// Fortran puts the parameters in the middle of the local variables
