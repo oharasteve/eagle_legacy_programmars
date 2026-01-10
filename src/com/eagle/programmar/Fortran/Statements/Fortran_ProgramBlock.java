@@ -54,20 +54,6 @@ public class Fortran_ProgramBlock extends TokenSequence
 		}
 	}
 
-//	private static boolean firstPass(Fortran_Statement stmt)
-//	{
-//		if (stmt.getWhich() instanceof Fortran_Assignment)
-//		{
-//			Fortran_Assignment asg = (Fortran_Assignment) stmt.getWhich();
-//			AbstractToken token = asg.expression.getWhich();
-//			if (token instanceof Fortran_BracketExpression)
-//			{
-//				return true;
-//			}
-//		}
-////		return false;
-//	}
-	
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{

@@ -90,28 +90,13 @@ public class Fortran_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
-		String fnName = id.getValue();
-
 		// Collect all the COMMON variables first
-		HashSet<String> commons = new HashSet<String>();
-		for (Fortran_Statement stmt : statements._elements)
-		{
-			if (stmt.getWhich() instanceof Fortran_Common)
-			{
-				Fortran_Common common = (Fortran_Common) stmt.getWhich();
-				int numCommons = common.variables.getPrimaryCount();
-				for (int i = 0; i < numCommons; i++)
-				{
-					Fortran_Variable_Reference ref = common.variables.getPrimaryElement(i);
-					commons.add(ref.getValue());
-					System.err.println("****** Found common " + ref.getValue() + " in " + fnName);
-				}
-			}
-		}
+		HashSet<String> commons = Fortran_Common.collectCommons(statements._elements);
 		
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
 
+		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
 		if (VERBOSE)
