@@ -5,6 +5,7 @@ package com.eagle.programmar.Fortran.Statements;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -89,10 +90,27 @@ public class Fortran_Function extends TokenSequence
 	@Override
 	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
 	{
+		String fnName = id.getValue();
+
+		// Collect all the COMMON variables first
+		HashSet<String> commons = new HashSet<String>();
+		for (Fortran_Statement stmt : statements._elements)
+		{
+			if (stmt.getWhich() instanceof Fortran_Common)
+			{
+				Fortran_Common common = (Fortran_Common) stmt.getWhich();
+				int numCommons = common.variables.getPrimaryCount();
+				for (int i = 0; i < numCommons; i++)
+				{
+					Fortran_Variable_Reference ref = common.variables.getPrimaryElement(i);
+					commons.add(ref.getValue());
+					System.err.println("****** Found common " + ref.getValue() + " in " + fnName);
+				}
+			}
+		}
+		
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
-
-		String fnName = id.getValue();
 
 		generator.addMethod(newReturnType, fnName, this);
 		generator.setMethodName(fnName);
@@ -124,6 +142,18 @@ public class Fortran_Function extends TokenSequence
 
 		for (Fortran_Statement stmt : statements._elements)
 		{
+			if (stmt.getWhich() instanceof Fortran_Data)
+			{
+				Fortran_Data dataStmt = (Fortran_Data) stmt.getWhich();
+				String var = dataStmt.variables.first().getValue();
+				if (commons.contains(var))
+				{
+					// This is broken if a single DATA line has both COMMON and non-COMMON variables
+					// It only checks the first variable and if it is COMMON, it assumes all of them are COMMON
+					continue;	// Skip all the COMMON variables
+				}
+			}
+			
 			Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
 			if (newStmts != null)
 			{
