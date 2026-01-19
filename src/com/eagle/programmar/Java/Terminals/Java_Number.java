@@ -27,16 +27,16 @@ public class Java_Number extends TerminalNumberToken
 		return super.genericDescription("Ee", "LlFfDd", true, true, '_');
 	}
 
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		return generator.newNumberExpression(_numberAsText, this);
+	}
+
 	public Java_Number generateNumber(String value, AbstractToken source)
 	{
 		this.setValue(value);
 		this.setTransformationSource(source);
 		return this;
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		return generator.newNumberExpression(_numberAsText, this);
 	}
 }

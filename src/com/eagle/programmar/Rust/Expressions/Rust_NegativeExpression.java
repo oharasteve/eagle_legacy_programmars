@@ -8,7 +8,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -39,9 +41,6 @@ public class Rust_NegativeExpression extends PrimaryOperator
 		int val = value.forceIntegerValue();
 		switch (oper)
 		{
-		case "+":
-			interpreter.pushInt(val);
-			break;
 		case "-":
 			interpreter.pushInt(-val);
 			break;
@@ -56,12 +55,29 @@ public class Rust_NegativeExpression extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())
 		{
-		case "+":
-			return theExpr;
 		case "-":
 			return generator.newNegativeExpression(NegativeEnum.NEGATIVE, theExpr, this);
 		default:
 			throw new RuntimeException("Unexpected negation operator: " + operator);
 		}
+	}
+
+	public Rust_Expression generateNegative(NegativeEnum sign,
+			Rust_Expression theExpr, AbstractToken source)
+	{
+		String oper;
+		switch (sign)
+		{
+		case NEGATIVE:
+			oper = "-";
+			break;
+		default:
+			return null;
+		}
+
+		this.expr = theExpr;
+		this.operator.setValue(oper);
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

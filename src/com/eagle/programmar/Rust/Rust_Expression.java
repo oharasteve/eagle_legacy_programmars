@@ -4,7 +4,9 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_BitwiseNotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
@@ -25,6 +27,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_Underscore;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
+import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Functions.Rust_RevMethod;
 import com.eagle.programmar.Rust.Functions.Rust_StartsWithMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
@@ -72,7 +75,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
-	public @P(120) Rust_BitwiseExpression bitwiseExpression;
+	public @P(120) Rust_BitwiseNotExpression bitwiseNotExpression;
 	public @P(130) Rust_LogicalNotExpression notExpression;
 	public @P(140) Rust_BuiltIn builtIn;
 	public @P(150) Rust_VariableExpression variableExpression;
@@ -95,7 +98,10 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1080) Rust_ShiftExpression shiftExpression;
 	public @P(1090) Rust_RelationalExpression relationalExpression;
 	public @P(1100) Rust_EqualityExpression equalityExpression;
-	public @P(1110) Rust_LogicalAndExpression conditionalAndExpression;
-	public @P(1120) Rust_LogicalOrExpression conditionalOrExpression;
-	public @P(1130) Rust_RangeExpression rangeExpression;
+	public @P(1110) Rust_BitwiseExpression bitwiseExpression;
+	public @P(1120) Rust_LogicalAndExpression conditionalAndExpression;
+	public @P(1130) Rust_LogicalOrExpression conditionalOrExpression;
+	public @P(1140) Rust_RangeExpression rangeExpression;
+	public @P(1150) Rust_PrintlnFunction printFunction;
+	public @P(1160) Rust_AssignmentExpression asgExpression;
 }

@@ -72,7 +72,7 @@ public class Rust_MethodInvocation extends PrimaryOperator
 
 		// And transfer control to the function
 		interpreter.callingFunction(name, func);
-		Eagle_Statement_Result result = interpreter.tryToInterpret(func.stmt);
+		Eagle_Statement_Result result = interpreter.tryToInterpret(func.block);
 
 		// The result was already put on the runtime stack
 		long elapsedTime = System.nanoTime() - startTime;

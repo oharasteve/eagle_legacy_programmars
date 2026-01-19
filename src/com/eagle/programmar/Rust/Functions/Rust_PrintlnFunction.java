@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Jul 2, 2022
 
-package com.eagle.programmar.Rust.Statements;
+package com.eagle.programmar.Rust.Functions;
 
 import java.util.ArrayList;
 
@@ -10,22 +10,23 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Format;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_PrintlnStatement extends TokenSequence
-		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
+public class Rust_PrintlnFunction extends TokenSequence
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Keyword PRINTLN = new Rust_Keyword("println");
 	public @S(20) Rust_Punctuation bang = new Rust_Punctuation("!");
@@ -48,11 +49,24 @@ public class Rust_PrintlnStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer,
+	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTLN);
 		AbstractExpression fullExpr = Rust_Format.transform(transformer, generator, argList, metrics);
-		return generator.newPrintStatement(fullExpr, true, false, this);
+		return fullExpr;
+	}
+
+	public Rust_Expression generatePrintFunc(Rust_Expression line, boolean newLine,
+			boolean toErr, AbstractToken source)
+	{
+		leftParen = new PunctuationLeftParen();
+		rightParen = new PunctuationRightParen();
+
+		argList = new SeparatedList<Rust_Expression, PunctuationComma>();
+		argList.addPrimaryElement(line);
+
+		setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

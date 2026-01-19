@@ -1,5 +1,5 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Apr 1, 2024
+// Original author: Steven A. O'Hara, Jan 15, 2026
 
 package com.eagle.programmar.Rust.Expressions;
 
@@ -15,10 +15,10 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_LogicalNotExpression extends PrimaryOperator
+public class Rust_BitwiseNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Rust_Punctuation notOperator = new Rust_Punctuation('!');
+	public @S(10) Rust_Punctuation logicalNotOperator = new Rust_Punctuation('!');
 	public @S(20) Rust_Expression expr;
 
 	@Override
@@ -31,13 +31,13 @@ public class Rust_LogicalNotExpression extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		return generator.newBitwiseNotExpression(value, this);
 	}
 
-	public Rust_Expression generateLogicalNot(Rust_Expression theExpr, AbstractToken source)
+	public Rust_Expression generateBitwiseNot(Rust_Expression value, AbstractToken source)
 	{
-		this.expr = theExpr;
+		this.expr = value;
 		this.setTransformationSource(source);
 		return Rust_Generator.wrapExpression(this);
 	}

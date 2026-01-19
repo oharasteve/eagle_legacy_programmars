@@ -40,7 +40,6 @@ public class Rust_Program extends AbstractLanguage
 		public @CHOICE Rust_Comment XXcomment;
 		public @CHOICE Rust_Function XXfunction;
 		public @CHOICE Rust_Module XXmodule;
-		public @CHOICE Rust_Data XXdata;
 		public @CHOICE Rust_Use XXuse;
 
 		public @LAST Rust_Statement XXstatement;
@@ -104,5 +103,17 @@ public class Rust_Program extends AbstractLanguage
 		generator.addCallToMain();
 
 		return generator.getTransfomedProgram();
+	}
+	
+	public void addComment(Rust_Comment comm)
+	{
+		Rust_TopElement topElt = new Rust_TopElement();
+		topElt.setWhich(comm);
+		elements.addToken(topElt);
+	}
+
+	public void addTopElement(Rust_TopElement elt)
+	{
+		elements.addToken(elt);
 	}
 }

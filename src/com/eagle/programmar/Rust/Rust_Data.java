@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -64,5 +65,47 @@ public class Rust_Data extends TokenSequence
 		String name = var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
+	}
+
+	public static Rust_Data newDataDeclaration(boolean isStatic, String name, Rust_Expression size, Rust_Type type,
+			Rust_Expression initial, AbstractToken source)
+	{
+		if (type == null)
+		{
+			throw new RuntimeException("Can't create data without a type, for " + name);
+		}
+
+		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
+		{
+			// Sorry, cannot redefine true or false
+			return null;
+		}
+
+		Rust_Data data = new Rust_Data();
+		data.semicolon = new PunctuationSemicolon();
+
+		// Set data name and type
+		data.var = new Rust_Variable_Definition();
+		data.var.setValue(name);
+		data.type = type;
+
+		if (isStatic)
+		{
+			data.STATIC.setValue("static");
+		}
+
+		// Set the initial value, if any
+		if (initial != null)
+		{
+			Rust_Data_Initial init = new Rust_Data_Initial();
+			init.setPresent(true);
+			init.equals = new PunctuationEquals();
+			init.expr = initial;
+			data.init = init;
+			data.init.setPresent(true);
+		}
+
+		data.setTransformationSource(source);
+		return data;
 	}
 }

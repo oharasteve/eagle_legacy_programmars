@@ -5,6 +5,8 @@ package com.eagle.programmar.Rust.Terminals;
 
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.programmar.Rust.Terminals.Rust_Number;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 import com.eagle.transform.EagleGenerator;
@@ -31,5 +33,12 @@ public class Rust_Number extends TerminalNumberToken
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newNumberExpression(_numberAsText, this);
+	}
+
+	public Rust_Number generateNumber(String value, AbstractToken source)
+	{
+		this.setValue(value);
+		this.setTransformationSource(source);
+		return this;
 	}
 }

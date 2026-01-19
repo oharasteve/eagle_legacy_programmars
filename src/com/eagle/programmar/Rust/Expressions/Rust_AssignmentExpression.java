@@ -1,32 +1,32 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Jul 2, 2022
 
-package com.eagle.programmar.Rust.Statements;
+package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Variable;
+import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
-import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_AssignmentStatement extends TokenSequence
-		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
+public class Rust_AssignmentExpression extends PrecedenceOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Variable var;
 	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("=", "+=", "-=");
 	public @S(30) Rust_Expression expr;
-	public @S(40) @OPT PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -56,7 +56,7 @@ public class Rust_AssignmentStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer,
+	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
 		AssignmentEnum asg;
@@ -78,7 +78,33 @@ public class Rust_AssignmentStatement extends TokenSequence
 		AbstractExpression value = transformer.transformExpression(generator, expr);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(var.var.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, null, asg, value, this);
-		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
-		return exprStmt;
+		return asgExpr;
+	}
+	
+	public Rust_Expression generateAssignment(Rust_Variable variable, Rust_Expression subscript,
+			AssignmentEnum oper, Rust_Expression expression, AbstractToken source)
+	{
+		String punct;
+		switch (oper)
+		{
+		case EQUALS:
+			punct = "=";
+			break;
+		case PLUS_EQUALS:
+			punct = "+=";
+			break;
+		case MINUS_EQUALS:
+			punct = "-=";
+			break;
+		default:
+			throw new RuntimeException("Unexpected assignment operator: " + oper);
+		}
+
+		Rust_Identifier_Reference id = variable.var;
+		this.var = Rust_Variable.newVariable(id.getValue());
+		this.operator.setValue(punct);
+		this.expr = expression;
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

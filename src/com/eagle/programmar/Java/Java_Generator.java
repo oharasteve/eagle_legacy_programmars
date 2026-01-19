@@ -608,8 +608,7 @@ public class Java_Generator
 			ShiftEnum shift, Java_Expression right, AbstractToken source)
 	{
 		Java_ShiftExpression shiftExpr = new Java_ShiftExpression();
-		return shiftExpr.generateShift(left, shift,
-				right, source);
+		return shiftExpr.generateShift(left, shift, right, source);
 	}
 
 	@Override

@@ -8,13 +8,15 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class Rust_MultiplicativeExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -72,5 +74,34 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
+	}
+
+	public Rust_Expression generateMultiplicative(
+			Rust_Expression leftExpr, MultiplicativeEnum oper,
+			Rust_Expression rightExpr, AbstractToken source)
+	{
+		this.left = leftExpr;
+		this.right = rightExpr;
+		switch (oper)
+		{
+		case TIMES:
+			this.operator.setValue("*");
+			break;
+		case DIVIDE_TRUNCATE:
+			this.operator.setValue("/");
+			break;
+//		case DIVIDE_NO_TRUNCATE:
+//			this.operator.setValue("/");
+//			Rust_Type type = Rust_Type.newPrimitiveType("double");
+//			this.right = Rust_CastExpression.newCastExpression(type, rightExpr, source);
+//			break;
+		case REMAINDER:
+			this.operator.setValue("%");
+			break;
+		default:
+			throw new RuntimeException("Unable to handle: " + oper.toString());
+		}
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

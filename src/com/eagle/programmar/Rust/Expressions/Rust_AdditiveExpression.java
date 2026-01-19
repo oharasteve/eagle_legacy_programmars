@@ -9,7 +9,9 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -70,5 +72,23 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected additive operator: " + operator);
 		}
+	}
+
+	public Rust_Expression generateAdditive(Oper2Types types, Rust_Expression leftExpr, AdditiveEnum oper,
+			Rust_Expression rightExpr, AbstractToken source)
+	{
+		this.left = leftExpr;
+		this.right = rightExpr;
+		switch (oper)
+		{
+		case PLUS:
+			this.operator.setValue("+");
+			break;
+		case MINUS:
+			this.operator.setValue("-");
+			break;
+		}
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

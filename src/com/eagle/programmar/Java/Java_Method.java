@@ -46,7 +46,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Java_Method extends TokenSequence
 		implements AbstractMethod, AbstractFunction, EagleRunnable,
-		EagleScopeInterface, EagleTransformableFunction
+				EagleScopeInterface, EagleTransformableFunction
 {
 	public @S(10) @OPT @BLANKLINE TokenList<Java_Comment> comments;
 	public @S(20) @OPT Java_Annotation annotation;

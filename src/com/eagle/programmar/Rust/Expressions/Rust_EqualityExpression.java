@@ -9,13 +9,15 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Rust_EqualityExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -117,5 +119,26 @@ public class Rust_EqualityExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected relational operator: " + operator);
 		}
+	}
+	public Rust_Expression generateEquality(Oper2Types types, Rust_Expression leftExpr, RelationalEnum relOp,
+			Rust_Expression rightExpr, AbstractToken source)
+	{
+		this.left = leftExpr;
+		this.right = rightExpr;
+		String oper;
+		switch (relOp)
+		{
+		case EQUALS:
+			oper = "==";
+			break;
+		case NOT_EQUALS:
+			oper = "!=";
+			break;
+		default:
+			throw new RuntimeException("Unable to handle operator " + relOp);
+		}
+		this.operator.setValue(oper);
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

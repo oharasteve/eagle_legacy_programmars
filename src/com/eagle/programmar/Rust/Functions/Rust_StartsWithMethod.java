@@ -6,7 +6,9 @@ package com.eagle.programmar.Rust.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -59,5 +61,25 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
+	}
+
+	public Rust_Expression generateStartsWith(Rust_Expression expr, Rust_Expression patt,
+			Rust_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+	{
+		this.left = expr;
+		this.dot = new PunctuationPeriod();
+		this.leftParen = new PunctuationLeftParen();
+		this.arg = patt;
+		if (sc != null)
+		{
+			this.comma = new PunctuationComma();
+			this.comma.setPresent(true);
+			this.scExpr = sc;
+			this.scExpr.setPresent(true);
+		}
+		this.rightParen = new PunctuationRightParen();
+
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

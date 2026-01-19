@@ -10,12 +10,17 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -81,5 +86,33 @@ public class Rust_WhileStatement extends TokenSequence implements
 
 		AbstractStatement stmt = generator.newWhileStatement(cond, whileTrue, this);
 		return stmt;
+	}
+
+	public Rust_Statement generateWhile1(Rust_Expression cond,
+			Rust_Statement action, AbstractToken source)
+	{
+		this.whileStatement = action;
+		this.condition = cond;
+
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapStatement(this);
+	}
+
+	public Rust_Statement generateWhile(Rust_Expression cond,
+			ArrayList<Rust_Statement> actions, AbstractToken source)
+	{
+		Rust_Block_Statement body = new Rust_Block_Statement();
+		body.statements = new TokenList<Rust_Statement>();
+		body.leftBrace = new PunctuationLeftBrace();
+		body.rightBrace = new PunctuationRightBrace();
+
+		this.condition = cond;
+
+		for (Rust_Statement stmt : actions)
+		{
+			body.statements.addToken(stmt);
+		}
+
+		return generateWhile1(condition, Rust_Generator.wrapStatement(body), source);
 	}
 }

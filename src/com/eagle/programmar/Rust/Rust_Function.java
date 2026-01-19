@@ -15,18 +15,22 @@ import com.eagle.programmar.Rust.Rust_Type.Rust_TypePrimitive;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
+import com.eagle.programmar.Rust.Terminals.Rust_Comment;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
@@ -43,7 +47,7 @@ public class Rust_Function extends TokenSequence
 	public @S(50) @OPT SeparatedList<Rust_Parameter, PunctuationComma> funcParamDefs;
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) @OPT Rust_FunctionReturns returns;
-	public @S(80) Rust_Block_Statement stmt;
+	public @S(80) Rust_Block_Statement block;
 
 	public static class Rust_FunctionReturns extends TokenSequence
 	{
@@ -88,7 +92,7 @@ public class Rust_Function extends TokenSequence
 		if (id.getValue().equals("main"))
 		{
 			interpreter.callingFunction("main", this);
-			interpreter.tryToInterpret(stmt);
+			interpreter.tryToInterpret(block);
 			interpreter.completedFunction("main", this);
 		}
 	}
@@ -158,15 +162,63 @@ public class Rust_Function extends TokenSequence
 
 		///////// addLocalVars(transformer, generator);
 
-		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt);
+		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, block);
 		if (newStmts != null)
 		{
 			for (AbstractStatement newStmt : newStmts)
 			{
-				generator.addStatement(newStmt, stmt);
+				generator.addStatement(newStmt, block);
 			}
 		}
 
 		generator.doneMethod();
+	}
+
+	public void newRustFunction(Rust_Type returnType, String methodName)
+	{
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
+
+		if (returnType != null)
+		{
+			this.returns = new Rust_FunctionReturns();
+			this.returns.setPresent(true);
+			this.returns.returnType = returnType;
+		}
+
+		this.block = new Rust_Block_Statement();
+		this.block.leftBrace = new PunctuationLeftBrace();
+		this.block.statements = new TokenList<Rust_Statement>();
+		this.block.rightBrace = new PunctuationRightBrace();
+
+		this.id = new Rust_Function_Definition();
+		this.id.setValue(methodName);
+	}
+
+	public void addFunctionParameter(AbstractType type, String name)
+	{
+		Rust_Parameter param = new Rust_Parameter();
+		param.var = new Rust_Variable_Definition();
+		param.var.setValue(name);
+		param.type = (Rust_Type) type;
+		
+		if (funcParamDefs == null)
+		{
+			this.funcParamDefs = new SeparatedList<Rust_Parameter, PunctuationComma>();
+			this.funcParamDefs.setPresent(true);
+		}
+		
+		if (this.funcParamDefs.size() > 0)
+		{
+			this.funcParamDefs.addSecondaryElement(new PunctuationComma());
+		}
+		this.funcParamDefs.addPrimaryElement(param);
+	}
+	
+	public void addComment(Rust_Comment comm)
+	{
+		Rust_Statement stmt = new Rust_Statement();
+		stmt.setWhich(comm);
+		this.block.statements._elements.add(stmt);
 	}
 }

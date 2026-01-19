@@ -4,6 +4,7 @@
 package com.eagle.programmar.Rust.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Rust_Character_Literal extends TerminalLiteralToken
@@ -18,5 +19,12 @@ public class Rust_Character_Literal extends TerminalLiteralToken
 	public String description()
 	{
 		return super.genericDescription("'", true, '\\', false, false);
+	}
+
+	public Rust_Character_Literal generateCharLiteral(String value, AbstractToken source)
+	{
+		this.setValue(value);
+		this.setTransformationSource(source);
+		return this;
 	}
 }

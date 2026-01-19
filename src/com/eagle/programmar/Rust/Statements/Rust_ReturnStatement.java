@@ -7,7 +7,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -41,5 +44,17 @@ public class Rust_ReturnStatement extends TokenSequence
 			retExpr = transformer.transformExpression(generator, expr);
 		}
 		return generator.newReturnStatement(retExpr, this);
+	}
+
+	public Rust_Statement generateReturn(Rust_Expression ret, AbstractToken source)
+	{
+		if (ret != null)
+		{
+			this.expr = ret;
+			this.expr.setPresent(true);
+		}
+		this.semicolon = new PunctuationSemicolon();
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapStatement(this);
 	}
 }

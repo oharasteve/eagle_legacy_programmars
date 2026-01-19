@@ -6,6 +6,8 @@ package com.eagle.programmar.Rust.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -34,5 +36,15 @@ public class Rust_ParenthesizedExpression extends PrimaryOperator
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
 		return generator.newParenthesizedExpression(theExpr, this);
+	}
+
+	public Rust_Expression generateParentheses(Rust_Expression theExpr, AbstractToken source)
+	{
+		this.leftParen = new PunctuationLeftParen();
+		this.expressions = new SeparatedList<Rust_Expression, PunctuationComma>();
+		this.expressions.addPrimaryElement(theExpr);
+		this.rightParen = new PunctuationRightParen();
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

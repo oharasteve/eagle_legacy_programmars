@@ -9,8 +9,11 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Statement;
+import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -97,5 +100,51 @@ public class Rust_IfStatement extends TokenSequence
 		}
 
 		return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+	}
+
+	public Rust_Statement generateIfElse1(Rust_Expression cond,
+			Rust_Statement thenStmt, Rust_Statement elseStmt, AbstractToken source)
+	{
+		AbstractToken which = cond.getWhich();
+		if (which instanceof Rust_ParenthesizedExpression)
+		{
+			Rust_ParenthesizedExpression parensExpr = (Rust_ParenthesizedExpression) which;
+			// Remove redundant parens
+			this.condition = parensExpr.expressions.first();
+		}
+		else
+		{
+			this.condition = cond;
+		}
+
+		this.thenStatement = thenStmt;
+
+		if (elseStmt != null)
+		{
+			this.elseClause = new Rust_IfElseClause();
+			this.elseClause.setPresent(true);
+			this.elseClause.elseStatement = elseStmt;
+			this.elseClause.elseStatement.setPresent(true);
+		}
+
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapStatement(this);
+	}
+
+	public Rust_Statement generateIfElse(Rust_Expression cond,
+			ArrayList<Rust_Statement> thenStatements,
+			ArrayList<Rust_Statement> elseStatements, AbstractToken source)
+	{
+		Rust_Block_Statement thenBlock = new Rust_Block_Statement();
+		Rust_Statement blockTrue = thenBlock.generateBlock(thenStatements, source);
+
+		Rust_Statement blockElse = null;
+		if (elseStatements != null && elseStatements.size() > 0)
+		{
+			Rust_Block_Statement elseBlock = new Rust_Block_Statement();
+			blockElse = elseBlock.generateBlock(elseStatements, source);
+		}
+
+		return generateIfElse1(cond, blockTrue, blockElse, source);
 	}
 }

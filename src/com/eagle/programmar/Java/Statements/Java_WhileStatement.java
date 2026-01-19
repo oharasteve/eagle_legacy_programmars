@@ -111,7 +111,7 @@ public class Java_WhileStatement extends TokenSequence
 		body.leftBrace = new PunctuationLeftBrace();
 		body.rightBrace = new PunctuationRightBrace();
 
-		Java_Statement javaStatement = new Java_Statement();
+//		Java_Statement javaStatement = new Java_Statement();
 
 		this.condition = cond;
 
@@ -121,12 +121,12 @@ public class Java_WhileStatement extends TokenSequence
 			stmtOrComment.setWhich(stmt);
 			body.statements.addToken(stmtOrComment);
 
-			// If the parent block gets the 'while' as the parent, line numbers in the
-			// side-by-side report will pick up the 'while', not the first statement.
-			if (javaStatement.getTransformationSource() == null)
-			{
-				javaStatement.setTransformationSource(stmt.getTransformationSource());
-			}
+//			// If the parent block gets the 'while' as the parent, line numbers in the
+//			// side-by-side report will pick up the 'while', not the first statement.
+//			if (javaStatement.getTransformationSource() == null)
+//			{
+//				javaStatement.setTransformationSource(stmt.getTransformationSource());
+//			}
 		}
 
 		return generateWhile1(condition, Java_Generator.wrapStatement(body), source);

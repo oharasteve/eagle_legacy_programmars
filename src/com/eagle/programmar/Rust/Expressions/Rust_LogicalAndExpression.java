@@ -6,7 +6,9 @@ package com.eagle.programmar.Rust.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -42,5 +44,13 @@ public class Rust_LogicalAndExpression extends PrecedenceOperator
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
+	}
+
+	public Rust_Expression generateLogicalAnd(Rust_Expression leftExpr, Rust_Expression rightExpr, AbstractToken source)
+	{
+		this.left = leftExpr;
+		this.right = rightExpr;
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

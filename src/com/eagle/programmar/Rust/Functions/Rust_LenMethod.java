@@ -6,7 +6,9 @@ package com.eagle.programmar.Rust.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -37,5 +39,16 @@ public class Rust_LenMethod extends PrecedenceOperator
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, left);
 		return generator.newLengthFunction(theExpr, this);
+	}
+
+	public Rust_Expression generateLength(Rust_Expression expr, AbstractToken source)
+	{
+		this.left = expr;
+		this.dot = new PunctuationPeriod();
+		this.leftParen = new PunctuationLeftParen();
+		this.rightParen = new PunctuationRightParen();
+
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

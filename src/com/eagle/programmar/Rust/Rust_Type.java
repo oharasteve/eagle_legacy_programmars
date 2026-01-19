@@ -6,6 +6,7 @@ package com.eagle.programmar.Rust;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -63,6 +64,9 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		case "usize":
 			newType = TypeEnum.INTEGER;
 			break;
+		case "f64":
+			newType = TypeEnum.DOUBLE;
+			break;
 		case "str":
 		case "String":
 			newType = TypeEnum.STRING;
@@ -72,5 +76,56 @@ public class Rust_Type extends TokenChooser implements AbstractType
 			break;
 		}
 		return generator.transformType(newType, null, null);
+	}
+	
+	// Convert "i32" to a Rust_Type representing an integer
+	public static Rust_Type newPrimitiveType(String name)
+	{
+		Rust_Type type = new Rust_Type();
+		Rust_TypePrimitive primitive = new Rust_TypePrimitive();
+		primitive.PRIMITIVE.setValue(name);
+		type.setWhich(primitive);
+		return type;
+	}
+
+	public static Rust_Type transformType(TypeEnum type,
+			String typeName, AbstractToken source)
+	{
+		if (type == null)
+		{
+			return null;
+		}
+
+		switch (type)
+		{
+		case BOOLEAN:
+			return newPrimitiveType("bool");
+		case INTEGER:
+			return newPrimitiveType("i32");
+		case DOUBLE:
+			return newPrimitiveType("f64");
+		case CHAR:
+		case STRING:
+			return newPrimitiveType("str");
+		case STRING_ARRAY:
+			return transformTypeArray(TypeEnum.STRING);
+//		case STRING_HASH:
+//			return transformTypeHash(TypeEnum.STRING);
+		case VOID:
+			return null;
+		default:
+			throw new RuntimeException("Can't transform type: " + type);
+		}
+	}
+	
+	public static Rust_Type transformTypeArray(TypeEnum type)
+	{
+		Rust_TypeArray array = new Rust_TypeArray();
+		array.leftBracket = new PunctuationLeftBracket();
+		array.rightBracket = new PunctuationRightBracket();
+
+		Rust_Type newType = new Rust_Type();
+		newType.setWhich(array);
+		return newType;
 	}
 }

@@ -5,7 +5,10 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -50,5 +53,22 @@ public class Rust_BuiltIn extends PrimaryOperator
 			throw new RuntimeException("Unable to handle: " + builtinConstant);
 		}
 		return generator.newBuiltInExpression(builtIn, this);
+	}
+
+	public Rust_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
+	{
+		switch (builtin)
+		{
+		case TRUE:
+			this.builtinConstant.setValue("true");
+			break;
+		case FALSE:
+			this.builtinConstant.setValue("false");
+			break;
+		default:
+			throw new RuntimeException("Unable to handle: " + builtin);
+		}
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

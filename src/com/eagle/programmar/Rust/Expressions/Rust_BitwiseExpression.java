@@ -6,7 +6,9 @@ package com.eagle.programmar.Rust.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
@@ -63,5 +65,28 @@ public class Rust_BitwiseExpression extends PrecedenceOperator
 			throw new RuntimeException("Unable to handle " + operator);
 		}
 		return generator.newBitwiseExpression(leftExpr, oper, rightExpr, this);
+	}
+	
+	public Rust_Expression generateBitwise(Rust_Expression leftExpr,
+			BitwiseEnum oper, Rust_Expression rightExpr, AbstractToken source)
+	{
+		this.left = leftExpr;
+		this.right = rightExpr;
+		switch (oper)
+		{
+		case AND:
+			this.operator.setValue("&");
+			break;
+		case OR:
+			this.operator.setValue("|");
+			break;
+		case XOR:
+			this.operator.setValue("^");
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + oper);
+		}
+		this.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(this);
 	}
 }

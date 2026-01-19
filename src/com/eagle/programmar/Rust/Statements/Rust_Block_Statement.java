@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Statement;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -58,6 +60,20 @@ public class Rust_Block_Statement extends TokenSequence
 		return generator.newBlockStatement(result, this);
 	}
 
+	public Rust_Statement generateBlock(ArrayList<Rust_Statement> stmts,
+			AbstractToken source)
+	{
+		this.leftBrace = new PunctuationLeftBrace();
+		this.rightBrace = new PunctuationRightBrace();
+		this.statements = new TokenList<Rust_Statement>();
+		this.statements.setPresent(true);
+		for (Rust_Statement stmt : stmts)
+		{
+			this.statements.addToken(stmt);
+		}
+		return Rust_Generator.wrapStatement(this);
+	}
+	
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
 			EagleGenerator generator, Rust_Statement statement)
 	{
