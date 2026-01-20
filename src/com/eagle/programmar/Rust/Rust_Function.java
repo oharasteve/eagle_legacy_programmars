@@ -43,9 +43,9 @@ public class Rust_Function extends TokenSequence
 	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/functions.html") Rust_Keyword FN = new Rust_Keyword("fn");
 	public @S(30) Rust_Function_Definition id;
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) @OPT SeparatedList<Rust_Parameter, PunctuationComma> funcParamDefs;
-	public @S(60) PunctuationRightParen rightParen;
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @OPT @NOSPACE SeparatedList<Rust_Parameter, PunctuationComma> funcParamDefs;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 	public @S(70) @OPT Rust_FunctionReturns returns;
 	public @S(80) Rust_Block_Statement block;
 

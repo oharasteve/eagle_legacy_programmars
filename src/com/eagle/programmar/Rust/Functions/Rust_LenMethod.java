@@ -22,10 +22,10 @@ public class Rust_LenMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Rust_Keyword LEN = new Rust_Keyword("len");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Rust_Keyword LEN = new Rust_Keyword("len");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

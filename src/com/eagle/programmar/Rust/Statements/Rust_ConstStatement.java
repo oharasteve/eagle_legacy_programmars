@@ -1,11 +1,13 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
 // Original author: Steven A. O'Hara, Jul 1, 2022
 
-package com.eagle.programmar.Rust;
+package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
@@ -22,16 +24,16 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_Data extends TokenSequence
+public class Rust_ConstStatement extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatement
 {
-	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
+	public @S(10) @OPT @NEWLINE Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/static-items.html") Rust_KeywordChoice STATIC = new Rust_KeywordChoice("const", "static");
 	public @S(30) Rust_Variable_Definition var;
-	public @S(40) PunctuationColon colon;
+	public @S(40) PunctuationColon colon = new PunctuationColon();
 	public @S(50) Rust_Type type;
 	public @S(60) @OPT Rust_Data_Initial init;
-	public @S(70) PunctuationSemicolon semicolon;
+	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
 
 	public static class Rust_Data_Initial extends TokenSequence
 	{
@@ -67,7 +69,7 @@ public class Rust_Data extends TokenSequence
 		return stmt;
 	}
 
-	public static Rust_Data newDataDeclaration(boolean isStatic, String name, Rust_Expression size, Rust_Type type,
+	public static Rust_ConstStatement newDataDeclaration(boolean isStatic, String name, Rust_Expression size, Rust_Type type,
 			Rust_Expression initial, AbstractToken source)
 	{
 		if (type == null)
@@ -81,7 +83,7 @@ public class Rust_Data extends TokenSequence
 			return null;
 		}
 
-		Rust_Data data = new Rust_Data();
+		Rust_ConstStatement data = new Rust_ConstStatement();
 		data.semicolon = new PunctuationSemicolon();
 
 		// Set data name and type

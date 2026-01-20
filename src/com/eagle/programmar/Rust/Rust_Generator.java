@@ -30,6 +30,7 @@ import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Functions.Rust_StartsWithMethod;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
+import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExpressionStatement;
 import com.eagle.programmar.Rust.Statements.Rust_IfStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ReturnStatement;
@@ -238,7 +239,7 @@ public class Rust_Generator
 	public Rust_Statement newDataDeclaration(boolean isStatic, String name, Rust_Expression size,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
-		return wrapStatement(Rust_Data.newDataDeclaration(isStatic, name, size, type, initial, source));
+		return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 
 	@Override

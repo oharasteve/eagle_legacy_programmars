@@ -22,8 +22,8 @@ import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 public class Rust_RangeExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Rust_Expression lowExpression = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Rust_PunctuationChoice dots = new Rust_PunctuationChoice("..", "..=");
-	public @S(30) @OPT Rust_Expression highExpression = new Rust_Expression(this, AllowedPrecedence.HIGHER);
+	public @S(20) @NOSPACE Rust_PunctuationChoice dots = new Rust_PunctuationChoice("..", "..=");
+	public @S(30) @OPT @NOSPACE Rust_Expression highExpression = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

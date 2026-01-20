@@ -24,13 +24,13 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Rust_Keyword STARTSWITH = new Rust_Keyword("starts_with");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) Rust_Expression arg;
-	public @S(60) @OPT PunctuationComma comma;
+	public @S(20) @NOSPACE PunctuationPeriod dot;
+	public @S(30) @NOSPACE Rust_Keyword STARTSWITH = new Rust_Keyword("starts_with");
+	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(50) @NOSPACE Rust_Expression arg;
+	public @S(60) @OPT @NOSPACE PunctuationComma comma;
 	public @S(70) @OPT Rust_Expression scExpr;
-	public @S(80) PunctuationRightParen rightParen;
+	public @S(80) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

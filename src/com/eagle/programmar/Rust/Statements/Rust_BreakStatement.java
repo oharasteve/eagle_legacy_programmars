@@ -19,7 +19,8 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_BreakStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("expressions/loop-expr.html#break-expressions") Rust_Keyword BREAK = new Rust_Keyword("break");
+	public @S(10) @DOC("expressions/loop-expr.html#break-expressions") @NEWLINE Rust_Keyword BREAK =
+			new Rust_Keyword("break");
 	public @S(20) @OPT PunctuationSemicolon semicolon;
 
 	@Override
@@ -37,6 +38,7 @@ public class Rust_BreakStatement extends TokenSequence
 	public Rust_Statement generateBreak(AbstractToken source)
 	{
 		this.semicolon = new PunctuationSemicolon();
+		this.semicolon.setPresent(true);
 		this.setTransformationSource(source);
 		return Rust_Generator.wrapStatement(this);
 	}

@@ -33,7 +33,8 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_ForStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("expressions/loop-expr.html#iterator-loops") Rust_Keyword FOR = new Rust_Keyword("for");
+	public @S(10) @DOC("expressions/loop-expr.html#iterator-loops") @NEWLINE Rust_Keyword FOR =
+			new Rust_Keyword("for");
 	public @S(20) Rust_Variable variable;
 	public @S(30) Rust_Keyword IN = new Rust_Keyword("in");
 	public @S(40) Rust_Expression values;

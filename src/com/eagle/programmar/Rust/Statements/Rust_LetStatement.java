@@ -22,11 +22,12 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_LetStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("statements.html#let-statements") Rust_Keyword LET = new Rust_Keyword("let");
+	public @S(10) @DOC("statements.html#let-statements") @NEWLINE Rust_Keyword LET =
+			new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
 	public @S(30) Rust_AssignmentExpression asgExpr;
 	public @S(60) @OPT Rust_LetAs letAs;
-	public @S(70) @OPT PunctuationSemicolon semicolon;
+	public @S(70) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
 	public static class Rust_LetAs extends TokenSequence
 	{

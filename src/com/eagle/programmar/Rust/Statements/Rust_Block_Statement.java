@@ -22,9 +22,9 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_Block_Statement extends TokenSequence
 		implements EagleRunnableWithResult, EagleTransformableStatement
 {
-	public @S(10) PunctuationLeftBrace leftBrace;
+	public @S(10) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(20) TokenList<Rust_Statement> statements;
-	public @S(30) PunctuationRightBrace rightBrace;
+	public @S(30) @OUTDENT PunctuationRightBrace rightBrace;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

@@ -22,8 +22,8 @@ public class Rust_ParenthesizedExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) SeparatedList<Rust_Expression, PunctuationComma> expressions;
-	public @S(30) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> expressions;
+	public @S(30) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

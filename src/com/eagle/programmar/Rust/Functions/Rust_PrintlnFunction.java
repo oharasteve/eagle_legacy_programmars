@@ -29,11 +29,11 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Keyword PRINTLN = new Rust_Keyword("println");
-	public @S(20) Rust_Punctuation bang = new Rust_Punctuation("!");
-	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Rust_Expression, PunctuationComma> argList;
-	public @S(50) PunctuationRightParen rightParen;
-	public @S(60) @OPT PunctuationSemicolon semicolon;
+	public @S(20) @NOSPACE Rust_Punctuation bang = new Rust_Punctuation("!");
+	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(40) @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> argList;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(60) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
 	private @SKIP ArgumentsMetrics _metrics = null;
 

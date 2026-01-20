@@ -18,8 +18,8 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_ExpressionStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) Rust_Expression expression;
-	public @S(20) @OPT PunctuationSemicolon semicolon;
+	public @S(10) @NEWLINE Rust_Expression expression;
+	public @S(20) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -31,6 +31,8 @@ public class Rust_ExpressionStatement extends TokenSequence
 	{
 		Rust_ExpressionStatement stmt = new Rust_ExpressionStatement();
 		stmt.expression = (Rust_Expression) expr;
+		stmt.semicolon = new PunctuationSemicolon();
+		stmt.semicolon.setPresent(true);
 		stmt.setTransformationSource(source);
 		return stmt;
 	}

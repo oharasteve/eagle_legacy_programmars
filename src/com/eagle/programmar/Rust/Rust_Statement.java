@@ -5,6 +5,7 @@ package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
+import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExpressionStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ForStatement;
 import com.eagle.programmar.Rust.Statements.Rust_FunctionCall;
@@ -22,7 +23,7 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Rust_Comment XXcomment;
 
 	public @CHOICE Rust_Block_Statement XXblockStatement;
-	public @CHOICE Rust_Data XXdataStatement;
+	public @CHOICE Rust_ConstStatement XXdataStatement;
 	public @CHOICE Rust_BreakStatement XXbreakStatement;
 	public @CHOICE Rust_IfStatement XXifStatement;
 	public @CHOICE Rust_ForStatement XXforStatement;
