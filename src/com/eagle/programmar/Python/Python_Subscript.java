@@ -219,6 +219,7 @@ public class Python_Subscript extends TokenSequence
 		case GIVEN_NEITHER:
 			break;
 		}
+
 		subscr.setTransformationSource(source);
 		return subscr;
 	}

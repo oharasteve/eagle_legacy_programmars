@@ -13,6 +13,8 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -23,6 +25,26 @@ import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+
+/* Ran this in rextester.com
+ * 
+ *  fn main() {
+ *    let s = "abcdèfghij";
+ *    println!("{}", &s[0..3]);
+ *    println!("{}", &s[1..3]);
+ *    println!("{}", &s[1..9]);
+ *    println!("{}", &s[2..]);
+ *    println!("{}", &s[..4]);
+ *  }
+
+ * abc
+ * bc
+ * bcdèfgh
+ * cdèfghij
+ * abcd
+ * 
+ * first is zero, second is ec+1, cannot do &s[1..9999]
+*/
 
 public class Rust_SubscriptExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -123,5 +145,22 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		}
 
 		throw new RuntimeException("Unable to handle " + expr);
+	}
+	
+	public static Rust_SubscriptExpression generateSubscriptExpression(AbstractExpression theExpr,
+			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
+	{
+		Rust_SubscriptExpression subscr = new Rust_SubscriptExpression();
+		subscr.expr = (Rust_Expression) theExpr;
+		subscr.leftBracket = new PunctuationLeftBracket();
+		subscr.rightBracket = new PunctuationRightBracket();
+
+		Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(
+				sc, whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
+		subscr.subscrExpr = Rust_Generator.wrapExpression(range);
+
+		subscr.setTransformationSource(source);
+		return subscr;
 	}
 }

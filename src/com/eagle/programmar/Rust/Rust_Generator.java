@@ -23,6 +23,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
@@ -41,6 +42,7 @@ import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
 
@@ -56,6 +58,7 @@ public class Rust_Generator
 	{
 		super(parser);
 		_program = new Rust_Program();
+		_program.elements = new TokenList<Rust_TopElement>();
 	}
 
 	@Override
@@ -144,6 +147,10 @@ public class Rust_Generator
 		_currentFunction = new Rust_Function();
 		_currentFunction.newRustFunction(returnType, name);
 		_currentFunction.setTransformationSource(source);
+		
+		Rust_TopElement topElt = new Rust_TopElement();
+		topElt.setWhich(_currentFunction);
+		_program.addTopElement(topElt);
 	}
 
 	@Override
@@ -163,31 +170,31 @@ public class Rust_Generator
 	{
 		if (stmt == null) return;
 
-		// Cannot put data into the 'main' method when it was declared in a global area
-		if (stmt.getWhich() instanceof Rust_Data)
-		{
-			boolean saveGlobally = false;
-			if (_currentFunction == null)
-			{
-				saveGlobally = true;
-			}
-			else if (_currentFunction.id.getValue().equals("main"))
-			{
-				saveGlobally = true;
-			}
-
-			if (saveGlobally)
-			{
-				Rust_Data data = (Rust_Data) stmt.getWhich();
-				data.STATIC.setValue("static");
-
-				// Put it in program, not the 'main' method
-				Rust_TopElement element = new Rust_TopElement();
-				element.setWhich(data);
-				_program.addTopElement(element);
-				return;
-			}
-		}
+//		// Cannot put data into the 'main' method when it was declared in a global area
+//		if (stmt.getWhich() instanceof Rust_Data)
+//		{
+//			boolean saveGlobally = false;
+//			if (_currentFunction == null)
+//			{
+//				saveGlobally = true;
+//			}
+//			else if (_currentFunction.id.getValue().equals("main"))
+//			{
+//				saveGlobally = true;
+//			}
+//
+//			if (saveGlobally)
+//			{
+//				Rust_Data data = (Rust_Data) stmt.getWhich();
+//				data.STATIC.setValue("static");
+//
+//				// Put it in program, not the 'main' method
+//				Rust_TopElement element = new Rust_TopElement();
+//				element.setWhich(data);
+//				_program.addTopElement(element);
+//				return;
+//			}
+//		}
 
 		checkFunction();
 		
@@ -401,10 +408,9 @@ public class Rust_Generator
 	public Rust_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Rust_Expression subscript, AssignmentEnum oper, Rust_Expression expression, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_Variable var = Rust_Variable.newVariable(name);
-//		Rust_AssignmentExpression asgExpr = new Rust_AssignmentExpression();
-//		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
+		Rust_Variable var = Rust_Variable.newVariable(name);
+		Rust_AssignmentExpression asgExpr = new Rust_AssignmentExpression();
+		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
 	}
 
 	@Override
@@ -669,9 +675,8 @@ public class Rust_Generator
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, Rust_Expression ecOrnc,
 			boolean ncMightBeTooBig, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		return wrapExpression(Rust_SubstringMethod.generateExpression(expr, sc, whichSC,
-//				whichEC, ecOrnc, ncMightBeTooBig, source));
+		return wrapExpression(Rust_SubscriptExpression.generateSubscriptExpression(expr, sc, whichSC,
+				whichEC, ecOrnc, ncMightBeTooBig, source));
 	}
 
 	@Override
