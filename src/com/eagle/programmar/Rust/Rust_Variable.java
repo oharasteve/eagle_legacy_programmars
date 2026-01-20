@@ -32,11 +32,10 @@ public class Rust_Variable extends TokenSequence implements AbstractVariable, Ea
 //			int subscr = interpreter.getIntValue(subscript.expr);
 //			EagleArray val = (EagleArray) value;
 //			interpreter.pushEagleValue(val.getValue(subscr));
+//			return;
 //		}
-//		else
-//		{
+
 		interpreter.pushEagleValue(value);
-//		}
 	}
 
 	public static Rust_Variable newVariable(String name)

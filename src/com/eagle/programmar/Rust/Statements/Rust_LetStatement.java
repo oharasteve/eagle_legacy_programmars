@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -48,7 +49,13 @@ public class Rust_LetStatement extends TokenSequence
 
 		AbstractExpression initial = transformer.transformExpression(generator, asgExpr.expr);
 
-		String name = asgExpr.var.var.getValue();
+		if (!(asgExpr.var.getWhich() instanceof Rust_VariableExpression))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + asgExpr.var.getWhich());
+		}
+		Rust_VariableExpression varExpr = (Rust_VariableExpression) asgExpr.var.getWhich();
+
+		String name = varExpr.variable.var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
 	}

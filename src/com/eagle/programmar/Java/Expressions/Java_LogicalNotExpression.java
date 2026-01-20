@@ -32,7 +32,7 @@ public class Java_LogicalNotExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
 	public Java_Expression generateLogicalNot(Java_Expression theExpr, AbstractToken source)

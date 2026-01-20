@@ -14,8 +14,8 @@ import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -25,7 +25,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_PrintlnFunction extends TokenSequence
+public class Rust_PrintlnFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Keyword PRINTLN = new Rust_Keyword("println");
@@ -53,8 +53,8 @@ public class Rust_PrintlnFunction extends TokenSequence
 			EagleGenerator generator)
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTLN);
-		AbstractExpression fullExpr = Rust_Format.transform(transformer, generator, argList, metrics);
-		return fullExpr;
+		AbstractExpression value = Rust_Format.transform(transformer, generator, argList, metrics);
+		return generator.newPrintFunction(value, true, false, this);
 	}
 
 	public Rust_Expression generatePrintFunc(Rust_Expression line, boolean newLine,

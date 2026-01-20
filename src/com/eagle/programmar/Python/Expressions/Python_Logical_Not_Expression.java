@@ -33,7 +33,7 @@ public class Python_Logical_Not_Expression extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
 	public Python_Expression generateLogicalNot(Python_Expression theExpr,

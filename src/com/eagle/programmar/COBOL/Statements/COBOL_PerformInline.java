@@ -138,7 +138,7 @@ public class COBOL_PerformInline extends TokenSequence
 				{
 					COBOL_PerformUntil until = (COBOL_PerformUntil) which;
 					AbstractExpression untilExpr = transformer.transformExpression(generator, until.condition);
-					whileExpr = generator.newNotExpression(untilExpr, which);
+					whileExpr = generator.newLogicalNotExpression(untilExpr, which);
 				}
 			}
 		}

@@ -41,6 +41,7 @@ public class Rust_Reserved_Words
 			"move",
 			"mut",
 			"override",
+			"println",
 			"priv",
 			"pub",
 			"ref",

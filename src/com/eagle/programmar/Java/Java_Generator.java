@@ -559,7 +559,7 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Expression newNotExpression(Java_Expression expr, AbstractToken source)
+	public Java_Expression newLogicalNotExpression(Java_Expression expr, AbstractToken source)
 	{
 		Java_LogicalNotExpression notExp = new Java_LogicalNotExpression();
 		AbstractToken which = expr.getWhich();

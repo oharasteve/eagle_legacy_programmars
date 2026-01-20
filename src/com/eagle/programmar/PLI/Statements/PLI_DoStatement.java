@@ -216,7 +216,7 @@ public class PLI_DoStatement extends TokenSequence
 		if (doUntil != null && doUntil.isPresent())
 		{
 			AbstractExpression untilCond = transformer.transformExpression(generator, doUntil.condition);
-			whileCond = generator.newNotExpression(untilCond, doUntil);
+			whileCond = generator.newLogicalNotExpression(untilCond, doUntil);
 		}
 		if (FOREVER != null && FOREVER.isPresent())
 		{

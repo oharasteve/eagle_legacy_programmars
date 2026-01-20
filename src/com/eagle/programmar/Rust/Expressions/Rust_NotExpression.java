@@ -15,7 +15,14 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_LogicalNotExpression extends PrimaryOperator
+/* In Rust, the bitwise NOT operator is the exclamation mark !.
+ * This is unlike many other languages (like C and C++) where the tilde ~ symbol is used. 
+ * The ! operator is used for both bitwise negation on integers and logical negation on boolean values.
+ * Rust's strong type system prevents ambiguity, as an integer will always be treated with bitwise NOT,
+ * and a boolean with logical NOT. 
+*/
+
+public class Rust_NotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Punctuation notOperator = new Rust_Punctuation('!');
@@ -32,10 +39,10 @@ public class Rust_LogicalNotExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
-	public Rust_Expression generateLogicalNot(Rust_Expression theExpr, AbstractToken source)
+	public Rust_Expression generateNot(Rust_Expression theExpr, AbstractToken source)
 	{
 		this.expr = theExpr;
 		this.setTransformationSource(source);

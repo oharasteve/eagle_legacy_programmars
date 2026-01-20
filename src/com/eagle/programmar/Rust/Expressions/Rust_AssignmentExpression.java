@@ -24,14 +24,20 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_AssignmentExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Rust_Variable var;
+	public @S(10) Rust_Expression var = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("=", "+=", "-=");
 	public @S(30) Rust_Expression expr;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String id = var.var.getValue();
+		if (!(var.getWhich() instanceof Rust_VariableExpression))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
+		}
+		Rust_VariableExpression varExpr = (Rust_VariableExpression) var.getWhich();
+
+		String id = varExpr.variable.var.getValue();
 		switch (operator.getValue())
 		{
 		case "=":
@@ -59,6 +65,12 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
+		if (!(var.getWhich() instanceof Rust_VariableExpression))
+		{
+			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
+		}
+		Rust_VariableExpression varExpr = (Rust_VariableExpression) var.getWhich();
+
 		AssignmentEnum asg;
 		switch (operator.getValue())
 		{
@@ -76,7 +88,7 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var.var.getValue(),
+		AbstractExpression asgExpr = generator.newAssignmentExpression(varExpr.variable.var.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, null, asg, value, this);
 		return asgExpr;
 	}
@@ -101,7 +113,9 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 		}
 
 		Rust_Identifier_Reference id = variable.var;
-		this.var = Rust_Variable.newVariable(id.getValue());
+		Rust_VariableExpression varExpr = new Rust_VariableExpression();
+		varExpr.variable = Rust_Variable.newVariable(id.getValue());
+		this.var = Rust_Generator.wrapExpression(varExpr);
 		this.operator.setValue(punct);
 		this.expr = expression;
 		this.setTransformationSource(source);

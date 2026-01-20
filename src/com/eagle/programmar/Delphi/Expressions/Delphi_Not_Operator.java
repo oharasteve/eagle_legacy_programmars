@@ -31,6 +31,6 @@ public class Delphi_Not_Operator extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 }

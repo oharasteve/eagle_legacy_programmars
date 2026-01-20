@@ -542,7 +542,7 @@ public class Python_Generator
 	}
 
 	@Override
-	public Python_Expression newNotExpression(Python_Expression expr, AbstractToken source)
+	public Python_Expression newLogicalNotExpression(Python_Expression expr, AbstractToken source)
 	{
 		Python_Logical_Not_Expression notExp = new Python_Logical_Not_Expression();
 		AbstractToken which = expr.getWhich();

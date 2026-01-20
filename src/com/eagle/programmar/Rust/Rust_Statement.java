@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
-import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExpressionStatement;
@@ -30,12 +28,10 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Rust_ForStatement XXforStatement;
 	public @CHOICE Rust_LetStatement XXletStatement;
 	public @CHOICE Rust_MatchStatement XXmatchStatement;
-	public @CHOICE Rust_PrintlnFunction XXprintlnStatement;
 	public @CHOICE Rust_ReturnStatement XXreturnStatement;
 	public @CHOICE Rust_Use XXuseStatement;
 	public @CHOICE Rust_WhileStatement XXwhileStatement;
 
-	public @LAST Rust_AssignmentExpression XXassignmentStatement;
 	public @LAST Rust_FunctionCall XXfunctionCall;
 	public @LAST Rust_ExpressionStatement XXexpressionStatement;
 

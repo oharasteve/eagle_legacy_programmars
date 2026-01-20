@@ -34,7 +34,7 @@ public class CSharp_LogicalNotExpression extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
 	public CSharp_Expression generateLogicalNot(CSharp_Expression theExpr,

@@ -6,17 +6,16 @@ package com.eagle.programmar.Rust;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_BitwiseNotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_LogicalNotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
@@ -75,14 +74,14 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
-	public @P(120) Rust_BitwiseNotExpression bitwiseNotExpression;
-	public @P(130) Rust_LogicalNotExpression notExpression;
-	public @P(140) Rust_BuiltIn builtIn;
-	public @P(150) Rust_VariableExpression variableExpression;
-	public @P(160) Rust_FormatFunction builtinFunction;
-	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(180) Rust_ExpressionArray expressionArray;
-	public @P(190) Rust_BorrowExpression borrowExpression;
+	public @P(120) Rust_NotExpression notExpression;
+	public @P(130) Rust_BuiltIn builtIn;
+	public @P(140) Rust_VariableExpression variableExpression;
+	public @P(150) Rust_FormatFunction builtinFunction;
+	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(170) Rust_ExpressionArray expressionArray;
+	public @P(180) Rust_BorrowExpression borrowExpression;
+	public @P(190) Rust_PrintlnFunction printlnStatement;
 
 	///////////////////////////////////////////////
 	// Binary expressions
@@ -102,6 +101,5 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1120) Rust_LogicalAndExpression conditionalAndExpression;
 	public @P(1130) Rust_LogicalOrExpression conditionalOrExpression;
 	public @P(1140) Rust_RangeExpression rangeExpression;
-	public @P(1150) Rust_PrintlnFunction printFunction;
-	public @P(1160) Rust_AssignmentExpression asgExpression;
+	public @P(1150) Rust_AssignmentExpression asgExpression;
 }

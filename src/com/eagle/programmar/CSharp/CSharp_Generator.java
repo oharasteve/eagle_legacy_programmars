@@ -546,7 +546,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
-	public CSharp_Expression newNotExpression(CSharp_Expression expr, AbstractToken source)
+	public CSharp_Expression newLogicalNotExpression(CSharp_Expression expr, AbstractToken source)
 	{
 		CSharp_LogicalNotExpression notExp = new CSharp_LogicalNotExpression();
 		AbstractToken which = expr.getWhich();

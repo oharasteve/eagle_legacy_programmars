@@ -10,6 +10,7 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -18,6 +19,7 @@ public class Rust_ExpressionStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Rust_Expression expression;
+	public @S(20) @OPT PunctuationSemicolon semicolon;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

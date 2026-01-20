@@ -31,6 +31,6 @@ public class FSharp_Logical_Not_Expresion extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 }

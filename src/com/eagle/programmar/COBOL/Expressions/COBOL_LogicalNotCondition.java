@@ -30,6 +30,6 @@ public class COBOL_LogicalNotCondition extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, cond);
-		return generator.newNotExpression(theExpr, this);
+		return generator.newLogicalNotExpression(theExpr, this);
 	}
 }

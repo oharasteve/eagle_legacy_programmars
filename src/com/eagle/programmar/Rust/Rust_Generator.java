@@ -13,14 +13,13 @@ import com.eagle.programmar.Rust.Rust_Program.Rust_TopElement;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_BitwiseNotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_LogicalNotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
@@ -131,6 +130,10 @@ public class Rust_Generator
 			_currentFunction = new Rust_Function();
 			_currentFunction.id = new Rust_Function_Definition();
 			_currentFunction.id.setValue("main");
+			
+			Rust_TopElement topElt = new Rust_TopElement();
+			topElt.setWhich(_currentFunction);
+			_program.elements.addToken(topElt);
 		}
 	}
 
@@ -498,8 +501,8 @@ public class Rust_Generator
 	public AbstractExpression newBitwiseNotExpression(Rust_Expression expr,
 			AbstractToken source)
 	{
-		Rust_BitwiseNotExpression bitExpr = new Rust_BitwiseNotExpression();
-		return bitExpr.generateBitwiseNot(expr, source);
+		Rust_NotExpression bitExpr = new Rust_NotExpression();
+		return bitExpr.generateNot(expr, source);
 	}
 
 	@Override
@@ -528,18 +531,18 @@ public class Rust_Generator
 	}
 
 	@Override
-	public Rust_Expression newNotExpression(Rust_Expression expr, AbstractToken source)
+	public Rust_Expression newLogicalNotExpression(Rust_Expression expr, AbstractToken source)
 	{
-		Rust_LogicalNotExpression notExp = new Rust_LogicalNotExpression();
+		Rust_NotExpression notExp = new Rust_NotExpression();
 		AbstractToken which = expr.getWhich();
 		if (which instanceof TerminalToken || which instanceof Rust_ParenthesizedExpression)
 		{
-			return notExp.generateLogicalNot(expr, source);
+			return notExp.generateNot(expr, source);
 		}
 
 		Rust_ParenthesizedExpression parens = new Rust_ParenthesizedExpression();
 		parens.generateParentheses(expr, source);
-		return notExp.generateLogicalNot(Rust_Generator.wrapExpression(parens), source);
+		return notExp.generateNot(Rust_Generator.wrapExpression(parens), source);
 	}
 
 	@Override
