@@ -157,7 +157,11 @@ public class Rust_Generator
 	@Override
 	public void addMethodParameter(Rust_Type type, String name)
 	{
-		_currentFunction.addFunctionParameter(type, name);
+		// Don't add args to "fn main()"
+		if (!_currentFunction.id.getValue().equals("main"))
+		{
+			_currentFunction.addFunctionParameter(type, name);
+		}
 	}
 
 	@Override

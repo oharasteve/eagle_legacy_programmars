@@ -134,7 +134,7 @@ public class Rust_Function extends TokenSequence
 		if (isMain)
 		{
 			// Have to wait until addMethod is called
-			generator.addMainArgs(); // For java and C# but not for Python
+			generator.addMainArgs(); // For java and C# but not for Python or Rust
 		}
 
 		// Search metrics for arg types -- might not be any
