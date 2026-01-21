@@ -7,15 +7,16 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -28,24 +29,14 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 	public @S(30) @NOSPACE Rust_Keyword STARTSWITH = new Rust_Keyword("starts_with");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Rust_Expression arg;
-	public @S(60) @OPT @NOSPACE PunctuationComma comma;
-	public @S(70) @OPT Rust_Expression scExpr;
-	public @S(80) @NOSPACE PunctuationRightParen rightParen;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String text = interpreter.getStrValue(left);
 		String patt = interpreter.getStrValue(arg);
-		if (scExpr != null && scExpr.isPresent())
-		{
-			int sc = interpreter.getIntValue(scExpr);
-			interpreter.pushBool(text.startsWith(patt, sc));
-		}
-		else
-		{
-			interpreter.pushBool(text.startsWith(patt));
-		}
+		interpreter.pushBool(text.startsWith(patt));
 	}
 
 	@Override
@@ -54,11 +45,6 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, left);
 		AbstractExpression thePattern = transformer.transformExpression(generator, arg);
 		AbstractExpression theSC = null;
-		if (scExpr != null && scExpr.isPresent())
-		{
-			theSC = transformer.transformExpression(generator, scExpr);
-		}
-
 		return generator.newStartsWithFunction(theExpr, thePattern, theSC,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
@@ -72,10 +58,11 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 		this.arg = patt;
 		if (sc != null)
 		{
-			this.comma = new PunctuationComma();
-			this.comma.setPresent(true);
-			this.scExpr = sc;
-			this.scExpr.setPresent(true);
+			// Rust does not support str.StartsWith("patt",sc)
+			// Have to use Substring instead
+			Rust_SubscriptExpression substr = Rust_SubscriptExpression.generateSubscriptExpression(
+					expr, sc, whichSC, SubstringECEnum.GIVEN_NEITHER, null, false, source);
+			this.left = Rust_Generator.wrapExpression(substr);
 		}
 		this.rightParen = new PunctuationRightParen();
 

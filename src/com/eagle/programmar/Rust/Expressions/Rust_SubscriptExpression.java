@@ -50,9 +50,9 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression expr = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(20) PunctuationLeftBracket leftBracket;
-	public @S(30) Rust_Expression subscrExpr = new Rust_Expression();
-	public @S(40) PunctuationRightBracket rightBracket;
+	public @S(20) @NOSPACE PunctuationLeftBracket leftBracket;
+	public @S(30) @NOSPACE Rust_Expression subscrExpr = new Rust_Expression();
+	public @S(40) @NOSPACE PunctuationRightBracket rightBracket;
 
 	private @SKIP Operator2Metrics _metrics = null;
 
