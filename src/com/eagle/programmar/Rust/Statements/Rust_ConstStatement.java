@@ -69,18 +69,12 @@ public class Rust_ConstStatement extends TokenSequence
 		return stmt;
 	}
 
-	public static Rust_ConstStatement newDataDeclaration(boolean isStatic, String name, Rust_Expression size, Rust_Type type,
-			Rust_Expression initial, AbstractToken source)
+	public static Rust_ConstStatement newDataDeclaration(boolean isStatic, String name, Rust_Expression size,
+			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
 		if (type == null)
 		{
 			throw new RuntimeException("Can't create data without a type, for " + name);
-		}
-
-		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))
-		{
-			// Sorry, cannot redefine true or false
-			return null;
 		}
 
 		Rust_ConstStatement data = new Rust_ConstStatement();

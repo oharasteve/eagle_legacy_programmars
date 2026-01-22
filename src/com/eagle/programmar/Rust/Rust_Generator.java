@@ -6,6 +6,7 @@ package com.eagle.programmar.Rust;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
@@ -33,6 +34,7 @@ import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExpressionStatement;
 import com.eagle.programmar.Rust.Statements.Rust_IfStatement;
+import com.eagle.programmar.Rust.Statements.Rust_LetStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ReturnStatement;
 import com.eagle.programmar.Rust.Statements.Rust_WhileStatement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
@@ -54,6 +56,7 @@ public class Rust_Generator
 	public static String SUFFIX = ".rs";
 
 	private Rust_Program _program;
+	private EagleMetrics _metrics = null;
 
 	public Rust_Generator(ParserManager parser, String className)
 	{
@@ -243,7 +246,14 @@ public class Rust_Generator
 	public Rust_Statement newDataDeclaration(boolean isStatic, String name, Rust_Expression size,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
-		return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
+		if (_metrics != null)
+		{
+			if (_metrics.countAssignments(name, null) == 1)
+			{
+				return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
+			}
+		}
+		return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 
 	@Override

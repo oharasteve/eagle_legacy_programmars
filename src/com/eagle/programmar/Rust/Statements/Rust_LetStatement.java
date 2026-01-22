@@ -5,10 +5,15 @@ package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Type;
+import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
+import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -59,5 +64,36 @@ public class Rust_LetStatement extends TokenSequence
 		String name = varExpr.variable.var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
+	}
+	
+	public static Rust_LetStatement newDataDeclaration(boolean isStatic, String name,
+			Rust_Expression size, Rust_Type type, Rust_Expression initial, AbstractToken source)
+	{
+		if (type == null)
+		{
+			throw new RuntimeException("Can't create data without a type, for " + name);
+		}
+
+		Rust_LetStatement letStmt = new Rust_LetStatement();
+		letStmt.MUT.setPresent(true);
+		letStmt.semicolon = new PunctuationSemicolon();
+		letStmt.semicolon.setPresent(true);
+
+		// Set data name, value and type
+		letStmt.asgExpr = new Rust_AssignmentExpression();
+		Rust_VariableExpression varExpr = new Rust_VariableExpression();
+		varExpr.variable = new Rust_Variable();
+		varExpr.variable.var = new Rust_Identifier_Reference();
+		varExpr.variable.var.setValue(name);
+		letStmt.asgExpr.var = Rust_Generator.wrapExpression(varExpr);
+		letStmt.asgExpr.operator.setValue("=");
+		letStmt.asgExpr.expr = initial;
+		
+		letStmt.letAs = new Rust_LetAs();
+		letStmt.letAs.type = type;
+		letStmt.letAs.setPresent(true);
+
+		letStmt.setTransformationSource(source);
+		return letStmt;
 	}
 }
