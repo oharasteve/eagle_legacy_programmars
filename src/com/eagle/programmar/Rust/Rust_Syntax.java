@@ -29,6 +29,7 @@ public class Rust_Syntax extends EagleSyntax
 				"+=",
 				"-=",
 				"->",
+				"::",
 				"..",
 				"..=",
 				"...",

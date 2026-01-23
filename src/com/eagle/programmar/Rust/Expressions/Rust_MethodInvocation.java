@@ -11,11 +11,17 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Function;
 import com.eagle.programmar.Rust.Rust_Function.Rust_Parameter;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Variable;
+import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation.Rust_MethodWhat.Rust_MethodClass;
+import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
@@ -29,16 +35,40 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_MethodInvocation extends PrimaryOperator
 		implements EagleRunnableWithResult, EagleTransformableExpression
 {
-	public @S(10) Rust_Variable methodName;
-	public @S(20) @OPT Rust_Punctuation bang = new Rust_Punctuation("!");
-	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) @OPT SeparatedList<Rust_Expression, PunctuationComma> argList;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(10) Rust_MethodWhat what;
+	public @S(20) @OPT @NOSPACE Rust_Punctuation bang = new Rust_Punctuation("!");
+	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(40) @OPT @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> argList;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	
+	public static class Rust_MethodWhat extends TokenChooser
+	{
+		public @CHOICE Rust_Variable XXmethodName;
+
+		public @FIRST static class Rust_MethodClass extends TokenSequence
+		{
+			public @S(10) Rust_Identifier_Reference clsName;
+			public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
+			public @S(30) @NOSPACE Rust_Variable methodName;
+		}
+	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		String name = methodName.var.getValue();
+		String name;
+		AbstractToken which = what.getWhich();
+		if (which instanceof Rust_MethodClass)
+		{
+			Rust_MethodClass mthCls = (Rust_MethodClass) which;
+			name = mthCls.methodName.var.getValue();
+		}
+		else if (which instanceof Rust_Variable)
+		{
+			Rust_Variable var = (Rust_Variable) which;
+			name = var.var.getValue();
+		}
+		else throw new RuntimeException("Unexpected method name: " + which);
 
 		AbstractFunction fn = interpreter.findFunction(name);
 		if (fn == null)
@@ -89,7 +119,21 @@ public class Rust_MethodInvocation extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		String name = methodName.var.getValue();
+		Rust_Identifier_Reference id;
+		AbstractToken which = what.getWhich();
+		if (which instanceof Rust_MethodClass)
+		{
+			Rust_MethodClass mthCls = (Rust_MethodClass) which;
+			id = mthCls.methodName.var;
+		}
+		else if (which instanceof Rust_Variable)
+		{
+			Rust_Variable var = (Rust_Variable) which;
+			id = var.var;
+		}
+		else throw new RuntimeException("Unexpected method name: " + which);
+		String name = id.getValue();
+
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
@@ -102,7 +146,7 @@ public class Rust_MethodInvocation extends PrimaryOperator
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			return generator.newMethodInvocation(var, args, methodName);
+			return generator.newMethodInvocation(var, args, id);
 		}
 
 		// Dang. Scale uses () for both arrays and function calls
@@ -110,5 +154,46 @@ public class Rust_MethodInvocation extends PrimaryOperator
 		AbstractExpression index = transformer.transformExpression(generator,
 				argList.first());
 		return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, index, this);
+	}
+	
+	public Rust_Expression generateInvocation(Rust_Identifier_Reference clsName,
+			Rust_Variable var, ArrayList<Rust_Expression> args, AbstractToken source)
+	{
+		Rust_MethodInvocation invoke = new Rust_MethodInvocation();
+		invoke.what = new Rust_MethodWhat();
+
+		if (clsName == null)
+		{
+			invoke.what.setWhich(var);
+		}
+		else
+		{
+			Rust_MethodClass methCls = new Rust_MethodClass();
+			methCls.clsName = clsName;
+			methCls.methodName = var;
+			methCls.setPresent(true);
+			invoke.what.setWhich(methCls);
+		}
+
+		invoke.leftParen = new PunctuationLeftParen();
+		invoke.argList = new SeparatedList<Rust_Expression, PunctuationComma>();
+		invoke.rightParen = new PunctuationRightParen();
+		
+		boolean first = true;
+		for (Rust_Expression arg : args)
+		{
+			if (first)
+			{
+				first = false;
+			}
+			else
+			{
+				invoke.argList.addSecondaryElement(new PunctuationComma());
+			}
+			
+			invoke.argList.addPrimaryElement(arg);
+		}
+		
+		return Rust_Generator.wrapExpression(invoke);
 	}
 }

@@ -6,7 +6,10 @@ package com.eagle.programmar.Rust.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
+import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -19,11 +22,12 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_ToStringMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
-	public @S(30) Rust_KeywordChoice TOSTRING = new Rust_KeywordChoice("as_str", "to_string");
-	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(10) Rust_Punctuation ampersand = new Rust_Punctuation('&');
+	public @S(20) @NOSPACE Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(30) @NOSPACE PunctuationPeriod dot;
+	public @S(40) @NOSPACE Rust_KeywordChoice TOSTRING = new Rust_KeywordChoice("as_str", "to_string");
+	public @S(50) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -37,5 +41,16 @@ public class Rust_ToStringMethod extends PrecedenceOperator
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, left);
 		return theExpr;
+	}
+
+	public Rust_Expression generateString(Rust_Expression expr, AbstractToken source)
+	{
+		// Rust likes '&ok.to_string()' where 'ok' is an i32
+		left = expr;
+		dot = new PunctuationPeriod();
+		TOSTRING.setValue("to_string");
+		leftParen = new PunctuationLeftParen();
+		rightParen = new PunctuationRightParen();
+		return Rust_Generator.wrapExpression(this);
 	}
 }

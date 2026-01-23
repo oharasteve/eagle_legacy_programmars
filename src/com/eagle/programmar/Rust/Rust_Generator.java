@@ -18,6 +18,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
@@ -649,9 +650,8 @@ public class Rust_Generator
 	public Rust_Expression newMethodInvocation(Rust_Variable var,
 			ArrayList<Rust_Expression> args, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_MethodInvocation creat = new Rust_MethodInvocation();
-//		return creat.generateInvocation(var, args, source);
+		Rust_MethodInvocation creat = new Rust_MethodInvocation();
+		return creat.generateInvocation(null, var, args, source);
 	}
 
 	@Override

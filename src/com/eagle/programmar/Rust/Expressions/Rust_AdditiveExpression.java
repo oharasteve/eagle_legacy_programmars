@@ -5,11 +5,13 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -79,6 +81,15 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 	{
 		this.left = leftExpr;
 		this.right = rightExpr;
+		if (types != null)
+		{
+			if (types._type1.equals(EagleString.STRING) && !types._type2.equals(EagleString.STRING))
+			{
+				Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
+				this.right = strMeth.generateString(rightExpr, rightExpr);
+			}
+		}
+
 		switch (oper)
 		{
 		case PLUS:
