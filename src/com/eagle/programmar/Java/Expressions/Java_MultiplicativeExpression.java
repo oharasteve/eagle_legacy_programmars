@@ -41,19 +41,39 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.typeName(), rightValue.typeName());
 
-		int leftInt = leftValue.forceIntegerValue();
-		int rightInt = rightValue.forceIntegerValue();
-		switch (oper)
+		if (leftValue.isDouble() || rightValue.isDouble())
 		{
-		case "*":
-			interpreter.pushInt(leftInt * rightInt);
-			return;
-		case "/":
-			interpreter.pushInt(leftInt / rightInt);
-			return;
-		case "%":
-			interpreter.pushInt(leftInt % rightInt);
-			return;
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "*":
+				interpreter.pushDouble(leftDbl * rightDbl);
+				return;
+			case "/":
+				interpreter.pushDouble(leftDbl / rightDbl);
+				return;
+			case "%":
+				interpreter.pushDouble(leftDbl % rightDbl);
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (oper)
+			{
+			case "*":
+				interpreter.pushInt(leftInt * rightInt);
+				return;
+			case "/":
+				interpreter.pushInt(leftInt / rightInt);
+				return;
+			case "%":
+				interpreter.pushInt(leftInt % rightInt);
+				return;
+			}
 		}
 		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}

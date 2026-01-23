@@ -49,9 +49,23 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 			{
 			case "+":
 				interpreter.pushStr(leftStr + rightStr);
-				break;
+				return;
 			default:
 				throw new RuntimeException("Unexpected concatenation operator: " + oper);
+			}
+		}
+		else if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "+":
+				interpreter.pushDouble(leftDbl + rightDbl);
+				return;
+			case "-":
+				interpreter.pushDouble(leftDbl - rightDbl);
+				return;
 			}
 		}
 		else
@@ -62,14 +76,13 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 			{
 			case "+":
 				interpreter.pushInt(leftInt + rightInt);
-				break;
+				return;
 			case "-":
 				interpreter.pushInt(leftInt - rightInt);
-				break;
-			default:
-				throw new RuntimeException("Unexpected additive operator: " + oper);
+				return;
 			}
 		}
+		throw new RuntimeException("Unexpected additive operator: " + oper);
 	}
 
 	@Override
