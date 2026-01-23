@@ -13,7 +13,6 @@ import com.eagle.programmar.Rust.Rust_Function;
 import com.eagle.programmar.Rust.Rust_Function.Rust_Parameter;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation.Rust_MethodWhat.Rust_MethodClass;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractFunction;
@@ -43,14 +42,15 @@ public class Rust_MethodInvocation extends PrimaryOperator
 	
 	public static class Rust_MethodWhat extends TokenChooser
 	{
+		public @FIRST Rust_MethodClass XXmethodClass;
 		public @CHOICE Rust_Variable XXmethodName;
+	}
 
-		public @FIRST static class Rust_MethodClass extends TokenSequence
-		{
-			public @S(10) Rust_Identifier_Reference clsName;
-			public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
-			public @S(30) @NOSPACE Rust_Variable methodName;
-		}
+	public static class Rust_MethodClass extends TokenSequence
+	{
+		public @S(10) Rust_Identifier_Reference clsName;
+		public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
+		public @S(30) @NOSPACE Rust_Variable methodName;
 	}
 
 	@Override

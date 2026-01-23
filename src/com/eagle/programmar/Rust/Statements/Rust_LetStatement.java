@@ -5,12 +5,10 @@ package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
-import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -18,6 +16,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
@@ -30,9 +29,11 @@ public class Rust_LetStatement extends TokenSequence
 	public @S(10) @DOC("statements.html#let-statements") @NEWLINE Rust_Keyword LET =
 			new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
-	public @S(30) Rust_AssignmentExpression asgExpr;
-	public @S(40) @OPT Rust_LetAs letAs;
-	public @S(50) @OPT @NOSPACE PunctuationSemicolon semicolon;
+	public @S(30) Rust_Variable var;
+	public @S(40) PunctuationEquals equals;
+	public @S(50) Rust_Expression expr;
+	public @S(60) @OPT Rust_LetAs letAs;
+	public @S(70) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
 	public static class Rust_LetAs extends TokenSequence
 	{
@@ -43,25 +44,21 @@ public class Rust_LetStatement extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(asgExpr);
+		String id = var.var.getValue();
+		EagleValue val = interpreter.getEagleValue(expr);
+		interpreter.setSymbol(var, id, val);
 	}
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
 		// See if the Definition has some assignments in the metrics file
-		TypeEnum type = transformer.findAssignMetric(asgExpr.var);
+		TypeEnum type = transformer.findAssignMetric(var);
 		AbstractType newType = generator.transformType(type, null, null);
 
-		AbstractExpression initial = transformer.transformExpression(generator, asgExpr.expr);
+		AbstractExpression initial = transformer.transformExpression(generator, expr);
 
-		if (!(asgExpr.var.getWhich() instanceof Rust_VariableExpression))
-		{
-			throw new RuntimeException("Unexpected assignment variable: " + asgExpr.var.getWhich());
-		}
-		Rust_VariableExpression varExpr = (Rust_VariableExpression) asgExpr.var.getWhich();
-
-		String name = varExpr.variable.var.getValue();
+		String name = var.var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
 	}
@@ -76,18 +73,15 @@ public class Rust_LetStatement extends TokenSequence
 
 		Rust_LetStatement letStmt = new Rust_LetStatement();
 		letStmt.MUT.setPresent(true);
+		letStmt.equals = new PunctuationEquals();
 		letStmt.semicolon = new PunctuationSemicolon();
 		letStmt.semicolon.setPresent(true);
 
 		// Set data name, value and type
-		letStmt.asgExpr = new Rust_AssignmentExpression();
-		Rust_VariableExpression varExpr = new Rust_VariableExpression();
-		varExpr.variable = new Rust_Variable();
-		varExpr.variable.var = new Rust_Identifier_Reference();
-		varExpr.variable.var.setValue(name);
-		letStmt.asgExpr.var = Rust_Generator.wrapExpression(varExpr);
-		letStmt.asgExpr.operator.setValue("=");
-		letStmt.asgExpr.expr = initial;
+		letStmt.var = new Rust_Variable();
+		letStmt.var.var = new Rust_Identifier_Reference();
+		letStmt.var.var.setValue(name);
+		letStmt.expr = initial;
 		
 		letStmt.letAs = new Rust_LetAs();
 		letStmt.letAs.type = type;
