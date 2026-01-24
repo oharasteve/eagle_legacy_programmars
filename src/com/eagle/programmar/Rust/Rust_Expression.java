@@ -8,6 +8,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
+import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
@@ -77,11 +78,12 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(120) Rust_NotExpression notExpression;
 	public @P(130) Rust_BuiltIn builtIn;
 	public @P(140) Rust_VariableExpression variableExpression;
-	public @P(150) Rust_FormatFunction builtinFunction;
-	public @P(160) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(170) Rust_ExpressionArray expressionArray;
-	public @P(180) Rust_BorrowExpression borrowExpression;
-	public @P(190) Rust_PrintlnFunction printlnStatement;
+	public @P(150) Rust_CastExpression castExpression;
+	public @P(160) Rust_FormatFunction builtinFunction;
+	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(180) Rust_ExpressionArray expressionArray;
+	public @P(190) Rust_BorrowExpression borrowExpression;
+	public @P(200) Rust_PrintlnFunction printlnStatement;
 
 	///////////////////////////////////////////////
 	// Binary expressions

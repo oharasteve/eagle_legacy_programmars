@@ -15,6 +15,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
+import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
@@ -207,8 +208,17 @@ public class Rust_Generator
 
 		checkFunction();
 		
-		stmt.setTransformationSource(source);
+		if (_currentFunction.block == null)
+		{
+			_currentFunction.block = new Rust_Block_Statement();
+		}
+		if (_currentFunction.block.statements == null)
+		{
+			_currentFunction.block.statements = new TokenList<Rust_Statement>();
+		}
 		_currentFunction.block.statements.addToken(stmt);
+
+		stmt.setTransformationSource(source);
 	}
 
 	@Override
@@ -547,9 +557,7 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newTruncateExpression(Rust_Expression expr, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_Type type = Rust_Type.newPrimitiveType("int");
-//		return Rust_CastExpression.newCastExpression(type, expr, source);
+		return Rust_CastExpression.newCastExpression("i32", expr, source);
 	}
 
 	@Override

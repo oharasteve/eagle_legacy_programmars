@@ -90,11 +90,11 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 		case DIVIDE_TRUNCATE:
 			this.operator.setValue("/");
 			break;
-//		case DIVIDE_NO_TRUNCATE:
-//			this.operator.setValue("/");
-//			Rust_Type type = Rust_Type.newPrimitiveType("double");
-//			this.right = Rust_CastExpression.newCastExpression(type, rightExpr, source);
-//			break;
+		case DIVIDE_NO_TRUNCATE:
+			this.operator.setValue("/");
+			this.left = Rust_CastExpression.newCastExpression("f64", leftExpr, source);
+			this.right = Rust_CastExpression.newCastExpression("f64", rightExpr, source);
+			break;
 		case REMAINDER:
 			this.operator.setValue("%");
 			break;
